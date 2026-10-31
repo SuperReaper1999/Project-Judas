@@ -143,6 +143,13 @@ private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
 #ifdef __EMSCRIPTEN__
+    void UpdateBrowserSurface();
+    void PublishBrowserSurface();
+    float m_browserMouseScaleX=1,m_browserMouseScaleY=1;
+    int m_browserPublishedWidth=0,m_browserPublishedHeight=0;
+    bool m_browserPublishedActive=false,m_browserPublishedFocus=false;
+    bool m_browserPointerLocked=false,m_browserAcceptRelative=false;
+    int m_browserVisibilityEpoch=0;
     int m_browserGLContext=0; // owned WebGL context on the game worker
 #endif
     bool m_sdlInitialized = false;

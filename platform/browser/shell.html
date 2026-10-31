@@ -2,21 +2,22 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Judas — Experimental Browser Game</title>
 <style>
-body{margin:0;background:#111b25;color:#edf5fc;font:16px system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:12px}header{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button{font:inherit;padding:10px 24px;background:#80d9c5;color:#101c24;border:0;border-radius:6px}button:disabled{opacity:.5}canvas{display:block;width:min(100%,1024px);height:auto;background:#080c12;margin:12px auto;outline:2px solid #658b9c}a{color:#9edbd6}p{margin:8px 0}#status{white-space:pre-wrap}small{color:#bdd2e0}
+body{margin:0;background:#111b25;color:#edf5fc;font:16px system-ui,sans-serif}main{max-width:1600px;margin:auto;padding:12px}header{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button{font:inherit;padding:10px 24px;background:#80d9c5;color:#101c24;border:0;border-radius:6px}button:disabled{opacity:.5}#viewport{position:relative;width:100%;height:clamp(240px,calc(100dvh - 210px),900px);margin:12px auto}#exit-fullscreen{display:none}#viewport:fullscreen #exit-fullscreen{display:block;flex-shrink:0;align-self:flex-end;margin:6px 12px;padding:6px 18px}#viewport:fullscreen{display:flex;flex-direction:column;width:100vw;height:100dvh;margin:0;background:#080c12}#viewport:fullscreen canvas{flex:1;min-height:0;height:0;outline:none}canvas{display:block;width:100%;height:100%;background:#080c12;margin:0;outline:2px solid #658b9c}a{color:#9edbd6}p{margin:8px 0}#status{white-space:pre-wrap}small{color:#bdd2e0}
 </style></head><body><main>
-<header><strong>Judas · Experimental browser support</strong><button id="play" disabled>Loading…</button></header>
+<header><strong>Judas · Experimental browser support</strong><button id="play" disabled>Loading…</button><button id="fullscreen" disabled>Fullscreen</button></header>
 <p id="status" role="status">Preparing engine and game…</p>
-<canvas id="canvas" width="1024" height="768" tabindex="0" aria-label="Game viewport"></canvas>
+<div id="viewport"><canvas id="canvas" width="1024" height="768" tabindex="0" aria-label="Game viewport"></canvas><button id="exit-fullscreen">Exit fullscreen</button></div>
 <small>Keyboard/mouse focus belongs to the canvas. Click it to restore focus or unlock audio. Saves use this browser's local storage; clearing site data removes them. This experimental port is not universal browser certification. <a href="licenses/ENGINE_NOTICES.txt">Engine notices</a> · <a href="licenses/emscripten-LICENSE.txt">Web runtime notices</a>.</small>
 </main>
 <script src="game-config.js"></script>
 <script>
 const statusText=document.querySelector('#status'),playButton=document.querySelector('#play'),canvas=document.querySelector('#canvas');
-let failed=false,runtimeReady=false;
+let failed=false,runtimeReady=false,playing=false;
+const fullscreenButton=document.querySelector("#fullscreen"),viewport=document.querySelector("#viewport");
 function fail(message){if(failed)return;failed=true;statusText.textContent=String(message);playButton.disabled=true;playButton.textContent='Unavailable';}
-var Module={canvas,noInitialRun:true,
+var Module={canvas,noInitialRun:true,judasVisibilityEpoch:0,
  print:line=>console.log(line),printErr:line=>console.error(line),setStatus:message=>{if(message&&!failed&&!runtimeReady)statusText.textContent=message;},
- onAbort:message=>fail('Game stopped: '+message),onExit:code=>{statusText.textContent='Game exited ('+code+'). Reload to restart.';if(Module.judasReleaseStorageLock)Module.judasReleaseStorageLock();},
+ onAbort:message=>fail('Game stopped: '+message),onExit:code=>{playing=false;fullscreenButton.disabled=true;Module.judasPointerCaptureRequested=false;if(document.pointerLockElement===canvas)document.exitPointerLock();if(document.fullscreenElement===viewport)document.exitFullscreen().catch(()=>{});statusText.textContent='Game exited ('+code+'). Reload to restart.';if(Module.judasReleaseStorageLock)Module.judasReleaseStorageLock();},
  preRun:[function(){
   Module.addRunDependency('judas-storage');
   if(!crossOriginIsolated||!window.SharedArrayBuffer){fail('This build requires HTTPS/local hosting with COOP/COEP isolation headers.');return;}
@@ -36,7 +37,20 @@ var Module={canvas,noInitialRun:true,
  }],
  onRuntimeInitialized:()=>{if(failed)return;runtimeReady=true;statusText.textContent='Ready. Click Play, then use the game controls.';playButton.disabled=false;playButton.textContent='Play';}
 };
-playButton.onclick=()=>{if(failed||!runtimeReady)return;playButton.disabled=true;playButton.textContent='Playing';statusText.textContent=JUDAS_GAME.controls||'Click the canvas for keyboard and mouse input.';canvas.focus();Module.callMain([]);};
+playButton.onclick=()=>{if(failed||!runtimeReady)return;playButton.disabled=true;playButton.textContent='Playing';playing=true;fullscreenButton.disabled=false;statusText.textContent=JUDAS_GAME.controls||'Click the canvas for keyboard and mouse input.';canvas.focus();Module.callMain([]);};
+fullscreenButton.onclick=async()=>{
+ try{if(document.fullscreenElement===viewport)await document.exitFullscreen();else await viewport.requestFullscreen();canvas.focus();}
+ catch(error){statusText.textContent='Fullscreen unavailable: '+error.message;}
+};
+document.querySelector('#exit-fullscreen').onclick=()=>document.exitFullscreen().then(()=>canvas.focus()).catch(error=>{statusText.textContent='Could not leave fullscreen: '+error.message;});
+canvas.addEventListener('pointerdown',()=>{
+ canvas.focus();
+ if(playing&&Module.judasPointerCaptureRequested&&document.pointerLockElement!==canvas){
+  try{const result=canvas.requestPointerLock();if(result?.catch)result.catch(error=>{statusText.textContent='Click the game again to capture the mouse. '+error.message;});}catch(error){statusText.textContent='Mouse capture unavailable: '+error.message;}
+ }
+});
+document.addEventListener('visibilitychange',()=>{Module.judasVisibilityEpoch=((Module.judasVisibilityEpoch||0)+1)>>>0;if(document.hidden&&document.pointerLockElement===canvas)document.exitPointerLock();});
+document.addEventListener('fullscreenchange',()=>{fullscreenButton.textContent=document.fullscreenElement===viewport?'Exit fullscreen':'Fullscreen';});
 canvas.addEventListener('webglcontextlost',()=>fail('Graphics context lost. Reload the game; your last completed save is retained.'));
 window.addEventListener('error',event=>fail(event.message));
 window.addEventListener('unhandledrejection',event=>fail(event.reason));

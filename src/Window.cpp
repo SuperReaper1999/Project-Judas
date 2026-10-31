@@ -3,9 +3,18 @@
 #include "AppIcon.h"
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
+#include "BrowserSurface.h"
 #include <emscripten/html5_webgl.h>
 EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
-    await new Promise(resolve => requestAnimationFrame(resolve));
+    // Browsers can stop RAF before the game observes the visibility event.
+    // Wake for lifecycle observation even then; the existing inactive branch
+    // suspends simulation/audio and resets its clock. Visible frames prefer RAF.
+    await new Promise(resolve => {
+        let complete=false;let frame=0;let timer=0;
+        const finish=()=>{if(complete)return;complete=true;
+            cancelAnimationFrame(frame);clearTimeout(timer);resolve();};
+        timer=setTimeout(finish,250);frame=requestAnimationFrame(finish);
+    });
 });
 #endif
 
@@ -92,7 +101,7 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
 bool Window::Resize(int width, int height, std::string& error) {
 #ifdef __EMSCRIPTEN__
     (void)width; (void)height;
-    error = "Experimental browser RESIZE is unsupported; use the fixed canvas and proportional page layout";
+    error = "Browser RESIZE is page-owned; resize the browser viewport or use the page Fullscreen button";
     return false;
 #elif defined(__ANDROID__)
     (void)width; (void)height;
@@ -262,9 +271,79 @@ void Window::UpdateNativeTextInput(){
   if(enabled)SDL_StartTextInput();else SDL_StopTextInput();
  }
 }
+#ifdef __EMSCRIPTEN__
+void Window::UpdateBrowserSurface() {
+    double values[3]{};int flags[4]{};
+    // DOM lives on the UI thread; SDL/WebGL resizing stays on this game worker.
+    // One synchronous observation keeps canvas focus, visibility and sizing coherent.
+    MAIN_THREAD_EM_ASM({
+        const canvas=Module.canvas;const r=canvas.getBoundingClientRect();
+        HEAPF64[$0>>3]=r.width;HEAPF64[($0>>3)+1]=r.height;
+        HEAPF64[($0>>3)+2]=window.devicePixelRatio||1;
+        HEAP32[$1>>2]=!document.hidden&&r.width>0&&r.height>0?1:0;
+        HEAP32[($1>>2)+1]=document.hasFocus()&&
+            (document.activeElement===canvas||document.pointerLockElement===canvas)?1:0;
+        HEAP32[($1>>2)+2]=document.pointerLockElement===canvas?1:0;
+        HEAP32[($1>>2)+3]=Module.judasVisibilityEpoch||0;
+    },values,flags);
+    const auto size=ChooseBrowserSurface(values[0],values[1],values[2]);
+    if(size.width>0&&size.height>0) {
+        int w=0,h=0;SDL_GetWindowSize(m_window,&w,&h);
+        if(w!=size.width||h!=size.height)SDL_SetWindowSize(m_window,size.width,size.height);
+        emscripten_get_canvas_element_size("#canvas",&m_width,&m_height);
+        m_browserMouseScaleX=float(values[0]/std::max(1,m_width));
+        m_browserMouseScaleY=float(values[1]/std::max(1,m_height));
+    }
+    // A capture request is not a browser-granted lock. Discard page motion and
+    // the acquisition/release boundary, including queued pre-lock mouse events.
+    const bool locked=flags[2]!=0;
+    m_browserAcceptRelative=locked&&m_browserPointerLocked&&
+        size.width==m_browserPublishedWidth&&size.height==m_browserPublishedHeight;
+    if(!locked||locked!=m_browserPointerLocked) {
+        m_input.SetPhysical("mouse:dx",0);m_input.SetPhysical("mouse:dy",0);
+        if(auto hub=m_input.localDevices.lock()) {
+            hub->Set("mouse","mouse:dx",0);hub->Set("mouse","mouse:dy",0);
+        }
+    }
+    m_browserPointerLocked=locked;
+    // Latch transitions on the UI thread: a browser may freeze this worker
+    // for the entire hidden interval, so polling only the current flag loses it.
+    if(flags[3]!=m_browserVisibilityEpoch) {
+        m_browserVisibilityEpoch=flags[3];m_lifecycleClockReset=true;
+    }
+    const bool active=flags[0]!=0,focused=active&&flags[1]!=0;
+    if(active!=m_applicationActive) {m_applicationActive=active;m_lifecycleClockReset=true;}
+    if(focused!=m_inputFocused || !active) {
+        m_inputFocused=focused;m_controllerInputReady=false;
+        if(!focused)SetTextInput(false);
+        m_input.Reset();if(auto hub=m_input.localDevices.lock())hub->Reset();ClearPendingRequests();
+    }
+    // SDL's document keyboard listener can also see page controls. They must not
+    // feed either the legacy or per-player input route while the canvas is blurred.
+    if(!focused) {m_input.Reset();if(auto hub=m_input.localDevices.lock())hub->Reset();ClearPendingRequests();}
+}
+void Window::PublishBrowserSurface() {
+    // SDL may deliver queued CSS/logical size events after our resize request.
+    // Publish the storage owned by this worker, never those stale dimensions.
+    emscripten_get_canvas_element_size("#canvas",&m_width,&m_height);
+    if(m_browserPublishedWidth!=m_width||m_browserPublishedHeight!=m_height||
+       m_browserPublishedActive!=m_applicationActive||m_browserPublishedFocus!=m_inputFocused) {
+        m_browserPublishedWidth=m_width;m_browserPublishedHeight=m_height;
+        m_browserPublishedActive=m_applicationActive;m_browserPublishedFocus=m_inputFocused;
+        MAIN_THREAD_EM_ASM({Module.judasSurface=({width:$0,height:$1,active:!!$2,focused:!!$3,
+            generation:(Module.judasSurface?.generation||0)+1});},m_width,m_height,m_applicationActive,m_inputFocused);
+    }
+}
+#endif
+
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();
     auto hub=m_input.localDevices.lock();if(hub)hub->BeginFrame();
+#ifdef __EMSCRIPTEN__
+    // Observe DOM ownership before consuming queued input: resetting focus after
+    // the event loop would discard the first legitimate click/key on return.
+    UpdateBrowserSurface();
+#endif
     if(!m_testInputMode)RefreshLocalControllers(false);
     if(hub)for(auto& [device,control,value]:m_testDevices)hub->Set(device,control,value);
     m_testDevices.clear();
@@ -284,10 +363,18 @@ void Window::PollEvents(){
         if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT&&
            !(event.type>=SDL_APP_TERMINATING&&event.type<=SDL_APP_DIDENTERFOREGROUND)&&event.type!=SDL_RENDER_DEVICE_RESET)continue;
         if(m_eventHook)m_eventHook(event);
+        float mouseDX=0,mouseDY=0;
+        if(event.type==SDL_MOUSEMOTION) {
+            mouseDX=float(event.motion.xrel);mouseDY=float(event.motion.yrel);
+#ifdef __EMSCRIPTEN__
+            mouseDX=m_browserAcceptRelative?mouseDX*m_browserMouseScaleX:0;
+            mouseDY=m_browserAcceptRelative?mouseDY*m_browserMouseScaleY:0;
+#endif
+        }
         if(hub){
          if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP){if(!m_keyboardClaimed&&m_inputFocused&&m_applicationActive)hub->Set("keyboard",std::string("key:")+SDL_GetScancodeName(event.key.keysym.scancode),event.type==SDL_KEYDOWN?1:0);}
          else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP){if(!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.button.which!=SDL_TOUCH_MOUSEID)if(auto* name=MouseButton(event.button.button)){hub->Set("mouse",std::string("mouse:")+name,event.type==SDL_MOUSEBUTTONDOWN?1:0);const auto* d=hub->Find("mouse");auto left=d->values.find("mouse:Left");hub->Pointer("mouse",{float(event.button.x)/std::max(1,m_width),float(event.button.y)/std::max(1,m_height),left!=d->values.end()&&left->second>.5f});}}
-         else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.motion.which!=SDL_TOUCH_MOUSEID){auto* d=hub->Find("mouse");auto pointer=d->pointer;pointer.x=float(event.motion.x)/std::max(1,m_width);pointer.y=float(event.motion.y)/std::max(1,m_height);hub->Pointer("mouse",pointer);if(m_mouseCaptured)for(auto p:{std::pair<const char*,float>{"mouse:dx",float(event.motion.xrel)},{"mouse:dy",float(event.motion.yrel)}}){auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
+         else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.motion.which!=SDL_TOUCH_MOUSEID){auto* d=hub->Find("mouse");auto pointer=d->pointer;pointer.x=float(event.motion.x)/std::max(1,m_width);pointer.y=float(event.motion.y)/std::max(1,m_height);hub->Pointer("mouse",pointer);if(m_mouseCaptured)for(auto p:{std::pair<const char*,float>{"mouse:dx",mouseDX},{"mouse:dy",mouseDY}}){auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
          else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.wheel.which!=SDL_TOUCH_MOUSEID){float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1:1;for(auto p:{std::pair<const char*,float>{"mouse:wheelX",sign*event.wheel.x},{"mouse:wheelY",sign*event.wheel.y}}){auto* d=hub->Find("mouse");auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
          else if(event.type==SDL_CONTROLLERAXISMOTION){auto pad=m_localControllers.find(event.caxis.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* axis=PadAxis(event.caxis.axis))hub->Set(pad->second.second,std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));}
          else if(event.type==SDL_CONTROLLERBUTTONDOWN||event.type==SDL_CONTROLLERBUTTONUP){auto pad=m_localControllers.find(event.cbutton.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* button=PadButton(event.cbutton.button))hub->Set(pad->second.second,std::string("pad:")+button,event.type==SDL_CONTROLLERBUTTONDOWN?1:0);}
@@ -325,6 +412,7 @@ void Window::PollEvents(){
         }
         else if(event.type==SDL_WINDOWEVENT){
             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
+#ifndef __EMSCRIPTEN__
             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
             if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;SetTextInput(false);m_controllerInputReady=false;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
             if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED){
@@ -333,6 +421,7 @@ void Window::PollEvents(){
                 // gameplay request. Restore that request, preserving paused UI.
                 SetMouseCaptured(m_mouseCaptured);
             }
+#endif
         }else if(event.type==SDL_CONTROLLERDEVICEREMOVED&&event.cdevice.which==m_controllerId){
             RefreshController(false);
         }else if(event.type==SDL_CONTROLLERAXISMOTION&&event.caxis.which==m_controllerId&&m_controllerInputReady&&!m_keyboardClaimed&&m_inputFocused){
@@ -342,11 +431,17 @@ void Window::PollEvents(){
         }else if((event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP)&&!m_mouseClaimed){
             if(const char* name=MouseButton(event.button.button))m_input.SetPhysical(std::string("mouse:")+name,event.type==SDL_MOUSEBUTTONDOWN?1:0);
             if(event.type==SDL_MOUSEBUTTONDOWN){m_uiClickX=event.button.x;m_uiClickY=event.button.y;}
-        }else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_mouseCaptured){m_input.AddDelta("mouse:dx",float(event.motion.xrel));m_input.AddDelta("mouse:dy",float(event.motion.yrel));}
+        }else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_mouseCaptured){
+            m_input.AddDelta("mouse:dx",mouseDX);m_input.AddDelta("mouse:dy",mouseDY);
+        }
         else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed){const float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1.f:1.f;m_input.AddDelta("mouse:wheelX",sign*event.wheel.x);m_input.AddDelta("mouse:wheelY",sign*event.wheel.y);}
     }
+#ifdef __EMSCRIPTEN__
+    PublishBrowserSurface();
+    if(!m_inputFocused||!m_applicationActive)m_input.Reset();
+#endif
     if(!m_testInputMode){int x=0,y=0;const auto buttons=SDL_GetMouseState(&x,&y);
-        m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),!m_mouseClaimed&&m_applicationActive&&(buttons&SDL_BUTTON_LMASK));}
+        m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&(buttons&SDL_BUTTON_LMASK));}
     // Restore held physical keys after UI ownership ends without stale edges.
     if(!m_testInputMode&&!m_keyboardClaimed&&m_inputFocused){const auto* keys=SDL_GetKeyboardState(nullptr);for(int i=0;i<SDL_NUM_SCANCODES;++i)if(keys[i])m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(static_cast<SDL_Scancode>(i)),1);}
     if(!m_testInputMode)RefreshController();
@@ -361,7 +456,7 @@ void Window::PollEvents(){
     // A compositor/backend release need not produce another FOCUS_GAINED
     // event. Reconcile while this window owns focus; never grab it back from
     // another application, and leave an uncaptured menu alone.
-    if(m_mouseCaptured && (SDL_GetWindowFlags(m_window)&SDL_WINDOW_INPUT_FOCUS) &&
+    if(m_mouseCaptured && m_inputFocused && m_applicationActive && (SDL_GetWindowFlags(m_window)&SDL_WINDOW_INPUT_FOCUS) &&
        (!SDL_GetRelativeMouseMode() || !SDL_GetWindowGrab(m_window)))
         SetMouseCaptured(true);
 }
@@ -369,9 +464,9 @@ bool Window::ConsumeNamedAction(const std::string& name){return m_input.Action(n
 
 void Window::SwapBuffers() {
 #ifdef __EMSCRIPTEN__
-    // Presentation is implicit when the worker yields. Wait for its actual
-    // animation-frame callback rather than busy rendering or sleeping at an
-    // arbitrary physics cadence. Simulation retains its fixed-step policy.
+    // Presentation is implicit when the worker yields. Prefer RAF, allowing a
+    // lifecycle wake if the browser stops delivering frames in a hidden tab.
+    // Simulation retains its independent fixed-step policy.
     AwaitBrowserFrame();
 #else
     SDL_GL_SwapWindow(m_window);
@@ -586,6 +681,9 @@ void Window::GetMousePosition(int& outX, int& outY) const {
 }
 
 void Window::SetMouseCaptured(bool captured) {
+#ifdef __EMSCRIPTEN__
+    if(captured!=m_mouseCaptured)MAIN_THREAD_EM_ASM({Module.judasPointerCaptureRequested=!!$0;},captured);
+#endif
     m_mouseCaptured = captured;
     SDL_SetWindowGrab(m_window,captured ? SDL_TRUE : SDL_FALSE);
     if(SDL_SetRelativeMouseMode(captured ? SDL_TRUE : SDL_FALSE)!=0 &&

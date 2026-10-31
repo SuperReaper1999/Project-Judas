@@ -83,9 +83,9 @@ migration contracts still apply.
   file-writing workflows are not independently qualified.
 - Native TCP hosting/joining is explicitly unavailable. A future WebSocket
   transport/server endpoint is separate work.
-- Fixed 1024×768 canvas with proportional CSS display is the initial page layout;
-  harness RESIZE rejects explicitly. Full responsive surfaces, mobile touch/controller behaviour and every 3D effect
-  are not promised by this prototype.
+- Responsive browser-owned canvas, optional fullscreen and bounded high-DPI rendering.
+  Harness RESIZE still rejects: resize the page viewport instead. Mobile
+  touch/controller behaviour and every 3D effect remain unqualified.
 - Loading/errors, keyboard focus and cold saves have actual Chromium tests.
   Browser audio mixing and Firefox offline-game checks are covered by the next-stage qualification below; physical audio hardware, controllers, touch and other browser families remain unqualified.
   Reload after graphics-context loss; automatic GPU resource restoration is not
@@ -111,7 +111,7 @@ This is software-browser functional evidence, not browser hardware performance,
 Safari/mobile certification or complete-engine compatibility. The first
 uncompressed universal WASM is roughly 51 MiB, plus project data; initial memory
 is 256 MiB with growth bounded at 1 GiB. Assets are preloaded as one package, not
-HTTP-residency streamed. Compression, download size, responsive surfaces,
+HTTP-residency streamed. Compression, download size,
 more 3D effects and browser-specific qualification remain future work. The current
 scope is an early optional foundation, not a production browser distribution.
 
@@ -231,3 +231,35 @@ The earlier standalone audio-probe evidence used a deliberately incomplete
 receipt with the old diagnostic server. Reproduce that historical probe using
 the server from `567f03e7`; the current preview intentionally rejects its dummy
 receipt. Ordinary completed stage-1/2 packages still verify normally.
+
+## Browser player stage
+
+The shell offers Fullscreen only after Play, with a separate exit strip that does
+not cover the game HUD. CSS owns the available rectangle;
+SDL resizes the worker-owned WebGL surface. After queued SDL events are consumed,
+the existing renderer receives the actual backing dimensions, rather than stale
+CSS/logical resize events. Rendering is limited to device pixel ratio 2,
+4096 pixels per axis and 2,097,152 total pixels. This is a presentation budget,
+not a physics quality/cadence change. Fractional sizes round down. Relative mouse
+look is normalized to CSS pixels so high-DPI rendering does not accelerate it.
+
+Canvas focus owns gameplay input. Clicking a page control releases gameplay
+input; held keyboard state is rebuilt through the existing SDL path on return.
+Mouse capture still requires an explicit browser gesture and can be refused by
+browser policy. Escape and browser controls retain their normal authority.
+
+A hidden tab suspends the existing application loop and audio. A bounded lifecycle
+wake handles stopped animation callbacks, and a UI-side visibility epoch retains
+transitions even if the browser freezes the worker. These changes reset the clock,
+avoiding a catch-up burst on return. Already-dispatched durable
+save work retains its existing completion contract. Context loss still requires
+reload. No mobile/browser-family or autoplay guarantee follows from these paths.
+
+`projects/browser_player_lab` is an editable ordinary 3D consumer with a motor,
+script-owned first/third-person camera, MK2 crates, UI hit target and cold saves.
+See [player qualification](BROWSER_PLAYER_QUALIFICATION.md). The rendering/input
+driver is `tests/browser/player.cjs`, and actual tab visibility uses
+`tests/browser/visibility.cjs`; it reads actual rendered
+markers and public gameplay state, separately from surface diagnostics. Desktop
+browser tests do not certify every 3D renderer feature, touch, physical gamepads,
+mobile audio or network transports.

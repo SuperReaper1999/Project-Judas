@@ -2,6 +2,7 @@
   "format": 1,
   "tests": [
     {"name":"browser-workflow","target":"judas_browser_workflow_tests","groups":["browser","editor"]},
+    {"name":"browser-surface","target":"judas_browser_surface_tests","groups":["core","browser"]},
     {"name":"browser-opt-in","target":"judas_browser_option_tests","groups":["core","browser"]},
     {"name":"editor-script-workflow","target":"judas_editor_script_workflow_tests","groups":["2d","editor"]},
     {"name":"one-way-platform","target":"judas_one_way_platform_tests","groups":["2d","collision"],"args":["{output}/one-way-platform"]},

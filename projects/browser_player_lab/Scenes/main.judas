@@ -1,0 +1,358 @@
+JudasScene 3
+settings
+  name "Browser Player Lab"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  background-color 0.1 0.17 0.25
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 14
+end
+
+object 1 "Uniform gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 60 60 60
+end
+
+object 2 "Courtyard floor"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 12 0.5 12
+  render.radius 0.5
+  render.color 0.32 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 12 0.5 12
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3 "Back wall"
+  position 0 2 -10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 12 2 0.3
+  render.radius 0.5
+  render.color 0.35 0.46 0.6
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 12 2 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 4 "Left wall"
+  position -10 2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 2 10
+  render.radius 0.5
+  render.color 0.25 0.4 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.3 2 10
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 5 "Jump steps"
+  position 3 0.11 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.11 1
+  render.radius 0.5
+  render.color 0.75 0.48 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.5 0.11 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 6 "Jump steps"
+  position 4 0.32999998 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.32999998 1
+  render.radius 0.5
+  render.color 0.75 0.48 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.5 0.32999998 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 7 "Jump steps"
+  position 5 0.55 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.55 1
+  render.radius 0.5
+  render.color 0.75 0.48 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.5 0.55 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 8 "Pushable MK2 crate"
+  position -2 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.2 0.65 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 9 "Pushable MK2 crate"
+  position -1 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.3 0.65 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 10 "Pushable MK2 crate"
+  position 0 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.4 0.65 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 11 "Pushable MK2 crate"
+  position 1 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.5 0.65 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 12 "Pushable MK2 crate"
+  position 2 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.6 0.65 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 13 "Player - ordinary first person template"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  ui.asset "fa2cc33b1a7da826c4cc9e95d9b82c91"
+  ui.name "browser_player"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "90481f408c86d8ad91932aa411cd4da1"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 1.05 6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.9 0.3
+  render.radius 0.5
+  render.color 0.8 0.5 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end

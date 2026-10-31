@@ -57,6 +57,8 @@ target_compile_definitions(judas_build_identity PRIVATE JUDAS_BUILD_CONFIGURATIO
 judas_warnings(judas_build_identity)
 add_executable(judas_build_identity_tests tests/BuildIdentityTests.cpp)
 target_link_libraries(judas_build_identity_tests PRIVATE judas_build_identity)
+add_executable(judas_browser_surface_tests tests/BrowserSurfaceTests.cpp)
+target_include_directories(judas_browser_surface_tests PRIVATE src)
 add_executable(judas_browser_option_tests tests/BrowserOptionTests.cpp src/ExperimentalBrowser.cpp)
 target_include_directories(judas_browser_option_tests PRIVATE src)
 add_executable(judas_release_update_tests tests/ReleaseUpdateTests.cpp)
@@ -1812,6 +1814,10 @@ judas_add_engine_test(judas_browser_workflow_tests tests/BrowserWorkflowTests.cp
 add_executable(judas_browser_export_smoke tests/BrowserExportSmoke.cpp src/editor/BrowserExportWorkflow.cpp)
 target_link_libraries(judas_browser_export_smoke PRIVATE judas_engine judas_imgui)
 judas_warnings(judas_browser_export_smoke)
+
+add_executable(judas_browser_player_lab tools/demos/BrowserPlayerLab.cpp)
+target_link_libraries(judas_browser_player_lab PRIVATE judas_engine)
+judas_warnings(judas_browser_player_lab)
 
 add_executable(judas_beacon_grove tools/demos/BeaconGrove.cpp)
 target_link_libraries(judas_beacon_grove PRIVATE judas_engine)
