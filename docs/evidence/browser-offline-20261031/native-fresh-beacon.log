@@ -1,0 +1,31 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-fresh-beacon/project/Saves/main.judasstate (none saved)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-fresh-beacon/project/Beacon_Grove.judasproj)
+Scene: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-fresh-beacon/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS authored pause menu freezes native motion/game time and consumes held input
+PASS capture actual rendered game
+PASS capture actual rendered game
+PASS animation marker without cells/proximity cannot open the gate
+PASS actual movement and native triggers collect exactly two cells
+PASS save played progress through production service
+PASS read committed snapshot independently
+PASS real load restores exact native physical endpoint before stepping
+PASS partial objective and unconsumed gate survive first restored script boundary
+PASS all resources and a real animation marker still cannot activate from outside beacon proximity
+PASS all three actual collectibles required for activation
+PASS timed activation removes actual gate collider
+PASS native player crosses former physical gate to exit
+PASS complete playable objective loop
+PASS capture actual rendered game
+PASS save completed objective and destroyed gate
+PASS read independently committed completed-game save
+PASS completed-save physical endpoint matches before stepping
+PASS completed-save gate collider stays removed
+PASS completed objectives and removed collider survive real save restoration
+PASS real rendered application completes and shuts down
+SOFTWARE_RENDERED_FRAME n=254 median_ms=1.668216 p95_ms=2.200191 worst_ms=3.017903
+BEACON_GROVE mode=win checks=22 failures=0

@@ -87,7 +87,7 @@ migration contracts still apply.
   harness RESIZE rejects explicitly. Full responsive surfaces, mobile touch/controller behaviour and every 3D effect
   are not promised by this prototype.
 - Loading/errors, keyboard focus and cold saves have actual Chromium tests.
-  Audible audio, controllers, touch and other browser families remain unqualified.
+  Browser audio mixing and Firefox offline-game checks are covered by the next-stage qualification below; physical audio hardware, controllers, touch and other browser families remain unqualified.
   Reload after graphics-context loss; automatic GPU resource restoration is not
   implemented or qualified by this port.
 - A worker owns the WebGL context and yields to requestAnimationFrame through
@@ -108,10 +108,10 @@ headers all failed closed. The native application still switched scenes, moved,
 rendered a capture and saved using its ordinary desktop backend.
 
 This is software-browser functional evidence, not browser hardware performance,
-Firefox/Safari/mobile certification or complete-engine compatibility. The first
+Safari/mobile certification or complete-engine compatibility. The first
 uncompressed universal WASM is roughly 51 MiB, plus project data; initial memory
 is 256 MiB with growth bounded at 1 GiB. Assets are preloaded as one package, not
-HTTP-residency streamed. Compression, download size, audio, responsive surfaces,
+HTTP-residency streamed. Compression, download size, responsive surfaces,
 more 3D effects and browser-specific qualification remain future work. The current
 scope is an early optional foundation, not a production browser distribution.
 
@@ -130,3 +130,24 @@ subsystem has been browser-qualified.
 Browser-owned shortcuts such as Firefox F6 may never reach SDL. Bind ordinary
 project controls instead of trapping the browser UI: Traversal uses K to save and
 L to load, with F6/F7 retained as desktop alternatives.
+
+## Offline-game stage and audio architecture
+
+The next bounded qualification uses Beacon Grove and Traversal in Chromium and
+Firefox on Linux. See [the offline qualification procedure](BROWSER_OFFLINE_QUALIFICATION.md)
+and its evidence status; this does not certify the entire engine for the web.
+Beacon Grove now offers K/L save/load alongside desktop F6/F7.
+
+The default miniaudio Web Audio backend previously looked for `window` on the game
+pthread and returned no-backend (-203). Its DOM/Web Audio operations now use
+synchronous Emscripten main-thread proxies. The normal native mixer, decoder,
+voices and game-side audio APIs remain in use; there is no second browser game
+implementation or JavaScript-only sound generator. Native backends are unchanged.
+The vendored adjustment is marked at the Web Audio implementation entry.
+
+This first audio path uses miniaudio's existing ScriptProcessorNode backend. It is
+deprecated in browsers and runs mixing callbacks on the UI thread. AudioWorklet,
+capture, mobile audio, background-tab policy and latency guarantees remain
+unqualified. Click the canvas after Play to unlock audio if the browser blocks
+autoplay. Quality/speaker output still needs human listening; measured Web Audio
+output is functional evidence, not a hardware listening test.

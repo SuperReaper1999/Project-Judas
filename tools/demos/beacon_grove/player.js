@@ -68,7 +68,7 @@ export default class extends Motion {
   const hud=ui.get('sprite_help');if(!hud)return;
   const request=this.state.request?saves.status(this.state.request):null;
   hud.get('help').text='BEACON GROVE  |  Hearts '+Math.max(0,this.state.health)+'/3  |  Cells '+this.state.cells.length+'/3\n'+
-   this.state.message+'\nWASD / arrows: move   E: restore beacon   F6/F7: save/load   R: retry   Esc: pause'+
+   this.state.message+'\nWASD / arrows: move   E: restore beacon   K/L: save/load (desktop also F6/F7)   R: retry   Esc: pause'+
    (request?'\nSave: '+request.state+(request.error?' — '+request.error:''):'');
  }
 }

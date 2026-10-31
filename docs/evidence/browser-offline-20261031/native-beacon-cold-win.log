@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-beacon-v2/project/Saves/main.judasstate (none saved)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-beacon-v2/project/Beacon_Grove.judasproj)
+Scene: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/browser-stage2/native-beacon-v2/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS fresh process requests real gameplay save
+PASS real load restores exact native physical endpoint before stepping
+PASS completed objectives and removed collider survive real save restoration
+PASS real rendered application completes and shuts down
+BEACON_GROVE mode=cold-win checks=5 failures=0

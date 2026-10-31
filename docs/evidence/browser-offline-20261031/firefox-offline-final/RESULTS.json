@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "browser": "firefox",
+  "version": "157.0",
+  "checks": [
+    "preload and durable storage hydrate",
+    "fresh real game and closed gate",
+    "real engine decoded PCM reaches Web Audio output",
+    "authored pause menu prevents simulation and movement",
+    "animation event alone cannot open gate",
+    "released movement reaches an observed stationary endpoint",
+    "actual trigger pickups collect two cells",
+    "real binary progress saved",
+    "no runtime exceptions before cold restart",
+    "preload and durable storage hydrate",
+    "new browser process hydrates exact saved bytes",
+    "cold load restores actual physical endpoint, inventory and closed gate",
+    "released movement reaches an observed stationary endpoint",
+    "third real pickup after cold load",
+    "all resources without proximity cannot open gate",
+    "released movement reaches an observed stationary endpoint",
+    "released movement reaches an observed stationary endpoint",
+    "actual player crosses removed gate and reaches victory",
+    "completed save restores progress and actual removed gate",
+    "released movement reaches an observed stationary endpoint",
+    "damage and defeat are actual gameplay",
+    "complete win/loss/reload loop without runtime exceptions",
+    "ordinary UI Quit destroys the actual audio device before runtime shutdown"
+  ],
+  "sound": {
+    "state": "running",
+    "rms": 0.07078265768604601
+  },
+  "savedPose": {
+    "x": 4.199998378753662,
+    "y": 0,
+    "z": 0
+  },
+  "restoredPose": {
+    "x": 4.199998378753662,
+    "y": 0,
+    "z": 0
+  },
+  "savedSha256": "acb4da8547593ecf1333c4137c3cfb6a22bf37b00c512b50c93c2e0793144867",
+  "savedBytes": 477735
+}

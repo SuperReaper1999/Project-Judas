@@ -1,0 +1,17 @@
+PASS preload and durable storage hydrate
+PASS fresh real game and closed gate
+PASS real engine decoded PCM reaches Web Audio output
+PASS authored pause menu prevents simulation and movement
+PASS animation event alone cannot open gate
+PASS released movement reaches an observed stationary endpoint
+PASS actual trigger pickups collect two cells
+PASS real binary progress saved
+PASS no runtime exceptions before cold restart
+PASS preload and durable storage hydrate
+PASS new browser process hydrates exact saved bytes
+PASS cold load restores actual physical endpoint, inventory and closed gate
+PASS released movement reaches an observed stationary endpoint
+PASS third real pickup after cold load
+Error: all resources without proximity cannot open gate
+    at check (/home/conner/Documents/GitHub/Project-Judas/tests/browser/offline_game.cjs:9:33)
+    at /home/conner/Documents/GitHub/Project-Judas/tests/browser/offline_game.cjs:55:121

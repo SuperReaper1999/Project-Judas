@@ -1,0 +1,71 @@
+PASS production audio without device
+PASS normal current lab project
+PASS normal audio fixture builds using authoritative colliders
+PASS real resident collider sets obstruction gain/filter
+PASS bounded query diagnostics from actual PhysicsWorld
+PASS muted master does not spend obstruction queries
+PASS disabled/open collider restores unblocked targets
+PASS real collider drives audible PCM attenuation/filter rather than just a flag
+OCCLUSION blocked_rms=0.000980482 open_rms=0.004414721
+PASS existing collision include mask filters wall
+PASS normal sensor geometry excluded from audio ray
+PASS wall without entity wrapper still obstructs
+PASS repeated buffered shots have independent voices
+PASS component disable releases every owned one-shot
+PASS full Stop cleans normal voices and effects
+PASS manual shot world
+PASS stopped emitter has no ray until independent shot plays
+PASS independent shot participates in bounded obstruction demand
+PASS attached emitter hierarchy
+PASS rotating attached offset uses angular point velocity
+PASS teleport resets motion instead of making pitch spike
+PASS oriented equal-priority authored zones
+PASS zone impulse actual PCM
+PASS overlapping zones share one bounded processor
+PASS oriented equal-priority authored zones
+PASS zone impulse actual PCM
+PASS overlapping zones share one bounded processor
+PASS equal-priority zone selection independent from authored traversal order
+PASS normal bounded performance world
+WORKLOAD mode=0 voices=0 streams=0 PCM=0 buffered=576000 reverb=0 rays=0 retirements=0 underruns=0 audio_work_median_ms=0.00080 audio_work_p95_ms=0.00295 audio_work_max_ms=0.00380 control_median_ms=0.00051 control_p95_ms=0.00216 control_max_ms=0.00281 DSP_median_ms=0.00029 DSP_p95_ms=0.00069 DSP_max_ms=0.00098
+PASS requested modest workload voices created
+PASS normal bounded performance world
+WORKLOAD mode=1 voices=8 streams=0 PCM=0 buffered=576000 reverb=0 rays=0 retirements=0 underruns=0 audio_work_median_ms=0.05611 audio_work_p95_ms=0.06306 audio_work_max_ms=0.15841 control_median_ms=0.00351 control_p95_ms=0.00741 control_max_ms=0.02004 DSP_median_ms=0.05267 DSP_p95_ms=0.05561 DSP_max_ms=0.15258
+PASS requested modest workload voices created
+PASS normal bounded performance world
+WORKLOAD mode=2 voices=8 streams=1 PCM=131072 buffered=576000 reverb=1 rays=420 retirements=0 underruns=0 audio_work_median_ms=0.10710 audio_work_p95_ms=0.12733 audio_work_max_ms=0.18704 control_median_ms=0.00695 control_p95_ms=0.01416 control_max_ms=0.02088 DSP_median_ms=0.10250 DSP_p95_ms=0.11659 DSP_max_ms=0.17534
+PASS requested modest workload voices created
+PASS normal bounded performance world
+WORKLOAD mode=3 voices=32 streams=1 PCM=131072 buffered=576000 reverb=1 rays=480 retirements=0 underruns=0 audio_work_median_ms=0.29712 audio_work_p95_ms=0.34641 audio_work_max_ms=0.36597 control_median_ms=0.01619 control_p95_ms=0.03581 control_max_ms=0.04785 DSP_median_ms=0.28093 DSP_p95_ms=0.31807 DSP_max_ms=0.34251
+PASS requested modest workload voices created
+PASS current streamed game project
+PASS registered streamed root scene
+PASS audio root through ordinary world path
+PASS normal world manifest coordinator
+PASS root music streaming cursor advances
+PASS independent demands activate one gallery
+PASS ordinary carry ownership adoption
+PASS adopted buffered source finishes independent readiness
+PASS root voice identity remains unchanged
+PASS second demand keeps gallery active
+PASS gallery unload reaches unloaded without decoder wait
+PASS root music continues without restart/duplication
+PASS adopted emitter keeps original voice after birthplace removal
+PASS local stream resources retire after each trip
+PASS independent demands activate one gallery
+PASS root voice identity remains unchanged
+PASS second demand keeps gallery active
+PASS gallery unload reaches unloaded without decoder wait
+PASS root music continues without restart/duplication
+PASS adopted emitter keeps original voice after birthplace removal
+PASS local stream resources retire after each trip
+PASS independent demands activate one gallery
+PASS root voice identity remains unchanged
+PASS second demand keeps gallery active
+PASS gallery unload reaches unloaded without decoder wait
+PASS root music continues without restart/duplication
+PASS adopted emitter keeps original voice after birthplace removal
+PASS local stream resources retire after each trip
+PASS cancelled preparation cannot resurrect stream
+PASS whole-world teardown clears voices/retirements/zones
+SUMMARY checks=65 failures=0

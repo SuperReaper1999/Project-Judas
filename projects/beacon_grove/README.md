@@ -9,7 +9,7 @@ as often as you like. A supply crate is an ordinary pushable physical object.
 
 - WASD or arrows: move.
 - E: play the restore animation beside the beacon, after collecting all cells.
-- F6 / F7: save / load the current run, including collected cells and gate state.
+- K / L (desktop also F6 / F7): save / load the current run, including collected cells and gate state.
 - R: restart with full health and all cells restored.
 - Escape: pause/resume through the normal runtime.
 

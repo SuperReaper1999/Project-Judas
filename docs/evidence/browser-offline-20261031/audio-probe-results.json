@@ -1,0 +1,49 @@
+[
+  {
+    "browser": "chromium",
+    "version": "156.0.8078.4",
+    "variant": "original",
+    "expected": true,
+    "rms": 0,
+    "state": "absent",
+    "logs": [
+      "AUDIO_INIT -203"
+    ]
+  },
+  {
+    "browser": "chromium",
+    "version": "156.0.8078.4",
+    "variant": "proxy",
+    "expected": true,
+    "rms": 0.07060573120813904,
+    "state": "running",
+    "logs": [
+      "The ScriptProcessorNode is deprecated. Use AudioWorkletNode instead. (https://bit.ly/audio-worklet)",
+      "AUDIO_INIT 0 backend=12",
+      "AUDIO_PLAY 0"
+    ]
+  },
+  {
+    "browser": "firefox",
+    "version": "157.0",
+    "variant": "original",
+    "expected": true,
+    "rms": 0,
+    "state": "absent",
+    "logs": [
+      "AUDIO_INIT -203"
+    ]
+  },
+  {
+    "browser": "firefox",
+    "version": "157.0",
+    "variant": "proxy",
+    "expected": true,
+    "rms": 0.07042654183369526,
+    "state": "running",
+    "logs": [
+      "AUDIO_INIT 0 backend=12",
+      "AUDIO_PLAY 0"
+    ]
+  }
+]

@@ -77,6 +77,8 @@ int main(int argc,char** argv){try{
  auto& pause=scene.CreateObject("Pause menu - ordinary editable UI");pause.ui=SceneUIComponent{pauseUI,"grove_pause",true};pause.scripts.push_back({1,pauseScript,true,"{}"});
  fs::copy_file(source/"tools/demos/beacon_grove/README.md",root/"README.md");
  for(auto [action,key]:{std::pair<const char*,const char*>{"interact","key:E"},{"restart","key:R"},{"save_game","key:F6"},{"load_game","key:F7"}}){project.Settings().input.Add(action,false);project.Settings().input.AddBinding(action,{key});}
+ project.Settings().input.AddBinding("save_game",{"key:K"});
+ project.Settings().input.AddBinding("load_game",{"key:L"});
  require(SaveSceneToFile(scene,project.StartupScenePath(),error));require(project.Save(error));
  std::cout<<project.ProjectFile()<<'\n';return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

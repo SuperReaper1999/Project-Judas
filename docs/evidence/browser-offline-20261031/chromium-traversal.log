@@ -1,0 +1,3 @@
+Error: initial ground: {"position":{"x":0,"y":0.09999999403953552,"z":0},"velocity":{"x":0,"y":0,"z":0},"status":null}
+    at until (/home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:14:193)
+    at async /home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:17:229

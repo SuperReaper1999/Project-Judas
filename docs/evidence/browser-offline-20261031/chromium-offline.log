@@ -1,0 +1,12 @@
+PASS preload and durable storage hydrate
+PASS fresh real game and closed gate
+PASS real engine decoded PCM reaches Web Audio output
+PASS animation event alone cannot open gate
+PASS actual trigger pickups collect two cells
+PASS real binary progress saved
+PASS no runtime exceptions before cold restart
+PASS preload and durable storage hydrate
+PASS new browser process hydrates exact saved bytes
+Error: cold load restores actual physical endpoint, inventory and closed gate
+    at check (/home/conner/Documents/GitHub/Project-Judas/tests/browser/offline_game.cjs:9:33)
+    at /home/conner/Documents/GitHub/Project-Judas/tests/browser/offline_game.cjs:43:2

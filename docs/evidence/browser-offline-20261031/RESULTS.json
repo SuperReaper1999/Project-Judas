@@ -1,0 +1,60 @@
+[
+  {
+    "run": "chromium-offline-final",
+    "browser": "chromium",
+    "version": "156.0.8078.4",
+    "passed": true,
+    "sound": {
+      "state": "running",
+      "rms": 0.07080601637390545
+    },
+    "savedPose": {
+      "x": 4.533331394195557,
+      "y": 0,
+      "z": 0
+    },
+    "restoredPose": {
+      "x": 4.533331394195557,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "run": "firefox-offline-final",
+    "browser": "firefox",
+    "version": "157.0",
+    "passed": true,
+    "sound": {
+      "state": "running",
+      "rms": 0.07078265768604601
+    },
+    "savedPose": {
+      "x": 4.199998378753662,
+      "y": 0,
+      "z": 0
+    },
+    "restoredPose": {
+      "x": 4.199998378753662,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "run": "chromium-traversal-final",
+    "browser": "chromium",
+    "version": "156.0.8078.4",
+    "passed": true,
+    "sound": null,
+    "savedPose": null,
+    "restoredPose": null
+  },
+  {
+    "run": "firefox-traversal-final",
+    "browser": "firefox",
+    "version": "157.0",
+    "passed": true,
+    "sound": null,
+    "savedPose": null,
+    "restoredPose": null
+  }
+]

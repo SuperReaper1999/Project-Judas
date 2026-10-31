@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "browser": "firefox",
+  "version": "157.0",
+  "checks": [
+    "walk underneath actual one-way collider",
+    "jump through underside and land on real one-way top",
+    "actual blocked tile rejects full-cell movement from west",
+    "actual blocked tile rejects full-cell movement from south",
+    "free neighbour remains traversable",
+    "grid save reaches IndexedDB publication",
+    "save/load restores actual grid pose across scene transition",
+    "no browser runtime errors"
+  ],
+  "restored": {
+    "position": {
+      "x": 1,
+      "y": 1.9999990463256836,
+      "z": 0
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "requestTwo": {
+      "operation": "load",
+      "slot": "traversal",
+      "state": "completed",
+      "error": "",
+      "migrationReport": "exact",
+      "waitingFor": "",
+      "id": 2,
+      "migrationMs": 0.019968,
+      "queuedMs": 15.13984,
+      "identityMs": 8.940032,
+      "workerQueueMs": 0.179968,
+      "elapsedMs": 113.299968,
+      "captureMs": 0,
+      "workerMs": 6.220032,
+      "restoreMs": 39.660032,
+      "bytes": 197658,
+      "migrated": false,
+      "recovered": false
+    },
+    "status": {
+      "operation": "save",
+      "slot": "traversal",
+      "state": "completed",
+      "error": "",
+      "migrationReport": "",
+      "waitingFor": "",
+      "id": 1,
+      "migrationMs": 0,
+      "queuedMs": 14.800128,
+      "identityMs": 11.819776,
+      "workerQueueMs": 0.359936,
+      "elapsedMs": 82.040064,
+      "captureMs": 40.379648,
+      "workerMs": 16.120064,
+      "restoreMs": 0,
+      "bytes": 197658,
+      "migrated": false,
+      "recovered": false
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "third_party/miniaudio/miniaudio.h": "1b2657bdd397eee39278271e43344f3ff25fd8af380cceef1cf54c2a3566b41a",
+  "tools/demos/BeaconGrove.cpp": "0817cf97cbe3efb55e24ebd0b41fcf85969a410ee2afb0742bb270bdf90a0b73",
+  "tools/demos/beacon_grove/player.js": "4cb70c0b375fa440525f9c9e0afc26c0db356fc334be63a048b7f5d960eef82a",
+  "projects/beacon_grove/Assets/game.js": "4cb70c0b375fa440525f9c9e0afc26c0db356fc334be63a048b7f5d960eef82a",
+  "projects/beacon_grove/Beacon_Grove.judasproj": "0dd348f362a34f1e0c53038f4c3a80d39aa17e5ddaae254de735b262263739aa",
+  "tests/browser/prepare_offline_fixture.py": "3354df122c0988eae93e3a7d0b2a5e6bac89c5aa07da45e6f82a78fa407e2d9d",
+  "tests/browser/prepare_traversal_fixture.py": "ebfdae9996208eae43c3700429e031d55aa7d81f8e37a8f33d92c50a20362e25",
+  "tests/browser/offline_game.cjs": "5bdac99bd7b33b4c5d3ed22283ee93cf85c291ada501312eea2e02559db1c032",
+  "tests/browser/traversal.cjs": "83399022907b26f0b4b5d11aa7ef8a18482abe29fd39a088590aac3b2173b6f5"
+}

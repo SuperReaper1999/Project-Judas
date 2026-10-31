@@ -1,5 +1,8 @@
 # Browser game export feasibility — 31 October 2026
 
+Historical feasibility assessment. For subsequent implementation and current
+qualification boundaries, see [BROWSER_SUPPORT.md](BROWSER_SUPPORT.md).
+
 Investigation of Experimental at 70fe8ff4 plus the accompanying usability edits.
 **Not an implemented or qualified platform.** No Emscripten compiler was found on
 PATH; no WebAssembly build or browser gameplay was attempted. Current desktop

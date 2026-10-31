@@ -1,0 +1,5 @@
+PASS walk underneath actual one-way collider
+PASS jump through underside and land on real one-way top
+Error: grid scene switch: {"position":{"x":0,"y":2,"z":0},"velocity":{"x":0,"y":0,"z":0},"status":null}
+    at until (/home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:14:193)
+    at async /home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:23:22

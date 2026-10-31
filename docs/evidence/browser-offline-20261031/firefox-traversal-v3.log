@@ -1,0 +1,9 @@
+PASS walk underneath actual one-way collider
+PASS jump through underside and land on real one-way top
+PASS actual blocked tile rejects full-cell movement from west
+PASS actual blocked tile rejects full-cell movement from south
+PASS free neighbour remains traversable
+PASS grid save reaches IndexedDB publication
+Error: restore saved grid scene: {"position":{"x":1,"y":1.9999990463256836,"z":0},"velocity":{"x":0,"y":0,"z":0},"status":{"operation":"save","slot":"traversal","state":"completed","error":"","migrationReport":"","waitingFor":"","id":1,"migrationMs":0,"queuedMs":16.279808,"identityMs":11.13984,"workerQueueMs":0.260352,"elapsedMs":69.18016,"captureMs":31.699968,"workerMs":13.519872,"restoreMs":0,"bytes":197658,"migrated":false,"recovered":false}}
+    at until (/home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:14:193)
+    at async /home/conner/Documents/GitHub/Project-Judas/tests/browser/traversal.cjs:29:89
