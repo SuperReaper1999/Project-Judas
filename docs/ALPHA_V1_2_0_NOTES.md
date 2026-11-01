@@ -3,8 +3,8 @@
 Machine version **1.2.0-alpha.1**. Alpha, not Stable/GA. This release adds optional
 game AI and an editable life game, and carries the separately gated browser work
 developed after Alpha v1.1.0. Previous tags and packages remain immutable.
-Publication is provisional pending exact-candidate gates. The final manifest and
-checksums identify shipped source and artifacts; these notes do not publish them.
+Published 1 November 2026 from `b81b39b2`; [release record](RELEASING.md#current-boundary).
+The manifest and checksums identify shipped source and artifacts.
 
 ## Game AI developers control
 
@@ -76,8 +76,8 @@ by the earlier browser-game checks. See [browser support and evidence](BROWSER_S
 
 ## Qualification and limits
 
-The operator authorized promotion and publication. Exact-source gates and SDK
-receipts must pass; prior scoped trials are not universal human acceptance.
+The operator approved publication; exact-source Linux/Windows gates and SDK
+qualification passed. Prior scoped trials are not universal human acceptance.
 Development evidence keeps its honest base-plus-dirty provenance.
 
 Linux development checks include fresh-object AI authoring, real script ownership,

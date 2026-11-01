@@ -1,8 +1,8 @@
 # Judas documentation
 
-Start here for **Judas Engine Alpha**. The current source targets
-**Alpha v1.2.0 / `1.2.0-alpha.1`**; [published downloads](https://github.com/SuperReaper1999/Project-Judas/releases)
-and their manifests identify actual releases. [Repository overview](../README.md),
+Start here for **Judas Engine Alpha**. **Alpha v1.2.0 / `1.2.0-alpha.1`** was
+[published on 1 November 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)
+from `b81b39b2`; its manifest identifies the exact source and packages. [Repository overview](../README.md),
 [current status and limits](PREALPHA.md), [architecture](ARCHITECTURE.md).
 The first Alpha received final operator approval on 27 October 2026; later
 publication and acceptance remain explicit. This is not a universal compatibility promise.

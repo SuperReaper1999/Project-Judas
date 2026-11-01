@@ -5,13 +5,23 @@
 
 ## Current boundary
 
-Source version **Alpha v1.2.0 / `1.2.0-alpha.1`** prepares optional Utility AI,
-Little Haven and Willow Town, alongside the gated experimental browser workflow.
-[Release notes](ALPHA_V1_2_0_NOTES.md) separate operator authorization, prior scoped
-evidence and exact-source package qualification. The operator has authorized
-preparing, qualifying, promoting and publishing this release; no failed gate is
-waived. Publication remains provisional until the exact candidate and packages
-pass the checks below. These source edits alone are not a published release.
+**[Judas Engine Alpha v1.2.0 / `1.2.0-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)**
+from `b81b39b22ac305bcd250b1cef0fe9ff28e097633` on 1 November 2026, after explicit
+operator approval of the corrected build. [Release preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41360911680)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41363879795)
+passed for that exact source. Linux Alpha/Experimental gates and SDK workflows,
+native Windows selected contracts and SDK qualification passed. Published package
+hashes and the live Alpha feed were verified. Prior tags/packages remain immutable.
+
+The release includes optional Utility AI, Little Haven and Willow Town, alongside
+the gated experimental browser workflow. Windows AI core (165), script (21),
+authoring model (39), fresh-object workflow (49), reservations (65), reservation
+script (26), sensing (53), sensing/script integration (10) and reservation cold
+write/read (13/5) checks passed. These are native functional checks, not a new
+Windows GPU/audio/controller trial or Android/browser AI qualification.
+[Release notes](ALPHA_V1_2_0_NOTES.md) retain the feature and limitation detail;
+sealed preparation artifacts retain their original pre-publication wording.
+
 Advanced Fluids remains locked. Browser export requires explicit
 `-ExpBrowserSupport=1` and a separately installed source/Emscripten toolchain;
 no browser compiler is bundled in the desktop SDK.

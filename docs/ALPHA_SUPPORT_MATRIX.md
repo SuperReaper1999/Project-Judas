@@ -4,6 +4,8 @@ This is the source support boundary for **Alpha v1.2.0 / `1.2.0-alpha.1`**.
 [Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
 identify exact accepted source/artifacts; source-version changes do not publish a
 release. The original Alpha was human accepted on 27 October at `636eec47`.
+Alpha v1.2.0 was published from `b81b39b2` on 1 November 2026; the
+[release record](RELEASING.md#current-boundary) identifies actual passing package gates.
 The [current release notes](ALPHA_V1_2_0_NOTES.md) distinguish new AI qualification,
 experimental browser evidence and exact release-package receipts. Earlier Hinge
 phone and Xvfb/desktop evidence retains its original scope.
@@ -37,7 +39,7 @@ does not publish or promote it. Main remains operator controlled. Use
 | Dense physics workloads | Supported with content-dependent limits | Benchmark results are fixture/hardware specific. No guarantee that every 1024-body disturbance meets a frame budget. |
 | Elastic / very fast spin | Supported bounded approximation | Corrected moderate-rate energy gain; long-run nominal-e=1 dissipation and extreme-spin phase error remain. [Measurements](PREALPHA_MK2_ROTATION_CORRECTION.md). |
 | Wheels, powertrains, structural/deformation mechanisms | Supported within documented representations | Vehicle-agnostic authored components, not universal industrial mechanics. Native physical/lifecycle tests cover wheels and powertrains; other accepted mechanisms retain their own evidence. |
-| Utility AI and action lifecycles | Supported utility/action subset | Optional utility/target decisions, bounded-result physical sensing, transient exclusive leases, script-owned actions and fresh-object editor workflow. Linux native/script/editor, cold-save and relocated-export checks cover the implementation; new Windows/Android/browser AI execution is not yet qualified. Cached observations are explicitly stale; broadphase traversal is not hard-budgeted. No planner or automatic network authority. [Guide](GAME_AI.md). |
+| Utility AI and action lifecycles | Supported utility/action subset | Optional utility/target decisions, bounded-result physical sensing, transient exclusive leases, script-owned actions and fresh-object editor workflow. Linux native/script/editor, cold-save and relocated-export checks cover the implementation; selected native Windows AI core/script/authoring/sensing/lease checks also pass at `b81b39b2`. Windows AI graphics/gameplay hardware, Android and browser AI execution remain unqualified. Cached observations are explicitly stale; broadphase traversal is not hard-budgeted. No planner or automatic network authority. [Guide](GAME_AI.md). |
 | CharacterMotor and script-owned controllers/cameras | Supported preferred path | Engine supplies movement/query primitives, project JS supplies policy. Not a skeleton, camera or AI system. |
 | Retained C++ player / spacecraft gameplay adapters | Supported compatibility subset | Optional legacy policy path; distinct from removed MK1 physics. Targeted locomotion, swimming, input and spacecraft/frame tests do not certify every old game. New projects use JS policy. |
 | FaithfulGravity / RadicalGravity / script selection | Supported | Resolver owns default selection; per-entity overrides are optional. Support normals remain separate. Arbitrary orientation does not remove local-chart precision limits. |

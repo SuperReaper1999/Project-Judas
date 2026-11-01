@@ -18,10 +18,11 @@ The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 
 
 The current source identity is **`1.2.0-alpha.1`**, titled **Judas Engine Alpha
 v1.2.0**, with [Utility AI and experimental-browser release notes](ALPHA_V1_2_0_NOTES.md).
-The operator has authorized release preparation and publication; exact-candidate
-gates and package verification still govern that operation. Changing this file
-or building a candidate does not publish it. See the release page and its
-immutable manifest for actual published source/artifact identities.
+It was [published on 1 November 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)
+from `b81b39b22ac305bcd250b1cef0fe9ff28e097633` after operator approval and passing
+exact-source Linux/Windows preparation. The [release record](RELEASING.md#current-boundary)
+and immutable manifest identify its qualification and artifact scope. Changing
+this file or building a later candidate does not publish another release.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort
