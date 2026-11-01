@@ -49,6 +49,13 @@ struct FluidFieldSample {
 // a tiny wet root overlap cannot admit taller neighbors over the entire slab.
 // Displaced solids also always use height-dependent column ownership, so
 // discovering a remote air gap cannot switch the exclusion rule for other donors.
+// Connected queries reconstruct a local quadratic surface from enclosing,
+// single-layer exterior column tops when a weighted QR fit is reliable. Input
+// roundoff, fit residual, conditioning and donor redundancy fade its confidence;
+// unsupported data retain the original column mean. The fitted cap never bypasses
+// per-height wet contact or component ownership. Partial box/circular footprints
+// preserve exterior donor area only in this qualified reconstruction branch.
+// This is spatial interpolation, not a conserved-volume or pressure solve.
 // Resolved exterior vertical gaps use separate height slices, each with its own
 // wet/dry admission and solid cross-section. A small wet overlap in one slice
 // cannot admit surrounding water into a different, dry slice. Gaps no larger

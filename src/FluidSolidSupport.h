@@ -2,6 +2,7 @@
 
 #include "FluidHydrostatics.h"
 #include <array>
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <vector>
@@ -114,6 +115,96 @@ public:
             if (!apart) return true;
         }
         return false;
+    }
+
+    // Exterior area of a square column footprint at this height. Box pieces
+    // have disjoint interiors in FluidVolumeQuadrature, so clipped areas add.
+    // This only weights reconstructed donors; it does not prove wet contact.
+    double ExteriorFraction(const glm::dvec3& center) const {
+        const double area = 4*m_half.x*m_half.z;
+        if (!(area > 0)) return Occluded(center) ? 0.0 : 1.0;
+        if (m_radius > 0) {
+            const auto delta = m_center-center;
+            const double vertical = glm::dot(delta, m_axes[1]);
+            const double radius2 = m_radius*m_radius-vertical*vertical;
+            if (!(radius2 > 0)) return 1;
+            const glm::dvec2 offset(glm::dot(delta, m_axes[0]), glm::dot(delta, m_axes[2]));
+            const glm::dvec2 corners[] = {
+                {-m_half.x,-m_half.z}, {m_half.x,-m_half.z},
+                {m_half.x,m_half.z}, {-m_half.x,m_half.z}
+            };
+            double intersection = 0;
+            for (int edge = 0; edge < 4; ++edge) {
+                const auto a = corners[edge]-offset;
+                const auto b = corners[(edge+1)%4]-offset, d = b-a;
+                const double A = glm::dot(d,d), B = 2*glm::dot(a,d), C = glm::dot(a,a)-radius2;
+                std::array<double,4> cuts{{0,1,1,1}};
+                std::size_t count = 2;
+                const double discriminant = B*B-4*A*C;
+                if (discriminant > 0) {
+                    const double q = -.5*(B+std::copysign(std::sqrt(discriminant),B));
+                    const double roots[] = {q/A, q != 0 ? C/q : -B/(2*A)};
+                    for (double t : roots)
+                        if (t > 0 && t < 1 && count < cuts.size()) cuts[count++] = t;
+                }
+                std::sort(cuts.begin(), cuts.end());
+                for (std::size_t i = 1; i < cuts.size(); ++i) {
+                    if (cuts[i] == cuts[i-1]) continue;
+                    const auto p = a+d*cuts[i-1], v = a+d*cuts[i];
+                    const auto mid = a+d*((cuts[i-1]+cuts[i])*.5);
+                    const double cross = p.x*v.y-p.y*v.x;
+                    // Outside edges contribute sectors, inside edges triangles.
+                    // A tangent midpoint is outside: treating equality as an
+                    // interior edge would replace a circle with its square.
+                    intersection += glm::dot(mid,mid) < radius2 ? cross*.5 :
+                        radius2*.5*std::atan2(cross,glm::dot(p,v));
+                }
+            }
+            return std::clamp(1-intersection/area, 0., 1.);
+        }
+        double covered = 0;
+        for (const auto& box : m_boxes) {
+            std::array<glm::dvec2,16> polygon{}, next{};
+            polygon[0] = {-m_half.x,-m_half.z};
+            polygon[1] = {m_half.x,-m_half.z};
+            polygon[2] = {m_half.x,m_half.z};
+            polygon[3] = {-m_half.x,m_half.z};
+            std::size_t count = 4;
+            const auto offset = center-box.center;
+            for (int axis = 0; axis < 3 && count; ++axis) for (double sign : {-1.,1.}) {
+                const glm::dvec2 normal(sign*glm::dot(box.bodyAxes[axis],m_axes[0]),
+                                        sign*glm::dot(box.bodyAxes[axis],m_axes[2]));
+                const double bound = box.half[axis]-sign*glm::dot(box.bodyAxes[axis],offset);
+                std::size_t output = 0;
+                auto previous = polygon[count-1];
+                double previousDistance = glm::dot(normal,previous)-bound;
+                for (std::size_t i = 0; i < count; ++i) {
+                    const auto current = polygon[i];
+                    const double distance = glm::dot(normal,current)-bound;
+                    if ((distance <= 0) != (previousDistance <= 0)) {
+                        if (output == next.size()) return 0;
+                        next[output++] = previous+(current-previous)*
+                            (previousDistance/(previousDistance-distance));
+                    }
+                    if (distance <= 0) {
+                        if (output == next.size()) return 0;
+                        next[output++] = current;
+                    }
+                    previous = current;
+                    previousDistance = distance;
+                }
+                polygon = next;
+                count = output;
+                if (!count) break;
+            }
+            double twice = 0;
+            for (std::size_t i = 0; i < count; ++i) {
+                const auto a = polygon[i], b = polygon[(i+1)%count];
+                twice += a.x*b.y-a.y*b.x;
+            }
+            covered += std::abs(twice)*.5;
+        }
+        return std::clamp(1-covered/area, 0., 1.);
     }
 
     void SelectSupport(const glm::dvec3& point) {

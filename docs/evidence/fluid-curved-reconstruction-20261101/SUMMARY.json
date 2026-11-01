@@ -1,0 +1,384 @@
+{
+  "start_commit": "03fbd812963d6190f18a881cf68ec44339c4f326",
+  "known": {
+    "cases": 360,
+    "engine_failures": 36,
+    "failure_classes": [
+      [
+        "0.0625",
+        "0",
+        "1"
+      ],
+      [
+        "0.0625",
+        "1",
+        "1"
+      ],
+      [
+        "0.0625",
+        "2",
+        "1"
+      ]
+    ],
+    "coarse_half": {
+      "flat": {
+        "expected": 0.5,
+        "engine": 0.5,
+        "observer": 0.5
+      },
+      "affine": {
+        "expected": 0.5,
+        "engine": 0.49999991059303284,
+        "observer": 0.5625
+      },
+      "bowl": {
+        "expected": 0.49999999888241303,
+        "engine": 0.4968806803226471,
+        "observer": 1.0
+      },
+      "dome": {
+        "expected": 0.500000001117587,
+        "engine": 0.4197784662246704,
+        "observer": 0.0
+      },
+      "saddle": {
+        "expected": 0.5,
+        "engine": 0.4999963343143463,
+        "observer": 0.5
+      },
+      "wave": {
+        "expected": 0.5,
+        "engine": 0.5,
+        "observer": 0.53125
+      }
+    }
+  },
+  "additional": [
+    {
+      "shape": "0",
+      "surface": "0",
+      "spacing": "0.25",
+      "engine": "0.4937548041343689",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0062451958656311035,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "0",
+      "surface": "0",
+      "spacing": "0.125",
+      "engine": "0.4854646623134613",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.014535337686538696,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "0",
+      "surface": "1",
+      "spacing": "0.25",
+      "engine": "0.55513668060302734",
+      "reference64": "0.56981658935546875",
+      "reference96": "0.56989090530960651",
+      "absolute_error": 0.014754224706579167,
+      "reference_disagreement": 7.431595413776027e-05
+    },
+    {
+      "shape": "0",
+      "surface": "1",
+      "spacing": "0.125",
+      "engine": "0.54491192102432251",
+      "reference64": "0.56981658935546875",
+      "reference96": "0.56989090530960651",
+      "absolute_error": 0.024978984285284,
+      "reference_disagreement": 7.431595413776027e-05
+    },
+    {
+      "shape": "0",
+      "surface": "2",
+      "spacing": "0.25",
+      "engine": "0.32841029763221741",
+      "reference64": "0.43018341064453125",
+      "reference96": "0.43010909469039355",
+      "absolute_error": 0.10169879705817614,
+      "reference_disagreement": 7.431595413770475e-05
+    },
+    {
+      "shape": "0",
+      "surface": "2",
+      "spacing": "0.125",
+      "engine": "0.32846564054489136",
+      "reference64": "0.43018341064453125",
+      "reference96": "0.43010909469039355",
+      "absolute_error": 0.10164345414550219,
+      "reference_disagreement": 7.431595413770475e-05
+    },
+    {
+      "shape": "0",
+      "surface": "3",
+      "spacing": "0.25",
+      "engine": "0.48787599802017212",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.01212400197982788,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "0",
+      "surface": "3",
+      "spacing": "0.125",
+      "engine": "0.4555341899394989",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0444658100605011,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "1",
+      "surface": "0",
+      "spacing": "0.25",
+      "engine": "0.46135997772216797",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.03864002227783203,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "1",
+      "surface": "0",
+      "spacing": "0.125",
+      "engine": "0.49896535277366638",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0010346472263336182,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "1",
+      "surface": "1",
+      "spacing": "0.25",
+      "engine": "0.57141470909118652",
+      "reference64": "0.55532261821569995",
+      "reference96": "0.55542511868795852",
+      "absolute_error": 0.015989590403228005,
+      "reference_disagreement": 0.00010250047225857095
+    },
+    {
+      "shape": "1",
+      "surface": "1",
+      "spacing": "0.125",
+      "engine": "0.55427819490432739",
+      "reference64": "0.55532261821569995",
+      "reference96": "0.55542511868795852",
+      "absolute_error": 0.0011469237836311263,
+      "reference_disagreement": 0.00010250047225857095
+    },
+    {
+      "shape": "1",
+      "surface": "2",
+      "spacing": "0.25",
+      "engine": "0.18898475170135498",
+      "reference64": "0.4446773817843",
+      "reference96": "0.44457488131204143",
+      "absolute_error": 0.25559012961068645,
+      "reference_disagreement": 0.00010250047225857095
+    },
+    {
+      "shape": "1",
+      "surface": "2",
+      "spacing": "0.125",
+      "engine": "0.38231712579727173",
+      "reference64": "0.4446773817843",
+      "reference96": "0.44457488131204143",
+      "absolute_error": 0.0622577555147697,
+      "reference_disagreement": 0.00010250047225857095
+    },
+    {
+      "shape": "1",
+      "surface": "3",
+      "spacing": "0.25",
+      "engine": "0.47298574447631836",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.02701425552368164,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "1",
+      "surface": "3",
+      "spacing": "0.125",
+      "engine": "0.46107357740402222",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.03892642259597778,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "2",
+      "surface": "0",
+      "spacing": "0.25",
+      "engine": "0.5",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "2",
+      "surface": "0",
+      "spacing": "0.125",
+      "engine": "0.5",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "2",
+      "surface": "1",
+      "spacing": "0.25",
+      "engine": "0.54805248975753784",
+      "reference64": "0.5499114990234375",
+      "reference96": "0.5499448423032407",
+      "absolute_error": 0.0018923525457028578,
+      "reference_disagreement": 3.334327980319962e-05
+    },
+    {
+      "shape": "2",
+      "surface": "1",
+      "spacing": "0.125",
+      "engine": "0.54805350303649902",
+      "reference64": "0.5499114990234375",
+      "reference96": "0.5499448423032407",
+      "absolute_error": 0.0018913392667416762,
+      "reference_disagreement": 3.334327980319962e-05
+    },
+    {
+      "shape": "2",
+      "surface": "2",
+      "spacing": "0.25",
+      "engine": "0.36977913975715637",
+      "reference64": "0.4500885009765625",
+      "reference96": "0.45005515769675924",
+      "absolute_error": 0.08027601793960287,
+      "reference_disagreement": 3.334327980325513e-05
+    },
+    {
+      "shape": "2",
+      "surface": "2",
+      "spacing": "0.125",
+      "engine": "0.4134763777256012",
+      "reference64": "0.4500885009765625",
+      "reference96": "0.45005515769675924",
+      "absolute_error": 0.03657877997115805,
+      "reference_disagreement": 3.334327980325513e-05
+    },
+    {
+      "shape": "2",
+      "surface": "3",
+      "spacing": "0.25",
+      "engine": "0.49892911314964294",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.0010708868503570557,
+      "reference_disagreement": 0.0
+    },
+    {
+      "shape": "2",
+      "surface": "3",
+      "spacing": "0.125",
+      "engine": "0.48852407932281494",
+      "reference64": "0.5",
+      "reference96": "0.5",
+      "absolute_error": 0.011475920677185059,
+      "reference_disagreement": 0.0
+    }
+  ],
+  "query_cost": {
+    "before-0": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 11.350655,
+      "p95_us": 14.149035,
+      "worst_us": 15.592104999999998
+    },
+    "before-1": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 13.45124,
+      "p95_us": 14.843589999999999,
+      "worst_us": 17.514025
+    },
+    "before-2": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 9.0614125,
+      "p95_us": 10.275125000000001,
+      "worst_us": 10.35683
+    },
+    "after-0": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 22.40347,
+      "p95_us": 23.90102,
+      "worst_us": 25.73633
+    },
+    "after-1": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 25.1994425,
+      "p95_us": 26.39763,
+      "worst_us": 29.296545000000002
+    },
+    "after-2": {
+      "batches": 20,
+      "queries_per_batch": 200,
+      "median_us": 20.020025,
+      "p95_us": 20.900109999999998,
+      "worst_us": 20.974655
+    }
+  },
+  "log_summaries": {
+    "qualified-judas_fluid_boundary_contact_tests.log": [
+      "SUMMARY cases=8 checks=24 failures=0"
+    ],
+    "qualified-judas_fluid_demo_integration_tests.log": [
+      "SUMMARY checks=49 failures=0"
+    ],
+    "qualified-judas_fluid_hydrostatics_tests.log": [
+      "SUMMARY checks=169 failures=0 seconds=0.556101509"
+    ],
+    "qualified-judas_fluid_known_geometry_tests.log": [
+      "SUMMARY cases=360 engine_failures=36 observer_failures=80 frame_failures=0 observer_frame_failures=0 reference_checks=180 reference_failures=0 engine_worst_error=0.69999998758236615 observer_worst_error=0.69999999801317858 frame_worst_difference=0.00010812282562255859 observer_frame_worst_difference=0 reference_worst_error=3.0517579759359315e-06"
+    ],
+    "qualified-judas_fluid_lifecycle_qualification_tests.log": [
+      "Fluid lifecycle qualification: 21 checks, 0 failures"
+    ],
+    "qualified-judas_fluid_vertical_support_tests.log": [
+      "Fluid vertical support: 335 checks, 0 failures"
+    ],
+    "qualified-judas_fluid_volume_drag_tests.log": [
+      "Fluid volume drag: 185 checks, 0 failures"
+    ],
+    "qualified-judas_fluid_wet_support_tests.log": [
+      "Fluid wet support: 109 checks, 0 failures"
+    ],
+    "qualified-judas_player_fluid_integration_tests.log": [
+      "CASE swim-through-20-950 failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 height_change=0.0337357521 final_immersion=0 max_speed=4.00001574 relative_drift=19.0027752 synchronized_relative_drift=18.9361115 independent_fall_error=0 warmup_steps=0 warmup_mean_speed=0 warmup_bulk_speed=0 warmup_centroid_travel=0 final_mean_particle_speed=0 jump_immersion=0.243368044 jump_delta_speed=0.0113797989 particle_steps=150 seconds=4.93121403 particle_reference_equal=1",
+      "CASE swim-through-25-950 failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 height_change=0.0375967026 final_immersion=0 max_speed=4.00001955 relative_drift=18.942894 synchronized_relative_drift=18.8762264 independent_fall_error=0 warmup_steps=0 warmup_mean_speed=0 warmup_bulk_speed=0 warmup_centroid_travel=0 final_mean_particle_speed=0 jump_immersion=0.28372249 jump_delta_speed=0.0132487388 particle_steps=150 seconds=2.42308389 particle_reference_equal=1",
+      "SUMMARY checks=5661 failures=0 acceptance_failures=0 diagnostic_checks=7 diagnostic_failures=4 strict_diagnostics=0 strict_microrest_checks=7 strict_microrest_failures=4 ordinary_steps=5040"
+    ],
+    "qualified-judas_production_fluid_tests.log": [
+      "CASE small_mass_125x failures=0 acceptance_failures=0 diagnostic_checks=4 diagnostic_failures=1 observational_scale=1 mass=0.864000082 particles=1196 y=1.708918929 vy=1.020416737 fraction=0.541727066 observed_fraction=0.5447143555 max_speed=4.399366856 particle_ms=16.880481 executed_ms=17.984643 amortized_ms=9.450894942",
+      "CASE light_80kg failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=80 particles=1152 y=1.764603019 vy=0.02357827127 fraction=0.4774237275 observed_fraction=0.5257003784 max_speed=2.81358099 particle_ms=16.706533 executed_ms=33.268945 amortized_ms=24.79642467",
+      "SUMMARY checks=13801 failures=1 acceptance_failures=1 diagnostic_checks=13 diagnostic_failures=2 strict_diagnostics=0 steps=6960 settling_mode=window_decay legacy_comparisons=5 legacy_failures=1 legacy_mandatory_failures=0"
+    ],
+    "qualified-judas_project_fluid_policy_tests.log": [
+      "Project fluid policy: 26 checks, 0 failures"
+    ],
+    "qualified-judas_project_water_tests.log": [
+      "ProjectWaterTests: 56 checks, 0 failures"
+    ]
+  }
+}

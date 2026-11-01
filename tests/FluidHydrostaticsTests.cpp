@@ -31,7 +31,10 @@ void Rotate(std::vector<FluidParticle>& p,const glm::quat& q,const glm::vec3& t)
     for(auto& x:p){x.position=q*x.position+t;x.previousPosition=x.position;x.velocity=q*x.velocity;x.acceleration=q*x.acceleration;}
 }
 }
+#include "FluidSurfaceReconstructionChecks.h"
 int main() {
+    SurfaceReconstructionChecks();
+    CurvedPhysicalReconstructionChecks();
     const auto begin=std::chrono::steady_clock::now();
     std::cout<<std::setprecision(12);
     const Uniform gravity({0,-9.81f,0}), zero({0,0,0});

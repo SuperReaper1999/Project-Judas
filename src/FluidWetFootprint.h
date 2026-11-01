@@ -104,10 +104,12 @@ inline bool FluidWetColumnsContainOrigin(const std::vector<FluidWetColumnFootpri
 // columns already vote dry in the vertical mean and are not counted again.
 // covered() limits traversal to the sample's solid component. notEmpty() excludes
 // solid/particle-occupied cells from dry evidence. wetContact() requires actual
-// particle-footprint contact, not contact with a rounded bin centre.
+// particle-footprint contact, not contact with a rounded bin centre. A partial
+// exterior footprint is insufficient proof for a reconstructed cap: its caller
+// disables allowDirectRoot to require actual particle/selected-solid contact.
 template<class Covered, class NotEmpty, class WetContact>
 bool FluidWetSupportThroughSolid(const std::vector<FluidWetColumnFootprint>& columns,
-                                 double width, glm::dvec2 origin, Covered covered, NotEmpty notEmpty, WetContact wetContact) {
+                                 double width, glm::dvec2 origin, Covered covered, NotEmpty notEmpty, WetContact wetContact, bool allowDirectRoot = true) {
     using Cell = std::pair<std::int64_t, std::int64_t>;
     const Cell root{static_cast<std::int64_t>(std::floor(-origin.x / width + .5)),
                     static_cast<std::int64_t>(std::floor(-origin.y / width + .5))};
@@ -117,7 +119,7 @@ bool FluidWetSupportThroughSolid(const std::vector<FluidWetColumnFootprint>& col
         return it != columns.end() && it->x == cell.first && it->z == cell.second ? &*it : nullptr;
     };
     const auto* initial = column(root);
-    if (initial && initial->wet) return true;
+    if (allowDirectRoot && initial && initial->wet) return true;
     if (!covered(root.first, root.second)) return false;
     if (initial && initial->observedWet && wetContact(root.first, root.second)) return true;
     const auto distance2 = [&](Cell cell) {

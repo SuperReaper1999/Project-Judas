@@ -1,6 +1,12 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
-Latest follow-up: [native known-answer geometry comparison](FLUID_KNOWN_GEOMETRY_COMPARISON.md)
+Latest follow-up: [curved free-surface reconstruction](FLUID_CURVED_SURFACE_RECONSTRUCTION.md)
+reduces original known-geometry engine failures from 76 to 36, with no remaining
+frame failures. The retained contact-gap fixtures, coarse curved-body limits and
+original moving-pool observation failure still prevent an unlock. Alpha stays
+locked; Basic Water and main are unchanged.
+
+Previous follow-up: [native known-answer geometry comparison](FLUID_KNOWN_GEOMETRY_COMPARISON.md)
 confirms errors in both curved-surface sampling and the legacy observer, and
 corrects a separate connected-query height-admission discontinuity. The original
 coarse immersion check remains failed; Advanced Fluids remain locked in Alpha.

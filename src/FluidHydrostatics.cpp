@@ -3,6 +3,7 @@
 #include "FluidWetFootprint.h"
 #include "FluidColumnLayers.h"
 #include "GravityField.h"
+#include "FluidSurfaceReconstruction.h"
 #include "Narrowphase.h"
 
 #include <algorithm>
@@ -330,11 +331,49 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     splitHeights = splitHeights || solid != nullptr || connectedWetSupport;
     if(splitHeights)for(auto& profile:profiles)
         if(!profile.continuous && profile.layers.empty())prepareLayers(profile);
+    // Neighboring surface heights must not become a nonlocal wet-volume mean.
+    // Fit only exterior, untruncated tops at actual particle coordinates. The
+    // geometric admission below remains authoritative even for an exact fit.
+    std::optional<FluidHydrostaticDetail::CurvedSurfacePatch> surface;
+    if (connectedWetSupport && profiles.size() >= 6) {
+        std::optional<FluidHydrostaticDetail::PreparedSolidQuery> projection;
+        if (solid) {
+            const double fullHeight = solid->volume.boundRadius + columnWidth +
+                glm::length(glm::dvec3(solid->pose.position)-glm::dvec3(point));
+            projection.emplace(tangent, up, bitangent, columnWidth, fullHeight, *solid);
+        }
+        std::vector<FluidHydrostaticDetail::SurfaceDatum> data;
+        std::vector<glm::dvec2> hull;
+        double reliableWeight = 0, layeredWeight = 0;
+        for (const auto& profile : profiles) {
+            std::size_t top = profile.begin;
+            for (std::size_t k = profile.begin+1; k < profile.end; ++k)
+                if (columns[k].interval.hi > columns[top].interval.hi) top = k;
+            const auto& column = columns[top];
+            const auto location = glm::dvec3(point) + tangent*column.actualX + bitangent*column.actualZ;
+            if (projection && projection->Occluded(location)) continue;
+            if (profile.high >= verticalReach-columnWidth || profile.low >= -halfHeight) continue;
+            std::vector<HeightSpan> spans;
+            for (std::size_t k = profile.begin; k < profile.end; ++k)
+                spans.emplace_back(columns[k].interval.lo, columns[k].interval.hi);
+            FluidHydrostaticDetail::CloseColumnLayers(spans, columnWidth, rounding);
+            if (spans.size() != 1) { layeredWeight += profile.weight; continue; }
+            reliableWeight += profile.weight;
+            data.push_back({column.actualX, column.actualZ, profile.high, profile.weight});
+            hull.emplace_back(column.actualX, column.actualZ);
+        }
+        if (data.size() >= 6 && FluidWetFootprintContainsOrigin(hull)) {
+            const double inputError = 32*std::numeric_limits<float>::epsilon() *
+                (1+glm::length(glm::dvec3(point))+glm::length(center)+glm::length(half));
+            surface = FluidHydrostaticDetail::FitCurvedSurface(data, reach, columnWidth, inputError);
+            if (surface) surface->confidence *= reliableWeight/(reliableWeight+layeredWeight);
+        }
+    }
     const auto occupiedLength=[](double lo,double hi,double half) {
         return half>0 ? std::max(0.0,std::min(hi,half)-std::max(lo,-half)) :
                         (lo<=0 && hi>=0 ? 1.0 : 0.0);
     };
-    const auto measureBand=[&](double lo,double hi,bool layered) {
+    const auto measureBand=[&](double lo,double hi,bool layered,bool reconstruction=false) {
         const double middle=(lo+hi)*.5,bandHalf=(hi-lo)*.5;
         const glm::dvec3 bandPoint=glm::dvec3(point)+up*middle;
         std::optional<FluidHydrostaticDetail::PreparedSolidQuery> bandSolid;
@@ -356,12 +395,13 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                 fraction=occupiedLength(profile.low,profile.high,halfHeight)/(halfHeight>0 ? 2*halfHeight : 1);
             }
             const auto center=bandPoint+tangent*profile.center.x+bitangent*profile.center.y;
-            const bool displaced=layered ? geometry && geometry->Occluded(center) : profile.displaced;
+            const double exterior=reconstruction && geometry ? geometry->ExteriorFraction(center) :
+                ((layered ? geometry && geometry->Occluded(center) : profile.displaced) ? 0.0 : 1.0);
             wet.push_back({profile.x,profile.z,profile.center,false,fraction>0});
             wet.back().resolvedAir=layered && fraction==0 && profile.low<=middle && middle<=profile.high;
-            if(displaced)continue;
-            total+=profile.weight;
-            weighted+=profile.weight*fraction;
+            if(exterior<=0)continue;
+            total+=profile.weight*exterior;
+            weighted+=profile.weight*exterior*fraction;
             wet.back().wet=fraction>0;
         }
         const double outerWidth=columnWidth*(connectedWetSupport?2:1);
@@ -402,8 +442,9 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                 }
                 return false;
             };
-            if(!FluidWetSupportThroughSolid(wet,columnWidth,{originX,originZ},covered,notEmpty,wetContact))return 0.0;
+            if(!FluidWetSupportThroughSolid(wet,columnWidth,{originX,originZ},covered,notEmpty,wetContact,!reconstruction))return 0.0;
         }
+        if(reconstruction && surface)return middle<=surface->height ? 1.0 : 0.0;
         return total>0 ? weighted/total : 0.0;
     };
     if(connectedWetSupport && !solid) {
@@ -438,11 +479,30 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                 total+=profile.weight;
                 occupied+=profile.weight*height;
             }
-            if(total>0)out.fraction=static_cast<float>(occupied/(total*(halfHeight>0 ? 2*halfHeight : 1)));
+            if(total>0) {
+                double fraction=occupied/(total*(halfHeight>0 ? 2*halfHeight : 1));
+                if(surface) {
+                    const double cap=surface->height;
+                    double represented=0;
+                    const auto add=[&](double lo,double hi) {
+                        if(halfHeight==0)return lo<=0 && hi>=0 && cap>=0 ? 1.0 : 0.0;
+                        return std::max(0.0,std::min({hi,cap,double(halfHeight)})-std::max(lo,-double(halfHeight)));
+                    };
+                    if(root->continuous)represented=add(root->low,root->high);
+                    else for(const auto& span:root->layers)represented+=add(span.first,span.second);
+                    if(halfHeight>0)represented/=2*halfHeight;
+                    fraction+=surface->confidence*(represented-fraction);
+                }
+                out.fraction=static_cast<float>(fraction);
+            }
         }
     }
     else if(!splitHeights)out.fraction=static_cast<float>(measureBand(-halfHeight,halfHeight,false));
-    else if(halfHeight==0)out.fraction=static_cast<float>(measureBand(0,0,true));
+    else if(halfHeight==0) {
+        const double original=measureBand(0,0,true);
+        const double model=surface && surface->confidence>0 ? measureBand(0,0,true,true) : original;
+        out.fraction=static_cast<float>(original+(surface ? surface->confidence : 0)*(model-original));
+    }
     else {
         std::vector<double> cuts{-halfHeight,halfHeight};
         for(const auto& profile:profiles) {
@@ -454,9 +514,20 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         }
         std::sort(cuts.begin(),cuts.end());
         cuts.erase(std::unique(cuts.begin(),cuts.end()),cuts.end());
-        double occupied=0;
-        for(std::size_t k=1;k<cuts.size();++k)occupied+=(cuts[k]-cuts[k-1])*measureBand(cuts[k-1],cuts[k],true);
-        out.fraction=static_cast<float>(occupied/(2*halfHeight));
+        // Keep the fallback integral on its original partition. Splitting it
+        // at a fitted cap would change the answer even as confidence tends to
+        // zero. Only the model integral gets the additional cap boundary.
+        double occupied=0,model=0;
+        for(std::size_t k=1;k<cuts.size();++k) {
+            const double lo=cuts[k-1],hi=cuts[k];
+            occupied+=(hi-lo)*measureBand(lo,hi,true);
+            if(surface && surface->confidence>0 && surface->height>lo) {
+                const double end=std::min(hi,surface->height);
+                model+=(end-lo)*measureBand(lo,end,true,true);
+            }
+        }
+        const double fraction=occupied/(2*halfHeight);
+        out.fraction=static_cast<float>(fraction+(surface ? surface->confidence : 0)*(model/(2*halfHeight)-fraction));
     }
     if(out.fraction>0) {
         if(bulkWeight>0){out.velocity=glm::vec3(bulkVelocity/bulkWeight);out.acceleration=glm::vec3(bulkAcceleration/bulkWeight);}

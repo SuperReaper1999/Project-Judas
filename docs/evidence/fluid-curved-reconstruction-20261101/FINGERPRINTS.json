@@ -1,0 +1,27 @@
+{
+  "utc": "2026-11-01T16:36:50.064408+00:00",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "base_head": "03fbd812963d6190f18a881cf68ec44339c4f326",
+  "files": {
+    "src/FluidHydrostatics.cpp": "9dbb3f83e31b550302c5eeea2321c214dc3ec27f658a09dd2a1cee860143ea2e",
+    "src/FluidHydrostatics.h": "5eed74f313d187c4a1c0ccd9dd5cfe822b15861672a906a96ac19d4833b36c3f",
+    "src/FluidSolidSupport.h": "3f0158d0e46cc011d17ac3d9cab754641cbb1185656560a063e47e66c61d9623",
+    "src/FluidWetFootprint.h": "8a282bc2d82f06d6ad2e84bc6c3fe1ca327a1b61cea46ebf895936ea7f48bf68",
+    "src/FluidSurfaceReconstruction.h": "016a062a24951040ee7b89a47a07018eeb481f6f42083f52296893286f9addf9",
+    "tests/FluidHydrostaticsTests.cpp": "55ae97d83e0a1724910abb9ef2f8cf37ccd8a0943c9f29244a7880f6ac599965",
+    "tests/FluidSurfaceReconstructionChecks.h": "5e5d2a8c0ed2dc75cda74327d66e987c03e143f711bbf0097e34ab1152188ac3",
+    ".cache/2d-stage1-build/judas_fluid_vertical_support_tests": "04d5a890db52db831609b39332ab9f37902d0bb6cda1819999c0b562ec4af173",
+    ".cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests": "1b85bf3712dc5bbb585be66b07293a106807cf1371eed0343af20d6bc780ef27",
+    ".cache/2d-stage1-build/judas_fluid_known_geometry_tests": "7ff4011ed39f2abfd6de3f0f0fc7e7ba97e0646c9dc98201bff3e41c1e08eccf",
+    ".cache/2d-stage1-build/judas_fluid_hydrostatics_tests": "3c16a015ab55435b97914c8cd28f7871ca6ae130dbb3d180a7d5fb9e6c3d5fa3",
+    ".cache/2d-stage1-build/judas_fluid_demo_integration_tests": "0dd48cc369a5d222a6830a55b24dcaf45f5627742f89223fcbf3c65ecd563a43",
+    ".cache/2d-stage1-build/judas_project_fluid_policy_tests": "7e1b45c003bd6214e5512b3e3327a9d9220647f23001c456107c7692092a1bed",
+    ".cache/2d-stage1-build/judas_production_fluid_tests": "705d228b4052ca29a612e94b3309e2c35c515e3032e8555bd61f7fb62f3d2b2d",
+    ".cache/2d-stage1-build/judas_player_fluid_integration_tests": "754e1974a52fb3628d69902c5a1437331bb6c89898964ace5be82c386f4a0d3a",
+    ".cache/2d-stage1-build/judas_fluid_wet_support_tests": "93fa079a1920dcf904d89d157984625fdc761aa752f3207e1a5b2e1d1b6eb157",
+    ".cache/2d-stage1-build/judas_fluid_boundary_contact_tests": "f826895351c1b8fad090bcdbfaefe5344ba3c29c5483bc66189542a6fe06179c",
+    ".cache/2d-stage1-build/judas_project_water_tests": "b6f88389ab795dd6ae649fc76bfa7fc3ec39f68add8eca49782d86500efc6b0c",
+    ".cache/2d-stage1-build/judas_fluid_volume_drag_tests": "7324ede82fd1b2e9312aed58d0d6534db18e144abd15c77e45b158c9531e86c5"
+  },
+  "policy": "Final source candidate; no main promotion or Alpha unlock."
+}
