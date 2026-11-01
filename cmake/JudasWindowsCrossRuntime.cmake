@@ -53,14 +53,4 @@ add_custom_target(judas_windows_runtime
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_BINARY_DIR}/required-dlls.txt" "$<TARGET_FILE_DIR:judas>/windows-runtime/required-dlls.txt"
  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/cross-licenses" "$<TARGET_FILE_DIR:judas>/windows-licenses"
  VERBATIM)
-get_property(_cross_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
-foreach(target IN LISTS _cross_targets)
- get_target_property(kind ${target} TYPE)
- if(kind STREQUAL "EXECUTABLE")
-  target_sources(${target} PRIVATE "${CMAKE_BINARY_DIR}/generated/judas-cross-$<CONFIG>.rc")
-  add_dependencies(${target} judas_windows_runtime)
- endif()
- if(target MATCHES "_tests$|_performance$|_stress$")
-  set_target_properties(${target} PROPERTIES EXCLUDE_FROM_ALL TRUE)
- endif()
-endforeach()
+include("${CMAKE_CURRENT_LIST_DIR}/JudasWindowsTargets.cmake")

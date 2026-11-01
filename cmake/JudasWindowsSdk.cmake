@@ -29,14 +29,4 @@ add_custom_target(judas_windows_runtime
  VERBATIM)
 # Linux-oriented historical harnesses remain available as explicit targets, not
 # prerequisites of the native editor/game SDK. No historical test is rewritten.
-get_property(judas_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
-foreach(target IN LISTS judas_targets)
- get_target_property(judas_target_type ${target} TYPE)
- if(judas_target_type STREQUAL "EXECUTABLE")
-  target_link_options(${target} PRIVATE "/MANIFEST:EMBED" "/MANIFESTINPUT:${CMAKE_SOURCE_DIR}/packaging/windows/judas.manifest")
-  add_dependencies(${target} judas_windows_runtime)
- endif()
- if(target MATCHES "_tests$|_performance$|_stress$")
-  set_target_properties(${target} PROPERTIES EXCLUDE_FROM_ALL TRUE)
- endif()
-endforeach()
+include("${CMAKE_CURRENT_LIST_DIR}/JudasWindowsTargets.cmake")

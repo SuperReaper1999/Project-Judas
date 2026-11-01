@@ -13,7 +13,7 @@
 namespace fs = std::filesystem;
 using Json = nlohmann::json;
 std::string Read(const std::string& path) {
-    std::ifstream in(path, std::ios::binary);
+    std::ifstream in(fs::u8path(path), std::ios::binary);
     return {std::istreambuf_iterator<char>(in), {}};
 }
 int main() {
@@ -109,15 +109,44 @@ int main() {
         Project unicodeProject;
         const auto unicodeRoot = root / fs::u8path(u8"Créatures");
         check(Project::CreateNew(unicodeRoot.u8string(), "Unicode AI", unicodeProject, error), "create project at a Unicode directory");
+        check(fs::is_directory(unicodeRoot) && fs::equivalent(fs::u8path(unicodeProject.RootDir()), unicodeRoot),
+              "project creation uses the actual Unicode directory without a code-page alias");
         AssetDatabase unicodeDB; unicodeDB.Scan(unicodeProject.RootDir(), unicodeProject.AssetsDir());
         UtilityAIEditor unicodeEditor;
-        check(unicodeEditor.Create(unicodeDB, u8"Citoyen-é.ai.js", error), "create definition using a Unicode staging/output path: " + error);
+        const bool unicodeCreated = unicodeEditor.Create(unicodeDB, u8"Citoyen-é.ai.js", error);
+        check(unicodeCreated, "create definition using a Unicode staging/output path: " + error);
+        const auto unicodeDefinition = unicodeRoot / "Assets" / "AI" / fs::u8path(u8"Citoyen-é.ai.js");
+        const auto unicodeMeta = fs::u8path(unicodeDefinition.u8string() + ".judasmeta");
+        check(fs::is_regular_file(unicodeDefinition) && fs::is_regular_file(unicodeMeta) &&
+              fs::equivalent(fs::u8path(unicodeEditor.path), unicodeDefinition),
+              "source and metadata are published at their real Unicode paths");
+        const auto unicodeSource = Read(unicodeEditor.path), unicodeMetadata = Read(unicodeMeta.u8string());
+        check(!unicodeEditor.Create(unicodeDB, u8"Citoyen-é.ai.js", error) &&
+              Read(unicodeEditor.path) == unicodeSource && Read(unicodeMeta.u8string()) == unicodeMetadata,
+              "duplicate Unicode creation preserves authored source and metadata");
+        const auto reservedDefinition = unicodeDefinition.parent_path() / fs::u8path(u8"Réservé.ai.js");
+        const auto reservedMeta = fs::u8path(reservedDefinition.u8string() + ".judasmeta");
+        { std::ofstream file(reservedMeta, std::ios::binary); file << "Preserved metadata ownership"; }
+        check(!unicodeEditor.Create(unicodeDB, u8"Réservé.ai.js", error) && !fs::exists(reservedDefinition) &&
+              Read(reservedMeta.u8string()) == "Preserved metadata ownership",
+              "Unicode metadata alone prevents creation without changing the owned sidecar");
         auto unicodeDraft = Json::parse(unicodeEditor.definition); unicodeDraft["name"] = u8"Citoyen éveillé";
         unicodeEditor.definition = unicodeDraft.dump();
-        check(unicodeEditor.Save(unicodeDB, error), "save authored Unicode content through staged publication: " + error);
+        const bool unicodeSaved = unicodeEditor.Save(unicodeDB, error);
+        check(unicodeSaved, "save authored Unicode content through staged publication: " + error);
         UtilityAIEditor unicodeReopened;
         check(unicodeReopened.Open(*unicodeDB.Find(unicodeEditor.asset), error) && unicodeReopened.definition == unicodeEditor.definition,
               "Unicode definition survives a fresh editor model");
+        unicodeDraft["name"] = "Unsaved draft"; unicodeEditor.definition = unicodeDraft.dump();
+        { std::ofstream file(unicodeDefinition, std::ios::binary); file << unicodeEditor.savedSource << "\n"; }
+        const auto unicodeExternal = Read(unicodeEditor.path);
+        check(!unicodeEditor.Save(unicodeDB, error) && unicodeEditor.Dirty() &&
+              Read(unicodeEditor.path) == unicodeExternal && Read(unicodeMeta.u8string()) == unicodeMetadata,
+              "Unicode save conflict preserves external bytes, metadata and unsaved draft");
+        bool noUnicodeStaging = true;
+        for (const auto& file : fs::directory_iterator(unicodeDefinition.parent_path()))
+            noUnicodeStaging &= file.path().filename().u8string().find(".import-staging-") == std::string::npos;
+        check(noUnicodeStaging, "Unicode create/save leaves no owned staging files behind");
         ImGui::CreateContext();
         auto& io = ImGui::GetIO(); io.IniFilename = nullptr; io.DisplaySize = {1400, 900}; io.DeltaTime = 1.f / 60;
         unsigned char* pixels = nullptr; int width = 0, height = 0;

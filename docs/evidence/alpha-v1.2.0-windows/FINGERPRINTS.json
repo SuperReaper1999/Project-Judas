@@ -1,0 +1,36 @@
+{
+  "base": "37b425ec3730bf6b9a33e3df4f64dbfc8ca5815f",
+  "failedPreparationRun": 41357442411,
+  "failedWindowsJob": 125000446048,
+  "rawLogSha256": "a44c529db5e0eee6886858346965472ff4c90d9817b8ecca0374d1a861737f5b",
+  "files": [
+    {
+      "path": "cmake/JudasWindowsTargets.cmake",
+      "sha256": "120150c4d4ee9da41cc6d3c8482d77e757d7e7e90834e9c6d9947f6ae63110c9"
+    },
+    {
+      "path": "cmake/JudasWindowsSdk.cmake",
+      "sha256": "096503e51f4c2100ad1e11727545ab343acd42cf66524e6b4ab197f57fb9af72"
+    },
+    {
+      "path": "cmake/JudasWindowsCrossRuntime.cmake",
+      "sha256": "a5275cd680649438cbce49b9c51518c8892d1d8386b158581c0a8d4c40c6fbaf"
+    },
+    {
+      "path": "src/editor/UtilityAIEditor.cpp",
+      "sha256": "4eaf0f58ea725861cacf76b6281a00929fc7c9ae281923015d6d3776f9d424ae"
+    },
+    {
+      "path": "tests/UtilityAIEditorTests.cpp",
+      "sha256": "9f7c285cc5622d200fd53c16fb928f6943d15f66660dc94d32ab391a2f1fd5ce"
+    },
+    {
+      "path": "tests/test_cmake_test_targets.py",
+      "sha256": "4998f76942cf2fd87c7962ee885bfc901235674b1c7ed7050776b0438734f199"
+    },
+    {
+      "path": ".github/workflows/release-candidate.yml",
+      "sha256": "aa883ee07f4c8114e2de6e8f5dade2d94c3c9aef6f9c793448aa665cc8a03377"
+    }
+  ]
+}

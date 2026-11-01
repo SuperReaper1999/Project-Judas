@@ -309,5 +309,84 @@ class SubsystemTargetContracts(unittest.TestCase):
         self.assert_rejected("android", source=candidate)
 
 
+class WindowsTargetPolicy(unittest.TestCase):
+    """Exercise final target properties, including targets declared afterward."""
+
+    def policy(self):
+        return (ROOT / 'cmake/JudasWindowsTargets.cmake').read_text(encoding='utf-8')
+
+    def graph(self, mingw=False, policy=None):
+        with tempfile.TemporaryDirectory(prefix='judas-windows-targets-') as folder:
+            root = pathlib.Path(folder)
+            (root / 'stub.c').write_text('int main(void) { return 0; }\n', encoding='utf-8')
+            (root / 'policy.cmake').write_text(self.policy() if policy is None else policy, encoding='utf-8')
+            (root / 'CMakeLists.txt').write_text('''cmake_minimum_required(VERSION 3.20)
+project(WindowsTargetContract C)
+set(CMAKE_BUILD_TYPE Release)
+set(MINGW %s)
+add_custom_target(judas_windows_runtime)
+add_executable(early stub.c)
+add_library(ordinary_library STATIC stub.c)
+include("${CMAKE_SOURCE_DIR}/policy.cmake")
+add_executable(late_tests stub.c)
+# The real cross module generates this resource; this configure-only fixture
+# inspects its ownership without requiring a Windows resource compiler.
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/generated")
+file(WRITE "${CMAKE_BINARY_DIR}/generated/judas-cross-Release.rc" "fixture")
+set_source_files_properties("${CMAKE_BINARY_DIR}/generated/judas-cross-Release.rc"
+    PROPERTIES GENERATED TRUE HEADER_FILE_ONLY TRUE)
+function(record_graph)
+    foreach(target early late_tests ordinary_library)
+        foreach(property LINK_OPTIONS MANUALLY_ADDED_DEPENDENCIES SOURCES EXCLUDE_FROM_ALL)
+            get_target_property(value ${target} ${property})
+            file(APPEND "${CMAKE_BINARY_DIR}/graph.txt" "${target}|${property}|${value}\\n")
+        endforeach()
+    endforeach()
+endfunction()
+cmake_language(DEFER CALL record_graph)
+''' % ('TRUE' if mingw else 'FALSE'), encoding='utf-8')
+            result = subprocess.run(['cmake', '-S', str(root), '-B', str(root / 'build')],
+                                    capture_output=True, text=True, encoding='utf-8', timeout=30)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            graph = {}
+            for line in (root / 'build/graph.txt').read_text(encoding='utf-8').splitlines():
+                target, prop, value = line.split('|', 2)
+                graph.setdefault(target, {})[prop] = value.split(';')
+            return graph
+
+    def assert_policy(self, graph, mingw=False):
+        for target in ('early', 'late_tests'):
+            self.assertIn('judas_windows_runtime', graph[target]['MANUALLY_ADDED_DEPENDENCIES'])
+            if mingw:
+                self.assertTrue(any(path.endswith('/generated/judas-cross-$<CONFIG>.rc')
+                                    for path in graph[target]['SOURCES']))
+                self.assertNotIn('/MANIFEST:EMBED', graph[target]['LINK_OPTIONS'])
+            else:
+                self.assertIn('/MANIFEST:EMBED', graph[target]['LINK_OPTIONS'])
+                self.assertTrue(any(path.endswith('/packaging/windows/judas.manifest')
+                                    for path in graph[target]['LINK_OPTIONS']))
+        self.assertEqual(graph['late_tests']['EXCLUDE_FROM_ALL'], ['TRUE'])
+        self.assertNotIn('judas_windows_runtime', graph['ordinary_library']['MANUALLY_ADDED_DEPENDENCIES'])
+
+    def test_msvc_late_targets_retain_manifest_and_runtime(self):
+        self.assert_policy(self.graph())
+
+    def test_mingw_late_targets_retain_resource_and_runtime(self):
+        self.assert_policy(self.graph(mingw=True), mingw=True)
+
+    def test_early_enumeration_is_detected(self):
+        broken = self.policy().replace('cmake_language(DEFER CALL judas_finalize_windows_targets)',
+                                       'judas_finalize_windows_targets()')
+        self.assertNotEqual(broken, self.policy())
+        with self.assertRaises(AssertionError):
+            self.assert_policy(self.graph(policy=broken))
+
+    def test_missing_runtime_dependency_is_detected(self):
+        broken = self.policy().replace('add_dependencies(${target} judas_windows_runtime)', '')
+        self.assertNotEqual(broken, self.policy())
+        with self.assertRaises(AssertionError):
+            self.assert_policy(self.graph(policy=broken))
+
+
 if __name__ == "__main__":
     unittest.main()

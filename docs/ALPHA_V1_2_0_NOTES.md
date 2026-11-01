@@ -27,6 +27,8 @@ checksums identify shipped source and artifacts; these notes do not publish them
 - Agent snapshots preserve explicit decision state through ordinary script saves.
   A fresh process reconstructs handlers and agents; it never serializes closures,
   resumes a JavaScript stack or revives old runtime lock tokens.
+- Windows authoring uses native Unicode staging paths; final platform setup also
+  covers executable targets declared by later subsystems.
 
 See [Game AI](GAME_AI.md) and [JudasJS](judasjs/ai.md).
 

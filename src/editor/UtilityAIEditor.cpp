@@ -144,14 +144,14 @@ bool UtilityAIEditor::Create(AssetDatabase& db, const std::string& fileName, std
         const auto destination = directory / name;
         OwnPath(db, destination);
         if (fs::symlink_status(destination).type() != fs::file_type::not_found ||
-            fs::symlink_status(destination.u8string() + ".judasmeta").type() != fs::file_type::not_found)
+            fs::symlink_status(fs::u8path(destination.u8string() + ".judasmeta")).type() != fs::file_type::not_found)
             throw std::runtime_error("That asset or metadata already exists; open it rather than overwrite it.");
         const auto source = EncodeUtilityAIModule(DefaultDefinition());
         staged = CreateImportStagingFile(destination);
         { std::ofstream out(fs::u8path(staged), std::ios::binary); out << source; out.close();
           if (!out) throw std::runtime_error("Cannot write AI definition staging file."); }
-        fs::copy_file(staged, destination, fs::copy_options::none);
-        fs::remove(staged); staged.clear();
+        fs::copy_file(fs::u8path(staged), destination, fs::copy_options::none);
+        fs::remove(fs::u8path(staged)); staged.clear();
         AssetRecord record;
         if (!db.Track(destination.u8string(), record, error)) {
             error = "Source preserved at " + destination.u8string() + "; registration failed: " + error;
