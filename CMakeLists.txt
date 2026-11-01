@@ -1858,6 +1858,7 @@ target_link_libraries(judas_utility_ai_benchmark PRIVATE judas_engine)
 judas_warnings(judas_utility_ai_benchmark)
 
 judas_add_engine_test(judas_utility_ai_application_tests tests/UtilityAIApplicationTests.cpp APPLICATION)
+judas_add_engine_test(judas_willow_town_application_tests tests/WillowTownApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_ai_reservation_tests tests/AIReservationTests.cpp)
 judas_add_engine_test(judas_ai_reservation_script_tests tests/AIReservationScriptTests.cpp)

@@ -1,0 +1,4 @@
+PASS isolated editable town project loads: 
+/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/second/project/Scenes/main.judas: scene line 46: missing required key 'render.half-extents'
+FAIL ordinary town application completes and shuts down
+WILLOW_TOWN mode=write checks=2 failures=1 worst_fixed_ms=0.000000

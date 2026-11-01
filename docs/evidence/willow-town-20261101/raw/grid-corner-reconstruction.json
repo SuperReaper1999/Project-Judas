@@ -1,0 +1,26 @@
+{
+  "scope": "Independent known-answer axis-aligned box segment test, using actual saved centre and authored wall dimensions; native validation follows separately.",
+  "snapshot_sha256": "48536aa49348fab2966426f7b6bbcb56eb3a3d119fddba231157106cc082d849",
+  "old_source_sha256": "72b0bfa1f873c18c85990f1702946c705dd5090a7a3065c20f2581d68ec72137",
+  "new_source_sha256": "2e924b7bc9ca074f08f0fa4fc3a0fd1e32c506bba1f191f689b3db22ce8f5913",
+  "actor": "301",
+  "position": [
+    -10.62696361541748,
+    4.417932510375977,
+    0.0
+  ],
+  "time": 616.6166988257319,
+  "actual_half_extent": 0.24,
+  "planner_inflation": 0.29,
+  "nearest_start_node": [
+    -10.5,
+    4.5
+  ],
+  "old_first_waypoint": [
+    -11,
+    4.5
+  ],
+  "old_segment_first_wall_intersection_fraction": 0.08856075693391217,
+  "fixed_segments_wall_intersections": [],
+  "correction": "Retain initial grid node and complete each grid corner within .01m instead of .12m. Native casts still authoritatively veto movement."
+}

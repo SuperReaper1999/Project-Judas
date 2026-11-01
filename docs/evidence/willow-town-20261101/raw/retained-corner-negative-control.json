@@ -1,0 +1,44 @@
+{
+  "301": {
+    "name": "Mara",
+    "services_400": 6,
+    "services_600": 6,
+    "continues": false,
+    "has_job_meal_rest": false
+  },
+  "302": {
+    "name": "Eli",
+    "services_400": 35,
+    "services_600": 53,
+    "continues": true,
+    "has_job_meal_rest": true
+  },
+  "303": {
+    "name": "Nia",
+    "services_400": 25,
+    "services_600": 40,
+    "continues": true,
+    "has_job_meal_rest": true
+  },
+  "304": {
+    "name": "Theo",
+    "services_400": 36,
+    "services_600": 54,
+    "continues": true,
+    "has_job_meal_rest": true
+  },
+  "305": {
+    "name": "Ada",
+    "services_400": 42,
+    "services_600": 62,
+    "continues": true,
+    "has_job_meal_rest": true
+  },
+  "306": {
+    "name": "Sam",
+    "services_400": 36,
+    "services_600": 55,
+    "continues": true,
+    "has_job_meal_rest": true
+  }
+}

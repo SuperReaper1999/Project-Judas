@@ -1,0 +1,4 @@
+FRAMES 1200
+FRAME_SECONDS 0.016666667
+LOG_EVERY 300
+SCREENSHOT 600 /home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/standalone-final.png

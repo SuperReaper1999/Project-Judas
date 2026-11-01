@@ -1,0 +1,33 @@
+[
+  {
+    "name": "export-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/Willow-Town-standalone",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2641598120026174,
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas"
+  },
+  {
+    "name": "editor-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/editor-final-project/Willow_Town.judasproj"
+    ],
+    "exit_code": 0,
+    "seconds": 1.8679960670015134,
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas"
+  },
+  {
+    "name": "standalone-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/Willow-Town-standalone/judas"
+    ],
+    "exit_code": 0,
+    "seconds": 1.9701020299980883,
+    "cwd": "/tmp"
+  }
+]

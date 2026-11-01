@@ -1,0 +1,13 @@
+JudasProject 1
+name "Willow Town"
+editor-2d "true"
+basic-water "true"
+water-swimming "true"
+advanced-fluid-dynamics "false"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+save-identity "c1e0600559cd909b3155da0b3d7a37099534f4cb8c456c8a0d581f9310945566"
+legacy-gameplay "false"
+input-map "1 10 \"pause\" 0 1 \"key:Space\" 1 0 \"release\" 0 1 \"key:Escape\" 1 0 \"save_game\" 0 1 \"key:K\" 1 0 \"load_game\" 0 1 \"key:L\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"select\" 0 1 \"mouse:Left\" 1 0 \"ui_next\" 0 1 \"key:Tab\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"move_x\" 1 4 \"key:A\" -1 0 \"key:D\" 1 0 \"key:Left\" -1 0 \"key:Right\" 1 0 \"move_y\" 1 4 \"key:S\" -1 0 \"key:W\" 1 0 \"key:Down\" -1 0 \"key:Up\" 1 0 "

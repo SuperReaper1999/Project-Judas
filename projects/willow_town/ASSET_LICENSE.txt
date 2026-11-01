@@ -1,0 +1,10 @@
+Willow Town original pixel art
+Copyright (c) 2026 Conner / SuperReaper1999
+
+All images in Assets/Art are original deterministic artwork produced by
+tools/CreateWillowTown.py, under the Project Judas MIT license. No external
+models, textures or game assets were downloaded. Source art generation is
+preserved in that tool. Pillow and DejaVu Sans (including its Bold variant)
+are authoring dependencies only. DejaVu is distributed separately under its
+permissive font license: https://dejavu-fonts.github.io/License.html . No font
+files or Python dependencies are redistributed or required by the running game.

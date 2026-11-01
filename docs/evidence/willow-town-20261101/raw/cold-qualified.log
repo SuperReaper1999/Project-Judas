@@ -1,0 +1,65 @@
+PASS isolated editable town project loads: 
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/final/project/Saves/main.judasstate (none saved)
+Project: Willow Town (/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/final/project/Willow_Town.judasproj)
+Scene: Willow Town - a little life simulation (/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/final/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process begins without the saved progress already present
+PASS cold process requests genuine modern save restoration: 
+PASS cold-restored actual MK2 endpoint before stepping: 301
+PASS cold-restored actual MK2 endpoint before stepping: 302
+PASS cold-restored actual MK2 endpoint before stepping: 303
+PASS cold-restored actual MK2 endpoint before stepping: 304
+PASS cold-restored actual MK2 endpoint before stepping: 305
+PASS cold-restored actual MK2 endpoint before stepping: 306
+PASS cold-restored actual MK2 endpoint before stepping: 301
+PASS cold-restored actual MK2 endpoint before stepping: 302
+PASS cold-restored actual MK2 endpoint before stepping: 303
+PASS cold-restored actual MK2 endpoint before stepping: 304
+PASS cold-restored actual MK2 endpoint before stepping: 305
+PASS cold-restored actual MK2 endpoint before stepping: 306
+PASS cold save preserves all resident needs, money, jobs and decision snapshots exactly
+PASS cold save preserves shop ledger and town clock without replaying rewards
+PASS restoration reconstructs six real native utility agents
+PASS restored actual native 301 elapsed
+PASS restored actual native 301 untilEvaluation
+PASS restored actual native 301 selected
+PASS restored actual native 301 status
+PASS restored actual native 301 cooldowns
+PASS restored actual native 302 elapsed
+PASS restored actual native 302 untilEvaluation
+PASS restored actual native 302 selected
+PASS restored actual native 302 status
+PASS restored actual native 302 cooldowns
+PASS restored actual native 303 elapsed
+PASS restored actual native 303 untilEvaluation
+PASS restored actual native 303 selected
+PASS restored actual native 303 status
+PASS restored actual native 303 cooldowns
+PASS restored actual native 304 elapsed
+PASS restored actual native 304 untilEvaluation
+PASS restored actual native 304 selected
+PASS restored actual native 304 status
+PASS restored actual native 304 cooldowns
+PASS restored actual native 305 elapsed
+PASS restored actual native 305 untilEvaluation
+PASS restored actual native 305 selected
+PASS restored actual native 305 status
+PASS restored actual native 305 cooldowns
+PASS restored actual native 306 elapsed
+PASS restored actual native 306 untilEvaluation
+PASS restored actual native 306 selected
+PASS restored actual native 306 status
+PASS restored actual native 306 cooldowns
+JS: WILLOW_TOWN {"time":616.1166987996548,"stock":83,"sales":65,"controlled":null,"residents":[{"id":"301","name":"Mara","job":"Baker","work":34,"meals":12,"rests":8,"chats":7,"money":86,"selected":{"action":"eat","target":"1301"}},{"id":"302","name":"Eli","job":"Carpenter","work":27,"meals":10,"rests":8,"chats":6,"money":69,"selected":{"action":"rest","target":"1202"}},{"id":"303","name":"Nia","job":"Gardener","work":22,"meals":10,"rests":6,"chats":11,"money":54,"selected":{"action":"rest","target":"1203"}},{"id":"304","name":"Theo","job":"Shopkeeper","work":28,"meals":11,"rests":7,"chats":8,"money":70,"selected":{"action":"rest","target":"1204"}},{"id":"305","name":"Ada","job":"Courier","work":33,"meals":12,"rests":8,"chats":7,"money":83,"selected":{"action":"socialize","target":"301"}},{"id":"306","name":"Sam","job":"Park keeper","work":29,"meals":10,"rests":9,"chats":7,"money":75,"selected":{"action":"wander","target":"1504"}}]}
+PASS native decision clock continues one real fixed step: 301
+PASS native decision clock continues one real fixed step: 302
+PASS native decision clock continues one real fixed step: 303
+PASS native decision clock continues one real fixed step: 304
+PASS native decision clock continues one real fixed step: 305
+PASS native decision clock continues one real fixed step: 306
+PASS restored current actions continue moving actual physical residents
+PASS ordinary town application completes and shuts down
+WILLOW_TOWN mode=cold checks=56 failures=0 worst_fixed_ms=3.707846
