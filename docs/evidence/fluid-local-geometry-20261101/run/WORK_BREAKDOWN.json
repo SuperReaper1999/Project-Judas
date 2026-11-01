@@ -1,0 +1,14 @@
+{
+  "0-240": {
+    "hydro_translation_work": 1050.0569751195105,
+    "hydro_rotation_work": 20.00708820970897,
+    "drag_translation_work": -807.1819756675543,
+    "drag_rotation_work": -3.364085370544769
+  },
+  "480-720": {
+    "hydro_translation_work": -800.1151818392144,
+    "hydro_rotation_work": 357.99980627158646,
+    "drag_translation_work": -64.08745252456745,
+    "drag_rotation_work": -73.90694555267737
+  }
+}

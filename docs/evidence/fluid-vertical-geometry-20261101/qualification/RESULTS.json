@@ -1,0 +1,116 @@
+[
+  {
+    "name": "vertical",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_vertical_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 1.6162870200059842,
+    "binary_sha256": "70a65a6e7944babc044e9fd9ba85000533cab87cbd54e6b93acfc49c12b6217a"
+  },
+  {
+    "name": "hydro",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_hydrostatics_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2644597039979999,
+    "binary_sha256": "a8c6ad007238fe766aff21903494773b03f831c13ab8d8bb4bef4be312fcaed2"
+  },
+  {
+    "name": "wet",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_wet_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.11402780700154835,
+    "binary_sha256": "5120b744aee4ba1a98cfa8fd2edcb4baf54701b351e84f4df2b5c8681e82c751"
+  },
+  {
+    "name": "production",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/qualification/production"
+    ],
+    "exit_code": 1,
+    "seconds": 48.58457866199751,
+    "binary_sha256": "daf8af711e954e92a110edb4e4e8544dc2388674bd02f25251ec6c7087bb4307"
+  },
+  {
+    "name": "player",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_player_fluid_integration_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/qualification/player"
+    ],
+    "exit_code": 0,
+    "seconds": 77.79668079800467,
+    "binary_sha256": "d5d40057e31ca1951d708bb96ce728dd645981ab0d2a7f95a3937055de446430"
+  },
+  {
+    "name": "containers",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_container_integration_tests",
+      "--supported-only",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/qualification/containers"
+    ],
+    "exit_code": 0,
+    "seconds": 1.1156447859975742,
+    "binary_sha256": "8c5412925883fe5b2093feab4bcf4d54388eb28bbfd4c96be6e787a6a62105b6"
+  },
+  {
+    "name": "cavity",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_cavity_impact_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.01588239099510247,
+    "binary_sha256": "71561560bce2fc62f7144eafd256776d3c6ffbc2e24cf72dcadb21e2632f8630"
+  },
+  {
+    "name": "demo-pool",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_demo_integration_tests",
+      "--scene",
+      "pool",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/qualification/demo-pool"
+    ],
+    "exit_code": 0,
+    "seconds": 11.13298580999981,
+    "binary_sha256": "5ba54f0a707cf7e38f7a8dad0fb05d6d06c58e4a5c7d422cdb270633bd1690a0"
+  },
+  {
+    "name": "demo-planet",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_demo_integration_tests",
+      "--scene",
+      "planet",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/qualification/demo-planet"
+    ],
+    "exit_code": 0,
+    "seconds": 11.335645833001763,
+    "binary_sha256": "5ba54f0a707cf7e38f7a8dad0fb05d6d06c58e4a5c7d422cdb270633bd1690a0"
+  },
+  {
+    "name": "lifecycle",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.016455489996587858,
+    "binary_sha256": "b718ebbeff405a837273ca4a3ec2c885178aeb6267d2341d5997b288e3b30156"
+  },
+  {
+    "name": "basic-water",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_water_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.031917496999085415,
+    "binary_sha256": "94dfeacb17a5d34b050051c0d55011ee2830f5529101735e3d015f54d60c98f6"
+  }
+]

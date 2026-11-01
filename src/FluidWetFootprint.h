@@ -54,7 +54,8 @@ struct FluidWetColumnFootprint {
     std::int64_t x, z;
     glm::dvec2 center;
     bool wet = false;
-    bool observedWet = false; // before solid occlusion; never a bulk-motion donor
+    bool observedWet = false;
+    bool resolvedAir = false; // internal vertical void, distinct from an ordinary free surface
 };
 
 // Columns arrive in sorted grid order. Loads require a connected wet patch:
@@ -134,11 +135,11 @@ bool FluidWetSupportThroughSolid(const std::vector<FluidWetColumnFootprint>& col
             const Cell air{c.x + dx, c.z + dz};
             if (distance2(air) + rounding >= wetDistance2 || !checked.insert(air).second) continue;
             const auto* present = column(air);
-            // Existing columns with a lower surface already vote dry in the
-            // vertical occupancy mean. This admission test addresses absent
-            // lateral columns; applying it again to low columns double-counts
-            // a free surface and removes legitimate partial immersion.
-            if (!present && !notEmpty(air.first, air.second)) return false;
+            // A lower free surface already votes dry in the occupancy mean.
+            // A missing column or a resolved internal void at this height can
+            // provide closer air evidence. Do not apply that rule to ordinary
+            // lower surfaces, which would double-count their dry contribution.
+            if ((!present || present->resolvedAir) && !notEmpty(air.first, air.second)) return false;
         }
     }
 

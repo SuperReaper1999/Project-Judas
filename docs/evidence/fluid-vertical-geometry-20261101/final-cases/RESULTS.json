@@ -1,0 +1,38 @@
+[
+  {
+    "case": "half_020",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--case",
+      "half_020",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/final-cases/half_020"
+    ],
+    "exit_code": 1,
+    "binary_sha256": "47754ac6587a5426436915987444031ff604206a669b3684eca98fd2c1252c6f"
+  },
+  {
+    "case": "half_025",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--case",
+      "half_025",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/final-cases/half_025"
+    ],
+    "exit_code": 1,
+    "binary_sha256": "47754ac6587a5426436915987444031ff604206a669b3684eca98fd2c1252c6f"
+  },
+  {
+    "case": "light_80kg",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--case",
+      "light_80kg",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/final-cases/light_80kg"
+    ],
+    "exit_code": 1,
+    "binary_sha256": "47754ac6587a5426436915987444031ff604206a669b3684eca98fd2c1252c6f"
+  }
+]

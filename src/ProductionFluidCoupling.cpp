@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <glm/gtc/matrix_inverse.hpp>
 #include "FluidHydrostatics.h"
+#include "FluidVolumeDrag.h"
 #include "PlayerController.h"
 #include "RuntimeWorld.h"
 namespace {
@@ -25,9 +26,6 @@ BodyTransform EvaluateBodyPose(const std::vector<PhysicsWorld::BodyMotionSegment
         if(time>=it->begin && time<=it->end)
             return time==it->end ? it->endPose : PhysicsWorld::EvaluateBodyMotionSegment(*it,time);
     return time<history.front().begin ? history.front().start : history.back().endPose;
-}
-glm::mat3 CrossMatrix(const glm::vec3& r) {
-    return glm::mat3(0,r.z,-r.y,-r.z,0,r.x,r.y,-r.x,0);
 }
 }
 struct ProductionFluidCoupling::Impl {
@@ -114,20 +112,19 @@ void ProductionFluidCoupling::PrepareRigidStep(RuntimeWorld& world,float dt) {
         diagnostic.buoyancyForce=hydro.buoyancyForce;
         p.ApplyForce(body.handle,hydro.buoyancyForce);p.ApplyTorque(body.handle,hydro.buoyancyTorque);
         if(hydro.fraction>0) {
-            const float mass=p.GetMass(body.handle);const glm::mat3 inverseInertia=glm::inverse(p.GetInertiaWorld(body.handle));
-            const glm::vec3 offset=hydro.submergedCentroid-pose.position;
-            const glm::vec3 liquidVelocity=hydro.fluidVelocity+hydro.fluidAcceleration*static_cast<float>(s.pending+dt);
-            // Drag follows the known gravity/hydrostatic kick. In particular,
-            // neutral hydrostatics must not damp gravity and then cancel it a
-            // second time. The point effective mass includes rotational inertia.
-            const glm::vec3 relative=p.GetLinearVelocity(body.handle)+hydro.buoyancyForce*(dt/mass)+
-                glm::cross(p.GetAngularVelocity(body.handle)+inverseInertia*hydro.buoyancyTorque*dt,offset)-liquidVelocity;
-            const glm::mat3 cross=CrossMatrix(offset);
-            const glm::mat3 inverseEffectiveMass=glm::mat3(1.0f/mass)-cross*inverseInertia*cross;
-            const float fraction=-std::expm1(-world.FluidSettingsUsed().hydrostaticDragRate*hydro.fraction*dt);
-            const glm::vec3 impulse=-fraction*(glm::inverse(inverseEffectiveMass)*relative);
-            diagnostic.dragForce=impulse/dt;
-            p.ApplyForce(body.handle,diagnostic.dragForce);p.ApplyTorque(body.handle,glm::cross(offset,diagnostic.dragForce));
+            // Resolve the existing authored drag over the wetted body volume.
+            // A single centroid damper has an angular nullspace even for a
+            // fully immersed spinning body. The volume resistance includes its
+            // physical lever arms; it introduces no independent damping knob.
+            const double mass=p.GetMass(body.handle);
+            const glm::dmat3 inertia(p.GetInertiaWorld(body.handle));
+            const auto velocity=glm::dvec3(p.GetLinearVelocity(body.handle))+glm::dvec3(hydro.buoyancyForce)*(dt/mass);
+            const auto omega=glm::dvec3(p.GetAngularVelocity(body.handle))+glm::inverse(inertia)*glm::dvec3(hydro.buoyancyTorque)*double(dt);
+            const auto drag=EvaluateFluidVolumeDrag(hydro,mass,inertia,velocity,omega,
+                world.FluidSettingsUsed().hydrostaticDragRate,dt,s.pending+dt);
+            diagnostic.dragForce=glm::vec3(drag.linear/double(dt));
+            p.ApplyForce(body.handle,diagnostic.dragForce);
+            p.ApplyTorque(body.handle,glm::vec3(drag.angular/double(dt)));
         }
     }
     s.measured.totalMilliseconds=Milliseconds(started);

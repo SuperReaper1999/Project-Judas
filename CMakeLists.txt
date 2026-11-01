@@ -1118,6 +1118,10 @@ judas_add_engine_test(judas_fluid_metadata_tests tests/FluidMetadataTests.cpp)
 # FTFT9: deterministic shape/particle-field hydrostatic approximation.
 judas_add_engine_test(judas_fluid_hydrostatics_tests tests/FluidHydrostaticsTests.cpp)
 judas_add_engine_test(judas_fluid_wet_support_tests tests/FluidWetSupportTests.cpp)
+judas_add_engine_test(judas_fluid_vertical_support_tests tests/FluidVerticalSupportTests.cpp)
+judas_add_engine_test(judas_fluid_settling_reference_tests tests/FluidSettlingReferenceTests.cpp)
+judas_add_engine_test(judas_fluid_settling_contract_tests tests/FluidSettlingContractTests.cpp)
+judas_add_engine_test(judas_fluid_volume_drag_tests tests/FluidVolumeDragTests.cpp)
 
 judas_add_engine_test(judas_production_fluid_tests tests/ProductionFluidTests.cpp)
 

@@ -1,6 +1,7 @@
 #include "FluidHydrostatics.h"
 #include "FluidSolidSupport.h"
 #include "FluidWetFootprint.h"
+#include "FluidColumnLayers.h"
 #include "GravityField.h"
 #include "Narrowphase.h"
 
@@ -122,6 +123,21 @@ void FluidHydrostaticField::Build(const std::vector<FluidParticle>& particles,fl
         return a.x<b.x;
     });
 }
+glm::vec3 FluidHydrostaticField::ReconstructionTangent(const glm::vec3& direction,
+                                                      const glm::vec3& fallback) const {
+    if (!Finite(direction) || !(glm::length(direction)>0) || !Finite(fallback))
+        throw std::invalid_argument("invalid hydrostatic reconstruction frame");
+    const auto up=glm::normalize(glm::dvec3(direction));
+    if(!m_particles.empty())for(std::size_t i=1;i<m_particles.size();++i) {
+        const auto edge=glm::dvec3(m_particles[i].position)-glm::dvec3(m_particles.front().position);
+        const auto horizontal=edge-up*glm::dot(up,edge);
+        // Geometric conditioning only: avoid a nearly vertical/zero seed.
+        // The input-order reference is the same deterministic field geometry
+        // already used for the lattice origin, not an object-dependent axis.
+        if(glm::dot(horizontal,horizontal)>.25*glm::dot(edge,edge))return glm::vec3(edge);
+    }
+    return fallback;
+}
 FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::vec3& direction,float halfHeight,float radius,const glm::vec3& tangentAxis,const FluidSolidQuery* solid,bool connectedWetSupport) const {
     FluidFieldSample out; out.density=m_density;
     if (m_particles.empty()) return out;
@@ -203,122 +219,212 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         if(a.z!=b.z)return a.z<b.z;
         return a.visit<b.visit;
     });
+    using HeightSpan = std::pair<double, double>;
+    struct ColumnProfile {
+        std::int64_t x, z;
+        std::size_t begin, end;
+        glm::dvec2 center;
+        double low, high, weight;
+        bool displaced, continuous;
+        std::vector<HeightSpan> layers;
+    };
     std::optional<FluidHydrostaticDetail::PreparedSolidQuery> occlusion;
-    if(solid && !columns.empty())occlusion.emplace(tangent,up,bitangent,columnWidth,halfHeight,*solid);
-    double columnWeight=0, weightedFraction=0;
-    std::vector<FluidWetColumnFootprint> wetFootprint;
-    for(std::size_t begin=0,end=0;begin<columns.size();begin=end) {
-        const auto x=columns[begin].x,z=columns[begin].z;
-        end=begin+1;while(end<columns.size() && columns[end].x==x && columns[end].z==z)++end;
-        const glm::dvec3 columnCenter=glm::dvec3(point)+tangent*(originX+x*columnWidth)+bitangent*(originZ+z*columnWidth);
-        // Connectivity belongs to observed water, not the query's occlusion
-        // mask or thin vertical footprint. Water below/around a solid still
-        // connects its pool; it cannot itself contribute a masked wet sample.
-        wetFootprint.push_back({x,z,{originX+x*columnWidth,originZ+z*columnWidth},false});
-
-        Interval envelope=columns[begin].interval;
-        for(std::size_t k=begin;k<end;++k) {
-            envelope.lo=std::min(envelope.lo,columns[k].interval.lo);
-            envelope.hi=std::max(envelope.hi,columns[k].interval.hi);
+    if (solid && !columns.empty()) occlusion.emplace(tangent,up,bitangent,columnWidth,halfHeight,*solid);
+    std::vector<ColumnProfile> profiles;
+    profiles.reserve(std::min(columns.size(),std::size_t{256}));
+    const auto prepareLayers=[&](ColumnProfile& profile) {
+        auto& layers=profile.layers;
+        for(std::size_t k=profile.begin;k<profile.end;++k)
+            layers.emplace_back(columns[k].interval.lo,columns[k].interval.hi);
+        FluidHydrostaticDetail::CloseColumnLayers(layers,columnWidth,rounding);
+        if(layers.size()>1) {
+            // Fill internal sampling disorder from the existing two-spacing
+            // halo. This cannot extend either external free surface.
+            for(int dx:{-2,-1,0,1,2})for(int dz:{-2,-1,0,1,2}) {
+                if(!dx&&!dz)continue;
+                const auto key=std::make_pair(profile.x+dx,profile.z+dz);
+                auto it=std::lower_bound(columns.begin(),columns.end(),key,
+                    [](const auto& c,const auto& k){return c.x<k.first||(c.x==k.first&&c.z<k.second);});
+                for(;it!=columns.end()&&it->x==key.first&&it->z==key.second;++it) {
+                    const double px=it->actualX-profile.center.x,pz=it->actualZ-profile.center.y;
+                    if(px*px+pz*pz>=4*columnWidth*columnWidth)continue;
+                    const double lo=std::max(profile.low,it->interval.lo),hi=std::min(profile.high,it->interval.hi);
+                    if(lo<hi)layers.emplace_back(lo,hi);
+                }
+            }
+            FluidHydrostaticDetail::CloseColumnLayers(layers,columnWidth,rounding);
         }
-        const double occupied=halfHeight>0 ? std::max(0.0,std::min(envelope.hi,static_cast<double>(halfHeight))-std::max(envelope.lo,-static_cast<double>(halfHeight))) : (envelope.lo<=0 && envelope.hi>=0 ? 1.0 : 0.0);
-        wetFootprint.back().observedWet=occupied>0;
-        if (occlusion && occlusion->Occluded(columnCenter)) continue;
-
-        // The exterior field is extended through the SAME unoccluded columns
-        // for occupancy and bulk motion. Sampling motion inside a solid's
-        // displaced/contact shadow feeds its own one-way wall impulse back as
-        // analytic hydrostatic support. This geometric exclusion has no mass,
-        // velocity or object-name condition and leaves uniform free fall intact.
+    };
+    bool splitHeights = false;
+    for (std::size_t begin=0,end=0;begin<columns.size();begin=end) {
+        const auto x=columns[begin].x,z=columns[begin].z;
+        end=begin+1;
+        while(end<columns.size() && columns[end].x==x && columns[end].z==z)++end;
+        const glm::dvec2 center(originX+x*columnWidth,originZ+z*columnWidth);
+        const auto worldCenter=glm::dvec3(point)+tangent*center.x+bitangent*center.y;
+        double low=columns[begin].interval.lo, high=columns[begin].interval.hi;
+        for(std::size_t k=begin;k<end;++k) {
+            low=std::min(low,columns[k].interval.lo);
+            high=std::max(high,columns[k].interval.hi);
+        }
+        // Prove continuity without sorting or allocating a layer vector.
+        // This is equivalent to closing the raw interval union over the query
+        // footprint; an unresolved proof falls back to full reconstruction.
+        double reached=low;
+        const double target=std::min(high,double(halfHeight));
+        bool progress=true;
+        while(reached<target && progress) {
+            const double before=reached;
+            for(std::size_t k=begin;k<end;++k) {
+                const auto& span=columns[k].interval;
+                if(span.lo<=reached+columnWidth+rounding)reached=std::max(reached,span.hi);
+            }
+            progress=reached>before;
+        }
+        const bool continuous=low>halfHeight || high< -halfHeight || reached>=target;
+        const double t=1.0-glm::dot(center,center)/reach2;
+        const bool displaced=occlusion && occlusion->Occluded(worldCenter);
+        profiles.push_back({x,z,begin,end,center,low,high,columnWidth*columnWidth*t*t,displaced,continuous,{}});
+        auto& profile=profiles.back();
+        if(!displaced && !continuous) {
+            prepareLayers(profile);
+            for(std::size_t k=1;k<profile.layers.size();++k)
+                if(profile.layers[k-1].second<halfHeight && profile.layers[k].first> -halfHeight)splitHeights=true;
+        }
+        // Motion donors use the full-query solid exclusion, evaluated at
+        // their actual horizontal positions. A rounded bin centre can change
+        // ownership under a frame change even when the physical donor did not
+        // move. Keep traversal order, and do not borrow the solid's own contact
+        // reaction as background acceleration through a pressure height slice.
         for(std::size_t k=begin;k<end;++k) {
             const auto& interval=columns[k].interval;
             const auto& p=m_particles[interval.particle];
+            const auto donorCenter=glm::dvec3(point)+tangent*columns[k].actualX+bitangent*columns[k].actualZ;
+            if(occlusion && occlusion->Occluded(donorCenter))continue;
             const glm::dvec3 d=glm::dvec3(p.position)-glm::dvec3(point);
             const double distance2=glm::dot(d,d);
-            if (distance2<reach2) {
+            if(distance2<reach2) {
                 const double t=1.0-distance2/reach2,w=p.volume*t*t;
                 bulkWeight+=w;bulkVelocity+=w*glm::dvec3(p.velocity);
                 bulkAcceleration+=w*glm::dvec3(p.acceleration);
             }
-            // A wet column envelope may have no local spherical donors.
-            // Extend actual donor motion over the admitted geometric support
-            // only in that missing-data case; do not overwrite resolved flow.
-            const double overlap=std::max(0.0,std::min(interval.hi,verticalReach)-
-                                              std::max(interval.lo,-verticalReach));
+            const double overlap=std::max(0.0,std::min(interval.hi,verticalReach)-std::max(interval.lo,-verticalReach));
             const double columnX=originX+x*columnWidth,columnZ=originZ+z*columnWidth;
             const double t=1.0-(columnX*columnX+columnZ*columnZ)/reach2;
             const double w=p.volume*(overlap/p.spacing)*t*t;
             extensionWeight+=w;extensionVelocity+=w*glm::dvec3(p.velocity);
             extensionAcceleration+=w*glm::dvec3(p.acceleration);
         }
-        // Hydrostatic occupancy reconstructs a locally filled column, rather
-        // than treating disordered PBF sample intervals as literal air gaps.
-        // Only the finite vertical neighbourhood above participates: detached
-        // layers farther away do not become an infinite liquid column. Air
-        // pockets inside this local envelope are unresolved by this mode.
-        const double columnX=originX+x*columnWidth, columnZ=originZ+z*columnWidth;
-        const double lateral2=columnX*columnX+columnZ*columnZ;
-        const double t=1.0-lateral2/reach2, w=columnWidth*columnWidth*t*t;
-        columnWeight+=w;
-        weightedFraction+=w*(halfHeight>0 ? occupied/(2*halfHeight) : (occupied>0 ? 1.0 : 0.0));
-        if (occupied > 0) {
-            wetFootprint.back().wet = true;
-        }
     }
-    // A bin centre can be half a column from its actual particle centre;
-    // adding the particle's half-width needs a full column on each side.
-    // This is only a conservative rejection hull. Physical admission below
-    // checks actual footprints and does not enlarge water to this bound.
-    const double outerWidth=columnWidth*(connectedWetSupport?2:1);
-    if (!FluidWetColumnsContainOrigin(wetFootprint,outerWidth,connectedWetSupport)) return out;
-    if (connectedWetSupport) {
-        if (occlusion) occlusion->SelectSupport(glm::dvec3(point));
-        const auto covered=[&](std::int64_t x,std::int64_t z) {
-            if (!occlusion) return false;
-            const double px=originX+x*columnWidth,pz=originZ+z*columnWidth;
-            if (px*px+pz*pz>=reach2) return false;
-            return occlusion->Touches(glm::dvec3(point)+tangent*px+bitangent*pz);
-        };
-        const auto notEmpty=[&](std::int64_t x,std::int64_t z) {
-            const double px=originX+x*columnWidth,pz=originZ+z*columnWidth;
-            const auto worldColumn=glm::dvec3(point)+tangent*px+bitangent*pz;
-            if(occlusion && occlusion->Occluded(worldColumn))return true;
-            // Binning is not geometry: jittered particles in neighbouring
-            // bins can still overlap this apparently empty column footprint.
-            for(int dx:{-1,0,1})for(int dz:{-1,0,1}) {
-                const auto key=std::make_pair(x+dx,z+dz);
+    // Solid occlusion varies with height even in a continuous water column.
+    // The integrated shortcut excludes a column for the whole sample slab;
+    // the sliced path excludes it only at that height. Switching between those
+    // ownership rules when an arbitrarily weak donor reveals a remote air gap
+    // changes all other donors' weights discontinuously. Displaced solids must
+    // use one height-dependent rule regardless of whether a gap was found.
+    // Keep the established column-mean contract for non-displacing queries.
+    splitHeights = splitHeights || solid != nullptr;
+    if(splitHeights)for(auto& profile:profiles)
+        if(!profile.continuous && profile.layers.empty())prepareLayers(profile);
+    const auto occupiedLength=[](double lo,double hi,double half) {
+        return half>0 ? std::max(0.0,std::min(hi,half)-std::max(lo,-half)) :
+                        (lo<=0 && hi>=0 ? 1.0 : 0.0);
+    };
+    const auto measureBand=[&](double lo,double hi,bool layered) {
+        const double middle=(lo+hi)*.5,bandHalf=(hi-lo)*.5;
+        const glm::dvec3 bandPoint=glm::dvec3(point)+up*middle;
+        std::optional<FluidHydrostaticDetail::PreparedSolidQuery> bandSolid;
+        if(solid && layered)bandSolid.emplace(tangent,up,bitangent,columnWidth,bandHalf,*solid);
+        auto* geometry=layered ? (bandSolid ? &*bandSolid : nullptr) : (occlusion ? &*occlusion : nullptr);
+        if(geometry)geometry->SelectSupport(bandPoint);
+        double weighted=0,total=0;
+        std::vector<FluidWetColumnFootprint> wet;
+        wet.reserve(profiles.size());
+        for(const auto& profile:profiles) {
+            double fraction=0;
+            if(layered && profile.continuous) {
+                fraction=profile.low<=middle && middle<=profile.high ? 1.0 : 0.0;
+            } else if(layered) {
+                for(const auto& span:profile.layers) {
+                    if(span.first<=middle && middle<=span.second){fraction=1;break;}
+                }
+            } else {
+                fraction=occupiedLength(profile.low,profile.high,halfHeight)/(halfHeight>0 ? 2*halfHeight : 1);
+            }
+            const auto center=bandPoint+tangent*profile.center.x+bitangent*profile.center.y;
+            const bool displaced=layered ? geometry && geometry->Occluded(center) : profile.displaced;
+            wet.push_back({profile.x,profile.z,profile.center,false,fraction>0});
+            wet.back().resolvedAir=layered && fraction==0 && profile.low<=middle && middle<=profile.high;
+            if(displaced)continue;
+            total+=profile.weight;
+            weighted+=profile.weight*fraction;
+            wet.back().wet=fraction>0;
+        }
+        const double outerWidth=columnWidth*(connectedWetSupport?2:1);
+        if(!FluidWetColumnsContainOrigin(wet,outerWidth,connectedWetSupport))return 0.0;
+        if(connectedWetSupport) {
+            const auto covered=[&](std::int64_t x,std::int64_t z) {
+                if(!geometry)return false;
+                const double px=originX+x*columnWidth,pz=originZ+z*columnWidth;
+                return px*px+pz*pz<reach2 && geometry->Touches(bandPoint+tangent*px+bitangent*pz);
+            };
+            const auto notEmpty=[&](std::int64_t x,std::int64_t z) {
+                const double px=originX+x*columnWidth,pz=originZ+z*columnWidth;
+                if(geometry && geometry->Occluded(bandPoint+tangent*px+bitangent*pz))return true;
+                for(int dx:{-1,0,1})for(int dz:{-1,0,1}) {
+                    const auto key=std::make_pair(x+dx,z+dz);
+                    auto it=std::lower_bound(columns.begin(),columns.end(),key,
+                        [](const auto& c,const auto& k){return c.x<k.first||(c.x==k.first&&c.z<k.second);});
+                    for(;it!=columns.end()&&it->x==key.first&&it->z==key.second;++it) {
+                        if(layered && (it->interval.lo>middle || it->interval.hi<middle))continue;
+                        const auto& particle=m_particles[it->interval.particle];
+                        const double halfReach=(columnWidth+particle.spacing)*.5;
+                        const double tolerance=8*std::numeric_limits<float>::epsilon()*
+                            (1+glm::length(glm::dvec3(particle.position))+glm::length(glm::dvec3(point)));
+                        if(std::abs(it->actualX-px)<halfReach-tolerance&&std::abs(it->actualZ-pz)<halfReach-tolerance)return true;
+                    }
+                }
+                return false;
+            };
+            const auto wetContact=[&](std::int64_t x,std::int64_t z) {
+                if(!geometry)return false;
+                const auto key=std::make_pair(x,z);
                 auto it=std::lower_bound(columns.begin(),columns.end(),key,
                     [](const auto& c,const auto& k){return c.x<k.first||(c.x==k.first&&c.z<k.second);});
-                for(;it!=columns.end()&&it->x==key.first&&it->z==key.second;++it) {
+                for(;it!=columns.end()&&it->x==x&&it->z==z;++it) {
                     const auto& particle=m_particles[it->interval.particle];
-                    const double halfReach=(columnWidth+particle.spacing)*.5;
-                    const double tolerance=8*std::numeric_limits<float>::epsilon()*
-                        (1+glm::length(glm::dvec3(particle.position))+glm::length(glm::dvec3(point)));
-                    if(std::abs(it->actualX-px)<halfReach-tolerance&&std::abs(it->actualZ-pz)<halfReach-tolerance)return true;
+                    const auto actual=bandPoint+tangent*it->actualX+bitangent*it->actualZ;
+                    if(geometry->Touches(actual,particle.spacing*.5))return true;
                 }
+                return false;
+            };
+            if(!FluidWetSupportThroughSolid(wet,columnWidth,{originX,originZ},covered,notEmpty,wetContact))return 0.0;
+        }
+        return total>0 ? weighted/total : 0.0;
+    };
+    if(!splitHeights)out.fraction=static_cast<float>(measureBand(-halfHeight,halfHeight,false));
+    else if(halfHeight==0)out.fraction=static_cast<float>(measureBand(0,0,true));
+    else {
+        std::vector<double> cuts{-halfHeight,halfHeight};
+        for(const auto& profile:profiles) {
+            if(profile.continuous) {
+                for(const double end:{profile.low,profile.high})if(end> -halfHeight && end<halfHeight)cuts.push_back(end);
+            } else for(const auto& span:profile.layers) {
+                for(const double end:{span.first,span.second})if(end> -halfHeight && end<halfHeight)cuts.push_back(end);
             }
-            return false;
-        };
-        const auto wetContact=[&](std::int64_t x,std::int64_t z) {
-            if(!occlusion)return false;
-            const auto key=std::make_pair(x,z);
-            auto it=std::lower_bound(columns.begin(),columns.end(),key,
-                [](const auto& c,const auto& k){return c.x<k.first||(c.x==k.first&&c.z<k.second);});
-            for(;it!=columns.end()&&it->x==x&&it->z==z;++it) {
-                const auto& particle=m_particles[it->interval.particle];
-                const auto actual=glm::dvec3(point)+tangent*it->actualX+bitangent*it->actualZ;
-                if(occlusion->Touches(actual,particle.spacing*.5))return true;
-            }
-            return false;
-        };
-        if (!FluidWetSupportThroughSolid(wetFootprint,columnWidth,{originX,originZ},covered,notEmpty,wetContact)) return out;
+        }
+        std::sort(cuts.begin(),cuts.end());
+        cuts.erase(std::unique(cuts.begin(),cuts.end()),cuts.end());
+        double occupied=0;
+        for(std::size_t k=1;k<cuts.size();++k)occupied+=(cuts[k]-cuts[k-1])*measureBand(cuts[k-1],cuts[k],true);
+        out.fraction=static_cast<float>(occupied/(2*halfHeight));
     }
-    if (columnWeight>0) out.fraction=static_cast<float>(weightedFraction/columnWeight);
-    if (out.fraction>0) {
-        if (bulkWeight>0) { out.velocity=glm::vec3(bulkVelocity/bulkWeight); out.acceleration=glm::vec3(bulkAcceleration/bulkWeight); }
-        else if (extensionWeight>0) { out.velocity=glm::vec3(extensionVelocity/extensionWeight); out.acceleration=glm::vec3(extensionAcceleration/extensionWeight); }
+    if(out.fraction>0) {
+        if(bulkWeight>0){out.velocity=glm::vec3(bulkVelocity/bulkWeight);out.acceleration=glm::vec3(bulkAcceleration/bulkWeight);}
+        else if(extensionWeight>0){out.velocity=glm::vec3(extensionVelocity/extensionWeight);out.acceleration=glm::vec3(extensionAcceleration/extensionWeight);}
     }
     return out;
+
 }
 FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& field,const FluidVolumeQuadrature& volume,const BodyTransform& pose,const GravityField& gravity,FluidVolumeGeometry geometry) {
     FluidHydrostaticResult out; out.totalVolume=volume.totalVolume; out.density=field.RestDensity(); out.submergedCentroid=pose.position;
@@ -336,11 +442,27 @@ FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& fi
             const float length2=glm::dot(projected,projected);
             if (length2>best) {best=length2;tangent=projected;}
         }
+        tangent=field.ReconstructionTangent(up,tangent);
         const FluidSolidQuery solid{volume,pose};
         const auto fluid=field.Query(point,up,height,volume.boundRadius,tangent,
             geometry==FluidVolumeGeometry::DisplacedSolid ? &solid : nullptr,true);
         const double v=static_cast<double>(sample.volume)*fluid.fraction;
         const glm::dvec3 f=-static_cast<double>(fluid.density)*v*(glm::dvec3(g)-glm::dvec3(fluid.acceleration));
+        const glm::dvec3 r(offset);
+        glm::dmat3 intrinsic(0);
+        if(sample.localRadius==0) {
+            const auto h=glm::dvec3(sample.localHalfExtents);
+            glm::dmat3 diagonal(0);
+            diagonal[0][0]=(h.y*h.y+h.z*h.z)/3;
+            diagonal[1][1]=(h.x*h.x+h.z*h.z)/3;
+            diagonal[2][2]=(h.x*h.x+h.y*h.y)/3;
+            const auto rotation=glm::mat3_cast(glm::dquat(pose.rotation)*glm::dquat(sample.localRotation));
+            intrinsic=rotation*diagonal*glm::transpose(rotation);
+        }
+        out.wetFirstMoment+=v*r;
+        out.wetAngularMoment+=v*(glm::dmat3(glm::dot(r,r))-glm::outerProduct(r,r)+intrinsic);
+        out.fluidVelocityMoment+=v*glm::cross(r,glm::dvec3(fluid.velocity));
+        out.fluidAccelerationMoment+=v*glm::cross(r,glm::dvec3(fluid.acceleration));
         wet+=v; center+=v*glm::dvec3(point); velocity+=v*glm::dvec3(fluid.velocity); acceleration+=v*glm::dvec3(fluid.acceleration);
         force+=f; torque+=glm::cross(glm::dvec3(offset),f);
     }

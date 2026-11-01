@@ -1,0 +1,34 @@
+{
+  "step": 41,
+  "differences": {
+    "y": {
+      "baseline": "2.0559177398681641",
+      "candidate": "2.0558969974517822"
+    },
+    "vy": {
+      "baseline": "2.1639506816864014",
+      "candidate": "2.1627025604248047"
+    },
+    "immersion": {
+      "baseline": "0.35806423425674438",
+      "candidate": "0.34017711877822876"
+    },
+    "bfx": {
+      "baseline": "-4.8189735412597656",
+      "candidate": "-4.9118971824645996"
+    },
+    "bfy": {
+      "baseline": "393.70211791992188",
+      "candidate": "381.0081787109375"
+    },
+    "bfz": {
+      "baseline": "-10.990170478820801",
+      "candidate": "-10.899972915649414"
+    },
+    "body_ke": {
+      "baseline": "187.62456576898694",
+      "candidate": "187.40888295695186"
+    }
+  },
+  "note": "Body endpoint diagnostics, not a trace of all internal solver boundaries or independent wet-geometry oracle."
+}

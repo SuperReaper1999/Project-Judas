@@ -1,0 +1,290 @@
+[
+  {
+    "orientation": 0,
+    "mode": "replay",
+    "fraction": 0.0,
+    "error": -0.5
+  },
+  {
+    "orientation": 0,
+    "mode": "sliced-replay",
+    "fraction": 0.0,
+    "error": -0.5
+  },
+  {
+    "orientation": 1,
+    "mode": "replay",
+    "fraction": 0.4777979552745819,
+    "error": -0.02220204472541809
+  },
+  {
+    "orientation": 1,
+    "mode": "sliced-replay",
+    "fraction": 0.47279056906700134,
+    "error": -0.027209430932998657
+  },
+  {
+    "orientation": 2,
+    "mode": "replay",
+    "fraction": 0.49845173954963684,
+    "error": -0.0015482604503631592
+  },
+  {
+    "orientation": 2,
+    "mode": "sliced-replay",
+    "fraction": 0.4904170632362366,
+    "error": -0.009582936763763428
+  },
+  {
+    "orientation": 3,
+    "mode": "replay",
+    "fraction": 0.4821910262107849,
+    "error": -0.017808973789215088
+  },
+  {
+    "orientation": 3,
+    "mode": "sliced-replay",
+    "fraction": 0.48385345935821533,
+    "error": -0.016146540641784668
+  },
+  {
+    "orientation": 4,
+    "mode": "replay",
+    "fraction": 0.5,
+    "error": 0.0
+  },
+  {
+    "orientation": 4,
+    "mode": "sliced-replay",
+    "fraction": 0.4883137345314026,
+    "error": -0.011686265468597412
+  },
+  {
+    "orientation": 5,
+    "mode": "replay",
+    "fraction": 0.4988502264022827,
+    "error": -0.0011497735977172852
+  },
+  {
+    "orientation": 5,
+    "mode": "sliced-replay",
+    "fraction": 0.49337276816368103,
+    "error": -0.00662723183631897
+  },
+  {
+    "orientation": 6,
+    "mode": "replay",
+    "fraction": 0.49646055698394775,
+    "error": -0.003539443016052246
+  },
+  {
+    "orientation": 6,
+    "mode": "sliced-replay",
+    "fraction": 0.4892563819885254,
+    "error": -0.01074361801147461
+  },
+  {
+    "orientation": 7,
+    "mode": "replay",
+    "fraction": 0.47003304958343506,
+    "error": -0.02996695041656494
+  },
+  {
+    "orientation": 7,
+    "mode": "sliced-replay",
+    "fraction": 0.46327608823776245,
+    "error": -0.03672391176223755
+  },
+  {
+    "orientation": 8,
+    "mode": "replay",
+    "fraction": 0.4981068968772888,
+    "error": -0.0018931031227111816
+  },
+  {
+    "orientation": 8,
+    "mode": "sliced-replay",
+    "fraction": 0.49318867921829224,
+    "error": -0.006811320781707764
+  },
+  {
+    "orientation": 9,
+    "mode": "replay",
+    "fraction": 0.47381165623664856,
+    "error": -0.02618834376335144
+  },
+  {
+    "orientation": 9,
+    "mode": "sliced-replay",
+    "fraction": 0.46426481008529663,
+    "error": -0.03573518991470337
+  },
+  {
+    "orientation": 10,
+    "mode": "replay",
+    "fraction": 0.480317622423172,
+    "error": -0.019682377576828003
+  },
+  {
+    "orientation": 10,
+    "mode": "sliced-replay",
+    "fraction": 0.47113826870918274,
+    "error": -0.02886173129081726
+  },
+  {
+    "orientation": 11,
+    "mode": "replay",
+    "fraction": 0.49939629435539246,
+    "error": -0.0006037056446075439
+  },
+  {
+    "orientation": 11,
+    "mode": "sliced-replay",
+    "fraction": 0.4879020154476166,
+    "error": -0.012097984552383423
+  },
+  {
+    "orientation": 12,
+    "mode": "replay",
+    "fraction": 0.49872350692749023,
+    "error": -0.0012764930725097656
+  },
+  {
+    "orientation": 12,
+    "mode": "sliced-replay",
+    "fraction": 0.4911477565765381,
+    "error": -0.008852243423461914
+  },
+  {
+    "orientation": 13,
+    "mode": "replay",
+    "fraction": 0.47215333580970764,
+    "error": -0.02784666419029236
+  },
+  {
+    "orientation": 13,
+    "mode": "sliced-replay",
+    "fraction": 0.4506829082965851,
+    "error": -0.04931709170341492
+  },
+  {
+    "orientation": 14,
+    "mode": "replay",
+    "fraction": 0.5,
+    "error": 0.0
+  },
+  {
+    "orientation": 14,
+    "mode": "sliced-replay",
+    "fraction": 0.495503306388855,
+    "error": -0.0044966936111450195
+  },
+  {
+    "orientation": 15,
+    "mode": "replay",
+    "fraction": 0.49993017315864563,
+    "error": -6.982684135437012e-05
+  },
+  {
+    "orientation": 15,
+    "mode": "sliced-replay",
+    "fraction": 0.49123916029930115,
+    "error": -0.008760839700698853
+  },
+  {
+    "orientation": 16,
+    "mode": "replay",
+    "fraction": 0.4975172281265259,
+    "error": -0.002482771873474121
+  },
+  {
+    "orientation": 16,
+    "mode": "sliced-replay",
+    "fraction": 0.49235913157463074,
+    "error": -0.007640868425369263
+  },
+  {
+    "orientation": 17,
+    "mode": "replay",
+    "fraction": 0.49445730447769165,
+    "error": -0.00554269552230835
+  },
+  {
+    "orientation": 17,
+    "mode": "sliced-replay",
+    "fraction": 0.49278512597084045,
+    "error": -0.007214874029159546
+  },
+  {
+    "orientation": 18,
+    "mode": "replay",
+    "fraction": 0.46126261353492737,
+    "error": -0.03873738646507263
+  },
+  {
+    "orientation": 18,
+    "mode": "sliced-replay",
+    "fraction": 0.4494014382362366,
+    "error": -0.05059856176376343
+  },
+  {
+    "orientation": 19,
+    "mode": "replay",
+    "fraction": 0.4985932409763336,
+    "error": -0.0014067590236663818
+  },
+  {
+    "orientation": 19,
+    "mode": "sliced-replay",
+    "fraction": 0.4961009919643402,
+    "error": -0.00389900803565979
+  },
+  {
+    "orientation": 20,
+    "mode": "replay",
+    "fraction": 0.4767668545246124,
+    "error": -0.023233145475387573
+  },
+  {
+    "orientation": 20,
+    "mode": "sliced-replay",
+    "fraction": 0.47610029578208923,
+    "error": -0.023899704217910767
+  },
+  {
+    "orientation": 21,
+    "mode": "replay",
+    "fraction": 0.4988701343536377,
+    "error": -0.0011298656463623047
+  },
+  {
+    "orientation": 21,
+    "mode": "sliced-replay",
+    "fraction": 0.495288223028183,
+    "error": -0.004711776971817017
+  },
+  {
+    "orientation": 22,
+    "mode": "replay",
+    "fraction": 0.49963581562042236,
+    "error": -0.0003641843795776367
+  },
+  {
+    "orientation": 22,
+    "mode": "sliced-replay",
+    "fraction": 0.48958808183670044,
+    "error": -0.01041191816329956
+  },
+  {
+    "orientation": 23,
+    "mode": "replay",
+    "fraction": 0.49892956018447876,
+    "error": -0.0010704398155212402
+  },
+  {
+    "orientation": 23,
+    "mode": "sliced-replay",
+    "fraction": 0.49337488412857056,
+    "error": -0.006625115871429443
+  }
+]

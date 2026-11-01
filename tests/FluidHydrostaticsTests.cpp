@@ -97,16 +97,25 @@ int main() {
     particles={{{0,-1,0},{0,-1,0},{0,0,0},8,{0,0,0}},{{0,1,0},{0,1,0},{0,0,0},8,{0,0,0}}};field.Build(particles,1000);
     Near(field.Query({0,0,0},{0,1,0},.1f,.3f,{1,0,0}).fraction,0,0,"disconnected vertical layers retain air gap");
     const auto before=field.Query({0,-1,0},{0,1,0},.05f,.3f,{1,0,0});for(int i=0;i<20;++i)Near(field.Query({0,-1,0},{0,1,0},.05f,.3f,{1,0,0}).fraction,before.fraction,0,"repeated deterministic query");
-    // Independent constant-field witness: both contributing particles lie
-    // outside the former spherical motion kernel (reach=.1+2*.2=.5), while
-    // the finite column envelope [-.7,.7] covers the whole sample [-.3,.3].
+    // Regression: donor reach is not occupied geometry. The old min/max
+    // envelope filled this metre-wide air gap and falsely reported full water.
     particles={{{0,-.6f,0},{0,-.6f,0},{.4f,-.2f,.1f},8,gravity.value},
                {{0, .6f,0},{0, .6f,0},{.4f,-.2f,.1f},8,gravity.value}};
     field.Build(particles,1000);
     const auto wideColumn=field.Query({0,0,0},{0,1,0},.3f,.1f,{1,0,0});
-    Near(wideColumn.fraction,1,2e-6,"wet envelope has finite column support");
-    VectorNear(wideColumn.velocity,{.4f,-.2f,.1f},2e-6f,"wide wet envelope preserves common velocity");
-    VectorNear(wideColumn.acceleration,gravity.value,2e-6f,"wide wet envelope preserves common gravity acceleration");
+    Near(wideColumn.fraction,0,0,"wide vertical air gap has no water");
+    VectorNear(wideColumn.velocity,{0,0,0},0,"dry vertical gap has no fluid velocity");
+    VectorNear(wideColumn.acceleration,{0,0,0},0,"dry vertical gap has no fluid acceleration");
+    // Keep the independent missing-spherical-donor coverage. Both centres
+    // lie outside reach=.4, but their actual intervals overlap the taller
+    // sample by .4m out of 1.2m. Uniform flow must survive that partial support.
+    particles={{{0,-.5f,0},{0,-.5f,0},{.4f,-.2f,.1f},8,gravity.value},
+               {{0, .5f,0},{0, .5f,0},{.4f,-.2f,.1f},8,gravity.value}};
+    field.Build(particles,1000);
+    const auto splitColumn=field.Query({0,0,0},{0,1,0},.6f,0,{1,0,0});
+    Near(splitColumn.fraction,1./3.,2e-6,"split layers retain their actual occupied fraction");
+    VectorNear(splitColumn.velocity,{.4f,-.2f,.1f},2e-6f,"split wet layers preserve common velocity");
+    VectorNear(splitColumn.acceleration,gravity.value,2e-6f,"split wet layers preserve common gravity acceleration");
     // Occupancy is full on both sides of this row-entry event. Local bulk
     // flow interpolation must not jump merely because another interval first
     // touches a quadrature footprint by an infinitesimal amount.
@@ -190,7 +199,8 @@ int main() {
     // window is filled. This is a hydrostatic envelope, not multiphase CFD.
     particles={{{0,-.3f,0},{0,-.3f,0},{0,0,0},8,{0,0,0}},{{0,.3f,0},{0,.3f,0},{0,0,0},8,{0,0,0}}};field.Build(particles,1000);
     const auto unresolvedPocket=field.Query({0,0,0},{0,1,0},.05f,.3f,{1,0,0});
-    std::cout<<"approximation_limit near_air_pocket_fraction="<<unresolvedPocket.fraction<<" physical_point_occupancy=0 local_envelope_occupancy=1\n";
+    Near(unresolvedPocket.fraction,0,0,"nearby vertical pocket is now resolved");
+    std::cout<<"resolved_air_pocket_fraction="<<unresolvedPocket.fraction<<" physical_point_occupancy=0\n";
     // Regression: a motion-donor radius is not a physical water footprint.
     // Previously one distant column normalized its own tiny weight to 100%
     // wetness, and applied buoyancy to any sufficiently nearby dry body.

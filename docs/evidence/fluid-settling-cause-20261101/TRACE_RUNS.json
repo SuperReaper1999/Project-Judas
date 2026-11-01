@@ -1,0 +1,80 @@
+[
+  {
+    "arm": "baseline",
+    "case": "half_020",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-baseline",
+      "--case",
+      "half_020",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/baseline-half_020"
+    ],
+    "exit_code": 0,
+    "seconds": 4.822420690994477
+  },
+  {
+    "arm": "baseline",
+    "case": "half_025",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-baseline",
+      "--case",
+      "half_025",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/baseline-half_025"
+    ],
+    "exit_code": 0,
+    "seconds": 2.567921538000519
+  },
+  {
+    "arm": "baseline",
+    "case": "light_80kg",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-baseline",
+      "--case",
+      "light_80kg",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/baseline-light_80kg"
+    ],
+    "exit_code": 0,
+    "seconds": 4.720445620994724
+  },
+  {
+    "arm": "current",
+    "case": "half_020",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-current",
+      "--case",
+      "half_020",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/current-half_020"
+    ],
+    "exit_code": 1,
+    "seconds": 5.421712887000467
+  },
+  {
+    "arm": "current",
+    "case": "half_025",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-current",
+      "--case",
+      "half_025",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/current-half_025"
+    ],
+    "exit_code": 1,
+    "seconds": 2.767962225996598
+  },
+  {
+    "arm": "current",
+    "case": "light_80kg",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/trace-current",
+      "--case",
+      "light_80kg",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-settling-cause-20261101/current-light_80kg"
+    ],
+    "exit_code": 1,
+    "seconds": 5.122596428001998
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-01T02:37:30.535335+00:00",
+  "parent_commit": "90a97547e7148f2ba179fb5d6a547d1e94a21188",
+  "branch": "Experimental",
+  "main": "49c4f3d9e29debe669411f01501e0276dea23231",
+  "scope": "Verified engine corrections; NOT a full fluid unlock. One existing production immersion assertion remains failed. Tests/limits unchanged.",
+  "source_sha256": {
+    "src/FluidHydrostatics.cpp": "c1567e08457668b3f87ddf8781d1d6dc059f5887fe7fb1dbaedfb13efbf16786",
+    "src/FluidHydrostatics.h": "ae5aeea94e15cebc71a0ceae251e7a2eed683129a813a659d67721c4a80a36a2",
+    "src/FluidColumnLayers.h": "be009b0259f8da699907ca8022c4e7d592bdc093b61ea5169f773aeb31f8c0a0",
+    "src/FluidWetFootprint.h": "eb66d046bc1c369022402546ff61446fd9f1a2c4c0d9fc613942bcdb29db7747",
+    "src/FluidVolumeDrag.h": "2fcb1ea291dd16577bac6c630b954769ef89bc9a22048f36b499587c65f81a6e",
+    "src/ProductionFluidCoupling.cpp": "caac84fda9a490dc5e32f92ae7968a8289d87174d0f45b5e08a4bf36c9a3efdc",
+    "tests/FluidHydrostaticsTests.cpp": "03edf8204ad2ac72e681286ffde7eb23b527b21a68e3c792ac471285baff6b02",
+    "tests/FluidVerticalSupportTests.cpp": "bf00b0e07275d6953e8f52ab0c86c8b95cf4cd077bfcd00846c73a6f18a61e91",
+    "tests/FluidVolumeDragTests.cpp": "d294ea65c109f33cbf6bd6158231d9597353599fe5284db28270ad1811b60d55",
+    "tests/ProductionFluidTests.cpp": "fad4e808e2fba5fff9f56934181a5e8f206184c2ef6f2880dc4a1e89ab8099b2",
+    "tests/FluidSettlingContract.h": "d697da0fa12454ad699dce25fb98973af9e2df4c02e151fedbebdb03a1db781b",
+    "tests/FluidSettlingContractTests.cpp": "14399beda96f7d0500f652d922a9289740a2a90170c335ff1078757a0af3e0a9",
+    "tests/FluidSettlingReferenceTests.cpp": "37b399aea2e677029e77277c8c0fc7654603a940381699896636fb843ade3452",
+    "CMakeLists.txt": "24d43637ff2623ca1be775101becb77b9ce42b12fdbc41e0792b2e7c3adc1198",
+    "tools/validation/suites.json": "44d85d8b178983914a855f23a84ec467984571e42b4f790725708039f3b629d4",
+    "docs/FLUID_PROGRESS_CHECKPOINT.md": "917d3f7b1974433e9e5870bbe6efa215e695ef3cd77c516a73e67f062941d8c3"
+  },
+  "post_cleanup_binary_sha256": {
+    "judas_production_fluid_tests": "d8b9a659663d250e8357d68ea66ecbed78d5b5e51e46c1ebb3cb3bc391b7c1eb",
+    "judas_fluid_volume_drag_tests": "c23356e2b95c51b60d43c5e65f9bfe6b4f25ffb7b054acd4ee40f0a46b672353",
+    "judas_fluid_vertical_support_tests": "4dd6ffcc1babc20ac5c6b13b726578563cd6b52f6a617d59b7d2e778cc235cdf",
+    "judas_fluid_hydrostatics_tests": "1fa2dc3df087c153fc949c1012ac0a82404c93ea0859b48f57bd092a9e47c8cb",
+    "judas_fluid_wet_support_tests": "87d96e88c6a2abaad2a61a33e5f0e7f7aa5d6946b0c64b99d62ea0d7b4742741"
+  },
+  "pre_cleanup_full_qualification": "run/final/RESULTS.json",
+  "post_cleanup_validation": "run/post-cleanup/RESULTS.json",
+  "provenance_note": "Binaries built from explicitly fingerprinted dirty Experimental sources before checkpoint commit. Source identity is verified against commit after checkpointing."
+}

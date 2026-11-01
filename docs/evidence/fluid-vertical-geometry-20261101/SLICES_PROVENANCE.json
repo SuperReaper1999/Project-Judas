@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-01T00:31:50.048743+00:00",
+  "baseline": "90a97547e7148f2ba179fb5d6a547d1e94a21188",
+  "source_sha256": {
+    "src/FluidHydrostatics.cpp": "10b0598edf6ec8da7151a5aceac546c7ce6ca91dbf4fc79f8d2e4702c264d934",
+    "src/FluidHydrostatics.h": "ad8fce9b93d0d7037cf0886f8e8e0e9747407c50bf23ac17145c63469b97a2bb",
+    "src/FluidWetFootprint.h": "870268fdfb74272853bb98698479173699c01fae3bbe9f935a69d861fa6cba76",
+    "src/FluidColumnLayers.h": "e6afac4a88764e5d91c186c2a564ffdf0652428e65db01ef13378746a95f2987",
+    "tests/FluidVerticalSupportTests.cpp": "4b10e0fe578cbfbf697b701e12ab67c0483ad2d048e30595e5b450ecb8df6a5a",
+    "tests/FluidHydrostaticsTests.cpp": "03edf8204ad2ac72e681286ffde7eb23b527b21a68e3c792ac471285baff6b02",
+    "CMakeLists.txt": "bd10bdb0eec0c70411fd1529f97ae84a53ababb66addb39c8e7f513228b2a14a",
+    "tools/validation/suites.json": "3e9791cbdf14bdb3989adc750f8950f4aa2a16ed6a1489077c29e832c2e7566a"
+  },
+  "status": "uncommitted layered-query candidate; qualification pending; no Alpha unlock"
+}

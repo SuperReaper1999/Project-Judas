@@ -1,0 +1,290 @@
+[
+  {
+    "pair": 0,
+    "case": "wet",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.12553507100528805,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 0,
+    "case": "wet",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.10485992299800273,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 0,
+    "case": "dry",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.007722432994341943,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 0,
+    "case": "dry",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.006297835003351793,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 0,
+    "case": "layered",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.1843982389982557,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 0,
+    "case": "layered",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.19384051399538293,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 0,
+    "case": "cavity",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.1790335129990126,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  },
+  {
+    "pair": 0,
+    "case": "cavity",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.18368344099872047,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  },
+  {
+    "pair": 1,
+    "case": "wet",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.08734728999843355,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 1,
+    "case": "wet",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.12806120500317775,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 1,
+    "case": "dry",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.006540182999742683,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 1,
+    "case": "dry",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.00651196000399068,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 1,
+    "case": "layered",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.20094558100390714,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 1,
+    "case": "layered",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.17170006400556304,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 1,
+    "case": "cavity",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.18483226699754596,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  },
+  {
+    "pair": 1,
+    "case": "cavity",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.17751737299840897,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  },
+  {
+    "pair": 2,
+    "case": "wet",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.1244013530013035,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 2,
+    "case": "wet",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-wet.txt"
+    ],
+    "wall_seconds": 0.08773074400232872,
+    "samples": 20,
+    "input_sha256": "d5a5171181cd0d9d8d17903fa77e5ca16cc25aec069e7ef1a71b59f432691aff"
+  },
+  {
+    "pair": 2,
+    "case": "dry",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.005629225001030136,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 2,
+    "case": "dry",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/frozen-dry.txt"
+    ],
+    "wall_seconds": 0.005237956997007132,
+    "samples": 20,
+    "input_sha256": "90a2de93cadf75976edde3134e965f6b8c6c932612f9ec58626321a4cea611f5"
+  },
+  {
+    "pair": 2,
+    "case": "layered",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.17145447099755984,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 2,
+    "case": "layered",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-layered.txt"
+    ],
+    "wall_seconds": 0.1936727379943477,
+    "samples": 20,
+    "input_sha256": "94f8218a80fd889878a7244b2dc683a784de8bfb898f4c4b82b0bb237f45d6aa"
+  },
+  {
+    "pair": 2,
+    "case": "cavity",
+    "arm": "current",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-current",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.17991515500034438,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  },
+  {
+    "pair": 2,
+    "case": "cavity",
+    "arm": "optimized",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/query-optimized",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-vertical-support-20261101/frozen-cavity.txt"
+    ],
+    "wall_seconds": 0.18145774400181836,
+    "samples": 20,
+    "input_sha256": "6b9e954af5556599317e08a97ea1e43d832ec2952c5233dc23cfbf1d8d8f837f"
+  }
+]

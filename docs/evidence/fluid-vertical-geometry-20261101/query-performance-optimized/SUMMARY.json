@@ -1,0 +1,106 @@
+{
+  "wet": {
+    "baseline": {
+      "n": 60,
+      "median_ms": 3.212237,
+      "p95_ms": 3.284574,
+      "worst_ms": 4.290981,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        2116.07421875
+      ]
+    },
+    "optimized": {
+      "n": 60,
+      "median_ms": 3.6233825,
+      "p95_ms": 3.832237,
+      "worst_ms": 4.347037,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        2116.07421875
+      ]
+    }
+  },
+  "dry": {
+    "baseline": {
+      "n": 60,
+      "median_ms": 0.129129,
+      "p95_ms": 0.142058,
+      "worst_ms": 0.145986,
+      "fractions": [
+        0.0
+      ],
+      "force_y": [
+        0.0
+      ]
+    },
+    "optimized": {
+      "n": 60,
+      "median_ms": 0.13850649999999998,
+      "p95_ms": 0.151626,
+      "worst_ms": 0.243419,
+      "fractions": [
+        0.0
+      ],
+      "force_y": [
+        0.0
+      ]
+    }
+  },
+  "layered": {
+    "baseline": {
+      "n": 60,
+      "median_ms": 3.054545,
+      "p95_ms": 3.082132,
+      "worst_ms": 3.08678,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        588.6000366210938
+      ]
+    },
+    "optimized": {
+      "n": 60,
+      "median_ms": 8.24361,
+      "p95_ms": 8.335859,
+      "worst_ms": 8.637187,
+      "fractions": [
+        0.3333333432674408
+      ],
+      "force_y": [
+        196.2000274658203
+      ]
+    }
+  },
+  "cavity": {
+    "baseline": {
+      "n": 60,
+      "median_ms": 4.6970425,
+      "p95_ms": 4.742333,
+      "worst_ms": 4.752492,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        588.6000366210938
+      ]
+    },
+    "optimized": {
+      "n": 60,
+      "median_ms": 7.6679395,
+      "p95_ms": 7.689771,
+      "worst_ms": 7.741449,
+      "fractions": [
+        0.3333333432674408
+      ],
+      "force_y": [
+        196.2000274658203
+      ]
+    }
+  }
+}

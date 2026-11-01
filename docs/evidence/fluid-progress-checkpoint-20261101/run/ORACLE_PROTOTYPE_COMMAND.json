@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-checkpoint-20261101/local-observed",
+    "--case",
+    "half_025",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-checkpoint-20261101/local-observed-coarse"
+  ],
+  "exit_code": 1,
+  "scope": "Predeclared local affine stencil; unchanged +/-0.10 acceptance, all raw remote-plane observations retained."
+}

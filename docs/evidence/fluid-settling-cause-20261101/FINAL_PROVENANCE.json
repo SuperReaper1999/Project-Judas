@@ -1,0 +1,28 @@
+{
+  "utc": "2026-11-01T01:13:02.846675+00:00",
+  "head": "90a97547e7148f2ba179fb5d6a547d1e94a21188",
+  "branch": "Experimental",
+  "main": "49c4f3d9e29debe669411f01501e0276dea23231",
+  "status": "Uncommitted. Original three acceptance assertions remain unchanged and failed; contract review required. No production force or damping change. No Alpha unlock.",
+  "source_sha256": {
+    "tests/FluidSettlingReferenceTests.cpp": "5b8865e5f5344c3e58d2951885526836aef5f875cea5e6304a6b33c9cfbe6c9c",
+    "CMakeLists.txt": "6499817973aebe833cb50d7976c125b85b15ce798451da58507c01a6be314f24",
+    "tools/validation/suites.json": "fc373ad3ff84a7063d6b56e29d7216e3ee6f6fdde62833b81ae587554c17dedf",
+    "docs/FLUID_SETTLING_CAUSE_REVIEW.md": "00a1f9f6001fd6bd371ed7294ccb97f62dfefa68a32cd043b6369cd6351f9da5",
+    "docs/FLUID_VERTICAL_GEOMETRY_CANDIDATE.md": "9f3fe0ab4a02ebcc667905ed0677c2621da34052790814626040696225f13936"
+  },
+  "unchanged_physics_sha256": {
+    "src/FluidHydrostatics.cpp": "184c8e4ad9d526057485a998ef9f8e0821307c96b33b2cfc38bd4098a4cdf489",
+    "src/ProductionFluidCoupling.cpp": "219d30bc1664ebc61ad45d4bed3bbbedc94bb4db6a4fc6cc02075eedc5afc035",
+    "src/FluidWorld.cpp": "e7943c00356ba06e484c25c0deb02dc3c2970dd75997731b7e4a4d03b7e3a0c5",
+    "tests/ProductionFluidTests.cpp": "fe12173c7a94663d618ad1d36c01be528f9b2d5267c0b1d48e6fbd53ed420c02",
+    "src/Project.cpp": "074f4e812feeffc5d5eb6230049223d61f527e5abbae53e41633c0a2569a0927"
+  },
+  "binary_sha256": {
+    "judas_fluid_settling_reference_tests": "d65e397fb2cb139335ebb1b490fa3c3507e3e81280a6f018bea1275e443bd3bc",
+    "judas_production_fluid_tests": "47754ac6587a5426436915987444031ff604206a669b3684eca98fd2c1252c6f",
+    "judas_fluid_vertical_support_tests": "925d32aa81a22c71fc0f0e4036f4b1a3ef53a01f2045c57256dcd9be94d4268f"
+  },
+  "reference_inputs": "calm-parameters.txt; CALM_INPUTS.json; exact recorded source values embedded in tests/FluidSettlingReferenceTests.cpp",
+  "source_origin_note": "Native public API controls use current engine. Baseline trace substitutes only pinned hydrostatic TU; private layout is identical to current. Traced rows proved exact against uninstrumented physical CSVs."
+}

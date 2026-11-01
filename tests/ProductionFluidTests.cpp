@@ -1,4 +1,5 @@
 #include "Project.h"
+#include "FluidSettlingContract.h"
 // FTFT9 actual authored-scene -> ordinary fixed-step hybrid body checks.
 #include <algorithm>
 #include <chrono>
@@ -19,11 +20,11 @@
 #include "ProductionFluidCoupling.h"
 #include "Window.h"
 namespace {
-namespace fs=std::filesystem;constexpr float dt=1.0f/60;int checks=0,failed=0,diagnosticChecks=0,diagnosticFailures=0,totalSteps=0;bool strictDiagnostics=false;std::string selectedCase;
+namespace fs=std::filesystem;constexpr float dt=1.0f/60;int checks=0,failed=0,diagnosticChecks=0,diagnosticFailures=0,totalSteps=0;bool strictDiagnostics=false,legacyFourSecond=false,strictLegacySettling=false;int legacyComparisons=0,legacyFailures=0,legacyMandatoryFailures=0;std::string selectedCase;
 void Check(bool ok,const std::string& label){++checks;if(!ok){++failed;std::cout<<"FAIL "<<label<<'\n';}}
 void DiagnosticCheck(bool ok,const std::string& label){++checks;++diagnosticChecks;if(!ok){++diagnosticFailures;std::cout<<"DIAGNOSTIC_FAIL "<<label<<'\n';}}
 int ReportedFailures(){return failed+(strictDiagnostics?diagnosticFailures:0);}
-void PrintSummary(){std::cout<<"SUMMARY checks="<<checks<<" failures="<<ReportedFailures()<<" acceptance_failures="<<failed<<" diagnostic_checks="<<diagnosticChecks<<" diagnostic_failures="<<diagnosticFailures<<" strict_diagnostics="<<strictDiagnostics<<" steps="<<totalSteps<<'\n';}
+void PrintSummary(){std::cout<<"SUMMARY checks="<<checks<<" failures="<<ReportedFailures()<<" acceptance_failures="<<failed<<" diagnostic_checks="<<diagnosticChecks<<" diagnostic_failures="<<diagnosticFailures<<" strict_diagnostics="<<strictDiagnostics<<" steps="<<totalSteps<<" settling_mode="<<(legacyFourSecond?"legacy_four_second":"window_decay")<<" legacy_comparisons="<<legacyComparisons<<" legacy_failures="<<legacyFailures<<" legacy_mandatory_failures="<<legacyMandatoryFailures<<'\n';}
 struct Result { float finalY=0,finalV=0,meanFraction=0,maxSpeed=0;double medianParticleMs=0,medianExecutedMs=0,amortizedMs=0,energy=0;int count=0; };
 double Median(std::vector<double> values){if(values.empty())return 0;std::sort(values.begin(),values.end());return values[values.size()/2];}
 // Independent raw-particle observation, shared by release validity and the
@@ -105,7 +106,15 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
   Check(surface&&*surface>=initial.y+half.y+spacing,name+" all density cases start fully submerged by one particle spacing");
  }
  const double initialWaterMass=world.Fluid().GetDiagnostics().totalMass;
- Result result;std::vector<double> executed,particleTimes;double totalMs=0,mean=0,observedMean=0;int meanCount=0;const int count=240;
+ std::optional<FluidTest::SettlingContract> settling;
+ if(densityRatio==.5f && g>0 && !freefall && !observationalScale && !legacyFourSecond) {
+  try { settling=FluidTest::SettlingContract::Make(world.FluidSettingsUsed().hydrostaticDragRate,densityRatio,dt); }
+  catch(const std::invalid_argument& e) { Check(false,name+" invalid settling contract: "+e.what()); return {}; }
+ }
+ FluidTest::WindowMotion earlyMotion,lateMotion;
+ float legacyV4=0,legacyY4=0;
+ Result result;std::vector<double> executed,particleTimes;double totalMs=0,mean=0,observedMean=0;int meanCount=0;
+ const int count=settling?static_cast<int>(settling->late.end):240;
  std::ofstream csv(out/(name+".csv"));csv<<std::setprecision(17)<<"step,y,vy,immersion,bfx,bfy,bfz,fluid_mass,fluid_ke,body_ke,fluid_step_ms,total_coupling_ms,executed,contact_caps,contact_relative_residual,acceleration_rejections,acceleration_boundary_declines,geometry_escapes,unresolved_geometry,geometry_candidates,max_geometry_escape_distance,pressure_reconstruction_samples,max_pressure_reconstruction_velocity_error,rms_pressure_reconstruction_velocity_error\n";
  for(int step=0;step<count;++step){StepPlayedWorld(session,window,dt);++totalSteps;const auto pose=world.Physics().GetTransform(handle);const auto velocity=world.Physics().GetLinearVelocity(handle);const auto omega=world.Physics().GetAngularVelocity(handle);
   const glm::vec3 local=glm::conjugate(q)*pose.position,localV=glm::conjugate(q)*velocity;const auto& m=world.FluidCoupling().Measurements();const auto liquid=world.Fluid().GetDiagnostics();
@@ -113,25 +122,30 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
   const double rigidEnergy=.5*actualMass*glm::dot(velocity,velocity)+.5*glm::dot(omega,world.Physics().GetInertiaWorld(handle)*omega);
   Check(std::isfinite(rigidEnergy)&&std::isfinite(liquid.kineticEnergy)&&glm::length(velocity)<100,name+" finite stable state");
   Check(std::abs(liquid.totalMass-initialWaterMass)<.001*std::max(1.,initialWaterMass),name+" finite liquid mass retained");
-  if(step>=180){
-   mean+=d->fraction;++meanCount;
-   // Independent observation: fit a horizontal surface from the highest
-   // particles in fixed exterior columns, then integrate the actual rotated
-   // box volume below it with a separate dense rectangular quadrature.
+  const bool originalMean=step>=180 && step<240;
+  const bool lateSample=settling && settling->late.Contains(static_cast<std::size_t>(step));
+  std::optional<double> observedFraction;
+  if(originalMean || lateSample){
+   // Independent exterior surface and dense rectangular quadrature. Keep the
+   // original 3-4 second oracle and also cover every late-window observation.
    const auto observedSurface=ObservedSurface(world.Fluid().Particles(),q,local,half,spacing,nx);
    if(observedSurface){
-    const double surface=*observedSurface;int wet=0;constexpr int n=32;
+    int wet=0;constexpr int n=32;
     for(int z=0;z<n;++z)for(int y=0;y<n;++y)for(int x=0;x<n;++x){
      const glm::vec3 offset=half*(glm::vec3(2*x+1,2*y+1,2*z+1)/float(n)-1.0f);
      const glm::vec3 point=glm::conjugate(q)*(pose.position+pose.rotation*offset);
-     if(point.y<surface)++wet;
+     if(point.y<*observedSurface)++wet;
     }
-    observedMean+=static_cast<double>(wet)/(n*n*n);
+    observedFraction=static_cast<double>(wet)/(n*n*n);
    }
   }
+  if(originalMean){mean+=d->fraction;++meanCount;if(observedFraction)observedMean+=*observedFraction;}
+  if(settling && settling->early.Contains(static_cast<std::size_t>(step)))earlyMotion.Add(local.y,localV.y,d->fraction);
+  if(lateSample)lateMotion.Add(local.y,localV.y,d->fraction,observedFraction.has_value(),observedFraction.value_or(0));
+  if(step==239){legacyV4=localV.y;legacyY4=local.y;}
   if(m.executed){executed.push_back(m.totalMilliseconds);particleTimes.push_back(m.particleMilliseconds);}totalMs+=m.totalMilliseconds;
   csv<<step<<','<<local.y<<','<<localV.y<<','<<d->fraction<<','<<d->buoyancyForce.x<<','<<d->buoyancyForce.y<<','<<d->buoyancyForce.z<<','<<liquid.totalMass<<','<<liquid.kineticEnergy<<','<<rigidEnergy<<','<<m.particleMilliseconds<<','<<m.totalMilliseconds<<','<<m.executed<<','<<m.contactIterationCaps<<','<<m.maximumContactRelativeResidual<<','<<m.normalAccelerationRejections<<','<<m.normalAccelerationBoundaryDeclines<<','<<(m.executed?liquid.geometryEscapeCount:0)<<','<<(m.executed?liquid.unresolvedGeometryCount:0)<<','<<(m.executed?liquid.geometryEscapeCandidates:0)<<','<<(m.executed?liquid.maximumGeometryEscapeDistance:0)<<','<<(m.executed?liquid.pressureReconstructionSamples:0)<<','<<(m.executed?liquid.maximumPressureReconstructionVelocityError:0)<<','<<(m.executed?liquid.rmsPressureReconstructionVelocityError:0)<<'\n';
-  if(step==9||step==239)snapshot("step"+std::to_string(step+1),handle);
+  if(step==9||step==239||(settling&&step==count-1))snapshot("step"+std::to_string(step+1),handle);
   result.finalY=local.y;result.finalV=localV.y;result.maxSpeed=std::max(result.maxSpeed,glm::length(velocity));result.energy=rigidEnergy+liquid.kineticEnergy;
  }
  result.meanFraction=static_cast<float>(mean/meanCount);result.count=count;result.medianParticleMs=Median(particleTimes);result.medianExecutedMs=Median(executed);result.amortizedMs=totalMs/count;
@@ -143,14 +157,48 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
   const auto expectation=observationalScale?DiagnosticCheck:Check;
   expectation(std::abs(result.meanFraction-.5f)<=.10f,name+" half-density sampled equilibrium immersion within 10 percentage points");
   expectation(std::abs(observedMean/meanCount-.5)<=.10,name+" independent measured box/surface immersion within 10 percentage points");
-  expectation(std::abs(result.finalV)<.5f,name+" settles rather than passing through desired immersion");
+  const bool legacyPass=std::abs(legacyV4)<.5f;
+  ++legacyComparisons;if(!legacyPass){++legacyFailures;if(!observationalScale)++legacyMandatoryFailures;}
+  std::cout<<std::setprecision(17)<<"LEGACY_SETTLING "<<name<<" status="<<(legacyPass?"PASS":"FAIL")<<" observational_scale="<<observationalScale<<" time=4 limit=0.5 y="<<legacyY4<<" vy="<<legacyV4<<'\n';
+  if(!settling || strictLegacySettling)
+   expectation(legacyPass,name+" settles rather than passing through desired immersion");
+  if(settling){
+   const auto verdict=FluidTest::Assess(*settling,earlyMotion,lateMotion,std::sqrt(std::abs(g)*half.y));
+   Check(verdict.coverage,name+" complete valid early/late settling observations");
+   Check(verdict.peak,name+" peak vertical speed below 0.5 m/s over the late window");
+   Check(verdict.rmsDecay,name+" late RMS vertical speed decays by at least half");
+   Check(verdict.rangeDecay,name+" late vertical travel range decays by at least half");
+   Check(verdict.immersion,name+" late sampled equilibrium immersion within 10 percentage points");
+   Check(verdict.independentImmersion,name+" late independent equilibrium immersion within 10 percentage points");
+   std::cout<<"SETTLING_WINDOW "<<name<<" tau="<<settling->timeConstant
+    <<" early_begin="<<settling->early.first*double(dt)<<" early_end="<<settling->early.end*double(dt)
+    <<" late_begin="<<settling->late.first*double(dt)<<" late_end="<<settling->late.end*double(dt)
+    <<" early_rms="<<earlyMotion.Rms()<<" late_rms="<<lateMotion.Rms()<<" late_peak="<<lateMotion.peakSpeed
+    <<" early_range="<<earlyMotion.Range()<<" late_range="<<lateMotion.Range()
+    <<" sampled_fraction="<<lateMotion.MeanImmersion()<<" observed_fraction="<<lateMotion.MeanIndependent()<<'\n';
+   std::ofstream report(out/(name+"_settling.json"));report<<std::setprecision(17)<<std::boolalpha
+    <<"{\n  \"schema\": 1,\n  \"time_constant_seconds\": "<<settling->timeConstant
+    <<",\n  \"speed_limit\": "<<settling->speedLimit<<",\n  \"decay_ratio\": "<<settling->decayRatio
+    <<",\n  \"early_first_step\": "<<settling->early.first<<",\n  \"early_end_step\": "<<settling->early.end
+    <<",\n  \"late_first_step\": "<<settling->late.first<<",\n  \"late_end_step\": "<<settling->late.end
+    <<",\n  \"early_samples\": "<<earlyMotion.count<<",\n  \"late_samples\": "<<lateMotion.count
+    <<",\n  \"late_independent_samples\": "<<lateMotion.independentCount
+    <<",\n  \"late_sampled_fraction\": "<<lateMotion.MeanImmersion()<<",\n  \"late_independent_fraction\": "<<lateMotion.MeanIndependent()
+    <<",\n  \"legacy_four_second_pass\": "<<legacyPass<<",\n  \"legacy_v4\": "<<legacyV4
+    <<",\n  \"early_rms\": "<<earlyMotion.Rms()<<",\n  \"late_rms\": "<<lateMotion.Rms()
+    <<",\n  \"early_range\": "<<earlyMotion.Range()<<",\n  \"late_range\": "<<lateMotion.Range()
+    <<",\n  \"late_peak\": "<<lateMotion.peakSpeed<<",\n  \"coverage_pass\": "<<verdict.coverage
+    <<",\n  \"peak_pass\": "<<verdict.peak<<",\n  \"rms_decay_pass\": "<<verdict.rmsDecay
+    <<",\n  \"range_decay_pass\": "<<verdict.rangeDecay<<",\n  \"immersion_pass\": "<<verdict.immersion
+    <<",\n  \"independent_immersion_pass\": "<<verdict.independentImmersion<<"\n}\n";
+  }
  }
  else if(densityRatio==1){Check(std::abs(result.finalY-initial.y)<=.20f,name+" neutral drift within 0.20m over 4 seconds");}
  else Check(result.finalY<initial.y-.3f,name+" dense body sinks");
  std::cout<<std::setprecision(10)<<"CASE "<<name<<" failures="<<(failed-failBefore+(strictDiagnostics?diagnosticFailures-diagnosticBefore:0))<<" acceptance_failures="<<(failed-failBefore)<<" diagnostic_checks="<<(diagnosticChecks-diagnosticChecksBefore)<<" diagnostic_failures="<<(diagnosticFailures-diagnosticBefore)<<" observational_scale="<<observationalScale<<" mass="<<actualMass<<" particles="<<particles<<" y="<<result.finalY<<" vy="<<result.finalV<<" fraction="<<result.meanFraction<<" observed_fraction="<<observedMean/meanCount<<" max_speed="<<result.maxSpeed<<" particle_ms="<<result.medianParticleMs<<" executed_ms="<<result.medianExecutedMs<<" amortized_ms="<<result.amortizedMs<<'\n';return result;
 }
 }
-int main(int argc,char**argv){fs::path out="build/production-fluid";bool single=false,neutralOnly=false;for(int i=1;i<argc;++i){if(std::string(argv[i])=="--output"&&i+1<argc)out=argv[++i];else if(std::string(argv[i])=="--single")single=true;else if(std::string(argv[i])=="--neutral")neutralOnly=true;else if(std::string(argv[i])=="--case"&&i+1<argc)selectedCase=argv[++i];else if(std::string(argv[i])=="--strict-diagnostics")strictDiagnostics=true;else return 2;}fs::create_directories(out);
+int main(int argc,char**argv){fs::path out="build/production-fluid";bool single=false,neutralOnly=false;for(int i=1;i<argc;++i){if(std::string(argv[i])=="--output"&&i+1<argc)out=argv[++i];else if(std::string(argv[i])=="--single")single=true;else if(std::string(argv[i])=="--neutral")neutralOnly=true;else if(std::string(argv[i])=="--case"&&i+1<argc)selectedCase=argv[++i];else if(std::string(argv[i])=="--strict-diagnostics")strictDiagnostics=true;else if(std::string(argv[i])=="--legacy-four-second")legacyFourSecond=true;else if(std::string(argv[i])=="--strict-legacy-settling")strictLegacySettling=true;else return 2;}fs::create_directories(out);
  const glm::quat identity(1,0,0,0),rotated=glm::angleAxis(.83f,glm::normalize(glm::vec3(1,-2,3)));
  if(neutralOnly){Run("neutral_020",.2f,1,1,identity,9.81f,false,out);PrintSummary();return ReportedFailures()?1:0;}
  Run("half_020",.2f,.5f,1,identity,9.81f,false,out);

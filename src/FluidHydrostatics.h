@@ -44,9 +44,14 @@ struct FluidFieldSample {
 };
 
 // Approximate liquid columns at max particle spacing, in an explicit tangent/
-// up basis. Vertical particle intervals form a locally filled envelope WITHIN
-// each column (internal air pockets below this resolution are unresolved); column
-// occupancy fractions are averaged by positive area/spatial-kernel weights.
+// up basis. Non-displacing continuous columns retain their spatial-kernel mean.
+// Displaced solids always use height-dependent column ownership, so discovering
+// a remote air gap cannot switch the exclusion rule for all other donors.
+// Resolved exterior vertical gaps use separate height slices, each with its own
+// wet/dry admission and solid cross-section. A small wet overlap in one slice
+// cannot admit surrounding water into a different, dry slice. Gaps no larger
+// than one column spacing remain unresolved sampling disorder; a two-spacing
+// lateral reconstruction halo repairs rows that wander between nearest bins.
 // Nearby lower liquid columns vote dry at an elevated sample. A supplied solid
 // excludes geometrically occluded column footprints so excluded interior
 // particles do not masquerade as a lower free surface. There is no SPH reaction.
@@ -58,8 +63,8 @@ struct FluidFieldSample {
 // require a wet local column or a route through the sample's actual connected
 // solid component to represented water touching that solid. An outer convex
 // hull alone cannot fill dry lateral holes or borrow a separate child's support.
-// This remains a column approximation: sub-resolution shorelines, vertical air
-// pockets and exact arbitrary three-dimensional wet topology are unresolved.
+// This remains a finite-resolution column approximation: sub-resolution pockets,
+// shorelines and exact arbitrary three-dimensional wet topology are unresolved.
 // Resolved bulk motion retains the local spherical Vp*(1-distance²/reach²)²
 // kernel. If that kernel has no donors for a wet envelope, motion is extended
 // from the admitted unoccluded columns using Vp * admitted interval fraction *
@@ -81,6 +86,10 @@ public:
                            const glm::vec3& tangentAxis,
                            const FluidSolidQuery* solid = nullptr,
                            bool connectedWetSupport = false) const;
+    // A receiving body's rotation must not rotate/rebin the water lattice.
+    // Use represented field geometry where it supplies a conditioned horizontal
+    // direction; the caller frame remains the fallback for degenerate clouds.
+    glm::vec3 ReconstructionTangent(const glm::vec3& up, const glm::vec3& fallback) const;
     float RestDensity() const { return m_density; }
     float MaximumParticleSpacing() const { return m_maxSpacing; }
     std::size_t ParticleCount() const { return m_particles.size(); }
@@ -104,6 +113,11 @@ struct FluidHydrostaticResult {
     glm::vec3 submergedCentroid{0};
     glm::vec3 fluidVelocity{0}, fluidAcceleration{0};
     glm::vec3 buoyancyForce{0}, buoyancyTorque{0}; // torque about pose.position
+    // Wetted-volume moments for distributed viscous loading, about pose.position.
+    // Fluid velocities are piecewise constant over each volume sample.
+    glm::dvec3 wetFirstMoment{0}, fluidVelocityMoment{0}, fluidAccelerationMoment{0};
+    glm::dmat3 wetAngularMoment{0}; // integral (|r|^2 I - r*r^T) dV
+
 };
 // A rigid solid excludes liquid from its interior; a sampling volume such as
 // the query-only player does not. This is an explicit caller geometry contract,

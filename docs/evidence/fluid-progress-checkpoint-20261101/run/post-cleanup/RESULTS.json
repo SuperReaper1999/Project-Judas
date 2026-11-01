@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_vertical_support_tests"
+      ],
+      "exit_code": 0,
+      "seconds": 1.616254503998789,
+      "binary_sha256": "4dd6ffcc1babc20ac5c6b13b726578563cd6b52f6a617d59b7d2e778cc235cdf"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_hydrostatics_tests"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4143071740036248,
+      "binary_sha256": "1fa2dc3df087c153fc949c1012ac0a82404c93ea0859b48f57bd092a9e47c8cb"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_wet_support_tests"
+      ],
+      "exit_code": 0,
+      "seconds": 0.11396535999665502,
+      "binary_sha256": "87d96e88c6a2abaad2a61a33e5f0e7f7aa5d6946b0c64b99d62ea0d7b4742741"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_volume_drag_tests"
+      ],
+      "exit_code": 0,
+      "seconds": 0.015554771001916379,
+      "binary_sha256": "c23356e2b95c51b60d43c5e65f9bfe6b4f25ffb7b054acd4ee40f0a46b672353"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+        "--case",
+        "half_025",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-checkpoint-20261101/post-cleanup/coarse"
+      ],
+      "exit_code": 1,
+      "seconds": 11.132754994003335,
+      "binary_sha256": "d8b9a659663d250e8357d68ea66ecbed78d5b5e51e46c1ebb3cb3bc391b7c1eb"
+    }
+  ],
+  "coarse_720_rows_physically_exact": true,
+  "excluded_columns": [
+    "fluid_step_ms",
+    "total_coupling_ms"
+  ]
+}

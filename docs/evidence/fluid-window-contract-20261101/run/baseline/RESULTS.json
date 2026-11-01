@@ -1,0 +1,50 @@
+[
+  {
+    "case": "half_020",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline-window",
+      "--case",
+      "half_020",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline/half_020"
+    ],
+    "exit_code": 1,
+    "seconds": 10.53104277800594
+  },
+  {
+    "case": "half_025",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline-window",
+      "--case",
+      "half_025",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline/half_025"
+    ],
+    "exit_code": 1,
+    "seconds": 5.522096495005826
+  },
+  {
+    "case": "rotated_half",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline-window",
+      "--case",
+      "rotated_half",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline/rotated_half"
+    ],
+    "exit_code": 1,
+    "seconds": 11.782435258995974
+  },
+  {
+    "case": "light_80kg",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline-window",
+      "--case",
+      "light_80kg",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-window-contract-20261101/baseline/light_80kg"
+    ],
+    "exit_code": 0,
+    "seconds": 9.980251698005304
+  }
+]

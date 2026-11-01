@@ -1,0 +1,14 @@
+[
+  {
+    "target": "judas_fluid_hydrostatics_tests",
+    "code": 0
+  },
+  {
+    "target": "judas_fluid_vertical_support_tests",
+    "code": 0
+  },
+  {
+    "target": "judas_fluid_wet_support_tests",
+    "code": 0
+  }
+]

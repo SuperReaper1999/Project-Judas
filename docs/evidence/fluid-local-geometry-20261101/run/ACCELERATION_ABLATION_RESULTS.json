@@ -1,0 +1,14 @@
+{
+  "coarse": {
+    "initial_angular_speed": 3.143583335707019,
+    "final_angular_speed": 6.925505077202029,
+    "hydro_rotational_work_J": 357.99980627158624,
+    "max_abs_water_accel": 7.650041580200195
+  },
+  "noaccel": {
+    "initial_angular_speed": 6.17434097686934,
+    "final_angular_speed": 6.966112231263137,
+    "hydro_rotational_work_J": 444.28784512037004,
+    "max_abs_water_accel": 0.0
+  }
+}

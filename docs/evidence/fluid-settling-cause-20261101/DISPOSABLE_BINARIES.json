@@ -1,0 +1,14 @@
+{
+  "trace-baseline": {
+    "bytes": 55058704,
+    "sha256": "18c00a7bb61c381645826de0dfc4efb6ec02e6d162d7b910d1a36b570abac76e"
+  },
+  "continued-baseline": {
+    "bytes": 55050368,
+    "sha256": "d857c9d8fb98b86947077c00e2d5721f4f6803deec430f5564134fe55fb35655"
+  },
+  "continued-current": {
+    "bytes": 55059192,
+    "sha256": "83b0250f0130d1bf178e32a6e2f9f7c33229246c2ba089175843b6d807a33af8"
+  }
+}

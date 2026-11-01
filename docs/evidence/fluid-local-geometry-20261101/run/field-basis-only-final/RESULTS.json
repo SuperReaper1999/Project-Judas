@@ -1,0 +1,97 @@
+[
+  {
+    "name": "vertical",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_vertical_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 1.5658069709970732,
+    "binary_sha256": "f5f1753b423a1181769e7539aaf0b68f7552d229d65e45012c2a238c6af04deb"
+  },
+  {
+    "name": "hydrostatics",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_hydrostatics_tests"
+    ],
+    "exit_code": 1,
+    "seconds": 0.3642217160013388,
+    "binary_sha256": "e61698f99ef2cc5e8accfce999cd48be5a1c06c0e87f162264b136c22a9c9285"
+  },
+  {
+    "name": "lateral",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_wet_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.11390607600333169,
+    "binary_sha256": "e041488aa43bfed088055acd9a8f83d7de13bd4accc824b2a83d5ffea886d975"
+  },
+  {
+    "name": "contract",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_settling_contract_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0035020430004806258,
+    "binary_sha256": "22878f295660e0f8de3b3c5f109dcea7f24e8bcbc5626c9675c5351a1b7ccf32"
+  },
+  {
+    "name": "reference",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_settling_reference_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.11376907800149638,
+    "binary_sha256": "34df09d1e1f2e02510f28fd8aeb247b03b0ef23161586e344a88bac9a1ef2e3e"
+  },
+  {
+    "name": "fluid-policy",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_fluid_policy_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2640903219944448,
+    "binary_sha256": "fedfb58f877c7035d85ea8a3e8f57c9a3247973d2b2388ae7fef5bf6b9fb86bd"
+  },
+  {
+    "name": "swimming",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_player_swimming_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015725078999821562,
+    "binary_sha256": "b8958dcfa307eddc34a5dd80f8ee66b15e436fdb130f7f8b9ec2c5975ed130c5"
+  },
+  {
+    "name": "lifecycle",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015583701999275945,
+    "binary_sha256": "8d16e817473edd265ec377478350cd8156574ba05530d9b29255991560053fda"
+  },
+  {
+    "name": "production",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-local-geometry-20261101/final/production"
+    ],
+    "exit_code": 1,
+    "seconds": 95.62694137400104,
+    "binary_sha256": "9c3a90289436e5e93b0061b4a9d9666984b447434d7703517783194e35c74323"
+  },
+  {
+    "name": "legacy",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--legacy-four-second",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-local-geometry-20261101/final/legacy"
+    ],
+    "exit_code": 1,
+    "seconds": 54.65024596500007,
+    "binary_sha256": "9c3a90289436e5e93b0061b4a9d9666984b447434d7703517783194e35c74323"
+  }
+]
