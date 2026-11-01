@@ -339,6 +339,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("JudasJS developer tools", nullptr, &state.showScriptTools);
+        ImGui::MenuItem("AI actions and decisions", nullptr, &state.showUtilityAI);
         if (ImGui::BeginMenu("Terrain and world tools")) {
             ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
             ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
@@ -986,7 +987,9 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 selectAsset();
                 if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                     if(record.type==AssetType::SpriteSheet){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
-                    if (!RequestEditorScriptEdit(record, state)) state.selectAssetDetails = true;
+                    const bool aiDefinition=record.type==AssetType::Script&&name.size()>=6&&name.compare(name.size()-6,6,".ai.js")==0;
+                    if(aiDefinition){state.utilityAIEdit=id;state.showUtilityAI=true;}
+                    else if (!RequestEditorScriptEdit(record, state)) state.selectAssetDetails = true;
                 }
             }
             if (!record.missing && ImGui::BeginDragDropSource()) {
@@ -1004,6 +1007,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 }
                 if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Paint tilemap from this sheet",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){state.tilemapPalette=id;state.showTilemapEditor=true;}
                 if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Edit frames and animation")){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
+                if(record.type==AssetType::Script&&ImGui::MenuItem("Open as AI definition",nullptr,false,!record.missing)){state.utilityAIEdit=id;state.showUtilityAI=true;}
 
                 if(record.type==AssetType::Texture&&ImGui::MenuItem("Create sprite in scene",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){
                     std::string error;const auto id=CreateEditorSpriteFromImage(doc,db,record.id,state.cameraFocus,0,error);

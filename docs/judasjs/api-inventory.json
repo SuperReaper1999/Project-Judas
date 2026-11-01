@@ -1,6 +1,6 @@
 {
-  "checkpoint": "Current public module including Experimental 2D Stage 3 and consumer lifecycle diagnostics; source version in engine-version.json",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
+  "checkpoint": "Current public module including optional Utility AI, native 2D and consumer lifecycle diagnostics; source version in engine-version.json",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp",
   "resultShapes": [
     {
       "binding": "scripts.faults",
@@ -1213,6 +1213,36 @@
       "symbol": "UIElement.setLayout",
       "minimum": 1,
       "maximum": 1
+    },
+    {
+      "symbol": "UtilityAgent.constructor",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "UtilityAgent.dispose",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UtilityAgent.finish",
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "symbol": "UtilityAgent.restore",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UtilityAgent.snapshot",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UtilityAgent.tick",
+      "minimum": 2,
+      "maximum": 3
     },
     {
       "symbol": "Weather.constructor",
@@ -5017,6 +5047,95 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "UtilityAgent",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UtilityAgent",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiCreate"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.constructor",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.dispose",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiDispose"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.dispose",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.finish",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiFinish",
+        "aiInspect"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.finish",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.inspection",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "aiInspect"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.inspection",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.restore",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiRestore"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.restore",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.snapshot",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiSnapshot"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.snapshot",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "UtilityAgent.tick",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "aiDue",
+        "aiFinish",
+        "aiTick"
+      ],
+      "type": "docs/judas.d.ts:UtilityAgent.tick",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
       "symbol": "Weather",
       "kinds": [
         "class"
@@ -6960,6 +7079,14 @@
   ],
   "nativeOperations": [
     "addTag",
+    "aiCreate",
+    "aiDispose",
+    "aiDue",
+    "aiFinish",
+    "aiInspect",
+    "aiRestore",
+    "aiSnapshot",
+    "aiTick",
     "angularVelocity",
     "animationAdvance",
     "animationExists",

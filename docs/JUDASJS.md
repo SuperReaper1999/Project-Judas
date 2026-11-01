@@ -33,6 +33,7 @@ Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor t
 | Entity.collider, classification, safe query witnesses | [Collider inspection](judasjs/entities.md#entitycollider) |
 | Entity.gravity, physics.gravity, FaithfulGravity / RadicalGravity, scripted selection | [Gravity](judasjs/physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65) · [Selection guide](GRAVITY_SELECTION.md) |
 | CharacterMotor / entity.character, support, intent, query capsule | [Character](judasjs/character.md) |
+| UtilityAgent, utility scores, action targets, needs, cooldowns | [Game AI (Experimental)](judasjs/ai.md) · [Editor authoring](GAME_AI.md) |
 | navigation, NavigationAgent, links, obstacles | [Navigation](judasjs/navigation.md) |
 | Animation, clips, events, rootMotion, layers, jointTransform, limb, configureIK | [Animation and IK](judasjs/animation-ragdolls.md) |
 | Ragdoll, physical animation, configureBalance, requestBalance | [Ragdolls and physical balance](judasjs/animation-ragdolls.md#ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77) |

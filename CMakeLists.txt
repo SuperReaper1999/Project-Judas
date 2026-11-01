@@ -262,6 +262,8 @@ add_library(judas_engine STATIC
     src/WorldScripts.cpp
     src/RuntimeUI.cpp
     src/RuntimeUIControls.cpp
+    src/UtilityAI.cpp
+    src/ScriptUtilityAI.cpp
     src/ScriptSystem.cpp
     src/ScriptBindingsUI.cpp
     src/ScriptBindingsJoint.cpp
@@ -446,6 +448,7 @@ add_executable(judas_editor
     src/editor/EditorMain.cpp
     src/editor/EditorMilestoneNotice.cpp
     src/ExperimentalBrowser.cpp
+    src/editor/UtilityAIEditor.cpp
     src/editor/EditorApplication.cpp
     src/editor/ScriptTools.cpp
     src/editor/EditorCamera.cpp
@@ -1844,6 +1847,17 @@ judas_add_engine_test(judas_tilemap_render_tests tests/TilemapRenderTests.cpp)
 judas_add_engine_test(judas_tilemap_application_tests tests/TilemapApplicationTests.cpp APPLICATION)
 judas_add_engine_test(judas_tilemap_editor_tests tests/TilemapEditorTests.cpp
     SOURCES src/editor/TilemapEditor.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
+
+add_executable(judas_utility_ai_benchmark tools/benchmarks/UtilityAIBenchmark.cpp)
+target_link_libraries(judas_utility_ai_benchmark PRIVATE judas_engine)
+judas_warnings(judas_utility_ai_benchmark)
+
+judas_add_engine_test(judas_utility_ai_application_tests tests/UtilityAIApplicationTests.cpp APPLICATION)
+
+judas_add_engine_test(judas_utility_ai_tests tests/UtilityAITests.cpp)
+judas_add_engine_test(judas_utility_ai_script_tests tests/UtilityAIScriptTests.cpp)
+judas_add_engine_test(judas_utility_ai_editor_tests tests/UtilityAIEditorTests.cpp
+    SOURCES src/editor/UtilityAIEditor.cpp LIBRARIES judas_imgui)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

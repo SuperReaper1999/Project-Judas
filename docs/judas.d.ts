@@ -5,6 +5,57 @@
  * Tooling only, no TS runtime. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
+  /** Optional native utility decisions; project scripts own sensing and action execution. */
+  export interface UtilityConsideration {
+    fact: string; weight?: number; min?: number; max?: number;
+    curve?: 'linear' | 'inverse' | 'power'; exponent?: number;
+  }
+  export interface UtilityAction {
+    id: string; weight?: number; mode?: 'product' | 'mean';
+    cooldown?: number; minCommitment?: number; interruptible?: boolean;
+    requiredFacts?: string[]; considerations?: UtilityConsideration[];
+  }
+  export interface UtilityDefinition {
+    version?: 1; name?: string; interval?: number; initialDelay?: number;
+    switchAdvantage?: number; actions: UtilityAction[];
+  }
+  /** Stable project target key, not necessarily an entity or world position. */
+  export interface UtilitySelection {action: string; target: string;}
+  export interface UtilityCandidate extends UtilitySelection {
+    facts: Record<string, number>; eligible?: boolean; reason?: string;
+  }
+  export interface UtilityCandidateInspection extends UtilitySelection {
+    score: number; eligible: boolean; reason: string;
+    considerations: Array<{fact: string; input?: number; normalized?: number; response?: number; weight?: number; contribution?: number; reason?: string}>;
+  }
+  export interface UtilityDecision {
+    selected: UtilitySelection | null; previous: UtilitySelection | null;
+    changed: boolean; evaluated: boolean; reason: string;
+    elapsed: number; untilEvaluation: number; commitmentRemaining: number;
+    name: string; status: string; cooldowns: Record<string, number>;
+    candidates?: UtilityCandidateInspection[];
+  }
+  export interface UtilitySnapshot {
+    version: 1; definition: UtilityDefinition; elapsed: number;
+    untilEvaluation: number; activeAge: number; selected: UtilitySelection | null;
+    status: string; cooldowns: Record<string, number>;
+  }
+  export interface UtilityActionHandler<Context> {
+    start?(context: Context, selection: UtilitySelection): void;
+    update?(dt: number, context: Context, selection: UtilitySelection): void;
+    stop?(context: Context, selection: UtilitySelection, reason: string): void;
+  }
+  /** Store snapshot() explicitly in script state. No JS closures are serialized. */
+  export class UtilityAgent<Context = Record<string, unknown>> {
+    constructor(definition: UtilityDefinition, handlers?: Record<string, UtilityActionHandler<Context>>, name?: string);
+    tick(dt: number, candidates: UtilityCandidate[] | ((context: Context) => UtilityCandidate[]), context?: Context): UtilityDecision;
+    finish(status?: 'success' | 'failure' | 'cancelled', context?: Context): void;
+    snapshot(): UtilitySnapshot;
+    restore(snapshot: UtilitySnapshot): void;
+    readonly inspection: UtilityDecision;
+    dispose(): void;
+  }
+
   /** Embedded executable provenance; not game-save/content compatibility. */
   export interface EngineBuildInfo {
     readonly schema: 1;

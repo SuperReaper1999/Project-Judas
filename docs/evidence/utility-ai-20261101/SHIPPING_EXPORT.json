@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "observations": 40,
+  "last": {
+    "time": 80.00000417232513,
+    "health": 0.9703333755955135,
+    "meals": 6,
+    "rested": 8,
+    "chats": 4,
+    "shelters": 2,
+    "pantry": 1,
+    "citizen": {
+      "action": "eat",
+      "target": "101"
+    },
+    "guard": {
+      "action": "patrol",
+      "target": "203"
+    }
+  },
+  "renamed_after_export": true,
+  "cwd": "/tmp",
+  "engine_root_environment": false
+}

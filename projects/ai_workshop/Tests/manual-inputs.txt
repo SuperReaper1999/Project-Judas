@@ -1,0 +1,13 @@
+# Disable watch, deliberately exercise two needs, injury and food eligibility.
+FRAMES 5400
+FRAME_SECONDS 0.016666667
+LOG_EVERY 120
+TAP A 1
+TAP H 60
+TAP D 600
+TAP T 1200
+TAP C 2100
+TAP F 2700
+TAP H 2760
+TAP F 3300
+TAP H 3360

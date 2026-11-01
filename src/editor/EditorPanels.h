@@ -117,6 +117,8 @@ struct EditorPanelState {
     bool showEditorPreferences = false;
     bool showRetarget = false;
     bool showAnimationTimeline=false;
+    bool showUtilityAI=false;
+    std::string utilityAIEdit;
     bool showTerrain = false;
     bool showVolumeTerrain = false;
     bool showMods = false;

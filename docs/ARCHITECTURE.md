@@ -11,6 +11,23 @@ Old limits and pending-review labels there do not override this reference.
 Source links require the matching checkout/source archive; SDK/runtime packages
 do not contain every project, native source or historical evidence artifact.
 
+## Optional utility decisions (Experimental)
+
+`UtilityAI.{h,cpp}` is a world-independent, bounded decision/timer core. It owns
+neither targets nor movements. `ScriptUtilityAI` lazily owns native agents per
+script entity/slot; the private `ScriptUtilityLibrary` wrapper owns synchronous
+action callbacks. ScriptSystem retires them through its existing destruction,
+fault and reload boundaries. No-agent projects have no agent registry or
+background evaluation loop.
+
+Definitions are constrained JSON default exports in ordinary tracked `.ai.js`
+script modules, reusing asset ownership, imports, fingerprints and export.
+`UtilityAIEditor` shares native validation and exposes opt-in authoring/live
+inspection through existing panels/preferences. Gameplay explicitly stores native
+snapshots inside script state; modern persistence and regional scripting remain
+the owning lifecycle. No new physics, navigation, save or replication system is
+introduced. [Guide](GAME_AI.md) · [qualification](GAME_AI_QUALIFICATION.md).
+
 ## Engine and game boundary
 
 Judas owns simulation, rendering, resources, authoring and platform mechanisms.

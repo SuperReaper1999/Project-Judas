@@ -1,6 +1,10 @@
 {
   "format": 1,
   "tests": [
+    {"name":"utility-ai-application","target":"judas_utility_ai_application_tests","groups":["ai","lifecycle"],"args":["{root}/projects/ai_workshop/AI_Workshop.judasproj","{output}/ai-workshop"]},
+    {"name":"utility-ai","target":"judas_utility_ai_tests","groups":["ai","core"]},
+    {"name":"utility-ai-script","target":"judas_utility_ai_script_tests","groups":["ai","scripting","lifecycle"]},
+    {"name":"utility-ai-editor","target":"judas_utility_ai_editor_tests","groups":["ai","editor"]},
     {"name":"browser-workflow","target":"judas_browser_workflow_tests","groups":["browser","editor"]},
     {"name":"browser-surface","target":"judas_browser_surface_tests","groups":["core","browser"]},
     {"name":"browser-opt-in","target":"judas_browser_option_tests","groups":["core","browser"]},

@@ -59,3 +59,19 @@ world.unproject({x:.5,y:.5});
 owner.setSprite({size:[1,2]});
 // @ts-expect-error Unknown projection must not compile.
 world.setView({position:origin},60,{projection:'ortho-ish'});
+
+// Native utility decisions share targets/facts with project-owned action handlers.
+import {UtilityAgent} from 'judas';
+const brain = new UtilityAgent<{health:number}>({version:1,name:'Guard',interval:.2,
+  actions:[{id:'hide',considerations:[{fact:'health',curve:'inverse'}]}]}, {
+  hide:{update:(dt, context, choice)=>{const hp:number=context.health;const target:string=choice.target;void hp;void target;void dt;}}
+});
+brain.tick(.016, ()=>[{action:'hide',target:'cover',facts:{health:.2}}],{health:.2});
+brain.restore(brain.snapshot());
+brain.finish('success');
+// @ts-expect-error outcomes are deliberately explicit
+brain.finish('finished somehow');
+// @ts-expect-error observations must be numerical
+brain.tick(.016,[{action:'hide',target:'cover',facts:{health:'injured'}}],{health:.2});
+// @ts-expect-error unsupported response curve
+new UtilityAgent({actions:[{id:'hide',considerations:[{fact:'health',curve:'magic'}]}]});

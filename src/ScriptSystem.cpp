@@ -10,6 +10,8 @@
 #include <atomic>
 #include "ScriptSystem.h"
 #include "ScriptBindings.h"
+#include "ScriptUtilityAI.h"
+#include "ScriptUtilityLibrary.h"
 #include "ScriptBindingValues.h"
 #include "AuthoringJSON.h"
 #include "PlayerController.h"
@@ -54,7 +56,7 @@ bool KnownOptions(JSContext* c,JSValueConst value,std::initializer_list<const ch
 #include "ScriptCameraValues.inl"
 #include "ScriptSpriteValues.inl"
 #include "ScriptPlanarValues.inl"
-const char* library=R"JS(
+const std::string library=std::string(R"JS(
 const call=(op,...args)=>globalThis.__judas(op,...args);
 export class NetworkEntity {
  constructor(id,generation){this.id=String(id);this.generation=generation}
@@ -504,7 +506,7 @@ export const ui={get:name=>{const id=call('uiFind',name);return id?new UIDocumen
  get debugOverlayVisible(){return call('uiDiagnostics')},set debugOverlayVisible(v){call('uiDiagnostics',v)}};
 
 globalThis.console=console;
-)JS";
+)JS") + kUtilityAILibrary;
 }
 struct ScriptSystem::Impl {
     std::thread::id thread=std::this_thread::get_id();
@@ -514,6 +516,18 @@ struct ScriptSystem::Impl {
     std::map<std::pair<SceneObjectId,std::uint64_t>,Instance> instances;
     std::map<std::string,JSModuleDef*> modules;
     std::vector<ScriptDiagnostic> diagnostics;
+    std::unique_ptr<ScriptUtilityAI> ai;
+    bool retiringAI=false;
+    void RetireAI(SceneObjectId owner,uint64_t slot) {
+        if(!ai)return;
+        const auto previousOwner=currentOwner;const auto previousSlot=currentSlot;
+        currentOwner=owner;currentSlot=slot;polls=0;
+        const bool wasRetiring=retiringAI;retiringAI=true;
+        const auto error=ai->Retire(owner,slot);
+        retiringAI=wasRetiring;
+        currentOwner=previousOwner;currentSlot=previousSlot;
+        if(!error.empty())diagnostics.push_back({owner,slot,"","AI cleanup",error});
+    }
     bool reloaded=false;
     unsigned invocationDepth=0;
     std::vector<std::string> consoleMessages;
@@ -566,7 +580,7 @@ struct ScriptSystem::Impl {
             if(record)i.profileLabel=p.Intern("Script asset: "+record->relativePath);
         }return i.profileLabel;
     }
-    ~Impl(){JS_SetExecutionHook(rt,nullptr,nullptr);Stop();if(debug)for(auto [atom,name]:debug->files){(void)name;JS_FreeAtom(ctx,atom);}JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
+    ~Impl(){JS_SetExecutionHook(rt,nullptr,nullptr);Stop();if(debug)for(auto [atom,name]:debug->files){(void)name;JS_FreeAtom(ctx,atom);}ai.reset();JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
     static char* Normalize(JSContext* c,const char* base,const char* name,void* p){
         auto* s=static_cast<Impl*>(p);std::string result;
         if(std::string(name)=="judas")result="judas";
@@ -593,7 +607,7 @@ struct ScriptSystem::Impl {
         if(JS_IsException(value))return nullptr;
         auto* module=static_cast<JSModuleDef*>(JS_VALUE_GET_PTR(value));modules[path]=module;JS_FreeValue(ctx,value);return module;
     }
-    void Error(Instance& i,const char* callback){i.fault=true;SignalRetire({i.entity,i.slot.id});auto message=Exception(ctx);diagnostics.push_back({i.entity,i.slot.id,i.slot.asset,callback,message});std::fprintf(stderr,"script asset=%s entity=%llu slot=%llu %s: %s\n",i.slot.asset.c_str(),(unsigned long long)i.entity,(unsigned long long)i.slot.id,callback,message.c_str());}
+    void Error(Instance& i,const char* callback){i.fault=true;SignalRetire({i.entity,i.slot.id});auto message=Exception(ctx);RetireAI(i.entity,i.slot.id);diagnostics.push_back({i.entity,i.slot.id,i.slot.asset,callback,message});std::fprintf(stderr,"script asset=%s entity=%llu slot=%llu %s: %s\n",i.slot.asset.c_str(),(unsigned long long)i.entity,(unsigned long long)i.slot.id,callback,message.c_str());}
     std::set<std::string> evaluated;
     bool Evaluate(JSModuleDef* module,const std::string& path){
         if(evaluated.count(path))return true;
@@ -639,6 +653,7 @@ struct ScriptSystem::Impl {
     bool animationControl=false; // only authoritative fixedUpdate, not post-step contact/UI callbacks
     void Callback(Instance& i,const char* name,bool presentation=false){
         struct AnimationControlScope {Impl& s;bool previous;AnimationControlScope(Impl& v,const char* n):s(v),previous(v.animationControl){s.animationControl=std::strcmp(n,"fixedUpdate")==0;}~AnimationControlScope(){s.animationControl=previous;}} animationScope(*this,name);
+        struct AIRetirement {Impl& self;Instance& instance;bool retire;~AIRetirement(){if(retire)self.RetireAI(instance.entity,instance.slot.id);}} aiRetirement{*this,i,std::strcmp(name,"destroy")==0};
         if(std::strcmp(name,"destroy")==0)SignalRetire({i.entity,i.slot.id});
         if(i.fault)return;
         struct CallScope { Impl& s; CallScope(Impl& v):s(v){++s.invocationDepth;if(s.debug){s.debug->lastLine=-1;s.debug->linesByDepth.clear();}} ~CallScope(){--s.invocationDepth;} } callScope(*this);
@@ -674,6 +689,11 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(!s->world)return JS_ThrowTypeError(c,"world API unavailable in metadata context");
     auto& world=*s->world;
+    if(op.rfind("ai",0)==0){
+        if(op=="aiCreate"&&(s->stopping||s->retiringAI))return JS_ThrowTypeError(c,"Cannot create AI while retiring a script");
+        if(!s->ai){if(op!="aiCreate")return JS_ThrowReferenceError(c,"stale AI agent");s->ai=std::make_unique<ScriptUtilityAI>(c);}
+        return s->ai->Dispatch(op,argc,argv,s->currentOwner,s->currentSlot);
+    }
     if(op=="terrainState"||op=="terrainCreate"||op=="terrainBrush"){
         EntityId owner=0;try{auto identity=String(c,arg(1));if(identity.empty()||identity.find_first_not_of("0123456789")!=std::string::npos)throw std::invalid_argument("identity");owner=std::stoull(identity);}catch(...){return JS_ThrowReferenceError(c,"invalid terrain owner");}
         if(!world.RuntimeDefinition(owner))return JS_ThrowReferenceError(c,"stale terrain owner");
@@ -2748,4 +2768,8 @@ ScriptInstancePhase ScriptSystem::InspectPhase(SceneObjectId entity, uint64_t sl
     if (instance.fault) return ScriptInstancePhase::Faulted;
     if (instance.started) return ScriptInstancePhase::Running;
     return instance.loaded ? ScriptInstancePhase::AwaitingRestore : ScriptInstancePhase::AwaitingStart;
+}
+
+std::vector<ScriptAIInspection> ScriptSystem::AIInspections() const {
+    m->CheckThread();return m->ai ? m->ai->Inspect() : std::vector<ScriptAIInspection>{};
 }

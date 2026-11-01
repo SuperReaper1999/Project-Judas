@@ -31,6 +31,7 @@ constexpr Panel panels[] = {
     {"volume", "Volumetric terrain", &EditorPanelState::showVolumeTerrain}, {"animation", "Animation timeline", &EditorPanelState::showAnimationTimeline},
     {"sprite-animation", "Sprite sheets and frame animation", &EditorPanelState::showSpriteSheetEditor},
     {"tilemaps", "Tilemap painter", &EditorPanelState::showTilemapEditor},
+    {"utility-ai", "AI actions and decisions", &EditorPanelState::showUtilityAI},
     {"retarget", "Animation retargeting", &EditorPanelState::showRetarget}, {"world", "World building", &EditorPanelState::showWorldBuilding},
     {"mods", "Local mods", &EditorPanelState::showMods}, {"help", "Navigation help", &EditorPanelState::showNavigationHelp}
 };

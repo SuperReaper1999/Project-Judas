@@ -20,6 +20,7 @@ class EngineHost;
 class InteractivePlay;
 class RuntimeWorld;
 struct AnimationTimeline;
+struct UtilityAIEditor;
 struct SpriteSheetEditor;
 struct TilemapEditor;
 
@@ -115,6 +116,7 @@ private:
     EditorScenePicker m_scenePicker;
     std::unique_ptr<RuntimeWorld> m_world;
     std::unique_ptr<AnimationTimeline> m_animationTimeline;
+    std::unique_ptr<UtilityAIEditor> m_utilityAIEditor;
     std::unique_ptr<SpriteSheetEditor> m_spriteSheetEditor;
     std::unique_ptr<TilemapEditor> m_tilemapEditor;
     std::unique_ptr<InteractivePlay> m_play;

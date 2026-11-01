@@ -1,0 +1,4 @@
+# 80 simulated seconds; watch inputs modify facts, never select a winning action.
+FRAMES 4800
+FRAME_SECONDS 0.016666667
+LOG_EVERY 120

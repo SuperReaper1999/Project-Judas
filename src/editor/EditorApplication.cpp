@@ -54,6 +54,7 @@ extern char** environ;
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
 #include "AnimationTimeline.h"
+#include "UtilityAIEditor.h"
 #include "SpriteSheetEditor.h"
 #include "TilemapEditor.h"
 #include "SceneSession.h"
@@ -605,6 +606,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     }
     if (r.quit && (m_document.IsDirty()||m_project.IsDirty()) && m_panels.mode == EditorMode::Play) StopPlay();
     const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || r.exportBrowser || !r.openSceneRelative.empty();
+    if(terrainReplaces&&m_utilityAIEditor&&!m_utilityAIEditor->Guard(m_panels))return;
     if(terrainReplaces&&m_spriteSheetEditor&&m_spriteSheetEditor->Dirty()){
         m_panels.showSpriteSheetEditor=true;
         m_panels.status="Save or discard the sprite-sheet draft before leaving, playing or exporting";
@@ -1673,7 +1675,7 @@ int EditorApplication::Run(int argc, char** argv) {
             if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
             m_scriptTools->Attach(*m_world,host);
             m_scriptTools->ApplyReload(*m_world);
-            m_play->SetPointerCaptureAllowed(!(m_panels.showProfiler && m_panels.profilerInspect) && !m_panels.showScriptTools);
+            m_play->SetPointerCaptureAllowed(!(m_panels.showProfiler && m_panels.profilerInspect) && !m_panels.showScriptTools && !m_panels.showUtilityAI);
             // The identical frame the runtime runs. Escape opens the M13
             // pause menu, which releases the mouse for the editor panels.
             m_play->Frame(window, renderer, deltaSeconds, /*drawHud=*/true);
@@ -1723,6 +1725,8 @@ int EditorApplication::Run(int argc, char** argv) {
         m_scriptTools->visible=m_panels.showScriptTools;
         m_scriptTools->Panel(m_world.get(),host.Assets());
         m_panels.showScriptTools=m_scriptTools->visible;
+        if(!m_utilityAIEditor)m_utilityAIEditor=std::make_unique<UtilityAIEditor>();
+        m_utilityAIEditor->Panel(m_panels);
         if(!m_animationTimeline)m_animationTimeline=std::make_unique<AnimationTimeline>();
         m_animationTimeline->visible=m_panels.showAnimationTimeline;
         m_animationTimeline->Panel(m_panels,m_document.Selected());

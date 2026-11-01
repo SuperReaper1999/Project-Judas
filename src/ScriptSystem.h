@@ -10,6 +10,7 @@
 class RuntimeWorld;
 class AssetDatabase;
 class InputSystem;
+struct ScriptAIInspection { SceneObjectId entity=0; std::uint64_t slot=0; std::string name,json; };
 struct ScriptStateRecord { SceneObjectId entity=0;std::uint64_t slot=0;std::string json="{}"; };
 struct ScriptProperty {std::string name,type,text;double number=0;bool boolean=false;};
 struct ScriptMetadataStats {uint64_t parserConstructions=0,referenceInspections=0;};
@@ -47,6 +48,7 @@ public:
     std::vector<ScriptStateRecord> Capture(bool required=false,const std::vector<SceneObjectId>* only=nullptr) const;
     bool Restore(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
     const std::vector<ScriptDiagnostic>& Diagnostics() const;
+    std::vector<ScriptAIInspection> AIInspections() const;
     // Read-only developer observation; Running means the callback completed,
     // not that project-specific asynchronous resources are ready.
     ScriptInstancePhase InspectPhase(SceneObjectId entity, uint64_t slot) const;

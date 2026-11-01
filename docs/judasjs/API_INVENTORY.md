@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Current public module including Experimental 2D Stage 3 and consumer lifecycle diagnostics; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Current public module including optional Utility AI, native 2D and consumer lifecycle diagnostics; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -312,6 +312,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.texture` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.value` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.visible` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UtilityAgent` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.constructor` | `aiCreate` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.dispose` | `aiDispose` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.finish` | `aiFinish`, `aiInspect` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.inspection` | `aiInspect` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.restore` | `aiRestore` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.snapshot` | `aiSnapshot` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `UtilityAgent.tick` | `aiDue`, `aiFinish`, `aiTick` | [declaration](../judas.d.ts) | [reference](ai.md) |
 | `Weather` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
 | `Weather.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
 | `Weather.enabled` | `weatherEnabled` | [declaration](../judas.d.ts) | [reference](weather.md) |
