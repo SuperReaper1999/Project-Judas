@@ -44,7 +44,9 @@
     "projects/beacon_grove",
     "projects/tilemap_workshop",
     "projects/sprite_animation_workshop",
-    "projects/2d_traversal_workshop"
+    "projects/2d_traversal_workshop",
+    "projects/ai_workshop",
+    "projects/willow_town"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [

@@ -125,6 +125,9 @@ int main(int argc, char** argv) try {
         fs::copy(source.parent_path(), project, fs::copy_options::recursive);
     }
     SDL_setenv("XDG_DATA_HOME", (output / "user").string().c_str(), 1);
+    // Match the original town application's supported responsive viewport.
+    // This bounds software pixel work without shortening any gameplay checks.
+    SDL_setenv("JUDAS_WINDOW_SIZE", "640x480", 1);
     std::string projectFile = (project / source.filename()).string(), error;
     Project definition;
     Check(definition.Load(projectFile, error), "isolated life-game project loads: " + error);
@@ -152,6 +155,8 @@ int main(int argc, char** argv) try {
     control.hidden = true;
     control.frameSeconds = [&](float) { return freeze ? 0.f : 1.f / 60; };
     control.hostReady = [](EngineHost& host) {
+        Check(host.GetWindow().Width() == 640 && host.GetWindow().Height() == 480,
+            "software-renderable fixture uses its actual supported 640x480 viewport");
         host.GetWindow().SetTestInputMode(true); SDL_GL_SetSwapInterval(0);
         std::string ignored; host.Audio().Init(ignored, true);
     };

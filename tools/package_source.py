@@ -21,9 +21,10 @@ ROOT = Path(__file__).resolve().parents[1]
 METADATA = {"JUDAS_SOURCE_INFO.json", "JUDAS_SOURCE_FILES.json"}
 ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packaging", "third_party", "assets", "releases", ".github"}
 ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig.cmake", "README.md", "LICENSE", "engine-version.json", ".gitignore", ".gitattributes"}
-# Small, redistributable learning projects also supply the 2D qualification
+# Small, redistributable learning projects also supply the 2D and AI qualification
 # fixtures. No other consumer games, saves or untracked experiments are selected.
-LEARNING_PROJECTS = {"beacon_grove", "tilemap_workshop", "sprite_animation_workshop", "2d_traversal_workshop"}
+LEARNING_PROJECTS = {"beacon_grove", "tilemap_workshop", "sprite_animation_workshop", "2d_traversal_workshop",
+                     "ai_workshop", "willow_town"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 
 

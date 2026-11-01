@@ -9,8 +9,25 @@ import sys
 from prealpha_validate import partition_channel_tests
 
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=['2d','core','mk2','water','network','lifecycle','onboarding','application','liquid','input','rendering']
+GROUPS=['ai','2d','core','mk2','water','network','lifecycle','onboarding','application','liquid','input','rendering']
 EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_player_swimming_tests']
+COLD_APPLICATIONS=('utility-ai-application','willow-town-application','willow-town-life')
+
+
+def ai_cold_commands(tests, build, gates):
+    """Read each producer's actual output in a separate native process."""
+    extension='.exe' if os.name=='nt' else ''
+    commands=[]
+    for entry in tests:
+        executable=build/(entry['target']+extension)
+        if entry['name'] in COLD_APPLICATIONS:
+            arguments=[argument.format(output=gates,root=ROOT) for argument in entry['args']]
+            commands.append((entry['name']+'-cold',[executable,*arguments,'cold']))
+        elif entry['name']=='ai-reservation-script':
+            directory=gates/'ai-reservation-cold'
+            for mode in ('write','read'):
+                commands.append(('ai-reservation-'+mode,[executable,mode,directory]))
+    return commands
 
 
 def main():
@@ -43,6 +60,8 @@ def main():
             executable=build/(reader+('.exe' if os.name=='nt' else ''))
             run(name+'-cold',[executable,output/'gates'/name,'--cold'])
             if name=='grid-movement':run(name+'-cold-queue',[executable,output/'gates'/name,'--cold-queue'])
+    for name,command in ai_cold_commands(tests,build,output/'gates'):
+        run(name,command)
     for target in EXTRA:run(target,[build/(target+('.exe' if os.name=='nt' else ''))])
     run('release-python',[sys.executable,ROOT/'tests/test_release_manifest.py'])
     run('release-packaging',[sys.executable,ROOT/'tests/test_release_packaging.py'])

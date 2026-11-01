@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_willow_town_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.2.0/diagnostics/willow-640-llvmpipe"
+  ],
+  "exit": 0,
+  "seconds": 70.86819408900192,
+  "environment": {
+    "JUDAS_WINDOW_SIZE": "640x480",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "__GLX_VENDOR_LIBRARY_NAME": "mesa"
+  }
+}

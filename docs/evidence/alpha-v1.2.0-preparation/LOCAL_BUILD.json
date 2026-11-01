@@ -1,0 +1,24 @@
+{
+  "identity": {
+    "architecture": "x86_64",
+    "build_id": "1.2.0-alpha.1-Experimental-400bc7b-dirty-d973663caacd-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v1.2.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "d973663caacd56926e3ddc6858da57141a9d4b31bf51adc2634864b1d1eb5d2b",
+    "source_origin": "git",
+    "source_revision": "400bc7ba0b7d1f092025ab6440d410981e82c055",
+    "source_tree": "95e1f030cc94de5de577de5df525f8bcb7d52d06",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "1.2.0-alpha.1"
+  },
+  "scope": "Local working-candidate diagnostic; release qualification will rebuild exact committed source on Ubuntu24.04 and Windows.",
+  "sha256": "57e0711bbf54b1862c9bf80103d519a73b0594182d2c60ceb18451f6bc76e3e6"
+}

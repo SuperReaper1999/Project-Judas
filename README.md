@@ -9,7 +9,7 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**Judas Engine Alpha v1.1.0** (`1.1.0-alpha.1`) is this source version.
+**Judas Engine Alpha v1.2.0** (`1.2.0-alpha.1`) is this source version.
 Versioned editor/SDK distributions, source archives and checksums are available
 through [published Alpha releases](https://github.com/SuperReaper1999/Project-Judas/releases).
 A source build or prepared candidate is not automatically a published release.
@@ -19,21 +19,28 @@ Alpha is not Stable/GA; documented limits still apply.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-This release adds native sprite/tilemap game development, frame animation, planar
-physics and editable 2D presets, alongside save/UI reliability fixes. See
-[release notes](docs/ALPHA_V1_1_0_NOTES.md). The versioned source identity is
-authoritative in [engine-version.json](engine-version.json).
+This release adds optional Utility AI, editable action definitions, runtime decision
+inspection, physical sensing and target leases, with the Little Haven and Willow
+Town learning projects. It retains the native 2D workflow and adds an explicitly
+gated experimental browser-export path. See [release notes](docs/ALPHA_V1_2_0_NOTES.md).
+The versioned source identity is authoritative in
+[engine-version.json](engine-version.json).
 
 ## Current status
 
-The v1.1.0 candidate includes [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md). Alpha v1.0.4 predates this workflow; sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset are also available on Experimental. See the [2D quick start](docs/2D_QUICKSTART.md).
+Build sprite-based games with [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md), sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset. Start with the [2D quick start](docs/2D_QUICKSTART.md).
+
+For NPCs, start with [Game AI](docs/GAME_AI.md) and its [JudasJS API](docs/judasjs/ai.md). Judas selects actions; project scripts own movement, work, combat and other outcomes. Try [Little Haven](projects/ai_workshop/README.md) for decisions and authoring, or [Willow Town](projects/willow_town/README.md) for selectable residents, employment, needs, aging and persistent death. Little Haven and Willow Town are included as editable SDK/source learning projects; package manifests identify the exact shipped files.
+
+[Browser export](docs/BROWSER_SUPPORT.md) is an early optional source workflow, visible only with `-ExpBrowserSupport=1`. It uses the same engine through WebAssembly/WebGL2 and requires a separate Linux/Emscripten toolchain. It is not enabled by default or a general browser-support guarantee.
 
 `main` contains operator-accepted source; `Experimental` is ongoing development.
 Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha v1.1.0 release notes](docs/ALPHA_V1_1_0_NOTES.md) ·
+[Alpha v1.2.0 release notes](docs/ALPHA_V1_2_0_NOTES.md) ·
+[Previous native 2D release](docs/ALPHA_V1_1_0_NOTES.md) ·
 [Previous orientation/resize patch](docs/ALPHA_V1_0_4_NOTES.md) ·
 [Previous authoring patch](docs/ALPHA_V1_0_3_NOTES.md) ·
 [Previous rain patch](docs/ALPHA_V1_0_2_NOTES.md) ·
@@ -112,8 +119,9 @@ Windows M99 validation remain outstanding.
   deformables, fracture and physical structural connections.
 - Local and planetary terrain, volumetric terrain authoring, navigation,
   world streaming, saves and scene transitions.
-- Optional liquids, weather, atmosphere, particles, audio, animation,
-  ragdolls, cameras, UI and profiling.
+- Optional Utility AI, weather, atmosphere, particles, audio, animation,
+  ragdolls, cameras, UI and profiling; Basic Water is available independently of
+  the Alpha-locked advanced-fluid simulation.
 - Project JavaScript through JudasJS for gameplay, input, cameras, UI,
   persistence and other game-owned policy.
 - An editor, project/scene authoring format, native Linux/Windows standalone
@@ -149,7 +157,8 @@ builds. Channel selection alone does not qualify or publish a build. See
 From an unpacked SDK, start `./judas_editor` on Linux or
 `.\judas_editor.exe` on Windows. Follow [your first visible project](docs/FIRST_PROJECT.md)
 to create a project without repository examples. The verified **engine source
-archive** also excludes game projects; see [source archive scope](docs/DISTRIBUTION.md#source-archives-without-git-history).
+archive** includes the curated 2D and AI learning projects, while larger consumer
+games and research remain outside it; see [source archive scope](docs/DISTRIBUTION.md#source-archives-without-git-history).
 
 In a **full Git checkout**, run the included projects with your source-build tools:
 
@@ -186,6 +195,7 @@ options, lifecycle behavior and current limitations.
 - [Architecture](docs/ARCHITECTURE.md) — engine boundaries and major systems
 - [JudasJS](docs/JUDASJS.md) and [getting started](docs/judasjs/getting-started.md)
 - [Editor guide](docs/EDITOR_GUIDE.md) and [content authoring](docs/CONTENT_AUTHORING.md)
+- [Game AI authoring](docs/GAME_AI.md), [AI scripting](docs/judasjs/ai.md) and [2D quick start](docs/2D_QUICKSTART.md)
 - [Android](docs/ANDROID.md) and [Windows notes](docs/WINDOWS.md)
 - [Feature documentation](docs/) and [validation evidence](docs/evidence/)
 - [Archived historical README](docs/DontReadMe_Final.md) — the previous root
@@ -202,5 +212,3 @@ features should remain clearly scoped.
 
 Project Judas is licensed under the [MIT License](LICENSE). Vendored
 dependencies retain their own notices and licence terms.
-
-Experimental native 2D: [Stage 3 sprite sheets, animation and events](docs/2D_STAGE3.md), with an editable Sprite Animation Workshop. Main and published Alpha releases are unchanged by this development.

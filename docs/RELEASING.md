@@ -1,15 +1,24 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_4_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Current release notes](ALPHA_V1_2_0_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
 
-Source version **Alpha v1.1.0 / `1.1.0-alpha.1`** prepares the accepted native 2D
-workflow and save/UI fixes. [Release notes](ALPHA_V1_1_0_NOTES.md) separate prior
-operator acceptance from exact-source package qualification. The operator has
-authorized preparing, qualifying and publishing this release; no failed gate is
-waived. Browser port work is separate and not included in this release.
+Source version **Alpha v1.2.0 / `1.2.0-alpha.1`** prepares optional Utility AI,
+Little Haven and Willow Town, alongside the gated experimental browser workflow.
+[Release notes](ALPHA_V1_2_0_NOTES.md) separate operator authorization, prior scoped
+evidence and exact-source package qualification. The operator has authorized
+preparing, qualifying, promoting and publishing this release; no failed gate is
+waived. Publication remains provisional until the exact candidate and packages
+pass the checks below. These source edits alone are not a published release.
+Advanced Fluids remains locked. Browser export requires explicit
+`-ExpBrowserSupport=1` and a separately installed source/Emscripten toolchain;
+no browser compiler is bundled in the desktop SDK.
+
+The SDK and verified source archive include the four native 2D learning projects
+plus Little Haven and Willow Town. Larger consumer games, research, build caches
+and unrelated experiments remain outside these release artifacts.
 
 **[Alpha v1.0.4 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.4-alpha.1)**
 on 30 October 2026. Its immutable tag/packages remain unchanged.
@@ -123,7 +132,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_0_2_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_0_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,
@@ -149,7 +158,7 @@ known limits and human checklist. Stop for final approval.
 4. Validate the already-reviewed files with `tools/publish_release.py CANDIDATE
    --accepted-commit EXACT_SHA` (dry-run; no network/publication).
 5. Only when authorized, add `--publish --human-approval 'PUBLISH
-   v1.0.0-alpha.1'`. This checks remote main/commit and required reviewer protection,
+   v1.2.0-alpha.1'`. This checks remote main/commit and required reviewer protection,
    refuses an existing final tag, creates a draft prerelease, uploads the exact
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.

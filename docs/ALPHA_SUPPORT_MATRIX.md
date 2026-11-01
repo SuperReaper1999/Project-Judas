@@ -1,11 +1,12 @@
 # Alpha scope and qualification matrix
 
-This is the source support boundary for **Alpha v1.1.0 / `1.1.0-alpha.1`**.
+This is the source support boundary for **Alpha v1.2.0 / `1.2.0-alpha.1`**.
 [Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
 identify exact accepted source/artifacts; source-version changes do not publish a
 release. The original Alpha was human accepted on 27 October at `636eec47`.
-The [current release notes](ALPHA_V1_1_0_NOTES.md) separate Hinge's operator phone
-acceptance, independent Xvfb/desktop verification and SDK/package qualification.
+The [current release notes](ALPHA_V1_2_0_NOTES.md) distinguish new AI qualification,
+experimental browser evidence and exact release-package receipts. Earlier Hinge
+phone and Xvfb/desktop evidence retains its original scope.
 Previous Windows hardware acceptance is retained; no new Windows GPU/audio,
 controller or clean-machine certification is implied. Advanced Fluids remains
 locked. No universal component-composition claim is made.
@@ -20,7 +21,8 @@ locked. No universal component-composition claim is made.
 | Windows x64 MSVC / tested Windows 11 hardware | Human accepted at `6941b381` | Effective 59/59 native gate plus 33/33 extras; operator project creation, save/reopen, small game, audio and editor/gameplay trial. Controller hardware and clean-machine certification remain unqualified. [Evidence](WINDOWS.md). |
 | Linux-to-Windows MinGW cross-build | Existing separately qualified workflow | Native MSVC acceptance does not supply a new MinGW qualification; historical cross-build receipts keep their own scope. |
 | Android runtime, touch, APK workflow | Human-verified working through real games | Operator confirms making and playing multiple Judas Android games, alongside earlier scoped phone acceptance. Exact revisions/devices were not supplied for the additional report; the operator additionally reports the d5f02448-based Hinge APK working on the phone after the orientation correction. APK bytes/device identity were not independently captured for this report; no general controller/emulator or every-device qualification is implied. |
-| macOS, iOS, consoles, browser runtime | Unsupported | No supported distribution pipeline promised. |
+| Browser runtime / Linux export host | Experimental, explicit `-ExpBrowserSupport=1` opt-in | Same engine through WebAssembly/WebGL2. Separately installed Emscripten/source toolchain and isolation-capable hosting required. Bounded Chromium/Firefox and Android phone/emulator evidence; no general browser or complete-engine certification. [Scope](BROWSER_SUPPORT.md). |
+| macOS, iOS, consoles | Unsupported | No supported distribution pipeline promised. |
 | Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
 
 M100 defines Alpha/Experimental and reserves Stable for GA; preparing a candidate
@@ -35,12 +37,12 @@ does not publish or promote it. Main remains operator controlled. Use
 | Dense physics workloads | Supported with content-dependent limits | Benchmark results are fixture/hardware specific. No guarantee that every 1024-body disturbance meets a frame budget. |
 | Elastic / very fast spin | Supported bounded approximation | Corrected moderate-rate energy gain; long-run nominal-e=1 dissipation and extreme-spin phase error remain. [Measurements](PREALPHA_MK2_ROTATION_CORRECTION.md). |
 | Wheels, powertrains, structural/deformation mechanisms | Supported within documented representations | Vehicle-agnostic authored components, not universal industrial mechanics. Native physical/lifecycle tests cover wheels and powertrains; other accepted mechanisms retain their own evidence. |
-| Utility AI and action lifecycles | Experimental checkpoint; not published Alpha support | Optional utility/target decisions, bounded-result physical sensing, transient exclusive leases, script-owned actions and fresh-object editor workflow. Cached observations are explicitly stale; broadphase traversal is not hard-budgeted. No planner or automatic network authority. [Guide](GAME_AI.md). |
+| Utility AI and action lifecycles | Supported utility/action subset | Optional utility/target decisions, bounded-result physical sensing, transient exclusive leases, script-owned actions and fresh-object editor workflow. Linux native/script/editor, cold-save and relocated-export checks cover the implementation; new Windows/Android/browser AI execution is not yet qualified. Cached observations are explicitly stale; broadphase traversal is not hard-budgeted. No planner or automatic network authority. [Guide](GAME_AI.md). |
 | CharacterMotor and script-owned controllers/cameras | Supported preferred path | Engine supplies movement/query primitives, project JS supplies policy. Not a skeleton, camera or AI system. |
 | Retained C++ player / spacecraft gameplay adapters | Supported compatibility subset | Optional legacy policy path; distinct from removed MK1 physics. Targeted locomotion, swimming, input and spacecraft/frame tests do not certify every old game. New projects use JS policy. |
 | FaithfulGravity / RadicalGravity / script selection | Supported | Resolver owns default selection; per-entity overrides are optional. Support normals remain separate. Arbitrary orientation does not remove local-chart precision limits. |
 | Basic water and swimming | Supported; default configuration | Rendering and simple interaction do not require advanced-fluid solvers. Default-off and cold-process controls cover actual runtime policy. |
-| Conserved reservoirs / dynamic surfaces / legacy particle fluids | **Disabled in Alpha builds** | Contact-stability issues can launch nearby rigid bodies. Alpha rejects advanced-fluid project requests before Play or export; the editor cannot enable them. Experimental/local builds retain opt-in implementation for repair, not Alpha support. FLU-001 and half-turn sampling remain deferred. [Investigation](M100_FLUID_CONTACT_STABILITY.md). |
+| Conserved reservoirs / dynamic surfaces / legacy particle fluids | **Disabled in Alpha builds** | The contact-stability restriction remains in force. Alpha rejects advanced-fluid project requests before Play or export; the editor cannot enable them. Experimental/local builds retain opt-in implementation and subsequent wet-geometry repairs for continued qualification, not Alpha support. Remaining numerical/immersion limits and protected historical failures are not erased by these repairs. [Investigation](M100_FLUID_CONTACT_STABILITY.md). |
 | Large-world origins / planetary terrain | Supported bounded chart and terrain workflow | Checked participant admission, tile-local geometry and double absolute positions; not multiple simultaneous independent physics charts. |
 | Streaming / regional suspension | Supported declared subsets | Inactive state persists; unsupported active assembly/liquid combinations reject explicitly. No universal suspension claim. |
 | Volumetric excavation | Supported local volumes | Real collision and navigation publication for bounded edits. Not arbitrary planet-wide excavation through every terrain representation. |
@@ -69,14 +71,15 @@ Broader game-building coverage, controller hardware, clean-machine distribution
 and fresh qualification of a particular Android build remain separate. A usability blocker still
 deserves correction even if automated tests pass.
 
-## Alpha v1.1.0 2D scope
+## Native 2D and experimental browser scope
 
 Native sprites, sheets/frame animation/events, orthographic cameras, static layered
 tilemaps, native planar MK2 collision, free top-down/platformer/grid presets,
 script parallax and sampled attack helpers are included. One-way platforms are
 static straight segments. Planar and 3D rigid bodies cannot share a physical
-world. Browser export is not included. The separate port will be experimental
-and explicitly gated behind `-ExpBrowserSupport=1`; this is not current support.
+world. Browser export is a separate experimental source workflow, explicitly
+gated behind `-ExpBrowserSupport=1`. It is not an installed compiler bundled
+inside the desktop SDK, and it does not qualify every native subsystem for the web.
 
 Exact-source release-preparation results identify Linux and Windows checks. Earlier
-Android human acceptance remains real, but is not a new 1.1.0 device qualification.
+Android human acceptance remains real, but is not a new 1.2.0 AI/device qualification.

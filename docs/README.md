@@ -1,12 +1,12 @@
 # Judas documentation
 
 Start here for **Judas Engine Alpha**. The current source targets
-**Alpha v1.0.4 / `1.0.4-alpha.1`**; [published downloads](https://github.com/SuperReaper1999/Project-Judas/releases)
+**Alpha v1.2.0 / `1.2.0-alpha.1`**; [published downloads](https://github.com/SuperReaper1999/Project-Judas/releases)
 and their manifests identify actual releases. [Repository overview](../README.md),
 [current status and limits](PREALPHA.md), [architecture](ARCHITECTURE.md).
 The first Alpha received final operator approval on 27 October 2026; later
 publication and acceptance remain explicit. This is not a universal compatibility promise.
-See [current patch notes](ALPHA_V1_0_4_NOTES.md), [versioning](VERSIONING.md) and [publication](RELEASING.md).
+See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) and [publication](RELEASING.md).
 
 ## Start a project
 
@@ -16,6 +16,9 @@ See [current patch notes](ALPHA_V1_0_4_NOTES.md), [versioning](VERSIONING.md) an
 - [Editor completion](judasjs/getting-started.md) with [judas.d.ts](judas.d.ts).
 - [Copyable cookbook](judasjs/cookbook.md) and [runtime/type/reference inventory](judasjs/API_INVENTORY.md).
 - [Scripting](SCRIPTING.md): execution boundary and existing project integration.
+- [2D quick start](2D_QUICKSTART.md): presets, collision, scripts, tiles, animation and export.
+- [Game AI](GAME_AI.md) and [AI scripting](judasjs/ai.md): author actions, inspect decisions, sense physical targets and reserve resources.
+- [Experimental browser export](BROWSER_SUPPORT.md): explicit launch opt-in and a separate Linux/Emscripten toolchain; supported boundaries and qualification records.
 
 ## Build, distribute and verify
 
@@ -64,6 +67,15 @@ See [current patch notes](ALPHA_V1_0_4_NOTES.md), [versioning](VERSIONING.md) an
 
 ## Learn from a consumer game
 
+[Little Haven](../projects/ai_workshop/README.md) demonstrates native Utility AI
+with project-owned needs and patrol/hide actions.
+[Willow Town](../projects/willow_town/README.md) expands that workflow into an
+editable top-down life game with employment, resource use, aging, death and
+cold-save continuation. See its [life qualification](../projects/willow_town/Tests/LIFE_QUALIFICATION.md)
+for the actual 20-minute observation and remaining limits. Both are included as
+editable SDK/source learning projects; package manifests identify their exact files.
+
+
 [Hearthworld survival sandbox](HEARTHWORLD_SURVIVAL_SANDBOX.md) combines a small
 planet, tool collection, physical tree felling, a force-based gravity gun,
 construction, bounded excavation and cold saves in ordinary project JavaScript.
@@ -92,5 +104,3 @@ reject links to untracked files. The small parser covers inline links and refere
 definitions; undefined reference usages and arbitrary Markdown extensions are
 outside its scope. It does not prove prose, temporal ordering, platform acceptance
 or every project asset; those still need review.
-
-- [2D quick start](2D_QUICKSTART.md): presets, collision, scripts, tiles, animation and export.

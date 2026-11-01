@@ -1,0 +1,66 @@
+PASS isolated editable town project loads: 
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS software-renderable fixture uses its actual supported 640x480 viewport
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.2.0/local-tests/original/project/Saves/main.judasstate (none saved)
+Project: Willow Town (/home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.2.0/local-tests/original/project/Willow_Town.judasproj)
+Scene: Willow Town - a little life simulation (/home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.2.0/local-tests/original/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process begins without the saved progress already present
+PASS cold process requests genuine modern save restoration: 
+PASS cold-restored actual MK2 endpoint before stepping: 301
+PASS cold-restored actual MK2 endpoint before stepping: 302
+PASS cold-restored actual MK2 endpoint before stepping: 303
+PASS cold-restored actual MK2 endpoint before stepping: 304
+PASS cold-restored actual MK2 endpoint before stepping: 305
+PASS cold-restored actual MK2 endpoint before stepping: 306
+PASS cold-restored actual MK2 endpoint before stepping: 301
+PASS cold-restored actual MK2 endpoint before stepping: 302
+PASS cold-restored actual MK2 endpoint before stepping: 303
+PASS cold-restored actual MK2 endpoint before stepping: 304
+PASS cold-restored actual MK2 endpoint before stepping: 305
+PASS cold-restored actual MK2 endpoint before stepping: 306
+PASS cold save preserves all resident needs, money, jobs and decision snapshots exactly
+PASS cold save preserves shop ledger and town clock without replaying rewards
+PASS restoration reconstructs six real native utility agents
+PASS restored actual native 301 elapsed
+PASS restored actual native 301 untilEvaluation
+PASS restored actual native 301 selected
+PASS restored actual native 301 status
+PASS restored actual native 301 cooldowns
+PASS restored actual native 302 elapsed
+PASS restored actual native 302 untilEvaluation
+PASS restored actual native 302 selected
+PASS restored actual native 302 status
+PASS restored actual native 302 cooldowns
+PASS restored actual native 303 elapsed
+PASS restored actual native 303 untilEvaluation
+PASS restored actual native 303 selected
+PASS restored actual native 303 status
+PASS restored actual native 303 cooldowns
+PASS restored actual native 304 elapsed
+PASS restored actual native 304 untilEvaluation
+PASS restored actual native 304 selected
+PASS restored actual native 304 status
+PASS restored actual native 304 cooldowns
+PASS restored actual native 305 elapsed
+PASS restored actual native 305 untilEvaluation
+PASS restored actual native 305 selected
+PASS restored actual native 305 status
+PASS restored actual native 305 cooldowns
+PASS restored actual native 306 elapsed
+PASS restored actual native 306 untilEvaluation
+PASS restored actual native 306 selected
+PASS restored actual native 306 status
+PASS restored actual native 306 cooldowns
+JS: WILLOW_TOWN {"version":2,"time":622.1166991125792,"speed":3,"paused":false,"stock":83,"sales":61,"controlled":null,"census":{"deaths":0,"hires":1,"firings":0},"hiringOpen":true,"jobs":[{"id":"baker","employeeId":"301","open":true,"tasks":34},{"id":"carpenter","employeeId":"302","open":true,"tasks":26},{"id":"gardener","employeeId":"303","open":true,"tasks":24},{"id":"shopkeeper","employeeId":"304","open":true,"tasks":23},{"id":"courier","employeeId":"305","open":true,"tasks":25},{"id":"keeper","employeeId":"306","open":true,"tasks":29}],"residents":[{"id":"301","name":"Mara","alive":true,"ageDays":29.440084951669135,"lifespanDays":78,"health":0.9906999932564792,"hunger":1,"fatigue":0.18585000604204702,"social":0.23955001249351154,"job":"Baker","jobId":"baker","jobsLost":0,"jobsFound":0,"absence":0,"deathCause":"","deathTime":null,"work":34,"meals":13,"rests":9,"chats":8,"money":84,"position":{"x":-4,"y":-2,"z":0},"selected":{"action":"socialize","target":"306"},"decisionElapsed":208.55001087673008},{"id":"302","name":"Eli","alive":true,"ageDays":35.440084951669135,"lifespanDays":82,"health":1,"hunger":0.4121000188849949,"fatigue":0.04270000222697875,"social":0.23970001250133466,"job":"Carpenter","jobId":"carpenter","jobsLost":0,"jobsFound":0,"absence":14.80000077188015,"deathCause":"","deathTime":null,"work":26,"meals":10,"rests":9,"chats":6,"money":66,"position":{"x":0,"y":-5.890000343322754,"z":0},"selected":{"action":"work","target":"1102"},"decisionElapsed":208.55001087673008},{"id":"303","name":"Nia","alive":true,"ageDays":25.440084951669135,"lifespanDays":76,"health":1,"hunger":0.5064000224992738,"fatigue":0.20912500725593322,"social":0.04500000234693283,"job":"Gardener","jobId":"gardener","jobsLost":0,"jobsFound":0,"absence":0,"deathCause":"","deathTime":null,"work":24,"meals":9,"rests":7,"chats":9,"money":62,"position":{"x":9,"y":-2,"z":0},"selected":{"action":"work","target":"1103"},"decisionElapsed":208.55001087673008},{"id":"304","name":"Theo","alive":true,"ageDays":43.440084951669135,"lifespanDays":80,"health":1,"hunger":0.43790002023057,"fatigue":0.05792500302102467,"social":0.2680500139799033,"job":"Shopkeeper","jobId":"shopkeeper","jobsLost":0,"jobsFound":0,"absence":23.950001249089837,"deathCause":"","deathTime":null,"work":23,"meals":10,"rests":6,"chats":7,"money":57,"position":{"x":-9,"y":-6,"z":0},"selected":{"action":"eat","target":"1302"},"decisionElapsed":208.55001087673008},{"id":"305","name":"Ada","alive":true,"ageDays":23.440084951669135,"lifespanDays":79,"health":1,"hunger":0.00030000001564621927,"fatigue":0.17325000538490598,"social":0.2682000139877264,"job":"Courier","jobId":"courier","jobsLost":0,"jobsFound":1,"absence":0,"deathCause":"","deathTime":null,"work":25,"meals":9,"rests":7,"chats":6,"money":65,"position":{"x":-11,"y":-4.130000114440918,"z":0},"selected":{"action":"socialize","target":"304"},"decisionElapsed":208.55001087673008},{"id":"306","name":"Sam","alive":true,"ageDays":78.44008495166914,"lifespanDays":80,"health":1,"hunger":0.3774000157713953,"fatigue":0.16887500515673176,"social":0.045150002354755935,"job":"Park keeper","jobId":"keeper","jobsLost":0,"jobsFound":0,"absence":0,"deathCause":"","deathTime":null,"work":29,"meals":10,"rests":9,"chats":8,"money":75,"position":{"x":-4.609999656677246,"y":-1.5,"z":0},"selected":{"action":"socialize","target":"301"},"decisionElapsed":207.383344149217}]}
+PASS native decision clock continues one real fixed step: 301
+PASS native decision clock continues one real fixed step: 302
+PASS native decision clock continues one real fixed step: 303
+PASS native decision clock continues one real fixed step: 304
+PASS native decision clock continues one real fixed step: 305
+PASS native decision clock continues one real fixed step: 306
+PASS restored current actions continue moving actual physical residents
+PASS ordinary town application completes and shuts down
+WILLOW_TOWN mode=cold checks=57 failures=0 worst_fixed_ms=1.950118

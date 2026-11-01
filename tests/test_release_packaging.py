@@ -52,6 +52,24 @@ class ReleaseNotes(unittest.TestCase):
 
 
 class QualificationScope(unittest.TestCase):
+    def test_ai_release_scope_and_cold_readers_use_real_producer_paths(self):
+        self.assertIn('ai',qualify_m100.GROUPS)
+        manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
+        tests=[entry for entry in manifest['tests'] if 'ai' in entry['groups']]
+        gates=ROOT/'unused-qualification-fixture'
+        commands=dict(qualify_m100.ai_cold_commands(tests,ROOT/'unused-build',gates))
+        for name in qualify_m100.COLD_APPLICATIONS:
+            entry=next(entry for entry in tests if entry['name']==name)
+            expected=[argument.format(output=gates,root=ROOT) for argument in entry['args']]
+            self.assertEqual(commands[name+'-cold'][1:],expected+['cold'])
+        self.assertEqual(commands['ai-reservation-write'][1:],['write',gates/'ai-reservation-cold'])
+        self.assertEqual(commands['ai-reservation-read'][1:],['read',gates/'ai-reservation-cold'])
+        self.assertEqual(qualify_m100.ai_cold_commands([],ROOT/'unused-build',gates),[])
+        spec=package_sdk.inventory(ROOT/'packaging/sdk-inventory.json')
+        for name in ('ai_workshop','willow_town'):
+            self.assertIn(name,package_source.LEARNING_PROJECTS)
+            self.assertIn('projects/'+name,spec['directories'])
+
     def test_2d_release_scope_has_its_own_checks_and_source_fixtures(self):
         self.assertIn('2d',qualify_m100.GROUPS)
         spec=package_sdk.inventory(ROOT/'packaging/sdk-inventory.json')

@@ -1,0 +1,187 @@
+{
+  "captured_utc": "2026-11-01T22:26:35.847428+00:00",
+  "scope": "Independent bounded graphics investigation only; no source edits, builds or existing service manipulation. Two normal visible12-wall-second owned launches with native and X11 captures.",
+  "source_revision": "400bc7ba0b7d1f092025ab6440d410981e82c055",
+  "original_bad": {
+    "file": "docs/evidence/willow-town-life-20261101/soak/start.png",
+    "sha256": "e908494444b31693a85b09ba979c0ffeafc89244194346cf2157313dc8b6b1d8",
+    "house_centre_unique_colours": 5738,
+    "button_pixel_970_375": [
+      36,
+      56,
+      48
+    ],
+    "header_pixel_600_5": [
+      36,
+      56,
+      48
+    ]
+  },
+  "probes": [
+    {
+      "probe": "render-independent-wrapped",
+      "summary_state": "completed",
+      "runtime_exit_code": 0,
+      "ordinary_save": {
+        "state": "completed",
+        "error": "",
+        "time": 46.15000240691006
+      },
+      "command": [
+        "/usr/bin/stdbuf",
+        "-oL",
+        "-eL",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/Willow-Town-standalone/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/render-independent-wrapped/project/Willow_Town.judasproj"
+      ],
+      "runtime_sha256": "973f787c744b25545a916b3d253dc9f8521831ef34e95220e6517a7225018f6c",
+      "images": [
+        {
+          "file": ".cache/willow-life-20261101/render-independent-wrapped/start.png",
+          "sha256": "06d99627d935632b58ebc879350a4a688c219567da35cf5f6660cbc2c1762a28",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-wrapped/midpoint.png",
+          "sha256": "345d545ea305404300065fa3e3397d1a706c06dc091db42782c09243bb82adc7",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-wrapped/internal.png",
+          "sha256": "b09e5be1fd85519420d60d057bb5341dd4f334c6da60e0967258d80e2e159081",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-wrapped/finished.png",
+          "sha256": "248558ad87a137da4c2f7a42b74bddb91bcc19b64742d9854973b78724081340",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "probe": "render-independent-direct",
+      "summary_state": "incomplete",
+      "runtime_exit_code": 0,
+      "ordinary_save": {
+        "state": "completed",
+        "error": "",
+        "time": 56.75000295974314
+      },
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/Willow-Town-standalone/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/render-independent-direct/project/Willow_Town.judasproj"
+      ],
+      "runtime_sha256": "973f787c744b25545a916b3d253dc9f8521831ef34e95220e6517a7225018f6c",
+      "images": [
+        {
+          "file": ".cache/willow-life-20261101/render-independent-direct/start.png",
+          "sha256": "15406e5595af0ae6bb0a93fbcd13431fc59999bfeaa79aa974e12d54a47be9e0",
+          "house_centre_unique_colours": 200,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-direct/midpoint.png",
+          "sha256": "7b7da0a7a7dc64b60eb07a5d1fc616ba0ce2abdc4a8014e6ff7f5dab45da3dfc",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-direct/internal.png",
+          "sha256": "284eb7a176c92b83abdc6f867ae46f8fcc498d93c9f08382c57a282dfbf77888",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        },
+        {
+          "file": ".cache/willow-life-20261101/render-independent-direct/finished.png",
+          "sha256": "57048edb047adba0a32bbda98eb060ba4fc9a72669bf284620caab0a9e7363dd",
+          "house_centre_unique_colours": 17,
+          "button_pixel_970_375": [
+            64,
+            102,
+            82
+          ],
+          "header_pixel_600_5": [
+            14,
+            26,
+            25
+          ]
+        }
+      ],
+      "warnings": [
+        "stdout wrapper disabled or unavailable; buffered logs can delay observations",
+        "Malformed game observation: Expecting ',' delimiter: line 1 column 2641 (char 2640)"
+      ]
+    }
+  ],
+  "finding": "No renderer flaw or external-capture corruption reproduced. Both wrapped and direct launches have correct native and external screenshots. Original startup anomaly remains preserved and unexplained; no fix or cause is claimed.",
+  "diagnostic_limit": "Unwrapped run buffered stdout interleaved one WILLOW_TOWN JSON line with the stderr screenshot message. Save completed and runtime exited0, but observer declared incomplete because finish protocol became visible after close. This is distinct from rendering correctness.",
+  "source_review": "Owner-thread texture publication and generation-checked handles inspected. Solid UI rects share UI quad/white fallback; text uses separate VAO/atlas. No concrete alias/double destruction established. CreateTexture unpack-state assumption is unproven as cause; standalone code has no unpack-state writes. ApplicationControl does not imply blocking resource mode, so both paths are async."
+}

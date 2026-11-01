@@ -16,10 +16,12 @@ The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 
 `f2813324155166c6942fd68dde843d9775eb532d`; see
 [its authoring/Android diagnostic corrections and release record](ALPHA_V1_0_3_NOTES.md).
 
-The current source identity is **`1.1.0-alpha.1`**, titled **Judas Engine Alpha
-v1.1.0**, with [native 2D workflow release notes](ALPHA_V1_1_0_NOTES.md).
-Publication is a separate, protected operation; see the release page and its
-immutable manifest for published source/artifact identities.
+The current source identity is **`1.2.0-alpha.1`**, titled **Judas Engine Alpha
+v1.2.0**, with [Utility AI and experimental-browser release notes](ALPHA_V1_2_0_NOTES.md).
+The operator has authorized release preparation and publication; exact-candidate
+gates and package verification still govern that operation. Changing this file
+or building a candidate does not publish it. See the release page and its
+immutable manifest for actual published source/artifact identities.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort
