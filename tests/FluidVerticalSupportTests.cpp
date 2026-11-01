@@ -169,11 +169,64 @@ void IntervalControls() {
     Near(measure({{-.5, .5}}, 0), 1, 0, "zero-height query inside water");
     Near(measure({{-.5, -.25}, {0, .25}}, 1), .75, 0, "one-column resolution closes internal gaps only");
 }
+void ConnectedSlabContinuity() {
+    // The root column ends at y=0; all neighboring columns end at y=.25.
+    // A physical sample slab just touching the root surface cannot borrow an
+    // entire slab of taller neighbor water through an infinitesimal overlap.
+    const auto rotation=glm::angleAxis(.83f,glm::normalize(glm::vec3(1,-2,3)));
+    constexpr float spacing=.25f, halfHeight=.1f, radius=.3f;
+    double kernelSum=0;
+    const double reach=double(radius)+2*spacing;
+    for (int z=-4; z<=4; ++z) for (int x=-4; x<=4; ++x) {
+        const double distance2=spacing*spacing*(x*x+z*z);
+        if (distance2>=reach*reach) continue;
+        const double kernel=1-distance2/(reach*reach);
+        kernelSum+=kernel*kernel;
+    }
+    const double rounding=64*std::numeric_limits<float>::epsilon();
+    for (const Frame& frame : {Frame{},Frame{rotation,{2,-1,3}}}) {
+        std::vector<FluidParticle> particles;
+        for (int z=-4; z<=4; ++z) for (int x=-4; x<=4; ++x) {
+            for (int y=-4; y<(x||z ? 1 : 0); ++y) {
+                FluidParticle particle;
+                particle.position=frame.Point({x*spacing,(y+.5f)*spacing,z*spacing});
+                particle.mass=15.625f;
+                particles.push_back(particle);
+            }
+        }
+        FluidHydrostaticField field;
+        field.Build(particles,1000);
+        double previousJump=0;
+        for (float epsilon : {.001f,.00001f}) {
+            const auto sample=[&](float y,bool connected) {
+                return field.Query(frame.Point({0,y,0}),frame.Vector({0,1,0}),
+                    halfHeight,radius,frame.Vector({1,0,0}),nullptr,connected).fraction;
+            };
+            const double below=sample(halfHeight-epsilon,true);
+            const double above=sample(halfHeight+epsilon,true);
+            Near(below,epsilon/(2*double(halfHeight)),rounding,
+                 "connected sample integrates only its admitted wet-height interval");
+            Near(above,0,0,"connected slab above its local water surface stays dry");
+            const double jump=std::abs(below-above);
+            if (previousJump>0) Near(std::max(0.,jump-.02*previousJump),0,rounding,
+                "vanishing root overlap cannot admit a finite neighbor slab");
+            previousJump=jump;
+            // The default low-level unconnected reconstruction deliberately
+            // retains its published spatial column mean.
+            const double rootWeight=1/kernelSum;
+            Near(sample(halfHeight+epsilon,false),1-rootWeight,rounding,
+                 "unconnected low-level column mean remains unchanged");
+            Near(sample(halfHeight-epsilon,false),1-rootWeight+rootWeight*epsilon/(2*halfHeight),rounding,
+                 "unconnected partial-column reconstruction remains unchanged");
+        }
+    }
+}
 } // namespace
 int main() {
     IntervalControls();
     DisplacedSupportContinuity();
     EquivalentSolidFrames();
+    ConnectedSlabContinuity();
     const auto rotation = glm::angleAxis(.83f, glm::normalize(glm::vec3(1, -2, 3)));
     for (const Frame& frame : {Frame{}, Frame{rotation, {3, -2, 4}}, Frame{rotation, {4096, 0, 0}}}) LayerQueries(frame);
     std::cout << "Fluid vertical support: " << checks << " checks, " << failures << " failures\n";

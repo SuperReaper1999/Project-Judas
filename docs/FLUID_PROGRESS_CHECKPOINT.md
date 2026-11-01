@@ -1,5 +1,10 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
+Latest follow-up: [native known-answer geometry comparison](FLUID_KNOWN_GEOMETRY_COMPARISON.md)
+confirms errors in both curved-surface sampling and the legacy observer, and
+corrects a separate connected-query height-admission discontinuity. The original
+coarse immersion check remains failed; Advanced Fluids remain locked in Alpha.
+
 Follow-up: [remaining immersion observation audit](FLUID_IMMERSION_OBSERVER_AUDIT.md)
 adds reproducible before/after capture, independent plane clipping and rejected
 nonplanar-observer evidence. The original failure remains active; no further

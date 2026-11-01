@@ -44,9 +44,11 @@ struct FluidFieldSample {
 };
 
 // Approximate liquid columns at max particle spacing, in an explicit tangent/
-// up basis. Non-displacing continuous columns retain their spatial-kernel mean.
-// Displaced solids always use height-dependent column ownership, so discovering
-// a remote air gap cannot switch the exclusion rule for all other donors.
+// up basis. Low-level unconnected continuous queries retain their spatial-kernel
+// column mean. Connected physical queries integrate admission at each height:
+// a tiny wet root overlap cannot admit taller neighbors over the entire slab.
+// Displaced solids also always use height-dependent column ownership, so
+// discovering a remote air gap cannot switch the exclusion rule for other donors.
 // Resolved exterior vertical gaps use separate height slices, each with its own
 // wet/dry admission and solid cross-section. A small wet overlap in one slice
 // cannot admit surrounding water into a different, dry slice. Gaps no larger

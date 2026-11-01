@@ -1,0 +1,20 @@
+[
+  {
+    "name": "baseline-known",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-known-geometry-20261101/baseline-known",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-known-geometry-20261101/baseline-qualified.csv"
+    ],
+    "exit_code": 1,
+    "seconds": 17.942534613000134
+  },
+  {
+    "name": "baseline-vertical",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-known-geometry-20261101/baseline-vertical"
+    ],
+    "exit_code": 1,
+    "seconds": 1.5662181119996603
+  }
+]

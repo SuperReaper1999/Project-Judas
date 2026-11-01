@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "dc861698be320fd7056297b82f47b4bc2f0e54de",
+  "main_unchanged": "49c4f3d9e29debe669411f01501e0276dea23231",
+  "source_sha256": {
+    "CMakeLists.txt": "30bed720bd7e28991edca47e95c199efef19eaf55647479cf1318fb77b3746d0",
+    "src/FluidHydrostatics.cpp": "6fd3f30031e3c841ccc0884c1fdc32d02e8b437d5c15de8983ba42ab499b73b5",
+    "src/FluidHydrostatics.h": "4165c12212ce20f3910b6cc1c485645b1e1702084e2570effb21e195f405dd76",
+    "tests/FluidVerticalSupportTests.cpp": "13e3d58761b123929e80d178f6e73a5237fda8638f8ca44d59aa84a6cf457813",
+    "tests/FluidImmersionObservation.h": "e94ae09bf4ae7eee59cbdee566a8d6e5e15717a7f7b9295ee501e2b4ab283e99",
+    "tests/FluidKnownGeometryTests.cpp": "d9d28fdbe35c71bc662dfb2c218ec8768a5a3fa2250ae1db9cb737f1301f16a0",
+    "tests/ProductionFluidTests.cpp": "d5a236947ebf0b0f8bc0e3ecf2ad015bd383240324159205042b3272d2237bd5",
+    "tests/test_prealpha_validation.py": "de2339fa3421fd9797a8a8caaa4634aa870ce861e40f5c4a7f26642db5b4fd93",
+    "tools/validation/suites.json": "28c9ca6a320e9c57e63f45709097ae1551977703dc89a6a35e823e14996a0af1"
+  },
+  "baseline_hydrostatics_sha256": "c1567e08457668b3f87ddf8781d1d6dc059f5887fe7fb1dbaedfb13efbf16786",
+  "engine_library_sha256": "dd8a14ae8f17ba563b40afe9db40ccf900a05b823c228f415c9204acfe73fbb6",
+  "native_binaries_sha256": {
+    "judas_fluid_known_geometry_tests": "1128b34d56701908c69d4869ebc37ee4752e97326a20ae4fa6a5def53c17ac9e",
+    "judas_production_fluid_tests": "ea83617744a382e80207f9a6dcc0287985b6586350f4e172cf0366a016584a7b",
+    "judas_fluid_vertical_support_tests": "6652bb0cd43a6916f5d6dc8917b325578ab8b9195a0047ecaf1db5922f257cbc",
+    "judas_fluid_demo_integration_tests": "2d5aa92225f5a883140d27f7df83f8a6c26032dc28091f65769cd70dec754506"
+  },
+  "unchanged_original_production_acceptance_block": true,
+  "scope": "One connected non-displacing height-admission correction. Known spatial-geometry diagnostic and original immersion check still fail. No Alpha unlock, main promotion, release or hardware acceptance. Binaries were built before final documentation/registry-test edits and checkpoint; source hashes identify actual compiled mechanism/test contents."
+}

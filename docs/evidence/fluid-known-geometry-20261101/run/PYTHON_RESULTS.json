@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_fluid_immersion_observer.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 0.16401895999933913
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_cmake_test_targets.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 0.41487190699990606
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_validation_registration.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 2.7680486230001407
+  }
+]

@@ -1,5 +1,10 @@
 # Remaining production immersion check: observation audit
 
+Follow-up: [native known-answer geometry comparison](FLUID_KNOWN_GEOMETRY_COMPARISON.md)
+tests the engine as well as the ruler, and corrects one demonstrated connected
+height-admission defect. The results below remain the historical diagnostic
+checkpoint; the original production failure is still preserved.
+
 2026-11-01. Based on Experimental `4feada296189f1e80be8447a297489e379ab4832`.
 **The original failure remains active. This is a diagnostic checkpoint, not a
 fluid correction, qualification pass, human acceptance or permission to unlock.**

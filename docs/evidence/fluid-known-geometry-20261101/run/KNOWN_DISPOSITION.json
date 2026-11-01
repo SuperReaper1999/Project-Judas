@@ -1,0 +1,23 @@
+{
+  "new_failures": [],
+  "comparisons_now_within_existing_tolerance": [
+    {
+      "case": "bowl",
+      "spacing": "0.25",
+      "height_case": "1",
+      "displaced": "0",
+      "frame": "0",
+      "before_error": 0.11868638793627423,
+      "after_error": 0.02395834525426227
+    },
+    {
+      "case": "bowl",
+      "spacing": "0.25",
+      "height_case": "1",
+      "displaced": "0",
+      "frame": "1",
+      "before_error": 0.11868638793627423,
+      "after_error": 0.023958315451939882
+    }
+  ]
+}

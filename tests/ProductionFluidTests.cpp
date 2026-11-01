@@ -1,5 +1,6 @@
 #include "Project.h"
 #include "FluidSettlingContract.h"
+#include "FluidImmersionObservation.h"
 // FTFT9 actual authored-scene -> ordinary fixed-step hybrid body checks.
 #include <algorithm>
 #include <chrono>
@@ -28,21 +29,7 @@ int ReportedFailures(){return failed+(strictDiagnostics?diagnosticFailures:0);}
 void PrintSummary(){std::cout<<"SUMMARY checks="<<checks<<" failures="<<ReportedFailures()<<" acceptance_failures="<<failed<<" diagnostic_checks="<<diagnosticChecks<<" diagnostic_failures="<<diagnosticFailures<<" strict_diagnostics="<<strictDiagnostics<<" steps="<<totalSteps<<" settling_mode="<<(legacyFourSecond?"legacy_four_second":"window_decay")<<" legacy_comparisons="<<legacyComparisons<<" legacy_failures="<<legacyFailures<<" legacy_mandatory_failures="<<legacyMandatoryFailures<<'\n';}
 struct Result { float finalY=0,finalV=0,meanFraction=0,maxSpeed=0;double medianParticleMs=0,medianExecutedMs=0,amortizedMs=0,energy=0;int count=0; };
 double Median(std::vector<double> values){if(values.empty())return 0;std::sort(values.begin(),values.end());return values[values.size()/2];}
-// Independent raw-particle observation, shared by release validity and the
-// final immersion oracle. It never calls the engine's hydrostatic sampler.
-std::optional<double> ObservedSurface(const std::vector<FluidParticle>& particles,
- const glm::quat& q,const glm::vec3& localCenter,const glm::vec3& half,float spacing,int nx){
- std::vector<double> tops(static_cast<std::size_t>(nx*nx),-1e30);
- for(const auto& particle:particles){
-  const glm::vec3 point=glm::conjugate(q)*particle.position;
-  if(std::abs(point.x-localCenter.x)<half.x+spacing||std::abs(point.z-localCenter.z)<half.z+spacing)continue;
-  const int x=static_cast<int>(std::floor((point.x+1)/spacing)),z=static_cast<int>(std::floor((point.z+1)/spacing));
-  if(x>=0&&x<nx&&z>=0&&z<nx)tops[static_cast<std::size_t>(z*nx+x)]=std::max(tops[static_cast<std::size_t>(z*nx+x)],static_cast<double>(point.y)+.5*spacing);
- }
- tops.erase(std::remove_if(tops.begin(),tops.end(),[](double v){return v< -1e20;}),tops.end());
- if(tops.empty())return {};
- return Median(tops);
-}
+using FluidTest::ObservedSurface;
 Result Run(const std::string& name,float spacing,float densityRatio,float sizeScale,const glm::quat& q,float g,bool freefall,fs::path out,bool observationalScale=false){
  if(!selectedCase.empty()&&name!=selectedCase)return {};
  const int failBefore=failed,diagnosticBefore=diagnosticFailures,diagnosticChecksBefore=diagnosticChecks;Scene scene;scene.Settings().name=name;scene.Settings().fluidScale=spacing/.05f;
@@ -142,13 +129,7 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
    const auto observedSurface=ObservedSurface(world.Fluid().Particles(),q,local,half,spacing,nx);
    observedHeight=observedSurface;
    if(observedSurface){
-    int wet=0;constexpr int n=32;
-    for(int z=0;z<n;++z)for(int y=0;y<n;++y)for(int x=0;x<n;++x){
-     const glm::vec3 offset=half*(glm::vec3(2*x+1,2*y+1,2*z+1)/float(n)-1.0f);
-     const glm::vec3 point=glm::conjugate(q)*(pose.position+pose.rotation*offset);
-     if(point.y<*observedSurface)++wet;
-    }
-    observedFraction=static_cast<double>(wet)/(n*n*n);
+    observedFraction=FluidTest::BoxBelowObservedPlane(pose,half,q,*observedSurface);
    }
   }
   if(captureStep){

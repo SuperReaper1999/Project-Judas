@@ -1,0 +1,372 @@
+[
+  {
+    "name": "baseline",
+    "groups": {
+      "flat/0.25/0": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.25/1": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.25/0": {
+        "engine_max_error": 0.021468817691008724,
+        "observer_max_error": 0.07499998758236615,
+        "measurements": 10
+      },
+      "affine/0.25/1": {
+        "engine_max_error": 0.03591364572445599,
+        "observer_max_error": 0.07499998758236615,
+        "measurements": 10
+      },
+      "bowl/0.25/0": {
+        "engine_max_error": 0.11868638793627423,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.25/1": {
+        "engine_max_error": 0.18437528461217834,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.25/0": {
+        "engine_max_error": 0.20606334010759997,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.25/1": {
+        "engine_max_error": 0.420487533013026,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.25/0": {
+        "engine_max_error": 0.061581313113372005,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.25/1": {
+        "engine_max_error": 0.11027955959240643,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.25/0": {
+        "engine_max_error": 0.026565969487030827,
+        "observer_max_error": 0.03125,
+        "measurements": 10
+      },
+      "wave/0.25/1": {
+        "engine_max_error": 2.9305617488262214e-08,
+        "observer_max_error": 0.03125,
+        "measurements": 10
+      },
+      "flat/0.125/0": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.125/1": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.125/0": {
+        "engine_max_error": 0.012371718386809505,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "affine/0.125/1": {
+        "engine_max_error": 0.03166574190060345,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "bowl/0.125/0": {
+        "engine_max_error": 0.08775759736696881,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.125/1": {
+        "engine_max_error": 0.11276066154241515,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.125/0": {
+        "engine_max_error": 0.1201005677382152,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.125/1": {
+        "engine_max_error": 0.24181879560152697,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.125/0": {
+        "engine_max_error": 0.034939705828826106,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.125/1": {
+        "engine_max_error": 0.05928182552258221,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.125/0": {
+        "engine_max_error": 0.00994899868965149,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "wave/0.125/1": {
+        "engine_max_error": 0.011741966505844914,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "flat/0.0625/0": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.0625/1": {
+        "engine_max_error": 0.6999999875823661,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.0625/0": {
+        "engine_max_error": 0.0088423485557243,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "affine/0.0625/1": {
+        "engine_max_error": 0.651041652510564,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "bowl/0.0625/0": {
+        "engine_max_error": 0.06840566794077557,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.0625/1": {
+        "engine_max_error": 0.6538411356508737,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.0625/0": {
+        "engine_max_error": 0.08469703905284398,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.0625/1": {
+        "engine_max_error": 0.6482447298864524,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.0625/0": {
+        "engine_max_error": 0.024202823142211116,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.0625/1": {
+        "engine_max_error": 0.651041652510564,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.0625/0": {
+        "engine_max_error": 0.007554739713668823,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.0625/1": {
+        "engine_max_error": 0.6490480820337936,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      }
+    }
+  },
+  {
+    "name": "candidate",
+    "groups": {
+      "flat/0.25/0": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.25/1": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.25/0": {
+        "engine_max_error": 0.055655062198638916,
+        "observer_max_error": 0.07499998758236615,
+        "measurements": 10
+      },
+      "affine/0.25/1": {
+        "engine_max_error": 0.03591364572445599,
+        "observer_max_error": 0.07499998758236615,
+        "measurements": 10
+      },
+      "bowl/0.25/0": {
+        "engine_max_error": 0.02395838387310517,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.25/1": {
+        "engine_max_error": 0.18437528461217834,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.25/0": {
+        "engine_max_error": 0.20606334010759997,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.25/1": {
+        "engine_max_error": 0.420487533013026,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.25/0": {
+        "engine_max_error": 0.07827633569637982,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.25/1": {
+        "engine_max_error": 0.11027955959240643,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.25/0": {
+        "engine_max_error": 0.03580400397380146,
+        "observer_max_error": 0.03125,
+        "measurements": 10
+      },
+      "wave/0.25/1": {
+        "engine_max_error": 2.9305617488262214e-08,
+        "observer_max_error": 0.03125,
+        "measurements": 10
+      },
+      "flat/0.125/0": {
+        "engine_max_error": 8.940696716308594e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.125/1": {
+        "engine_max_error": 6.010134967482372e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.125/0": {
+        "engine_max_error": 0.041794776916503906,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "affine/0.125/1": {
+        "engine_max_error": 0.03166574190060345,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "bowl/0.125/0": {
+        "engine_max_error": 0.02016764767467988,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.125/1": {
+        "engine_max_error": 0.11276066154241515,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.125/0": {
+        "engine_max_error": 0.1228202680746715,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.125/1": {
+        "engine_max_error": 0.24181879560152697,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.125/0": {
+        "engine_max_error": 0.05346369693676678,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.125/1": {
+        "engine_max_error": 0.05928182552258221,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.125/0": {
+        "engine_max_error": 0.03350994040568622,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "wave/0.125/1": {
+        "engine_max_error": 0.011741966505844914,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "flat/0.0625/0": {
+        "engine_max_error": 8.940696716308594e-08,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "flat/0.0625/1": {
+        "engine_max_error": 0.6999999875823661,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "affine/0.0625/0": {
+        "engine_max_error": 0.03497546911239624,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "affine/0.0625/1": {
+        "engine_max_error": 0.651041652510564,
+        "observer_max_error": 0.018750012417633855,
+        "measurements": 10
+      },
+      "bowl/0.0625/0": {
+        "engine_max_error": 0.00975918658077729,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "bowl/0.0625/1": {
+        "engine_max_error": 0.6538411356508737,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.0625/0": {
+        "engine_max_error": 0.09039909640947985,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "dome/0.0625/1": {
+        "engine_max_error": 0.6482447298864524,
+        "observer_max_error": 0.6999999980131786,
+        "measurements": 10
+      },
+      "saddle/0.0625/0": {
+        "engine_max_error": 0.04199916074673382,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "saddle/0.0625/1": {
+        "engine_max_error": 0.651041652510564,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.0625/0": {
+        "engine_max_error": 0.0317651624480888,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      },
+      "wave/0.0625/1": {
+        "engine_max_error": 0.6490480820337936,
+        "observer_max_error": 0.012499987582366145,
+        "measurements": 10
+      }
+    }
+  }
+]

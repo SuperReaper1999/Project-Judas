@@ -1,0 +1,16 @@
+[
+  {
+    "name": "no-admission",
+    "source_sha256": "ec2f57a87d938dffdc788479237770927422e15d402a62ffb8d79b1b91d213ab",
+    "exit_code": 0,
+    "seconds": 0.26422837299969615,
+    "scope": "Causal ablation, not an engine correction"
+  },
+  {
+    "name": "local-radius",
+    "source_sha256": "734c033d3015926042b2c8a4db2f83e4af240d7e99402e908da52edf1b203801",
+    "exit_code": 0,
+    "seconds": 0.11392580900019311,
+    "scope": "Causal ablation, not an engine correction"
+  }
+]

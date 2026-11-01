@@ -322,8 +322,12 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     // ownership rules when an arbitrarily weak donor reveals a remote air gap
     // changes all other donors' weights discontinuously. Displaced solids must
     // use one height-dependent rule regardless of whether a gap was found.
-    // Keep the established column-mean contract for non-displacing queries.
-    splitHeights = splitHeights || solid != nullptr;
+    // Connected physical queries also need admission at each height. Admitting
+    // an entire sample slab because its root column has a vanishing wet overlap
+    // otherwise imports a finite mean from taller neighbors. This creates a
+    // finite jump as that overlap reaches zero, including under frame roundoff.
+    // Preserve the low-level unconnected column-mean reconstruction contract.
+    splitHeights = splitHeights || solid != nullptr || connectedWetSupport;
     if(splitHeights)for(auto& profile:profiles)
         if(!profile.continuous && profile.layers.empty())prepareLayers(profile);
     const auto occupiedLength=[](double lo,double hi,double half) {
@@ -402,7 +406,42 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         }
         return total>0 ? weighted/total : 0.0;
     };
-    if(!splitHeights)out.fraction=static_cast<float>(measureBand(-halfHeight,halfHeight,false));
+    if(connectedWetSupport && !solid) {
+        // Without a displaced solid, connected admission requires the root
+        // column itself to be wet. Its footprint already contains the query,
+        // so no additional hull/solid traversal is needed. Integrating the
+        // intersection of its wet intervals with each donor's intervals is
+        // exactly the height-sliced rule, without rebuilding topology per band.
+        const auto x=static_cast<std::int64_t>(std::floor(-originX/columnWidth+.5));
+        const auto z=static_cast<std::int64_t>(std::floor(-originZ/columnWidth+.5));
+        const auto root=std::lower_bound(profiles.begin(),profiles.end(),std::make_pair(x,z),
+            [](const auto& profile,const auto& key) {
+                return profile.x<key.first || (profile.x==key.first && profile.z<key.second);
+            });
+        if(root!=profiles.end() && root->x==x && root->z==z) {
+            const auto intersectRoot=[&](double lo,double hi) {
+                const auto intersection=[&](double rootLo,double rootHi) {
+                    if(halfHeight==0)return lo<=0 && hi>=0 && rootLo<=0 && rootHi>=0 ? 1.0 : 0.0;
+                    return std::max(0.0,std::min({hi,rootHi,double(halfHeight)})-
+                                        std::max({lo,rootLo,-double(halfHeight)}));
+                };
+                if(root->continuous)return intersection(root->low,root->high);
+                double occupied=0;
+                for(const auto& span:root->layers)occupied+=intersection(span.first,span.second);
+                return occupied;
+            };
+            double total=0,occupied=0;
+            for(const auto& profile:profiles) {
+                double height=0;
+                if(profile.continuous)height=intersectRoot(profile.low,profile.high);
+                else for(const auto& span:profile.layers)height+=intersectRoot(span.first,span.second);
+                total+=profile.weight;
+                occupied+=profile.weight*height;
+            }
+            if(total>0)out.fraction=static_cast<float>(occupied/(total*(halfHeight>0 ? 2*halfHeight : 1)));
+        }
+    }
+    else if(!splitHeights)out.fraction=static_cast<float>(measureBand(-halfHeight,halfHeight,false));
     else if(halfHeight==0)out.fraction=static_cast<float>(measureBand(0,0,true));
     else {
         std::vector<double> cuts{-halfHeight,halfHeight};

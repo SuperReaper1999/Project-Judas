@@ -90,7 +90,9 @@ class GateTests(unittest.TestCase):
         summary = json.loads(result.stdout)
         manifest = gate.load_manifest(gate.MANIFEST)
         self.assertEqual(summary['tests'], len(manifest['tests']))
-        self.assertEqual(summary['manual'], 1)
+        self.assertEqual(summary['manual'], 2)
+        self.assertEqual({entry['name'] for entry in manifest['tests'] if entry.get('manual', False)},
+                         {'liquid-origin-grid-query', 'fluid-known-geometry'})
 
     def test_finding_status_annotation_preserves_observed_results(self):
         manifest = gate.load_manifest(gate.MANIFEST)
