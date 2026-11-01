@@ -18,11 +18,18 @@ neither targets nor movements. `ScriptUtilityAI` lazily owns native agents per
 script entity/slot; the private `ScriptUtilityLibrary` wrapper owns synchronous
 action callbacks. ScriptSystem retires them through its existing destruction,
 fault and reload boundaries. No-agent projects have no agent registry or
-background evaluation loop.
+background evaluation loop. Optional `AISensing` uses existing MK2 spatial queries
+with explicit result/cast budgets and timed stale observations; it does not replace
+the broadphase. `AIReservationBoard` provides exclusive simulation-time leases.
+Their script bridges are lazy and slot-owned. Claims are released before teardown
+callbacks; no new claims are admitted during retirement. Caches invalidate on
+origin transitions and are discarded with their script session. Neither helper
+serializes runtime tokens; actions reacquire resources after restoration.
 
 Definitions are constrained JSON default exports in ordinary tracked `.ai.js`
 script modules, reusing asset ownership, imports, fingerprints and export.
-`UtilityAIEditor` shares native validation and exposes opt-in authoring/live
+`EditorAIWorkflow` creates paired source/definition assets and a copyable actor
+starter through the normal scene edit/undo paths. `UtilityAIEditor` shares native validation and exposes opt-in authoring/live
 inspection through existing panels/preferences. Gameplay explicitly stores native
 snapshots inside script state; modern persistence and regional scripting remain
 the owning lifecycle. No new physics, navigation, save or replication system is

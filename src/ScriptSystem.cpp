@@ -11,6 +11,8 @@
 #include "ScriptSystem.h"
 #include "ScriptBindings.h"
 #include "ScriptUtilityAI.h"
+#include "ScriptAIReservations.h"
+#include "ScriptAISensing.h"
 #include "ScriptUtilityLibrary.h"
 #include "ScriptBindingValues.h"
 #include "AuthoringJSON.h"
@@ -517,13 +519,18 @@ struct ScriptSystem::Impl {
     std::map<std::string,JSModuleDef*> modules;
     std::vector<ScriptDiagnostic> diagnostics;
     std::unique_ptr<ScriptUtilityAI> ai;
+    std::unique_ptr<ScriptAIReservations> reservations;
+    std::unique_ptr<ScriptAISensing> senses;
     bool retiringAI=false;
     void RetireAI(SceneObjectId owner,uint64_t slot) {
-        if(!ai)return;
+        if(!ai&&!reservations&&!senses)return;
         const auto previousOwner=currentOwner;const auto previousSlot=currentSlot;
         currentOwner=owner;currentSlot=slot;polls=0;
         const bool wasRetiring=retiringAI;retiringAI=true;
-        const auto error=ai->Retire(owner,slot);
+        if(reservations)reservations->ReleaseClaims(owner,slot);
+        const auto error=ai?ai->Retire(owner,slot):std::string{};
+        if(senses)senses->Retire(owner,slot);
+        if(reservations)reservations->Retire(owner,slot);
         retiringAI=wasRetiring;
         currentOwner=previousOwner;currentSlot=previousSlot;
         if(!error.empty())diagnostics.push_back({owner,slot,"","AI cleanup",error});
@@ -580,7 +587,7 @@ struct ScriptSystem::Impl {
             if(record)i.profileLabel=p.Intern("Script asset: "+record->relativePath);
         }return i.profileLabel;
     }
-    ~Impl(){JS_SetExecutionHook(rt,nullptr,nullptr);Stop();if(debug)for(auto [atom,name]:debug->files){(void)name;JS_FreeAtom(ctx,atom);}ai.reset();JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
+    ~Impl(){JS_SetExecutionHook(rt,nullptr,nullptr);Stop();if(debug)for(auto [atom,name]:debug->files){(void)name;JS_FreeAtom(ctx,atom);}ai.reset();reservations.reset();senses.reset();JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
     static char* Normalize(JSContext* c,const char* base,const char* name,void* p){
         auto* s=static_cast<Impl*>(p);std::string result;
         if(std::string(name)=="judas")result="judas";
@@ -653,7 +660,13 @@ struct ScriptSystem::Impl {
     bool animationControl=false; // only authoritative fixedUpdate, not post-step contact/UI callbacks
     void Callback(Instance& i,const char* name,bool presentation=false){
         struct AnimationControlScope {Impl& s;bool previous;AnimationControlScope(Impl& v,const char* n):s(v),previous(v.animationControl){s.animationControl=std::strcmp(n,"fixedUpdate")==0;}~AnimationControlScope(){s.animationControl=previous;}} animationScope(*this,name);
-        struct AIRetirement {Impl& self;Instance& instance;bool retire;~AIRetirement(){if(retire)self.RetireAI(instance.entity,instance.slot.id);}} aiRetirement{*this,i,std::strcmp(name,"destroy")==0};
+        struct AIRetirement {
+            Impl& self;Instance& instance;bool retire,previous;
+            AIRetirement(Impl& s,Instance& i,bool r):self(s),instance(i),retire(r),previous(s.retiringAI){
+                if(retire){self.retiringAI=true;if(self.reservations)self.reservations->ReleaseClaims(instance.entity,instance.slot.id);}
+            }
+            ~AIRetirement(){if(retire)self.RetireAI(instance.entity,instance.slot.id);self.retiringAI=previous;}
+        } aiRetirement{*this,i,std::strcmp(name,"destroy")==0};
         if(std::strcmp(name,"destroy")==0)SignalRetire({i.entity,i.slot.id});
         if(i.fault)return;
         struct CallScope { Impl& s; CallScope(Impl& v):s(v){++s.invocationDepth;if(s.debug){s.debug->lastLine=-1;s.debug->linesByDepth.clear();}} ~CallScope(){--s.invocationDepth;} } callScope(*this);
@@ -689,6 +702,17 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(!s->world)return JS_ThrowTypeError(c,"world API unavailable in metadata context");
     auto& world=*s->world;
+    if(op.rfind("reservation",0)==0){
+        if((op=="reservationCreate"||op=="reservationAcquire")&&(s->stopping||s->retiringAI))
+            return JS_ThrowTypeError(c,"Cannot acquire AI targets while retiring a script");
+        if(!s->reservations){if(op!="reservationCreate")return JS_ThrowReferenceError(c,"stale AI reservation scope");s->reservations=std::make_unique<ScriptAIReservations>();}
+        return s->reservations->Dispatch(c,op,argc,argv,world,s->currentOwner,s->currentSlot);
+    }
+    if(op.rfind("sense",0)==0){
+        if(op=="senseCreate"&&(s->stopping||s->retiringAI))return JS_ThrowTypeError(c,"Cannot create AI senses while retiring a script");
+        if(!s->senses){if(op!="senseCreate")return JS_ThrowReferenceError(c,"stale AI sensor");s->senses=std::make_unique<ScriptAISensing>(c);}
+        return s->senses->Dispatch(op,argc,argv,world,s->currentOwner,s->currentSlot);
+    }
     if(op.rfind("ai",0)==0){
         if(op=="aiCreate"&&(s->stopping||s->retiringAI))return JS_ThrowTypeError(c,"Cannot create AI while retiring a script");
         if(!s->ai){if(op!="aiCreate")return JS_ThrowReferenceError(c,"stale AI agent");s->ai=std::make_unique<ScriptUtilityAI>(c);}
@@ -2515,6 +2539,7 @@ void ScriptSystem::PhysicsEvent(SceneObjectId self, SceneObjectId other,
 
 void ScriptSystem::ShiftOrigin(glm::dvec3 delta) {
     m->CheckThread();
+    if(m->senses)m->senses->ShiftOrigin();
     m->viewOrigin = glm::vec3(glm::dvec3(m->viewOrigin) - delta);
     const auto vector = [&](glm::dvec3 p) {
         auto value = JS_NewObject(m->ctx);

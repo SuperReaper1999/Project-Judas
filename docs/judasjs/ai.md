@@ -131,3 +131,92 @@ contracts; this API does not make unsupported world combinations saveable.
 
 For networking, project authority determines where agents run. There is no
 automatic AI replication or client-side reconciliation in this initial framework.
+
+
+## Optional sensing
+
+```js
+import {AISenses, AITargetReservations, entity} from 'judas';
+const senses = new AISenses({interval: .2, maxResults: 16, maxCandidates: 128, maxRaycasts: 8});
+const claims = new AITargetReservations(); // instantiate inside your script lifecycle
+const observation = senses.sample(actor.transform.position, 20, {
+  requiredTags: ['food'], visibility: true
+});
+const candidates = observation.targets.map(t => ({
+  action: 'eat', target: t.entityId, facts: {hunger, distance: t.distance},
+  eligible: t.visible === true && claims.available(t.entityId),
+  reason: 'Unavailable, occluded or visibility unknown'
+}));
+```
+
+The fragment illustrates composition, not a complete attachable behaviour. Keep
+helpers on the creating script instance and sample inside a lazy candidate function
+or another deliberate sensing cadence. For fresh-object code use **Create AI
+Behaviour** in the Scripts inspector and edit the generated action implementation.
+
+`AISenses(settings = {})` settings: interval [0,60] simulation seconds (default .2),
+maxResults 1..128 (default16), maxRaycasts 0..128 (default8), and maxCandidates
+maxResults..4096 (default128). `sample(origin, radius, options = {})` takes a local
+world-space `{x,y,z}`, radius [0,1,000,000] metres, and optional visibility, planar,
+includeSensors, includeLayers, excludeLayers, requiredTags, excludedTags and
+occluderLayers. Category arrays accept valid project names or numeric IDs;
+unknown/retired names are errors. Occluder layers default to all, independently
+of the target filter. `dispose()` releases the instance; script retirement does
+so automatically.
+
+Returned observation: targets `{entityId,position,distance,visible}`, cached, stale,
+age, sampledAt, truncated, candidatesConsidered, raycasts and queryCandidates.
+Entity IDs are decimal strings; positions are actual physical body centres, not
+visual pivots. Visibility is boolean only when tested; otherwise null. Radius is
+centre-based. Only ordinary published entity-owned physical bodies are targets;
+render-only markers and auxiliary articulation bodies are not silently replaced
+by another entity/root. The owner's ordinary body is ignored.
+
+A cached sample is a timed observation, **not a guarantee about the current
+world**. Every reused result sets stale=true, even at age zero. Age is simulation
+time since the original sample. Retained target identity/position/filter changes,
+request changes, entity publication and origin changes invalidate relevant caches.
+New arrivals and moving occluders can remain unseen until refresh. Set interval=0
+for an uncached query or use your own immediate interaction validation.
+
+maxCandidates bounds processed broadphase matches; maxResults bounds returned
+entities; maxRaycasts bounds LOS casts. The shared broadphase still traverses and
+materializes its complete match vector. Those budgets do **not** guarantee a
+constant CPU/memory cost in arbitrarily dense worlds. When truncated, results are
+nearest within the processed stable-handle subset, not necessarily the globally
+nearest targets. Unknown LOS is independent of truncation. A cache hit reports
+zero new queries/rays/processed matches, while preserving the original observations.
+Each script slot may own16 sensors; a session may own4096. No work is scheduled
+without explicit calls; caches are transient and are not serialized.
+
+## Exclusive target leases
+
+`new AITargetReservations()` creates an independent, script-owned claimant scope:
+
+| Method | Meaning |
+| --- | --- |
+| `available(key)` | True when unclaimed/expired or held by this same scope. |
+| `acquire(key, leaseSeconds=1)` | Atomically acquire or renew; false for contention or capacity refusal. |
+| `release(key)` | Release only this scope's claim; false for absent/foreign ownership. |
+| `releaseAll()` | Release this scope's claims. |
+| `dispose()` | Release claims and retire the scope; idempotent. |
+
+Keys are opaque 1..256-byte strings, without NUL. They need not be entities.
+Lease duration is .001..60 finite simulation seconds and must be representable
+at the current clock. Invalid inputs throw without changing live ownership;
+capacity denial returns false without evicting another claimant. Limits are256
+live targets/scope,4096 live targets/board,16 scopes/script slot and4096 scopes/session.
+Expired leases are reclaimed lazily when inspected/acquired; no background scan.
+
+Check availability while building candidates, then acquire again in execution:
+availability is an observation, not a lock. Renew while using the target and
+release in action stop/finish. Separate scopes cannot share a claim merely because
+their owner script is the same. Target destruction is project policy because keys
+can identify arbitrary resources; release it or allow its bounded lease to expire.
+
+The board is local to the authoritative script session, not a network lock service.
+Run it on the appropriate host. Do not save handles or assume leases survive
+load/reload/region teardown. Save gameplay progress and AI snapshots; reacquire
+on execution and handle refusal without replaying one-time rewards. The generated
+starter and native regressions demonstrate this contract. Existing world-save
+restrictions still apply.

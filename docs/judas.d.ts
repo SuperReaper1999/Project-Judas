@@ -56,6 +56,41 @@ declare module "judas" {
     dispose(): void;
   }
 
+  /** Optional timed observations of published physical entities. */
+  export interface AISensingSettings {
+    interval?: number; maxResults?: number; maxRaycasts?: number; maxCandidates?: number;
+  }
+  export interface AISensingOptions {
+    visibility?: boolean; planar?: boolean; includeSensors?: boolean;
+    includeLayers?: Array<string | number>; excludeLayers?: Array<string | number>;
+    requiredTags?: Array<string | number>; excludedTags?: Array<string | number>;
+    occluderLayers?: Array<string | number>;
+  }
+  export interface AISensedTarget {
+    entityId: string; position: {x:number;y:number;z:number}; distance: number;
+    /** null means visibility was not established, not clear. */
+    visible: boolean | null;
+  }
+  export interface AISensingObservation {
+    targets: AISensedTarget[]; cached: boolean; stale: boolean;
+    age: number; sampledAt: number; truncated: boolean;
+    candidatesConsidered: number; raycasts: number; queryCandidates: number;
+  }
+  export class AISenses {
+    constructor(settings?: AISensingSettings);
+    sample(origin: {x:number;y:number;z:number}, radius: number, options?: AISensingOptions): AISensingObservation;
+    dispose(): void;
+  }
+  /** Exclusive, transient world-session claims, independently scoped per object. */
+  export class AITargetReservations {
+    constructor();
+    acquire(target: string, leaseSeconds?: number): boolean;
+    available(target: string): boolean;
+    release(target: string): boolean;
+    releaseAll(): void;
+    dispose(): void;
+  }
+
   /** Embedded executable provenance; not game-save/content compatibility. */
   export interface EngineBuildInfo {
     readonly schema: 1;

@@ -13,7 +13,7 @@ if(args.includes('--help')){
 const ts=loadTypeScript(option('--typescript'));
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'src/ScriptSystem.cpp'),'utf8');
-const nativeSource=source+'\n'+['src/ScriptInputBindings.inl','src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp','src/ScriptUtilityAI.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
+const nativeSource=source+'\n'+['src/ScriptInputBindings.inl','src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp','src/ScriptUtilityAI.cpp','src/ScriptAISensing.cpp','src/ScriptAIReservations.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
 const baseLibrary=source.match(/const std::string library=std::string\(R"JS\(([\s\S]*?)\)JS"\) \+ kUtilityAILibrary;/)?.[1];
 const aiSource=fs.readFileSync(path.join(root,'src/ScriptUtilityLibrary.h'),'utf8');
 const aiLibrary=aiSource.match(/R"JS\(([\s\S]*?)\)JS";/)?.[1];
@@ -77,7 +77,7 @@ function declarations(nodes){for(const n of nodes){
  else if(ts.isVariableStatement(n))for(const d of n.declarationList.declarations){const parent=name(d.name);if(!ts.isTypeLiteralNode(d.type))throw Error('Namespace needs explicit type literal: '+parent);insert(types,parent,'namespace',[],d);for(const m of d.type.members)insert(types,parent+'.'+name(m.name),(ts.isMethodSignature(m)||ts.isTypeQueryNode(m.type))?'call':m.modifiers?.some(x=>x.kind===ts.SyntaxKind.ReadonlyKeyword)?'get':'field',[],m);}
 }}
 declarations(decl.statements);
-const pages={UtilityAgent:'ai.md',scripts:'scripting-diagnostics.md',NetworkEntity:'network.md',network:'network.md',Terrain:'terrain.md',LocalPlayer:'local-multiplayer.md',PlayerInput:'local-multiplayer.md',players:'local-multiplayer.md',Weather:'weather.md',weather:'weather.md',mods:'mods.md',signals:'signals.md',Fracture:'fracture.md',Deformable:'deformables.md',saves:'saves.md',audio:'audio.md',localization:"localization.md",Material:"materials.md",profiler:"profiling.md",LiquidVolume:'liquid.md',liquid:'liquid.md',NavigationAgent:'navigation.md',navigation:'navigation.md',Entity:'entities.md',entity:'entities.md',world:'entities.md',EntityGravity:'physics.md',Character:'character.md',Wheel:'wheels.md',Powertrain:'powertrains.md',Ragdoll:'animation-ragdolls.md',Animation:'animation-ragdolls.md',Joint:'physics.md',physics:'physics.md',scenes:'scenes-state.md',session:'scenes-state.md',input:'input.md',time:'input.md',console:'input.md',UIElement:'ui.md',UIDocument:'ui.md',ui:'ui.md'};
+const pages={AISenses:'ai.md',AITargetReservations:'ai.md',UtilityAgent:'ai.md',scripts:'scripting-diagnostics.md',NetworkEntity:'network.md',network:'network.md',Terrain:'terrain.md',LocalPlayer:'local-multiplayer.md',PlayerInput:'local-multiplayer.md',players:'local-multiplayer.md',Weather:'weather.md',weather:'weather.md',mods:'mods.md',signals:'signals.md',Fracture:'fracture.md',Deformable:'deformables.md',saves:'saves.md',audio:'audio.md',localization:"localization.md",Material:"materials.md",profiler:"profiling.md",LiquidVolume:'liquid.md',liquid:'liquid.md',NavigationAgent:'navigation.md',navigation:'navigation.md',Entity:'entities.md',entity:'entities.md',world:'entities.md',EntityGravity:'physics.md',Character:'character.md',Wheel:'wheels.md',Powertrain:'powertrains.md',Ragdoll:'animation-ragdolls.md',Animation:'animation-ragdolls.md',Joint:'physics.md',physics:'physics.md',scenes:'scenes-state.md',session:'scenes-state.md',input:'input.md',time:'input.md',console:'input.md',UIElement:'ui.md',UIDocument:'ui.md',ui:'ui.md'};
 // Component accessors and cross-cutting world operations belong at the page
 // documenting their actual contract, rather than all pointing to Entity's index.
 const referenceOverrides = {
@@ -164,7 +164,7 @@ function checkCallables(declarations) {
  }
 }
 checkCallables(types);
-const schema={checkpoint:'Current public module including optional Utility AI, native 2D and consumer lifecycle diagnostics; source version in engine-version.json',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp',resultShapes,callables,symbols:symbols.map(k=>{
+const schema={checkpoint:'Current public module including Utility AI sensing/reservations and authoring, native 2D and consumer lifecycle diagnostics; source version in engine-version.json',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp + ScriptAISensing.cpp + ScriptAIReservations.cpp',resultShapes,callables,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k==='physics.cast2D')native=['cast2D'];

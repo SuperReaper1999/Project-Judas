@@ -1,11 +1,22 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Current public module including optional Utility AI, native 2D and consumer lifecycle diagnostics; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Current public module including Utility AI sensing/reservations and authoring, native 2D and consumer lifecycle diagnostics; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
 | Runtime symbol | Native bridge operation | Type | Reference |
 |---|---|---|---|
+| `AISenses` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AISenses.constructor` | `senseCreate` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AISenses.dispose` | `senseDispose` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AISenses.sample` | `senseSample` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.acquire` | `reservationAcquire` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.available` | `reservationAvailable` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.constructor` | `reservationCreate` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.dispose` | `reservationDispose` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.release` | `reservationRelease` | [declaration](../judas.d.ts) | [reference](ai.md) |
+| `AITargetReservations.releaseAll` | `reservationReleaseAll` | [declaration](../judas.d.ts) | [reference](ai.md) |
 | `Animation` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.advance` | `animationAdvance` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.clips` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |

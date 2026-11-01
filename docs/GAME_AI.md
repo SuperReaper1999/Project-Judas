@@ -5,7 +5,8 @@ predefined combat, hunger, personality, cover selection or social simulation.
 Developers define candidate actions/targets and sensed facts; native scoring
 selects a candidate. Ordinary project action callbacks perform the gameplay.
 No machine learning, model download or external service is involved.
-[Linux qualification, measurements and human checklist](GAME_AI_QUALIFICATION.md).
+[Initial qualification](GAME_AI_QUALIFICATION.md) ·
+[Usability, sensing and reservation qualification](AI_USABILITY_QUALIFICATION.md).
 
 A tiny enemy can offer `patrol` and `hide`. A simulated person can offer meals,
 beds, work and conversations. Both use the same decisions, action lifecycle,
@@ -14,6 +15,34 @@ cooldowns and inspection; the smaller project need not adopt the larger policy.
 Start with the editable [Little Haven project](../projects/ai_workshop/README.md)
 and the [JudasJS API](judasjs/ai.md). Navigation and movement remain existing
 subsystems, not a second AI-owned physics engine.
+
+## Start with a selected object
+
+In a script-owned project, select an empty object and open the
+Inspector’s **Add gameplay script** section (open by default on a fresh object). Choose **Create AI behaviour**, enter a name, and create it. Judas
+creates two normal Script assets in `Assets/Scripts`: a constrained `.ai.js`
+definition (decision settings) and a `.js` behaviour (your action code), then
+attaches the behaviour in one undoable scene operation.
+
+A fresh 3D object gains a visible capsule and CharacterMotor. Three visible root
+markers are wired as patrol, return and cover targets. Place a floor beneath the
+actor and press Play. For an existing kinematic native 2D actor the starter uses
+its real collider and authored plane. Existing rigid/dynamic ownership is rejected
+with an explanation instead of silently converting a vehicle or physical assembly.
+The starter moves directly with collision checks; it is not a pathfinder.
+
+The Inspector gives separate **Decision settings**, **Action code** and
+**Inspect this NPC** shortcuts. Live decisions can follow the selected object's
+actual script ownership. A coordinator's agents remain owned by its coordinator;
+Judas does not guess ownership from the visual object an action controls.
+
+The generated patrol/hide example is ordinary readable game code. Send
+`signals.send(npc, 'ai.damage', {amount: .6})` from your combat script to see the
+hide action compete against patrol. Recovery and movement are script policy.
+Target references, cancellation, one-second renewable claims and save restoration
+are included. The embedded template is in `src/editor/AIBehaviourTemplate.h`;
+no external template package is required. Undo removes scene setup while keeping
+created source assets, as with existing editor script workflows.
 
 ## Authoring
 
@@ -126,11 +155,32 @@ The framework does not add universal suspension support to otherwise unsupported
 engine combinations. If the world cannot save a required subsystem, adding AI
 must not hide that failure.
 
+## Optional observations and target ownership
+
+`AISenses` performs bounded-result spatial observations of published physical
+entities. Target filters and line-of-sight occluder layers are independent: a wall
+need not have the food tag to block the sight of food. A zero/exhausted ray budget
+returns `visible: null`, never an invented clear result. Timed cache reuse reports
+its original sample time, age and `stale: true`, even if a same-tick wall change
+cannot be detected cheaply. Check targets again before applying gameplay effects.
+
+`AITargetReservations` provides exclusive world-session target leases. Different
+instances are different claimants, including two instances in the same script.
+One NPC can claim a bed, meal or work position while others make that candidate
+ineligible. Leases use simulation time, support renewal/release and expire; no
+wall-clock thread runs. Claims are released on script teardown/fault/reload before
+action cleanup. They are transient: after loading, actions explicitly reacquire
+instead of reviving saved ownership tokens or duplicating rewards.
+
+These helpers do not decide who deserves a job, consume inventory, discover every
+possible kind of target or coordinate a squad. See [API bounds and usage](judasjs/ai.md#optional-sensing).
+
 ## Initial boundaries
 
 This is a utility/action framework, not a behaviour-tree graph, GOAP planner,
 perception engine, crowd simulator or pathfinding replacement. Long sequences,
-reservations, conversations and coordinated teams remain project policy. A chosen
+job queues, conversations and coordinated teams remain project policy. Exclusive
+target leases are available; higher-level allocation/fairness policy remains yours. A chosen
 attack still needs valid collision/hit timing; a chosen route can still fail.
 
 Use runtime evidence to distinguish a bad score, missing fact, invalid target,

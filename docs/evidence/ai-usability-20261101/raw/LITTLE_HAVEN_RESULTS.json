@@ -1,0 +1,21 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_utility_ai_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/ai_workshop/AI_Workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/little-haven-final"
+    ],
+    "exit_code": 0,
+    "seconds": 0.7649503739994543
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_utility_ai_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/ai_workshop/AI_Workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/little-haven-final",
+      "cold"
+    ],
+    "exit_code": 0,
+    "seconds": 0.26424270699862973
+  }
+]

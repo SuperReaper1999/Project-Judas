@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_reservation_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.00782277300095302
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_reservation_script_tests"
+    ],
+    "exit_code": 1,
+    "seconds": 0.11404220799886389
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_sensing_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06418207800015807
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_sensing_script_tests"
+    ],
+    "exit_code": 1,
+    "seconds": 0.21435155799917993
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_workflow_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/fresh-project-first"
+    ],
+    "exit_code": 1,
+    "seconds": 0.06400152800051728
+  }
+]

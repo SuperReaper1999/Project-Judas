@@ -75,3 +75,15 @@ brain.finish('finished somehow');
 brain.tick(.016,[{action:'hide',target:'cover',facts:{health:'injured'}}],{health:.2});
 // @ts-expect-error unsupported response curve
 new UtilityAgent({actions:[{id:'hide',considerations:[{fact:'health',curve:'magic'}]}]});
+
+// Optional sensor bounds and exclusive lease keys are explicit.
+import {AISenses,AITargetReservations} from 'judas';
+const senses = new AISenses({maxResults:8,maxRaycasts:4,interval:.2});
+const observation=senses.sample(origin,20,{visibility:true,requiredTags:['food']});
+const seen:boolean|null=observation.targets[0]?.visible;void seen;
+const claim = new AITargetReservations();
+claim.acquire('bed:42',1);claim.release('bed:42');
+// @ts-expect-error leases take stable string resource keys
+claim.acquire(42);
+// @ts-expect-error spatial radius is numeric
+senses.sample(origin,'nearby');

@@ -1,0 +1,18 @@
+PASS test output is a fresh isolated directory
+PASS create ordinary project: 
+PASS fresh object creates linked definition, behaviour and actual actor: 
+PASS fresh NPC has ordinary visible capsule and CharacterMotor
+PASS actual script and all explicit marker references attached
+PASS targets stay at root rather than following the NPC
+PASS source links explicit definition identity and matching import
+PASS actual entity-property defaults and authored references validate, not just module syntax
+PASS generated modules compile/link with the real public module
+PASS one Undo restores fresh object and removes all generated scene setup
+PASS Undo preserves project source assets
+PASS one Redo restores the full actor setup
+PASS existing files and scene survive name collision
+PASS path escape rejected before changing scene
+PASS existing physical ownership is never silently converted
+PASS invalid preexisting scene cannot leave partial AI assets or edits
+PASS second publication failure rolls back only its own newly minted files and records
+FAIL Scripts-component-first workflow fills an empty slot: injected second registration failure

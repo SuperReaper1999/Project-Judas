@@ -1,0 +1,5 @@
+FAIL tagged published CharacterMotor capsule is attributed to its actual entity without a getter side effect
+FAIL CharacterMotor sensing reports actual offset capsule centre and real unobstructed LOS
+FAIL cached CharacterMotor membership invalidates immediately after runtime untagging
+FAIL next observation rediscovers a retagged CharacterMotor through physical query filtering
+AISensing: 53 checks, 4 failures

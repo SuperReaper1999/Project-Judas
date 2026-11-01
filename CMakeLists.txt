@@ -262,6 +262,10 @@ add_library(judas_engine STATIC
     src/WorldScripts.cpp
     src/RuntimeUI.cpp
     src/RuntimeUIControls.cpp
+    src/AIReservations.cpp
+    src/ScriptAIReservations.cpp
+    src/AISensing.cpp
+    src/ScriptAISensing.cpp
     src/UtilityAI.cpp
     src/ScriptUtilityAI.cpp
     src/ScriptSystem.cpp
@@ -448,6 +452,7 @@ add_executable(judas_editor
     src/editor/EditorMain.cpp
     src/editor/EditorMilestoneNotice.cpp
     src/ExperimentalBrowser.cpp
+    src/editor/EditorAIWorkflow.cpp
     src/editor/UtilityAIEditor.cpp
     src/editor/EditorApplication.cpp
     src/editor/ScriptTools.cpp
@@ -1755,10 +1760,10 @@ judas_add_engine_test(judas_editor_asset_actions_tests tests/EditorAssetActionsT
 judas_add_engine_test(judas_editor_preferences_tests tests/EditorPreferencesTests.cpp
     SOURCES src/editor/EditorPreferences.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_editor_script_workflow_tests tests/EditorScriptWorkflowTests.cpp
-    SOURCES src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+    SOURCES src/editor/EditorAIWorkflow.cpp src/editor/UtilityAIEditor.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_input_rebinding_tests tests/InputRebindingTests.cpp)
 judas_add_engine_test(judas_pause_example_application_tests tests/PauseExampleApplicationTests.cpp
-    SOURCES src/editor/EditorPauseExample.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+    SOURCES src/editor/EditorPauseExample.cpp src/editor/EditorAIWorkflow.cpp src/editor/UtilityAIEditor.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
 judas_add_engine_test(judas_velocity_coupling_substep_tests tests/VelocityCouplingSubstepTests.cpp)
@@ -1814,7 +1819,7 @@ judas_add_engine_test(judas_2d_helpers_tests tests/TwoDHelpersTests.cpp)
 judas_add_engine_test(judas_planar_gameplay_tests tests/PlanarGameplayTests.cpp)
 
 judas_add_engine_test(judas_2d_game_workflow_tests tests/TwoDGameWorkflowTests.cpp
-    SOURCES src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp
+    SOURCES src/editor/EditorAIWorkflow.cpp src/editor/UtilityAIEditor.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp
     src/editor/SpriteSheetEditor.cpp src/editor/TilemapEditor.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_beacon_grove_application_tests tests/BeaconGroveApplicationTests.cpp APPLICATION)
@@ -1853,6 +1858,14 @@ target_link_libraries(judas_utility_ai_benchmark PRIVATE judas_engine)
 judas_warnings(judas_utility_ai_benchmark)
 
 judas_add_engine_test(judas_utility_ai_application_tests tests/UtilityAIApplicationTests.cpp APPLICATION)
+
+judas_add_engine_test(judas_ai_reservation_tests tests/AIReservationTests.cpp)
+judas_add_engine_test(judas_ai_reservation_script_tests tests/AIReservationScriptTests.cpp)
+judas_add_engine_test(judas_ai_sensing_tests tests/AISensingTests.cpp)
+judas_add_engine_test(judas_ai_sensing_script_tests tests/AISensingScriptTests.cpp)
+judas_add_engine_test(judas_ai_workflow_tests tests/UtilityAIWorkflowTests.cpp
+    SOURCES src/editor/EditorAIWorkflow.cpp src/editor/EditorScriptWorkflow.cpp
+    src/editor/UtilityAIEditor.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_utility_ai_tests tests/UtilityAITests.cpp)
 judas_add_engine_test(judas_utility_ai_script_tests tests/UtilityAIScriptTests.cpp)

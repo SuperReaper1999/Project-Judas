@@ -1,0 +1,26 @@
+PASS fresh output protects existing projects
+PASS create brand-new project
+PASS same New 2D Game starter as editor
+PASS import external PNG with ordinary asset metadata
+PASS duplicate destination never overwrites source art
+PASS same right-click Create sprite sheet handler
+PASS open actual editable sheet draft
+PASS slice native palette using actual image dimensions
+PASS workflow input image must provide at least two 32x32 frames
+PASS save authored frame animation and event content
+PASS create selected editable tile grid
+PASS start viewport brush through native ray
+PASS release commits real sprite and collision
+PASS painted cell really exists
+PASS Undo removes authored cell
+PASS Redo restores cell
+PASS create and attach ordinary JavaScript from inspector workflow
+PASS complete fresh project compiles public scripts
+PASS broken edit is detected rather than accepted silently
+PASS corrected source compiles without restarting editor
+PASS save project and scene through actual document path
+PASS reopen saved authored scene
+PASS reopened composed sprites, animation, scripts and physical grid build
+PASS newly attached source executes in ordinary world
+PASS script actually executes instead of merely being present
+TWO_D_WORKFLOW checks=25 failures=0

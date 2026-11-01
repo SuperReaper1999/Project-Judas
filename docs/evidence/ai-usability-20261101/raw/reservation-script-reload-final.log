@@ -1,0 +1,4 @@
+script asset=a51a706436ffd59ce9ea3bc92178d7fa entity=2 slot=1 fixedUpdate: Error: intentional reservation owner fault
+    at fixedUpdate (Assets/npc.js:28:50)
+
+AI reservation scripts: 26 checks, 0 failures

@@ -185,12 +185,24 @@ bool UtilityAIEditor::Save(AssetDatabase& db, std::string& error) {
     }
 }
 
+std::vector<ScriptAIInspection> EditorAIAgentsForEntity(const std::vector<ScriptAIInspection>& agents,SceneObjectId entity) {
+    if(!entity)return agents;
+    std::vector<ScriptAIInspection> selected;
+    for(const auto& agent:agents)if(agent.entity==entity)selected.push_back(agent);
+    return selected;
+}
+
 void UtilityAIEditor::Panel(EditorPanelState& state) {
     if (!state.showUtilityAI) return;
     ImGui::SetNextWindowSize({820, 650}, ImGuiCond_FirstUseEver);
+    if(state.utilityAILiveRequested||state.utilityAIAuthorRequested)ImGui::SetNextWindowCollapsed(false,ImGuiCond_Always);
     if (!ImGui::Begin("AI actions and decisions", &state.showUtilityAI)) { ImGui::End(); return; }
+    const bool requestedAuthor=state.utilityAIAuthorRequested;state.utilityAIAuthorRequested=false;
+    const bool requestedLive=state.utilityAILiveRequested&&!requestedAuthor;
+    state.utilityAILiveRequested=false;
+    if(requestedLive)followSelected=false;
     if (ImGui::BeginTabBar("aiTabs")) {
-        if (ImGui::BeginTabItem("Author actions")) {
+        if (ImGui::BeginTabItem("Author actions",nullptr,requestedAuthor?ImGuiTabItemFlags_SetSelected:0)) {
             ImGui::TextWrapped("Choose what an NPC values here. Project scripts provide candidates, sensing and action execution.");
             const bool editableProject = state.mode == EditorMode::Edit && state.assets && state.project && state.project->IsLoaded();
             ImGui::BeginDisabled(!editableProject);
@@ -330,11 +342,16 @@ void UtilityAIEditor::Panel(EditorPanelState& state) {
             if (!status.empty()) ImGui::TextWrapped("%s", status.c_str());
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Live decisions")) {
+        if (ImGui::BeginTabItem("Live decisions",nullptr,requestedLive?ImGuiTabItemFlags_SetSelected:0)) {
             if (!state.runtime || !state.runtime->Scripts()) ImGui::TextWrapped("Press Play to inspect script-owned agents. Stopping Play releases their runtime state.");
             else {
-                const auto agents = state.runtime->Scripts()->AIInspections();
-                if (agents.empty()) ImGui::TextWrapped("No active Utility AI agents. Create an agent from a project script, then supply candidates and tick it during fixedUpdate.");
+                ImGui::Checkbox("Follow selected object",&followSelected);
+                const auto filter=followSelected?state.utilityAISelected:state.utilityAIEntity;
+                if(filter){ImGui::SameLine();ImGui::TextDisabled("Entity %llu",static_cast<unsigned long long>(filter));}
+                else ImGui::TextDisabled("No entity filter: showing all agents");
+                if(!followSelected&&filter&&ImGui::SmallButton("Show all agents"))state.utilityAIEntity=0;
+                const auto agents = EditorAIAgentsForEntity(state.runtime->Scripts()->AIInspections(),filter);
+                if (agents.empty()) ImGui::TextWrapped("No Utility AI agents match this object. A coordinator script owns its agents on the coordinator entity, not on guessed visual targets. Create an agent from a project script, then supply candidates and tick it during fixedUpdate.");
                 else {
                     runtimeAgent = std::clamp(runtimeAgent, 0, int(agents.size()) - 1);
                     const auto label = [&](int i) { return agents[i].name + "  [entity " + std::to_string(agents[i].entity) + ", script " + std::to_string(agents[i].slot) + "]"; };

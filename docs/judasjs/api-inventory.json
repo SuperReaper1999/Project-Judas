@@ -1,6 +1,6 @@
 {
-  "checkpoint": "Current public module including optional Utility AI, native 2D and consumer lifecycle diagnostics; source version in engine-version.json",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp",
+  "checkpoint": "Current public module including Utility AI sensing/reservations and authoring, native 2D and consumer lifecycle diagnostics; source version in engine-version.json",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp + ScriptAISensing.cpp + ScriptAIReservations.cpp",
   "resultShapes": [
     {
       "binding": "scripts.faults",
@@ -490,6 +490,51 @@
     }
   ],
   "callables": [
+    {
+      "symbol": "AISenses.constructor",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "AISenses.dispose",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "AISenses.sample",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "AITargetReservations.acquire",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "AITargetReservations.available",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "AITargetReservations.constructor",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "AITargetReservations.dispose",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "AITargetReservations.release",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "AITargetReservations.releaseAll",
+      "minimum": 0,
+      "maximum": 0
+    },
     {
       "symbol": "Animation.advance",
       "minimum": 1,
@@ -1785,6 +1830,123 @@
     }
   ],
   "symbols": [
+    {
+      "symbol": "AISenses",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:AISenses",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AISenses.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "senseCreate"
+      ],
+      "type": "docs/judas.d.ts:AISenses.constructor",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AISenses.dispose",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "senseDispose"
+      ],
+      "type": "docs/judas.d.ts:AISenses.dispose",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AISenses.sample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "senseSample"
+      ],
+      "type": "docs/judas.d.ts:AISenses.sample",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:AITargetReservations",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.acquire",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationAcquire"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.acquire",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.available",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationAvailable"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.available",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationCreate"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.constructor",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.dispose",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationDispose"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.dispose",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.release",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationRelease"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.release",
+      "reference": "docs/judasjs/ai.md"
+    },
+    {
+      "symbol": "AITargetReservations.releaseAll",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "reservationReleaseAll"
+      ],
+      "type": "docs/judas.d.ts:AITargetReservations.releaseAll",
+      "reference": "docs/judasjs/ai.md"
+    },
     {
       "symbol": "Animation",
       "kinds": [
@@ -7328,6 +7490,12 @@
     "removeTag",
     "renderVisible",
     "rendererVisible",
+    "reservationAcquire",
+    "reservationAvailable",
+    "reservationCreate",
+    "reservationDispose",
+    "reservationRelease",
+    "reservationReleaseAll",
     "resumeAudio",
     "saveCancel",
     "saveExclude",
@@ -7342,6 +7510,9 @@
     "sceneReload",
     "scriptFaults",
     "scriptState",
+    "senseCreate",
+    "senseDispose",
+    "senseSample",
     "sessionDelete",
     "sessionGet",
     "sessionSet",

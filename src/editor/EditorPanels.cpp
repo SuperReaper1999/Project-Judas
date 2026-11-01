@@ -46,6 +46,7 @@
 #include "EditorWidgets.h"
 #include "EditorCreationMenu.h"
 #include "EditorScriptWorkflow.h"
+#include "EditorAIWorkflow.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
 
@@ -625,14 +626,16 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
     DrawTransformEditor(doc, *o);
     if (state.mode == EditorMode::Play && state.runtime) {
         ImGui::EndDisabled();
+        DrawSelectedAIShortcuts(*o,state);
         if (ImGui::CollapsingHeader("Ownership & readiness")) {
-            DrawRuntimeEntity(*state.runtime, o->id);
+            DrawRuntimeEntity(*state.runtime, o->id,&state);
             if (ImGui::SmallButton("Open Runtime Inspector")) {
                 state.runtimeInspectEntity=o->id;state.showRuntimeInspector=true;
             }
         }
         ImGui::BeginDisabled();
     }
+    if(state.mode==EditorMode::Edit)DrawSelectedAIShortcuts(*o,state);
     ImGui::SeparatorText("Components");
     DrawAddComponentMenu(doc, *o, state);
     for (const ComponentEditor& editor : ComponentEditorRegistry()) {
@@ -988,7 +991,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                     if(record.type==AssetType::SpriteSheet){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
                     const bool aiDefinition=record.type==AssetType::Script&&name.size()>=6&&name.compare(name.size()-6,6,".ai.js")==0;
-                    if(aiDefinition){state.utilityAIEdit=id;state.showUtilityAI=true;}
+                    if(aiDefinition){state.utilityAIEdit=id;state.showUtilityAI=true;state.utilityAIAuthorRequested=true;state.utilityAILiveRequested=false;}
                     else if (!RequestEditorScriptEdit(record, state)) state.selectAssetDetails = true;
                 }
             }
@@ -1007,7 +1010,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 }
                 if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Paint tilemap from this sheet",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){state.tilemapPalette=id;state.showTilemapEditor=true;}
                 if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Edit frames and animation")){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
-                if(record.type==AssetType::Script&&ImGui::MenuItem("Open as AI definition",nullptr,false,!record.missing)){state.utilityAIEdit=id;state.showUtilityAI=true;}
+                if(record.type==AssetType::Script&&ImGui::MenuItem("Open as AI definition",nullptr,false,!record.missing)){state.utilityAIEdit=id;state.showUtilityAI=true;state.utilityAIAuthorRequested=true;state.utilityAILiveRequested=false;}
 
                 if(record.type==AssetType::Texture&&ImGui::MenuItem("Create sprite in scene",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){
                     std::string error;const auto id=CreateEditorSpriteFromImage(doc,db,record.id,state.cameraFocus,0,error);

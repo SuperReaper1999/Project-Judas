@@ -1,0 +1,18 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_reservation_script_tests",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/reservation-cold-qualified"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_ai_reservation_script_tests",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/reservation-cold-qualified"
+    ],
+    "exit_code": 0
+  }
+]

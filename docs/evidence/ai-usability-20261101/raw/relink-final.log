@@ -1,0 +1,233 @@
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_utility_ai_tests
+[100%] Built target judas_utility_ai_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_materials
+[ 33%] Built target judas_navigation_cook
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_utility_ai_script_tests
+[100%] Built target judas_utility_ai_script_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_utility_ai_editor_tests
+[100%] Built target judas_utility_ai_editor_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_utility_ai_application_tests
+[100%] Built target judas_utility_ai_application_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_editor_script_workflow_tests.dir/src/editor/EditorAIWorkflow.cpp.o
+[100%] Linking CXX executable judas_editor_script_workflow_tests
+[100%] Built target judas_editor_script_workflow_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_pause_example_application_tests.dir/src/editor/EditorAIWorkflow.cpp.o
+[100%] Linking CXX executable judas_pause_example_application_tests
+[100%] Built target judas_pause_example_application_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_2d_game_workflow_tests.dir/src/editor/EditorAIWorkflow.cpp.o
+[100%] Linking CXX executable judas_2d_game_workflow_tests
+[100%] Built target judas_2d_game_workflow_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/src/editor/EditorPreferences.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/tests/EditorPreferencesTests.cpp.o
+[100%] Linking CXX executable judas_editor_preferences_tests
+[100%] Built target judas_editor_preferences_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_editor_workspace_tests
+[100%] Built target judas_editor_workspace_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_project_water_tests
+[100%] Built target judas_project_water_tests
+[  7%] Built target judas_build_identity
+[ 15%] Built target freetype
+[ 15%] Built target judas_jobs
+[ 15%] Built target judas_audio_backend
+[ 15%] Built target judas_app_icon
+[ 15%] Built target judas_meshoptimizer
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_quickjs
+[ 23%] Built target judas_navigation_backend
+[ 23%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 23%] Built target harfbuzz
+[ 30%] Built target judas_navigation_cook
+[ 30%] Built target judas_materials
+[ 92%] Built target judas_engine
+[ 92%] Linking CXX executable judas
+[100%] Built target judas
+[100%] Linking CXX executable judas_project_fluid_policy_tests
+[100%] Built target judas_project_fluid_policy_tests
+[  7%] Built target judas_build_identity
+[ 15%] Built target freetype
+[ 15%] Built target judas_jobs
+[ 15%] Built target judas_audio_backend
+[ 15%] Built target judas_app_icon
+[ 15%] Built target judas_meshoptimizer
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_quickjs
+[ 23%] Built target judas_navigation_backend
+[ 23%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 23%] Built target harfbuzz
+[ 30%] Built target judas_navigation_cook
+[ 30%] Built target judas_materials
+[ 92%] Built target judas_engine
+[ 92%] Linking CXX executable judas_origin_script_tests
+[100%] Built target judas_origin_script_tests
+[  8%] Built target judas_build_identity
+[ 16%] Built target freetype
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_network_script_tests
+[100%] Built target judas_network_script_tests

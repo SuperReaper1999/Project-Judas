@@ -1,0 +1,4 @@
+FRAMES 1200
+FRAME_SECONDS 0.016666667
+LOG_EVERY 120
+SCREENSHOT 360 /home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/fresh-standalone.png

@@ -1,6 +1,11 @@
 {
   "format": 1,
   "tests": [
+    {"name":"ai-reservations","target":"judas_ai_reservation_tests","groups":["ai","core"]},
+    {"name":"ai-reservation-script","target":"judas_ai_reservation_script_tests","groups":["ai","scripting","lifecycle"]},
+    {"name":"ai-sensing","target":"judas_ai_sensing_tests","groups":["ai","physics"]},
+    {"name":"ai-sensing-script","target":"judas_ai_sensing_script_tests","groups":["ai","scripting"]},
+    {"name":"ai-fresh-workflow","target":"judas_ai_workflow_tests","groups":["ai","editor","lifecycle"]},
     {"name":"utility-ai-application","target":"judas_utility_ai_application_tests","groups":["ai","lifecycle"],"args":["{root}/projects/ai_workshop/AI_Workshop.judasproj","{output}/ai-workshop"]},
     {"name":"utility-ai","target":"judas_utility_ai_tests","groups":["ai","core"]},
     {"name":"utility-ai-script","target":"judas_utility_ai_script_tests","groups":["ai","scripting","lifecycle"]},

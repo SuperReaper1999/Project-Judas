@@ -1,0 +1,3 @@
+FAIL per-claimant overflow explicitly rejected
+FAIL global capacity rejects instead of evicting someone else
+AI reservations: 61 checks, 2 failures

@@ -54,4 +54,28 @@ export class UtilityAgent {
   if(old)this.#invoke('stop',old,this.#context,old,'restored');}
  dispose(){if(!this.#closed)call('aiDispose',this.#handle);}
 }
+export class AISenses {
+ #handle; #closed=false;
+ constructor(settings={}) { this.#handle=call('senseCreate',JSON.stringify(settings)); }
+ sample(origin,radius,options={}) {
+  if(this.#closed)throw new Error('AI sensor is disposed');
+  return call('senseSample',this.#handle,JSON.stringify({...options,origin,radius}));
+ }
+ dispose() { if(!this.#closed){call('senseDispose',this.#handle);this.#closed=true;} }
+}
+export class AITargetReservations {
+ #handle; #closed=false;
+ constructor() { this.#handle=call('reservationCreate'); }
+ acquire(target,leaseSeconds=1) {
+  if(this.#closed)throw new Error('AI reservations are disposed');
+  return call('reservationAcquire',this.#handle,target,leaseSeconds);
+ }
+ available(target) {
+  if(this.#closed)throw new Error('AI reservations are disposed');
+  return call('reservationAvailable',this.#handle,target);
+ }
+ release(target) { return this.#closed?false:call('reservationRelease',this.#handle,target); }
+ releaseAll() { if(!this.#closed)call('reservationReleaseAll',this.#handle); }
+ dispose() { if(!this.#closed){call('reservationDispose',this.#handle);this.#closed=true;} }
+}
 )JS";

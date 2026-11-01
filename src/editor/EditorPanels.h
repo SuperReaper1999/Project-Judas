@@ -119,6 +119,9 @@ struct EditorPanelState {
     bool showAnimationTimeline=false;
     bool showUtilityAI=false;
     std::string utilityAIEdit;
+    SceneObjectId utilityAIEntity=0, utilityAISelected=0;
+    bool utilityAILiveRequested=false, utilityAIAuthorRequested=false;
+    std::string newAIBehaviourName="Guard", aiWorkflowMessage;
     bool showTerrain = false;
     bool showVolumeTerrain = false;
     bool showMods = false;

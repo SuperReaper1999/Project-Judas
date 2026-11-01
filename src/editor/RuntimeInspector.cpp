@@ -3,6 +3,7 @@
 #include "RuntimeWorld.h"
 #include "SceneSession.h"
 #include "ScriptSystem.h"
+#include "UtilityAIEditor.h"
 #include "SaveService.h"
 #include "SaveEvolution.h"
 #include "WorldStreaming.h"
@@ -29,7 +30,7 @@ void Copyable(const char* label, const std::string& value) {
 }
 }
 
-void DrawRuntimeEntity(RuntimeWorld& world, SceneObjectId id) {
+void DrawRuntimeEntity(RuntimeWorld& world, SceneObjectId id,EditorPanelState* panels) {
     const auto* definition = world.RuntimeDefinition(id);
     if (!definition) {
         ImGui::TextWrapped("Entity is not currently published. It may be unloaded or destroyed. Select an active entity or inspect World regions.");
@@ -59,6 +60,16 @@ void DrawRuntimeEntity(RuntimeWorld& world, SceneObjectId id) {
     for (const auto& slot : definition->scripts) {
         const char* phase = !slot.enabled ? "disabled" : scripts ? PhaseName(scripts->InspectPhase(id, slot.id)) : "not instantiated";
         ImGui::BulletText("Script slot %llu: %s", static_cast<unsigned long long>(slot.id), phase);
+    }
+    if(scripts){
+        const auto agents=EditorAIAgentsForEntity(scripts->AIInspections(),id);
+        if(!agents.empty()){
+            ImGui::SeparatorText("AI decisions on this object");
+            for(const auto& agent:agents)ImGui::BulletText("%s / script %llu",agent.name.c_str(),static_cast<unsigned long long>(agent.slot));
+            if(panels&&ImGui::SmallButton("Inspect this object's AI decisions")){
+                panels->utilityAIEntity=id;panels->utilityAILiveRequested=true;panels->utilityAIAuthorRequested=false;panels->showUtilityAI=true;
+            }
+        }
     }
     if (scripts) for (const auto& diagnostic : scripts->Diagnostics()) {
         if (diagnostic.entity == id)
@@ -103,7 +114,7 @@ void DrawRuntimeInspector(EditorPanelState& state, EditorRequests& requests) {
         }
         ImGui::EndCombo();
     }
-    if (state.runtimeInspectEntity) DrawRuntimeEntity(*world, state.runtimeInspectEntity);
+    if (state.runtimeInspectEntity) DrawRuntimeEntity(*world, state.runtimeInspectEntity,&state);
     if (ImGui::CollapsingHeader("Save compatibility (read-only)")) {
         auto scene = world->SceneControl();
         auto* saves = scene ? scene->SavesIfLoaded() : nullptr;

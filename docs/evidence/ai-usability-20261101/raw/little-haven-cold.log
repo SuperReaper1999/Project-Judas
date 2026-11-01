@@ -1,0 +1,45 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/little-haven-final/project/Saves/main.judasstate (none saved)
+Project: AI Workshop - Little Haven (/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/little-haven-final/project/AI_Workshop.judasproj)
+Scene: Little Haven - Utility AI Workshop (/home/conner/Documents/GitHub/Project-Judas/.cache/ai-usability-20261101/little-haven-final/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS load isolated editable Workshop: 
+PASS fresh process native clock initially differs from saved continuation
+PASS cold process requests real modern save load: 
+PASS restored actual MK2 endpoint is exact before stepping: 301
+PASS restored position is finite
+PASS restored position is finite
+PASS restored position is finite
+PASS restored actual MK2 endpoint is exact before stepping: 302
+PASS restored position is finite
+PASS restored position is finite
+PASS restored position is finite
+PASS restored actual MK2 endpoint is exact before stepping: 301
+PASS restored position is finite
+PASS restored position is finite
+PASS restored position is finite
+PASS restored actual MK2 endpoint is exact before stepping: 302
+PASS restored position is finite
+PASS restored position is finite
+PASS restored position is finite
+PASS restored script data exactly matches independently read save before stepping
+PASS restore callback reconstructs two real native agents on zero-physics frame
+PASS actual native citizen restored elapsed
+PASS actual native citizen restored untilEvaluation
+PASS actual native citizen restored selected
+PASS actual native citizen restored status
+PASS actual native citizen restored cooldowns
+PASS actual native guard restored elapsed
+PASS actual native guard restored untilEvaluation
+PASS actual native guard restored selected
+PASS actual native guard restored status
+PASS actual native guard restored cooldowns
+PASS restore callback does not replay gameplay time
+PASS restore callback does not duplicate completed rewards
+PASS native citizen clock continues one fixed step rather than resetting
+PASS native guard clock continues one fixed step rather than resetting
+PASS restored running action advances an actual physical actor
+PASS native application completes and shuts down
+UTILITY_AI_APPLICATION mode=cold checks=37 failures=0

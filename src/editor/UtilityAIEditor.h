@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AssetDatabase.h"
+#include "ScriptSystem.h"
 #include <string>
 #include <vector>
 
@@ -11,11 +12,14 @@ struct EditorPanelState;
 bool DecodeUtilityAIModule(const std::string& source, std::string& definition, std::string& error);
 std::string EncodeUtilityAIModule(const std::string& definition);
 
+std::vector<ScriptAIInspection> EditorAIAgentsForEntity(const std::vector<ScriptAIInspection>&,SceneObjectId);
+
 struct UtilityAIEditor {
     std::string asset, path, definition, savedDefinition, savedSource, status;
     std::string newName = "Citizen.ai.js";
     std::vector<std::string> undo;
     int action = 0, runtimeAgent = 0;
+    bool followSelected=true;
 
     bool Dirty() const;
     bool Guard(EditorPanelState&) const;

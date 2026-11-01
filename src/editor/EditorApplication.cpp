@@ -1726,6 +1726,7 @@ int EditorApplication::Run(int argc, char** argv) {
         m_scriptTools->Panel(m_world.get(),host.Assets());
         m_panels.showScriptTools=m_scriptTools->visible;
         if(!m_utilityAIEditor)m_utilityAIEditor=std::make_unique<UtilityAIEditor>();
+        m_panels.utilityAISelected=m_document.Selected();
         m_utilityAIEditor->Panel(m_panels);
         if(!m_animationTimeline)m_animationTimeline=std::make_unique<AnimationTimeline>();
         m_animationTimeline->visible=m_panels.showAnimationTimeline;
