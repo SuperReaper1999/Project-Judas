@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <optional>
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@
 #include "ProductionFluidCoupling.h"
 #include "Window.h"
 namespace {
-namespace fs=std::filesystem;constexpr float dt=1.0f/60;int checks=0,failed=0,diagnosticChecks=0,diagnosticFailures=0,totalSteps=0;bool strictDiagnostics=false,legacyFourSecond=false,strictLegacySettling=false;int legacyComparisons=0,legacyFailures=0,legacyMandatoryFailures=0;std::string selectedCase;
+namespace fs=std::filesystem;constexpr float dt=1.0f/60;int checks=0,failed=0,diagnosticChecks=0,diagnosticFailures=0,totalSteps=0;bool strictDiagnostics=false,legacyFourSecond=false,strictLegacySettling=false,captureImmersion=false;int legacyComparisons=0,legacyFailures=0,legacyMandatoryFailures=0;std::string selectedCase;
 void Check(bool ok,const std::string& label){++checks;if(!ok){++failed;std::cout<<"FAIL "<<label<<'\n';}}
 void DiagnosticCheck(bool ok,const std::string& label){++checks;++diagnosticChecks;if(!ok){++diagnosticFailures;std::cout<<"DIAGNOSTIC_FAIL "<<label<<'\n';}}
 int ReportedFailures(){return failed+(strictDiagnostics?diagnosticFailures:0);}
@@ -115,8 +116,18 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
  float legacyV4=0,legacyY4=0;
  Result result;std::vector<double> executed,particleTimes;double totalMs=0,mean=0,observedMean=0;int meanCount=0;
  const int count=settling?static_cast<int>(settling->late.end):240;
+ // Opt-in evidence capture only. Applied buoyancy describes the beginning of
+ // the rigid step; the independent surface observer reads its endpoint. Keep
+ // both timestamps and the exact particle/pose inputs instead of conflating
+ // them. This does not replace the original observer or acceptance checks.
+ std::ofstream observations;
+ if(captureImmersion){observations.open(out/(name+"_observations.csv"));observations<<std::setprecision(17)<<"step,window,begin_y,end_y,applied_fraction,independent_fraction,surface_y,fluid_updated\n";}
  std::ofstream csv(out/(name+".csv"));csv<<std::setprecision(17)<<"step,y,vy,immersion,bfx,bfy,bfz,fluid_mass,fluid_ke,body_ke,fluid_step_ms,total_coupling_ms,executed,contact_caps,contact_relative_residual,acceleration_rejections,acceleration_boundary_declines,geometry_escapes,unresolved_geometry,geometry_candidates,max_geometry_escape_distance,pressure_reconstruction_samples,max_pressure_reconstruction_velocity_error,rms_pressure_reconstruction_velocity_error\n";
- for(int step=0;step<count;++step){StepPlayedWorld(session,window,dt);++totalSteps;const auto pose=world.Physics().GetTransform(handle);const auto velocity=world.Physics().GetLinearVelocity(handle);const auto omega=world.Physics().GetAngularVelocity(handle);
+ for(int step=0;step<count;++step){
+  const bool captureStep=captureImmersion && ((step>=180 && step<240) || (settling && settling->late.Contains(static_cast<std::size_t>(step))));
+  float beginY=0;
+  if(captureStep){beginY=(glm::conjugate(q)*world.Physics().GetTransform(handle).position).y;snapshot("before"+std::to_string(step+1),handle);}
+  StepPlayedWorld(session,window,dt);++totalSteps;const auto pose=world.Physics().GetTransform(handle);const auto velocity=world.Physics().GetLinearVelocity(handle);const auto omega=world.Physics().GetAngularVelocity(handle);
   const glm::vec3 local=glm::conjugate(q)*pose.position,localV=glm::conjugate(q)*velocity;const auto& m=world.FluidCoupling().Measurements();const auto liquid=world.Fluid().GetDiagnostics();
   const auto d=std::find_if(m.bodies.begin(),m.bodies.end(),[&](const auto& b){return b.body.id==handle.id;});Check(d!=m.bodies.end(),name+" real coupling record");if(d==m.bodies.end())break;
   const double rigidEnergy=.5*actualMass*glm::dot(velocity,velocity)+.5*glm::dot(omega,world.Physics().GetInertiaWorld(handle)*omega);
@@ -124,11 +135,12 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
   Check(std::abs(liquid.totalMass-initialWaterMass)<.001*std::max(1.,initialWaterMass),name+" finite liquid mass retained");
   const bool originalMean=step>=180 && step<240;
   const bool lateSample=settling && settling->late.Contains(static_cast<std::size_t>(step));
-  std::optional<double> observedFraction;
+  std::optional<double> observedFraction,observedHeight;
   if(originalMean || lateSample){
    // Independent exterior surface and dense rectangular quadrature. Keep the
    // original 3-4 second oracle and also cover every late-window observation.
    const auto observedSurface=ObservedSurface(world.Fluid().Particles(),q,local,half,spacing,nx);
+   observedHeight=observedSurface;
    if(observedSurface){
     int wet=0;constexpr int n=32;
     for(int z=0;z<n;++z)for(int y=0;y<n;++y)for(int x=0;x<n;++x){
@@ -138,6 +150,10 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
     }
     observedFraction=static_cast<double>(wet)/(n*n*n);
    }
+  }
+  if(captureStep){
+   snapshot("observe"+std::to_string(step+1),handle);
+   observations<<step+1<<','<<(originalMean?"original":"late")<<','<<beginY<<','<<local.y<<','<<d->fraction<<','<<observedFraction.value_or(std::numeric_limits<double>::quiet_NaN())<<','<<observedHeight.value_or(std::numeric_limits<double>::quiet_NaN())<<','<<m.executed<<'\n';
   }
   if(originalMean){mean+=d->fraction;++meanCount;if(observedFraction)observedMean+=*observedFraction;}
   if(settling && settling->early.Contains(static_cast<std::size_t>(step)))earlyMotion.Add(local.y,localV.y,d->fraction);
@@ -198,7 +214,7 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
  std::cout<<std::setprecision(10)<<"CASE "<<name<<" failures="<<(failed-failBefore+(strictDiagnostics?diagnosticFailures-diagnosticBefore:0))<<" acceptance_failures="<<(failed-failBefore)<<" diagnostic_checks="<<(diagnosticChecks-diagnosticChecksBefore)<<" diagnostic_failures="<<(diagnosticFailures-diagnosticBefore)<<" observational_scale="<<observationalScale<<" mass="<<actualMass<<" particles="<<particles<<" y="<<result.finalY<<" vy="<<result.finalV<<" fraction="<<result.meanFraction<<" observed_fraction="<<observedMean/meanCount<<" max_speed="<<result.maxSpeed<<" particle_ms="<<result.medianParticleMs<<" executed_ms="<<result.medianExecutedMs<<" amortized_ms="<<result.amortizedMs<<'\n';return result;
 }
 }
-int main(int argc,char**argv){fs::path out="build/production-fluid";bool single=false,neutralOnly=false;for(int i=1;i<argc;++i){if(std::string(argv[i])=="--output"&&i+1<argc)out=argv[++i];else if(std::string(argv[i])=="--single")single=true;else if(std::string(argv[i])=="--neutral")neutralOnly=true;else if(std::string(argv[i])=="--case"&&i+1<argc)selectedCase=argv[++i];else if(std::string(argv[i])=="--strict-diagnostics")strictDiagnostics=true;else if(std::string(argv[i])=="--legacy-four-second")legacyFourSecond=true;else if(std::string(argv[i])=="--strict-legacy-settling")strictLegacySettling=true;else return 2;}fs::create_directories(out);
+int main(int argc,char**argv){fs::path out="build/production-fluid";bool single=false,neutralOnly=false;for(int i=1;i<argc;++i){if(std::string(argv[i])=="--output"&&i+1<argc)out=argv[++i];else if(std::string(argv[i])=="--single")single=true;else if(std::string(argv[i])=="--neutral")neutralOnly=true;else if(std::string(argv[i])=="--case"&&i+1<argc)selectedCase=argv[++i];else if(std::string(argv[i])=="--strict-diagnostics")strictDiagnostics=true;else if(std::string(argv[i])=="--legacy-four-second")legacyFourSecond=true;else if(std::string(argv[i])=="--strict-legacy-settling")strictLegacySettling=true;else if(std::string(argv[i])=="--capture-immersion")captureImmersion=true;else return 2;}fs::create_directories(out);
  const glm::quat identity(1,0,0,0),rotated=glm::angleAxis(.83f,glm::normalize(glm::vec3(1,-2,3)));
  if(neutralOnly){Run("neutral_020",.2f,1,1,identity,9.81f,false,out);PrintSummary();return ReportedFailures()?1:0;}
  Run("half_020",.2f,.5f,1,identity,9.81f,false,out);

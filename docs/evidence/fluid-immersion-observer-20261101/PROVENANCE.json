@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "4feada296189f1e80be8447a297489e379ab4832",
+  "main_unchanged": "49c4f3d9e29debe669411f01501e0276dea23231",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "build_configuration": "Release; Experimental; -O3 -DNDEBUG; native Linux",
+  "source_sha256": {
+    "tests/ProductionFluidTests.cpp": "b4af69142d0119456812d8ad12a29ff36cebe69832f82114eed79b371bc61163",
+    "tests/test_fluid_immersion_observer.py": "8ce6f6619276061bc16a66e0843f9a10c280d877bb60cb966f3a311b55722406",
+    "tools/validation/audit_fluid_immersion.py": "89338af08e53fcda0f2499d6244dedc5ceaa8042e853c0bf4adbe66f68b8b5aa"
+  },
+  "binary_sha256": "80c24cd2b18583290d03880accade6aa6e88083e6d2e565612eae0d557013eae",
+  "engine_library_sha256": "44cecd3c0c4b3f4336698c19437d1e3b6b7095e89285afb0471f0adc7afdfb5c",
+  "runtime_source_unchanged": true,
+  "acceptance_block_and_original_surface_function_byte_identical": true,
+  "captured_files": 1212,
+  "captured_bytes": 60438225,
+  "coverage": "Diagnostics only; original production failure preserved. No unlock, platform or human acceptance. Binaries built before the documentation/checkpoint commit."
+}

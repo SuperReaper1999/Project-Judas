@@ -1,5 +1,10 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
+Follow-up: [remaining immersion observation audit](FLUID_IMMERSION_OBSERVER_AUDIT.md)
+adds reproducible before/after capture, independent plane clipping and rejected
+nonplanar-observer evidence. The original failure remains active; no further
+runtime correction or fluid unlock is claimed.
+
 **Engineering checkpoint only. Advanced Fluids remain locked in Alpha. Main is
 unchanged. This is not full fluid qualification or human acceptance.**
 
