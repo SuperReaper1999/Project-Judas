@@ -1,0 +1,22 @@
+Visible observation started: pid 1891411 for 1200 real seconds
+Observed 3.1 s; game time 10.000000521540642
+Observed 63.1 s; game time 190.0000099092722
+Observed 123.2 s; game time 370.00001929700375
+Observed 183.2 s; game time 550.0000286847353
+Observed 243.3 s; game time 740.0000385940075
+Observed 303.3 s; game time 920.000047981739
+Observed 363.4 s; game time 1100.0000573694706
+Observed 423.5 s; game time 1280.0000667572021
+Observed 483.6 s; game time 1460.0000761449337
+Observed 543.6 s; game time 1640.0000855326653
+Observed 603.7 s; game time 1820.0000949203968
+Observed 663.8 s; game time 2000.0001043081284
+Observed 723.9 s; game time 2180.00011369586
+Observed 783.9 s; game time 2360.0001230835915
+Observed 844.0 s; game time 2540.000132471323
+Observed 904.0 s; game time 2720.0001418590546
+Observed 964.1 s; game time 2900.000151246786
+Observed 1024.2 s; game time 3080.0001606345177
+Observed 1084.2 s; game time 3260.000170022249
+Observed 1144.3 s; game time 3440.000179409981
+Observation completed ; final save {'state': 'completed', 'error': '', 'time': 3610.600188307464}

@@ -1,0 +1,20 @@
+[
+  "CMakeLists.txt",
+  "projects/willow_town/Assets/Art/noticeboard.png",
+  "projects/willow_town/Assets/Art/noticeboard.png.judasmeta",
+  "projects/willow_town/Assets/citizen.ai.js",
+  "projects/willow_town/Assets/game.js",
+  "projects/willow_town/Assets/hud.judasui",
+  "projects/willow_town/Assets/life.js",
+  "projects/willow_town/Assets/life.js.judasmeta",
+  "projects/willow_town/Assets/town.js",
+  "projects/willow_town/README.md",
+  "projects/willow_town/Scenes/main.judas",
+  "projects/willow_town/Tests/LIFE_QUALIFICATION.md",
+  "projects/willow_town/Willow_Town.judasproj",
+  "tests/WillowTownLifeApplicationTests.cpp",
+  "tools/CreateWillowTown.py",
+  "tools/CreateWillowTownUI.py",
+  "tools/diagnostics/watch_willow_town.py",
+  "tools/validation/suites.json"
+]

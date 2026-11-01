@@ -1,0 +1,81 @@
+PASS isolated life-game project loads: 
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/life-final/project/Saves/main.judasstate (none saved)
+Project: Willow Town (/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/life-final/project/Willow_Town.judasproj)
+Scene: Willow Town - a little life simulation (/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/life-final/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process starts before the saved life progression
+PASS request genuine fresh-process life-save restoration: 
+PASS restored actual physical endpoint before stepping: 301
+PASS restored actual physical endpoint before stepping: 302
+PASS restored actual physical endpoint before stepping: 303
+PASS restored actual physical endpoint before stepping: 304
+PASS restored actual physical endpoint before stepping: 305
+PASS restored actual physical endpoint before stepping: 306
+PASS restored actual physical endpoint before stepping: 301
+PASS restored actual physical endpoint before stepping: 302
+PASS restored actual physical endpoint before stepping: 303
+PASS restored actual physical endpoint before stepping: 304
+PASS restored actual physical endpoint before stepping: 305
+PASS restored actual physical endpoint before stepping: 306
+PASS cold restoration preserves actual life state: residents
+PASS cold restoration preserves actual life state: jobs
+PASS cold restoration preserves actual life state: census
+PASS cold restoration preserves actual life state: shop
+PASS cold restoration preserves actual life state: time
+PASS cold restoration preserves actual life state: hiringOpen
+PASS dead resident stays dead and has no resurrected native brain
+PASS restored deceased body remains natively disabled before any fixed step
+PASS living resident reconstructs its native brain: 301
+PASS restored native continuation 301 elapsed
+PASS restored native continuation 301 untilEvaluation
+PASS restored native continuation 301 selected
+PASS restored native continuation 301 status
+PASS restored native continuation 301 cooldowns
+PASS living resident reconstructs its native brain: 302
+PASS restored native continuation 302 elapsed
+PASS restored native continuation 302 untilEvaluation
+PASS restored native continuation 302 selected
+PASS restored native continuation 302 status
+PASS restored native continuation 302 cooldowns
+PASS living resident reconstructs its native brain: 303
+PASS restored native continuation 303 elapsed
+PASS restored native continuation 303 untilEvaluation
+PASS restored native continuation 303 selected
+PASS restored native continuation 303 status
+PASS restored native continuation 303 cooldowns
+PASS living resident reconstructs its native brain: 304
+PASS restored native continuation 304 elapsed
+PASS restored native continuation 304 untilEvaluation
+PASS restored native continuation 304 selected
+PASS restored native continuation 304 status
+PASS restored native continuation 304 cooldowns
+PASS living resident reconstructs its native brain: 305
+PASS restored native continuation 305 elapsed
+PASS restored native continuation 305 untilEvaluation
+PASS restored native continuation 305 selected
+PASS restored native continuation 305 status
+PASS restored native continuation 305 cooldowns
+PASS one resident does not occupy multiple jobs: 301
+PASS job board ownership agrees with a living resident: 301
+PASS one resident does not occupy multiple jobs: 302
+PASS job board ownership agrees with a living resident: 302
+PASS one resident does not occupy multiple jobs: 303
+PASS job board ownership agrees with a living resident: 303
+PASS one resident does not occupy multiple jobs: 304
+PASS job board ownership agrees with a living resident: 304
+PASS one resident does not occupy multiple jobs: 305
+PASS job board ownership agrees with a living resident: 305
+JS: WILLOW_TOWN {"version":2,"time":87.05000454001129,"speed":3,"paused":false,"stock":24,"sales":8,"controlled":null,"census":{"deaths":1,"hires":3,"firings":2},"hiringOpen":true,"jobs":[{"id":"baker","employeeId":"301","open":true,"tasks":5},{"id":"carpenter","employeeId":"302","open":true,"tasks":3},{"id":"gardener","employeeId":"303","open":true,"tasks":3},{"id":"shopkeeper","employeeId":"304","open":true,"tasks":4},{"id":"courier","employeeId":null,"open":false,"tasks":0},{"id":"keeper","employeeId":"305","open":true,"tasks":3}],"residents":[{"id":"301","name":"Mara","alive":true,"ageDays":28.201504640141664,"lifespanDays":78,"health":1,"hunger":0.026700001392513478,"fatigue":0.1888250061972053,"social":0.048300002519041194,"job":"Baker","jobId":"baker","jobsLost":0,"jobsFound":0,"absence":7.3000003807246685,"deathCause":"","deathTime":null,"work":5,"meals":3,"rests":1,"chats":1,"money":17,"position":{"x":-8,"y":-5.890000343322754,"z":0},"selected":{"action":"work","target":"1101"},"decisionElapsed":29.250001525506377},{"id":"302","name":"Eli","alive":true,"ageDays":34.201504640141664,"lifespanDays":82,"health":1,"hunger":0.37760001708567853,"fatigue":0.037625001962296775,"social":0.10305000537447734,"job":"Carpenter","jobId":"carpenter","jobsLost":0,"jobsFound":0,"absence":23.500001225620508,"deathCause":"","deathTime":null,"work":3,"meals":1,"rests":2,"chats":1,"money":15,"position":{"x":0,"y":-5.890000343322754,"z":0},"selected":{"action":"work","target":"1102"},"decisionElapsed":29.250001525506377},{"id":"303","name":"Nia","alive":true,"ageDays":24.201504640141664,"lifespanDays":76,"health":1,"hunger":0.41630001910404213,"fatigue":0.010675000556744632,"social":0.10320000538230045,"job":"Gardener","jobId":"gardener","jobsLost":0,"jobsFound":0,"absence":19.80000103265047,"deathCause":"","deathTime":null,"work":3,"meals":1,"rests":1,"chats":2,"money":15,"position":{"x":-7,"y":3.5,"z":0},"selected":{"action":"work","target":"1103"},"decisionElapsed":29.250001525506377},{"id":"304","name":"Theo","alive":true,"ageDays":42.201504640141664,"lifespanDays":80,"health":1,"hunger":0.23090000943467198,"fatigue":0.2868250094829109,"social":0.0484500025268643,"job":"Shopkeeper","jobId":"shopkeeper","jobsLost":0,"jobsFound":0,"absence":6.650000346824527,"deathCause":"","deathTime":null,"work":4,"meals":1,"rests":1,"chats":2,"money":18,"position":{"x":-6.260000228881836,"y":-2,"z":0},"selected":{"action":"work","target":"1104"},"decisionElapsed":29.250001525506377},{"id":"305","name":"Ada","alive":true,"ageDays":22.201504640141664,"lifespanDays":79,"health":1,"hunger":0.2873000272400848,"fatigue":0.009450000492855904,"social":0.25395001324453054,"job":"Park keeper","jobId":"keeper","jobsLost":2,"jobsFound":3,"absence":10.050000524148345,"deathCause":"","deathTime":null,"work":1,"meals":1,"rests":1,"chats":1,"money":9,"position":{"x":10,"y":1.3700000047683716,"z":0},"selected":{"action":"work","target":"1106"},"decisionElapsed":29.250001525506377},{"id":"306","name":"Sam","alive":false,"ageDays":77.08449074514843,"lifespanDays":80,"health":0,"hunger":0.11560000472515808,"fatigue":0.43775000666267894,"social":0.10095000526495373,"job":"Unemployed","jobId":null,"jobsLost":0,"jobsFound":0,"absence":0,"deathCause":"Injuries","deathTime":36.50000190362334,"work":2,"meals":1,"rests":0,"chats":1,"money":12,"position":{"x":9.5,"y":-0.8700000047683716,"z":0},"selected":null,"decisionElapsed":null}]}
+PASS a real post-restore step does not revive the deceased
+PASS a real post-restore fixed step does not reenable the deceased collider
+PASS deceased cannot earn, eat, rest or find a job after restoration
+PASS living native clock continues one actual fixed step: 301
+PASS living native clock continues one actual fixed step: 302
+PASS living native clock continues one actual fixed step: 303
+PASS living native clock continues one actual fixed step: 304
+PASS living native clock continues one actual fixed step: 305
+PASS ordinary life-game application completes and shuts down
+WILLOW_TOWN_LIFE mode=cold checks=72 failures=0 worst_fixed_ms=3.425992

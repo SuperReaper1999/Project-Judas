@@ -208,9 +208,20 @@ def citizens():
         save(im,f'resident-{index+1}.png')
 
 
+def noticeboard():
+    im=image('noticeboard.png',(64,48));d=ImageDraw.Draw(im)
+    d.rectangle((8,30,13,47),fill='#6b5037');d.rectangle((51,30,56,47),fill='#6b5037')
+    d.rectangle((2,2,61,36),fill='#ae8552',outline='#4f4935',width=2)
+    d.rectangle((7,7,56,31),fill='#e5d6a5')
+    d.text((32,13),'JOBS',font=font(11,True),anchor='mm',fill='#3a5443')
+    for x in (13,27,41):
+        d.rectangle((x,21,x+9,29),fill='#fff0ce',outline='#a89870')
+        d.line((x+2,24,x+7,24),fill='#6b8d70')
+    save(im,'noticeboard.png')
+
 def generate():
     ASSETS.mkdir(parents=True,exist_ok=True);(PROJECT/'Scenes').mkdir(exist_ok=True)
-    background();house('house-west.png','#b7b493','#a16f55');house('house-east.png','#c4bf9d','#678c82')
+    noticeboard();background();house('house-west.png','#b7b493','#a16f55');house('house-east.png','#c4bf9d','#678c82')
     shop();workshop();garden();tree();bench();fountain();selection_ring();citizens()
     points={str(k):{'x':x,'y':y} for k,x,y in [
         (1101,-8,-6),(1102,0,-6),(1103,10,-5),(1104,-12,-6),(1105,0,0),(1106,10,-1.5),
@@ -247,7 +258,7 @@ def generate():
     (ASSETS/'layout.json').write_text(json.dumps(layout,indent=2)+'\n')
     (ASSETS/'layout.js').write_text('// Generated physical layout. See tools/CreateWillowTown.py.\nexport default '+json.dumps(layout,separators=(',',':'))+';\n')
     meta('Assets/layout.js','script')
-    for f,typ in [('game.js','script'),('town.js','script'),('citizen.ai.js','script'),('hud.judasui','ui')]:meta('Assets/'+f,typ)
+    for f,typ in [('game.js','script'),('town.js','script'),('life.js','script'),('citizen.ai.js','script'),('hud.judasui','ui')]:meta('Assets/'+f,typ)
     scene=['JudasScene 3','settings','  name "Willow Town - a little life simulation"','  world-origin 0 0 0','  sun-direction 0.4 0.7 0.35','  sun-color 1 1 1','  ambient 1 1 1','  sun-enabled false','  background-color 0.14 0.22 0.19','  fluid-scale 1','  fluid-update-rate-hz 30','  fluid-hydrostatic-drag-rate 2','  fidelity-policy none','  next-id 3000','end','']
     def obj(oid,name,x=0,y=0,texture=None,size=(1,1),layer=-2,ysort=False,pivot=(.5,.5),frame=(0,0,1,1),body=None,extra=()):
         lines=['object '+str(oid)+' '+q(name),f'  position {x} {y} 0','  rotation 1 0 0 0','  scale 1 1 1']
@@ -275,6 +286,7 @@ def generate():
     obj(16,'Town fountain',0,3,'fountain.png',(2.5,2.5),0)
     obj(17,'West park bench',-3,3.1,'bench.png',(2,1),0)
     obj(18,'East park bench',3,3.1,'bench.png',(2,1),0)
+    obj(19,'Public jobs noticeboard',0,.8,'noticeboard.png',(1.7,1.275),0)
     for i,(x,y) in enumerate(trees):obj(30+i,'Willow tree',x,y,'tree.png',(2,2.5),1,True,(.5,.15))
     for i,name in enumerate(['Mara - Baker','Eli - Carpenter','Nia - Gardener','Theo - Grocer','Ada - Courier','Sam - Park keeper']):
         obj(301+i,name,*spawns[i],f'resident-{i+1}.png',(.96,1.28),1,True,(.5,.2),(0,0,.25,1),('kinematic',.48,.48))
@@ -283,12 +295,12 @@ def generate():
     for oid,p in points.items():obj(int(oid),targetnames.get(int(oid),'Home bed' if oid.startswith('12') else 'Town walk destination'),p['x'],p['y'])
     for i,b in enumerate(blocks):obj(2000+i,b['name'],b['x'],b['y'],body=('static',b['w'],b['h']))
     (PROJECT/'Scenes/main.judas').write_text('\n'.join(scene))
-    bindings=[('pause',0,[('key:Space',1)]),('release',0,[('key:Escape',1)]),('save_game',0,[('key:K',1)]),('load_game',0,[('key:L',1)]),('ui_click',0,[('mouse:Left',1)]),('select',0,[('mouse:Left',1)]),('ui_next',0,[('key:Tab',1)]),('ui_activate',0,[('key:Return',1)]),('move_x',1,[('key:A',-1),('key:D',1),('key:Left',-1),('key:Right',1)]),('move_y',1,[('key:S',-1),('key:W',1),('key:Down',-1),('key:Up',1)])]
+    bindings=[('pause',0,[('key:Space',1)]),('release',0,[('key:Escape',1)]),('save_game',0,[('key:K',1)]),('load_game',0,[('key:L',1)]),('finish_watch',0,[('key:F10',1)]),('ui_click',0,[('mouse:Left',1)]),('select',0,[('mouse:Left',1)]),('ui_next',0,[('key:Tab',1)]),('ui_activate',0,[('key:Return',1)]),('move_x',1,[('key:A',-1),('key:D',1),('key:Left',-1),('key:Right',1)]),('move_y',1,[('key:S',-1),('key:W',1),('key:Down',-1),('key:Up',1)])]
     encoded='1 '+str(len(bindings))+' '
     for name,kind,controls in bindings:
         encoded+=q(name)+' '+str(kind)+' '+str(len(controls))+' '
         for control,scale in controls:encoded+=q(control)+' '+str(scale)+' 0 '
-    project='\n'.join(['JudasProject 1','name "Willow Town"','editor-2d "true"','basic-water "true"','water-swimming "true"','advanced-fluid-dynamics "false"','startup-scene "Scenes/main.judas"','assets-dir "Assets"','scenes-dir "Scenes"','saves-dir "Saves"','save-identity '+q(hashlib.sha256(b'WillowTown-v1').hexdigest()),'legacy-gameplay "false"','input-map '+q(encoded),''])
+    project='\n'.join(['JudasProject 1','name "Willow Town"','editor-2d "true"','basic-water "true"','water-swimming "true"','advanced-fluid-dynamics "false"','startup-scene "Scenes/main.judas"','assets-dir "Assets"','scenes-dir "Scenes"','saves-dir "Saves"','save-identity '+q(hashlib.sha256(b'WillowTown-v2').hexdigest()),'legacy-gameplay "false"','input-map '+q(encoded),''])
     (PROJECT/'Willow_Town.judasproj').write_text(project)
     (PROJECT/'ASSET_LICENSE.txt').write_text('Willow Town original pixel art\nCopyright (c) 2026 Conner / SuperReaper1999\n\nAll images in Assets/Art are original deterministic artwork produced by\ntools/CreateWillowTown.py, under the Project Judas MIT license. No external\nmodels, textures or game assets were downloaded. Source art generation is\npreserved in that tool. Pillow and DejaVu Sans (including its Bold variant)\nare authoring dependencies only. DejaVu is distributed separately under its\npermissive font license: https://dejavu-fonts.github.io/License.html . No font\nfiles or Python dependencies are redistributed or required by the running game.\n')
     ui=ROOT/'tools/CreateWillowTownUI.py'

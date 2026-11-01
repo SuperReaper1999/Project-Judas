@@ -1,0 +1,44 @@
+[
+  {
+    "name": "life-qualified",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_willow_town_life_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/life-qualified"
+    ],
+    "exit_code": 0,
+    "seconds": 6.6232626250020985
+  },
+  {
+    "name": "life-cold",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_willow_town_life_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/life-qualified",
+      "cold"
+    ],
+    "exit_code": 0,
+    "seconds": 0.3143351629987592
+  },
+  {
+    "name": "town-qualified",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_willow_town_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/town-qualified"
+    ],
+    "exit_code": 0,
+    "seconds": 36.41632732799917
+  },
+  {
+    "name": "town-cold",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_willow_town_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/town-qualified",
+      "cold"
+    ],
+    "exit_code": 0,
+    "seconds": 0.3142529180004203
+  }
+]

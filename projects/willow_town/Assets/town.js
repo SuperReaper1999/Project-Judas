@@ -3,37 +3,12 @@
 import {UtilityAgent, AISenses, AITargetReservations, entity, physics} from 'judas';
 import definition from './citizen.ai.js';
 import layout from './layout.js';
+import {createState, clamp, workingHours, advanceVitals, ABSENCE_LIMIT} from './life.js';
+export {createState} from './life.js';
 
 const ZERO = {x: 0, y: 0, z: 0};
-const clamp = value => Math.max(0, Math.min(1, value));
 const length = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const lookup = id => entity(String(id));
-const people = [
-  ['301', 'Mara', 'Baker', .82, .22, .22],
-  ['302', 'Eli', 'Carpenter', .22, .84, .18],
-  ['303', 'Nia', 'Gardener', .30, .22, .92],
-  ['304', 'Theo', 'Shopkeeper', .24, .28, .70],
-  ['305', 'Ada', 'Courier', .44, .34, .20],
-  ['306', 'Sam', 'Park keeper', .30, .24, .56]
-];
-const ids = new Set(people.map(person => person[0]));
-
-export function createState() {
-  return {
-    time: 0, paused: false, speed: 1, controlled: null,
-    selected: '301', message: 'Click a resident to meet them and inspect their decisions.',
-    shop: {stock: 16, sales: 0, grain: 3, wood: 0, parcels: 0, open: true},
-    events: [], socialPairs: {},
-    residents: people.map((person, index) => ({
-      id: person[0], name: person[1], job: person[2],
-      hunger: person[3], fatigue: person[4], social: person[5], health: 1,
-      money: 8, workEarnings: 0, spent: 0, workDone: 0, meals: 0, rests: 0, chats: 0,
-      workTarget: String(1101 + index), bedTarget: String(1201 + index),
-      snapshot: null, service: {key: '', elapsed: 0},
-      lastAction: '', lastTarget: '', explanation: 'Getting ready for the day.'
-    }))
-  };
-}
 
 // This small static town uses a deterministic 0.5m four-neighbour route grid.
 // Nodes inside authored solid footprints are excluded. Movement still casts the
@@ -110,17 +85,21 @@ export class Town {
   resident(id) { return this.state.residents.find(person => person.id === String(id)); }
 
   start(restoring = false) {
+    if (this.state.version !== 2 || !Array.isArray(this.state.jobs))
+      throw Error('Willow Town life version 2 requires a new game or a version 2 save; the original town save is not migrated.');
+    this.validateEmployment();
     for (const resident of this.state.residents) {
       const actor = lookup(resident.id);
       if (!actor?.valid) throw Error('Willow Town is missing resident ' + resident.name);
       this.pedestrians.push(actor);
+      if (!resident.alive) { actor.setColliderEnabled(false); continue; }
       const helpers = {
         claims: new AITargetReservations(),
         senses: new AISenses({interval: .5, maxResults: 64, maxCandidates: 128, maxRaycasts: 0})
       };
       this.helpers.set(resident.id, helpers);
       const handlers = {};
-      for (const action of ['work', 'eat', 'rest', 'socialize', 'wander']) {
+      for (const action of ['work', 'eat', 'rest', 'socialize', 'wander', 'jobsearch']) {
         handlers[action] = {
           start: (_context, choice) => this.begin(resident, choice),
           update: (dt, _context, choice) => this.perform(resident, choice, dt),
@@ -128,11 +107,11 @@ export class Town {
         };
       }
       const agent = new UtilityAgent({...definition, initialDelay: (Number(resident.id) - 301) * .04},
-        handlers, resident.name + ' — ' + resident.job);
+        handlers, resident.name + ' — town resident');
       this.agents.set(resident.id, agent);
       if (restoring && resident.snapshot) agent.restore(resident.snapshot);
     }
-    if (this.state.controlled && !this.resident(this.state.controlled)) this.state.controlled = null;
+    if (this.state.controlled && !this.resident(this.state.controlled)?.alive) this.state.controlled = null;
   }
 
   inspect(id) {
@@ -146,17 +125,140 @@ export class Town {
     this.state.events.length = Math.min(12, this.state.events.length);
   }
 
+  job(id) { return this.state.jobs.find(row => row.id === id); }
+
+  jobFor(person) {
+    const job = person.jobId ? this.job(person.jobId) : null;
+    return job && job.employeeId === person.id ? job : null;
+  }
+
+  validateEmployment() {
+    const occupied = new Set();
+    for (const job of this.state.jobs) {
+      if (!job.id || !job.target || !Number.isFinite(job.wage) || job.wage < 0)
+        throw Error('Willow Town save has an invalid job record');
+      if (!job.employeeId) continue;
+      const person = this.resident(job.employeeId);
+      if (!person?.alive || person.jobId !== job.id || occupied.has(person.id))
+        throw Error('Willow Town save has inconsistent job ownership');
+      occupied.add(person.id);
+    }
+    for (const person of this.state.residents) {
+      if (person.jobId && !this.jobFor(person)) throw Error('Willow Town save has an unowned employee');
+      if (!person.alive && person.jobId) throw Error('A deceased resident cannot retain a job');
+    }
+  }
+
+  remember(person, type, jobId, reason) {
+    person.history.unshift({time: this.state.time, type, jobId, reason});
+    person.history.length = Math.min(8, person.history.length);
+  }
+
+  // Manager actions and ordinary attendance use the same employment boundary.
+  // Cancelling is never a completed task: no wages or output are granted here.
+  dismiss(id, reason = 'Dismissed by the town manager') {
+    const person = this.resident(id);
+    if (!person?.alive || !person.jobId) return false;
+    const title = person.job;
+    this.releaseJob(person, reason, true);
+    this.log(person.name + ' lost their ' + title.toLowerCase() + ' job: ' + reason + '.');
+    return true;
+  }
+
+  releaseJob(person, reason, dismissal) {
+    const job = this.job(person.jobId);
+    if (!job) return;
+    const agent = this.agents.get(person.id);
+    agent?.finish('cancelled', this);
+    if (agent) person.snapshot = agent.snapshot();
+    this.helpers.get(person.id)?.claims.releaseAll();
+    if (job.employeeId === person.id) job.employeeId = null;
+    this.remember(person, dismissal ? 'dismissed' : 'vacated', job.id, reason);
+    if (dismissal) { person.jobsLost++; this.state.census.firings++; }
+    person.lastJobId = job.id;
+    person.jobId = null; person.job = 'Unemployed'; person.workTarget = null;
+    person.jobLostReason = reason; person.lastEmploymentChange = this.state.time;
+    person.absenceWorkingSeconds = 0; person.service = {key: '', elapsed: 0};
+  }
+
+  setJobOpen(id, open) {
+    const job = this.job(id);
+    if (!job || typeof open !== 'boolean') return false;
+    job.open = open;
+    if (!open && job.employeeId) this.dismiss(job.employeeId, 'Workplace closed');
+    this.log(job.title + ' workplace ' + (open ? 'opened' : 'closed') + '.');
+    return true;
+  }
+
+  acceptJob(person, job) {
+    if (!person.alive || person.jobId || !this.state.hiringOpen || !job?.open || job.employeeId) return false;
+    // Script callbacks run sequentially at the fixed boundary. The advertised
+    // job also has an exclusive native lease; rechecking here prevents a stale
+    // candidate from claiming a vacancy another applicant has already filled.
+    job.employeeId = person.id;
+    person.jobId = job.id; person.lastJobId = job.id; person.job = job.title; person.workTarget = job.target;
+    person.jobsFound++; this.state.census.hires++;
+    person.absenceWorkingSeconds = 0; person.lastWorkedAt = this.state.time;
+    person.lastEmploymentChange = this.state.time; person.jobLostReason = '';
+    this.remember(person, 'hired', job.id, 'Application accepted at the noticeboard');
+    this.log(person.name + ' found a new job as ' + job.title.toLowerCase() + '.');
+    return true;
+  }
+
+  hurt(id, amount) {
+    const person = this.resident(id);
+    if (!person?.alive || !Number.isFinite(amount) || amount <= 0 || amount > 1) return false;
+    person.health = clamp(person.health - amount);
+    this.log(person.name + ' was injured. Health is now ' + Math.round(person.health * 100) + '%.');
+    if (person.health <= 0) this.die(person, 'Injuries');
+    return true;
+  }
+
+  die(person, cause) {
+    if (!person.alive) return false;
+    const previousJob = this.job(person.jobId);
+    const agent = this.agents.get(person.id);
+    person.lastDecision = agent?.inspection.selected ?? null;
+    if (person.jobId) this.releaseJob(person, 'Died: ' + cause, false);
+    if (this.state.controlled === person.id) this.state.controlled = null;
+    // Clear project movement and run action cleanup while the body is still an
+    // enabled kinematic actor. Disabled corpses must receive no future commands.
+    this.stopBody(person.id);
+    agent?.dispose();
+    const helper = this.helpers.get(person.id);
+    helper?.claims.dispose(); helper?.senses.dispose();
+    this.agents.delete(person.id); this.helpers.delete(person.id);
+    this.routes.delete(person.id); this.observations.delete(person.id);
+    for (const [recipient, sender] of this.invitations)
+      if (recipient === person.id || sender === person.id) this.invitations.delete(recipient);
+    person.alive = false; person.health = 0; person.deathCause = cause;
+    person.deathTime = this.state.time; person.snapshot = null;
+    person.service = {key: '', elapsed: 0};
+    person.explanation = 'Died from ' + cause.toLowerCase() + '.';
+    this.remember(person, 'died', null, cause);
+    // Existing SetColliderEnabled(false) clears the native prescribed command,
+    // actual linear/angular velocities and motion episode synchronously. The
+    // handle/entity and physical endpoint survive for selection and cold saves.
+    const actor = lookup(person.id);
+    if (actor?.valid) actor.setColliderEnabled(false);
+    this.state.census.deaths++;
+    this.log(person.name + ' died from ' + cause.toLowerCase() + '.' +
+      (previousJob ? ' The ' + previousJob.title.toLowerCase() + ' position is now vacant.' : ''));
+    return true;
+  }
+
   setNeed(id, key, value) {
     const person = this.resident(id);
-    if (!person || !['hunger', 'fatigue', 'social', 'health'].includes(key) || !Number.isFinite(value)) return false;
+    if (!person?.alive || !['hunger', 'fatigue', 'social', 'health'].includes(key) || !Number.isFinite(value)) return false;
     person[key] = clamp(value);
+    if (key === 'health' && person.health <= 0) { this.die(person, 'Injuries'); return true; }
     this.log(person.name + ': ' + key + ' changed. Their AI will reconsider at its next evaluation.');
     return true;
   }
 
   setControlled(id) {
     const next = id === null ? null : String(id);
-    if (next && !this.resident(next)) return false;
+    if (next && !this.resident(next)?.alive) return false;
     const previous = this.state.controlled;
     if (previous === next) return true;
     if (previous) this.stopBody(previous);
@@ -172,6 +274,7 @@ export class Town {
   }
 
   stopBody(id) {
+    if (!this.resident(id)?.alive) return;
     const actor = lookup(id);
     if (actor?.valid) actor.setKinematicVelocity(ZERO, ZERO);
   }
@@ -179,15 +282,22 @@ export class Town {
   // Frame dt remains the engine's fixed step; game speed changes policy rates and
   // desired velocity, not the world's solver timestep or collision fidelity.
   step(dt) {
-    for (const resident of this.state.residents) this.stopBody(resident.id);
+    for (const resident of this.state.residents)
+      if (resident.alive) this.stopBody(resident.id);
     if (this.state.paused || !Number.isFinite(dt) || dt <= 0) return;
     const speed = this.state.speed === 3 ? 3 : 1;
     const elapsed = dt * speed;
     this.state.time += elapsed;
     for (const resident of this.state.residents) {
-      resident.hunger = clamp(resident.hunger + elapsed * .006);
-      resident.fatigue = clamp(resident.fatigue + elapsed * .0035);
-      resident.social = clamp(resident.social + elapsed * .003);
+      if (!resident.alive) continue;
+      const cause = advanceVitals(resident, elapsed);
+      if (cause) { this.die(resident, cause); continue; }
+      const job = this.jobFor(resident);
+      if (job && workingHours(this.state.time)) {
+        resident.absenceWorkingSeconds += elapsed;
+        if (resident.absenceWorkingSeconds >= ABSENCE_LIMIT)
+          this.dismiss(resident.id, 'Missed ' + ABSENCE_LIMIT + ' working seconds without completing a task');
+      }
       if (resident.id === this.state.controlled) continue;
       this.current = {resident, physicalDt: dt, gameDt: elapsed};
       const agent = this.agents.get(resident.id);
@@ -201,7 +311,7 @@ export class Town {
 
   manualMove(direction, dt) {
     const id = this.state.controlled;
-    if (!id || this.state.paused || !Number.isFinite(dt) || dt <= 0) return;
+    if (!id || !this.resident(id)?.alive || this.state.paused || !Number.isFinite(dt) || dt <= 0) return;
     const size = Math.hypot(direction.x, direction.y);
     if (!Number.isFinite(size) || size < .01) { this.stopBody(id); return; }
     const actor = lookup(id);
@@ -211,7 +321,7 @@ export class Town {
 
   candidates(person) {
     const actor = lookup(person.id);
-    if (!actor?.valid) return [];
+    if (!actor?.valid || !person.alive) return [];
     const position = actor.transform.position;
     const helpers = this.helpers.get(person.id);
     const make = (action, id, facts, eligible = true, reason = '') => {
@@ -221,20 +331,32 @@ export class Town {
         eligible: eligible && !!target?.valid && available,
         reason: !target?.valid ? 'The destination no longer exists' : !eligible ? reason : !available ? 'Another resident is using this place' : ''};
     };
-    const hour = (8 + this.state.time / 18) % 24;
-    const onShift = hour >= 8 && hour < 18;
-    const work = make('work', person.workTarget,
+    const job = this.jobFor(person);
+    const onShift = workingHours(this.state.time);
+    const work = make('work', job?.target ?? '1105',
       {duty: onShift ? 1 : .12, readiness: Math.max(.05, 1 - person.hunger * .45 - person.fatigue * .55)},
-      person.health > .1, 'Too unwell to work');
+      !!job && job.open && person.health > .1,
+      !job ? 'No job: visit the noticeboard to apply' : !job.open ? 'The workplace is closed' : 'Too unwell to work');
     const foodReady = this.state.shop.open && this.state.shop.stock > 0 && person.money >= 2;
     const foodReason = !this.state.shop.open ? 'The shop is closed' : this.state.shop.stock <= 0 ? 'Food is sold out' : 'A meal costs 2 coins';
     const output = [work,
       make('eat', '1301', {hunger: person.hunger}, foodReady, foodReason),
       make('eat', '1302', {hunger: person.hunger}, foodReady, foodReason),
       make('rest', person.bedTarget, {fatigue: person.fatigue})];
+    for (const vacancy of this.state.jobs) {
+      const eligible = !person.jobId && this.state.hiringOpen && vacancy.open && !vacancy.employeeId;
+      const reason = person.jobId ? 'Already employed' : !this.state.hiringOpen ? 'Town hiring is paused' :
+        !vacancy.open ? 'The workplace is closed' : vacancy.employeeId ? 'This vacancy has been filled' : '';
+      // Job target identifies the advertised vacancy; every application is made
+      // physically at the public noticeboard, not at an imaginary remote office.
+      output.push({action: 'jobsearch', target: vacancy.target,
+        facts: {needForWork: .7 + .3 * clamp((12 - person.money) / 12),
+          distance: length(position, lookup('1105').transform.position)}, eligible,
+        reason: eligible ? '' : reason});
+    }
     const observation = helpers.senses.sample(position, 12, {visibility: false, planar: true});
     this.observations.set(person.id, observation);
-    const neighbours = observation.targets.filter(candidate => ids.has(candidate.entityId) && candidate.entityId !== person.id);
+    const neighbours = observation.targets.filter(candidate => this.resident(candidate.entityId)?.alive && candidate.entityId !== person.id);
     for (const neighbour of neighbours) {
       const other = this.resident(neighbour.entityId);
       const invitation = this.invitations.get(person.id) === other.id;
@@ -242,7 +364,7 @@ export class Town {
       const recent = this.state.socialPairs[pair];
       output.push(make('socialize', other.id,
         {company: invitation ? Math.max(.86, person.social) : person.social},
-        (!recent || this.state.time - recent > 5) && other.health > .1,
+        (!recent || this.state.time - recent > 5) && other.alive && other.health > .1,
         recent && this.state.time - recent <= 5 ? 'Just finished a conversation' : 'This resident is unwell'));
     }
     for (let id = 1501; id <= 1504; ++id) {
@@ -254,7 +376,7 @@ export class Town {
   }
 
   claimKey(action, id) {
-    return action === 'socialize' ? 'company:' + id : action === 'wander' ? 'walk:' + id : 'place:' + id;
+    return action === 'jobsearch' ? 'job:' + id : action === 'socialize' ? 'company:' + id : action === 'wander' ? 'walk:' + id : 'place:' + id;
   }
 
   begin(person, choice) {
@@ -264,7 +386,8 @@ export class Town {
     person.explanation = choice.action === 'work' ? 'Going to work for wages and town supplies.' :
       choice.action === 'eat' ? 'Buying a meal because hunger matters more right now.' :
       choice.action === 'rest' ? 'Heading home to recover energy.' :
-      choice.action === 'socialize' ? 'Looking for a real nearby neighbour to talk to.' : 'Taking a short walk.';
+      choice.action === 'socialize' ? 'Looking for a real nearby neighbour to talk to.' :
+      choice.action === 'jobsearch' ? 'Going to the noticeboard to apply for a real vacancy.' : 'Taking a short walk.';
     if (choice.action === 'socialize') this.invitations.set(choice.target, person.id);
     this.routes.delete(person.id);
   }
@@ -279,18 +402,30 @@ export class Town {
   finish(person, status) { this.agents.get(person.id).finish(status, this); }
 
   perform(person, choice, dt) {
-    const actor = lookup(person.id), destination = lookup(choice.target);
-    if (!actor?.valid || !destination?.valid) { this.finish(person, 'failure'); return; }
+    const actor = lookup(person.id), destination = lookup(choice.action === 'jobsearch' ? '1105' : choice.target);
+    if (!person.alive || !actor?.valid || !destination?.valid) { this.finish(person, 'failure'); return; }
     if (!this.helpers.get(person.id).claims.acquire(this.claimKey(choice.action, choice.target), 2)) {
       person.explanation = 'Waiting: another resident has this resource.';
       this.finish(person, 'failure'); return;
     }
     const delta = this.current?.gameDt ?? dt;
+    const job = this.jobFor(person);
+    if (choice.action === 'work' && (!job || !job.open || job.target !== choice.target)) {
+      this.finish(person, 'failure'); return;
+    }
+    if (choice.action === 'jobsearch') {
+      const vacancy = this.state.jobs.find(row => row.target === choice.target);
+      if (person.jobId || !this.state.hiringOpen || !vacancy?.open || vacancy.employeeId) {
+        this.finish(person, 'failure'); return;
+      }
+    }
+
     if (choice.action === 'eat' && (!this.state.shop.open || this.state.shop.stock <= 0 || person.money < 2)) {
       person.explanation = 'The meal is no longer available. Reconsidering.';
       this.finish(person, 'failure'); return;
     }
     if (choice.action === 'socialize') {
+      if (!this.resident(choice.target)?.alive) { this.finish(person, 'failure'); return; }
       const pair = [person.id, choice.target].sort().join(':');
       if (this.state.socialPairs[pair] && this.state.time - this.state.socialPairs[pair] < 5) {
         this.finish(person, 'cancelled'); return;
@@ -300,21 +435,27 @@ export class Town {
     if (!this.walk(person, destination.transform.position, dt, social ? .9 : .22)) return;
     if (choice.action === 'wander') { this.finish(person, 'success'); return; }
     person.service.elapsed += delta;
-    if (choice.action === 'work' && person.service.elapsed >= 5) {
-      person.service.elapsed = 0; person.workDone++; person.money += 3; person.workEarnings += 3;
+    if (choice.action === 'jobsearch' && person.service.elapsed >= 2.5) {
+      const vacancy = this.state.jobs.find(row => row.target === choice.target);
+      if (!this.acceptJob(person, vacancy)) { this.finish(person, 'failure'); return; }
+      person.service.elapsed = 0;
+      this.finish(person, 'success');
+    } else if (choice.action === 'work' && person.service.elapsed >= 5) {
+      person.service.elapsed = 0; person.workDone++; person.money += job.wage; person.workEarnings += job.wage;
+      person.lastWorkedAt = this.state.time; person.absenceWorkingSeconds = 0; job.completedTasks++;
       person.fatigue = clamp(person.fatigue + .035); person.hunger = clamp(person.hunger + .025);
-      const job = Number(person.id) - 301;
-      if (job === 0) { const made = Math.min(3, this.state.shop.grain); this.state.shop.grain -= made; this.state.shop.stock += made; }
-      if (job === 1) this.state.shop.wood += 2;
-      if (job === 2) this.state.shop.grain += 3;
-      if (job === 3) this.state.shop.stock += 1;
-      if (job === 4) { this.state.shop.parcels++; this.state.shop.stock += 1; }
-      this.log(person.name + ' finished a shift task and earned 3 coins.');
+      if (job.id === 'baker') { const made = Math.min(3, this.state.shop.grain); this.state.shop.grain -= made; this.state.shop.stock += made; }
+      if (job.id === 'carpenter') this.state.shop.wood += 2;
+      if (job.id === 'gardener') this.state.shop.grain += 3;
+      if (job.id === 'shopkeeper') this.state.shop.stock += 1;
+      if (job.id === 'courier') { this.state.shop.parcels++; this.state.shop.stock += 1; }
+      this.log(person.name + ' finished a ' + job.title.toLowerCase() + ' task and earned ' + job.wage + ' coins.');
       this.finish(person, 'success');
     } else if (choice.action === 'eat' && person.service.elapsed >= 1.8) {
       // The precondition is rechecked above on every step, including publication.
       person.service.elapsed = 0; person.money -= 2; person.spent += 2;
       person.meals++; person.hunger = clamp(person.hunger - .7);
+      person.health = clamp(person.health + .05);
       this.state.shop.stock--; this.state.shop.sales++;
       this.log(person.name + ' bought lunch for 2 coins.'); this.finish(person, 'success');
     } else if (choice.action === 'rest' && person.service.elapsed >= 3.5) {

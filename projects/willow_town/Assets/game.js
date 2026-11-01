@@ -3,12 +3,17 @@ import {entity,input,world,ui,saves} from 'judas';
 import Town,{createState} from './town.js';
 
 const percent=v=>Math.round(Math.max(0,Math.min(1,v))*100)+'%';
-const actionNames={work:'Working',eat:'Buying a meal',rest:'Resting at home',socialize:'Meeting a neighbour',wander:'Taking a stroll',idle:'Taking a breather'};
+export const properties={startSpeed:{type:'number',default:1},observationRun:{type:'boolean',default:false}};
+
+const actionNames={jobsearch:'Looking for work',work:'Working',eat:'Buying a meal',rest:'Resting at home',socialize:'Meeting a neighbour',wander:'Taking a stroll',idle:'Taking a breather'};
 const colour=(r,g,b,a=1)=>({r,g,b,a});
 
 export default class WillowTown {
- constructor(){
+ constructor(context={}){
   this.state={...createState(),selected:'301',request:null,lastPick:null,view:null};
+  this.state.speed=context.properties?.startSpeed===3?3:1;
+  this.observationRun=!!context.properties?.observationRun;
+  this.watchFinishing=false;this.watchRequest=null;
   this.town=null;this.doc=null;this.size='';this.traceSecond=0;
  }
  start(){this.open(false);}
@@ -19,6 +24,7 @@ export default class WillowTown {
   if(!this.doc)throw Error('Willow Town interface is missing from the scene');
   input.pointerCapture=false;ui.debugOverlayVisible=false;
   this.layout();this.camera();this.paint();
+  if(this.observationRun)this.observe('WILLOW_WATCH_START');
  }
  selected(){return this.town?.resident(this.state.selected)??this.state.residents[0];}
  choose(id){
@@ -41,6 +47,15 @@ export default class WillowTown {
   else if(id==='hungry')this.town.setNeed(this.state.selected,'hunger',.98);
   else if(id==='tired')this.town.setNeed(this.state.selected,'fatigue',.98);
   else if(id==='lonely')this.town.setNeed(this.state.selected,'social',.98);
+  else if(id==='hurt')this.town.hurt(this.state.selected,.45);
+  else if(id==='dismiss')this.town.dismiss(this.state.selected);
+  else if(id==='hiring-toggle'){
+   this.state.hiringOpen=!this.state.hiringOpen;
+   this.state.message=this.state.hiringOpen?'Applications are open. Residents can compete for real vacancies.':'Hiring paused. Existing employees keep their jobs.';
+  }else if(id==='job-toggle'){
+   const person=this.selected(),job=this.town.job(person.jobId??person.lastJobId);
+   if(job)this.town.setJobOpen(job.id,!job.open);
+  }
   else if(id==='shop-toggle'){
    this.state.shop.open=!this.state.shop.open;
    this.state.message=this.state.shop.open?'The grocer is open again.':'Grocer closed: meals must become unavailable, however hungry someone is.';
@@ -60,6 +75,20 @@ export default class WillowTown {
   if(input.pressed('release'))this.town.setControlled(null);
   if(input.pressed('save_game'))this.save('save');
   if(input.pressed('load_game'))this.save('load');
+  if(input.pressed('finish_watch')){
+   this.state.paused=true;this.watchFinishing=true;this.watchRequest=null;
+   this.observe('WILLOW_WATCH_FINAL');
+  }
+  if(this.watchFinishing&&!this.watchRequest&&!saves.busy){
+   this.watchRequest=saves.save('willow-observation');this.state.request=this.watchRequest;
+  }
+  if(this.watchRequest){
+   const status=saves.status(this.watchRequest);
+   if(status&&(status.state==='completed'||status.state==='failed')){
+    console.log('WILLOW_WATCH_SAVE '+JSON.stringify({state:status.state,error:status.error??'',time:this.state.time}));
+    this.watchFinishing=false;this.watchRequest=null;
+   }
+  }
   this.paint();
  }
  update(){
@@ -91,11 +120,21 @@ export default class WillowTown {
   // decisions and effects, not a hidden watch-tour choosing actions for them.
   const second=Math.floor(this.state.time/10);
   if(second>this.traceSecond){this.traceSecond=second;
-   console.log('WILLOW_TOWN '+JSON.stringify({time:this.state.time,stock:this.state.shop.stock,
-    sales:this.state.shop.sales,controlled:this.state.controlled,
-    residents:this.state.residents.map(r=>({id:r.id,name:r.name,job:r.job,work:r.workDone,meals:r.meals,
-     rests:r.rests,chats:r.chats,money:r.money,selected:this.town.inspect(r.id)?.selected}))}));
+   this.observe('WILLOW_TOWN');
   }
+ }
+ observe(label){
+  const s=this.state;
+  console.log(label+' '+JSON.stringify({version:s.version,time:s.time,speed:s.speed,paused:s.paused,
+   stock:s.shop.stock,sales:s.shop.sales,controlled:s.controlled,census:s.census,hiringOpen:s.hiringOpen,
+   jobs:s.jobs.map(j=>({id:j.id,employeeId:j.employeeId,open:j.open,tasks:j.completedTasks})),
+   residents:s.residents.map(r=>{const a=entity(r.id),brain=this.town.inspect(r.id);return {
+    id:r.id,name:r.name,alive:r.alive,ageDays:r.ageDays,lifespanDays:r.lifespanDays,
+    health:r.health,hunger:r.hunger,fatigue:r.fatigue,social:r.social,job:r.job,jobId:r.jobId,
+    jobsLost:r.jobsLost,jobsFound:r.jobsFound,absence:r.absenceWorkingSeconds,
+    deathCause:r.deathCause,deathTime:r.deathTime,work:r.workDone,meals:r.meals,rests:r.rests,
+    chats:r.chats,money:r.money,position:a?.valid?a.transform.position:null,
+    selected:brain?.selected??null,decisionElapsed:brain?.elapsed??null};})}));
  }
  layout(){
   const viewport=world.viewport,w=Math.max(640,viewport.width),h=Math.max(480,viewport.height);
@@ -107,16 +146,20 @@ export default class WillowTown {
   set('brand',22,9,280,30);set('subtitle',23,39,390,20);
   set('clock',Math.max(350,w*.36),20,220,28);
   for(const [i,id] of ['pause','speed','save','load'].entries())set(id,w-406+i*98,16,90,34);
-  const sy=Math.min(1,(h-100)/610),line=(id,y,height=25)=>set(id,x+pad,76+y*sy,inner,height*sy);
-  line('person-name',0,36);line('person-job',35,23);line('person-action',68,48);line('person-reason',111,43);
+  set('hiring-toggle',w-584,16,164,34);
+  const sy=Math.min(1,(h-112)/660);this.sideScale=sy;
+  const line=(id,y,height=25)=>set(id,x+pad,76+y*sy,inner,height*sy);
+  line('person-name',0,34);line('person-job',34,22);line('person-life',57,21);
+  line('person-action',85,29);line('person-reason',115,37);
   for(const [i,need] of ['hunger','fatigue','social'].entries()){
-   line('need-'+need,162+i*34,23);line('track-'+need,187+i*34,6);line('bar-'+need,187+i*34,6);
+   line('need-'+need,157+i*30,21);line('track-'+need,180+i*30,6);line('bar-'+need,180+i*30,6);
   }
-  line('person-money',274,24);line('control',308,36);line('scores-title',362,22);line('scores',388,112);
-  line('experiment-label',503,18);
-  for(const [i,id] of ['hungry','tired','lonely'].entries())set(id,x+pad+i*(inner+6)/3,76+525*sy,(inner-12)/3,29*sy);
-  line('shop-status',563,20);
-  for(const [i,id] of ['shop-toggle','restock'].entries())set(id,x+pad+i*(inner+8)/2,76+587*sy,(inner-8)/2,29*sy);
+  line('person-money',256,23);line('control',286,33);line('person-employment',328,33);
+  for(const [i,id] of ['dismiss','job-toggle'].entries())set(id,x+pad+i*(inner+8)/2,76+369*sy,(inner-8)/2,29*sy);
+  line('scores-title',410,20);line('scores',436,110);line('experiment-label',550,18);
+  for(const [i,id] of ['hungry','tired','lonely','hurt'].entries())set(id,x+pad+i*(inner+6)/4,76+573*sy,(inner-18)/4,28*sy);
+  line('shop-status',610,20);
+  for(const [i,id] of ['shop-toggle','restock'].entries())set(id,x+pad+i*(inner+8)/2,76+633*sy,(inner-8)/2,27*sy);
   const townWidth=w-this.panel;
   for(const [i,r] of this.state.residents.entries())set('resident-'+r.id,16+i*(townWidth-32)/6,h-79,(townWidth-48)/6,35);
   set('town-help',20,h-108,townWidth-40,20);
@@ -136,30 +179,41 @@ export default class WillowTown {
   get('clock').text='Day '+(1+Math.floor((144+s.time)/432))+'  ·  '+
    String(Math.floor((8+s.time/18)%24)).padStart(2,'0')+':'+String(Math.floor(s.time*60/18)%60).padStart(2,'0');
   get('pause').text=s.paused?'Resume':'Pause';get('speed').text='Speed: '+s.speed+'x';
-  get('person-name').text=person.name;get('person-job').text=person.job+'  ·  Health '+percent(person.health);
-  const actor=entity(person.id),destination=choice?entity(choice.target):null;
+  get('person-name').text=person.name;get('person-job').text=person.alive?person.job:'Deceased';
+  get('person-life').text='Health '+percent(person.health)+'  ·  Age '+person.ageDays.toFixed(1)+' / '+person.lifespanDays+' days';
+  get('subtitle').text=s.residents.filter(r=>r.alive).length+' living  ·  '+s.census.deaths+' deaths  ·  '+s.census.hires+' hires  ·  '+s.census.firings+' dismissals';
+  get('hiring-toggle').text=s.hiringOpen?'Hiring: open':'Hiring: paused';
+  const job=this.town.job(person.jobId??person.lastJobId);
+  get('person-employment').text=person.alive?'Jobs found '+person.jobsFound+'  ·  Jobs lost '+person.jobsLost+'\n'+
+   (person.jobId?'Absence: '+Math.floor(person.absenceWorkingSeconds)+' / 65 working sec':person.jobLostReason?.startsWith('Missed')?'Missed too much of the workday':person.jobLostReason==='Workplace closed'?'Their previous workplace closed':'Looking for an open vacancy'):
+   'Died: '+person.deathCause+'\nEmployment and decisions have ended.';
+  get('dismiss').enabled=!!person.alive&&!!person.jobId;
+  get('job-toggle').enabled=!!job;get('job-toggle').text=job?.open?'Close workplace':'Open workplace';
+  get('control').enabled=!!person.alive;
+  for(const id of ['hungry','tired','lonely','hurt'])get(id).enabled=!!person.alive;
+  const actor=entity(person.id),destination=choice?entity(choice.action==='jobsearch'?'1105':choice.target):null;
   const travelling=actor?.valid&&destination?.valid&&Math.hypot(actor.transform.position.x-destination.transform.position.x,actor.transform.position.y-destination.transform.position.y)>(choice.action==='socialize'?.9:.25);
-  const journey={work:'Going to work',eat:'Walking to the grocer',rest:'Heading home',socialize:'Meeting a neighbour',wander:'Taking a stroll'};
-  get('person-action').text=s.controlled===person.id?'You are in control':((travelling?journey[choice?.action]:actionNames[choice?.action])??'Choosing their next task');
-  get('person-reason').text=s.controlled===person.id?'WASD / arrows to walk. Return to AI or press Esc when you are done.':
+  const journey={jobsearch:'Going to the jobs board',work:'Going to work',eat:'Walking to the grocer',rest:'Heading home',socialize:'Meeting a neighbour',wander:'Taking a stroll'};
+  get('person-action').text=!person.alive?'Died from '+person.deathCause.toLowerCase():s.controlled===person.id?'You are in control':((travelling?journey[choice?.action]:actionNames[choice?.action])??'Choosing their next task');
+  get('person-reason').text=!person.alive?'Their history and stats remain here. Their old job is now available.':s.controlled===person.id?'WASD / arrows to walk. Return to AI or press Esc when you are done.':
    (info?.commitmentRemaining>.05?'Sticking with this task for '+info.commitmentRemaining.toFixed(1)+' seconds.':
     info?.reason==='highest eligible utility'?'This currently has the highest eligible score.':info?.reason==='switch advantage not reached'?"Another choice isn't enough better to interrupt this one.":info?.reason??'Waiting for the next decision.');
   const inner=this.panel-36;
   for(const [need,label] of [['hunger','Hunger'],['fatigue','Tiredness'],['social','Needs company']]){
    get('need-'+need).text=label+'  '+percent(person[need]);
-   get('bar-'+need).setLayout({size:{x:inner*Math.max(.005,person[need]),y:6*Math.min(1,(world.viewport.height-100)/610)}});
+   get('bar-'+need).setLayout({size:{x:inner*Math.max(.005,person[need]),y:6*(this.sideScale??1)}});
   }
   get('person-money').text='Wallet '+Math.floor(person.money)+' coins  ·  Jobs done '+person.workDone;
   get('control').text=s.controlled===person.id?'Return to AI [Esc]':'Take control [WASD]';
   const rows=info?.candidates??[],best=new Map();
   for(const row of rows){const current=best.get(row.action);if(!current||row.score>current.score||(row.eligible&&!current.eligible))best.set(row.action,row);}
   const scoreRows=Array.from(best.values()).sort((a,b)=>Number(b.eligible)-Number(a.eligible)||b.score-a.score);
-  get('scores').text=s.controlled===person.id?'AI is paused for this person. Everyone else is still making their own decisions.':
-   scoreRows.map(row=>(row.eligible?'• ':'× ')+({work:'Work',eat:'Meal',rest:'Rest',socialize:'Company',wander:'Stroll',idle:'Breather'}[row.action]??row.action)+'  '+
+  get('scores').text=!person.alive?'No active brain or resource claims. A deceased resident cannot be controlled or hired.':s.controlled===person.id?'AI is paused for this person. Everyone else is still making their own decisions.':
+   scoreRows.map(row=>(row.eligible?'• ':'× ')+({jobsearch:'Find work',work:'Work',eat:'Meal',rest:'Rest',socialize:'Company',wander:'Stroll',idle:'Breather'}[row.action]??row.action)+'  '+
     (row.eligible?row.score.toFixed(2):'unavailable')).slice(0,6).join('\n');
   get('shop-status').text='Grocer '+(s.shop.open?'open':'closed')+'  ·  '+s.shop.stock+' meals  ·  '+s.shop.sales+' sold';
   get('shop-toggle').text=s.shop.open?'Close shop':'Open shop';
-  for(const r of s.residents)get('resident-'+r.id).configure({background:r.id===person.id?colour(.29,.40,.29):colour(.09,.18,.16,.96)});
+  for(const r of s.residents){get('resident-'+r.id).text=r.name+(r.alive?'':' †');get('resident-'+r.id).configure({background:r.id===person.id?colour(.29,.40,.29):colour(.09,.18,.16,.96)});}
   const status=s.request?saves.status(s.request):null;
   get('message').text=status&&(status.state==='failed'||status.state==='completed')?
    (status.state==='failed'?'Save/load failed: '+status.error:'Saved progress / loaded progress successfully.'):
@@ -169,14 +223,17 @@ export default class WillowTown {
   if(!this.town)return;this.camera();
   const selected=this.selected(),actor=selected?entity(selected.id):null,ring=entity('500');
   if(actor?.valid&&ring?.valid){const p=actor.presentedTransform.position;ring.transform={position:{x:p.x,y:p.y,z:0}};
-   const point=world.project({x:p.x,y:p.y+1.15,z:0});
+   const point=world.project({x:p.x,y:p.y+(selected.alive?1.15:.6),z:0});
    const label=this.doc.get('selected-label');label.visible=!!point?.inside;
-   if(point?.inside){label.text=selected.name;label.setLayout({offset:{x:point.x*world.viewport.width-45,y:point.y*world.viewport.height-14},size:{x:90,y:21}});}
+   if(point?.inside){label.text=selected.name+(selected.alive?'':' †');label.setLayout({offset:{x:point.x*world.viewport.width-45,y:point.y*world.viewport.height-14},size:{x:90,y:21}});}
   }
   for(const r of this.state.residents){const a=entity(r.id);if(!a?.valid)continue;
    const v=a.velocity,moving=Math.hypot(v.x,v.y)>.08;
    const frame=moving?Math.floor(this.state.time*7)%4:0;
-   a.setSprite({rect:{x:frame*.25,y:0,width:.25,height:1},flipX:moving?v.x<0:a.sprite.flipX});
+   a.setSprite({rect:{x:r.alive?frame*.25:0,y:0,width:.25,height:1},
+    size:{x:r.alive ? .96 : 1.2,y:r.alive ? 1.28 : .5},pivot:{x:.5,y:.2},
+    tint:r.alive?{x:1,y:1,z:1,w:1}:{x:.55,y:.58,z:.54,w:.85},
+    flipX:moving?v.x<0:a.sprite.flipX});
   }
  }
  destroy(){this.town?.dispose();world.clearView();}

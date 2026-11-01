@@ -33,6 +33,13 @@ export default {
       ]
     },
     {
+      "id": "jobsearch", "weight": 1.2, "cooldown": 1.5, "minCommitment": 2,
+      "considerations": [
+        {"fact": "needForWork"},
+        {"fact": "distance", "min": 0, "max": 65, "curve": "inverse"}
+      ]
+    },
+    {
       "id": "wander", "weight": 0.085, "cooldown": 1.5, "minCommitment": 2,
       "considerations": [
         {"fact": "distance", "min": 0, "max": 65, "curve": "inverse"}

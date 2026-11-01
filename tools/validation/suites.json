@@ -8,6 +8,8 @@
     {"name":"ai-fresh-workflow","target":"judas_ai_workflow_tests","groups":["ai","editor","lifecycle"]},
     {"name":"utility-ai-application","target":"judas_utility_ai_application_tests","groups":["ai","lifecycle"],"args":["{root}/projects/ai_workshop/AI_Workshop.judasproj","{output}/ai-workshop"]},
     {"name":"willow-town-application","target":"judas_willow_town_application_tests","groups":["ai","2d","lifecycle"],"args":["{root}/projects/willow_town/Willow_Town.judasproj","{output}/willow-town"]},
+    {"name":"willow-town-life","target":"judas_willow_town_life_application_tests","groups":["ai","2d","lifecycle"],"args":["{root}/projects/willow_town/Willow_Town.judasproj","{output}/willow-town-life"]},
+    {"name":"willow-town-absence","target":"judas_willow_town_life_application_tests","groups":["ai","2d","lifecycle"],"args":["{root}/projects/willow_town/Willow_Town.judasproj","{output}/willow-town-absence","absence"]},
     {"name":"utility-ai","target":"judas_utility_ai_tests","groups":["ai","core"]},
     {"name":"utility-ai-script","target":"judas_utility_ai_script_tests","groups":["ai","scripting","lifecycle"]},
     {"name":"utility-ai-editor","target":"judas_utility_ai_editor_tests","groups":["ai","editor"]},

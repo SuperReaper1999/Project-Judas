@@ -1,0 +1,537 @@
+{
+  "format": 1,
+  "state": "completed",
+  "requested_wall_seconds": 12.0,
+  "requested_game_speed": 3,
+  "created_utc": "2026-11-01T22:10:00.926228+00:00",
+  "runtime": "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/Willow-Town-standalone/judas",
+  "runtime_sha256": "973f787c744b25545a916b3d253dc9f8521831ef34e95220e6517a7225018f6c",
+  "source_project": "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+  "isolated_project": "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/graphics-wrapped/project/Willow_Town.judasproj",
+  "source_scene_sha256": "aeabc47425b22bbcc7531873b063e60566268747e1df6761ebd4ee69b33c7792",
+  "copied_scene_sha256": "ff093cf95f236486a6a17db9c74e23e413943ae22253373decd4c97870d870b2",
+  "configuration_change": {
+    "startSpeed": 3,
+    "observationRun": true
+  },
+  "test_harness": false,
+  "frame_delta_override": false,
+  "captures": [
+    {
+      "name": "start",
+      "utc": "2026-11-01T22:10:05.063309+00:00",
+      "exit_code": 0,
+      "dimensions": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "midpoint",
+      "utc": "2026-11-01T22:10:11.243124+00:00",
+      "exit_code": 0,
+      "dimensions": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "finished",
+      "utc": "2026-11-01T22:10:17.197783+00:00",
+      "exit_code": 0,
+      "dimensions": [
+        1280,
+        800
+      ]
+    }
+  ],
+  "warnings": [],
+  "removed_inherited_judas_environment_names": [],
+  "internal_capture_path": "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/graphics-wrapped/internal.png",
+  "stdout_wrapper": "stdbuf -oL -eL",
+  "command": [
+    "/usr/bin/stdbuf",
+    "-oL",
+    "-eL",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/Willow-Town-standalone/judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/willow-life-20261101/graphics-wrapped/project/Willow_Town.judasproj"
+  ],
+  "sdl_video_driver": "x11",
+  "pid": 3612352,
+  "launched_utc": "2026-11-01T22:10:01.058676+00:00",
+  "observation_started_utc": "2026-11-01T22:10:05.063281+00:00",
+  "window_id": 35651594,
+  "startup_seconds": 4.005110705002153,
+  "first_observation": {
+    "time": 10.000000521540642,
+    "census": {
+      "deaths": 0,
+      "hires": 1,
+      "firings": 0
+    },
+    "alive": 6,
+    "residents": [
+      {
+        "id": "301",
+        "name": "Mara",
+        "alive": true,
+        "ageDays": 28.023148149355734,
+        "job": "Baker",
+        "jobId": "baker",
+        "health": 1,
+        "money": 6,
+        "work": 0,
+        "meals": 1,
+        "rests": 0,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1101"
+        }
+      },
+      {
+        "id": "302",
+        "name": "Eli",
+        "alive": true,
+        "ageDays": 34.023148149355734,
+        "job": "Carpenter",
+        "jobId": "carpenter",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "rest",
+          "target": "1202"
+        }
+      },
+      {
+        "id": "303",
+        "name": "Nia",
+        "alive": true,
+        "ageDays": 24.023148149355734,
+        "job": "Gardener",
+        "jobId": "gardener",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1103"
+        }
+      },
+      {
+        "id": "304",
+        "name": "Theo",
+        "alive": true,
+        "ageDays": 42.023148149355734,
+        "job": "Shopkeeper",
+        "jobId": "shopkeeper",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1104"
+        }
+      },
+      {
+        "id": "305",
+        "name": "Ada",
+        "alive": true,
+        "ageDays": 22.023148149355734,
+        "job": "Courier",
+        "jobId": "courier",
+        "health": 1,
+        "money": 11,
+        "work": 1,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 1,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "eat",
+          "target": "1302"
+        }
+      },
+      {
+        "id": "306",
+        "name": "Sam",
+        "alive": true,
+        "ageDays": 77.02314814935573,
+        "job": "Park keeper",
+        "jobId": "keeper",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1106"
+        }
+      }
+    ]
+  },
+  "observed_wall_seconds": 12.053781593996973,
+  "observations": 4,
+  "last_observation": {
+    "time": 10.000000521540642,
+    "census": {
+      "deaths": 0,
+      "hires": 1,
+      "firings": 0
+    },
+    "alive": 6,
+    "residents": [
+      {
+        "id": "301",
+        "name": "Mara",
+        "alive": true,
+        "ageDays": 28.023148149355734,
+        "job": "Baker",
+        "jobId": "baker",
+        "health": 1,
+        "money": 6,
+        "work": 0,
+        "meals": 1,
+        "rests": 0,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1101"
+        }
+      },
+      {
+        "id": "302",
+        "name": "Eli",
+        "alive": true,
+        "ageDays": 34.023148149355734,
+        "job": "Carpenter",
+        "jobId": "carpenter",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "rest",
+          "target": "1202"
+        }
+      },
+      {
+        "id": "303",
+        "name": "Nia",
+        "alive": true,
+        "ageDays": 24.023148149355734,
+        "job": "Gardener",
+        "jobId": "gardener",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1103"
+        }
+      },
+      {
+        "id": "304",
+        "name": "Theo",
+        "alive": true,
+        "ageDays": 42.023148149355734,
+        "job": "Shopkeeper",
+        "jobId": "shopkeeper",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1104"
+        }
+      },
+      {
+        "id": "305",
+        "name": "Ada",
+        "alive": true,
+        "ageDays": 22.023148149355734,
+        "job": "Courier",
+        "jobId": "courier",
+        "health": 1,
+        "money": 11,
+        "work": 1,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 1,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "eat",
+          "target": "1302"
+        }
+      },
+      {
+        "id": "306",
+        "name": "Sam",
+        "alive": true,
+        "ageDays": 77.02314814935573,
+        "job": "Park keeper",
+        "jobId": "keeper",
+        "health": 1,
+        "money": 8,
+        "work": 0,
+        "meals": 0,
+        "rests": 0,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1106"
+        }
+      }
+    ]
+  },
+  "last_metric": {
+    "pid": 3612352,
+    "cpu_seconds": 2.14,
+    "VmSize": 1118756,
+    "VmRSS": 193736,
+    "Threads": 12,
+    "Rss_KiB": 193736,
+    "Pss_KiB": 158494,
+    "host_MemAvailable_KiB": 4477744,
+    "host_SwapFree_KiB": 13614232,
+    "utc": "2026-11-01T22:10:08.239833+00:00",
+    "wall_seconds": 3.1712930470021092
+  },
+  "observation_finished_utc": "2026-11-01T22:10:17.117047+00:00",
+  "duration_reached": true,
+  "finish_key_sent_to_owned_window": true,
+  "window_close_sent": true,
+  "runtime_left_running": false,
+  "runtime_alive_at_summary": false,
+  "runtime_lifetime_after_observer_exit_verified": false,
+  "child_lifetime_note": "Leaving a paused child does not detach it from an outer task/process manager. Use an independent desktop/session if it must survive caller cleanup. This summary only checks liveness before observer exit.",
+  "runtime_exit_code": 0,
+  "final_observation": {
+    "time": 46.650002432987094,
+    "census": {
+      "deaths": 0,
+      "hires": 1,
+      "firings": 0
+    },
+    "alive": 6,
+    "residents": [
+      {
+        "id": "301",
+        "name": "Mara",
+        "alive": true,
+        "ageDays": 28.1079861167445,
+        "job": "Baker",
+        "jobId": "baker",
+        "health": 1,
+        "money": 13,
+        "work": 3,
+        "meals": 2,
+        "rests": 0,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "rest",
+          "target": "1201"
+        }
+      },
+      {
+        "id": "302",
+        "name": "Eli",
+        "alive": true,
+        "ageDays": 34.1079861167445,
+        "job": "Carpenter",
+        "jobId": "carpenter",
+        "health": 1,
+        "money": 12,
+        "work": 2,
+        "meals": 1,
+        "rests": 1,
+        "chats": 0,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "socialize",
+          "target": "305"
+        }
+      },
+      {
+        "id": "303",
+        "name": "Nia",
+        "alive": true,
+        "ageDays": 24.1079861167445,
+        "job": "Gardener",
+        "jobId": "gardener",
+        "health": 1,
+        "money": 12,
+        "work": 2,
+        "meals": 1,
+        "rests": 0,
+        "chats": 2,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1103"
+        }
+      },
+      {
+        "id": "304",
+        "name": "Theo",
+        "alive": true,
+        "ageDays": 42.1079861167445,
+        "job": "Shopkeeper",
+        "jobId": "shopkeeper",
+        "health": 1,
+        "money": 12,
+        "work": 2,
+        "meals": 1,
+        "rests": 1,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1104"
+        }
+      },
+      {
+        "id": "305",
+        "name": "Ada",
+        "alive": true,
+        "ageDays": 22.1079861167445,
+        "job": "Courier",
+        "jobId": "courier",
+        "health": 1,
+        "money": 12,
+        "work": 2,
+        "meals": 1,
+        "rests": 1,
+        "chats": 1,
+        "jobsLost": 0,
+        "jobsFound": 1,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1105"
+        }
+      },
+      {
+        "id": "306",
+        "name": "Sam",
+        "alive": true,
+        "ageDays": 77.1079861167445,
+        "job": "Park keeper",
+        "jobId": "keeper",
+        "health": 1,
+        "money": 12,
+        "work": 2,
+        "meals": 1,
+        "rests": 0,
+        "chats": 2,
+        "jobsLost": 0,
+        "jobsFound": 0,
+        "deathCause": "",
+        "deathTime": null,
+        "selected": {
+          "action": "work",
+          "target": "1106"
+        }
+      }
+    ]
+  },
+  "final_save": {
+    "state": "completed",
+    "error": "",
+    "time": 46.650002432987094
+  },
+  "observed_regular_speeds": [
+    3
+  ],
+  "regular_paused_observations": 0,
+  "regular_controlled_observations": 0,
+  "regular_observations_missing_paused_field": 0,
+  "continuous_state_observation": false,
+  "snapshot_limit": "Periodic game-time snapshots cannot prove an absence of pauses between samples; compare actual game-clock progression with measured wall time.",
+  "stopped_by_signal": false,
+  "observed_game_seconds": 36.65000191144645,
+  "game_seconds_per_wall_second": 3.040539736483934,
+  "game_clock_difference_from_selected_3x_seconds": 0.4886571294555324,
+  "internal_capture_created": true,
+  "internal_capture_sha256": "d17a61baa4afe9161732ec670b3293c0849d1625375cd533a9f04e7568b3ff54"
+}

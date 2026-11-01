@@ -15,11 +15,15 @@ element('header',1,size=(1280,66),bg=PANEL)
 element('brand',text='WILLOW TOWN',pos=(22,10),size=(290,28),font=25,color=GOLD)
 element('subtitle',text='A little town with a mind of its own',pos=(23,39),size=(390,20),font=14,color=MUTED)
 element('clock',pos=(430,16),size=(240,30),font=20)
-for id,label in [('pause','Pause'),('speed','Speed: 1x'),('save','Save [K]'),('load','Load [L]')]:
+for id,label in [('pause','Pause'),('speed','Speed: 1x'),('save','Save [K]'),('load','Load [L]'),('hiring-toggle','Hiring: open')]:
     element(id,4,text=label,size=(95,34),font=16,bg=(.15,.24,.22,1),align=(.5,.5))
 element('sidebar',1,pos=(940,66),size=(340,630),bg=PANEL)
 element('person-name',text='Mara',font=27,color=GOLD)
 element('person-job',text='Baker',font=16,color=MUTED)
+element('person-life',text='Health 100% · Age 31 / 80 town days',font=14,color=MUTED)
+element('person-employment',text='Employed · Jobs found 0 / lost 0',font=14,color=MUTED,wrap=True)
+for id,label in [('dismiss','Dismiss'),('job-toggle','Close workplace')]:
+    element(id,4,text=label,font=14,bg=(.20,.26,.23,1),align=(.5,.5))
 element('person-action',text='Deciding what to do...',font=18,wrap=True)
 element('person-reason',text='The decision comes from real needs and opportunities.',font=14,color=MUTED,wrap=True)
 for need,col in [('hunger',(.89,.60,.36,1)),('fatigue',(.46,.70,.85,1)),('social',(.75,.57,.83,1))]:
@@ -31,7 +35,7 @@ element('control',4,text='Take control [WASD]',font=17,bg=(.25,.40,.32,1),align=
 element('scores-title',text='WHAT MATTERS TO THEM',font=13,color=GOLD)
 element('scores',text='Waiting for their first decision...',font=15,wrap=True)
 element('experiment-label',text='TRY CHANGING THEIR NEEDS',font=12,color=MUTED)
-for id,label in [('hungry','Hungry'),('tired','Tired'),('lonely','Lonely')]:
+for id,label in [('hungry','Hungry'),('tired','Tired'),('lonely','Lonely'),('hurt','Hurt')]:
     element(id,4,text=label,font=14,bg=(.15,.24,.22,1),align=(.5,.5))
 element('shop-status',text='Grocer: open',font=15,color=GOLD)
 for id,label in [('shop-toggle','Close shop'),('restock','Restock +8')]:

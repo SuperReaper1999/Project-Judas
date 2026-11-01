@@ -1,0 +1,36 @@
+{
+  "actual_wall_seconds": 1200.1428476799992,
+  "game_seconds_observed": 3600.6001877859235,
+  "game_seconds_per_wall_second": 3.0001430202631774,
+  "census": {
+    "deaths": 1,
+    "hires": 3,
+    "firings": 2
+  },
+  "alive": 5,
+  "final_health_of_survivors": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "work_tasks": 849,
+  "meals": 357,
+  "rests": 260,
+  "chat_participant_rewards": 238,
+  "rss_mib_range": [
+    75.48046875,
+    132.08984375
+  ],
+  "metric_samples": 20,
+  "validated_observations": 362,
+  "ledger_and_job_ownership_valid": true,
+  "regular_paused_observations": 0,
+  "regular_controlled_observations": 0,
+  "final_save": {
+    "state": "completed",
+    "error": "",
+    "time": 3610.600188307464
+  }
+}
