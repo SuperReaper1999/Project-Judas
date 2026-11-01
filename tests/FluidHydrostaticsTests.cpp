@@ -32,7 +32,11 @@ void Rotate(std::vector<FluidParticle>& p,const glm::quat& q,const glm::vec3& t)
 }
 }
 #include "FluidSurfaceReconstructionChecks.h"
+#include "FluidBoundaryOwnershipChecks.h"
 int main() {
+    FluidBoundaryOwnershipChecks();
+    OwnedCurvedBoundaryChecks();
+    NativeOwnedDryRegionChecks();
     SurfaceReconstructionChecks();
     CurvedPhysicalReconstructionChecks();
     const auto begin=std::chrono::steady_clock::now();

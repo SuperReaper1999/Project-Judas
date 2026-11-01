@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <unordered_map>
 #include <vector>
+#include <memory>
+#include <optional>
 #include <glm/glm.hpp>
 #include "CollisionShapes.h"
 #include "FluidWorld.h"
@@ -31,6 +33,7 @@ struct FluidVolumeQuadrature {
 struct FluidSolidQuery {
     const FluidVolumeQuadrature& volume;
     BodyTransform pose;
+    BodyHandle owner{}; // generation-bearing identity; invalid means no retained domain
 };
 FluidVolumeQuadrature MakeBoxFluidVolume(const glm::vec3& halfExtents, unsigned samplesPerAxis = 4);
 FluidVolumeQuadrature MakeSphereFluidVolume(float radius, unsigned radialLayers = 3, unsigned antipodalPairs = 24);
@@ -95,6 +98,16 @@ public:
                            const glm::vec3& tangentAxis,
                            const FluidSolidQuery* solid = nullptr,
                            bool connectedWetSupport = false) const;
+    // Retain the wet domain BEFORE this owner's solid displacement/exclusion.
+    // Geometry only: it contributes no particles, mass, velocity or acceleration.
+    // Build() invalidates all retained snapshots. A source must describe real
+    // water/air topology; a fitted height cap alone cannot describe a dry hole.
+    void RetainDisplacedBoundary(BodyHandle owner, const FluidVolumeQuadrature& solid,
+                                 const BodyTransform& pose,
+                                 const std::vector<FluidParticle>& domainParticles);
+    void RetainDisplacementCells(BodyHandle owner, const FluidVolumeQuadrature& solid,
+                                  const BodyTransform& pose,
+                                  const std::vector<FluidDisplacementMarker>& cells);
     // A receiving body's rotation must not rotate/rebin the water lattice.
     // Use represented field geometry where it supplies a conditioned horizontal
     // direction; the caller frame remains the fallback for degenerate clouds.
@@ -103,6 +116,21 @@ public:
     float MaximumParticleSpacing() const { return m_maxSpacing; }
     std::size_t ParticleCount() const { return m_particles.size(); }
 private:
+    struct OwnedBoundary {
+        BodyHandle owner;
+        BodyTransform pose;
+        std::vector<CompoundBox> boxes;
+        float sphereRadius = 0;
+        std::shared_ptr<const FluidHydrostaticField> domain;
+        std::vector<FluidDisplacementMarker> cells;
+    };
+    std::vector<OwnedBoundary> m_boundaries;
+    std::optional<float> RetainedFraction(const glm::vec3& point, const glm::vec3& up,
+        float halfHeight, float radius, const glm::vec3& tangent,
+        const FluidSolidQuery* solid) const;
+    const OwnedBoundary* BoundaryAt(const glm::vec3& point, const FluidSolidQuery* solid) const;
+    std::vector<std::pair<double,double>> OwnedIntervals(const glm::vec3& point,
+        const glm::vec3& up, float halfHeight, const FluidSolidQuery* solid) const;
     struct Particle { glm::vec3 position, velocity, acceleration; float spacing, volume; };
     struct Key {
         std::int64_t x, y, z;
@@ -139,4 +167,5 @@ FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& fi
                                                 const FluidVolumeQuadrature& volume,
                                                 const BodyTransform& pose,
                                                 const GravityField& gravity,
-                                                FluidVolumeGeometry geometry = FluidVolumeGeometry::DisplacedSolid);
+                                                FluidVolumeGeometry geometry = FluidVolumeGeometry::DisplacedSolid,
+                                                BodyHandle owner = {});

@@ -1,0 +1,115 @@
+{
+  "runs": [
+    {
+      "pair": 0,
+      "kind": "before",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-before",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-0-before.bin"
+      ],
+      "output": "wall_median_us=441.392 wall_p95_us=518.88900000000001 wall_worst_us=643.20299999999997 cpu_median_us=440.5 marker_bytes=0 marker_size=72 retained_observations=0 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 0,
+      "kind": "after",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-after",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-0-after.bin"
+      ],
+      "output": "wall_median_us=440.5 wall_p95_us=529.31799999999998 wall_worst_us=613.89700000000005 cpu_median_us=439 marker_bytes=9216 marker_size=72 retained_observations=4231 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 1,
+      "kind": "after",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-after",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-1-after.bin"
+      ],
+      "output": "wall_median_us=458.64449999999999 wall_p95_us=533.12599999999998 wall_worst_us=744.56399999999996 cpu_median_us=457 marker_bytes=9216 marker_size=72 retained_observations=4231 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 1,
+      "kind": "before",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-before",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-1-before.bin"
+      ],
+      "output": "wall_median_us=417.7475 wall_p95_us=508.23899999999998 wall_worst_us=596.63499999999999 cpu_median_us=416.5 marker_bytes=0 marker_size=72 retained_observations=0 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 2,
+      "kind": "before",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-before",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-2-before.bin"
+      ],
+      "output": "wall_median_us=411.416 wall_p95_us=483.66199999999998 wall_worst_us=587.64800000000002 cpu_median_us=410.5 marker_bytes=0 marker_size=72 retained_observations=0 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 2,
+      "kind": "after",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-after",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-2-after.bin"
+      ],
+      "output": "wall_median_us=441.863 wall_p95_us=515.74300000000005 wall_worst_us=532.85500000000002 cpu_median_us=441 marker_bytes=9216 marker_size=72 retained_observations=4231 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 3,
+      "kind": "after",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-after",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-3-after.bin"
+      ],
+      "output": "wall_median_us=440.35050000000001 wall_p95_us=539.43700000000001 wall_worst_us=797.34400000000005 cpu_median_us=430.5 marker_bytes=9216 marker_size=72 retained_observations=4231 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    },
+    {
+      "pair": 3,
+      "kind": "before",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/trajectory-before",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/paired-3-before.bin"
+      ],
+      "output": "wall_median_us=446.08600000000001 wall_p95_us=492.54899999999998 wall_worst_us=629.04700000000003 cpu_median_us=444.5 marker_bytes=0 marker_size=72 retained_observations=0 final_mass_sum=675\n",
+      "sha256": "27a4354ae0941d63e77e8b95d9ef829ead1ff05124a52a4350887ee4e4086da4"
+    }
+  ],
+  "metrics": {
+    "before": {
+      "wall_us": {
+        "steps": 480,
+        "median": 426.7045,
+        "p95": 501.426,
+        "worst": 643.203
+      },
+      "cpu_us": {
+        "steps": 480,
+        "median": 424.0,
+        "p95": 500.0,
+        "worst": 635.0
+      }
+    },
+    "after": {
+      "wall_us": {
+        "steps": 480,
+        "median": 442.0235,
+        "p95": 529.318,
+        "worst": 797.344
+      },
+      "cpu_us": {
+        "steps": 480,
+        "median": 439.0,
+        "p95": 523.0,
+        "worst": 744.0
+      }
+    }
+  },
+  "note": "120 steps/run, 100 real particles, identical fixed colliders and exact physical outputs; shared workstation, no concurrent builds/tests launched during pairs."
+}

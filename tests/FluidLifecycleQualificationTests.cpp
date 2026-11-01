@@ -2,6 +2,7 @@
 #include "AssetDatabase.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
+#include "ProductionFluidCoupling.h"
 #include "SceneSerialization.h"
 #include "WorldPersistence.h"
 #include "WorldStreaming.h"
@@ -119,6 +120,14 @@ int main() try {
         active.Destroy();
         Check(active.Build(scene, nullptr, error) && Particles(active) == initial,
               "Stop/rebuild recreates the exact authored lattice without evolved-state leakage");
+        active.FluidCoupling().AdvanceResolvedLiquid(active,1.f/60);
+        Check(active.FluidCoupling().SampleField({0,.3f,0},{0,1,0},.05f,.1f,{1,0,0}).fraction>.9f,
+              "published fluid field has a genuinely wet positive control");
+        active.Fluid().Clear();
+        active.FluidCoupling().PrepareRigidStep(active,1.f/60);
+        Check(active.FluidCoupling().SampleField({0,.3f,0},{0,1,0},.05f,.1f,{1,0,0}).fraction==0,
+              "external Clear invalidates published fluid and retained boundary before another force step");
+        Check(active.Fluid().DisplacementMarkers().empty(),"external Clear leaves no orphan displacement ownership");
     }
     std::filesystem::remove_all(root);
     std::cout << "Fluid lifecycle qualification: " << checks << " checks, 0 failures\n";

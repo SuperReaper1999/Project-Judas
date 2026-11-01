@@ -1,0 +1,149 @@
+[
+  {
+    "target": "judas_fluid_hydrostatics_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_hydrostatics_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 1.7660315949979122
+  },
+  {
+    "target": "judas_fluid_vertical_support_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_vertical_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 1.7161414879992662
+  },
+  {
+    "target": "judas_fluid_wet_support_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_wet_support_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2141190500005905
+  },
+  {
+    "target": "judas_fluid_world_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_world_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.31421969900111435
+  },
+  {
+    "target": "judas_fluid_volume_drag_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_volume_drag_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015698853003414115
+  },
+  {
+    "target": "judas_fluid_lifecycle_qualification_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015617879998899298
+  },
+  {
+    "target": "judas_project_fluid_policy_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_fluid_policy_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2641807309992146
+  },
+  {
+    "target": "judas_project_water_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_water_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.03174814700105344
+  },
+  {
+    "target": "judas_fluid_container_integration_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_container_integration_tests",
+      "--supported-only",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/ship-containers"
+    ],
+    "exit_code": 0,
+    "seconds": 1.265516392999416
+  },
+  {
+    "target": "judas_fluid_cavity_impact_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_cavity_impact_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015713710999989416
+  },
+  {
+    "target": "judas_fluid_rigid_coupling_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_rigid_coupling_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 7.023238757999934
+  },
+  {
+    "target": "judas_fluid_boundary_contact_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_boundary_contact_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.003627671001595445
+  },
+  {
+    "target": "judas_fluid_smoothing_budget_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_smoothing_budget_tests"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0035099989981972612
+  },
+  {
+    "target": "judas_fluid_known_geometry_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_known_geometry_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/ship-legacy-known.csv"
+    ],
+    "exit_code": 1,
+    "seconds": 24.997691707998456
+  },
+  {
+    "target": "judas_production_fluid_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_production_fluid_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/ship-production"
+    ],
+    "exit_code": 1,
+    "seconds": 109.91331099799936
+  },
+  {
+    "target": "judas_fluid_demo_integration_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_demo_integration_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/ship-demos"
+    ],
+    "exit_code": 0,
+    "seconds": 50.982660876998125
+  },
+  {
+    "target": "judas_player_fluid_integration_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_player_fluid_integration_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-ownership-20261101/ship-player"
+    ],
+    "exit_code": 0,
+    "seconds": 72.26290246499775
+  }
+]

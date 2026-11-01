@@ -308,6 +308,7 @@ add_library(judas_engine STATIC
     src/FluidWorld.cpp
     src/ProductionFluidCoupling.cpp
     src/FluidHydrostatics.cpp
+    src/FluidBoundaryOwnership.cpp
     src/FluidSurface.cpp
     src/CombustionWorld.cpp
     src/FirePresentation.cpp

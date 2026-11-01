@@ -1,6 +1,12 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
-Latest follow-up: [exact-boundary isolation](FLUID_BOUNDARY_ISOLATION.md) identifies
+Latest follow-up: [owned water boundaries](FLUID_BOUNDARY_OWNERSHIP.md) retains
+pre-cut domain or native solid-contact geometry without adding virtual matter or
+bridging real dry gaps. Owned known-answer cases pass; the original production
+observation failure, historical settling comparisons and deep-start rotation
+limitations remain recorded. Advanced Fluids stay locked; this is not an unlock.
+
+Previous follow-up: [exact-boundary isolation](FLUID_BOUNDARY_ISOLATION.md) identifies
 water/contact admission and lost boundary information as the dominant remaining
 curved-body errors. The unchanged volume calculation is close to independent
 references with an exact boundary. Identical particle states can represent either

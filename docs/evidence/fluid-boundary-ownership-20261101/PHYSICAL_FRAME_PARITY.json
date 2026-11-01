@@ -1,0 +1,12 @@
+{
+  "before": {
+    "sha256": "d0f1bcb039ec677e46ff817e21d45b6d5abf6d3ecac43018001b4a371c5fc57c",
+    "bytes": 5750784,
+    "trace": "physical_max_difference=0.3\n"
+  },
+  "after": {
+    "sha256": "d0f1bcb039ec677e46ff817e21d45b6d5abf6d3ecac43018001b4a371c5fc57c",
+    "bytes": 5750784,
+    "trace": "physical_max_difference=0.3\n"
+  }
+}

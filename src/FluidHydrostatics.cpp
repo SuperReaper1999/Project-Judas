@@ -103,6 +103,7 @@ FluidHydrostaticField::Key FluidHydrostaticField::Cell(const glm::vec3& p) const
 }
 void FluidHydrostaticField::Build(const std::vector<FluidParticle>& particles,float density,const std::vector<bool>* excluded) {
     if (!(density>0) || !std::isfinite(density) || (excluded && excluded->size()!=particles.size())) throw std::invalid_argument("invalid hydrostatic field density or exclusion mask");
+    m_boundaries.clear();
     m_particles.clear(); m_cells.clear(); m_density=density; m_maxSpacing=0;
     m_min=glm::vec3(std::numeric_limits<float>::max()); m_max=-m_min;
     for (std::size_t i=0;i<particles.size();++i) {
@@ -147,6 +148,11 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     const glm::dvec3 projectedTangent=glm::dvec3(tangentAxis)-up*glm::dot(up,glm::dvec3(tangentAxis));
     if (!Finite(tangentAxis) || !(glm::dot(projectedTangent,projectedTangent)>0)) throw std::invalid_argument("invalid hydrostatic column tangent");
     const glm::dvec3 tangent=glm::normalize(projectedTangent), bitangent=glm::cross(up,tangent);
+    const auto retained = connectedWetSupport ?
+        RetainedFraction(point,direction,halfHeight,radius,tangentAxis,solid) : std::nullopt;
+    if(retained && *retained==0)return out;
+    const auto owned=connectedWetSupport ? OwnedIntervals(point,direction,halfHeight,solid) :
+        std::vector<std::pair<double,double>>{};
     // No column can overlap this sample if the entire particle interval AABB
     // lies above/below it. Reach extends donor searches, not occupied height.
     // Use a conservative rounding allowance; near-boundary queries still run
@@ -156,7 +162,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     const double projected=glm::dot(center-glm::dvec3(point),up);
     const double extentH=glm::dot(half,glm::abs(up));
     const double rounding=32*std::numeric_limits<float>::epsilon()*(glm::dot(glm::abs(center)+glm::abs(glm::dvec3(point))+half,glm::abs(up))+halfHeight+1);
-    if(projected-extentH>halfHeight+rounding || projected+extentH< -halfHeight-rounding)return out;
+    if(!retained && owned.empty() && (projected-extentH>halfHeight+rounding || projected+extentH< -halfHeight-rounding))return out;
     // A world AABB is loose for tilted/radial fields. Test the exact height
     // interval used by the unchanged column reconstruction before allocating
     // columns or testing solid occlusion. Once intervals straddle the sample,
@@ -168,7 +174,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         entirelyBelow &= h+particle.spacing*.5 < -halfHeight-rounding;
         if(!entirelyAbove && !entirelyBelow)break;
     }
-    if(entirelyAbove || entirelyBelow)return out;
+    if(!retained && owned.empty() && (entirelyAbove || entirelyBelow))return out;
     const double reach=radius+2.0*m_maxSpacing, reach2=reach*reach;
     const double columnWidth=m_maxSpacing, verticalReach=reach+halfHeight;
     // Anchor the lattice at actual field geometry. A query-centred lattice
@@ -179,7 +185,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     const glm::dvec3 reference=glm::dvec3(m_particles.front().position)-glm::dvec3(point);
     const double originX=glm::dot(reference,tangent), originZ=glm::dot(reference,bitangent);
     const float extent=static_cast<float>(reach+halfHeight+m_maxSpacing);
-    if (glm::any(glm::lessThan(point+glm::vec3(extent),m_min)) || glm::any(glm::greaterThan(point-glm::vec3(extent),m_max))) return out;
+    if (!retained && owned.empty() && (glm::any(glm::lessThan(point+glm::vec3(extent),m_min)) || glm::any(glm::greaterThan(point-glm::vec3(extent),m_max)))) return out;
     struct Interval { double lo,hi; std::size_t particle; };
     struct ColumnInterval {std::int64_t x,z;Interval interval;std::size_t visit;double actualX,actualZ;};
     std::vector<ColumnInterval> columns;columns.reserve(std::min(m_particles.size(),std::size_t{512}));
@@ -499,8 +505,10 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     }
     else if(!splitHeights)out.fraction=static_cast<float>(measureBand(-halfHeight,halfHeight,false));
     else if(halfHeight==0) {
-        const double original=measureBand(0,0,true);
-        const double model=surface && surface->confidence>0 ? measureBand(0,0,true,true) : original;
+        const double observedOriginal=measureBand(0,0,true);
+        const double original=!owned.empty()?1.0:observedOriginal;
+        double model=surface && surface->confidence>0 ? measureBand(0,0,true,true) : original;
+        if(surface && surface->height>=0 && !owned.empty())model=1;
         out.fraction=static_cast<float>(original+(surface ? surface->confidence : 0)*(model-original));
     }
     else {
@@ -517,18 +525,31 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         // Keep the fallback integral on its original partition. Splitting it
         // at a fitted cap would change the answer even as confidence tends to
         // zero. Only the model integral gets the additional cap boundary.
-        double occupied=0,model=0;
+        double occupied=0,retainedOccupied=0,model=0;
         for(std::size_t k=1;k<cuts.size();++k) {
             const double lo=cuts[k-1],hi=cuts[k];
-            occupied+=(hi-lo)*measureBand(lo,hi,true);
+            const double original=measureBand(lo,hi,true);
+            occupied+=(hi-lo)*original;
+            double cutLength=0;
+            for(const auto& span:owned)
+                cutLength+=std::max(0.,std::min(hi,span.second)-std::max(lo,span.first));
+            retainedOccupied+=cutLength*(1-original);
             if(surface && surface->confidence>0 && surface->height>lo) {
                 const double end=std::min(hi,surface->height);
-                model+=(end-lo)*measureBand(lo,end,true,true);
+                const double observed=measureBand(lo,end,true,true);
+                double covered=0;
+                for(const auto& span:owned)
+                    covered+=std::max(0.,std::min(end,span.second)-std::max(lo,span.first));
+                // Union proven cut-water coverage with the ordinary model,
+                // never add the same occupied interval twice. Surface height
+                // comes from current exterior water, not advected ghost matter.
+                model+=(end-lo)*observed+covered*(1-observed);
             }
         }
-        const double fraction=occupied/(2*halfHeight);
+        const double fraction=(occupied+retainedOccupied)/(2*halfHeight);
         out.fraction=static_cast<float>(fraction+(surface ? surface->confidence : 0)*(model/(2*halfHeight)-fraction));
     }
+    if(retained)out.fraction=*retained;
     if(out.fraction>0) {
         if(bulkWeight>0){out.velocity=glm::vec3(bulkVelocity/bulkWeight);out.acceleration=glm::vec3(bulkAcceleration/bulkWeight);}
         else if(extensionWeight>0){out.velocity=glm::vec3(extensionVelocity/extensionWeight);out.acceleration=glm::vec3(extensionAcceleration/extensionWeight);}
@@ -536,7 +557,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     return out;
 
 }
-FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& field,const FluidVolumeQuadrature& volume,const BodyTransform& pose,const GravityField& gravity,FluidVolumeGeometry geometry) {
+FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& field,const FluidVolumeQuadrature& volume,const BodyTransform& pose,const GravityField& gravity,FluidVolumeGeometry geometry,BodyHandle owner) {
     FluidHydrostaticResult out; out.totalVolume=volume.totalVolume; out.density=field.RestDensity(); out.submergedCentroid=pose.position;
     double wet=0; glm::dvec3 center(0),velocity(0),acceleration(0),force(0),torque(0);
     for (const auto& sample:volume.samples) {
@@ -553,7 +574,7 @@ FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& fi
             if (length2>best) {best=length2;tangent=projected;}
         }
         tangent=field.ReconstructionTangent(up,tangent);
-        const FluidSolidQuery solid{volume,pose};
+        const FluidSolidQuery solid{volume,pose,owner};
         const auto fluid=field.Query(point,up,height,volume.boundRadius,tangent,
             geometry==FluidVolumeGeometry::DisplacedSolid ? &solid : nullptr,true);
         const double v=static_cast<double>(sample.volume)*fluid.fraction;

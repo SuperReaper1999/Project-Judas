@@ -22,6 +22,18 @@ struct FluidParticle {
     glm::vec3 acceleration{0.0f}; // actual velocity change over latest executed fluid step
 };
 
+// Geometric water cell observed being cut by an actual solid contact. The
+// cell stays anchored in the fluid chart, not attached to the moving body.
+// Current material/surface witnesses verify that its owner still contacts water.
+// It contributes no mass, velocity, pressure or particles.
+struct FluidDisplacementMarker {
+    BodyHandle owner{};
+    glm::vec3 position{0};
+    glm::quat rotation{1,0,0,0};
+    float halfWidth=0;
+    glm::vec3 materialPoint{0}, contactPoint{0};
+};
+
 struct FluidSettings {
     float updateRateHz = 30.0f; // production cadence; direct Step still advances its supplied interval
     float hydrostaticDragRate = 2.0f; // s^-1 at full immersion
@@ -146,6 +158,7 @@ public:
               const FluidVelocityBatchResponse& velocityResponse = {});
 
     const std::vector<FluidParticle>& Particles() const { return m_particles; }
+    const std::vector<FluidDisplacementMarker>& DisplacementMarkers() const { return m_boundaryMarkers; }
     std::uint64_t Revision() const { return m_revision; }
     const FluidSettings& Settings() const { return m_settings; }
     glm::vec3 PresentedPosition(std::size_t index, float alpha) const;
@@ -156,6 +169,7 @@ private:
     std::uint64_t m_revision = 0; // presentation invalidation, never saved
     FluidSettings m_settings;
     std::vector<FluidParticle> m_particles;
+    std::vector<FluidDisplacementMarker> m_boundaryMarkers;
     std::vector<float> m_lastDensities;
     std::size_t m_geometryEscapes=0,m_unresolvedGeometry=0,m_geometryEscapeCandidates=0;
     float m_maximumGeometryEscapeDistance=0;

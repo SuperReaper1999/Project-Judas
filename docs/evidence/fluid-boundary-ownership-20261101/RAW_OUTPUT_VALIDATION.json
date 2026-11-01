@@ -1,0 +1,11 @@
+{
+  "physical_frame_bytes": 5750784,
+  "trajectory_bytes_each": 624000,
+  "trajectory_files": 8,
+  "timing_rows_each": 120,
+  "validated": true,
+  "original_scene_native_logs": {
+    "radial": "active=1 initial_particles=125\nframes=1200 executed_fluid_steps=600 final_particles=125 max_buoyancy_force=0\nbody=0 peak_speed=4.0875\nbody=1 peak_speed=2.289\nbody=2 peak_speed=2.289\nbody=3 peak_speed=2.289\nbody=4 peak_speed=2.09504\n",
+    "flat": "active=1 initial_particles=125\nframes=1200 executed_fluid_steps=600 final_particles=125 max_buoyancy_force=0\nbody=0 peak_speed=8.175\nbody=1 peak_speed=6.867\nbody=2 peak_speed=6.867\nbody=3 peak_speed=6.867\nbody=4 peak_speed=6.7035\n"
+  }
+}

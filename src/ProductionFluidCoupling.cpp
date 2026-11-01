@@ -39,6 +39,7 @@ struct ProductionFluidCoupling::Impl {
     double pending=0;
     std::size_t pendingFrames=0;
     bool first=true;
+    std::uint64_t fieldRevision=0;
     FluidHydrostaticField field;
     FluidVolumeQuadrature playerVolume=MakeBoxFluidVolume(glm::vec3(PlayerController::CapsuleRadius(),
         PlayerController::CapsuleHalfHeight()+PlayerController::CapsuleRadius(),PlayerController::CapsuleRadius()));
@@ -46,6 +47,29 @@ struct ProductionFluidCoupling::Impl {
     std::unordered_map<unsigned,BodyTransform> previousFluidPoses,stepStartPoses;
     std::unordered_map<unsigned,std::vector<PhysicsWorld::BodyMotionSegment>> pendingMotion;
     ProductionFluidMeasurements measured;
+    // Rebuilt once per material revision. Far-away bodies must not rescan
+    // every water particle merely to discover they own no cut cells.
+    std::unordered_map<unsigned,std::vector<std::size_t>> boundaryIndices;
+    void CollectBoundaries(const FluidWorld& fluid) {
+        boundaryIndices.clear();
+        const auto& markers=fluid.DisplacementMarkers();
+        for(std::size_t i=0;i<markers.size();++i)
+            if(markers[i].owner.IsValid())boundaryIndices[markers[i].owner.id].push_back(i);
+    }
+    void RetainBoundary(FluidHydrostaticField& target, const Body& body,
+                        const BodyTransform& pose, const FluidWorld& fluid,
+                        const std::vector<bool>* excluded=nullptr) {
+        const auto found=boundaryIndices.find(body.handle.id);
+        if(found==boundaryIndices.end())return;
+        const auto& markers=fluid.DisplacementMarkers();
+        std::vector<FluidDisplacementMarker> cells;
+        cells.reserve(found->second.size());
+        for(const auto i:found->second) {
+            if(excluded && (*excluded)[i])continue;
+            if(markers[i].owner.world==body.handle.world)cells.push_back(markers[i]);
+        }
+        if(!cells.empty())target.RetainDisplacementCells(body.handle,body.volume,pose,cells);
+    }
     void Rebuild(RuntimeWorld& world) {
         if(entityVersion==world.EntityVersion()) return;
         bodies.clear();
@@ -72,7 +96,19 @@ void ProductionFluidCoupling::Reset() { m_impl=std::make_unique<Impl>(); }
 const ProductionFluidMeasurements& ProductionFluidCoupling::Measurements() const { return m_impl->measured; }
 void ProductionFluidCoupling::PrepareRigidStep(RuntimeWorld& world,float dt) {
     auto& s=*m_impl;const auto started=Clock::now();auto& p=world.Physics();auto& fluid=world.Fluid();
-    s.Rebuild(world);s.measured.executed=false;s.measured.particleMilliseconds=0;s.measured.exteriorReactionNotApplied=glm::vec3(0);s.measured.containedStaticSupportImpulse=glm::vec3(0);
+    s.Rebuild(world);
+    // External Clear/emission invalidates the field as well as its owned
+    // boundary snapshot. Keep the ordinary first-step publication ordering.
+    if(!s.first && s.fieldRevision!=fluid.Revision()) {
+        s.field.Build(fluid.Particles(),world.FluidSettingsUsed().restDensity);
+        s.CollectBoundaries(fluid);
+        for(const auto& body:s.bodies) {
+            const auto pose=s.previousFluidPoses.find(body.handle.id);
+            if(pose!=s.previousFluidPoses.end())s.RetainBoundary(s.field,body,pose->second,fluid);
+        }
+        s.fieldRevision=fluid.Revision();
+    }
+    s.measured.executed=false;s.measured.particleMilliseconds=0;s.measured.exteriorReactionNotApplied=glm::vec3(0);s.measured.containedStaticSupportImpulse=glm::vec3(0);
     s.measured.contactBatches=0;s.measured.contactIterations=0;s.measured.normalMatrixProducts=0;
     s.measured.normalAccelerations=0;s.measured.contactIterationCaps=0;s.measured.normalBreakdowns=0;
     s.measured.normalAccelerationRejections=0;s.measured.normalAccelerationBoundaryDeclines=0;
@@ -105,9 +141,13 @@ void ProductionFluidCoupling::PrepareRigidStep(RuntimeWorld& world,float dt) {
                 const bool contained=Inside(particle.position,fluidPose,body.cavities);excluded.push_back(contained);
                 if(contained)s.measured.bodies[i].containedMass+=particle.mass;
             }
-            body.exterior.Build(fluid.Particles(),world.FluidSettingsUsed().restDensity,&excluded);field=&body.exterior;
+            body.exterior.Build(fluid.Particles(),world.FluidSettingsUsed().restDensity,&excluded);
+            const auto found=s.previousFluidPoses.find(body.handle.id);
+            s.RetainBoundary(body.exterior,body,found==s.previousFluidPoses.end()?pose:found->second,fluid,&excluded);
+            field=&body.exterior;
         }
-        const auto hydro=EvaluateFluidHydrostatics(*field,body.volume,pose,world.Gravity());
+        const auto hydro=EvaluateFluidHydrostatics(*field,body.volume,pose,world.Gravity(),
+            FluidVolumeGeometry::DisplacedSolid,body.handle);
         auto& diagnostic=s.measured.bodies[i];diagnostic.fraction=hydro.fraction;diagnostic.displacedVolume=hydro.submergedVolume;
         diagnostic.buoyancyForce=hydro.buoyancyForce;
         p.ApplyForce(body.handle,hydro.buoyancyForce);p.ApplyTorque(body.handle,hydro.buoyancyTorque);
@@ -256,6 +296,12 @@ void ProductionFluidCoupling::AdvanceResolvedLiquid(RuntimeWorld& world,float dt
         for(const auto& body:s.measured.bodies)s.measured.exteriorReactionNotApplied-=body.containedImpulse;
         s.previousFluidPoses.swap(nextPoses);
         s.field.Build(fluid.Particles(),world.FluidSettingsUsed().restDensity);
+        s.CollectBoundaries(fluid);
+        for(const auto& body:s.bodies) {
+            const auto pose=s.previousFluidPoses.find(body.handle.id);
+            if(pose!=s.previousFluidPoses.end())s.RetainBoundary(s.field,body,pose->second,fluid);
+        }
+        s.fieldRevision=fluid.Revision();
         // History is bounded by the configured cadence, not accumulated over
         // gameplay time: default 30 Hz contains at most two 60 Hz rigid frames.
         // Slower authored rates retain their required finite number of frames.

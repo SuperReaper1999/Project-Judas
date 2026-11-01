@@ -1,4 +1,5 @@
 #include "FluidWorld.h"
+#include "FluidDisplacementTracking.h"
 
 #include <algorithm>
 #include <cmath>
@@ -942,11 +943,13 @@ void FluidWorld::AddParticle(const glm::vec3& position, const glm::vec3& velocit
     if (mass <= 0.0f) return;
     m_particles.push_back(FluidParticle{position, position, velocity, mass});
     m_lastDensities.push_back(m_settings.restDensity);
+    m_boundaryMarkers.push_back({});
 }
 
 void FluidWorld::Clear() {
     ++m_revision;
     m_particles.clear();
+    m_boundaryMarkers.clear();
     m_lastDensities.clear();
     m_geometryEscapes=m_unresolvedGeometry=m_geometryEscapeCandidates=0;
     m_maximumGeometryEscapeDistance=0;
@@ -994,6 +997,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
     const FluidKernel kernel(radius);
     const float restDensity = m_settings.restDensity;
     const std::size_t count = m_particles.size();
+    const auto boundaryFrame=FluidBoundaryFrame(m_particles);
     for (FluidParticle& particle : m_particles) {
         particle.previousPosition = particle.position;
     }
@@ -1111,6 +1115,28 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             m_boundaryMilliseconds+=ElapsedFluidMs(phaseStart);
         }
 
+        // This passive geometry state never changes particle positions,
+        // velocities, contact impulses or mass. Reuse resolved endpoint poses.
+        phaseStart=FluidClock::now();
+        std::vector<FluidBoundarySolid> boundarySolids;
+        boundarySolids.reserve(preparedBoxes.size()+preparedSpheres.size());
+        for(const auto& box : preparedBoxes)
+            boundarySolids.push_back({box.owner,box.end,box.halfExtents,0});
+        for(const auto& sphere : preparedSpheres)
+            boundarySolids.push_back({sphere.owner,sphere.end,{},sphere.radius});
+        for (std::size_t i = 0; i < count; ++i) {
+            BodyHandle owner{};bool ambiguous=false;
+            for(const auto& contact : contacts[i]) {
+                if(!owner.IsValid())owner=contact.owner;
+                else if(!FluidBoundaryDetail::SameOwner(owner,contact.owner))ambiguous=true;
+            }
+            if(ambiguous){m_boundaryMarkers[i]={};continue;}
+            UpdateFluidDisplacementMarker(m_boundaryMarkers[i], positions[i],
+                solidCorrections[i], owner, boundarySolids, m_settings.particleRadius,
+                .5f*std::cbrt(m_particles[i].mass/m_settings.restDensity), boundaryFrame);
+        }
+
+        m_boundaryMilliseconds+=ElapsedFluidMs(phaseStart);
         phaseStart=FluidClock::now();
         for (std::size_t i = 0; i < count; ++i) {
             FluidParticle& particle = m_particles[i];
@@ -1180,6 +1206,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
         m_velocityMilliseconds+=ElapsedFluidMs(phaseStart);
     }
 
+    if(m_unresolvedGeometry)std::fill(m_boundaryMarkers.begin(),m_boundaryMarkers.end(),FluidDisplacementMarker{});
     for (std::size_t i = 0; i < count; ++i) positions[i] = m_particles[i].position;
     const NeighborLists& finalNeighbors = BuildNeighbors(positions, radius, neighborWorkspace);
     for (std::size_t i = 0; i < count; ++i) {
