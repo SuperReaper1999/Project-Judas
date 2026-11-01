@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-isolation-20261101/boundary-isolation",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-boundary-isolation-20261101/results"
+  ],
+  "exit_code": 0,
+  "seconds": 24.053154066999923,
+  "base": "db90a17bee89a97dde17a07c6fcafc2cbd753297"
+}

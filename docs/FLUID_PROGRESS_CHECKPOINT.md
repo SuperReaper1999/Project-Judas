@@ -1,6 +1,13 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
-Latest follow-up: [curved free-surface reconstruction](FLUID_CURVED_SURFACE_RECONSTRUCTION.md)
+Latest follow-up: [exact-boundary isolation](FLUID_BOUNDARY_ISOLATION.md) identifies
+water/contact admission and lost boundary information as the dominant remaining
+curved-body errors. The unchanged volume calculation is close to independent
+references with an exact boundary. Identical particle states can represent either
+a displaced-water hole or a real dry cavity, so disabling contact checks is not
+a justified repair. This investigation changes no production implementation.
+
+Previous follow-up: [curved free-surface reconstruction](FLUID_CURVED_SURFACE_RECONSTRUCTION.md)
 reduces original known-geometry engine failures from 76 to 36, with no remaining
 frame failures. The retained contact-gap fixtures, coarse curved-body limits and
 original moving-pool observation failure still prevent an unlock. Alpha stays

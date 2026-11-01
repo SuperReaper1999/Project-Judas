@@ -1,0 +1,34 @@
+{
+  "base": "db90a17bee89a97dde17a07c6fcafc2cbd753297",
+  "production_unchanged": {
+    "src/FluidHydrostatics.cpp": true,
+    "src/FluidHydrostatics.h": true,
+    "src/FluidSolidSupport.h": true,
+    "src/FluidSurfaceReconstruction.h": true,
+    "src/FluidWetFootprint.h": true,
+    "tests/FluidKnownGeometryTests.cpp": true,
+    "tests/FluidImmersionObservation.h": true,
+    "tests/ProductionFluidTests.cpp": true
+  },
+  "sources": {
+    "src/FluidHydrostatics.cpp": "9dbb3f83e31b550302c5eeea2321c214dc3ec27f658a09dd2a1cee860143ea2e",
+    "src/FluidHydrostatics.h": "5eed74f313d187c4a1c0ccd9dd5cfe822b15861672a906a96ac19d4833b36c3f",
+    "src/FluidSolidSupport.h": "3f0158d0e46cc011d17ac3d9cab754641cbb1185656560a063e47e66c61d9623",
+    "src/FluidSurfaceReconstruction.h": "016a062a24951040ee7b89a47a07018eeb481f6f42083f52296893286f9addf9",
+    "src/FluidWetFootprint.h": "8a282bc2d82f06d6ad2e84bc6c3fe1ca327a1b61cea46ebf895936ea7f48bf68",
+    "tests/FluidKnownGeometryTests.cpp": "d9d28fdbe35c71bc662dfb2c218ec8768a5a3fa2250ae1db9cb737f1301f16a0",
+    "tests/FluidImmersionObservation.h": "e94ae09bf4ae7eee59cbdee566a8d6e5e15717a7f7b9295ee501e2b4ab283e99",
+    "tests/ProductionFluidTests.cpp": "d5a236947ebf0b0f8bc0e3ecf2ad015bd383240324159205042b3272d2237bd5"
+  },
+  "diagnostic": {
+    "Diagnostic.h": "092756a277677b69e9eb4539ca28f41f84ddd8cf8e82be220aeff55a9613c7a2",
+    "analyze.py": "15efaed7d33320aa85632ec8facca69faee6bc83d543f3d227d59eb844ebd9d8",
+    "HydroDiagnostic.cpp": "9f34bb72ab1e27a1d20bf4ec8464604f367f4be4351f6a127ab564bad08c53f2",
+    "twins.py": "0a85ed0cf7aee0acf645387e27ff0d3fb86cf07d054d5332ca130b305a84243a",
+    "prepare.py": "c29e10bb75636362206e7f5b44c8743ba73540ea9ee705fc17a6fba479ef9fba",
+    "run.py": "ca3ab25c583ee76330171e09e12ac05f18a01fa6e280f294f505b2f715dd6474",
+    "package.py": "53f2105ccddd2b99bdd4534f43b66c64815ab88c1642c788265f3283e38215bd",
+    "BoundaryIsolation.cpp": "072fadeda28b6443f94dca54a0ff9498fa6c8be289c0c98dd000c29784a8223f"
+  },
+  "binary": "78f219d33a7fba8bdff2f22cab3eb3417c4653cf2d270da77d8e2f7e0e6eb12c"
+}
