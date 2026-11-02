@@ -3,6 +3,7 @@
 #include "FluidSolidSupport.h"
 #include "FluidWetFootprint.h"
 #include "FluidColumnLayers.h"
+#include "FluidLocalWetSupport.h"
 #include "GravityField.h"
 #include "FluidSurfaceReconstruction.h"
 #include "Narrowphase.h"
@@ -190,6 +191,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     struct Interval { double lo,hi; std::size_t particle; };
     struct ColumnInterval {std::int64_t x,z;Interval interval;std::size_t visit;double actualX,actualZ;};
     std::vector<ColumnInterval> columns;columns.reserve(std::min(m_particles.size(),std::size_t{512}));
+    std::vector<FluidHydrostaticDetail::LocalWetCell> localCells;
     double bulkWeight=0,extensionWeight=0;
     glm::dvec3 bulkVelocity(0),bulkAcceleration(0),extensionVelocity(0),extensionAcceleration(0);
     auto add=[&](std::size_t index) {
@@ -204,6 +206,16 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         const double lateral2=columnX*columnX+columnZ*columnZ;
         if (lateral2>=reach2) return;
         columns.push_back({x,z,{h-p.spacing*0.5,h+p.spacing*0.5,index},columns.size(),actualX,actualZ});
+        // Keep actual/numerically ambiguous raw footprints separately from the
+        // compact interpolation support. An unrelated coarse cell or a body's
+        // donor radius must not enlarge this particle's physical support.
+        if (connectedWetSupport && !solid) {
+            const double localError=8*std::numeric_limits<float>::epsilon()*
+                (1+glm::length(glm::dvec3(p.position))+glm::length(glm::dvec3(point)));
+            const FluidHydrostaticDetail::LocalWetCell cell{{actualX,h,actualZ},p.spacing,localError};
+            if(FluidHydrostaticDetail::LocalWetCellMayTouchQuery(cell,halfHeight))
+                localCells.push_back(cell);
+        }
     };
     const Key lo=Cell(point-glm::vec3(extent)), hi=Cell(point+glm::vec3(extent));
     const double cells=(static_cast<double>(hi.x)-lo.x+1)*(static_cast<double>(hi.y)-lo.y+1)*(static_cast<double>(hi.z)-lo.z+1);
@@ -459,27 +471,20 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         return total>0 ? weighted/total : 0.0;
     };
     if(connectedWetSupport && !solid) {
-        // Without a displaced solid, connected admission requires the root
-        // column itself to be wet. Its footprint already contains the query,
-        // so no additional hull/solid traversal is needed. Integrating the
-        // intersection of its wet intervals with each donor's intervals is
-        // exactly the height-sliced rule, without rebuilding topology per band.
-        const auto x=static_cast<std::int64_t>(std::floor(-originX/columnWidth+.5));
-        const auto z=static_cast<std::int64_t>(std::floor(-originZ/columnWidth+.5));
-        const auto root=std::lower_bound(profiles.begin(),profiles.end(),std::make_pair(x,z),
-            [](const auto& profile,const auto& key) {
-                return profile.x<key.first || (profile.x==key.first && profile.z<key.second);
-            });
-        if(root!=profiles.end() && root->x==x && root->z==z) {
+        // Actual local particle geometry determines admitted height. Rounded
+        // grid profiles provide the existing donor mean, not proof of water.
+        // Integrate its intersection with the compact interval union directly;
+        // this is the height-sliced rule without repeated per-band topology.
+        const auto local=FluidHydrostaticDetail::LocalWetIntervals(localCells,halfHeight);
+        if(!local.empty()) {
             const auto intersectRoot=[&](double lo,double hi) {
                 const auto intersection=[&](double rootLo,double rootHi) {
                     if(halfHeight==0)return lo<=0 && hi>=0 && rootLo<=0 && rootHi>=0 ? 1.0 : 0.0;
                     return std::max(0.0,std::min({hi,rootHi,double(halfHeight)})-
                                         std::max({lo,rootLo,-double(halfHeight)}));
                 };
-                if(root->continuous)return intersection(root->low,root->high);
                 double occupied=0;
-                for(const auto& span:root->layers)occupied+=intersection(span.first,span.second);
+                for(const auto& span:local)occupied+=intersection(span.first,span.second);
                 return occupied;
             };
             double total=0,occupied=0;
@@ -499,8 +504,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                         if(halfHeight==0)return lo<=0 && hi>=0 && cap>=0 ? 1.0 : 0.0;
                         return std::max(0.0,std::min({hi,cap,double(halfHeight)})-std::max(lo,-double(halfHeight)));
                     };
-                    if(root->continuous)represented=add(root->low,root->high);
-                    else for(const auto& span:root->layers)represented+=add(span.first,span.second);
+                    for(const auto& span:local)represented+=add(span.first,span.second);
                     if(halfHeight>0)represented/=2*halfHeight;
                     fraction+=surface->confidence*(represented-fraction);
                 }

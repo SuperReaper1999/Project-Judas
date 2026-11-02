@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "buildIdentity": {
+    "architecture": "x86_64",
+    "build_id": "1.2.0-alpha.1-Experimental-941832f-dirty-56b2dfc8e79e-uc3b742200757",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v1.2.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "56b2dfc8e79eab1563d9f6e15010998da03e1d8b37bd5576162b9847c5767b3d",
+    "source_origin": "git",
+    "source_revision": "941832fe9a4544a937dfc1b08894ed2c989b91d6",
+    "source_tree": "3d027e73063983e8dceb9dbaa3a97e845af456ea",
+    "source_untracked_count": 20,
+    "source_untracked_fingerprint": "c3b742200757e6e649dc378fafaa6efe9dd089e9ff5ac7f360999177bcfb480a",
+    "version": "1.2.0-alpha.1"
+  },
+  "scope": "Exact tested dirty-base Linux engineering binaries; not release packages or a post-commit rebuild. Baseline executables use exact941Hydrostatics module override and unchanged public ABI.",
+  "files": {
+    ".cache/2d-stage1-build/judas_fluid_local_wet_support_tests": {
+      "bytes": 1095392,
+      "sha256": "6f521e32dc91bf52278bdbed2a37ff41f42c67d5bd8699e7e4b5b1feaca31a5a"
+    },
+    ".cache/2d-stage1-build/judas_fluid_root_admission_diagnostics": {
+      "bytes": 1081816,
+      "sha256": "e290ef64d468085674018fcede0e5312b67447483b146d8d7bc69db3cf0c7369"
+    },
+    ".cache/2d-stage1-build/judas_fluid_hydrostatics_tests": {
+      "bytes": 1931416,
+      "sha256": "b983c77bf0dfaa41b31ab2f8d6a95734fdf8dda9a2c6e5d36e2223747d5c5f80"
+    },
+    ".cache/2d-stage1-build/judas_fluid_wet_support_tests": {
+      "bytes": 1132080,
+      "sha256": "384006a2576710ef1ffcc6b35e18b788d272310c45fc79020cc27d6ababe49b8"
+    },
+    ".cache/2d-stage1-build/judas_fluid_vertical_support_tests": {
+      "bytes": 1106752,
+      "sha256": "8fe833b25759b72052efe79314a0f8c1af6079892f18061349bedcb1685f63c2"
+    },
+    ".cache/2d-stage1-build/judas_player_fluid_integration_tests": {
+      "bytes": 55495872,
+      "sha256": "e47854916b79d6bf7b08ec1607b1c6fe52de685d5c7c0b6ad3dde62010887f23"
+    },
+    ".cache/2d-stage1-build/judas_production_fluid_tests": {
+      "bytes": 55540472,
+      "sha256": "b7e236f6bae1e12d9816354e664ec7807641aacfdc94f59792dd755b11b25ed1"
+    },
+    ".cache/2d-stage1-build/judas_fluid_known_geometry_tests": {
+      "bytes": 1081528,
+      "sha256": "679956163fe66a9c761d1496ec2ce0ec3f6a20b63f41e0ba45e34471c7baf033"
+    },
+    ".cache/2d-stage1-build/judas_fluid_boundary_contact_tests": {
+      "bytes": 1452616,
+      "sha256": "f3cb74927d601f74254d90ea99dd811042bb14ce7715a379617d454a4af05092"
+    },
+    ".cache/2d-stage1-build/judas_fluid_cavity_impact_tests": {
+      "bytes": 55430360,
+      "sha256": "e542153d1211c0ef199cd8fa03a5b6af98c8697e45eaa2abe81d141006408f9b"
+    },
+    ".cache/2d-stage1-build/judas_fluid_rigid_coupling_tests": {
+      "bytes": 2039968,
+      "sha256": "006fcdf64624246842a2a74ec7b24013a1d837fc3f56c6decdbab08eeea5bfb7"
+    },
+    ".cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests": {
+      "bytes": 55423192,
+      "sha256": "b0d8ffc1705aea41075e5236b57ef7f6d49ce2d3c1a12c30ed5fbc9859063bec"
+    },
+    ".cache/2d-stage1-build/judas_fluid_volume_drag_tests": {
+      "bytes": 1090160,
+      "sha256": "3db3942d4276737feb1d9225871e97e4391dc7a51f8a8111142c04b1661330b5"
+    },
+    ".cache/2d-stage1-build/judas_project_fluid_policy_tests": {
+      "bytes": 56197048,
+      "sha256": "19883b87cbf9061b0032df566276699c0245523d17b12a40642d0b9574ac2d61"
+    },
+    ".cache/2d-stage1-build/judas_project_water_tests": {
+      "bytes": 55438976,
+      "sha256": "dcffe4033ca8bafcbceb7de38ad23911245b07fd8a8a96f31542849f9cf9f39b"
+    },
+    ".cache/2d-stage1-build/judas_fluid_container_integration_tests": {
+      "bytes": 55477176,
+      "sha256": "cfeca9195d227f18c2f3c37e64a2f4d72b6efedac494f5ff155410365cf7e74f"
+    },
+    ".cache/2d-stage1-build/judas_fluid_demo_integration_tests": {
+      "bytes": 55448072,
+      "sha256": "b620bc73ad3a30f2d3086095a65c9ed3419c59954915ab719bca94fe8c906871"
+    },
+    ".cache/2d-stage1-build/libjudas_engine.a": {
+      "bytes": 35172880,
+      "sha256": "2bd715cd14b8063e1cb22eaae147048ab016da8e198883b970f65d928383a443"
+    },
+    ".cache/2d-stage1-build/judas": {
+      "bytes": 56270832,
+      "sha256": "bc19e0fe6e74bb9df154c53a52ff99ccd4ef78268202db4fb9d742be74a40441"
+    },
+    ".cache/fluid-root-reconstruction-20261102/benchmark/baseline-root": {
+      "bytes": 1081880,
+      "sha256": "988100c93ddfcc7a1eaca770a0cf863aa0bdd9eca2a26d08cad9dd221a97c0bc"
+    },
+    ".cache/fluid-root-reconstruction-20261102/benchmark/baseline": {
+      "bytes": 1089928,
+      "sha256": "e80d97c39c546ca70f06ae445b9589aa10ca3363d2d1f9c3a21b0398dae757fa"
+    },
+    ".cache/fluid-root-reconstruction-20261102/benchmark-final/candidate": {
+      "bytes": 1093960,
+      "sha256": "d077e2ff33d7cf5897d82ccd1f2415d086c6d0fe8170d2d6aa178cf47568bfe3"
+    }
+  }
+}

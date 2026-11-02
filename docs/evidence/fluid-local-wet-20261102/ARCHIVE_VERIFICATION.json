@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "utc": "2026-11-02T17:05:07.363108+00:00",
+  "archive": "raw-evidence.tar.xz",
+  "bytes": 8335400,
+  "sha256": "1087f4eeae920c8179aa66940620054c5ca08559b8b2734796ab6247706ba08e",
+  "files": 470,
+  "rawBytes": 30028464,
+  "allMembersReadbackVerified": true,
+  "excluded": "Executables,objects,build trees,symlinks,unrelated projects,independent research"
+}

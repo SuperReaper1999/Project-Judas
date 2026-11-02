@@ -1,5 +1,5 @@
-// Known-failing diagnostics for unresolved particle-column admission.
-// New controls; no previously accepted gate has been removed or relaxed.
+// Regression controls for physical admission independent of rounded bins.
+// These same fixtures failed 14/34 assertions at checkpoint 941832fe.
 #include "FluidHydrostatics.h"
 #include "GravityField.h"
 #include <glm/gtc/quaternion.hpp>

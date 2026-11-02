@@ -6,10 +6,18 @@
 separates spatial immersion from the broader motion-donor search. Body and
 swimming queries use connected wet patches, preventing distant water or separate
 pools from providing false support across an external dry gap. Within each
-patch, support is still a local convex-column envelope: enclosed air pockets and
-concave shoreline details are not a resolved multiphase boundary. See the
+patch, displaced-solid support uses finite-resolution columns and actual
+contact/ownership routes. Sub-resolution air pockets and exact concave shoreline
+details are not a resolved multiphase boundary. See the
 [repair and validation report](FLUID_WET_CLASSIFICATION_REPAIR.md). No activation
 delay, force clamp, changed gravity or reduced particle/solver budget is used.
+
+Current Experimental swimming and connected non-solid samples use
+[actual local wet reconstruction](FLUID_LOCAL_WET_RECONSTRUCTION.txt), including
+compact interpolation between nearby particle cells. Rounded bins remain donor
+reconstruction, rather than proof that a point contains water. This passes the
+preserved dry-cavity and swimming regressions; broader geometry, settling,
+performance and unlock limits remain documented in that report.
 
 For current conserved reservoirs/containers and dynamic surfaces, see
 [Liquid reservoirs](LIQUID_RESERVOIRS.md) and [Liquid surfaces](LIQUID_SURFACES.md).

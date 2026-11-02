@@ -61,18 +61,19 @@ struct FluidFieldSample {
 // This is spatial interpolation, not a conserved-volume or pressure solve.
 // Resolved exterior vertical gaps use separate height slices, each with its own
 // wet/dry admission and solid cross-section. A small wet overlap in one slice
-// cannot admit surrounding water into a different, dry slice. Gaps no larger
-// than one column spacing remain unresolved sampling disorder; a two-spacing
-// lateral reconstruction halo repairs rows that wander between nearest bins.
+// cannot admit surrounding water into a different, dry slice. Column donor
+// profiles close one-spacing disorder and use a two-spacing lateral halo.
+// Physical non-solid admission instead uses actual particle cubes and compact
+// pair-hull/support-ball intersections, integrated as disjoint ray intervals.
+// Pair sizes are local; numerically uncertain interpolation is conservative.
 // Nearby lower liquid columns vote dry at an elevated sample. A supplied solid
 // excludes geometrically occluded column footprints so excluded interior
 // particles do not masquerade as a lower free surface. There is no SPH reaction.
 // The lattice is anchored at the first retained particle, so its reference
 // follows universe rotations/translations; changing particle order can change
-// the finite-resolution approximation. Wetness is restricted to the convex
-// lateral envelope of observed wet column footprints; the donor reach does
-// not make a dry point outside that envelope wet. Physical queries additionally
-// require a wet local column or a route through the sample's actual connected
+// the finite-resolution donor approximation. A body-sized motion-donor reach
+// does not enlarge non-solid physical admission. Displaced-solid queries use
+// the observed wet envelope plus a route through the sample's actual connected
 // solid component to represented water touching that solid. An outer convex
 // hull alone cannot fill dry lateral holes or borrow a separate child's support.
 // This remains a finite-resolution column approximation: sub-resolution pockets,

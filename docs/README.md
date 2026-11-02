@@ -48,7 +48,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 | Structures and deformation | [Structural failure](M79_STRUCTURES.md), [bending](M80_BENDING.md), [coarse crash assemblies](M83_COARSE_CRASH.md) |
 | Wheels and mechanics | [Wheels](M81_WHEELS.md), [powertrains](M82_POWERTRAINS.md), [mechanical damage](M83_MECHANICAL_DAMAGE.md) |
 | Conserved liquid quantities/surfaces | [Reservoirs](LIQUID_RESERVOIRS.md), [dynamic surfaces](LIQUID_SURFACES.md) |
-| Advanced-fluid qualification (Alpha locked) | [Contact, initialization and query-cost corrections](FLUID_CONTACT_AND_QUERY_REPAIR.txt), [finite-support corrections](FLUID_FINITE_SUPPORT_REPAIR.md), [measurement audit](FLUID_MEASUREMENT_AUDIT.md) — retained failures, force accounting and geometric uncertainty |
+| Advanced-fluid qualification (Alpha locked) | [Local wet reconstruction](FLUID_LOCAL_WET_RECONSTRUCTION.txt), [contact and query-cost corrections](FLUID_CONTACT_AND_QUERY_REPAIR.txt), [finite-support corrections](FLUID_FINITE_SUPPORT_REPAIR.md), [measurement audit](FLUID_MEASUREMENT_AUDIT.md) — retained failures, force accounting and geometric uncertainty |
 | Editable volumes and planets | [Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md), [planetary terrain](M85_PLANETARY_TERRAIN.md) |
 | Continuous travel and persistent regions | [Assembly travel](M90_ASSEMBLY_TRAVEL.md), [living worlds](M97_LIVING_WORLD.md) |
 | Collision policy and practical dense limits | [Collision continuity](M91_COLLISION_CONTINUITY.md), [support ownership and measured costs](PREALPHA_SUPPORT_CONTINUITY.txt) |

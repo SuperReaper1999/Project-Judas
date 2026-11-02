@@ -1,0 +1,152 @@
+Local physical wet support — 2 November 2026
+==========================================
+Experimental continuation from941832fe9a4544a937dfc1b08894ed2c989b91d6.
+Advanced Fluids remain locked in Alpha. Main, published packages, Basic Water,
+M54/M55 and independent research are unchanged. Automated Linux engineering
+qualification is not human acceptance or a general fluid unlock.
+
+The nominal grid bin is no longer evidence of physical water for swimming,
+non-displacing volumes and connected point samples. Actual nearby particle
+geometry supplies the admitted height. The existing grid profiles still supply
+the donor mean and curved cap, and displaced-solid routing retains its existing
+ownership/contact requirements. No gameplay-specific exceptions were added.
+
+The original34 root-admission assertions passed unchanged in the native prototype,
+where941 failed14. This includes genuine water in an absent nominal bin, a dry
+point in an occupied bin, tall internal air, short sampling disorder and retained
+wet/dry twins. The former failing diagnostic is now an ordinary water gate.
+
+Why the previous approaches failed
+---------------------------------
+A global halo ban fixed the dry cavities but broke four existing player checks.
+Strict actual-footprint-only admission preserved dry space but left holes in the
+disordered PBF samples and failed neutral drift. Bounding the old halo by another
+vertical threshold kept nominal-bin false positives and missing-bin negatives.
+Those failures remain in the preceding checkpoint's evidence, unchanged.
+
+The replacement reconstructs small gaps directly between actual local samples.
+It does not fill a connected patch's whole convex hull: a ring of water may
+surround a genuine dry cavity. Unrelated coarse particles cannot enlarge the
+support assigned to an existing local pair.
+
+Mathematical model and numeric representation
+--------------------------------------------
+Particle spacing si=cbrt(mi/rho), halfwidth hi=si/2, as in the existing sampler.
+Positions, masses and input settings remain binary32. Query-frame subtraction,
+normalization, affine clipping, square roots and interval integration use
+ordinary binary64. No extended/113-bit/rational arithmetic or research solver.
+
+In the query's tangent/up/bitangent frame, raw particle cell:
+  Ci = ci + hi[-1,1]^3.
+For two nearby samples, f=min(si,sj), Ri=hi+f/2, Rj=hj+f/2. Interpolated support:
+  conv(Ci,Cj) intersect Ball(ci,Ri-Ei) intersect Ball(cj,Rj-Ej),
+where effective radii are nonnegative and Ei is the existing form of local
+binary32 input-position uncertainty. Ri+Rj=hi+hj+f; equal-size particles retain
+the one-spacing unresolved gap scale, without a new authoring knob.
+
+For c(t)=ci+t(cj-ci), h(t)=hi+t(hj-hi), 0<=t<=1, four affine inequalities
+  -h(t)<=cx(t)<=h(t), -h(t)<=cz(t)<=h(t)
+give the part of the pair hull intersecting the query ray. Its minimum lower-Y
+and maximum upper-Y values are taken at the feasible interval endpoints. Each
+sphere independently clips that ray by cy +/- sqrt(R_effective^2-cx^2-cz^2).
+Raw and pair intervals are clipped to the requested height and unioned by exact
+overlap/touch only. There is no additional gap closure or double counting.
+
+Raw cubes remain authoritative. Only interpolation is uncertainty-eroded. The
+same effective radius controls both the tangency predicate AND the square root;
+otherwise an O(epsilon) coordinate error becomes O(sqrt(epsilon)) false water.
+A pair must have positive ray length before clipping, preserving valid H=0
+queries without inventing a wet point from a zero-volume touching lens.
+
+Candidate collection separately tests the actual/uncertain raw footprint and
+the particle's own compact support ball. A body-sized donor radius, or another
+particle's rounding allowance, cannot enlarge an existing local connection.
+The public interface, project settings, save format and solver budgets are unchanged.
+
+Rejected new experiments are preserved
+-------------------------------------
+- Hard pair-hull activation removes a finite water prism at2si separation. A
+  known-answer sweep gives1->1->0, despite an infinitesimal separation change.
+- Intersecting the pair hull with its two support balls instead shrinks that
+  contribution to zero. At the same sweep it gives .00199999975->0->0.
+- Native-v1 passed the34 root checks and neutral/swim controls but failed four
+  rotated vertical-support assertions. A nominally tangent neighboring support
+  sphere gained a tiny positive radicand after float rotation.
+- Moving only the tangency guard inward still leaves a finite jump at that new
+  guard. Eroding the sphere used by BOTH predicate and sqrt fixes this.
+- Merging intervals with the largest input error from unrelated off-ray cells
+  could close another layer's air gap. The final union uses exact touching only.
+No artificial damping, force/energy clamps, settling delays or test retuning.
+
+Qualification and measured cost
+------------------------------
+Final-source Linux results (GCC15.2 Release, Ryzen5 5600):
+- Root admission:34/34, versus14 failures with the941 module and identical driver.
+- New local geometry/public Query/force controls:290/290.
+- Hydrostatics346, wet support153, vertical support335, drag185:all pass.
+- Player5661 and production13801:zero acceptance failures; each still reports
+  four pre-existing diagnostic failures. Two historical4s comparisons still fail.
+- Supported containers4340, lifecycle38, flat/radial49, boundary24, cavity7 cases,
+  rigid coupling, project fluid policy26 and Basic Water56:all pass.
+- Original360-case known geometry:48 engine/80 observer failures remain; zero
+  frame failures. This diagnostic still exits1. No threshold or fixture changed.
+- All22 recorded physical CSV fields match941 exactly over4560 played rows in
+  all11 production cases. Warm-up accounting adds2400 steps to the suite total.
+- CMake helper tests22 pass; registration9 tests passes with2 platform skips;
+  documentation checker unit tests10 pass. No builds were called by those tests.
+  An initial misnamed Python discovery matched0 tests; that log is retained and
+  is not counted as validation. Corrected module/registration logs are supplied.
+The kernel checks and34 root controls now run in the ordinary water gate.
+
+Before/after sampling cost uses four exact frozen fields and identical256 queries
+per pass: two neutral and two swim captures. Seven alternating-order pairs use16
+passes per field/run. It measures64-query player-volume CPU sampling, not particle
+solve, ordinary rigid stepping, rendering or game FPS. Outputs intentionally
+change; this is a correctness-cost comparison, not a speedup claim.
+Pooled448 measured64-query volumes per version:
+               Before941      Corrected
+Mean           7.807 ms        8.334 ms
+Median         7.317 ms        8.333 ms
+p95           15.106 ms       16.055 ms
+Worst         17.581 ms       20.192 ms
+This is about6.8% mean OVERHEAD for corrected sampling, not an optimization.
+The per-field tables/raw alternating pairs are preserved. In the densest frozen
+field the median64-query volume costs15.69ms; fluid sampling remains expensive.
+Measurements are from a shared host with no other task-owned build/test launched
+during timing; they are not a dedicated-host or general frame-rate guarantee.
+
+Limits and remaining work
+-------------------------
+This is bounded interpolation for games, not literal connected water geometry,
+a conserved-volume pressure solve or an independently reconstructed continuum.
+Particle mass is unchanged; filling sampling gaps does not create new particles.
+Local lenses can be disconnected from raw cubes at large unresolved separations.
+Sub-resolution pockets and exact multiphase topology remain outside this model.
+
+Pair-support birth/death is continuous in the tested finite-height controls.
+That is not a promise of universal force continuity at every raw-cube boundary,
+quadrature boundary or curved-cap/ownership transition. Binary32 world-coordinate
+precision still limits fine details; the arithmetic upgrade does not create
+planet-scale precision or support active-fluid live origin shifts.
+
+The public force controls independently check analytic ray sections and wiring
+through the existing one-sample quadrature. They do not prove exact continuum
+integration of an entire body, pressure accuracy, global volume or energy
+conservation. The48 engine/80 observer known-geometry failures remain distinct
+from the now-passing root-admission contract. Historical settling speed failures
+and warm-up diagnostics are preserved. Alpha remains locked pending broader work.
+Active PBF cold saves, regional suspension and live origin shifts remain unsupported.
+No Windows, Android, browser or new human qualification is claimed.
+
+Changed implementation: src/FluidHydrostatics.cpp and new
+src/FluidLocalWetSupport.h; public-header contract comments updated in
+src/FluidHydrostatics.h. Original tests/FluidRootAdmissionDiagnostics.cpp inputs
+and limits unchanged; comment updated to reflect its regression role. New
+FluidLocalWetSupportTests.cpp adds kernel and public force controls. CMake and
+validation registry make both ordinary water gates. Current doc links updated.
+
+Reproduction/evidence: docs/evidence/fluid-local-wet-20261102/README.txt.
+Human review (explicitly opted-in Experimental project only): compare flat/radial swimming and water
+edges, dry cavities, nearby separated bodies, floating/sinking and cup pouring.
+Look for a remaining support pop. Confirm normal Alpha still refuses Advanced
+Fluids and Basic Water stays independent. This does not authorize an unlock.

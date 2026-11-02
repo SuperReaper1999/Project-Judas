@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "baseCommit": "941832fe9a4544a937dfc1b08894ed2c989b91d6",
+  "candidateCommit": "The commit containing this manifest",
+  "scope": "Final runtime and regression sources. Registry disposition prose refreshed after qualification; core runtime hashes verified against final17-command run. Public header changes are comments only.",
+  "files": {
+    "src/FluidHydrostatics.cpp": "8b14dbf11da31ec12d1945097a32bfec177fffd06cece0629ee8ef2f5a014403",
+    "src/FluidHydrostatics.h": "b2d13ee8d34d732dc01c35a04b232ca91221a86b50ae7dd1cc2dfca70d1db6ff",
+    "src/FluidLocalWetSupport.h": "1e466a6b590754d28a0efb9bda7d4e23faffbef89650b64f797f994df55549d3",
+    "tests/FluidRootAdmissionDiagnostics.cpp": "018ecc9361f95ce68752e79c53e901035cbfe549bd932fa92f2aaa85ab7b4ca9",
+    "tests/FluidLocalWetSupportTests.cpp": "f729edca6d60be06bb4c0ae61dab4f800603a04776c747e66b16909c559e1553",
+    "CMakeLists.txt": "36bcf3f5d6378d51b7316fc8816dc0fbcff3c45bfdf96eeb3ef7746788a6b059",
+    "tools/validation/suites.json": "129c4b73d2dc5f59ee64f48bff1d78fef7051b0fbbf37cb4d4d5765bc34e9461"
+  }
+}
