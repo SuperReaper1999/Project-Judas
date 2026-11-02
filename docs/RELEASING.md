@@ -5,10 +5,27 @@
 
 ## Current boundary
 
-Alpha v1.2.1 (`1.2.1-alpha.1`) is being prepared from Experimental with operator
-authorization to publish after qualification. Advanced Fluids remain locked.
-[Patch notes](ALPHA_V1_2_1_NOTES.md). The published record below remains unchanged
-until the new artifacts and manifest are verified.
+**[Judas Engine Alpha v1.2.1 / `1.2.1-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.1-alpha.1)**
+from `a461bab5b73c6aafdf43842288542b055c984d12` on 2 November 2026, under the
+operator's conditional publication/main-promotion approval, including passing
+qualification corrections. [Exact-source preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41532266816),
+[Alpha/Experimental gates](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41532265232)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41537305389)
+passed. Experimental passed 117 CTest cases; the registration oracle passed all
+10 controls, including both Ninja configurations. Linux release qualification
+passed 92 native gates plus coordinated cold readers, SDK creation, tool operations
+and moved exports. Native hosted Windows selected contracts and SDK inspection
+passed; this is not fresh Windows graphics/audio/controller hardware acceptance.
+
+The public Linux, Windows and source package hashes matched the local deterministic
+assembly and GitHub asset digests. The live Alpha feed matched the published
+manifest. [Patch notes](ALPHA_V1_2_1_NOTES.md) describe the shadow correction,
+bounded GPU diagnostics and retained fluid repairs. **Advanced Fluids remain
+locked**; unavailable Alpha runtime combinations and unresolved fluid diagnostics
+are not passes. Sealed package notes retain preparation-time wording; this current
+record supplies publication status. No prior tag or package was replaced.
+
+### Previous publication: v1.2.0
 
 **[Judas Engine Alpha v1.2.0 / `1.2.0-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)**
 from `b81b39b22ac305bcd250b1cef0fe9ff28e097633` on 1 November 2026, after explicit
@@ -147,7 +164,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_0_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_1_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,
@@ -173,7 +190,7 @@ known limits and human checklist. Stop for final approval.
 4. Validate the already-reviewed files with `tools/publish_release.py CANDIDATE
    --accepted-commit EXACT_SHA` (dry-run; no network/publication).
 5. Only when authorized, add `--publish --human-approval 'PUBLISH
-   v1.2.0-alpha.1'`. This checks remote main/commit and required reviewer protection,
+   v1.2.1-alpha.1'`. This checks remote main/commit and required reviewer protection,
    refuses an existing final tag, creates a draft prerelease, uploads the exact
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.
