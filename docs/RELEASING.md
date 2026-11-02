@@ -1,9 +1,14 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Current release notes](ALPHA_V1_2_0_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Current source notes](ALPHA_V1_2_1_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+Alpha v1.2.1 (`1.2.1-alpha.1`) is being prepared from Experimental with operator
+authorization to publish after qualification. Advanced Fluids remain locked.
+[Patch notes](ALPHA_V1_2_1_NOTES.md). The published record below remains unchanged
+until the new artifacts and manifest are verified.
 
 **[Judas Engine Alpha v1.2.0 / `1.2.0-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)**
 from `b81b39b22ac305bcd250b1cef0fe9ff28e097633` on 1 November 2026, after explicit

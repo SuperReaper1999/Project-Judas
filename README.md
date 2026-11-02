@@ -9,7 +9,7 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**Judas Engine Alpha v1.2.0** (`1.2.0-alpha.1`) is this source version.
+**Judas Engine Alpha v1.2.1** (`1.2.1-alpha.1`) is this source version.
 Versioned editor/SDK distributions, source archives and checksums are available
 through [published Alpha releases](https://github.com/SuperReaper1999/Project-Judas/releases).
 A source build or prepared candidate is not automatically a published release.
@@ -19,10 +19,11 @@ Alpha is not Stable/GA; documented limits still apply.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-This release adds optional Utility AI, editable action definitions, runtime decision
-inspection, physical sensing and target leases, with the Little Haven and Willow
-Town learning projects. It retains the native 2D workflow and adds an explicitly
-gated experimental browser-export path. See [release notes](docs/ALPHA_V1_2_0_NOTES.md).
+This patch smooths shadow filtering, adds optional bounded GPU diagnostics and
+includes advanced-fluid contact and wet-geometry repairs. Advanced Fluids remain
+locked in Alpha; these repairs do not certify or enable that feature. Existing
+Utility AI, native 2D and gated browser workflows remain available. See
+[release notes](docs/ALPHA_V1_2_1_NOTES.md).
 The versioned source identity is authoritative in
 [engine-version.json](engine-version.json).
 
@@ -39,7 +40,7 @@ Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha v1.2.0 release notes](docs/ALPHA_V1_2_0_NOTES.md) ·
+[Alpha v1.2.1 release notes](docs/ALPHA_V1_2_1_NOTES.md) ·
 [Previous native 2D release](docs/ALPHA_V1_1_0_NOTES.md) ·
 [Previous orientation/resize patch](docs/ALPHA_V1_0_4_NOTES.md) ·
 [Previous authoring patch](docs/ALPHA_V1_0_3_NOTES.md) ·
