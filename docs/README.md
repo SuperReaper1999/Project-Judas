@@ -21,6 +21,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 - [Experimental browser export](BROWSER_SUPPORT.md): explicit launch opt-in and a separate Linux/Emscripten toolchain; supported boundaries and qualification records.
 - [Experimental shadow-filter correction](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; separate from published release qualification.
 - [Experimental fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
+- [Fluid contact transient and representation review](FLUID_TRANSIENT_AND_REPRESENTATION_REVIEW.txt): captured premature contact impulses, causal controls and non-particle alternatives; investigation, not a qualified replacement solver.
 
 ## Build, distribute and verify
 
