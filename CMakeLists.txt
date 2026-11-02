@@ -1136,6 +1136,7 @@ judas_add_engine_test(judas_fluid_settling_contract_tests tests/FluidSettlingCon
 judas_add_engine_test(judas_fluid_volume_drag_tests tests/FluidVolumeDragTests.cpp)
 
 judas_add_engine_test(judas_production_fluid_tests tests/ProductionFluidTests.cpp)
+judas_add_engine_test(judas_fluid_cadence_motion_tests tests/FluidCadenceMotionTests.cpp)
 
 # FTFT9: actual authored compound-cavity load and moving-container integration.
 judas_add_engine_test(judas_fluid_container_integration_tests tests/FluidContainerIntegrationTests.cpp)

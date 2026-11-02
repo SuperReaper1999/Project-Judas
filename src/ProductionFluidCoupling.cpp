@@ -192,7 +192,13 @@ void ProductionFluidCoupling::AdvanceResolvedLiquid(RuntimeWorld& world,float dt
         actualMotionAvailable.emplace(handle.id,!resolved.empty());
         if(resolved.empty())resolved.push_back({0,double(dt),begin,now,{}, {},false});
         for(auto segment:resolved) {
-            segment.begin+=offset;segment.end+=offset;history.push_back(segment);
+            // Every clock in the anchored path must use the accumulated fluid
+            // interval. Leaving the translation epoch in rigid-step time makes
+            // later segments jump ahead before snapping back to their endPose.
+            segment.begin+=offset;
+            segment.end+=offset;
+            if(segment.anchoredTranslation)segment.translationTime+=offset;
+            history.push_back(segment);
         }
     }
     s.pending+=dt;++s.pendingFrames;

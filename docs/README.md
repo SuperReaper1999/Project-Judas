@@ -20,6 +20,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 - [Game AI](GAME_AI.md) and [AI scripting](judasjs/ai.md): author actions, inspect decisions, sense physical targets and reserve resources.
 - [Experimental browser export](BROWSER_SUPPORT.md): explicit launch opt-in and a separate Linux/Emscripten toolchain; supported boundaries and qualification records.
 - [Experimental shadow-filter correction](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; separate from published release qualification.
+- [Experimental fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
 
 ## Build, distribute and verify
 
@@ -34,6 +35,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 | Focused regression groups and preserved failures | [Pre-Alpha validation](PREALPHA.md#focused-validation-from-a-clean-checkout) |
 | Application harness and automation | [Test harness](TEST_HARNESS.md) |
 | Profiling costs | [Profiler](PROFILER.md) |
+| Lightweight native graphics error capture | [Experimental GPU diagnostics](GPU_DIAGNOSTICS.txt) |
 | Keeping references aligned | [Documentation maintenance](DOCUMENTATION_MAINTENANCE.md) |
 
 ## Physics and worlds

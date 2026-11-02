@@ -1,0 +1,44 @@
+LIGHTWEIGHT NATIVE GPU DIAGNOSTICS
+
+Opt in for a diagnostic run with JUDAS_GPU_DIAGNOSTICS=1, for example:
+
+  JUDAS_GPU_DIAGNOSTICS=1 JUDAS_WORLD_STATE=none ./build/judas project.judasproj
+
+The runtime and editor share the EngineHost implementation. Setting this variable
+installs a native KHR_debug callback when the existing GL context supports it.
+It does not request a debug context, force synchronous debug output, record every
+GL call, or add glFinish/per-draw glGetError calls. Default-off runs make no extra
+GL diagnostic calls. Android/browser builds report that this native callback is
+unavailable if the variable is explicitly enabled; their backends are unchanged.
+
+Output goes to stderr with a [GPU] prefix:
+- Startup vendor, renderer, version and context flags.
+- High/medium-severity and API-error messages, including source/type/severity/id.
+- Performance notices and notification messages are filtered out.
+- Output is capped at256 messages per process and1024 payload bytes per message;
+  one suppression marker announces reaching the cap. A new process resets it.
+- Where robustness extensions expose a reset query, the existing resource-pump
+  boundary checks it once and reports changed nonzero reset status. The startup
+  line records the context's reset-notification strategy. A non-robust or
+  no-notification context cannot be assumed to report driver resets reliably.
+
+Callbacks are asynchronous and never dereference the host. They retain only an
+opaque integer context tag, so late driver callback execution cannot access freed
+host state. The callback is detached before context destruction. Resource and
+renderer teardown remain within the callback's logging window.
+
+This is evidence collection, not a crash fix or a promise of an exact failing GL
+call. Drivers may omit diagnostics from ordinary non-debug contexts, catastrophic
+GPU failures may prevent delivery, and enabling diagnostics can still affect
+timing. Preserve the OS/driver journal and coredump alongside application stderr.
+For a user service, journalctl --user -u SERVICE retains the application's stderr;
+the kernel journal may independently record NVIDIA Xid or reset events.
+
+Focused native controls are in tests/GpuDiagnosticsTests.cpp. Run separate
+processes with off, on, and optionally flood arguments. The positive controls
+inject synthetic debug messages (id778901), intentionally call one invalid GL
+enum, exercise resource pumping/frames, and close/reopen a default host. Noise
+markers778902/778903 must not appear in callback output. The flood control emits
+270 synthetic messages to verify the cap. These deliberate messages are test
+inputs, not genuine driver or engine failures. Unsupported KHR_debug returns77
+instead of pretending to test the callback.

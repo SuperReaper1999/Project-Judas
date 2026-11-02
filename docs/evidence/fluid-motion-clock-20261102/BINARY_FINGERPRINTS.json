@@ -1,0 +1,13 @@
+{
+  ".cache/2d-stage1-build/judas": "456761efea6e1f97a4a3f434aa56d3b8054c2c2eb734aa153b6af9cbda48d6e3",
+  ".cache/2d-stage1-build/judas_export": "bc413c59b7cbe26c6e48e78338f45ee5ea287d9692c9ed2ed8dd0cd42651c600",
+  ".cache/2d-stage1-build/judas_gpu_diagnostics_tests": "c86dad9703d8e1978d166de51610f6126354f78337b05a274125bba18184ef05",
+  ".cache/2d-stage1-build/judas_fluid_cadence_motion_tests": "96123017bb856465078e5dc6a65cc4ba268687dab3458c623148951b83fba7ce",
+  ".cache/2d-stage1-build/judas_production_fluid_tests": "96660ce14d75bb9826e9da4bd59c88d48140f120c4e59a9b712c40f5efc22bee",
+  ".cache/2d-stage1-build/judas_player_fluid_integration_tests": "4e323fad40627dfa2ce7a382f67e011f638f7df6e48de8eacfe32142c464d778",
+  ".cache/2d-stage1-build/judas_fluid_container_integration_tests": "0adde7f3771c03afb937e514f206d447218475eea4d10e2365909b1163ae8acf",
+  ".cache/2d-stage1-build/judas_fluid_demo_integration_tests": "5e9ad6ad8b154e3e874a7342d095bf07e4a889817384c50f017495feace9d383",
+  ".cache/fluid-pool-impact-20261102/neutral/cadence_motion_before": "a97205632bce3686f1151675e19d6cf0e7700b5fbfa07d32216e7bca0c75528a",
+  "/tmp/Judas Fluid Clock Final 20261102/judas": "456761efea6e1f97a4a3f434aa56d3b8054c2c2eb734aa153b6af9cbda48d6e3",
+  "/tmp/Judas Fluid Clock Final 20261102/BUILD_PROVENANCE.json": "0f35e529b6ec1cb711548b3cb921103a3c4658d97b522fc9a1095bc70dfc8663"
+}

@@ -120,7 +120,12 @@ class GateTests(unittest.TestCase):
         # findings must not silently become acceptance passes through scheduling.
         scheduled = {key for key, row in findings.items() if row['scheduled']}
         self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'CCD-MESH-CONTINUATION', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS',
-                                     'LIQUID-ORIGIN-TOTAL-IDENTITY'})
+                                     'LIQUID-ORIGIN-TOTAL-IDENTITY', 'FLU-ROOT-ADMISSION'})
+        self.assertEqual(findings['FLU-ROOT-ADMISSION']['status'], 'resolved-local-reconstruction')
+        root_admission = next(row for row in manifest['tests'] if row['name'] == 'fluid-root-admission')
+        self.assertEqual(root_admission['target'], 'judas_fluid_root_admission_diagnostics')
+        self.assertIn('water', root_admission['groups'])
+        self.assertFalse(root_admission.get('manual', False))
         self.assertEqual(findings['LIQUID-ORIGIN-GRID-QUERY']['status'], 'open-query-continuity-failing')
         knots = next(row for row in manifest['tests'] if row['name'] == 'liquid-bake-knots-only')
         self.assertEqual(knots['args'][:2], ['--bake-only', 'knots'])
@@ -230,6 +235,15 @@ class GateTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, error):
                         gate.run_verified_case([sys.executable], root / 'log', root,
                             os.environ.copy(), 5, expected, entry=entry, expected_channel='Alpha')
+
+    def test_particle_cadence_requires_the_existing_advanced_runtime_opt_in(self):
+        entry = dict(name='fluid-cadence-motion', target='judas_fluid_cadence_motion_tests')
+        selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
+        self.assertFalse(selected)
+        self.assertEqual(unavailable[0]['status'], 'not-exercised')
+        selected, unavailable = gate.partition_channel_tests([entry], 'Experimental')
+        self.assertEqual(selected, [entry])
+        self.assertFalse(unavailable)
 
     def test_unavailable_main_receipt_is_not_a_pass(self):
         with tempfile.TemporaryDirectory() as directory:

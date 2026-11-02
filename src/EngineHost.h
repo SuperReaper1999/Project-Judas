@@ -59,6 +59,16 @@ public:
     JobSystem& Jobs() { return *m_jobs; }
 
 private:
+    void StartGpuDiagnostics();
+    void PollGpuReset();
+    void StopGpuDiagnostics();
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    using GpuCallbackInstaller = void (GLAD_API_PTR *)(GLDEBUGPROC, const void*);
+    using GpuResetQuery = GLenum (GLAD_API_PTR *)();
+    GpuCallbackInstaller m_gpuCallbackInstaller = nullptr;
+    GpuResetQuery m_gpuResetQuery = nullptr;
+    GLenum m_gpuLastReset = GL_NO_ERROR;
+#endif
     AudioSystem m_audio;
     Window m_window;
     Renderer m_renderer;

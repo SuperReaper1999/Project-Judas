@@ -1,0 +1,15 @@
+.cache/fluid-pool-impact-20261102/FluidWorld-phase.o
+.cache/fluid-pool-impact-20261102/ProductionFluidCoupling-clock.o
+.cache/fluid-pool-impact-20261102/body_trace
+.cache/fluid-pool-impact-20261102/clock_phase_probe
+.cache/fluid-pool-impact-20261102/clock_probe
+.cache/fluid-pool-impact-20261102/impact_trace
+.cache/fluid-pool-impact-20261102/impact_trace_corrected
+.cache/fluid-pool-impact-20261102/neutral/analytic
+.cache/fluid-pool-impact-20261102/neutral/cadence_motion_before
+.cache/fluid-pool-impact-20261102/neutral/exact_probe
+.cache/fluid-pool-impact-20261102/neutral/quiet_probe
+.cache/fluid-pool-impact-20261102/neutral/quiet_snapshot
+.cache/fluid-pool-impact-20261102/phase_probe
+.cache/fluid-pool-impact-20261102/pool-final-probe
+.cache/fluid-pool-impact-20261102/pool_probe_peak

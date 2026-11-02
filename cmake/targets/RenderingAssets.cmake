@@ -5,6 +5,7 @@ target_compile_definitions(judas_rendering_scale_tests PRIVATE JUDAS_M92)
 
 judas_add_engine_test(judas_rendering_architecture_tests tests/RenderingArchitectureTests.cpp)
 judas_add_engine_test(judas_shadow_sampling_render_tests tests/ShadowSamplingRenderTests.cpp)
+judas_add_engine_test(judas_gpu_diagnostics_tests tests/GpuDiagnosticsTests.cpp)
 
 judas_add_engine_test(judas_rendering_lab_tests tests/RenderingLabTests.cpp APPLICATION)
 add_executable(judas_rendering_shadow_scale_tests tests/RenderingShadowScaleTests.cpp)
