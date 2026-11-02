@@ -1,0 +1,23 @@
+FRAMES 550
+FRAME_SECONDS 0.016666667
+LOG_EVERY 20
+LOOK 0 140 1
+SCREENSHOT 60 /tmp/judas-fluid-comparison-captures/reference.png
+ACTION fluid_planet 1 80 81
+WAIT_SERVICES scene 10000 82
+EXPECT_SCENE Scenes/awkward_planet.judas 83
+SCREENSHOT 110 /tmp/judas-fluid-comparison-captures/awkward.png
+ACTION add_water 1 120 121
+ACTION fluid_pool 1 150 151
+WAIT_SERVICES scene 10000 152
+EXPECT_SCENE Scenes/rectangular_pool.judas 153
+LOOK 0 140 155
+ACTION pause 1 165 166
+EXPECT_PAUSED 1 167
+ACTION pause 1 175 176
+EXPECT_PAUSED 0 177
+HOLD W 185 305
+TAP Space 310
+HOLD S 360 510
+SCREENSHOT 340 /tmp/judas-fluid-comparison-captures/swimming.png
+SCREENSHOT 540 /tmp/judas-fluid-comparison-captures/exit.png
