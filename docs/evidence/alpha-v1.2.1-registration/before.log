@@ -1,0 +1,17 @@
+.Fs.s....
+======================================================================
+FAIL: test_alpha_marks_only_advanced_runtime_unavailable (tests.test_validation_registration.ValidationRegistrationTests.test_alpha_marks_only_advanced_runtime_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 102, in test_alpha_marks_only_advanced_runtime_unavailable
+    self.assert_contract(self.configure(channel='Alpha'), channel='Alpha')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 90, in assert_contract
+    self.assertNotIn('SKIP_RETURN_CODE', properties)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SKIP_RETURN_CODE' unexpectedly found in {'LABELS': ['lifecycle', 'prealpha', 'unavailable-in-channel', 'water'], 'RUN_SERIAL': True, 'SKIP_RETURN_CODE': 77, 'TIMEOUT': 150.0, 'WORKING_DIRECTORY': '/tmp/judas-ctest-contract-stwvlxpg/build'}
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.212s
+
+FAILED (failures=1, skipped=2)

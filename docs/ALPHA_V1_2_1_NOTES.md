@@ -48,6 +48,11 @@ must not be interpreted as a replacement fluid system.
 
 ## Qualification and known limits
 
+The registration oracle now includes the advanced-fluid cadence fixture in its
+explicit Alpha-unavailability expectation. A targeted negative control detects
+both accidentally enabling that fixture in Alpha and skipping it in Experimental.
+The original CI failure is retained; no physical test or runtime policy changed.
+
 Release preparation reruns exact-source Linux qualification, SDK project creation,
 cold saves and relocated exports, plus native hosted Windows contracts and SDK
 checks. The preparation run and publication manifest provide final results;

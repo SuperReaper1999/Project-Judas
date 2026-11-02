@@ -80,7 +80,8 @@ class ValidationRegistrationTests(unittest.TestCase):
                               '--expected-channel', channel])
             properties = {item['name']: item['value'] for item in case['properties']}
             unavailable = channel == 'Alpha' and entry['target'] in {
-                'judas_origin_environment_tests', 'judas_liquid_surface_tests'}
+                'judas_origin_environment_tests', 'judas_liquid_surface_tests',
+                'judas_fluid_cadence_motion_tests'}
             labels = ['prealpha', *entry['groups']]
             if unavailable:
                 labels.append('unavailable-in-channel')
@@ -120,6 +121,21 @@ class ValidationRegistrationTests(unittest.TestCase):
         self.assertNotEqual(module, MODULE.read_text(encoding='utf-8'))
         with self.assertRaises(AssertionError):
             self.assert_contract(self.configure(channel='Alpha', module=module), channel='Alpha')
+
+    def test_removed_cadence_channel_admission_is_detected(self):
+        # This real RuntimeWorld fixture needs Advanced Fluids. Alpha must report
+        # it unavailable, while Experimental must continue to execute it.
+        alpha = self.configure(channel='Alpha')
+        case = alpha['prealpha.fluid-cadence-motion']
+        case['properties'] = [item for item in case['properties']
+                              if item['name'] != 'SKIP_RETURN_CODE']
+        with self.assertRaises(AssertionError):
+            self.assert_contract(alpha, channel='Alpha')
+        experimental = self.configure()
+        case = experimental['prealpha.fluid-cadence-motion']
+        case['properties'].append({'name': 'SKIP_RETURN_CODE', 'value': 77})
+        with self.assertRaises(AssertionError):
+            self.assert_contract(experimental)
 
     @unittest.skipUnless(shutil.which('ninja'), 'Ninja needed for explicit multi-config control')
     def test_multi_configuration_discovery(self):
