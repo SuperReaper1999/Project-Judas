@@ -1152,6 +1152,7 @@ judas_add_engine_test(judas_fluid_smoothing_budget_tests tests/FluidSmoothingBud
 
 # FTFT9: all corner normals and exact-touch particle sweeps.
 judas_add_engine_test(judas_fluid_boundary_contact_tests tests/FluidBoundaryContactTests.cpp)
+judas_add_engine_test(judas_fluid_contact_clearance_tests tests/FluidContactClearanceTests.cpp)
 
 # FTFT9: existing contact-solver batch adapter, independent impulse/support oracles.
 judas_add_engine_test(judas_particle_contact_batch_tests tests/ParticleContactBatchTests.cpp)

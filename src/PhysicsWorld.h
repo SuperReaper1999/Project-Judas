@@ -404,6 +404,9 @@ public:
         // false: prescribed boundary, with no reaction on the actual owner.
         // true: owner and its touching rigid island receive the same-solve reaction.
         bool twoWay = false;
+        // Explicit inelastic relative-normal target. The fluid caller owns its
+        // physical gap / fluid interval; remainingRigidDt belongs to support.
+        float minimumNormalVelocity = 0;
     };
     // particleImpulses is per input contact, applied TO the particle. Optional
     // staticSupportImpulse is the external impulse applied BY physical static

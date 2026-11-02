@@ -204,7 +204,9 @@ void PhysicsWorld::SolveParticleContacts(std::vector<ContactParticle> &particles
     std::vector<unsigned> pending;
     for (const auto &c : contacts) {
         if (c.particleIndex >= particles.size() || !finite(c.point) || !finite(c.normal) ||
-            !finite(c.wallVelocity) || std::abs(glm::dot(c.normal, c.normal) - 1.0f) > 1.0e-3f)
+            !finite(c.wallVelocity) || !std::isfinite(c.minimumNormalVelocity) ||
+            c.minimumNormalVelocity > 0 ||
+            std::abs(glm::dot(c.normal, c.normal) - 1.0f) > 1.0e-3f)
             throw std::invalid_argument("invalid particle boundary contact");
         const auto &particle = particles[c.particleIndex];
         if (!(particle.mass > 0) || !std::isfinite(particle.mass) ||
@@ -410,6 +412,11 @@ void PhysicsWorld::SolveParticleContacts(std::vector<ContactParticle> &particles
                               normal ? (*normal)[i] : 0, tangent ? (*tangent)[i] : glm::vec3(0));
         }
         solver.Prepare(remainingRigidDt);
+        // Support rows retain their own rigid interval. Reapply explicit fluid
+        // targets on every replay, including an optional PCG proposal.
+        for (std::size_t i = 0; i < contacts.size(); ++i)
+            solver.SetInelasticVelocityTarget(particleRowStart + i,
+                                              contacts[i].minimumNormalVelocity);
     };
     prepare();
     const auto &solved = solver.Constraints();

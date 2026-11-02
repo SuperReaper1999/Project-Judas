@@ -104,6 +104,9 @@ struct FluidVelocityContact {
     BodyHandle owner;
     glm::vec3 point, normal, wallVelocity, particlePosition, particleVelocity;
     float particleMass, stepFraction;
+    // Lower bound on n dot(v_particle - v_wall). A yielding preferred skin
+    // allows the actual physical gap to close over this fluid substep.
+    float minimumNormalVelocity = 0;
 };
 // Resolves all normals together after each PBF substep. The callback updates
 // particle/rigid velocities and returns the impulse ON each particle contact.
@@ -120,6 +123,8 @@ struct FluidDiagnostics {
     std::size_t skinClippedProposals = 0; // preferred radius yielded to real geometry
     std::size_t skinPreventedReversals = 0; // deterministic blocked-clearance tie ordering
     std::size_t surfaceRoundingSteps = 0; // strict hard-surface nextafter construction
+    std::size_t fallbackContactIterationCaps = 0; // direct prescribed-wall path, no callback
+    float maximumFallbackContactResidual = 0; // excess normal closing speed, m/s
     std::size_t pressureReconstructionSamples = 0; // particle/substep observations in last executed step
     double maximumPressureReconstructionVelocityError = 0; // passive subtraction-versus-increment residual, m/s
     double rmsPressureReconstructionVelocityError = 0; // no correction is applied to authoritative velocity
@@ -175,6 +180,8 @@ private:
     float m_maximumGeometryEscapeDistance=0;
     std::size_t m_skinClippedProposals=0,m_skinPreventedReversals=0;
     std::size_t m_surfaceRoundingSteps=0;
+    std::size_t m_fallbackContactIterationCaps=0;
+    float m_maximumFallbackContactResidual=0;
     std::size_t m_pressureReconstructionSamples=0;
     double m_maximumPressureReconstructionVelocityError=0;
     double m_pressureReconstructionVelocityErrorSquared=0;

@@ -1,5 +1,7 @@
 #include "FluidWorld.h"
 #include "FluidDisplacementTracking.h"
+#include "ContactSolver.h"
+#include "RigidBody.h"
 
 #include <algorithm>
 #include <cmath>
@@ -170,6 +172,8 @@ BodyTransform InterpolatePose(const FluidTerrainCollider& terrain, float alpha) 
 }
 
 struct PreparedBox;
+struct PreparedSphere;
+struct PreparedTerrain;
 struct BoxContact {
     bool hit = false;
     BodyHandle owner;
@@ -178,6 +182,10 @@ struct BoxContact {
     glm::vec3 point{0.0f};
     glm::vec3 wallVelocity{0.0f};
     const PreparedBox* box=nullptr; // exact child; prepared substep storage remains stable
+    const PreparedSphere* sphere=nullptr;
+    const PreparedTerrain* terrain=nullptr;
+    bool hardEncounter=false; // immutable initial drift hit, with its original impact response
+    bool displacementWitness=false; // belongs to selected geometry, not discarded soft history
 };
 
 struct PreparedBox {
@@ -470,6 +478,7 @@ BoxContact CollideSphere(const glm::vec3& from, const glm::vec3& to,
 
     result.hit = true;
     result.normal = outward;
+    result.sphere = &sphere;
     result.projectedPosition = end.position + outward * combinedRadius;
     result.point = end.position + outward * sphere.radius;
     const glm::vec3 previousPoint = start.position + outward * sphere.radius;
@@ -512,6 +521,7 @@ BoxContact CollideTerrain(const glm::vec3& from, const glm::vec3& to,
             // position is already clear, but contact still supplies the
             // moving wall's point velocity to the momentum update below.
             result.hit = true;
+            result.terrain = &terrain;
             result.projectedPosition = to;
             result.normal = glm::normalize(terrain.end.rotation * endSample.outwardNormal);
             result.point = terrain.end.position +
@@ -561,6 +571,7 @@ BoxContact CollideTerrain(const glm::vec3& from, const glm::vec3& to,
     }
 
     result.hit = true;
+    result.terrain = &terrain;
     result.projectedPosition = terrain.end.position + terrain.end.rotation * projectedLocal;
     result.normal = glm::normalize(terrain.end.rotation * contactSample.outwardNormal);
     result.point = terrain.end.position +
@@ -762,12 +773,198 @@ RealClipLimit ClipRealUnion(const glm::vec3& from,const glm::vec3& to,
     return result;
 }
 
+// Final soft-contact classification is independent of the projection history.
+// A stale witness cannot harden a clearance which geometry has already yielded.
+struct FinalSoftContact {
+    BoxContact physical;
+    float gap=0;
+    bool active=false;
+    bool preferredFeasible=false;
+};
+
+FinalSoftContact FinalizeSoftContact(const BoxContact& row,const glm::vec3& position,
+                                     float radius,float substepTime) {
+    FinalSoftContact result;
+    result.physical=row;
+    auto& contact=result.physical;
+    // This band only recognises represented preferred stand-off. It never
+    // reclassifies an interior physical point as exterior.
+    const float tolerance=64*std::numeric_limits<float>::epsilon()*
+        (1+glm::length(position)+glm::length(row.point)+radius);
+    if(row.box) {
+        const auto& box=*row.box;
+        const glm::vec3 local=box.inverseEnd*(position-box.end.position);
+        const glm::vec3 oldNormal=box.inverseEnd*row.normal;
+        int axis=0;
+        for(int i=1;i<3;++i)if(std::abs(oldNormal[i])>std::abs(oldNormal[axis]))axis=i;
+        const float sign=oldNormal[axis]>=0 ? 1.f : -1.f;
+        const float faceGap=sign*local[axis]-box.halfExtents[axis];
+        bool withinFeature=true;
+        for(int i=0;i<3;++i)
+            withinFeature=withinFeature && std::abs(local[i])<=box.halfExtents[i]+radius+tolerance;
+        result.active=withinFeature && faceGap<=radius+tolerance;
+        result.preferredFeasible=result.active && std::abs(faceGap-radius)<=tolerance;
+        const glm::vec3 closest=glm::clamp(local,-box.halfExtents,box.halfExtents);
+        const glm::dvec3 offset=glm::dvec3(local)-glm::dvec3(closest);
+        result.gap=static_cast<float>(glm::length(offset));
+        if(result.gap>0)contact.normal=glm::normalize(box.end.rotation*glm::vec3(offset/double(result.gap)));
+        // At exact physical touch choose the actual nearest exterior face,
+        // rather than an old face on the other side of this finite primitive.
+        else {
+            int face=0;
+            for(int i=1;i<3;++i)if(std::abs(local[i])-box.halfExtents[i]>
+                std::abs(local[face])-box.halfExtents[face])face=i;
+            glm::vec3 normal(0);normal[face]=local[face]>=0 ? 1.f : -1.f;
+            contact.normal=box.end.rotation*normal;
+        }
+        contact.point=box.end.position+box.end.rotation*closest;
+        const auto previous=box.start.position+box.start.rotation*closest;
+        contact.wallVelocity=(contact.point-previous)/substepTime;
+    } else if(row.sphere) {
+        const auto& sphere=*row.sphere;
+        const glm::dvec3 offset=glm::dvec3(position)-glm::dvec3(sphere.end.position);
+        const double distance=glm::length(offset);
+        if(!(distance>0))throw std::runtime_error("fluid contact at unresolved sphere centre");
+        contact.normal=glm::vec3(offset/distance);
+        result.gap=static_cast<float>(std::max(0.0,distance-sphere.radius));
+        contact.point=sphere.end.position+contact.normal*sphere.radius;
+        const auto previous=sphere.start.position+contact.normal*sphere.radius;
+        contact.wallVelocity=(contact.point-previous)/substepTime;
+        result.active=result.gap<=radius+tolerance;
+        result.preferredFeasible=result.active && std::abs(result.gap-radius)<=tolerance;
+    } else if(row.terrain) {
+        const auto& terrain=*row.terrain;
+        const auto sample=terrain.surface->Sample(terrain.inverseEnd*(position-terrain.end.position));
+        contact.normal=glm::normalize(terrain.end.rotation*sample.outwardNormal);
+        result.gap=std::max(0.f,sample.signedDistance);
+        contact.point=terrain.end.position+terrain.end.rotation*sample.surfacePoint;
+        const auto previous=terrain.start.position+terrain.start.rotation*sample.surfacePoint;
+        contact.wallVelocity=(contact.point-previous)/substepTime;
+        result.active=result.gap<=radius+tolerance;
+        result.preferredFeasible=result.active && std::abs(result.gap-radius)<=tolerance;
+    }
+    return result;
+}
+
+const BoxContact& PreferredContact(const BoxContact& original,const FinalSoftContact& final) {
+    return original.hardEncounter || original.box ? original : final.physical;
+}
+
+struct ContactGroup {
+    std::vector<FinalSoftContact> rows;
+    bool yielding=false;
+};
+
+ContactGroup ClassifyContacts(const std::vector<BoxContact>& contacts,
+                             const glm::vec3& position,float radius,float substepTime) {
+    ContactGroup group;
+    group.rows.reserve(contacts.size());
+    for(const auto& contact:contacts) {
+        auto final=FinalizeSoftContact(contact,position,radius,substepTime);
+        // Retain ownership of a genuine earlier drift hit. Its CURRENT gap is
+        // still real: an earlier impact need not remain simultaneous contact.
+        if(contact.hardEncounter)final.active=true;
+        group.yielding=group.yielding || (final.active && !final.preferredFeasible);
+        group.rows.push_back(final);
+    }
+    const auto preferred=[&](std::size_t k)->const BoxContact& {
+        return PreferredContact(contacts[k],group.rows[k]);
+    };
+    // A feasible boundary-velocity witness bounds the prescribed accumulated-
+    // impulse solve in that frame. Preserve ordinary resting/opening behavior;
+    // this is sufficient, not a necessary test for all feasible velocities.
+    bool compatible=false;
+    for(std::size_t a=0;a<contacts.size() && !compatible;++a) {
+        if(!group.rows[a].active)continue;
+        const glm::dvec3 reference(preferred(a).wallVelocity);
+        bool valid=true;
+        for(std::size_t b=0;b<contacts.size() && valid;++b)if(group.rows[b].active)
+            valid=glm::dot(glm::dvec3(preferred(b).normal),
+                           reference-glm::dvec3(preferred(b).wallVelocity))>=0;
+        compatible=valid;
+    }
+    if(compatible)group.yielding=false;
+    // Nonnegative normal products cannot make another preferred row close
+    // under a positive normal impulse. Competing rows without a bounded
+    // reference yield their optional thickness. The sign band covers normal
+    // arithmetic rounding, not an angle/impulse cutoff or a physical tolerance.
+    for(std::size_t a=0;a<contacts.size() && !group.yielding && !compatible;++a) {
+        if(!group.rows[a].active)continue;
+        for(std::size_t b=a+1;b<contacts.size();++b)if(group.rows[b].active &&
+            glm::dot(preferred(a).normal,preferred(b).normal)<
+                -8*std::numeric_limits<float>::epsilon()) {group.yielding=true;break;}
+    }
+    return group;
+}
+
+// Direct callers have no rigid-world callback. Reuse the same contact law
+// for all of one particle's prescribed rows; a single projection can undo an
+// earlier bound when normals oppose. No rigid state or warm cache is invented.
+void ResolvePrescribedContacts(std::vector<FluidParticle>& particles,
+                               const std::vector<FluidVelocityContact>& contacts,
+                               std::vector<glm::vec3>& impulses,
+                               std::size_t& iterationCaps,float& maximumResidual) {
+    ContactSolver solver;
+    std::vector<RigidBody> walls;
+    for(std::size_t first=0;first<contacts.size();) {
+        std::size_t end=first+1;
+        while(end<contacts.size() && contacts[end].particleIndex==contacts[first].particleIndex)++end;
+        auto& particle=particles[contacts[first].particleIndex];
+        RigidBody body;
+        body.position=particle.position;
+        body.linearVelocity=particle.velocity;
+        body.inverseMass=1.f/particle.mass;
+        solver.Clear();
+        walls.clear();walls.resize(end-first);
+        float speedScale=std::max(1.f,glm::length(body.linearVelocity));
+        for(std::size_t i=first;i<end;++i) {
+            const auto& c=contacts[i];auto& wall=walls[i-first];
+            wall.position=c.point;wall.linearVelocity=c.wallVelocity;
+            speedScale=std::max(speedScale,glm::length(c.wallVelocity));
+            Contact geometry;
+            geometry.hit=true;geometry.point=c.point;geometry.normal=c.normal;
+            geometry.preciseNormal=glm::dvec3(c.normal);
+            geometry.hasLocalAnchors=true;
+            geometry.localAnchorA=glm::dvec3(c.point)-glm::dvec3(body.position);
+            solver.AddContact(body,wall,geometry,0,0);
+        }
+        solver.Prepare();
+        for(std::size_t i=first;i<end;++i)
+            solver.SetInelasticVelocityTarget(i-first,contacts[i].minimumNormalVelocity);
+        float residual=0;
+        int iterations=0;
+        do {
+            const int count=std::min(10,64-iterations);
+            solver.SolveVelocities(count);iterations+=count;residual=0;
+            for(const auto& c:solver.Constraints()) {
+                const float speed=glm::dot(body.linearVelocity-c.bodyB->linearVelocity,c.normal);
+                residual=std::isfinite(speed) ? std::max(residual,c.restitutionBias-speed)
+                                             : std::numeric_limits<float>::infinity();
+            }
+        } while(residual>1e-5f*speedScale && iterations<64);
+        maximumResidual=std::max(maximumResidual,residual);
+        iterationCaps+=residual>1e-5f*speedScale ? 1 : 0;
+        for(int axis=0;axis<3;++axis)if(!std::isfinite(body.linearVelocity[axis]))
+            throw std::runtime_error("nonfinite prescribed fluid contact response");
+        for(const auto& c:solver.Constraints())if(!std::isfinite(c.normalImpulse))
+            throw std::runtime_error("nonfinite prescribed fluid contact impulse");
+        particle.velocity=body.linearVelocity;
+        for(std::size_t i=first;i<end;++i) {
+            const auto& c=solver.Constraints()[i-first];
+            impulses[i]=c.normal*c.normalImpulse+c.tangentImpulse;
+        }
+        // Rows contain pointers to stack/array bodies; clear before destruction
+        // or any following resize, including the final particle group.
+        solver.Clear();first=end;
+    }
+}
+
 void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
                           std::vector<glm::vec3>& positions,
                           const std::vector<PreparedBox>& boxes,
                           const std::vector<PreparedSphere>& spheres,
                           const std::vector<PreparedTerrain>& terrains,
-                          float radius, float substepTime,
+                          float radius, float substepTime, bool initialDrift,
                           std::vector<glm::vec3>& solidCorrections,
                           std::vector<std::vector<BoxContact>>& contacts,
                           std::size_t& hardRepairCount,std::size_t& unresolvedCount,
@@ -775,6 +972,8 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
                           std::size_t& skinClippedCount,std::size_t& skinReversalCount,
                           std::size_t& surfaceRoundingSteps) {
     const glm::vec3 reference=positions[particleIndex];
+    const glm::vec3 correctionBefore=solidCorrections[particleIndex];
+    const auto contactsBefore=contacts[particleIndex];
     auto& point=positions[particleIndex];
     // Primitive encounter tracking serves only geometric fallback. Keep the
     // legacy owner/normal coalescing for ordinary velocity contacts.
@@ -791,15 +990,22 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
         observe(contact);
         auto& rows = contacts[particleIndex];
         for (auto& row : rows) {
-            if (row.owner.id == contact.owner.id &&
+            if (row.owner.id == contact.owner.id && row.box == contact.box &&
+                row.sphere == contact.sphere && row.terrain == contact.terrain &&
                 glm::dot(row.normal, contact.normal) >= 1.0f - 8.0f * std::numeric_limits<float>::epsilon()) {
-                row = contact;return;
+                const bool witnessed=row.displacementWitness || contact.displacementWitness;
+                if (!row.hardEncounter || contact.hardEncounter) row = contact;
+                row.displacementWitness=witnessed;
+                return;
             }
         }
         rows.push_back(contact);
     };
     auto commit=[&](BoxContact contact,const auto& insideOwnSolid) {
         if(!contact.hit)return;
+        contact.displacementWitness=true;
+        // A geometric repair is not automatically an earlier drift impact.
+        // Immutable drift witnesses are recorded separately below.
         // A represented surface point can round inward. Advance only to
         // neighbouring float coordinates in its known outward direction;
         // strict whole-union validation follows the hard projection passes.
@@ -855,7 +1061,7 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
     struct SoftPreference {glm::dvec3 normal,achieved;int limitingKind;std::size_t limitingIndex;};
     std::vector<SoftPreference> preferences;
     const auto soft=[&](const auto& buildContact) {
-        BoxContact contact=buildContact();
+        BoxContact contact=buildContact(radius);
         if(!contact.hit)return;
         observe(contact);
         // An exterior prediction on the far side of a crossed wall is not
@@ -867,7 +1073,7 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
             !CrossesAnyNonmovingBox(from,contact.projectedPosition,boxes);
         if(!startSafe && !fullRecoverySafe) {
             establishHard();
-            contact=buildContact();
+            contact=buildContact(radius);
             if(!contact.hit)return;
             observe(contact);
             startSafe=true;
@@ -911,8 +1117,8 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
         }
         if(representedFraction<1)++skinClippedCount;
         solidCorrections[particleIndex]+=candidate-before;point=candidate;
-        // Retain the same physical contact owner/normal/point reaction even
-        // when its preferred skin cannot be supplied by the available space.
+        // Track selected geometry independently of retained velocity history.
+        contact.displacementWitness=true;
         retain(contact);
         if(physical.fraction<1) {
             // First blocked clearance wins an ambiguous soft-only tie.
@@ -921,15 +1127,44 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
             preferences.push_back({glm::dvec3(contact.normal),glm::dvec3(point),physical.kind,physical.index});
         }
     };
+    // Historical sweep ownership must come from the immutable free drift,
+    // before ANY preferred correction can push a point into another collider.
+    // Density proposals retain physical exclusion but do not invent episodes.
+    if(initialDrift) {
+        const auto drift=[&](BoxContact c,BodyHandle owner) {
+            if(!c.hit)return;
+            c.owner=owner;c.hardEncounter=true;retain(c);
+        };
+        for(const auto& box:boxes)drift(CollideBox(from,reference,box,0,substepTime),box.owner);
+        for(const auto& sphere:spheres)drift(CollideSphere(from,reference,sphere,0,substepTime),sphere.owner);
+        for(const auto& terrain:terrains)drift(CollideTerrain(from,reference,terrain,0,substepTime),terrain.owner);
+    }
     // Preserve the legacy two preferred-clearance passes where feasible.
     // Blocked-clearance preferences live across BOTH passes, so impossible
     // skins cannot repeatedly undo each other in a narrow physical gap.
     for(int pass=0;pass<2;++pass) {
-        for(const auto& box:boxes)soft([&]{auto c=CollideBox(from,point,box,radius,substepTime);c.owner=box.owner;return c;});
-        for(const auto& sphere:spheres)soft([&]{auto c=CollideSphere(from,point,sphere,radius,substepTime);c.owner=sphere.owner;return c;});
-        for(const auto& terrain:terrains)soft([&]{auto c=CollideTerrain(from,point,terrain,radius,substepTime);c.owner=terrain.owner;return c;});
+        for(const auto& box:boxes)soft([&](float skin){auto c=CollideBox(from,point,box,skin,substepTime);c.owner=box.owner;return c;});
+        for(const auto& sphere:spheres)soft([&](float skin){auto c=CollideSphere(from,point,sphere,skin,substepTime);c.owner=sphere.owner;return c;});
+        for(const auto& terrain:terrains)soft([&](float skin){auto c=CollideTerrain(from,point,terrain,skin,substepTime);c.owner=terrain.owner;return c;});
     }
     if(!OutsideRealSolids(point,boxes,spheres,terrains) || CrossesAnyNonmovingBox(from,point,boxes))establishHard();
+    if(radius>0 && ClassifyContacts(contacts[particleIndex],point,radius,substepTime).yielding) {
+        // A blocked preference must not spend the available real gap to create
+        // contact with its opposing wall. Replay only HARD geometry from this
+        // stage's original proposal; PBF sees this result in its next iteration.
+        // Removing only the velocity constraint left position/velocity clocks
+        // inconsistent and preserved the false simultaneous-contact episode.
+        const auto encounters=contacts[particleIndex];
+        point=reference;solidCorrections[particleIndex]=correctionBefore;
+        contacts[particleIndex]=contactsBefore;
+        geometryRows=encounters;
+        establishHard();
+        for(auto c:encounters) {
+            c.displacementWitness=false;
+            retain(c);
+        }
+        ++skinClippedCount; // rejected work is counted, not hidden
+    }
 }
 
 }  // namespace
@@ -961,6 +1196,7 @@ void FluidWorld::Clear() {
     m_maximumGeometryEscapeDistance=0;
     m_skinClippedProposals=m_skinPreventedReversals=0;
     m_surfaceRoundingSteps=0;
+    m_fallbackContactIterationCaps=0;m_maximumFallbackContactResidual=0;
     m_pressureReconstructionSamples=0;
     m_maximumPressureReconstructionVelocityError=0;
     m_pressureReconstructionVelocityErrorSquared=0;
@@ -1012,6 +1248,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
     m_maximumGeometryEscapeDistance=0;
     m_skinClippedProposals=m_skinPreventedReversals=0;
     m_surfaceRoundingSteps=0;
+    m_fallbackContactIterationCaps=0;m_maximumFallbackContactResidual=0;
     m_pressureReconstructionSamples=0;
     m_maximumPressureReconstructionVelocityError=0;
     m_pressureReconstructionVelocityErrorSquared=0;
@@ -1065,7 +1302,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             unconstrainedPositions[i] = positions[i];
             ApplySolidCollisions(i, starts[i], positions, preparedBoxes, preparedSpheres,
                                  preparedTerrains,
-                                 m_settings.particleRadius, substepTime, solidCorrections, contacts,
+                                 m_settings.particleRadius, substepTime, true, solidCorrections, contacts,
                                  m_geometryEscapes,m_unresolvedGeometry,m_geometryEscapeCandidates,m_maximumGeometryEscapeDistance,
                                  m_skinClippedProposals,m_skinPreventedReversals,m_surfaceRoundingSteps);
         }
@@ -1114,7 +1351,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             for (std::size_t i = 0; i < count; ++i) {
                 ApplySolidCollisions(i, starts[i], positions, preparedBoxes, preparedSpheres,
                                      preparedTerrains,
-                                     m_settings.particleRadius, substepTime, solidCorrections, contacts,
+                                     m_settings.particleRadius, substepTime, false, solidCorrections, contacts,
                                  m_geometryEscapes,m_unresolvedGeometry,m_geometryEscapeCandidates,m_maximumGeometryEscapeDistance,
                                  m_skinClippedProposals,m_skinPreventedReversals,m_surfaceRoundingSteps);
             }
@@ -1133,6 +1370,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
         for (std::size_t i = 0; i < count; ++i) {
             BodyHandle owner{};bool ambiguous=false;
             for(const auto& contact : contacts[i]) {
+                if(!contact.displacementWitness)continue;
                 if(!owner.IsValid())owner=contact.owner;
                 else if(!FluidBoundaryDetail::SameOwner(owner,contact.owner))ambiguous=true;
             }
@@ -1190,18 +1428,27 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             }
         }
         std::vector<FluidVelocityContact> velocityContacts;
-        for (std::size_t i = 0; i < count; ++i) for (const auto& c : contacts[i]) {
+        for (std::size_t i = 0; i < count; ++i) {
             const auto& particle=m_particles[i];
-            velocityContacts.push_back({i,c.owner,c.point,c.normal,c.wallVelocity,
-                positions[i],particle.velocity,particle.mass,alpha1});
+            const auto group=ClassifyContacts(contacts[i],positions[i],m_settings.particleRadius,substepTime);
+            for(std::size_t k=0;k<contacts[i].size();++k) {
+                const auto& final=group.rows[k];
+                if(!final.active)continue;
+                // Preserve the impulse of a genuine immutable drift hit.
+                // Preferred projection history is different: it can only use
+                // the actual final feature/gap when the group yields.
+                const bool yielding=group.yielding && !contacts[i][k].hardEncounter;
+                const auto& c=yielding ? final.physical : PreferredContact(contacts[i][k],final);
+                const float target=yielding ? -final.gap/substepTime : 0;
+                if(!std::isfinite(target))throw std::runtime_error("nonfinite fluid contact target");
+                velocityContacts.push_back({i,c.owner,c.point,c.normal,c.wallVelocity,
+                    positions[i],particle.velocity,particle.mass,alpha1,target});
+            }
         }
         std::vector<glm::vec3> impulses(velocityContacts.size(),glm::vec3(0));
         if (velocityResponse) velocityResponse(m_particles,velocityContacts,impulses);
-        else for (std::size_t row=0;row<velocityContacts.size();++row) {
-            const auto& c=velocityContacts[row];auto& particle=m_particles[c.particleIndex];
-            const float vn=glm::dot(particle.velocity-c.wallVelocity,c.normal);
-            if(vn<0) {const glm::vec3 dv=-vn*c.normal;particle.velocity+=dv;impulses[row]=particle.mass*dv;}
-        }
+        else ResolvePrescribedContacts(m_particles,velocityContacts,impulses,
+                                       m_fallbackContactIterationCaps,m_maximumFallbackContactResidual);
         if(impulses.size()!=velocityContacts.size())throw std::runtime_error("fluid contact response returned inconsistent impulse count");
         if(contactImpulses)for(std::size_t row=0;row<velocityContacts.size();++row) {
             const auto& c=velocityContacts[row];
@@ -1232,6 +1479,8 @@ FluidDiagnostics FluidWorld::GetDiagnostics() const {
     diagnostics.skinClippedProposals=m_skinClippedProposals;
     diagnostics.skinPreventedReversals=m_skinPreventedReversals;
     diagnostics.surfaceRoundingSteps=m_surfaceRoundingSteps;
+    diagnostics.fallbackContactIterationCaps=m_fallbackContactIterationCaps;
+    diagnostics.maximumFallbackContactResidual=m_maximumFallbackContactResidual;
     diagnostics.pressureReconstructionSamples=m_pressureReconstructionSamples;
     diagnostics.maximumPressureReconstructionVelocityError=m_maximumPressureReconstructionVelocityError;
     diagnostics.rmsPressureReconstructionVelocityError=m_pressureReconstructionSamples>0 ?

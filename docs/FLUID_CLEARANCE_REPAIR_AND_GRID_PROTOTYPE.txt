@@ -1,0 +1,259 @@
+FLUID CLEARANCE REPAIR AND BOUNDED GRID PROTOTYPE — 2 NOVEMBER 2026
+
+Qualified correction on Experimental; the grid remains an isolated prototype.
+No release publication, main promotion or fluid unlock is authorized by this report.
+Investigated parent: 35db07d0742ac27138d9f6f9651ff7c384d519ad, Experimental.
+Main, releases, the Alpha fluid lock, Basic Water and accepted M54/M55 remain
+unchanged. Independent fluid research directories were not read or edited.
+
+1. CONTACT CONTRACT
+The preceding FLUID_TRANSIENT_AND_REPRESENTATION_REVIEW.txt contains the original
+captured 41.72 m/s episode and unchanged negative controls. A physical centre
+separated from both solids was constrained as touching both of them. A moving
+prescribed boundary then supplied the near-opposed wedge's large velocity.
+
+Final correction:
+- Retain radius-zero drift witnesses from the IMMUTABLE unconstrained segment,
+  before any collider or preferred-skin correction. A later PBF proposal is
+  still excluded from physical solids but cannot invent an earlier drift event.
+- One shared classifier controls both preferred POSITION and VELOCITY response.
+  When preferences conflict without a bounded compatible response, restore this
+  projection call's entry proposal, correction accumulator and selected rows,
+  then replay hard physical exclusion only. The PBF proposal is preserved.
+  A soft floor lift can no longer manufacture contact with an opposing body.
+- Selected displacement witnesses and retained velocity encounters have distinct
+  ownership flags. Discarded soft history cannot establish a water-displacement
+  marker. Actual work, including rejected proposals/replays, remains counted.
+- Revalidate soft witnesses at final positions. Departed expanded features are
+  removed; real initial swept hits are retained. Yielding box witnesses use the
+  actual closest face/edge/corner instead of an old face's infinite plane.
+- A separated point with physical gap g and fluid substep h has normal bound
+  n dot(v-w) >= -g/h. FluidVelocityContact.minimumNormalVelocity carries that
+  bound, not a fake wall velocity. The matching native field defaults to0 for
+  existing callers. Production passes it unchanged; WorldParticles reapplies
+  it after EVERY Prepare, including replay of optional solver proposals.
+  Cached rigid support retains its own rigid interval, not the fluid horizon.
+- Preferred stand-off can retain its ordinary0 target if a compatible boundary
+  velocity bounds the response, or available normals do not compete. Otherwise
+  preferred skins yield. Genuine immutable drift-hit responses remain unchanged
+  at0; this repair does not silently remove a real impact's impulse.
+- Direct FluidWorld calls formerly projected each row once, allowing a later
+  row to reclose an earlier bound. They now reuse ContactSolver for the whole
+  particle group, with the established64 iteration budget/residual scale.
+  fallbackContactIterationCaps and maximumFallbackContactResidual report limits.
+  No velocity/energy clamp, extra damping, fake velocity, mass change or relaxed
+  accepted threshold is used. Exterior one-way versus finite cavity ownership
+  is unchanged; separately applied hydrostatic force/drag is not counted twice.
+
+Native interfaces add a defaulted target and diagnostics; rebuild C++ consumers.
+No JudasJS, project/save format or public release/channel change is made.
+
+The compatible-reference argument is scoped to FIXED PRESCRIBED rows. In the
+reference frame, the accumulated-impulse dual objective is the mass-weighted
+kinetic-distance change plus nonnegative feasible-reference slack. Coordinate
+minimization starts at0 and cannot increase the objective, bounding velocity
+relative to that reference. This is not an energy clamp. It is not a claim that
+absence of a wall-velocity witness proves infeasibility, nor a particle-only
+proof for the finite-body coupled batch. Existing finite-mass controls remain.
+
+2. FAILED ATTEMPTS AND ORACLE CHECKS (ALL RETAINED)
+Position-fit-only policy: pool peak21.26 m/s; all individual skins could fit at
+one instant while a closing oblique wall still forced a false23.396 m/s jet in
+an independent geometric control. Rejected as incomplete.
+Blanket negative-normal policy: pool peak16.77 m/s and375 controls passed, but
+full production qualification failed the UNCHANGED half_025 early immersion
+check (0.6306066 versus0.5 +/-0.1);6 diagnostic failures were retained. Static/
+opening groups need not yield merely because their normals oppose. A compatible-
+reference refinement passed the unchanged case and all13 combined suites.
+That still was NOT enough: the exact pool probe failed with2 repeatable escapes.
+Its intermediate21.794 m/s event had a genuine earlier floor hit, now14.7 cm
+away, combined with a body encounter created by the preferred floor lift. The
+pressure contribution there was only0.0063 m/s; contact added21.879 m/s. Simply
+changing initial-versus-density flags would miss the intra-call projection event.
+The final positional replay removes that synthetic encounter consistently.
+A reduced known-answer fixture exposed22.0728 m/s sideways velocity and34525.6
+N s body reaction from an untouched body in the old implementation. Final tests
+require the real floor endpoint/impulse, zero final velocity and ZERO body
+reaction, across both collider orders, rotations, tilt and native/fallback.
+
+Two NEW trial-test premises were independently corrected, not hidden:
+- An allegedly exact common translation encoded different stored float endpoint
+  velocities by0.7-1.5 micrometres/s. The valid control now ASSERTS identical
+  represented COM deltas; the original rounded case remains a no-kick/valid-bound
+  control. Its original3 failures and exact source/rows are preserved.
+- After positional rollback, the unchanged squeeze inputs need a small REAL
+  speculative response: gap0.0993603 m, h0.04 s, required delta0.00799632 m/s.
+  The old zero-velocity expectation would predict penetration next horizon.
+  The independently calculated projection replaces that incorrect oracle;
+  ALL inputs and the3e-5 tolerance remain unchanged, with old8 failures retained.
+No original engine test, scene fixture, count, threshold or quality setting was
+weakened. The original source recompiled against current structural layout fails
+78/425 earlier controls; that is not mislabelled as an old released binary.
+
+3. KNOWN CONTACT LIMITS
+A deliberately fast40 m/s narrow prescribed wedge reaches the unchanged64-step
+native/fallback cap with about0.051 m/s normal residual. Its ORIGINAL failed
+physical-residual experiment is preserved. A separate diagnostics control checks
+that the reported cap/residual agree with independent measurement; that control
+DOES NOT certify the physical residual as passing.
+Nearest-feature/gap retargeting is not a new continuously rotating-feature CCD
+algorithm. The existing swept hard geometry, resolved-path sampling and its
+limitations remain. Feasible expanded-box stand-off retains its established
+normal/material-witness convention. No universal maximum water speed is claimed.
+
+4. ISOLATED NON-PARTICLE PROTOTYPE
+Source and commands: tools/prototypes/fluid_volume_grid/README.txt.
+This is deliberately absent from the engine runtime/CMake/SDK. It is a scoped
+experiment, not a replacement, another authoritative water quantity or an unlock.
+
+Actual update: binary64 regular3D MAC grid; cell water fractions and face velocity;
+water/air densities1000/1; variable-density pressure projection; paired donor-cell
+volume transport; same-flux staggered dual-mass/momentum transport; reprojection;
+atomic publication after validation. All non-solid cells, including air, are
+solved inside a closed domain. Static solids must occupy aligned whole cells.
+Queries and an isosurface read this owned quantity. Upwind transport has numerical
+dissipation; no claim of exact energy or angular-momentum conservation is made.
+
+57 scoped controls pass. They include static hydrostatic force/torque against
+analytic displaced volume, genuinely oblique gravity INPUT, conservative known
+transfers, a momentum marker (frozen-velocity negative control), a gravity-driven
+dam release, disconnected components and failed-step rollback. The output-frame
+rotation check is algebraic; it is not a production rotating-world test. The
+oblique pressure quadrature is an affine QUERY patch, not a cut-cell operator.
+Force-only density signs are not actual moving rigid-body trajectories.
+
+The dam centre moves0.110289 m over0.25 s with volume drift about-3.0e-14 m3.
+The diagnostic12x8x3 m domain starts with180 m3/180000 kg water. Quantity remains
+bounded without post-hoc mass rescaling/clamping. Pressure tolerance is1e-11
+relative/absolute residual, actual divergence gate1e-7, budget2000; failed pressure
+or transport does not publish partial primary fields.
+
+One bounded optimization caches weighted pressure edges ONCE PER projection,
+not across changing density/topology. The same equations, edge order, tolerance
+and budget are retained. Naive/cached gate logs and terminal full quantity,
+pressure and velocity digests are bit-identical. Original failures are retained,
+including a divergent transport fixture and its rejected-output harness crash.
+
+60 consecutive diagnostic updates at1/90 s, Ryzen5 5600, GNU15.2 -O3:
+                         naive median/p95/worst     cached median/p95/worst (ms)
+  2304 cells, h0.5 m      9.505/9.824/9.871          3.981/4.130/4.289
+ 18432 cells, h0.25 m   156.931/159.771/162.119     65.627/67.247/68.754
+These update costs include both pressure projections, allocations/copies and
+volume/momentum transport. Mesh/query are measured separately. Summing ACTUAL
+per-sample update + meshing +1000 queries gives:
+  2304 cells: median4.318/p954.506/worst4.849 ms
+ 18432 cells: median67.633/p9569.371/worst71.139 ms
+Owned persistent state is99456/775680 bytes; measured process peak RSS is about
+5.2/9.6 MiB and includes temporaries/mesh. These are diagnostic host runs, not
+exclusive-machine or GPU measurements.
+
+NOT A PBF SPEEDUP COMPARISON: the production pool has nonaligned narrow stairs
+and moving/rotating thrown boxes. The prototype explicitly rejects that geometry;
+its timings do not include missing cut-solid preparation, body coupling or GPU
+rendering. No matching consumer-game speedup has been established.
+
+Not qualified: moving/cut/subcell solids, rotating cups/pours, thin/disconnected
+subcell wet ownership, finite-mass body coupling, open atmosphere, geometric
+interface accuracy, angular momentum, persistence/origin/streaming/export,
+renderer quality or Windows/Android/browser execution. Do not silently voxelize
+away those features or claim existing M54 ownership implies this support.
+
+Decision: preserve the useful prototype, keep production water and lock intact.
+Fine-grid pressure is still too expensive. Before any replacement, qualify a
+stronger pressure preconditioner AND real moving-solid ownership/coupling on
+original geometry. The present result does not justify an engine replacement.
+
+5. FINAL QUALIFICATION / CHECKPOINT
+Final physics source SHA256 (FluidWorld.cpp):
+  e01571e1ff254708a8a1752992fd170e3bbc0200f9cb2dfa385e9cae5e721511
+New regression source SHA256 (FluidContactClearanceTests.cpp):
+  3d47c50bbc7f8172c57485e369883f81064d7baaafa949db83d1a2876ed95fd3
+The containing commit identifies the selected source; final-source snapshots,
+FINAL_SOURCE_FINGERPRINTS.json and per-binary hashes identify the tested bytes.
+Builds honestly retain parent d0f1f359 + dirty/untracked-source provenance; they
+are not relabelled as clean release packages. The independent grid checkpoint is
+  d0f1f3595870e6f435df1d6b0d769e1e7f8c09f8.
+
+Final3 is the final combined native Linux run:13/13 executables exit0.
+- New clearance/episode regression:513 checks,0 failures.
+- Existing boundary24, particle batch77, cadence48, hydrostatic346, project
+  policy26, lifecycle38 and Basic Water actual-GL preview18 checks pass.
+- Cavity impact:7 cases pass; finite-mass containers:8 cases/7014 checks pass.
+- Production:13801 checks, zero acceptance failures;5 diagnostic failures remain.
+- Player/swimming:5661 checks, zero acceptance failures;4 warmup diagnostics remain.
+- Existing flat/radial demo:49 checks pass; mass retained. Its separately
+  recorded maxima are14.3262/49.4322 m/s. This is NOT a global speed-bound fix.
+- Validation registration helpers:15/15 and22/22 Python checks pass.
+
+The ORIGINAL rectangular-pool recipe, timestep, input throws and zero-escape
+assertion are unchanged and PASS:1440 particles,180000 kg, finite,0 escapes,
+ordinary swimming/exit preserved. Published-frame peak41.7176 ->9.6519 m/s.
+Two ordinary repeats and the passive instrumented run give identical observed
+trajectory digest d7594a1ae82ca7cf and endpoint f5a59cbb035e3268.
+The final intermediate peak is10.6298 m/s. It comes from represented PBF pressure
+displacement: pressure adds4.7750 m/s, smoothing/contact reduce it; subtraction
+versus represented-increment mismatch is only1.11e-7 m/s. That attribution is NOT
+an independent continuum proof of its physical accuracy. Original failed2-spill
+intermediate-candidate runs and their identical digests remain preserved.
+
+A fresh native standalone exports4 assets/2 scenes,58510298 bytes. It was moved
+to /tmp/Judas Fluid Clearance Verification 20261102 and run from /tmp with NO
+JUDAS_ENGINE_ROOT override. The80-frame real-GL tour switches flat/planet scenes,
+checks pause/resume, moves the camera and captures a frame; exit0. Lightweight
+asynchronous GPU diagnostics are enabled, with no unexpected callback/reset
+messages during this bounded run. The older desktop/GPU crash is NOT resolved
+or certified absent by this test. No full graphics-call trace was enabled.
+Runtime SHA256:
+  c8cd35d7d75010ac251d973761bf4537cdc0b344889beb88322468801f37f5b6
+Full relocated package file hashes are retained. This is a local native
+Experimental export, not clean-machine Linux/Windows distribution certification.
+No Windows/Android/browser qualification was performed for this correction.
+
+REMAINING FAILURES / LIMITS
+- Native/fallback narrow40 m/s prescribed wedge still reaches64 iterations with
+  about0.051 m/s residual. Diagnostics are correct; physical convergence failed.
+- Production diagnostic failures: half/neutral/dense_025 fixed warmup quiescence,
+  zero-gravity warmup quiescence, and the observational small_mass_125x early
+  settling check. Compared with the parent, three coarse warmup checks now fail
+  (mean0.08685 m/s vs parent0.04996); no added damping or threshold changes hide
+  the changed packing/flow. The small-body diagnostic changed category; it is
+  still not a qualified scale. The player's4 warmup diagnostics also remain.
+- True initial drift-hit impulses are preserved. General chronological impact/
+  separation after later PBF reconstruction and arbitrary rotating finite-feature
+  continuation are not newly solved or certified. Active-fluid lifecycle tests
+  retain explicit unsupported suspension/origin/save combinations; they do not
+  imply universal active particle-fluid cold-save support.
+- Broad PBF surface/pressure quality and exterior one-way coupling remain
+  approximate. The particle transient correction is not a production-fluid
+  certification. The Alpha fluid lock and project opt-in policy remain intact.
+- The volume grid is promising building-block evidence, but fine-grid pressure
+  is expensive and actual moving cut-solid/body coupling is absent. It is not
+  ready to replace the existing backend or justify unlocking Advanced Fluids.
+
+EXACT IMPLEMENTATION / REGISTRATION FILES
+  src/FluidWorld.cpp, src/FluidWorld.h
+  src/PhysicsWorld.h, src/physics/WorldParticles.cpp
+  src/ProductionFluidCoupling.cpp
+  tests/FluidContactClearanceTests.cpp
+  CMakeLists.txt, tools/validation/suites.json
+Separate optional prototype files:
+  tools/prototypes/fluid_volume_grid/VolumeGridPrototype.cpp, README.txt
+Documentation/evidence: this report, docs/README.md and the new
+  docs/evidence/fluid-clearance-repair-20261102/ directory.
+No original accepted test, project, scene or independent research was modified.
+
+HUMAN REVIEW
+1. In the updated Experimental build open projects/fluid_comparison/
+   fluid_comparison.judasproj. F1 rectangular pool; swim, grab/throw the three
+   density props, reset and repeat. Watch for artificial sideways launches.
+2. F2 awkward planetary basin: check traversal, swimming, manipulation and
+   scene switching. High particle speeds/rough surface behavior remain limits;
+   report exact actions rather than treating the rectangle as universal proof.
+3. Open an ordinary Basic Water project: visuals/swimming and default settings
+   remain independent of advanced fluids. No human acceptance is invented here.
+4. The grid prototype is a command-line numerical experiment, not a new engine
+   water option. Its README gives build/gate/diagnostic commands and exclusions.
+
+Evidence, reproduction commands and all preserved failures:
+  docs/evidence/fluid-clearance-repair-20261102/README.txt
+  docs/evidence/fluid-volume-grid-20261102/README.txt

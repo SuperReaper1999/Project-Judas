@@ -269,7 +269,8 @@ void ProductionFluidCoupling::AdvanceResolvedLiquid(RuntimeWorld& world,float dt
                     break;
                 }
                 owners.push_back(owner);
-                rows.push_back({c.particleIndex,c.owner,c.point,c.normal,c.wallVelocity,owner<s.bodies.size()});
+                rows.push_back({c.particleIndex,c.owner,c.point,c.normal,c.wallVelocity,
+                    owner<s.bodies.size(),c.minimumNormalVelocity});
             }
             glm::vec3 supportImpulse(0);
             // This post-rigid velocity exchange reuses already cached support

@@ -108,6 +108,7 @@
     {"name":"fluid-volume-drag","target":"judas_fluid_volume_drag_tests","groups":["water"]},
     {"name":"fluid-lifecycle-qualification","target":"judas_fluid_lifecycle_qualification_tests","groups":["water","lifecycle"]},
     {"name":"fluid-cadence-motion","target":"judas_fluid_cadence_motion_tests","groups":["water","lifecycle"]},
+    {"name":"fluid-contact-clearance","target":"judas_fluid_contact_clearance_tests","groups":["water"]},
     {"name":"project-settings-editor","target":"judas_project_settings_editor_tests","groups":["onboarding","water"]},
     {"name":"basic-water-application","target":"judas_basic_water_application_tests","groups":["water","application"],"args":["--profile","{output}/water"]},
     {"name":"basic-water-cold","target":"judas_basic_water_application_tests","groups":["water","lifecycle","application"],"args":["--cold-cycle","{output}/cold"]},

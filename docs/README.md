@@ -22,6 +22,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 - [Experimental shadow-filter correction](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; separate from published release qualification.
 - [Experimental fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
 - [Fluid contact transient and representation review](FLUID_TRANSIENT_AND_REPRESENTATION_REVIEW.txt): captured premature contact impulses, causal controls and non-particle alternatives; investigation, not a qualified replacement solver.
+- [Fluid clearance repair and grid prototype](FLUID_CLEARANCE_REPAIR_AND_GRID_PROTOTYPE.txt): coherent hard/soft contact handling, unchanged pool replay, final regression evidence and measured limits of an isolated non-particle design; Alpha lock retained.
 
 ## Build, distribute and verify
 
