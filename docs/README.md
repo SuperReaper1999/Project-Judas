@@ -19,6 +19,7 @@ See [current release notes](ALPHA_V1_2_0_NOTES.md), [versioning](VERSIONING.md) 
 - [2D quick start](2D_QUICKSTART.md): presets, collision, scripts, tiles, animation and export.
 - [Game AI](GAME_AI.md) and [AI scripting](judasjs/ai.md): author actions, inspect decisions, sense physical targets and reserve resources.
 - [Experimental browser export](BROWSER_SUPPORT.md): explicit launch opt-in and a separate Linux/Emscripten toolchain; supported boundaries and qualification records.
+- [Experimental shadow-filter correction](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; separate from published release qualification.
 
 ## Build, distribute and verify
 

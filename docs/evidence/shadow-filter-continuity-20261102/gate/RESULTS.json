@@ -1,0 +1,146 @@
+{
+  "format": 1,
+  "startedUtc": "2026-11-02T18:03:44.454086+00:00",
+  "sourceRevision": "f60c5a4cb5b37c43423269818de993bf87c893ad",
+  "trackedWorktreeStatus": "M cmake/targets/RenderingAssets.cmake\n M src/Renderer.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "a9ae0710b7b2d69a14210185d9cfce1e376440941a076e38d99d0e246eb07b8f",
+  "trackedDiffSha256": "8921193cf26adc3fe161719a4727007099dd9e815df625de2344fcd805f90cf2",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_shadow_sampling_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/src/Renderer.cpp"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/shadow-quality-20261102/gate",
+      "timeoutSeconds": 120,
+      "binarySha256": "a7ae8f5265d482ffef4c2aa7e35a83f14590a15b7278ccb92a975a5092c7d3f2",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "a7ae8f5265d482ffef4c2aa7e35a83f14590a15b7278ccb92a975a5092c7d3f2",
+      "seconds": 0.27669999200043094,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.0-alpha.1-Experimental-f60c5a4-dirty-2da005faa75a-u6900545fdb4a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "2da005faa75acaa49ef405401e35a5cbeda73da4ef6c1ceac804c2d7991e2fa4",
+        "source_origin": "git",
+        "source_revision": "f60c5a4cb5b37c43423269818de993bf87c893ad",
+        "source_tree": "1412ae959807f833b0d0035ea762f3cd1045fa3e",
+        "source_untracked_count": 19,
+        "source_untracked_fingerprint": "6900545fdb4a73d81d6d7102076dcc17e801888d85f2f6c7bb2d7131a19a1821",
+        "version": "1.2.0-alpha.1"
+      },
+      "name": "shadow-sampling"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "FLU-ROOT-ADMISSION",
+      "status": "resolved-local-reconstruction",
+      "scheduled": true,
+      "reason": "Physical non-solid admission uses actual particle cubes and compact pair lenses, not nominal-bin occupancy. All original 34 controls pass unchanged, with neutral/swimming and existing vertical support preserved. New geometric/force controls cover compact support and numerical tangency. This is bounded sampling reconstruction, not exact multiphase topology or a conserved-volume solve. See docs/FLUID_LOCAL_WET_RECONSTRUCTION.txt.",
+      "evidence": "docs/evidence/fluid-local-wet-20261102"
+    },
+    {
+      "id": "FLU-KNOWN-GEOMETRY",
+      "status": "open-failing-diagnostic",
+      "scheduled": false,
+      "reason": "Analytic nonplanar geometry exposes error in both legacy PBF wet-volume reconstruction and the original remote-plane observer. Strict diagnostic stays failing; Advanced Fluids remain locked. See docs/FLUID_KNOWN_GEOMETRY_COMPARISON.md.",
+      "evidence": "docs/evidence/fluid-known-geometry-20261101"
+    },
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF remains locked in Alpha. Contact-height corrections pass the current production acceptance windows and original coarse immersion comparison, but four diagnostic failures and two historical four-second speed failures remain. Root-admission regressions now pass, while these settling and geometry failures remain separate. Original failures and rejected fixes remain preserved; see docs/FLUID_LOCAL_WET_RECONSTRUCTION.txt.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "f60c5a4cb5b37c43423269818de993bf87c893ad",
+    "source_fingerprint": "2da005faa75acaa49ef405401e35a5cbeda73da4ef6c1ceac804c2d7991e2fa4",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "6900545fdb4a73d81d6d7102076dcc17e801888d85f2f6c7bb2d7131a19a1821"
+  },
+  "passed": true,
+  "finishedUtc": "2026-11-02T18:03:44.986179+00:00",
+  "sourceRevisionAfter": "f60c5a4cb5b37c43423269818de993bf87c893ad",
+  "trackedWorktreeStatusAfter": "M cmake/targets/RenderingAssets.cmake\n M src/Renderer.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "8921193cf26adc3fe161719a4727007099dd9e815df625de2344fcd805f90cf2",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "f60c5a4cb5b37c43423269818de993bf87c893ad",
+    "source_fingerprint": "2da005faa75acaa49ef405401e35a5cbeda73da4ef6c1ceac804c2d7991e2fa4",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "6900545fdb4a73d81d6d7102076dcc17e801888d85f2f6c7bb2d7131a19a1821"
+  }
+}

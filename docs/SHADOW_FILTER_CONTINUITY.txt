@@ -1,0 +1,98 @@
+CONTINUOUS SHADOW FILTERING — EXPERIMENTAL, 2 NOVEMBER 2026
+
+Baseline: f60c5a4cb5b37c43423269818de993bf87c893ad.
+This is a rendering correction, not a release, fluid unlock or desktop-crash fix.
+Main and published packages are unchanged. Human acceptance is pending.
+
+CONFIRMED MECHANISM
+The existing receiver-plane correction is present and passes its sloped-plane
+controls. However, its nine equal-weight nearest depth comparisons select their
+whole footprint with floor(projectedUV * mapSize). Crossing a texel boundary
+replaces an entire column/row at once. A one-dimensional edge therefore jumps
+by 1/3 in visibility. This appears as blocky, snapping shadow edges on the pool,
+ordinary boxes and steps; it is not specific to water.
+
+The desktop directional map spans 50 m at 1024 squared (about 4.88 cm/texel).
+That remains a finite-resolution shadow representation, especially visible
+close to a receiver. This patch does not claim unlimited shadow detail.
+
+CORRECTION
+Interpolate the comparison results of four adjacent 3x3 kernel placements.
+Their shared samples form a 4x4 footprint, with per-axis weights
+  [1 - phase, 1, 1, phase], phase = fract(projectedUV * mapSize - 0.5).
+The two weight sums are each 3, so total normalization remains 9.
+Every tap still uses the actual receiver-plane depth at that texel center.
+Raw depth values are not interpolated, which would fabricate occluder depths.
+Existing bias, map size/count, directional coverage, lighting and geometry are
+unchanged. Sampling work is 16 depth fetches per evaluated light versus 9;
+shadow-map memory/resolution are unchanged. No throughput speedup is claimed.
+
+Exact production changes:
+  src/Renderer.cpp — continuous PCF weights; retain receiver-plane correction.
+  tests/ShadowSamplingRenderTests.cpp — actual production-function GL oracle.
+  cmake/targets/RenderingAssets.cmake — ordinary native test target.
+  tools/validation/suites.json — shadow-sampling rendering gate registration.
+  docs/README.md and this note — current Experimental evidence navigation.
+
+EVIDENCE
+Native NVIDIA GTX 970 / driver580.178.04 / OpenGL3.3, GNU15.2 Release on Linux.
+The same final oracle binary reads the frozen baseline or final source function:
+  Baseline: 17 controls, 5 failures; candidate: 17 controls, 0 failures.
+  Vertical/horizontal edge maximum error: .166666672 -> 0.
+  Adjacent 1/16-texel edge-phase jump: .333333343 -> .0208333731.
+  Two-dimensional corner maximum error: .249999970 -> 5.96046448e-8.
+  Flat/oblique/opposite-slope/perspective receivers, real occlusion, neighboring
+  tiled lights, invalid slots and out-of-chart receivers retain passing results.
+  The oracle compares against independent overlap-length/area geometry, not
+  another implementation of the production weight expressions.
+Existing rendering architecture: 44/44, including shadow occlusion, separate
+cameras, instancing, shared atlas layers and GL error/resource checks.
+Shadow transform mathematics: 17/17.
+CMake target/helper regressions: 22/22. Registered shadow-sampling gate passes.
+Pool application: 550 fixed-clock frames, scene switches, pause/resume, entry
+and exit; all 28 logged physical-state rows exactly match the prior pool tour.
+Matched pure-render captures exclude fluids and physics, use identical geometry,
+two fixed cameras, shadow-on/off controls, and show continuous softer boundaries.
+The complete pool's final reference/swimming/exit captures also render normally.
+No new GPU Xid, KWin crash or OOM entry was returned for the bounded test window.
+This is not prolonged crash qualification or Windows/Android/browser acceptance.
+
+REJECTED AUTHORING EXPERIMENT
+The original stairs do have 13 overlapping box pairs. Partitioning the identical
+solid into adjoining slabs removed internal overlap while preserving the exact
+outer union, rise, footprint and all 1440 water positions. But the two captured
+cameras changed only 0 and 6 shadowed pixels respectively out of 760000; the
+unshadowed captures changed 0 and 3 pixels. It did not explain the reported
+pattern. That experiment is preserved and not integrated. The project content,
+fluid parameters and collision geometry remain byte-identical to the baseline.
+The stair shape genuinely casts diagonal wedges; smoothing those shadows must
+not be confused with removing legitimate occlusion.
+
+REMAINING FAILURES / LIMITS
+The broader Python validation-helper suite is 13/14: its existing scheduled-
+finding inventory assertion omits FLU-ROOT-ADMISSION. The exact same assertion
+fails against the unchanged baseline manifest; new shadow registration did not
+cause it. No expectation was weakened or unrelated gate repair bundled here.
+Experimental fluid escape/settling/geometry issues remain as previously recorded.
+The earlier native desktop failure logged NVIDIA Xid32/69 and KWin termination.
+Its cause remains unestablished. Full-call tracing changes timing, and its
+timeout shutdown crashed the tracer; neither result certifies driver stability.
+
+REPRODUCTION / RETAINED ARTIFACTS
+  cmake --build BUILD --target judas judas_shadow_sampling_render_tests judas_rendering_architecture_tests judas_shadow_tests -j2
+  BUILD/judas_shadow_sampling_render_tests src/Renderer.cpp
+  BUILD/judas_rendering_architecture_tests /tmp/fresh-shadow-architecture
+  BUILD/judas_shadow_tests
+  python3 scripts/prealpha_validate.py --build-dir BUILD --test shadow-sampling --expected-channel Experimental --output /tmp/fresh-shadow-gate
+Use an actual desktop GL context or the existing suitable headless GL setup.
+The same test accepts a frozen Renderer.cpp path to reproduce original failures.
+Full commands, raw results, frozen baseline, diagnostic sources, rejected stair
+experiment, captures, source/binary hashes and validation receipt are under
+  docs/evidence/shadow-filter-continuity-20261102/
+Large local builds/traces remain in .cache; no trace replay was needed here.
+
+HUMAN CHECK
+Compare the large pool's deck, steps and water-edge shadows at the same camera
+angle, then the no-water Rigid Stability scene. Walk slowly and watch shadow
+edges move. Finite-resolution softness remains; whole-row brightness snapping
+should be gone. Any repeat desktop/GPU failure remains a separate blocker.

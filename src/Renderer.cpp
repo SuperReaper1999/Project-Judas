@@ -150,7 +150,7 @@ ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clam
 vec3 shadowWorldDx, shadowWorldDy;
 
 // A sloped receiver has a different depth at each shadow texel. Correct that
-// depth across the nine-tap PCF footprint instead of hiding acne with more bias.
+// depth across the PCF footprint instead of hiding acne with more bias.
 float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     if(slot<0||slot>=9)return 1.0;
     vec4 clip=uLightSpaceMatrix[slot]*vec4(worldPosition,1.0);
@@ -171,16 +171,23 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     }
     if(any(isnan(slope))||any(isinf(slope)))slope=vec2(0.0);
     ivec2 size=textureSize(uShadowMaps,0).xy;
-    ivec2 center=ivec2(floor(projected.xy*vec2(size)));
+    // Interpolate comparison results, never raw depths. A nearest 3x3 kernel
+    // changes a whole row/column at a texel boundary and visibly snaps. Blend
+    // its four adjacent placements continuously using their shared 4x4 taps.
+    vec2 texel=projected.xy*vec2(size)-0.5;
+    ivec2 center=ivec2(floor(texel));
+    vec2 phase=fract(texel);
     float bias=max(0.006*(1.0-ndotl),0.0015); // Existing numerical bias, unchanged.
     float lit=0.0;
-    for(int x=-1;x<=1;++x){
-        for(int y=-1;y<=1;++y){
+    for(int x=-1;x<=2;++x){
+        float wx=x==-1?1.0-phase.x:(x==2?phase.x:1.0);
+        for(int y=-1;y<=2;++y){
+            float wy=y==-1?1.0-phase.y:(y==2?phase.y:1.0);
             ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
             vec2 offset=(vec2(pixel)+0.5)/vec2(size)-projected.xy;
             float receiver=projected.z+dot(slope,offset);
             float stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
-            lit+=receiver-bias<=stored?1.0:0.0;
+            lit+=wx*wy*(receiver-bias<=stored?1.0:0.0);
         }
     }
     return lit/9.0;

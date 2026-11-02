@@ -1,0 +1,814 @@
+JudasScene 3
+settings
+  name "Large rectangular fluid reference"
+  world-origin 0 0 0
+  sun-direction .4 .7 .35
+  sun-color 1 .98 .92
+  ambient .3 .32 .35
+  fluid-scale 10
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 36
+end
+
+object 1 "Reference floor / uniform gravity"
+  position 0 -0.25 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8.5 0.25 9
+  render.radius 0.5
+  render.color 0.22 0.27 0.29
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8.5 0.25 9
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  gravity uniform 9.81
+  gravity.region box 100 100 100
+end
+
+object 2 "Clear long wall"
+  position -6.15 1.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.4 4.3
+  render.radius 0.5
+  render.color 0.25 0.55 0.65
+  render.alpha 0.24
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.15 1.4 4.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 3 "Short wall"
+  position 0 1.4 -4.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 1.4 0.15
+  render.radius 0.5
+  render.color 0.45 0.53 0.58
+  render.alpha 0.32
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 1.4 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 4 "Long rim"
+  position -6.15 2.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.17 0.06 4.3
+  render.radius 0.5
+  render.color 0.8 0.83 0.84
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.17 0.06 4.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 5 "Short rim"
+  position 0 2.8 -4.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 0.06 0.17
+  render.radius 0.5
+  render.color 0.8 0.83 0.84
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 0.06 0.17
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 6 "Clear long wall"
+  position 6.15 1.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.4 4.3
+  render.radius 0.5
+  render.color 0.25 0.55 0.65
+  render.alpha 0.24
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.15 1.4 4.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 7 "Short wall"
+  position 0 1.4 4.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 1.4 0.15
+  render.radius 0.5
+  render.color 0.45 0.53 0.58
+  render.alpha 0.32
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 1.4 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 8 "Long rim"
+  position 6.15 2.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.17 0.06 4.3
+  render.radius 0.5
+  render.color 0.8 0.83 0.84
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.17 0.06 4.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 9 "Short rim"
+  position 0 2.8 4.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 0.06 0.17
+  render.radius 0.5
+  render.color 0.8 0.83 0.84
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 0.06 0.17
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Entry and observation deck"
+  position 0 1.4 5.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 7 1.4 1.6
+  render.radius 0.5
+  render.color 0.6 0.58 0.48
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 7 1.4 1.6
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 11 "Exit stair 01 / .2 m rise"
+  position 0 0.1 0.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.1 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.1 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 12 "Exit stair 02 / .2 m rise"
+  position 0 0.2 0.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.2 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.2 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 13 "Exit stair 03 / .2 m rise"
+  position 0 0.3 1.1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.3 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.3 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 14 "Exit stair 04 / .2 m rise"
+  position 0 0.4 1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.4 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.4 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 15 "Exit stair 05 / .2 m rise"
+  position 0 0.5 1.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.5 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.5 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 16 "Exit stair 06 / .2 m rise"
+  position 0 0.6 1.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.6 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.6 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 17 "Exit stair 07 / .2 m rise"
+  position 0 0.7 2.1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.7 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.7 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 18 "Exit stair 08 / .2 m rise"
+  position 0 0.8 2.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.8 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.8 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 19 "Exit stair 09 / .2 m rise"
+  position 0 0.9 2.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.9 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.9 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 20 "Exit stair 10 / .2 m rise"
+  position 0 1 2.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 1 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 1 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 21 "Exit stair 11 / .2 m rise"
+  position 0 1.1 3.1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 1.1 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 1.1 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 22 "Exit stair 12 / .2 m rise"
+  position 0 1.2 3.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 1.2 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 1.2 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 23 "Exit stair 13 / .2 m rise"
+  position 0 1.3 3.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 1.3 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 1.3 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 24 "Exit stair 14 / .2 m rise"
+  position 0 1.4 3.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 1.4 0.18
+  render.radius 0.5
+  render.color 0.71 0.72 0.68
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 1.4 0.18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 25 "Floating green block / 500 kg per m3"
+  position -3.5 3.32 5.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.18 0.78 0.35
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 500
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 26 "Sinking grey block / 2000 kg per m3"
+  position -5 3.32 5.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.4 0.43 0.47
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2000
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 27 "Neutral blue block / 1000 kg per m3"
+  position 3.5 3.32 5.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.18 0.48 0.9
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1000
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 28 "Reference water / stock volume"
+  position 0 0.25 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 24 4 8
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 29 "Reference water / stock volume"
+  position -3.5 0.25 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 10 4 8
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 30 "Reference water / stock volume"
+  position 3.5 0.25 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 10 4 8
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 31 "Reference water / stock volume"
+  position 0 0.75 0.25
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 4 3 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 32 "Reference water / stock volume"
+  position 0 1.25 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 4 2 2
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 33 "Reference water / stock volume"
+  position 0 1.75 1.75
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.5
+  fluid-volume.count 4 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 34 "Player / dry entry deck"
+  position 0 3.8 6.7
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+  player-start.density 950
+  player-start.fluid-drag 2
+  player-start.swim-acceleration 4
+end
+
+object 35 "Comparison controls"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  ui.asset "fa11c0de000000000000000000000001"
+  ui.name "game_ui"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "fa11c0de000000000000000000000002"
+  script.0.enabled true
+  script.0.properties "{}"
+end

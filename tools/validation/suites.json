@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"shadow-sampling","target":"judas_shadow_sampling_render_tests","groups":["rendering"],"args":["{root}/src/Renderer.cpp"]},
     {"name":"fluid-hydrostatics","target":"judas_fluid_hydrostatics_tests","groups":["water"]},
     {"name":"fluid-coverage-observation","target":"judas_fluid_coverage_observation_tests","groups":["water"]},
     {"name":"ai-reservations","target":"judas_ai_reservation_tests","groups":["ai","core"]},

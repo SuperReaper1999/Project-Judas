@@ -1,0 +1,11 @@
+{
+  "src/Renderer.cpp": "86909dde4d1da638ac7afa818b5368c4df129d0cd0a4a1d6fabdad922c45b6ca",
+  "tests/ShadowSamplingRenderTests.cpp": "ec4d8f55fe72f1d9694af3c69ba37dc529c5d8a4e6af7d8fd904cf5ffdbf840c",
+  "cmake/targets/RenderingAssets.cmake": "de503f84f1a94db0f187706b9c8f4b291eabb985fc3e799dcc9af2fc997d70b0",
+  "tools/validation/suites.json": "a9ae0710b7b2d69a14210185d9cfce1e376440941a076e38d99d0e246eb07b8f",
+  ".cache/2d-stage1-build/judas": "271c2ab92c1b3411d54ec360872de06d74db48f4e2beb32b836757d7ec5e98a6",
+  ".cache/2d-stage1-build/judas_shadow_sampling_render_tests": "a7ae8f5265d482ffef4c2aa7e35a83f14590a15b7278ccb92a975a5092c7d3f2",
+  ".cache/2d-stage1-build/judas_rendering_architecture_tests": "d8e9dd1b522b414f70b9a91358d034f5c354f6ef3ba88df2f2e14676bed2a954",
+  ".cache/shadow-quality-20261102/capture": "ebe9f8c5fcbb0d33b3196a367a3cef92ac0649ebe3e8da0e70664957f25325b2",
+  ".cache/shadow-quality-20261102/capture-after": "ed5398dceb32e10ffc5b981118ed156504a3d83a38e804a35e1426cd679c0e9e"
+}

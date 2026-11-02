@@ -1,0 +1,359 @@
+diff --git a/projects/fluid_comparison/Scenes/rectangular_pool.judas b/projects/fluid_comparison/Scenes/rectangular_pool.judas
+index a3857762..02b34ab9 100644
+--- a/projects/fluid_comparison/Scenes/rectangular_pool.judas
++++ b/projects/fluid_comparison/Scenes/rectangular_pool.judas
+@@ -275,11 +275,11 @@ object 10 "Entry and observation deck"
+ end
+ 
+ object 11 "Exit stair 01 / .2 m rise"
+-  position 0 0.1 0.6
++  position 0 0.1 0.545
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.1 0.18
++  render.half-extents 0.9 0.1 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -288,7 +288,7 @@ object 11 "Exit stair 01 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.1 0.18
++  body.half-extents 0.9 0.1 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -301,11 +301,11 @@ object 11 "Exit stair 01 / .2 m rise"
+ end
+ 
+ object 12 "Exit stair 02 / .2 m rise"
+-  position 0 0.2 0.85
++  position 0 0.2 0.795
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.2 0.18
++  render.half-extents 0.9 0.2 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -314,7 +314,7 @@ object 12 "Exit stair 02 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.2 0.18
++  body.half-extents 0.9 0.2 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -327,11 +327,11 @@ object 12 "Exit stair 02 / .2 m rise"
+ end
+ 
+ object 13 "Exit stair 03 / .2 m rise"
+-  position 0 0.3 1.1
++  position 0 0.3 1.045
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.3 0.18
++  render.half-extents 0.9 0.3 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -340,7 +340,7 @@ object 13 "Exit stair 03 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.3 0.18
++  body.half-extents 0.9 0.3 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -353,11 +353,11 @@ object 13 "Exit stair 03 / .2 m rise"
+ end
+ 
+ object 14 "Exit stair 04 / .2 m rise"
+-  position 0 0.4 1.35
++  position 0 0.4 1.295
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.4 0.18
++  render.half-extents 0.9 0.4 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -366,7 +366,7 @@ object 14 "Exit stair 04 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.4 0.18
++  body.half-extents 0.9 0.4 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -379,11 +379,11 @@ object 14 "Exit stair 04 / .2 m rise"
+ end
+ 
+ object 15 "Exit stair 05 / .2 m rise"
+-  position 0 0.5 1.6
++  position 0 0.5 1.545
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.5 0.18
++  render.half-extents 0.9 0.5 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -392,7 +392,7 @@ object 15 "Exit stair 05 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.5 0.18
++  body.half-extents 0.9 0.5 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -405,11 +405,11 @@ object 15 "Exit stair 05 / .2 m rise"
+ end
+ 
+ object 16 "Exit stair 06 / .2 m rise"
+-  position 0 0.6 1.85
++  position 0 0.6 1.795
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.6 0.18
++  render.half-extents 0.9 0.6 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -418,7 +418,7 @@ object 16 "Exit stair 06 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.6 0.18
++  body.half-extents 0.9 0.6 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -431,11 +431,11 @@ object 16 "Exit stair 06 / .2 m rise"
+ end
+ 
+ object 17 "Exit stair 07 / .2 m rise"
+-  position 0 0.7 2.1
++  position 0 0.7 2.045
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.7 0.18
++  render.half-extents 0.9 0.7 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -444,7 +444,7 @@ object 17 "Exit stair 07 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.7 0.18
++  body.half-extents 0.9 0.7 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -457,11 +457,11 @@ object 17 "Exit stair 07 / .2 m rise"
+ end
+ 
+ object 18 "Exit stair 08 / .2 m rise"
+-  position 0 0.8 2.35
++  position 0 0.8 2.295
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.8 0.18
++  render.half-extents 0.9 0.8 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -470,7 +470,7 @@ object 18 "Exit stair 08 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.8 0.18
++  body.half-extents 0.9 0.8 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -483,11 +483,11 @@ object 18 "Exit stair 08 / .2 m rise"
+ end
+ 
+ object 19 "Exit stair 09 / .2 m rise"
+-  position 0 0.9 2.6
++  position 0 0.9 2.545
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 0.9 0.18
++  render.half-extents 0.9 0.9 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -496,7 +496,7 @@ object 19 "Exit stair 09 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 0.9 0.18
++  body.half-extents 0.9 0.9 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -509,11 +509,11 @@ object 19 "Exit stair 09 / .2 m rise"
+ end
+ 
+ object 20 "Exit stair 10 / .2 m rise"
+-  position 0 1 2.85
++  position 0 1 2.795
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 1 0.18
++  render.half-extents 0.9 1 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -522,7 +522,7 @@ object 20 "Exit stair 10 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 1 0.18
++  body.half-extents 0.9 1 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -535,11 +535,11 @@ object 20 "Exit stair 10 / .2 m rise"
+ end
+ 
+ object 21 "Exit stair 11 / .2 m rise"
+-  position 0 1.1 3.1
++  position 0 1.1 3.045
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 1.1 0.18
++  render.half-extents 0.9 1.1 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -548,7 +548,7 @@ object 21 "Exit stair 11 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 1.1 0.18
++  body.half-extents 0.9 1.1 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -561,11 +561,11 @@ object 21 "Exit stair 11 / .2 m rise"
+ end
+ 
+ object 22 "Exit stair 12 / .2 m rise"
+-  position 0 1.2 3.35
++  position 0 1.2 3.295
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 1.2 0.18
++  render.half-extents 0.9 1.2 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -574,7 +574,7 @@ object 22 "Exit stair 12 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 1.2 0.18
++  body.half-extents 0.9 1.2 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+@@ -587,11 +587,11 @@ object 22 "Exit stair 12 / .2 m rise"
+ end
+ 
+ object 23 "Exit stair 13 / .2 m rise"
+-  position 0 1.3 3.6
++  position 0 1.3 3.545
+   rotation 1 0 0 0
+   scale 1 1 1
+   render box
+-  render.half-extents 0.9 1.3 0.18
++  render.half-extents 0.9 1.3 0.125
+   render.radius 0.5
+   render.color 0.71 0.72 0.68
+   render.alpha 1
+@@ -600,7 +600,7 @@ object 23 "Exit stair 13 / .2 m rise"
+   render.mesh-asset ""
+   render.texture-asset ""
+   body static box
+-  body.half-extents 0.9 1.3 0.18
++  body.half-extents 0.9 1.3 0.125
+   body.radius 0.5
+   body.terrain ""
+   body.mass 1
+diff --git a/projects/fluid_comparison/Source/authoring.json b/projects/fluid_comparison/Source/authoring.json
+index 09273818..b224477c 100644
+--- a/projects/fluid_comparison/Source/authoring.json
++++ b/projects/fluid_comparison/Source/authoring.json
+@@ -17,7 +17,16 @@
+     "actualParticles": 1440,
+     "particleMassKg": 125.0,
+     "initialMassKg": 180000.0,
+-    "stairClearanceM": 0.18
++    "stairClearanceM": 0.18,
++    "stairs": {
++      "count": 14,
++      "riseM": 0.2,
++      "solidZRangeM": [
++        0.42,
++        4.03
++      ],
++      "partition": "Adjoining slabs; original stepped-solid union preserved."
++    }
+   },
+   "awkward": "Original objects1-8 unchanged. Only next-id metadata and HUD object9 added."
+ }
+diff --git a/projects/fluid_comparison/Tools/build_scenes.py b/projects/fluid_comparison/Tools/build_scenes.py
+index 2c4271df..17f788f9 100644
+--- a/projects/fluid_comparison/Tools/build_scenes.py
++++ b/projects/fluid_comparison/Tools/build_scenes.py
+@@ -72,7 +72,16 @@ for sign in (-1, 1):
+ obj('Entry and observation deck', (0, 1.4, 5.9), (7, 1.4, 1.6), color=(.6, .58, .48))
+ for index in range(1, 15):
+     top = index * .2
+-    position, half = (0, top / 2, .35 + index * .25), (.9, top / 2, .18)
++    # Partition the existing stepped solid at each higher step's leading edge.
++    # The old overlapping boxes had coplanar side faces that fought for depth.
++    # These adjoining slabs preserve the exact outer staircase and water stock.
++    front = .35 + index * .25 - .18
++    if index < 14:
++        back = .35 + (index + 1) * .25 - .18
++    else:
++        back = .35 + index * .25 + .18
++    position = (0, top / 2, (front + back) / 2)
++    half = (.9, top / 2, (back - front) / 2)
+     stairs.append((position, half))
+     obj(f'Exit stair {index:02d} / .2 m rise', position, half, color=(.71, .72, .68))
+ obj('Floating green block / 500 kg per m3', (-3.5, 3.32, 5.4), (.5, .5, .5),
+@@ -158,7 +167,10 @@ awkward = original.decode().replace('  next-id 9\n', '  next-id 10\n') + '\n' +
+                   'unclippedGrid': [24, 4, 16], 'actualParticles': particle_count,
+                   'particleMassKg': 1000 * spacing ** 3,
+                   'initialMassKg': particle_count * 1000 * spacing ** 3,
+-                  'stairClearanceM': clearance},
++                  'stairClearanceM': clearance,
++                  'stairs': {'count': 14, 'riseM': .2,
++                             'solidZRangeM': [.42, 4.03],
++                             'partition': 'Adjoining slabs; original stepped-solid union preserved.'}},
+     'awkward': 'Original objects1-8 unchanged. Only next-id metadata and HUD object9 added.'
+ }, indent=2) + '\n')
+ print(f'Generated reference: {particle_count} particles, {len(blocks)} objects; original terrain snapshot preserved.')
