@@ -434,11 +434,17 @@ BoxContact CollideSphere(const glm::vec3& from, const glm::vec3& to,
 
     glm::vec3 outward(0.0f);
     if (startInside) {
-        const glm::vec3 reference = glm::dot(startRelative, startRelative) > kEpsilon * kEpsilon
-            ? startRelative : endRelative;
-        const float length = glm::length(reference);
-        if (length <= kEpsilon) return result; // exact centre has no defined normal
-        outward = reference / length;
+        // Every represented nonzero radial direction defines a normal, even
+        // below the ordinary sweep epsilon. Normalize in double so tiny float
+        // components do not lose their squared norm to underflow.
+        const glm::dvec3 startDirection(startRelative), endDirection(endRelative);
+        const glm::dvec3 reference = glm::dot(startDirection, startDirection) > 0
+            ? startDirection : glm::dot(endDirection, endDirection) > 0
+            ? endDirection : glm::dvec3(end.rotation * glm::vec3(1, 0, 0));
+        // A motionless exact centre has no unique geometric exit. Initial
+        // overlap uses the sphere body's local +X as its deterministic policy;
+        // this rotates with the body and only selects geometric depenetration.
+        outward = glm::vec3(reference / glm::length(reference));
     } else {
         const float a = glm::dot(displacement, displacement);
         const float b = 2.0f * glm::dot(startRelative, displacement);

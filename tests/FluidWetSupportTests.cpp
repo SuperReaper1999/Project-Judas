@@ -1,4 +1,5 @@
 #include "FluidHydrostatics.h"
+#include "FluidWetFootprint.h"
 #include "GravityField.h"
 #include <glm/gtc/quaternion.hpp>
 #include <cmath>
@@ -184,14 +185,134 @@ void AnchoredFootprint(const Frame& frame) {
     Near(glm::length(result.buoyancyForce), 1000 * 9.81 * volume.totalVolume, .0001,
          "positive coarse footprint retains Archimedes load");
 }
+void PreparedColumnTopologyControls() {
+    std::vector<FluidWetColumnFootprint> columns{{0, 0, {0, 0}, true, true, false}};
+    const FluidWetColumnTopology topology(columns, true);
+    Near(topology.ContainsOrigin(columns, 1), 1, 0, "prepared topology admits actual wet footprint");
+    columns[0].wet = false;
+    Near(topology.ContainsOrigin(columns, 1), 0, 0, "prepared topology does not retain old wetness");
+    columns[0].wet = true;
+    columns[0].center = {2, 0};
+    Near(topology.ContainsOrigin(columns, 1), 0, 0, "prepared topology uses current footprint positions");
+    Near(topology.ContainsOrigin(columns, 5), 1, 0, "prepared topology uses the current footprint width");
+    const auto rejects = [&](const std::vector<FluidWetColumnFootprint>& changed) {
+        bool rejected = false;
+        try { topology.ContainsOrigin(changed, 1); }
+        catch (const std::invalid_argument&) { rejected = true; }
+        Near(rejected, 1, 0, "prepared topology rejects changed grid keys or size");
+    };
+    rejects({});
+    auto changed = columns;
+    ++changed[0].x;
+    rejects(changed);
+    columns[0].center = {0, 0};
+    Near(topology.ContainsOrigin(columns, 1), 1, 0, "rejected reuse does not corrupt valid topology");
+
+    std::vector<FluidWetColumnFootprint> islands{
+        {-3, 0, {-3, 0}, true, true, false},
+        {0, 0, {0, 0}, false, false, false},
+        {3, 0, {3, 0}, true, true, false}
+    };
+    const FluidWetColumnTopology separate(islands, true);
+    Near(separate.ContainsOrigin(islands, 1), 0, 0, "prepared disconnected patches cannot form a global wet hull");
+    islands[1].wet = true;
+    Near(separate.ContainsOrigin(islands, 1), 1, 0, "new local wet patch becomes visible without rebuilding adjacency");
+    std::swap(islands[0], islands[2]);
+    bool rejected = false;
+    try { separate.ContainsOrigin(islands, 1); }
+    catch (const std::invalid_argument&) { rejected = true; }
+    Near(rejected, 1, 0, "prepared topology rejects reordered columns");
+    const FluidWetColumnTopology empty({}, true);
+    Near(empty.ContainsOrigin({}, 1), 0, 0, "prepared empty topology stays dry");
+}
+
+void VerticallySeparatedContactWitness(const Frame& frame) {
+    const auto volume = MakeBoxFluidVolume(glm::vec3(.1f), 1);
+    const BodyTransform pose{frame.Point({0, 0, 0}), frame.rotation};
+    const FluidSolidQuery solid{volume, pose};
+    struct Case {
+        const char* label;
+        bool low, remote, local;
+        double expected;
+    };
+    const Case cases[]{
+        {"low footprint retains lateral dry gap", true, false, false, 0},
+        {"vertically remote contact cannot wet lower row", true, true, false, 0},
+        {"active local footprint retains real contact", true, false, true, 1},
+        {"remote row alone cannot supply local water", false, true, false, 0},
+    };
+    for (const auto& scenario : cases) {
+        std::vector<FluidParticle> particles;
+        const auto append = [&](glm::vec3 p) {
+            p = frame.Point(p);
+            particles.push_back({p, p, {}, 15.625f, {}});
+        };
+        // Spacing is .25 m. The remote first particle fixes bin centres at
+        // x=n*.25 without supplying local water. Both local x coordinates
+        // occupy the same bin, whose square begins at x=.125 outside the box.
+        append({-2, 0, 0});
+        // Independent geometry: this water begins at x=.155, leaving .055 m
+        // of air beside the .1 m box. The higher particle begins at y=.425,
+        // leaving .325 m of air above it; its lateral footprint cannot witness
+        // water/solid contact at the lower query height. Moving that particle
+        // to y=0 supplies an actual .005 m lateral overlap as a positive control.
+        if (scenario.low) append({.28f, 0, 0});
+        if (scenario.remote) append({.22f, .55f, 0});
+        if (scenario.local) append({.22f, 0, 0});
+        FluidHydrostaticField field;
+        field.Build(particles, 1000);
+        for (float half : {0.f, .025f}) {
+            const auto result = field.Query(pose.position, frame.Vector({0, 1, 0}),
+                                            half, volume.boundRadius,
+                                            frame.Vector({1, 0, 0}), &solid, true);
+            Near(result.fraction, scenario.expected, 2e-5, scenario.label);
+        }
+    }
+    // These analytic height controls use the same rotations at the local
+    // origin, where binary32 translations do not quantize the .025 m sliver.
+    const Frame sliverFrame{frame.rotation, {0, 0, 0}};
+    const BodyTransform sliverPose{sliverFrame.Point({0, 0, 0}), sliverFrame.rotation};
+    const FluidSolidQuery sliverSolid{volume, sliverPose};
+    struct SliverCase {
+        const char* label;
+        float contactX, contactY;
+        double expected;
+    };
+    const SliverCase slivers[]{
+        {"active height sliver survives closed column profile", .22f, .2f, .125},
+        {"active height sliver requires lateral contact", .28f, .2f, 0},
+        {"closed profile cannot borrow remote height contact", .22f, .55f, 0},
+    };
+    for (const auto& scenario : slivers) {
+        std::vector<FluidParticle> particles;
+        for (const glm::vec3 local : {glm::vec3(-2, 0, 0),
+                                      glm::vec3(.28f, -.1f, 0),
+                                      glm::vec3(scenario.contactX, scenario.contactY, 0)}) {
+            const auto p = sliverFrame.Point(local);
+            particles.push_back({p, p, {}, 15.625f, {}});
+        }
+        FluidHydrostaticField field;
+        field.Build(particles, 1000);
+        // The low row leaves the same .055 m lateral air gap. A genuine
+        // contacting row at y=.2 starts at y=.075; only [.075,.1] of this
+        // .2 m query slab touches represented water, giving exactly .125.
+        // Closing the .05 m sampling gap hides that raw .075 endpoint.
+        const auto result = field.Query(sliverPose.position, sliverFrame.Vector({0, 1, 0}),
+                                        .1f, volume.boundRadius,
+                                        sliverFrame.Vector({1, 0, 0}), &sliverSolid, true);
+        Near(result.fraction, scenario.expected, 2e-5, scenario.label);
+    }
+}
 }
 int main() {
+    PreparedColumnTopologyControls();
     const auto rotation = glm::angleAxis(.83f, glm::normalize(glm::vec3(1, -2, 3)));
     const Frame frames[] = {{}, {rotation, {3, -2, 4}}, {rotation, {4096, 0, 0}}};
     for (const auto& frame : frames) {
         RingAndShapeCases(frame);
         CompoundOwnership(frame);
         AnchoredFootprint(frame);
+        VerticallySeparatedContactWitness(frame);
     }
     VerticalMean();
     std::cout << "Fluid wet support: " << checks << " checks, " << failures << " failures\n";

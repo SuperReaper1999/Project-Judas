@@ -1,0 +1,118 @@
+Fluid continuation: contact-height support, sphere initialization and query cost
+Experimental continuation from d71af6e007b5c39a822f0f563f4dd108040cea4b.
+Linux engineering checkpoint; final-source evidence is identified below.
+
+Advanced Fluids remain locked in Alpha. This is an engineering checkpoint, not
+human acceptance or full fluid qualification. Main and published packages are
+unchanged. Basic Water remains independent of the advanced particle path.
+
+Two demonstrated geometry defects were corrected. A stationary particle exactly
+at a sphere centre had no selected collision normal, so ordinary authored fluid
+could throw before its first liquid step. Every represented nonzero radial
+vector now supplies its direction through double-precision normalization, even
+below the previous absolute threshold. A truly directionless centre uses the
+sphere body's local +X as an explicit initial-overlap exit policy. Existing
+projection validation still establishes real-solid exclusion. Stationary
+controls gain no velocity, kinetic energy or impulse.
+
+The original probe reproduces eight exceptions across 36 measurements; the
+correction removes them. Sixty-four stationary direction/frame measurements,
+subnormal rays and q/-q controls pass. FluidWorld has 355 passing assertions;
+lifecycle has 38. The same new unit driver against the old engine fails 46.
+Two serialized 3x3x3 authored scenes create an exact-centre particle: the old
+engine throws at particle 13; the correction advances all 27 particles with
+exact mass and zero kinetic energy.
+
+A second defect let water at a different height certify local wet contact through
+a solid. A known dry control has a .055 m lateral gap and a .325 m vertical
+separation, yet reports full wetness. Requiring the witness particle to intersect
+the active band makes it dry and keeps a genuine .005 m contact overlap wet,
+for point and finite-height queries in two frames. The guard alone misses a
+real finite sliver: its midpoint gives zero while independent zero-height
+integration and geometry give .125. Raw particle-height cuts recover
+.12499999255. Durable contact tests add 33 assertions; caching misuse/parity controls add 11 more. Wet support passes 153 total; scoped
+hydrostatics and vertical support pass 346 and 335. No acceptance limit changed.
+
+The unchanged metadata-free known-geometry diagnostic has 48 engine and 80
+observer failures over 360 rows, versus the previous checkpoint's 36 and 80.
+The 12 added failures are finest-spacing (.0625 m), fully immersed displaced
+boxes in both frames across all six surfaces. Their earlier admission borrowed
+contact evidence from another height. These inputs delete particle centres
+before publication and supply no pre-cut domain ownership; the represented
+contact gap remains. Missing history cannot distinguish displaced water from a
+genuine dry cavity. The counterpart supplied with the actual pre-cut domain has
+zero engine failures over 360 while all 80 observer failures remain. Both
+diagnostics remain failed; no assertion or tolerance was relaxed. Frame
+comparisons have zero failures.
+
+Raw height partitioning increases work: an earlier coarse-pool executed-coupling
+median rises from about 21.49 to 41.86 ms. Changed trajectories make that
+sequential comparison unsuitable as an isolated performance ratio. Profiling
+1,000 frozen queries finds 42,000 footprint calls; topology accounts for
+85.07 ms of .211257 s total. Timer overhead/shared-host effects limit that result.
+
+The query now builds its column DSU once, lazily, and reuses component roots
+across bands. Incoming wet states, centres and widths still build the same hull
+in the same order. Dry-key connectivity is preserved, changed keys/sizes are
+rejected, and the original wrapper remains usable. State stays query-local.
+Parity covers 16,387 kernel comparisons, 762 rejected misuse cases, all eight
+float fields in nine frozen queries, and every known-geometry row, still 48/80
+failed. Seven alternating 3,000-query timing pairs reduce median batch means
+from 196.14 to 117.41 microseconds/query with identical checksums. A matched
+720-step coupled trace preserves all 22 physical columns exactly; its final all-step coupling median is 36.73 versus 25.35 ms; p95 49.29 versus
+35.06 ms; worst 57.73 versus 41.20 ms. Before means the new correctness
+version before caching, not the preceding accepted checkpoint. These scoped Linux CPU measurements
+exclude rendering and ordinary rigid-step cost; they are not general frame rate.
+
+A prepared-solid reuse prototype preserves 8,505,000 kernel comparisons, gates
+and frozen outputs, but measures 195.55 versus 194.89 microseconds/query. That
+approximately .3 percent batch delta gives no material demonstrated gain. It
+was rejected for added complexity, not for a correctness failure.
+
+Root admission through reconstructed non-solid halos remains UNRESOLVED. A
+global halo ban passes new dry controls but causes four original player/swimming
+acceptance regressions and is rejected. Actual-only/nominal-root variants expose
+conflicting missing-bin, dry-admission and player requirements; selected native
+passes do not qualify a replacement. The checkpoint retains the legacy non-solid
+halo policy. All 22 new root assertions plus 12 actual-footprint controls now remain in
+tests/FluidRootAdmissionDiagnostics.cpp, a manual known-failing target:
+34 assertions, 14 failures. Its exit remains 1. No expected value changed; no
+previous ordinary gate was removed/demoted. Rejected sources and exact particle
+captures remain in the evidence archive under bounded-halo/.
+
+Historical four-second comparisons remain visible: scoped half_025 records
+.582806 m/s against the original .5 m/s comparison; the under-resolved small-body
+case records 2.696490 m/s. Both failures remain alongside current window/decay
+checks. The scoped half_025 remote-plane mean becomes .5769877 and passes its
+existing comparison; this does not qualify a general nonplanar immersion oracle.
+
+FINAL SOURCE / HASHES: docs/evidence/fluid-contact-query-20261102/SOURCE_FINGERPRINTS.json and BINARY_FINGERPRINTS.json.
+FINAL ORDINARY GATES: FluidWorld355, hydrostatics346, wet support153, vertical335, drag185, lifecycle38, policy26, BasicWater56, boundary contact24, cavity impact7 cases, rigid-coupling, flat/radial demos49 and supported containers4340 all exit0. See qualified/RESULTS.json; assertions are not independent capabilities.
+FINAL PLAYER: 5661 checks, zero acceptance failures; four unchanged warm-up/microrest diagnostics remain. Both fixed swim-jump tests pass with original settings and thresholds.
+FINAL PRODUCTION: 13801 checks, zero acceptance failures, four diagnostic failures. Five historical4s comparisons include two failures (one originally mandatory); they remain independently callable with --legacy-four-second, not erased by window/decay mode.
+FINAL KNOWN GEOMETRY: 360 rows; 48 engine/80 observer failures; zero engine/observer frame failures. Exit1; unchanged fixture/settings/limits.
+FINAL EVIDENCE LINK: docs/evidence/fluid-contact-query-20261102/README.txt. Raw logs, original failures, rejected variants, exact commands, sources and member hashes are in raw-evidence.tar.xz.
+
+Active legacy-PBF cold saves, suspension and live origin shifts remain explicitly
+unsupported. No human, Windows or Android qualification is claimed. The current
+final/ directory holds the rejected global-halo-ban snapshot; use explicitly
+named replacement results and final source fingerprints when supplied.
+
+Changed implementation: src/FluidWorld.cpp, src/FluidHydrostatics.cpp,
+src/FluidWetFootprint.h. Regression sources: tests/FluidWorldTests.cpp,
+FluidSphereInitializationChecks.h, FluidLifecycleQualificationTests.cpp,
+FluidWetSupportTests.cpp, FluidRootAdmissionDiagnostics.cpp. Build/qualification:
+CMakeLists.txt and tools/validation/suites.json. Current index/report links updated.
+No public API, project setting, save format or solver iteration budget changed.
+
+Human review checklist (deliberate diagnostic override only; not an unlock):
+1. Compare flat/radial water, floating/sinking props, tilted objects, cup/pour.
+2. Swim/jump across water edges and watch for false water in enclosed dry spaces.
+3. Confirm ordinary Alpha refuses Advanced Fluids and Basic Water remains usable.
+Do not infer that this Linux Experimental policy run retested an Alpha package.
+
+Next boundary: define and qualify local occupancy reconstruction that accounts
+for disordered PBF sampling without treating nominal bins as material. Preserve
+the34 root diagnostics, player neutral/swim tests, retained wet/dry twins and
+original known-geometry failures. This is an unresolved physical support problem,
+not a licence to increase a gap threshold until a test passes.

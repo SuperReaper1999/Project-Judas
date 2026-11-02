@@ -380,6 +380,8 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         return half>0 ? std::max(0.0,std::min(hi,half)-std::max(lo,-half)) :
                         (lo<=0 && hi>=0 ? 1.0 : 0.0);
     };
+    // Grid adjacency is fixed for this query; height bands only change wetness.
+    std::optional<FluidWetColumnTopology> wetTopology;
     const auto measureBand=[&](double lo,double hi,bool layered,bool reconstruction=false) {
         const double middle=(lo+hi)*.5,bandHalf=(hi-lo)*.5;
         const glm::dvec3 bandPoint=glm::dvec3(point)+up*middle;
@@ -412,7 +414,8 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
             wet.back().wet=fraction>0;
         }
         const double outerWidth=columnWidth*(connectedWetSupport?2:1);
-        if(!FluidWetColumnsContainOrigin(wet,outerWidth,connectedWetSupport))return 0.0;
+        if(!wetTopology)wetTopology.emplace(wet,connectedWetSupport);
+        if(!wetTopology->ContainsOrigin(wet,outerWidth))return 0.0;
         if(connectedWetSupport) {
             const auto covered=[&](std::int64_t x,std::int64_t z) {
                 if(!geometry)return false;
@@ -443,6 +446,7 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                 auto it=std::lower_bound(columns.begin(),columns.end(),key,
                     [](const auto& c,const auto& k){return c.x<k.first||(c.x==k.first&&c.z<k.second);});
                 for(;it!=columns.end()&&it->x==x&&it->z==z;++it) {
+                    if(layered && (it->interval.lo>middle || it->interval.hi<middle))continue;
                     const auto& particle=m_particles[it->interval.particle];
                     const auto actual=bandPoint+tangent*it->actualX+bitangent*it->actualZ;
                     if(geometry->Touches(actual,particle.spacing*.5))return true;
@@ -522,6 +526,17 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
             }
         }
         if(solid) {
+            const double supportRounding=8*std::numeric_limits<float>::epsilon()*
+                (1+glm::length(glm::dvec3(point))+glm::length(glm::dvec3(solid->pose.position))+
+                 solid->volume.boundRadius);
+            // Actual particle footprints may change water/solid contact inside
+            // a profile whose closed layers hide the raw particle endpoints.
+            if(connectedWetSupport)for(const auto& column:columns)
+                for(const double end:{column.interval.lo,column.interval.hi}) {
+                    if(end<=-halfHeight || end>=halfHeight)continue;
+                    const auto same=[&](double cut){return std::abs(cut-end)<=supportRounding;};
+                    if(std::none_of(cuts.begin(),cuts.end(),same))cuts.push_back(end);
+                }
             // A connected support component can end inside a water band. Using
             // only water endpoints lets its midpoint switch that entire band
             // between wet and dry under an arbitrarily small body movement.
@@ -529,9 +544,6 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
             const auto support=FluidBoundaryDetail::SolidRayIntervals(point,up,
                 solid->pose,solid->volume.solidBoxes,solid->volume.solidSphereRadius,
                 -halfHeight,halfHeight);
-            const double supportRounding=8*std::numeric_limits<float>::epsilon()*
-                (1+glm::length(glm::dvec3(point))+glm::length(glm::dvec3(solid->pose.position))+
-                 solid->volume.boundRadius);
             for(const auto& span:support)for(const double end:{span.first,span.second}) {
                 if(end<=-halfHeight || end>=halfHeight)continue;
                 // Input poses/particles are binary32. Do not create a spurious

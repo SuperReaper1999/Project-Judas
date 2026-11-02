@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "baseCommit": "d71af6e007b5c39a822f0f563f4dd108040cea4b",
+  "candidateCommit": "The commit containing this manifest",
+  "scope": "Core runtime and test sources; metadata finding prose updated after native runs. Root diagnostic rebuilt after making its12 original footprint tolerances exactly0. No runtime source changed after qualification.",
+  "files": {
+    "src/FluidHydrostatics.cpp": "50fad2d9adb00fac7bb0aa713c17fa90e17a72497263d431e3222b10edb2e1af",
+    "src/FluidWetFootprint.h": "b64fdc1e801f8b5d98844d2d8720a3568496b8259583d4343d840666a2f78638",
+    "src/FluidWorld.cpp": "5389f2f4c68d5ed4c45ca0f408d2547db8800649b51ce19946b38ea0f9c859f6",
+    "tests/FluidLifecycleQualificationTests.cpp": "32ba7356620b948addbffd5d3792b7c9e6fb54ee290266d9313b63c8cae73d6b",
+    "tests/FluidWetSupportTests.cpp": "55ef61dd03647af4da775dd7ebed84b8010e1a82a55fde19939c87816d766263",
+    "tests/FluidWorldTests.cpp": "9439df1dce505bc2bab2b88c1ae68ac010d8fd76399f7b0faa126875d0b7136d",
+    "tests/FluidSphereInitializationChecks.h": "a0f43d863ccb08f78a7cab99d69fa9ec33fd22c8160d76acd5e6272c4074fb40",
+    "tests/FluidRootAdmissionDiagnostics.cpp": "41e05c6dd09ec104c110eecf91ba9ac9608fd69277030051ebc2b237edbfa04e",
+    "CMakeLists.txt": "5cad44de214b1fd03b6e47d53fe549c9bac48969a14d9c8bdee83b9a5d80862b",
+    "tools/validation/suites.json": "31836586d5fe36c5782a7c498494bf695777f785f5c6df9bdc09681e937ff98f"
+  }
+}

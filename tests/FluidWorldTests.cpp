@@ -408,7 +408,10 @@ void TestDensityMassAndPresentation() {
 
 }  // namespace
 
+#include "FluidSphereInitializationChecks.h"
+
 int main() {
+    TestSphereInitializationContract();
     TestGravityAndZeroGravity();
     TestRotatedUniverse();
     TestRotatedPressureCluster();

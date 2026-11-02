@@ -9,10 +9,12 @@
 #include "WorldState.h"
 
 #include <chrono>
+#include <cmath>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <glm/gtc/quaternion.hpp>
 
 namespace {
 unsigned checks = 0;
@@ -47,6 +49,50 @@ std::string Particles(RuntimeWorld& world) {
         out << p.mass << '\n';
     }
     return out.str();
+}
+
+void AuthoredSphereInitialization() {
+    for(int frame=0;frame<2;++frame) {
+        const auto rotation=frame?glm::angleAxis(.83f,glm::normalize(glm::vec3(1,-2,3))):glm::quat(1,0,0,0);
+        const glm::vec3 center=frame?glm::vec3(2,-1,3):glm::vec3(0);
+        Scene scene;scene.Settings().fluidScale=2.5f;
+        auto& gravity=scene.CreateObject("Zero gravity");gravity.gravity=SceneGravityComponent{};
+        gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->magnitude=0;
+        gravity.gravity->regionShape=SceneRegionShape::Box;gravity.gravity->regionHalfExtents=glm::vec3(10);
+        gravity.transform.position=center;gravity.transform.rotation=rotation;
+        auto& water=scene.CreateObject("Odd authored lattice");water.fluidVolume=SceneFluidVolumeComponent{};
+        water.fluidVolume->countX=water.fluidVolume->countY=water.fluidVolume->countZ=3;
+        water.fluidVolume->spacing=.125f;water.transform.position=center-rotation*glm::vec3(0,.125f,0);
+        water.transform.rotation=rotation;
+        auto& solid=scene.CreateObject("Ordinary static sphere");solid.body=SceneBodyComponent{};
+        solid.body->shape=SceneShape::Sphere;solid.body->radius=.3f;solid.body->motion=SceneBodyMotion::Static;
+        solid.transform.position=center;solid.transform.rotation=rotation;
+        std::string serialized,error;SaveSceneToString(scene,serialized);Scene loaded;
+        Check(LoadSceneFromString(serialized,loaded,error),"sphere initialization loads ordinary authored fluid and body components");
+        RuntimeWorld world;ProjectSettings settings;settings.advancedFluidDynamics=true;world.ConfigureProject(settings);
+        Check(world.Build(loaded,nullptr,error),"sphere initialization builds the actual authored runtime");
+        unsigned exactCenter=0;
+        for(const auto& particle:world.Fluid().Particles())exactCenter+=particle.position==center;
+        const auto before=world.Fluid().GetDiagnostics();
+        Check(exactCenter==1&&before.particleCount==27,"odd native fluid lattice actually contains the exact sphere-centre particle");
+        bool completed=true;
+        try{world.FluidCoupling().AdvanceResolvedLiquid(world,1.f/60);}
+        catch(const std::exception&){completed=false;}
+        Check(completed&&world.FluidCoupling().Measurements().executedSteps==1,
+              "authored centred fluid executes an ordinary production liquid step without an exception");
+        bool finite=true,outside=true;
+        for(const auto& particle:world.Fluid().Particles()) {
+            for(const auto value:{particle.position,particle.velocity,particle.acceleration})
+                finite=finite&&std::isfinite(value.x)&&std::isfinite(value.y)&&std::isfinite(value.z);
+            const glm::dvec3 radial=glm::dvec3(particle.position)-glm::dvec3(center);
+            outside=outside&&glm::dot(radial,radial)>=double(.3f)*.3f;
+        }
+        const auto after=world.Fluid().GetDiagnostics();
+        Check(finite&&outside,"authored fluid initialization leaves every actual particle finite and outside the real sphere");
+        Check(after.particleCount==before.particleCount&&after.totalMass==before.totalMass,
+              "authored sphere initialization preserves actual particle count and mass");
+        Check(after.kineticEnergy==0,"stationary authored sphere initialization invents no fluid kinetic energy");
+    }
 }
 }
 
@@ -128,6 +174,7 @@ int main() try {
         Check(active.FluidCoupling().SampleField({0,.3f,0},{0,1,0},.05f,.1f,{1,0,0}).fraction==0,
               "external Clear invalidates published fluid and retained boundary before another force step");
         Check(active.Fluid().DisplacementMarkers().empty(),"external Clear leaves no orphan displacement ownership");
+        AuthoredSphereInitialization();
     }
     std::filesystem::remove_all(root);
     std::cout << "Fluid lifecycle qualification: " << checks << " checks, 0 failures\n";

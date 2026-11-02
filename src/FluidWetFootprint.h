@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <numeric>
 #include <set>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 #include <glm/glm.hpp>
@@ -61,38 +62,63 @@ struct FluidWetColumnFootprint {
 // Columns arrive in sorted grid order. Loads require a connected wet patch:
 // two disconnected reservoirs must not support an object in their dry gap.
 // Interpolation within one patch may still span displaced-solid holes.
-inline bool FluidWetColumnsContainOrigin(const std::vector<FluidWetColumnFootprint>& columns,
-                                        double width, bool connected) {
-    if (columns.empty()) return false;
-    std::vector<std::size_t> parent(columns.size());
-    std::iota(parent.begin(), parent.end(), 0);
-    const auto find = [&](std::size_t i) {
-        while (parent[i] != i) { parent[i] = parent[parent[i]]; i = parent[i]; }
-        return i;
-    };
-    if (connected) {
-        for (std::size_t i = 0; i < columns.size(); ++i) {
-            for (int dx : {-1,0,1}) for (int dz : {-1,0,1}) {
-                if (!dx && !dz) continue;
-                const auto x = columns[i].x + dx, z = columns[i].z + dz;
-                const auto it = std::lower_bound(columns.begin(), columns.end(), std::make_pair(x,z),
-                    [](const auto& a, const auto& b) {return a.x < b.first || (a.x == b.first && a.z < b.second);});
-                if (it != columns.end() && it->x == x && it->z == z) {
-                    auto a = find(i), b = find(std::size_t(it-columns.begin()));
-                    if (a != b) parent[std::max(a,b)] = std::min(a,b);
+class FluidWetColumnTopology {
+public:
+    FluidWetColumnTopology(const std::vector<FluidWetColumnFootprint>& columns, bool connected)
+        : m_connected(connected), m_roots(columns.size()) {
+        m_keys.reserve(columns.size());
+        for (const auto& column : columns) m_keys.emplace_back(column.x, column.z);
+        std::iota(m_roots.begin(), m_roots.end(), 0);
+        const auto find = [&](std::size_t i) {
+            while (m_roots[i] != i) { m_roots[i] = m_roots[m_roots[i]]; i = m_roots[i]; }
+            return i;
+        };
+        // Connectivity deliberately includes dry columns, exactly as before.
+        // Only grid keys are fixed; incoming centres and wet states may vary.
+        if (connected) {
+            for (std::size_t i = 0; i < columns.size(); ++i) {
+                for (int dx : {-1,0,1}) for (int dz : {-1,0,1}) {
+                    if (!dx && !dz) continue;
+                    const auto x = columns[i].x + dx, z = columns[i].z + dz;
+                    const auto it = std::lower_bound(columns.begin(), columns.end(), std::make_pair(x,z),
+                        [](const auto& a, const auto& b) {return a.x < b.first || (a.x == b.first && a.z < b.second);});
+                    if (it != columns.end() && it->x == x && it->z == z) {
+                        auto a = find(i), b = find(std::size_t(it-columns.begin()));
+                        if (a != b) m_roots[std::max(a,b)] = std::min(a,b);
+                    }
                 }
             }
+            for (std::size_t i = 0; i < columns.size(); ++i) m_roots[i] = find(i);
         }
     }
-    std::vector<std::vector<glm::dvec2>> patches(connected ? columns.size() : 1);
-    for (std::size_t i = 0; i < columns.size(); ++i) {
-        if (!columns[i].wet) continue;
-        auto& patch = patches[connected ? find(i) : 0];
-        for (double dx : {-width*.5,width*.5})
-            for (double dz : {-width*.5,width*.5}) patch.push_back(columns[i].center + glm::dvec2(dx,dz));
+
+    bool ContainsOrigin(const std::vector<FluidWetColumnFootprint>& columns, double width) const {
+        if (columns.size() != m_keys.size())
+            throw std::invalid_argument("wet-column topology requires the same ordered grid keys");
+        for (std::size_t i = 0; i < columns.size(); ++i)
+            if (columns[i].x != m_keys[i].first || columns[i].z != m_keys[i].second)
+                throw std::invalid_argument("wet-column topology requires the same ordered grid keys");
+        if (columns.empty()) return false;
+        std::vector<std::vector<glm::dvec2>> patches(m_connected ? columns.size() : 1);
+        for (std::size_t i = 0; i < columns.size(); ++i) {
+            if (!columns[i].wet) continue;
+            auto& patch = patches[m_connected ? m_roots[i] : 0];
+            for (double dx : {-width*.5,width*.5})
+                for (double dz : {-width*.5,width*.5}) patch.push_back(columns[i].center + glm::dvec2(dx,dz));
+        }
+        for (auto& patch : patches) if (FluidWetFootprintContainsOrigin(patch)) return true;
+        return false;
     }
-    for (auto& patch : patches) if (FluidWetFootprintContainsOrigin(patch)) return true;
-    return false;
+
+private:
+    bool m_connected;
+    std::vector<std::pair<std::int64_t,std::int64_t>> m_keys;
+    std::vector<std::size_t> m_roots;
+};
+
+inline bool FluidWetColumnsContainOrigin(const std::vector<FluidWetColumnFootprint>& columns,
+                                        double width, bool connected) {
+    return FluidWetColumnTopology(columns, connected).ContainsOrigin(columns, width);
 }
 
 // A convex pool envelope is only an outer rejection boundary. A missing column
