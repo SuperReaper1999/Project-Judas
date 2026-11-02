@@ -1,4 +1,5 @@
 #include "FluidHydrostatics.h"
+#include "FluidBoundaryGeometry.h"
 #include "FluidSolidSupport.h"
 #include "FluidWetFootprint.h"
 #include "FluidColumnLayers.h"
@@ -518,6 +519,26 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
                 for(const double end:{profile.low,profile.high})if(end> -halfHeight && end<halfHeight)cuts.push_back(end);
             } else for(const auto& span:profile.layers) {
                 for(const double end:{span.first,span.second})if(end> -halfHeight && end<halfHeight)cuts.push_back(end);
+            }
+        }
+        if(solid) {
+            // A connected support component can end inside a water band. Using
+            // only water endpoints lets its midpoint switch that entire band
+            // between wet and dry under an arbitrarily small body movement.
+            // Split at the actual solid-ray boundaries before selecting support.
+            const auto support=FluidBoundaryDetail::SolidRayIntervals(point,up,
+                solid->pose,solid->volume.solidBoxes,solid->volume.solidSphereRadius,
+                -halfHeight,halfHeight);
+            const double supportRounding=8*std::numeric_limits<float>::epsilon()*
+                (1+glm::length(glm::dvec3(point))+glm::length(glm::dvec3(solid->pose.position))+
+                 solid->volume.boundRadius);
+            for(const auto& span:support)for(const double end:{span.first,span.second}) {
+                if(end<=-halfHeight || end>=halfHeight)continue;
+                // Input poses/particles are binary32. Do not create a spurious
+                // sliver where endpoints coincide within local geometry input
+                // roundoff. Unrelated, remote water must not widen this bound.
+                const auto same=[&](double cut){return std::abs(cut-end)<=supportRounding;};
+                if(std::none_of(cuts.begin(),cuts.end(),same))cuts.push_back(end);
             }
         }
         std::sort(cuts.begin(),cuts.end());

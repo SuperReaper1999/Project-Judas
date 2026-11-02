@@ -5,6 +5,23 @@
 #include <cmath>
 
 namespace {
+std::vector<std::pair<double,double>> OwnedSupport(
+    const glm::vec3& point,const glm::vec3& up,float halfHeight,
+    const BodyTransform& captured,const FluidSolidQuery& current) {
+    const auto direction=glm::normalize(glm::dvec3(up));
+    const auto& volume=current.volume;
+    const auto old=FluidBoundaryDetail::SolidRayIntervals(point,direction,captured,
+        volume.solidBoxes,volume.solidSphereRadius,-halfHeight,halfHeight);
+    const auto now=FluidBoundaryDetail::SolidRayIntervals(point,direction,current.pose,
+        volume.solidBoxes,volume.solidSphereRadius,-halfHeight,halfHeight);
+    std::vector<std::pair<double,double>> result;
+    for(const auto& a:old)for(const auto& b:now) {
+        const double lo=std::max(a.first,b.first),hi=std::min(a.second,b.second);
+        if(lo<=hi)result.emplace_back(lo,hi);
+    }
+    return result;
+}
+
 void ValidateBoundarySolid(BodyHandle owner, const FluidVolumeQuadrature& solid,
                            const BodyTransform& pose, bool hasMaterial) {
     const auto finite=[](auto v) {
@@ -42,7 +59,9 @@ void FluidHydrostaticField::RetainDisplacedBoundary(
 }
 
 const FluidHydrostaticField::OwnedBoundary* FluidHydrostaticField::BoundaryAt(
-    const glm::vec3& point, const FluidSolidQuery* solid) const {
+    const glm::vec3&, const FluidSolidQuery* solid) const {
+    // Match metadata here; finite captured/current support is intersected by
+    // each caller. Centre membership cannot decide ownership of a whole slab.
     if(!solid || !solid->owner.IsValid())return nullptr;
     for(const auto& boundary : m_boundaries) {
         if(!FluidBoundaryDetail::SameOwner(boundary.owner,solid->owner))continue;
@@ -53,8 +72,6 @@ const FluidHydrostaticField::OwnedBoundary* FluidHydrostaticField::BoundaryAt(
             if(a.type!=b.type || a.localCenter!=b.localCenter || a.halfExtents!=b.halfExtents ||
                a.rotation!=b.rotation)return nullptr;
         }
-        if(!FluidBoundaryDetail::Inside(point,boundary.pose,boundary.boxes,boundary.sphereRadius) ||
-           !FluidBoundaryDetail::Inside(point,solid->pose,boundary.boxes,boundary.sphereRadius))return nullptr;
         return &boundary;
     }
     return nullptr;
@@ -65,7 +82,30 @@ std::optional<float> FluidHydrostaticField::RetainedFraction(
     const glm::vec3& tangent, const FluidSolidQuery* solid) const {
     const auto* boundary=BoundaryAt(point,solid);
     if(!boundary || !boundary->domain)return {};
-    return boundary->domain->Query(point,up,halfHeight,radius,tangent,nullptr,true).fraction;
+    const auto owned=OwnedSupport(point,up,halfHeight,boundary->pose,*solid);
+    if(owned.empty())return {};
+    if(owned.size()==1 && owned.front().first<=-halfHeight && owned.front().second>=halfHeight)
+        return boundary->domain->Query(point,up,halfHeight,radius,tangent,nullptr,true).fraction;
+    // Owned geometry applies only to the part of this finite support lying in
+    // BOTH captured and current solid. Remaining support uses current material;
+    // stripping only owner identity prevents recursive retained-domain access.
+    FluidSolidQuery exterior=*solid;exterior.owner={};
+    const auto direction=glm::normalize(glm::dvec3(up));
+    const auto sample=[&](const FluidHydrostaticField& source,double lo,double hi,bool retained) {
+        if(!(hi>lo))return 0.;
+        const auto center=glm::vec3(glm::dvec3(point)+direction*((lo+hi)*.5));
+        const auto value=source.Query(center,up,static_cast<float>((hi-lo)*.5),radius,
+                                      tangent,retained?nullptr:&exterior,true);
+        return (hi-lo)*value.fraction;
+    };
+    double wet=0,cursor=-halfHeight;
+    for(const auto& span:owned) {
+        wet+=sample(*this,cursor,span.first,false);
+        wet+=sample(*boundary->domain,span.first,span.second,true);
+        cursor=span.second;
+    }
+    wet+=sample(*this,cursor,halfHeight,false);
+    return static_cast<float>(wet/(2*halfHeight));
 }
 
 void FluidHydrostaticField::RetainDisplacementCells(
@@ -115,14 +155,19 @@ std::vector<std::pair<double,double>> FluidHydrostaticField::OwnedIntervals(
     std::vector<std::pair<double,double>> intervals;
     const auto* boundary=BoundaryAt(point,solid);
     if(!boundary || boundary->cells.empty())return intervals;
+    const auto owned=OwnedSupport(point,up,halfHeight,boundary->pose,*solid);
+    if(owned.empty())return intervals;
     const FluidSolidQuery captured{solid->volume,boundary->pose,boundary->owner};
     FluidHydrostaticDetail::PreparedSolidQuery component({1,0,0},{0,1,0},{0,0,1},0,0,captured);
-    component.SelectSupport(point);
     const auto direction=glm::normalize(glm::dvec3(up));
-    for(const auto& cell:boundary->cells) {
-        if(!component.Touches(cell.contactPoint,0))continue;
-        const auto span=FluidBoundaryDetail::CellInterval(cell,point,direction,-halfHeight,halfHeight);
-        if(span)intervals.push_back(*span);
+    for(const auto& support:owned) {
+        const auto selected=glm::vec3(glm::dvec3(point)+direction*((support.first+support.second)*.5));
+        component.SelectSupport(selected);
+        for(const auto& cell:boundary->cells) {
+            if(!component.Touches(cell.contactPoint,0))continue;
+            const auto span=FluidBoundaryDetail::CellInterval(cell,point,direction,support.first,support.second);
+            if(span)intervals.push_back(*span);
+        }
     }
     std::sort(intervals.begin(),intervals.end());
     std::size_t count=0;
