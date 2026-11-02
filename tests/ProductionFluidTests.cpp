@@ -21,6 +21,7 @@
 #include "Simulation.h"
 #include "ProductionFluidCoupling.h"
 #include "Window.h"
+#include "../third_party/nlohmann/json.hpp"
 namespace {
 namespace fs=std::filesystem;constexpr float dt=1.0f/60;int checks=0,failed=0,diagnosticChecks=0,diagnosticFailures=0,totalSteps=0;bool strictDiagnostics=false,legacyFourSecond=false,strictLegacySettling=false,captureImmersion=false;int legacyComparisons=0,legacyFailures=0,legacyMandatoryFailures=0;std::string selectedCase;
 void Check(bool ok,const std::string& label){++checks;if(!ok){++failed;std::cout<<"FAIL "<<label<<'\n';}}
@@ -62,6 +63,86 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
   std::ofstream poseFile(out/(name+"_"+stage+"_body.csv"));poseFile<<std::setprecision(17)<<"x,y,z,qw,qx,qy,qz,hx,hy,hz,gx,gy,gz\n";
   const auto gravity=world.Gravity().Sample(pose.position);
   poseFile<<pose.position.x<<','<<pose.position.y<<','<<pose.position.z<<','<<pose.rotation.w<<','<<pose.rotation.x<<','<<pose.rotation.y<<','<<pose.rotation.z<<','<<half.x<<','<<half.y<<','<<half.z<<','<<gravity.x<<','<<gravity.y<<','<<gravity.z<<'\n';
+  if(captureImmersion) {
+   // Passive evidence only: the CSVs above and the original observer/gates are
+   // unchanged. Birth cells are retained geometry, not extra fluid matter or
+   // proof of the current hidden free surface beneath a moving solid.
+   using Json=nlohmann::json;
+   const auto vector=[](const glm::vec3& v){return Json::array({double(v.x),double(v.y),double(v.z)});};
+   const auto rotation=[](const glm::quat& v){return Json::array({double(v.w),double(v.x),double(v.y),double(v.z)});};
+   const auto identity=[](BodyHandle h){return Json{{"id",h.id},{"world",h.world},{"valid",h.IsValid()}};};
+   const auto transform=[&](const BodyTransform& p){return Json{{"position",vector(p.position)},{"rotation_wxyz",rotation(p.rotation)}};};
+   const auto settings=[](const FluidSettings& s){return Json{
+    {"updateRateHz",double(s.updateRateHz)},{"hydrostaticDragRate",double(s.hydrostaticDragRate)},
+    {"restDensity",double(s.restDensity)},{"particleRadius",double(s.particleRadius)},
+    {"smoothingRadius",double(s.smoothingRadius)},{"substeps",s.substeps},{"densityIterations",s.densityIterations},
+    {"maxDensityCorrection",double(s.maxDensityCorrection)},{"velocitySmoothing",double(s.velocitySmoothing)}};};
+   const auto& fluid=world.Fluid();const auto& markers=fluid.DisplacementMarkers();
+   const auto& measured=world.FluidCoupling().Measurements();
+   Json evidence={{"schema",1},{"case",name},{"stage",stage},
+    {"coordinateFrame","local simulation coordinates; fixed authored uniform-gravity fixture, no origin shifts"},
+    {"fixture_rotation_wxyz",rotation(q)},{"completedNativeFixedSteps",totalSteps},{"fixedStepSeconds",double(dt)},
+    {"materialRevision",fluid.Revision()},{"particleCount",fluid.Particles().size()},
+    {"sourceMarkerCount",markers.size()},{"markerParticleCountsMatch",markers.size()==fluid.Particles().size()},
+    {"authoredSpacing",double(spacing)},{"fluidSettings",settings(fluid.Settings())},
+    {"couplingSettings",settings(world.FluidSettingsUsed())},{"observedBody",identity(observed)},
+    {"observedPose",transform(pose)},{"observedHalfExtents",vector(half)},
+    {"observedLinearVelocity",vector(world.Physics().GetLinearVelocity(observed))},
+    {"observedAngularVelocity",vector(world.Physics().GetAngularVelocity(observed))},
+    {"observedMass",double(world.Physics().GetMass(observed))},
+    {"observedGravity",vector(gravity)},
+    {"heldFieldPublicationPoseCaptured",false},
+    {"ownerPoseSemantics","owners contain current public rigid poses; private cached field-publication poses are not captured"},
+    {"captureBoundary",stage.rfind("before",0)==0 ? "before-next-rigid-step" : stage.rfind("observe",0)==0 ? "after-rigid-and-possible-liquid-step" : "named-completed-state"},
+    {"measurementSemantics","coupling measurements describe the most recently completed rigid step; applied buoyancy uses that step's beginning field/pose, not this snapshot's endpoint geometry"},
+    {"couplingExecuted",measured.executed},{"couplingExecutedSteps",measured.executedSteps},
+    {"lastFluidDeltaTime",double(measured.lastFluidDeltaTime)},
+    {"exteriorReactionNotApplied",vector(measured.exteriorReactionNotApplied)},
+    {"containedStaticSupportImpulse",vector(measured.containedStaticSupportImpulse)},
+    {"lastBodyMeasurement",nullptr},
+    {"markers",Json::array()},{"owners",Json::array()}};
+   std::vector<BodyHandle> owners=world.Physics().AliveBodies();owners.push_back(observed);
+   for(std::size_t i=0;i<markers.size();++i) {
+    const auto& marker=markers[i];if(!marker.owner.IsValid())continue;
+    owners.push_back(marker.owner);
+    evidence["markers"].push_back({{"particleIndex",i},{"particleExists",i<fluid.Particles().size()},
+     {"owner",identity(marker.owner)},{"birthPosition",vector(marker.position)},
+     {"birthRotation_wxyz",rotation(marker.rotation)},{"halfWidth",double(marker.halfWidth)},
+     {"materialPoint",vector(marker.materialPoint)},{"contactPoint",vector(marker.contactPoint)}});
+   }
+   std::sort(owners.begin(),owners.end(),[](BodyHandle a,BodyHandle b){return a.world<b.world || (a.world==b.world&&a.id<b.id);});
+   owners.erase(std::unique(owners.begin(),owners.end(),[](BodyHandle a,BodyHandle b){return a.id==b.id&&a.world==b.world;}),owners.end());
+   for(const auto owner:owners) {
+    Shape shape;BodyTransform current;const bool exists=world.Physics().GetBodyShape(owner,shape,current);
+    Json row={{"handle",identity(owner)},{"currentShapeAvailable",exists}};
+    if(exists) {
+     row["enabled"]=world.Physics().IsBodyEnabled(owner);row["sensor"]=world.Physics().IsBodySensor(owner);
+     row["motionType"]=static_cast<int>(world.Physics().GetMotionType(owner));row["pose"]=transform(current);
+     row["shapeType"]=static_cast<int>(shape.type);row["radius"]=double(shape.radius);
+     row["halfHeight"]=double(shape.halfHeight);row["halfExtents"]=vector(shape.halfExtents);
+     row["pivotOffset"]=vector(shape.pivotOffset);row["assetId"]=shape.assetId;
+     row["geometryFullyRecorded"]=shape.type==ShapeType::Box||shape.type==ShapeType::Sphere||shape.type==ShapeType::Capsule||shape.type==ShapeType::CompoundBoxes;
+     row["children"]=Json::array();
+     for(const auto& child:shape.boxes) {
+      row["children"].push_back({{"type",static_cast<int>(child.type)},{"localCenter",vector(child.localCenter)},
+       {"rotation_wxyz",rotation(child.rotation)},{"halfExtents",vector(child.halfExtents)},
+       {"radius",double(child.radius)},{"assetId",child.assetId},{"key",child.key}});
+      if(child.type!=ShapeType::Box&&child.type!=ShapeType::Sphere)row["geometryFullyRecorded"]=false;
+     }
+    }
+    evidence["owners"].push_back(std::move(row));
+   }
+   for(const auto& bodyMeasurement:measured.bodies)
+    if(bodyMeasurement.body.id==observed.id&&bodyMeasurement.body.world==observed.world)
+     evidence["lastBodyMeasurement"]={{"fraction",double(bodyMeasurement.fraction)},
+      {"displacedVolume",double(bodyMeasurement.displacedVolume)},
+      {"buoyancyForce",vector(bodyMeasurement.buoyancyForce)},{"dragForce",vector(bodyMeasurement.dragForce)},
+      {"containedMass",double(bodyMeasurement.containedMass)},{"containedImpulse",vector(bodyMeasurement.containedImpulse)}};
+   std::ofstream metadata(out/(name+"_"+stage+"_boundary.json"));
+   metadata<<evidence.dump(2)<<'\n';
+   metadata.close();
+   if(!metadata)throw std::runtime_error("Cannot write fluid boundary diagnostic snapshot");
+  }
  };
  if(!freefall){
   // Prepare a stationary pool through the ordinary simulation. The static

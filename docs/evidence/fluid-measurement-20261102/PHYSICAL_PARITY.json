@@ -1,0 +1,30 @@
+{
+  "rows": 720,
+  "capturedRows": 720,
+  "physicalColumns": [
+    "step",
+    "y",
+    "vy",
+    "immersion",
+    "bfx",
+    "bfy",
+    "bfz",
+    "fluid_mass",
+    "fluid_ke",
+    "body_ke",
+    "executed",
+    "contact_caps",
+    "contact_relative_residual",
+    "acceleration_rejections",
+    "acceleration_boundary_declines",
+    "geometry_escapes",
+    "unresolved_geometry",
+    "geometry_candidates",
+    "max_geometry_escape_distance",
+    "pressure_reconstruction_samples",
+    "max_pressure_reconstruction_velocity_error",
+    "rms_pressure_reconstruction_velocity_error"
+  ],
+  "mismatches": [],
+  "exact": true
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "half_025_release_particles.csv",
+    "sha256": "73eba5c77ff4e99fcee20331cb323e16e614f734e64c2dcd7d0e43c1deb4a91b",
+    "equal": true
+  },
+  {
+    "file": "half_025_step10_particles.csv",
+    "sha256": "187a0976176dd5cb0bd48bf26f4cbf08d1b941f79983578c434350ba3dd1e893",
+    "equal": true
+  },
+  {
+    "file": "half_025_step240_particles.csv",
+    "sha256": "e068ad1f953f4809d22cf8cc06448b6cfa6bc67307369a569e2106ff948f710e",
+    "equal": true
+  },
+  {
+    "file": "half_025_step720_particles.csv",
+    "sha256": "fffe4db8eedc44181361cafef688d1beea0cd8c10f476d6f907ac5c400b9f62d",
+    "equal": true
+  },
+  {
+    "file": "half_025_release_body.csv",
+    "sha256": "c53b6ae804a5c5174025e31e496101fc3173ee87d7a6900950136c823695bdc9",
+    "equal": true
+  },
+  {
+    "file": "half_025_step10_body.csv",
+    "sha256": "eedd28eb6e574cf40d339ebe15deca1310a9dc66b83816f0fe4290eedcbff618",
+    "equal": true
+  },
+  {
+    "file": "half_025_step240_body.csv",
+    "sha256": "c45237105134d090378f82711b45cf4225c83dc53854c548039d0cc139625413",
+    "equal": true
+  },
+  {
+    "file": "half_025_step720_body.csv",
+    "sha256": "7a609312789ad28001683635df3c05e54b669644145489c0b31238dd1101b2bc",
+    "equal": true
+  }
+]

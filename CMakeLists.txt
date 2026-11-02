@@ -1874,5 +1874,14 @@ judas_add_engine_test(judas_utility_ai_script_tests tests/UtilityAIScriptTests.c
 judas_add_engine_test(judas_utility_ai_editor_tests tests/UtilityAIEditorTests.cpp
     SOURCES src/editor/UtilityAIEditor.cpp LIBRARIES judas_imgui)
 
+# Independent, test-only geometry diagnostics; no production wetness calls.
+add_executable(judas_fluid_coverage_observation_tests tests/FluidCoverageObservationTests.cpp)
+target_link_libraries(judas_fluid_coverage_observation_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_fluid_coverage_observation_tests)
+add_executable(judas_fluid_coverage_replay tools/validation/FluidCoverageReplay.cpp)
+target_include_directories(judas_fluid_coverage_replay PRIVATE src tests)
+target_link_libraries(judas_fluid_coverage_replay PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_fluid_coverage_replay)
+
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

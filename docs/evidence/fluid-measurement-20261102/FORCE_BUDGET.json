@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "case": "half_025",
+  "windows": {
+    "original": {
+      "samples": 60,
+      "impulses": {
+        "momentum_change": 15.762706201179299,
+        "gravity": -1059.4801754191612,
+        "static_buoyancy": 1082.0133709573633,
+        "fluid_acceleration_load": -13.673127657700544,
+        "hydro_total": 1068.340243299663,
+        "drag": 6.902608474728392,
+        "contained": 0.0,
+        "unattributed_residual": 2.9845949289786233e-05,
+        "exterior_reaction_NOT_applied": 839.1284947991371
+      },
+      "max_absolute_step_residual": 5.764027136478944e-06,
+      "mean_applied_fraction": 0.5106340656677882,
+      "begin_vertical_speed": 0.45264583826065063,
+      "end_vertical_speed": 0.5985968112945557
+    },
+    "late": {
+      "samples": 240,
+      "impulses": {
+        "momentum_change": 28.71986717214338,
+        "gravity": -4237.920701676645,
+        "static_buoyancy": 4291.34178194275,
+        "fluid_acceleration_load": -36.901494545342004,
+        "hydro_total": 4254.440287397408,
+        "drag": 12.200342552381706,
+        "contained": 0.0,
+        "unattributed_residual": -6.110100105843896e-05,
+        "exterior_reaction_NOT_applied": 4650.4323907494545
+      },
+      "max_absolute_step_residual": 7.881273560883528e-06,
+      "mean_applied_fraction": 0.5063027338435252,
+      "begin_vertical_speed": -0.20638376474380493,
+      "end_vertical_speed": 0.05954091250896454
+    }
+  },
+  "scope": "Momentum accounting only; no continuum immersion oracle or replacement acceptance gate",
+  "unknown": "Residual can include rigid contact/solver impulses and binary32 rounding",
+  "acceptance_changed": false
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_coverage_observation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.11386364699865226
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_hydrostatics_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.816440369002521
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_vertical_support_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.6659230470031616
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_wet_support_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.2140067380023538
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_volume_drag_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015684639998653438
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_fluid_lifecycle_qualification_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031669265998061746
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_fluid_policy_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.3141140009975061
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_project_water_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031718448000901844
+  }
+]

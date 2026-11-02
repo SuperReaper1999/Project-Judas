@@ -1,0 +1,47 @@
+{
+  "base": "42302816aaf5d6fbeb577f6daf9a3112ff7ceaf4",
+  "source": {
+    "tests/ProductionFluidTests.cpp": "c64b17577c68756c525310c7635353cc0e915b7ef67df314a6e46246c1170a81",
+    "tests/FluidCoverageObservation.h": "5fdfb229800b5fa433a60c26f26d26b55e355aed6af0fc83839df47cd63e1a96",
+    "tests/FluidCoverageObservationTests.cpp": "11cbf83cb8db1bcd0f3294d3d5db78de829a9ee84e76eb8926625f02110bd6d9",
+    "tools/validation/FluidCoverageReplay.cpp": "7ef475a84eec4d9ef4010e39e2fec9f1b71aa1c8c8e7848b1510a07ba80d4350",
+    "tools/validation/audit_fluid_force_budget.py": "fce16eb3358f5d97923b8409f99012745a28479f9d674caf7387dcb63947489d",
+    "tests/test_fluid_force_budget.py": "156dc47ae20c3fb9160ea427f0bd8675e90cdb0eb28b37f584e643c2d72a0459",
+    "CMakeLists.txt": "77a89e4b3694650fd91374033039608dee0fc3ed990d9b7f7aab48891241895c",
+    "tools/validation/suites.json": "be8aee1b92e63c8c886afbc63ec0a35239679cd04264306c2d0b864cfc2eda9d",
+    "src/FluidWorld.cpp": "6f4dd0f44f84891010a79f9f4f7a6739616d7522c4d91e163751e880ca11616d",
+    "src/FluidWorld.h": "79ed1211a52ec044d957b8ee0a99175956cd5c4248ff60175bc17f3b11c3943e",
+    "src/FluidHydrostatics.cpp": "ee8d6fbb8e20fe70ef9456445119be0e58f0305cbb35919f134b5c28640ecc55",
+    "src/FluidHydrostatics.h": "05d1472b692d20f753846b93e820daa012597e3e9408fbbbe46efff23ae4f96c",
+    "src/FluidBoundaryOwnership.cpp": "357b8aa9d081a72fe9e389065e7fc8acb8cb9a5419b05a31564b6b7c1f6a5ba1",
+    "src/ProductionFluidCoupling.cpp": "74bf3dd31bced3327c75433a192e6cd81da2f0d18c252bde572f79b07e38d369",
+    "src/ProductionFluidCoupling.h": "9ffe8471f43a921d424d26d4699015f8f449230974d0c55d40618996b14ab1b3"
+  },
+  "binaries": {
+    "judas_production_fluid_tests": "59d11fa102ca494a22d39090835a959a48fe7e7c8612befc3b031099a2ba2086",
+    "judas_fluid_coverage_observation_tests": "2315d698eadb8eeff325060969f0240309c5e0949bb7d3e90d342ac992279143",
+    "judas_fluid_coverage_replay": "48528845870c3903395d805a4aca4401cd66a52f008c84903450a1be8e1343fd"
+  },
+  "configuredBuildIdentity": {
+    "schema": 1,
+    "release_name": "Judas Engine Alpha v1.2.0",
+    "version": "1.2.0-alpha.1",
+    "maturity": "alpha",
+    "channel": "Experimental",
+    "build_id": "1.2.0-alpha.1-Experimental-4230281-dirty-33ecb946d390-u68ffa00cd55b",
+    "source_revision": "42302816aaf5d6fbeb577f6daf9a3112ff7ceaf4",
+    "source_tree": "2b575707911750884bf649eb22d74536e97c4c35",
+    "source_dirty": true,
+    "source_fingerprint": "33ecb946d390076b3ed7f145c2674052ce8fd75d516eee53776327e004f0172c",
+    "source_untracked_count": 23,
+    "source_untracked_fingerprint": "68ffa00cd55bea882436159b26b42216f08dc0bbbaa93bc2f196576d0e09f450",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "identityScope": "Direct production/replay drivers do not implement --build-info-json; configured identity is not substituted as embedded binary proof. Actual executable hashes, build logs and source hashes retained.",
+  "engineImplementationDiff": ""
+}
