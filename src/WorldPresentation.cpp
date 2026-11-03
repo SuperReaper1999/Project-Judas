@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <cstdio>
 #include <algorithm>
+#include <optional>
 
 #include "CelestialGravity.h"
 #include "FirePresentation.h"
@@ -160,17 +161,41 @@ SceneTransform PresentedBody(const RuntimeWorld& world, SceneObjectId id,
     if(auto* network=world.NetworkIfLoaded())network->Presentation(id,pose);
     return pose;
 }
+
+// These values belong to one presentation sample. Camera texture handles,
+// resource touches, culling and LOD still resolve in the individual pass.
+struct PresentedObject {
+    SceneTransform pose;
+    const std::vector<glm::mat4>* skin;
+};
+struct PresentedObjects {
+    std::vector<std::optional<PresentedObject>> statics, dynamics;
+};
+
+template<class SamplePose>
+PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float alpha,
+                             std::optional<PresentedObject>* slot, SamplePose samplePose) {
+    if (slot && *slot) return **slot;
+    PresentedObject result{samplePose(), world.AnimationSkin(id, alpha)};
+    if (slot) *slot = result;
+    return result;
 }
 
-void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
-                       float alpha, const WorldDrawOptions& options) {
+}
+
+static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
+                              float alpha, const WorldDrawOptions& options, PresentedObjects* objects) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
     r.BeginMeshBatch();
-    for (const RuntimeWorld::StaticRenderable& s : world.StaticRenderables()) {
+    const auto& statics = world.StaticRenderables();
+    for (std::size_t i = 0; i < statics.size(); ++i) {
+        const auto& s = statics[i];
         if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable||world.HasRuntimeTerrain(s.id))continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
-        const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,s.rotation,s.scale},alpha);
-        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha),s.id);
+        const auto [t, skin] = SampleObject(world, s.id, alpha, objects ? &objects->statics[i] : nullptr, [&] {
+            return world.PresentedTransform(s.id, {s.position, s.rotation, s.scale}, alpha);
+        });
+        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),skin,s.id);
     }
     if(options.includeTerrain)world.DrawPlanets(r);
     world.DrawDeformables(r,alpha);
@@ -220,7 +245,9 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         const RuntimeWorld::DynamicVisual& v = visuals[i];
         r.SetRenderLayer(world.RenderLayerOf(v.id));
         if (!v.hasRender||!world.IsPublished(v.id)||!world.RenderVisible(v.id)) continue;
-        const auto pose=PresentedBody(world,v.id,bodies[i],alpha,v.scale);
+        const auto [pose, skin] = SampleObject(world, v.id, alpha, objects ? &objects->dynamics[i] : nullptr, [&] {
+            return PresentedBody(world, v.id, bodies[i], alpha, v.scale);
+        });
         const glm::vec3 position=pose.position;
         const glm::quat rotation=pose.rotation;
         if (v.render.shape == SceneShape::Compound) {
@@ -234,7 +261,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
             }
             continue;
         }
-        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),world.AnimationSkin(v.id,alpha),v.id);
+        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),skin,v.id);
     }
 
     r.SetMaterialBindings({});
@@ -247,6 +274,11 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
                    TextureHandle{}, glm::vec3(0.12f, 0.48f, 0.82f));
     }
     r.EndMeshBatch();
+}
+
+void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world, const GameSession* session,
+                       float alpha, const WorldDrawOptions& options) {
+    DrawWorldGeometry(renderer, world, session, alpha, options, nullptr);
 }
 
 void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSession* session, float alpha) {
@@ -531,6 +563,9 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     // Each camera receives its own relevance decision and actual shadow chart.
     // Targets/viewport are restored by Renderer; no pass borrows another eye's
     // directional coverage or stale spotlight assignment.
+    PresentedObjects presentedObjects;
+    presentedObjects.statics.resize(world.StaticRenderables().size());
+    presentedObjects.dynamics.resize(world.DynamicBodies().size());
     auto lightPass=[&](){
         auto selected=SelectShadowLights(lights,renderer.ViewMatrix(),renderer.ProjectionMatrix(),renderer.ShadowBudget());
         unsigned layers=1;for(const auto& light:selected)if(light.shadowMapIndex>0)layers=std::max(layers,unsigned(light.shadowMapIndex+1));renderer.ReserveShadowLayers(layers);
@@ -538,8 +573,8 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         if(renderer.ShadowsEnabled()){
             static ProfileLabel shadowLabel("Shadow pass submission");ProfileScope shadowScope(shadowLabel);
             const auto eye=glm::vec3(glm::inverse(renderer.ViewMatrix())[3]);
-            if(settings.sunEnabled){renderer.BeginShadowPass(0,ComputeDirectionalShadowMatrix(eye,settings.sunDirection,kDirShadowHalfExtent,kDirShadowDistance));DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});renderer.EndShadowPass();}
-            for(size_t source=0;source<selected.size();++source){const auto& light=selected[source];if(light.shadowMapIndex<=0)continue;renderer.BeginShadowPass(light.shadowMapIndex,ComputeSpotShadowMatrix(light.position,light.direction,light.outerConeDegrees,light.range));WorldDrawOptions options;options.includePlayerModel=lights[source].shadowMapIndex!=kTorchShadowSlot;DrawWorldGeometry(renderer,world,session,alpha,options);renderer.EndShadowPass();}
+            if(settings.sunEnabled){renderer.BeginShadowPass(0,ComputeDirectionalShadowMatrix(eye,settings.sunDirection,kDirShadowHalfExtent,kDirShadowDistance));DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{}, &presentedObjects);renderer.EndShadowPass();}
+            for(size_t source=0;source<selected.size();++source){const auto& light=selected[source];if(light.shadowMapIndex<=0)continue;renderer.BeginShadowPass(light.shadowMapIndex,ComputeSpotShadowMatrix(light.position,light.direction,light.outerConeDegrees,light.range));WorldDrawOptions options;options.includePlayerModel=lights[source].shadowMapIndex!=kTorchShadowSlot;DrawWorldGeometry(renderer,world,session,alpha,options, &presentedObjects);renderer.EndShadowPass();}
         }
         renderer.SetDynamicLights(selected);
     };
@@ -587,7 +622,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.SetRenderMask(c.renderMask);
             lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
-            DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
+            DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{}, &presentedObjects);
             DrawWorldTransparents(renderer, world, session, alpha);
             renderer.DrawWeather(true);
             renderer.EndRenderTarget(); ++camera.updates;
@@ -607,7 +642,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
-            DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
+            DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{}, &presentedObjects);DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
         renderer.ClearWeather();renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);
         for(auto& entry:players->All()){auto& p=entry.second;if(p.view&&p.renderError.empty())renderer.DrawUIImage({p.viewport.x*width,p.viewport.y*height},{p.viewport.z*width,p.viewport.w*height},renderer.RenderTargetTexture(p.target),{1,1,1,1},false,true);}
@@ -623,7 +658,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     lightPass();
     renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
-    DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
+    DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{}, &presentedObjects);
     DrawWorldTransparents(renderer, world, session, alpha);
     renderer.DrawWeather();
     renderer.EndFrame();
