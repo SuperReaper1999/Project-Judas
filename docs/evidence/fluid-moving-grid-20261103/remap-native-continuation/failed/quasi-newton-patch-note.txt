@@ -1,0 +1,1 @@
+The patch retains Git-style blank context after whitespace normalization. Apply with patch -l.

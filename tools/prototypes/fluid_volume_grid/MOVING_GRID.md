@@ -87,7 +87,7 @@ used by the solver. It returns triangles independently of the renderer.
 
 ## Validation boundary
 
-The standalone run covers 866 checks. It includes exact free-volume
+The standalone run covers 874 checks. It includes exact free-volume
 and wet-geometry controls, a 4 mm same-cell dry gap, an actual moving
 waterline, free rigid flotation and sinking, flow-driven motion, rotated
 charts, linked material and momentum transfer, and transaction failures.
@@ -168,6 +168,14 @@ original fixture, whose wall geometry and full native motion remain
 qualification requirements. The additional native probes cover a
 mixed aperture opening and dry gap through one MK2 tick, and the same
 28-check level and oblique player path with geometric ownership.
+
+The [remap and native continuation probes](../../../docs/evidence/fluid-moving-grid-20261103/remap-native-continuation/)
+specialize staggered transport to one momentum component and reproduce
+all logged release observables over 720 steps. The repeated native
+probe verifies 96 exact published pose/velocity boundaries. A longer
+native run reaches an aperture and traction discontinuity at tick 28.
+Separate contact and CCD probes show why the existing velocity callback
+cannot certify the path used by the pressure solve.
 
 Runtime adoption requires a conservative treatment of newly exposed
 volume, native contact and CCD composition, representative terrain and

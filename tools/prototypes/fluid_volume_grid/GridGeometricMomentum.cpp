@@ -551,20 +551,20 @@ bool AdvectGridGeometricMomentum(const GridLayout& layout, const MovingGridGeome
                 return false;
             next.phaseFluxRoundoff += endpointCorrection / density[phase];
             ConservativeRemap plan;
-            std::vector<GridVec> beforeMomentum(2 * count);
+            std::vector<double> beforeMomentum(2 * count);
             for (std::size_t i = 0; i < beforeMomentum.size(); ++i)
-                beforeMomentum[i][component] = route.start[i] * pressed.velocity[component][i];
-            RemapMomentumResult transport;
+                beforeMomentum[i] = route.start[i] * pressed.velocity[component][i];
+            RemapAxisMomentumResult transport;
             if (!BuildConservativeRemap(route, plan, error) ||
-                !plan.RemapMomentum(beforeMomentum, transport, error)) {
+                !plan.RemapAxisMomentum(beforeMomentum, transport, error)) {
                 error = "geometric half-cell " + std::string(phase == 0 ? "water: " : "air: ") + error;
                 return false;
             }
-            next.momentumResidual[component] += transport.conservationResidual[component];
+            next.momentumResidual[component] += transport.field.conservationResidual;
             energyBefore += transport.beforeKineticEnergy;
             remapLoss += transport.mixingLoss;
             for (std::size_t half = 0; half < afterMass.size(); ++half) {
-                const double moved = transport.end[half][component];
+                const double moved = transport.field.end[half];
                 const double speed = route.end[half] > 0. ? moved / route.end[half] : 0.;
                 const double represented = speed * geometricEnd[half];
                 const double defect = represented - moved;

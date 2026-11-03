@@ -1,0 +1,115 @@
+--- CoupledVolumeBox.cpp
++++ CoupledVolumeBox-quasi-newton.cpp
+@@ -219,53 +219,77 @@
+
+     constexpr int workLimit = 12;
+     const double tolerance = 1e-11 * layout.h;
++    std::array<GridVec, 3> tangent{};
++    bool reusableTangent = false;
+     for (int iteration = 0; MaxAbs(current.residual) > tolerance; ++iteration) {
+         if (iteration == workLimit) {
+             error = "coupled box could not resolve the pressure/displacement residual";
+             return reject();
+         }
+-        std::array<GridVec, 3> tangent;
+-        for (int col = 0; col < 3; ++col) {
+-            const double increment = std::cbrt(std::numeric_limits<double>::epsilon()) *
+-                (layout.h + std::abs(displacement[col]));
+-            auto changed = displacement;
+-            changed[col] += increment;
+-            Sample sample;
+-            double difference = increment;
+-            if (!evaluate(changed, sample)) {
+-                changed[col] = displacement[col] - increment;
+-                difference = -increment;
+-                if (!evaluate(changed, sample))
+-                    return reject();
++        const auto rebuildTangent = [&] {
++            for (int col = 0; col < 3; ++col) {
++                const double increment = std::cbrt(std::numeric_limits<double>::epsilon()) *
++                    (layout.h + std::abs(displacement[col]));
++                auto changed = displacement;
++                changed[col] += increment;
++                Sample sample;
++                double difference = increment;
++                if (!evaluate(changed, sample)) {
++                    changed[col] = displacement[col] - increment;
++                    difference = -increment;
++                    if (!evaluate(changed, sample))
++                        return false;
++                }
++                for (int row = 0; row < 3; ++row)
++                    tangent[row][col] = (sample.residual[row] - current.residual[row]) / difference;
+             }
+-            for (int row = 0; row < 3; ++row)
+-                tangent[row][col] = (sample.residual[row] - current.residual[row]) / difference;
+-        }
+-        GridVec rhs, direction{};
+-        for (int axis = 0; axis < 3; ++axis)
+-            rhs[axis] = -current.residual[axis];
+-        if (!SolveTangent(tangent, rhs, direction)) {
+-            error = "coupled box lost a finite pressure/displacement search direction";
+-            return false;
+-        }
+-        bool improved = false;
+-        for (int search = 0; search < 12; ++search) {
+-            const double fraction = std::ldexp(1., -search);
+-            GridVec proposed;
++            return true;
++        };
++        const auto searchDirection = [&](bool reused) {
++            GridVec rhs, direction{};
+             for (int axis = 0; axis < 3; ++axis)
+-                proposed[axis] = displacement[axis] + fraction * direction[axis];
+-            Sample trial;
+-            if (evaluate(proposed, trial) && MaxAbs(trial.residual) < MaxAbs(current.residual)) {
++                rhs[axis] = -current.residual[axis];
++            if (!SolveTangent(tangent, rhs, direction)) {
++                error = "coupled box lost a finite pressure/displacement search direction";
++                return false;
++            }
++            for (int search = 0; search < (reused ? 1 : 12); ++search) {
++                const double fraction = std::ldexp(1., -search);
++                GridVec proposed;
++                for (int axis = 0; axis < 3; ++axis)
++                    proposed[axis] = displacement[axis] + fraction * direction[axis];
++                Sample trial;
++                if (!evaluate(proposed, trial) || MaxAbs(trial.residual) >= MaxAbs(current.residual))
++                    continue;
++                reusableTangent = geometric &&
++                    trial.fluid.pressureInertialFace == current.fluid.pressureInertialFace;
++                if (reusableTangent) {
++                    GridVec delta{};
++                    for (int col = 0; col < 3; ++col)
++                        delta[col] = proposed[col] - displacement[col];
++                    const double lengthSquared = Dot(delta, delta);
++                    if (lengthSquared > 0.) {
++                        for (int row = 0; row < 3; ++row) {
++                            const double difference = trial.residual[row] - current.residual[row];
++                            const double correction = (difference - Dot(tangent[row], delta)) / lengthSquared;
++                            for (int col = 0; col < 3; ++col)
++                                tangent[row][col] += correction * delta[col];
++                        }
++                    } else {
++                        reusableTangent = false;
++                    }
++                }
+                 displacement = proposed;
+                 current = std::move(trial);
+-                improved = true;
+-                break;
++                return true;
+             }
+-        }
+-        if (!improved) {
+             error = "coupled box found no admissible pressure/displacement update";
++            return false;
++        };
++        if (reusableTangent && searchDirection(true))
++            continue;
++        if (!rebuildTangent() || !searchDirection(false))
+             return reject();
+-        }
+     }
+
+     CoupledBoxStep step;

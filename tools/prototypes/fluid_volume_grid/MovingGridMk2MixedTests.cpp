@@ -78,6 +78,7 @@ struct Candidate {
     float dt = 0.;
     double pressurePathRise = 0.;
     double remapDistance = 0., remapMomentumError = 0.;
+    double endpointRoundoff = 0.;
 };
 
 struct Result {
@@ -87,6 +88,7 @@ struct Result {
     double maxMassDrift = 0., maxImpulseError = 0., maxImpulseBudget = 0.;
     double maxMomentumError = 0., maxPoseError = 0., maxVelocityError = 0.;
     double maxRemapDistance = 0., maxRemapMomentumError = 0.;
+    double endpointRoundoff = 0.;
     double cavity = 0., expectedCavity = 0., nativeCavityError = 0.;
     double maxInletDrop = 0., maxInletError = 0.;
     bool allInletsHaveMass = true, upperHalvesStayClosed = true;
@@ -123,7 +125,7 @@ void MeasureFirstInlet(const Candidate& candidate, glm::vec3 start, Result& resu
         .25 * (double(candidate.endpoint.y) - start.y));
 }
 
-void ReconcileGeometry(const CoupledBoxStep& ideal, Candidate& candidate) {
+void ReconcileGeometry(const CoupledBoxStep& ideal, glm::vec3 half, Candidate& candidate) {
     const auto endpoint = glm::dvec3(candidate.endpoint);
     const auto idealCenter = .5 * (Vector(ideal.body.lo) + Vector(ideal.body.hi));
     const auto correction = endpoint - idealCenter;
@@ -168,12 +170,23 @@ void ReconcileGeometry(const CoupledBoxStep& ideal, Candidate& candidate) {
                                      remap.phase.fluid, candidate.water.halfVelocity, transport, error))
         throw std::runtime_error("mixed rounding momentum remap: " + error);
     candidate.nativeWater = std::move(remap.phase.fluid.state);
+    // The continuous box translated to the represented center and the
+    // box rebuilt from that center can round their bounds differently.
+    // Verify their cut capacities before mapping the phase representation.
+    GridCellPhase publishedPhase;
+    GridCellPhaseReconciliation endpointRepresentation{geometry.endCapacity, {}};
+    if (!ReconstructGridCellPhase(layout, {BoxAt(candidate.endpoint, half)}, 1,
+                                  candidate.nativeWater.water, publishedPhase, error,
+                                  &endpointRepresentation))
+        throw std::runtime_error("mixed native endpoint representation: " + error);
+    candidate.endpointRoundoff = endpointRepresentation.volumeRoundoff;
+    candidate.nativeWater.water = std::move(endpointRepresentation.water);
     candidate.nativeWater.velocity = std::move(transport.merged.faceVelocity);
     candidate.nativeOwnership = std::move(transport.merged.state);
     candidate.remapMomentumError = MaxAbs(Vector(transport.momentumResidual));
 }
 
-Result Run(const Fixture& fixture, bool inlet) {
+Result Run(const Fixture& fixture, bool inlet, unsigned ticks = 1) {
     PhysicsWorld world;
     if (!world.Init())
         throw std::runtime_error("MK2 init failed");
@@ -278,10 +291,10 @@ Result Run(const Fixture& fixture, bool inlet) {
                 pending.water.phase.fluid = std::move(ideal.box.fluid);
                 pending.water.halfVelocity = std::move(ideal.halfVelocity);
                 pending.water.transportMomentumError = ideal.transportMomentumError;
-                ReconcileGeometry(ideal.box, pending);
+                ReconcileGeometry(ideal.box, fixture.half, pending);
             }
         }
-        if (inlet && batch.context.index == 0)
+        if (inlet && result.published == 0 && batch.context.index == 0)
             MeasureFirstInlet(pending, body.center, result);
         proposal.linearImpulses = {pending.impulse};
         proposal.angularImpulses = {glm::dvec3(0)};
@@ -321,6 +334,7 @@ Result Run(const Fixture& fixture, bool inlet) {
             MaxAbs(Vector(pending.water.transportMomentumError)));
         result.maxRemapDistance = std::max(result.maxRemapDistance, pending.remapDistance);
         result.maxRemapMomentumError = std::max(result.maxRemapMomentumError, pending.remapMomentumError);
+        result.endpointRoundoff += pending.endpointRoundoff;
         result.maxMassDrift = std::max(result.maxMassDrift,
             1000. * std::abs(Sum(phase.water) - initialVolume));
         result.positions.push_back(pose.position);
@@ -330,8 +344,10 @@ Result Run(const Fixture& fixture, bool inlet) {
         water = std::move(phase);
         owned = std::move(pending.nativeOwnership);
     };
-    world.ApplyLinearAcceleration(handle, {0.f, gravity, 0.f}, tick);
-    world.Step(tick, &coupling);
+    for (unsigned step = 0; step < ticks; ++step) {
+        world.ApplyLinearAcceleration(handle, {0.f, gravity, 0.f}, tick);
+        world.Step(tick, &coupling);
+    }
     return result;
 }
 
@@ -383,6 +399,18 @@ int main() {
             dryImpulseError = std::max(dryImpulseError, MaxAbs(wet.impulses[i] - air.impulses[i]));
         checks.Expect(dryImpulseError < 1e-12 && wet.maxMassDrift < 1e-8,
                       "nearby water transfers no pressure impulse across the dry gap", dryImpulseError);
+
+        const auto continuing = Run(piston, true, 24);
+        checks.Expect(continuing.published == 96 && continuing.positions.size() == 96 &&
+                      continuing.maxPoseError == 0. && continuing.maxVelocityError == 0. &&
+                      continuing.velocities.front().y > 0. && continuing.velocities.back().y < 0.,
+                      "repeated native pressure coupling survives the upward and return stroke",
+                      continuing.published);
+        checks.Expect(continuing.endpointRoundoff > 0. && continuing.endpointRoundoff < 1e-13 &&
+                      continuing.maxMassDrift < 1e-8 && continuing.maxMomentumError < 1e-10 &&
+                      continuing.maxRemapMomentumError < 1e-10,
+                      "actual repeated binary32 endpoints preserve both phase and momentum budgets",
+                      continuing.endpointRoundoff);
     } catch (const std::exception& error) {
         std::cerr << "FAIL " << error.what() << '\n';
         ++checks.failures;

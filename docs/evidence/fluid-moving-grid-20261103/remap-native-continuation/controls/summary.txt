@@ -1,0 +1,8 @@
+run,mean_ms,median_ms,p95_ms,worst_ms
+baseline-0,75.550273,61.460867,63.989586,369.709011
+baseline-1,77.267964,63.082154,66.429528,379.043866
+baseline-pooled,76.409118,62.468081,66.429528,379.043866
+axis-remap-0,64.907916,52.846431,56.799747,321.070295
+axis-remap-1,67.023087,53.112518,57.472125,352.676180
+axis-remap-pooled,65.965502,52.966528,57.472125,352.676180
+All 80 records have identical non-timing fields, including physical outcomes and retry counts.

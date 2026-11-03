@@ -312,6 +312,24 @@ bool ConservativeRemap::RemapScalar(const std::vector<double>& start, RemapScala
     return Apply(start, output, nullptr, error);
 }
 
+bool ConservativeRemap::RemapAxisMomentum(const std::vector<double>& start,
+                                          RemapAxisMomentumResult& output,
+                                          std::string& error) const {
+    RemapAxisMomentumResult result;
+    MixingLedger energy;
+    if (!Apply(start, result.field, &energy, error))
+        return false;
+    result.beforeKineticEnergy = energy.before;
+    result.afterKineticEnergy = energy.after;
+    result.mixingLoss = energy.loss;
+    result.kineticResidual = (energy.before - energy.after) - energy.loss;
+    if (!std::isfinite(result.kineticResidual))
+        return Fail(error, "conservative remap axis kinetic energy is not representable");
+    output = std::move(result);
+    error.clear();
+    return true;
+}
+
 bool ConservativeRemap::RemapMomentum(const std::vector<std::array<double, 3>>& start,
                                       RemapMomentumResult& output, std::string& error) const {
     RemapMomentumResult result;

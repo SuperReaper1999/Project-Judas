@@ -25,6 +25,12 @@ struct RemapScalarResult {
     double conservationResidual = 0;
 };
 
+struct RemapAxisMomentumResult {
+    RemapScalarResult field;
+    double beforeKineticEnergy = 0, afterKineticEnergy = 0;
+    double mixingLoss = 0, kineticResidual = 0;
+};
+
 struct RemapMomentumResult {
     std::vector<std::array<double, 3>> end, transfers;
     std::array<double, 3> conservationResidual{};
@@ -41,6 +47,9 @@ class ConservativeRemap {
 public:
     bool RemapScalar(const std::vector<double>& start, RemapScalarResult& output,
                      std::string& error) const;
+    // A staggered dual owns just one extensive velocity component.
+    bool RemapAxisMomentum(const std::vector<double>& start, RemapAxisMomentumResult& output,
+                           std::string& error) const;
     // Build the plan with mass, then supply extensive linear momentum.
     bool RemapMomentum(const std::vector<std::array<double, 3>>& start,
                        RemapMomentumResult& output, std::string& error) const;

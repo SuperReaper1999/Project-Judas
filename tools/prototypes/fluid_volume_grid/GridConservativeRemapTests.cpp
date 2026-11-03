@@ -126,6 +126,54 @@ void CyclicMixing(Checks& checks) {
         "reordering signed transfers preserves local and end mixing");
 }
 
+void AxisMomentum(Checks& checks) {
+    const ConservativeRemapInput input{{1, 1, 0, 0, 0, 1}, {0, 0, 0, 0, 2, 1},
+        {{0, 2, 1}, {1, 3, 1}, {2, 3, 3}, {3, 2, 2}, {4, 3, -2}},
+        {false, false, true, true, false, false}};
+    ConservativeRemap plan;
+    std::string error;
+    if (!BuildConservativeRemap(input, plan, error)) {
+        checks.Expect(false, "axis momentum rooted cycle " + error);
+        return;
+    }
+    const std::vector<double> initial{2, -1, 0, 0, 0, 0};
+    RemapAxisMomentumResult axis;
+    checks.Expect(plan.RemapAxisMomentum(initial, axis, error) &&
+        Close(axis.field.end, {0, 0, 0, 0, 1, 0}) &&
+        Close(axis.beforeKineticEnergy, 2.5) && Close(axis.afterKineticEnergy, .25) &&
+        Close(axis.mixingLoss, 2.25) && Close(axis.kineticResidual, 0.),
+        "axis momentum preserves signed transport and analytic cycle work");
+    for (std::size_t component = 0; component < 3; ++component) {
+        std::vector<std::array<double, 3>> momentum(initial.size());
+        for (std::size_t i = 0; i < initial.size(); ++i)
+            momentum[i][component] = initial[i];
+        RemapMomentumResult vector;
+        bool equivalent = plan.RemapMomentum(momentum, vector, error) &&
+            axis.field.end.size() == vector.end.size() &&
+            axis.field.transfers.size() == vector.transfers.size();
+        for (std::size_t i = 0; equivalent && i < vector.end.size(); ++i)
+            equivalent = axis.field.end[i] == vector.end[i][component];
+        for (std::size_t i = 0; equivalent && i < vector.transfers.size(); ++i)
+            equivalent = axis.field.transfers[i] == vector.transfers[i][component];
+        checks.Expect(equivalent && axis.field.conservationResidual == vector.conservationResidual[component] &&
+            axis.beforeKineticEnergy == vector.beforeKineticEnergy &&
+            axis.afterKineticEnergy == vector.afterKineticEnergy &&
+            axis.mixingLoss == vector.mixingLoss && axis.kineticResidual == vector.kineticResidual,
+            "axis remap gives the same transfers and work as the vector field");
+    }
+    const auto retained = axis;
+    for (const auto& invalid : std::vector<std::vector<double>>{
+             {1}, {2, -1, 1, 0, 0, 0}, {std::numeric_limits<double>::quiet_NaN(), -1, 0, 0, 0, 0},
+             {1e308, -1e308, 0, 0, 0, 0}}) {
+        checks.Expect(!plan.RemapAxisMomentum(invalid, axis, error) &&
+            !error.empty() && axis.field.end == retained.field.end &&
+            axis.field.transfers == retained.field.transfers &&
+            axis.beforeKineticEnergy == retained.beforeKineticEnergy &&
+            axis.afterKineticEnergy == retained.afterKineticEnergy && axis.mixingLoss == retained.mixingLoss,
+            "axis momentum rejects invalid and overflowing fields without publication");
+    }
+}
+
 void RejectInvalid(Checks& checks) {
     ConservativeRemap plan;
     std::string error;
@@ -215,6 +263,7 @@ int main() {
     OrdinaryDonor(checks);
     ExposureChain(checks);
     CyclicMixing(checks);
+    AxisMomentum(checks);
     RejectInvalid(checks);
     LongExposure(checks);
     SeededGraphs(checks);
