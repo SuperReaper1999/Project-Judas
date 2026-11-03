@@ -1,0 +1,49 @@
+PASS overlapping walls build as one static union 0
+PASS capacity and aperture include intersection exactly once 0.59375
+PASS reordering or duplicating static geometry leaves physical measure identical 0
+PASS touching wall halves leave no fictitious opening 0
+PASS stationary disjoint geometry agrees with the existing cut builder 3.4694469519536142e-18
+PASS empty grid establishes rollback baseline 0
+PASS an in-cell slab with two free pockets rejects transactionally 0
+PASS a point or line connection cannot join disconnected fluid pockets 0
+PASS one representable step of positive gap connects the two pockets 0
+PASS local partition has a bounded work budget and preserves the last result 0
+PASS authored half_025 five walls build 0
+PASS authored measured seam at z=±1.125 agrees with analytic area 0.0020000934600830078
+PASS authored measured seam at z=±1.125 agrees with analytic area 0.0020000934600830078
+PASS authored chart free volume agrees with independent box inclusion-exclusion 29.993599886083601
+TIMING authored cells=18432 samples=11 median_ms=3.610930 max_ms=6.454432 max_pieces=8 checks_bound=26824
+PASS matched Z-floor seam control builds 0
+PASS matched control seals measured seam at z=±1.125 0
+PASS matched control seals measured seam at z=±1.125 0
+PASS authored chart free volume agrees with independent box inclusion-exclusion 29.991999811291691
+TIMING sealed cells=18432 samples=11 median_ms=3.578669 max_ms=3.662107 max_pieces=8 checks_bound=26552
+PASS compose actual static walls and authored moving release box 0
+PASS prescribed authored box crosses from full immersion to partial immersion 0
+PASS all composed cells close against independently clipped capacity and signed face sweep 1.7347234759768071e-18
+PASS dynamic-only swept patch traction closes against independent pressure work -1.1102230246251565e-16
+PASS frozen start-wall patches fail the same nonuniform pressure-work check 0.18090003497600748
+PASS authored seam remains open throughout composed body motion 0.0020000934600830078
+PASS authored seam remains open throughout composed body motion 0.0020000934600830078
+PASS a transient wall crossing rejects even when both endpoint boxes are disjoint 0
+PASS zero-volume wall contact still rejects instead of double-owning a face 0
+PASS overlapping moving bodies reject transactionally 0
+PASS build cached overlapping wall partitions 0
+PASS cached half-cell partial fill matches independent rectangular volume 0.1796875
+PASS midpoint wet rectangle measures the union from both incident slabs 0.3125
+PASS midpoint rectangle on an exactly coincident solid face is closed 0
+PASS out-of-cell interior clip rejects without publishing an area 0
+PASS reversed volume bounds reject without publishing a value 0
+PASS cache authored tank phase-query geometry 0
+PASS both shared sides and the in-wall midpoint retain the clipped wet seam area 0.00099999999999988987
+PASS clipped half-cell stores exactly the actual floor-seam water volume 7.8128650784492493e-06
+PASS actual wall underside is closed while the next representable plane in the slit is open 0.0078125
+PASS both shared sides and the in-wall midpoint retain the clipped wet seam area 0.00099999999999988987
+PASS clipped half-cell stores exactly the actual floor-seam water volume 7.8128650784492493e-06
+PASS actual wall underside is closed while the next representable plane in the slit is open 0.0078125
+PASS cache authored tank phase-query geometry 0
+PASS both shared sides and the in-wall midpoint retain the clipped wet seam area 0
+PASS clipped half-cell stores exactly the actual floor-seam water volume 0
+PASS both shared sides and the in-wall midpoint retain the clipped wet seam area 0
+PASS clipped half-cell stores exactly the actual floor-seam water volume 0
+SUMMARY static wall union 46 checks 0 failures

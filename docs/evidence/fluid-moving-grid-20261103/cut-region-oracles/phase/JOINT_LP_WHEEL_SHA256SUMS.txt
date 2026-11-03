@@ -1,0 +1,2 @@
+d549420b8858885cea8838a727842249218b9c1da24dd517e25c9c7a948310a3  /tmp/judas-joint-lp-deps.CoNQr8xV/numpy-2.5.4-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+ac0333bdf38309aa3dcbe7e3fa7ea29e7a2c37c6ea306a757b700ded8e4596ad  /tmp/judas-joint-lp-deps.CoNQr8xV/scipy-1.18.1-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl

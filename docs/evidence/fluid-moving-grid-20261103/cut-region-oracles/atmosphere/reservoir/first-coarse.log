@@ -1,0 +1,29 @@
+PASS equal atmospheric heads stay hydrostatic despite unequal storage cross-sections 0
+PASS pressure advances through a genuine fully wet rectangular link 0
+PASS flow is positive and approaches zero linearly with measured aperture area 0.00065398574311080016
+PASS volume, reservoir potential and link kinetic work independently balance 0.05346216902402319
+PASS pressure advances through a genuine fully wet rectangular link 0
+PASS flow is positive and approaches zero linearly with measured aperture area 0.00032699643573885052
+PASS volume, reservoir potential and link kinetic work independently balance 0.02673166724647804
+PASS a narrower opening lowers volume flow without inventing a lower transit CFL 0.043599524765180066
+PASS pressure advances through a genuine fully wet rectangular link 0
+PASS flow is positive and approaches zero linearly with measured aperture area 0.00016349910892985635
+PASS volume, reservoir potential and link kinetic work independently balance 0.013365979310428513
+PASS a narrower opening lowers volume flow without inventing a lower transit CFL 0.043599762381295024
+PASS pressure advances through a genuine fully wet rectangular link 0
+PASS flow is positive and approaches zero linearly with measured aperture area 1.5227124094885785e-10
+PASS volume, reservoir potential and link kinetic work independently balance 1.2448173947505943e-08
+PASS a narrower opening lowers volume flow without inventing a lower transit CFL 0.043599999999778698
+PASS matched sealed geometry retains its unequal head and carries exactly zero flux 0
+PASS unvented head space rejects transactionally 0
+PASS a partly dry port is outside this fixed-aperture model 0
+PASS even a tiny wet aperture rejects when liquid travels beyond its link volume 0
+PASS a resolved shorter interval transports the same fast wet link 0
+FAIL wet link throughflow exceeds one link inventory; substep required 0.99369135156585975
+PASS vented thin-link trajectory completes within explicit liquid CFL 0.61497238188293035
+PASS head and flow converge at second order without volume or mechanical-energy drift 5.6886648014842223e-05
+PASS vented thin-link trajectory completes within explicit liquid CFL 0.30968665063415984
+PASS head and flow converge at second order without volume or mechanical-energy drift 1.422216188773362e-05
+PASS vented thin-link trajectory completes within explicit liquid CFL 0.15539023471723012
+PASS head and flow converge at second order without volume or mechanical-energy drift 3.5555717281532395e-06
+SUMMARY atmospheric reservoir 28 checks 1 failures

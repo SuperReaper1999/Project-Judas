@@ -177,6 +177,15 @@ native run reaches an aperture and traction discontinuity at tick 28.
 Separate contact and CCD probes show why the existing velocity callback
 cannot certify the path used by the pressure solve.
 
+The [cut-region oracles](../../../docs/evidence/fluid-moving-grid-20261103/cut-region-oracles/)
+verify separate pressure ownership for a thin slit and a cap, a common
+water inventory across the three half-cell axes, and exact clipped
+geometry for the authored basin. They preserve the finer pool, cyclic
+gravity and original authored mixed transport failures. Separate vented
+liquid controls pass without a simulated air phase. They qualify a
+piston column and a fixed wet aperture, leaving the three-dimensional
+free surface and native composition open.
+
 Runtime adoption requires a conservative treatment of newly exposed
 volume, native contact and CCD composition, representative terrain and
 surface publication, cold persistence, and full original gameplay

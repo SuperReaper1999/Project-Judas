@@ -1,0 +1,14 @@
+PASS build exact fixed-wall partition 0
+PASS exact original authored parcel inventory 9.25
+CASE authored original seed stationary geometry dt=0.01666666753590107 water=9.25 dy=0
+FAIL projection: moving-volume transport exceeds donor capacity; substep or merge required [subdivision eligible] 0
+CASE authored original seed prescribed motion dt=0.01666666753590107 water=9.25 dy=0.0041666668839752674
+FAIL projection: moving-volume transport exceeds donor capacity; substep or merge required [subdivision eligible] 0
+PASS unqualified mixed-cell topology rejects even for physically disjoint solids 0
+PASS build exact fixed-wall partition 0
+PASS exact original authored parcel inventory 9.25
+CASE sealed original seed stationary geometry dt=0.01666666753590107 water=9.25 dy=0
+FAIL projection: moving-volume transport exceeds donor capacity; substep or merge required [subdivision eligible] 0
+CASE sealed original seed prescribed motion dt=0.01666666753590107 water=9.25 dy=0.0041666668839752674
+FAIL projection: moving-volume transport exceeds donor capacity; substep or merge required [subdivision eligible] 0
+SUMMARY authored pressure handoff 9 checks 4 failures

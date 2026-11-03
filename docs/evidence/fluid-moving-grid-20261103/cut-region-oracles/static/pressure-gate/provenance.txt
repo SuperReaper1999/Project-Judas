@@ -1,0 +1,6 @@
+pinned pressure commit 8fd9a2de1156b262782d8e252f9426d4320a6e91
+Tue Nov  3 14:56:50 UTC 2026
+g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+Model name:                              AMD Ryzen 5 5600 6-Core Processor
+c64b17577c68756c525310c7635353cc0e915b7ef67df314a6e46246c1170a81  tests/ProductionFluidTests.cpp
+37b399aea2e677029e77277c8c0fc7654603a940381699896636fb843ade3452  tests/FluidSettlingReferenceTests.cpp
