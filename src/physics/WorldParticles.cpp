@@ -1,4 +1,5 @@
 #include "WorldInternal.h"
+#include "PrescribedParticleProjection.h"
 
 using namespace JudasPhysicsDetail;
 
@@ -48,7 +49,8 @@ bool AccelerateParticleNormals(const std::vector<ContactConstraint> &rows,
         // Optional PCG is restricted to homogeneous prescribed normal motion.
         // A moving infinite-mass boundary can supply unbounded constraint work
         // when nearly opposing coarse particle rows form a narrow wedge. The
-        // ordinary bounded PGS still processes every such row unchanged.
+        // ordinary bounded PGS still processes every such row. A separate
+        // certified solve can handle independent prescribed particle groups.
         const double prescribedA = glm::dot(n, glm::dvec3(c.bodyA->linearVelocity)) +
                                    glm::dot(angularA, glm::dvec3(c.bodyA->angularVelocity));
         const double prescribedB = glm::dot(n, glm::dvec3(c.bodyB->linearVelocity)) +
@@ -504,12 +506,53 @@ void PhysicsWorld::SolveParticleContacts(std::vector<ContactParticle> &particles
         }
     } while (convergence.maximumClosingSpeed > 1.0e-5f * convergence.speedScale &&
              convergence.iterations < 64);
-    convergence.iterationCapReached =
-        convergence.maximumClosingSpeed > 1.0e-5f * convergence.speedScale;
     for (std::size_t i = 0; i < contacts.size(); ++i) {
         const auto &c = solved[particleRowStart + i];
         particleImpulses[i] = c.normal * c.normalImpulse + c.tangentImpulse;
     }
+    const float tolerance = 1.0e-5f * convergence.speedScale;
+    // A prescribed-only group has no shared finite body. Retain the usual
+    // auxiliary solver for coupled islands and for unordered caller batches.
+    if (convergence.maximumClosingSpeed > tolerance && particleRowStart == 0 &&
+        std::none_of(contacts.begin(), contacts.end(), [](const auto &c) { return c.twoWay; }) &&
+        std::is_sorted(contacts.begin(), contacts.end(), [](const auto &a, const auto &b) {
+            return a.particleIndex < b.particleIndex;
+        })) {
+        convergence.maximumClosingSpeed = 0;
+        for (std::size_t first = 0; first < contacts.size();) {
+            const auto particleIndex = contacts[first].particleIndex;
+            std::size_t end = first + 1;
+            while (end < contacts.size() && contacts[end].particleIndex == particleIndex)
+                ++end;
+            const auto residual = [&] {
+                float largest = 0;
+                for (std::size_t i = first; i < end; ++i) {
+                    const auto &c = solved[i];
+                    const float speed = glm::dot(c.bodyA->linearVelocity - c.bodyB->linearVelocity,
+                                                 c.normal);
+                    if (!std::isfinite(speed))
+                        return std::numeric_limits<float>::infinity();
+                    largest = std::max(largest, c.restitutionBias - speed);
+                }
+                return largest;
+            };
+            float closing = residual();
+            PrescribedParticleProjection projection;
+            if (closing > tolerance &&
+                ProjectPrescribedParticleVelocity(solved.data() + first, end - first,
+                                                   original[particleIndex].linear, tolerance, projection)) {
+                particleBodies[particleIndex].linearVelocity = projection.velocity;
+                for (std::size_t i = first; i < end; ++i)
+                    particleImpulses[i] = solved[i].normal * projection.normalImpulses[i - first];
+                closing = residual();
+            }
+            convergence.maximumClosingSpeed = std::max(convergence.maximumClosingSpeed, closing);
+            first = end;
+        }
+    }
+    // The count retains all PGS sweeps. The cap flag continues to mean that
+    // the published response has a residual above its normal-speed budget.
+    convergence.iterationCapReached = convergence.maximumClosingSpeed > tolerance;
     if (staticSupportImpulse)
         for (std::size_t i = 0; i < particleRowStart; ++i) {
             const auto &c = solved[i];

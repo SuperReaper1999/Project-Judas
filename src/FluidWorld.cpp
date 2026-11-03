@@ -2,6 +2,7 @@
 #include "FluidDisplacementTracking.h"
 #include "ContactSolver.h"
 #include "RigidBody.h"
+#include "physics/PrescribedParticleProjection.h"
 
 #include <algorithm>
 #include <cmath>
@@ -914,6 +915,7 @@ void ResolvePrescribedContacts(std::vector<FluidParticle>& particles,
         body.position=particle.position;
         body.linearVelocity=particle.velocity;
         body.inverseMass=1.f/particle.mass;
+        const auto incoming=body.linearVelocity;
         solver.Clear();
         walls.clear();walls.resize(end-first);
         float speedScale=std::max(1.f,glm::length(body.linearVelocity));
@@ -942,6 +944,17 @@ void ResolvePrescribedContacts(std::vector<FluidParticle>& particles,
                                              : std::numeric_limits<float>::infinity();
             }
         } while(residual>1e-5f*speedScale && iterations<64);
+        PrescribedParticleProjection projection;
+        const auto& rows=solver.Constraints();
+        const bool projected=residual>1e-5f*speedScale &&
+            ProjectPrescribedParticleVelocity(rows.data(),rows.size(),incoming,1e-5f*speedScale,projection);
+        if(projected) {
+            body.linearVelocity=projection.velocity;
+            residual=0;
+            for(const auto& c:rows)
+                residual=std::max(residual,c.restitutionBias-
+                    glm::dot(body.linearVelocity-c.bodyB->linearVelocity,c.normal));
+        }
         maximumResidual=std::max(maximumResidual,residual);
         iterationCaps+=residual>1e-5f*speedScale ? 1 : 0;
         for(int axis=0;axis<3;++axis)if(!std::isfinite(body.linearVelocity[axis]))
@@ -951,7 +964,8 @@ void ResolvePrescribedContacts(std::vector<FluidParticle>& particles,
         particle.velocity=body.linearVelocity;
         for(std::size_t i=first;i<end;++i) {
             const auto& c=solver.Constraints()[i-first];
-            impulses[i]=c.normal*c.normalImpulse+c.tangentImpulse;
+            impulses[i]=projected ? c.normal*projection.normalImpulses[i-first] :
+                c.normal*c.normalImpulse+c.tangentImpulse;
         }
         // Rows contain pointers to stack/array bodies; clear before destruction
         // or any following resize, including the final particle group.

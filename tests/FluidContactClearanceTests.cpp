@@ -280,13 +280,13 @@ void OrthogonalPreferredSkins(const glm::quat& rotation, bool callback) {
 // makes a real (negative-target) speculative impulse necessary. Every row must
 // remain satisfied after all other rows: a later wedge impulse may not undo an
 // earlier wall bound.
-void SimultaneousYieldingResponse(const glm::quat& rotation, bool callback, bool knownLimit = false) {
+void SimultaneousYieldingResponse(const glm::quat& rotation, bool callback, bool narrow = false,
+                                 bool reversed = false) {
     const float dt = .01f, radius = .18f;
     const glm::vec3 point(0, radius, radius);
-    // This separate 30-degree wedge tests row coupling without exhausting
-    // the unchanged native iteration budget. The original narrower captured
-    // wedge remains covered above; its active 40 m/s stress failure is archived.
-    const glm::vec3 normal = knownLimit ?
+    // The 30-degree wedge converges through ordinary PGS. The original
+    // captured narrower wedge needs a certified projection at the same budget.
+    const glm::vec3 normal = narrow ?
         glm::normalize(glm::vec3(.2527f, -.0102f, -.9675f)) :
         glm::vec3(.5f, 0, -std::sqrt(.75f));
     const auto axis = glm::normalize(glm::cross(glm::vec3(0, 1, 0), normal));
@@ -297,7 +297,9 @@ void SimultaneousYieldingResponse(const glm::quat& rotation, bool callback, bool
     settings.densityIterations = 0;
     settings.velocitySmoothing = 0;
     FluidWorld fluid(settings);
-    fluid.AddParticle(rotation * point, rotation * glm::vec3(0, -.001f, -.001f), 125);
+    const auto incoming = rotation * glm::vec3(0, -.001f, -.001f);
+    constexpr float particleMass = 125;
+    fluid.AddParticle(rotation * point, incoming, particleMass);
     const auto floor = Box(41, rotation * glm::vec3(0, -.25f, 0), {2, .25f, 2}, rotation);
     const auto wall = Box(42, rotation * glm::vec3(0, 0, -.25f), {2, 2, .25f}, rotation);
     auto moving = Box(43, rotation * (point - normal * (radius + .1f - 1e-6f)),
@@ -320,8 +322,10 @@ void SimultaneousYieldingResponse(const glm::quat& rotation, bool callback, bool
         for (std::size_t i = 0; i < particles.size(); ++i) particles[i].velocity = input[i].velocity;
     };
     UniformGravity zero({0, 0, 0});
-    const std::vector<FluidBoxCollider> boxes{floor, wall, moving};
-    fluid.Step(dt, zero, boxes, {}, {}, nullptr,
+    std::vector<FluidBoxCollider> boxes{floor, wall, moving};
+    if (reversed) std::reverse(boxes.begin(), boxes.end());
+    std::vector<FluidContactImpulse> reactions;
+    fluid.Step(dt, zero, boxes, {}, {}, &reactions,
                callback ? response : FluidVelocityBatchResponse{});
     const auto& particle = fluid.Particles()[0];
     float residual = 0;
@@ -338,22 +342,47 @@ void SimultaneousYieldingResponse(const glm::quat& rotation, bool callback, bool
     const std::string label = callback ? "native" : "fallback";
     Check(outside, label + " actual-impulse wedge retains physical solid exclusion");
     Check(glm::length(particle.velocity) > 1, label + " actual-impulse wedge exercises active speculative response");
-    if (knownLimit) {
-        // This deliberately retained high-speed narrow wedge does NOT pass
-        // the physical residual contract. These assertions qualify only the
-        // honesty of bounded-solver diagnostics, never its physical solution.
+    if (narrow) {
         const auto diagnostics = fluid.GetDiagnostics();
         const auto nativeStats = native.GetParticleContactStats();
         const bool cap = callback ? nativeStats.iterationCapReached :
                                     diagnostics.fallbackContactIterationCaps > 0;
         const float reported = callback ? nativeStats.maximumClosingSpeed :
                                           diagnostics.maximumFallbackContactResidual;
-        Check(cap && residual > 2e-5f * std::max(40.f, glm::length(particle.velocity)),
-              label + " known-limit narrow wedge reports unresolved iteration cap");
+        Check(!cap && residual <= 1e-5f * 40.f,
+              label + " narrow wedge satisfies all physical rows within the solver residual budget");
         Check(std::abs(reported - residual) <= 64 * std::numeric_limits<float>::epsilon() *
                   std::max(40.f, glm::length(particle.velocity)),
-              label + " known-limit diagnostics agree with independent physical residual");
-        std::printf("KNOWN_LIMIT narrow active-impulse wedge/%s physical_residual=%.9g reported=%.9g cap=%d\n",
+              label + " narrow wedge diagnostics agree with independent physical residual");
+        const auto rowAt = [&](const FluidBoxCollider& box) {
+            const auto local = glm::inverse(box.currentPose.rotation) *
+                (particle.position - box.currentPose.position);
+            const auto difference = glm::dvec3(box.currentPose.rotation *
+                (local - glm::clamp(local, -box.halfExtents, box.halfExtents)));
+            const auto n = glm::normalize(difference);
+            const auto boundaryVelocity = glm::dvec3(
+                (box.currentPose.position - box.previousPose.position) / dt);
+            return std::pair{n, -glm::length(difference) / dt -
+                glm::dot(n, glm::dvec3(incoming) - boundaryVelocity)};
+        };
+        // Analytic two-plane witness in the wall-normal plane. The floor is
+        // strictly slack, and both multipliers are positive.
+        const auto [a, demandA] = rowAt(wall);
+        const auto [b, demandB] = rowAt(moving);
+        const auto [f, demandFloor] = rowAt(floor);
+        const auto side = b - glm::dot(a, b) * a;
+        const double pushB = (demandB - demandA * glm::dot(a, b)) / glm::dot(side, side);
+        const double pushA = demandA - pushB * glm::dot(a, b);
+        const auto correction = demandA * a + pushB * side;
+        Check(pushA > 0 && pushB > 0 && glm::dot(correction, f) > demandFloor &&
+              glm::length(glm::dvec3(particle.velocity - incoming) - correction) <= 2e-5 * 40,
+              label + " narrow wedge agrees with the least-change two-plane velocity");
+        glm::dvec3 reaction(0);
+        for (const auto& row : reactions) reaction += glm::dvec3(row.impulse);
+        Check(glm::length(reaction + double(particleMass) * glm::dvec3(particle.velocity - incoming))
+                  <= 2e-5 * particleMass * 40,
+              label + " narrow wedge published reactions close particle momentum");
+        std::printf("MEASURE narrow active-impulse wedge/%s physical_residual=%.9g reported=%.9g cap=%d\n",
             label.c_str(), residual, reported, int(cap));
     } else {
         Check(residual <= 2e-5f * std::max(40.f, glm::length(particle.velocity)),
@@ -664,6 +693,7 @@ int main() {
         for (const bool callback : {false, true}) {
             SimultaneousYieldingResponse(rotation, callback);
             SimultaneousYieldingResponse(rotation, callback, true);
+            SimultaneousYieldingResponse(rotation, callback, true, true);
             for (const bool reversed : {false, true})
                 for (const float direction : {-1.f, 1.f})
                     StationaryOpposedChannel(rotation, callback, reversed, direction);

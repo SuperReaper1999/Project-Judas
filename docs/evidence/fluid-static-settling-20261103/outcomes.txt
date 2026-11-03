@@ -1,0 +1,47 @@
+=== current ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0868477
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== old ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0499571
+SUMMARY checks=2 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== keep-static ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0499571
+SUMMARY checks=2 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== no-hard ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0868477
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== preferred-witness ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0868477
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== no-markers ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0868477
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== density-segment ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0774307
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== speculative ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.08821
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== speculative-zero ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0825106
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== speculative-gravity ===
+  what():  invalid particle boundary contact
+=== bounded-face ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.08821
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== projected-density ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0655901
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== projected-density-inward ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.101151
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== mobility ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0706087
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== mobility-pressure ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0779972
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+=== mobility-velocity ===
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0646739
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
