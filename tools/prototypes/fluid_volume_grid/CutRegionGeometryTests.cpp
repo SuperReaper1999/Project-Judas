@@ -211,6 +211,112 @@ void Phase(Checks& checks) {
                   "normal face at the waterline sees the correct one-sided phase");
 }
 
+void PhaseNearSaturation(Checks& checks) {
+    const CutRegion region{{0., .5, 0.}, {.125, .501, .125}, 0};
+    CutRegionChart chart;
+    chart.regions = {region, region};
+    CutRegionGeometry geometry;
+    std::vector<CutRegionWaterPlane> planes;
+    std::string error;
+    const double capacity = CutRegionClippedVolume(region, {}, region.lo, region.hi);
+    const double water = capacity - 6.74e-19;
+    geometry.startCapacity = {capacity, capacity};
+    const bool subcoordinate = ReconstructCutRegionWaterPlanes(chart, geometry, 1,
+        {water, capacity}, {{1, true}, {1, true}}, planes, error);
+    if (!subcoordinate) {
+        checks.Expect(false, "sub-coordinate phase reconstruction " + error);
+        return;
+    }
+    const auto [wet, dry] = MeasureCutRegionPhaseVolumes(region, {}, region.lo, region.hi, planes[0]);
+    checks.Expect(planes[0].coordinate == .5 && planes[0].remainder > 0. &&
+                  std::abs(wet - water) < 3e-21 && std::abs(dry - (capacity - water)) < 1e-31,
+                  "a local plane retains the air inventory below a chart-coordinate step", dry);
+    CutRegionFace face{0, 1, 0, {.125, .5, 0.}, {.125, .501, .125},
+                       .125 * (.501 - .5), .125 * (.501 - .5), .125 * (.501 - .5), 0., .125};
+    const auto thin = MeasureCutRegionFacePhase(face, {}, planes[0], planes[1]);
+    checks.Expect(thin.dry[0].start == dry / .125 && thin.dry[1].start == 0.,
+                  "only the positive thin phase has a physical aperture", thin.dry[0].start);
+    const auto connected = MeasureCutRegionSharedPhase(face, {}, planes[0], planes[0], false, false);
+    const auto disconnected = MeasureCutRegionSharedPhase(face, {}, planes[0], planes[1], false, false);
+    checks.Expect(connected.start == thin.dry[0].start && disconnected.start == 0.,
+                  "the same tiny shared phase opening connects only when both sides are dry", connected.start);
+
+    geometry.motion = BoxMotion{7, {-1., .5006, -1.}, {1., .52, 1.}, {0., .0001, 0.}};
+    const double clipped = CutRegionClippedVolume(region, geometry.motion, region.lo, region.hi);
+    geometry.startCapacity = {clipped, clipped};
+    const double almost = std::nextafter(clipped, 0.);
+    const bool saturated = ReconstructCutRegionWaterPlanes(chart, geometry, 1,
+        {clipped, almost}, {}, planes, error);
+    if (!saturated) {
+        checks.Expect(false, "swept saturation limit " + error);
+        return;
+    }
+    const auto aperture = MeasureCutRegionAperture(face, geometry.motion, face.lo, face.hi);
+    face.startArea = aperture.start;
+    face.meanArea = aperture.mean;
+    const auto phase = MeasureCutRegionFacePhase(face, geometry.motion, planes[0], planes[1]);
+    checks.Expect(planes[0].coordinate == geometry.motion->lo[1] &&
+                  std::abs(planes[1].RelativeTo(planes[0].coordinate)) < 2e-18 &&
+                  phase.dry[0].start == 0. && phase.dry[0].mean > 1e-7 &&
+                  std::abs(phase.wet[0].mean - phase.wet[1].mean) < 1e-18,
+                  "swept aperture reaches the same saturation limit on the actual free slab",
+                  phase.dry[0].mean);
+    const CutRegionWaterPlane crossed{{2, true}, .0625};
+    double partition = 0.;
+    for (bool leftWet : {false, true})
+        for (bool rightWet : {false, true})
+            partition += MeasureCutRegionSharedPhase(face, geometry.motion, planes[0], crossed,
+                                                     leftWet, rightWet).mean;
+    checks.Expect(std::abs(partition - face.meanArea) < 1e-19,
+                  "crossed interfaces partition the swept aperture without subtractive phase support", partition);
+
+    // A box that retreats from the lower half must never expose wet area
+    // when the adjacent region is entirely dry.
+    geometry.motion = BoxMotion{7, {-1., .48, -1.}, {1., .5006, 1.}, {0., -.0001, 0.}};
+    const double dryCapacity = CutRegionClippedVolume(region, geometry.motion, region.lo, region.hi);
+    geometry.startCapacity = {dryCapacity, dryCapacity};
+    if (!ReconstructCutRegionWaterPlanes(chart, geometry, 1, {0., 0.}, {}, planes, error)) {
+        checks.Expect(false, "dry swept aperture " + error);
+        return;
+    }
+    const auto opening = MeasureCutRegionAperture(face, geometry.motion, face.lo, face.hi);
+    face.startArea = opening.start;
+    face.meanArea = opening.mean;
+    const auto dryTrace = MeasureCutRegionFacePhase(face, geometry.motion, planes[0], planes[1]);
+    checks.Expect(opening.mean > opening.start && dryTrace.wet[0].mean == 0. &&
+                  dryTrace.wet[1].mean == 0. && dryTrace.dry[0].mean == opening.mean,
+                  "a retreating solid cannot expose water from an entirely dry cut", opening.mean);
+}
+
+void ConnectedInertia(Checks& checks) {
+    const CutRegion region{{0., .5, 0.}, {.25, .75, .25}, 0};
+    const CutRegionFace face{0, 1, 1, {0., .5, 0.}, {.25, .5, .25},
+                             .0625, .0625, .0625, 0., .25};
+    const BoxMotion solid{5, {0., .515625, 0.}, {.25, .59375, .25}, {}};
+    const CutRegionWaterPlane vertical{{1, false}, .515625};
+    const CutRegionWaterPlane lateral{{0, false}, .25, -1e-17};
+    const auto water = MeasureCutRegionFaceInertiaVolumes(face, solid, region, false, vertical);
+    const auto trace = MeasureCutRegionFaceInertiaVolumes(face, solid, region, false, lateral);
+    const double connected = .0625 * .015625;
+    checks.Expect(water[0] == connected && water[1] == 0. &&
+                  std::abs(trace[0] - connected) < 1e-18 &&
+                  std::abs(trace[1] - (.25 * .015625 * 1e-17)) < 1e-33,
+                  "vertical inertia excludes fluid behind a solid and is continuous across phase axes",
+                  water[0]);
+
+    auto moving = solid;
+    moving.translation[1] = .015625;
+    const auto swept = MeasureCutRegionFaceInertiaVolumes(face, moving, region, false, vertical);
+    checks.Expect(swept[0] == connected && swept[1] == .5 * connected,
+                  "swept inertia integrates the actual wet and newly opened dry depths", swept[1]);
+
+    const BoxMotion entering{5, {0., .4375, 0.}, {.25, .484375, .25}, {0., .03125, 0.}};
+    const CutRegionWaterPlane allWet{{1, false}, .75};
+    const auto blocked = MeasureCutRegionFaceInertiaVolumes(face, entering, region, false, allWet);
+    checks.Expect(blocked[0] == .5 * .0625 * .125 && blocked[1] == 0.,
+                  "a moving occluder removes column inertia only after it covers the aperture", blocked[0]);
+}
+
 } // namespace
 
 int main() {
@@ -219,6 +325,8 @@ int main() {
     Stationary(checks);
     Moving(checks);
     Phase(checks);
+    PhaseNearSaturation(checks);
+    ConnectedInertia(checks);
     std::cout << "SUMMARY cut region geometry " << checks.total << " checks "
               << checks.failures << " failures\n";
     return checks.failures ? 1 : 0;

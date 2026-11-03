@@ -1,0 +1,49 @@
+PASS analytic symmetric and antisymmetric pressures agree value=2.0421164759198973e-13
+PASS paired water volume and gas mass close independently value=1.2400562347802957e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-2.2204460492503131e-16
+MEASURE axis=1 dt=0.016666666666666666 dry_area=0 gas_delta_Pa=276.93118393612616 water_transfer_m3=9.6091198959641445e-06 gas_transfer_kg=0 wall_work_J=0.13982219598403142
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=1.2485265642528387e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.1102230246251565e-16
+MEASURE axis=1 dt=0.016666666666666666 dry_area=4.9999999999999999e-17 gas_delta_Pa=276.93118393612593 water_transfer_m3=9.609119895964136e-06 gas_transfer_kg=9.6156661088932631e-19 wall_work_J=0.13982219598403142
+PASS analytic symmetric and antisymmetric pressures agree value=1.6166755434365854e-13
+PASS paired water volume and gas mass close independently value=3.3610267347050637e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.6653345369377348e-16
+MEASURE axis=1 dt=0.016666666666666666 dry_area=0.5 gas_delta_Pa=16.265088207711251 water_transfer_m3=5.6437552638484656e-07 gas_transfer_kg=0.00056476000721219631 wall_work_J=0.074655672051927649
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=5.5120669042573595e-19
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=8.3266726846886741e-17
+MEASURE axis=1 dt=0.0041666666666666666 dry_area=0 gas_delta_Pa=282.01200606368587 water_transfer_m3=6.119791645670075e-07 gas_transfer_kg=0 wall_work_J=0.14109240151592153
+PASS analytic symmetric and antisymmetric pressures agree value=1.1912346109532734e-13
+PASS paired water volume and gas mass close independently value=5.5120669042573595e-19
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=1.1102230246251565e-16
+MEASURE axis=1 dt=0.0041666666666666666 dry_area=4.9999999999999999e-17 gas_delta_Pa=282.01200606368587 water_transfer_m3=6.119791645670075e-07 gas_transfer_kg=6.120052214923739e-20 wall_work_J=0.14109240151592153
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=1.8431436932253575e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.2490009027033011e-16
+MEASURE axis=1 dt=0.0041666666666666666 dry_area=0.5 gas_delta_Pa=139.6093025324281 water_transfer_m3=3.0295867726384592e-07 gas_transfer_kg=0.00030297157667627631 wall_work_J=0.10549172563310692
+PASS analytic symmetric and antisymmetric pressures agree value=2.0421164759198973e-13
+PASS paired water volume and gas mass close independently value=1.2400562347802957e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-2.2204460492503131e-16
+MEASURE axis=2 dt=0.016666666666666666 dry_area=0 gas_delta_Pa=276.93118393612616 water_transfer_m3=9.6091198959641445e-06 gas_transfer_kg=0 wall_work_J=0.13982219598403142
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=1.2485265642528387e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.1102230246251565e-16
+MEASURE axis=2 dt=0.016666666666666666 dry_area=4.9999999999999999e-17 gas_delta_Pa=276.93118393612593 water_transfer_m3=9.609119895964136e-06 gas_transfer_kg=9.6156661088932631e-19 wall_work_J=0.13982219598403142
+PASS analytic symmetric and antisymmetric pressures agree value=1.6166755434365854e-13
+PASS paired water volume and gas mass close independently value=3.3610267347050637e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.6653345369377348e-16
+MEASURE axis=2 dt=0.016666666666666666 dry_area=0.5 gas_delta_Pa=16.265088207711251 water_transfer_m3=5.6437552638484656e-07 gas_transfer_kg=0.00056476000721219631 wall_work_J=0.074655672051927649
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=5.5120669042573595e-19
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=8.3266726846886741e-17
+MEASURE axis=2 dt=0.0041666666666666666 dry_area=0 gas_delta_Pa=282.01200606368587 water_transfer_m3=6.119791645670075e-07 gas_transfer_kg=0 wall_work_J=0.14109240151592153
+PASS analytic symmetric and antisymmetric pressures agree value=1.1912346109532734e-13
+PASS paired water volume and gas mass close independently value=5.5120669042573595e-19
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=1.1102230246251565e-16
+MEASURE axis=2 dt=0.0041666666666666666 dry_area=4.9999999999999999e-17 gas_delta_Pa=282.01200606368587 water_transfer_m3=6.119791645670075e-07 gas_transfer_kg=6.120052214923739e-20 wall_work_J=0.14109240151592153
+PASS analytic symmetric and antisymmetric pressures agree value=1.0210582379599487e-13
+PASS paired water volume and gas mass close independently value=1.8431436932253575e-18
+PASS midpoint wall reaction closes energy and endpoint traction fails the control value=-1.2490009027033011e-16
+MEASURE axis=2 dt=0.0041666666666666666 dry_area=0.5 gas_delta_Pa=139.6093025324281 water_transfer_m3=3.0295867726384592e-07 gas_transfer_kg=0.00030297157667627631 wall_work_J=0.10549172563310692
+SUMMARY 36 checks 0 failures

@@ -14,10 +14,6 @@ namespace {
 
 constexpr double densityDifference = 999.;
 
-double WetLength(double low, double high, double plane) {
-    return std::clamp(plane - low, 0., high - low);
-}
-
 double MaxAbs(const std::vector<double>& values) {
     double largest = 0.;
     for (double value : values)
@@ -30,33 +26,29 @@ struct FaceInertia {
 };
 
 FaceInertia MeasureInertia(const CutRegionChart& chart, const CutRegionFace& face,
-                          const std::vector<double>& waterPlanes,
-                          const CutRegionFacePhase& phase, const CutRegionSettings& settings,
+                          const std::optional<BoxMotion>& motion,
+                          const CutRegionWaterPlane& leftPlane,
+                          const CutRegionWaterPlane& rightPlane,
+                          const CutRegionSettings& settings,
                           double dt) {
     const auto& left = chart.regions[face.left];
     const auto& right = chart.regions[face.right];
-    const int axis = face.axis;
-    const double leftDepth = .5 * (left.hi[axis] - left.lo[axis]);
-    const double rightDepth = .5 * (right.hi[axis] - right.lo[axis]);
-    double leftWet = leftDepth * phase.wet[0].mean / face.meanArea;
-    double rightWet = rightDepth * phase.wet[1].mean / face.meanArea;
+    const auto [leftWet, leftDry] = MeasureCutRegionFaceInertiaVolumes(face, motion, left, true, leftPlane);
+    const auto [rightWet, rightDry] = MeasureCutRegionFaceInertiaVolumes(face, motion, right, false, rightPlane);
     double gravityImpulse = 0.;
-    if (axis == settings.upAxis) {
-        const double plane = face.lo[axis];
-        leftWet = WetLength(plane - leftDepth, plane, waterPlanes[face.left]);
-        rightWet = WetLength(plane, plane + rightDepth, waterPlanes[face.right]);
-        const double referenceWet = WetLength(plane - leftDepth, plane + rightDepth,
-                                               settings.referenceHeight);
-        gravityImpulse = dt * face.meanArea * settings.gravity * densityDifference *
-            (leftWet + rightWet - referenceWet);
+    if (face.axis == settings.upAxis) {
+        const CutRegionWaterPlane reference{{settings.upAxis, false}, settings.referenceHeight};
+        const double referenceLeft = MeasureCutRegionFaceInertiaVolumes(face, motion, left, true, reference)[0];
+        const double referenceRight = MeasureCutRegionFaceInertiaVolumes(face, motion, right, false, reference)[0];
+        gravityImpulse = dt * settings.gravity * densityDifference *
+            ((leftWet - referenceLeft) + (rightWet - referenceRight));
     }
-    return {face.meanArea * (leftDepth + densityDifference * leftWet),
-            face.meanArea * (rightDepth + densityDifference * rightWet), gravityImpulse};
+    return {1000. * leftWet + leftDry, 1000. * rightWet + rightDry, gravityImpulse};
 }
 
 CutRegionPhaseFace PhaseTransfer(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                                  const CutRegionFace& face, const CutRegionFacePhase& phase,
-                                 const std::vector<double>& waterPlanes, int upAxis,
+                                 const std::vector<CutRegionWaterPlane>& waterPlanes,
                                  double flux, bool relay) {
     const auto side = flux >= 0. ? 0 : 1;
     const auto donor = side == 0 ? face.left : face.right;
@@ -66,21 +58,20 @@ CutRegionPhaseFace PhaseTransfer(const CutRegionChart& chart, const CutRegionGeo
     const bool exposed = geometry.startCapacity[donor] == 0.;
     bool wet = wetArea > 0., dry = dryArea > 0.;
     double preference = amount * wetArea / face.meanArea;
-    if (face.axis == upAxis && amount > 0. && !exposed) {
-        // A finite plug can reach across a horizontal interface even when
+    const auto& plane = waterPlanes[donor];
+    const int axis = plane.orientation.axis;
+    if (face.axis == axis && amount > 0. && !exposed) {
+        // A finite plug can reach across the interface even when
         // the initial one-sided trace is pure. Clip the actual departure
         // prism in the donor region, including the start solid.
         auto lower = face.lo, upper = face.hi;
         const double depth = amount / face.meanArea;
         if (side == 0)
-            lower[upAxis] = std::max(region.lo[upAxis], lower[upAxis] - depth);
+            lower[axis] = std::max(region.lo[axis], lower[axis] - depth);
         else
-            upper[upAxis] = std::min(region.hi[upAxis], upper[upAxis] + depth);
-        auto wetUpper = upper, dryLower = lower;
-        wetUpper[upAxis] = std::min(wetUpper[upAxis], waterPlanes[donor]);
-        dryLower[upAxis] = std::max(dryLower[upAxis], waterPlanes[donor]);
-        const double wetVolume = CutRegionClippedVolume(region, geometry.motion, lower, wetUpper);
-        const double dryVolume = CutRegionClippedVolume(region, geometry.motion, dryLower, upper);
+            upper[axis] = std::min(region.hi[axis], upper[axis] + depth);
+        const auto [wetVolume, dryVolume] =
+            MeasureCutRegionPhaseVolumes(region, geometry.motion, lower, upper, plane);
         wet = wet || wetVolume > 0.;
         dry = dry || dryVolume > 0.;
         if (wetVolume + dryVolume > 0.)
@@ -96,6 +87,63 @@ CutRegionPhaseFace PhaseTransfer(const CutRegionChart& chart, const CutRegionGeo
     const double upper = wet ? amount : 0.;
     return {face.left, face.right, flux, lower, upper,
             lower <= upper ? std::clamp(preference, lower, upper) : 0.};
+}
+
+int DominantInlet(const GridVec& incoming) {
+    int best = -1;
+    double largest = 0.;
+    for (int axis = 0; axis < 3; ++axis) {
+        const double volume = std::abs(incoming[axis]);
+        if (volume > largest) {
+            largest = volume;
+            best = axis;
+        } else if (volume == largest) {
+            best = -1;
+        }
+    }
+    return best;
+}
+
+std::vector<CutRegionInterface> AdvanceInterfaces(const CutRegionGeometry& geometry,
+                                                const CutRegionState& initial,
+                                                const CutRegionStep& step, int upAxis) {
+    const auto count = initial.water.size();
+    const CutRegionInterface fallback{upAxis, false};
+    std::vector<CutRegionInterface> result = initial.interfaces;
+    result.resize(count, fallback);
+    std::vector<std::array<GridVec, 2>> incoming(count);
+    for (std::size_t i = 0; i < step.activeFaces.size(); ++i) {
+        const auto& face = geometry.faces[step.activeFaces[i]];
+        const double water = step.phase.waterFlux[i], air = step.phase.airFlux[i];
+        if (water != 0.)
+            incoming[water > 0. ? face.right : face.left][0][face.axis] += water;
+        if (air != 0.)
+            incoming[air > 0. ? face.right : face.left][1][face.axis] += air;
+    }
+    for (std::size_t i = 0; i < count; ++i) {
+        const double water = step.phase.endWater[i], end = geometry.endCapacity[i];
+        if (water == 0. || water == end) {
+            result[i] = fallback;
+            continue;
+        }
+        const double startWater = initial.water[i], start = geometry.startCapacity[i];
+        if (startWater > 0. && startWater < start)
+            continue;
+        const auto& [wet, dry] = incoming[i];
+        const int wetAxis = DominantInlet(wet), dryAxis = DominantInlet(dry);
+        if (start == 0.) {
+            // Both phases are new. One slab can follow both arrivals only
+            // when their dominant inflows enter from opposite sides.
+            if (wetAxis >= 0 && wetAxis == dryAxis &&
+                std::signbit(wet[wetAxis]) != std::signbit(dry[dryAxis]))
+                result[i] = {wetAxis, wet[wetAxis] < 0.};
+        } else if (startWater == 0. && wetAxis >= 0) {
+            result[i] = {wetAxis, wet[wetAxis] < 0.};
+        } else if (startWater == start && dryAxis >= 0) {
+            result[i] = {dryAxis, dry[dryAxis] > 0.};
+        }
+    }
+    return result;
 }
 
 bool FullyOpen(const CutRegionFace& face) {
@@ -247,8 +295,10 @@ bool AdvanceCutRegionStep(const CutRegionChart& chart, const CutRegionGeometry& 
     }
     const double h = chart.layout.h, cellVolume = h * h * h;
     const double roundoff = 256. * std::numeric_limits<double>::epsilon() * cellVolume;
-    std::vector<double> planes, source(count), sweep(count), patchSweep(count);
-    if (!ReconstructCutRegionWaterPlanes(chart, geometry, settings.upAxis, state.water, planes, error))
+    std::vector<CutRegionWaterPlane> planes;
+    std::vector<double> source(count), sweep(count), patchSweep(count);
+    if (!ReconstructCutRegionWaterPlanes(chart, geometry, settings.upAxis, state.water,
+                                         state.interfaces, planes, error))
         return false;
     for (std::size_t i = 0; i < count; ++i) {
         if (!(geometry.endCapacity[i] >= 0.) || !std::isfinite(geometry.endCapacity[i]) ||
@@ -294,10 +344,15 @@ bool AdvanceCutRegionStep(const CutRegionChart& chart, const CutRegionGeometry& 
         sweep[face.right] -= face.sweptVolume;
         if (face.meanArea == 0.)
             continue;
-        phase.push_back(MeasureCutRegionFacePhase(face, geometry.motion, settings.upAxis,
-                                                planes[face.left], planes[face.right]));
-        const auto metric = MeasureInertia(chart, face, planes, phase.back(), settings, dt);
+        const auto& left = planes[face.left];
+        const auto& right = planes[face.right];
+        phase.push_back(MeasureCutRegionFacePhase(face, geometry.motion, left, right));
+        const auto metric = MeasureInertia(chart, face, geometry.motion, left, right, settings, dt);
         const double mass = metric.left + metric.right;
+        if (!(mass > 0. && std::isfinite(mass))) {
+            error = "cut-region aperture has no finite connected inertia";
+            return false;
+        }
         const double projectedArea = dt * face.meanArea;
         const double oldVelocity = (metric.left * state.velocity[face.left][face.axis] +
                                     metric.right * state.velocity[face.right][face.axis]) / mass;
@@ -347,7 +402,7 @@ bool AdvanceCutRegionStep(const CutRegionChart& chart, const CutRegionGeometry& 
         const double flux = next.pressure.volumeFlux[i];
         const auto donor = flux >= 0. ? face.left : face.right;
         transport.faces.push_back(PhaseTransfer(chart, geometry, face, phase[i], planes,
-                                                settings.upAxis, flux, transport.relayAllowed[donor]));
+                                                flux, transport.relayAllowed[donor]));
     }
     AdmitRelayThroughflow(chart, geometry, connectionFaces, phase, transport);
     if (!TransportCutRegionPhases(transport, next.phase, error))
@@ -386,6 +441,7 @@ bool AdvanceCutRegionStep(const CutRegionChart& chart, const CutRegionGeometry& 
     next.state.water = next.phase.endWater;
     next.state.velocity = std::move(momentum.velocity);
     next.activeFaces = std::move(connectionFaces);
+    next.state.interfaces = AdvanceInterfaces(geometry, state, next, settings.upAxis);
     next.transportMomentumResidual = momentum.momentumResidual;
     next.transportKineticResidual = momentum.kineticResidual;
     try {

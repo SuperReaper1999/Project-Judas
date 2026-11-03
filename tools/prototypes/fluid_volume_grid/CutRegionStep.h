@@ -10,6 +10,9 @@ namespace judas::volume_grid {
 struct CutRegionState {
     std::vector<double> water;
     std::vector<GridVec> velocity;
+    // Empty initial states reconstruct liquid below the gravity-aligned plane.
+    // A transported interface can face the actual inlet instead.
+    std::vector<CutRegionInterface> interfaces{};
 };
 
 struct CutRegionSettings {

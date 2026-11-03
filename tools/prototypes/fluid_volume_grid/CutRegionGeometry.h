@@ -59,9 +59,40 @@ inline bool BuildCutRegionGeometry(const CutRegionChart& chart, const GridVec& d
 double CutRegionClippedVolume(const CutRegion& region, const std::optional<BoxMotion>& motion,
                               const GridVec& clipLo, const GridVec& clipHi, double time = 0.);
 
+struct CutRegionInterface {
+    int axis = 1;
+    bool wetAbove = false;
+};
+
+struct CutRegionWaterPlane {
+    CutRegionInterface orientation;
+    double coordinate;
+    // A thin phase can have a real depth smaller than one chart-coordinate
+    // step. Keep the remainder from adding its depth to the slab boundary.
+    double remainder = 0.;
+
+    double RelativeTo(double anchor) const { return (coordinate - anchor) + remainder; }
+};
+
+bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                    int defaultAxis, const std::vector<double>& startWater,
+                                    const std::vector<CutRegionInterface>& interfaces,
+                                    std::vector<CutRegionWaterPlane>& waterPlanes, std::string& error);
+
 bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                                     int phaseAxis, const std::vector<double>& startWater,
                                     std::vector<double>& waterPlanes, std::string& error);
+
+// Wet and dry volumes inside the same rectangular departure prism.
+std::array<double, 2> MeasureCutRegionPhaseVolumes(const CutRegion& region,
+    const std::optional<BoxMotion>& motion, const GridVec& lo, const GridVec& hi,
+    const CutRegionWaterPlane& water);
+
+// Mean wet and dry volumes of the normal half-cell columns connected to
+// the physical aperture. A solid stops a column at its first boundary.
+std::array<double, 2> MeasureCutRegionFaceInertiaVolumes(const CutRegionFace& face,
+    const std::optional<BoxMotion>& motion, const CutRegion& region, bool left,
+    const CutRegionWaterPlane& water);
 
 struct CutRegionAperture {
     double start = 0., mean = 0.;
@@ -80,6 +111,17 @@ CutRegionAperture MeasureCutRegionAperture(const CutRegionFace& face,
 
 // Each side uses its own phase trace. A horizontal face exactly at a plane
 // reads the phase from the donor side. Wet and dry use independent area clips.
+CutRegionFacePhase MeasureCutRegionFacePhase(const CutRegionFace& face,
+                                            const std::optional<BoxMotion>& motion,
+                                            const CutRegionWaterPlane& left,
+                                            const CutRegionWaterPlane& right);
+
+// The portion of one physical aperture with the requested phase on each
+// side. Joint support is needed to connect a wet region or a gas chamber.
+CutRegionAperture MeasureCutRegionSharedPhase(const CutRegionFace& face,
+    const std::optional<BoxMotion>& motion, const CutRegionWaterPlane& left,
+    const CutRegionWaterPlane& right, bool leftWet, bool rightWet);
+
 CutRegionFacePhase MeasureCutRegionFacePhase(const CutRegionFace& face,
                                            const std::optional<BoxMotion>& motion, int phaseAxis,
                                            double leftPlane, double rightPlane);

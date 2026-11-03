@@ -116,6 +116,27 @@ void TestIsolatedPhase(Checks& checks) {
         "roundoff tolerance cannot carry wet phase through a zero-volume opening");
 }
 
+void TestUnrootedTrace(Checks& checks) {
+    constexpr double volume = .125;
+    const double preferred = std::nextafter(volume, 0.);
+    CutRegionPhaseInput input{{1., 0., 1.}, {.875, 0., 1.125}, {.5, 0., 0.},
+        {{0, 1, volume, 0., volume, volume},
+         {1, 2, volume, 0., volume, preferred}},
+        {false, true, false}, 1e-15};
+    CutRegionPhaseResult output;
+    std::string error;
+    checks.Expect(TransportCutRegionPhases(input, output, error) && IndependentClosure(input, output) &&
+                  output.waterFlux == std::vector<double>{volume, volume} &&
+                  output.airFlux == std::vector<double>{0., 0.},
+                  "an initially solid relay repartitions an unrooted trace without changing its flow");
+    const auto retained = output;
+    input.faces[1].maxWater = preferred;
+    checks.Expect(!TransportCutRegionPhases(input, output, error) &&
+                  output.waterFlux == retained.waterFlux && output.airFlux == retained.airFlux &&
+                  output.endWater == retained.endWater,
+                  "an unrooted relay cannot reassign air through a geometric water limit");
+}
+
 void TestTraceDonorInventory(Checks& checks) {
     constexpr double capacity = 0x1p-40, air = 0x1p-69, volume = 0x1p-41;
     constexpr double preferred = volume - 1.5 * air;
@@ -150,6 +171,7 @@ int main() {
     TestThinThroughflow(checks);
     TestSeparatedPhase(checks);
     TestIsolatedPhase(checks);
+    TestUnrootedTrace(checks);
     TestTraceDonorInventory(checks);
     std::cout << "SUMMARY cut-region phase " << checks.total << " checks " << checks.failures
               << " failures\n";

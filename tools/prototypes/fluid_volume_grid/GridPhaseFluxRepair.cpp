@@ -214,7 +214,7 @@ std::vector<bool> ReachPhase(const GridPhaseFluxRepairInput& input, bool wet, co
     }
     for (std::size_t i = 0; i < queue.size(); ++i) {
         for (const auto target : destinations[queue[i]]) {
-            if (!reached[target]) {
+            if (!reached[target] && (!input.repairUnrootedRelays || input.relayAllowed[target])) {
                 reached[target] = true;
                 queue.push_back(target);
             }
@@ -231,8 +231,10 @@ GridPhaseInventoryRoundoff MeasureGridPhaseInventoryRoundoff(
     return {limit, limit + std::min(volumeResidual, kRoundoff * massInAirVolumeUnits)};
 }
 
-bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
-                         GridPhaseFluxRepairResult& output, std::string& error) {
+namespace {
+
+bool SolveGridPhaseFlux(const GridPhaseFluxRepairInput& input,
+                        GridPhaseFluxRepairResult& output, std::string& error) {
     const auto count = input.startCapacity.size();
     if (count > (std::numeric_limits<std::size_t>::max() - 3) / 3 ||
         input.endCapacity.size() != count || input.startWater.size() != count ||
@@ -412,19 +414,66 @@ bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
     if (!std::isfinite(result.conservationResidual) || !std::isfinite(result.endpointWaterCorrection) ||
         !std::isfinite(globalBudget) || std::abs(result.conservationResidual) > globalBudget)
         return Fail(error, "repaired phase transfer fails the global water inventory check");
-    if (!input.relayAllowed.empty()) {
-        const auto wet = ReachPhase(input, true, [&](std::size_t f) { return result.waterFlux[f] > 0.; });
-        const auto air = ReachPhase(input, false, [&](std::size_t f) {
-            return result.waterFlux[f] < input.edges[f].volume;
-        });
-        for (std::size_t face = 0; face < input.edges.size(); ++face) {
-            const auto& edge = input.edges[face];
-            const double water = result.waterFlux[face];
-            if ((water > 0. && !wet[edge.from]) || (water < edge.volume && !air[edge.from]))
+    output = std::move(result);
+    error.clear();
+    return true;
+}
+
+struct UnownedRoute {
+    std::size_t face;
+    bool water, air;
+};
+
+std::vector<UnownedRoute> FindUnownedRoutes(const GridPhaseFluxRepairInput& input,
+                                          const GridPhaseFluxRepairResult& solved) {
+    std::vector<UnownedRoute> routes;
+    if (input.relayAllowed.empty())
+        return routes;
+    const auto wet = ReachPhase(input, true, [&](std::size_t f) { return solved.waterFlux[f] > 0.; });
+    const auto air = ReachPhase(input, false, [&](std::size_t f) {
+        return solved.waterFlux[f] < input.edges[f].volume;
+    });
+    for (std::size_t face = 0; face < input.edges.size(); ++face) {
+        const auto& edge = input.edges[face];
+        const double water = solved.waterFlux[face];
+        const bool unownedWater = water > 0. && !wet[edge.from];
+        const bool unownedAir = water < edge.volume && !air[edge.from];
+        if (unownedWater || unownedAir)
+            routes.push_back({face, unownedWater, unownedAir});
+    }
+    return routes;
+}
+
+} // namespace
+
+bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
+                         GridPhaseFluxRepairResult& output, std::string& error) {
+    GridPhaseFluxRepairResult next;
+    if (!SolveGridPhaseFlux(input, next, error))
+        return false;
+    const auto unowned = FindUnownedRoutes(input, next);
+    if (!unowned.empty()) {
+        if (!input.repairUnrootedRelays)
+            return Fail(error, "repaired phase circulation has an unowned material route");
+        auto supported = input;
+        for (const auto& route : unowned) {
+            auto& edge = supported.edges[route.face];
+            // Find another partition on the same physical flow. The
+            // complementary phase must occupy the port within its original
+            // geometric bounds and pass the full circulation checks again.
+            if (route.water)
+                edge.maxWater = 0.;
+            if (route.air)
+                edge.minWater = edge.volume;
+            if (edge.minWater > edge.maxWater)
                 return Fail(error, "repaired phase circulation has an unowned material route");
         }
+        if (!SolveGridPhaseFlux(supported, next, error))
+            return false;
+        if (!FindUnownedRoutes(supported, next).empty())
+            return Fail(error, "repaired phase circulation has an unowned material route");
     }
-    output = std::move(result);
+    output = std::move(next);
     error.clear();
     return true;
 }

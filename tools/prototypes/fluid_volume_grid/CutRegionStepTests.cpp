@@ -137,6 +137,93 @@ void WetTranslation(Checks& checks) {
     std::cout << "MEASURE work_J=" << work << " momentum_kg_m_s=" << momentum << '\n';
 }
 
+void TransportedInterface(Checks& checks, int up) {
+    GridLayout layout{{2, 2, 2}, 1.};
+    const int across = (up + 1) % 3;
+    layout.cells[(up + 2) % 3] = 1;
+    CutRegionChart chart;
+    CutRegionGeometry geometry;
+    std::string error;
+    if (!PrepareCutRegionChart(layout, {}, std::nullopt, {}, {}, chart, error) ||
+        !BuildCutRegionGeometry(chart, {}, geometry, error)) {
+        checks.Expect(false, "circulation interface chart " + error);
+        return;
+    }
+    CutRegionState state;
+    state.water.resize(chart.regions.size());
+    state.velocity.resize(chart.regions.size());
+    std::size_t source = 0, receiver = 0;
+    for (std::size_t i = 0; i < chart.regions.size(); ++i) {
+        const auto& r = chart.regions[i];
+        const bool high = r.lo[up] > 0., far = r.lo[across] > 0.;
+        state.water[i] = (high || far) ? 1. : 0.;
+        state.velocity[i][up] = far ? -1. : 1.;
+        state.velocity[i][across] = high ? 1. : -1.;
+        if (!far)
+            (high ? receiver : source) = i;
+    }
+    const CutRegionSettings settings{up, 0., 0.};
+    constexpr double dt = .05;
+    CutRegionStep first;
+    if (!AdvanceCutRegionStep(chart, geometry, state, dt, settings, first, error)) {
+        checks.Expect(false, "circulation creates the new interface " + error);
+        return;
+    }
+    const auto& placed = first.state.interfaces[receiver];
+    checks.Expect(placed.axis == up && placed.wetAbove &&
+                  std::abs(first.state.water[receiver] - .95) < 1e-12 &&
+                  std::abs(Sum(first.state.water) - Sum(state.water)) < 1e-12,
+                  "air entering from below remains at the lower inlet", first.state.water[receiver]);
+
+    std::vector<CutRegionWaterPlane> planes;
+    if (!ReconstructCutRegionWaterPlanes(chart, geometry, up, first.state.water,
+                                         first.state.interfaces, planes, error)) {
+        checks.Expect(false, "transported interface reconstructs " + error);
+        return;
+    }
+    const auto inlet = std::find_if(geometry.faces.begin(), geometry.faces.end(), [&](const auto& face) {
+        return face.left == source && face.right == receiver;
+    });
+    if (inlet == geometry.faces.end()) {
+        checks.Expect(false, "physical inlet survived the reconstruction");
+        return;
+    }
+    const auto phase = MeasureCutRegionFacePhase(*inlet, geometry.motion, planes[source], planes[receiver]);
+    checks.Expect(phase.dry[1].start == inlet->startArea && phase.wet[1].start == 0.,
+                  "reconstructed pressure and transport inlet has a dry receiving side");
+
+    // Drive the return circulation without exactly prescribing its divergence.
+    // That lets the changed aperture inertia participate in the projection.
+    auto driven = first.state;
+    for (std::size_t i = 0; i < state.velocity.size(); ++i)
+        for (int axis = 0; axis < 3; ++axis)
+            driven.velocity[i][axis] = -.5 * state.velocity[i][axis];
+    driven.velocity[receiver][up] *= .8;
+    auto reset = driven;
+    reset.interfaces.clear();
+    CutRegionStep returned, resetResult;
+    const bool physical = AdvanceCutRegionStep(chart, geometry, driven, dt, settings, returned, error);
+    const bool relocated = AdvanceCutRegionStep(chart, geometry, reset, dt, settings, resetResult, error);
+    if (!physical || !relocated) {
+        checks.Expect(false, "return circulation " + error);
+        return;
+    }
+    const auto face = static_cast<std::size_t>(inlet - geometry.faces.begin());
+    const auto position = std::find(returned.activeFaces.begin(), returned.activeFaces.end(), face);
+    if (position == returned.activeFaces.end() || returned.activeFaces != resetResult.activeFaces) {
+        checks.Expect(false, "return uses the same physical face ordering");
+        return;
+    }
+    const auto i = static_cast<std::size_t>(position - returned.activeFaces.begin());
+    checks.Expect(returned.phase.airFlux[i] < -.01 && returned.phase.waterFlux[i] == 0. &&
+                  resetResult.phase.waterFlux[i] < -.01 && resetResult.phase.airFlux[i] == 0.,
+                  "return transports the anchored air and catches a gravity-only reconstruction",
+                  returned.phase.airFlux[i]);
+    const double change = std::abs(returned.pressure.volumeFlux[i] - resetResult.pressure.volumeFlux[i]);
+    checks.Expect(change > 1e-7 && std::abs(Sum(returned.state.water) - Sum(state.water)) < 1e-12,
+                  "pressure also consumes the transported interface on the return", change);
+}
+
 } // namespace
 
 int main() {
@@ -146,6 +233,8 @@ int main() {
     StaticFloat(checks, 1);
     StaticFloat(checks, 2);
     WetTranslation(checks);
+    TransportedInterface(checks, 1);
+    TransportedInterface(checks, 2);
     std::cout << "SUMMARY cut-region step " << checks.total << " checks, " << checks.failed << " failures\n";
     return checks.failed ? 1 : 0;
 }

@@ -12,7 +12,7 @@ objects=()
 for source in MovingVolumeGrid MovingVolumeMomentum HalfDualVolumeMomentum CoupledVolumeBox \
     GridWaterSurface GridOrientedGeometry GridOrientedSweep OrientedMovingVolume GridHalfCellGeometry \
     GridGeometricMomentum GridConservativeRemap GridPhaseFluxRepair GridParcelSeed \
-    CutRegionGeometry CutRegionPressure CutRegionPhase CutRegionMomentum CutRegionStep; do
+    CutRegionGeometry CutRegionPressure CutRegionPhase CutRegionMomentum CutRegionStep CutRegionGasTopology; do
     object="$output_dir/$source.o"
     "$cxx" "${flags[@]}" -c "$source_dir/$source.cpp" -o "$object"
     objects+=("$object")
@@ -24,7 +24,7 @@ for suite in GridPhaseGeometryTests GridCellPhaseTests GridWaterQueryTests GridP
     GridOrientedGeometryTests GridOrientedSweepTests OrientedMovingVolumeTests GridHalfCellGeometryTests \
     ExposureVolumePressureTests GridConservativeRemapTests GridPhaseFluxRepairTests \
     GridGeometricMomentumTests GridParcelSeedTests CutRegionGeometryTests CutRegionPhaseTests \
-    CutRegionMomentumTests CutRegionStepTests; do
+    CutRegionMomentumTests CutRegionStepTests CutRegionGasTopologyTests; do
     "$cxx" "${flags[@]}" "$source_dir/$suite.cpp" "${objects[@]}" -o "$output_dir/$suite"
     arguments=()
     if [[ "$suite" == PlanarMovingVolumeTests ]]; then

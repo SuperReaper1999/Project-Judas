@@ -558,23 +558,31 @@ bool BuildCutRegionGeometry(const CutRegionChart& chart, const GridVec& startOff
 }
 
 bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
-                                    int phaseAxis, const std::vector<double>& startWater,
-                                    std::vector<double>& waterPlanes, std::string& error) {
-    if (phaseAxis < 0 || phaseAxis > 2 || startWater.size() != chart.regions.size() ||
-        geometry.startCapacity.size() != chart.regions.size())
+                                    int defaultAxis, const std::vector<double>& startWater,
+                                    const std::vector<CutRegionInterface>& interfaces,
+                                    std::vector<CutRegionWaterPlane>& waterPlanes, std::string& error) {
+    if (defaultAxis < 0 || defaultAxis > 2 || startWater.size() != chart.regions.size() ||
+        geometry.startCapacity.size() != chart.regions.size() ||
+        (!interfaces.empty() && interfaces.size() != chart.regions.size()))
         return Fail(error, "cut region phase data does not match its pressure geometry");
-    std::vector<double> planes;
+    std::vector<CutRegionWaterPlane> planes;
     planes.reserve(startWater.size());
     for (std::size_t i = 0; i < startWater.size(); ++i) {
         const auto& region = chart.regions[i];
+        const auto orientation = interfaces.empty() ? CutRegionInterface{defaultAxis, false} : interfaces[i];
+        const int phaseAxis = orientation.axis;
+        if (phaseAxis < 0 || phaseAxis > 2)
+            return Fail(error, "cut region phase plane axis is invalid");
         const double lo = region.lo[phaseAxis], hi = region.hi[phaseAxis];
         const double capacity = geometry.startCapacity[i], water = startWater[i];
         const double tolerance = 128. * std::numeric_limits<double>::epsilon() * capacity;
         if (!(0. <= capacity && std::isfinite(capacity) && 0. <= water &&
               std::isfinite(water) && water <= capacity + tolerance))
             return Fail(error, "water is outside its cut region capacity");
-        if (water <= 0. || water >= capacity) {
-            planes.push_back(water <= 0. ? lo : hi);
+        // A region without water has no wet ownership, including where
+        // the moving solid exposes additional volume during the interval.
+        if (water == 0.) {
+            planes.push_back({orientation, orientation.wetAbove ? hi : lo});
             continue;
         }
         std::array<double, 4> cuts{lo, hi, lo, hi};
@@ -584,14 +592,24 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
         }
         std::sort(cuts.begin(), cuts.end());
         auto clipLo = region.lo, clipHi = region.hi;
-        double remaining = water;
-        double plane = hi;
+        const double air = std::max(0., capacity - water);
+        const bool locateWet = water <= air;
+        const bool fromHigh = locateWet == orientation.wetAbove;
+        double remaining = locateWet ? water : air;
+        CutRegionWaterPlane plane{orientation, fromHigh ? lo : hi};
         for (std::size_t j = 1; j < cuts.size(); ++j) {
-            clipLo[phaseAxis] = cuts[j - 1];
-            clipHi[phaseAxis] = cuts[j];
+            const auto interval = fromHigh ? cuts.size() - j : j;
+            const double lower = cuts[interval - 1], upper = cuts[interval];
+            clipLo[phaseAxis] = lower;
+            clipHi[phaseAxis] = upper;
             const double slab = CutRegionClippedVolume(region, geometry.motion, clipLo, clipHi);
             if (slab > 0. && remaining <= slab) {
-                plane = cuts[j - 1] + (cuts[j] - cuts[j - 1]) * (remaining / slab);
+                const double depth = (upper - lower) * (remaining / slab);
+                const double anchor = fromHigh ? upper : lower;
+                const double offset = fromHigh ? -depth : depth;
+                plane.coordinate = anchor + offset;
+                const double part = plane.coordinate - anchor;
+                plane.remainder = (anchor - (plane.coordinate - part)) + (offset - part);
                 break;
             }
             remaining -= slab;
@@ -603,6 +621,149 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
     return true;
 }
 
+std::array<double, 2> MeasureCutRegionPhaseVolumes(const CutRegion& region,
+    const std::optional<BoxMotion>& motion, const GridVec& lo, const GridVec& hi,
+    const CutRegionWaterPlane& water) {
+    const auto [axis, wetAbove] = water.orientation;
+    if (axis < 0 || axis > 2 || !std::isfinite(water.coordinate) || !std::isfinite(water.remainder))
+        return {};
+    auto cut = region;
+    auto solid = motion;
+    auto lower = lo, upper = hi;
+    double plane = water.coordinate;
+    if (water.remainder != 0.) {
+        const double anchor = water.coordinate;
+        cut.lo[axis] -= anchor;
+        cut.hi[axis] -= anchor;
+        lower[axis] -= anchor;
+        upper[axis] -= anchor;
+        if (solid) {
+            solid->lo[axis] -= anchor;
+            solid->hi[axis] -= anchor;
+        }
+        plane = water.remainder;
+    }
+    auto lowerHi = upper, upperLo = lower;
+    lowerHi[axis] = std::min(lowerHi[axis], plane);
+    upperLo[axis] = std::max(upperLo[axis], plane);
+    const double below = CutRegionClippedVolume(cut, solid, lower, lowerHi);
+    const double above = CutRegionClippedVolume(cut, solid, upperLo, upper);
+    return wetAbove ? std::array{above, below} : std::array{below, above};
+}
+
+bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                    int phaseAxis, const std::vector<double>& startWater,
+                                    std::vector<double>& waterPlanes, std::string& error) {
+    std::vector<CutRegionWaterPlane> planes;
+    if (!ReconstructCutRegionWaterPlanes(chart, geometry, phaseAxis, startWater, {}, planes, error))
+        return false;
+    waterPlanes.clear();
+    waterPlanes.reserve(planes.size());
+    for (const auto& plane : planes)
+        waterPlanes.push_back(plane.coordinate);
+    return true;
+}
+
+namespace {
+
+double AverageConnectedPrism(const CutRegionFace& face, const std::optional<BoxMotion>& motion,
+                            const GridVec& lo, const GridVec& hi, bool left) {
+    for (int axis = 0; axis < 3; ++axis)
+        if (!(lo[axis] < hi[axis]))
+            return 0.;
+    const double volume = BoxVolume(lo, hi);
+    if (!motion)
+        return volume;
+    const auto& box = *motion;
+    const int axis = face.axis;
+    const double inwardLo = left ? -hi[axis] : lo[axis];
+    const double inwardHi = left ? -lo[axis] : hi[axis];
+    const double near = left ? -box.hi[axis] : box.lo[axis];
+    const double far = left ? -box.lo[axis] : box.hi[axis];
+    const double travel = left ? -box.translation[axis] : box.translation[axis];
+    if (std::max(far, far + travel) < 0. || std::min(near, near + travel) >= inwardHi)
+        return volume;
+    for (const int tangent : {(axis + 1) % 3, (axis + 2) % 3}) {
+        const double delta = box.translation[tangent];
+        if (std::max(box.hi[tangent], box.hi[tangent] + delta) <= lo[tangent] ||
+            std::min(box.lo[tangent], box.lo[tangent] + delta) >= hi[tangent])
+            return volume;
+    }
+    const auto sample = [&](double time, bool columnStops) {
+        if (!columnStops)
+            return volume;
+        const auto area = FaceClip(face, box, lo, hi, time);
+        const double stop = std::fma(travel, time, near);
+        const double connected = std::clamp(stop - inwardLo, 0., inwardHi - inwardLo);
+        return area.free * (inwardHi - inwardLo) + area.covered * connected;
+    };
+    if (box.translation == GridVec{})
+        return sample(0., far >= 0.);
+    Events events;
+    events.Cross(far, travel, 0.);
+    events.Cross(near, travel, inwardLo);
+    events.Cross(near, travel, inwardHi);
+    for (const int tangent : {(axis + 1) % 3, (axis + 2) % 3})
+        AddTangentEvents(events, box, tangent, lo[tangent], hi[tangent]);
+    events.Sort();
+    double mean = 0.;
+    for (std::size_t i = 1; i < events.count; ++i) {
+        const double start = events.times[i - 1], end = events.times[i];
+        const double middle = start + .5 * (end - start);
+        const bool columnStops = std::fma(travel, middle, far) >= 0.;
+        // The tangential area is quadratic and the column extent is
+        // affine on each event interval, so Simpson integrates the volume.
+        mean += (end - start) / 6. *
+            (sample(start, columnStops) + 4. * sample(middle, columnStops) + sample(end, columnStops));
+    }
+    return mean;
+}
+
+} // namespace
+
+std::array<double, 2> MeasureCutRegionFaceInertiaVolumes(const CutRegionFace& face,
+    const std::optional<BoxMotion>& motion, const CutRegion& region, bool left,
+    const CutRegionWaterPlane& water) {
+    const int normal = face.axis;
+    const auto [axis, wetAbove] = water.orientation;
+    if (normal < 0 || normal > 2 || axis < 0 || axis > 2 ||
+        !std::isfinite(water.coordinate) || !std::isfinite(water.remainder))
+        return {};
+    auto localFace = face;
+    auto solid = motion;
+    auto lo = face.lo, hi = face.hi;
+    const double depth = .5 * (region.hi[normal] - region.lo[normal]);
+    const double mouth = face.lo[normal];
+    lo[normal] = left ? -depth : 0.;
+    hi[normal] = left ? 0. : depth;
+    localFace.lo[normal] = localFace.hi[normal] = 0.;
+    if (solid) {
+        solid->lo[normal] -= mouth;
+        solid->hi[normal] -= mouth;
+    }
+    double plane = water.coordinate;
+    if (axis == normal) {
+        plane = water.RelativeTo(mouth);
+    } else if (water.remainder != 0.) {
+        const double anchor = water.coordinate;
+        lo[axis] -= anchor;
+        hi[axis] -= anchor;
+        localFace.lo[axis] -= anchor;
+        localFace.hi[axis] -= anchor;
+        if (solid) {
+            solid->lo[axis] -= anchor;
+            solid->hi[axis] -= anchor;
+        }
+        plane = water.remainder;
+    }
+    auto lowerHi = hi, upperLo = lo;
+    lowerHi[axis] = std::min(hi[axis], plane);
+    upperLo[axis] = std::max(lo[axis], plane);
+    const double below = AverageConnectedPrism(localFace, solid, lo, lowerHi, left);
+    const double above = AverageConnectedPrism(localFace, solid, upperLo, hi, left);
+    return wetAbove ? std::array{above, below} : std::array{below, above};
+}
+
 CutRegionAperture MeasureCutRegionAperture(const CutRegionFace& face,
                                          const std::optional<BoxMotion>& motion,
                                          const GridVec& clipLo, const GridVec& clipHi,
@@ -612,34 +773,115 @@ CutRegionAperture MeasureCutRegionAperture(const CutRegionFace& face,
 }
 
 CutRegionFacePhase MeasureCutRegionFacePhase(const CutRegionFace& face,
-                                           const std::optional<BoxMotion>& motion, int phaseAxis,
-                                           double leftPlane, double rightPlane) {
+                                           const std::optional<BoxMotion>& motion,
+                                           const CutRegionWaterPlane& left,
+                                           const CutRegionWaterPlane& right) {
     CutRegionFacePhase result{};
-    if (phaseAxis < 0 || phaseAxis > 2)
-        return result;
     for (int side = 0; side < 2; ++side) {
-        const double plane = side == 0 ? leftPlane : rightPlane;
-        if (!std::isfinite(plane))
+        const auto& shape = side == 0 ? left : right;
+        const auto [phaseAxis, wetAbove] = shape.orientation;
+        if (phaseAxis < 0 || phaseAxis > 2 || !std::isfinite(shape.coordinate) ||
+            !std::isfinite(shape.remainder))
             continue;
         const CutRegionAperture whole{face.startArea, face.meanArea};
         if (face.axis == phaseAxis) {
-            const double position = face.lo[phaseAxis];
-            const bool wet = side == 0 ? position <= plane : position < plane;
+            const double distance = shape.RelativeTo(face.lo[phaseAxis]);
+            const bool wetBelow = side == 0 ? distance >= 0. : distance > 0.;
+            const bool wet = wetBelow != wetAbove;
             auto& aperture = wet ? result.wet[side] : result.dry[side];
             aperture = whole;
-        } else if (plane <= face.lo[phaseAxis]) {
-            result.dry[side] = whole;
-        } else if (plane >= face.hi[phaseAxis]) {
-            result.wet[side] = whole;
+        } else if (shape.RelativeTo(face.lo[phaseAxis]) <= 0.) {
+            (wetAbove ? result.wet : result.dry)[side] = whole;
+        } else if (shape.RelativeTo(face.hi[phaseAxis]) >= 0.) {
+            (wetAbove ? result.dry : result.wet)[side] = whole;
         } else {
-            auto wetHi = face.hi, dryLo = face.lo;
-            wetHi[phaseAxis] = plane;
-            dryLo[phaseAxis] = plane;
-            result.wet[side] = MeasureCutRegionAperture(face, motion, face.lo, wetHi);
-            result.dry[side] = MeasureCutRegionAperture(face, motion, dryLo, face.hi);
+            auto clippedFace = face;
+            auto solid = motion;
+            double plane = shape.coordinate;
+            if (shape.remainder != 0.) {
+                const double anchor = shape.coordinate;
+                clippedFace.lo[phaseAxis] -= anchor;
+                clippedFace.hi[phaseAxis] -= anchor;
+                if (solid) {
+                    solid->lo[phaseAxis] -= anchor;
+                    solid->hi[phaseAxis] -= anchor;
+                }
+                plane = shape.remainder;
+            }
+            auto lowerHi = clippedFace.hi, upperLo = clippedFace.lo;
+            lowerHi[phaseAxis] = plane;
+            upperLo[phaseAxis] = plane;
+            (wetAbove ? result.dry : result.wet)[side] =
+                MeasureCutRegionAperture(clippedFace, solid, clippedFace.lo, lowerHi);
+            (wetAbove ? result.wet : result.dry)[side] =
+                MeasureCutRegionAperture(clippedFace, solid, upperLo, clippedFace.hi);
         }
     }
     return result;
+}
+
+CutRegionAperture MeasureCutRegionSharedPhase(const CutRegionFace& face,
+    const std::optional<BoxMotion>& motion, const CutRegionWaterPlane& left,
+    const CutRegionWaterPlane& right, bool leftWet, bool rightWet) {
+    if (face.axis < 0 || face.axis > 2)
+        return {};
+    struct Bound {
+        double coordinate, remainder;
+
+        double RelativeTo(double anchor) const { return (coordinate - anchor) + remainder; }
+    };
+    std::array<Bound, 3> lower, upper;
+    for (int axis = 0; axis < 3; ++axis) {
+        lower[axis] = {face.lo[axis], 0.};
+        upper[axis] = {face.hi[axis], 0.};
+    }
+    const auto clip = [&](const CutRegionWaterPlane& plane, bool wet, bool leftSide) {
+        const auto [axis, wetAbove] = plane.orientation;
+        if (axis < 0 || axis > 2 || !std::isfinite(plane.coordinate) || !std::isfinite(plane.remainder))
+            return false;
+        const bool keepAbove = wet == wetAbove;
+        if (axis == face.axis) {
+            const double distance = plane.RelativeTo(face.lo[axis]);
+            const bool below = leftSide ? distance >= 0. : distance > 0.;
+            return below != keepAbove;
+        }
+        const Bound next{plane.coordinate, plane.remainder};
+        auto& bound = keepAbove ? lower[axis] : upper[axis];
+        const double difference = next.RelativeTo(bound.coordinate) - bound.remainder;
+        if (keepAbove ? difference > 0. : difference < 0.)
+            bound = next;
+        return true;
+    };
+    if (!clip(left, leftWet, true) || !clip(right, rightWet, false))
+        return {};
+    auto localFace = face;
+    auto solid = motion;
+    GridVec lo = face.lo, hi = face.hi;
+    for (int axis = 0; axis < 3; ++axis) {
+        if (axis == face.axis)
+            continue;
+        const auto a = lower[axis], b = upper[axis];
+        const double anchor = a.remainder != 0. ? a.coordinate :
+            b.remainder != 0. ? b.coordinate : 0.;
+        lo[axis] = a.RelativeTo(anchor);
+        hi[axis] = b.RelativeTo(anchor);
+        if (!(lo[axis] < hi[axis]))
+            return {};
+        localFace.lo[axis] -= anchor;
+        localFace.hi[axis] -= anchor;
+        if (solid) {
+            solid->lo[axis] -= anchor;
+            solid->hi[axis] -= anchor;
+        }
+    }
+    return MeasureCutRegionAperture(localFace, solid, lo, hi);
+}
+
+CutRegionFacePhase MeasureCutRegionFacePhase(const CutRegionFace& face,
+                                           const std::optional<BoxMotion>& motion, int phaseAxis,
+                                           double leftPlane, double rightPlane) {
+    return MeasureCutRegionFacePhase(face, motion, {{phaseAxis, false}, leftPlane},
+                                                   {{phaseAxis, false}, rightPlane});
 }
 
 } // namespace judas::volume_grid

@@ -23,6 +23,9 @@ struct GridPhaseFluxRepairInput {
     // Positive enables locally audited ordinary phase inventories.
     // The ratio is water density divided by air density.
     double localOrdinaryDensityRatio = 0;
+    // Retry a physically supported partition when the first circulation
+    // forwards phase along a relay with no actual source.
+    bool repairUnrootedRelays = false;
 };
 
 struct GridPhaseFluxRepairResult {

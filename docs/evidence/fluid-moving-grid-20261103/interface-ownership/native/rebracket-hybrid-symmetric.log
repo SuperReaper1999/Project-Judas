@@ -1,0 +1,19 @@
+MIRROR label=start substep=0 axis=0 unpaired=0 unique=20344 water_m3=0 pressure_Pa=0 speed_m_s=0 l1_momentum_kg_m_s=0 max_pressure_region=0 max_speed_region=0
+MIRROR label=start substep=0 axis=2 unpaired=0 unique=20344 water_m3=0 pressure_Pa=0 speed_m_s=0 l1_momentum_kg_m_s=0 max_pressure_region=0 max_speed_region=0
+ROOT substep=0 y=0.70007354021072388 residual_m=-6.9272396044928186e-06 force_N=1473.9402383054858 torque_N_m=6.5483501473591505e-13 pressure_residual_m3=2.7447148057181939e-17
+ROOT substep=0 y=0.70007359981536865 residual_m=-7.069402846116013e-06 force_N=1473.4266577923827 torque_N_m=4.5487921274905712e-13 pressure_residual_m3=2.7447148717088258e-17
+ROOT substep=0 y=0.70006990973941507 residual_m=1.7349000589472752e-06 force_N=1505.2412404566489 torque_N_m=4.9842052684177668e-11 pressure_residual_m3=4.0018528196727549e-17
+ROOT substep=0 y=0.70007063687398308 residual_m=-5.0254644889946576e-10 force_N=1498.9690067195381 torque_N_m=6.4319600969396248e-13 pressure_residual_m3=2.585988624633161e-17
+ROOT substep=0 y=0.70007063666341585 residual_m=-3.6193270602780103e-14 force_N=1498.9708228384291 torque_N_m=5.2735118650478629e-11 pressure_residual_m3=3.9309627794324704e-17
+ROOT substep=0 y=0.70007063666340064 residual_m=2.2204460492503131e-16 force_N=1498.9708229705755 torque_N_m=4.5717622409823865e-13 pressure_residual_m3=2.5104320304511713e-17
+REMAP_PREVIEW native_y=0.70007061958312988 dy_m=-1.7080270753311311e-08 swept_m3=6.1488979598528203e-09 force_times_rounding_J=-2.5602827507651306e-05
+REMAP_DONE water_before_m3=15.829885793519965 water_after_m3=15.829885793519965 phase_residual_m3=4.106415728288848e-18 pressure_residual_m3=2.6425006619907301e-17 momentum_residual_kg_m_s=2.2450516274248148e-17 energy_residual_J=-1.5281899269790762e-16 remap_kinetic_delta_J=-2.4496398833007138e-09 accounted_mixing_loss_J=2.4496397304817211e-09
+MIRROR label=solved substep=0 axis=0 unpaired=0 unique=20344 water_m3=4.3368086899420177e-19 pressure_Pa=2.4556356947869062e-11 speed_m_s=3.3341212857302142e-12 l1_momentum_kg_m_s=2.499814517579254e-13 max_pressure_region=8650 max_speed_region=17536
+MIRROR label=solved substep=0 axis=2 unpaired=0 unique=20344 water_m3=4.3368086899420177e-19 pressure_Pa=2.4101609596982598e-11 speed_m_s=3.3340333655669426e-12 l1_momentum_kg_m_s=2.5009275032668653e-13 max_pressure_region=8650 max_speed_region=3000
+MIRROR label=remap substep=0 axis=0 unpaired=0 unique=20344 water_m3=2.087089182034596e-18 pressure_Pa=0 speed_m_s=6.7021798072214749e-12 l1_momentum_kg_m_s=2.5027401395703497e-13 max_pressure_region=0 max_speed_region=2522
+MIRROR label=remap substep=0 axis=2 unpaired=0 unique=20344 water_m3=2.087089182034596e-18 pressure_Pa=0 speed_m_s=6.7022166067395156e-12 l1_momentum_kg_m_s=2.5042177622548683e-13 max_pressure_region=0 max_speed_region=2567
+ENERGY substep=0 body_J=0.090357373252838255 fluid_J=-0.13082236526715008 total_J=-0.040464992014311821 native_rounding_bound_J=6.18147327528952e-05 pressure_work_residual_J=1.2490009027033011e-16 carried_kinetic_residual_J=4.2148359455373985e-18
+NATIVE_VERIFIED y=0.70007061958312988 vy=0.016955658793449402 water_m3=15.829885793519965
+MIRROR label=start substep=1 axis=0 unpaired=0 unique=20344 water_m3=2.087089182034596e-18 pressure_Pa=0 speed_m_s=6.7021798072214749e-12 l1_momentum_kg_m_s=2.5027401395703497e-13 max_pressure_region=0 max_speed_region=2522
+MIRROR label=start substep=1 axis=2 unpaired=0 unique=20344 water_m3=2.087089182034596e-18 pressure_Pa=0 speed_m_s=6.7022166067395156e-12 l1_momentum_kg_m_s=2.5042177622548683e-13 max_pressure_region=0 max_speed_region=2567
+END remap_mode=3 proposals=2 published=1 accepted=1 native_ticks=0 material_commits=1 water_drift_m3=0 max_energy_gain_J=0 angular_speed=0 max_impulse_error_N_s=6.0630979348275105e-08 reason=repaired phase circulation has an unowned material route
