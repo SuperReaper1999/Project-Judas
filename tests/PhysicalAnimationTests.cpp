@@ -78,6 +78,28 @@ float RotationDiagnostics(std::shared_ptr<const SkeletalAsset> asset,std::string
 }
 }
 int main(){
+    for (float scale : {1.f, 100.f}) {
+        for (bool nonuniform : {false, true}) {
+            auto asset = std::make_shared<SkeletalAsset>(*Asset());
+            asset->skeleton.rest.local[0].scale = glm::vec3(scale);
+            asset->skeleton.rest.local[1].scale = {1.f, 1.0000006f, nonuniform ? 1.01f : 1.0000012f};
+            RuntimeWorld world;
+            std::string mappingError;
+            if (!Build(world, Fixture(), asset, mappingError)) {
+                Check(false, "scaled physical mapping fixture builds");
+                continue;
+            }
+            PhysicalAnimationRequest request;
+            request.mode = PhysicalAnimationMode::Passive;
+            request.motorHandoff = true;
+            const bool accepted = world.RequestPhysicalAnimation(10, request, mappingError);
+            if (accepted) Advance(world);
+            Check(nonuniform ? !accepted && mappingError.find("nonuniform joint: Branch") != std::string::npos
+                             : accepted && world.RagdollActive(10),
+                  nonuniform ? "physical authority rejects nonuniform joint scale"
+                             : "physical authority accepts joint rounding noise independent of rig scale");
+        }
+    }
     std::string error;PhysicalAnimationRegion region;region.id="test";region.joints={"arbitrary"};
     auto target=glm::angleAxis(.5f,glm::vec3(0,0,1));auto response=CalculatePhysicalTorque(target,{1,0,0,0},{1,0,0,0},{0,0,0},{0,0,0},glm::mat3(1),glm::mat3(0),region,1.f/60);
     const float expected=15/(1+4.f/60+30.f/3600);

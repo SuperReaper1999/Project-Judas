@@ -8,6 +8,13 @@
 namespace {
 glm::mat4 Matrix(const SceneTransform& t){return glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);}
 bool UniformPositive(glm::vec3 s){return s.x>0&&std::abs(s.x-s.y)<1e-4f&&std::abs(s.x-s.z)<1e-4f;}
+bool UniformJointScale(glm::vec3 scale) {
+    // Imported skeletons can carry a uniform unit conversion in an ancestor.
+    // Its magnitude should not change whether basis-length noise is accepted.
+    const float smallest = std::min({scale.x, scale.y, scale.z});
+    const float largest = std::max({scale.x, scale.y, scale.z});
+    return smallest > 0.f && largest - smallest <= largest * 1e-5f;
+}
 glm::vec3 AngularVelocity(glm::quat previous,glm::quat current,float dt){
     auto delta=glm::normalize(current*glm::inverse(previous));if(delta.w<0)delta=-delta;
     float length=glm::length(glm::vec3(delta.x,delta.y,delta.z));
@@ -101,7 +108,7 @@ bool RuntimeWorld::RequestPhysicalAnimation(EntityId id,const PhysicalAnimationR
     auto globals=PoseGlobalMatrices(animation->asset->skeleton,animation->finalPose);std::vector<bool> needed(definition->ragdoll->bones.size(),request.mode!=PhysicalAnimationMode::Partial);
     if(request.mode==PhysicalAnimationMode::Partial)for(size_t i=0;i<mapping.size();++i)if(mapping[i]>=0){needed[i]=true;const auto& parent=definition->ragdoll->bones[i].parent;for(size_t p=0;p<definition->ragdoll->bones.size();++p)if(definition->ragdoll->bones[p].joint==parent)needed[p]=true;}
     if(request.mode!=PhysicalAnimationMode::Animation)for(size_t i=0;i<definition->ragdoll->bones.size();++i){const auto& bone=definition->ragdoll->bones[i];int node=FindSkeletonJoint(animation->asset->skeleton,bone.joint);JointTransform mapped;
-        if(node<0||(needed[i]&&(!DecomposeRigidPose(Matrix(transform)*globals[size_t(node)],mapped,error)||!UniformPositive(mapped.scale)))){error="physical mapping has an unavailable/nonrigid/nonuniform joint: "+bone.joint;return false;}}
+        if(node<0||(needed[i]&&(!DecomposeRigidPose(Matrix(transform)*globals[size_t(node)],mapped,error)||!UniformJointScale(mapped.scale)))){error="physical mapping has an unavailable/nonrigid/nonuniform joint: "+bone.joint;return false;}}
     const bool fullyPhysical=request.mode==PhysicalAnimationMode::Active||request.mode==PhysicalAnimationMode::Passive;
     if(definition->characterMotor&&definition->characterMotor->enabled&&fullyPhysical&&!request.motorHandoff){error="full physical authority requires explicit motorHandoff";return false;}
     if(request.resumeMotor&&(!definition->characterMotor||!request.placement)){error="motor resume requires an explicit collision-valid placement";return false;}
@@ -263,7 +270,7 @@ bool RuntimeWorld::EnterRagdoll(EntityId id,std::string& error){
         int node=FindSkeletonJoint(skeleton,b.joint);
         if(node<0||std::find(nodes.begin(),nodes.end(),node)!=nodes.end()){error="missing/ambiguous/duplicate mapped skeleton joint: "+b.joint;return false;}
         JointTransform world;std::string rigidError;
-        if(!DecomposeRigidPose(model*globals[node],world,rigidError)||!UniformPositive(world.scale)){
+        if(!DecomposeRigidPose(model*globals[node],world,rigidError)||!UniformJointScale(world.scale)){
             if(required[nodes.size()]){error="ragdoll requires non-sheared, uniform joint scale at activation";return false;}
             // An uninvolved hidden branch has no physical pose authority. Its
             // inert identity placeholder has no contacts, queries or joints.
