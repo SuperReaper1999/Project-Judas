@@ -1,0 +1,12 @@
+PRECONDITION rotated_half warmup_steps=240 mean_particle_speed=0.300301
+DIAGNOSTIC_FAIL rotated_half reference pool is quiescent before body release
+PRECONDITION rotated_half observed_release_surface=1.59772 body_top=1 clearance=0.597724
+FAIL rotated_half independent measured box/surface immersion within 10 percentage points
+LEGACY_SETTLING rotated_half status=PASS observational_scale=0 time=4 limit=0.5 y=1.4805834293365479 vy=0.34834334254264832
+FAIL rotated_half peak vertical speed below 0.5 m/s over the late window
+FAIL rotated_half late RMS vertical speed decays by at least half
+FAIL rotated_half late vertical travel range decays by at least half
+FAIL rotated_half late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW rotated_half tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.29032442662390484 late_rms=0.47813786491658367 late_peak=1.1630710363388062 early_range=0.14055800437927246 late_range=0.43311595916748047 sampled_fraction=0.49460229687392709 observed_fraction=0.84117317199707031
+CASE rotated_half failures=6 acceptance_failures=5 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=108.0000076 particles=1152 y=1.419118285 vy=-0.6910369396 fraction=0.50093925 observed_fraction=0.6868906657 max_speed=1.948796988 particle_ms=18.699998 executed_ms=50.271733 amortized_ms=40.941576
+SUMMARY checks=2176 failures=6 acceptance_failures=5 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0

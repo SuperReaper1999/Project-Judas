@@ -1,0 +1,2 @@
+DIAGNOSTIC_FAIL zero_gravity reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=1200 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0

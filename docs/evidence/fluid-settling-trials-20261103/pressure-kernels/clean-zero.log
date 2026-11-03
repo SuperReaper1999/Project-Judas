@@ -1,0 +1,3 @@
+PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=0.000255231
+CASE zero_gravity failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=1152 y=0.6999999881 vy=-1.366114702e-06 fraction=0.00361163565 observed_fraction=1 max_speed=1.36611925e-06 particle_ms=10.172536 executed_ms=26.025834 amortized_ms=21.11836416
+SUMMARY checks=727 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0

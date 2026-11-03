@@ -1,0 +1,6 @@
+spacing=0.200000 steps=0 centres_min_z=-0.900000036 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0
+spacing=0.200000 steps=1 centres_min_z=-0.918734968 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.686926042
+spacing=0.200000 steps=61 centres_min_z=-2.90031409 count_outside_authored_footprint=1296 count_beyond_candidate_player=90 mean_speed=0.591346938
+spacing=0.250000 steps=0 centres_min_z=-0.875 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0
+spacing=0.250000 steps=1 centres_min_z=-0.89717108 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.850732564
+spacing=0.250000 steps=61 centres_min_z=-3.0130372 count_outside_authored_footprint=736 count_beyond_candidate_player=76 mean_speed=0.701910266

@@ -1,0 +1,16 @@
+calm_reference step=0.0166666666667 y4=1.861716615 vy4=0.937256798 y8=1.857333499 vy8=0.091579000
+calm_reference step=0.00166666666667 y4=1.864414899 vy4=0.928897118 y8=1.857606418 vy8=0.087596776
+calm_reference step=0.000166666666667 y4=1.864389228 vy4=0.928996556 y8=1.857603853 vy8=0.087637417
+calm_reference step=1.66666666667e-05 y4=1.864389165 vy4=0.928996929 y8=1.857603845 vy8=0.087637582
+record t=0.017 y=0.702499 vy=0.149969 wet=0.960799 buoyancy=16.495014 drag_other=-0.244767 field_load_excess_per_wet_mass=0.125194
+record t=0.167 y=0.828163 vy=1.377847 wet=0.998833 buoyancy=19.032362 drag_other=-2.329416 field_load_excess_per_wet_mass=1.216967
+record t=0.417 y=1.393734 vy=3.080307 wet=0.981165 buoyancy=19.663780 drag_other=-5.014755 field_load_excess_per_wet_mass=1.787946
+record t=0.817 y=2.425662 vy=1.173936 wet=0.000000 buoyancy=0.000000 drag_other=-0.000004 field_load_excess_per_wet_mass=nan
+record t=1.217 y=2.077736 vy=-2.750065 wet=0.000000 buoyancy=0.000000 drag_other=-0.000004 field_load_excess_per_wet_mass=nan
+record t=1.617 y=1.317816 vy=0.079502 wet=0.938438 buoyancy=17.394077 drag_other=-0.241910 field_load_excess_per_wet_mass=0.916348
+record t=2.017 y=1.915581 vy=1.722694 wet=0.224235 buoyancy=4.066969 drag_other=-0.597356 field_load_excess_per_wet_mass=0.685982
+record t=2.417 y=2.242712 vy=-0.906608 wet=0.000000 buoyancy=0.000000 drag_other=-0.000001 field_load_excess_per_wet_mass=nan
+record t=2.817 y=1.479320 vy=-0.805043 wet=0.960840 buoyancy=17.339588 drag_other=1.140433 field_load_excess_per_wet_mass=0.633444
+record t=3.217 y=1.869017 vy=1.642809 wet=0.102000 buoyancy=1.587562 drag_other=-0.278200 field_load_excess_per_wet_mass=-0.802865
+record t=3.617 y=1.752146 vy=-1.204211 wet=0.939874 buoyancy=15.252681 drag_other=1.983410 field_load_excess_per_wet_mass=-0.418551
+record t=4.000 y=1.895841 vy=0.726902 wet=0.000306 buoyancy=0.005172 drag_other=-0.000383 field_load_excess_per_wet_mass=nan

@@ -1,0 +1,6 @@
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0361876
+PRECONDITION half_025 observed_release_surface=1.80441 body_top=1 clearance=0.80441
+LEGACY_SETTLING half_025 status=PASS observational_scale=0 time=4 limit=0.5 y=1.7230764627456665 vy=-0.15633524954319
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.37397670202297911 late_rms=0.045097740337730327 late_peak=0.090707600116729736 early_range=0.24250626564025879 late_range=0.038439154624938965 sampled_fraction=0.50019174714883163 observed_fraction=0.55948816935221357
+CASE half_025 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=592 y=1.748611569 vy=-0.04227034748 fraction=0.502671361 observed_fraction=0.5682581584 max_speed=2.462380886 particle_ms=9.393225 executed_ms=31.810475 amortized_ms=27.41433619
+SUMMARY checks=2176 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0

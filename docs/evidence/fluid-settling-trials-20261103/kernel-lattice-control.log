@@ -1,0 +1,12 @@
+h/s=1.50 poly6_bias=-0.050582910 quartic_bias=+0.004258503 poly6_5pct_compression=+0.105565916 quartic_5pct_compression=+0.142655325
+h/s=1.75 poly6_bias=-0.025403909 quartic_bias=-0.032044609 poly6_5pct_compression=+0.154211513 quartic_5pct_compression=+0.136444025
+h/s=2.00 poly6_bias=+0.009775167 quartic_bias=-0.009158117 poly6_5pct_compression=+0.183732326 quartic_5pct_compression=+0.166871519
+h/s=2.05 poly6_bias=+0.013051671 quartic_bias=-0.004216519 poly6_5pct_compression=+0.183900418 quartic_5pct_compression=+0.170939234
+h/s=2.10 poly6_bias=+0.014801537 quartic_bias=+0.000044266 poly6_5pct_compression=+0.182199082 quartic_5pct_compression=+0.173788075
+h/s=2.15 poly6_bias=+0.015125939 quartic_bias=+0.003475092 poly6_5pct_compression=+0.178618921 quartic_5pct_compression=+0.175314746
+h/s=2.20 poly6_bias=+0.014010485 quartic_bias=+0.005976197 poly6_5pct_compression=+0.174063954 quartic_5pct_compression=+0.175529479
+h/s=2.40 poly6_bias=+0.000765627 quartic_bias=+0.006424991 poly6_5pct_compression=+0.159920006 quartic_5pct_compression=+0.169124282
+h/s=2.60 poly6_bias=-0.006661931 quartic_bias=+0.000025454 poly6_5pct_compression=+0.161538210 quartic_5pct_compression=+0.163525925
+h/s=3.00 poly6_bias=+0.002189016 quartic_bias=-0.000812404 poly6_5pct_compression=+0.168441230 quartic_5pct_compression=+0.166893357
+h/s=3.50 poly6_bias=-0.000518457 quartic_bias=+0.000264809 poly6_5pct_compression=+0.165846071 quartic_5pct_compression=+0.166285366
+h/s=4.00 poly6_bias=-0.000002249 quartic_bias=-0.000223563 poly6_5pct_compression=+0.166924279 quartic_5pct_compression=+0.166383247

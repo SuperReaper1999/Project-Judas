@@ -22,6 +22,7 @@ from `a461bab5`; its manifest identifies the exact source and packages.
 - [Experimental fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
 - [Fluid contact transient and representation review](FLUID_TRANSIENT_AND_REPRESENTATION_REVIEW.txt): captured premature contact impulses, causal controls and non-particle alternatives; investigation, not a qualified replacement solver.
 - [Fluid clearance repair and grid prototype](FLUID_CLEARANCE_REPAIR_AND_GRID_PROTOTYPE.txt): coherent hard/soft contact handling, unchanged pool replay, final regression evidence and measured limits of an isolated non-particle design; Alpha lock retained.
+- [Advanced Fluids settling trials](FLUID_SETTLING_TRIALS_20261103.md) records the remaining settling failures, pressure and support experiments, and the player regression that ruled out the most promising candidate.
 
 ## Build, distribute and verify
 

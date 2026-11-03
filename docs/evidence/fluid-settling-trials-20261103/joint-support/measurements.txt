@@ -1,0 +1,211 @@
+[baseline-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0868477
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[both-2-dense_025-full.log]
+PRECONDITION dense_025 warmup_steps=240 mean_particle_speed=0.042237
+PRECONDITION dense_025 observed_release_surface=1.25375 body_top=1 clearance=0.253749
+SUMMARY checks=729 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[both-2-half_025-full.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.042237
+PRECONDITION half_025 observed_release_surface=1.25375 body_top=1 clearance=0.253749
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+FAIL half_025 late RMS vertical speed decays by at least half
+FAIL half_025 late vertical travel range decays by at least half
+FAIL half_025 late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.28591361653950198 late_rms=0.18729091857834024 late_peak=0.39587569236755371 early_range=0.18411564826965332 late_range=0.17663073539733887 sampled_fraction=0.50652925781905656 observed_fraction=0.78134803771972661
+SUMMARY checks=2176 failures=4 acceptance_failures=4 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[both-2-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.042237
+SUMMARY checks=2 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[both-2-neutral_025-full.log]
+PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.042237
+PRECONDITION neutral_025 observed_release_surface=1.25375 body_top=1 clearance=0.253749
+FAIL neutral_025 neutral drift within 0.20m over 4 seconds
+SUMMARY checks=729 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[both-2-zero_gravity-full.log]
+PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=0.102072
+DIAGNOSTIC_FAIL zero_gravity reference pool is quiescent before body release
+SUMMARY checks=727 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[exact-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.108138
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[fluid-world-baseline.log]
+FluidWorld: PASS (0 failures)
+
+[fluid-world-both-2.log]
+FluidWorld: PASS (0 failures)
+
+[fluid-world-joint-2.log]
+FluidWorld: PASS (0 failures)
+
+[fluid-world-position-2.log]
+FluidWorld: PASS (0 failures)
+
+[gs-2-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0637284
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[gskeep-2-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0638373
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[joint-2-dense_025-full.log]
+PRECONDITION dense_025 warmup_steps=240 mean_particle_speed=0.0525197
+DIAGNOSTIC_FAIL dense_025 reference pool is quiescent before body release
+PRECONDITION dense_025 observed_release_surface=1.44338 body_top=1 clearance=0.443383
+SUMMARY checks=729 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[joint-2-half_025-full.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0525197
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+PRECONDITION half_025 observed_release_surface=1.44338 body_top=1 clearance=0.443383
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+FAIL half_025 peak vertical speed below 0.5 m/s over the late window
+FAIL half_025 late RMS vertical speed decays by at least half
+FAIL half_025 late vertical travel range decays by at least half
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.20957304459495316 late_rms=0.44413110163625291 late_peak=1.016089916229248 early_range=0.19498598575592041 late_range=0.30701494216918945 sampled_fraction=0.51061551043142872 observed_fraction=0.53722788492838547
+SUMMARY checks=2176 failures=5 acceptance_failures=4 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[joint-2-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0525197
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[joint-2-neutral_025-full.log]
+PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.0525197
+DIAGNOSTIC_FAIL neutral_025 reference pool is quiescent before body release
+PRECONDITION neutral_025 observed_release_surface=1.44338 body_top=1 clearance=0.443383
+FAIL neutral_025 neutral drift within 0.20m over 4 seconds
+SUMMARY checks=729 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[joint-8-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0533939
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[jointkeep-2-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0635069
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[jointmob-2-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0668626
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[position-2-dense_025-full.log]
+PRECONDITION dense_025 warmup_steps=240 mean_particle_speed=0.0511198
+DIAGNOSTIC_FAIL dense_025 reference pool is quiescent before body release
+PRECONDITION dense_025 observed_release_surface=1.47077 body_top=1 clearance=0.470773
+SUMMARY checks=729 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[position-2-half_025-full.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0511198
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+PRECONDITION half_025 observed_release_surface=1.47077 body_top=1 clearance=0.470773
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+FAIL half_025 late vertical travel range decays by at least half
+FAIL half_025 late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.28398346248330281 late_rms=0.059054220808652767 late_peak=0.10929057002067566 early_range=0.20367252826690674 late_range=0.1067429780960083 sampled_fraction=0.49876635447144507 observed_fraction=0.87671089172363281
+SUMMARY checks=2176 failures=4 acceptance_failures=3 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[position-2-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0511198
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[position-2-neutral_025-full.log]
+PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.0511198
+DIAGNOSTIC_FAIL neutral_025 reference pool is quiescent before body release
+PRECONDITION neutral_025 observed_release_surface=1.47077 body_top=1 clearance=0.470773
+FAIL neutral_025 neutral drift within 0.20m over 4 seconds
+SUMMARY checks=729 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[position-4-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0633328
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[split-2-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.429747
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[split-8-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.418001
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[vel-2-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.082435
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[vel-4-half_025.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0624375
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[velkeep-4-half_025-warmup.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.054889
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[column-baseline.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0676451772 0 -0.0348927826 0.147599772
+2 0.0180000067 0.0674850047 0 -0.0260616224 0.169693246
+3 0.0180000067 0.0674826503 0 -0.017078694 0.169769824
+4 0.0180000067 0.0675092638 0 -0.0150656067 0.166248083
+5 0.0180000067 0.06752 0 -0.0158259738 0.164846614
+6 0.0180000067 0.0675196499 0 -0.0164643377 0.164908454
+598 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+599 0.0180000067 0.067517221 0 -0.016477203 0.165230855
+600 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+
+[column-both-2.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0678282157 0 -0.00622433238 0.162085635
+2 0.0180000067 0.0678108707 0 -0.00420400035 0.166251453
+3 0.0180000067 0.0678118914 0 -0.0039305808 0.165369087
+4 0.0180000067 0.0678122491 -4.87782037e-12 -0.00393631309 0.16522786
+5 0.0180000067 0.067812264 -4.87782037e-12 -0.00394101394 0.165228551
+6 0.0180000067 0.0678122565 0 -0.00394142885 0.165230608
+598 0.0180000067 0.0678122565 0 -0.00394129567 0.165230854
+599 0.0180000067 0.0678122565 0 -0.00394129567 0.165230854
+600 0.0180000067 0.0678122565 0 -0.00394129567 0.165230854
+
+[column-joint-2.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0680000186 0 -0.00387694919 0.163271846
+2 0.0180000067 0.0680000186 0 -0.0039230762 0.165207389
+3 0.0180000067 0.0680000037 0 -0.00392361078 0.165230561
+4 0.0180000067 0.0680000186 0 -0.00392346224 0.165230711
+5 0.0180000067 0.0680000037 -4.87782037e-12 -0.00392359635 0.165230852
+6 0.0180000067 0.0680000186 0 -0.00392345665 0.165230708
+598 0.0180000067 0.0680000186 0 -0.00392345665 0.165230708
+599 0.0180000067 0.0680000037 -4.87782037e-12 -0.00392359635 0.165230852
+600 0.0180000067 0.0680000186 0 -0.00392345665 0.165230708
+
+[column-position-2.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0678282157 0 -0.0248973034 0.152650312
+2 0.0180000067 0.0677913204 0 -0.0187744778 0.168324754
+3 0.0180000067 0.0677954033 0 -0.0162569191 0.166503087
+4 0.0180000067 0.0677983016 0 -0.0162002277 0.165259555
+5 0.0180000067 0.06779854 0 -0.0163414869 0.165159494
+6 0.0180000067 0.0677984059 0 -0.0163685009 0.165217265
+598 0.0180000067 0.0677983761 0 -0.0163621642 0.16523096
+599 0.0180000067 0.0677983761 0 -0.0163622927 0.165230691
+600 0.0180000067 0.0677983761 0 -0.0163624194 0.165230691
