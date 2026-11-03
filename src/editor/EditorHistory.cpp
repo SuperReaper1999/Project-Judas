@@ -7,6 +7,8 @@
 #include <glm/gtx/quaternion.hpp>
 #include <algorithm>
 #include <set>
+#include <unordered_map>
+#include <unordered_set>
 #include <fstream>
 #include <sstream>
 #include "NamedAuthoring.h"
@@ -95,7 +97,12 @@ void EditorDocument::CommitEditImpl(bool capturePrefab,bool alreadyValidated) {
         if(std::any_of(m_scene.Objects().begin(),m_scene.Objects().end(),[](const auto& o){return o.prefabRoot!=0;}))alreadyValidated=false;
         CapturePrefabEdits(m_pendingSnapshot,m_scene);
     }
-    if(!alreadyValidated&&!ValidEdit(m_scene,m_validationError)){m_scene=m_pendingSnapshot;PruneSelection();return;}
+    if (!alreadyValidated && !ValidEdit(m_scene, m_validationError)) {
+        m_scene = m_pendingSnapshot;
+        m_hierarchyGeneration = ~uint64_t(0);
+        PruneSelection();
+        return;
+    }
     if (ScenesEqual(m_pendingSnapshot, m_scene)) return;
     m_undo.push_back(std::move(m_pendingSnapshot));
     if (m_undo.size() > kMaxHistory) m_undo.erase(m_undo.begin());
@@ -104,7 +111,10 @@ void EditorDocument::CommitEditImpl(bool capturePrefab,bool alreadyValidated) {
 }
 
 void EditorDocument::CancelEdit() {
-    if(m_editInProgress&&!ScenesEqual(m_scene,m_pendingSnapshot))m_scene=m_pendingSnapshot;
+    if (m_editInProgress && !ScenesEqual(m_scene, m_pendingSnapshot)) {
+        m_scene = m_pendingSnapshot;
+        m_hierarchyGeneration = ~uint64_t(0);
+    }
     m_editInProgress = false;PruneSelection();
 }
 
@@ -164,8 +174,77 @@ bool EditorDocument::DuplicateSelection(std::string& error){
 }
 
 std::vector<SceneObjectId> EditorDocument::SelectionRoots()const{std::vector<SceneObjectId> roots;for(auto id:m_selection){bool inherited=false;auto* o=m_scene.Find(id);for(auto p=o?o->parent:0;p;){if(IsSelected(p)){inherited=true;break;}auto* parent=m_scene.Find(p);p=parent?parent->parent:0;}if(o&&!inherited)roots.push_back(id);}return roots;}
-std::vector<SceneObjectId> EditorDocument::Search(const std::string& query)const{if(m_searchGeneration==m_generation&&m_searchQuery==query)return m_searchResults;JUDAS_PROFILE_SCOPE("Hierarchy filter");std::set<SceneObjectId> keep;for(auto& o:m_scene.Objects()){bool match=query.empty()||o.name.find(query)!=std::string::npos||o.authoringFolder.find(query)!=std::string::npos;auto properties=ObjectProperties(o);for(auto& [k,v]:properties)match|=k.find(query)!=std::string::npos||v.find(query)!=std::string::npos;if(match){keep.insert(o.id);for(auto p=o.parent;p;){keep.insert(p);auto* ancestor=m_scene.Find(p);p=ancestor?ancestor->parent:0;}}}std::vector<SceneObjectId> ids;for(auto& o:m_scene.Objects())if(keep.count(o.id))ids.push_back(o.id);m_searchGeneration=m_generation;m_searchQuery=query;m_searchResults=ids;return ids;}
-void EditorDocument::SelectRange(SceneObjectId id,const std::vector<SceneObjectId>& visible,bool additive){auto a=std::find(visible.begin(),visible.end(),m_selected),b=std::find(visible.begin(),visible.end(),id);if(a==visible.end()||b==visible.end()){Select(id,additive);return;}if(!additive)m_selection.clear();if(a>b)std::swap(a,b);for(auto i=a;i<=b;++i)if(!IsSelected(*i))m_selection.push_back(*i);m_selected=id;}
+const std::vector<EditorHierarchyRow>& EditorDocument::HierarchyRows(const std::string& query,
+                                                                          CategoryMask matchingTags) const {
+    if (m_hierarchyGeneration == m_generation && m_hierarchyQuery == query && m_hierarchyTags == matchingTags)
+        return m_hierarchyRows;
+    JUDAS_PROFILE_SCOPE("Hierarchy filter");
+
+    const auto& objects = m_scene.Objects();
+    const auto missing = objects.size();
+    std::unordered_map<SceneObjectId, std::size_t> indices;
+    indices.reserve(objects.size());
+    for (std::size_t i = 0; i < objects.size(); ++i) indices.emplace(objects[i].id, i);
+    std::vector<std::size_t> parents(objects.size(), missing);
+    for (std::size_t i = 0; i < objects.size(); ++i) {
+        if (const auto parent = indices.find(objects[i].parent); parent != indices.end())
+            parents[i] = parent->second;
+    }
+
+    std::vector<bool> visible(objects.size(), query.empty());
+    if (!query.empty()) {
+        for (std::size_t i = 0; i < objects.size(); ++i) {
+            if (visible[i]) continue;
+            const auto& object = objects[i];
+            const bool direct = (object.tags & matchingTags) || object.name.find(query) != std::string::npos ||
+                                object.authoringFolder.find(query) != std::string::npos;
+            if (!direct) {
+                const auto properties = ObjectProperties(object);
+                const bool property = std::any_of(properties.begin(), properties.end(), [&](const auto& entry) {
+                    return entry.first.find(query) != std::string::npos || entry.second.find(query) != std::string::npos;
+                });
+                if (!property) continue;
+            }
+            // An already-visible ancestor has already had its own chain admitted.
+            for (auto row = i; row != missing && !visible[row]; row = parents[row]) visible[row] = true;
+        }
+    }
+
+    m_hierarchyRows.clear();
+    m_hierarchyRows.reserve(objects.size());
+    for (std::size_t i = 0; i < objects.size(); ++i) {
+        if (!visible[i]) continue;
+        unsigned depth = 0;
+        for (auto parent = parents[i]; parent != missing && depth < 8; parent = parents[parent]) ++depth;
+        m_hierarchyRows.push_back({objects[i].id, i, depth});
+    }
+    m_hierarchyQuery = query;
+    m_hierarchyTags = matchingTags;
+    m_hierarchyGeneration = m_generation;
+    return m_hierarchyRows;
+}
+
+void EditorDocument::SelectRange(SceneObjectId id, const std::vector<EditorHierarchyRow>& rows, bool additive) {
+    const auto find = [&](SceneObjectId key) {
+        return std::find_if(rows.begin(), rows.end(), [key](const auto& row) { return row.id == key; });
+    };
+    auto first = find(m_selected), last = find(id);
+    if (first == rows.end() || last == rows.end()) {
+        Select(id, additive);
+        return;
+    }
+    if (first > last) std::swap(first, last);
+    if (additive) {
+        std::unordered_set<SceneObjectId> selected(m_selection.begin(), m_selection.end());
+        for (auto it = first; it <= last; ++it)
+            if (selected.insert(it->id).second) m_selection.push_back(it->id);
+    } else {
+        m_selection.clear();
+        for (auto it = first; it <= last; ++it) m_selection.push_back(it->id);
+    }
+    m_selected = id;
+}
+
 bool EditorDocument::DeleteSelection(std::string& error){auto candidate=m_scene;auto roots=SelectionRoots();if(roots.empty()){error="select objects first";return false;}for(auto id:roots)candidate.DestroyObject(id);PruneTilemapRecipes(candidate);std::string text;SaveSceneToString(candidate,text);Scene validated;if(!LoadSceneFromString(text,validated,error))return false;if(!CommitCandidate(std::move(validated),error,true,true))return false;PruneSelection();return true;}
 bool EditorDocument::ApplySource(const std::string& text,std::string& error){Scene candidate;if(!LoadSceneFromString(text,candidate,error))return false;if(!CommitCandidate(std::move(candidate),error,true,true))return false;PruneSelection();return true;}
 bool EditorDocument::ExternalChanged()const{return !m_path.empty()&&Source(m_path)!=m_loadedSource;}

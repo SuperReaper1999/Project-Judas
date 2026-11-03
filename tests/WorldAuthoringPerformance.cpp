@@ -20,8 +20,8 @@ int main(int argc,char** argv){
     J result={{"objects",scene.Objects().size()},{"batchSelection",doc.Selection().size()},{"units","milliseconds"},{"measurements",J::object()}};
     auto measure=[&](const char* label,auto operation){std::vector<double> samples;double cold=0;for(int i=0;i<32;++i){auto start=PerformanceProfiler::Now();profiler.BeginFrame("M67 authoring",i==0);{ProfileScope scope(profiler.Intern(label));operation();}profiler.EndFrame();double ms=double(PerformanceProfiler::Now()-start)/1e6;if(!i)cold=ms;else samples.push_back(ms);}std::sort(samples.begin(),samples.end());result["measurements"][label]={{"cold",cold},{"median",samples[samples.size()/2]},{"p95",samples[size_t(samples.size()*.95)]},{"maximum",samples.back()}};};
     measure("Selection",[&]{doc.Select(3);doc.Select(6,true);});
-    measure("Filter cached",[&]{doc.Search("gallery-1");});
-    measure("Filter changed query",[&]{static unsigned n=0;doc.Search(n++%2?"gallery-1":"Step");});
+    measure("Filter cached",[&]{doc.HierarchyRows("gallery-1");});
+    measure("Filter changed query",[&]{static unsigned n=0;doc.HierarchyRows(n++%2?"gallery-1":"Step");});
     doc.Select(0);for(auto& o:scene.Objects())if(o.id>=100&&doc.Selection().size()<32)doc.Select(o.id,true);
     measure("Batch translation plus undo",[&]{if(!doc.BatchTransform({.25f,0,0},{1,0,0,0},{1,1,1},error,true,true))throw std::runtime_error(error);doc.Undo();});
     WorldRecipe recipe;ParseWorldRecipe(scene.Settings().authoringRecipes.at("gallery-0"),recipe,error);AssetDatabase assets;

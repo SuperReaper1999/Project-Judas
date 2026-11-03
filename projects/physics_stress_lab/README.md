@@ -7,7 +7,13 @@ produce their motion. Motor power can be removed without disabling physics.
 
 Open `physics_stress_lab.judasproj` in the editor, or run its normal exported package.
 
-## Latest Pre-Alpha result
+## Current MK2 evidence
+
+The lab now runs MK2. The [MK2 architecture notes](../../docs/MK2_PHYSICS_ARCHITECTURE.md)
+link the current solver diagnostics and preserved ordinary, severe and live camera
+benchmarks.
+
+## Historical Pre-Alpha result (MK1)
 
 The operator accepted the pair-discovery checkpoint `45f0614fa2` on main.
 The subsequent [CCD query/history follow-up](../../docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt)
@@ -59,9 +65,9 @@ M91's matched measurements and physical checks are in the
 [current report](../../docs/evidence/m91/REPORT.md), with the numerical contract
 [explained separately](../../docs/M91_COLLISION_CONTINUITY.md).
 
-**The 1,024-piece pile remains an extreme stress workload.** Cost is substantially
-improved in the measured failure region, but isolated stalls remain. It is not a
-60 Hz certification. The default room is the practical watch-tour demonstration;
+**The 1,024-piece pile is an extreme stress workload.** The M91 measurement
+improved the failure region, with isolated stalls still present. The default
+room is the practical watch-tour demonstration;
 press **3** deliberately to inspect the worst case. No body is frozen or removed
 to improve the result. M91 was human accepted at the checkpoint recorded in the
 [current architecture](../../docs/ARCHITECTURE.md#physics-ownership-and-modules).

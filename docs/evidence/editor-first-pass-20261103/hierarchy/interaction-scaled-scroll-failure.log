@@ -1,0 +1,24 @@
+FAIL mouse Shift selection spans the full authored list across hidden rows
+SCALE 1.00
+PASS large hierarchy has real scrolling extent
+DIAGNOSTIC bottom first scroll=10230 max=10230
+DIAGNOSTIC bottom stable scroll=10230 max=10230
+PASS last rows reached at bottom
+PASS last row click lies inside the clipped list
+PASS mouse Shift selection spans the full authored list across hidden rows
+PASS right-click reaches the correct clipped bottom row
+PASS row opens the real Create child submenu
+PASS submenu targets the exact bottom-row parent
+DIAGNOSTIC menu-closed focus=Hierarchy/list_1D3E289E text=1 popups=0 active=0 rename=0
+DIAGNOSTIC idle focus=Hierarchy/list_1D3E289E text=0 popups=0 active=0 rename=0
+DIAGNOSTIC f2-down focus=Hierarchy/list_1D3E289E text=0 popups=0 active=0 rename=512
+DIAGNOSTIC f2-up focus=Hierarchy/list_1D3E289E text=0 popups=0 active=89289450 rename=512
+PASS F2 begins inline rename on the scrolled row
+PASS inline rename commits typed text
+PASS one undo restores the old name
+SCALE 1.50
+PASS large hierarchy has real scrolling extent
+DIAGNOSTIC bottom first scroll=13328 max=13840
+DIAGNOSTIC bottom stable scroll=13840 max=13840
+PASS last rows reached at bottom
+PASS last row click lies inside the clipped list

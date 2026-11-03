@@ -150,9 +150,12 @@ During Play, source saving remains separate from deliberate script reloading;
 opening a file does not change the running code. Existing unsaved source edits
 remain protected when switching files.
 
-The asset browser puts **Import assets…** at the top of its **Assets** tab. Choose a source, then
-review its destination inside Assets and click **Import file**. The source is
-preserved. Use **Filters…** for type/missing filters; the search matches names,
+Use **File → Import assets…** or the same button in the asset browser's **Assets** tab.
+Choose a source and review the destination inside Assets. Use **Import file** for an
+image, script or other ready-to-use file. For FBX, glTF, GLB or OBJ, **Cook & import model**
+opens the progress and preview in **Import & tools**. Use **Place accepted model** to
+place the result at the scene-view focus. The original source is preserved. Use
+**Filters…** for type/missing filters; the search matches names,
 paths, IDs and sources without case sensitivity. A selected script exposes
 **Edit script** and **Attach to selected object** directly; attachment requires
 one selected object in Edit mode. These also appear on its right-click menu.
@@ -278,8 +281,12 @@ historical projects can retain legacy controls. **Stop / F5** discards runtime
 state and returns to the authored scene.
 
 Select the startup scene and input bindings in **File → Project settings**.
-**Run project** launches the separate runtime. **Export project (Release)**
-creates a movable runtime package; see [export](M38.md) and [Windows](WINDOWS.md).
+Open **File → Build & Export…**. **Run project** launches the separate runtime.
+To create a movable package, choose a destination outside your project and click
+**Export desktop game**. [Export reference](M38.md) · [Windows](WINDOWS.md)
+
+The same window links to export settings for scene and asset inclusion. It shows
+**Build for browser…** only with the [experimental browser opt-in](BROWSER_SUPPORT.md).
 Save scenes, settings and source before exporting. JavaScript completion comes
 from [judas.d.ts](judas.d.ts), with setup in [practices](judasjs/practices.md).
 

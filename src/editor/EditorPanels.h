@@ -134,6 +134,8 @@ struct EditorPanelState {
     bool assetMissingOnly = false;
     bool selectAssetDetails = false;
     bool reviewAssetImport = false;
+    bool selectModelImportTools = false;
+    std::string modelImportReviewOutput, modelImportReviewError;
     std::shared_ptr<AssetCookPanelTask> assetCookTask;
     JobSystem* importJobs=nullptr;
     std::shared_ptr<ModelCookTask> importTask,importAccepted;
@@ -205,6 +207,7 @@ struct EditorPanelState {
     bool showProfiler = false;
     bool profilerInspect = false;
     bool showProjectSettings = false;
+    bool showBuildExport = false;
     int projectSettingsPage = 0;
     bool showAssetBrowser = true;
     ProfilerData profiler;
@@ -229,6 +232,7 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state);
 void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state);
 void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
 void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
+void DrawEditorBuildExportPanel(EditorPanelState& state, EditorRequests& requests);
 void DrawProfilerPanel(EditorPanelState& state);
 void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
 

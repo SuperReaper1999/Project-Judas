@@ -10,3 +10,5 @@ bool BeginEditorRename(const EditorDocument&, EditorPanelState&);
 // Called inside the hierarchy window so keyboard navigation can capture input.
 void HandleHierarchyRenameShortcut(const EditorDocument&, EditorPanelState&);
 void DrawEditorImportReview(EditorPanelState&, EditorRequests&);
+bool EditorModelImportPending(const EditorPanelState&);
+bool QueueEditorModelCook(EditorPanelState&);

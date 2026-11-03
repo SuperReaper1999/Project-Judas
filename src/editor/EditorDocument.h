@@ -1,9 +1,16 @@
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
 #include "Scene.h"
+
+struct EditorHierarchyRow {
+    SceneObjectId id;
+    std::size_t sceneIndex;
+    unsigned depth;
+};
 
 // Milestone 28: the editor's view of one authored Scene — the file it
 // came from, whether it has unsaved changes, the current selection, and a
@@ -33,8 +40,10 @@ public:
     bool BatchTransform(glm::vec3 translation,glm::quat rotation,glm::vec3 scale,std::string& error,bool individual=true,bool world=false);
     bool ReparentSelection(SceneObjectId parent,std::string& error,bool preserveWorld=true);
     std::vector<SceneObjectId> SelectionRoots() const;
-    std::vector<SceneObjectId> Search(const std::string& query) const;
-    void SelectRange(SceneObjectId id,const std::vector<SceneObjectId>& visible,bool additive=false);
+    // Rows are in authored scene order and valid until the next hierarchy query.
+    const std::vector<EditorHierarchyRow>& HierarchyRows(const std::string& query,
+                                                         CategoryMask matchingTags = 0) const;
+    void SelectRange(SceneObjectId id, const std::vector<EditorHierarchyRow>& rows, bool additive = false);
     bool DeleteSelection(std::string& error);
     bool ApplySource(const std::string& text,std::string& error);
     bool ExternalChanged() const;
@@ -73,7 +82,10 @@ public:
 private:
     void CommitEditImpl(bool capturePrefab,bool alreadyValidated);
     bool CommitCandidate(Scene&&,std::string& error,bool capturePrefab=true,bool alreadyValidated=false);
-    mutable uint64_t m_searchGeneration=~uint64_t(0);mutable std::string m_searchQuery;mutable std::vector<SceneObjectId> m_searchResults;
+    mutable uint64_t m_hierarchyGeneration = ~uint64_t(0);
+    mutable std::string m_hierarchyQuery;
+    mutable CategoryMask m_hierarchyTags = 0;
+    mutable std::vector<EditorHierarchyRow> m_hierarchyRows;
     Scene m_scene;
     std::string m_path,m_loadedSource,m_validationError;
     uint64_t m_generation=0;

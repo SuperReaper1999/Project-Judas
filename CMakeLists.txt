@@ -1766,7 +1766,7 @@ judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTes
 judas_add_engine_test(judas_editor_creation_menu_tests tests/EditorCreationMenuTests.cpp
     SOURCES src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_editor_asset_actions_tests tests/EditorAssetActionsTests.cpp
-    SOURCES src/editor/EditorAssetActions.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+    SOURCES src/editor/EditorAssetActions.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui judas_model_import)
 judas_add_engine_test(judas_editor_preferences_tests tests/EditorPreferencesTests.cpp
     SOURCES src/editor/EditorPreferences.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_editor_script_workflow_tests tests/EditorScriptWorkflowTests.cpp

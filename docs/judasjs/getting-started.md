@@ -169,9 +169,9 @@ interfaces or `.d.ts` at runtime. Keep their engine checkpoint in sync with the
 runtime you develop against. All reference pages can be read offline.
 
 Save source, scene and project settings. Select the startup scene in Project
-settings; use **Run project** to exercise ordinary runtime startup. Then choose a
-package directory outside the project and **Export project (Release)**. Export
-uses saved files, not unsaved inspector edits. Copy the package elsewhere and run
+settings, then open **File → Build & Export…**. Use **Run project** to exercise
+ordinary runtime startup. Choose a package directory outside the project and
+click **Export desktop game**. Export uses saved files. Copy the package elsewhere and run
 its `judas` executable. [Export workflow](../M38.md) · [Windows status/requirements](../WINDOWS.md).
 
 All registered assets is the safe default. If choosing dependency closure, declare

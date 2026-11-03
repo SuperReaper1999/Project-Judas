@@ -75,18 +75,99 @@ bool ReadModelArchiveMetadata(const void* data,size_t size,std::string& record,s
  record=std::move(sax.record);materials=std::move(found);error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}}
 
-bool VerifyImportedModelFresh(const std::string& root,const std::string& path,std::string& error){try{
- std::vector<uint8_t> bytes;if(!ReadWholeFile(path,bytes,error))return false;std::string record;std::vector<MaterialDefinition> materials;if(!ReadModelArchiveMetadata(bytes.data(),bytes.size(),record,materials,error))return false;if(record.empty())return true;
- auto j=Json::parse(record);auto base=std::filesystem::weakly_canonical(root);
- auto owned=[&](const std::string& p){auto file=std::filesystem::weakly_canonical(base/p);auto relative=file.lexically_relative(base);if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("import record outside project");return file;};
- // Terrain provenance is authoring/export-only. Painting keeps geometry hashes stable.
- if(j.value("kind",std::string())=="terrain"||j.value("kind",std::string())=="volume-terrain"){
- const bool volume=j.value("kind",std::string())=="volume-terrain";
-  auto receiptPath=owned(j.at("receipt"));if(!std::filesystem::is_regular_file(receiptPath)||std::filesystem::file_size(receiptPath)>1024*1024)throw std::runtime_error("missing/bounded terrain cook receipt");
-  std::ifstream file(receiptPath);auto receipt=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=16)throw std::runtime_error("terrain receipt nesting bound");return true;});if(receipt.at("format")!=(volume?"JudasVolumeTerrainCook":"JudasTerrainCook")||receipt.at("version")!=1||receipt.at("revision")!=(volume?"M84-1":"M75-1"))throw std::runtime_error("terrain cook revision; recook before export");
-  for(const char* group:{"inputs","products"}){if(receipt.at(group).size()>16)throw std::runtime_error("terrain receipt bounds");for(auto it=receipt.at(group).begin();it!=receipt.at(group).end();++it){std::string digest;if(!SceneFingerprintSha256File(owned(it.key()).string(),digest,error)||digest!=it.value())throw std::runtime_error("stale terrain source/product: "+it.key()+"; save and recook before export");}}
-  error.clear();return true;
- }
- std::ifstream recipe(owned(j.at("recipe")));if(!recipe)throw std::runtime_error("missing import recipe; restore author-owned recipe before export");if(std::filesystem::file_size(owned(j.at("recipe")))>4*1024*1024)throw std::runtime_error("recipe exceeds 4 MiB");auto current=Json::parse(recipe,[](int depth,Json::parse_event_t,const Json&){if(depth>=48)throw std::runtime_error("recipe nesting bound");return true;});if(SceneFingerprintSha256(current.dump()+j.at("revision").get<std::string>())!=j.at("digest"))throw std::runtime_error("import settings changed; reimport before export");
- for(auto it=j.at("inputs").begin();it!=j.at("inputs").end();++it){std::string digest;if(!SceneFingerprintSha256File(owned(it.key()).string(),digest,error)||digest!=it.value())throw std::runtime_error("stale imported source/dependency: "+it.key()+"; reimport before export");}error.clear();return true;
- }catch(const std::exception& e){error=e.what();return false;}}
+namespace {
+bool ReadModelImportRecord(const std::string& path, std::string& record, std::string& error) {
+    std::vector<uint8_t> bytes;
+    std::vector<MaterialDefinition> materials;
+    return ReadWholeFile(path, bytes, error) &&
+           ReadModelArchiveMetadata(bytes.data(), bytes.size(), record, materials, error);
+}
+
+bool VerifyImportRecordFresh(const std::string& root, const Json& j, std::string& error) {
+    const auto base = std::filesystem::weakly_canonical(root);
+    const auto owned = [&](const std::string& path) {
+        auto file = std::filesystem::weakly_canonical(base / path);
+        const auto relative = file.lexically_relative(base);
+        if (relative.empty() || relative.is_absolute() || *relative.begin() == "..")
+            throw std::runtime_error("import record outside project");
+        return file;
+    };
+    // Terrain provenance is authoring/export-only. Painting keeps geometry hashes stable.
+    const auto kind = j.value("kind", std::string());
+    if (kind == "terrain" || kind == "volume-terrain") {
+        const bool volume = kind == "volume-terrain";
+        const auto receiptPath = owned(j.at("receipt"));
+        if (!std::filesystem::is_regular_file(receiptPath) || std::filesystem::file_size(receiptPath) > 1024 * 1024)
+            throw std::runtime_error("missing/bounded terrain cook receipt");
+        std::ifstream file(receiptPath);
+        const auto receipt = Json::parse(file, [](int depth, Json::parse_event_t, const Json&) {
+            if (depth >= 16) throw std::runtime_error("terrain receipt nesting bound");
+            return true;
+        });
+        if (receipt.at("format") != (volume ? "JudasVolumeTerrainCook" : "JudasTerrainCook") ||
+            receipt.at("version") != 1 || receipt.at("revision") != (volume ? "M84-1" : "M75-1"))
+            throw std::runtime_error("terrain cook revision; recook before export");
+        for (const char* group : {"inputs", "products"}) {
+            const auto& files = receipt.at(group);
+            if (files.size() > 16)
+                throw std::runtime_error("terrain receipt bounds");
+            for (auto it = files.begin(); it != files.end(); ++it) {
+                std::string digest;
+                if (!SceneFingerprintSha256File(owned(it.key()).string(), digest, error) || digest != it.value())
+                    throw std::runtime_error("stale terrain source/product: " + it.key() + "; save and recook before export");
+            }
+        }
+    } else {
+        const auto recipePath = owned(j.at("recipe"));
+        std::ifstream recipe(recipePath);
+        if (!recipe)
+            throw std::runtime_error("missing import recipe; restore author-owned recipe before export");
+        if (std::filesystem::file_size(recipePath) > 4 * 1024 * 1024)
+            throw std::runtime_error("recipe exceeds 4 MiB");
+        const auto current = Json::parse(recipe, [](int depth, Json::parse_event_t, const Json&) {
+            if (depth >= 48) throw std::runtime_error("recipe nesting bound");
+            return true;
+        });
+        if (SceneFingerprintSha256(current.dump() + j.at("revision").get<std::string>()) != j.at("digest"))
+            throw std::runtime_error("import settings changed; reimport before export");
+        const auto& inputs = j.at("inputs");
+        for (auto it = inputs.begin(); it != inputs.end(); ++it) {
+            std::string digest;
+            if (!SceneFingerprintSha256File(owned(it.key()).string(), digest, error) || digest != it.value())
+                throw std::runtime_error("stale imported source/dependency: " + it.key() + "; reimport before export");
+        }
+    }
+    error.clear();
+    return true;
+}
+} // namespace
+
+bool VerifyImportedModelFresh(const std::string& root, const std::string& path, std::string& error) {
+    try {
+        std::string record;
+        if (!ReadModelImportRecord(path, record, error))
+            return false;
+        return record.empty() || VerifyImportRecordFresh(root, Json::parse(record), error);
+    } catch (const std::exception& e) {
+        error = e.what();
+        return false;
+    }
+}
+
+bool VerifyTerrainModelFreshForPlay(const std::string& root, const std::string& path, std::string& error) {
+    try {
+        std::string record;
+        // Leave unreadable models to the ordinary runtime resource diagnostics.
+        if (!ReadModelImportRecord(path, record, error) || record.empty()) {
+            error.clear();
+            return true;
+        }
+        const auto provenance = Json::parse(record);
+        const auto kind = provenance.value("kind", std::string());
+        return (kind != "terrain" && kind != "volume-terrain") ||
+               VerifyImportRecordFresh(root, provenance, error);
+    } catch (const std::exception& e) {
+        error = e.what();
+        return false;
+    }
+}
