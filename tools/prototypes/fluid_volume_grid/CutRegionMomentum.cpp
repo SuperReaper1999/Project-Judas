@@ -1,13 +1,13 @@
 #include "CutRegionMomentum.h"
 
 #include "GridConservativeRemap.h"
+#include "GridPhaseFluxRepair.h"
 
 #include <utility>
 
 namespace judas::volume_grid {
 namespace {
 
-constexpr double kWaterDensity = 1000.;
 constexpr double kRoundoff = 256. * std::numeric_limits<double>::epsilon();
 
 struct CompensatedSum {
@@ -64,7 +64,7 @@ bool Nonnegative(double value) {
 }
 
 double MixtureMass(double capacity, double water) {
-    return kWaterDensity * water + (capacity - water);
+    return CutRegionWaterDensity * water + (capacity - water);
 }
 
 } // namespace
@@ -89,7 +89,7 @@ bool TransportCutRegionMomentum(const CutRegionPhaseInput& input,
     remap.end.resize(count);
     remap.relayAllowed = input.relayAllowed;
     remap.relayAllowed.resize(count);
-    remap.balanceTolerance = kWaterDensity * input.balanceTolerance;
+    remap.balanceTolerance = CutRegionWaterDensity * input.balanceTolerance;
     remap.allowDonorRoundoff = true;
     remap.transfers.reserve(input.faces.size());
     std::vector<GridVec> before(count), kicked(count);
@@ -130,7 +130,7 @@ bool TransportCutRegionMomentum(const CutRegionPhaseInput& input,
             std::abs((wet + dry) - volume) > kRoundoff * std::abs(volume) ||
             !(opening.minWater <= std::abs(wet) && std::abs(wet) <= opening.maxWater))
             return Fail(error, "cut region momentum requires the accepted signed phase flux");
-        const double mass = kWaterDensity * wet + dry;
+        const double mass = CutRegionWaterDensity * wet + dry;
         if (!std::isfinite(mass))
             return Fail(error, "cut region face mass transfer is not representable");
         remap.transfers.push_back({opening.left, opening.right, mass});
@@ -147,16 +147,12 @@ bool TransportCutRegionMomentum(const CutRegionPhaseInput& input,
         const double capacity = input.startCapacity[region];
         const double wet = input.startWater[region], dry = capacity - wet;
         const double wetOut = outgoing[region][0].Value(), dryOut = outgoing[region][1].Value();
-        // Air can be the difference of two almost equal volumes. Bound that
-        // subtraction by the mixture scale and this region's represented
-        // mixture residual. The allowance must remain roundoff in mass.
-        const double limit = kRoundoff * capacity;
         const double volumeResidual = std::abs((capacity + receivedVolume[region].Value()) -
             (input.endCapacity[region] + (wetOut + dryOut)));
-        const double airLimit = limit + std::min(volumeResidual, kRoundoff * remap.start[region]);
+        const auto bound = MeasureGridPhaseInventoryRoundoff(capacity, volumeResidual, remap.start[region]);
         if (!std::isfinite(wetOut) || !std::isfinite(dryOut) ||
             (wet == 0. && wetOut > 0.) || (dry == 0. && dryOut > 0.) ||
-            wetOut - wet > limit || dryOut - dry > airLimit)
+            wetOut - wet > bound.water || dryOut - dry > bound.air)
             return Fail(error, "cut region momentum phase leaves an ordinary donor before receipt");
     }
 

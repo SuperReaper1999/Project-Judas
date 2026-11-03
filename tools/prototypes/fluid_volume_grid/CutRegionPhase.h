@@ -6,6 +6,8 @@
 
 namespace judas::volume_grid {
 
+inline constexpr double CutRegionWaterDensity = 1000.;
+
 // One physical opening, with positive mixture flux directed left to right.
 // The bounds and preference are absolute water volumes in the actual
 // departure direction. The caller computes them from the swept geometry.

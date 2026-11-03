@@ -54,13 +54,27 @@ public:
         return std::clamp(arc.lower + reverse, arc.lower, arc.upper);
     }
 
-    bool Close(double tolerance) {
+    struct DepartureLimit {
+        bool ordinary = false;
+        GridPhaseInventoryRoundoff bound{};
+    };
+
+    bool Close(double tolerance, const std::vector<DepartureLimit>& departureLimits) {
+        const auto errorAt = [&](std::size_t node) {
+            if (node < departureLimits.size() && departureLimits[node].ordinary) {
+                const auto& bound = departureLimits[node].bound;
+                // A water deficit overspends water. A water surplus leaves
+                // less water than the minimum needed to cover outgoing volume.
+                return balance_[node] < 0. ? bound.water : bound.air;
+            }
+            return tolerance + kRoundoff * scale_[node];
+        };
         std::vector<ArcRef> demands;
         std::vector<double> errors;
         for (std::size_t node = 0; node < balance_.size(); ++node) {
             if (!std::isfinite(balance_[node]) || !std::isfinite(scale_[node]))
                 return false;
-            const double error = tolerance + kRoundoff * scale_[node];
+            const double error = errorAt(node);
             if (!std::isfinite(error))
                 return false;
             if (std::abs(balance_[node]) <= error)
@@ -75,7 +89,7 @@ public:
         // residuals whenever a larger defect needs them as a matching route.
         if (!demands.empty()) {
             for (std::size_t node = 0; node < balance_.size(); ++node) {
-                const double error = tolerance + kRoundoff * scale_[node];
+                const double error = errorAt(node);
                 if (balance_[node] == 0. || std::abs(balance_[node]) > error)
                     continue;
                 if (balance_[node] > 0.)
@@ -211,13 +225,19 @@ std::vector<bool> ReachPhase(const GridPhaseFluxRepairInput& input, bool wet, co
 
 } // namespace
 
+GridPhaseInventoryRoundoff MeasureGridPhaseInventoryRoundoff(
+    double capacity, double volumeResidual, double massInAirVolumeUnits) {
+    const double limit = kRoundoff * capacity;
+    return {limit, limit + std::min(volumeResidual, kRoundoff * massInAirVolumeUnits)};
+}
+
 bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
                          GridPhaseFluxRepairResult& output, std::string& error) {
     const auto count = input.startCapacity.size();
     if (count > (std::numeric_limits<std::size_t>::max() - 3) / 3 ||
         input.endCapacity.size() != count || input.startWater.size() != count ||
         (!input.relayAllowed.empty() && input.relayAllowed.size() != count) ||
-        !Nonnegative(input.balanceTolerance))
+        !Nonnegative(input.balanceTolerance) || !Nonnegative(input.localOrdinaryDensityRatio))
         return Fail(error, "invalid phase flux repair dimensions or tolerance");
 
     GridPhaseFluxRepairResult result;
@@ -288,6 +308,9 @@ bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
     const auto arrival = [&](std::size_t node) { return store(node) + 2 * !relay(node); };
     const auto sink = 3 * count;
     ResidualNetwork network(sink + 1);
+    std::vector<ResidualNetwork::DepartureLimit> departureLimits;
+    if (input.localOrdinaryDensityRatio > 0.)
+        departureLimits.resize(sink + 1);
     for (std::size_t node = 0; node < count; ++node) {
         const double start = input.startCapacity[node], end = input.endCapacity[node];
         const double water = input.startWater[node];
@@ -308,7 +331,16 @@ bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
             const double air = start - water;
             const double upper = std::min(water, mixture[node].out);
             const double requested = std::max(0., mixture[node].out - air);
-            if (requested - upper > allowed)
+            double donorAllowance = allowed;
+            if (!departureLimits.empty()) {
+                const double massInAirVolumeUnits = input.localOrdinaryDensityRatio * water + air;
+                if (!std::isfinite(massInAirVolumeUnits))
+                    return Fail(error, "ordinary phase inventory mass is not representable");
+                const auto bound = MeasureGridPhaseInventoryRoundoff(start, mismatch, massInAirVolumeUnits);
+                departureLimits[departure(node)] = {true, bound};
+                donorAllowance = bound.water + bound.air;
+            }
+            if (requested - upper > donorAllowance)
                 return Fail(error, "fixed mixture flux exhausts an ordinary donor's starting capacity");
             const double lower = std::min(requested, upper);
             outgoing = std::clamp(outgoing, lower, upper);
@@ -330,7 +362,7 @@ bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
         faceArcs.push_back(network.Add(departure(edge.from), arrival(edge.to), lower, upper,
                                        result.waterFlux[face]));
     }
-    if (!network.Close(input.balanceTolerance))
+    if (!network.Close(input.balanceTolerance, departureLimits))
         return Fail(error, "geometric phase bounds cannot satisfy the water and air inventory ledger");
 
     std::vector<Traffic> repaired(count), repairedAir(count);
@@ -352,6 +384,12 @@ bool RepairGridPhaseFlux(const GridPhaseFluxRepairInput& input,
         const auto [airReceived, airSent] = repairedAir[node];
         const double amount = relay(node) ? (initial + received) - sent : (initial - sent) + received;
         const double airInitial = input.startCapacity[node] - initial;
+        if (!departureLimits.empty() && !relay(node)) {
+            const auto& bound = departureLimits[departure(node)].bound;
+            if ((initial == 0. && sent > 0.) || (airInitial == 0. && airSent > 0.) ||
+                sent - initial > bound.water || airSent - airInitial > bound.air)
+                return Fail(error, "repaired phase flux spends an ordinary donor before receipt");
+        }
         const double airAmount = relay(node) ? (airInitial + airReceived) - airSent
                                              : (airInitial - airSent) + airReceived;
         const double endpoint = std::clamp(amount, 0., end);

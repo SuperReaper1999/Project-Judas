@@ -116,6 +116,33 @@ void TestIsolatedPhase(Checks& checks) {
         "roundoff tolerance cannot carry wet phase through a zero-volume opening");
 }
 
+void TestTraceDonorInventory(Checks& checks) {
+    constexpr double capacity = 0x1p-40, air = 0x1p-69, volume = 0x1p-41;
+    constexpr double preferred = volume - 1.5 * air;
+    CutRegionPhaseInput input{{capacity, 0.}, {capacity - volume, volume}, {capacity - air, 0.},
+        {{0, 1, volume, 0., volume, preferred}}, {}, 1e-16};
+    CutRegionPhaseResult output;
+    std::string error;
+    checks.Expect(TransportCutRegionPhases(input, output, error) &&
+                  output.waterFlux[0] == volume - air && output.airFlux[0] == air &&
+                  IndependentClosure(input, output),
+        "a feasible cut repair replaces a preferred 50 percent trace-air overspend");
+
+    const auto retained = output;
+    input.faces[0].maxWater = preferred;
+    checks.Expect(!TransportCutRegionPhases(input, output, error) &&
+                  output.waterFlux == retained.waterFlux && output.airFlux == retained.airFlux &&
+                  output.endWater == retained.endWater,
+        "an aperture that requires excess trace air rejects below the whole-grid tolerance");
+
+    input.startWater[0] = air;
+    input.faces[0] = {0, 1, volume, 1.5 * air, volume, 1.5 * air};
+    checks.Expect(!TransportCutRegionPhases(input, output, error) &&
+                  output.waterFlux == retained.waterFlux && output.airFlux == retained.airFlux &&
+                  output.endWater == retained.endWater,
+        "an aperture that requires excess trace water also rejects transactionally");
+}
+
 } // namespace
 
 int main() {
@@ -123,6 +150,7 @@ int main() {
     TestThinThroughflow(checks);
     TestSeparatedPhase(checks);
     TestIsolatedPhase(checks);
+    TestTraceDonorInventory(checks);
     std::cout << "SUMMARY cut-region phase " << checks.total << " checks " << checks.failures
               << " failures\n";
     return checks.failures != 0;

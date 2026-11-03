@@ -1,0 +1,12 @@
+BEGIN level=1 equilibrium=0 dt=0.01666666753590107 volume=9.25 cuts=20344 faces=57348
+PASS step=0 residual=1.1451057604521098e-15 water_drift=1.0554190604984578e-14 speed=0.74360624573189793 iterations=18/568 dP=-194.6139045948803 dK=90.654614837334037 total_energy_change=-103.95928975754626 ms=76.847708999999995
+GAS initial_closed=1 ending_closed=2 initial_largest_m3=0.53399997425079249 largest_initial_owner_mean_Pa=1307.0153113787901
+COMPONENT id=1 volume=0.52309826506429291 unresolved=0 regions=1172
+COMPONENT id=2 volume=0.0012045206166372939 unresolved=0 regions=28
+LINEAGE from=1 to=1 root=5897 bounds=1.125,1,0.875
+LINEAGE from=1 to=2 root=6748 bounds=1,1.5,1
+GAS unowned_new_m3=0 join_or_split=1
+ANCHOR shared_aperture_residual_m2=8.6736173798840355e-19 original_pocket_extension_area_m2=0.024587308318770595 anchored_pocket_extension_area_m2=2.2451377600899196
+ANCHOR changed=404 moved_dry_geometry_m3=0.013975569327498185 max_capacity_mismatch=6.9388939039072284e-18 closed_components=1
+ANCHOR group=14147 volume_m3=0.52430278568092958 inherited 1:0.52430278568092958
+REJECT initial gas owners do not describe final geometry

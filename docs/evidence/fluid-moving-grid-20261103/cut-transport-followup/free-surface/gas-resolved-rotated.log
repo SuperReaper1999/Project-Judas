@@ -1,0 +1,3 @@
+BEGIN level=0 equilibrium=0 dt=0.01666666753590107 volume=9.2160004119873111 cuts=35840 faces=101292
+limit norm=0.00010155 nonlinear=80 linear=2861
+FAIL step=0 ms=800.041 wet storage pressure exceeded nonlinear work limit

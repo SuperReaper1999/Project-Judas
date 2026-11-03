@@ -62,6 +62,7 @@ bool TransportCutRegionPhases(const CutRegionPhaseInput& input, CutRegionPhaseRe
     repair.startWater = input.startWater;
     repair.relayAllowed = input.relayAllowed;
     repair.balanceTolerance = input.balanceTolerance;
+    repair.localOrdinaryDensityRatio = CutRegionWaterDensity;
     repair.edges.reserve(input.faces.size());
     for (const auto& face : input.faces) {
         const bool reverse = face.signedVolume < 0.;

@@ -152,8 +152,11 @@ void ExhaustedOrdinaryDonor(Checks& checks) {
     constexpr double small = 6.98e-11, excess = 3.9e-14;
     input = {{small, 0.}, {0., small + excess}, {0., 0.},
         {{0, 1, small + excess, 0., 0., 0.}}, {}, 1e-13};
-    checks.Expect(TransportCutRegionPhases(input, phases, error) &&
-                  !TransportCutRegionMomentum(input, phases, velocity, impulse, result, error) &&
+    const bool phaseRejected = !TransportCutRegionPhases(input, phases, error);
+    phases.waterFlux = {0.};
+    phases.airFlux = {small + excess};
+    phases.endWater = {0., 0.};
+    checks.Expect(phaseRejected && !TransportCutRegionMomentum(input, phases, velocity, impulse, result, error) &&
                   result.velocity == retained.velocity &&
                   error.find("ordinary donor before receipt") != std::string::npos,
         "a local physical deficit still fails within the absolute phase-solve tolerance");

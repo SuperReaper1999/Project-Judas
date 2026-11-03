@@ -1,0 +1,15 @@
+BEGIN level=0 equilibrium=1 dt=0.01666666753590107 volume=15.76079988027811 cuts=35840 faces=101292
+PASS step=0 residual=6.2840525011110756e-16 water_drift=-7.6123020282010523e-14 speed=2.172438444553209e-11 iterations=8/808 dP=-1.6589183360338211e-09 dK=1.2587298355701157e-23 total_energy_change=-1.6589183360338085e-09 ms=203.58462399999999
+GAS initial_closed=101 ending_closed=5 initial_largest_m3=2.1684043449710089e-19 largest_initial_owner_mean_Pa=0
+COMPONENT id=1 volume=4.3368086899420177e-18 unresolved=0 regions=1
+COMPONENT id=2 volume=1.7564075194265172e-17 unresolved=0 regions=2
+COMPONENT id=3 volume=1.7564075194265172e-17 unresolved=0 regions=3
+COMPONENT id=4 volume=1.3444106938820255e-17 unresolved=0 regions=1
+COMPONENT id=5 volume=1.7780915628762273e-17 unresolved=0 regions=2
+LINEAGE from=0 to=1 root=636 bounds=0.60000000000000009,2.1000000000000001,0
+LINEAGE from=0 to=2 root=639 bounds=0.90000000000000002,2.1000000000000001,0
+LINEAGE from=0 to=3 root=1837 bounds=0.70000000000000007,2.1000000000000001,0.10000000000000001
+LINEAGE from=0 to=4 root=3095 bounds=2.5,2.1000000000000001,0.20000000000000001
+LINEAGE from=0 to=5 root=8564 bounds=0.20000000000000001,2.1000000000000001,0.70000000000000007
+GAS unowned_new_m3=0 join_or_split=1
+REJECT initial gas owners do not describe final geometry
