@@ -50,6 +50,33 @@ export default class {
   this.state.raw=input.stick('right');this.state.delta=input.stickDelta('right');this.state.mapped=input.vector('flick_stick');
   this.state.capacity=s.capacity;this.state.ordered=s.samples.every((v,i)=>i===0||(v.sequence>s.samples[i-1].sequence&&v.time>=s.samples[i-1].time));
   this.state.frameIsFixed=time.fixed;
+  if(this.state.frames===1){
+   this.state.tiltDefaultNull=input.tilt===null;
+   input.setTiltEnabled(true);
+   try{input.setTiltEnabled(1);this.state.tiltInvalidRejected=false;}
+   catch(error){this.state.tiltInvalidRejected=error instanceof TypeError;}
+  }
+  if(input.pressed('probe_rumble')){
+   this.state.haptics=input.canRumble;
+   this.state.pulse=input.rumble({low:.6,high:.3,seconds:.15,device:'gamepad',gamepad:'test-pad'});
+   this.state.unknownPad=input.rumble({low:1,seconds:.1,device:'gamepad',gamepad:'missing'});
+   this.state.zeroPulse=input.rumble({seconds:.1});
+   let rejected=0;
+   for(const options of [{low:1.1,seconds:.1},{low:1,seconds:5.1},{device:'phone',gamepad:'test-pad',seconds:.1}]){
+    try{input.rumble(options);}catch(error){if(error instanceof TypeError)rejected++;}
+   }
+   this.state.rumbleRejected=rejected;
+  }
+  if(input.pressed('stop_rumble'))input.stopRumble();
+  this.state.tilt=input.tilt;
+  if(this.state.tilt){
+   const snapshot=input.tilt;snapshot.x=99;
+   this.state.tiltCopied=input.tilt.x!==99;
+  }
+  if(input.pressed('disable_tilt')){
+   input.setTiltEnabled(false);
+   this.state.tiltDisabled=input.tilt===null;
+  }
   const a=input.stickSamples('right',0),b=input.stickSamples('right',0);
   this.state.repeated=JSON.stringify(a)===JSON.stringify(b);
   if(a.samples.length){a.samples[0].x=99;this.state.copied=input.stickSamples('right',0).samples[0].x!==99;}else this.state.copied=true;
@@ -60,6 +87,7 @@ export default class {
   const s=input.stickSamples('right',this.fixedCursor);this.fixedCursor=s.sequence;
   this.state.steps++;if(!s.reset&&!s.overflow)this.state.fixedSamples+=s.samples.length;
   this.state.fixedIsFixed=time.fixed;
+  this.state.fixedTilt=input.tilt;
  }
 }
 )JS";
@@ -68,6 +96,9 @@ export default class {
     std::ofstream(root/"Assets/fixture.judasui")<<SerializeUIDocument(doc);
     AssetRecord uiAsset;Check(host.Assets().Track((root/"Assets/fixture.judasui").string(),uiAsset,error),"normal authored UI for pause routing");
     InputMap map=InputMap::Defaults();map.AddVector("flick_stick");map.AddBinding("flick_stick",{"stick:Right",1,.2f,1,true});
+    map.Add("disable_tilt",false);map.AddBinding("disable_tilt",{"key:F10"});
+    map.Add("probe_rumble",false);map.AddBinding("probe_rumble",{"key:F9"});
+    map.Add("stop_rumble",false);map.AddBinding("stop_rumble",{"key:F11"});
     project.Settings().input=map;project.Settings().startupScene="Scenes/probe.judas";
     project.Settings().legacyGameplay=false;Check(project.Save(error),"project saves paired binding normally");
     Scene scene;auto& owner=scene.CreateObject("Input reader");owner.scripts.push_back({1,script.id,true,"{}"});owner.ui=SceneUIComponent{uiAsset.id,"fixture",true};
@@ -103,8 +134,40 @@ export default class {
     const int acceptedBefore=State(*world).value("fixedSamples",0);
     window.BeginTestFrame();Flick(window.Input());window.Input().SetPhysical("key:Escape",1);frame(1.f/60);
     Check(!play.IsPaused()&&State(*world).value("fixedSamples",0)==acceptedBefore,"resume discards observations delivered while paused without losing its button edge");
+    Check(State(*world).value("tiltDefaultNull",false)&&State(*world)["tilt"].is_null()&&
+          State(*world).value("tiltInvalidRejected",false),"tilt is opt-in and reports unavailable without a sample");
+    window.BeginTestFrame();window.SetTestTilt(InputTilt{2,5,7},1);frame(1.f/60);state=State(*world);
+    Check(state["tilt"]==J{{"x",-5},{"y",2},{"z",7}}&&state["fixedTilt"]==state["tilt"]&&
+          state.value("tiltCopied",false),"rotated tilt marshals a detached sample to frame and fixed callbacks");
+    window.BeginTestFrame();window.ApplyTestPhysical("key:F10",1);frame(0);
+    window.SetTestTilt(InputTilt{2,5,7},0);
+    Check(State(*world).value("tiltDisabled",false)&&!window.Input().Tilt(),"JS opt-out clears the current tilt sample and suppresses new samples");
+    window.ApplyTestPhysical("key:Escape",0);
+    auto press=[&](const char* key){window.BeginTestFrame();window.ApplyTestPhysical(key,1);frame(1.f/60);
+        window.BeginTestFrame();window.ApplyTestPhysical(key,0);frame(1.f/60);};
+    press("key:F9");state=State(*world);
+    Check(state["haptics"]==J{{"gamepad",false},{"phone",false}}&&state["pulse"]==false,
+          "hardware-free test window exposes no vibration");
+    int pulses=0,stops=0;bool exactPulse=false;
+    window.Input().rumbleBackend=[&](RumbleOperation op,RumbleDevice device,const std::string& token,
+                                    float low,float high,unsigned ms){
+        if(op==RumbleOperation::Stop){++stops;return true;}
+        if(op==RumbleOperation::Query)return device==RumbleDevice::Gamepad;
+        if(token!="test-pad")return false;
+        ++pulses;exactPulse=device==RumbleDevice::Gamepad&&low==.6f&&high==.3f&&ms==150;
+        return true;
+    };
+    press("key:F9");state=State(*world);
+    Check(state["pulse"]==true&&state["unknownPad"]==false&&state["zeroPulse"]==false&&
+          state["rumbleRejected"]==3&&pulses==1&&exactPulse,"JudasJS validates and routes a bounded pulse to the assigned device");
+    press("key:F11");
+    Check(stops==1,"JudasJS cancels outstanding feedback");
+    press("key:F9");press("key:Escape");
+    Check(stops==2&&play.IsPaused(),"project pause cancels outstanding feedback");
+    press("key:Escape");press("key:F9");
     const auto oldCursor=window.Input().StickSamples("right").sequence;Flick(window.Input());
     Check(control->Reload(error)&&control->AdvanceOuter(world,play,host.Resources(),window.Input(),error),"registered scene reload at safe outer boundary");
+    Check(stops==3,"scene replacement stops vibration");
     const auto fresh=window.Input().StickSamples("right",oldCursor);
     Check(fresh.reset&&fresh.samples.empty(),"scene replacement invalidates old paired observations before new scripts");
     frame(0);Check(world->Scripts()&&world->Scripts()->Diagnostics().empty(),"replacement VM has no stale input/script faults");

@@ -442,7 +442,7 @@ export const localization={get locale(){return call('localeInfo').locale},get av
 export const scripts={faults:()=>call('scriptFaults')};
 export const saves={get busy(){return call('lifecycleBusy')},save:(slot,options={})=>call('saveRequest','save',slot,options),load:(slot,options={})=>call('saveRequest','load',slot,options),delete:slot=>call('saveRequest','delete',slot,{}),refresh:()=>call('saveRequest','list','',{}),list:()=>call('saveList'),exists:slot=>call('saveList').some(s=>s.id===slot),status:request=>call('saveStatus',request),cancel:request=>call('saveCancel',request),exclude:(entity,excluded=true)=>call('saveExclude',entity.id,excluded),reference:entity=>call('saveReference',entity.id),resolve:key=>entity(call('saveResolve',key))};
 export const session={get:key=>call('sessionGet',key),set:(key,value)=>call('sessionSet',key,value),delete:key=>call('sessionDelete',key)};
-export const input={get touches(){return call('touches')},get pointer(){return call('pointer')},get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},getBindings:()=>call('inputBindings'),setBindings:map=>call('inputSetBindings',map),held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
+export const input={get tilt(){return call('tilt')},setTiltEnabled:enabled=>call('setTiltEnabled',enabled),get canRumble(){return call('inputCanRumble')},rumble:options=>call('inputRumble',options),stopRumble:()=>call('inputStopRumble'),get touches(){return call('touches')},get pointer(){return call('pointer')},get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},getBindings:()=>call('inputBindings'),setBindings:map=>call('inputSetBindings',map),held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
 export const profiler={scope:(label,callback)=>call("profileScope",label,callback),counter:(label,value,mode="sum")=>call("profileCounter",label,value,mode)};
 export const mods={get active(){return call('modCatalog').active},contributions:point=>call('modCatalog').contributions.filter(c=>c.point===point),resolve:(owner,name)=>call('modCatalog').exports[owner]?.[name]??null};
 export const time={get elapsed(){return call('elapsed')},get delta(){return call('delta')},get fixed(){return call('fixed')}};
@@ -974,6 +974,15 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="elapsed")return JS_NewFloat64(c,world.SimulationTimeSeconds());
     if(op=="delta")return JS_NewFloat64(c,s->delta);
     if(op=="fixed")return JS_NewBool(c,s->fixed);
+    if(op=="setTiltEnabled"){
+        if(!JS_IsBool(arg(1)))return JS_ThrowTypeError(c,"input.setTiltEnabled requires a boolean");
+        if(s->input)s->input->SetTiltEnabled(JS_ToBool(c,arg(1)));
+        return JS_UNDEFINED;
+    }
+    if(op=="tilt"){
+        const auto tilt=s->input?s->input->Tilt():std::nullopt;
+        return tilt?Vec(c,{tilt->x,tilt->y,tilt->z}):JS_NULL;
+    }
     if(op=="touches"||op=="pointer"){
         auto point=[&](float x,float y){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,y));return o;};
         if(op=="pointer"){auto p=s->input?s->input->Pointer():InputPointer{};auto o=point(p.x,p.y);JS_SetPropertyStr(c,o,"down",JS_NewBool(c,p.down));return o;}
@@ -1003,6 +1012,43 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         return out;
     }
 #include "ScriptInputBindings.inl"
+    if(op=="inputCanRumble"){
+        auto out=JS_NewObject(c);
+        JS_SetPropertyStr(c,out,"gamepad",JS_NewBool(c,s->input&&s->input->CanRumble(RumbleDevice::Gamepad)));
+        JS_SetPropertyStr(c,out,"phone",JS_NewBool(c,s->input&&s->input->CanRumble(RumbleDevice::Phone)));
+        return out;
+    }
+    if(op=="inputStopRumble"){
+        if(s->input)s->input->StopRumble();
+        return JS_UNDEFINED;
+    }
+    if(op=="inputRumble"){
+        std::string json,error;
+        if(!s->Json(arg(1),json,error))return JS_ThrowTypeError(c,"invalid rumble options: %s",error.c_str());
+        try{
+            const auto options=nlohmann::json::parse(json);
+            if(!options.is_object())throw std::runtime_error("expected a rumble options object");
+            for(auto field=options.begin();field!=options.end();++field)
+                if(field.key()!="low"&&field.key()!="high"&&field.key()!="seconds"&&
+                   field.key()!="device"&&field.key()!="gamepad")throw std::runtime_error("unknown rumble option: "+field.key());
+            const auto name=options.value("device",std::string("auto"));
+            const auto gamepad=options.value("gamepad",std::string());
+            const double low=options.value("low",0.0),high=options.value("high",0.0);
+            const double seconds=options.at("seconds").get<double>();
+            if(!std::isfinite(low)||!std::isfinite(high)||low<0||low>1||high<0||high>1||
+               !std::isfinite(seconds)||seconds<=0||seconds>5)
+                throw std::runtime_error("strengths must be in 0..1 and duration in (0,5] seconds");
+            RumbleDevice device=RumbleDevice::Auto;
+            if(name=="gamepad")device=RumbleDevice::Gamepad;
+            else if(name=="phone")device=RumbleDevice::Phone;
+            else if(name!="auto")throw std::runtime_error("device must be auto, gamepad or phone");
+            if(options.contains("gamepad")&&(device!=RumbleDevice::Gamepad||gamepad.empty()||gamepad.size()>64))
+                throw std::runtime_error("gamepad requires a device token and device: gamepad");
+            if(!s->input||(world.UIIfLoaded()&&world.UIIfLoaded()->Paused()))return JS_FALSE;
+            return JS_NewBool(c,s->input->Rumble(device,gamepad,float(low),float(high),
+                static_cast<unsigned>(std::max(1.0,std::round(seconds*1000)))));
+        }catch(const std::exception& e){return JS_ThrowTypeError(c,"invalid rumble options: %s",e.what());}
+    }
     if(op=="held"||op=="pressed"||op=="released"||op=="axis"){
         auto name=String(c,arg(1));if(!s->input)return op=="axis"?JS_NewFloat64(c,0):JS_FALSE;
         if(op=="axis")return JS_NewFloat64(c,s->input->Axis(name));

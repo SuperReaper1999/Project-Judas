@@ -121,6 +121,7 @@ def android_manifest(a, engine_version):
     orientation = '' if a.orientation == 'any' else f' android:screenOrientation="{a.orientation}"'
     return f'''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="{a.id}" android:versionCode="{a.version_code}" android:versionName="{escape(a.version_name,{chr(34):"&quot;"})}">
 <uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.VIBRATE"/>
 <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
 <uses-feature android:glEsVersion="0x00030000" android:required="true"/>
 <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>

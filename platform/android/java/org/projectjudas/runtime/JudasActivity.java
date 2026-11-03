@@ -24,9 +24,38 @@ public final class JudasActivity extends SDLActivity {
     }
 
     private android.media.AudioFocusRequest audioFocus;
+    private boolean vibrationActive;
+    private android.os.Vibrator vibrator;
+
+    public synchronized boolean judasVibration(int amplitude, int milliseconds) {
+        if (milliseconds == 0) {
+            if (vibrator != null) vibrator.cancel();
+            return true;
+        }
+        if (!vibrationActive) return false;
+        if (vibrator == null) {
+            vibrator = (android.os.Vibrator)getSystemService(VIBRATOR_SERVICE);
+        }
+        if (vibrator == null || !vibrator.hasVibrator()) return false;
+        if (milliseconds < 0) return true;
+        if (milliseconds > 5000 || amplitude < 1 || amplitude > 255) return false;
+        try {
+            vibrator.vibrate(android.os.VibrationEffect.createOneShot(milliseconds,
+                vibrator.hasAmplitudeControl() ? amplitude : android.os.VibrationEffect.DEFAULT_AMPLITUDE));
+            return true;
+        } catch (SecurityException unavailable) {
+            return false;
+        }
+    }
+
+    private synchronized void enableVibration(boolean enabled) {
+        vibrationActive = enabled;
+        if (!enabled) judasVibration(0, 0);
+    }
     private static native void nativeAudioFocus(boolean focused);
     @Override protected void onResume() {
         super.onResume();
+        enableVibration(true);
         android.media.AudioManager manager=(android.media.AudioManager)getSystemService(AUDIO_SERVICE);
         if(manager==null){nativeAudioFocus(false);return;}
         if(audioFocus==null)audioFocus=new android.media.AudioFocusRequest.Builder(android.media.AudioManager.AUDIOFOCUS_GAIN)
@@ -37,6 +66,7 @@ public final class JudasActivity extends SDLActivity {
         nativeAudioFocus(manager.requestAudioFocus(audioFocus)==android.media.AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
     }
     @Override protected void onPause() {
+        enableVibration(false);
         nativeAudioFocus(false);
         android.media.AudioManager manager=(android.media.AudioManager)getSystemService(AUDIO_SERVICE);
         if(manager!=null&&audioFocus!=null)manager.abandonAudioFocusRequest(audioFocus);

@@ -74,6 +74,13 @@ gesture code. For short mouse taps, bind a logical mouse action and use its
 `pressed`/`released` edges alongside the current position; polling only `down` can
 miss a complete press/release between fixed updates.
 
+`TILT x y z quarterTurns frame` injects a raw accelerometer sample in m/s²
+into the main input path, using Android's screen rotations 0, 1, 2 or 3.
+`TILT_CLEAR frame` returns to the unavailable state. A sample stays visible
+across frames until replaced or cleared. Scripts must opt in with
+`input.setTiltEnabled(true)` before injection. This exercises script routing
+and axis remapping on desktop without requiring a phone.
+
 `FRAMES` and legacy `STEPS` count application frames. Frame seconds defaults to 1/60;
 0–0.25 supports paused UI clocks / several fixed steps. `REALTIME n` runs **n
 application frames**, using wall time for each frame and the normal render/swap
@@ -202,3 +209,5 @@ completion; do not infer persistence from a zero process exit code alone.
 frames may take microseconds; asynchronous saves can span many frames while
 finishing in tens of real milliseconds. Use monotonic elapsed timings from save
 status and wall-clock measurements when diagnosing latency.
+
+`HAPTICS <off|gamepad|phone|both> <frame>` configures synthetic vibration capability before that frame's callbacks. A simulated gamepad can be addressed by the token `test-pad`. Successful requests log `[TestHarness] RUMBLE <device> <low> <high> <milliseconds> <token-or-default>`. Cancellation logs `[TestHarness] RUMBLE stop`. Script tests never activate physical vibration hardware.

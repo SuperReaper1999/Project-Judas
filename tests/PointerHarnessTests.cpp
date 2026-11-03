@@ -40,6 +40,29 @@ TOUCH_UP 8 .1 .2 7
 EXPECT_TOUCHES 0 7
 )TXT",[&](){if(observations==3){auto a=window.Input().Action("ui_click");Check(a.pressed&&a.released&&!a.held,"actual harness preserves same-frame press/release");}if(observations==5){const auto& t=window.Input().Touches();Check(t.size()==2&&t[0].x==.4f&&t[0].y==.5f&&t[0].pressure==.6f,"actual harness retains independent touch motion/pressure");}++observations;});Check(result==0&&observations==8,"new directives traverse real play frames with public pointer/touch assertions");
  Check(run("bad-pressure.txt","FRAMES 1\nTOUCH_DOWN 1 .5 .5 2 0\n")!=0,"out-of-range pressure rejects");Check(run("bad-contact.txt","FRAMES 1\nTOUCH_MOVE 99 .5 .5 .5 0\n")!=0,"move cannot silently invent a missing contact");Check(run("bad-expectation.txt","FRAMES 1\nEXPECT_POINTER .5 .5 2 0\n")!=0,"invalid boolean pointer expectation rejects");Check(run("wrong-oracle.txt","FRAMES 1\nPOINTER_DOWN 80 60 0\nEXPECT_POINTER .75 .75 1 0\n")!=0,"negative control detects an incorrect public pointer position");
+ window.Input().SetTiltEnabled(true);
+ const std::array<InputTilt,4> rotations={InputTilt{2,5,7},{-5,2,7},{-2,-5,7},{5,-2,7}};
+ unsigned tiltFrames=0;
+ Check(run("tilt.txt","FRAMES 5\nLOG_EVERY 0\nTILT 2 5 7 0 0\nTILT 2 5 7 1 1\nTILT 2 5 7 2 2\nTILT 2 5 7 3 3\nTILT_CLEAR 4\n",[&](){
+  const auto tilt=window.Input().Tilt();
+  if(tiltFrames<rotations.size()){
+   const auto expected=rotations[tiltFrames];
+   Check(tilt&&tilt->x==expected.x&&tilt->y==expected.y&&tilt->z==expected.z,"harness tilt follows screen rotation");
+  }else Check(!tilt,"harness can clear tilt to unavailable");
+  ++tiltFrames;
+ })==0&&tiltFrames==5,"tilt directives reach ordinary play frames");
+ Check(run("bad-tilt.txt","FRAMES 1\nTILT 1 2 3 4 0\n")!=0,"invalid tilt orientation rejects");
+ Check(run("bad-tilt-frame.txt","FRAMES 1\nTILT_CLEAR 1\n")!=0,"invalid tilt frame rejects");
+ window.Input().SetTiltEnabled(false);
+ unsigned hapticFrame=0;
+ Check(run("haptics.txt","FRAMES 4\nLOG_EVERY 0\nHAPTICS both 0\nHAPTICS phone 1\nHAPTICS off 3\n",[&](){
+  const auto& input=window.Input();
+  Check(input.CanRumble(RumbleDevice::Gamepad)==(hapticFrame==0)&&
+        input.CanRumble(RumbleDevice::Phone)==(hapticFrame<3),"synthetic vibration capability follows the harness");
+  Check(input.Rumble(RumbleDevice::Auto,{},.4f,.2f,150)==(hapticFrame<3),"automatic output goes through the harness backend");
+  ++hapticFrame;
+ })==0&&hapticFrame==4,"haptics directives reach ordinary play frames");
+ Check(run("bad-haptics.txt","FRAMES 1\nHAPTICS unavailable 0\n")!=0,"invalid haptics mode rejects");
  unsigned resizeFrames=0;
  Check(run("resize.txt",R"TXT(FRAMES 4
 LOG_EVERY 0

@@ -166,7 +166,28 @@ void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline
 }
 void InputSystem::AddDelta(const std::string& c,float v){if(!m_logicalMode&&std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
 void InputSystem::ClearDevice(const std::string& prefix){if(prefix=="touch:"){m_touchKeys.clear();m_touches.clear();}for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
+void InputSystem::SetTiltEnabled(bool enabled) const {
+    if(m_logicalMode)return;
+    m_tiltEnabled=enabled;
+    if(!enabled)m_tilt.reset();
+}
+void InputSystem::SetTiltSample(InputTilt sample,unsigned quarterTurns) {
+    if(!TiltEnabled())return;
+    if(!std::isfinite(sample.x)||!std::isfinite(sample.y)||!std::isfinite(sample.z)){
+        ClearTiltSample();
+        return;
+    }
+    switch(quarterTurns){
+        case 0:m_tilt=sample;break;
+        case 1:m_tilt=InputTilt{-sample.y,sample.x,sample.z};break;
+        case 2:m_tilt=InputTilt{-sample.x,-sample.y,sample.z};break;
+        case 3:m_tilt=InputTilt{sample.y,-sample.x,sample.z};break;
+        default:ClearTiltSample();break;
+    }
+}
 void InputSystem::Reset(){
+    ClearTiltSample();
+    StopRumble();
     m_textEvents.clear();++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_logical.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
 void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
 void InputSystem::DiscardStickHistory(){
@@ -233,3 +254,22 @@ void InputSystem::SetTouch(std::int64_t device,std::int64_t finger,float x,float
 }
 
 std::uint64_t InputSystem::TouchId(std::int64_t device,std::int64_t finger)const{for(const auto& key:m_touchKeys)if(key.device==device&&key.finger==finger)return key.id;return 0;}
+
+bool InputSystem::CanRumble(RumbleDevice device, const std::string& gamepad) const {
+    return !m_logicalMode && rumbleBackend &&
+        rumbleBackend(RumbleOperation::Query,device,gamepad,0,0,0);
+}
+bool InputSystem::Rumble(RumbleDevice device, const std::string& gamepad,
+                         float low, float high, unsigned milliseconds) const {
+    if(m_logicalMode || !rumbleBackend || device==RumbleDevice::All ||
+       !std::isfinite(low) || !std::isfinite(high) || low<0 || low>1 || high<0 || high>1 ||
+       milliseconds==0 || milliseconds>5000 || (low==0 && high==0)) return false;
+    const bool sent=rumbleBackend(RumbleOperation::Play,device,gamepad,low,high,milliseconds);
+    m_rumbleActive |= sent;
+    return sent;
+}
+void InputSystem::StopRumble() const {
+    if(!m_rumbleActive) return;
+    m_rumbleActive=false;
+    if(rumbleBackend)rumbleBackend(RumbleOperation::Stop,RumbleDevice::All,{},0,0,0);
+}

@@ -577,6 +577,7 @@ bool EditorApplication::StartPlay(std::string& outError) {
 void EditorApplication::StopPlay() {
     CancelCameraNavigation();
     if (m_play) m_play->End();
+    m_host->GetWindow().Input().StopRumble();
     m_play.reset();
     m_world.reset();  // the authored Scene was never written; nothing to revert
     if(m_project.ModSession()){

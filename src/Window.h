@@ -112,6 +112,7 @@ public:
     void SetTestPointer(int x,int y);
     void ApplyTestPhysical(const std::string& control,float value);
     void SetTestTouch(std::int64_t finger,float x,float y,float pressure,bool down);
+    void SetTestTilt(std::optional<InputTilt> sample,unsigned quarterTurns=0);
     void SetTestActionState(Action action, bool active);
     void QueueTestMouseDelta(int deltaX, int deltaY);
     void RequestTestJump();
@@ -127,6 +128,7 @@ public:
 
 private:
     void UpdateNativeTextInput();
+    bool DispatchRumble(RumbleOperation,RumbleDevice,const std::string&,float,float,unsigned);
     bool m_hostTextInput=false;
     bool m_applicationActive=true,m_lifecycleClockReset=false;
     bool m_textActive=false;std::uint64_t m_textPlayer=0,m_textToken=0;
@@ -142,6 +144,12 @@ private:
     std::weak_ptr<InputDeviceHub> m_localHub;
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
+#ifdef __ANDROID__
+    void RefreshTiltSensor();
+    void CloseTiltSensor();
+    SDL_Sensor* m_tiltSensor=nullptr;
+    bool m_tiltSensorAttempted=false,m_tiltSubsystem=false;
+#endif
 #ifdef __EMSCRIPTEN__
     void UpdateBrowserSurface();
     void PublishBrowserSurface();

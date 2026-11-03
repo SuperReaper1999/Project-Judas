@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "InputDeviceHub.h"
 #include "AppIcon.h"
+#include "AndroidPlatform.h"
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include "BrowserSurface.h"
@@ -116,6 +117,10 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     m_input.textPlatform=std::make_shared<TextInputPlatform>();
     m_input.textPlatform->clipboardRead=[](){char* p=SDL_GetClipboardText();std::string result=p?p:"";SDL_free(p);return result;};
     m_input.textPlatform->clipboardWrite=[](const std::string& s){SDL_SetClipboardText(s.c_str());};
+    m_input.rumbleBackend=[this](RumbleOperation op,RumbleDevice device,
+        const std::string& gamepad,float low,float high,unsigned ms){
+        return DispatchRumble(op,device,gamepad,low,high,ms);
+    };
     SDL_StopTextInput();
     SDL_GetWindowSize(m_window,&m_width,&m_height);
     return true;
@@ -164,6 +169,12 @@ Window::~Window() {
 }
 
 void Window::Shutdown() {
+    m_input.StopRumble();
+    m_input.rumbleBackend={};
+#ifdef __ANDROID__
+    CloseTiltSensor();
+#endif
+    m_input.SetTiltEnabled(false);
     if(m_controller){SDL_GameControllerClose(m_controller);m_controller=nullptr;}
     m_controllerId=-1;m_controllerInputReady=false;
     m_input.Reset();
@@ -260,7 +271,7 @@ void Window::RefreshLocalControllers(bool poll){
  auto hub=m_input.localDevices.lock();
  // A new world may publish its hub before an intervening device poll. Native
  // controller handles are reusable, but their previous world tokens are not.
- if(hub!=m_localHub.lock()){for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();m_localHub=hub;}
+ if(hub!=m_localHub.lock()){m_input.StopRumble();for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();m_localHub=hub;}
  if(!hub){for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();return;}
  for(auto it=m_localControllers.begin();it!=m_localControllers.end();)if(!SDL_GameControllerGetAttached(it->second.first)){hub->Disconnect(it->second.second);SDL_GameControllerClose(it->second.first);it=m_localControllers.erase(it);}else ++it;
  for(int i=0;i<SDL_NumJoysticks()&&m_localControllers.size()<16;++i)if(SDL_IsGameController(i)){
@@ -359,6 +370,33 @@ void Window::PublishBrowserSurface() {
 }
 #endif
 
+#ifdef __ANDROID__
+void Window::CloseTiltSensor(){
+    if(m_tiltSensor)SDL_SensorClose(m_tiltSensor);
+    m_tiltSensor=nullptr;
+    if(m_tiltSubsystem)SDL_QuitSubSystem(SDL_INIT_SENSOR);
+    m_tiltSubsystem=false;
+    m_tiltSensorAttempted=false;
+    m_input.ClearTiltSample();
+}
+
+void Window::RefreshTiltSensor(){
+    if(!m_window||m_testInputMode||!m_input.TiltEnabled()||!m_applicationActive||!m_inputFocused){
+        if(m_tiltSensorAttempted)CloseTiltSensor();
+        return;
+    }
+    if(m_tiltSensorAttempted)return;
+    m_tiltSensorAttempted=true;
+    if(SDL_InitSubSystem(SDL_INIT_SENSOR)!=0)return;
+    m_tiltSubsystem=true;
+    for(int i=0;i<SDL_NumSensors();++i){
+        if(SDL_SensorGetDeviceType(i)==SDL_SENSOR_ACCEL&&(m_tiltSensor=SDL_SensorOpen(i)))return;
+    }
+    SDL_QuitSubSystem(SDL_INIT_SENSOR);
+    m_tiltSubsystem=false;
+}
+#endif
+
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();
     auto hub=m_input.localDevices.lock();if(hub)hub->BeginFrame();
@@ -380,12 +418,37 @@ void Window::PollEvents(){
     if(m_keyboardClaimed)SetTextInput(false);
     if(hub)hub->textPlatform=m_input.textPlatform;
     auto textEvent=[&](TextInputEvent value){value.player=m_textPlayer;value.token=m_textToken;m_input.QueueText(value);if(hub&&hub->textEvents.size()<128)hub->textEvents.push_back(std::move(value));};
+#ifdef __ANDROID__
+    RefreshTiltSensor();
+#endif
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         // Harness input is injected into InputSystem; real devices must not mix in.
         if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT&&
            !(event.type>=SDL_APP_TERMINATING&&event.type<=SDL_APP_DIDENTERFOREGROUND)&&event.type!=SDL_RENDER_DEVICE_RESET)continue;
         if(m_eventHook)m_eventHook(event);
+#ifdef __ANDROID__
+        if(event.type==SDL_SENSORUPDATE&&m_tiltSensor&&m_inputFocused&&m_applicationActive&&
+           event.sensor.which==SDL_SensorGetInstanceID(m_tiltSensor)){
+            // SDL's Android backend reports the Display rotation relative to
+            // its natural frame, even on naturally landscape devices.
+            const auto orientation=SDL_GetDisplayOrientation(SDL_GetWindowDisplayIndex(m_window));
+            int rotation=-1;
+            switch(orientation){
+                case SDL_ORIENTATION_PORTRAIT:rotation=0;break;
+                case SDL_ORIENTATION_LANDSCAPE:rotation=1;break;
+                case SDL_ORIENTATION_PORTRAIT_FLIPPED:rotation=2;break;
+                case SDL_ORIENTATION_LANDSCAPE_FLIPPED:rotation=3;break;
+                default:break;
+            }
+            const auto* a=event.sensor.data;
+            m_input.SetTiltSample({a[0],a[1],a[2]},static_cast<unsigned>(rotation));
+        }
+        if(event.type==SDL_DISPLAYEVENT&&event.display.event==SDL_DISPLAYEVENT_ORIENTATION){
+            // Never expose the last value from a different screen frame.
+            m_input.ClearTiltSample();
+        }
+#endif
         float mouseDX=0,mouseDY=0;
         if(event.type==SDL_MOUSEMOTION) {
             mouseDX=float(event.motion.xrel);mouseDY=float(event.motion.yrel);
@@ -459,6 +522,9 @@ void Window::PollEvents(){
         }
         else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed){const float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1.f:1.f;m_input.AddDelta("mouse:wheelX",sign*event.wheel.x);m_input.AddDelta("mouse:wheelY",sign*event.wheel.y);}
     }
+#ifdef __ANDROID__
+    RefreshTiltSensor();
+#endif
 #ifdef __EMSCRIPTEN__
     PublishBrowserSurface();
     if(!m_inputFocused||!m_applicationActive)m_input.Reset();
@@ -633,6 +699,11 @@ void Window::ApplyTestPhysical(const std::string& control,float value) {
 void Window::SetTestTouch(std::int64_t finger,float x,float y,float pressure,bool down) {
     if(m_testInputMode)m_input.SetTouch(0,finger,x,y,pressure,down);
 }
+void Window::SetTestTilt(std::optional<InputTilt> sample,unsigned quarterTurns) {
+    if(!m_testInputMode)return;
+    if(sample)m_input.SetTiltSample(*sample,quarterTurns);
+    else m_input.ClearTiltSample();
+}
 
 
 void Window::SetTestActionState(Action action, bool active) {
@@ -735,3 +806,44 @@ void Window::GetLookDelta(float& x,float& y)const{
 }
 
 void Window::QueueTestPhysical(std::string control,float value){if(m_testInputMode)m_testPhysical.emplace_back(std::move(control),value);}
+
+
+bool Window::DispatchRumble(RumbleOperation op,RumbleDevice device,const std::string& gamepad,
+                            float low,float high,unsigned ms) {
+    if(m_testInputMode || !m_window) return false;
+    if(op!=RumbleOperation::Stop && (!m_inputFocused || !m_applicationActive)) return false;
+#if SDL_VERSION_ATLEAST(2,0,18) && !defined(__EMSCRIPTEN__)
+    if(device!=RumbleDevice::Phone){
+        if(op==RumbleOperation::Stop){
+            if(m_controller)SDL_GameControllerRumble(m_controller,0,0,0);
+            for(auto& entry:m_localControllers)if(entry.second.first!=m_controller)
+                SDL_GameControllerRumble(entry.second.first,0,0,0);
+        }else{
+            SDL_GameController* pad=m_controller;
+            if(!gamepad.empty()){
+                pad=nullptr;
+                for(const auto& entry:m_localControllers)if(entry.second.second==gamepad){
+                    pad=entry.second.first;break;
+                }
+            }
+            if(pad&&SDL_GameControllerGetAttached(pad)&&SDL_GameControllerHasRumble(pad)){
+                if(op==RumbleOperation::Query)return true;
+                const auto strength=[](float v){return static_cast<Uint16>(std::lround(v*65535.f));};
+                if(SDL_GameControllerRumble(pad,strength(low),strength(high),ms)==0)return true;
+            }
+        }
+    }
+#else
+    (void)gamepad;
+#endif
+#ifdef __ANDROID__
+    if(device!=RumbleDevice::Gamepad){
+        const int duration=op==RumbleOperation::Query?-1:op==RumbleOperation::Stop?0:static_cast<int>(ms);
+        const int amplitude=std::max(1,static_cast<int>(std::lround(std::max(low,high)*255.f)));
+        return AndroidVibration(amplitude,duration);
+    }
+#else
+    (void)low;(void)high;(void)ms;
+#endif
+    return false;
+}

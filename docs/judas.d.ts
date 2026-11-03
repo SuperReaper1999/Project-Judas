@@ -1042,12 +1042,32 @@ declare module "judas" {
   /** Active contacts in normalized top-left window coordinates, bounded to ten. */
   export interface TouchContact { readonly id:number; readonly x:number; readonly y:number; readonly pressure:number; }
   export interface PointerSnapshot { readonly x:number; readonly y:number; readonly down:boolean; }
+  export interface RumbleOptions {
+    /** Gamepad low-frequency motor strength in 0..1. Defaults to zero. */
+    low?: number;
+    /** Gamepad high-frequency motor strength in 0..1. Defaults to zero. */
+    high?: number;
+    /** Pulse duration in (0,5] seconds. */
+    seconds: number;
+    /** Auto uses the selected pad, then the Android phone if available. */
+    device?: 'auto' | 'gamepad' | 'phone';
+    /** Connected local-multiplayer gamepad device token. Requires device: 'gamepad'. */
+    gamepad?: string;
+  }
   export const input: {
+    readonly canRumble: Readonly<{gamepad:boolean;phone:boolean}>;
+    rumble(options: RumbleOptions): boolean;
+    /** Cancel outstanding local pulses. */
+    stopRumble(): void;
     /** Detached copy of the active main input map; local players use their own setInputMap. */
     getBindings(): PlayerInputEntry[];
     /** Rebind existing logical names/types at next input frame; null restores project defaults. */
     setBindings(map: PlayerInputEntry[] | null): boolean;
     readonly touches: readonly TouchContact[];
+    /** Latest Android accelerometer sample in screen axes (m/s²), or null. */
+    readonly tilt: Readonly<Vec3> | null;
+    /** Opt in or out of the physical device's accelerometer. */
+    setTiltEnabled(enabled: boolean): void;
     readonly pointer: PointerSnapshot;
     pointerCapture: boolean;
     held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number;

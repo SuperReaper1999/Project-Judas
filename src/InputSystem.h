@@ -44,6 +44,7 @@ struct InputMap {
 };
 struct InputActionState { bool held=false,pressed=false,released=false; };
 struct InputVector { float x=0,y=0; };
+struct InputTilt { float x=0,y=0,z=0; };
 struct InputStickSample { std::uint64_t sequence=0;double time=0;float x=0,y=0; };
 struct InputStickSnapshot {
     std::vector<InputStickSample> samples;
@@ -57,6 +58,10 @@ struct InputTouch {std::uint64_t id=0;float x=0,y=0,pressure=0;};
 struct InputPointer {float x=0,y=0;bool down=false;};
 struct TextInputEvent {std::string command,text;bool shift=false,control=false;int start=0,length=0;std::uint64_t player=0,token=0;};
 struct TextInputPlatform {std::function<std::string()> clipboardRead;std::function<void(const std::string&)> clipboardWrite;};
+enum class RumbleDevice { Auto, Gamepad, Phone, All };
+enum class RumbleOperation { Query, Play, Stop };
+using RumbleBackend = std::function<bool(RumbleOperation, RumbleDevice,
+    const std::string& gamepad, float low, float high, unsigned milliseconds)>;
 class InputSystem {
 public:
     InputSystem();
@@ -87,6 +92,12 @@ public:
     const std::vector<InputTouch>& Touches() const {return m_touches;}
     void SetPointer(float x,float y,bool down);
     InputPointer Pointer() const {return m_pointer;}
+    void SetTiltEnabled(bool enabled) const;
+    bool TiltEnabled() const {return m_tiltEnabled&&!m_logicalMode;}
+    std::optional<InputTilt> Tilt() const {return TiltEnabled()?m_tilt:std::nullopt;}
+    // Backend snapshots in the natural device frame, rotated into screen axes.
+    void SetTiltSample(InputTilt sample,unsigned quarterTurns);
+    void ClearTiltSample() {m_tilt.reset();}
     void SetPhysical(const std::string& control,float value);
     void AddDelta(const std::string& control,float delta);
     void ClearDevice(const std::string& prefix);
@@ -114,13 +125,20 @@ public:
     void BeginFixedStep() const;
     InputActionState FixedAction(const std::string& name) const;
     static float Deadzone(float value,float deadzone);
+    RumbleBackend rumbleBackend;
+    bool CanRumble(RumbleDevice, const std::string& gamepad={}) const;
+    bool Rumble(RumbleDevice, const std::string& gamepad, float low, float high, unsigned milliseconds) const;
+    void StopRumble() const;
 private:
+    mutable bool m_rumbleActive=false;
     std::vector<TextInputEvent> m_textEvents;
     struct TouchKey {std::int64_t device,finger;std::uint64_t id;};
     std::vector<TouchKey> m_touchKeys;
     std::vector<InputTouch> m_touches;
     std::uint64_t m_nextTouch=1;
     InputPointer m_pointer;
+    mutable bool m_tiltEnabled=false;
+    mutable std::optional<InputTilt> m_tilt;
     std::uint64_t m_resetRevision=0;
     void Evaluate();
     void SetAction(const std::string& name,bool held);

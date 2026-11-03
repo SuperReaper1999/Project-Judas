@@ -211,6 +211,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     PerformanceProfiler::Get().FixedState(m_physicsAccumulator,profileCap,profileDiscarded,IsPaused()||uiOwned);
     const float presentationAlpha = m_physicsAccumulator / SimulationTiming::kFixedTimestep;
     world.PresentationScripts(&window.Input(),frameDeltaTime,presentationAlpha);
+    if(IsPaused()||m_resetOccurred)window.Input().StopRumble();
     const int height = std::max(window.Height(), 1);
     const float aspectRatio = static_cast<float>(window.Width()) / static_cast<float>(height);
     const PlayerController& player = m_session.Player();

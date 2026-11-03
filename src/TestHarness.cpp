@@ -20,10 +20,32 @@
 #include <limits>
 #include <stdexcept>
 #include <vector>
+#include <utility>
 namespace {
 struct Command {std::string kind,name,path;int begin=0,end=0,width=0,height=0;float value=0,other=0,pressure=0;std::int64_t finger=0;int down=0;};
 struct Script {int frames=600,logEvery=1;float seconds=SimulationTiming::kFixedTimestep;bool realtime=false;std::string entity;std::vector<Command> commands;};
 void Require(bool ok,const std::string& error){if(!ok)throw std::runtime_error(error);}
+struct TestHaptics {
+ InputSystem& input;
+ RumbleBackend previous;
+ bool gamepad=false,phone=false;
+ explicit TestHaptics(InputSystem& in):input(in),previous(std::move(in.rumbleBackend)){
+  input.rumbleBackend=[this](RumbleOperation operation,RumbleDevice device,const std::string& token,
+      float low,float high,unsigned ms){
+   if(operation==RumbleOperation::Stop){
+    std::puts("[TestHarness] RUMBLE stop");return true;
+   }
+   const bool pad=gamepad&&device!=RumbleDevice::Phone&&(token.empty()||token=="test-pad");
+   const bool handset=phone&&device!=RumbleDevice::Gamepad;
+   if(!pad&&!handset)return false;
+   if(operation==RumbleOperation::Play)
+    std::printf("[TestHarness] RUMBLE %s %.6f %.6f %u %s\n",
+        pad?"gamepad":"phone",low,high,ms,token.empty()?"default":token.c_str());
+   return true;
+  };
+ }
+ ~TestHaptics(){input.StopRumble();input.rumbleBackend=std::move(previous);}
+};
 Script Load(const std::string& path,const InputMap& map){
  std::ifstream f(path);Require(bool(f),"cannot open "+path);Script s;std::string line;unsigned index=0;
  while(std::getline(f,line)){++index;line=line.substr(0,line.find('#'));std::istringstream in(line);std::string op;in>>op;if(op.empty())continue;Command c;c.kind=op;
@@ -33,12 +55,15 @@ Script Load(const std::string& path,const InputMap& map){
   else if(op=="FRAME_SECONDS")in>>s.seconds;
   else if(op=="ENTITY")in>>s.entity;
   else if(op=="RESIZE"||op=="EXPECT_VIEWPORT")in>>c.width>>c.height>>c.begin;
+  else if(op=="HAPTICS")in>>c.name>>c.begin;
   else if(op=="SCREENSHOT")in>>c.begin>>c.path;
   else if(op=="HOLD"){in>>c.name>>c.begin>>c.end;c.value=1;c.name="key:"+c.name;}
   else if(op=="TAP"){in>>c.name>>c.begin;c.end=c.begin+1;c.value=1;c.name="key:"+(c.name=="SPACE"?std::string("Space"):c.name);}
   else if(op=="ACTION"||op=="AXIS"){in>>c.name>>c.value>>c.begin>>c.end;auto* entry=map.Find(c.name);Require(entry&&!entry->bindings.empty(),"unknown/unbound input "+c.name);Require(entry->axis==(op=="AXIS"),"input kind mismatch "+c.name);auto b=entry->bindings.front();Require(b.scale!=0,"zero binding scale");if(op=="AXIS"&&b.deadzone>0){const float v=c.value/b.scale;c.value=v==0?0:std::copysign(b.deadzone+std::abs(v)*(1-b.deadzone),v);}else c.value/=b.scale;c.name=b.control;}
   else if(op=="CONTROL")in>>c.name>>c.value>>c.begin>>c.end;
   else if(op=="LOOK")in>>c.value>>c.other>>c.begin;
+  else if(op=="TILT")in>>c.value>>c.other>>c.pressure>>c.width>>c.begin;
+  else if(op=="TILT_CLEAR")in>>c.begin;
   else if(op=="POINTER"||op=="POINTER_DOWN"||op=="POINTER_UP")in>>c.value>>c.other>>c.begin;
   else if(op=="TOUCH_DOWN"||op=="TOUCH_MOVE")in>>c.finger>>c.value>>c.other>>c.pressure>>c.begin;
   else if(op=="TOUCH_UP")in>>c.finger>>c.value>>c.other>>c.begin;
@@ -57,17 +82,20 @@ Script Load(const std::string& path,const InputMap& map){
   else throw std::runtime_error("unknown directive "+op);
   Require(!in.fail(),"invalid arguments at line "+std::to_string(index));std::string extra;Require(!(in>>extra),"extra argument at line "+std::to_string(index));
   if(op=="EXPECT_HELD"||op=="EXPECT_PAUSED")Require(c.value==0||c.value==1,"boolean expectation must be 0 or 1");
+  if(op=="HAPTICS")Require(c.name=="off"||c.name=="gamepad"||c.name=="phone"||c.name=="both","invalid synthetic haptics mode");
   if(op=="SCREENSHOT")Require(!c.path.empty(),"empty screenshot path");
   s.commands.push_back(c);
  }
  Require(s.frames>0&&s.frames<=1000000&&s.logEvery>=0&&std::isfinite(s.seconds)&&s.seconds>=0&&s.seconds<=.25f,"invalid frame count/clock");
- for(const auto& c:s.commands)if(c.kind=="RESIZE"||c.kind=="SCREENSHOT"||c.kind=="LOOK"||(c.kind.rfind("POINTER",0)==0)||(c.kind.rfind("TOUCH_",0)==0)||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
+ for(const auto& c:s.commands)if(c.kind=="RESIZE"||c.kind=="HAPTICS"||c.kind=="SCREENSHOT"||c.kind=="LOOK"||(c.kind.rfind("POINTER",0)==0)||(c.kind.rfind("TOUCH_",0)==0)||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
  for(const auto& c:s.commands)if(c.kind=="ACTION"||c.kind=="AXIS"||c.kind=="HOLD"||c.kind=="TAP"||c.kind=="CONTROL")Require(c.begin>=0&&c.end>c.begin&&c.end<=s.frames&&std::isfinite(c.value),"invalid input interval");
  for(const auto& c:s.commands){
   if(c.kind=="RESIZE"||c.kind=="EXPECT_VIEWPORT")Require(c.width>=1&&c.height>=1&&c.width<=8192&&c.height<=8192,"window dimensions must be 1..8192");
   if(c.kind.rfind("POINTER",0)==0)Require(double(c.value)>=std::numeric_limits<int>::min()&&double(c.value)<=std::numeric_limits<int>::max()&&double(c.other)>=std::numeric_limits<int>::min()&&double(c.other)<=std::numeric_limits<int>::max(),"pointer pixels exceed integer range");
   if(c.kind=="EXPECT_POINTER")Require((c.down==0||c.down==1)&&c.value>=0&&c.value<=1&&c.other>=0&&c.other<=1,"invalid pointer expectation");
   if(c.kind=="EXPECT_TOUCHES")Require(c.value>=0&&c.value<=10&&std::floor(c.value)==c.value,"invalid touch count expectation");
+  if(c.kind=="TILT"||c.kind=="TILT_CLEAR")Require(c.begin>=0&&c.begin<s.frames&&
+     std::isfinite(c.value)&&std::isfinite(c.other)&&std::isfinite(c.pressure)&&c.width>=0&&c.width<=3,"invalid tilt frame, sample or quarter turns");
   if(c.kind.rfind("TOUCH_",0)==0)Require(c.finger>=0&&c.value>=0&&c.value<=1&&c.other>=0&&c.other<=1&&std::isfinite(c.pressure)&&c.pressure>=0&&c.pressure<=1,"invalid normalized touch contact");
  }
  return s;
@@ -76,6 +104,10 @@ Script Load(const std::string& path,const InputMap& map){
 int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const std::string& path,const std::function<void()>& beforeFrame,const std::function<void()>& afterFrame,const std::function<bool(const std::string&)>& servicesReady){
  try{
   const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);SDL_GL_SetSwapInterval(0);
+  std::unique_ptr<TestHaptics> haptics;
+  for(const auto& command:script.commands)if(command.kind=="HAPTICS"){
+   haptics=std::make_unique<TestHaptics>(window.Input());break;
+  }
   for(const auto& c:script.commands)if(c.kind=="SAMPLE_GRAVITY"){glm::vec3 p;std::istringstream(c.path)>>p.x>>p.y>>p.z;auto g=play.Session().World().Gravity().Sample(p);std::printf("sample,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f\n",p.x,p.y,p.z,g.x,g.y,g.z);}
   Uint64 last=SDL_GetPerformanceCounter();
   std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused");
@@ -96,11 +128,18 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    // No PollEvents: real desktop devices cannot contaminate deterministic input.
    window.BeginTestFrame();
    for(const auto& c:script.commands){
+    if(c.kind=="HAPTICS"&&frame==c.begin){
+     window.Input().StopRumble();
+     haptics->gamepad=c.name=="gamepad"||c.name=="both";
+     haptics->phone=c.name=="phone"||c.name=="both";
+    }
     if(c.kind=="HOLD"||c.kind=="TAP"||c.kind=="ACTION"||c.kind=="AXIS"||c.kind=="CONTROL"){
      if(frame==c.begin)window.ApplyTestPhysical(c.name,c.value);
      if(frame==c.end)window.ApplyTestPhysical(c.name,0);
     }
     if(frame==c.begin&&c.kind=="LOOK"){window.Input().AddDelta("mouse:dx",c.value);window.Input().AddDelta("mouse:dy",c.other);window.QueueTestMouseDelta(int(c.value),int(c.other));}
+    if(frame==c.begin&&c.kind=="TILT")window.SetTestTilt(InputTilt{c.value,c.other,c.pressure},static_cast<unsigned>(c.width));
+    if(frame==c.begin&&c.kind=="TILT_CLEAR")window.SetTestTilt(std::nullopt);
     if(frame==c.begin&&c.kind.rfind("POINTER",0)==0){window.SetTestPointer(int(c.value),int(c.other));if(c.kind!="POINTER")window.ApplyTestPhysical("mouse:Left",c.kind=="POINTER_DOWN"?1.f:0.f);}
     if(frame==c.begin&&c.kind.rfind("TOUCH_",0)==0){const bool active=window.Input().TouchId(0,c.finger)!=0;Require(c.kind=="TOUCH_DOWN"?!active:active,"touch transition requires matching contact lifetime");window.SetTestTouch(c.finger,c.value,c.other,c.pressure,c.kind!="TOUCH_UP");}
     if(frame==c.begin&&c.kind=="TAP"){if(c.name=="key:Space")window.RequestTestJump();if(c.name=="key:R")window.RequestTestReset();if(c.name=="key:F")window.RequestTestControlToggle();}

@@ -50,6 +50,33 @@ appropriate. UI can consume a logical action and all actions/axes sharing its
 physical bindings; consumed reads are false/zero for that frame's fixed steps.
 One active logical gamepad is supported; hardware feel remains operator-tested.
 
+## Device tilt (Android)
+
+Call `input.setTiltEnabled(true)` from a game input callback to opt in.
+Read `input.tilt` for the latest copied accelerometer sample, or `null`
+while waiting for the first sample, on a device without an accelerometer,
+on desktop/browser, or with tilt disabled. The axes follow the active screen
+rotation. Positive X points right, positive Y points up and positive Z points
+out of the screen. Values are in m/s² and include gravity and device motion.
+They are raw readings, so calibrate the neutral position or smooth them in
+the project if needed.
+
+```js
+import {input} from 'judas';
+// When the player enables or disables tilt controls in Settings:
+input.setTiltEnabled(tiltControlsEnabled);
+// In fixedUpdate, fall back to a mapped movement axis while tilt is unavailable.
+const tilt = input.tilt;
+const horizontal = tilt ? Math.max(-1, Math.min(1, tilt.x / 4)) : input.axis('move_x');
+```
+
+The gameplay accelerometer opens only while opted in and the app is active
+and focused. On focus loss or backgrounding its snapshot is discarded, and
+fresh samples resume when the app regains focus. This is a device-wide
+main-input snapshot. Projects own any player assignment and user preference
+persistence. SDL's own Android orientation monitoring follows its existing
+lifecycle independently of the gameplay opt-in.
+
 ## Paired sticks (M69)
 
 | Method | Result |
@@ -218,3 +245,21 @@ Use [players and PlayerInput](local-multiplayer.md) for independent routes. The
 global input namespace deliberately retains its existing aggregate/selected-pad
 behaviour. SDL touch-generated mouse events remain on the global UI route and
 are excluded from another player's physical-mouse assignment.
+
+### Gamepad and Android vibration
+
+Use a short pulse for feedback, and make it optional in your game settings.
+
+```js
+import {input} from 'judas';
+
+if (settings.vibration) input.rumble({low: 0.6, high: 0.3, seconds: 0.15});
+else input.stopRumble();
+```
+
+- `input.canRumble` reports whether the selected gamepad and Android handset can vibrate. It returns a fresh `{gamepad, phone}` value.
+- `input.rumble(options)` returns true when a device accepts the pulse. The default `device: 'auto'` tries the selected gamepad first, then the Android handset. Choose `'gamepad'` or `'phone'` to target one type. For local multiplayer pass `device: 'gamepad', gamepad: deviceId` with a connected token from the local device API. An unavailable device or an all-zero pulse returns false.
+- Both strengths default to zero and must be in 0–1. Duration is in seconds, greater than zero and at most five. Invalid options throw. Each pulse replaces the pulse on its target. The handset uses the greater of the two strengths and falls back to its standard amplitude when hardware cannot vary it.
+- `input.stopRumble()` cancels local pulses. Pause, loss of focus, Android backgrounding and world replacement also cancel pulses. The output is local to the running device. Browser runtimes and builds using SDL older than 2.0.18 report gamepad vibration unavailable.
+
+For headless tests use `HAPTICS both 0` in a [runtime harness script](../TEST_HARNESS.md). This simulates the two targets and records output without activating hardware.

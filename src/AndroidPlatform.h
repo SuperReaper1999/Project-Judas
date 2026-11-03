@@ -4,4 +4,5 @@
 // and started/stopped on the ordinary engine thread. The final audio mix
 // reads this flag without changing voices or accumulating delayed one-shots.
 bool AndroidAudioFocused();
+bool AndroidVibration(int amplitude,int milliseconds);
 #endif
