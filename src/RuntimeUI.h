@@ -7,7 +7,7 @@
 #include "Localization.h"
 #include "TextEditing.h"
 #include <optional>
-class Renderer; class ResourceManager; class AssetDatabase; class InputSystem;
+class RuntimeWorld; class Renderer; class ResourceManager; class AssetDatabase; class InputSystem;
 enum class UIKind { Canvas, Panel, Text, Image, Button, Slider, Toggle, TextInput, Scroll, List };
 enum class UIFlow { Free, Horizontal, Vertical };
 struct UIRect {glm::vec2 position{0},size{0};bool Contains(glm::vec2 p)const;};
@@ -20,6 +20,7 @@ struct UIElement {
     glm::vec2 anchorMin{0},anchorMax{0},offset{0},size{180,40},relativeSize{0},align{0},textAlign{0};
     glm::vec4 margin{0},padding{0},background{0,0,0,0},color{1};
     float spacing=8,fontSize=22,value=0,minimum=0,maximum=1;
+    std::string dragType={},dropType={}; // Appended: preserve native aggregate prefixes.
 };
 struct UIDocument {glm::vec2 reference{1280,720};bool visible=true,enabled=true,modal=false;std::vector<UIElement> elements;
     bool Validate(std::string& error)const;
@@ -29,7 +30,14 @@ bool SaveUIDocument(const std::string& path,const UIDocument& doc,std::string& e
 std::string SerializeUIDocument(const UIDocument& doc);
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error);
 bool ValidateUIAssets(const UIDocument& doc,const AssetDatabase& assets,std::string& error);
-struct UIEvent {std::string document,element,type;float value=0;std::uint64_t player=0;std::string text={},item={};};
+struct UIEvent {std::string document,element,type;float value=0;std::uint64_t player=0;std::string text={},item={};
+    std::string sourceDocument={},sourceElement={},dragType={},targetDocument={},targetElement={};
+    glm::vec2 position{0};
+};
+struct UIDragState {
+    std::uint32_t source=0,target=0;std::string element,type,targetElement;
+    glm::vec2 position{0};bool keyboard=false;std::uint64_t revision=0;
+};
 struct UILayout {UIRect rect,clip;bool visible=false,enabled=false;};
 struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;};
 // World-owned document instances; monotonically increasing handles never revive
@@ -45,6 +53,7 @@ public:
     bool Unload(std::uint32_t handle);void Clear();void RemoveOwner(std::uint64_t owner);void RemoveSlotOwner(std::uint64_t owner,std::uint64_t slot);
     void SetLocalization(LocalizationSession* l){m_localization=l;}
     std::uint32_t Find(const std::string& name)const;
+    std::string Name(std::uint32_t handle)const;
     UIDocument* Document(std::uint32_t handle);const UIDocument* Document(std::uint32_t handle)const;
     UIElement* Element(std::uint32_t handle,const std::string& id);
     const UILayout* LayoutOf(std::uint32_t handle,const std::string& id)const;
@@ -52,7 +61,12 @@ public:
     bool SetElementLayout(std::uint32_t handle,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error);
     void InvalidateLayout(){++m_layoutRevision;}
     void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height,std::uint64_t player=0);
-    void Draw(Renderer& renderer,int width,int height);
+    void Draw(Renderer& renderer,int width,int height,const RuntimeWorld* world=nullptr);
+    bool BeginDrag(std::uint32_t handle,const std::string& id);
+    void CancelDrag(std::uint32_t handle);
+    std::optional<UIDragState> Drag(std::uint32_t handle)const;
+    bool SetPreviewCamera(std::uint32_t handle,const std::string& id,std::uint64_t camera);
+    std::uint64_t PreviewCamera(std::uint32_t handle,const std::string& id)const;
     bool Focus(std::uint32_t handle,const std::string& id);
     std::string Focused(std::uint32_t handle)const;
     bool SetScale(std::uint32_t handle,float scale);float Scale(std::uint32_t handle)const;
@@ -79,7 +93,7 @@ public:
     const UIStats& Stats()const{return m_stats;}
 private:
     struct WidgetState {glm::vec2 scroll{0},extent{0};TextSelection selection;std::string composition;int compositionStart=0,compositionLength=0,selected=-1;std::vector<UIListItem> items;std::vector<std::pair<std::string,TextSelection>> undo,redo;std::vector<float> carets;float textPan=0;};
-    struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;};
+    struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;std::map<std::string,std::uint64_t> previews;};
     std::map<std::uint32_t,Instance> m_documents;std::uint32_t m_next=1;
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
     LocalizationSession* m_localization=nullptr;
@@ -87,6 +101,12 @@ private:
     uint64_t m_layoutRevision=1,m_computedRevision=0,m_localeRevision=0;int m_layoutWidth=0,m_layoutHeight=0;
     uint64_t m_textSerial=0;uint32_t m_textDocument=0;std::string m_textElement;
     bool m_quit=false;UIStats m_stats;glm::vec2 m_lastPointer{-1};
+    std::map<std::uint64_t,UIDragState> m_drags;
+    void DragEvent(const UIDragState&,const char* type,bool target=false);
+    void EndDrag(std::uint64_t player,bool drop);
+    void UpdateDrag(InputSystem&,glm::vec2,bool,int,int,std::uint64_t);
+    void DrawDrags(Renderer&);
+    bool DragAvailable(const UIDragState&)const;
     void Edit(Instance& in,UIElement& e,InputSystem& input,std::uint64_t player);
     void Activate(Instance& doc,UIElement& e,const char* type="click");
 };

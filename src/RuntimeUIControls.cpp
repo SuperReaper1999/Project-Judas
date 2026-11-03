@@ -9,12 +9,12 @@ using nlohmann::json;
 namespace {
 std::atomic<uint64_t> textSerial{1};
 const UIElement* FindElement(const UIDocument& d,const std::string& id){for(auto& e:d.elements)if(e.id==id)return &e;return nullptr;}
-bool Focusable(UIKind k){return int(k)>=int(UIKind::Button);}
+bool Focusable(const UIElement& e){return !e.dragType.empty()||!e.dropType.empty()||int(e.kind)>=int(UIKind::Button);}
 bool Available(const UIDocument& d,const UIElement* e){if(!d.visible||!d.enabled)return false;while(e){if(!e->visible||!e->enabled)return false;e=FindElement(d,e->parent);}return true;}
 }
 bool RuntimeUI::Focus(uint32_t h,const std::string& id){
  auto it=m_documents.find(h);if(it==m_documents.end())return false;auto& in=it->second;auto* e=FindElement(in.doc,id);
- if(!id.empty()&&(!e||!Focusable(e->kind)||!Available(in.doc,e)))return false;
+ if(!id.empty()&&(!e||!Focusable(*e)||!Available(in.doc,e)))return false;
  if(in.focus!=id){in.widgets[in.focus].composition.clear();in.focus=id;m_events.push_back({in.name,id,"focus",0,in.player});}
  if(e&&e->kind==UIKind::TextInput){if(m_textDocument!=h||m_textElement!=id)m_textSerial=textSerial++;m_textDocument=h;m_textElement=id;}else if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}
  // Keep keyboard navigation visible through every scroll ancestor.
@@ -76,7 +76,7 @@ bool RuntimeUI::RestoreState(uint32_t h,const std::string& source,std::string& e
  }
  if(!it->second.doc.Validate(error)||!Focus(h,j.at("focus").get<std::string>()))throw std::runtime_error(error.empty()?"invalid saved focus":error);
  if(m_textDocument==h)m_textSerial=textSerial++;
- InvalidateLayout();if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);error.clear();return true;
+ InvalidateLayout();if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);CancelDrag(h);error.clear();return true;
  }catch(const std::exception& e){it->second=std::move(backup);m_textDocument=textDoc;m_textElement=textElement;m_events=std::move(events);InvalidateLayout();error=e.what();return false;}
 }
 std::string RuntimeUI::Accessibility(uint32_t h)const{

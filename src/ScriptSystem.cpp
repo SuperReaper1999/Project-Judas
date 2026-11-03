@@ -458,6 +458,8 @@ export class UIElement {
  set selectedIndex(value){call('uiControl',this.handle,this.id,'selected',JSON.stringify(value))}
  setItems(items){call('uiControl',this.handle,this.id,'items',JSON.stringify(items))}
  configure(options){call('uiControl',this.handle,this.id,'configure',JSON.stringify(options))}
+ setPreviewCamera(camera){if(camera!==null&&!(camera instanceof Entity))throw new TypeError('preview camera requires an Entity or null');call('uiControl',this.handle,this.id,'previewCamera',JSON.stringify(camera===null?null:camera.id))}
+ get fontSize(){return call('uiGet',this.handle,this.id,'fontSize')}
  get layout(){return call('uiLayout',this.handle,this.id)}
  setLayout(patch){return call('uiLayout',this.handle,this.id,patch)}
  get text(){return call('uiGet',this.handle,this.id,'text')}
@@ -490,6 +492,9 @@ export class UIDocument {
  captureState(){return call('uiControl',this.handle,'','capture')}
  restoreState(state){call('uiControl',this.handle,'','restore',JSON.stringify(state))}
  get accessibility(){return call('uiControl',this.handle,'','accessibility')}
+ get drag(){return call('uiControl',this.handle,'','drag')}
+ beginDrag(id){call('uiControl',this.handle,'','beginDrag',JSON.stringify(id))}
+ cancelDrag(){call('uiControl',this.handle,'','cancelDrag')}
 
  get player(){const id=call("uiPlayer",this.handle);return id?new LocalPlayer(id):null}
  set player(value){call("uiPlayer",this.handle,value?.id??null)}
@@ -2417,6 +2422,14 @@ void ScriptSystem::UIEvents(const InputSystem *input, float dt) {
                                   JS_NewStringLen(m->ctx, event.text.data(), event.text.size()));
                 JS_SetPropertyStr(m->ctx, e, "item",
                                   JS_NewStringLen(m->ctx, event.item.data(), event.item.size()));
+                for(const auto& field: {std::pair<const char*,const std::string&>{"sourceDocument",event.sourceDocument},
+                    {"sourceElement",event.sourceElement},{"dragType",event.dragType},
+                    {"targetDocument",event.targetDocument},{"targetElement",event.targetElement}})
+                    JS_SetPropertyStr(m->ctx,e,field.first,JS_NewStringLen(m->ctx,field.second.data(),field.second.size()));
+                auto position=JS_NewObject(m->ctx);
+                JS_SetPropertyStr(m->ctx,position,"x",JS_NewFloat64(m->ctx,event.position.x));
+                JS_SetPropertyStr(m->ctx,position,"y",JS_NewFloat64(m->ctx,event.position.y));
+                JS_SetPropertyStr(m->ctx,e,"position",position);
                 JS_SetPropertyStr(m->ctx, e, "playerId",
                                   event.player
                                       ? JS_NewString(m->ctx, std::to_string(event.player).c_str())

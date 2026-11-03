@@ -287,8 +287,11 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Terrain.state` | `terrainState` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.accessibility` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.beginDrag` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.cancelDrag` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.captureState` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.drag` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.enabled` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.focus` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.focused` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -309,6 +312,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.direction` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.enabled` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.font` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.fontSize` | `uiGet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.layout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -317,6 +321,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.selection` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.setItems` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.setLayout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.setPreviewCamera` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.text` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.textAlignment` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.textKey` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |

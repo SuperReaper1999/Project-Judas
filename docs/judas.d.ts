@@ -1066,7 +1066,7 @@ declare module "judas" {
   /** Engine-owned capture format; preserve unchanged and pass to restoreState. */
   export interface UIState {version:1;[key:string]:unknown}
   export interface UIAccessibleElement {id:string;role:"group"|"text"|"image"|"button"|"slider"|"toggle"|"textbox"|"scroll"|"list";label:string;description:string;focused:boolean;value:number;text?:string;selectedIndex?:number}
-  export interface UIControlOptions {placeholder?:string;accessibleLabel?:string;description?:string;readOnly?:boolean;maxBytes?:number;fontSize?:number;rowHeight?:number;background?:{r:number;g:number;b:number;a:number};color?:{r:number;g:number;b:number;a:number};focusColor?:{r:number;g:number;b:number;a:number}}
+  export interface UIControlOptions {dragType?:string;dropType?:string;placeholder?:string;accessibleLabel?:string;description?:string;readOnly?:boolean;maxBytes?:number;fontSize?:number;rowHeight?:number;background?:{r:number;g:number;b:number;a:number};color?:{r:number;g:number;b:number;a:number};focusColor?:{r:number;g:number;b:number;a:number}}
   export class UIElement {
     constructor(handle: number, id: string);
     handle: number;
@@ -1077,6 +1077,8 @@ declare module "judas" {
     selectedIndex:number;
     setItems(items:UIListItem[]):void;
     configure(options:UIControlOptions):void;
+    setPreviewCamera(camera:Entity|null):void;
+    readonly fontSize:number;
     readonly layout:UIElementLayout;
     setLayout(patch:Partial<UIElementLayout>):UIElementLayout;
     /** Labels preserve length-bearing UTF-8 including NUL; TextInput rejects NUL/line breaks and over-capacity values atomically. */
@@ -1093,7 +1095,11 @@ declare module "judas" {
     value: number;
     texture: AssetId;
   }
+  export interface UIDragState {sourceDocument:string;sourceElement:string;dragType:string;targetDocument:string;targetElement:string;position:{x:number;y:number};keyboard:boolean}
   export class UIDocument {
+    readonly drag:UIDragState|null;
+    beginDrag(id:string):void;
+    cancelDrag():void;
     referenceSize:{x:number;y:number};
     readonly focused:string;
     focus(id:string|null):void;
@@ -1118,7 +1124,7 @@ declare module "judas" {
     quit(): void;
     debugOverlayVisible: boolean;
   };
-  export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back" | "submit"; value: number; playerId: string|null; text:string; item:string }
+  export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back" | "submit" | "dragStart" | "dragOver" | "drop" | "dragEnd" | "dragCancel"; sourceDocument:string;sourceElement:string;dragType:string;targetDocument:string;targetElement:string;position:{x:number;y:number}; value: number; playerId: string|null; text:string; item:string }
   export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null; selfBody: Entity | null; selfJoint: string | null; otherArticulation: Entity | null; otherJoint: string | null }
   export type ScriptProperties = Record<string, number | boolean | string | Entity | null>;
   /** Authored defaults; entity references become Entity|null in ScriptContext.properties. */

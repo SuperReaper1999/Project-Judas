@@ -1200,6 +1200,16 @@
       "maximum": 1
     },
     {
+      "symbol": "UIDocument.beginDrag",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.cancelDrag",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
       "symbol": "UIDocument.captureState",
       "minimum": 0,
       "maximum": 0
@@ -1256,6 +1266,11 @@
     },
     {
       "symbol": "UIElement.setLayout",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIElement.setPreviewCamera",
       "minimum": 1,
       "maximum": 1
     },
@@ -4799,6 +4814,28 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "UIDocument.beginDrag",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.beginDrag",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.cancelDrag",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.cancelDrag",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
       "symbol": "UIDocument.captureState",
       "kinds": [
         "call"
@@ -4816,6 +4853,17 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:UIDocument.constructor",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.drag",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.drag",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -5044,6 +5092,17 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "UIElement.fontSize",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiGet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.fontSize",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
       "symbol": "UIElement.handle",
       "kinds": [
         "field"
@@ -5128,6 +5187,17 @@
         "uiLayout"
       ],
       "type": "docs/judas.d.ts:UIElement.setLayout",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.setPreviewCamera",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.setPreviewCamera",
       "reference": "docs/judasjs/ui.md"
     },
     {

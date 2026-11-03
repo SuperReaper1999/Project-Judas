@@ -68,6 +68,39 @@ JSValue ScriptBindings::UI(JSContext *c, const std::string &op, int argc, JSValu
                 if (!ok)
                     throw std::runtime_error(message);
             };
+            if (action == "beginDrag" && !element) {
+                require(write && value.is_string() && ui.BeginDrag(h,value.get<std::string>()),
+                        "drag source must be visible, enabled and have a dragType");
+                return JS_UNDEFINED;
+            }
+            if (action == "cancelDrag" && !element) { ui.CancelDrag(h); return JS_UNDEFINED; }
+            if (action == "drag" && !element) {
+                const auto drag=ui.Drag(h);
+                if(!drag)return JS_NULL;
+                return result(nlohmann::json{{"sourceDocument",ui.Name(drag->source)},
+                    {"sourceElement",drag->element},{"dragType",drag->type},
+                    {"targetDocument",ui.Name(drag->target)},{"targetElement",drag->targetElement},
+                    {"position",{{"x",drag->position.x},{"y",drag->position.y}}},{"keyboard",drag->keyboard}}.dump());
+            }
+            if (action == "previewCamera" && element) {
+                require(element->kind==UIKind::Image,"preview camera requires an Image element");
+                if(write){
+                    std::uint64_t camera=0;
+                    if(!value.is_null()){
+                        require(value.is_string(),"preview requires an Entity or null");
+                        const auto text=value.get<std::string>();size_t used=0;
+                        camera=std::stoull(text,&used);
+                        require(camera && used==text.size(),"invalid preview camera ID");
+                        bool found=false;
+                        for(const auto& c:world.PresentationCameras())if(c.id==camera)found=true;
+                        const auto* entity=world.FindEntity(camera);
+                        require(found && world.IsPublished(camera) && (!entity||entity->lifecycle==EntityLifecycle::Active),"preview camera must be a live render-camera entity in this world");
+                    }
+                    require(ui.SetPreviewCamera(h,id,camera),"invalid preview image");
+                }
+                const auto camera=ui.PreviewCamera(h,id);
+                return camera?JS_NewString(c,std::to_string(camera).c_str()):JS_NULL;
+            }
             if (action == "focus" && !element) {
                 if (write)
                     require(ui.Focus(h, value.get<std::string>()),
@@ -153,7 +186,9 @@ JSValue ScriptBindings::UI(JSContext *c, const std::string &op, int argc, JSValu
                 for (auto entry = value.begin(); entry != value.end(); ++entry) {
                     auto key = entry.key();
                     auto &v = entry.value();
-                    if (key == "placeholder")
+                    if (key == "dragType") candidate.dragType = v.get<std::string>();
+                    else if (key == "dropType") candidate.dropType = v.get<std::string>();
+                    else if (key == "placeholder")
                         candidate.placeholder = v.get<std::string>();
                     else if (key == "accessibleLabel")
                         candidate.accessibleLabel = v.get<std::string>();
@@ -339,6 +374,7 @@ JSValue ScriptBindings::UI(JSContext *c, const std::string &op, int argc, JSValu
             }
             return JS_NewString(c, index < 0 ? "" : choices[index].c_str());
         }
+        if (e && key == "fontSize" && op == "uiGet") return JS_NewFloat64(c,e->fontSize);
         if (e && key == "value") {
             if (op == "uiSet") {
                 double v;

@@ -262,6 +262,7 @@ add_library(judas_engine STATIC
     src/WorldScripts.cpp
     src/RuntimeUI.cpp
     src/RuntimeUIControls.cpp
+    src/RuntimeUIDrag.cpp
     src/AIReservations.cpp
     src/ScriptAIReservations.cpp
     src/AISensing.cpp
@@ -1192,6 +1193,11 @@ judas_add_engine_test(judas_script_tests tests/ScriptTests.cpp)
 judas_add_engine_test(judas_script_application_tests tests/ScriptApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_runtime_ui_tests tests/RuntimeUITests.cpp)
+judas_add_engine_test(judas_ui_drag_tests tests/UIDragTests.cpp)
+judas_add_engine_test(judas_ui_menu_tests tests/UIMenuIntegrationTests.cpp APPLICATION)
+add_executable(judas_menu_workshop tools/demos/MenuWorkshop.cpp)
+target_link_libraries(judas_menu_workshop PRIVATE judas_engine)
+judas_warnings(judas_menu_workshop)
 judas_add_engine_test(judas_runtime_ui_application_tests tests/RuntimeUIApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_touch_event_tests tests/TouchEventTests.cpp)

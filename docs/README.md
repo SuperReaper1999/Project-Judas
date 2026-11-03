@@ -109,3 +109,5 @@ reject links to untracked files. The small parser covers inline links and refere
 definitions; undefined reference usages and arbitrary Markdown extensions are
 outside its scope. It does not prove prose, temporal ordering, platform acceptance
 or every project asset; those still need review.
+
+- [UI transfers and live 3D previews](UI_TRANSFERS_AND_PREVIEWS.md) — Experimental APIs and editable Satchel Menu Workshop.

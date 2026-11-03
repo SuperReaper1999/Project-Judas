@@ -1,0 +1,6 @@
+SUMMARY 53 checks 0 failures
+SUMMARY 38 checks 0 failures
+FAIL application save/load completes within bounded frame budget
+FAIL ordinary application startup, save/load and shutdown complete
+SUMMARY 6 checks 2 failures
+FAIL fresh process application: Tool failed or exited unsuccessfully

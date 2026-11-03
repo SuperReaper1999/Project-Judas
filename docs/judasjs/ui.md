@@ -1,4 +1,4 @@
-# UI — current M96 controls
+# UI — runtime controls
 
 [Index](../JUDASJS.md) · [Input](input.md) · [Local players](local-multiplayer.md)
 · [Save lifecycle](saves.md) · [Authoring and limitations](../M96_UI_TOOLKIT.md)
@@ -67,7 +67,7 @@ axis ownership. Layout, clipping, pointer hit tests and focus use the same geome
 
 Returns undefined. Validated atomic subset of: `placeholder`, `accessibleLabel`,
 `description`, `readOnly`, `maxBytes`, `fontSize`, `rowHeight`, `background`, `color`,
-`focusColor`. Colours are `{r,g,b,a}`. Font size >0..512; rowHeight 12..512 reference
+`focusColor`, `dragType`, `dropType`. Colours are `{r,g,b,a}`. Font size >0..512; rowHeight 12..512 reference
 pixels; maxBytes integer 1..16384. Unknown keys throw. No DOM or arbitrary CSS.
 
 ### Text input
@@ -95,7 +95,10 @@ outside this implementation. `setItems` and setters do not synthesize change eve
 
 `onUI({document,element,type,value,playerId,text,item})` broadcasts queued input
 observations to live scripts; filter document/element/player. Types:
-`click`, `change`, `focus`, `back`, **`submit`**.
+`click`, `change`, `focus`, `back`, **`submit`**, `dragStart`, `dragOver`, `drop`,
+`dragEnd`, `dragCancel`. Transfer events also include `sourceDocument`,
+`sourceElement`, `dragType`, `targetDocument`, `targetElement` and framebuffer-pixel
+`position:{x,y}`. These are identifiers, not an inventory mutation.
 
 - Text input change/submit: `text` is committed text, `item` empty.
 - List change/click: `value` is row index, `text` label, `item` stable row key.
@@ -137,3 +140,21 @@ assertions are distinct from pixel correctness; the native regression verifies
 complete captures after growth, shrinkage and odd-width changes on Xvfb/Mesa
 and the real desktop. Android orientation policy is an [APK export option](../ANDROID.md#game-orientation),
 not a new JudasJS binding or a fixed-size UI guarantee.
+
+### Item transfers and live 3D images (Experimental)
+
+`configure({dragType,dropType})` opts into matching-category transfer requests.
+`UIDocument.drag` returns the current per-player drag snapshot or null;
+`beginDrag(id)` starts focused pickup and `cancelDrag()` cancels it. Pointer,
+focus/Activate and Back share the same validation and lifecycle rules.
+Categories are at most 64 UTF-8 bytes; Image, Button, Panel and Text can be sources.
+Virtual-list rows and editing controls are not item-drag sources.
+
+`UIElement.setPreviewCamera(cameraEntity|null)` binds an Image to an existing
+render-camera entity in the same world. Clear with null; authored texture resumes.
+The binding is transient: reacquire in restore. Disable that camera when its menu
+closes. No new scene, physics world or render target ownership is introduced.
+`fontSize` reads the authored/current size; change it with configure.
+
+See [the practical guide and editable menu](../UI_TRANSFERS_AND_PREVIEWS.md)
+for authoring, event validation, ownership, controls and qualification boundaries.

@@ -251,7 +251,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         m_hud.Draw(renderer, window.Width(), window.Height(), hud);
     }
     if(world.legacyGameplay&&!authoredUI)m_pauseMenu.Draw(renderer, window.Width(), window.Height());
-    if(authoredUI)world.UI().Draw(renderer,window.Width(),window.Height());
+    if(authoredUI)world.UI().Draw(renderer,window.Width(),window.Height(),&world);
     if(m_scriptFaultNotice)DrawScriptFaultNotice(renderer,window.Width(),window.Height(),world.Scripts(),world.Resources()?world.Resources()->Assets():nullptr);
     renderer.EndUIFrame();
     return presentationAlpha;

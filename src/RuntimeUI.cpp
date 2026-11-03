@@ -1,5 +1,6 @@
 #include "PerformanceProfiler.h"
 #include "RuntimeUI.h"
+#include "RuntimeWorld.h"
 #include "NamedAuthoring.h"
 #include "AssetDatabase.h"
 #include "InputSystem.h"
@@ -16,7 +17,7 @@ namespace {
 using Clock=std::chrono::steady_clock;
 double Us(Clock::time_point t){return std::chrono::duration<double,std::micro>(Clock::now()-t).count();}
 UIRect Intersect(UIRect a,UIRect b){auto p=glm::max(a.position,b.position);return {p,glm::max(glm::vec2(0),glm::min(a.position+a.size,b.position+b.size)-p)};}
-bool Control(UIKind k){return k==UIKind::Button||k==UIKind::Slider||k==UIKind::Toggle||k==UIKind::TextInput||k==UIKind::List||k==UIKind::Scroll;}
+bool Control(const UIElement& e){auto k=e.kind;return !e.dragType.empty()||!e.dropType.empty()||k==UIKind::Button||k==UIKind::Slider||k==UIKind::Toggle||k==UIKind::TextInput||k==UIKind::List||k==UIKind::Scroll;}
 UIElement* ById(UIDocument& d,const std::string& id){for(auto& e:d.elements)if(e.id==id)return &e;return nullptr;}
 bool Finite(float x){return std::isfinite(x);}
 }
@@ -30,6 +31,10 @@ bool UIDocument::Validate(std::string& error)const{
         if(i==0){if(!e.parent.empty()||e.kind!=UIKind::Canvas)return fail("UI needs one root canvas");}
         else if(!ids.count(e.parent)||e.kind==UIKind::Canvas)return fail("UI parents must precede children, with exactly one canvas");
         ids.insert(e.id);
+        if(!e.dragType.empty()&&e.kind!=UIKind::Image&&e.kind!=UIKind::Button&&e.kind!=UIKind::Panel&&e.kind!=UIKind::Text)
+            return fail("UI drag sources require an Image, Button, Panel or Text element");
+        for(const auto& type:{e.dragType,e.dropType})
+            if(type.size()>64||type.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(type,error))return fail("invalid UI drag/drop category");
         if(!ValidTextUTF8(e.id,error)||!ValidTextUTF8(e.parent,error)||!ValidTextUTF8(e.text,error)||!ValidTextUTF8(e.textKey,error)||e.textKey.find_first_of("\r\n\0",0,3)!=std::string::npos||e.textKey.size()>128||int(e.direction)<0||int(e.direction)>2||e.textLogicalAlign<-1||e.textLogicalAlign>4)return fail("invalid UTF-8/text direction/alignment");
         if(int(e.kind)<0||int(e.kind)>9||int(e.flow)<0||int(e.flow)>2||e.text.size()>16384)return fail("invalid UI kind, flow or text size");
         for(auto v:{e.anchorMin,e.anchorMax,e.offset,e.size,e.relativeSize,e.align,e.textAlign})if(!Finite(v.x)||!Finite(v.y))return fail("nonfinite UI layout");
@@ -41,23 +46,24 @@ bool UIDocument::Validate(std::string& error)const{
         if((!e.texture.empty()&&!IsValidAssetId(e.texture))||(!e.font.empty()&&!IsValidAssetId(e.font)))return fail("invalid UI asset ID");
     }error.clear();return true;
 }
-std::string SerializeUIDocument(const UIDocument& d){bool extended=std::any_of(d.elements.begin(),d.elements.end(),[](const auto& e){return int(e.kind)>6||!e.placeholder.empty()||!e.accessibleLabel.empty()||!e.description.empty()||e.readOnly||e.maxBytes!=4096||e.rowHeight!=40||e.focusColor!=glm::vec4(1,.78f,.28f,1);});bool modern=extended||std::any_of(d.elements.begin(),d.elements.end(),[](const auto& e){return !e.textKey.empty()||e.direction!=TextDirection::Auto||e.textLogicalAlign!=-1||e.mirrorRow;});std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(9)<<"JudasUI "<<(extended?3:modern?2:1)<<"\n"<<d.reference.x<<' '<<d.reference.y<<' '<<d.visible<<' '<<d.enabled<<' '<<d.modal<<' '<<d.elements.size()<<'\n';
+std::string SerializeUIDocument(const UIDocument& d){bool transfer=std::any_of(d.elements.begin(),d.elements.end(),[](const auto& e){return !e.dragType.empty()||!e.dropType.empty();});bool extended=transfer||std::any_of(d.elements.begin(),d.elements.end(),[](const auto& e){return int(e.kind)>6||!e.placeholder.empty()||!e.accessibleLabel.empty()||!e.description.empty()||e.readOnly||e.maxBytes!=4096||e.rowHeight!=40||e.focusColor!=glm::vec4(1,.78f,.28f,1);});bool modern=extended||std::any_of(d.elements.begin(),d.elements.end(),[](const auto& e){return !e.textKey.empty()||e.direction!=TextDirection::Auto||e.textLogicalAlign!=-1||e.mirrorRow;});std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(9)<<"JudasUI "<<(transfer?4:extended?3:modern?2:1)<<"\n"<<d.reference.x<<' '<<d.reference.y<<' '<<d.visible<<' '<<d.enabled<<' '<<d.modal<<' '<<d.elements.size()<<'\n';
     for(const auto& e:d.elements){s<<std::quoted(e.id)<<' '<<std::quoted(e.parent)<<' '<<int(e.kind)<<' '<<int(e.flow)<<' '<<e.visible<<' '<<e.enabled<<' '<<e.clip<<' '<<e.wrap<<' '<<e.fit<<' ';
         for(auto v:{e.anchorMin,e.anchorMax,e.offset,e.size,e.relativeSize,e.align,e.textAlign})s<<v.x<<' '<<v.y<<' ';
         for(auto v:{e.margin,e.padding,e.background,e.color})for(int c=0;c<4;++c)s<<v[c]<<' ';
-        s<<e.spacing<<' '<<e.fontSize<<' '<<e.value<<' '<<e.minimum<<' '<<e.maximum<<' '<<std::quoted(e.text)<<' '<<std::quoted(e.texture)<<' '<<std::quoted(e.font);if(modern)s<<' '<<std::quoted(e.textKey)<<' '<<int(e.direction)<<' '<<e.textLogicalAlign<<' '<<e.mirrorRow;if(extended){s<<' '<<std::quoted(e.placeholder)<<' '<<std::quoted(e.accessibleLabel)<<' '<<std::quoted(e.description)<<' '<<e.readOnly<<' '<<e.maxBytes<<' '<<e.rowHeight;for(int c=0;c<4;++c)s<<' '<<e.focusColor[c];}s<<'\n';}return s.str();}
+        s<<e.spacing<<' '<<e.fontSize<<' '<<e.value<<' '<<e.minimum<<' '<<e.maximum<<' '<<std::quoted(e.text)<<' '<<std::quoted(e.texture)<<' '<<std::quoted(e.font);if(modern)s<<' '<<std::quoted(e.textKey)<<' '<<int(e.direction)<<' '<<e.textLogicalAlign<<' '<<e.mirrorRow;if(extended){s<<' '<<std::quoted(e.placeholder)<<' '<<std::quoted(e.accessibleLabel)<<' '<<std::quoted(e.description)<<' '<<e.readOnly<<' '<<e.maxBytes<<' '<<e.rowHeight;for(int c=0;c<4;++c)s<<' '<<e.focusColor[c];}if(transfer)s<<' '<<std::quoted(e.dragType)<<' '<<std::quoted(e.dropType);s<<'\n';}return s.str();}
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error){
     if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"ui",legacy,error,false))return false;return ParseUIDocument(legacy,out,error);}
     if(text.size()>4*1024*1024){error="UI document too large";return false;}if(!ValidTextUTF8(text,error)){error="UI document UTF-8: "+error;return false;}
     std::istringstream s(text);s.imbue(std::locale::classic());std::string magic;int version;size_t count=0;UIDocument d;
     auto fail=[&](){error="malformed or unsupported UI document";return false;};
-    if(!(s>>magic>>version)||magic!="JudasUI"||(version<1||version>3)||!(s>>d.reference.x>>d.reference.y>>d.visible>>d.enabled>>d.modal>>count)||count>2048)return fail();
+    if(!(s>>magic>>version)||magic!="JudasUI"||(version<1||version>4)||!(s>>d.reference.x>>d.reference.y>>d.visible>>d.enabled>>d.modal>>count)||count>2048)return fail();
     for(size_t i=0;i<count;++i){UIElement e;int kind,flow;if(!(s>>std::quoted(e.id)>>std::quoted(e.parent)>>kind>>flow>>e.visible>>e.enabled>>e.clip>>e.wrap>>e.fit))return fail();e.kind=UIKind(kind);e.flow=UIFlow(flow);
         for(auto* v:{&e.anchorMin,&e.anchorMax,&e.offset,&e.size,&e.relativeSize,&e.align,&e.textAlign})if(!(s>>v->x>>v->y))return fail();
         for(auto* v:{&e.margin,&e.padding,&e.background,&e.color})for(int c=0;c<4;++c)if(!(s>>(*v)[c]))return fail();
         if(!(s>>e.spacing>>e.fontSize>>e.value>>e.minimum>>e.maximum>>std::quoted(e.text)>>std::quoted(e.texture)>>std::quoted(e.font)))return fail();
         if(version>=2){int dir=0;if(!(s>>std::quoted(e.textKey)>>dir>>e.textLogicalAlign>>e.mirrorRow))return fail();e.direction=TextDirection(dir);}
         if(version>=3){if(!(s>>std::quoted(e.placeholder)>>std::quoted(e.accessibleLabel)>>std::quoted(e.description)>>e.readOnly>>e.maxBytes>>e.rowHeight))return fail();for(int c=0;c<4;++c)if(!(s>>e.focusColor[c]))return fail();}
+        if(version>=4&&!(s>>std::quoted(e.dragType)>>std::quoted(e.dropType)))return fail();
         d.elements.push_back(e);}
     s>>std::ws;if(!s.eof()||!d.Validate(error))return false;out=std::move(d);return true;
 }
@@ -68,10 +74,15 @@ bool ValidateUIAssets(const UIDocument& d,const AssetDatabase& a,std::string& er
 RuntimeUI::~RuntimeUI(){Clear();}
 std::uint32_t RuntimeUI::Load(const std::string& asset,const std::string& name,std::uint64_t owner,std::string& error,std::uint64_t slot){auto* a=m_resources?m_resources->Assets():nullptr;auto* r=a?a->Find(asset):nullptr;UIDocument d;
     if(!r||r->missing||r->type!=AssetType::UI){error="missing UI document asset "+asset;return 0;}if(!LoadUIDocument(r->path,d,error)||!ValidateUIAssets(d,*a,error))return 0;return Add(d,name,owner,error,slot);}
-std::uint32_t RuntimeUI::Add(const UIDocument& d,const std::string& name,std::uint64_t owner,std::string& error,std::uint64_t slot){if(name.empty()||Find(name)||!d.Validate(error)){if(error.empty())error="duplicate/empty UI document name";return 0;}if(!m_next){error="UI handle space exhausted";return 0;}
+std::uint32_t RuntimeUI::Add(const UIDocument& d,const std::string& name,std::uint64_t owner,std::string& error,std::uint64_t slot){
+    if(name.empty()||name.size()>128||name.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(name,error)||Find(name)){
+        error="UI document names must be unique UTF-8, 1..128 bytes, without NUL or newlines";return 0;
+    }
+    if (!d.Validate(error)) return 0;
+    if (!m_next) { error="UI handle space exhausted"; return 0; }
     InvalidateLayout();auto id=m_next++;Instance instance;instance.doc=d;instance.name=name;instance.owner=owner;instance.slot=slot;m_documents.emplace(id,std::move(instance));return id;}
-bool RuntimeUI::Unload(std::uint32_t h){if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}InvalidateLayout();auto it=m_documents.find(h);if(it==m_documents.end())return false;const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name;}),m_events.end());return true;}
-void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_localizedText.clear();m_quit=false;}
+bool RuntimeUI::Unload(std::uint32_t h){if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}InvalidateLayout();auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name||e.sourceDocument==name;}),m_events.end());return true;}
+void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_drags.clear();m_localizedText.clear();m_quit=false;}
 void RuntimeUI::RemoveOwner(std::uint64_t id){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==id)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 std::uint32_t RuntimeUI::Find(const std::string& n)const{for(const auto& p:m_documents)if(p.second.name==n)return p.first;return 0;}
 UIDocument* RuntimeUI::Document(uint32_t h){InvalidateLayout();auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
@@ -101,12 +112,25 @@ void RuntimeUI::Layout(int w,int h){
 void RuntimeUI::Activate(Instance& in,UIElement& e,const char* type){if(e.kind==UIKind::List){auto& state=in.widgets[e.id];if(state.selected<0||state.selected>=int(state.items.size())||!state.items[state.selected].enabled)return;m_events.push_back({in.name,e.id,type,float(state.selected),in.player,state.items[state.selected].text,state.items[state.selected].id});return;}if(e.kind==UIKind::Toggle){e.value=e.value>.5f?0:1;type="change";}m_events.push_back({in.name,e.id,type,e.value,in.player});}
 void RuntimeUI::Input(InputSystem& input,glm::vec2 pointer,bool available,int w,int h,std::uint64_t player){
     JUDAS_PROFILE_SCOPE("Runtime UI input");Layout(w,h);
+    UpdateDrag(input,pointer,available,w,h,player);
     auto top=m_documents.end();for(auto it=m_documents.begin();it!=m_documents.end();++it)if(it->second.player==player&&it->second.doc.visible&&it->second.doc.enabled&&(top==m_documents.end()||it->second.doc.modal||!top->second.doc.modal))top=it;
+    if(top!=m_documents.end()&&!top->second.doc.modal){
+        bool captured=false;
+        for(auto it=m_documents.begin();it!=m_documents.end();++it)if(it->second.player==player&&it->second.doc.visible&&it->second.doc.enabled&&!it->second.pressed.empty()){top=it;captured=true;break;}
+        if(!captured&&available&&input.Action("ui_click").pressed){
+            for(auto it=m_documents.rbegin();it!=m_documents.rend();++it){
+                auto& candidate=it->second;if(candidate.player!=player||!candidate.doc.visible||!candidate.doc.enabled)continue;
+                bool hit=false;for(const auto& e:candidate.doc.elements){const auto& l=candidate.layout.at(e.id);hit|=l.visible&&Control(e)&&l.rect.Contains(pointer)&&l.clip.Contains(pointer);}
+                if(hit){top=m_documents.find(it->first);break;}
+            }
+        }
+    }
     if(top==m_documents.end())return;
+    if(auto active=m_drags.find(player);active!=m_drags.end()&&active->second.keyboard)top=m_documents.find(active->second.source);
     auto handle=top->first;auto& in=top->second;
     if(in.inputRevision!=input.ResetRevision()){in.pressed.clear();in.dragging.clear();for(auto& pair:in.widgets)pair.second.composition.clear();in.inputRevision=input.ResetRevision();}
     std::vector<UIElement*> controls;UIElement *hit=nullptr,*scrollHit=nullptr;
-    for(auto& e:in.doc.elements){auto& l=in.layout.at(e.id);if(l.visible&&l.enabled&&Control(e.kind)){controls.push_back(&e);if(available&&l.rect.Contains(pointer)&&l.clip.Contains(pointer)){hit=&e;if(e.kind==UIKind::Scroll||e.kind==UIKind::List)scrollHit=&e;}}}
+    for(auto& e:in.doc.elements){auto& l=in.layout.at(e.id);if(l.visible&&l.enabled&&Control(e)){controls.push_back(&e);if(available&&l.rect.Contains(pointer)&&l.clip.Contains(pointer)){hit=&e;if(e.kind==UIKind::Scroll||e.kind==UIKind::List)scrollHit=&e;}}}
     if(!in.focus.empty()&&std::none_of(controls.begin(),controls.end(),[&](auto* e){return e->id==in.focus;})){if(m_textDocument==handle){m_textDocument=0;m_textElement.clear();}in.focus.clear();}
     if(available&&pointer!=in.lastPointer&&hit&&hit->kind!=UIKind::TextInput&&!(ById(in.doc,in.focus)&&ById(in.doc,in.focus)->kind==UIKind::TextInput)&&in.pressed.empty())Focus(handle,hit->id);
     in.lastPointer=pointer;const bool modal=in.doc.modal;bool editing=false,submitted=false;
@@ -122,20 +146,27 @@ void RuntimeUI::Input(InputSystem& input,glm::vec2 pointer,bool available,int w,
         bool nativeTab=std::any_of(input.TextEvents().begin(),input.TextEvents().end(),[&](const auto& event){return event.player==player&&(event.token==0||event.token==m_textSerial)&&event.command=="tab";});if(input.Action("ui_next").pressed&&!editing&&!nativeTab)moveFocus(1);
         for(auto& event:input.TextEvents())if(event.player==player&&(event.token==0||event.token==m_textSerial)&&event.command=="tab"&&(editing||input.Action("ui_next").pressed))moveFocus(event.shift?-1:1);
         current=ById(in.doc,in.focus);
-        if(current&&current->kind!=UIKind::Slider&&input.Action("ui_activate").pressed&&!submitted){if(current->kind==UIKind::TextInput){m_textDocument=handle;m_textElement=current->id;}else Activate(in,*current);}
+        if(auto drag=Drag(handle);drag&&drag->keyboard)UpdateDrag(input,pointer,available,w,h,player);
+        if(current&&current->kind!=UIKind::Slider&&input.Action("ui_activate").pressed&&!submitted){if(current->kind==UIKind::TextInput){m_textDocument=handle;m_textElement=current->id;}else if(auto drag=Drag(handle);drag&&drag->keyboard){EndDrag(player,true);}
+            else if(!current->dragType.empty()){BeginDrag(handle,current->id);}
+            else Activate(in,*current);}
         if(current&&current->kind==UIKind::Slider){float change=(input.Action("ui_right").pressed?1.f:0)-(input.Action("ui_left").pressed?1.f:0);if(change){current->value=std::clamp(current->value+change*(current->maximum-current->minimum)*.05f,current->minimum,current->maximum);Activate(in,*current,"change");}}
-        if(input.Action("pause").pressed&&!editing)m_events.push_back({in.name,"","back",0,in.player});
+        if(input.Action("pause").pressed&&!editing&&!m_drags.count(player))m_events.push_back({in.name,"","back",0,in.player});
     }
     auto click=input.Action("ui_click");
     if(!click.held&&!click.pressed&&!click.released){in.pressed.clear();in.dragging.clear();}
     float scale=std::min(w*in.viewport.z/in.doc.reference.x,h*in.viewport.w/in.doc.reference.y)*in.scale;
     if(scrollHit){auto delta=input.Axis("ui_scroll");if(delta)SetScroll(handle,scrollHit->id,Scroll(handle,scrollHit->id)-glm::vec2(0,delta*scrollHit->rowHeight*3));}
     if(available&&click.pressed){in.pressed=hit?hit->id:"";if(hit)Focus(handle,hit->id);else{in.focus.clear();if(m_textDocument==handle)m_textDocument=0;}
-        in.dragged=false;in.dragStart=pointer;in.dragging=scrollHit&&(!hit||(hit->kind!=UIKind::TextInput&&hit->kind!=UIKind::Slider))?scrollHit->id:"";if(scrollHit)in.dragScroll=Scroll(handle,scrollHit->id);
+        in.dragged=false;in.dragStart=pointer;in.dragging=(!hit||hit->dragType.empty())&&scrollHit&&(!hit||(hit->kind!=UIKind::TextInput&&hit->kind!=UIKind::Slider))?scrollHit->id:"";if(scrollHit)in.dragScroll=Scroll(handle,scrollHit->id);
         if(hit&&hit->kind==UIKind::TextInput){auto& state=in.widgets[hit->id];auto& rect=in.layout.at(hit->id).rect;float x=pointer.x-rect.position.x+state.textPan;size_t nearest=0;float best=1e30f;for(size_t n=0;n<state.carets.size();++n)if(std::abs(state.carets[n]-x)<best){best=std::abs(state.carets[n]-x);nearest=n;}state.selection={nearest,nearest};state.composition.clear();}
     }
     if(available&&click.held&&!in.pressed.empty()){
-        auto* e=ById(in.doc,in.pressed);if(e&&e->kind==UIKind::Slider){auto& rect=in.layout.at(e->id).rect;float t=std::clamp((pointer.x-rect.position.x)/std::max(rect.size.x,1.f),0.f,1.f);float value=e->minimum+t*(e->maximum-e->minimum);if(value!=e->value){e->value=value;Activate(in,*e,"change");}}
+        auto* e=ById(in.doc,in.pressed);
+        if(e&&!e->dragType.empty()&&!in.dragged&&glm::length(pointer-in.dragStart)>6*scale){
+            if(BeginDrag(handle,e->id)){auto& drag=m_drags.at(player);drag.keyboard=false;drag.position=pointer;drag.revision=input.ResetRevision();m_events.back().position=pointer;in.dragged=true;in.dragging.clear();}
+        }
+        if(e&&e->kind==UIKind::Slider){auto& rect=in.layout.at(e->id).rect;float t=std::clamp((pointer.x-rect.position.x)/std::max(rect.size.x,1.f),0.f,1.f);float value=e->minimum+t*(e->maximum-e->minimum);if(value!=e->value){e->value=value;Activate(in,*e,"change");}}
         if(!in.dragging.empty()&&glm::length(pointer-in.dragStart)>6){in.dragged=true;SetScroll(handle,in.dragging,in.dragScroll-(pointer-in.dragStart)/std::max(.01f,scale));}
         if(e&&e->kind==UIKind::TextInput){auto& state=in.widgets[e->id];float x=pointer.x-in.layout.at(e->id).rect.position.x+state.textPan;float best=1e30f;for(size_t n=0;n<state.carets.size();++n)if(std::abs(state.carets[n]-x)<best){best=std::abs(state.carets[n]-x);state.selection.caret=n;}}
     }
@@ -145,16 +176,24 @@ void RuntimeUI::Input(InputSystem& input,glm::vec2 pointer,bool available,int w,
     input.ConsumeText();
 }
 std::vector<UIEvent> RuntimeUI::TakeEvents(){auto events=std::move(m_events);m_events.clear();return events;}
-void RuntimeUI::Draw(Renderer& r,int w,int h){
+void RuntimeUI::Draw(Renderer& r,int w,int h,const RuntimeWorld* world){
     JUDAS_PROFILE_SCOPE("Runtime UI drawing");auto start=Clock::now();Layout(w,h);m_stats.draws=0;m_stats.listRows=0;unsigned before=r.UIDrawCalls();
     for(auto& p:m_documents){auto& in=p.second;
         if(m_resources){for(auto it=in.refs.begin();it!=in.refs.end();)if(std::none_of(in.doc.elements.begin(),in.doc.elements.end(),[&](const auto& e){return e.texture==*it||e.font==*it;})){m_resources->ReleaseRef(*it);it=in.refs.erase(it);}else ++it;}
         float scale=std::min(w*in.viewport.z/in.doc.reference.x,h*in.viewport.w/in.doc.reference.y)*in.scale;for(auto& e:in.doc.elements){const auto& l=in.layout.at(e.id);if(!l.visible||Intersect(l.rect,l.clip).size.x<=0||Intersect(l.rect,l.clip).size.y<=0)continue;r.SetUIClip(l.clip.position,l.clip.size);
-            auto bg=e.background;if(!l.enabled)bg.a*=.5f;if(in.focus==e.id&&Control(e.kind))bg=glm::vec4(glm::min(glm::vec3(bg)+glm::vec3(.15f),glm::vec3(1)),bg.a);
+            auto bg=e.background;if(!l.enabled)bg.a*=.5f;if(in.focus==e.id&&Control(e))bg=glm::vec4(glm::min(glm::vec3(bg)+glm::vec3(.15f),glm::vec3(1)),bg.a);
             if(bg.a>0){r.DrawUIRect(l.rect.position,l.rect.size,bg);++m_stats.draws;}
             if(e.kind==UIKind::Slider){auto size=l.rect.size;size.x*= (e.value-e.minimum)/(e.maximum-e.minimum);r.DrawUIRect(l.rect.position,size,e.color);++m_stats.draws;}
             if(e.kind==UIKind::Toggle&&e.value>.5f){r.DrawUIRect(l.rect.position+glm::vec2(5)*scale,glm::vec2(20)*scale,e.color);++m_stats.draws;}
-            if(e.kind==UIKind::Image&&!e.texture.empty()&&m_resources){if(std::find(in.refs.begin(),in.refs.end(),e.texture)==in.refs.end()){m_resources->AddRef(e.texture);in.refs.push_back(e.texture);}m_resources->RequestTexture(e.texture);auto t=m_resources->TryGetTexture(e.texture);if(t.IsValid()){r.DrawUIImage(l.rect.position,l.rect.size,t,e.color,e.fit);++m_stats.draws;}}
+            const auto preview=e.kind==UIKind::Image?in.previews.find(e.id):in.previews.end();
+            const auto camera=preview==in.previews.end()?0:preview->second;
+            if(e.kind==UIKind::Image&&camera&&world){
+                const auto& cameras=world->PresentationCameras();
+                const bool available=world->IsPublished(camera)&&std::any_of(cameras.begin(),cameras.end(),[&](const auto& c){return c.id==camera&&c.settings.enabled;});
+                auto texture=available?world->CameraTexture(camera):TextureHandle{};
+                if(texture.IsValid()){r.DrawUIImage(l.rect.position,l.rect.size,texture,e.color,e.fit,true);++m_stats.draws;}
+            }
+            if(!camera&&e.kind==UIKind::Image&&!e.texture.empty()&&m_resources){if(std::find(in.refs.begin(),in.refs.end(),e.texture)==in.refs.end()){m_resources->AddRef(e.texture);in.refs.push_back(e.texture);}m_resources->RequestTexture(e.texture);auto t=m_resources->TryGetTexture(e.texture);if(t.IsValid()){r.DrawUIImage(l.rect.position,l.rect.size,t,e.color,e.fit);++m_stats.draws;}}
             std::string text=e.text;if(!e.textKey.empty()&&m_localization){m_localization->Refresh();auto& cached=m_localizedText[{p.first,e.id}];std::string identity=e.textKey+":"+std::to_string(m_localization->Revision());if(cached.second.empty()||cached.first!=m_localization->Revision()||cached.second.substr(0,identity.size())!=identity){std::string error;auto value=m_localization->Format(e.textKey,{},error);cached={m_localization->Revision(),identity+'\0'+value};}auto nul=cached.second.find('\0');text=cached.second.substr(nul+1);}
             if(!text.empty()||e.kind==UIKind::TextInput||e.kind==UIKind::List){
                 std::vector<std::shared_ptr<const TextFont>> fonts;
@@ -183,16 +222,16 @@ void RuntimeUI::Draw(Renderer& r,int w,int h){
                     if(in.focus==e.id){float cx=state.carets[caret];if(!state.composition.empty()){auto composition=r.LayoutText(state.composition,options);r.DrawUIRect(pos+glm::vec2(cx,0),{composition->width,std::max(options.pixels,composition->height)},e.background);r.DrawTextLayout(*composition,pos+glm::vec2(cx,0),e.color);r.DrawUIRect(pos+glm::vec2(cx,std::max(options.pixels,composition->height)),{composition->width,2*scale},e.focusColor);}r.DrawUIRect(pos+glm::vec2(cx,0),{std::max(1.f,scale),std::max(options.pixels,layout->height)},e.focusColor);}
                 }else{auto layout=r.LayoutText(text,options);glm::vec2 position=l.rect.position;position.y+=e.textAlign.y*std::max(0.f,l.rect.size.y-layout->height);r.DrawTextLayout(*layout,position,e.color);}
             }
-            if(in.focus==e.id&&Control(e.kind)){auto clip=Intersect(l.clip,l.rect);r.SetUIClip(clip.position,clip.size);float t=std::max(2.f,scale*2);auto pos=l.rect.position,size=l.rect.size;for(auto rect:std::vector<UIRect>{{pos,{size.x,t}},{pos+glm::vec2(0,size.y-t),{size.x,t}},{pos,{t,size.y}},{pos+glm::vec2(size.x-t,0),{t,size.y}}})r.DrawUIRect(rect.position,rect.size,e.focusColor);}
+            if(in.focus==e.id&&Control(e)){auto clip=Intersect(l.clip,l.rect);r.SetUIClip(clip.position,clip.size);float t=std::max(2.f,scale*2);auto pos=l.rect.position,size=l.rect.size;for(auto rect:std::vector<UIRect>{{pos,{size.x,t}},{pos+glm::vec2(0,size.y-t),{size.x,t}},{pos,{t,size.y}},{pos+glm::vec2(size.x-t,0),{t,size.y}}})r.DrawUIRect(rect.position,rect.size,e.focusColor);}
             if(e.kind==UIKind::Scroll||e.kind==UIKind::List){auto& state=in.widgets[e.id];float total=e.kind==UIKind::List?state.items.size()*e.rowHeight*scale:state.extent.y*scale;if(total>l.rect.size.y){float height=std::max(12.f,l.rect.size.y*l.rect.size.y/total),travel=l.rect.size.y-height;float y=travel*state.scroll.y*scale/std::max(1.f,total-l.rect.size.y);r.DrawUIRect(l.rect.position+glm::vec2(l.rect.size.x-5*scale,y),{4*scale,height},e.focusColor);}}
-        }}r.ClearUIClip();std::string error;r.SelectUIFont("",error);m_stats.draws=r.UIDrawCalls()-before;m_stats.renderUs=Us(start);
+        }}DrawDrags(r);r.ClearUIClip();std::string error;r.SelectUIFont("",error);m_stats.draws=r.UIDrawCalls()-before;m_stats.renderUs=Us(start);
 }
 
 void RuntimeUI::RemoveSlotOwner(std::uint64_t owner,std::uint64_t slot){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==owner&&p.second.slot==slot)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 
 bool RuntimeUI::SetElementLayout(uint32_t h,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error){auto* e=Element(h,id);if(!e){error="stale UI document/element";return false;}auto candidate=*e;for(auto& [key,v]:patch){if(key=="offset")candidate.offset=v;else if(key=="size")candidate.size=v;else if(key=="anchorMin")candidate.anchorMin=v;else if(key=="anchorMax")candidate.anchorMax=v;else if(key=="relativeSize")candidate.relativeSize=v;else if(key=="align")candidate.align=v;else{error="unknown layout property "+key;return false;}}UIDocument proof;UIElement root;root.id="__layout_root";root.kind=UIKind::Canvas;auto test=candidate;test.id="__layout_element";test.parent=root.id;test.kind=UIKind::Panel;proof.elements={root,test};if(!proof.Validate(error))return false;*e=candidate;InvalidateLayout();return true;}
 
-bool RuntimeUI::SetPlayer(uint32_t h,uint64_t player){auto it=m_documents.find(h);if(it==m_documents.end())return false;it->second.player=player;it->second.focus.clear();it->second.pressed.clear();it->second.viewport={0,0,1,1};InvalidateLayout();return true;}
+bool RuntimeUI::SetPlayer(uint32_t h,uint64_t player){auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);it->second.player=player;it->second.focus.clear();it->second.pressed.clear();it->second.viewport={0,0,1,1};InvalidateLayout();return true;}
 uint64_t RuntimeUI::Player(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?0:it->second.player;}
 void RuntimeUI::PlayerViewport(uint64_t player,glm::vec4 rect){for(auto& pair:m_documents)if(pair.second.player==player&&pair.second.viewport!=rect){pair.second.viewport=rect;InvalidateLayout();}}
 void RuntimeUI::RemovePlayer(uint64_t player){std::vector<uint32_t> remove;for(auto& pair:m_documents)if(pair.second.player==player)remove.push_back(pair.first);for(auto handle:remove)Unload(handle);}

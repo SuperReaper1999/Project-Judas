@@ -1,0 +1,18 @@
+[GPU] vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits) version=4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 context_flags=0x0
+[GPU] asynchronous KHR_debug enabled; max_messages=256 max_message_bytes=1024
+[GPU] reset_query=available notification_strategy=0x8261 (not a promise of crash detection)
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[GPU] context=1 source=0x8248 type=0x8251 severity=0x9146 id=1 message=0:58(43): warning: `shadowWorldDx' used uninitialized
+[GPU] context=1 source=0x8248 type=0x8251 severity=0x9146 id=2 message=0:59(43): warning: `shadowWorldDy' used uninitialized
+[editor autotest] shared authoring batch + undo PASS: 
+[editor autotest] duplicate created id 12: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/ui-menu-pass/editor-light.edit.png
+[editor autotest] edit frame: 3 draw calls, 12 triangles, 206 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/ui-menu-pass/editor-light.play.png
+[editor autotest] play frame: 0 steps, step 0.000 ms, 3 bodies, 0 contacts, 8 draw calls, 1980 triangles, 2 shadow passes, 0 lights, 270 debug lines, 0 particles
+[editor autotest] resources: 5 meshes, 9 textures, 0 terrain meshes, hits 3919, misses 14, failed 0, uploads 14, resident 493020 bytes
+[editor autotest] jobs: 11 workers, 14 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

@@ -87,3 +87,19 @@ claim.acquire('bed:42',1);claim.release('bed:42');
 claim.acquire(42);
 // @ts-expect-error spatial radius is numeric
 senses.sample(origin,'nearby');
+
+// Native drag routing carries identifiers; project code owns inventory mutations.
+declare const menuDocument: import('judas').UIDocument;
+declare const previewImage: import('judas').UIElement;
+previewImage.configure({dragType:'item',dropType:'item'});
+previewImage.setPreviewCamera(owner);
+previewImage.setPreviewCamera(null);
+const authoredFontSize:number=previewImage.fontSize;void authoredFontSize;
+menuDocument.beginDrag('bag_0');menuDocument.cancelDrag();
+if(menuDocument.drag){const source:string=menuDocument.drag.sourceElement;void source;}
+// @ts-expect-error A camera binding takes a live Entity wrapper, not a raw ID.
+previewImage.setPreviewCamera(42);
+// @ts-expect-error Font size is read through the property and edited with configure.
+previewImage.fontSize=24;
+// @ts-expect-error Drag sources use stable element names.
+menuDocument.beginDrag(42);
