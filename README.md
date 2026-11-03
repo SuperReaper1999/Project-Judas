@@ -9,7 +9,7 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**Judas Engine Alpha v1.2.3** (`1.2.3-alpha.1`) is this source version.
+**Judas Engine Alpha v1.2.4** (`1.2.4-alpha.1`) is this source version.
 Versioned editor/SDK distributions, source archives and checksums are available
 through [published Alpha releases](https://github.com/SuperReaper1999/Project-Judas/releases).
 A source build or prepared candidate is not automatically a published release.
@@ -19,9 +19,8 @@ Alpha is not Stable/GA; documented limits still apply.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-This patch makes model import and desktop export easier to find, improves
-large-scene Hierarchy and Play responsiveness, and reduces repeated
-rendering and resource bookkeeping. See the [patch notes](docs/ALPHA_V1_2_3_NOTES.md).
+This patch adds script access to device tilt and vibration and fixes ragdoll
+import validation across asset scales. See the [patch notes](docs/ALPHA_V1_2_4_NOTES.md).
 The versioned source identity is authoritative in
 [engine-version.json](engine-version.json).
 
@@ -38,7 +37,7 @@ Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha v1.2.3 patch notes](docs/ALPHA_V1_2_3_NOTES.md) ·
+[Alpha v1.2.4 patch notes](docs/ALPHA_V1_2_4_NOTES.md) ·
 [Previous UI release](docs/ALPHA_V1_2_2_NOTES.md) ·
 [Previous native 2D release](docs/ALPHA_V1_1_0_NOTES.md) ·
 [Previous orientation/resize patch](docs/ALPHA_V1_0_4_NOTES.md) ·
