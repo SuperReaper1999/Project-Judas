@@ -1,0 +1,30 @@
+PASS build exact fixed-wall partition 0
+PASS exact original authored parcel inventory 9.25
+CASE authored original seed stationary geometry dt=0.01666666753590107 water=9.25 dy=0
+FAIL projection: geometric phase bounds cannot satisfy the water and air inventory ledger [subdivision eligible] 0
+CASE authored original seed prescribed motion dt=0.01666666753590107 water=9.25 dy=0.0041666668839752674
+FAIL projection: geometric phase bounds cannot satisfy the water and air inventory ledger [subdivision eligible] 0
+PASS unqualified mixed-cell topology rejects even for physically disjoint solids 0
+PASS build exact fixed-wall partition 0
+PASS exact original authored parcel inventory 9.25
+CASE sealed original seed stationary geometry dt=0.01666666753590107 water=9.25 dy=0
+FAIL projection: geometric phase bounds cannot satisfy the water and air inventory ledger [subdivision eligible] 0
+CASE sealed original seed prescribed motion dt=0.01666666753590107 water=9.25 dy=0.0041666668839752674
+FAIL projection: geometric phase bounds cannot satisfy the water and air inventory ledger [subdivision eligible] 0
+PASS build exact fixed-wall partition 0
+CASE authored uniform-wet control prescribed motion dt=0.01666666753590107 water=29.777599860334394 dy=0.0041666668839752674
+PASS prototype projects the authored wall geometry 0
+PASS qualified pressure step conserves water, cell volumes and wall work 0
+SEAM authored z=-1.125 area=0.0020000934600830078 outward_mixture=-1.3017934449864996e-06 outward_water=-1.3017934449864996e-06 l1_mixture=1.3017934449864996e-06 l1_water=1.3017934449864996e-06
+SEAM authored z=1.125 area=0.0020000934600830078 outward_mixture=-1.3017934449865009e-06 outward_water=-1.3017934449865009e-06 l1_mixture=1.3017934449865009e-06 l1_water=1.3017934449865009e-06
+PASS seam water crosses only genuinely supported open faces 2.6035868899730004e-06
+PRESSURE iterations=251 residual=5.7322881913540871e-17 work_error=8.8817841970012523e-16 phase_roundoff=1.8201034961786694e-13 cfl=0.22584427220365899 time_ms=44.576927
+PASS build exact fixed-wall partition 0
+CASE sealed uniform-wet control prescribed motion dt=0.01666666753590107 water=29.775999785542485 dy=0.0041666668839752674
+PASS prototype projects the authored wall geometry 0
+PASS qualified pressure step conserves water, cell volumes and wall work 0
+SEAM sealed z=-1.125 area=0 outward_mixture=0 outward_water=0 l1_mixture=0 l1_water=0
+SEAM sealed z=1.125 area=0 outward_mixture=0 outward_water=0 l1_mixture=0 l1_water=0
+PASS seam water crosses only genuinely supported open faces 0
+PRESSURE iterations=253 residual=4.6904374068487833e-17 work_error=-1.7763568394002505e-15 phase_roundoff=1.624608252354207e-13 cfl=0.045181717128550444 time_ms=45.203769
+SUMMARY authored pressure handoff 17 checks 4 failures

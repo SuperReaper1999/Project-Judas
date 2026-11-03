@@ -87,7 +87,7 @@ used by the solver. It returns triangles independently of the renderer.
 
 ## Validation boundary
 
-The standalone run covers 874 checks. It includes exact free-volume
+The standalone run covers 876 checks. It includes exact free-volume
 and wet-geometry controls, a 4 mm same-cell dry gap, an actual moving
 waterline, free rigid flotation and sinking, flow-driven motion, rotated
 charts, linked material and momentum transfer, and transaction failures.
@@ -185,6 +185,13 @@ gravity and original authored mixed transport failures. Separate vented
 liquid controls pass without a simulated air phase. They qualify a
 piston column and a fixed wet aperture, leaving the three-dimensional
 free surface and native composition open.
+
+The [pressure compatibility evidence](../../../docs/evidence/fluid-moving-grid-20261103/pressure-compatibility/)
+records why sealed-component roundoff is corrected at a sourced row.
+The previous uniform correction could drive a source-free thin branch.
+The captured mixed cut-region pressure forecast now closes its rigid
+displacement residual. Material publication and native composition
+still require independent qualification.
 
 Runtime adoption requires a conservative treatment of newly exposed
 volume, native contact and CCD composition, representative terrain and

@@ -747,6 +747,35 @@ void TestOwnedBoxTopology(Checks& checks, const GridLayout& layout) {
         maxTransportError);
 }
 
+void TestPressureCompatibility(Checks& checks) {
+    const GridLayout layout{{3, 1, 1}, .125};
+    MovingGridGeometry geometry;
+    std::string error;
+    if (!BuildMovingGridGeometry(layout, {}, geometry, error)) {
+        checks.Expect(false, "sealed compatibility fixture builds");
+        return;
+    }
+    constexpr double capacity = 1e-4, transfer = 3e-5;
+    geometry.startCapacity.assign(3, capacity);
+    geometry.endCapacity = {capacity - transfer, capacity + transfer - 1e-19, capacity};
+    const auto ordinary = layout.Face(0, 1, 0, 0), leaf = layout.Face(0, 2, 0, 0);
+    geometry.solidSweep[0][ordinary] = -transfer;
+    const double leafArea = 1e-29 * 1000. * layout.h / (kDt * kDt);
+    for (auto* aperture : {&geometry.startAperture, &geometry.endAperture, &geometry.averageAperture})
+        (*aperture)[0][leaf] = leafArea;
+    const auto initial = AtRest(layout, geometry.startCapacity);
+    MovingVolumeStep step;
+    if (!AdvanceMovingVolume(layout, geometry, initial, kDt, kZero, step, error)) {
+        checks.Expect(false, "pressure solves a sealed component with representational imbalance " + error);
+        return;
+    }
+    const auto& flux = step.flux[0];
+    checks.Expect(std::abs(flux[ordinary] - transfer) < 1e-16,
+        "sealed pressure compatibility preserves the resolved physical transfer", flux[ordinary]);
+    checks.Expect(std::abs(flux[leaf]) < 1e-24,
+        "roundoff does not inject fluid into a source-free thin pressure branch", flux[leaf]);
+}
+
 bool Benchmark(const GridLayout& layout) {
     constexpr int samples = 60;
     BoxMotion box = InteriorBox();
@@ -801,6 +830,7 @@ int main(int argc, char** argv) {
     TestCoupledRejection(checks, layout);
     TestTransportedBox(checks, layout);
     TestOwnedBoxTopology(checks, layout);
+    TestPressureCompatibility(checks);
     std::cout << "SUMMARY checks=" << checks.total << " failures=" << checks.failures << '\n';
     return checks.failures ? EXIT_FAILURE : EXIT_SUCCESS;
 }

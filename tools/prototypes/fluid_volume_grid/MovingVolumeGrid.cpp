@@ -160,13 +160,18 @@ bool SolvePressure(const std::vector<FaceFlux>& faces, std::vector<double>& rhs,
     }
     // A pressure gauge cannot fix an incompatible sealed component. Only
     // remove the representable summation error, independently per component.
-    std::vector<std::size_t> size(count);
+    std::vector<std::size_t> size(count), balanceAt(count, count);
     std::vector<double> sum(count), absoluteSum(count);
     for (std::size_t cell = 0; cell < count; ++cell) {
         const auto group = root(cell);
         ++size[group];
         sum[group] += rhs[cell];
         absoluteSum[group] += std::abs(rhs[cell]);
+        if (balanceAt[group] == count ||
+            std::abs(rhs[cell]) > std::abs(rhs[balanceAt[group]]) ||
+            (std::abs(rhs[cell]) == std::abs(rhs[balanceAt[group]]) &&
+             diagonal[cell] > diagonal[balanceAt[group]]))
+            balanceAt[group] = cell;
     }
     for (std::size_t group = 0; group < count; ++group) {
         const double roundoff = 128 * std::numeric_limits<double>::epsilon() *
@@ -176,10 +181,12 @@ bool SolvePressure(const std::vector<FaceFlux>& faces, std::vector<double>& rhs,
             return false;
         }
     }
-    for (std::size_t cell = 0; cell < count; ++cell) {
-        const auto group = root(cell);
-        rhs[cell] -= sum[group] / double(size[group]);
-    }
+    // Eliminate representational incompatibility at a resolved source.
+    // Broadcasting it to an originally source-free thin branch creates a
+    // pressure proportional to 1/conductance even with no physical flow.
+    for (std::size_t group = 0; group < count; ++group)
+        if (balanceAt[group] != count)
+            rhs[balanceAt[group]] -= sum[group];
 
     std::vector<double> residual = rhs;
     std::vector<double> direction(count), product(count);

@@ -1,0 +1,4 @@
+PASS 0 rows=0 proposals=4 accepted=1 completed=4 x=0.41666668653488159 vx=100 reason=
+PASS 1 rows=0 proposals=1 accepted=0 completed=0 x=0 vx=0 reason=pressure step's swept bound has a native collision candidate
+PASS 2 rows=0 proposals=1 accepted=0 completed=0 x=0 vx=0 reason=pressure step cannot forecast another moving collision body
+PASS 3 rows=0 proposals=4 accepted=1 completed=4 x=0.41666668653488159 vx=100 reason=

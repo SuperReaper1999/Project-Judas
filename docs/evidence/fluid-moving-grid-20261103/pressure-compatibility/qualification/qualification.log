@@ -1,0 +1,754 @@
+128 samples across all chart axes, maximum errors: cell 2.1684043449710089e-18 m^3, face 1.3877787807814457e-17 m^2, volume 6.2172489379008766e-15 m^3, height 4.4408920985006262e-16 m
+Maximum moving aperture errors: reversal 2.7755575615628914e-17 m^2, refined quadrature 3.2966994924221726e-07 m^2, independent dry complement 3.2966994924221726e-07 m^2
+28 flat phase geometry checks, 0 failures
+20160 independent volumes across three axes, maximum reconstruction error 2.1684043449710089e-19 m^3, plane error 2.7755575615628914e-17 m
+18 cell phase checks, 0 failures
+16 water geometry query checks, 0 failures
+PASS fully submerged affine force 9.2534381770404401e-13
+PASS fully submerged off-centre torque 1.878414837149001e-12
+PASS partial immersion force 2.2958338407482174e-13
+PASS partial immersion off-centre torque 2.2748467065386707e-13
+PASS oblique partial immersion force 1.0247593068766006e-13
+PASS oblique partial immersion off-centre torque 3.2280856577246332e-13
+PASS 4 mm dry gap has no water pressure force or torque 0
+PASS grazing waterline transfers no hydrostatic load 0
+PASS clipped planar grid-wall pressure matches water-force oracle 0
+PASS clipped planar grid-wall pressure matches water-torque oracle 0
+PASS clipped planar grid-wall pressure matches water-force oracle 3.5527214079677369e-15
+PASS clipped planar grid-wall pressure matches water-torque oracle 5.0242985630296916e-15
+PASS clipped planar grid-wall pressure matches water-force oracle 4.5553775209923607e-13
+PASS clipped planar grid-wall pressure matches water-torque oracle 3.5989485217685782e-13
+PASS clipped planar grid-wall pressure matches water-force oracle 2.4796089976815073e-13
+PASS clipped planar grid-wall pressure matches water-torque oracle 9.4031042829711193e-13
+PASS clipped planar grid-wall pressure matches water-force oracle 0
+PASS clipped planar grid-wall pressure matches water-torque oracle 0
+PASS clipped planar grid-wall pressure matches water-force oracle 3.5527208785732572e-15
+PASS clipped planar grid-wall pressure matches water-torque oracle 1.7763576864329958e-15
+PASS clipped planar grid-wall pressure matches water-force oracle 1.4210854715202004e-14
+PASS clipped planar grid-wall pressure matches water-torque oracle 1.1368683772161603e-13
+PASS clipped planar grid-wall pressure matches water-force oracle 1.8192626561791224e-12
+PASS clipped planar grid-wall pressure matches water-torque oracle 1.0169580849242969e-12
+PASS clipped planar grid-wall pressure matches water-force oracle 0
+PASS clipped planar grid-wall pressure matches water-torque oracle 0
+PASS clipped planar grid-wall pressure matches water-force oracle 1.7763585334653372e-15
+PASS clipped planar grid-wall pressure matches water-torque oracle 2.5121485328367098e-15
+PASS clipped planar grid-wall pressure matches water-force oracle 4.6086281814366654e-13
+PASS clipped planar grid-wall pressure matches water-torque oracle 4.6880363203563191e-13
+PASS clipped planar grid-wall pressure matches water-force oracle 4.7918192933841982e-13
+PASS clipped planar grid-wall pressure matches water-torque oracle 1.1146639167236572e-13
+PASS swept waterline crossing gives exact mean reaction 5.6849234697273414e-14
+PASS swept waterline crossing gives exact mean torque 5.6848657064593017e-14
+PASS swept waterline reaction matches pressure potential change 1.4210854715202004e-14
+PASS reverse traversal preserves mean load and reverses work 1.7053025658242404e-13
+PASS moving work fixture builds 0
+PASS moving reaction retains solid owner 0
+PASS average solid force is the swept-volume work adjoint 1.1102230246251565e-15
+PASS moving reaction has nonzero work -0.82790452080000032
+PASS start-only wall traction is a failing moving-work control 0
+PASS closed moving box reaction is pressure-gauge invariant 6.4940311700395266e-14
+PASS moving force and torque rotate with the grid chart 3.9544467539602277e-14
+PASS nonfinite pressure rejects without publishing a reaction 0
+PASS cell-centre pressure is a failing exact moving hydrostatic-force control 169.67427900985118
+PASS affine split matches independent fully wet moving force 1.6872061314252084e-12
+PASS affine split matches independent fully wet moving torque 1.2815008082720279e-12
+PASS affine split matches exact hydrostatic geometric work 6.5369931689929217e-13
+SUMMARY grid pressure reaction 48 checks 0 failures
+PASS certified planar phase advances 0
+PASS certified planar phase advances 0
+PASS solved planar loads retain their owning box 0
+PASS 4 mm same-cell dry gap transfers no water force 0
+PASS 4 mm same-cell dry gap transfers no water torque 0
+PASS actual dry reaction retains only physical air buoyancy 0
+PASS dry cut box and horizontal water stay at rest 0
+PASS certified planar phase advances 0
+PASS 4 mm positive immersion gives nonzero exact buoyancy 0
+PASS partial immersion gives exact off-centre torque 0
+PASS supported partially wet cut box retains rest and water volume 3.0198066269804258e-14
+PASS certified planar phase advances 0
+PASS certified planar phase advances 0
+PASS solved planar loads retain their owning box 0
+PASS 4 mm same-cell dry gap transfers no water force 0
+PASS 4 mm same-cell dry gap transfers no water torque 0
+PASS actual dry reaction retains only physical air buoyancy 0
+PASS dry cut box and horizontal water stay at rest 0
+PASS certified planar phase advances 0
+PASS 4 mm positive immersion gives nonzero exact buoyancy 0
+PASS partial immersion gives exact off-centre torque 0
+PASS supported partially wet cut box retains rest and water volume 3.1086244689504383e-14
+PASS certified planar phase advances 0
+PASS certified planar phase advances 0
+PASS solved planar loads retain their owning box 0
+PASS 4 mm same-cell dry gap transfers no water force 0
+PASS 4 mm same-cell dry gap transfers no water torque 0
+PASS actual dry reaction retains only physical air buoyancy 0
+PASS dry cut box and horizontal water stay at rest 0
+PASS certified planar phase advances 0
+PASS 4 mm positive immersion gives nonzero exact buoyancy 0
+PASS partial immersion gives exact off-centre torque 0
+PASS supported partially wet cut box retains rest and water volume 7.0166095156309893e-14
+PASS certified planar phase advances 0
+PASS well-balanced solve preserves a nonzero divergence-free velocity 0
+PASS velocity perturbation produces actual conservative transport 0
+PASS same-total nonplanar water fails geometry admission 0
+PASS nonplanar rejection preserves the previous fluid and body load 0
+PASS certified planar phase advances 0
+PASS prescribed moving submerged box does work on real fluid -117.68532839847126
+PASS dynamic solid and fluid pressure work are reciprocal 1.9895196601282805e-13
+PASS moving submerged body conserves water volume 7.1054273576010019e-15
+PASS certified planar phase advances 0
+PASS actual waterline crossing produces pressure-driven fluid work -2.8328991065728437
+PASS crossing pressure work separates exact hydrostatics and reciprocal dynamics 7.9936057773011271e-15
+PASS waterline crossing conserves material volume 4.4408920985006262e-15
+PASS waterline crossing has verifiable finite face geometry 0
+MEASURE crossing mean_hydro_N=5.9731127999999929 above_plane_water_m3=0.00010449925101822695 outside_departure_support_m3=0 max_donor_cfl=0.61124812754552527
+PASS phase flux excludes unreachable dry departure slabs 0
+PASS evolved nonplanar state requires a new phase reconstruction 0
+PASS faster crossing rejects exhausted cut-cell donor without publication 0
+SUMMARY solved planar volume 50 checks 0 failures
+PASS nonplanar free surface continues through 24 evolving steps 24
+PASS evolving free surface conserves global water volume 7.9936057773011271e-15
+PASS published phase flux reproduces each evolving cell water update 0
+PASS gravity causes resolved flow on sloped free surface 0.2731733661115533
+PASS nonplanar continuation actually transports material 0.0010330964982318003
+PASS independent local wet and dry loops advance 0
+PASS high local water transports water even above global reference 4.163336342344337e-17
+PASS dry local air transports only air even below global reference 0
+PASS disjoint wet circulation creates no phantom pressure on dry body 0
+PASS no water is invented across the untouched dry gap 0
+PASS nonplanar overcapacity state is rejected 0
+PASS overcapacity rejection leaves the last fluid and body result intact 0
+PASS evolving solver continues after a dry box crosses into water 10
+PASS repeated moving box sweep conserves all water 1.0658141036401503e-14
+PASS moving box phase flux reproduces each cell update 2.5849394142282115e-26
+PASS moving box has nonzero finite work through actual pressure evolution 0.97698412423581038
+PASS original 12 mm crossing succeeds with exact path subdivision 0
+PASS subdivision addresses cut-cell capacity with two admitted half steps 0.53151380450300978
+PASS subdivided original crossing conserves global water 6.2172489379008766e-15
+PASS adaptive endpoint matches two independently submitted half intervals 0
+PASS subdivision publishes time-weighted force and torque once 0
+PASS original faster crossing still rejects with subdivision disabled 0
+PASS unsplit capacity failure does not replace accepted endpoint or reaction 0
+PASS neutral dry body has only physical air buoyancy 8.7243668792238718e-11
+PASS finite-body pressure force independently balances neutral weight 1.8051668799883439e-10
+PASS neutral finite-body rest preserves water quantity 0
+PASS neutral half-submerged body stays at hydrostatic rest 2.6260489217087894e-11
+PASS finite-body pressure force independently balances neutral weight 2.9924553024829776e-08
+PASS neutral finite-body rest preserves water quantity 3.5527136788005009e-15
+PASS unprescribed finite-mass body crosses into evolving water 1.0335945687899717
+PASS water pressure measurably slows the entering body 0.60709556780144047
+PASS reported reaction closes all components of rigid impulse 5.574234407390577e-09
+PASS rigid position and accepted velocity use the same motion 9.6277152916712794e-17
+PASS coupled pressure work and swept hydrostatic potential close 4.3537028426854363e-09
+PASS unprescribed crossing retains all water 1.5099033134902129e-14
+PASS unprescribed finite-mass body crosses into evolving water 1.0412258441743145
+PASS water pressure measurably slows the entering body 0.63759321783339418
+PASS reported reaction closes all components of rigid impulse 2.577826840877151e-09
+PASS rigid position and accepted velocity use the same motion 1.1015494072452725e-16
+PASS coupled pressure work and swept hydrostatic potential close 1.9745279994376475e-09
+PASS unprescribed crossing retains all water 1.3322676295501878e-14
+PASS coupled waterline transport closes the material momentum ledger 1.3059401345263471e-13
+PASS coupled waterline actually advects and merges unequal half velocities 0.013036306610909083
+PASS nonplanar moving fixture solves after cyclic chart rotation 0
+PASS transported phase water rotates with its chart 1.7347234759768071e-18
+PASS actual evolving pressure and flow rotate with the chart 4.2632564145606011e-14
+PASS coupled moving pressure force and torque rotate 9.0949470177292824e-13
+SUMMARY evolving volume 47 checks 0 failures
+PASS motion geometry  value=0
+PASS moving-box pressure and material flux  value=0
+PASS two-cell translation carries its analytical primal mass flux value=0
+PASS two-cell analytic momentum transport  value=0
+PASS longitudinal half-duals move analytical momentum value=0
+PASS transverse boundary half-duals move analytical momentum value=0
+PASS motion geometry  value=0
+PASS moving-box pressure and material flux  value=0
+PASS advect actual two-phase moving-box momentum  value=0
+PASS paired dual fluxes preserve all momentum components value=1.2434497875801753e-14
+PASS reported momentum agrees with independent primal-to-dual observation value=0
+PASS actual two-phase flux closes primal material mass value=5.3290705182007514e-14
+PASS paired averages close the dual material mass value=3.907985046680551e-14
+PASS donor momentum mixing dissipates rather than adding energy value=-0.11828162442466761
+PASS reported kinetic energy agrees with independent dual mass value=0
+PASS actual moving flux obeys dual material donor budget value=0.10551125909051141
+PASS manufactured uniform velocity over actual moving material flux  value=0
+PASS constant advected velocity survives changing cell capacities value=2.7533531010703882e-14
+PASS inconsistent material flux rejects without partial publication value=0
+PASS material flux through a sealed wall rejects without publication value=0
+PASS non-finite advected momentum rejects without publication value=0
+PASS conservative but excessive dual donor flux rejects transactionally value=0
+PASS motion geometry  value=0
+PASS moving-box pressure and material flux  value=0
+PASS topology fixture actually opens a closed face value=0
+PASS moving aperture topology change rejects without inventing face momentum value=0
+SUMMARY checks=26 failures=0
+PASS half-dual geometry  value=0
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=0
+PASS merge reports lost energy separately from stationary wall constraint value=2162.5
+PASS known two-cell opening mixes the actual adjacent owners value=0
+PASS opening two distinct velocities loses exactly the analytical mixing energy value=2000
+PASS fixed exterior walls close the known half-cell impulse and work value=150
+PASS half-dual geometry  value=0
+PASS closing witness changes a real cut face from open to closed value=0
+PASS half-dual material projection  value=0
+PASS owned half-dual transport  value=0
+PASS half-dual momentum closes with reported roundoff value=5.6843418860808015e-14
+PASS half-dual donor transport has independently bounded kinetic energy value=-22.760956117883609
+PASS each half receives exactly its share of the primal mass change value=1.1368683772161603e-13
+PASS closing interval transports material before the aperture shuts value=-20.896847031460499
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=4.9737991503207013e-14
+PASS merge reports lost energy separately from stationary wall constraint value=35.495624805915952
+PASS closing face leaves distinct half momentum on both sides of the obstruction value=0.039820077802593445
+PASS half-dual geometry  value=0
+PASS half-dual material projection  value=0
+PASS owned half-dual transport  value=0
+PASS half-dual momentum closes with reported roundoff value=0
+PASS half-dual donor transport has independently bounded kinetic energy value=0
+PASS each half receives exactly its share of the primal mass change value=0
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=0
+PASS merge reports lost energy separately from stationary wall constraint value=0
+PASS a stationary blocked face never transfers between its two owners value=0
+PASS half-dual geometry  value=0
+PASS reopening witness restores a shared cut face value=0
+PASS half-dual material projection  value=0
+PASS owned half-dual transport  value=0
+PASS half-dual momentum closes with reported roundoff value=2.0516140869508703e-13
+PASS half-dual donor transport has independently bounded kinetic energy value=-15.731145883724309
+PASS each half receives exactly its share of the primal mass change value=1.7053025658242404e-13
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=1.8005388846553672e-13
+PASS merge reports lost energy separately from stationary wall constraint value=0.21464324711453742
+PASS newly open shared velocity uses the actual adjacent half masses value=0.7405710199764155
+PASS obstructed primal flux rejects without changing half ownership value=0
+PASS invalid opening velocity rejects without publishing an impulse value=0
+PASS half-dual geometry  value=0
+PASS pressure ownership fixture opens during the step value=0
+PASS half-dual weighted pressure predictor  value=0
+PASS pressure sees one weighted flux without merging its two physical owners value=0.050000000000000044
+PASS matched pressure metric for half owners  value=0
+PASS shared pressure impulse maps to both owned halves  value=0
+PASS pressure changes the true shared flow but retains relative velocity before opening value=1.0727454973935382
+PASS mapped pressure impulse closes independent owned momentum value=9.0949470177292824e-13
+PASS mapped half pressure work matches the actual projection value=2.5011104298755527e-12
+PASS actual pressure impulse closes with moving solid and independently integrated tank walls value=2.6201263381153694e-14
+PASS owned half-dual transport  value=0
+PASS half-dual momentum closes with reported roundoff value=1.0089706847793423e-12
+PASS half-dual donor transport has independently bounded kinetic energy value=-102.01646272254379
+PASS each half receives exactly its share of the primal mass change value=1.1368683772161603e-13
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=1.5320522628314848e-12
+PASS merge reports lost energy separately from stationary wall constraint value=100.18384615903187
+PASS end topology merges halves only after actual open-face material transport value=0
+PASS mismatched metric pressure control really solves  value=0
+PASS mismatched kinetic metric rejects instead of inventing a pressure impulse value=0
+PASS mismatched predictor rejects without publishing mapped pressure value=0
+PASS mapped pressure rejects flux through a sealed face value=0
+PASS half-dual geometry  value=0
+PASS opening cut face has one empty starting material owner value=0
+PASS stale velocity in an empty half cannot move the actual material owner  value=0
+PASS half-dual geometry  value=0
+PASS a real opening can expose two previously empty owners value=0
+PASS pressure refuses to invent inertia on a newly open face with no starting material value=0
+PASS same-step transit from an empty half donor rejects value=0
+PASS half-dual geometry  value=0
+PASS half-dual material projection  value=0
+PASS opposed transverse half-fluxes cancel only their net mass value=0
+PASS owned half-dual transport  value=0
+PASS half-dual momentum closes with reported roundoff value=0
+PASS half-dual donor transport has independently bounded kinetic energy value=-810
+PASS each half receives exactly its share of the primal mass change value=0
+PASS half-dual face ownership mapping  value=0
+PASS open merge and wall impulse close independent momentum value=0
+PASS merge reports lost energy separately from stationary wall constraint value=2117.5
+PASS opposed half-flows carry momentum even at zero net dual mass flux value=1.8500000000000001
+SUMMARY checks=82 failures=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 body initially supplies kinetic energy value=0.0048685182486407109
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 geometry admission value=0
+PASS uniform tracer 0.000000 pressure and transport admission value=0
+PASS uniform tracer 0.000000 exact endpoint capacity value=0
+PASS uniform tracer 0.000000 cell continuity value=1.7894011467879667e-15
+PASS uniform tracer 0.000000 constant concentration follows capacity value=0
+PASS uniform tracer 0.000000 conserved global water volume value=0
+PASS uniform tracer 0.000000 impermeable outer wall value=0
+PASS uniform tracer 0.000000 moving solid produces actual fluid flux value=0.00026945924357472435
+PASS uniform tracer 0.000000 moving boundary work uses same pressure and volume value=0
+PASS uniform tracer 0.000000 discrete pressure energy identity value=9.9746599868666408e-18
+PASS uniform tracer 0.000000 body and fluid pressure work are opposite value=1.0408340855860843e-17
+PASS uniform tracer 0.000000 admitted conservative CFL value=0.13096200485044321
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 body initially supplies kinetic energy value=1.950328410405469
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 geometry admission value=0
+PASS uniform tracer 0.400000 pressure and transport admission value=0
+PASS uniform tracer 0.400000 exact endpoint capacity value=0
+PASS uniform tracer 0.400000 cell continuity value=1.7894011467879667e-15
+PASS uniform tracer 0.400000 constant concentration follows capacity value=9.9920072216264089e-16
+PASS uniform tracer 0.400000 conserved global water volume value=1.8207657603852567e-14
+PASS uniform tracer 0.400000 impermeable outer wall value=0
+PASS uniform tracer 0.400000 moving solid produces actual fluid flux value=0.00026945924357473205
+PASS uniform tracer 0.400000 moving boundary work uses same pressure and volume value=0
+PASS uniform tracer 0.400000 discrete pressure energy identity value=4.4408920985006262e-15
+PASS uniform tracer 0.400000 body and fluid pressure work are opposite value=4.2188474935755949e-15
+PASS uniform tracer 0.400000 admitted conservative CFL value=0.13096200485044321
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 body initially supplies kinetic energy value=4.8685182486407141
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 geometry admission value=0
+PASS uniform tracer 1.000000 pressure and transport admission value=0
+PASS uniform tracer 1.000000 exact endpoint capacity value=0
+PASS uniform tracer 1.000000 cell continuity value=1.7890487810819089e-15
+PASS uniform tracer 1.000000 constant concentration follows capacity value=2.4980018054066022e-15
+PASS uniform tracer 1.000000 conserved global water volume value=1.9095836023552692e-13
+PASS uniform tracer 1.000000 impermeable outer wall value=0
+PASS uniform tracer 1.000000 moving solid produces actual fluid flux value=0.00026945924357473199
+PASS uniform tracer 1.000000 moving boundary work uses same pressure and volume value=0
+PASS uniform tracer 1.000000 discrete pressure energy identity value=1.021405182655144e-14
+PASS uniform tracer 1.000000 body and fluid pressure work are opposite value=1.1102230246251565e-14
+PASS uniform tracer 1.000000 admitted conservative CFL value=0.13096200485044321
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air geometry admission value=0
+PASS submerged translating box in layered water and air pressure and transport admission value=0
+PASS submerged translating box in layered water and air continuity value=1.4531085261790385e-15
+PASS submerged translating box in layered water and air conserves water volume value=8.8817841970012523e-15
+PASS submerged translating box in layered water and air remains within wet and dry capacity value=0
+PASS submerged translating box in layered water and air transports the free interface value=0.000421244505913054
+PASS submerged translating box in layered water and air discrete pressure energy identity value=4.5974335449727732e-13
+PASS submerged translating box in layered water and air body and fluid pressure work are opposite value=1.6431300764452317e-14
+PASS hydrostatic pool geometry admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pool pressure and transport admission value=0
+PASS hydrostatic pressure leaves layered water still value=1.7613688285678109e-11
+PASS hydrostatic pressure leaves occupied volume unchanged value=5.2735593669694936e-16
+PASS hydrostatic perturbation pressure and transport admission value=0
+PASS equilibrium pressure does not erase actual circulation value=0.00031250000000000049
+PASS oblique gravity geometry admission value=0
+PASS oblique gravity pressure and transport admission value=0
+PASS oblique gravity pressure difference is hydrostatic value=1.2105374480597675e-09
+PASS oblique gravity creates no motion at equilibrium value=1.6139867220488213e-13
+PASS rollback fixture geometry admission value=0
+PASS rollback fixture pressure and transport admission value=0
+PASS non-finite water rejects without publication value=0
+PASS overfilled cell rejects without publication value=0
+PASS missing face state rejects without publication value=0
+PASS invalid timestep rejects without publication value=0
+PASS changed solid capacity without swept volume rejects without publication value=0
+PASS excess transport CFL rejects without publication value=0
+PASS identical admitted inputs replay exactly value=0
+PASS solid leaving basin rejects without replacing published geometry value=0
+PASS coupled tank geometry admission value=0
+PASS neutral oblique coupled pressure admission value=0
+PASS neutral box and water remain exactly at rest under oblique gravity value=0
+PASS neutral box receives exactly the displaced-weight pressure value=0
+PASS coupled tank geometry admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box accelerates in expected direction with pressure-added inertia value=5.5791493910374257
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box coupled pressure admission value=0
+PASS light box follows an actual moving trajectory value=0.21755164316494924
+PASS light box pressure force closes the rigid impulse value=6.0518656752606148e-10
+PASS light box published pose follows coupled velocity value=5.2041704279304213e-17
+PASS light box fluid reaction equals opposite rigid work value=1.7763568394002505e-14
+PASS light box coupled projection energy closes value=1.5495515981456265e-10
+PASS light box water volume remains conserved value=0
+PASS coupled tank geometry admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box accelerates in expected direction with pressure-added inertia value=-4.1201836649475201
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box coupled pressure admission value=0
+PASS heavy box follows an actual moving trajectory value=-0.15664422983413456
+PASS heavy box pressure force closes the rigid impulse value=7.6902750834051403e-10
+PASS heavy box published pose follows coupled velocity value=4.8572257327350599e-17
+PASS heavy box fluid reaction equals opposite rigid work value=2.6645352591003757e-15
+PASS heavy box coupled projection energy closes value=3.1519839516214176e-10
+PASS heavy box water volume remains conserved value=1.7763568394002505e-15
+PASS generated water motion geometry admission value=0
+PASS generated water motion pressure and transport admission value=0
+PASS water-driven release coupled pressure admission value=0
+PASS moving water transfers pressure and moves the stopped box without gravity value=0.21792340347154063
+PASS water-driven release closes the pressure impulse and work value=1.6875389974302379e-14
+PASS coupled tank geometry admission value=0
+PASS coupled rollback coupled pressure admission value=0
+PASS unsupported mixed phase rejects coupled publication value=0
+PASS inadmissible moving trajectory leaves prior fluid and box intact value=0
+PASS coupled tank geometry admission value=0
+PASS unresolved subcell body rejects without inventing pressure response value=0
+PASS coupled tank geometry admission value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined pressure, volume and momentum step  value=0
+PASS joined trajectory moves the buoyant box value=0.092331612606410207
+PASS joined trajectory conserves water value=0
+PASS joined trajectory rigid impulse closes value=6.5565330942263245e-12
+PASS joined trajectory pressure projection energy closes value=5.1799259326301694e-12
+PASS joined trajectory actually advects nonuniform momentum value=0.051632255146403239
+PASS joined transport resolves nonzero wall-normal momentum before publication value=0.00096493852815275789
+PASS sealed boundary accounts for all transported wall impulse value=1.5892970668890741e-14
+PASS sealed boundary accounts for kinetic loss value=1.1339076920674711e-15
+PASS coupled tank geometry admission value=0
+PASS occluder pressure control coupled pressure admission value=0
+PASS unsupported closed face cannot partially publish a joined step value=0
+PASS coupled tank geometry admission value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS joined side-owned moving pressure step  value=0
+PASS independent owned endpoint geometry admission value=0
+PASS reopened face has one shared velocity value=0
+PASS actual moving box closes and reopens a face with distinct side-owned state value=3.3588294538618624e-05
+PASS owned topology conserves water value=1.7763568394002505e-15
+PASS owned topology rigid impulse closes value=7.8051870539691537e-09
+PASS owned topology pressure work closes value=5.7336964321384742e-10
+PASS owned topology advection conserves momentum value=3.8082171965419481e-14
+PASS sealed pressure compatibility preserves the resolved physical transfer value=2.9999999999999903e-05
+PASS roundoff does not inject fluid into a source-free thin pressure branch value=-1.0799999999999965e-27
+SUMMARY checks=315 failures=0
+PASS authoritative flat volume extracts 0
+PASS sealed completely dry or full grid has no free surface 0
+PASS authoritative flat volume extracts 0
+PASS sealed completely dry or full grid has no free surface 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS solid crossing or touching removes its exact top rectangle 3.25
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS authoritative flat volume extracts 0
+PASS solid crossing or touching removes its exact top rectangle 3.25
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS authoritative flat volume extracts 0
+PASS 4 mm gap above the surface leaves its full area 4
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS height step with solid crossing extracts 0
+PASS vertical step faces point into low water side and clip solid exactly 0.203125
+PASS vertical clipping preserves unique finite positive-area faces 0
+PASS isolated interior full cell extracts 0
+PASS isolated water has six oriented sides and a downward free face 1.5
+PASS nonfinite phase plane rejects without replacing mesh 0
+SUMMARY grid water surface 28 checks 0 failures
+128 oblique boxes, maximum volume error 3.4694469519536142e-17 m^3, area 5.5511151231257827e-16 m^2, force 8.5323005044265476e-16 N, torque 1.1157603309187458e-15 N m, centroid-only torque error 0.0036761849893467849 N m
+16 oriented cut geometry checks, 0 failures
+translation evaluations 252, face residual 5.0680193982438615e-11 m^3, wall residual 5.0680193548757746e-11 m^3
+angular evaluations 200, face residual 6.0947775282595498e-13 m^3, wall residual 6.0947781381232718e-13 m^3
+angular refined midpoint aperture error 1.9149070523694078e-10 m^2, reversal 6.9388939039072284e-18, frozen volume work error 0.0002387707142475543 m^3
+16 oriented sweep checks, 0 failures
+PASS same swept geometry solves in water and air 0
+PASS prescribed motion transfers pressure work proportional to phase density 4.85660630429728
+PASS fluid pressure work closes with swept rigid force and torque 0
+PASS moving OBB conserves both phase inventories 0
+PASS same swept geometry solves in water and air 0
+PASS prescribed motion transfers pressure work proportional to phase density 0.090882971695586082
+PASS fluid pressure work closes with swept rigid force and torque 2.1379828463174988e-11
+PASS moving OBB conserves both phase inventories 0
+PASS rotational motion creates real pressure torque 0
+PASS same swept geometry solves in water and air 0
+PASS prescribed motion transfers pressure work proportional to phase density 0.82155404227495155
+PASS fluid pressure work closes with swept rigid force and torque 1.2055767495411374e-10
+PASS moving OBB conserves both phase inventories 0
+PASS rotational motion creates real pressure torque 0
+PASS fully wet hydrostatic OBB solves 0
+PASS oblique gravity applies displaced weight without flow or centre torque 0
+PASS unsupported mixed OBB phase leaves output intact 0
+SUMMARY oriented moving-volume pressure 17 checks 0 failures
+PASS translating piston cuts actual half cells 0
+PASS new volume lies below a midpoint that remains solid 0.0025000000000000022
+PASS known single inlet fills the true owner without midpoint flux 0
+PASS same total inflow to the wrong halves is rejected 0
+PASS half-cell volume imbalance rejects transactionally 0
+PASS reversed piston evacuates precisely the disappearing lower volume 0
+PASS piston water and air have separate geometric owners 0
+PASS wet and dry layers fit below the solid midpoint 0.0012500000000000011
+PASS crosswise momentum owners clip the same horizontal water layer 0
+PASS swept birth has cut-cell phase geometry 0
+PASS newborn water and air occupy only the lower half 0
+PASS time-averaged slit opening and independent wet traces match analytic integrals 0
+PASS closed upper slit and midpoint cannot supply either phase 0
+PASS reversing the solid path preserves both time-averaged wet traces 0
+PASS exact midpoint water plane has wet lower and dry upper traces 0
+PASS missing boundary owner contributes no wet trace 0
+PASS out-of-cell phase rejects without modifying either geometry output 0
+PASS reference primal and fine cuts build 0
+PASS nonflat phase inventory reconstructs 0
+PASS reference fine-grid wet apertures build 0
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 1.3877787807814457e-17
+PASS exact child cuts sum to their primal control volume 6.9388939039072284e-18
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 1.3877787807814457e-17
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 1.3877787807814457e-17
+PASS exact child cuts sum to their primal control volume 1.0408340855860843e-17
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 1.3877787807814457e-17
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 6.9388939039072284e-18
+PASS exact child cuts sum to their primal control volume 6.9388939039072284e-18
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 6.9388939039072284e-18
+SUMMARY grid half-cell geometry 47 checks 0 failures
+PASS piston creates a thin water cavity 0
+PASS same geometry admits pressure with newly exposed water and air 0
+PASS agglomerated pressure reaction closes with the real swept boundary 7.9580786405131221e-13
+PASS fluid work uses the same pressure metric and actual phase density -5.6843418860808015e-13
+PASS recovered transfers close every primal cell and retain both inventories 0
+PASS pressure actually fills only the exposed half 0
+PASS pressure actually fills only the exposed half 0
+PASS pressure actually fills only the exposed half 0
+PASS pressure actually fills only the exposed half 0
+PASS conservative axial and lateral inlets supply the exact new cavity volume 0.010000000000000009
+PASS unsupported mixed inputs leave the last pressure result intact 0
+PASS unmerged pressure asks an initially solid cell for outgoing material 0
+PASS grouped pressure supplies the new cells from their material owners 0
+PASS every newly opened cell gains its exact fully wet endpoint inventory 0.0010000000000000009
+SUMMARY exposed-volume pressure 14 checks 0 failures
+38/38 checks passed
+SUMMARY phase flux repair 17 checks 0 failures
+PASS build exact three-axis pressure owners 0
+PASS known masses include cut material and distinct wet and dry halves 0
+PASS map independently manufactured pressure impulse 0
+PASS impulse reaches exactly the two geometric owners on each axis 0
+PASS pressure work equals independent per-owner kinetic change 0
+PASS inconsistent pressure work rejects without changing momentum 0
+PASS nonfinite authoritative water rejects without changing pressure owners 0
+PASS pressure projects a fully wet piston with initially solid cells 0
+PASS birth gains known water mass across an initially massless lateral connection 0
+PASS fully wet pressure output agrees with its exact phase ledger 1.7347234759768071e-18
+PASS eliminated pressure direction can carry volume without inventing initial impulse 0
+PASS assigning fictitious initial inertia to the same direction rejects transactionally 0
+PASS geometric momentum crosses a genuine cell birth 0
+PASS newborn lower half inherits momentum and solid upper half remains empty -0.5
+PASS uniform momentum transport conserves impulse before endpoint constraints 5.5511151231257827e-15
+PASS uniform transport changes energy only through the known exterior wall reaction 0
+PASS a one-ulp phase complement is accounted without a fictitious stream 1.4570191841228873e-16
+PASS build stratified phase-circulation witness 0
+PASS valid air moves around the same four-face loop 0
+PASS balanced ledger cannot send water through a dry transverse trace 0
+PASS build a stationary cut inside the momentum cell 0
+PASS lower dam has known wet midpoint aperture 0.25
+PASS wet midpoint passes the balanced transfer 0
+PASS wet midpoint conserves uniform material momentum 0
+PASS build a stationary cut inside the momentum cell 0
+PASS higher dam has known air-only midpoint aperture 0
+PASS balanced water ledger cannot cross a stationary air-only midpoint 0
+PASS mixed grid opens a submerged cavity in the coupled transport 0
+PASS new wet cavity and entire mixed tank close their inventories 0.0010000000000000009
+PASS new material inherits motion below the still-solid half 0.23449666487169343
+PASS new cell's finite-mass inlet obeys its own pressure-drop relation 0
+PASS projection and phase remap preserve their impulse and energy ledgers 6.5052130349130266e-17
+PASS same-cell four-millimetre dry gap survives geometric momentum 0
+PASS water does no work across the dry gap compared with an air-only control 0
+PASS prescribed paths approach opening from both sides 0
+PASS late inlet pressure follows independent open-duration inertia 1890.1890000732146
+PASS a late opening has no finite impulse jump as its duration vanishes 0.013066345311722216
+PASS strict phase reconstruction rejects a swept endpoint overfill 0
+PASS verified endpoint representation preserves exact fully wet ownership 1.0842021724855044e-19
+PASS real endpoint capacity mismatch rejects without publishing a correction 0
+SUMMARY geometric momentum 40 checks 0 failures
+PASS reference stationary cut geometry builds 0
+PASS adjacent positive cut capacities are separated by a completely blocked face 0
+PASS a valid seed is preserved bit for bit 0
+PASS blocked direct face and too-short graph radius reject without changing output 0
+PASS nearest real face path takes three hops around the obstruction 0
+PASS no source volume is created or discarded on the detour 0
+PASS even an unbounded graph search rejects exhausted free capacity transactionally 0
+PASS nearest recipients are deterministic, with preexisting seed only added to 0
+PASS sub-ulp excess bypasses a recipient that would round it away or create volume 5.5511151231257827e-17
+PASS reachable space alone is insufficient when it cannot represent the exact excess 0
+PASS fully solid seed rejects even with free surrounding cells 0
+PASS nonfinite authored volume rejects transactionally 0
+PASS moving solids cannot be substituted for the stationary seed geometry 0
+SUMMARY parcel seed import 13 checks 0 failures
