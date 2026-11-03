@@ -1,0 +1,80 @@
+        bool implicitResolved=false;
+        // This stage is a prescribed-geometry experiment. Callback rigid motion
+        // is not represented by this operator and is still the baseline path.
+        const auto stationary=[](const auto& solid) {
+            return solid.resolvedMotion.empty() &&
+                solid.previousPose.position==solid.currentPose.position &&
+                (solid.previousPose.rotation==solid.currentPose.rotation || solid.previousPose.rotation==-solid.currentPose.rotation);
+        };
+        if(iterations>0 && spheres.empty() && terrains.empty() &&
+           std::all_of(boxes.begin(),boxes.end(),stationary) &&
+           std::all_of(spheres.begin(),spheres.end(),stationary) &&
+           std::all_of(terrains.begin(),terrains.end(),stationary)) {
+
+            struct SupportIdentity { std::size_t particle; const PreparedBox* box; glm::vec3 normal; };
+            std::vector<SupportIdentity> identities;
+            std::vector<FluidVelocityContact> supports;
+            const auto discover=[&] {
+                std::size_t added=0;
+                for(std::size_t i=0;i<count;++i) {
+                    if(contacts[i].empty())continue;
+                    const auto group=ClassifyContacts(contacts[i],positions[i],m_settings.particleRadius,substepTime);
+                    const auto& particle=m_particles[i];
+                    for(std::size_t k=0;k<contacts[i].size();++k) {
+                        const auto& final=group.rows[k];
+                        if(!final.active)continue;
+                        const bool yielding=group.yielding && !contacts[i][k].hardEncounter;
+                        const auto& c=yielding ? final.physical : PreferredContact(contacts[i][k],final);
+                        if(!c.box || yielding)continue; // linear box-face experiment, no opposing skins
+                        const auto match=[&](const SupportIdentity& row) {
+                            return row.particle==i && row.box==c.box && row.normal==c.normal;
+                        };
+                        if(std::any_of(identities.begin(),identities.end(),match))continue;
+                        const float gap=glm::dot(starts[i]-positions[i],c.normal);
+                        const float target=std::min(0.f,-gap/substepTime);
+                        supports.push_back({i,c.owner,c.point,c.normal,c.wallVelocity,starts[i],
+                            particle.velocity,particle.mass,alpha1,target});
+                        identities.push_back({i,c.box,c.normal});
+                        ++added;
+                    }
+                }
+                return added;
+            };
+            const auto& pressureNeighbors=BuildNeighbors(starts,radius,neighborWorkspace);
+            const auto initial=discover();
+            PressureProjectionResult solution;
+            static std::size_t calls=0,capped=0,rediscover=0,extraSupports=0;
+            static double worst=0;
+            std::size_t missing=0;
+            constexpr int geometryGuard=4;
+            for(int update=0;update<geometryGuard;++update) {
+                solution=ImplicitPressureProjection(m_particles,starts,pressureNeighbors,
+                    supports,kernel,restDensity,substepTime,m_settings.velocitySmoothing);
+                ++calls;if(solution.sweeps>=64)++capped;worst=std::max(worst,solution.residual);
+                for(auto& rows:contacts)rows.clear();
+                std::fill(solidCorrections.begin(),solidCorrections.end(),glm::vec3(0));
+                for(std::size_t i=0;i<count;++i) {
+                    positions[i]=starts[i]+substepTime*solution.velocities[i];
+                    unconstrainedPositions[i]=positions[i];
+                    ApplySolidCollisions(i,starts[i],positions,preparedBoxes,preparedSpheres,preparedTerrains,
+                        m_settings.particleRadius,substepTime,true,solidCorrections,contacts,
+                        m_geometryEscapes,m_unresolvedGeometry,m_geometryEscapeCandidates,m_maximumGeometryEscapeDistance,
+                        m_skinClippedProposals,m_skinPreventedReversals,m_surfaceRoundingSteps);
+                }
+                missing=discover();
+                if(!missing)break;
+                ++rediscover;extraSupports+=missing;
+            }
+            // Residual geometry is still owned by the existing outer safety
+            // stage. A capped discovery is reported and never treated as proof.
+            if(calls<=8 || calls%120==0 || missing)std::fprintf(stderr,
+                "PROJECTION %zu %d %.9g capped=%zu worst=%.9g rediscover=%zu extra=%zu initial=%zu missing=%zu\n",
+                calls,solution.sweeps,solution.residual,capped,worst,rediscover,extraSupports,initial,missing);
+            for(std::size_t i=0;i<count;++i)m_particles[i].velocity=solution.velocities[i];
+            if(contactImpulses)for(std::size_t r=0;r<solution.contactImpulses.size();++r) {
+                const auto& c=supports[r];const auto impulse=solution.contactImpulses[r];
+                if(c.owner.IsValid() && glm::dot(impulse,impulse)>0)
+                    contactImpulses->push_back({c.owner,c.point,-impulse,c.particleIndex});
+            }
+            implicitResolved=true;
+        }

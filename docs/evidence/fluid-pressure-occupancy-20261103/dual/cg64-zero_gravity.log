@@ -1,0 +1,14 @@
+PROJECTION 1 64 1.95253897e-05 capped=1 worst=1.95253897e-05
+PROJECTION 2 0 0 capped=1 worst=1.95253897e-05
+PROJECTION 3 0 0 capped=1 worst=1.95253897e-05
+PROJECTION 4 1 0 capped=1 worst=1.95253897e-05
+PROJECTION 5 1 0 capped=1 worst=1.95253897e-05
+PROJECTION 6 1 0 capped=1 worst=1.95253897e-05
+PROJECTION 7 1 0 capped=1 worst=1.95253897e-05
+PROJECTION 8 1 0 capped=1 worst=1.95253897e-05
+PROJECTION 120 7 5.64670417e-06 capped=1 worst=1.95253897e-05
+PROJECTION 240 15 6.35554779e-06 capped=1 worst=1.95253897e-05
+PROJECTION 360 7 6.9116308e-06 capped=1 worst=1.95253897e-05
+PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=0.0883207
+DIAGNOSTIC_FAIL zero_gravity reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0

@@ -1,0 +1,242 @@
+[column-traces.log]
+COLUMN PHASE before-smooth -0.305710375 -0.021289736
+COLUMN PHASE after-smooth -0.292107314 -0.0348927826
+COLUMN PHASE after-contact 0 -0.0348927826
+COLUMN PHASE before-smooth -0.34347713 -1.04308128e-07
+COLUMN PHASE after-smooth -0.326999813 -0.0164774116
+COLUMN PHASE after-contact 0 -0.0164774116
+COLUMN PHASE before-smooth -0.305710375 -0.021289736
+COLUMN PHASE after-smooth -0.306728601 -0.020271508
+COLUMN PHASE after-contact 0 -0.020271508
+COLUMN PHASE before-smooth -0.327000439 1.1920929e-07
+COLUMN PHASE after-smooth -0.327000439 1.13498373e-07
+COLUMN PHASE after-contact 0 1.13498373e-07
+
+[column.log]
+PROJECTION 1 15 7.05639444e-06 capped=0 worst=7.05639444e-06
+PROJECTION 2 15 7.05683007e-06 capped=0 worst=7.05683007e-06
+PROJECTION 240 15 7.05660978e-06 capped=0 worst=7.05683007e-06
+PROJECTION 360 15 7.05660978e-06 capped=0 worst=7.05683007e-06
+PROJECTION 480 15 7.05660978e-06 capped=0 worst=7.05683007e-06
+PROJECTION 600 15 7.05660978e-06 capped=0 worst=7.05683007e-06
+
+[discover-dense_025-full.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 6 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=36 missing=0
+PROJECTION 7 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=76 missing=0
+PROJECTION 240 64 0.00655857528 capped=201 worst=0.0263300671 rediscover=128 extra=13720 initial=516 missing=0
+PROJECTION 720 64 0.00911543669 capped=681 worst=0.0263300671 rediscover=403 extra=48408 initial=138 missing=0
+PRECONDITION dense_025 warmup_steps=240 mean_particle_speed=0.0317279
+PRECONDITION dense_025 observed_release_surface=1.54212 body_top=1 clearance=0.542121
+CASE dense_025 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=432.0000305 particles=592 y=0.3000000119 vy=-6.94180244e-07 fraction=0.8801339865 observed_fraction=1 max_speed=1.59039557 particle_ms=9.599736 executed_ms=24.2419 amortized_ms=20.36452697
+SUMMARY checks=729 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[discover-half_025-full.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 6 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=36 missing=0
+PROJECTION 7 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=76 missing=0
+PROJECTION 240 64 0.00655857528 capped=201 worst=0.0263300671 rediscover=128 extra=13720 initial=516 missing=0
+PROJECTION 720 64 0.00911543669 capped=681 worst=0.0263300671 rediscover=403 extra=48408 initial=138 missing=0
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0317279
+PRECONDITION half_025 observed_release_surface=1.54212 body_top=1 clearance=0.542121
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.80786432206542402 late_rms=0.040835050155468761 late_peak=0.12833106517791748 early_range=0.56692004203796387 late_range=0.032918453216552734 sampled_fraction=0.50203960699339711 observed_fraction=0.57519632975260415
+CASE half_025 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=592 y=1.639088273 vy=0.1282986403 fraction=0.520232439 observed_fraction=0.6649515788 max_speed=3.009920359 particle_ms=9.602781 executed_ms=36.793832 amortized_ms=32.04874708
+SUMMARY checks=2176 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=1 legacy_mandatory_failures=1
+
+[discover-half_025-warmup.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 6 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=36 missing=0
+PROJECTION 7 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=76 missing=0
+PROJECTION 240 64 0.00655857528 capped=201 worst=0.0263300671 rediscover=128 extra=13720 initial=516 missing=0
+PROJECTION 720 64 0.00911543669 capped=681 worst=0.0263300671 rediscover=403 extra=48408 initial=138 missing=0
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0317279
+SUMMARY checks=2 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[discover-neutral_025-full.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 6 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=36 missing=0
+PROJECTION 7 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=76 missing=0
+PROJECTION 240 64 0.00655857528 capped=201 worst=0.0263300671 rediscover=128 extra=13720 initial=516 missing=0
+PROJECTION 720 64 0.00911543669 capped=681 worst=0.0263300671 rediscover=403 extra=48408 initial=138 missing=0
+PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.0317279
+PRECONDITION neutral_025 observed_release_surface=1.54212 body_top=1 clearance=0.542121
+FAIL neutral_025 neutral drift within 0.20m over 4 seconds
+CASE neutral_025 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=592 y=0.3011602163 vy=-0.0364722386 fraction=0.9432598352 observed_fraction=1 max_speed=0.9274247289 particle_ms=9.712156 executed_ms=32.189859 amortized_ms=27.2749172
+SUMMARY checks=729 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=480 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[implicit-half_025-warmup.log]
+PROJECTION 1 1 0 capped=0 worst=0
+PROJECTION 2 7 5.46997135e-06 capped=0 worst=5.46997135e-06
+PROJECTION 6 12 1.66482185e-05 capped=0 worst=1.66482185e-05
+PROJECTION 7 16 2.20641468e-05 capped=0 worst=2.20641468e-05
+PROJECTION 8 36 2.32101707e-05 capped=0 worst=2.32101707e-05
+PROJECTION 120 64 0.0129559734 capped=112 worst=0.0438536121
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.293869
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[normalized-half_025-full.log]
+PROJECTION 1 1 1.55923365e-06 capped=0 worst=1.55923365e-06
+PROJECTION 2 1 1.86348066e-07 capped=0 worst=1.55923365e-06
+PROJECTION 8 1 0 capped=0 worst=1.55923365e-06
+PROJECTION 120 64 0.0166146689 capped=92 worst=0.0271828933
+PROJECTION 240 64 0.0148366607 capped=212 worst=0.0271828933
+PROJECTION 360 64 0.0151253773 capped=332 worst=0.0271828933
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0655516
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+PRECONDITION half_025 observed_release_surface=1.50812 body_top=1 clearance=0.50812
+FAIL half_025 late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.55587558781636026 late_rms=0.058278358480812427 late_peak=0.12043392658233643 early_range=0.38698911666870117 late_range=0.047904729843139648 sampled_fraction=0.49907167392472424 observed_fraction=0.61795743306477868
+CASE half_025 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=108.0000076 particles=592 y=1.564480186 vy=-0.03347566724 fraction=0.5054165721 observed_fraction=0.5804072062 max_speed=3.697160959 particle_ms=9.570731 executed_ms=37.756238 amortized_ms=32.85036011
+SUMMARY checks=2176 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[normalized-half_025-warmup.log]
+PROJECTION 1 1 1.55923365e-06 capped=0 worst=1.55923365e-06
+PROJECTION 2 1 1.86348066e-07 capped=0 worst=1.55923365e-06
+PROJECTION 8 1 0 capped=0 worst=1.55923365e-06
+PROJECTION 120 64 0.0166146689 capped=92 worst=0.0271828933
+PROJECTION 240 64 0.0148366607 capped=212 worst=0.0271828933
+PROJECTION 360 64 0.0151253773 capped=332 worst=0.0271828933
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0655516
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[normalized-zero_gravity-warmup.log]
+PROJECTION 1 2 5.68675938e-06 capped=0 worst=5.68675938e-06
+PROJECTION 2 2 1.49094096e-06 capped=0 worst=5.68675938e-06
+PROJECTION 8 1 5.25416401e-22 capped=0 worst=6.07568577e-06
+PROJECTION 120 1 5.03343038e-22 capped=0 worst=6.07568577e-06
+PROJECTION 240 1 0 capped=0 worst=6.07568577e-06
+PROJECTION 360 1 0 capped=0 worst=6.07568577e-06
+PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=3.39179e-07
+SUMMARY checks=2 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[owned-half_025-full.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356
+PROJECTION 2 1 0 capped=1 worst=0.000960237356
+PROJECTION 8 1 0 capped=1 worst=0.000960237356
+PROJECTION 120 64 0.0141984845 capped=91 worst=0.0221941948
+PROJECTION 240 64 0.0108533837 capped=211 worst=0.0273097369
+PROJECTION 360 64 0.0232847712 capped=331 worst=0.0273097369
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0652595
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+PRECONDITION half_025 observed_release_surface=1.5933 body_top=1 clearance=0.593302
+FAIL half_025 late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.28002759833096552 late_rms=0.087517133061427041 late_peak=0.21385875344276428 early_range=0.14534211158752441 late_range=0.059750676155090332 sampled_fraction=0.50056644467016065 observed_fraction=0.63701057434082031
+CASE half_025 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=108.0000076 particles=592 y=1.602587342 vy=0.07541441917 fraction=0.4893182218 observed_fraction=0.5441645304 max_speed=3.370023489 particle_ms=9.633109 executed_ms=29.184311 amortized_ms=24.60267183
+SUMMARY checks=2176 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[owned-half_025-warmup.log]
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356
+PROJECTION 2 1 0 capped=1 worst=0.000960237356
+PROJECTION 8 1 0 capped=1 worst=0.000960237356
+PROJECTION 120 64 0.0141984845 capped=91 worst=0.0221941948
+PROJECTION 240 64 0.0108533837 capped=211 worst=0.0273097369
+PROJECTION 360 64 0.0232847712 capped=331 worst=0.0273097369
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0652595
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[player-discover.log]
+PROJECTION 1 64 0.00134172668 capped=1 worst=0.00134172668 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.00134172668 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 6 16 1.04189624e-05 capped=1 worst=0.00134172668 rediscover=0 extra=0 initial=80 missing=0
+PROJECTION 7 33 1.2111802e-05 capped=1 worst=0.00134172668 rediscover=0 extra=0 initial=96 missing=0
+PROJECTION 8 39 1.36380359e-05 capped=1 worst=0.00134172668 rediscover=0 extra=0 initial=100 missing=0
+PROJECTION 480 64 0.0206859679 capped=450 worst=0.0795587306 rediscover=302 extra=191722 initial=233 missing=0
+FAIL density-20-1000 player starts substantially inside actual coarse fluid
+FAIL density-20-1000 neutral player has no rapid systematic drift
+CASE density-20-1000 failures=2 acceptance_failures=2 diagnostic_checks=1 diagnostic_failures=0 height_change=-0.604444385 final_immersion=0.358045459 max_speed=2.15634632 relative_drift=0.603899896 synchronized_relative_drift=0.603899896 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.0213682093 warmup_bulk_speed=0.0012009535 warmup_centroid_travel=0.00168034236 final_mean_particle_speed=0.00537968148 jump_immersion=0 jump_delta_speed=0 particle_steps=120 seconds=53.1550224 particle_reference_equal=0
+SUMMARY checks=492 failures=2 acceptance_failures=2 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 strict_microrest_checks=1 strict_microrest_failures=0 ordinary_steps=480
+
+[player-xsph.log]
+DIAGNOSTIC_FAIL density-20-1000 fixed reference-pool warmup is quiescent
+CASE density-20-1000 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 height_change=-0.000838875771 final_immersion=1 max_speed=0.0166703817 relative_drift=0.00319898385 synchronized_relative_drift=0.00318727014 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.0782709345 warmup_bulk_speed=0.00308729964 warmup_centroid_travel=0.00082580361 final_mean_particle_speed=0.0744917691 jump_immersion=0 jump_delta_speed=0 particle_steps=120 seconds=13.8435081 particle_reference_equal=0
+SUMMARY checks=492 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 strict_microrest_checks=1 strict_microrest_failures=1 ordinary_steps=480
+
+[trace-nonexistent-warmup.log]
+SUMMARY checks=0 failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 strict_diagnostics=1 steps=0 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[xsph-half_020-full.log]
+PRECONDITION half_020 warmup_steps=240 mean_particle_speed=0.0402
+PRECONDITION half_020 observed_release_surface=1.78728 body_top=1 clearance=0.787277
+SETTLING_WINDOW half_020 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.3571913387027571 late_rms=0.014948298356742065 late_peak=0.035564824938774109 early_range=0.22890448570251465 late_range=0.013090848922729492 sampled_fraction=0.49993349835276601 observed_fraction=0.54659182230631509
+CASE half_020 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=1152 y=1.772740602 vy=0.02128575742 fraction=0.495116353 observed_fraction=0.5401346842 max_speed=2.704780102 particle_ms=19.12534 executed_ms=78.978122 amortized_ms=65.59081896
+SUMMARY checks=2176 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[xsph-half_025-full.log]
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.102062
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+PRECONDITION half_025 observed_release_surface=1.70669 body_top=1 clearance=0.706691
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.90207086144982818 late_rms=0.043309232443117365 late_peak=0.14370328187942505 early_range=0.48936927318572998 late_range=0.033012509346008301 sampled_fraction=0.50115410213669143 observed_fraction=0.58531290690104165
+CASE half_025 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=108.0000076 particles=592 y=1.641580701 vy=-0.07011300325 fraction=0.4854468703 observed_fraction=0.6076395671 max_speed=2.857376575 particle_ms=9.546033 executed_ms=39.336349 amortized_ms=34.70395429
+SUMMARY checks=2176 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0
+
+[xsphtrace-nonexistent-warmup.log]
+SUMMARY checks=0 failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 strict_diagnostics=1 steps=0 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0
+
+[column-baseline.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0676451772 0 -0.0348927826 0.147599772
+2 0.0180000067 0.0674850047 0 -0.0260616224 0.169693246
+3 0.0180000067 0.0674826503 0 -0.017078694 0.169769824
+4 0.0180000067 0.0675092638 0 -0.0150656067 0.166248083
+5 0.0180000067 0.06752 0 -0.0158259738 0.164846614
+6 0.0180000067 0.0675196499 0 -0.0164643377 0.164908454
+598 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+599 0.0180000067 0.067517221 0 -0.016477203 0.165230855
+600 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+
+[column-discover.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0179999992 0.0679998398 0 -9.97924872e-06 0.165225759
+2 0.0179999992 0.0679998472 -2.7687813e-17 2.23945662e-07 0.165235966
+3 0.0179999992 0.0679998472 -2.04524575e-17 -1.04887718e-07 0.165230647
+4 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+5 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+6 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+598 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+599 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+600 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+
+[column-implicit.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0179999992 0.0679998398 0 -9.97924872e-06 0.165225759
+2 0.0179999992 0.0679998472 -2.7687813e-17 2.23945662e-07 0.165235966
+3 0.0179999992 0.0679998472 -2.04524575e-17 -1.04887718e-07 0.165230647
+4 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+5 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+6 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+598 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+599 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+600 0.0179999992 0.0679998472 -2.04541516e-17 -1.04897723e-07 0.165230811
+
+[column-trace.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0676451772 0 -0.0348927826 0.147599772
+2 0.0180000067 0.0674850047 0 -0.0260616224 0.169693246
+3 0.0180000067 0.0674826503 -3.12180504e-10 -0.017078694 0.169769838
+4 0.0180000067 0.0675092638 0 -0.0150656067 0.166248083
+5 0.0180000067 0.06752 0 -0.0158259738 0.164846614
+6 0.0180000067 0.0675196499 0 -0.0164643377 0.164908454
+598 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+599 0.0180000067 0.067517221 0 -0.016477203 0.165230855
+600 0.0180000067 0.067517221 0 -0.0164774116 0.165230706
+
+[column-xsphtrace.csv]
+# paired equilibrium mass=0.505292952 target mean support per step=0.165230811 target top and bottom heights 0.0680000037 0.0179999992 density at release=999.999958
+1 0.0180000067 0.0676451772 0 -0.020271508 0.154987797
+2 0.0180000067 0.0675286874 0 -0.00665417034 0.172111675
+3 0.0180000067 0.0675480142 0 0.00110423274 0.169151247
+4 0.0180000067 0.0675735772 0 0.00146019657 0.165410742
+5 0.0180000067 0.0675789267 0 0.000305609952 0.16464752
+6 0.0180000067 0.0675765648 -3.12180504e-10 -0.000134807939 0.165008515
+598 0.0180000067 0.0675750449 0 -1.41872967e-08 0.16523084
+599 0.0180000067 0.0675750449 0 -1.7024756e-07 0.16523084
+600 0.0180000067 0.0675750449 0 1.13498373e-07 0.165231019

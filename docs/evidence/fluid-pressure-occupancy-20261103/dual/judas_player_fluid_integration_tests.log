@@ -1,0 +1,3 @@
+DIAGNOSTIC_FAIL density-20-1000 fixed reference-pool warmup is quiescent
+CASE density-20-1000 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 height_change=2.39610672e-05 final_immersion=1 max_speed=0.0125794187 relative_drift=0.115552478 synchronized_relative_drift=0.115562968 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.0914285406 warmup_bulk_speed=0.0138295917 warmup_centroid_travel=0.010579329 final_mean_particle_speed=0.118027322 jump_immersion=0 jump_delta_speed=0 particle_steps=120 seconds=13.7344589 particle_reference_equal=0
+SUMMARY checks=492 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 strict_microrest_checks=1 strict_microrest_failures=1 ordinary_steps=480

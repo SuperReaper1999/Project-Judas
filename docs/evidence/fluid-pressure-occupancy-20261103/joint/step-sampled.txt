@@ -1,0 +1,53 @@
+        bool implicitResolved=false;
+        // This stage is a prescribed-geometry experiment. Callback rigid motion
+        // is not represented by this operator and is still the baseline path.
+        const auto stationary=[](const auto& solid) {
+            return solid.start.position==solid.end.position &&
+                (solid.start.rotation==solid.end.rotation || solid.start.rotation==-solid.end.rotation);
+        };
+        if(iterations>0 &&
+           std::all_of(preparedBoxes.begin(),preparedBoxes.end(),stationary) &&
+           std::all_of(preparedSpheres.begin(),preparedSpheres.end(),stationary) &&
+           std::all_of(preparedTerrains.begin(),preparedTerrains.end(),stationary)) {
+            std::vector<FluidVelocityContact> supports;
+            for(std::size_t i=0;i<count;++i) {
+                if(contacts[i].empty())continue;
+                const auto group=ClassifyContacts(contacts[i],positions[i],m_settings.particleRadius,substepTime);
+                const auto& particle=m_particles[i];
+                for(std::size_t k=0;k<contacts[i].size();++k) {
+                    const auto& final=group.rows[k];
+                    if(!final.active)continue;
+                    const bool yielding=group.yielding && !contacts[i][k].hardEncounter;
+                    const auto& c=yielding ? final.physical : PreferredContact(contacts[i][k],final);
+                    const float target=yielding ? -final.gap/substepTime :
+                        std::min(0.f,-glm::dot(starts[i]-positions[i],c.normal)/substepTime);
+                    supports.push_back({i,c.owner,c.point,c.normal,c.wallVelocity,starts[i],
+                        particle.velocity,particle.mass,alpha1,target});
+                }
+            }
+            const auto& pressureNeighbors=BuildNeighbors(starts,radius,neighborWorkspace);
+            const auto solution=ImplicitPressureProjection(m_particles,starts,pressureNeighbors,
+                supports,kernel,restDensity,substepTime,m_settings.velocitySmoothing);
+            static std::size_t calls=0,capped=0;static double worst=0;
+            ++calls;if(solution.sweeps>=64)++capped;worst=std::max(worst,solution.residual);
+            if(calls<=8 || calls%120==0)std::fprintf(stderr,"PROJECTION %zu %d %.9g capped=%zu worst=%.9g\n",
+                calls,solution.sweeps,solution.residual,capped,worst);
+            for(auto& rows:contacts)rows.clear();
+            std::fill(solidCorrections.begin(),solidCorrections.end(),glm::vec3(0));
+            for(std::size_t i=0;i<count;++i) {
+                auto& p=m_particles[i];
+                p.velocity=solution.velocities[i];
+                positions[i]=starts[i]+substepTime*p.velocity;
+                unconstrainedPositions[i]=positions[i];
+                ApplySolidCollisions(i,starts[i],positions,preparedBoxes,preparedSpheres,preparedTerrains,
+                    m_settings.particleRadius,substepTime,true,solidCorrections,contacts,
+                    m_geometryEscapes,m_unresolvedGeometry,m_geometryEscapeCandidates,m_maximumGeometryEscapeDistance,
+                    m_skinClippedProposals,m_skinPreventedReversals,m_surfaceRoundingSteps);
+            }
+            if(contactImpulses)for(std::size_t r=0;r<supports.size();++r) {
+                const auto& c=supports[r];const auto impulse=solution.contactImpulses[r];
+                if(c.owner.IsValid() && glm::dot(impulse,impulse)>0)
+                    contactImpulses->push_back({c.owner,c.point,-impulse,c.particleIndex});
+            }
+            implicitResolved=true;
+        }

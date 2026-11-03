@@ -1,0 +1,14 @@
+PROJECTION 1 32 4.17847431e-06 capped=0 worst=4.17847431e-06
+PROJECTION 2 0 0 capped=0 worst=4.17847431e-06
+PROJECTION 3 0 0 capped=0 worst=4.17847431e-06
+PROJECTION 4 0 0 capped=0 worst=4.17847431e-06
+PROJECTION 5 1 0 capped=0 worst=4.17847431e-06
+PROJECTION 6 1 0 capped=0 worst=4.17847431e-06
+PROJECTION 7 1 0 capped=0 worst=4.17847431e-06
+PROJECTION 8 1 0 capped=0 worst=4.17847431e-06
+PROJECTION 120 64 0.144051378 capped=91 worst=0.260572883
+PROJECTION 240 64 0.058299515 capped=211 worst=0.260572883
+PROJECTION 360 64 0.0209686314 capped=331 worst=0.406395764
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0828144
+DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
+SUMMARY checks=2 failures=1 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=240 settling_mode=window_decay legacy_comparisons=0 legacy_failures=0 legacy_mandatory_failures=0

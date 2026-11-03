@@ -1,0 +1,27 @@
+PROJECTION 1 64 0.000960237356 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 2 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 3 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 4 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=0 missing=0
+PROJECTION 5 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=12 missing=0
+PROJECTION 6 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=36 missing=0
+PROJECTION 7 1 0 capped=1 worst=0.000960237356 rediscover=0 extra=0 initial=76 missing=0
+PROJECTION 360 64 0.00901270771 capped=321 worst=0.0263332179 rediscover=198 extra=22154 initial=526 missing=0
+PROJECTION 600 64 0.00942990923 capped=561 worst=0.0263332179 rediscover=335 extra=39340 initial=535 missing=0
+PROJECTION 1080 64 0.00703161923 capped=1041 worst=0.0263332179 rediscover=601 extra=72709 initial=138 missing=0
+PROJECTION 1320 64 0.00807003667 capped=1281 worst=0.0263332179 rediscover=740 extra=87560 initial=557 missing=0
+PROJECTION 1440 64 0.00934311663 capped=1401 worst=0.0263332179 rediscover=810 extra=95189 initial=559 missing=0
+PROJECTION 1560 64 0.00673651414 capped=1521 worst=0.0263332179 rediscover=879 extra=102817 initial=559 missing=0
+PROJECTION 1680 64 0.00816488095 capped=1641 worst=0.0263332179 rediscover=949 extra=110508 initial=139 missing=0
+PROJECTION 1920 64 0.00876947474 capped=1881 worst=0.0263332179 rediscover=1092 extra=124925 initial=554 missing=0
+PROJECTION 2280 64 0.00976111505 capped=2241 worst=0.0263332179 rediscover=1302 extra=147586 initial=552 missing=0
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0314589
+PRECONDITION half_025 observed_release_surface=1.54133 body_top=1 clearance=0.541332
+FAIL half_025 independent measured box/surface immersion within 10 percentage points
+LEGACY_SETTLING half_025 status=PASS observational_scale=0 time=4 limit=0.5 y=1.3153825998306274 vy=-0.10971029102802277
+FAIL half_025 peak vertical speed below 0.5 m/s over the late window
+FAIL half_025 late RMS vertical speed decays by at least half
+FAIL half_025 late vertical travel range decays by at least half
+FAIL half_025 late independent equilibrium immersion within 10 percentage points
+SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.21461012224769818 late_rms=0.68616866869815452 late_peak=1.5000972747802734 early_range=0.1408156156539917 late_range=0.72774851322174072 sampled_fraction=0.51077821996683881 observed_fraction=0.72377433776855471
+CASE half_025 failures=5 acceptance_failures=5 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=592 y=1.476740837 vy=0.1475681067 fraction=0.4865405858 observed_fraction=0.7612798055 max_speed=1.502022862 particle_ms=32.08907 executed_ms=57.673092 amortized_ms=40.95827466
+SUMMARY checks=2176 failures=5 acceptance_failures=5 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0

@@ -1,0 +1,20 @@
+.cache/fluid-zero-settling-kernel/clean/player-baseline-strict @ .cache/fluid-zero-settling-kernel/clean/player-baseline-strict center
+mass=20000 particle_count=2500 centroid_y=1.64191193 local_box_mass=664 capsule_mass=472 box_target_mass=648 local_y_extent=0.0720000118,3.20631742 closest_horizontal=0.0129506628
+local_nn_min/median/max=0.162165091,0.198066731,0.211664836 local_center_density_min/median/max=980.313167,1006.97642,1027.04671 local_nn_below_.05=0/83 local_nn_below_.002=0/83
+volume_or_slice_y_center sample_count cube_fraction equal_volume_sphere_fraction mean_kernel_density min_kernel_density nearest_avg nearest_max
+box 81000 0.861679012 0.881135802 1005.60188 968.971436 0.0948856492 0.164711658
+.cache/fluid-zero-settling-kernel/clean/player-baseline-strict @ .cache/fluid-static-balanced-20261103/player-discover-0.20 center
+mass=20000 particle_count=2500 centroid_y=1.64191193 local_box_mass=680 capsule_mass=456 box_target_mass=648 local_y_extent=0.0720000118,3.20631742 closest_horizontal=0.0576757879
+local_nn_min/median/max=0.162165091,0.198070228,0.211664836 local_center_density_min/median/max=980.313167,1006.97642,1031.69636 local_nn_below_.05=0/85 local_nn_below_.002=0/85
+volume_or_slice_y_center sample_count cube_fraction equal_volume_sphere_fraction mean_kernel_density min_kernel_density nearest_avg nearest_max
+box 81000 0.85808642 0.881481481 1005.72441 968.952725 0.0948041901 0.16543437
+.cache/fluid-static-balanced-20261103/player-discover-0.20 @ .cache/fluid-zero-settling-kernel/clean/player-baseline-strict center
+mass=20000 particle_count=2500 centroid_y=1.52271555 local_box_mass=752 capsule_mass=544 box_target_mass=648 local_y_extent=0.0720000118,3.02860665 closest_horizontal=0.0458517066
+local_nn_min/median/max=5.30824457e-07,4.49971695e-05,0.000935077578 local_center_density_min/median/max=999.865903,999.984575,1000.16822 local_nn_below_.05=94/94 local_nn_below_.002=94/94
+volume_or_slice_y_center sample_count cube_fraction equal_volume_sphere_fraction mean_kernel_density min_kernel_density nearest_avg nearest_max
+box 81000 0.295209877 0.297419753 1102.31095 915.023695 0.143127964 0.238127189
+.cache/fluid-static-balanced-20261103/player-discover-0.20 @ .cache/fluid-static-balanced-20261103/player-discover-0.20 center
+mass=20000 particle_count=2500 centroid_y=1.52271555 local_box_mass=728 capsule_mass=616 box_target_mass=648 local_y_extent=0.0720000118,3.02860665 closest_horizontal=0.0443930628
+local_nn_min/median/max=5.30824457e-07,5.14128716e-05,0.000935077578 local_center_density_min/median/max=999.865903,999.985063,1000.16822 local_nn_below_.05=91/91 local_nn_below_.002=91/91
+volume_or_slice_y_center sample_count cube_fraction equal_volume_sphere_fraction mean_kernel_density min_kernel_density nearest_avg nearest_max
+box 81000 0.294888889 0.29445679 1103.55125 967.832645 0.14319848 0.237860578
