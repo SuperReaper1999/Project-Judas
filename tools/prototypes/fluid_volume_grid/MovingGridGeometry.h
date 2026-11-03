@@ -182,7 +182,7 @@ inline bool NormalizeBoxes(const GridLayout& layout, const std::vector<BoxMotion
     return true;
 }
 
-inline bool CoversPlane(const BoxMotion& box, int axis, int plane, double time) {
+inline bool CoversPlane(const BoxMotion& box, int axis, double plane, double time) {
     return At(box.lo[axis], box.translation[axis], time) <= plane &&
            At(box.hi[axis], box.translation[axis], time) >= plane;
 }
@@ -192,8 +192,8 @@ inline double TangentArea(const BoxMotion& box, int axis, const Index& cell, dou
     return CellOverlap(box, b, cell[b], time) * CellOverlap(box, c, cell[c], time);
 }
 
-// The two tangent intervals may end at a clipped coordinate within the face.
-inline double AverageBlockedFace(const BoxMotion& box, int axis, const Index& face,
+// The two tangent intervals may begin and end inside a parent face.
+inline double AverageBlockedFace(const BoxMotion& box, int axis, const GridVec& face,
                                  const GridVec& upper) {
     const int b = (axis + 1) % 3, c = (axis + 2) % 3;
     const auto tangentArea = [&](double time) {
@@ -227,6 +227,12 @@ inline double AverageBlockedFace(const BoxMotion& box, int axis, const Index& fa
 
 inline GridVec FaceUpper(const Index& face) {
     return {face[0] + 1., face[1] + 1., face[2] + 1.};
+}
+
+inline double AverageBlockedFace(const BoxMotion& box, int axis, const Index& face,
+                                 const GridVec& upper) {
+    return AverageBlockedFace(box, axis, GridVec{double(face[0]), double(face[1]), double(face[2])},
+                              upper);
 }
 
 inline double AverageBlockedFace(const BoxMotion& box, int axis, const Index& face) {

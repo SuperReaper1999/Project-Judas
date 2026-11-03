@@ -1,5 +1,6 @@
 #include "PlanarMovingVolume.h"
 
+#include "ExposureVolumePressure.h"
 #include "GridCellPhase.h"
 #include "GridHydrostaticReaction.h"
 #include "MovingVolumePressureInternal.h"
@@ -9,6 +10,7 @@
 #include <cmath>
 #include <limits>
 #include <numeric>
+#include <optional>
 
 namespace judas::volume_grid {
 namespace {
@@ -17,6 +19,44 @@ struct FaceFlux {
     std::size_t left, right, index;
     int axis;
     double aperture, mass, conductance, predictor, plane;
+};
+
+struct ExposureGroups {
+    std::vector<std::size_t> parent, inlet;
+
+    bool Build(const MovingGridGeometry& geometry, const std::vector<FaceFlux>& faces,
+               std::string& error) {
+        const auto count = geometry.startCapacity.size();
+        parent.resize(count);
+        std::iota(parent.begin(), parent.end(), 0);
+        inlet.assign(count, faces.size());
+        const auto admit = [&](std::size_t cell, std::size_t donor, std::size_t link) {
+            if (geometry.startCapacity[cell] > 0 || geometry.startCapacity[donor] == 0)
+                return;
+            if (inlet[cell] == faces.size() || faces[inlet[cell]].aperture < faces[link].aperture) {
+                inlet[cell] = link;
+                parent[cell] = donor;
+            }
+        };
+        for (std::size_t link = 0; link < faces.size(); ++link) {
+            const auto& face = faces[link];
+            admit(face.left, face.right, link);
+            admit(face.right, face.left, link);
+        }
+        for (const auto& face : faces) {
+            for (auto cell : {face.left, face.right}) {
+                if (geometry.startCapacity[cell] == 0 && parent[cell] == cell) {
+                    error = "exposed cell lacks a directly connected material owner";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool Joined(const FaceFlux& face) const {
+        return parent[face.left] == parent[face.right];
+    }
 };
 
 double MaxAbs(const std::vector<double>& values) {
@@ -140,7 +180,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                    const PlanarPressureReference* reference, PressureMetric metric,
                    MovingVolumeStep& output,
                    std::string& error, bool* transportRetry = nullptr,
-                   double verifiedSweepError = 0.) {
+                   double verifiedSweepError = 0., std::optional<bool> exposureWater = std::nullopt) {
     if (transportRetry)
         *transportRetry = false;
     const std::size_t count = layout.CheckedCellCount();
@@ -167,6 +207,10 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
             before < 0 || before > cellVolume + roundoff || after < 0 ||
             after > cellVolume + roundoff || water < 0 || water > before) {
             error = "moving-volume material exceeds the available cell capacity";
+            return false;
+        }
+        if (exposureWater && water != (*exposureWater ? before : 0.)) {
+            error = "exposure pressure currently requires a uniformly filled water or air chart";
             return false;
         }
         fraction[cell] = before > 0 ? water / before : 0;
@@ -228,7 +272,8 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                         continue;
                     // The same face mass is used in the pressure coefficient and
                     // kinetic-work oracle. A uniform phase retains its density.
-                    double waterFraction = .5 * (fraction[left] + fraction[right]);
+                    double waterFraction = exposureWater ? (*exposureWater ? 1. : 0.) :
+                        .5 * (fraction[left] + fraction[right]);
                     double acceleration = gravity[axis];
                     if (reference) {
                         acceleration = 0.;
@@ -297,12 +342,36 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
     }
 
     const double tolerance = std::max(roundoff / 8, MaxAbs(rhs) * 1e-12);
-    if (!SolvePressure(faces, rhs, tolerance, cellVolume, step.pressure,
-                       step.iterations, error))
+    ExposureGroups groups;
+    if (exposureWater) {
+        if (!groups.Build(geometry, faces, error))
+            return false;
+        std::vector<double> groupedRhs(count);
+        for (std::size_t cell = 0; cell < count; ++cell)
+            groupedRhs[groups.parent[cell]] += rhs[cell];
+        std::vector<FaceFlux> groupedFaces;
+        groupedFaces.reserve(faces.size());
+        for (auto face : faces) {
+            if (groups.Joined(face))
+                continue;
+            face.left = groups.parent[face.left];
+            face.right = groups.parent[face.right];
+            groupedFaces.push_back(face);
+        }
+        if (!SolvePressure(groupedFaces, groupedRhs, tolerance, cellVolume, step.pressure,
+                           step.iterations, error))
+            return false;
+        for (std::size_t cell = 0; cell < count; ++cell)
+            step.pressure[cell] = step.pressure[groups.parent[cell]];
+    } else if (!SolvePressure(faces, rhs, tolerance, cellVolume, step.pressure,
+                              step.iterations, error)) {
         return false;
+    }
 
     std::vector<double> outgoing(count);
     for (const auto& f : faces) {
+        if (exposureWater && groups.Joined(f))
+            continue;
         const double correction = f.conductance *
             (step.pressure[f.left] - step.pressure[f.right]);
         const double correctedSpeed = f.predictor + correction / (dt * f.aperture);
@@ -316,10 +385,32 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
             step.state.velocity[f.axis][f.index] = correctedSpeed;
         balance[f.left] += flux;
         balance[f.right] -= flux;
-        outgoing[flux >= 0 ? f.left : f.right] += std::abs(flux);
+        auto donor = flux >= 0 ? f.left : f.right;
+        if (exposureWater)
+            donor = groups.parent[donor];
+        outgoing[donor] += std::abs(flux);
         const double change = correctedSpeed - f.predictor;
         step.pressureKineticWork += f.mass * (f.predictor + .5 * change) * change;
         step.pressureCorrectionEnergy += .5 * f.mass * change * change;
+    }
+    if (exposureWater) {
+        for (std::size_t cell = 0; cell < count; ++cell) {
+            if (groups.parent[cell] == cell)
+                continue;
+            const auto& f = faces[groups.inlet[cell]];
+            const double wanted = geometry.startCapacity[cell] - geometry.endCapacity[cell];
+            const double flux = (f.left == cell ? 1. : -1.) * (wanted - balance[cell]);
+            const double speed = flux / (dt * f.aperture);
+            if (!std::isfinite(speed)) {
+                error = "exposed cell's internal flux is not representable";
+                return false;
+            }
+            step.flux[f.axis][f.index] = flux;
+            if (geometry.endAperture[f.axis][f.index] > 0)
+                step.state.velocity[f.axis][f.index] = speed;
+            balance[f.left] += flux;
+            balance[f.right] -= flux;
+        }
     }
     const double balanceTolerance = 8 * tolerance + roundoff;
     for (std::size_t cell = 0; cell < count; ++cell) {
@@ -416,7 +507,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         const auto& f = faces[i];
         const double flux = step.flux[f.axis][f.index];
         const auto donor = flux >= 0 ? f.left : f.right;
-        double water = flux * fraction[donor];
+        double water = flux * (exposureWater ? (*exposureWater ? 1. : 0.) : fraction[donor]);
         if (reference) {
             const auto& phases = phaseFlux[i];
             const double scale = targetWater[donor];
@@ -454,6 +545,13 @@ bool AdvanceMovingVolume(const GridLayout& layout, const MovingGridGeometry& geo
                          MovingVolumeStep& output, std::string& error) {
     return AdvanceVolume(layout, geometry, state, dt, gravity, nullptr, PressureMetric::FacePrism,
                          output, error);
+}
+
+bool AdvanceExposureVolumePressure(const GridLayout& layout, const MovingGridGeometry& geometry,
+                                    const MovingVolumeState& state, double dt, bool water,
+                                    MovingVolumeStep& output, std::string& error) {
+    return AdvanceVolume(layout, geometry, state, dt, {}, nullptr, PressureMetric::FacePrism,
+                         output, error, nullptr, 0., water);
 }
 
 namespace {

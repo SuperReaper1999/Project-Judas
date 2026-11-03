@@ -87,7 +87,7 @@ used by the solver. It returns triangles independently of the renderer.
 
 ## Validation boundary
 
-The standalone run covers 705 checks. It includes exact free-volume
+The standalone run covers 748 checks. It includes exact free-volume
 and wet-geometry controls, a 4 mm same-cell dry gap, an actual moving
 waterline, free rigid flotation and sinking, flow-driven motion, rotated
 charts, linked material and momentum transfer, and transaction failures.
@@ -148,6 +148,17 @@ at about 0.18 seconds, when a face opens between cells that started
 with zero free volume. Rejecting the step preserves published state.
 See the [ownership evidence](../../../docs/evidence/fluid-moving-grid-20261103/ownership/)
 for the original probe, traces and rejected repairs.
+
+The [cell-exposure probes](../../../docs/evidence/fluid-moving-grid-20261103/cell-exposure/)
+resolve the geometric part of that failure. New water and air volume
+are assigned to the actual half-cells. A separate single-phase
+pressure probe joins a new cell to a directly connected old material
+owner during projection and recovers the fine-cell transfer from
+continuity. The filled piston cavity satisfies every cell balance
+and sends no flux through its blocked midpoint. This is a reduced
+pressure metric with no separate inertance for its internal link.
+General wet/dry transport, free-body feedback and momentum during
+the opening still need to use the same geometric ownership.
 
 Runtime adoption requires a conservative treatment of newly exposed
 volume, native contact and CCD composition, representative terrain and

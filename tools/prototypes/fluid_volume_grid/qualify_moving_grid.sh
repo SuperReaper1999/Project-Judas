@@ -10,7 +10,7 @@ flags=(-std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror)
 
 objects=()
 for source in MovingVolumeGrid MovingVolumeMomentum HalfDualVolumeMomentum CoupledVolumeBox \
-    GridWaterSurface GridOrientedGeometry GridOrientedSweep OrientedMovingVolume; do
+    GridWaterSurface GridOrientedGeometry GridOrientedSweep OrientedMovingVolume GridHalfCellGeometry; do
     object="$output_dir/$source.o"
     "$cxx" "${flags[@]}" -c "$source_dir/$source.cpp" -o "$object"
     objects+=("$object")
@@ -19,7 +19,8 @@ done
 for suite in GridPhaseGeometryTests GridCellPhaseTests GridWaterQueryTests GridPressureReactionTests \
     PlanarMovingVolumeTests EvolvingVolumeTests MovingVolumeMomentumTests \
     HalfDualVolumeMomentumTests MovingGridTests GridWaterSurfaceTests \
-    GridOrientedGeometryTests GridOrientedSweepTests OrientedMovingVolumeTests; do
+    GridOrientedGeometryTests GridOrientedSweepTests OrientedMovingVolumeTests GridHalfCellGeometryTests \
+    ExposureVolumePressureTests; do
     "$cxx" "${flags[@]}" "$source_dir/$suite.cpp" "${objects[@]}" -o "$output_dir/$suite"
     arguments=()
     if [[ "$suite" == PlanarMovingVolumeTests ]]; then
