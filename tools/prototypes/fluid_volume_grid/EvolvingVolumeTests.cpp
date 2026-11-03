@@ -308,7 +308,7 @@ void NeutralCoupledRest(Checks& checks) {
     }
 }
 
-void CoupledWaterlineTrajectory(Checks& checks) {
+void CoupledWaterlineTrajectory(Checks& checks, bool ownsMomentum) {
     const BoxMotion shape{58,{.43,1.106,.61},{.91,1.382,1.47},{}};
     auto state = Seed([](int,int) { return kHeight; },{shape});
     const double area = (shape.hi[0]-shape.lo[0])*(shape.hi[2]-shape.lo[2]);
@@ -317,15 +317,30 @@ void CoupledWaterlineTrajectory(Checks& checks) {
     const double mass = 650*solidVolume;
     CoupledBoxState body{shape.owner,shape.lo,shape.hi,{0,-.1,0},mass};
     const double water = Volume(state);
+    HalfDualVolumeState halfVelocity;
+    for (auto& axis : halfVelocity.velocity)
+        axis.resize(2*kLayout.CellCount());
     double maxImpulseError = 0,maxTravelError = 0,maxEnergyError = 0;
     double maxVolumeError = 0,peakUpwardForce = 0;
+    double transportMomentumError = 0, mergeLoss = 0;
     int advanced = 0;
     for (int i = 0; i < 16; ++i) {
         CoupledBoxStep step;
         std::string error;
-        if (!AdvanceEvolvingCoupledVolumeBox(kLayout,body,state,kDt,1,kGravity,step,error)) {
+        OwnedCoupledBoxStep owned;
+        const bool accepted = ownsMomentum ?
+            AdvanceOwnedEvolvingCoupledVolumeBox(kLayout,body,state,halfVelocity,kDt,1,kGravity,owned,error) :
+            AdvanceEvolvingCoupledVolumeBox(kLayout,body,state,kDt,1,kGravity,step,error);
+        if (!accepted) {
             std::printf("coupled waterline failed at step %d: %s\n",i,error.c_str());
             break;
+        }
+        if (ownsMomentum) {
+            step = std::move(owned.box);
+            halfVelocity = std::move(owned.halfVelocity);
+            mergeLoss += owned.mergeKineticLoss;
+            for (double residual : owned.transportMomentumError)
+                transportMomentumError = std::max(transportMomentumError,std::abs(residual));
         }
         ++advanced;
         auto free = body.velocity;
@@ -373,6 +388,13 @@ void CoupledWaterlineTrajectory(Checks& checks) {
     checks.Expect(maxTravelError < 2e-14,"rigid position and accepted velocity use the same motion",maxTravelError);
     checks.Expect(maxEnergyError < 1e-7,"coupled pressure work and swept hydrostatic potential close",maxEnergyError);
     checks.Expect(maxVolumeError < 2e-10,"unprescribed crossing retains all water",maxVolumeError);
+    if (ownsMomentum) {
+        checks.Expect(transportMomentumError < 2e-10,
+                      "coupled waterline transport closes the material momentum ledger",
+                      transportMomentumError);
+        checks.Expect(mergeLoss > 0 && std::isfinite(mergeLoss),
+                      "coupled waterline actually advects and merges unequal half velocities",mergeLoss);
+    }
 }
 
 void RotateEvolvingChart(Checks& checks) {
@@ -440,7 +462,8 @@ int main() {
     ContinuingBoxCrossing(checks);
     AdaptiveCutVolumeCrossing(checks);
     NeutralCoupledRest(checks);
-    CoupledWaterlineTrajectory(checks);
+    CoupledWaterlineTrajectory(checks,false);
+    CoupledWaterlineTrajectory(checks,true);
     RotateEvolvingChart(checks);
     std::printf("SUMMARY evolving volume %d checks %d failures\n",checks.total,checks.failed);
     return checks.failed ? 1 : 0;

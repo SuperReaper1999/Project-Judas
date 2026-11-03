@@ -1,0 +1,4 @@
+translation evaluations 252, face residual 5.0680193982438615e-11 m^3, wall residual 5.0680193548757746e-11 m^3
+angular evaluations 200, face residual 6.0947775282595498e-13 m^3, wall residual 6.0947781381232718e-13 m^3
+angular refined midpoint aperture error 1.9149070523694078e-10 m^2, reversal 6.9388939039072284e-18, frozen volume work error 0.0002387707142475543 m^3
+16 oriented sweep checks, 0 failures

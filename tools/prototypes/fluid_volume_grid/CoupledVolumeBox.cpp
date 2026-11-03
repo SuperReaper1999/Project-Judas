@@ -3,6 +3,7 @@
 #include "GridHydrostaticReaction.h"
 #include "GridPressureReaction.h"
 #include "MovingVolumePressureInternal.h"
+#include "OwnedEvolvingVolume.h"
 #include "PlanarMovingVolume.h"
 
 namespace judas::volume_grid {
@@ -45,7 +46,8 @@ bool SolveTangent(std::array<GridVec, 3> matrix, GridVec rhs, GridVec& direction
 
 bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
                 const MovingVolumeState& fluid, double dt, const GridVec& gravity,
-                bool transport, int phaseAxis, CoupledBoxStep& output, std::string& error) {
+                bool transport, int phaseAxis, const HalfDualVolumeState* owned,
+                OwnedCoupledBoxStep* ownedResult, CoupledBoxStep& output, std::string& error) {
     if (!std::isfinite(dt) || dt <= 0 || !std::isfinite(body.mass) || body.mass <= 0) {
         error = "invalid coupled box mass or timestep";
         return false;
@@ -101,6 +103,8 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
     int evaluations = 0;
     struct Sample {
         MovingGridGeometry geometry;
+        MovingVolumeState ownedPredictor;
+        OwnedEvolvingVolumeStep phaseOwnership;
         MovingVolumeStep fluid;
         GridVec force{}, hydrostaticForce{}, residual{};
     };
@@ -109,9 +113,16 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
         const BoxMotion motion{body.owner, body.lo, body.hi, displacement};
         if (!fullyWet) {
             PlanarMovingStep phase;
-            if (!AdvanceEvolvingVolume(layout, {motion}, fluid, dt, phaseAxis, gravity[phaseAxis],
-                                       phase, error))
-                return false;
+            if (owned) {
+                if (!AdvanceOwnedEvolvingVolume(layout, {motion}, fluid, *owned, dt, phaseAxis,
+                                                gravity[phaseAxis], sample.phaseOwnership, error))
+                    return false;
+                phase = std::move(sample.phaseOwnership.phase);
+            } else {
+                if (!AdvanceEvolvingVolume(layout, {motion}, fluid, dt, phaseAxis,
+                                           gravity[phaseAxis], phase, error))
+                    return false;
+            }
             if (phase.loads.size() != 1 || phase.loads.front().owner != body.owner) {
                 error = "coupled surface reaction lost its solid owner";
                 return false;
@@ -133,9 +144,18 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
         auto& geometry = sample.geometry;
         if (!BuildMovingGridGeometry(layout, {motion}, geometry, error))
             return false;
-        const bool projected = transport
-            ? detail::AdvanceVolumeWithDualMass(layout, geometry, fullWater, dt, sample.fluid, error)
-            : AdvanceMovingVolume(layout, geometry, fullWater, dt, {}, sample.fluid, error);
+        bool projected;
+        if (owned) {
+            projected = BuildHalfDualVolumePredictor(layout, geometry, fullWater.water, *owned,
+                                                      sample.ownedPredictor, error) &&
+                detail::AdvanceVolumeWithOwnedDualMass(layout, geometry, sample.ownedPredictor,
+                                                       dt, sample.fluid, error);
+        } else if (transport) {
+            projected = detail::AdvanceVolumeWithDualMass(layout, geometry, fullWater, dt,
+                                                          sample.fluid, error);
+        } else {
+            projected = AdvanceMovingVolume(layout, geometry, fullWater, dt, {}, sample.fluid, error);
+        }
         if (!projected)
             return false;
         sample.fluid.waterRoundoffCorrection += inputRoundoff;
@@ -183,7 +203,7 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
     }
 
     constexpr int workLimit = 12;
-    const double tolerance = 1e-10 * layout.h;
+    const double tolerance = 1e-11 * layout.h;
     for (int iteration = 0; MaxAbs(current.residual) > tolerance; ++iteration) {
         if (iteration == workLimit) {
             error = "coupled box could not resolve the pressure/displacement residual";
@@ -296,6 +316,41 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
             return false;
         }
     }
+    if (owned && fullyWet) {
+        const auto& geometry = current.geometry;
+        HalfDualPressureUpdate pressure;
+        HalfDualVolumeTransport advection;
+        HalfDualFaceMerge merged;
+        if (!ApplyHalfDualVolumePressure(layout, geometry, current.ownedPredictor, step.fluid,
+                                        *owned, dt, pressure, error) ||
+            !AdvectHalfDualVolumeMomentum(layout, geometry, fullWater, step.fluid, pressure.state,
+                                          advection, error) ||
+            !MergeHalfDualVolumeFaces(layout, geometry, step.fluid.state.water, advection.state,
+                                      merged, error))
+            return false;
+        step.fluid.state.velocity = std::move(merged.faceVelocity);
+        step.stationaryWallImpulse = merged.stationaryWallImpulse;
+        step.stationaryWallKineticLoss = merged.stationaryWallKineticLoss;
+        ownedResult->halfVelocity = std::move(merged.state);
+        ownedResult->pressureImpulse = pressure.impulse;
+        ownedResult->mergeKineticLoss = merged.mergeKineticLoss;
+        ownedResult->transportKineticChange = advection.afterKineticEnergy -
+                                              advection.beforeKineticEnergy;
+        for (int axis = 0; axis < 3; ++axis) {
+            ownedResult->transportMomentumError[axis] = advection.afterMomentum[axis] -
+                advection.beforeMomentum[axis] - advection.roundoffMomentum[axis];
+        }
+    }
+    if (owned && !fullyWet) {
+        auto& ownership = current.phaseOwnership;
+        ownedResult->halfVelocity = std::move(ownership.halfVelocity);
+        ownedResult->pressureImpulse = ownership.pressureImpulse;
+        ownedResult->transportMomentumError = ownership.transportMomentumError;
+        ownedResult->mergeKineticLoss = ownership.mergeKineticLoss;
+        ownedResult->transportKineticChange = ownership.advectiveKineticChange;
+        step.stationaryWallImpulse = ownership.stationaryWallImpulse;
+        step.stationaryWallKineticLoss = ownership.stationaryWallKineticLoss;
+    }
     output = std::move(step);
     error.clear();
     return true;
@@ -306,14 +361,14 @@ bool AdvanceBox(const GridLayout& layout, const CoupledBoxState& body,
 bool AdvanceCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
                              const MovingVolumeState& fluid, double dt, const GridVec& gravity,
                              CoupledBoxStep& output, std::string& error) {
-    return AdvanceBox(layout, body, fluid, dt, gravity, false, -1, output, error);
+    return AdvanceBox(layout, body, fluid, dt, gravity, false, -1, nullptr, nullptr, output, error);
 }
 
 bool AdvanceTransportedVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
                                  const MovingVolumeState& fluid, double dt,
                                  const GridVec& gravity, CoupledBoxStep& output,
                                  std::string& error) {
-    return AdvanceBox(layout, body, fluid, dt, gravity, true, -1, output, error);
+    return AdvanceBox(layout, body, fluid, dt, gravity, true, -1, nullptr, nullptr, output, error);
 }
 
 bool AdvanceEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
@@ -326,7 +381,36 @@ bool AdvanceEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxS
     }
     GridVec gravity{};
     gravity[axis] = signedGravity;
-    return AdvanceBox(layout, body, fluid, dt, gravity, false, axis, output, error);
+    return AdvanceBox(layout, body, fluid, dt, gravity, false, axis, nullptr, nullptr, output, error);
+}
+
+bool AdvanceOwnedCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
+                                 const MovingVolumeState& fluid, const HalfDualVolumeState& owned,
+                                 double dt, const GridVec& gravity, OwnedCoupledBoxStep& output,
+                                 std::string& error) {
+    OwnedCoupledBoxStep next;
+    if (!AdvanceBox(layout, body, fluid, dt, gravity, false, -1, &owned, &next, next.box, error))
+        return false;
+    output = std::move(next);
+    return true;
+}
+
+bool AdvanceOwnedEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
+                                         const MovingVolumeState& fluid,
+                                         const HalfDualVolumeState& owned,
+                                         double dt, int axis, double signedGravity,
+                                         OwnedCoupledBoxStep& output, std::string& error) {
+    if (axis < 0 || axis > 2 || !std::isfinite(signedGravity) || signedGravity > 0) {
+        error = "invalid coupled surface gravity";
+        return false;
+    }
+    GridVec gravity{};
+    gravity[axis] = signedGravity;
+    OwnedCoupledBoxStep next;
+    if (!AdvanceBox(layout, body, fluid, dt, gravity, false, axis, &owned, &next, next.box, error))
+        return false;
+    output = std::move(next);
+    return true;
 }
 
 } // namespace judas::volume_grid

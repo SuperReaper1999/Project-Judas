@@ -1,0 +1,11 @@
+Archived original total-energy positive increments (full 600 recorded updates): 8
+Peak increment and location: (563.0, 0.007783000008203089)
+Sum of positive increments, J: 0.030673999994178303
+original release mean, RMS, vertical mean, deep, upper 0.132311166958 0.152982243198 0.101545958217 0.16695486964 0.0952993443527
+original absolute peak of per-row water volume difference 1.42108547152e-13
+half-step release mean, RMS, vertical mean, deep, upper 0.131395325951 0.151761083723 0.100699459894 0.165570970509 0.094884589976
+half-step absolute peak of per-row water volume difference 1.42108547152e-13
+flat release mean, RMS, vertical mean, deep, upper 0.0 0.0 0.0 0.0 0.0
+flat absolute peak of per-row water volume difference 7.1054273576e-15
+zero-g release mean, RMS, vertical mean, deep, upper 0.0 0.0 0.0 0.0 0.0
+zero-g absolute peak of per-row water volume difference 0.0

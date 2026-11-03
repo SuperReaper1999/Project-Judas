@@ -28,7 +28,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="judas-native-grid-player-") as temporary:
         out = pathlib.Path(temporary)
         objects = []
-        for path in ("GridNativePlayerTests.cpp", "MovingVolumeGrid.cpp"):
+        for path in ("GridNativePlayerTests.cpp", "MovingVolumeGrid.cpp", "HalfDualVolumeMomentum.cpp"):
             obj = out / (path + ".o")
             subprocess.run(
                 [link[0], *compile_flags, "-Werror", "-c", source / path, "-o", obj],

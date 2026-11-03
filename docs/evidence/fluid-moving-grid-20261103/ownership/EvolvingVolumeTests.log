@@ -1,0 +1,48 @@
+PASS nonplanar free surface continues through 24 evolving steps 24
+PASS evolving free surface conserves global water volume 7.9936057773011271e-15
+PASS published phase flux reproduces each evolving cell water update 1.7347234759768071e-18
+PASS gravity causes resolved flow on sloped free surface 0.2731733661115533
+PASS nonplanar continuation actually transports material 0.0010330964982318003
+PASS independent local wet and dry loops advance 0
+PASS high local water transports water even above global reference 4.163336342344337e-17
+PASS dry local air transports only air even below global reference 0
+PASS disjoint wet circulation creates no phantom pressure on dry body 0
+PASS no water is invented across the untouched dry gap 0
+PASS nonplanar overcapacity state is rejected 0
+PASS overcapacity rejection leaves the last fluid and body result intact 0
+PASS evolving solver continues after a dry box crosses into water 10
+PASS repeated moving box sweep conserves all water 1.0658141036401503e-14
+PASS moving box phase flux reproduces each cell update 6.6174449004242214e-24
+PASS moving box has nonzero finite work through actual pressure evolution 0.97698412423580983
+PASS original 12 mm crossing succeeds with exact path subdivision 0
+PASS subdivision addresses cut-cell capacity with two admitted half steps 0.53151380450300922
+PASS subdivided original crossing conserves global water 6.2172489379008766e-15
+PASS adaptive endpoint matches two independently submitted half intervals 0
+PASS subdivision publishes time-weighted force and torque once 0
+PASS original faster crossing still rejects with subdivision disabled 0
+PASS unsplit capacity failure does not replace accepted endpoint or reaction 0
+PASS neutral dry body has only physical air buoyancy 8.7241397983226076e-11
+PASS finite-body pressure force independently balances neutral weight 1.8047745507745656e-10
+PASS neutral finite-body rest preserves water quantity 0
+PASS neutral half-submerged body stays at hydrostatic rest 2.6257694238662029e-11
+PASS finite-body pressure force independently balances neutral weight 2.9918538268782695e-08
+PASS neutral finite-body rest preserves water quantity 3.5527136788005009e-15
+PASS unprescribed finite-mass body crosses into evolving water 1.0335945687899701
+PASS water pressure measurably slows the entering body 0.6070955678014216
+PASS reported reaction closes all components of rigid impulse 5.5741180560175962e-09
+PASS rigid position and accepted velocity use the same motion 1.0495077029659683e-16
+PASS coupled pressure work and swept hydrostatic potential close 4.3535575144915128e-09
+PASS unprescribed crossing retains all water 1.3322676295501878e-14
+PASS unprescribed finite-mass body crosses into evolving water 1.0412258441743143
+PASS water pressure measurably slows the entering body 0.63759321783338219
+PASS reported reaction closes all components of rigid impulse 2.5784983037624443e-09
+PASS rigid position and accepted velocity use the same motion 1.0668549377257364e-16
+PASS coupled pressure work and swept hydrostatic potential close 1.9750691082620619e-09
+PASS unprescribed crossing retains all water 1.3322676295501878e-14
+PASS coupled waterline transport closes the material momentum ledger 1.7961173273948565e-13
+PASS coupled waterline actually advects and merges unequal half velocities 0.013036306610908561
+PASS nonplanar moving fixture solves after cyclic chart rotation 0
+PASS transported phase water rotates with its chart 5.2041704279304213e-18
+PASS actual evolving pressure and flow rotate with the chart 6.6613381477509392e-15
+PASS coupled moving pressure force and torque rotate 4.0927261579781771e-12
+SUMMARY evolving volume 47 checks 0 failures

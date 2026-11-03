@@ -101,7 +101,10 @@ bool AdvectHalfDualVolumeMomentum(const GridLayout& layout, const MovingGridGeom
                                   const MovingVolumeState& before,
                                   const MovingVolumeStep& projected,
                                   const HalfDualVolumeState& initial,
-                                  HalfDualVolumeTransport& output, std::string& error) {
+                                  HalfDualVolumeTransport& output, std::string& error,
+                                  bool* donorCapacityExceeded) {
+    if (donorCapacityExceeded)
+        *donorCapacityExceeded = false;
     const std::size_t count = layout.CheckedCellCount();
     const double area = layout.h * layout.h;
     const double volume = area * layout.h;
@@ -197,9 +200,14 @@ bool AdvectHalfDualVolumeMomentum(const GridLayout& layout, const MovingGridGeom
             const double end = halfNew[half / 2];
             const double errorMass = std::abs(advectedMass[half] - end);
             if (!std::isfinite(errorMass) || !std::isfinite(outgoing[half]) ||
-                !std::isfinite(momentum[half]) || errorMass > massTolerance ||
-                outgoing[half] > start) {
-                error = "half-dual mass balance or donor capacity failed";
+                !std::isfinite(momentum[half]) || errorMass > massTolerance) {
+                error = "half-dual transported mass does not match endpoint capacity";
+                return false;
+            }
+            if (outgoing[half] > start) {
+                if (donorCapacityExceeded)
+                    *donorCapacityExceeded = true;
+                error = "half-dual donor capacity exhausted; substep required";
                 return false;
             }
             step.maximumHalfMassResidual = std::max(step.maximumHalfMassResidual, errorMass);
@@ -290,9 +298,11 @@ bool ApplyHalfDualVolumePressure(const GridLayout& layout, const MovingGridGeome
     double workScale = 0;
     for (int axis = 0; axis < 3; ++axis) {
         const auto& flux = projected.flux[axis];
+        const auto& gravity = projected.gravityVelocityIncrement[axis];
         auto& field = step.state.velocity[axis];
         const auto& aperture = geometry.averageAperture[axis];
         if (flux.size() != layout.FaceCount(axis) || before.velocity[axis].size() != flux.size() ||
+            (!gravity.empty() && gravity.size() != flux.size()) ||
             aperture.size() != flux.size() ||
             std::any_of(flux.begin(), flux.end(), [](double value) { return !std::isfinite(value); })) {
             error = "half-dual pressure mapping requires finite projected face flux";
@@ -304,7 +314,8 @@ bool ApplyHalfDualVolumePressure(const GridLayout& layout, const MovingGridGeome
         Visit(limits, [&](const Index& i) {
             const auto index = Face(layout, axis, i);
             if (i[axis] == 0 || i[axis] == layout.cells[axis] || aperture[index] == 0)
-                sealed = sealed && flux[index] == 0 && before.velocity[axis][index] == 0;
+                sealed = sealed && flux[index] == 0 && before.velocity[axis][index] == 0 &&
+                    (gravity.empty() || gravity[index] == 0);
         });
         if (!sealed) {
             error = "half-dual pressure mapping received flow across a sealed face";
@@ -313,17 +324,21 @@ bool ApplyHalfDualVolumePressure(const GridLayout& layout, const MovingGridGeome
         if (!VisitPressureFaces(layout, geometry, halfMass, initial, axis, [&](const PressureFace& f) {
             if (before.velocity[axis][f.index] != f.speed)
                 return false;
-            const double change = flux[f.index] / (dt * f.aperture) - f.speed;
-            const double impulse = (f.leftMass + f.rightMass) * change;
-            const double work = (f.speed + .5 * change) * impulse;
-            if (f.leftMass > 0) field[f.leftHalf] += change;
-            if (f.rightMass > 0) field[f.rightHalf] += change;
+            const double gravityChange = gravity.empty() ? 0. : gravity[f.index];
+            const double freeSpeed = f.speed + gravityChange;
+            const double change = flux[f.index] / (dt * f.aperture) - freeSpeed;
+            const double mass = f.leftMass + f.rightMass;
+            const double impulse = mass * change;
+            const double work = (freeSpeed + .5 * change) * impulse;
+            if (f.leftMass > 0) field[f.leftHalf] += gravityChange + change;
+            if (f.rightMass > 0) field[f.rightHalf] += gravityChange + change;
+            step.gravityImpulse[axis] += mass * gravityChange;
             step.impulse[axis] += impulse;
             step.kineticChange += work;
             step.correctionEnergy += .5 * impulse * change;
             workScale += std::abs(work);
             return std::isfinite(field[f.leftHalf]) && std::isfinite(field[f.rightHalf]);
-        }) || !std::isfinite(step.impulse[axis])) {
+        }) || !std::isfinite(step.impulse[axis]) || !std::isfinite(step.gravityImpulse[axis])) {
             error = "half-dual pressure mapping disagrees with the owned face predictor";
             return false;
         }

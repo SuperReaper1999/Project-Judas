@@ -15,8 +15,10 @@ struct Rectangle {
     GridVec lo, hi;
 };
 
-inline bool Intersect(Rectangle& clipped, const Rectangle& cut) {
+inline bool Intersect(Rectangle& clipped, const Rectangle& cut, int ignoredAxis = -1) {
     for (int axis = 0; axis < 3; ++axis) {
+        if (axis == ignoredAxis)
+            continue;
         clipped.lo[axis] = std::max(clipped.lo[axis], cut.lo[axis]);
         clipped.hi[axis] = std::min(clipped.hi[axis], cut.hi[axis]);
         if (clipped.lo[axis] >= clipped.hi[axis])
@@ -27,13 +29,16 @@ inline bool Intersect(Rectangle& clipped, const Rectangle& cut) {
 
 // Emit disjoint positive-volume slabs around the excluded intersection. This
 // avoids recovering a tiny fluid sliver by subtracting two large wet volumes.
-inline void Subtract(Rectangle region, const Rectangle& cut, std::vector<Rectangle>& output) {
+inline void Subtract(Rectangle region, const Rectangle& cut, std::vector<Rectangle>& output,
+                     int ignoredAxis = -1) {
     Rectangle excluded = region;
-    if (!Intersect(excluded, cut)) {
+    if (!Intersect(excluded, cut, ignoredAxis)) {
         output.push_back(region);
         return;
     }
     for (int axis = 0; axis < 3; ++axis) {
+        if (axis == ignoredAxis)
+            continue;
         if (region.lo[axis] < excluded.lo[axis]) {
             Rectangle slab = region;
             slab.hi[axis] = excluded.lo[axis];

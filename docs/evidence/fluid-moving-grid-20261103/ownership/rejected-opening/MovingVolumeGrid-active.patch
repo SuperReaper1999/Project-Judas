@@ -1,0 +1,65 @@
+--- MovingVolumeGrid.cpp
++++ MovingVolumeGrid-active.cpp
+@@ -19,0 +20,2 @@
++    int incomingSign = 0;
++    bool active = false;
+@@ -44,0 +47 @@
++        if (f.active) continue;
+@@ -90,0 +94 @@
++            if (f.active) continue;
+@@ -261,0 +266,4 @@
++                    // An explicit donor cannot supply a link when neither
++                    // neighboring cell owns material at the start of the interval.
++                    if (metric == PressureMetric::OwnedDual && metricMass == 0)
++                        continue;
+@@ -284,0 +293,4 @@
++                    const int incomingSign = metric == PressureMetric::OwnedDual
++                        ? geometry.startCapacity[left] == 0 ? -1
++                          : geometry.startCapacity[right] == 0 ? 1 : 0
++                        : 0;
+@@ -286 +298 @@
+-                                     conductance, predictor, rightCoord[axis] * layout.h});
++                                     conductance, predictor, rightCoord[axis] * layout.h, incomingSign});
+@@ -300,3 +312,36 @@
+-    if (!SolvePressure(faces, rhs, tolerance, cellVolume, step.pressure,
+-                       step.iterations, error))
+-        return false;
++    auto baseRhs = rhs;
++    for (std::size_t attempt = 0; ; ++attempt) {
++        rhs = baseRhs;
++        for (const auto& f : faces) {
++            if (!f.active)
++                continue;
++            const double predictorFlux = dt * f.aperture * f.predictor;
++            rhs[f.left] += predictorFlux;
++            rhs[f.right] -= predictorFlux;
++        }
++        int iterations = 0;
++        std::fill(step.pressure.begin(), step.pressure.end(), 0.);
++        if (!SolvePressure(faces, rhs, tolerance, cellVolume, step.pressure, iterations, error))
++            return false;
++        step.iterations += iterations;
++        bool changed = false;
++        for (auto& f : faces) {
++            if (f.incomingSign == 0)
++                continue;
++            const double correction = f.conductance *
++                (step.pressure[f.left] - step.pressure[f.right]);
++            const double desired = f.predictor + correction / (dt * f.aperture);
++            if ((f.active && desired * f.incomingSign > 0) ||
++                (!f.active && desired * f.incomingSign < 0)) {
++                f.active = !f.active;
++                changed = true;
++                break;
++            }
++        }
++        if (!changed)
++            break;
++        if (attempt == 63) {
++            error = "newly exposed pressure faces could not satisfy causal donor flow";
++            return false;
++        }
++    }
+@@ -308 +353 @@
+-        const double correctedSpeed = f.predictor + correction / (dt * f.aperture);
++        const double correctedSpeed = f.active ? 0. : f.predictor + correction / (dt * f.aperture);

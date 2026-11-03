@@ -1,0 +1,23 @@
+--- half-release.cpp
++++ half-release-adapt.cpp
+@@ -58 +58,16 @@
+-        if (!AdvanceOwnedEvolvingCoupledVolumeBox(grid, body, fluid, owned, dt, 1, gravity, next, error)) {
++        int splits = 0;
++        const auto advance = [&](const auto& self, const CoupledBoxState& beforeBody,
++                                 const MovingVolumeState& beforeFluid,
++                                 const HalfDualVolumeState& beforeOwned, double h, int depth,
++                                 OwnedCoupledBoxStep& after) -> bool {
++            if (AdvanceOwnedEvolvingCoupledVolumeBox(grid, beforeBody, beforeFluid, beforeOwned,
++                                                     h, 1, gravity, after, error))
++                return true;
++            if (depth == 9)
++                return false;
++            ++splits;
++            OwnedCoupledBoxStep mid;
++            return self(self, beforeBody, beforeFluid, beforeOwned, .5*h, depth+1, mid) &&
++                self(self, mid.box.body, mid.box.fluid.state, mid.halfVelocity, .5*h, depth+1, after);
++        };
++        if (!advance(advance, body, fluid, owned, dt, 0, next)) {
+@@ -98 +113 @@
+-                      << next.box.geometryEvaluations << ',' << next.box.pressureEnergyResidual << ','
++                      << splits << ',' << next.box.geometryEvaluations << ',' << next.box.pressureEnergyResidual << ','

@@ -14,6 +14,7 @@ struct MovingVolumeStep {
     std::vector<double> pressure; // Pa, with zero mean per sealed component.
     std::array<std::vector<double>, 3> flux; // Shared, time-integrated mixture volume, in m³.
     std::array<std::vector<double>, 3> materialMassFlux; // Same transport as flux, in kg.
+    std::array<std::vector<double>, 3> gravityVelocityIncrement;
     double residual = 0; // Maximum error in the cell volume balance, in m³.
     double pressureFluidWork = 0;
     double pressureKineticWork = 0; // Face kinetic-energy change during pressure projection.

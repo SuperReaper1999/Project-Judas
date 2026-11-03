@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HalfDualVolumeMomentum.h"
 #include "MovingVolumeMomentum.h"
 
 namespace judas::volume_grid {
@@ -20,6 +21,14 @@ struct CoupledBoxStep {
     MovingVolumeMomentumStep transport;
     GridVec stationaryWallImpulse{};
     double stationaryWallKineticLoss = 0;
+};
+
+struct OwnedCoupledBoxStep {
+    CoupledBoxStep box;
+    HalfDualVolumeState halfVelocity;
+    GridVec pressureImpulse{}, transportMomentumError{};
+    double transportKineticChange = 0;
+    double mergeKineticLoss = 0;
 };
 
 // A translation-only box in a sealed, fully filled, uniform-density tank.
@@ -44,5 +53,18 @@ bool AdvanceEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxS
                                      const MovingVolumeState& fluid, double dt, int axis,
                                      double signedGravity, CoupledBoxStep& output,
                                      std::string& error);
+
+// Fully wet coupled pressure with persistent ownership at closing and opening
+// faces. Shared face samples are derived from the half state on publication.
+bool AdvanceOwnedCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
+                                 const MovingVolumeState& fluid, const HalfDualVolumeState& owned,
+                                 double dt, const GridVec& gravity, OwnedCoupledBoxStep& output,
+                                 std::string& error);
+
+bool AdvanceOwnedEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
+                                         const MovingVolumeState& fluid,
+                                         const HalfDualVolumeState& owned,
+                                         double dt, int axis, double signedGravity,
+                                         OwnedCoupledBoxStep& output, std::string& error);
 
 } // namespace judas::volume_grid

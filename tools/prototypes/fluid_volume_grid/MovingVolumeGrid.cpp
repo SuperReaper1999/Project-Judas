@@ -3,6 +3,7 @@
 #include "GridCellPhase.h"
 #include "GridHydrostaticReaction.h"
 #include "MovingVolumePressureInternal.h"
+#include "OwnedEvolvingVolume.h"
 
 #include <algorithm>
 #include <cmath>
@@ -138,7 +139,8 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                    const MovingVolumeState& state, double dt, const GridVec& gravity,
                    const PlanarPressureReference* reference, PressureMetric metric,
                    MovingVolumeStep& output,
-                   std::string& error, bool* transportRetry = nullptr) {
+                   std::string& error, bool* transportRetry = nullptr,
+                   double verifiedSweepError = 0.) {
     if (transportRetry)
         *transportRetry = false;
     const std::size_t count = layout.CheckedCellCount();
@@ -187,6 +189,8 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         }
         step.flux[axis].resize(faceCount);
         step.materialMassFlux[axis].resize(faceCount);
+        if (reference)
+            step.gravityVelocityIncrement[axis].resize(faceCount);
         step.state.velocity[axis].resize(faceCount);
         auto faceLimits = layout.cells;
         ++faceLimits[axis];
@@ -259,8 +263,17 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                     const double conductance = useDualMass
                         ? fluxScale * fluxScale / metricMass
                         : dt * dt * aperture / (density * layout.h);
+                    if (reference && useDualMass) {
+                        // The reference gravity residual is a force on the
+                        // geometric face prism. Divide by the same owned
+                        // half-cell mass used by pressure and transport.
+                        acceleration *= density * aperture * layout.h / metricMass;
+                    }
+                    const double increment = dt * acceleration;
+                    if (reference)
+                        step.gravityVelocityIncrement[axis][index] = increment;
                     const double predictor = (startAperture > 0 || metric == PressureMetric::OwnedDual
-                        ? speed : 0.) + dt * acceleration;
+                        ? speed : 0.) + increment;
                     if (!(conductance > 0) || !std::isfinite(conductance) ||
                         !std::isfinite(predictor)) {
                         error = "moving-volume face predictor is not representable";
@@ -277,7 +290,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
     }
     for (std::size_t cell = 0; cell < count; ++cell) {
         if (std::abs(geometricBalance[cell] + geometry.startCapacity[cell] -
-                     geometry.endCapacity[cell]) > roundoff) {
+                     geometry.endCapacity[cell]) > roundoff + verifiedSweepError) {
             error = "moving solid sweep does not reproduce the change in capacity";
             return false;
         }
@@ -448,7 +461,9 @@ namespace {
 bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
                         const MovingVolumeState& state, double dt, int axis, double height,
                         double signedGravity, bool requireFlat, PlanarMovingStep& output,
-                        std::string& error, bool* transportRetry = nullptr) {
+                        std::string& error, bool* transportRetry = nullptr,
+                        const HalfDualVolumeState* owned = nullptr,
+                        OwnedEvolvingVolumeStep* ownedResult = nullptr) {
     if (transportRetry)
         *transportRetry = false;
     if (axis < 0 || axis > 2 || !std::isfinite(height) || !std::isfinite(signedGravity) ||
@@ -536,7 +551,11 @@ bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& 
     step.referenceHeight = height;
     const PlanarPressureReference reference{axis, height, signedGravity, wetLeft,
         flat ? wetLeft : wetRight, flat ? nullptr : &localPhase.waterPlane};
-    if (!AdvanceVolume(layout, geometry, canonical, dt, {}, &reference, PressureMetric::FacePrism, step.fluid,
+    if (owned && !BuildHalfDualVolumePredictor(layout, geometry, canonical.water, *owned,
+                                               canonical, error))
+        return false;
+    const auto metric = owned ? PressureMetric::OwnedDual : PressureMetric::FacePrism;
+    if (!AdvanceVolume(layout, geometry, canonical, dt, {}, &reference, metric, step.fluid,
                        error, transportRetry))
         return false;
     step.fluid.waterRoundoffCorrection += inputRoundoff;
@@ -564,6 +583,31 @@ bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& 
         error = exception.what();
         return false;
     }
+    if (owned) {
+        HalfDualPressureUpdate pressure;
+        HalfDualVolumeTransport advection;
+        HalfDualFaceMerge merged;
+        if (!ApplyHalfDualVolumePressure(layout, geometry, canonical, step.fluid, *owned,
+                                         dt, pressure, error) ||
+            !AdvectHalfDualVolumeMomentum(layout, geometry, canonical, step.fluid, pressure.state,
+                                           advection, error, transportRetry) ||
+            !MergeHalfDualVolumeFaces(layout, geometry, step.fluid.state.water, advection.state,
+                                       merged, error))
+            return false;
+        step.fluid.state.velocity = std::move(merged.faceVelocity);
+        ownedResult->halfVelocity = std::move(merged.state);
+        ownedResult->residualGravityImpulse = pressure.gravityImpulse;
+        ownedResult->pressureImpulse = pressure.impulse;
+        ownedResult->stationaryWallImpulse = merged.stationaryWallImpulse;
+        ownedResult->stationaryWallKineticLoss = merged.stationaryWallKineticLoss;
+        ownedResult->mergeKineticLoss = merged.mergeKineticLoss;
+        ownedResult->advectiveKineticChange = advection.afterKineticEnergy -
+                                               advection.beforeKineticEnergy;
+        for (int a = 0; a < 3; ++a) {
+            ownedResult->transportMomentumError[a] = advection.afterMomentum[a] -
+                advection.beforeMomentum[a] - advection.roundoffMomentum[a];
+        }
+    }
     output = std::move(step);
     error.clear();
     return true;
@@ -585,15 +629,32 @@ bool AdvanceEvolvingVolume(const GridLayout& layout, const std::vector<BoxMotion
                               output, error);
 }
 
-bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
-                                   const MovingVolumeState& state, double dt, int axis,
-                                   double signedGravity, int subdivisionLimit,
-                                   EvolvingVolumeInterval& output, std::string& error) {
+bool AdvanceOwnedEvolvingVolume(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                double dt, int axis, double signedGravity,
+                                OwnedEvolvingVolumeStep& output, std::string& error) {
+    OwnedEvolvingVolumeStep next;
+    if (!AdvancePhaseVolume(layout, boxes, state, dt, axis, 0., signedGravity, false,
+                            next.phase, error, nullptr, &owned, &next))
+        return false;
+    output = std::move(next);
+    return true;
+}
+
+namespace {
+
+const PlanarMovingStep& PhaseOf(const PlanarMovingStep& step) { return step; }
+const PlanarMovingStep& PhaseOf(const OwnedEvolvingVolumeStep& step) { return step.phase; }
+
+template<class Step, class Interval, class Advance>
+bool AdvanceInterval(const std::vector<BoxMotion>& boxes, const MovingVolumeState& state,
+                     double dt, int subdivisionLimit, Advance advanceOne, Interval& output,
+                     std::string& error) {
     if (subdivisionLimit < 0 || subdivisionLimit > 10) {
         error = "invalid moving-volume subdivision limit";
         return false;
     }
-    EvolvingVolumeInterval next;
+    Interval next;
     std::map<std::uint32_t, GridPressureLoad> means;
     MovingVolumeState current = state;
     const auto advance = [&](const auto& self, double begin, double end, int depth) -> bool {
@@ -605,10 +666,9 @@ bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<B
                 box.translation[a] *= end - begin;
             }
         }
-        PlanarMovingStep result;
+        Step result;
         bool retry = false;
-        if (!AdvancePhaseVolume(layout, substep, current, dt * (end - begin), axis, 0.,
-                                signedGravity, false, result, error, &retry)) {
+        if (!advanceOne(substep, current, dt * (end - begin), result, retry)) {
             ++next.rejectedAttempts;
             if (!retry || depth == subdivisionLimit)
                 return false;
@@ -616,9 +676,10 @@ bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<B
             return self(self, begin, middle, depth + 1) && self(self, middle, end, depth + 1);
         }
         ++next.substeps;
-        next.maximumResidual = std::max(next.maximumResidual, result.fluid.residual);
-        next.maximumCfl = std::max(next.maximumCfl, result.fluid.maxCfl);
-        for (const auto& load : result.loads) {
+        const auto& phase = PhaseOf(result);
+        next.maximumResidual = std::max(next.maximumResidual, phase.fluid.residual);
+        next.maximumCfl = std::max(next.maximumCfl, phase.fluid.maxCfl);
+        for (const auto& load : phase.loads) {
             auto& mean = means[load.owner];
             mean.owner = load.owner;
             for (int a = 0; a < 3; ++a) {
@@ -626,7 +687,7 @@ bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<B
                 mean.torque[a] += (end - begin) * load.torque[a];
             }
         }
-        current = result.fluid.state;
+        current = phase.fluid.state;
         next.final = std::move(result);
         return true;
     };
@@ -647,6 +708,41 @@ bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<B
     return true;
 }
 
+} // namespace
+
+bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                   const MovingVolumeState& state, double dt, int axis,
+                                   double signedGravity, int subdivisionLimit,
+                                   EvolvingVolumeInterval& output, std::string& error) {
+    const auto step = [&](const auto& motion, const auto& material, double h,
+                          PlanarMovingStep& next, bool& retry) {
+        return AdvancePhaseVolume(layout, motion, material, h, axis, 0., signedGravity,
+                                  false, next, error, &retry);
+    };
+    return AdvanceInterval<PlanarMovingStep>(boxes, state, dt, subdivisionLimit, step, output,
+                                              error);
+}
+
+bool AdvanceOwnedEvolvingVolumeInterval(const GridLayout& layout,
+                                        const std::vector<BoxMotion>& boxes,
+                                        const MovingVolumeState& state,
+                                        const HalfDualVolumeState& owned,
+                                        double dt, int axis, double signedGravity,
+                                        int subdivisionLimit, OwnedEvolvingVolumeInterval& output,
+                                        std::string& error) {
+    auto currentOwned = owned;
+    const auto step = [&](const auto& motion, const auto& material, double h,
+                          OwnedEvolvingVolumeStep& next, bool& retry) {
+        if (!AdvancePhaseVolume(layout, motion, material, h, axis, 0., signedGravity, false,
+                                next.phase, error, &retry, &currentOwned, &next))
+            return false;
+        currentOwned = next.halfVelocity;
+        return true;
+    };
+    return AdvanceInterval<OwnedEvolvingVolumeStep>(boxes, state, dt, subdivisionLimit, step,
+                                                     output, error);
+}
+
 bool detail::AdvanceVolumeWithDualMass(const GridLayout& layout, const MovingGridGeometry& geometry,
                                         const MovingVolumeState& state, double dt,
                                         MovingVolumeStep& output, std::string& error) {
@@ -660,6 +756,19 @@ bool detail::AdvanceVolumeWithOwnedDualMass(const GridLayout& layout,
                                            MovingVolumeStep& output, std::string& error) {
     return AdvanceVolume(layout, geometry, state, dt, {}, nullptr, PressureMetric::OwnedDual,
                          output, error);
+}
+
+bool detail::AdvanceVolumeForVerifiedSweep(const GridLayout& layout,
+                                           const MovingGridGeometry& geometry,
+                                           const MovingVolumeState& state, double dt,
+                                           double verifiedSweepError, MovingVolumeStep& output,
+                                           std::string& error) {
+    if (!std::isfinite(verifiedSweepError) || verifiedSweepError < 0) {
+        error = "invalid swept geometry verification error";
+        return false;
+    }
+    return AdvanceVolume(layout, geometry, state, dt, {}, nullptr, PressureMetric::FacePrism,
+                         output, error, nullptr, verifiedSweepError);
 }
 
 } // namespace judas::volume_grid

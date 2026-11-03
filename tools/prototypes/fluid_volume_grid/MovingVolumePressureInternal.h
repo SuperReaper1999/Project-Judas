@@ -16,4 +16,11 @@ bool AdvanceVolumeWithOwnedDualMass(const GridLayout& layout, const MovingGridGe
                                     const MovingVolumeState& state, double dt,
                                     MovingVolumeStep& output, std::string& error);
 
+// Called only after the oriented swept-geometry builder independently verifies
+// its integration error. Exact endpoint capacities still drive pressure.
+bool AdvanceVolumeForVerifiedSweep(const GridLayout& layout, const MovingGridGeometry& geometry,
+                                   const MovingVolumeState& state, double dt,
+                                   double verifiedSweepError, MovingVolumeStep& output,
+                                   std::string& error);
+
 } // namespace judas::volume_grid::detail

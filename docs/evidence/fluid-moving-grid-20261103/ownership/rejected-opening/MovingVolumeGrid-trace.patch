@@ -1,0 +1,12 @@
+--- MovingVolumeGrid.cpp
++++ MovingVolumeGrid-trace.cpp
+@@ -0,0 +1 @@
++#include <cstdio>
+@@ -261,0 +263,4 @@
++                    // An explicit donor cannot supply a link when neither
++                    // neighboring cell owns material at the start of the interval.
++                    if (metric == PressureMetric::OwnedDual && metricMass == 0)
++                        continue;
+@@ -332,0 +338,2 @@
++            std::fprintf(stderr, "PRIMAL donor cell %zu capacity %.17g end %.17g out %.17g balance %.17g tolerance %.17g\n",
++                cell, capacity, geometry.endCapacity[cell], outgoing[cell], balance[cell], balanceTolerance);

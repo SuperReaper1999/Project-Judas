@@ -1,0 +1,33 @@
+--- HalfDualVolumeMomentum.cpp
++++ HalfDualVolumeMomentum.cpp
+@@ -85,0 +86,2 @@
++        if (mass == 0)
++            return;
+@@ -182,2 +184,25 @@
+-            exchange(half, half + 1, .5 *
+-                (axial[Face(layout, component, i)] + axial[Face(layout, component, high)]));
++            const double lowFlux = axial[Face(layout, component, i)];
++            const double highFlux = axial[Face(layout, component, high)];
++            const double middle = .5 * (lowFlux + highFlux);
++            if (halfOld[half / 2] > 0 || middle == 0) {
++                exchange(half, half + 1, middle);
++            } else {
++                // A newly uncovered cell has no stored material. Split the
++                // actual incoming stream between the two newly created halves.
++                const bool positive = middle > 0;
++                auto donor = i;
++                donor[component] += positive ? -1 : 1;
++                const double incoming = positive ? lowFlux : -highFlux;
++                if (!(incoming >= std::abs(middle)) ||
++                    donor[component] < 0 || donor[component] == layout.cells[component] ||
++                    !(halfOld[Cell(layout, donor)] > 0)) {
++                    outgoing[half] = INFINITY;
++                } else {
++                    const auto sourceHalf = 2 * Cell(layout, donor) + (positive ? 1 : 0);
++                    const double impulse = middle * velocity[sourceHalf];
++                    advectedMass[half] -= middle;
++                    advectedMass[half + 1] += middle;
++                    momentum[half] -= impulse;
++                    momentum[half + 1] += impulse;
++                }
++            }

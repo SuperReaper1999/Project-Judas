@@ -1,0 +1,2 @@
+start 0 end 0.0025000000000000022 exact lower 0.0025000000000000022 exact upper 0 midpoint aperture 0 m2, lumped lower 0.0012500000000000011 lumped midpoint flow 0.00125 m3
+geometric oracle PASS, half-lumped owner negative control PASS

@@ -25,7 +25,8 @@ bool AdvectHalfDualVolumeMomentum(const GridLayout& layout, const MovingGridGeom
                                   const MovingVolumeState& before,
                                   const MovingVolumeStep& projected,
                                   const HalfDualVolumeState& initial,
-                                  HalfDualVolumeTransport& output, std::string& error);
+                                  HalfDualVolumeTransport& output, std::string& error,
+                                  bool* donorCapacityExceeded = nullptr);
 
 // Use the mass-weighted normal velocity for each average-open face without
 // changing either owned half velocity. An average-open face with no start
@@ -38,14 +39,15 @@ bool BuildHalfDualVolumePredictor(const GridLayout& layout, const MovingGridGeom
 struct HalfDualPressureUpdate {
     HalfDualVolumeState state;
     GridVec impulse{};
+    GridVec gravityImpulse{};
     double kineticChange = 0, correctionEnergy = 0;
 };
 
 // Map a pressure projection with the same half-mass metric back to its
 // owners. The same normal increment is added to both sides, preserving their
 // velocity difference until end-of-step topology decides whether to merge.
-// The pressure projection must have used the zero-gravity matched metric;
-// hydrostatic work belongs to the caller's separate reference split.
+// The projection must use the matched metric. Any declared residual gravity
+// increment is applied to both halves before measuring pressure work.
 bool ApplyHalfDualVolumePressure(const GridLayout& layout, const MovingGridGeometry& geometry,
                                  const MovingVolumeState& before,
                                  const MovingVolumeStep& projected,

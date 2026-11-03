@@ -688,6 +688,65 @@ void TestTransportedBox(Checks& checks, const GridLayout& layout) {
         "unsupported closed face cannot partially publish a joined step");
 }
 
+void TestOwnedBoxTopology(Checks& checks, const GridLayout& layout) {
+    CoupledBoxState body{23, {.36, .40, .41}, {.68, .84, .749}, {0, 0, .25}, 500.};
+    auto fluid = FilledTank(checks, layout, body);
+    if (fluid.water.empty()) return;
+    HalfDualVolumeState ownership;
+    for (auto& field : ownership.velocity)
+        field.resize(2 * layout.CellCount());
+    const auto face = layout.Face(0, 2, 2, 2);
+    const auto left = layout.Cell(1, 2, 2);
+    const auto right = layout.Cell(2, 2, 2);
+    CoupledErrors errors;
+    double largestClosedDifference = 0;
+    double maxTransportError = 0;
+    bool closed = false, reopened = false;
+    std::string error;
+    for (int frame = 0; frame < 10; ++frame) {
+        // A known external impulse reverses the box, while both fluid
+        // owners keep the velocities they actually carried at closure.
+        if (frame == 3)
+            body.velocity[2] -= .65;
+        OwnedCoupledBoxStep next;
+        const bool ok = AdvanceOwnedCoupledVolumeBox(layout, body, fluid, ownership, kDt, kZero,
+                                                      next, error);
+        checks.Expect(ok, "joined side-owned moving pressure step " + error);
+        if (!ok) return;
+        CheckCoupledStep(body, fluid, kZero, next.box, errors);
+        GridVec displacement;
+        for (int axis = 0; axis < 3; ++axis) {
+            displacement[axis] = next.box.body.lo[axis] - body.lo[axis];
+            maxTransportError = std::max(maxTransportError,
+                                          std::abs(next.transportMomentumError[axis]));
+        }
+        MovingGridGeometry geometry;
+        if (!Build(checks, "independent owned endpoint", layout,
+                   {{body.owner, body.lo, body.hi, displacement}}, geometry))
+            return;
+        const auto& sides = next.halfVelocity.velocity[0];
+        const double difference = std::abs(sides[2 * left + 1] - sides[2 * right]);
+        if (geometry.endAperture[0][face] == 0) {
+            closed = true;
+            largestClosedDifference = std::max(largestClosedDifference, difference);
+        } else if (closed) {
+            reopened = true;
+            checks.Expect(difference == 0, "reopened face has one shared velocity", difference);
+        }
+        body = next.box.body;
+        fluid = std::move(next.box.fluid.state);
+        ownership = std::move(next.halfVelocity);
+    }
+    checks.Expect(closed && reopened && largestClosedDifference > 1e-7,
+        "actual moving box closes and reopens a face with distinct side-owned state",
+        largestClosedDifference);
+    checks.Expect(errors.volume < kVolumeTolerance, "owned topology conserves water", errors.volume);
+    checks.Expect(errors.impulse < 5e-8, "owned topology rigid impulse closes", errors.impulse);
+    checks.Expect(errors.energy < 2e-7, "owned topology pressure work closes", errors.energy);
+    checks.Expect(maxTransportError < 2e-9, "owned topology advection conserves momentum",
+        maxTransportError);
+}
+
 bool Benchmark(const GridLayout& layout) {
     constexpr int samples = 60;
     BoxMotion box = InteriorBox();
@@ -741,6 +800,7 @@ int main(int argc, char** argv) {
     TestCoupledFlow(checks, layout);
     TestCoupledRejection(checks, layout);
     TestTransportedBox(checks, layout);
+    TestOwnedBoxTopology(checks, layout);
     std::cout << "SUMMARY checks=" << checks.total << " failures=" << checks.failures << '\n';
     return checks.failures ? EXIT_FAILURE : EXIT_SUCCESS;
 }

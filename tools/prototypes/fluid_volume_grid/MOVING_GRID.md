@@ -70,9 +70,24 @@ retains side ownership when apertures close and reopens them with a
 momentum-preserving merge. Pressure impulses, advective exchange and
 stationary wall impulses are checked independently.
 
+The two-phase owned path uses the same half-cell mass for pressure,
+residual gravity and momentum transport. Both rigid feedback and
+transport run inside the evaluated trial step for a body crossing the
+waterline. Only the converged candidate is published.
+
+A separate geometry path clips oriented boxes exactly at step endpoints
+and integrates the moving openings and wall moments over time. It
+verifies cell-volume changes against face sweeps and solid wall motion
+independently. The prescribed-motion solver uses this geometry to
+exchange linear and angular pressure work in a sealed, uniformly wet
+or air-filled chart. Waterline crossings and free rotation are still
+outside its supported scope. The surface extraction probe clips the
+evolving axis-aligned grid interface against the same occupied volume
+used by the solver. It returns triangles independently of the renderer.
+
 ## Validation boundary
 
-The standalone run covers 588 checks. It includes exact free-volume
+The standalone run covers 705 checks. It includes exact free-volume
 and wet-geometry controls, a 4 mm same-cell dry gap, an actual moving
 waterline, free rigid flotation and sinking, flow-driven motion, rotated
 charts, linked material and momentum transfer, and transaction failures.
@@ -91,6 +106,17 @@ charts, linked material and momentum transfer, and transaction failures.
   cell and 6.67e-15 m/s per face.
 - The six-step full-water pressure, rigid and momentum composition
   retains volume and measures rigid impulse error below 6.56e-12 N·s.
+- The coupled waterline with momentum transport closes the rigid
+  impulse to 2.58e-9 N·s, projected work to 1.98e-9 J, water volume to
+  1.34e-14 m³ and transport momentum to 1.80e-13 N·s.
+- The 10-step aperture reopening run closes rigid impulse to 7.81e-9
+  N·s and conserves water to 1.78e-15 m³. This fixture reopens a face
+  between cells that retain material. Fully uncovered cells are a
+  separate case.
+- Prescribed oriented motion transfers 0.82 J to the fluid in the
+  combined translation and rotation case. The work ledger closes
+  to 1.21e-10 J. A wet-to-air comparison changes the dynamic work by
+  the physical density ratio.
 
 A separate 28-check native consumer uses the existing PlayerController
 and native physics archive. It samples authoritative occupied volume
@@ -101,10 +127,29 @@ the player with a chart-aligned box and samples local flow.
 
 ```sh
 python3 tools/prototypes/fluid_volume_grid/run_grid_native_player_tests.py .cache/2d-stage1-build
+python3 tools/prototypes/fluid_volume_grid/run_grid_native_mk2_tests.py .cache/2d-stage1-build /tmp/judas-moving-grid-native
 ```
 
-The standalone solver's translation state is an independent reference
-for the native MK2 handoff. The production renderer, native
-contact/CCD combinations, terrain, arbitrary rotation of a solid within
-the chart, persistence and full original gameplay qualification remain
-separate gates. Passing these tests does not imply an Alpha unlock.
+The 57 native MK2 checks apply pressure impulses through the existing
+constraint participant before CCD. A separate geometry rebuild verifies
+the pose published by MK2. The represented-pose and rounding-only
+reconciliation probes each complete 16 substeps on a freely translating
+body. They reject a coarse chart whose representable displacement
+cannot conservatively fit the projected water. These probes cover a
+free rigid body. General CCD, contacts, joints and orientation still
+require one authoritative native motion prediction and publication path.
+
+The original half-density fixture leaves extra empty space around the
+submerged placeholder. The grid proxy's warmup speed is 0.13231 m/s at
+the original 0.05 m/s comparison. A same-volume flat control stays
+exactly still, and halving the original warmup intervals changes the
+release speed by 0.00092 m/s. The released box exposes another failure
+at about 0.18 seconds, when a face opens between cells that started
+with zero free volume. Rejecting the step preserves published state.
+See the [ownership evidence](../../../docs/evidence/fluid-moving-grid-20261103/ownership/)
+for the original probe, traces and rejected repairs.
+
+Runtime adoption requires a conservative treatment of newly exposed
+volume, native contact and CCD composition, representative terrain and
+surface publication, cold persistence, and full original gameplay
+qualification. The isolated backend leaves the Alpha policy intact.
