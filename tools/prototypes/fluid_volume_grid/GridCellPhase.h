@@ -10,6 +10,12 @@ struct GridCellPhase {
     std::vector<double> capacity; // Available cell volume in m³.
 };
 
+struct GridCellPhaseReconciliation {
+    const std::vector<double>& sweptEndpointCapacity;
+    std::vector<double> water;
+    double volumeRoundoff = 0.;
+};
+
 namespace grid_cell_phase_detail {
 
 struct SolidSlice {
@@ -68,7 +74,8 @@ inline bool InvertStorage(const std::vector<SolidSlice>& solids, int cell, doubl
 inline bool ReconstructGridCellPhase(const GridLayout& layout,
                                      const std::vector<BoxMotion>& stationary, int axis,
                                      const std::vector<double>& water, GridCellPhase& output,
-                                     std::string& error) {
+                                     std::string& error,
+                                     GridCellPhaseReconciliation* reconciliation = nullptr) {
     using grid_cell_phase_detail::SolidSlice;
     using grid_phase_detail::Index;
     using moving_geometry_detail::AdmitRoundoff;
@@ -80,7 +87,7 @@ inline bool ReconstructGridCellPhase(const GridLayout& layout,
         return false;
     const auto count = layout.CellCount();
     const double cellVolume = (layout.h * layout.h) * layout.h;
-    if (water.size() != count ||
+    if (water.size() != count || (reconciliation && reconciliation->sweptEndpointCapacity.size() != count) ||
         std::any_of(water.begin(), water.end(), [&](double v) { return !(v >= 0. && v <= cellVolume); })) {
         error = "water volumes do not match the cell reconstruction grid";
         return false;
@@ -90,6 +97,11 @@ inline bool ReconstructGridCellPhase(const GridLayout& layout,
     next.axis = axis;
     next.waterPlane.resize(count);
     next.capacity.assign(count, cellVolume);
+    std::vector<double> represented;
+    double volumeRoundoff = 0.;
+    if (reconciliation)
+        represented.resize(count);
+    const double endpointRoundoff = 256. * std::numeric_limits<double>::epsilon() * cellVolume;
     std::vector<std::vector<SolidSlice>> slices(count);
     const int b = (axis + 1) % 3, c = (axis + 2) % 3;
     for (const auto& box : boxes) {
@@ -117,9 +129,28 @@ inline bool ReconstructGridCellPhase(const GridLayout& layout,
             for (int i = 0; i < layout.cells[0]; ++i) {
                 const auto index = layout.Cell(i, j, k);
                 const int cell = Index{i, j, k}[axis];
-                const double volume = water[index];
+                double volume = water[index];
                 double& capacity = next.capacity[index];
-                if (!AdmitRoundoff(capacity, cellVolume) || volume > capacity) {
+                if (!AdmitRoundoff(capacity, cellVolume)) {
+                    error = "invalid available cut cell capacity";
+                    return false;
+                }
+                if (reconciliation) {
+                    // The swept endpoint evaluates position in chart units.
+                    // A published static transform normalizes that endpoint
+                    // again. Reconcile only their verified binary64 defect.
+                    const double swept = reconciliation->sweptEndpointCapacity[index];
+                    if (!(swept >= 0.) || volume > swept ||
+                        std::abs(swept - capacity) > endpointRoundoff) {
+                        error = "published endpoint differs from the swept cut volume";
+                        return false;
+                    }
+                    const double adjusted = volume > 0. && volume == swept
+                        ? capacity : std::min(volume, capacity);
+                    volumeRoundoff += std::abs(adjusted - volume);
+                    volume = represented[index] = adjusted;
+                }
+                if (volume > capacity) {
                     error = "water exceeds the available cut cell capacity";
                     return false;
                 }
@@ -136,6 +167,10 @@ inline bool ReconstructGridCellPhase(const GridLayout& layout,
                 next.waterPlane[index] = std::clamp(plane, double(cell), cell + 1.) * layout.h;
             }
         }
+    }
+    if (reconciliation) {
+        reconciliation->water = std::move(represented);
+        reconciliation->volumeRoundoff = volumeRoundoff;
     }
     output = std::move(next);
     error.clear();

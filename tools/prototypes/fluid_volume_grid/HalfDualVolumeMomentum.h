@@ -41,6 +41,7 @@ struct HalfDualPressureUpdate {
     GridVec impulse{};
     GridVec gravityImpulse{};
     double kineticChange = 0, correctionEnergy = 0;
+    double participationMixingLoss = 0;
 };
 
 // Map a pressure projection with the same half-mass metric back to its

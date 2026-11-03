@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run both fluid-grid MK2 probes against an existing native GNU Make build."""
+"""Run the fluid-grid MK2 probes against an existing native GNU Make build."""
 
 import argparse
 import pathlib
@@ -20,7 +20,7 @@ def main():
     if not flags_file.is_file() or not link_file.is_file():
         parser.error("build must contain GNU Make files for judas_production_fluid_tests")
 
-    suites = ("MovingGridMk2Tests", "MovingGridMk2ReconcileTests")
+    suites = ("MovingGridMk2Tests", "MovingGridMk2ReconcileTests", "MovingGridMk2MixedTests")
     logs = [output / (suite + ".log") for suite in suites]
     if any(log.exists() for log in logs):
         parser.error("output already contains an MK2 probe log")
@@ -54,7 +54,9 @@ def main():
 
         shared = [
             compile_source(name)
-            for name in ("MovingVolumeGrid", "MovingVolumeMomentum", "HalfDualVolumeMomentum", "CoupledVolumeBox")
+            for name in ("MovingVolumeGrid", "MovingVolumeMomentum", "HalfDualVolumeMomentum", "CoupledVolumeBox",
+                         "GridHalfCellGeometry", "GridGeometricMomentum", "GridConservativeRemap",
+                         "GridPhaseFluxRepair")
         ]
         failed = False
         for suite, log in zip(suites, logs):

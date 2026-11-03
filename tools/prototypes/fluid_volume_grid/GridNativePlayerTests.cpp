@@ -1,7 +1,7 @@
 // Prototype consumer test. The grid supplies observations to the native
 // PlayerController on ordinary fixed ticks, outside the engine scene pipeline.
 #include "GridWaterQuery.h"
-#include "PlanarMovingVolume.h"
+#include "OwnedEvolvingVolume.h"
 
 #include "GravityField.h"
 #include "PlayerController.h"
@@ -11,6 +11,8 @@
 #include <iomanip>
 #include <iostream>
 #include <numeric>
+#include <optional>
+#include <string_view>
 
 namespace {
 
@@ -59,8 +61,42 @@ bool FillTank(const GridLayout& layout, double level, MovingVolumeState& water,
     return true;
 }
 
-bool AdvanceTank(const GridLayout& layout, MovingVolumeState& water, double gravity,
-                 std::string& error) {
+std::optional<HalfDualVolumeState> InitialOwnedVelocity(const GridLayout& layout,
+                                                       const MovingVolumeState& water,
+                                                       bool geometric) {
+    if (!geometric)
+        return std::nullopt;
+    HalfDualVolumeState owned;
+    for (auto& velocity : owned.velocity)
+        velocity.resize(2 * layout.CellCount());
+    for (int k = 0; k < layout.cells[2]; ++k) {
+        for (int j = 0; j < layout.cells[1]; ++j) {
+            for (int i = 0; i < layout.cells[0]; ++i) {
+                const auto cell = layout.Cell(i, j, k);
+                for (int axis = 0; axis < 3; ++axis) {
+                    std::array<int, 3> high{i, j, k};
+                    ++high[axis];
+                    owned.velocity[axis][2 * cell] = water.velocity[axis][layout.Face(axis, i, j, k)];
+                    owned.velocity[axis][2 * cell + 1] =
+                        water.velocity[axis][layout.Face(axis, high[0], high[1], high[2])];
+                }
+            }
+        }
+    }
+    return owned;
+}
+
+bool AdvanceTank(const GridLayout& layout, MovingVolumeState& water,
+                 std::optional<HalfDualVolumeState>& owned, double gravity, std::string& error) {
+    if (owned) {
+        OwnedEvolvingVolumeInterval interval;
+        if (!AdvanceGeometricEvolvingVolumeInterval(layout, {}, water, *owned, tick, phaseAxis,
+                                                    gravity, 5, interval, error))
+            return false;
+        water = std::move(interval.final.phase.fluid.state);
+        owned = std::move(interval.final.halfVelocity);
+        return true;
+    }
     PlanarMovingStep step;
     if (!AdvanceEvolvingVolume(layout, {}, water, tick, phaseAxis, gravity, step, error))
         return false;
@@ -138,7 +174,7 @@ bool NativeReady(PhysicsWorld& physics, PlayerController& player, Window& window
     return true;
 }
 
-float DensityTank(Checks& checks, const Frame& frame, float density) {
+float DensityTank(Checks& checks, const Frame& frame, float density, bool geometric) {
     const GridLayout layout{{4, 7, 4}, .5};
     constexpr double gravityAcceleration = -9.81;
     const glm::vec3 spawn(1.f, 1.35f, 1.f);
@@ -157,11 +193,12 @@ float DensityTank(Checks& checks, const Frame& frame, float density) {
         return 0.f;
     player.SetFluidParameters(density, 2.f, 4.f);
     const auto initialWater = water.water;
+    auto owned = InitialOwnedVelocity(layout, water, geometric);
     float firstWet = 0.f, peak = 0.f;
     bool advanced = true;
     for (int step = 0; step < 180; ++step) {
         PlayerFluidSample sample;
-        if (!AdvanceTank(layout, water, gravityAcceleration, error) ||
+        if (!AdvanceTank(layout, water, owned, gravityAcceleration, error) ||
             !ObservePlayer(layout, water, frame, player, sample, error)) {
             advanced = false;
             break;
@@ -185,7 +222,7 @@ float DensityTank(Checks& checks, const Frame& frame, float density) {
     return dy;
 }
 
-void ZeroGravitySwim(Checks& checks, const Frame& frame) {
+void ZeroGravitySwim(Checks& checks, const Frame& frame, bool geometric) {
     const GridLayout layout{{4, 6, 16}, .5};
     const glm::vec3 spawn(1.f, 1.3f, 6.2f);
     const UniformGravity gravity(glm::vec3(0.f));
@@ -216,6 +253,8 @@ void ZeroGravitySwim(Checks& checks, const Frame& frame) {
 
     const auto initial = water.water;
     MovingVolumeState playerless = water;
+    auto owned = InitialOwnedVelocity(layout, water, geometric);
+    auto playerlessOwned = owned;
     const auto volume = [](const auto& values) {
         return std::accumulate(values.begin(), values.end(), 0.);
     };
@@ -226,8 +265,8 @@ void ZeroGravitySwim(Checks& checks, const Frame& frame) {
     float jumpImmersion = 0.f, jumpSpeed = 0.f, maximumImmersion = 0.f;
     window.SetTestActionState(Action::MoveForward, true);
     for (int step = 0; step < 270 && complete; ++step) {
-        if (!AdvanceTank(layout, water, 0., error) ||
-            !AdvanceTank(layout, playerless, 0., error) ||
+        if (!AdvanceTank(layout, water, owned, 0., error) ||
+            !AdvanceTank(layout, playerless, playerlessOwned, 0., error) ||
             !ObservePlayer(layout, water, frame, player, sample, error)) {
             complete = false;
             break;
@@ -248,6 +287,8 @@ void ZeroGravitySwim(Checks& checks, const Frame& frame) {
         }
         replayMatches = replayMatches && playerless.water == water.water &&
                         playerless.velocity == water.velocity;
+        if (owned)
+            replayMatches = replayMatches && playerlessOwned->velocity == owned->velocity;
     }
     checks.Check(complete, "zero-gravity game input runs with the evolving grid");
     if (!complete)
@@ -267,22 +308,29 @@ void ZeroGravitySwim(Checks& checks, const Frame& frame) {
 
 } // namespace
 
-int main() {
+int main(int argc, char** argv) {
+    const bool geometric = argc == 2 && std::string_view(argv[1]) == "--geometric";
+    if (argc != 1 && !geometric) {
+        std::cerr << "Usage: judas_grid_native_player_tests [--geometric]\n";
+        return 2;
+    }
     std::cout << std::setprecision(10);
+    if (geometric)
+        std::cout << "Geometric occupied-volume transport\n";
     Checks checks;
     const Frame aligned;
     const Frame oblique{glm::angleAxis(.73f, glm::normalize(glm::vec3(.4f, .8f, .2f))),
                         {2.f, -1.f, 3.f}};
-    const float light = DensityTank(checks, aligned, 500.f);
-    const float neutral = DensityTank(checks, aligned, 1000.f);
-    const float heavy = DensityTank(checks, aligned, 2000.f);
-    const float rotatedLight = DensityTank(checks, oblique, 500.f);
+    const float light = DensityTank(checks, aligned, 500.f, geometric);
+    const float neutral = DensityTank(checks, aligned, 1000.f, geometric);
+    const float heavy = DensityTank(checks, aligned, 2000.f, geometric);
+    const float rotatedLight = DensityTank(checks, oblique, 500.f, geometric);
     checks.Check(light > .40f && std::abs(neutral) < .002f && heavy < -.25f,
                  "native buoyancy rises, holds or sinks according to player density");
     checks.Check(std::abs(light - rotatedLight) < .002f,
                  "oblique whole-chart gravity reproduces the rise");
-    ZeroGravitySwim(checks, aligned);
-    ZeroGravitySwim(checks, oblique);
+    ZeroGravitySwim(checks, aligned, geometric);
+    ZeroGravitySwim(checks, oblique, geometric);
     std::cout << checks.count << " native grid player checks, " << checks.failures << " failures\n";
     return checks.failures ? 1 : 0;
 }

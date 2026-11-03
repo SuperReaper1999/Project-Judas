@@ -1,0 +1,8 @@
+Geometric occupied-volume transport
+density 500 displacement 1.615394473 m, first immersion 1, peak speed 2.836812258 m/s
+density 1000 displacement 0 m, first immersion 1, peak speed 0 m/s
+density 2000 displacement -0.4313178062 m, first immersion 1, peak speed 1.328136683 m/s
+density 500 displacement 1.615395188 m, first immersion 1, peak speed 2.83681345 m/s
+swim jump immersion 0.6597790718, upward delta 0.03042542376 m/s, maximum immersion 1, end chart z -9.505354881 m, volume error -2.131628207e-14 m³
+swim jump immersion 0.6597767472, upward delta 0.03042542934 m/s, maximum immersion 1, end chart z -9.505368233 m, volume error -2.131628207e-14 m³
+28 native grid player checks, 0 failures

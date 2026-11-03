@@ -1,0 +1,12 @@
+REMAP boundary=0 native_y=0.68942981958389282 mapped_y=0.6894298791885376 adjacent_y=0.6894298791885376 adjacent_mapped_y=0.68942981958389282
+REMAP boundary=3 native_y=0.69484978914260864 mapped_y=0.69484984874725342 adjacent_y=0.69484984874725342 adjacent_mapped_y=0.69484978914260864
+PASS mixed pressure and real MK2 advance four boundaries value=4
+PASS actual native binary32 pose and velocity equal the staged endpoint value=0
+PASS water inertia changes the native ascent relative to gravity alone value=0.46316266059875488
+PASS new cavity fills from its actual opening volume value=0.00048246111471286768
+PASS finite-mass inlets obey independent pressure-drop control value=6.7762635780344027e-21
+PASS real body impulse, water mass and momentum remap close value=2.8107400922294801e-06
+inlet expected_cavity=0.00048246111471286768 max_pressure_drop_pa=6947.4393271910085 mass_drift_kg=1.3322676295501878e-12 max_momentum_error_kg_m_s=5.2735593669694936e-16 max_rounding_remap_m=2.5713055684661867e-08 max_remap_momentum_error_kg_m_s=4.8736950476235009e-16 impulse_budget_ns=2.8610229496180193e-06
+PASS 4 mm dry gap gives the same actual native trajectory as air only value=0
+PASS nearby water transfers no pressure impulse across the dry gap value=0
+SUMMARY checks=8 failures=0

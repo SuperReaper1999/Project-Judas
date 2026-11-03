@@ -87,7 +87,7 @@ used by the solver. It returns triangles independently of the renderer.
 
 ## Validation boundary
 
-The standalone run covers 748 checks. It includes exact free-volume
+The standalone run covers 866 checks. It includes exact free-volume
 and wet-geometry controls, a 4 mm same-cell dry gap, an actual moving
 waterline, free rigid flotation and sinking, flow-driven motion, rotated
 charts, linked material and momentum transfer, and transaction failures.
@@ -157,8 +157,17 @@ owner during projection and recovers the fine-cell transfer from
 continuity. The filled piston cavity satisfies every cell balance
 and sends no flux through its blocked midpoint. This is a reduced
 pressure metric with no separate inertance for its internal link.
-General wet/dry transport, free-body feedback and momentum during
-the opening still need to use the same geometric ownership.
+The [geometric continuation probes](../../../docs/evidence/fluid-moving-grid-20261103/geometric-continuation/)
+now join that ownership to wet/dry transport, free-body feedback and
+momentum. The sealed 0.25 m pool proxy completes 12 seconds with
+3.36e-13 m³ peak water-volume drift and a late RMS body speed of
+0.01053 m/s. Its initial preparation still exceeds the preserved
+0.05 m/s diagnostic. The 0.20 m proxy rejects a later unsupported
+half-cell transfer at 0.5333 seconds. These are grid proxies for the
+original fixture, whose wall geometry and full native motion remain
+qualification requirements. The additional native probes cover a
+mixed aperture opening and dry gap through one MK2 tick, and the same
+28-check level and oblique player path with geometric ownership.
 
 Runtime adoption requires a conservative treatment of newly exposed
 volume, native contact and CCD composition, representative terrain and

@@ -2,7 +2,10 @@
 
 #include "ExposureVolumePressure.h"
 #include "GridCellPhase.h"
+#include "GridConservativeRemap.h"
+#include "GridGeometricMomentum.h"
 #include "GridHydrostaticReaction.h"
+#include "GridPhaseFluxRepair.h"
 #include "MovingVolumePressureInternal.h"
 #include "OwnedEvolvingVolume.h"
 
@@ -58,6 +61,75 @@ struct ExposureGroups {
         return parent[face.left] == parent[face.right];
     }
 };
+
+bool RouteExposedPhase(const MovingGridGeometry& geometry, const std::vector<FaceFlux>& faces,
+                       double tolerance, MovingVolumeStep& step, std::string& error) {
+    const auto count = geometry.startCapacity.size();
+    const auto exposed = [&](std::size_t cell) { return geometry.startCapacity[cell] == 0.; };
+    ConservativeRemapInput route;
+    route.start.resize(count);
+    route.end.resize(count);
+    route.relayAllowed.resize(count);
+    route.balanceTolerance = tolerance;
+    for (std::size_t cell = 0; cell < count; ++cell) {
+        if (exposed(cell)) {
+            route.end[cell] = geometry.endCapacity[cell];
+            route.relayAllowed[cell] = true;
+        }
+    }
+    std::vector<double> sourceWater(count);
+    std::vector<std::size_t> edges;
+    for (std::size_t index = 0; index < faces.size(); ++index) {
+        const auto& face = faces[index];
+        const double q = step.flux[face.axis][face.index];
+        if (q == 0.)
+            continue;
+        auto donor = q > 0. ? face.left : face.right;
+        auto receiver = q > 0. ? face.right : face.left;
+        if (!exposed(donor) && !exposed(receiver))
+            continue;
+        const double amount = std::abs(q);
+        if (!exposed(donor)) {
+            donor = route.start.size();
+            route.start.push_back(amount);
+            route.end.push_back(0.);
+            route.relayAllowed.push_back(false);
+            sourceWater.push_back(std::abs(step.waterFlux[face.axis][face.index]));
+        }
+        if (!exposed(receiver)) {
+            receiver = route.start.size();
+            route.start.push_back(0.);
+            route.end.push_back(amount);
+            route.relayAllowed.push_back(false);
+            sourceWater.push_back(0.);
+        }
+        route.transfers.push_back({donor, receiver, amount});
+        edges.push_back(index);
+    }
+    if (edges.empty())
+        return true;
+    ConservativeRemap plan;
+    RemapScalarResult routed;
+    if (!BuildConservativeRemap(route, plan, error) || !plan.RemapScalar(sourceWater, routed, error)) {
+        error = "newly exposed phase has no conservative donor route: " + error;
+        return false;
+    }
+    for (std::size_t edge = 0; edge < edges.size(); ++edge) {
+        const auto& face = faces[edges[edge]];
+        const double q = step.flux[face.axis][face.index];
+        const auto donor = q > 0. ? face.left : face.right;
+        if (!exposed(donor))
+            continue;
+        const double water = routed.transfers[edge];
+        const double volume = std::abs(q);
+        if (!(water >= -tolerance && water <= volume + tolerance)) {
+            error = "newly exposed phase exceeds the shared face volume";
+            return false;
+        }
+        step.waterFlux[face.axis][face.index] = std::copysign(std::clamp(water, 0., volume), q);
+    }
+    return true;
+}
 
 double MaxAbs(const std::vector<double>& values) {
     double result = 0;
@@ -180,7 +252,8 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                    const PlanarPressureReference* reference, PressureMetric metric,
                    MovingVolumeStep& output,
                    std::string& error, bool* transportRetry = nullptr,
-                   double verifiedSweepError = 0., std::optional<bool> exposureWater = std::nullopt) {
+                   double verifiedSweepError = 0., std::optional<bool> exposureWater = std::nullopt,
+                   const GridGeometricMomentumStart* geometric = nullptr) {
     if (transportRetry)
         *transportRetry = false;
     const std::size_t count = layout.CheckedCellCount();
@@ -198,6 +271,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         return false;
     }
     const double roundoff = 256 * std::numeric_limits<double>::epsilon() * cellVolume;
+    const bool groupExposure = exposureWater.has_value() || geometric;
     std::vector<double> fraction(count), rhs(count), balance(count), geometricBalance(count);
     for (std::size_t cell = 0; cell < count; ++cell) {
         const double before = geometry.startCapacity[cell];
@@ -235,6 +309,10 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         step.materialMassFlux[axis].resize(faceCount);
         if (reference)
             step.gravityVelocityIncrement[axis].resize(faceCount);
+        if (geometric)
+            step.pressureInertialFace[axis].resize(faceCount);
+        if (groupExposure)
+            step.waterFlux[axis].resize(faceCount);
         step.state.velocity[axis].resize(faceCount);
         auto faceLimits = layout.cells;
         ++faceLimits[axis];
@@ -299,11 +377,20 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                         }
                     }
                     const double density = 1 + 999 * waterFraction;
-                    const bool useDualMass = metric != PressureMetric::FacePrism;
-                    const double metricMass = useDualMass
+                    const bool useDualMass = metric != PressureMetric::FacePrism || geometric;
+                    const double metricMass = geometric ? geometric->faceMass[axis][index] : useDualMass
                         ? .5 * (geometry.startCapacity[left] + geometry.startCapacity[right] +
                                 999 * (state.water[left] + state.water[right]))
                         : density * aperture * layout.h;
+                    if (geometric && metricMass == 0.) {
+                        if (geometry.startCapacity[left] > 0. && geometry.startCapacity[right] > 0.) {
+                            error = "opening face between existing cells has no initial half-cell inertia";
+                            return false;
+                        }
+                        faces.push_back({left, right, index, axis, aperture, 0., 0., 0.,
+                                         rightCoord[axis] * layout.h});
+                        continue;
+                    }
                     const double fluxScale = dt * aperture;
                     const double conductance = useDualMass
                         ? fluxScale * fluxScale / metricMass
@@ -317,7 +404,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                     const double increment = dt * acceleration;
                     if (reference)
                         step.gravityVelocityIncrement[axis][index] = increment;
-                    const double predictor = (startAperture > 0 || metric == PressureMetric::OwnedDual
+                    const double predictor = (startAperture > 0 || metric == PressureMetric::OwnedDual || geometric
                         ? speed : 0.) + increment;
                     if (!(conductance > 0) || !std::isfinite(conductance) ||
                         !std::isfinite(predictor)) {
@@ -342,27 +429,42 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
     }
 
     const double tolerance = std::max(roundoff / 8, MaxAbs(rhs) * 1e-12);
-    ExposureGroups groups;
-    if (exposureWater) {
+    ExposureGroups groups, pressureGroups;
+    bool hasExposure = false;
+    if (groupExposure) {
         if (!groups.Build(geometry, faces, error))
             return false;
+        pressureGroups = groups;
+        if (geometric) {
+            for (std::size_t cell = 0; cell < count; ++cell) {
+                const auto parent = groups.parent[cell];
+                if (parent == cell)
+                    continue;
+                hasExposure = true;
+                // An exposed cell can borrow carrier from an adjacent
+                // material owner. That does not remove an existing normal
+                // pressure inertia on their shared face.
+                if (faces[groups.inlet[cell]].conductance > 0.)
+                    pressureGroups.parent[cell] = cell;
+            }
+        }
         std::vector<double> groupedRhs(count);
         for (std::size_t cell = 0; cell < count; ++cell)
-            groupedRhs[groups.parent[cell]] += rhs[cell];
+            groupedRhs[pressureGroups.parent[cell]] += rhs[cell];
         std::vector<FaceFlux> groupedFaces;
         groupedFaces.reserve(faces.size());
         for (auto face : faces) {
-            if (groups.Joined(face))
+            if (pressureGroups.Joined(face) || face.conductance == 0.)
                 continue;
-            face.left = groups.parent[face.left];
-            face.right = groups.parent[face.right];
+            face.left = pressureGroups.parent[face.left];
+            face.right = pressureGroups.parent[face.right];
             groupedFaces.push_back(face);
         }
         if (!SolvePressure(groupedFaces, groupedRhs, tolerance, cellVolume, step.pressure,
                            step.iterations, error))
             return false;
         for (std::size_t cell = 0; cell < count; ++cell)
-            step.pressure[cell] = step.pressure[groups.parent[cell]];
+            step.pressure[cell] = step.pressure[pressureGroups.parent[cell]];
     } else if (!SolvePressure(faces, rhs, tolerance, cellVolume, step.pressure,
                               step.iterations, error)) {
         return false;
@@ -370,7 +472,7 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
 
     std::vector<double> outgoing(count);
     for (const auto& f : faces) {
-        if (exposureWater && groups.Joined(f))
+        if ((groupExposure && pressureGroups.Joined(f)) || f.conductance == 0.)
             continue;
         const double correction = f.conductance *
             (step.pressure[f.left] - step.pressure[f.right]);
@@ -381,23 +483,24 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
             return false;
         }
         step.flux[f.axis][f.index] = flux;
+        if (geometric)
+            step.pressureInertialFace[f.axis][f.index] = true;
         if (geometry.endAperture[f.axis][f.index] > 0)
             step.state.velocity[f.axis][f.index] = correctedSpeed;
         balance[f.left] += flux;
         balance[f.right] -= flux;
         auto donor = flux >= 0 ? f.left : f.right;
-        if (exposureWater)
-            donor = groups.parent[donor];
-        outgoing[donor] += std::abs(flux);
+        if (geometric || !groupExposure || !groups.Joined(f))
+            outgoing[geometric || !groupExposure ? donor : groups.parent[donor]] += std::abs(flux);
         const double change = correctedSpeed - f.predictor;
         step.pressureKineticWork += f.mass * (f.predictor + .5 * change) * change;
         step.pressureCorrectionEnergy += .5 * f.mass * change * change;
     }
-    if (exposureWater) {
+    if (groupExposure) {
         for (std::size_t cell = 0; cell < count; ++cell) {
-            if (groups.parent[cell] == cell)
+            if (pressureGroups.parent[cell] == cell)
                 continue;
-            const auto& f = faces[groups.inlet[cell]];
+            const auto& f = faces[pressureGroups.inlet[cell]];
             const double wanted = geometry.startCapacity[cell] - geometry.endCapacity[cell];
             const double flux = (f.left == cell ? 1. : -1.) * (wanted - balance[cell]);
             const double speed = flux / (dt * f.aperture);
@@ -410,26 +513,40 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                 step.state.velocity[f.axis][f.index] = speed;
             balance[f.left] += flux;
             balance[f.right] -= flux;
+            if (geometric)
+                outgoing[flux >= 0. ? f.left : f.right] += std::abs(flux);
         }
     }
     const double balanceTolerance = 8 * tolerance + roundoff;
+    bool needPhaseRepair = false;
+    std::vector<bool> relayPhase(geometric ? count : 0);
     for (std::size_t cell = 0; cell < count; ++cell) {
         const double change = geometry.startCapacity[cell] - geometry.endCapacity[cell];
         step.residual = std::max(step.residual, std::abs(balance[cell] - change));
         step.pressureFluidWork += step.pressure[cell] * change;
         const double capacity = geometry.startCapacity[cell];
-        if (outgoing[cell] > capacity + balanceTolerance) {
+        const bool geometricRelay = geometric && (capacity == 0. ||
+            (geometry.endCapacity[cell] < capacity && outgoing[cell] > capacity + balanceTolerance));
+        if (geometric)
+            relayPhase[cell] = geometricRelay;
+        if (!geometricRelay && outgoing[cell] > capacity + balanceTolerance) {
             if (transportRetry)
                 *transportRetry = true;
             error = "moving-volume transport exceeds donor capacity; substep or merge required";
             return false;
         }
+        needPhaseRepair = needPhaseRepair || (geometricRelay && capacity > 0.);
         if (capacity > 0)
             step.maxCfl = std::max(step.maxCfl, outgoing[cell] / capacity);
     }
     if (step.residual > balanceTolerance || !std::isfinite(step.pressureFluidWork) ||
         !std::isfinite(step.pressureKineticWork) || !std::isfinite(step.pressureCorrectionEnergy)) {
         error = "moving-volume pressure failed the published balance or work check";
+        // A face that first opens late in the interval can have very small
+        // integrated conductance. Keep the strict balance and let the coupled
+        // clock retry the unresolved topology on a shorter interval.
+        if (geometric && hasExposure && transportRetry)
+            *transportRetry = true;
         return false;
     }
 
@@ -454,6 +571,10 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
             if (amount == 0)
                 continue;
             const auto donor = flux > 0 ? f.left : f.right;
+            if (geometric && geometry.startCapacity[donor] == 0.) {
+                phaseFlux[i].upper = amount;
+                continue;
+            }
             double wet = fraction[donor];
             if (wet > 0 && wet < 1) {
                 if (f.axis == reference->axis) {
@@ -483,6 +604,8 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
             maximumWater[donor] += phases.upper;
         }
         for (std::size_t cell = 0; cell < count; ++cell) {
+            if (geometric && relayPhase[cell])
+                continue;
             const double air = geometry.startCapacity[cell] - state.water[cell];
             const double lower = std::max(minimumWater[cell], outgoing[cell] - air);
             const double upper = std::min(maximumWater[cell], state.water[cell]);
@@ -493,7 +616,13 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                 return false;
             }
             const double target = targetWater[cell];
-            const double desired = std::clamp(target, std::min(lower, upper), upper);
+            double desired = std::clamp(target, std::min(lower, upper), upper);
+            if (geometric) {
+                // Near roundoff the inventory and the geometric bounds can
+                // disagree by a few ulps. Keep the admissible face interval.
+                // In particular, a fixed pure-phase sum has no blend range.
+                desired = std::clamp(desired, minimumWater[cell], maximumWater[cell]);
+            }
             if (desired > target)
                 targetWater[cell] = (desired - target) / (maximumWater[cell] - target);
             else if (desired < target)
@@ -503,19 +632,84 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         }
     }
 
+    const auto waterForFace = [&](const FaceFlux& f, std::size_t i) {
+        const double flux = step.flux[f.axis][f.index];
+        const auto donor = flux >= 0 ? f.left : f.right;
+        if (!reference)
+            return flux * (exposureWater ? (*exposureWater ? 1. : 0.) : fraction[donor]);
+        const auto& phases = phaseFlux[i];
+        if (geometric && phases.lower == phases.upper)
+            return std::copysign(phases.lower, flux);
+        const double scale = targetWater[donor];
+        const double available = scale > 0 ? phases.upper - phases.target : phases.target - phases.lower;
+        const double volume = phases.target + scale * available;
+        return std::copysign(geometric ? std::clamp(volume, phases.lower, phases.upper) : volume, flux);
+    };
+    if (geometric) {
+        for (std::size_t i = 0; i < faces.size(); ++i) {
+            const auto& f = faces[i];
+            step.waterFlux[f.axis][f.index] = waterForFace(f, i);
+        }
+        if (hasExposure && !RouteExposedPhase(geometry, faces, balanceTolerance, step, error)) {
+            needPhaseRepair = true;
+        }
+        std::vector<double> estimated = state.water;
+        for (const auto& f : faces) {
+            const double water = step.waterFlux[f.axis][f.index];
+            estimated[f.left] -= water;
+            estimated[f.right] += water;
+        }
+        for (std::size_t cell = 0; cell < count; ++cell)
+            needPhaseRepair = needPhaseRepair || estimated[cell] < -balanceTolerance ||
+                estimated[cell] > geometry.endCapacity[cell] + balanceTolerance;
+        if (needPhaseRepair) {
+            GridPhaseFluxRepairInput input;
+            input.startCapacity = geometry.startCapacity;
+            input.endCapacity = geometry.endCapacity;
+            input.startWater = state.water;
+            input.relayAllowed = relayPhase;
+            input.balanceTolerance = balanceTolerance;
+            std::vector<std::size_t> repairedFaces;
+            for (std::size_t i = 0; i < faces.size(); ++i) {
+                const auto& f = faces[i];
+                const double q = step.flux[f.axis][f.index];
+                if (q == 0.)
+                    continue;
+                const auto& phase = phaseFlux[i];
+                const double preferred = std::clamp(std::abs(step.waterFlux[f.axis][f.index]),
+                                                    phase.lower, phase.upper);
+                input.edges.push_back({q > 0. ? f.left : f.right, q > 0. ? f.right : f.left,
+                                       std::abs(q), phase.lower, phase.upper, preferred});
+                repairedFaces.push_back(i);
+            }
+            GridPhaseFluxRepairResult repaired;
+            if (!RepairGridPhaseFlux(input, repaired, error)) {
+                if (transportRetry)
+                    *transportRetry = true;
+                return false;
+            }
+            for (std::size_t edge = 0; edge < repairedFaces.size(); ++edge) {
+                const auto& f = faces[repairedFaces[edge]];
+                const double q = step.flux[f.axis][f.index];
+                step.waterFlux[f.axis][f.index] = std::copysign(repaired.waterFlux[edge], q);
+            }
+        }
+    }
+    std::vector<unsigned char> incomingPhase(geometric ? count : 0);
     for (std::size_t i = 0; i < faces.size(); ++i) {
         const auto& f = faces[i];
         const double flux = step.flux[f.axis][f.index];
-        const auto donor = flux >= 0 ? f.left : f.right;
-        double water = flux * (exposureWater ? (*exposureWater ? 1. : 0.) : fraction[donor]);
-        if (reference) {
-            const auto& phases = phaseFlux[i];
-            const double scale = targetWater[donor];
-            const double available = scale > 0 ? phases.upper - phases.target
-                                               : phases.target - phases.lower;
-            water = std::copysign(phases.target + scale * available, flux);
-        }
+        const double water = geometric ? step.waterFlux[f.axis][f.index] : waterForFace(f, i);
         step.materialMassFlux[f.axis][f.index] = flux + 999 * water;
+        if (groupExposure)
+            step.waterFlux[f.axis][f.index] = water;
+        if (geometric) {
+            const auto receiver = flux >= 0. ? f.right : f.left;
+            if (water != 0.)
+                incomingPhase[receiver] |= 1;
+            if (flux != water)
+                incomingPhase[receiver] |= 2;
+        }
         step.state.water[f.left] -= water;
         step.state.water[f.right] += water;
     }
@@ -525,11 +719,26 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
         if (!std::isfinite(amount) || amount < -balanceTolerance ||
             amount > capacity + balanceTolerance) {
             error = "moving-volume phase transport exceeds receiver capacity";
+            if (geometric && transportRetry)
+                *transportRetry = true;
             return false;
         }
         // Roundoff only. Any physical overfill was rejected above. Report the
         // total correction so it cannot be mistaken for conservative flux.
-        const double represented = std::clamp(amount, 0., capacity);
+        double represented = std::clamp(amount, 0., capacity);
+        if (geometric) {
+            // A truly absent phase stays absent in the absence of incoming
+            // phase flux. Pressure residual is accounted as roundoff, never
+            // turned into an unsupported material stream on a later step.
+            if (state.water[cell] == 0. && (incomingPhase[cell] & 1) == 0 &&
+                represented <= balanceTolerance) {
+                represented = 0.;
+            } else if (state.water[cell] == geometry.startCapacity[cell] &&
+                       (incomingPhase[cell] & 2) == 0 &&
+                       capacity - represented <= balanceTolerance) {
+                represented = capacity;
+            }
+        }
         step.waterRoundoffCorrection += std::abs(represented - amount);
         step.state.water[cell] = represented;
     }
@@ -561,7 +770,7 @@ bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& 
                         double signedGravity, bool requireFlat, PlanarMovingStep& output,
                         std::string& error, bool* transportRetry = nullptr,
                         const HalfDualVolumeState* owned = nullptr,
-                        OwnedEvolvingVolumeStep* ownedResult = nullptr) {
+                        OwnedEvolvingVolumeStep* ownedResult = nullptr, bool geometric = false) {
     if (transportRetry)
         *transportRetry = false;
     if (axis < 0 || axis > 2 || !std::isfinite(height) || !std::isfinite(signedGravity) ||
@@ -649,12 +858,20 @@ bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& 
     step.referenceHeight = height;
     const PlanarPressureReference reference{axis, height, signedGravity, wetLeft,
         flat ? wetLeft : wetRight, flat ? nullptr : &localPhase.waterPlane};
-    if (owned && !BuildHalfDualVolumePredictor(layout, geometry, canonical.water, *owned,
-                                               canonical, error))
+    GridGeometricMomentumStart geometricStart;
+    if (geometric) {
+        if ((flat && !ReconstructGridCellPhase(layout, initialBoxes, axis, canonical.water, localPhase, error)) ||
+            !BuildGridGeometricMomentumStart(layout, geometry, initialBoxes, axis, localPhase.waterPlane,
+                                             canonical, *owned, geometricStart, error))
+            return false;
+    } else if (owned && !BuildHalfDualVolumePredictor(layout, geometry, canonical.water, *owned,
+                                                      canonical, error)) {
         return false;
+    }
     const auto metric = owned ? PressureMetric::OwnedDual : PressureMetric::FacePrism;
-    if (!AdvanceVolume(layout, geometry, canonical, dt, {}, &reference, metric, step.fluid,
-                       error, transportRetry))
+    const auto& predictor = geometric ? geometricStart.predictor : canonical;
+    if (!AdvanceVolume(layout, geometry, predictor, dt, {}, &reference, metric, step.fluid,
+                       error, transportRetry, 0., std::nullopt, geometric ? &geometricStart : nullptr))
         return false;
     step.fluid.waterRoundoffCorrection += inputRoundoff;
     try {
@@ -681,7 +898,33 @@ bool AdvancePhaseVolume(const GridLayout& layout, const std::vector<BoxMotion>& 
         error = exception.what();
         return false;
     }
-    if (owned) {
+    if (geometric) {
+        HalfDualPressureUpdate pressure;
+        GridGeometricTransport transport;
+        if (!ApplyGridGeometricPressure(layout, geometry, geometricStart, step.fluid, *owned,
+                                        dt, pressure, error))
+            return false;
+        if (!AdvectGridGeometricMomentum(layout, geometry, boxes, axis, localPhase.waterPlane,
+                                          geometricStart, step.fluid, pressure.state, transport, error)) {
+            if (transportRetry)
+                *transportRetry = true;
+            return false;
+        }
+        step.fluid.state.velocity = std::move(transport.merged.faceVelocity);
+        step.fluid.state.water = std::move(transport.water);
+        step.fluid.waterRoundoffCorrection += transport.waterVolumeRoundoff;
+        ownedResult->halfVelocity = std::move(transport.merged.state);
+        ownedResult->residualGravityImpulse = pressure.gravityImpulse;
+        ownedResult->pressureImpulse = pressure.impulse;
+        ownedResult->stationaryWallImpulse = transport.merged.stationaryWallImpulse;
+        ownedResult->stationaryWallKineticLoss = transport.merged.stationaryWallKineticLoss;
+        ownedResult->mergeKineticLoss = transport.merged.mergeKineticLoss;
+        ownedResult->advectiveKineticChange = transport.kineticChange;
+        ownedResult->geometricPhaseFluxRoundoff = transport.phaseFluxRoundoff;
+        ownedResult->geometricPressureMixingLoss = pressure.participationMixingLoss;
+        ownedResult->transportMomentumError = transport.momentumResidual;
+        ownedResult->geometricTransportRoundoffImpulse = transport.phaseMomentumRoundoff;
+    } else if (owned) {
         HalfDualPressureUpdate pressure;
         HalfDualVolumeTransport advection;
         HalfDualFaceMerge merged;
@@ -734,6 +977,19 @@ bool AdvanceOwnedEvolvingVolume(const GridLayout& layout, const std::vector<BoxM
     OwnedEvolvingVolumeStep next;
     if (!AdvancePhaseVolume(layout, boxes, state, dt, axis, 0., signedGravity, false,
                             next.phase, error, nullptr, &owned, &next))
+        return false;
+    output = std::move(next);
+    return true;
+}
+
+bool AdvanceGeometricEvolvingVolume(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                    const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                    double dt, int axis, double signedGravity,
+                                    OwnedEvolvingVolumeStep& output, std::string& error,
+                                    bool* transportRetry) {
+    OwnedEvolvingVolumeStep next;
+    if (!AdvancePhaseVolume(layout, boxes, state, dt, axis, 0., signedGravity, false,
+                            next.phase, error, transportRetry, &owned, &next, true))
         return false;
     output = std::move(next);
     return true;
@@ -821,24 +1077,44 @@ bool AdvanceEvolvingVolumeInterval(const GridLayout& layout, const std::vector<B
                                               error);
 }
 
-bool AdvanceOwnedEvolvingVolumeInterval(const GridLayout& layout,
+namespace {
+
+bool AdvanceOwnedInterval(const GridLayout& layout,
                                         const std::vector<BoxMotion>& boxes,
                                         const MovingVolumeState& state,
                                         const HalfDualVolumeState& owned,
                                         double dt, int axis, double signedGravity,
                                         int subdivisionLimit, OwnedEvolvingVolumeInterval& output,
-                                        std::string& error) {
+                                        std::string& error, bool geometric) {
     auto currentOwned = owned;
     const auto step = [&](const auto& motion, const auto& material, double h,
                           OwnedEvolvingVolumeStep& next, bool& retry) {
         if (!AdvancePhaseVolume(layout, motion, material, h, axis, 0., signedGravity, false,
-                                next.phase, error, &retry, &currentOwned, &next))
+                                next.phase, error, &retry, &currentOwned, &next, geometric))
             return false;
         currentOwned = next.halfVelocity;
         return true;
     };
     return AdvanceInterval<OwnedEvolvingVolumeStep>(boxes, state, dt, subdivisionLimit, step,
                                                      output, error);
+}
+
+} // namespace
+
+bool AdvanceOwnedEvolvingVolumeInterval(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                        const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                        double dt, int axis, double signedGravity, int subdivisionLimit,
+                                        OwnedEvolvingVolumeInterval& output, std::string& error) {
+    return AdvanceOwnedInterval(layout, boxes, state, owned, dt, axis, signedGravity, subdivisionLimit,
+                                output, error, false);
+}
+
+bool AdvanceGeometricEvolvingVolumeInterval(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                            const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                            double dt, int axis, double signedGravity, int subdivisionLimit,
+                                            OwnedEvolvingVolumeInterval& output, std::string& error) {
+    return AdvanceOwnedInterval(layout, boxes, state, owned, dt, axis, signedGravity, subdivisionLimit,
+                                output, error, true);
 }
 
 bool detail::AdvanceVolumeWithDualMass(const GridLayout& layout, const MovingGridGeometry& geometry,

@@ -10,7 +10,10 @@ struct OwnedEvolvingVolumeStep {
     HalfDualVolumeState halfVelocity;
     GridVec residualGravityImpulse{}, pressureImpulse{}, stationaryWallImpulse{};
     GridVec transportMomentumError{};
+    GridVec geometricTransportRoundoffImpulse{};
     double advectiveKineticChange = 0;
+    double geometricPhaseFluxRoundoff = 0;
+    double geometricPressureMixingLoss = 0;
     double mergeKineticLoss = 0;
     double stationaryWallKineticLoss = 0;
 };
@@ -37,5 +40,16 @@ bool AdvanceOwnedEvolvingVolumeInterval(const GridLayout& layout,
                                         double dt, int axis, double signedGravity,
                                         int subdivisionLimit, OwnedEvolvingVolumeInterval& output,
                                         std::string& error);
+
+bool AdvanceGeometricEvolvingVolume(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                    const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                    double dt, int axis, double signedGravity,
+                                    OwnedEvolvingVolumeStep& output, std::string& error,
+                                    bool* transportRetry = nullptr);
+
+bool AdvanceGeometricEvolvingVolumeInterval(const GridLayout& layout, const std::vector<BoxMotion>& boxes,
+                                            const MovingVolumeState& state, const HalfDualVolumeState& owned,
+                                            double dt, int axis, double signedGravity, int subdivisionLimit,
+                                            OwnedEvolvingVolumeInterval& output, std::string& error);
 
 } // namespace judas::volume_grid

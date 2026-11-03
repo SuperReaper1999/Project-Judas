@@ -27,6 +27,9 @@ struct OwnedCoupledBoxStep {
     CoupledBoxStep box;
     HalfDualVolumeState halfVelocity;
     GridVec pressureImpulse{}, transportMomentumError{};
+    GridVec residualGravityImpulse{}, geometricTransportRoundoffImpulse{};
+    double geometricPhaseFluxRoundoff = 0.;
+    double geometricPressureMixingLoss = 0.;
     double transportKineticChange = 0;
     double mergeKineticLoss = 0;
 };
@@ -66,5 +69,24 @@ bool AdvanceOwnedEvolvingCoupledVolumeBox(const GridLayout& layout, const Couple
                                          const HalfDualVolumeState& owned,
                                          double dt, int axis, double signedGravity,
                                          OwnedCoupledBoxStep& output, std::string& error);
+
+bool AdvanceGeometricEvolvingCoupledVolumeBox(const GridLayout& layout, const CoupledBoxState& body,
+                                              const MovingVolumeState& fluid, const HalfDualVolumeState& owned,
+                                              double dt, int axis, double signedGravity,
+                                              OwnedCoupledBoxStep& output, std::string& error);
+
+struct GeometricCoupledBoxInterval {
+    OwnedCoupledBoxStep final;
+    GridVec bodyPressureImpulse{};
+    int substeps = 0, rejectedAttempts = 0;
+    double maxPressureEnergyResidual = 0., geometricPhaseFluxRoundoff = 0.;
+};
+
+// The external interval remains unchanged. Retry an inadmissible material
+// transfer with smaller coupled steps and publish only the whole result.
+bool AdvanceGeometricCoupledBoxInterval(const GridLayout& layout, const CoupledBoxState& body,
+                                         const MovingVolumeState& fluid, const HalfDualVolumeState& owned,
+                                         double dt, int axis, double signedGravity, int subdivisionLimit,
+                                         GeometricCoupledBoxInterval& output, std::string& error);
 
 } // namespace judas::volume_grid

@@ -43,4 +43,36 @@ struct HalfCellInflow {
 bool BalanceGridHalfCell(const GridHalfCellGeometry& geometry, std::size_t cell,
                          const HalfCellInflow& inflow, double& midpointFlux, std::string& error);
 
+struct GridHalfCellStorage {
+    // Lower and upper halves of each cell along splitAxis, in m³.
+    std::vector<std::array<double, 2>> capacity, water;
+};
+
+struct GridHalfCellAperture {
+    double open = 0., leftWet = 0., rightWet = 0.; // m²
+};
+
+struct GridHalfCellApertures {
+    // Indexed like coarse faces, then by the lower/upper half along splitAxis.
+    // The entry normal to splitAxis is empty. Coarse axial faces are unsplit.
+    std::array<std::vector<std::array<GridHalfCellAperture, 2>>, 3> transverse;
+    // Internal face between the lower and upper half of each coarse cell.
+    std::vector<GridHalfCellAperture> midpoint;
+};
+
+// Recover exact half-cell storage from one set of local phase planes and a
+// stationary snapshot. Call separately at the two endpoints with the phase
+// planes reconstructed from the water inventories at those endpoints.
+bool BuildGridHalfCellStorage(const GridLayout& layout, const std::vector<BoxMotion>& stationary,
+                              int phaseAxis, int splitAxis, const std::vector<double>& waterPlane,
+                              GridHalfCellStorage& output, std::string& error);
+
+// Average transverse and midpoint openings along linear box paths. Phase
+// planes are held fixed in the grid chart for this integral. Wet area uses
+// the interior trace of either side; a missing exterior side has zero wet
+// area. The geometric open area does not impose an exterior flow condition.
+bool AverageGridHalfCellApertures(const GridLayout& layout, const std::vector<BoxMotion>& moving,
+                                 int phaseAxis, int splitAxis, const std::vector<double>& waterPlane,
+                                 GridHalfCellApertures& output, std::string& error);
+
 } // namespace judas::volume_grid

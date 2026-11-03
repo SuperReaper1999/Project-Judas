@@ -1,0 +1,33 @@
+PASS build exact three-axis pressure owners 0
+PASS known masses include cut material and distinct wet and dry halves 0
+PASS map independently manufactured pressure impulse 0
+PASS impulse reaches exactly the two geometric owners on each axis 0
+PASS pressure work equals independent per-owner kinetic change 0
+PASS inconsistent pressure work rejects without changing momentum 0
+PASS nonfinite authoritative water rejects without changing pressure owners 0
+PASS pressure projects a fully wet piston with initially solid cells 0
+PASS birth gains known water mass across an initially massless lateral connection 0
+PASS fully wet pressure output agrees with its exact phase ledger 1.7347234759768071e-18
+PASS eliminated pressure direction can carry volume without inventing initial impulse 0
+PASS assigning fictitious initial inertia to the same direction rejects transactionally 0
+PASS geometric momentum crosses a genuine cell birth 0
+PASS newborn lower half inherits momentum and solid upper half remains empty -0.5
+PASS uniform momentum transport conserves impulse before endpoint constraints 5.5511151231257827e-15
+PASS uniform transport changes energy only through the known exterior wall reaction 0
+PASS build stratified phase-circulation witness 0
+PASS valid air moves around the same four-face loop 0
+PASS balanced ledger cannot send water through a dry transverse trace 0
+PASS build a stationary cut inside the momentum cell 0
+PASS lower dam has known wet midpoint aperture 0.25
+PASS wet midpoint passes the balanced transfer 0
+PASS wet midpoint conserves uniform material momentum 0
+PASS build a stationary cut inside the momentum cell 0
+PASS higher dam has known air-only midpoint aperture 0
+FAIL balanced water ledger cannot cross a stationary air-only midpoint 0
+PASS mixed grid opens a submerged cavity in the coupled transport 0
+PASS new wet cavity and entire mixed tank close their inventories 0.0010000000000000009
+FAIL new material inherits motion below the still-solid half 0.0052484069332863568
+PASS projection and phase remap preserve their impulse and energy ledgers -1.1362438767648086e-16
+PASS same-cell four-millimetre dry gap survives geometric momentum 0
+PASS water does no work across the dry gap compared with an air-only control 0
+SUMMARY geometric momentum 32 checks 2 failures

@@ -1,0 +1,48 @@
+PASS translating piston cuts actual half cells 0
+PASS new volume lies below a midpoint that remains solid 0.0025000000000000022
+PASS known single inlet fills the true owner without midpoint flux 0
+PASS same total inflow to the wrong halves is rejected 0
+PASS half-cell volume imbalance rejects transactionally 0
+PASS reversed piston evacuates precisely the disappearing lower volume 0
+PASS piston water and air have separate geometric owners 0
+PASS wet and dry layers fit below the solid midpoint 0.0012500000000000011
+PASS crosswise momentum owners clip the same horizontal water layer 0
+PASS swept birth has cut-cell phase geometry 0
+PASS newborn water and air occupy only the lower half 0
+PASS time-averaged slit opening and independent wet traces match analytic integrals 0
+PASS closed upper slit and midpoint cannot supply either phase 0
+PASS reversing the solid path preserves both time-averaged wet traces 0
+PASS exact midpoint water plane has wet lower and dry upper traces 0
+PASS missing boundary owner contributes no wet trace 0
+PASS out-of-cell phase rejects without modifying either geometry output 0
+PASS reference primal and fine cuts build 0
+PASS nonflat phase inventory reconstructs 0
+PASS reference fine-grid wet apertures build 0
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 1.3877787807814457e-17
+PASS exact child cuts sum to their primal control volume 6.9388939039072284e-18
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 1.3877787807814457e-17
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 1.3877787807814457e-17
+PASS exact child cuts sum to their primal control volume 1.0408340855860843e-17
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 1.3877787807814457e-17
+PASS half-grid cuts build in every component 0
+PASS nonflat water splits into actual half volumes 0
+PASS wet half-face cuts build in every component 0
+PASS water and remaining air fit their actual half-cell capacities 6.9388939039072284e-18
+PASS half endpoint capacities agree with fine-cell cuts 8.6736173798840355e-19
+PASS midpoint and transverse apertures agree with fine face cuts 6.9388939039072284e-18
+PASS exact child cuts sum to their primal control volume 6.9388939039072284e-18
+PASS endpoint phase storage agrees with independently refined cuts 8.6736173798840355e-19
+PASS half wet apertures agree with both fine-grid interior traces 6.9388939039072284e-18
+SUMMARY grid half-cell geometry 47 checks 0 failures

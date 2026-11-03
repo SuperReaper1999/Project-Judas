@@ -11,6 +11,8 @@ import tempfile
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("build", type=pathlib.Path)
+    parser.add_argument("--geometric", action="store_true",
+                        help="run with geometric occupied-volume transport")
     args = parser.parse_args()
     build = args.build.resolve()
     target = build / "CMakeFiles/judas_player_fluid_integration_tests.dir"
@@ -28,7 +30,9 @@ def main():
     with tempfile.TemporaryDirectory(prefix="judas-native-grid-player-") as temporary:
         out = pathlib.Path(temporary)
         objects = []
-        for path in ("GridNativePlayerTests.cpp", "MovingVolumeGrid.cpp", "HalfDualVolumeMomentum.cpp"):
+        for path in ("GridNativePlayerTests.cpp", "MovingVolumeGrid.cpp", "HalfDualVolumeMomentum.cpp",
+                     "GridHalfCellGeometry.cpp", "GridGeometricMomentum.cpp", "GridConservativeRemap.cpp",
+                     "GridPhaseFluxRepair.cpp"):
             obj = out / (path + ".o")
             subprocess.run(
                 [link[0], *compile_flags, "-Werror", "-c", source / path, "-o", obj],
@@ -43,7 +47,10 @@ def main():
         executable = out / "judas_grid_native_player_tests"
         link[link.index("-o") + 1] = executable
         subprocess.run(link, cwd=build, check=True)
-        subprocess.run([executable], check=True)
+        run = [executable]
+        if args.geometric:
+            run.append("--geometric")
+        subprocess.run(run, check=True)
 
 
 if __name__ == "__main__":

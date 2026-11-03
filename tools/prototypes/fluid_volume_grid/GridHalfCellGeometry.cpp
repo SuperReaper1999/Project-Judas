@@ -4,6 +4,7 @@ namespace judas::volume_grid {
 namespace {
 
 using namespace moving_geometry_detail;
+using grid_phase_detail::VisitGrid;
 
 GridVec Lower(const Index& cell) {
     return {double(cell[0]), double(cell[1]), double(cell[2])};
@@ -41,6 +42,95 @@ double OccupiedVolume(const BoxMotion& box, const GridVec& lo, const GridVec& hi
                           At(box.hi[axis], box.translation[axis], time));
     }
     return result;
+}
+
+bool ReadPlanes(const GridLayout& layout, int phaseAxis, int splitAxis,
+                const std::vector<double>& waterPlane, std::vector<double>& normalized,
+                std::string& error) {
+    if (!grid_phase_detail::ValidateChart(layout, phaseAxis, error))
+        return false;
+    if (splitAxis < 0 || splitAxis > 2 || waterPlane.size() != layout.CellCount()) {
+        error = "invalid half-cell split axis or phase array";
+        return false;
+    }
+    normalized.resize(waterPlane.size());
+    bool valid = true;
+    VisitGrid(layout, -1, [&](const Index& cell) {
+        const auto index = layout.Cell(cell[0], cell[1], cell[2]);
+        const double lower = cell[phaseAxis], upper = lower + 1., middle = lower + .5;
+        const double plane = waterPlane[index];
+        if (!(plane >= lower * layout.h && plane <= upper * layout.h)) {
+            valid = false;
+            return;
+        }
+        if (plane == lower * layout.h)
+            normalized[index] = lower;
+        else if (plane == upper * layout.h)
+            normalized[index] = upper;
+        else if (plane == middle * layout.h)
+            normalized[index] = middle;
+        else
+            normalized[index] = std::clamp(plane / layout.h, lower, upper);
+    });
+    if (!valid)
+        error = "half-cell phase plane is outside its coarse cell";
+    return valid;
+}
+
+double FaceArea(const Bounds& region, int normal) {
+    const int a = (normal + 1) % 3, b = (normal + 2) % 3;
+    return std::max(0., region.hi[a] - region.lo[a]) *
+           std::max(0., region.hi[b] - region.lo[b]);
+}
+
+Bounds WetFace(Bounds face, int normal, int phaseAxis, double plane, bool left) {
+    if (normal != phaseAxis)
+        return ClipWet(face, phaseAxis, plane);
+
+    // Sample the limit from inside the owner rather than classifying a
+    // horizontal face exactly on a local phase plane as both wet or both dry.
+    const double elevation = face.lo[normal];
+    if (left ? plane < elevation : plane <= elevation) {
+        const int tangent = (normal + 1) % 3;
+        face.hi[tangent] = face.lo[tangent];
+    }
+    return face;
+}
+
+struct FacePieces {
+    Bounds open, leftWet, rightWet;
+};
+
+GridHalfCellAperture Areas(const FacePieces& face, int normal, double area) {
+    return {area * FaceArea(face.open, normal), area * FaceArea(face.leftWet, normal),
+            area * FaceArea(face.rightWet, normal)};
+}
+
+double Blocked(const BoxMotion& box, int normal, const Bounds& region) {
+    if (FaceArea(region, normal) == 0.)
+        return 0.;
+    return AverageBlockedFace(box, normal, region.lo, region.hi);
+}
+
+void SubtractBox(GridHalfCellAperture& aperture, const FacePieces& face, const BoxMotion& box,
+                 int normal, double area) {
+    aperture.open -= area * Blocked(box, normal, face.open);
+    aperture.leftWet -= area * Blocked(box, normal, face.leftWet);
+    aperture.rightWet -= area * Blocked(box, normal, face.rightWet);
+}
+
+bool AdmitAperture(GridHalfCellAperture& aperture, double maxArea) {
+    // Validate subtraction residue at the face scale before comparing the
+    // wet subset with an arbitrarily small true opening.
+    if (!AdmitRoundoff(aperture.open, maxArea) ||
+        !AdmitRoundoff(aperture.leftWet, maxArea) || !AdmitRoundoff(aperture.rightWet, maxArea))
+        return false;
+    const double roundoff = 128. * std::numeric_limits<double>::epsilon() * maxArea;
+    if (aperture.leftWet > aperture.open + roundoff || aperture.rightWet > aperture.open + roundoff)
+        return false;
+    aperture.leftWet = std::min(aperture.leftWet, aperture.open);
+    aperture.rightWet = std::min(aperture.rightWet, aperture.open);
+    return true;
 }
 
 } // namespace
@@ -198,6 +288,133 @@ bool BalanceGridHalfCell(const GridHalfCellGeometry& geometry, std::size_t cell,
         return false;
     }
     midpointFlux = blocked ? 0. : lower;
+    error.clear();
+    return true;
+}
+
+bool BuildGridHalfCellStorage(const GridLayout& layout, const std::vector<BoxMotion>& stationary,
+                              int phaseAxis, int splitAxis, const std::vector<double>& waterPlane,
+                              GridHalfCellStorage& output, std::string& error) {
+    std::vector<double> planes;
+    std::vector<BoxMotion> boxes;
+    if (!ReadPlanes(layout, phaseAxis, splitAxis, waterPlane, planes, error) ||
+        !grid_phase_detail::Prepare(layout, stationary, phaseAxis, boxes, error))
+        return false;
+
+    const double cellVolume = (layout.h * layout.h) * layout.h;
+    const double halfVolume = .5 * cellVolume;
+    GridHalfCellStorage next;
+    next.capacity.assign(layout.CellCount(), {halfVolume, halfVolume});
+    next.water.resize(layout.CellCount());
+    VisitGrid(layout, -1, [&](const Index& cell) {
+        const auto index = layout.Cell(cell[0], cell[1], cell[2]);
+        for (int half = 0; half < 2; ++half) {
+            const auto region = SplitHalf(cell, splitAxis, half);
+            next.water[index][half] = cellVolume * Volume(ClipWet(region, phaseAxis, planes[index]));
+        }
+    });
+    for (const auto& box : boxes) {
+        VisitSweptBounds(layout, box, -1, [&](const Index& cell) {
+            const auto index = layout.Cell(cell[0], cell[1], cell[2]);
+            for (int half = 0; half < 2; ++half) {
+                const auto region = SplitHalf(cell, splitAxis, half);
+                next.capacity[index][half] -= cellVolume * OccupiedVolume(box, region.lo, region.hi, 0.);
+                const auto wet = ClipWet(region, phaseAxis, planes[index]);
+                next.water[index][half] -= cellVolume * OccupiedVolume(box, wet.lo, wet.hi, 0.);
+            }
+        });
+    }
+    const double roundoff = 128. * std::numeric_limits<double>::epsilon() * halfVolume;
+    for (std::size_t cell = 0; cell < next.capacity.size(); ++cell) {
+        for (int half = 0; half < 2; ++half) {
+            double& cap = next.capacity[cell][half];
+            double& water = next.water[cell][half];
+            if (!AdmitRoundoff(cap, halfVolume) || !AdmitRoundoff(water, halfVolume) ||
+                water > cap + roundoff) {
+                error = "half-cell phase volume is outside the free capacity";
+                return false;
+            }
+            water = std::min(water, cap);
+        }
+    }
+    output = std::move(next);
+    error.clear();
+    return true;
+}
+
+bool AverageGridHalfCellApertures(const GridLayout& layout, const std::vector<BoxMotion>& moving,
+                                 int phaseAxis, int splitAxis, const std::vector<double>& waterPlane,
+                                 GridHalfCellApertures& output, std::string& error) {
+    std::vector<double> planes;
+    std::vector<BoxMotion> boxes;
+    if (!ReadPlanes(layout, phaseAxis, splitAxis, waterPlane, planes, error) ||
+        !moving_geometry_detail::NormalizeBoxes(layout, moving, boxes, error))
+        return false;
+
+    const double area = layout.h * layout.h;
+    GridHalfCellApertures next;
+    for (int normal = 0; normal < 3; ++normal) {
+        if (normal == splitAxis)
+            continue;
+        const auto pieces = [&](const Index& face, int half) {
+            const auto open = SplitHalf(face, splitAxis, half);
+            auto dry = open;
+            dry.hi[(normal + 1) % 3] = dry.lo[(normal + 1) % 3];
+            auto leftCell = face;
+            --leftCell[normal];
+            const auto phase = [&](const Index& cell, bool left) {
+                if (cell[normal] < 0 || cell[normal] >= layout.cells[normal])
+                    return dry;
+                return WetFace(open, normal, phaseAxis, planes[layout.Cell(cell[0], cell[1], cell[2])],
+                               left);
+            };
+            return FacePieces{open, phase(leftCell, true), phase(face, false)};
+        };
+        auto& transverse = next.transverse[normal];
+        transverse.resize(layout.FaceCount(normal));
+        VisitGrid(layout, normal, [&](const Index& face) {
+            auto& parts = transverse[layout.Face(normal, face[0], face[1], face[2])];
+            for (int half = 0; half < 2; ++half)
+                parts[half] = Areas(pieces(face, half), normal, area);
+        });
+        for (const auto& box : boxes) {
+            VisitSweptBounds(layout, box, normal, [&](const Index& face) {
+                auto& parts = transverse[layout.Face(normal, face[0], face[1], face[2])];
+                for (int half = 0; half < 2; ++half)
+                    SubtractBox(parts[half], pieces(face, half), box, normal, area);
+            });
+        }
+        for (auto& parts : transverse) {
+            if (!AdmitAperture(parts[0], .5 * area) || !AdmitAperture(parts[1], .5 * area)) {
+                error = "transverse half-cell wet aperture is outside the geometric opening";
+                return false;
+            }
+        }
+    }
+
+    const auto midpoint = [&](const Index& cell, std::size_t index) {
+        const auto open = SplitHalf(cell, splitAxis, 1);
+        return FacePieces{open, WetFace(open, splitAxis, phaseAxis, planes[index], true),
+                          WetFace(open, splitAxis, phaseAxis, planes[index], false)};
+    };
+    next.midpoint.resize(layout.CellCount());
+    VisitGrid(layout, -1, [&](const Index& cell) {
+        const auto index = layout.Cell(cell[0], cell[1], cell[2]);
+        next.midpoint[index] = Areas(midpoint(cell, index), splitAxis, area);
+    });
+    for (const auto& box : boxes) {
+        VisitSweptBounds(layout, box, -1, [&](const Index& cell) {
+            const auto index = layout.Cell(cell[0], cell[1], cell[2]);
+            SubtractBox(next.midpoint[index], midpoint(cell, index), box, splitAxis, area);
+        });
+    }
+    for (auto& face : next.midpoint) {
+        if (!AdmitAperture(face, area)) {
+            error = "half-cell midpoint wet aperture is outside the geometric opening";
+            return false;
+        }
+    }
+    output = std::move(next);
     error.clear();
     return true;
 }
