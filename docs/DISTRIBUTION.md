@@ -66,9 +66,10 @@ Historical harnesses and lab builders are not public SDK tools.
 
 SDKs include engine fonts, licenses, top-level developer guides and small historical
 design references, the full JudasJS reference/examples and `judas.d.ts`. They also
-include six editable learning projects: Beacon Grove, Tilemap Workshop, Sprite
-Animation Workshop, Traversal Workshop, Little Haven and Willow Town. The SDK
-inventory and engine-source archive select those projects explicitly; other
+include seven editable learning projects: Beacon Grove, Tilemap Workshop, Sprite
+Animation Workshop, Traversal Workshop, Little Haven, Willow Town and Satchel Menu
+Workshop. The engine-source archive also retains the original runtime-UI test
+fixture. These are explicitly selected; other
 consumer games, research/prototypes, the old README archive, historical evidence
 and build caches are excluded. Links into those excluded materials refer
 to the matching source checkout; an SDK is not a complete repository archive.

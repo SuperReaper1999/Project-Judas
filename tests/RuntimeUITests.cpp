@@ -19,7 +19,16 @@ namespace fs=std::filesystem;
 int checks=0,failures=0;
 void Check(bool ok,const char* text){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",text);}
 int main(int argc,char** argv){
- fs::path out="build/m41-ui-tests";if(argc==3&&std::string(argv[1])=="--output")out=argv[2];fs::create_directories(out);
+ fs::path out="build/m41-ui-tests", projectPath="projects/ui_demo/ui_demo.judasproj";
+ for (int i=1;i<argc;++i) {
+     const std::string option=argv[i];
+     if (i+1==argc||(option!="--output"&&option!="--project")) {
+         std::fprintf(stderr,"usage: judas_runtime_ui_tests [--project PROJECT] [--output DIRECTORY]\n");
+         return 2;
+     }
+     (option=="--project"?projectPath:out)=argv[++i];
+ }
+ fs::create_directories(out);
  std::string error;UIDocument d;UIElement root;root.id="canvas";root.kind=UIKind::Canvas;d.elements.push_back(root);d.modal=true;
  UIElement panel;panel.id="panel";panel.parent="canvas";panel.anchorMin=panel.anchorMax={.5,.5};panel.size={300,220};panel.align={.5,.5};panel.padding={10,10,10,10};panel.flow=UIFlow::Vertical;panel.clip=true;panel.background={.1,.2,.3,1};d.elements.push_back(panel);
  for(auto name:{"button","toggle","slider"}){UIElement e;e.id=name;e.parent="panel";e.kind=std::string(name)=="button"?UIKind::Button:std::string(name)=="toggle"?UIKind::Toggle:UIKind::Slider;e.size={260,44};e.text=name;e.background={.2,.3,.4,1};d.elements.push_back(e);}
@@ -31,8 +40,11 @@ int main(int argc,char** argv){
  ui.Element(handle,"button")->enabled=false;ui.Element(handle,"toggle")->visible=false;input.Reset();input.SetPhysical("key:Return",1);ui.Input(input,point,true,1280,720);events=ui.TakeEvents();Check(std::none_of(events.begin(),events.end(),[](const auto& e){return e.type=="click";}),"hidden/disabled controls do not activate");
  Check(ui.Unload(handle)&&!ui.Document(handle),"unload invalidates handles");auto next=ui.Add(d,"menu",0,error);Check(next!=handle,"unloaded handle never revives");
  // Real GL rendering and ordinary world/JS/editor-compatible session.
+ Project project;const bool loaded=project.Load(projectPath.string(),error);
+ Check(loaded,"UI demo project loads");
+ if(!loaded){std::fprintf(stderr,"UI fixture %s: %s\n",projectPath.string().c_str(),error.c_str());return 1;}
  EngineHost host;Check(host.Init("M41 tests",640,360,false,error),"real engine host and GL context");if(failures){std::printf("INIT %s\n",error.c_str());return 1;}
- Project project;Check(project.Load("projects/ui_demo/ui_demo.judasproj",error),"UI demo project loads");AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"normal UI asset registry");
+ AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"normal UI asset registry");
  ResourceManager resources(&host.GetRenderer(),&assets);resources.SetBlockingMode(true);Scene scene;Check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"scene UI/script component load");
  RuntimeWorld world;Check(world.Build(scene,&resources,error,&project.Settings().classification),"normal world constructs UI document");if(!world.IsBuilt()){std::printf("ERROR %s\n",error.c_str());return 1;}
  input.SetMap(project.Settings().input,error);world.UpdateUIScripts(&input,1.f/60);auto h=world.UI().Find("game_ui");Check(h&&world.UI().Paused(),"authored main menu modal");

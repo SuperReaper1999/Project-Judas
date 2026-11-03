@@ -24,6 +24,14 @@ The existing camera owns its target; menu scripts must disable it when unused.
 Bindings and active drags are transient and must be reconstructed after restore.
 The demo uses render-only equipment proxies, not a new animated wardrobe system.
 
+## Qualification harness correction
+
+The first clean gate exposed a repository-working-directory assumption in the
+older runtime-UI test. The gate now passes explicit fixture/output paths, reports
+missing fixtures cleanly and retains its original assertions. Source archives
+include the fixture and new sample; SDK and gate project selection is checked
+against source-archive coverage. This does not change game or engine behaviour.
+
 ## Compatibility and qualification
 
 New category-bearing UI documents use JudasUI format 4 and require this SDK or a

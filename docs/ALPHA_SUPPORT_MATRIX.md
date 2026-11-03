@@ -1,15 +1,13 @@
 # Alpha scope and qualification matrix
 
-This is the source support boundary for **Alpha v1.2.1 / `1.2.1-alpha.1`**.
+This is the source support boundary for **Alpha v1.2.2 / `1.2.2-alpha.1`**.
 [Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
 identify exact accepted source/artifacts; source-version changes do not publish a
 release. The original Alpha was human accepted on 27 October at `636eec47`.
-Alpha v1.2.1 was published from `a461bab5` on 2 November 2026; the
-[release record](RELEASING.md#current-boundary) identifies actual passing package gates.
-The [current release notes](ALPHA_V1_2_1_NOTES.md) describe the shadow and locked-fluid
-repairs. Existing AI/browser qualification retains its scope; final package receipts
-identify the exact Linux/Windows checks. Earlier Hinge
-phone and Xvfb/desktop evidence retains its original scope.
+The [current release notes](ALPHA_V1_2_2_NOTES.md) describe native UI transfers,
+live camera previews and their tested boundaries. The
+[release record](RELEASING.md#current-boundary) identifies actual package gates.
+Earlier AI, browser, Hinge phone and desktop qualification retain their own scope.
 Previous Windows hardware acceptance is retained; no new Windows GPU/audio,
 controller or clean-machine certification is implied. Advanced Fluids remains
 locked. No universal component-composition claim is made.

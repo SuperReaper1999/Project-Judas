@@ -52,6 +52,25 @@ class ReleaseNotes(unittest.TestCase):
 
 
 class QualificationScope(unittest.TestCase):
+    def test_source_archive_retains_sdk_examples_and_ui_gate_projects(self):
+        inventory=json.loads((ROOT/'packaging/sdk-inventory.json').read_text())
+        manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
+        projects=[]
+        for directory in inventory['directories']:
+            if directory.startswith('projects/'):
+                fixtures=list((ROOT/directory).glob('*.judasproj'))
+                self.assertTrue(fixtures,directory)
+                projects.extend(path.relative_to(ROOT).as_posix() for path in fixtures)
+        for name in ('runtime-ui','ui-menu-workflow'):
+            entry=next(case for case in manifest['tests'] if case['name']==name)
+            project,=[argument for argument in entry['args'] if argument.endswith('.judasproj')]
+            self.assertTrue(project.startswith('{root}/'),name)
+            projects.append(project.removeprefix('{root}/'))
+        for project in projects:
+            with self.subTest(project=project):
+                self.assertTrue((ROOT/project).is_file())
+                self.assertTrue(package_source.selected(project,'engine'))
+
     def test_ai_release_scope_and_cold_readers_use_real_producer_paths(self):
         self.assertIn('ai',qualify_m100.GROUPS)
         manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
