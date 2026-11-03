@@ -112,6 +112,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // it simply isn't called while one owns input.
     world.viewportWidth=window.Width();world.viewportHeight=std::max(1,window.Height());
     if(auto* players=world.PlayersIfLoaded())if(auto devices=window.Input().localDevices.lock()){players->Route(*devices);if(world.UIIfLoaded())for(auto& p:players->All())world.UI().PlayerViewport(p.first,p.second.viewport);}
+    window.Input().SuspendRumble(IsPaused());
     world.UpdateUIScripts(&window.Input(),frameDeltaTime);
     const bool authoredUI=world.UIIfLoaded()&&!world.UIIfLoaded()->Empty();
     bool uiOwned=false;
@@ -138,6 +139,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
             m_pauseMenu.HandleMouseClick(glm::vec2(static_cast<float>(uiClickX), static_cast<float>(uiClickY)));
         }
     }
+    window.Input().SuspendRumble(IsPaused());
     // A replacement scene may begin after an outgoing modal menu released
     // the cursor. Reconcile ownership after the new scene's UI starts.
     const bool capture = m_pointerCaptureAllowed && !IsPaused() && (world.legacyGameplay || world.pointerCapture);
@@ -210,8 +212,9 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // step — the presentation interpolation factor (M6).
     PerformanceProfiler::Get().FixedState(m_physicsAccumulator,profileCap,profileDiscarded,IsPaused()||uiOwned);
     const float presentationAlpha = m_physicsAccumulator / SimulationTiming::kFixedTimestep;
+    window.Input().SuspendRumble(IsPaused());
     world.PresentationScripts(&window.Input(),frameDeltaTime,presentationAlpha);
-    if(IsPaused()||m_resetOccurred)window.Input().StopRumble();
+    if(m_resetOccurred)window.Input().StopRumble();
     const int height = std::max(window.Height(), 1);
     const float aspectRatio = static_cast<float>(window.Width()) / static_cast<float>(height);
     const PlayerController& player = m_session.Player();

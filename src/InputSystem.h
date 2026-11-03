@@ -129,8 +129,10 @@ public:
     bool CanRumble(RumbleDevice, const std::string& gamepad={}) const;
     bool Rumble(RumbleDevice, const std::string& gamepad, float low, float high, unsigned milliseconds) const;
     void StopRumble() const;
+    void SuspendRumble(bool suspended);
 private:
     mutable bool m_rumbleActive=false;
+    bool m_rumbleSuspended=false;
     std::vector<TextInputEvent> m_textEvents;
     struct TouchKey {std::int64_t device,finger;std::uint64_t id;};
     std::vector<TouchKey> m_touchKeys;

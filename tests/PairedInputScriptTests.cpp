@@ -42,7 +42,11 @@ int main(int argc,char** argv){
 import {input,ui,time} from 'judas';
 export default class {
  constructor(){this.state={frames:0,steps:0,frameSamples:0,fixedSamples:0,resets:0,overflows:0};this.frameCursor=0;this.fixedCursor=0;}
- uiUpdate(){const d=ui.get('fixture');if(d&&input.pressed('pause'))d.modal=!d.modal;}
+ uiUpdate(){
+  const d=ui.get('fixture');if(d&&input.pressed('pause'))d.modal=!d.modal;
+  if(input.pressed('probe_paused_rumble'))
+   this.state.pausedPulse=input.rumble({low:1,seconds:.1,device:'gamepad',gamepad:'test-pad'});
+ }
  update(){
   const s=input.stickSamples('right',this.frameCursor);this.frameCursor=s.sequence;
   this.state.frames++;this.state.resets+=s.reset?1:0;this.state.overflows+=s.overflow?1:0;
@@ -99,6 +103,7 @@ export default class {
     map.Add("disable_tilt",false);map.AddBinding("disable_tilt",{"key:F10"});
     map.Add("probe_rumble",false);map.AddBinding("probe_rumble",{"key:F9"});
     map.Add("stop_rumble",false);map.AddBinding("stop_rumble",{"key:F11"});
+    map.Add("probe_paused_rumble",false);map.AddBinding("probe_paused_rumble",{"key:F12"});
     project.Settings().input=map;project.Settings().startupScene="Scenes/probe.judas";
     project.Settings().legacyGameplay=false;Check(project.Save(error),"project saves paired binding normally");
     Scene scene;auto& owner=scene.CreateObject("Input reader");owner.scripts.push_back({1,script.id,true,"{}"});owner.ui=SceneUIComponent{uiAsset.id,"fixture",true};
@@ -171,6 +176,15 @@ export default class {
     const auto fresh=window.Input().StickSamples("right",oldCursor);
     Check(fresh.reset&&fresh.samples.empty(),"scene replacement invalidates old paired observations before new scripts");
     frame(0);Check(world->Scripts()&&world->Scripts()->Diagnostics().empty(),"replacement VM has no stale input/script faults");
+    play.Menu().HandleBackRequest();
+    const int pulsesBeforeLegacyPause=pulses;
+    press("key:F12");
+    Check(play.IsPaused()&&State(*world).contains("pausedPulse")&&State(*world)["pausedPulse"]==false&&
+          pulses==pulsesBeforeLegacyPause,"legacy pause blocks new hardware dispatch from UI callbacks");
+    play.Menu().HandleBackRequest();
+    press("key:F12");
+    Check(!play.IsPaused()&&State(*world)["pausedPulse"]==true&&pulses==pulsesBeforeLegacyPause+1,
+          "same UI vibration is dispatched after resuming");
     std::ofstream(out/"state.json")<<State(*world).dump(2)<<'\n';
     play.End();world->Destroy();host.Shutdown();
     std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;

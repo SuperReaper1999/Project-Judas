@@ -261,7 +261,7 @@ bool InputSystem::CanRumble(RumbleDevice device, const std::string& gamepad) con
 }
 bool InputSystem::Rumble(RumbleDevice device, const std::string& gamepad,
                          float low, float high, unsigned milliseconds) const {
-    if(m_logicalMode || !rumbleBackend || device==RumbleDevice::All ||
+    if(m_logicalMode || m_rumbleSuspended || !rumbleBackend || device==RumbleDevice::All ||
        !std::isfinite(low) || !std::isfinite(high) || low<0 || low>1 || high<0 || high>1 ||
        milliseconds==0 || milliseconds>5000 || (low==0 && high==0)) return false;
     const bool sent=rumbleBackend(RumbleOperation::Play,device,gamepad,low,high,milliseconds);
@@ -272,4 +272,9 @@ void InputSystem::StopRumble() const {
     if(!m_rumbleActive) return;
     m_rumbleActive=false;
     if(rumbleBackend)rumbleBackend(RumbleOperation::Stop,RumbleDevice::All,{},0,0,0);
+}
+
+void InputSystem::SuspendRumble(bool suspended) {
+    m_rumbleSuspended=suspended;
+    if(suspended)StopRumble();
 }
