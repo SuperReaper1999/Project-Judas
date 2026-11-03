@@ -433,8 +433,10 @@ bool ResourceManager::AdvanceUpload(const std::shared_ptr<LoadTask>& task,double
 
 void ResourceManager::Pump(std::size_t maxUploads) {
     JUDAS_PROFILE_SCOPE("Resource completion and budget");
-    RefreshResidentBytes();
     if (m_shutDown) return;
+    // Completion adds to the current total. An idle pump only needs the
+    // accounting pass below, which also observes renderer-side LOD changes.
+    if (!m_inFlight.empty()) RefreshResidentBytes();
     const auto pumpStart=std::chrono::steady_clock::now();
     AdmitPending();
     std::size_t uploads = 0;
@@ -517,22 +519,37 @@ void ResourceManager::WaitForAll() {
 
 std::size_t ResourceManager::EvictToFit(std::uint64_t targetBytes) {
     JUDAS_PROFILE_SCOPE("Resource eviction");
+    if (m_stats.bytesResident <= targetBytes) return 0;
+    const auto eligible = [&](const Entry& entry) {
+        return entry.state == ResourceState::Ready && entry.refs == 0 &&
+               !(m_visualStreaming && entry.visualDemand && m_visualFrame <= entry.visualDemand + 2);
+    };
+    const auto older = [](const Entry* a, const Entry* b) { return a->lastUse < b->lastUse; };
     std::size_t evicted = 0;
-    while (m_stats.bytesResident > targetBytes) {
-        // Least recently used, unreferenced, Ready.
-        Entry* victim = nullptr;
-        AssetId victimId;
-        for (auto& [id, entry] : m_entries) {
-            if (entry.state != ResourceState::Ready || entry.refs > 0) continue;
-            if(m_visualStreaming&&entry.visualDemand&&m_visualFrame<=entry.visualDemand+2)continue;
-            if (!victim || entry.lastUse < victim->lastUse) { victim = &entry; victimId = id; }
-        }
-        if (!victim) break;
-        DestroyGpu(*victim);
-        ++victim->generation;
-        victim->state = ResourceState::Unloaded;
+    const auto evict = [&](Entry& entry) {
+        DestroyGpu(entry);
+        ++entry.generation;
+        entry.state = ResourceState::Unloaded;
         ++evicted;
         ++m_stats.evictions;
+    };
+
+    Entry* oldest = nullptr;
+    for (auto& [_, entry] : m_entries)
+        if (eligible(entry) && (!oldest || older(&entry, oldest))) oldest = &entry;
+    if (!oldest) return 0;
+    evict(*oldest);
+    if (m_stats.bytesResident <= targetBytes) return evicted;
+
+    // Large budget cuts can evict many entries. Sort once and preserve
+    // entry traversal order for equal recency, as in the single-victim scan.
+    std::vector<Entry*> candidates;
+    for (auto& [_, entry] : m_entries)
+        if (eligible(entry)) candidates.push_back(&entry);
+    std::stable_sort(candidates.begin(), candidates.end(), older);
+    for (Entry* entry : candidates) {
+        if (m_stats.bytesResident <= targetBytes) break;
+        evict(*entry);
     }
     return evicted;
 }
