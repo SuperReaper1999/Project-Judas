@@ -26,6 +26,9 @@ The versioned source identity is authoritative in
 
 ## Current status
 
+The [SDK authoring reference](docs/SDK_AUTHORING.md) includes exact scene fields
+and a packaged terrain-to-NPC workflow.
+
 Build sprite-based games with [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md), sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset. Start with the [2D quick start](docs/2D_QUICKSTART.md).
 
 For NPCs, start with [Game AI](docs/GAME_AI.md) and its [JudasJS API](docs/judasjs/ai.md). Judas selects actions; project scripts own movement, work, combat and other outcomes. Try [Little Haven](projects/ai_workshop/README.md) for decisions and authoring, or [Willow Town](projects/willow_town/README.md) for selectable residents, employment, needs, aging and persistent death. Little Haven and Willow Town are included as editable SDK/source learning projects; package manifests identify the exact shipped files.

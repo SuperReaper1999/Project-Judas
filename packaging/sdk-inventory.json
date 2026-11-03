@@ -47,7 +47,8 @@
     "projects/2d_traversal_workshop",
     "projects/ai_workshop",
     "projects/willow_town",
-    "projects/menu_workshop"
+    "projects/menu_workshop",
+    "projects/terrain_navigation_workshop"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [

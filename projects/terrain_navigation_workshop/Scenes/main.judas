@@ -1,0 +1,122 @@
+JudasScene 3
+settings
+  name "Terrain Navigation Workshop"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 51
+end
+
+object 1 "Authored landscape"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.8 0.8 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static triangle-mesh
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.collision-asset ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 50 "Navigation frame"
+  nav.surface.asset ""
+  nav.surface.cellHeight "0.100000001"
+  nav.surface.cellSize "0.200000003"
+  nav.surface.enabled "1"
+  nav.surface.halfExtents "16 6 16"
+  nav.surface.includeDynamic "0"
+  nav.surface.minRegion "8"
+  nav.surface.profile "0"
+  nav.surface.simplification "1.29999995"
+  nav.surface.sources "18446744073709551615"
+  nav.surface.tileSize "32"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 2 "Uniform field"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 300
+end
+
+object 10 "Courier"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  nav.agent.enabled "1"
+  nav.agent.avoidance "0"
+  nav.agent.profile "0"
+  nav.agent.areas "18446744073709551615"
+  nav.agent.costs ""
+  nav.agent.speed "2"
+  nav.agent.arrival "0.25"
+  nav.agent.cornerDistance "0.25"
+  nav.agent.repathSeconds "0.5"
+  render box
+  render.half-extents 0.28 0.7 0.28
+  render.radius 0.5
+  render.color 0.9 0.4 0.12
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.alpha 1
+  render.secondary-color 0.9 0.4 0.12
+  render.secondary-alpha 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "a8000000000000000000000000000001"
+  script.0.enabled true
+  script.0.properties "{}"
+  position -8 1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 11 "Visitor start"
+  position 0 3 12
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+  player-start.density 950
+  player-start.fluid-drag 2
+  player-start.swim-acceleration 4
+end

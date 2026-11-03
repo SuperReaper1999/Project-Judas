@@ -1,0 +1,7 @@
+JudasProject 1
+name "Terrain Navigation Workshop"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"

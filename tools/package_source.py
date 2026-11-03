@@ -24,7 +24,7 @@ ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig
 # Editable SDK examples and the original runtime-UI qualification fixture.
 # No other consumer games, saves or untracked experiments are selected.
 LEARNING_PROJECTS = {"beacon_grove", "tilemap_workshop", "sprite_animation_workshop", "2d_traversal_workshop",
-                     "ai_workshop", "willow_town", "menu_workshop"}
+                     "ai_workshop", "willow_town", "menu_workshop", "terrain_navigation_workshop"}
 QUALIFICATION_PROJECTS = {"ui_demo"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 

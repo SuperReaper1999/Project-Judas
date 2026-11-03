@@ -23,6 +23,9 @@ resources; independent worlds never share mutable navigation state.
 
 ## Authoring and baking
 
+For exact scene keys and a complete SDK-only example, see the
+[SDK authoring reference](SDK_AUTHORING.md).
+
 1. In project settings, create stable navigation **areas** and agent **profiles**.
    Profiles specify radius, height, slope degrees and climb metres. Defaults retain
    compatibility for projects without navigation. Up to 62 lifetime area IDs
