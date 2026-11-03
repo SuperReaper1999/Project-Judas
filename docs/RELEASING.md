@@ -5,12 +5,27 @@
 
 ## Current boundary
 
-**Alpha v1.2.2 / `1.2.2-alpha.1` is being prepared under explicit operator
-publication and main-promotion authorization.** It contains the accepted UI
-checkpoint `49d03f863da54e415eaf07f5597342e100d5ca3c`, release identity/docs and
-SDK inclusion of the editable menu. Publication remains conditional on successful
-qualification. [Patch notes](ALPHA_V1_2_2_NOTES.md). Advanced Fluids remain locked.
-No published package is replaced.
+**[Judas Engine Alpha v1.2.2 / `1.2.2-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.2-alpha.1)**
+from `4ec20cece21b39756734591684056770116bcac4` on 3 November 2026, after explicit operator
+publication and main-promotion authorization. [Exact-source preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41553753282),
+[Alpha and Experimental gates](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41553748313),
+[main promotion verification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41557887352)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41557886594)
+passed. Each channel passed 121 CTest cases. Linux release qualification passed
+96 native gates, coordinated cold readers and eight SDK workflows. Hosted native
+Windows SDK qualification and all 41 new transfer checks passed; this is not a
+new desktop, graphics, audio or controller hardware trial.
+
+The first preparation exposed an isolated-working-directory assumption in the
+old UI fixture. Its original failure, 22-check isolated retest and missing-fixture
+control are retained in [qualification evidence](evidence/alpha-v1.2.2-20261103/publication.json).
+The bundled Satchel project was exported from the actual Alpha SDK and run outside
+the checkout: a pointer drag changed the source slot, equipment slot and live
+preview; Resume and Escape passed. All eight published asset sizes and digests
+matched the local assembly, and the live Alpha feed matched the published manifest.
+[Patch notes](ALPHA_V1_2_2_NOTES.md) describe the APIs and limits. Advanced Fluids
+remain locked. Sealed package notes keep their preparation wording, and earlier
+published tags and packages were left intact.
 
 ### Previous publication: v1.2.1
 

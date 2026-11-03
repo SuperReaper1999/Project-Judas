@@ -1,0 +1,82 @@
+{
+  "release": "Judas Engine Alpha v1.2.2",
+  "version": "1.2.2-alpha.1",
+  "tag": "v1.2.2-alpha.1",
+  "source_revision": "4ec20cece21b39756734591684056770116bcac4",
+  "published_utc": "2026-11-03T01:14:22Z",
+  "url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.2-alpha.1",
+  "release_preparation": 41553753282,
+  "engine_gates": 41553748313,
+  "promotion_gate": 41557887352,
+  "publication": 41557886594,
+  "checks": {
+    "alpha_ctest": 121,
+    "experimental_ctest": 121,
+    "linux_release_native_gates": 96,
+    "linux_sdk_workflows": 8,
+    "windows_transfer_checks": 41,
+    "published_asset_digests_verified": 8,
+    "live_alpha_matches_published_manifest": true
+  },
+  "bundled_menu": {
+    "source_revision": "4ec20cece21b39756734591684056770116bcac4",
+    "channel": "Alpha",
+    "pass": true,
+    "export": "/tmp/judas-alpha122-satchel-3mn4c815/moved-game",
+    "viewport": [
+      1280,
+      720
+    ],
+    "changedPixels": {
+      "preview": 2036,
+      "sourceSlot": 12707,
+      "equipmentSlot": 7820
+    },
+    "pause": "start paused; resume via click; reopen via Escape; all assertions passed"
+  },
+  "assets": [
+    {
+      "digest": "sha256:3c868073a86fadf9e3a7a6b610c1916118dcdb5c62ff40499d58505062ec7647",
+      "name": "CANDIDATE.json",
+      "size": 1888
+    },
+    {
+      "digest": "sha256:4fdcf0bde05236052ff34581709f3ec2ec8fe4fe0caa514d4399f55fba78dac7",
+      "name": "JudasEngine-1.2.2-alpha.1-Alpha-Linux-x86_64.tar.gz",
+      "size": 394158651
+    },
+    {
+      "digest": "sha256:ec4b87ba81b626f72684a229903be93b66c235f9f152ae899f27eee29eeb9ad0",
+      "name": "JudasEngine-1.2.2-alpha.1-Alpha-Windows-x86_64.zip",
+      "size": 107491977
+    },
+    {
+      "digest": "sha256:9bf36a2d26a4f3d49fbd905b802f2cd4f5c7bcbb5bccb39feff281a42812ff3c",
+      "name": "JudasEngine-1.2.2-alpha.1-Source.tar.gz",
+      "size": 71991053
+    },
+    {
+      "digest": "sha256:3b008e762ec9159384b79fe61f6ee018e3780280653376cc082ef5f631d954c0",
+      "name": "QUALIFICATION.json",
+      "size": 394
+    },
+    {
+      "digest": "sha256:a478107c2a1f0d5de1b368f88141a69e4053f8846325e01e9eba8e7f38608763",
+      "name": "release-manifest.json",
+      "size": 5330
+    },
+    {
+      "digest": "sha256:8ef8371c6dd50c3a368842d46f4294391ee310e027dd889fb403cc42ba17a1f5",
+      "name": "RELEASE_NOTES.md",
+      "size": 3729
+    },
+    {
+      "digest": "sha256:687b76c5cd978ba68890aaaeda9a4d89f0dd38c59586f6d062b8929bd8162218",
+      "name": "SHA256SUMS",
+      "size": 678
+    }
+  ],
+  "windows_scope": "Native hosted SDK/selected contracts; no new desktop or hardware acceptance",
+  "advanced_fluids": "locked in Alpha",
+  "original_failure": "runtime-ui-original-result.json"
+}
