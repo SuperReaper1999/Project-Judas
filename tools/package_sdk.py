@@ -3,7 +3,7 @@
 
 The inventory is shared with CMake. Build artifacts, current developer docs and
 required native DLLs are copied. Unrelated full game projects and historical research are not
-SDK payloads; four small editable 2D learning projects are explicitly inventoried.
+SDK payloads; small editable learning projects are explicitly inventoried.
 Manifests detect accidental omissions/corruption, not malicious replacement.
 """
 

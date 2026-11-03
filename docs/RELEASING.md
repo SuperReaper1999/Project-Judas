@@ -1,9 +1,18 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Current source notes](ALPHA_V1_2_1_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Current source notes](ALPHA_V1_2_2_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+**Alpha v1.2.2 / `1.2.2-alpha.1` is being prepared under explicit operator
+publication and main-promotion authorization.** It contains the accepted UI
+checkpoint `49d03f863da54e415eaf07f5597342e100d5ca3c`, release identity/docs and
+SDK inclusion of the editable menu. Publication remains conditional on successful
+qualification. [Patch notes](ALPHA_V1_2_2_NOTES.md). Advanced Fluids remain locked.
+No published package is replaced.
+
+### Previous publication: v1.2.1
 
 **[Judas Engine Alpha v1.2.1 / `1.2.1-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.1-alpha.1)**
 from `a461bab5b73c6aafdf43842288542b055c984d12` on 2 November 2026, under the
@@ -164,7 +173,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_1_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_2_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,
@@ -190,7 +199,7 @@ known limits and human checklist. Stop for final approval.
 4. Validate the already-reviewed files with `tools/publish_release.py CANDIDATE
    --accepted-commit EXACT_SHA` (dry-run; no network/publication).
 5. Only when authorized, add `--publish --human-approval 'PUBLISH
-   v1.2.1-alpha.1'`. This checks remote main/commit and required reviewer protection,
+   v1.2.2-alpha.1'`. This checks remote main/commit and required reviewer protection,
    refuses an existing final tag, creates a draft prerelease, uploads the exact
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.

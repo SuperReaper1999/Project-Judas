@@ -1,6 +1,6 @@
 # Item transfers and live 3D previews
 
-Experimental additions after Alpha 1.2.1. Published SDKs are unchanged. The editable
+Added for Alpha 1.2.2. Use the matching engine/SDK; earlier SDKs lack these APIs. The editable
 example is [Satchel Menu Workshop](../projects/menu_workshop/README.md).
 
 ## Author a transfer
@@ -80,7 +80,7 @@ Activate. Left/right rotates the preview. Buttons inspect, use/equip, split, mov
 to the chest, save and load. Text-size preferences preserve authored relative font
 sizes. This is a desktop/landscape example, not a finished portrait/mobile layout.
 
-The original art generator and native project builder are under
+In the source checkout/archive, the original art generator and native project builder are under
 `tools/demos/menu_workshop/` and `tools/demos/MenuWorkshop.cpp`. Pillow is an
 art-authoring dependency only; the game loads ordinary PNG/OBJ assets. There are
 no downloaded third-party assets. Project source remains readable and editable.

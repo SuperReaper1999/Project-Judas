@@ -141,7 +141,7 @@ complete captures after growth, shrinkage and odd-width changes on Xvfb/Mesa
 and the real desktop. Android orientation policy is an [APK export option](../ANDROID.md#game-orientation),
 not a new JudasJS binding or a fixed-size UI guarantee.
 
-### Item transfers and live 3D images (Experimental)
+### Item transfers and live 3D images (Alpha 1.2.2)
 
 `configure({dragType,dropType})` opts into matching-category transfer requests.
 `UIDocument.drag` returns the current per-player drag snapshot or null;

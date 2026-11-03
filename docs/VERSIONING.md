@@ -16,13 +16,11 @@ The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 
 `f2813324155166c6942fd68dde843d9775eb532d`; see
 [its authoring/Android diagnostic corrections and release record](ALPHA_V1_0_3_NOTES.md).
 
-The current source identity is **`1.2.1-alpha.1`**, titled **Judas Engine Alpha
-v1.2.1**, with [shadow and locked-fluid correction notes](ALPHA_V1_2_1_NOTES.md).
-It was [published on 2 November 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.1-alpha.1)
-from `a461bab5b73c6aafdf43842288542b055c984d12` after operator approval and passing
-exact-source Linux/Windows preparation. The [release record](RELEASING.md#current-boundary)
-and immutable manifest identify its qualification and artifact scope. Changing
-this file or building a later candidate does not publish another release.
+The current source identity is **`1.2.2-alpha.1`**, titled **Judas Engine Alpha
+v1.2.2**, with [native UI transfer and preview notes](ALPHA_V1_2_2_NOTES.md).
+Publication follows exact-source qualification and operator authorization; the
+[release record](RELEASING.md#current-boundary) distinguishes preparation from
+published packages. The previous 1.2.1 release remains immutable.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort

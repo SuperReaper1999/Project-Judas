@@ -1,7 +1,7 @@
 # Satchel Menu Workshop
 
 An editable inventory/pause menu demonstrating native drag requests and a live
-3D equipment preview. Experimental only; requires the matching engine build.
+3D equipment preview. Requires Alpha 1.2.2 or a newer compatible engine build.
 
 Open `Satchel_Menu_Workshop.judasproj` in the editor and press Play, or run the
 standalone package produced for this pass. Escape resumes/reopens the menu.
@@ -14,7 +14,7 @@ UI policy and saves. `Assets/satchel.judasui` contains the authored layout. The 
 falling sphere demonstrate that the modal menu really pauses physical gameplay.
 No controller code is taken from or installed into your RPG project.
 
-Original art generation: `tools/demos/menu_workshop/art.py` (Pillow, authoring only).
+In the source checkout/archive, original art generation: `tools/demos/menu_workshop/art.py` (Pillow, authoring only).
 Native authoring: `judas_menu_workshop SOURCE_ART NEW_PROJECT_DIRECTORY`.
 Export through the ordinary editor or `judas_export` workflow. All referenced
 icons are registered runtime assets rather than untracked string dependencies.
