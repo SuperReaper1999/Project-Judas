@@ -479,7 +479,7 @@ bool BuildCutRegionGeometry(const CutRegionChart& chart, const GridVec& startOff
         return Fail(error, "cut region chart is empty");
     CutRegionGeometry geometry;
     geometry.motion = chart.moving;
-    auto endpoint = chart.moving;
+    auto& endpoint = geometry.endpoint = chart.moving;
     if (geometry.motion) {
         auto& box = *geometry.motion;
         for (int axis = 0; axis < 3; ++axis) {
@@ -649,6 +649,96 @@ std::array<double, 2> MeasureCutRegionPhaseVolumes(const CutRegion& region,
     const double below = CutRegionClippedVolume(cut, solid, lower, lowerHi);
     const double above = CutRegionClippedVolume(cut, solid, upperLo, upper);
     return wetAbove ? std::array{above, below} : std::array{below, above};
+}
+
+double MeasureCutRegionInterfaceArea(const CutRegion& region, const std::optional<BoxMotion>& motion,
+                                     const CutRegionWaterPlane& plane) {
+    const int axis = plane.orientation.axis;
+    if (axis < 0 || axis > 2 ||
+        !(plane.RelativeTo(region.lo[axis]) > 0. && plane.RelativeTo(region.hi[axis]) < 0.))
+        return 0.;
+    CutRegionFace face{};
+    face.axis = axis;
+    face.lo = region.lo;
+    face.hi = region.hi;
+    face.lo[axis] = face.hi[axis] = plane.remainder;
+    auto local = motion;
+    if (local) {
+        local->lo[axis] -= plane.coordinate;
+        local->hi[axis] -= plane.coordinate;
+    }
+    return MeasureFace(face, local, face.lo, face.hi, 0., 1.).start;
+}
+
+bool MeasureCutRegionFixedPhaseGeometry(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                        const std::vector<CutRegionWaterPlane>& planes,
+                                        CutRegionFixedPhaseGeometry& output, std::string& error) {
+    const auto count = chart.regions.size();
+    if (count == 0 || planes.size() != count || geometry.startCapacity.size() != count ||
+        geometry.endCapacity.size() != count || geometry.motion.has_value() != geometry.endpoint.has_value())
+        return Fail(error, "invalid cut-region fixed phase dimensions");
+    CutRegionFixedPhaseGeometry next;
+    next.startVolumes.resize(count);
+    next.endVolumes.resize(count);
+    std::vector<std::array<double, 2>> swept(count);
+    for (std::size_t i = 0; i < count; ++i) {
+        const auto& region = chart.regions[i];
+        const auto& plane = planes[i];
+        if (plane.orientation.axis < 0 || plane.orientation.axis > 2 ||
+            !std::isfinite(plane.coordinate) || !std::isfinite(plane.remainder))
+            return Fail(error, "invalid fixed cut-region phase plane");
+        next.startVolumes[i] = MeasureCutRegionPhaseVolumes(region, geometry.motion, region.lo, region.hi, plane);
+        next.endVolumes[i] = MeasureCutRegionPhaseVolumes(region, geometry.endpoint, region.lo, region.hi, plane);
+    }
+    for (const auto& patch : geometry.patches) {
+        if (!geometry.motion || patch.cell >= count || patch.axis < 0 || patch.axis > 2 ||
+            (patch.sign != -1 && patch.sign != 1) || patch.owner != geometry.motion->owner)
+            return Fail(error, "invalid fixed-phase wall patch");
+        const auto& plane = planes[patch.cell];
+        const auto [axis, wetAbove] = plane.orientation;
+        auto box = *geometry.motion;
+        auto region = chart.regions[patch.cell];
+        const double anchor = plane.coordinate;
+        region.lo[axis] -= anchor;
+        region.hi[axis] -= anchor;
+        box.lo[axis] -= anchor;
+        box.hi[axis] -= anchor;
+        for (int material = 0; material < 2; ++material) {
+            auto clipped = region;
+            if ((material == 0) == wetAbove)
+                clipped.lo[axis] = std::max(clipped.lo[axis], plane.remainder);
+            else
+                clipped.hi[axis] = std::min(clipped.hi[axis], plane.remainder);
+            if (!(clipped.lo[axis] < clipped.hi[axis]))
+                continue;
+            auto measure = AverageWall(clipped, box, patch.axis, patch.sign);
+            if (measure.area == 0.)
+                continue;
+            measure.centroid[axis] += anchor;
+            next.wallPatches[material].push_back({patch.owner, patch.cell, patch.axis, patch.sign,
+                                                  measure.centroid, measure.area});
+            swept[patch.cell][material] += patch.sign * measure.area * box.translation[patch.axis];
+        }
+    }
+    const double h = chart.layout.h;
+    const double coarseVolume = h * h * h;
+    const double roundoff = 256. * std::numeric_limits<double>::epsilon();
+    for (std::size_t i = 0; i < count; ++i) {
+        const auto& a = next.startVolumes[i];
+        const auto& b = next.endVolumes[i];
+        if (!(std::abs((a[0] + a[1]) - geometry.startCapacity[i]) <= roundoff * coarseVolume &&
+              std::abs((b[0] + b[1]) - geometry.endCapacity[i]) <= roundoff * coarseVolume))
+            return Fail(error, "cut-region fixed phases do not cover the physical volume");
+        for (int material = 0; material < 2; ++material) {
+            const double defect = std::abs((a[material] - b[material]) - swept[i][material]);
+            if (!(defect <= roundoff * (coarseVolume + std::abs(swept[i][material]))))
+                return Fail(error, "cut-region phase wall sweep disagrees with its volume source");
+            next.maximumSweepError = std::max(next.maximumSweepError, defect);
+        }
+    }
+    output = std::move(next);
+    error.clear();
+    return true;
 }
 
 bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,

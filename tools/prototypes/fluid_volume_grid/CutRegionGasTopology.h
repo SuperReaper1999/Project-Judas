@@ -27,6 +27,9 @@ struct CutRegionGasTopology {
 
 CutRegionGasVent FullCutRegionGasVent(const CutRegionChart& chart, int axis, int sign);
 
+CutRegionAperture MeasureCutRegionGasVent(const CutRegion& region, const std::optional<BoxMotion>& solid,
+                                         const CutRegionGasVent& vent, const CutRegionWaterPlane& water);
+
 // Builds the gas graph at the beginning of the interval. Gas volume,
 // two-sided face apertures and vents use the supplied phase interfaces.
 // Component zero is the common exterior and remains present when sealed.

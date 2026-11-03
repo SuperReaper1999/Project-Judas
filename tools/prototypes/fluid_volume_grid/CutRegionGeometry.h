@@ -32,7 +32,7 @@ struct CutRegionGeometry {
     std::vector<double> startCapacity, endCapacity;
     std::vector<CutRegionFace> faces;
     std::vector<SolidPatch> patches;
-    std::optional<BoxMotion> motion;
+    std::optional<BoxMotion> motion, endpoint;
     double maxSweepError = 0., maxPatchError = 0.;
 };
 
@@ -87,6 +87,21 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
 std::array<double, 2> MeasureCutRegionPhaseVolumes(const CutRegion& region,
     const std::optional<BoxMotion>& motion, const GridVec& lo, const GridVec& hi,
     const CutRegionWaterPlane& water);
+
+struct CutRegionFixedPhaseGeometry {
+    std::vector<std::array<double, 2>> startVolumes, endVolumes;
+    std::array<std::vector<SolidPatch>, 2> wallPatches;
+    double maximumSweepError = 0.;
+};
+
+// Measure both materials against the same frozen interface, before applying
+// any free-surface displacement. Material zero is water.
+bool MeasureCutRegionFixedPhaseGeometry(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                        const std::vector<CutRegionWaterPlane>& planes,
+                                        CutRegionFixedPhaseGeometry& output, std::string& error);
+
+double MeasureCutRegionInterfaceArea(const CutRegion& region, const std::optional<BoxMotion>& motion,
+                                     const CutRegionWaterPlane& plane);
 
 // Mean wet and dry volumes of the normal half-cell columns connected to
 // the physical aperture. A solid stops a column at its first boundary.

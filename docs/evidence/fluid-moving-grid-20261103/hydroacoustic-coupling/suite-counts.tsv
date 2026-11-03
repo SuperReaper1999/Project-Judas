@@ -1,0 +1,28 @@
+suite	checks	summary
+CutHydroacousticGraphTests	14	14/14 passed
+CutHydroacousticPressureTests	49	SUMMARY 49 checks 0 failures
+CutRegionGasTopologyTests	17	CHECKS 17 FAILURES 0
+CutRegionGeometryTests	22	SUMMARY cut region geometry 22 checks 0 failures
+CutRegionMomentumTests	16	SUMMARY cut-region momentum 16 checks 0 failures
+CutRegionPhaseTests	14	SUMMARY cut-region phase 14 checks 0 failures
+CutRegionStepTests	19	SUMMARY cut-region step 19 checks, 0 failures
+EvolvingVolumeTests	47	SUMMARY evolving volume 47 checks 0 failures
+ExposureVolumePressureTests	14	SUMMARY exposed-volume pressure 14 checks 0 failures
+GridCellPhaseTests	18	18 cell phase checks, 0 failures
+GridConservativeRemapTests	41	41/41 checks passed
+GridGeometricMomentumTests	40	SUMMARY geometric momentum 40 checks 0 failures
+GridHalfCellGeometryTests	47	SUMMARY grid half-cell geometry 47 checks 0 failures
+GridOrientedGeometryTests	16	16 oriented cut geometry checks, 0 failures
+GridOrientedSweepTests	16	16 oriented sweep checks, 0 failures
+GridParcelSeedTests	13	SUMMARY parcel seed import 13 checks 0 failures
+GridPhaseFluxRepairTests	17	SUMMARY phase flux repair 17 checks 0 failures
+GridPhaseGeometryTests	28	28 flat phase geometry checks, 0 failures
+GridPressureReactionTests	48	SUMMARY grid pressure reaction 48 checks 0 failures
+GridWaterQueryTests	16	16 water geometry query checks, 0 failures
+GridWaterSurfaceTests	28	SUMMARY grid water surface 28 checks 0 failures
+HalfDualVolumeMomentumTests	82	SUMMARY checks=82 failures=0
+MovingGridTests	315	SUMMARY checks=315 failures=0
+MovingVolumeMomentumTests	26	SUMMARY checks=26 failures=0
+OrientedMovingVolumeTests	17	SUMMARY oriented moving-volume pressure 17 checks 0 failures
+PlanarMovingVolumeTests	50	SUMMARY solved planar volume 50 checks 0 failures
+TOTAL	1030	26 suites

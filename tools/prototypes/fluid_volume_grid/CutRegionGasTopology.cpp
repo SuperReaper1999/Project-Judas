@@ -73,26 +73,6 @@ bool DividesDrySlab(const CutRegion& region, const CutRegionWaterPlane& water, c
     return false;
 }
 
-double BoundaryDryArea(const CutRegion& region, const std::optional<BoxMotion>& solid,
-                       const CutRegionGasVent& vent, const CutRegionWaterPlane& water) {
-    const int normal = vent.axis;
-    const double boundary = vent.lo[normal];
-    const double side = vent.sign > 0 ? region.hi[normal] : region.lo[normal];
-    if (side != boundary)
-        return 0.;
-    CutRegionFace face{};
-    face.axis = normal;
-    for (int axis = 0; axis < 3; ++axis) {
-        face.lo[axis] = axis == normal ? boundary : std::max(region.lo[axis], vent.lo[axis]);
-        face.hi[axis] = axis == normal ? boundary : std::min(region.hi[axis], vent.hi[axis]);
-    }
-    face.startArea = face.meanArea = MeasureCutRegionAperture(face, solid, face.lo, face.hi).start;
-    if (face.startArea == 0.)
-        return 0.;
-    const auto phase = MeasureCutRegionFacePhase(face, solid, water, water);
-    return phase.dry[vent.sign > 0 ? 0 : 1].start;
-}
-
 class GasGraph {
 public:
     explicit GasGraph(std::size_t count) : parents_(count), rank_(count) {
@@ -137,6 +117,30 @@ CutRegionGasVent FullCutRegionGasVent(const CutRegionChart& chart, int axis, int
     else
         vent.lo[axis] = vent.hi[axis];
     return vent;
+}
+
+CutRegionAperture MeasureCutRegionGasVent(const CutRegion& region, const std::optional<BoxMotion>& solid,
+                       const CutRegionGasVent& vent, const CutRegionWaterPlane& water) {
+    const int normal = vent.axis;
+    if (normal < 0 || normal > 2 || (vent.sign != -1 && vent.sign != 1))
+        return {};
+    const double boundary = vent.lo[normal];
+    const double side = vent.sign > 0 ? region.hi[normal] : region.lo[normal];
+    if (side != boundary)
+        return {};
+    CutRegionFace face{};
+    face.axis = normal;
+    for (int axis = 0; axis < 3; ++axis) {
+        face.lo[axis] = axis == normal ? boundary : std::max(region.lo[axis], vent.lo[axis]);
+        face.hi[axis] = axis == normal ? boundary : std::min(region.hi[axis], vent.hi[axis]);
+    }
+    const auto opening = MeasureCutRegionAperture(face, solid, face.lo, face.hi);
+    face.startArea = opening.start;
+    face.meanArea = opening.mean;
+    if (face.meanArea == 0.)
+        return {};
+    const auto phase = MeasureCutRegionFacePhase(face, solid, water, water);
+    return phase.dry[vent.sign > 0 ? 0 : 1];
 }
 
 bool BuildCutRegionGasTopology(const CutRegionChart& chart, const CutRegionGeometry& geometry,
@@ -186,7 +190,7 @@ bool BuildCutRegionGasTopology(const CutRegionChart& chart, const CutRegionGeome
             return Fail(error, "moving solid divides dry material inside one cut region");
         next.regionVolume[i] = dry;
         for (const auto& vent : vents)
-            next.ventArea[i] += BoundaryDryArea(region, solid, vent, plane);
+            next.ventArea[i] += MeasureCutRegionGasVent(region, solid, vent, plane).start;
         if (next.ventArea[i] > 0.)
             graph.Join(i, exterior);
     }
