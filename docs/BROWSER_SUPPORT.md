@@ -168,8 +168,9 @@ output is functional evidence, not a hardware listening test.
 
 ## Editor export and local preview
 
-Start the Linux source editor with `-ExpBrowserSupport=1`. Open **File → Export
-browser game (Experimental)…** to reopen it. With this launch flag the focused
+Start the Linux source editor with `-ExpBrowserSupport=1`. Use **File → Build &
+Export… → Build for browser…** or **File → Export browser game (Experimental)…**.
+With this launch flag the focused
 export window also opens at startup. It handles the workflow; there is
 no need to navigate project settings or understand compiler paths.
 

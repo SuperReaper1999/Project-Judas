@@ -116,8 +116,9 @@ You can also check all registered project modules from a terminal:
 ## 4. Save and export
 
 Project settings have their own dirty indicator and Undo/Redo. Closing or replacing
-a project offers Save/Discard/Cancel. Save source, scene and project settings; choose `Scenes/main.judas` as startup
-scene. **Run project** checks ordinary startup. **Export project (Release)**
+a project offers Save/Discard/Cancel. Save source, scene and project settings, then choose
+`Scenes/main.judas` as the startup scene. Open **File → Build & Export…**.
+**Run project** checks ordinary startup. **Export desktop game**
 uses saved disk content. With unsaved scene/project changes, explicitly choose
 **Save all and continue**, **Use saved version**, or **Cancel**. Choose a fresh directory
 outside the project. The equivalent command is:

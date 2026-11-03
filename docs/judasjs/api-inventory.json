@@ -1384,7 +1384,17 @@
       "maximum": 1
     },
     {
+      "symbol": "input.rumble",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "input.setBindings",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.setTiltEnabled",
       "minimum": 1,
       "maximum": 1
     },
@@ -1402,6 +1412,11 @@
       "symbol": "input.stickSamples",
       "minimum": 1,
       "maximum": 2
+    },
+    {
+      "symbol": "input.stopRumble",
+      "minimum": 0,
+      "maximum": 0
     },
     {
       "symbol": "input.vector",
@@ -5656,6 +5671,17 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "input.canRumble",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "inputCanRumble"
+      ],
+      "type": "docs/judas.d.ts:input.canRumble",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
       "symbol": "input.getBindings",
       "kinds": [
         "call"
@@ -5724,6 +5750,17 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "input.rumble",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "inputRumble"
+      ],
+      "type": "docs/judas.d.ts:input.rumble",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
       "symbol": "input.setBindings",
       "kinds": [
         "call"
@@ -5732,6 +5769,17 @@
         "inputSetBindings"
       ],
       "type": "docs/judas.d.ts:input.setBindings",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.setTiltEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "setTiltEnabled"
+      ],
+      "type": "docs/judas.d.ts:input.setTiltEnabled",
       "reference": "docs/judasjs/input.md"
     },
     {
@@ -5765,6 +5813,28 @@
         "stickSamples"
       ],
       "type": "docs/judas.d.ts:input.stickSamples",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stopRumble",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "inputStopRumble"
+      ],
+      "type": "docs/judas.d.ts:input.stopRumble",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.tilt",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "tilt"
+      ],
+      "type": "docs/judas.d.ts:input.tilt",
       "reference": "docs/judasjs/input.md"
     },
     {
@@ -7412,7 +7482,10 @@
     "impulseAtPoint",
     "inertiaWorld",
     "inputBindings",
+    "inputCanRumble",
+    "inputRumble",
     "inputSetBindings",
+    "inputStopRumble",
     "joint",
     "jointConfigure",
     "jointCreate",
@@ -7588,6 +7661,7 @@
     "sessionSet",
     "setAngularVelocity",
     "setPointerCapture",
+    "setTiltEnabled",
     "setTransform",
     "setVelocity",
     "setView",
@@ -7612,6 +7686,7 @@
     "terrainBrush",
     "terrainCreate",
     "terrainState",
+    "tilt",
     "torque",
     "touches",
     "transform",

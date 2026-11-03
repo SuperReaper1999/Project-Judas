@@ -15,6 +15,7 @@
 #include "WorldStreaming.h"
 #include "SceneSession.h"
 #include "ProfilerView.h"
+#include "PerformanceProfiler.h"
 #include "Environment.h"
 #include "ResourceManager.h"
 #include "EditorPanels.h"
@@ -35,6 +36,7 @@
 #include <functional>
 
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 
 #include <glm/gtc/quaternion.hpp>
@@ -298,6 +300,11 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::MenuItem("Project settings", nullptr, state.showProjectSettings, hasProject)) {
             state.showProjectSettings = !state.showProjectSettings;
         }
+        if (ImGui::MenuItem("Import assets...", nullptr, false, editing && hasProject)) requests.browseImport = true;
+        if (ImGui::MenuItem("Build & Export...", nullptr, false, editing && hasProject)) {
+            state.showBuildExport = true;
+            ImGui::SetWindowFocus("Build & Export");
+        }
         if (state.experimentalBrowserSupport && ImGui::MenuItem("Export browser game (Experimental)...", nullptr, false, editing && hasProject)) {
             state.showBrowserExport=true;
         }
@@ -430,6 +437,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
 
 void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     if (!state.workspace.showRails) return;
+    JUDAS_PROFILE_SCOPE("Editor hierarchy");
     PlaceWorkspacePanel(state.workspace.hierarchy);
     if (!ImGui::Begin("Hierarchy", nullptr, kWorkspacePanelFlags)) { ImGui::End(); return; }
     const bool editing = state.mode == EditorMode::Edit;
@@ -453,12 +461,22 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         4 * ImGui::GetStyle().FramePadding.x + ImGui::GetStyle().ItemSpacing.x;
     const float footerRows = footerWidth > ImGui::GetContentRegionAvail().x ? 2.f : 1.f;
     ImGui::BeginChild("list", ImVec2(0.0f, -footerRows * ImGui::GetFrameHeightWithSpacing()));
-    auto visible=doc.Search(state.hierarchySearch);
-    if(state.project&&!state.hierarchySearch.empty()){std::set<SceneObjectId> matches(visible.begin(),visible.end());for(auto& o:doc.GetScene().Objects())for(auto& [id,name]:state.project->Settings().classification.tags.names)if((o.tags&CategoryBit(id))&&name.find(state.hierarchySearch)!=std::string::npos){matches.insert(o.id);for(auto p=o.parent;p;){matches.insert(p);auto* parent=doc.GetScene().Find(p);p=parent?parent->parent:0;}}visible.assign(matches.begin(),matches.end());}
-    for (const SceneObject& o : scene.Objects()) {
+    CategoryMask matchingTags = 0;
+    if (state.project && !state.hierarchySearch.empty())
+        for (const auto& [id, name] : state.project->Settings().classification.tags.names)
+            if (name.find(state.hierarchySearch) != std::string::npos) matchingTags |= CategoryBit(id);
+    const auto& rows = doc.HierarchyRows(state.hierarchySearch, matchingTags);
+    // ImGui snaps item positions to pixels. A fractional row pitch would
+    // round differently above the viewport and change the scroll extent.
+    const float spacing = ImGui::GetStyle().ItemSpacing.y;
+    const float rowPitch = std::floor(ImGui::GetTextLineHeightWithSpacing() + spacing);
+    const float rowHeight = rowPitch - spacing;
+    std::size_t submitted = 0;
+    const auto drawRow = [&](const EditorHierarchyRow& row) {
+        ++submitted;
+        const SceneObject& o = scene.Objects()[row.sceneIndex];
         ImGui::PushID(static_cast<int>(o.id));
         const bool selected = doc.IsSelected(o.id);
-        if(std::find(visible.begin(),visible.end(),o.id)==visible.end()){ImGui::PopID();continue;}
         if (editing && state.renamingId == o.id) {
             char buffer[256];
             CopyToBuffer(state.renameBuffer, buffer, sizeof(buffer));
@@ -475,10 +493,9 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
                 if (ImGui::IsItemDeactivated() || ImGui::IsKeyPressed(ImGuiKey_Escape)) state.renamingId = kInvalidSceneObjectId;
             }
             ImGui::PopID();
-            continue;
+            return;
         }
         std::string label = o.name.empty() ? "(unnamed)" : o.name;
-        const std::string indicators = ComponentIndicators(o);
         if (state.runtime) {
             if (const EntityRecord* e = state.runtime->FindEntity(o.id)) {
                 label += e->lifecycle == EntityLifecycle::Destroyed ? "  [destroyed]"
@@ -493,17 +510,11 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (broken) label += "  (!)";
         label += "##" + std::to_string(o.id);
-        unsigned depth = 0;
-        for (auto parent = o.parent; parent && depth < 16; ++depth) {
-            const auto* ancestor = scene.Find(parent);
-            if (!ancestor) break;
-            parent = ancestor->parent;
-        }
-        const float indentation = float(std::min(depth, 8u)) * 12.0f * ImGui::GetIO().FontGlobalScale;
+        const float indentation = float(row.depth) * 12.0f * ImGui::GetIO().FontGlobalScale;
         if (indentation > 0) ImGui::Indent(indentation);
         if (broken) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.55f, 0.3f, 1.0f));
-        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick, {0, ImGui::GetTextLineHeightWithSpacing()})) {
-            if(ImGui::GetIO().KeyShift)doc.SelectRange(o.id,visible,ImGui::GetIO().KeyCtrl);else doc.Select(o.id,ImGui::GetIO().KeyCtrl);
+        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick, {0, rowHeight})) {
+            if(ImGui::GetIO().KeyShift)doc.SelectRange(o.id, rows, ImGui::GetIO().KeyCtrl);else doc.Select(o.id,ImGui::GetIO().KeyCtrl);
             if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                 state.renamingId = o.id;
                 state.renameBuffer = o.name;
@@ -511,6 +522,7 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (broken) ImGui::PopStyleColor();
         if (ImGui::IsItemHovered()) {
+            const std::string indicators = ComponentIndicators(o);
             ImGui::BeginTooltip();
             ImGui::TextUnformatted(o.name.empty() ? "(unnamed)" : o.name.c_str());
             ImGui::TextDisabled("ID %llu  /  %s", static_cast<unsigned long long>(o.id),
@@ -553,7 +565,20 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (indentation > 0) ImGui::Unindent(indentation);
         ImGui::PopID();
+    };
+    // Inline rename has a different row height. Keep popup owners submitted
+    // even if the list scrolls while their context menu is open.
+    if (state.renamingId != kInvalidSceneObjectId ||
+        ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId | ImGuiPopupFlags_AnyPopupLevel)) {
+        for (const auto& row : rows) drawRow(row);
+    } else {
+        ImGuiListClipper clipper;
+        clipper.Begin(static_cast<int>(rows.size()), rowPitch);
+        while (clipper.Step())
+            for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; ++i) drawRow(rows[i]);
     }
+    JUDAS_PROFILE_COUNTER("Hierarchy matched rows", double(rows.size()), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Hierarchy submitted rows", double(submitted), ProfileCounterMode::Latest);
     DrawHierarchyCreationPopup(state, requests);
     ImGui::EndChild();
     if (editing) {
@@ -1176,14 +1201,18 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             ImGui::EndChild();
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Import & tools")) {
+        const bool openModelTools = state.selectModelImportTools;
+        if (ImGui::BeginTabItem("Import & tools", nullptr, openModelTools ? ImGuiTabItemFlags_SetSelected : 0)) {
+            state.selectModelImportTools = false;
             ImGui::BeginChild("assetTools", {0, 0});
             if(ImGui::Button("Animation retargeting: map / preview / bake"))OpenRetargetPanel(state,{},state.modelRecipe);
+    if(openModelTools){ImGui::SetNextItemOpen(true);ImGui::SetScrollY(0.0f);}
     if(ImGui::CollapsingHeader("Model import / reimport",ImGuiTreeNodeFlags_DefaultOpen)){
+        if(ImGui::TreeNode("Source and recipe settings")){
         auto text=[](const char* label,std::string& value){std::vector<char> buffer(std::max(size_t(4096),value.size()+256),0);std::copy(value.begin(),value.end(),buffer.begin());if(ImGui::InputText(label,buffer.data(),buffer.size()))value=buffer.data();};
         ImGui::TextWrapped("FBX / glTF / GLB / OBJ to an ordinary cooked model. Sources and recipes are author-owned; the game loads only cooked content. Reimport publishes only in Edit mode.");
         text("Original source file",state.modelSource);text("Project-relative runtime output",state.modelOutput);
-        if(state.mode==EditorMode::Edit&&ImGui::Button("Copy source and create import recipe")){std::string error;if(CreateModelRecipe(state.project->RootDir(),state.modelSource,state.modelOutput,state.modelRecipe,error))state.status="Recipe created; review settings then Import";else state.status=error;}
+        if(state.mode==EditorMode::Edit&&!EditorModelImportPending(state)&&ImGui::Button("Copy source and create import recipe")){std::string error;if(CreateModelRecipe(state.project->RootDir(),state.modelSource,state.modelOutput,state.modelRecipe,error))state.status="Recipe created; review settings then Import";else state.status=error;}
         text("Import recipe (.judasimport)",state.modelRecipe);
         if(!state.modelRecipe.empty()&&std::filesystem::is_regular_file(state.modelRecipe))try{
             using Json=nlohmann::json;std::ifstream file(state.modelRecipe);if(std::filesystem::file_size(state.modelRecipe)>4*1024*1024)throw std::runtime_error("Recipe exceeds 4 MiB");auto recipe=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=48)throw std::runtime_error("Recipe nesting bound");return true;});bool changed=false;auto& settings=recipe["settings"];
@@ -1203,20 +1232,40 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if(changed&&state.mode==EditorMode::Edit){std::ofstream out(state.modelRecipe);out<<recipe.dump(2)<<'\n';state.status="Import recipe saved; accepted runtime content is unchanged until reimport";}
             if(ImGui::TreeNode("Named recipe / selections / remaps")){auto pretty=recipe.dump(2);ImGui::TextUnformatted(pretty.c_str());ImGui::TreePop();}
         }catch(const std::exception& e){ImGui::TextWrapped("Recipe: %s",e.what());}
+        ImGui::TreePop();
+        }
         bool busy=state.importTask&&!state.importTask->done.load();
-        if(state.mode==EditorMode::Edit&&!busy&&!state.modelRecipe.empty()&&ImGui::Button("Import / reimport / retry")){state.importTask=QueueModelImport(*state.importJobs,state.modelRecipe);state.importPublished=false;}
+        ImGui::BeginDisabled(state.mode!=EditorMode::Edit||EditorModelImportPending(state)||state.modelRecipe.empty()||!state.importJobs);
+        if(ImGui::Button("Import / reimport / retry"))QueueEditorModelCook(state);
+        ImGui::EndDisabled();
         if(busy){ImGui::ProgressBar(float(state.importTask->progress.load())/100);if(ImGui::Button("Cancel import"))state.importTask->cancel=true;}
         if (state.importTask && state.importTask->done.load(std::memory_order_acquire)) {
             if (!state.importTask->success) ImGui::TextWrapped("Import failed; last good model retained: %s", state.importTask->error.c_str());
             else if (!state.importPublished) ImGui::TextWrapped("Cook ready. Stop Play to publish; live skeleton buffers remain unchanged.");
         }
         if(state.importAccepted){auto& t=*state.importAccepted;{
+                ImGui::TextWrapped("Accepted model: %s",std::filesystem::u8path(t.output).filename().u8string().c_str());
                 ImGui::Text("Source bones: %zu; hierarchy nodes: %zu; palette entries: %zu; parts: %zu",t.report.sourceBones,t.report.hierarchyNodes,t.report.skinJoints,t.report.parts);
-                if(ImGui::Button("Place accepted model"))requests.dropMeshAssetId=t.assetId;
+                if(ImGui::Button("Place accepted model")){
+                    requests.dropMeshAssetId=t.assetId;
+                    requests.createPosition=state.cameraFocus;
+                }
                 auto rig=state.resources->TryGetSkeletal(t.assetId);
                 if(rig){
                     ImGui::Text("Runtime hierarchy: %zu nodes",rig->skeleton.names.size());
-                    if(!rig->clips.empty()){int clip=int(std::min(size_t(state.modelPreviewClip),rig->clips.size()-1));if(ImGui::BeginCombo("Preview clip",rig->clips[clip].name.c_str())){for(size_t i=0;i<rig->clips.size();++i)if(ImGui::Selectable(rig->clips[i].name.c_str(),i==size_t(clip))){state.modelPreviewClip=unsigned(i);state.modelPreviewTime=0;}ImGui::EndCombo();}ImGui::Checkbox("Preview playback",&state.modelPreviewPlaying);ImGui::SliderFloat("Scrub seconds",&state.modelPreviewTime,0,rig->clips[state.modelPreviewClip].duration);}
+                    if(!rig->clips.empty()){
+                        state.modelPreviewClip=unsigned(std::min(size_t(state.modelPreviewClip),rig->clips.size()-1));
+                        if(ImGui::BeginCombo("Preview clip",rig->clips[state.modelPreviewClip].name.c_str())){
+                            for(size_t i=0;i<rig->clips.size();++i)
+                                if(ImGui::Selectable(rig->clips[i].name.c_str(),i==state.modelPreviewClip)){
+                                    state.modelPreviewClip=unsigned(i);
+                                    state.modelPreviewTime=0;
+                                }
+                            ImGui::EndCombo();
+                        }
+                        ImGui::Checkbox("Preview playback",&state.modelPreviewPlaying);
+                        ImGui::SliderFloat("Scrub seconds",&state.modelPreviewTime,0,rig->clips[state.modelPreviewClip].duration);
+                    }
                     ImGui::Checkbox("Skeleton overlay",&state.modelPreviewSkeleton);ImGui::SliderFloat("Orbit view",&state.modelPreviewYaw,-3.14f,3.14f);
                     if(ImGui::TreeNode("Hierarchy / stable joint identities")){for(size_t i=0;i<rig->skeleton.names.size();++i)ImGui::BulletText("%s",SkeletonJointKey(rig->skeleton,int(i)).c_str());ImGui::TreePop();}
                 }

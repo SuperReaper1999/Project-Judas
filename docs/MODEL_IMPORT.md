@@ -16,14 +16,19 @@ Without those files the lab scene fails to build (`unknown asset id`), and so do
 [imported-model example](judasjs/examples/imported-model.js). The workflow below still
 applies to your own sources and the CC0 fixtures in `tests/fixtures/m66`.
 
-Open `projects/import_lab/import_lab.judasproj` in `build/judas_editor`.
-In **Assets → Model import / reimport** choose the original file and a
-project-relative output such as `Assets/models/actor.judasmodel`. **Copy source
-and create import recipe** retains author-owned sources under `Sources/` and a
-named JSON recipe under `Imports/`. Review units/basis and sampling, then import.
-A missing dependency does not prevent creating an editable recipe: import reports
-it; add an explicit project-relative dependency remap and retry. Import does not
-search arbitrary directories or fetch files from the network.
+Open your project and choose **File → Import assets…**. Pick an FBX, glTF, GLB or
+OBJ file and review the cooked destination inside Assets, such as
+`models/actor.judasmodel`. **Cook & import model** copies the author-owned source
+under `Sources/`, saves an editable JSON recipe under `Imports/` and starts the
+worker. **Import & tools → Model import / reimport** shows progress and the
+accepted preview. A valid import also appears in the ordinary asset list.
+
+Use **Source and recipe settings** in that section to review units, basis,
+sampling and remaps. To configure these before the first cook, use **Copy source
+and create import recipe**, review the settings and then choose **Import / reimport / retry**.
+A missing dependency leaves an editable recipe and a diagnostic. Add an explicit
+project-relative dependency remap and retry. Import searches approved sources
+and dependencies and does not fetch files from the network.
 
 The job parses/cooks/hashes on existing workers. Progress and Cancel are visible.
 Only Edit mode publishes the complete accepted generation. During Play, Stop to

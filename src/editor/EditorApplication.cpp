@@ -35,6 +35,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <unordered_set>
 #include <vector>
 
 #if defined(__unix__) || defined(__APPLE__)
@@ -414,6 +415,8 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     if(!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
     RefreshProjectLists();
     m_panels.showProjectSettings = false;
+    m_panels.showBuildExport = false;
+    m_panels.runProjectInfo.clear();
     m_panels.browserSelection.clear();
     return true;
 }
@@ -506,10 +509,29 @@ bool EditorApplication::RunProject(std::string& outMessage) {
 }
 
 bool EditorApplication::StartPlay(std::string& outError) {
+    JUDAS_PROFILE_SCOPE("Editor Play startup");
     if(m_terrain&&!m_terrain->Guard(m_panels)){outError=m_terrain->error;return false;}
     if(m_volumeTerrain&&!m_volumeTerrain->Guard(m_panels)){outError=m_volumeTerrain->error;return false;}
-    // Source freshness is an editor/export check; packaged runtime needs only products.
-    for(const auto& o:m_document.GetScene().Objects())if(o.render&&!o.render->meshAsset.empty()){auto* a=m_host->Assets().Find(o.render->meshAsset);if(a&&!a->readOnly&&fs::path(a->path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string record;std::vector<MaterialDefinition> materials;if(ReadWholeFile(a->path,bytes,outError)&&ReadModelArchiveMetadata(bytes.data(),bytes.size(),record,materials,outError)&&!record.empty()){auto provenance=nlohmann::json::parse(record);if((provenance.value("kind",std::string())=="terrain"||provenance.value("kind",std::string())=="volume-terrain")&&!VerifyImportedModelFresh(m_project.RootDir(),a->path,outError))return false;}}}
+    {
+        JUDAS_PROFILE_SCOPE("Editor Play model preflight");
+        // Each Play rechecks current bytes. Repeated scene instances share
+        // only this check, never a freshness decision from an earlier Play.
+        std::unordered_set<std::string> checkedModels;
+        for (const auto& object : m_document.GetScene().Objects()) {
+            if (!object.render || object.render->meshAsset.empty())
+                continue;
+            const auto* asset = m_host->Assets().Find(object.render->meshAsset);
+            if (!asset || asset->readOnly || fs::path(asset->path).extension() != ".judasmodel" ||
+                !checkedModels.insert(asset->path).second)
+                continue;
+            if (!VerifyTerrainModelFreshForPlay(m_project.RootDir(), asset->path, outError)) {
+                outError = asset->relativePath + ": " + outError;
+                return false;
+            }
+        }
+        JUDAS_PROFILE_COUNTER("Editor Play model archives checked", double(checkedModels.size()),
+                              ProfileCounterMode::Latest);
+    }
     Project playedProject=m_project;
     if(!JudasMods::PrepareSession(playedProject,false,outError))return false;
     Scene playedScene=m_document.GetScene();
@@ -1758,6 +1780,7 @@ int EditorApplication::Run(int argc, char** argv) {
             DrawAssetBrowserPanel(m_document, m_panels, requests);
             DrawRetargetPanel(m_panels, requests);
             DrawProjectSettingsPanel(m_document, m_panels, requests);
+            DrawEditorBuildExportPanel(m_panels, requests);
         }
         if (m_panels.mode == EditorMode::Edit || m_panels.playPaused)
             DrawInspectorPanel(m_document, m_panels);

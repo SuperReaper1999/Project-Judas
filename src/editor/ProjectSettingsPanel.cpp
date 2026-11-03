@@ -15,6 +15,7 @@
 #include <vector>
 
 namespace {
+constexpr int kExportSettingsPage = 11;
 void CopyToBuffer(const std::string& value,char* data,size_t size){
     if(size){const auto count=std::min(value.size(),size-1);std::memcpy(data,value.data(),count);data[count]=0;}
 }
@@ -223,7 +224,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::Checkbox("Legacy gameplay compatibility (historical projects)",&s.legacyGameplay);
         ImGui::TextWrapped("New projects use script-owned gameplay. Compatibility restores historical built-in controls only when explicitly selected.");
     }
-    if(page==11){
+    if(page==kExportSettingsPage){
     {
         bool closure=s.exportAssetPolicy=="closure";if(ImGui::Checkbox("Asset dependency closure (explicit dynamic roots)",&closure))s.exportAssetPolicy=closure?"closure":"all";
         ImGui::TextWrapped("All registered assets is the safe default. Closure keeps selected scene dependencies, script/UI/localization compatibility roots and the runtime IDs below. Declare dynamically loaded prefabs/audio/materials and save-only assets.");
@@ -233,11 +234,10 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         for(const auto& scene:state.sceneFiles){ImGui::PushID(scene.c_str());bool included=s.exportScenes.empty()||std::find(s.exportScenes.begin(),s.exportScenes.end(),scene)!=s.exportScenes.end();bool excluded=std::find(s.excludeScenes.begin(),s.excludeScenes.end(),scene)!=s.excludeScenes.end();ImGui::TextUnformatted(scene.c_str());if(!s.exportScenes.empty()&&ImGui::Checkbox("Include",&included)){s.exportScenes.erase(std::remove(s.exportScenes.begin(),s.exportScenes.end(),scene),s.exportScenes.end());if(included)s.exportScenes.push_back(scene);}ImGui::SameLine();if(ImGui::Checkbox("Exclude",&excluded)){s.excludeScenes.erase(std::remove(s.excludeScenes.begin(),s.excludeScenes.end(),scene),s.excludeScenes.end());if(excluded)s.excludeScenes.push_back(scene);}ImGui::PopID();}
         ImGui::TextWrapped("Startup and world-manifest regions must be included. Registered assets stay available for dynamic ID loading. Save project before export.");
     }
-        char destination[4096];CopyToBuffer(state.exportDestination,destination,sizeof(destination));
-        if(ImGui::InputText("Package directory",destination,sizeof(destination)))state.exportDestination=destination;
-        ImGui::SameLine();if(ImGui::Button("Browse package folder..."))requests.browseExport=true;
-        ImGui::TextWrapped("Save project and scene edits first. Export copies the project policy, selected content and runtime dependencies. Choose a destination outside the project.");
-        if(ImGui::Button("Export project (Release)"))requests.exportProject=true;
+        if(ImGui::Button("Open Build & Export...")){
+            state.showBuildExport = true;
+            ImGui::SetWindowFocus("Build & Export");
+        }
         if(state.experimentalBrowserSupport && ImGui::Button("Export a browser game...")) state.showBrowserExport=true;
     }
     ImGui::EndDisabled();
@@ -251,5 +251,53 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     ImGui::EndDisabled();
     ImGui::SameLine();ImGui::TextDisabled("Save configuration; restart Play to apply runtime changes.");
     if(!state.runProjectInfo.empty())ImGui::TextWrapped("%s",state.runProjectInfo.c_str());
+    ImGui::End();
+}
+
+void DrawEditorBuildExportPanel(EditorPanelState& state, EditorRequests& requests) {
+    if (!state.showBuildExport || !state.project || !state.project->IsLoaded()) return;
+    ImGui::SetNextWindowSize({520, 0}, ImGuiCond_Appearing);
+    const auto display = ImGui::GetIO().DisplaySize;
+    ImGui::SetNextWindowPos({display.x * .5f, display.y * .5f}, ImGuiCond_FirstUseEver, {.5f, .5f});
+    if (!ImGui::Begin("Build & Export", &state.showBuildExport)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::TextWrapped("Run or package the project from its saved startup scene. "
+                       "The editor asks what to do with unsaved scene and project settings.");
+    const auto& startup = state.project->Settings().startupScene;
+    ImGui::TextWrapped("Startup scene: %s", startup.empty() ? "None selected" : startup.c_str());
+    const bool editing = state.mode == EditorMode::Edit;
+    ImGui::BeginDisabled(!editing);
+    if (ImGui::Button("Run project") && editing) requests.runProject = true;
+    ImGui::SameLine();
+    if (ImGui::Button(startup.empty() ? "Choose startup scene..." : "Export settings...")) {
+        state.showProjectSettings = true;
+        state.projectSettingsPage = startup.empty() ? 0 : kExportSettingsPage;
+        ImGui::SetWindowFocus("Project Settings");
+    }
+    ImGui::SeparatorText("Desktop package");
+    ImGui::TextWrapped("Choose a package folder outside the project. The result includes the "
+                       "game, its selected content and the desktop runtime.");
+    char destination[4096];
+    CopyToBuffer(state.exportDestination, destination, sizeof(destination));
+    ImGui::SetNextItemWidth(-1);
+    if (ImGui::InputTextWithHint("##packageDirectory", "Package directory", destination, sizeof(destination)))
+        state.exportDestination = destination;
+    if (ImGui::Button("Browse package folder...") && editing) requests.browseExport = true;
+    ImGui::SameLine();
+    ImGui::BeginDisabled(state.exportDestination.empty());
+    if (ImGui::Button("Export desktop game") && editing && !state.exportDestination.empty())
+        requests.exportProject = true;
+    ImGui::EndDisabled();
+    if (state.experimentalBrowserSupport) {
+        ImGui::SeparatorText("Browser (Experimental)");
+        if (ImGui::Button("Build for browser...") && editing) {
+            state.showBrowserExport = true;
+            ImGui::SetWindowFocus("Export your game for the web");
+        }
+    }
+    ImGui::EndDisabled();
+    if (!state.runProjectInfo.empty()) ImGui::TextWrapped("%s", state.runProjectInfo.c_str());
     ImGui::End();
 }

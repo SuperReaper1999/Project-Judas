@@ -81,6 +81,12 @@ registration/clock machinery not certified for that real-time callback.
 The legacy specialized diagnostics remain in a labelled collapsible section.
 The lightweight runtime FPS/debug HUD remains intact.
 
+The editor reports **Editor hierarchy** CPU time plus matched and submitted
+row counts. A large list normally submits only the visible rows.
+**Editor Play startup** covers construction of a Play session and includes
+**Editor Play model preflight**, which counts the unique model archives checked
+in that request. The startup scope ends before the first rendered Play frame.
+
 ### M87 physics stages and work counters
 
 Physics now separates kinematic publication, predicted reach/wake, velocity

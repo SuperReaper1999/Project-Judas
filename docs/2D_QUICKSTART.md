@@ -79,9 +79,9 @@ background flag. Start with the [genre guide](judasjs/2d-genres.md) and its exam
 
 Save scene and project changes. Play/Stop protects authored state; a game's
 F6/F7 save/load exists only when its script defines those controls. Use the
-normal **File export workflow** to package the saved project, then move the entire
-output directory and run it there. A desktop package is not a browser build.
-Browser export is currently unsupported; see [the feasibility review](BROWSER_EXPORT_REVIEW.md).
+**File → Build & Export… → Export desktop game** to package the saved project, then
+move the entire output directory and run it there. Browser export uses a separate
+build and requires the [experimental opt-in and toolchain](BROWSER_SUPPORT.md).
 
 ## Working examples
 

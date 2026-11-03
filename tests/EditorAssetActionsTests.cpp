@@ -4,6 +4,7 @@
 #include "imgui_internal.h"
 #include "Project.h"
 #include "Prefab.h"
+#include "ModelCook.h"
 #include <filesystem>
 #include <fstream>
 #include <chrono>
@@ -114,6 +115,66 @@ int main() {
               "reviewed destination imports and registers a genuine script asset");
         check(std::filesystem::exists(source) && std::filesystem::exists(script.path + ".judasmeta"),
               "import preserves original source and creates ordinary asset metadata");
+
+        const auto modelSource = root / "workbench.obj";
+        { std::ofstream file(modelSource); file << "v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n"; }
+        JobSystem jobs(1);
+        state.project = &project;
+        state.importJobs = &jobs;
+        state.importSourceInput = modelSource.string();
+        state.reviewAssetImport = true;
+        review(); review();
+        check(state.modelImportReviewOutput == "models/workbench.judasmodel",
+              "model picker suggests a ready-to-use destination inside Assets");
+        popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(popup->GetID("Cook & import model"));
+        review();
+        if (!state.importTask) review();
+        check(state.importTask && state.selectModelImportTools && EditorModelImportPending(state) &&
+                  std::filesystem::is_regular_file(state.modelRecipe),
+              "actual model import button creates a recipe, queues the ordinary cook and reveals its preview");
+        const auto accepted = state.importTask;
+        jobs.Wait(accepted->job);
+        check(accepted->done.load() && accepted->success && PublishModelImport(*accepted, error),
+              "model picker workflow produces a genuinely published runtime model");
+        jobs.Forget(accepted->job);
+        accepted->job = {};
+        state.importPublished = true;
+        database.Scan(project.RootDir(), project.AssetsDir());
+        const auto* cooked = database.Find(accepted->assetId);
+        check(cooked && cooked->type == AssetType::Mesh && !cooked->missing &&
+                  std::filesystem::is_regular_file(modelSource),
+              "published model has a stable registered ID and preserves original source");
+
+        state.reviewAssetImport = true; review(); review();
+        popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(popup->GetID("Cook & import model"));
+        review();
+        if (state.modelImportReviewError.empty()) review();
+        check(state.importTask == accepted && state.modelImportReviewError.find("already") != std::string::npos &&
+                  std::filesystem::is_regular_file(accepted->output),
+              "duplicate model name reports how to proceed without replacing accepted content");
+        io.AddKeyEvent(ImGuiKey_Escape, true); review(); io.AddKeyEvent(ImGuiKey_Escape, false); review();
+
+        const auto brokenSource = root / "broken.obj";
+        { std::ofstream file(brokenSource); file << "not an OBJ"; }
+        state.importSourceInput = brokenSource.string();
+        state.reviewAssetImport = true; review(); review();
+        popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(popup->GetID("Cook & import model"));
+        review();
+        if (state.importTask == accepted) review();
+        check(state.importTask && state.importTask != accepted, "invalid model uses the same real worker route");
+        jobs.Wait(state.importTask->job);
+        check(state.importTask->done.load() && !state.importTask->success && !state.importTask->error.empty() &&
+                  !std::filesystem::exists(std::filesystem::path(project.AssetsDir()) / "models/broken.judasmodel") &&
+                  std::filesystem::is_regular_file(accepted->output),
+              "invalid source leaves a retryable recipe and does not publish a broken asset");
+        jobs.Forget(state.importTask->job);
+        state.importTask->job = {};
+        state.importTask.reset();
+        state.project = nullptr;
+        state.importJobs = nullptr;
         std::filesystem::remove_all(root);
 
         doc.Select(first); doc.GetScene().Find(first)->transform.position = {3,4,5};

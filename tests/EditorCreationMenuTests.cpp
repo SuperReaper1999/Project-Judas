@@ -133,6 +133,50 @@ int main() {
         check(CreateObjectOfKind(doc, "box", {}, "", nullptr, 999999) == 0 &&
                   doc.GetScene().Objects().size() == count && !doc.EditInProgress(),
               "stale parent fails without creating an orphan or leaving an edit open");
+        EditorDocument tree;
+        auto& scene = tree.GetScene();
+        const auto trunk = scene.CreateObject("Trunk").id;
+        const auto unused = scene.CreateObject("Unrelated").id;
+        const auto branch = scene.CreateObject("Branch").id;
+        const auto leaf = scene.CreateObject("Leaf").id;
+        scene.Find(branch)->parent = trunk;
+        scene.Find(leaf)->parent = branch;
+        scene.Find(leaf)->tags = CategoryBit(4);
+        check(scene.MoveObject(leaf, -1) && scene.MoveObject(leaf, -1) && scene.MoveObject(leaf, -1), "hierarchy fixture puts a child before its ancestors");
+        const auto& filteredRows = tree.HierarchyRows("Rare fixture tag", CategoryBit(4));
+        check(filteredRows.size() == 3 && filteredRows[0].id == leaf && filteredRows[0].depth == 2 &&
+                  filteredRows[1].id == trunk && filteredRows[1].depth == 0 &&
+                  filteredRows[2].id == branch && filteredRows[2].depth == 1,
+              "tag search includes all ancestors in drawn scene order with depth");
+        tree.Select(leaf);
+        tree.SelectRange(trunk, filteredRows);
+        check(tree.Selection() == std::vector<SceneObjectId>{leaf, trunk} && tree.Selected() == trunk,
+              "Shift selects the visible span rather than numeric IDs");
+        tree.Select(unused, true);
+        tree.Select(trunk, true);
+        tree.Select(trunk, true);
+        tree.SelectRange(branch, filteredRows, true);
+        check(tree.Selection() == std::vector<SceneObjectId>{leaf, unused, trunk, branch},
+              "Ctrl+Shift adds the visible span without losing or duplicating earlier selections");
+        check(tree.HierarchyRows("Rare fixture tag").empty(),
+              "changed project tag definitions invalidate the same query");
+        check(tree.HierarchyRows("Leaf").size() == 3 && tree.HierarchyRows("").size() == 4,
+              "name search includes ancestors and clearing the query restores every row");
+        tree.BeginEdit();
+        scene.Find(leaf)->name = "Renamed leaf";
+        tree.CommitEdit();
+        check(tree.ValidationError().empty() && tree.HierarchyRows("Renamed leaf").size() == 3 &&
+                  tree.HierarchyRows("Renamed leaf").front().id == leaf,
+              "committed rename updates filtered rows");
+        tree.Undo();
+        check(tree.HierarchyRows("Renamed leaf").empty() && tree.HierarchyRows("Leaf").size() == 3,
+              "Undo restores filtered rows");
+        tree.BeginEdit();
+        scene.Find(leaf)->name = "Cancelled change";
+        check(tree.HierarchyRows("Cancelled change").size() == 3, "changed query reads the current editing scene");
+        tree.CancelEdit();
+        check(tree.HierarchyRows("Cancelled change").empty(),
+              "cancel discards cached rows from the temporary edit");
         ImGui::DestroyContext();
         std::cout << "Editor creation menu: " << checks << " checks, 0 failures\n";
         return 0;

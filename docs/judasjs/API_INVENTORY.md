@@ -364,16 +364,21 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `input` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.axis` | `axis` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.canRumble` | `inputCanRumble` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.getBindings` | `inputBindings` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.held` | `held` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pointer` | `pointer` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pointerCapture` | `pointerCapture`, `setPointerCapture` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pressed` | `pressed` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.released` | `released` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.rumble` | `inputRumble` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.setBindings` | `inputSetBindings` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.setTiltEnabled` | `setTiltEnabled` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stick` | `stick` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stickDelta` | `stickDelta` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stickSamples` | `stickSamples` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.stopRumble` | `inputStopRumble` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.tilt` | `tilt` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.touches` | `touches` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.vector` | `vector` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `liquid` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
