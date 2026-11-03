@@ -1,0 +1,8 @@
+BEGIN rotated_half regions=35840 faces=101292 water_m3=0 seed_shifted_m3=0 seed_shifted_parcels=0 seed_maximum_hops=0 warmup_requested=0 native_steps_requested=1
+MOMENTUM region=3746 capacity=7.1054257760316411e-18 wet=0 dry=7.1054257760316411e-18 wetOut=0 dryOut=2.4832405747765362e-17 dryExcess=1.7726979971733723e-17 wetExcess=0 roundoff=4.0389669357134842e-31 solveTolerance=5.6843418860808028e-17
+MOMENTUM_PORT left=2463 right=3746 volume=-1.578476596374745e-24 wet=-0 air=-1.578476596374745e-24
+MOMENTUM_PORT left=3745 right=3746 volume=-2.2851895895648509e-17 wet=-0 air=-2.2851895895648509e-17
+MOMENTUM_PORT left=3746 right=3751 volume=-2.2851899934715234e-17 wet=-0 air=-2.2851899934715234e-17
+MOMENTUM_PORT left=3744 right=3746 volume=-1.9805082736402568e-18 wet=-0 air=-1.9805082736402568e-18
+MOMENTUM_PORT left=3746 right=3830 volume=-1.9805058777857086e-18 wet=-0 air=-1.9805058777857086e-18
+END final_vy=-0.04087500274181366 warmup_steps=0 material_attempts=1 material_commits=0 proposals=1 impulses_published=0 native_accepted=0 native_steps=0 water_drift_m3=0 impulse_roundoff_Ns=0 reason=cut region momentum phase leaves an ordinary donor before receipt

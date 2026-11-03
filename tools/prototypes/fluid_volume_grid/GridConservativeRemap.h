@@ -17,6 +17,9 @@ struct ConservativeRemapInput {
     std::vector<RemapTransfer> transfers;
     std::vector<bool> relayAllowed;
     double balanceTolerance = 0;
+    // Use only after independently auditing the transported constituents.
+    // This allows arithmetic roundoff at an exhausted, nonempty donor.
+    bool allowDonorRoundoff = false;
 };
 
 struct RemapScalarResult {
@@ -61,8 +64,18 @@ private:
         bool reversed;
     };
     struct Block {
+        struct Weight {
+            std::size_t donor;
+            double share;
+        };
         std::vector<std::size_t> nodes, pivots;
         std::vector<double> factors;
+        std::vector<std::size_t> rowOffsets;
+        std::vector<Weight> weights;
+        std::size_t sparsePasses = 0;
+
+        bool CertifySparse();
+        bool SolveSparse(std::vector<double>& values, double scale) const;
     };
     struct MixingLedger {
         double before = 0, after = 0, loss = 0;
@@ -81,9 +94,9 @@ private:
     double tolerance_ = 0;
 };
 
-// Cyclic relay blocks use small pivoted dense solves. Oversized or numerically
-// unresolved blocks require a smaller transport interval. Failed builds and
-// applications leave their supplied output unchanged.
+// Cyclic relay blocks use small pivoted dense solves or a certified sparse
+// iteration. Numerically unresolved blocks require a smaller transport
+// interval. Failed builds and applications leave their supplied output unchanged.
 bool BuildConservativeRemap(const ConservativeRemapInput& input, ConservativeRemap& output,
                             std::string& error);
 

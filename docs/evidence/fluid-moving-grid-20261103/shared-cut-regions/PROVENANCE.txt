@@ -1,0 +1,13 @@
+fe1a58111c949ac2eb0a701e3f30f9027cd237ba
+Linux 7.0.0-42-generic x86_64 GNU/Linux
+c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+CMAKE_BUILD_TYPE:STRING=Release
+f822ad80d1fa10544fdd1757b63c2c81b77e9ea6e7643ce7a2d140839e9fd9f6  /tmp/judas-cut-basin/native-controls
+c60927ead8a2e0d798cafcae433951384a4b69a07c16cd12638185b2503fce3d  /tmp/judas-cut-basin/native-controls-exact
+0c2bf62f50d9b8df4bfef99067d2705c18fae9d6e87f4bb9ca06c2b04ec08db0  /tmp/judas-cut-basin/shared-step-elbow
+4cd17eaa38d6feae51afe99a21b1989fcbc36aa08b9cabc16aaee5d3be1d174d  /tmp/judas-cut-basin/shared-step-native-anchor
+a25010515ea21d2326161149445aea7db20cf19f74dbf38f7d1072b1dd78c119  /tmp/judas-cut-basin/threshold-test
+57ca2a127dc8472493e9c5a26bf9c09a067c8157fd9207df8fdaaf9ac8f04554  /tmp/judas-cut-basin/native-controls-exact-PhysicsWorld.o
+03113db806fcd6c560611c1701c30bc59b302db8214dd57ee2914711a7f982d8  /tmp/judas-cut-basin/native-controls-exact-WorldConstraintBatch.o
+1026ec0d917399b36e4128990ea1e4190b851ff30536bff73be35b789fad3aac  /tmp/judas-cut-basin/native-controls-exact-WorldMk2Solver.o
+50408adae6ea62207a631ceb73e58ebce8dee04c758ce9ed7905372931ef0919  /tmp/judas-cut-basin/native-controls-exact-WorldBodies.o

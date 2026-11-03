@@ -1,0 +1,2 @@
+BEGIN half_025 regions=20344 faces=57348 water_m3=9.25 seed_shifted_m3=0 seed_shifted_parcels=0 seed_maximum_hops=0 warmup_requested=0 native_steps_requested=1
+END final_vy=-0.068041115999221802 warmup_steps=0 material_attempts=7 material_commits=1 proposals=2 impulses_published=1 native_accepted=1 native_steps=0 water_drift_m3=0 impulse_roundoff_Ns=2.2298096702400017e-09 reason=cut region momentum phase leaves an ordinary donor before receipt

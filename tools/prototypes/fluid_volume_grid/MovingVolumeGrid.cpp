@@ -138,32 +138,43 @@ double MaxAbs(const std::vector<double>& values) {
     return result;
 }
 
-bool SolvePressure(const std::vector<FaceFlux>& faces, std::vector<double>& rhs,
-                   double tolerance, double cellVolume, std::vector<double>& pressure,
-                   int& iterations, std::string& error) {
-    const std::size_t count = rhs.size();
-    std::vector<std::size_t> parent(count);
-    std::iota(parent.begin(), parent.end(), 0);
-    const auto root = [&](std::size_t cell) {
+struct PressureConnectivity {
+    std::vector<std::size_t> parent;
+    std::vector<double> diagonal;
+
+    template<class Link>
+    PressureConnectivity(std::size_t count, const std::vector<Link>& faces)
+        : parent(count), diagonal(count) {
+        std::iota(parent.begin(), parent.end(), 0);
+        for (const auto& face : faces) {
+            parent[Root(face.left)] = Root(face.right);
+            diagonal[face.left] += face.conductance;
+            diagonal[face.right] += face.conductance;
+        }
+    }
+
+    std::size_t Root(std::size_t cell) {
         while (parent[cell] != cell) {
             parent[cell] = parent[parent[cell]];
             cell = parent[cell];
         }
         return cell;
-    };
-
-    std::vector<double> diagonal(count);
-    for (const auto& f : faces) {
-        parent[root(f.left)] = root(f.right);
-        diagonal[f.left] += f.conductance;
-        diagonal[f.right] += f.conductance;
     }
+};
+
+bool BalancePressureSources(PressureConnectivity& graph, std::vector<double>& rhs, double cellVolume,
+                            std::vector<std::size_t>& size, std::vector<double>& sum,
+                            std::string& error) {
     // A pressure gauge cannot fix an incompatible sealed component. Only
     // remove the representable summation error, independently per component.
-    std::vector<std::size_t> size(count), balanceAt(count, count);
-    std::vector<double> sum(count), absoluteSum(count);
+    const auto count = rhs.size();
+    size.assign(count, 0);
+    sum.assign(count, 0.);
+    std::vector<std::size_t> balanceAt(count, count);
+    std::vector<double> absoluteSum(count);
+    const auto& diagonal = graph.diagonal;
     for (std::size_t cell = 0; cell < count; ++cell) {
-        const auto group = root(cell);
+        const auto group = graph.Root(cell);
         ++size[group];
         sum[group] += rhs[cell];
         absoluteSum[group] += std::abs(rhs[cell]);
@@ -187,7 +198,20 @@ bool SolvePressure(const std::vector<FaceFlux>& faces, std::vector<double>& rhs,
     for (std::size_t group = 0; group < count; ++group)
         if (balanceAt[group] != count)
             rhs[balanceAt[group]] -= sum[group];
+    return true;
+}
 
+template<class Link>
+bool SolvePressure(const std::vector<Link>& faces, std::vector<double>& rhs,
+                   double tolerance, double cellVolume, std::vector<double>& pressure,
+                   int& iterations, std::string& error) {
+    const auto count = rhs.size();
+    PressureConnectivity graph(count, faces);
+    std::vector<std::size_t> size;
+    std::vector<double> sum;
+    if (!BalancePressureSources(graph, rhs, cellVolume, size, sum, error))
+        return false;
+    const auto& diagonal = graph.diagonal;
     std::vector<double> residual = rhs;
     std::vector<double> direction(count), product(count);
     const auto precondition = [&](std::size_t cell) {
@@ -232,9 +256,9 @@ bool SolvePressure(const std::vector<FaceFlux>& faces, std::vector<double>& rhs,
     }
     std::fill(sum.begin(), sum.end(), 0);
     for (std::size_t cell = 0; cell < count; ++cell)
-        sum[root(cell)] += pressure[cell];
+        sum[graph.Root(cell)] += pressure[cell];
     for (std::size_t cell = 0; cell < count; ++cell) {
-        const auto group = root(cell);
+        const auto group = graph.Root(cell);
         pressure[cell] -= sum[group] / double(size[group]);
     }
     return true;
@@ -755,6 +779,21 @@ bool AdvanceVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
 }
 
 } // namespace
+
+bool detail::BalanceVolumePressureSources(const std::vector<VolumePressureLink>& links,
+                                          std::vector<double>& rhs, double cellVolume,
+                                          std::string& error) {
+    PressureConnectivity graph(rhs.size(), links);
+    std::vector<std::size_t> size;
+    std::vector<double> sum;
+    return BalancePressureSources(graph, rhs, cellVolume, size, sum, error);
+}
+
+bool detail::SolveVolumePressure(const std::vector<VolumePressureLink>& links, std::vector<double>& rhs,
+                                 double tolerance, double cellVolume, std::vector<double>& pressure,
+                                 int& iterations, std::string& error) {
+    return SolvePressure(links, rhs, tolerance, cellVolume, pressure, iterations, error);
+}
 
 bool AdvanceMovingVolume(const GridLayout& layout, const MovingGridGeometry& geometry,
                          const MovingVolumeState& state, double dt, const GridVec& gravity,

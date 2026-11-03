@@ -1,0 +1,3 @@
+BEGIN half_025 seed_mode=0 wall_mode=1 regions=18552 faces=51956 water_m3=9.25 seed_shifted_m3=0 seed_shifted_parcels=0 seed_maximum_hops=0 warmup_requested=0 native_steps_requested=1
+WORK fluid_J=-0.29369076726473858 wall_J=0.29369076969116575 residual_J=2.4264271702989504e-09 tolerance_J=1.5873815369559045e-10 pressure_span_Pa=29788.251305940117 mixture_residual_m3=1.0531249571672178e-15
+END final_vy=-0.04087500274181366 warmup_steps=0 material_attempts=1 material_commits=0 proposals=1 impulses_published=0 native_accepted=0 native_steps=0 water_drift_m3=0 impulse_roundoff_Ns=0 reason=cut-region pressure and wall reaction failed the work ledger

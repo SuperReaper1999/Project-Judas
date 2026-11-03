@@ -1,0 +1,9 @@
+BEGIN half_025 seed_mode=0 wall_mode=0 regions=20344 faces=57348 water_m3=9.25 seed_shifted_m3=0 seed_shifted_parcels=0 seed_maximum_hops=0 warmup_requested=240 native_steps_requested=1
+TIMESTEP reciprocal=60 dt=0.01666666753590107 accepted=0 ms=127.227591 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=120 dt=0.0083333337679505348 accepted=0 ms=77.327181999999993 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=240 dt=0.0041666668839752674 accepted=0 ms=74.291487000000004 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=480 dt=0.0020833334419876337 accepted=0 ms=74.538122999999999 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=960 dt=0.0010416667209938169 accepted=0 ms=67.519356000000002 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=1920 dt=0.00052083336049690843 accepted=0 ms=66.319312999999994 reason=geometric phase bounds cannot satisfy the water and air inventory ledger
+TIMESTEP reciprocal=3840 dt=0.00026041668024845421 accepted=1 ms=76.678388999999996 endpoint_m3=9.25 max_speed_m_s=28.759360373964011 max_pressure_residual_m3=4.9604056780850256e-19
+TIMESTEP isolated=1 material_commits=0

@@ -9,7 +9,7 @@ namespace judas::volume_grid {
 namespace {
 
 constexpr double kRoundoff = 128 * std::numeric_limits<double>::epsilon();
-constexpr std::size_t kMaximumCyclicRelaySize = 64;
+constexpr std::size_t kDenseRelayLimit = 64, kSparsePassLimit = 128;
 
 bool FiniteNonnegative(double value) {
     return std::isfinite(value) && value >= 0;
@@ -61,6 +61,53 @@ void Solve(const std::vector<double>& factors, const std::vector<std::size_t>& p
 
 } // namespace
 
+bool ConservativeRemap::Block::CertifySparse() {
+    // With nonnegative W, W^k * 1 bounds the contribution of any
+    // unresolved concentration. Round outward to certify the bound.
+    constexpr double infinity = std::numeric_limits<double>::infinity();
+    std::vector<double> survival(nodes.size(), 1.), next(nodes.size());
+    for (std::size_t pass = 1; pass <= kSparsePassLimit; ++pass) {
+        for (std::size_t row = 0; row < nodes.size(); ++row) {
+            double sum = 0.;
+            for (auto entry = rowOffsets[row]; entry < rowOffsets[row + 1]; ++entry) {
+                const auto& weight = weights[entry];
+                const double term = std::nextafter(weight.share * survival[weight.donor], infinity);
+                sum = std::nextafter(sum + term, infinity);
+            }
+            next[row] = sum;
+        }
+        if (*std::max_element(next.begin(), next.end()) <= kRoundoff / 16.) {
+            sparsePasses = pass;
+            return true;
+        }
+        survival.swap(next);
+    }
+    return false;
+}
+
+bool ConservativeRemap::Block::SolveSparse(std::vector<double>& values, double scale) const {
+    const auto rhs = values;
+    std::vector<double> next(nodes.size());
+    const auto step = [&](std::size_t row) {
+        double sum = rhs[row];
+        for (auto entry = rowOffsets[row]; entry < rowOffsets[row + 1]; ++entry) {
+            const auto& weight = weights[entry];
+            sum += weight.share * values[weight.donor];
+        }
+        return sum;
+    };
+    for (std::size_t pass = 0; pass < sparsePasses; ++pass) {
+        for (std::size_t row = 0; row < nodes.size(); ++row)
+            next[row] = step(row);
+        values.swap(next);
+    }
+    for (std::size_t row = 0; row < nodes.size(); ++row) {
+        if (!std::isfinite(values[row]) || !(std::abs(values[row] - step(row)) <= kRoundoff * scale))
+            return false;
+    }
+    return true;
+}
+
 bool BuildConservativeRemap(const ConservativeRemapInput& input, ConservativeRemap& output,
                             std::string& error) {
     const auto count = input.start.size();
@@ -104,9 +151,12 @@ bool BuildConservativeRemap(const ConservativeRemapInput& input, ConservativeRem
             std::abs(received - spent) > plan.tolerance_ + kRoundoff * std::max(received, spent))
             return Fail(error, "conservative remap does not balance local carrier");
         if (plan.outgoing_[node] > start) {
-            if (!input.relayAllowed[node])
+            if (input.relayAllowed[node]) {
+                plan.relay_[node] = true;
+            } else if (!input.allowDonorRoundoff || start == 0 ||
+                       plan.outgoing_[node] - start > kRoundoff * plan.outgoing_[node]) {
                 return Fail(error, "conservative remap spends a non-relay donor before receipt");
-            plan.relay_[node] = true;
+            }
         }
     }
 
@@ -156,27 +206,40 @@ bool BuildConservativeRemap(const ConservativeRemapInput& input, ConservativeRem
         const auto size = block.nodes.size();
         if (size == 1)
             continue;
-        if (size > kMaximumCyclicRelaySize)
-            return Fail(error, "conservative remap cyclic relay block exceeds supported size");
+        const bool sparse = size > kDenseRelayLimit;
         bool hasSource = false;
-        block.factors.resize(size * size);
+        if (sparse)
+            block.rowOffsets.resize(size + 1);
+        else
+            block.factors.resize(size * size);
         for (std::size_t row = 0; row < size; ++row) {
             const auto node = block.nodes[row];
             const double received = plan.start_[node] + plan.incoming_[node];
-            block.factors[row * size + row] = 1;
+            if (sparse)
+                block.rowOffsets[row] = block.weights.size();
+            else
+                block.factors[row * size + row] = 1;
             hasSource = hasSource || plan.start_[node] > 0;
             for (const auto edge : plan.arrivals_[node]) {
                 const auto& link = plan.links_[edge];
-                if (component[link.donor] == id)
-                    block.factors[row * size + local[link.donor]] -= link.mass / received;
-                else
+                if (component[link.donor] != id) {
                     hasSource = true;
+                } else if (sparse) {
+                    block.weights.push_back({local[link.donor], link.mass / received});
+                } else {
+                    block.factors[row * size + local[link.donor]] -= link.mass / received;
+                }
             }
         }
         if (!hasSource)
             return Fail(error, "conservative remap cycle has no initial material source");
-        if (!Factor(block.factors, block.pivots, size))
+        if (sparse) {
+            block.rowOffsets.back() = block.weights.size();
+            if (!block.CertifySparse())
+                return Fail(error, "conservative remap cyclic relay has unresolved sparse mixing weights");
+        } else if (!Factor(block.factors, block.pivots, size)) {
             return Fail(error, "conservative remap cyclic relay has unresolved mixing weights");
+        }
     }
 
     output = std::move(plan);
@@ -232,6 +295,8 @@ bool ConservativeRemap::Apply(const std::vector<double>& start, RemapScalarResul
         }
         if (!block.factors.empty())
             Solve(block.factors, block.pivots, values);
+        if (block.sparsePasses && !block.SolveSparse(values, concentrationScale))
+            return Fail(error, "conservative remap sparse relay residual did not close");
         for (std::size_t row = 0; row < block.nodes.size(); ++row) {
             if (!bounded(values[row]))
                 return Fail(error, "conservative remap relay produced an unbounded concentration");
@@ -252,7 +317,7 @@ bool ConservativeRemap::Apply(const std::vector<double>& start, RemapScalarResul
     MixingLedger energy;
     double extensiveScale = 0;
     for (std::size_t node = 0; node < count; ++node) {
-        const double retained = relay_[node] ? 0 : start_[node] - outgoing_[node];
+        const double retained = relay_[node] ? 0 : std::max(0., start_[node] - outgoing_[node]);
         double inbound = 0;
         for (const auto edge : arrivals_[node]) {
             const auto& link = links_[edge];

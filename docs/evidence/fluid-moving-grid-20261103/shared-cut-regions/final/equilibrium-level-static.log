@@ -1,0 +1,2 @@
+BEGIN half_025 seed_mode=2 wall_mode=0 regions=20344 faces=57348 water_m3=15.829885793519965 seed_shifted_m3=0 seed_shifted_parcels=0 seed_maximum_hops=0 warmup_requested=1 native_steps_requested=0
+END final_vy=0 warmup_steps=1 material_attempts=1 material_commits=1 proposals=0 impulses_published=0 native_accepted=0 native_steps=0 water_drift_m3=0 impulse_roundoff_Ns=0 reason=

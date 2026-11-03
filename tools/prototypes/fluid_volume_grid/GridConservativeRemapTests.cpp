@@ -216,6 +216,41 @@ void LongExposure(Checks& checks) {
         "long acyclic exposure uses iterative graph traversal with exact transport");
 }
 
+void SparseRelayCycle(Checks& checks) {
+    constexpr std::size_t count = 96;
+    ConservativeRemapInput input;
+    input.start.resize(count, 1.);
+    input.end = input.start;
+    input.relayAllowed.resize(count, true);
+    std::vector<double> initial(count), expected(count);
+    for (std::size_t i = 0; i < count; ++i) {
+        input.transfers.push_back({i, (i + 1) % count, 2.});
+        initial[i] = i % 2 ? 4. : 0.;
+        expected[i] = i % 2 ? 2.4 : 1.6;
+    }
+    ConservativeRemap plan;
+    RemapAxisMomentumResult field;
+    std::string error;
+    checks.Expect(BuildConservativeRemap(input, plan, error) &&
+        plan.RemapAxisMomentum(initial, field, error) && Close(field.field.end, expected) &&
+        Close(field.mixingLoss, 184.32) && Close(field.kineticResidual, 0.) &&
+        Close(field.field.conservationResidual, 0.),
+        "a large strongly sourced sparse cycle matches the analytic velocities and mixing work");
+
+    for (auto& transfer : input.transfers)
+        transfer.amount = 1e12;
+    checks.Expect(!BuildConservativeRemap(input, plan, error) &&
+        error.find("unresolved sparse mixing weights") != std::string::npos,
+        "a large weakly sourced cycle requires a better-resolved interval");
+
+    input.start.assign(count, 0.);
+    input.end = input.start;
+    checks.Expect(!BuildConservativeRemap(input, plan, error) &&
+        error.find("no initial material source") != std::string::npos &&
+        plan.RemapAxisMomentum(initial, field, error) && Close(field.field.end, expected),
+        "a large unrooted cycle rejects and preserves the previously published plan");
+}
+
 void SeededGraphs(Checks& checks) {
     constexpr std::size_t count = 24;
     std::mt19937 random(275112);
@@ -266,6 +301,7 @@ int main() {
     AxisMomentum(checks);
     RejectInvalid(checks);
     LongExposure(checks);
+    SparseRelayCycle(checks);
     SeededGraphs(checks);
     std::cout << checks.count - checks.failures << '/' << checks.count << " checks passed\n";
     return checks.failures ? 1 : 0;

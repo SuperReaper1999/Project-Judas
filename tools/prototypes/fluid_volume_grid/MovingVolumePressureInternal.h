@@ -4,6 +4,20 @@
 
 namespace judas::volume_grid::detail {
 
+struct VolumePressureLink {
+    std::size_t left, right;
+    double conductance;
+};
+
+bool BalanceVolumePressureSources(const std::vector<VolumePressureLink>& links, std::vector<double>& rhs,
+                                  double cellVolume, std::string& error);
+
+// Solve the same sealed pressure system on a nonuniform control-volume graph.
+// Callers validate geometry and independently check the published edge fluxes.
+bool SolveVolumePressure(const std::vector<VolumePressureLink>& links, std::vector<double>& rhs,
+                         double tolerance, double cellVolume, std::vector<double>& pressure,
+                         int& iterations, std::string& error);
+
 // Uses the same mass as the dual momentum transport. The caller owns
 // hydrostatic gravity splitting because the geometry changes this metric.
 bool AdvanceVolumeWithDualMass(const GridLayout& layout, const MovingGridGeometry& geometry,

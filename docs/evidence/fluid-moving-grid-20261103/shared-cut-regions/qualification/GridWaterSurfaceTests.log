@@ -1,0 +1,29 @@
+PASS authoritative flat volume extracts 0
+PASS sealed completely dry or full grid has no free surface 0
+PASS authoritative flat volume extracts 0
+PASS sealed completely dry or full grid has no free surface 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS grid-aligned waterline emits one interface in each column 4
+PASS chart rotation retains positive winding and unique interior triangles 0
+PASS authoritative flat volume extracts 0
+PASS solid crossing or touching removes its exact top rectangle 3.25
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS authoritative flat volume extracts 0
+PASS solid crossing or touching removes its exact top rectangle 3.25
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS authoritative flat volume extracts 0
+PASS 4 mm gap above the surface leaves its full area 4
+PASS clipped water triangles never enter the box or duplicate a face 0
+PASS height step with solid crossing extracts 0
+PASS vertical step faces point into low water side and clip solid exactly 0.203125
+PASS vertical clipping preserves unique finite positive-area faces 0
+PASS isolated interior full cell extracts 0
+PASS isolated water has six oriented sides and a downward free face 1.5
+PASS nonfinite phase plane rejects without replacing mesh 0
+SUMMARY grid water surface 28 checks 0 failures
