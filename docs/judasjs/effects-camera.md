@@ -13,23 +13,36 @@ controls, bounded streams, motion, obstruction, reverb, sound groups and lifetim
 `burst(count)` queues an authored visual emitter burst; boolean success, false
 when no emitter. Count is converted to uint32 and must be <=65536; use a nonnegative
 integer. `setParticles({enabled, rate, size, endSize, velocity, velocityVariation,
-spread, acceleration})` applies a partial runtime patch. Invalid and unknown
-fields throw before mutation. It returns false without an emitter. Velocity,
-variation and spread affect new particles. Acceleration and size affect live
-particles too. Capacity, lifetime, texture and colours remain authored.
+spread, acceleration, loop, localSpace, useGravity, lifetime, color, endColor,
+burst, maxParticles, seed, textureAsset})` applies a partial runtime patch. Invalid
+and unknown fields throw before mutation. It returns false without an emitter.
+Use a registered texture asset ID or `null` to clear the texture. Colours are RGBA.
+Velocity, variation and spread affect new particles. Acceleration, gravity, size,
+colour and texture affect live particles too. Reducing capacity trims the pool,
+and reducing lifetime expires particles that already exceed it. Changing
+`localSpace` clears live particles. A new seed affects future emission. Changing
+`burst` does not replay a startup burst. Call `entity.burst(count)` for immediate emission.
+Modern save slots retain settings. Live particles are transient.
 Pose follows entity transforms. Offscreen emitters continue ageing.
 
 ## Cameras
 
 `camera` on Entity returns the runtime render-target camera snapshot
-`{enabled,width,height,near,far}`
+`{enabled,width,height,near,far,targetWidth,targetHeight,targetError,...}`
 or null. `setCameraEnabled(bool)` returns success.
 `setCameraPresentation({fov:45, updateEveryFrames:2, renderLayers:['Default']})`
 patches an existing secondary camera for the current played world. FOV is vertical
 degrees, cadence is a positive frame count, and render layers are registered names.
 An empty array draws no entity layers and null restores the all-layer mask.
 Omitted fields retain their values. Invalid fields reject the whole patch.
-Render-target size remains authored.
+`setCameraTargetSize(width, height)` requests dimensions in integer pixels from
+1 to 4096. It returns false without a camera and throws for invalid dimensions.
+`width` and `height` report the requested size. `targetWidth` and `targetHeight`
+report the allocated size (zero before allocation). The renderer applies the
+request on the camera's render cadence. If allocation fails, the previous
+target continues rendering and `targetError` reports the failure. Read the
+camera texture again after a successful resize because its handle can change.
+Modern save slots retain requested dimensions. Render targets are recreated at runtime.
 
 `world.setView(pose,fov=70)` publishes a separate runtime main view; partial transform
 omissions default to identity (not the previous view). FOV is degrees, strictly

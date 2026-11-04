@@ -236,6 +236,7 @@ export class Entity {
  burst(count){return call('burst',this.id,count)}
  setParticles(settings){return call('particles',this.id,settings)}
  setCameraEnabled(enabled){return call('camera',this.id,enabled)}
+ setCameraTargetSize(width,height){return call('cameraTargetSize',this.id,width,height)}
  setCameraProjection(range){return call('cameraProjection',this.id,range)}
  setCameraPresentation(settings){return call('cameraPresentation',this.id,settings)}
 }
@@ -2088,6 +2089,9 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             return JS_TRUE;}
         return JS_FALSE;}
     if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"lens",CameraLensValue(c,camera.settings.lens));JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+        JS_SetPropertyStr(c,o,"targetWidth",JS_NewInt32(c,camera.targetSize.x));
+        JS_SetPropertyStr(c,o,"targetHeight",JS_NewInt32(c,camera.targetSize.y));
+        JS_SetPropertyStr(c,o,"targetError",camera.error.empty()?JS_NULL:JS_NewString(c,camera.error.c_str()));
         if(camera.hasFrustum){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"left",JS_NewFloat64(c,camera.frustum.x));JS_SetPropertyStr(c,f,"right",JS_NewFloat64(c,camera.frustum.y));JS_SetPropertyStr(c,f,"bottom",JS_NewFloat64(c,camera.frustum.z));JS_SetPropertyStr(c,f,"top",JS_NewFloat64(c,camera.frustum.w));JS_SetPropertyStr(c,o,"frustum",f);}else JS_SetPropertyStr(c,o,"frustum",JS_NULL);
         if(camera.hasClipPlane){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"normal",Vec(c,camera.clipNormal));JS_SetPropertyStr(c,f,"point",Vec(c,camera.clipPoint));JS_SetPropertyStr(c,o,"clipPlane",f);}else JS_SetPropertyStr(c,o,"clipPlane",JS_NULL);
         return o;}return JS_NULL;}
@@ -2163,16 +2167,20 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="burst"){uint32_t n=0;JS_ToUint32(c,&n,arg(2));if(n>65536)return JS_ThrowTypeError(c,"burst too large");return JS_NewBool(c,world.EmitParticleBurst(id,n));}
     if(op=="particles"){
         auto options=arg(2);
-        if(!KnownOptions(c,options,{"enabled","rate","size","endSize","velocity","velocityVariation","spread","acceleration"}))
+        if(!KnownOptions(c,options,{"enabled","loop","localSpace","useGravity","rate","lifetime","size","endSize","velocity","velocityVariation","spread","acceleration","color","endColor","burst","maxParticles","seed","textureAsset"}))
             return JS_ThrowTypeError(c,"unknown particle setting");
         for(auto& emitter:world.VisualEmitters())if(emitter.id==id){
             auto settings=emitter.pool.settings;
-            auto enabled=JS_GetPropertyStr(c,options,"enabled");
-            const bool hasEnabled=!JS_IsUndefined(enabled);
-            if(hasEnabled)settings.enabled=JS_ToBool(c,enabled);
-            JS_FreeValue(c,enabled);
+            for(auto [key,value]:{std::pair<const char*,bool*>{"enabled",&settings.enabled},
+                                 {"loop",&settings.loop},{"localSpace",&settings.localSpace},{"useGravity",&settings.useGravity}}){
+                auto property=JS_GetPropertyStr(c,options,key);
+                const bool valid=JS_IsUndefined(property)||JS_IsBool(property)||std::string_view(key)=="enabled";
+                if(!JS_IsUndefined(property)&&valid)*value=JS_ToBool(c,property);
+                JS_FreeValue(c,property);
+                if(!valid)return JS_ThrowTypeError(c,"boolean particle setting required");
+            }
             for(auto [key,value]:{std::pair<const char*,float*>{"rate",&settings.rate},
-                                 {"size",&settings.size},{"endSize",&settings.endSize}}){
+                                 {"size",&settings.size},{"endSize",&settings.endSize},{"lifetime",&settings.lifetime}}){
                 auto property=JS_GetPropertyStr(c,options,key);
                 const bool present=!JS_IsUndefined(property);
                 JS_FreeValue(c,property);
@@ -2186,8 +2194,49 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
                 JS_FreeValue(c,property);
                 if(!valid)return JS_ThrowTypeError(c,"finite particle vector required");
             }
-            if(!ValidParticleSettings(settings))return JS_ThrowTypeError(c,"invalid particles");
-            emitter.pool.settings=settings;
+            for(auto [key,value]:{std::pair<const char*,glm::vec4*>{"color",&settings.color},
+                                 {"endColor",&settings.endColor}}){
+                auto property=JS_GetPropertyStr(c,options,key);
+                const bool valid=JS_IsUndefined(property)||(Number(c,property,"r",value->r)&&
+                    Number(c,property,"g",value->g)&&Number(c,property,"b",value->b)&&Number(c,property,"a",value->a));
+                JS_FreeValue(c,property);
+                if(!valid)return JS_ThrowTypeError(c,"finite particle RGBA required");
+            }
+            auto integer=[&](const char* key,double maximum,auto& out){
+                auto property=JS_GetPropertyStr(c,options,key);
+                double number=0;
+                const bool present=!JS_IsUndefined(property);
+                const bool valid=!present||(JS_IsNumber(property)&&!JS_ToFloat64(c,&number,property)&&
+                    std::isfinite(number)&&number>=0&&number<=maximum&&number==std::floor(number));
+                JS_FreeValue(c,property);
+                if(valid&&present)out=static_cast<std::decay_t<decltype(out)>>(number);
+                return valid;
+            };
+            if(!integer("burst",100000,settings.burst)||!integer("maxParticles",100000,settings.maxParticles)||
+               !integer("seed",UINT32_MAX,settings.seed))
+                return JS_ThrowRangeError(c,"invalid particle burst, capacity or seed");
+            auto texture=JS_GetPropertyStr(c,options,"textureAsset");
+            const bool validTexture=JS_IsUndefined(texture)||JS_IsNull(texture)||JS_IsString(texture);
+            if(JS_IsNull(texture))settings.textureAsset.clear();
+            else if(JS_IsString(texture))settings.textureAsset=String(c,texture);
+            JS_FreeValue(c,texture);
+            if(!validTexture||!world.SetParticleSettings(id,settings))
+                return JS_ThrowTypeError(c,"invalid particle settings or texture asset");
+            return JS_TRUE;
+        }
+        return JS_FALSE;
+    }
+    if(op=="cameraTargetSize"){
+        auto dimension=[&](JSValueConst value,double& out){
+            return JS_IsNumber(value)&&!JS_ToFloat64(c,&out,value)&&std::isfinite(out)&&
+                out>=1&&out<=4096&&out==std::floor(out);
+        };
+        double width=0,height=0;
+        if(!dimension(arg(2),width)||!dimension(arg(3),height))
+            return JS_ThrowRangeError(c,"camera target dimensions must be integers from 1 to 4096");
+        for(auto& camera:world.PresentationCameras())if(camera.id==id){
+            camera.settings.width=int(width);
+            camera.settings.height=int(height);
             return JS_TRUE;
         }
         return JS_FALSE;

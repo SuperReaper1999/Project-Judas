@@ -141,6 +141,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setCameraEnabled` | `camera` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setCameraPresentation` | `cameraPresentation` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setCameraProjection` | `cameraProjection` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `Entity.setCameraTargetSize` | `cameraTargetSize` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setCollisionFilter` | `collisionFilter` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setKinematicVelocity` | `kinematicVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |

@@ -73,6 +73,44 @@ int main(int argc,char** argv){
  visual.Update(.1f,{100,0,-5},q,{1,1,1},gravity);Check(visual.Particles()[0].age>age,"offscreen particles age coherently");
  r.SetCamera(rear,projection);const auto& second=visual.Presentation({0,0,0},q,{1,1,1});r.DrawParticles(second,visual.Bounds());Check(r.Stats().particleEmittersVisible==1&&r.Stats().particlesSubmitted==4,"same emitter visible from different camera");
  auto target=r.CreateRenderTarget(128,128,error);r.SetCamera(glm::mat4(1),projection);r.BeginRenderTarget(target);r.SetCamera(rear,projection);r.DrawParticles(second,visual.Bounds());r.EndRenderTarget();Check(!r.IsVisible(visual.Bounds()),"target end restores camera frustum");r.DestroyRenderTarget(target);
+ {
+ const auto root=std::filesystem::absolute(out/"particle-texture-swap");
+ std::filesystem::create_directories(root/"Assets");
+ const auto firstPath=root/"Assets/red.png",secondPath=root/"Assets/green.png";
+ Check(WriteRgbPng(firstPath.string(),1,1,{255,0,0})&&
+       WriteRgbPng(secondPath.string(),1,1,{0,255,0}),"write known-colour particle textures");
+ AssetDatabase assets;
+ assets.Scan(root.string(),(root/"Assets").string());
+ AssetRecord redTexture,greenTexture;
+ Check(assets.Track(firstPath.string(),redTexture,error)&&assets.Track(secondPath.string(),greenTexture,error),
+       "register both runtime particle textures");
+ ResourceManager resources(&r,&assets);
+ auto texturedScene=scene;
+ auto& settings=*texturedScene.Find(id)->particleEmitter;
+ settings.textureAsset=redTexture.id;
+ settings.color=settings.endColor=glm::vec4(1);
+ settings.velocity=settings.velocityVariation=glm::vec3(0);
+ RuntimeWorld texturedWorld;
+ Check(texturedWorld.Build(texturedScene,&resources,error),"build textured particle world");
+ resources.WaitForAll();
+ texturedWorld.UpdateVisualParticles(.1f);
+ auto capture=[&]{
+    RenderWorldFrame(r,256,256,texturedWorld,nullptr,glm::mat4(1),projection,{0,0,0},1);
+    std::vector<unsigned char> pixels;
+    r.CaptureFrame(256,256,pixels);
+    return pixels;
+ };
+ const auto redPixels=capture();
+ const auto count=texturedWorld.VisualEmitters().front().pool.Particles().size();
+ auto next=settings;
+ next.textureAsset=greenTexture.id;
+ Check(texturedWorld.SetParticleSettings(id,next),"runtime texture swap uses registered texture");
+ resources.WaitForAll();
+ const auto greenPixels=capture();
+ Check(redPixels!=greenPixels&&texturedWorld.VisualEmitters().front().pool.Particles().size()==count,
+       "new texture changes actual pixels without resetting the live particles");
+ texturedWorld.Destroy();
+ }
  // Measured normal colour submission path; no physics or assets substituted.
  for(bool enabled:{false,true})for(bool facing:{true,false}){
   r.SetCullingEnabled(enabled);r.SetCamera(facing?glm::mat4(1):glm::rotate(glm::mat4(1),glm::pi<float>(),glm::vec3(0,1,0)),projection);

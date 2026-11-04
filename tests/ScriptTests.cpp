@@ -1,3 +1,4 @@
+#include "WorldPersistence.h"
 #include "ScriptSystem.h"
 #include "BuildIdentity.h"
 #include "RuntimeWorld.h"
@@ -89,7 +90,11 @@ export default class {
     catch { this.state.invalidFilter=true; }
     e.applyForceAtPoint({x:8,y:0,z:0},{x:2,y:1,z:0});
     this.state.camera=e.setCameraPresentation({fov:42,updateEveryFrames:3,renderLayers:[]});
-    this.state.particles=e.setParticles({rate:0,size:0.4,velocity:{x:2,y:0,z:0}});
+    this.state.particles=e.setParticles({rate:0,size:0.4,velocity:{x:2,y:0,z:0},
+      loop:false,localSpace:true,useGravity:true,lifetime:0.5,burst:2,maxParticles:2,seed:99,
+      color:{r:1,g:0,b:0,a:1},endColor:{r:0,g:1,b:0,a:0}});
+    try {e.setParticles({rate:33,textureAsset:'missing-texture'});}
+    catch {this.state.invalidTexture=true;}
     try { e.setCameraPresentation({fov:70,renderLayers:['missing-layer']}); }
     catch { this.state.invalidCamera=true; }
     try { e.setParticles({rate:33,spread:{x:-1,y:0,z:0}}); }
@@ -109,6 +114,7 @@ export default class {
     controlled.scripts.push_back({1,controls.id,true,"{}"});
     RuntimeWorld controlsWorld;
     Check(controlsWorld.Build(controlsScene,&resources,error),"runtime controls fixture builds");
+    Check(controlsWorld.EmitParticleBurst(controlled.id,4),"seed particles in the old coordinate space");
     controlsWorld.FixedScripts(nullptr,1.f/60);
     const auto observations=controlsWorld.Scripts()->Capture();
     const auto observed=observations.empty()?std::string{}:observations.front().json;
@@ -117,7 +123,8 @@ export default class {
     Check(observed.find("\"invalidWater\":true")!=std::string::npos&&
           observed.find("\"invalidFilter\":true")!=std::string::npos&&
           observed.find("\"invalidCamera\":true")!=std::string::npos&&
-          observed.find("\"invalidParticles\":true")!=std::string::npos,
+          observed.find("\"invalidParticles\":true")!=std::string::npos&&
+          observed.find("\"invalidTexture\":true")!=std::string::npos,
           "invalid control patches throw through the public API");
     const auto waters=controlsWorld.BasicWaters();
     const auto swim=controlsWorld.SampleWater({2,-1,0},{0,1,0},0.5f,0.2f);
@@ -132,6 +139,17 @@ export default class {
     Check(emitters.size()==1&&emitters.front().pool.settings.size==0.4f&&
           emitters.front().pool.settings.rate==0&&emitters.front().pool.settings.velocity.x==2,
           "particle patch reaches the live emitter and rejects negative spread atomically");
+    const auto& pool=emitters.front().pool;
+    Check(pool.Particles().empty()&&pool.settings.localSpace&&pool.settings.useGravity&&
+          !pool.settings.loop&&pool.settings.maxParticles==2&&pool.settings.seed==99,
+          "coordinate-space change clears old particles and applies simulation options");
+    controlsWorld.UpdateVisualParticles(.25f);
+    auto& livePool=controlsWorld.VisualEmitters().front().pool;
+    const auto& billboards=livePool.Presentation({0,0,0},{1,0,0,0},{1,1,1});
+    Check(billboards.size()==2&&billboards[0].color==glm::vec4(1,0,0,1),
+          "edited startup burst, capacity and colour reach live billboards");
+    controlsWorld.UpdateVisualParticles(.6f);
+    Check(pool.Particles().empty(),"edited lifetime expires particles without restarting a non-looping emitter");
     auto controlledBody=controlsWorld.RuntimeBody(controlled.id);
     unsigned collisionLayer=64;
     CategoryMask collisionMask=kAllCategories;
@@ -142,6 +160,19 @@ export default class {
     Check(controlsWorld.Physics().GetLinearVelocity(controlledBody).x>0&&
           controlsWorld.Physics().GetAngularVelocity(controlledBody).z<0,
           "off-centre scripted force drives both translation and rotation");
+    std::map<std::string,SaveChunk> controlsSave;
+    Scene savedControlsScene;
+    RuntimeWorld reloadedControls;
+    const bool controlsRestored=WorldPersistence::Capture(controlsWorld,controlsSave,error)&&
+        WorldPersistence::SceneFrom(controlsSave,savedControlsScene,error)&&
+        reloadedControls.Build(savedControlsScene,&resources,error,nullptr,nullptr,true)&&
+        WorldPersistence::Prepare(reloadedControls,error)&&
+        WorldPersistence::Restore(reloadedControls,controlsSave,error);
+    if(!controlsRestored)std::fprintf(stderr,"controls save: %s\n",error.c_str());
+    Check(controlsRestored&&reloadedControls.VisualEmitters().size()==1&&
+          ParticleSettingsEqual(reloadedControls.VisualEmitters().front().pool.settings,pool.settings)&&
+          reloadedControls.VisualEmitters().front().pool.Particles().empty(),
+          "modern save participants restore edited emitter settings with a transient particle pool");
     controlsWorld.Destroy();
     for(int count:{0,10,100}){Scene load;for(int i=0;i<count;++i){auto& o=load.CreateObject("light script");o.scripts.push_back({1,script.id,true,"{}"});}RuntimeWorld perf;perf.Build(load,&resources,error);perf.UpdateScripts(&input,.016f);
         auto start=std::chrono::steady_clock::now();for(int i=0;i<200;++i){perf.UpdateScripts(&input,.016f);perf.FixedScripts(&input,.016f);}

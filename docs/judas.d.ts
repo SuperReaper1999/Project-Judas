@@ -193,7 +193,7 @@ declare module "judas" {
   export interface CameraClipPlane {normal:Vec3;point:Vec3}
   /** Render-target camera projection: near/far plus optional frustum/clipPlane (omitted keeps, null clears). */
   export interface CameraProjection extends CameraRange {frustum?:CameraFrustum|null;clipPlane?:CameraClipPlane|null}
-  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
+  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; targetWidth:number; targetHeight:number; targetError:string|null; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -210,7 +210,10 @@ declare module "judas" {
   export interface AudioDiagnostics {voices:number;streams:number;bufferedBytes:number;streamBytes:number;streamHighWater:number;pendingRetirements:number;reverbProcessors:number;underruns:number;decodedFrames:number;occlusionQueries:number;maximumDetachMilliseconds:number}
   export const audio:{group(name:string):AudioGroup|null;setGroup(name:string,settings:Partial<AudioGroup>,fadeSeconds?:number):boolean|null;readonly diagnostics:AudioDiagnostics|null};
   export interface ParticleSettingsPatch {
-    enabled?:boolean; rate?:number; size?:number; endSize?:number;
+    enabled?:boolean; loop?:boolean; localSpace?:boolean; useGravity?:boolean;
+    rate?:number; lifetime?:number; size?:number; endSize?:number;
+    color?:{r:number;g:number;b:number;a:number}; endColor?:{r:number;g:number;b:number;a:number};
+    burst?:number; maxParticles?:number; seed?:number; textureAsset?:AssetId|null;
     velocity?:Vec3; velocityVariation?:Vec3; spread?:Vec3; acceleration?:Vec3;
   }
   export interface CastHit {
@@ -442,6 +445,7 @@ declare module "judas" {
     burst(count: number): boolean;
     setParticles(settings: ParticleSettingsPatch): boolean;
     setCameraEnabled(enabled: boolean): boolean;
+    setCameraTargetSize(width:number,height:number):boolean;
     setCameraProjection(range:CameraProjection):boolean;
     /** Secondary-camera settings. Null renderLayers restores all layers. */
     setCameraPresentation(settings:{fov?:number;updateEveryFrames?:number;renderLayers?:string[]|null}):boolean;

@@ -622,10 +622,6 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         if(o.particleEmitter){
             ParticleEmitter e;e.id=o.id;e.transform=o.transform;e.pool=VisualParticlePool(*o.particleEmitter);
             m_particleEmitters.push_back(std::move(e));
-            if(m_assets&&!o.particleEmitter->textureAsset.empty()){
-                m_assets->AddRef(o.particleEmitter->textureAsset);m_referencedAssets.push_back(o.particleEmitter->textureAsset);
-                m_assets->RequestTexture(o.particleEmitter->textureAsset,JobPriority::High);
-            }
         }
         if(o.audioZone){m_audioZones.push_back({o.id,o.transform,*o.audioZone});if(m_assets&&!o.audioZone->asset.empty()){m_assets->AddRef(o.audioZone->asset);m_referencedAssets.push_back(o.audioZone->asset);std::string error;m_assets->GetAudioEnvironment(o.audioZone->asset,error);}}
         if(o.audioEmitter){
@@ -1667,11 +1663,27 @@ bool ValidRenderSlot(ResourceManager* resources,const MaterialSlot& value){
 }
 void RuntimeWorld::ReleaseRenderResources(EntityId id){if(auto it=m_renderAssetDemand.find(id);it!=m_renderAssetDemand.end()){if(m_assets)for(const auto& asset:it->second)m_assets->ReleaseRef(asset);
  m_renderAssetDemand.erase(it);}}
+bool RuntimeWorld::SetParticleSettings(EntityId id,const ParticleEmitterSettings& settings){
+    const auto* definition=RuntimeDefinition(id);
+    if(!definition||!definition->particleEmitter||!ValidParticleSettings(settings)||
+       !ValidRenderAsset(m_assets,settings.textureAsset,AssetType::Texture))return false;
+    for(auto& emitter:m_particleEmitters)if(emitter.id==id){
+        if(ParticleSettingsEqual(emitter.pool.settings,settings))return true;
+        const bool textureChanged=emitter.pool.settings.textureAsset!=settings.textureAsset;
+        emitter.pool.SetSettings(settings);
+        m_scriptDefinitions.at(id).particleEmitter=settings;
+        if(auto* record=FindEntity(id))record->definition.particleEmitter=settings;
+        if(textureChanged)ReconcileRenderResources(id);
+        return true;
+    }
+    return false;
+}
 void RuntimeWorld::ReconcileRenderResources(EntityId id){
  std::set<AssetId> demand;
  auto it=m_scriptDefinitions.find(id);
  auto* e=FindEntity(id);
  const auto* d=it==m_scriptDefinitions.end()||(e&&e->lifecycle==EntityLifecycle::Destroyed)?nullptr:&it->second;
+ if(d&&d->particleEmitter&&!d->particleEmitter->textureAsset.empty())demand.insert(d->particleEmitter->textureAsset);
  if(d&&d->render){
  if(d->render->spritePlayback){
    demand.insert(d->render->spritePlayback->sheet);std::string error;

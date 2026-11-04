@@ -11,6 +11,7 @@
 #include "EngineHost.h"
 #include <set>
 #include "RuntimeWorld.h"
+#include "ScriptSystem.h"
 #include "SceneFingerprint.h"
 #include "SceneSerialization.h"
 #include "WorldPresentation.h"
@@ -128,6 +129,56 @@ int main(int argc,char**argv){
  world.PresentationCameras()[0].settings.width=64;Frame(renderer,world);
  Check(renderer.RenderTargetSize(world.PresentationCameras()[0].target)==glm::ivec2(64,96),"runtime target resolution recreation is integrated");
  world.Destroy();Check(!renderer.ReadTextureForDiagnostics(westHandle,pixels)&&renderer.RenderTargetDiagnostics().liveTargets==0,"world teardown releases borrowed textures and all targets");
+ }
+ {
+ const auto assetsPath=std::filesystem::absolute(out/"resize-assets");
+ std::filesystem::create_directories(assetsPath);
+ const auto scriptPath=assetsPath/"resize.js";
+ std::ofstream(scriptPath)<<R"JS(export default class {
+   constructor({entity}) {this.entity=entity;this.state={};}
+   fixedUpdate() {
+      this.state.applied=this.entity.setCameraTargetSize(80,48);
+      try {this.entity.setCameraTargetSize(80,2.5);}
+      catch {this.state.rejected=true;}
+      this.state.camera=this.entity.camera;
+   }
+ })JS";
+ AssetDatabase assets;
+ assets.Scan(assetsPath.parent_path().string(),assetsPath.string());
+ AssetRecord script;
+ Check(assets.Track(scriptPath.string(),script,error),"register scripted resize fixture");
+ ResourceManager resources(nullptr,&assets);
+ auto scene=authored;
+ scene.Find(3)->scripts.push_back({1,script.id,true,"{}"});
+ RuntimeWorld world;
+ Check(world.Build(scene,&resources,error),"scripted secondary camera builds");
+ Frame(renderer,world);
+ const auto beforeResize=world.CameraTexture(3);
+ world.FixedScripts(nullptr,1.f/60);
+ const auto observations=world.Scripts()->Capture();
+ const auto pending=observations.empty()?std::string{}:observations.front().json;
+ Check(pending.find("\"applied\":true")!=std::string::npos&&
+       pending.find("\"rejected\":true")!=std::string::npos&&
+       pending.find("\"targetWidth\":128")!=std::string::npos,
+       "script resize validates atomically and keeps the prior allocation until rendering");
+ Frame(renderer,world);
+ const auto afterResize=world.CameraTexture(3);
+ TextureData resized;
+ Check(!renderer.ReadTextureForDiagnostics(beforeResize,resized)&&
+       renderer.ReadTextureForDiagnostics(afterResize,resized)&&resized.width==80&&resized.height==48&&
+       renderer.RenderTargetDiagnostics().liveTargets==2,
+       "new target has requested pixels and replaces the old GPU allocation");
+ world.FixedScripts(nullptr,1.f/60);
+ Frame(renderer,world);
+ Check(world.CameraTexture(3).id==afterResize.id,"same scripted size keeps the live target");
+ auto& camera=world.PresentationCameras().front();
+ camera.settings.width=1000000; // Inject a guaranteed driver-size rejection.
+ const auto updates=camera.updates;
+ Frame(renderer,world);
+ Check(camera.updates==updates+1&&!camera.error.empty()&&camera.targetSize==glm::ivec2(80,48)&&
+       world.CameraTexture(3).id==afterResize.id,"failed allocation preserves and renders the last good target");
+ world.Destroy();
+ Check(renderer.RenderTargetDiagnostics().liveTargets==0,"scripted targets are cleaned up on world destruction");
  }
  {
  Scene scene=authored;scene.Objects()[0].renderCamera=SceneRenderCameraComponent{};

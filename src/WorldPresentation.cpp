@@ -610,12 +610,13 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                 renderer.ResizeRenderTarget(camera.target, c.width, c.height, camera.error);
                 if (!camera.error.empty()) std::fprintf(stderr, "camera %llu: %s\n", static_cast<unsigned long long>(camera.id), camera.error.c_str());
             }
-            if (!camera.error.empty() || !renderer.BeginRenderTarget(camera.target)) continue;
+            if (!renderer.BeginRenderTarget(camera.target)) continue;
+            camera.targetSize=renderer.RenderTargetSize(camera.target);
             JUDAS_PROFILE_SCOPE("Secondary camera");
             RendererProfileScope cameraGPU(renderer,"Secondary camera",camera.id);
             const glm::mat4 cameraView=glm::lookAt(position, position + rotation * glm::vec3(0,0,-1), rotation * glm::vec3(0,1,0));
             const glm::vec4 viewPlane=camera.hasClipPlane?ViewSpacePlane(cameraView,camera.clipNormal,camera.clipPoint):glm::vec4(0);
-            auto frame=BuildCameraFrame(position,rotation,c.verticalFovDegrees,c.nearPlane,c.farPlane,c.lens,c.width,c.height);
+            auto frame=BuildCameraFrame(position,rotation,c.verticalFovDegrees,c.nearPlane,c.farPlane,c.lens,camera.targetSize.x,camera.targetSize.y);
             if(camera.hasFrustum||camera.hasClipPlane)frame.projection=SecondaryCameraProjection(c.verticalFovDegrees,float(frame.content.z)/frame.content.w,c.nearPlane,c.farPlane,camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr);
             renderer.SetCameraFrame(frame);
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);

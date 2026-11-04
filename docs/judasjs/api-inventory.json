@@ -419,7 +419,10 @@
         "width",
         "height",
         "frustum",
-        "clipPlane"
+        "clipPlane",
+        "targetWidth",
+        "targetHeight",
+        "targetError"
       ],
       "nativeFile": "src/ScriptSystem.cpp",
       "needles": [
@@ -844,6 +847,11 @@
       "symbol": "Entity.setCameraProjection",
       "minimum": 1,
       "maximum": 1
+    },
+    {
+      "symbol": "Entity.setCameraTargetSize",
+      "minimum": 2,
+      "maximum": 2
     },
     {
       "symbol": "Entity.setColliderEnabled",
@@ -3335,6 +3343,17 @@
         "cameraProjection"
       ],
       "type": "docs/judas.d.ts:Entity.setCameraProjection",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "Entity.setCameraTargetSize",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cameraTargetSize"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCameraTargetSize",
       "reference": "docs/judasjs/effects-camera.md"
     },
     {
@@ -7580,6 +7599,7 @@
     "cameraInfo",
     "cameraPresentation",
     "cameraProjection",
+    "cameraTargetSize",
     "cast",
     "cast2D",
     "castMany",

@@ -14,6 +14,17 @@ bool ValidParticleSettings(const ParticleEmitterSettings& s){
 bool ParticleSettingsEqual(const ParticleEmitterSettings& a,const ParticleEmitterSettings& b){return
     std::tie(a.enabled,a.loop,a.localSpace,a.useGravity,a.rate,a.lifetime,a.size,a.endSize,a.burst,a.maxParticles,a.spread,a.velocity,a.velocityVariation,a.acceleration,a.color,a.endColor,a.textureAsset,a.seed)==
     std::tie(b.enabled,b.loop,b.localSpace,b.useGravity,b.rate,b.lifetime,b.size,b.endSize,b.burst,b.maxParticles,b.spread,b.velocity,b.velocityVariation,b.acceleration,b.color,b.endColor,b.textureAsset,b.seed);}
+void VisualParticlePool::SetSettings(const ParticleEmitterSettings& next){
+    if(settings.localSpace!=next.localSpace)particles.clear();
+    if(settings.seed!=next.seed)random=next.seed;
+    if(settings.loop!=next.loop)credit=0;
+    settings=next;
+    particles.erase(std::remove_if(particles.begin(),particles.end(),
+        [&](const auto& particle){return particle.age>=settings.lifetime;}),particles.end());
+    if(particles.size()>static_cast<size_t>(next.maxParticles))particles.resize(next.maxParticles);
+    billboards.clear();
+    bounds={};
+}
 void VisualParticlePool::ShiftOrigin(glm::dvec3 delta){
     if(!settings.localSpace)for(auto& p:particles)p.position=glm::vec3(glm::dvec3(p.position)-delta);
     // These are derived presentation data; no age, emission credit or RNG reset.

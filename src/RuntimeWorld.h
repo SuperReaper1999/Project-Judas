@@ -95,6 +95,7 @@ public:
     struct ParticleEmitter {
         SceneObjectId id=0;SceneTransform transform;VisualParticlePool pool;
     };
+    bool SetParticleSettings(EntityId,const ParticleEmitterSettings&);
     void UpdateVisualParticles(float dt);
     bool EmitParticleBurst(SceneObjectId id,unsigned count);
     std::vector<ParticleEmitter>& VisualEmitters()const{return m_particleEmitters;}
@@ -139,6 +140,7 @@ public:
         std::string error;
         bool allocationAttempted = false,attemptedLinear=false;
         int attemptedWidth = 0, attemptedHeight = 0;
+        glm::ivec2 targetSize{0};
         std::uint64_t updates = 0;
         // Portal-view runtime presentation overrides (JS setCameraProjection); not authored or saved.
         bool hasFrustum = false, hasClipPlane = false;
