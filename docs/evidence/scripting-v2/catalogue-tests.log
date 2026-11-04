@@ -1,0 +1,13 @@
+test_duplicate_library_name_source_and_symbol_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_duplicate_library_name_source_and_symbol_are_rejected) ... ok
+test_duplicate_native_name_source_and_registration_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_duplicate_native_name_source_and_registration_are_rejected) ... ok
+test_duplicate_value_sources_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_duplicate_value_sources_are_rejected) ... ok
+test_invalid_registration_names_and_library_symbols_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_invalid_registration_names_and_library_symbols_are_rejected) ... ok
+test_missing_native_library_and_value_sources_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_missing_native_library_and_value_sources_are_rejected) ... ok
+test_unknown_schema_is_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_unknown_schema_is_rejected) ... ok
+test_unsafe_or_noncanonical_paths_are_rejected (test_scripting_catalogue.ScriptingCatalogueTests.test_unsafe_or_noncanonical_paths_are_rejected) ... ok
+test_valid_catalogue_preserves_module_and_library_order (test_scripting_catalogue.ScriptingCatalogueTests.test_valid_catalogue_preserves_module_and_library_order) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.359s
+
+OK

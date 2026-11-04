@@ -213,7 +213,15 @@ add_library(judas_materials STATIC third_party/mikktspace/mikktspace.c)
 target_include_directories(judas_materials PUBLIC src)
 target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 
+include(cmake/JudasScripting.cmake)
+
 add_library(judas_engine STATIC
+    ${JUDAS_SCRIPTING_SOURCES}
+    src/scripting/BindingRegistry.cpp
+    src/scripting/BindingValues.cpp
+    src/scripting/CameraValues.cpp
+    src/scripting/SpriteValues.cpp
+    src/scripting/PlanarValues.cpp
     src/NetworkSession.cpp
     src/NetworkTransport.cpp
     src/Wheel.cpp
@@ -270,6 +278,7 @@ add_library(judas_engine STATIC
     src/UtilityAI.cpp
     src/ScriptUtilityAI.cpp
     src/ScriptSystem.cpp
+    src/scripting/ScriptMetadata.cpp
     src/ScriptBindingsUI.cpp
     src/ScriptBindingsJoint.cpp
     src/Classification.cpp
@@ -384,6 +393,7 @@ add_library(judas_engine STATIC
     ${JUDAS_PHYSICS_SOURCES}
     ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
+target_include_directories(judas_engine PRIVATE "${JUDAS_SCRIPTING_GENERATED_DIR}")
 target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
 find_package(Threads REQUIRED)
 add_library(judas_jobs STATIC src/JobSystem.cpp)
@@ -1893,6 +1903,8 @@ add_executable(judas_fluid_coverage_replay tools/validation/FluidCoverageReplay.
 target_include_directories(judas_fluid_coverage_replay PRIVATE src tests)
 target_link_libraries(judas_fluid_coverage_replay PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_fluid_coverage_replay)
+
+judas_add_engine_test(judas_script_binding_registry_tests tests/ScriptBindingRegistryTests.cpp)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

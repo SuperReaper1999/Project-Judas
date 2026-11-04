@@ -1,5 +1,7 @@
 # JudasJS — Alpha API reference
 
+[Native Scripting V2 architecture and extension guide](judasjs/scripting-v2.md).
+
 [Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
 
 Judas provides engine primitives. Project JavaScript supplies game behaviour.
@@ -91,11 +93,12 @@ page and the [current Pre-Alpha support/issue guide](PREALPHA.md).
 
 ## Authority, verification and history
 
-The public wrapper is registered in [ScriptSystem.cpp](../src/ScriptSystem.cpp).
-Native dispatch also uses [UI](../src/ScriptBindingsUI.cpp),
-[joint](../src/ScriptBindingsJoint.cpp),
-[local-player](../src/ScriptLocalMultiplayer.inl) and
-[network](../src/ScriptNetwork.inl) bridges, plus the runtime systems they call.
+The [scripting catalogue](../src/scripting/Modules.json) owns native registration
+and the embedded public wrapper fragments. Subsystem handlers live under
+[src/scripting/modules](../src/scripting/modules), with existing UI, joint and AI
+helpers retained behind their adapters. [ScriptSystem](../src/ScriptSystem.cpp)
+coordinates the one runtime and lifecycle; [Scripting V2](judasjs/scripting-v2.md)
+explains the extension workflow.
 C++-only systems are not automatically scriptable.
 
 [API inventory](judasjs/API_INVENTORY.md) and its

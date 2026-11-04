@@ -83,6 +83,10 @@ if(JUDAS_ENABLE_VALIDATION)
     endforeach()
     list(REMOVE_DUPLICATES judas_gate_targets)
     add_custom_target(judas_prealpha_tests DEPENDS ${judas_gate_targets})
+    add_test(NAME prealpha.scripting-catalogue
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_scripting_catalogue.py -v)
+    set_tests_properties(prealpha.scripting-catalogue PROPERTIES LABELS "prealpha;tooling;scripting")
     add_test(NAME prealpha.gate-negative-controls
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_prealpha_validation.py -v)

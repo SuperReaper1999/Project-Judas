@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "modules": [
+    {
+      "name": "World",
+      "source": "src/scripting/modules/World.cpp",
+      "registration": "RegisterWorldBindings"
+    },
+    {
+      "name": "Terrain",
+      "source": "src/scripting/modules/Terrain.cpp",
+      "registration": "RegisterTerrainBindings"
+    },
+    {
+      "name": "Environment",
+      "source": "src/scripting/modules/Environment.cpp",
+      "registration": "RegisterEnvironmentBindings"
+    },
+    {
+      "name": "Rendering",
+      "source": "src/scripting/modules/Rendering.cpp",
+      "registration": "RegisterRenderingBindings"
+    },
+    {
+      "name": "Navigation",
+      "source": "src/scripting/modules/Navigation.cpp",
+      "registration": "RegisterNavigationBindings"
+    },
+    {
+      "name": "Input",
+      "source": "src/scripting/modules/Input.cpp",
+      "registration": "RegisterInputBindings"
+    },
+    {
+      "name": "Network",
+      "source": "src/scripting/modules/Network.cpp",
+      "registration": "RegisterNetworkBindings"
+    },
+    {
+      "name": "Mechanics",
+      "source": "src/scripting/modules/Mechanics.cpp",
+      "registration": "RegisterMechanicsBindings"
+    },
+    {
+      "name": "Characters",
+      "source": "src/scripting/modules/Characters.cpp",
+      "registration": "RegisterCharactersBindings"
+    },
+    {
+      "name": "PhysicsQueries",
+      "source": "src/scripting/modules/PhysicsQueries.cpp",
+      "registration": "RegisterPhysicsQueriesBindings"
+    },
+    {
+      "name": "PhysicsBodies",
+      "source": "src/scripting/modules/PhysicsBodies.cpp",
+      "registration": "RegisterPhysicsBodiesBindings"
+    },
+    {
+      "name": "Animation",
+      "source": "src/scripting/modules/Animation.cpp",
+      "registration": "RegisterAnimationBindings"
+    },
+    {
+      "name": "Audio",
+      "source": "src/scripting/modules/Audio.cpp",
+      "registration": "RegisterAudioBindings"
+    },
+    {
+      "name": "Particles",
+      "source": "src/scripting/modules/Particles.cpp",
+      "registration": "RegisterParticlesBindings"
+    },
+    {
+      "name": "UI",
+      "source": "src/scripting/modules/UI.cpp",
+      "registration": "RegisterUIBindings"
+    },
+    {
+      "name": "Joints",
+      "source": "src/scripting/modules/Joints.cpp",
+      "registration": "RegisterJointsBindings"
+    },
+    {
+      "name": "Runtime",
+      "source": "src/scripting/modules/Runtime.cpp",
+      "registration": "RegisterRuntimeBindings"
+    },
+    {
+      "name": "AI",
+      "source": "src/scripting/modules/AI.cpp",
+      "registration": "RegisterAIBindings"
+    }
+  ],
+  "libraries": [
+    {
+      "name": "Core",
+      "source": "src/scripting/library/Core.h",
+      "symbol": "LibraryParts::Core"
+    },
+    {
+      "name": "Entity",
+      "source": "src/scripting/library/Entity.h",
+      "symbol": "LibraryParts::Entity"
+    },
+    {
+      "name": "World",
+      "source": "src/scripting/library/World.h",
+      "symbol": "LibraryParts::World"
+    },
+    {
+      "name": "Physics",
+      "source": "src/scripting/library/Physics.h",
+      "symbol": "LibraryParts::Physics"
+    },
+    {
+      "name": "Characters",
+      "source": "src/scripting/library/Characters.h",
+      "symbol": "LibraryParts::Characters"
+    },
+    {
+      "name": "Mechanics",
+      "source": "src/scripting/library/Mechanics.h",
+      "symbol": "LibraryParts::Mechanics"
+    },
+    {
+      "name": "Animation",
+      "source": "src/scripting/library/Animation.h",
+      "symbol": "LibraryParts::Animation"
+    },
+    {
+      "name": "Terrain",
+      "source": "src/scripting/library/Terrain.h",
+      "symbol": "LibraryParts::Terrain"
+    },
+    {
+      "name": "Navigation",
+      "source": "src/scripting/library/Navigation.h",
+      "symbol": "LibraryParts::Navigation"
+    },
+    {
+      "name": "Rendering",
+      "source": "src/scripting/library/Rendering.h",
+      "symbol": "LibraryParts::Rendering"
+    },
+    {
+      "name": "Audio",
+      "source": "src/scripting/library/Audio.h",
+      "symbol": "LibraryParts::Audio"
+    },
+    {
+      "name": "Environment",
+      "source": "src/scripting/library/Environment.h",
+      "symbol": "LibraryParts::Environment"
+    },
+    {
+      "name": "InputPlayers",
+      "source": "src/scripting/library/InputPlayers.h",
+      "symbol": "LibraryParts::InputPlayers"
+    },
+    {
+      "name": "Networking",
+      "source": "src/scripting/library/Networking.h",
+      "symbol": "LibraryParts::Networking"
+    },
+    {
+      "name": "UI",
+      "source": "src/scripting/library/UI.h",
+      "symbol": "LibraryParts::UI"
+    },
+    {
+      "name": "AI",
+      "source": "src/scripting/library/AI.h",
+      "symbol": "LibraryParts::AI"
+    },
+    {
+      "name": "Finalize",
+      "source": "src/scripting/library/Finalize.h",
+      "symbol": "LibraryParts::Finalize"
+    }
+  ],
+  "valueSources": [
+    "src/ScriptSystem.cpp",
+    "src/scripting/ScriptMetadata.cpp",
+    "src/ScriptBindingsUI.cpp",
+    "src/ScriptBindingsJoint.cpp",
+    "src/ScriptUtilityAI.cpp",
+    "src/ScriptAISensing.cpp",
+    "src/ScriptAIReservations.cpp",
+    "src/scripting/BindingValues.cpp",
+    "src/scripting/CameraValues.cpp",
+    "src/scripting/SpriteValues.cpp",
+    "src/scripting/PlanarValues.cpp",
+    "src/PowertrainAuthoring.cpp"
+  ]
+}

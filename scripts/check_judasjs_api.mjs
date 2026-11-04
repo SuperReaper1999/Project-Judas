@@ -12,13 +12,23 @@ if(args.includes('--help')){
 }
 const ts=loadTypeScript(option('--typescript'));
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const source=fs.readFileSync(path.join(root,'src/ScriptSystem.cpp'),'utf8');
-const nativeSource=source+'\n'+['src/ScriptInputBindings.inl','src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp','src/ScriptUtilityAI.cpp','src/ScriptAISensing.cpp','src/ScriptAIReservations.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
-const baseLibrary=source.match(/const std::string library=std::string\(R"JS\(([\s\S]*?)\)JS"\) \+ kUtilityAILibrary;/)?.[1];
-const aiSource=fs.readFileSync(path.join(root,'src/ScriptUtilityLibrary.h'),'utf8');
-const aiLibrary=aiSource.match(/R"JS\(([\s\S]*?)\)JS";/)?.[1];
-const library=baseLibrary&&aiLibrary?baseLibrary+'\n'+aiLibrary:null;
-if(!library)throw Error('Cannot locate registered public module: review extractor');
+const cataloguePath='src/scripting/Modules.json';
+const catalogue=JSON.parse(fs.readFileSync(path.join(root,cataloguePath),'utf8'));
+if(catalogue.schema!==1||!Array.isArray(catalogue.modules)||!Array.isArray(catalogue.libraries)||!Array.isArray(catalogue.valueSources))throw Error('Invalid scripting module catalogue');
+const safeSource=file=>{
+ if(typeof file!=='string'||path.isAbsolute(file)||file.split(/[\\/]/).includes('..'))throw Error('Unsafe scripting source '+file);
+ return fs.readFileSync(path.join(root,file),'utf8');
+};
+const sourceFiles=[...new Set([...catalogue.modules.map(m=>m.source),...catalogue.valueSources])];
+const nativeSources=new Map(sourceFiles.map(file=>[file,safeSource(file)]));
+const nativeSource=[...nativeSources.values()].join('\n');
+const library=catalogue.libraries.map(part=>{
+ const source=safeSource(part.source);
+ const raw=[...source.matchAll(/R"JS\(([\s\S]*?)\)JS"/g)];
+ if(raw.length!==1)throw Error('Each scripting library part must contain one raw JS string: '+part.source);
+ return raw[0][1];
+}).join('');
+if(!library)throw Error('No registered public library parts');
 const parse=(name,text,kind)=>ts.createSourceFile(name,text,ts.ScriptTarget.ES2020,true,kind);
 const rt=parse('judas-runtime.js',library,ts.ScriptKind.JS);
 const dtsPath=path.join(root,'docs/judas.d.ts');
@@ -61,7 +71,17 @@ function runtimeMembers(parent,members){for(const m of members){
  if(!key)throw Error('Unknown runtime member');
  insert(runtime,parent+'.'+key,ts.isGetAccessor(m)?'get':ts.isSetAccessor(m)?'set':(ts.isMethodDeclaration(m)||(ts.isPropertyAssignment(m)&&ts.isArrowFunction(m.initializer))||ts.isShorthandPropertyAssignment(m))?'call':'field',ops(m),m);
 }}
-for(const n of rt.statements){if(!n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword))continue;
+for(const n of rt.statements){
+ if(ts.isExpressionStatement(n)&&ts.isCallExpression(n.expression)&&ts.isIdentifier(n.expression.expression)){
+  const extension=n.expression.expression.text;
+  if(extension==='extendEntity'||extension==='extendWorld'){
+   const members=n.expression.arguments[0];
+   if(!members||!ts.isObjectLiteralExpression(members))throw Error('Binding extension requires an explicit member object');
+   runtimeMembers(extension==='extendEntity'?'Entity':'world',members.properties);
+   continue;
+  }
+ }
+ if(!n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword))continue;
  if(ts.isClassDeclaration(n)){insert(runtime,name(n.name),'class',[],n);runtimeMembers(name(n.name),n.members);}
  else if(ts.isVariableStatement(n))for(const d of n.declarationList.declarations){
  const k=name(d.name);if(ts.isObjectLiteralExpression(d.initializer)){insert(runtime,k,'namespace',[],d);runtimeMembers(k,d.initializer.properties);}
@@ -115,33 +135,100 @@ function referencePage(symbol) {
 const abilities=k=>k.includes('field')?['get','set']:k.slice().sort();
 const symbols=[...runtime.keys()].sort();
 const nativeOps=[...new Set([...library.matchAll(/call\(['"]([^'"]+)['"]/g)].map(m=>m[1]))].sort();
-for(const op of nativeOps)if(!nativeSource.slice(source.indexOf('JSValue ScriptSystem::Impl::Native')).match(new RegExp('op\\s*(?:==|!=)\\s*"'+op+'"')))throw Error('Unimplemented native operation '+op);
+for(const op of nativeOps)if(!nativeSource.match(new RegExp('op\\s*(?:==|!=)\\s*"'+op+'"')))throw Error('Unimplemented native operation '+op);
+// The compiled catalogue, rather than a matching implementation string alone,
+// must register every operation forwarded by the public JavaScript facade.
+function registeredOperations(modules, sources) {
+ const registered = new Map();
+ const registrations = new Set();
+ for (const module of modules) {
+  const registration = module.registration;
+  if (!/^[A-Za-z_][A-Za-z_0-9]*$/.test(registration) || registrations.has(registration))
+   throw Error('Invalid or duplicate module registration: ' + registration);
+  registrations.add(registration);
+  const source = sources.get(module.source);
+  const definitions = [...source.matchAll(new RegExp('\\bvoid\\s+' + registration + '\\s*\\(\\s*BindingRegistry\\s*&\\s*(\\w+)\\s*\\)\\s*\\{', 'g'))];
+  if (definitions.length !== 1) throw Error('Expected one module registration definition: ' + registration);
+  const definition = definitions[0];
+  const start = definition.index + definition[0].length - 1;
+  // Skip quoted strings and comments while finding the registration body. This
+  // intentionally accepts the small explicit Add-list form used by modules.
+  const tokens = /\/\/[^\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[{}]/g;
+  tokens.lastIndex = start;
+  let depth = 0, end = -1;
+  for (let token; (token = tokens.exec(source));) {
+   if (token[0] === '{') ++depth;
+   else if (token[0] === '}' && --depth === 0) { end = token.index; break; }
+  }
+  if (end < 0) throw Error('Unclosed module registration: ' + registration);
+  const body = source.slice(start + 1, end).replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '');
+  const adds = [...body.matchAll(new RegExp('\\b' + definition[1] + '\\.Add\\s*\\(\\s*"([^"\\\\]+)"\\s*,\\s*\\{([^}]*)\\}', 'g'))];
+  if (!adds.length) throw Error('Module must explicitly register its operations: ' + registration);
+  for (const add of adds) {
+   const list = add[2];
+   if (!/^\s*(?:"[A-Za-z_][A-Za-z_0-9]*"\s*,\s*)*"[A-Za-z_][A-Za-z_0-9]*"\s*,?\s*$/.test(list))
+    throw Error('Operation registration requires literal names: ' + registration);
+   for (const [, operation] of list.matchAll(/"([A-Za-z_][A-Za-z_0-9]*)"/g)) {
+    if (registered.has(operation)) throw Error('Duplicate registered operation: ' + operation);
+    registered.set(operation, add[1]);
+   }
+  }
+ }
+ return registered;
+}
+const registeredOps = registeredOperations(catalogue.modules, nativeSources);
+function checkRegistrations(registered) {
+ for (const operation of nativeOps)
+  if (!registered.has(operation)) throw Error('Unregistered native operation: ' + operation);
+}
+checkRegistrations(registeredOps);
+const missingRegistration = new Map(registeredOps);
+missingRegistration.delete(nativeOps[0]);
+let rejectedRegistration = false;
+try { checkRegistrations(missingRegistration); } catch { rejectedRegistration = true; }
+if (!rejectedRegistration) throw Error('Missing native registration negative control accepted');
 const mapPath=path.join(root,'docs/judasjs/api-inventory.json');
 const resultShapes=[
  {binding:'scripts.faults',declaration:'ScriptFault',fields:['entity','slot','asset','callback','message','truncated'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,v,"entity"','JS_SetPropertyStr(c,v,"slot"','{"asset",d.asset}','{"callback",d.callback}','{"message",d.message}','JS_SetPropertyStr(c,v,"truncated"'],reference:'docs/judasjs/scripting-diagnostics.md'},
- {binding:'Entity.spriteAnimation',declaration:'SpriteAnimationInfo',fields:['ready','sampledFrame','events','finished','overflow','error'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,out,"ready"','JS_SetPropertyStr(c,out,"sampledFrame"','JS_SetPropertyStr(c,out,"events"','JS_SetPropertyStr(c,out,"finished"','JS_SetPropertyStr(c,out,"overflow"','JS_SetPropertyStr(c,out,"error"'],reference:'docs/judasjs/sprite-animation.md'},
- {binding:'Entity.spriteAnimation.playback',declaration:'SpritePlaybackSettings',fields:['sheet','clip','frame','time','speed','playing','loop'],nativeFile:'src/ScriptSystem.cpp',needles:['{"sheet",p.sheet}','{"clip",p.clip}','{"frame",p.frame}','JS_SetPropertyStr(c,out,"time"','JS_SetPropertyStr(c,out,"speed"','JS_SetPropertyStr(c,out,"playing"','JS_SetPropertyStr(c,out,"loop"'],reference:'docs/judasjs/sprite-animation.md'},
- {binding:'Entity.spriteAnimation.events',declaration:'SpriteFrameEvent',fields:['id','name','data','time','reverse'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,e,"id"','JS_SetPropertyStr(c,e,"name"','JS_SetPropertyStr(c,e,"data"','JS_SetPropertyStr(c,e,"time"','JS_SetPropertyStr(c,e,"reverse"'],reference:'docs/judasjs/sprite-animation.md'},
- {binding:'Entity.sprite',declaration:'SpriteSettings',fields:['size','pivot','rect','tint','flipX','flipY','nearest','pixelSnap','alphaPick','ySort','sortingLayer','order'],nativeFile:'src/ScriptSpriteValues.inl',needles:['vector("size"','vector("pivot"','vector("rect"','vector("tint"','{"flipX",sprite.flipX}','{"flipY",sprite.flipY}','{"nearest",sprite.nearest}','{"pixelSnap",sprite.pixelSnap}','{"alphaPick",sprite.alphaPick}','{"ySort",sprite.ySort}','JS_SetPropertyStr(c,out,"sortingLayer"','JS_SetPropertyStr(c,out,"order"'],reference:'docs/judasjs/sprites-2d.md'},
- {binding:'Entity.physicalMaterial',declaration:'PhysicalMaterialInfo',fields:['asset','friction','restitution'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,o,"asset",asset.empty()?JS_NULL:JS_NewString(c,asset.c_str()))','JS_SetPropertyStr(c,o,"friction",JS_NewFloat64(c,friction))','JS_SetPropertyStr(c,o,"restitution",JS_NewFloat64(c,restitution))'],reference:'docs/judasjs/physics.md'},
- {binding:'network.stats',declaration:'NetworkStats',fields:['bytesSent','bytesReceived','framesSent','framesReceived','backpressure','coalesced','rejected','snapshots','snapshotAge','entities','peers'],nativeFile:'src/ScriptNetwork.inl',needles:['{"bytesSent",t.bytesSent}','{"bytesReceived",t.bytesReceived}','{"framesSent",t.framesSent}','{"framesReceived",t.framesReceived}','{"backpressure",t.backpressure}','{"coalesced",t.dropped}','{"rejected",stats.rejected+t.rejected}','{"snapshots",stats.snapshots}','{"snapshotAge",stats.snapshotAge}','{"entities",stats.entities}','{"peers",stats.peers}'],reference:'docs/judasjs/network.md'},
- {binding:'network.launch',declaration:'NetworkLaunch',fields:['mode','address','port','dedicated'],nativeFile:'src/ScriptNetwork.inl',needles:['{"mode",launch.mode}','{"address",launch.address}','{"port",launch.port}','{"dedicated",launch.dedicated}'],reference:'docs/judasjs/network.md'},
- {binding:'network.peers',declaration:'NetworkPeer',fields:['id','name','connected','player'],nativeFile:'src/ScriptNetwork.inl',needles:['{"id",p.id}','{"name",p.name}','{"connected",p.connected}','{"player",p.player?std::to_string(p.player):std::string()}'],reference:'docs/judasjs/network.md'},
- {binding:'saves.status',declaration:'SaveRequest',fields:['id','operation','slot','state','error','recovered','captureMs','workerMs','restoreMs','bytes','migrated','migrationMs','migrationReport','waitingFor','queuedMs','identityMs','workerQueueMs','elapsedMs'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,o,"migrated",JS_NewBool(c,status->migrated))','{"migrationMs",status->migrationMs}','{"migrationReport",&status->migrationReport}','{"waitingFor",&status->waitingFor}','{"elapsedMs",status->elapsedMs}','{"queuedMs",status->queuedMs}','{"identityMs",status->identityMs}','{"workerQueueMs",status->workerQueueMs}'],reference:'docs/judasjs/saves.md'},
- {binding:'saves.list',declaration:'SaveSlot',fields:['id','name','scene','timestamp','metadata','status','error','recovered','modContext','content','compatibility','contentVersion'],nativeFile:'src/ScriptSystem.cpp',needles:['{"content",&slot.content}','{"compatibility",&slot.compatibility}','JS_SetPropertyStr(c,o,"contentVersion",JS_NewUint32(c,slot.contentVersion))'],reference:'docs/judasjs/saves.md'},
- {binding:'Terrain.state',declaration:'TerrainStatus',fields:['ready','busy','navigation','revision','samples','triangles','bytes','prepareMs','publishMs','error'],nativeFile:'src/ScriptSystem.cpp',needles:['{"ready",state->ready}','{"revision",double(state->revision)}','JS_SetPropertyStr(c,result,"error",JS_NewString(c,state->error.c_str()))'],reference:'docs/judasjs/terrain.md'},
- {binding:'Animation.advance',declaration:'AnimationSample',fields:['motion','events','overflow'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,result,"motion",motion)','JS_SetPropertyStr(c,result,"events",events)','JS_SetPropertyStr(c,result,"overflow",JS_NewBool(c,step.overflow))'],reference:'docs/judasjs/animation-ragdolls.md'},
- {binding:'Animation.clips',declaration:'ClipInfo',fields:['name','duration','events'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,value,"events",markers)','JS_SetPropertyStr(c,value,"duration",JS_NewFloat64(c,clip.duration))'],reference:'docs/judasjs/animation-ragdolls.md'},
- {binding:'Entity.light',declaration:'LightSettings',fields:['kind','color','enabled','castsShadow','intensity','range','innerConeDegrees','outerConeDegrees','shadowPriority'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,out,"kind"','JS_SetPropertyStr(c,out,"color"','JS_SetPropertyStr(c,out,"enabled"','JS_SetPropertyStr(c,out,"castsShadow"','{"intensity",l.intensity}','{"range",l.range}','{"innerConeDegrees",l.innerConeDegrees}','{"outerConeDegrees",l.outerConeDegrees}','{"shadowPriority",l.shadowPriority}'],reference:'docs/judasjs/entities.md'},
- {binding:'Weather.state',declaration:'WeatherState',fields:['current','target','time','transitionElapsed','transitionDuration','tornadoPosition','lightningSequence','lightningPosition','lightningFlash'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,result,"current",weatherProfileValue(field->Current()))','JS_SetPropertyStr(c,result,"target",weatherProfileValue(state.to))','JS_SetPropertyStr(c,result,"time",JS_NewFloat64(c,state.time))','JS_SetPropertyStr(c,result,"transitionElapsed",JS_NewFloat64(c,state.transitionElapsed))','JS_SetPropertyStr(c,result,"transitionDuration",JS_NewFloat64(c,state.transitionDuration))','JS_SetPropertyStr(c,result,"lightningSequence",JS_NewString(c,std::to_string(state.lightning.sequence).c_str()))','JS_SetPropertyStr(c,result,"lightningPosition",preciseVector(state.lightning.position-world.Settings().worldOrigin))','JS_SetPropertyStr(c,result,"tornadoPosition",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))','JS_SetPropertyStr(c,result,"lightningFlash",JS_NewFloat64(c,sample.lightningFlash))'],reference:'docs/judasjs/weather.md'},
- {binding:'weather.sample',declaration:'WeatherQuery',fields:['wind','up','altitude','airDensity','rain','snow','fog','cloudCoverage','tornadoPosition','lightningFlash'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,result,"wind",preciseVector(sample.wind))','JS_SetPropertyStr(c,result,"up",preciseVector(sample.up))','JS_SetPropertyStr(c,result,"tornadoPosition",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))','{"altitude",sample.altitude}','{"airDensity",sample.airDensity}','{"rain",sample.profile.rain}','{"snow",sample.profile.snow}','{"fog",sample.profile.fog}','{"cloudCoverage",sample.profile.cloudCoverage}','{"lightningFlash",sample.lightningFlash}'],reference:'docs/judasjs/weather.md'},
- {binding:'Entity.camera',declaration:'CameraInfo',fields:['near','far','enabled','width','height','frustum','clipPlane','targetWidth','targetHeight','targetError','fov','updateEveryFrames','renderLayers'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,o,"frustum"','JS_SetPropertyStr(c,o,"clipPlane"'],reference:'docs/judasjs/effects-camera.md'},
- {binding:'Entity.planetSample',declaration:'PlanetSample',fields:['position','normal','height','distance'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,o,"position",preciseVector(sample.point))','JS_SetPropertyStr(c,o,"normal",preciseVector(sample.normal))','JS_SetPropertyStr(c,o,"height",JS_NewFloat64(c,sample.height))','JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,sample.distance))'],reference:'docs/judasjs/planetary-terrain.md'},
- {binding:'Fracture.state.interfaces',declaration:'FractureInterfaceState',fields:['material','plasticTranslation','plasticRotation','plasticWork'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,v,"material"','JS_SetPropertyStr(c,v,"plasticTranslation"','JS_SetPropertyStr(c,v,"plasticRotation"','JS_SetPropertyStr(c,v,"plasticWork"'],reference:'docs/judasjs/fracture.md'},
- {binding:'Wheel.settings',declaration:'WheelSettings',fields:['part'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,result,"part"'],reference:'docs/judasjs/wheels.md'},
+ {binding:'Entity.spriteAnimation',declaration:'SpriteAnimationInfo',fields:['ready','sampledFrame','events','finished','overflow','error'],nativeFile:'src/scripting/modules/Rendering.cpp',needles:['JS_SetPropertyStr(c,out,"ready"','JS_SetPropertyStr(c,out,"sampledFrame"','JS_SetPropertyStr(c,out,"events"','JS_SetPropertyStr(c,out,"finished"','JS_SetPropertyStr(c,out,"overflow"','JS_SetPropertyStr(c,out,"error"'],reference:'docs/judasjs/sprite-animation.md'},
+ {binding:'Entity.spriteAnimation.playback',declaration:'SpritePlaybackSettings',fields:['sheet','clip','frame','time','speed','playing','loop'],nativeFile:'src/scripting/modules/Rendering.cpp',needles:['{"sheet",p.sheet}','{"clip",p.clip}','{"frame",p.frame}','JS_SetPropertyStr(c,out,"time"','JS_SetPropertyStr(c,out,"speed"','JS_SetPropertyStr(c,out,"playing"','JS_SetPropertyStr(c,out,"loop"'],reference:'docs/judasjs/sprite-animation.md'},
+ {binding:'Entity.spriteAnimation.events',declaration:'SpriteFrameEvent',fields:['id','name','data','time','reverse'],nativeFile:'src/scripting/modules/Rendering.cpp',needles:['JS_SetPropertyStr(c,e,"id"','JS_SetPropertyStr(c,e,"name"','JS_SetPropertyStr(c,e,"data"','JS_SetPropertyStr(c,e,"time"','JS_SetPropertyStr(c,e,"reverse"'],reference:'docs/judasjs/sprite-animation.md'},
+ {binding:'Entity.sprite',declaration:'SpriteSettings',fields:['size','pivot','rect','tint','flipX','flipY','nearest','pixelSnap','alphaPick','ySort','sortingLayer','order'],nativeFile:'src/scripting/SpriteValues.cpp',needles:['vector("size"','vector("pivot"','vector("rect"','vector("tint"','{"flipX",sprite.flipX}','{"flipY",sprite.flipY}','{"nearest",sprite.nearest}','{"pixelSnap",sprite.pixelSnap}','{"alphaPick",sprite.alphaPick}','{"ySort",sprite.ySort}','JS_SetPropertyStr(c,out,"sortingLayer"','JS_SetPropertyStr(c,out,"order"'],reference:'docs/judasjs/sprites-2d.md'},
+ {binding:'Entity.physicalMaterial',declaration:'PhysicalMaterialInfo',fields:['asset','friction','restitution'],nativeFile:'src/scripting/modules/PhysicsBodies.cpp',needles:['JS_SetPropertyStr(c,o,"asset",asset.empty()?JS_NULL:JS_NewString(c,asset.c_str()))','JS_SetPropertyStr(c,o,"friction",JS_NewFloat64(c,friction))','JS_SetPropertyStr(c,o,"restitution",JS_NewFloat64(c,restitution))'],reference:'docs/judasjs/physics.md'},
+ {binding:'network.stats',declaration:'NetworkStats',fields:['bytesSent','bytesReceived','framesSent','framesReceived','backpressure','coalesced','rejected','snapshots','snapshotAge','entities','peers'],nativeFile:'src/scripting/modules/Network.cpp',needles:['{"bytesSent",t.bytesSent}','{"bytesReceived",t.bytesReceived}','{"framesSent",t.framesSent}','{"framesReceived",t.framesReceived}','{"backpressure",t.backpressure}','{"coalesced",t.dropped}','{"rejected",stats.rejected+t.rejected}','{"snapshots",stats.snapshots}','{"snapshotAge",stats.snapshotAge}','{"entities",stats.entities}','{"peers",stats.peers}'],reference:'docs/judasjs/network.md'},
+ {binding:'network.launch',declaration:'NetworkLaunch',fields:['mode','address','port','dedicated'],nativeFile:'src/scripting/modules/Network.cpp',needles:['{"mode",launch.mode}','{"address",launch.address}','{"port",launch.port}','{"dedicated",launch.dedicated}'],reference:'docs/judasjs/network.md'},
+ {binding:'network.peers',declaration:'NetworkPeer',fields:['id','name','connected','player'],nativeFile:'src/scripting/modules/Network.cpp',needles:['{"id",p.id}','{"name",p.name}','{"connected",p.connected}','{"player",p.player?std::to_string(p.player):std::string()}'],reference:'docs/judasjs/network.md'},
+ {binding:'saves.status',declaration:'SaveRequest',fields:['id','operation','slot','state','error','recovered','captureMs','workerMs','restoreMs','bytes','migrated','migrationMs','migrationReport','waitingFor','queuedMs','identityMs','workerQueueMs','elapsedMs'],nativeFile:'src/scripting/modules/World.cpp',needles:['JS_SetPropertyStr(c,o,"migrated",JS_NewBool(c,status->migrated))','{"migrationMs",status->migrationMs}','{"migrationReport",&status->migrationReport}','{"waitingFor",&status->waitingFor}','{"elapsedMs",status->elapsedMs}','{"queuedMs",status->queuedMs}','{"identityMs",status->identityMs}','{"workerQueueMs",status->workerQueueMs}'],reference:'docs/judasjs/saves.md'},
+ {binding:'saves.list',declaration:'SaveSlot',fields:['id','name','scene','timestamp','metadata','status','error','recovered','modContext','content','compatibility','contentVersion'],nativeFile:'src/scripting/modules/World.cpp',needles:['{"content",&slot.content}','{"compatibility",&slot.compatibility}','JS_SetPropertyStr(c,o,"contentVersion",JS_NewUint32(c,slot.contentVersion))'],reference:'docs/judasjs/saves.md'},
+ {binding:'Terrain.state',declaration:'TerrainStatus',fields:['ready','busy','navigation','revision','samples','triangles','bytes','prepareMs','publishMs','error'],nativeFile:'src/scripting/modules/Terrain.cpp',needles:['{"ready",state->ready}','{"revision",double(state->revision)}','JS_SetPropertyStr(c,result,"error",JS_NewString(c,state->error.c_str()))'],reference:'docs/judasjs/terrain.md'},
+ {binding:'Animation.advance',declaration:'AnimationSample',fields:['motion','events','overflow'],nativeFile:'src/scripting/modules/Animation.cpp',needles:['JS_SetPropertyStr(c,result,"motion",motion)','JS_SetPropertyStr(c,result,"events",events)','JS_SetPropertyStr(c,result,"overflow",JS_NewBool(c,step.overflow))'],reference:'docs/judasjs/animation-ragdolls.md'},
+ {binding:'Animation.clips',declaration:'ClipInfo',fields:['name','duration','events'],nativeFile:'src/scripting/modules/Animation.cpp',needles:['JS_SetPropertyStr(c,value,"events",markers)','JS_SetPropertyStr(c,value,"duration",JS_NewFloat64(c,clip.duration))'],reference:'docs/judasjs/animation-ragdolls.md'},
+ {binding:'Entity.light',declaration:'LightSettings',fields:['kind','color','enabled','castsShadow','intensity','range','innerConeDegrees','outerConeDegrees','shadowPriority'],nativeFile:'src/scripting/modules/Rendering.cpp',needles:['JS_SetPropertyStr(c,out,"kind"','JS_SetPropertyStr(c,out,"color"','JS_SetPropertyStr(c,out,"enabled"','JS_SetPropertyStr(c,out,"castsShadow"','{"intensity",l.intensity}','{"range",l.range}','{"innerConeDegrees",l.innerConeDegrees}','{"outerConeDegrees",l.outerConeDegrees}','{"shadowPriority",l.shadowPriority}'],reference:'docs/judasjs/entities.md'},
+ {binding:'Weather.state',declaration:'WeatherState',fields:['current','target','time','transitionElapsed','transitionDuration','tornadoPosition','lightningSequence','lightningPosition','lightningFlash'],nativeFile:'src/scripting/modules/Environment.cpp',needles:['JS_SetPropertyStr(c,result,"current",weatherProfileValue(field->Current()))','JS_SetPropertyStr(c,result,"target",weatherProfileValue(state.to))','JS_SetPropertyStr(c,result,"time",JS_NewFloat64(c,state.time))','JS_SetPropertyStr(c,result,"transitionElapsed",JS_NewFloat64(c,state.transitionElapsed))','JS_SetPropertyStr(c,result,"transitionDuration",JS_NewFloat64(c,state.transitionDuration))','JS_SetPropertyStr(c,result,"lightningSequence",JS_NewString(c,std::to_string(state.lightning.sequence).c_str()))','JS_SetPropertyStr(c,result,"lightningPosition",preciseVector(state.lightning.position-world.Settings().worldOrigin))','JS_SetPropertyStr(c,result,"tornadoPosition",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))','JS_SetPropertyStr(c,result,"lightningFlash",JS_NewFloat64(c,sample.lightningFlash))'],reference:'docs/judasjs/weather.md'},
+ {binding:'weather.sample',declaration:'WeatherQuery',fields:['wind','up','altitude','airDensity','rain','snow','fog','cloudCoverage','tornadoPosition','lightningFlash'],nativeFile:'src/scripting/modules/Environment.cpp',needles:['JS_SetPropertyStr(c,result,"wind",preciseVector(sample.wind))','JS_SetPropertyStr(c,result,"up",preciseVector(sample.up))','JS_SetPropertyStr(c,result,"tornadoPosition",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))','{"altitude",sample.altitude}','{"airDensity",sample.airDensity}','{"rain",sample.profile.rain}','{"snow",sample.profile.snow}','{"fog",sample.profile.fog}','{"cloudCoverage",sample.profile.cloudCoverage}','{"lightningFlash",sample.lightningFlash}'],reference:'docs/judasjs/weather.md'},
+ {binding:'Entity.camera',declaration:'CameraInfo',fields:['near','far','enabled','width','height','frustum','clipPlane','targetWidth','targetHeight','targetError','fov','updateEveryFrames','renderLayers'],nativeFile:'src/scripting/modules/Rendering.cpp',needles:['JS_SetPropertyStr(c,o,"frustum"','JS_SetPropertyStr(c,o,"clipPlane"'],reference:'docs/judasjs/effects-camera.md'},
+ {binding:'Entity.planetSample',declaration:'PlanetSample',fields:['position','normal','height','distance'],nativeFile:'src/scripting/modules/Terrain.cpp',needles:['JS_SetPropertyStr(c,o,"position",preciseVector(sample.point))','JS_SetPropertyStr(c,o,"normal",preciseVector(sample.normal))','JS_SetPropertyStr(c,o,"height",JS_NewFloat64(c,sample.height))','JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,sample.distance))'],reference:'docs/judasjs/planetary-terrain.md'},
+ {binding:'Fracture.state.interfaces',declaration:'FractureInterfaceState',fields:['material','plasticTranslation','plasticRotation','plasticWork'],nativeFile:'src/scripting/modules/Mechanics.cpp',needles:['JS_SetPropertyStr(c,v,"material"','JS_SetPropertyStr(c,v,"plasticTranslation"','JS_SetPropertyStr(c,v,"plasticRotation"','JS_SetPropertyStr(c,v,"plasticWork"'],reference:'docs/judasjs/fracture.md'},
+ {binding:'Wheel.settings',declaration:'WheelSettings',fields:['part'],nativeFile:'src/scripting/modules/Mechanics.cpp',needles:['JS_SetPropertyStr(c,result,"part"'],reference:'docs/judasjs/wheels.md'},
  {binding:'Powertrain.settings.links[].connection',declaration:'PowertrainConnection',fields:['groups'],nativeFile:'src/PowertrainAuthoring.cpp',needles:['connection["groups"]'],reference:'docs/judasjs/powertrains.md'}
 ];
-function checkResultShapes(shapes){for(const row of shapes){let members=null;const visit=n=>{if(ts.isInterfaceDeclaration(n)&&name(n.name)===row.declaration)members=new Set(n.members.map(m=>name(m.name)));ts.forEachChild(n,visit);};visit(decl);if(!members||row.fields.some(k=>!members.has(k)))throw Error('Structured declaration drift: '+row.binding);const native=fs.readFileSync(path.join(root,row.nativeFile),'utf8');if(row.needles.some(k=>!native.includes(k)))throw Error('Structured native field drift: '+row.binding);}}
+// Compare C++ tokens rather than formatting; keep literal contents intact so a
+// renamed/removed result key still fails after ordinary source formatting.
+const compactCpp = source => source.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\/\/[^\n]*|\/\*[\s\S]*?\*\/|\s+/g,
+ token => token.startsWith('"') || token.startsWith("'") ? token : '');
+const containsShape = (source, row) => {
+ const compact = compactCpp(source);
+ return row.needles.every(needle => compact.includes(compactCpp(needle)));
+};
+// Follow the unchanged shape proof to its owning module/helper after extraction.
+for(const row of resultShapes){
+ const original=nativeSources.get(row.nativeFile);
+ if(original&&containsShape(original,row))continue;
+ const owners=[...nativeSources].filter(([,text])=>containsShape(text,row));
+ if(owners.length!==1)throw Error('Structured result needs one owning source: '+row.binding);
+ row.nativeFile=owners[0][0];
+}
+function checkResultShapes(shapes){for(const row of shapes){let members=null;const visit=n=>{if(ts.isInterfaceDeclaration(n)&&name(n.name)===row.declaration)members=new Set(n.members.map(m=>name(m.name)));ts.forEachChild(n,visit);};visit(decl);if(!members||row.fields.some(k=>!members.has(k)))throw Error('Structured declaration drift: '+row.binding);const native=fs.readFileSync(path.join(root,row.nativeFile),'utf8');if(!containsShape(native,row))throw Error('Structured native field drift: '+row.binding);}}
 checkResultShapes(resultShapes);
 let rejectedShape=false;try{checkResultShapes([{...resultShapes[0],fields:['inventedMaterialField']}]);}catch{rejectedShape=true;}if(!rejectedShape)throw Error('Structured field negative control accepted');
 const callableExceptions = {
@@ -166,7 +253,7 @@ function checkCallables(declarations) {
  }
 }
 checkCallables(types);
-const schema={checkpoint:'Current public module including Utility AI sensing/reservations and authoring, native 2D and consumer lifecycle diagnostics; source version in engine-version.json',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl + ScriptUtilityLibrary.h + ScriptUtilityAI.cpp + UtilityAI.cpp + ScriptAISensing.cpp + ScriptAIReservations.cpp',resultShapes,callables,symbols:symbols.map(k=>{
+const schema={checkpoint:'Current public module including Utility AI sensing/reservations and authoring, native 2D and consumer lifecycle diagnostics; source version in engine-version.json',authority:'src/scripting/Modules.json: compiled native modules, library fragments and shared value sources',resultShapes,callables,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k==='physics.cast2D')native=['cast2D'];
@@ -216,4 +303,4 @@ const typeContracts=path.join(root,'docs/judasjs/type-contracts.ts');
 const program=ts.createProgram([dtsPath,typeContracts,...examples],{allowJs:true,checkJs:true,noEmit:true,strict:true,target:ts.ScriptTarget.ES2020,lib:['lib.es2020.d.ts'],module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,skipLibCheck:false});
 const diagnostics=ts.getPreEmitDiagnostics(program);
 if(diagnostics.length){console.error(ts.formatDiagnosticsWithColorAndContext(diagnostics,{getCanonicalFileName:n=>n,getCurrentDirectory:()=>root,getNewLine:()=> '\n'}));process.exit(1);}
-console.log(JSON.stringify({publicSymbols:symbols.length,topLevelExports:rt.statements.filter(n=>n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)).length,nativeOperations:nativeOps.length,callbacks:stored.callbacks.length,typeChecker:ts.version,examples:examples.length,negativeDriftChecks:negativeChecks+1,structuredResultShapes:resultShapes.length,callableSignatures:callables.length,typeContractFixture:true,runtimeEnumeration:!!runtimeFile,pass:true},null,2));
+console.log(JSON.stringify({publicSymbols:symbols.length,topLevelExports:rt.statements.filter(n=>n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)).length,nativeOperations:nativeOps.length,registeredNativeOperations:registeredOps.size,callbacks:stored.callbacks.length,typeChecker:ts.version,examples:examples.length,negativeDriftChecks:negativeChecks+2,structuredResultShapes:resultShapes.length,callableSignatures:callables.length,typeContractFixture:true,runtimeEnumeration:!!runtimeFile,pass:true},null,2));

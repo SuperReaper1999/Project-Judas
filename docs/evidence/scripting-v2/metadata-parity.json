@@ -1,0 +1,13 @@
+{
+  "metadata_token_parity": true,
+  "metadata_tokens": 2703,
+  "impl_token_parity_except_declared_lazy_library_change": true,
+  "impl_tokens": 3749,
+  "coordinator_method_token_parity": true,
+  "coordinator_tokens": 8136,
+  "shared_counter_definition_count": 1,
+  "private_header_consumers": [
+    "src/ScriptSystem.cpp",
+    "src/scripting/ScriptMetadata.cpp"
+  ]
+}

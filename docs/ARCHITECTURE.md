@@ -15,7 +15,7 @@ do not contain every project, native source or historical evidence artifact.
 
 `UtilityAI.{h,cpp}` is a world-independent, bounded decision/timer core. It owns
 neither targets nor movements. `ScriptUtilityAI` lazily owns native agents per
-script entity/slot; the private `ScriptUtilityLibrary` wrapper owns synchronous
+script entity/slot; the private `scripting/library/AI.h` wrapper owns synchronous
 action callbacks. ScriptSystem retires them through its existing destruction,
 fault and reload boundaries. No-agent projects have no agent registry or
 background evaluation loop. Optional `AISensing` uses existing MK2 spatial queries
@@ -218,6 +218,10 @@ Native headers document actual interfaces, not a stable binary SDK ABI promise.
 JudasJS is the supported project scripting surface: trusted QuickJS modules,
 without Node/npm or unrestricted host modules. Optional TypeScript tooling gives
 completion for JavaScript; it is not a runtime dependency.
+Subsystem bindings and facade fragments are registered through one compiled
+[scripting catalogue](../src/scripting/Modules.json); the [Scripting V2 guide](judasjs/scripting-v2.md)
+explains runtime ownership and local extension. Metadata/property inspection
+lives in `scripting/ScriptMetadata.cpp`, sharing the private VM implementation.
 
 CMake separates subsystem targets under `cmake/targets/`, shares test helpers and
 finalizes SDK/validation after declarations. Build identity records version,

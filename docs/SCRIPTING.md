@@ -1,5 +1,7 @@
 # JavaScript gameplay and the M40 foundation
 
+[Native Scripting V2 architecture and extension guide](judasjs/scripting-v2.md).
+
 For complete current signatures, examples and lifetime rules use the
 [JudasJS reference](JUDASJS.md), [first project](FIRST_PROJECT.md) and
 [lifecycle guide](judasjs/lifecycle.md). This page explains the shared scripting
