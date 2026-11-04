@@ -11,7 +11,7 @@
 #include "Window.h"
 
 // Milestone 28: the engine's process-level services — the OS window and
-// GL context, the OpenGL 3.3 Core loader, the Renderer and its UI font,
+// GL context, the capability-qualified graphics loader, the Renderer and its UI font,
 // and (Milestone 30) the project's AssetDatabase with the ResourceManager
 // that turns its assets into GPU resources, and (Milestone 31) the
 // JobSystem those loads run on — brought up in one order and torn down in
@@ -53,6 +53,7 @@ public:
     AudioSystem& Audio() { return m_audio; }
     Window& GetWindow() { return m_window; }
     Renderer& GetRenderer() { return m_renderer; }
+    const GraphicsCapabilities& GraphicsCaps() const { return m_graphicsCapabilities; }
     AssetDatabase& Assets() { return m_assetDatabase; }
     const AssetDatabase& Assets() const { return m_assetDatabase; }
     ResourceManager& Resources() { return *m_resources; }
@@ -72,6 +73,7 @@ private:
     AudioSystem m_audio;
     Window m_window;
     Renderer m_renderer;
+    GraphicsCapabilities m_graphicsCapabilities;
     AssetDatabase m_assetDatabase;
     std::unique_ptr<JobSystem> m_jobs;
     std::unique_ptr<ResourceManager> m_resources;

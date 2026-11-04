@@ -24,42 +24,12 @@
 #include "Visibility.h"
 #include "VisualParticles.h"
 #include "GraphicsApi.h"
+#include "render/GraphicsCapabilities.h"
 
 struct WeatherSample;
 struct WeatherShelterGrid;
 
-// Opaque handles into Renderer's own GPU resource tables — the same
-// convention PhysicsWorld::BodyHandle already established (a small integer
-// id, kInvalid sentinel, no concrete type exposed to callers). Deliberately
-// not tied to a raw GLuint in any caller-visible way, so no file outside
-// Renderer.cpp needs to know what a VAO/VBO/texture object even is.
-struct MeshHandle {
-    static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
-    unsigned int id = kInvalidId;
-    unsigned generation=0;
-    bool IsValid() const { return id != kInvalidId; }
-};
-struct RenderTargetHandle {
-    unsigned int id = 0xFFFFFFFFu;
-    bool IsValid() const { return id != 0xFFFFFFFFu; }
-};
-
-struct MaterialHandle {unsigned id=0xFFFFFFFFu,generation=0;bool IsValid()const{return id!=0xFFFFFFFFu;}};
-struct EnvironmentHandle {unsigned id=0xFFFFFFFFu;bool IsValid()const{return id!=0xFFFFFFFFu;}};
-struct TextureHandle {
-    static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
-    unsigned int id = kInvalidId;
-    unsigned generation=0;
-    bool IsValid() const { return id != kInvalidId; }
-};
-// Borrowed immutable resources resolved for one render sample. A map replacement
-// is active only once Ready; an active invalid handle explicitly removes the map.
-// These handles are never serialized or owned by the instance.
-struct MaterialBinding {
-    MaterialHandle handle;MaterialOverride overrides;bool explicitAsset=false,failed=false;
-    std::array<TextureHandle,5> textures{};
-    std::array<bool,5> textureOverrides{};
-};
+#include "render/RenderTypes.h"
 
 // Milestone 30: what Renderer actually submitted since the last
 // ResetStats — counted at the draw call, not estimated. `drawCalls` and
@@ -93,6 +63,7 @@ struct RenderStats {
 class Renderer {
 public:
     bool Init();
+    const GraphicsCapabilities& Capabilities() const { return m_capabilities; }
     MaterialHandle CreateMaterial(const MaterialDefinition&);
     void DestroyMaterial(MaterialHandle);
     EnvironmentHandle CreateEnvironment(const EnvironmentData&);
@@ -399,6 +370,8 @@ public:
     void CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const;
 
 private:
+    GraphicsCapabilities m_capabilities;
+    bool CompileShader(GLenum type, const char* source, GLuint& result) const;
     struct WeatherGPU {
         struct Scratch { GLuint framebuffer=0,colour=0,depth=0;int width=0,height=0,cloudWidth=0,cloudHeight=0;std::uint64_t used=0; };
         std::vector<Scratch> targets;std::uint64_t targetClock=0;

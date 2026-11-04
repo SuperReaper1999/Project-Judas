@@ -7,6 +7,7 @@
 #include <tuple>
 #include "InputSystem.h"
 #include "WindowInputRegion.h"
+#include "render/GraphicsCapabilities.h"
 #include <optional>
 
 enum class Action {
@@ -43,6 +44,8 @@ public:
     // The event hook receives it; claimed keyboard input stays out of gameplay.
     void SetHostTextInput(bool enabled);
     bool Init(const char* title, int width, int height, bool visible = true);
+    const std::string& LastError() const { return m_lastError; }
+    GraphicsProfile RequestedGraphicsProfile() const { return m_graphicsProfile; }
     void Shutdown();
     // Desktop resize without polling/injecting input; reads back the actual native size.
     bool Resize(int width, int height, std::string& error);
@@ -140,6 +143,9 @@ public:
     void RequestTestSasToggle();
 
 private:
+    bool CreateDesktopGraphicsWindow(const char*, int width, int height, bool visible);
+    std::string m_lastError;
+    GraphicsProfile m_graphicsProfile = GraphicsProfile::Auto;
     void UpdateNativeTextInput();
     bool DispatchRumble(RumbleOperation,RumbleDevice,const std::string&,float,float,unsigned);
     bool m_hostTextInput=false;

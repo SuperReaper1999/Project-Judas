@@ -44,8 +44,85 @@ EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
 
 #include <cstdio>
 #include <cmath>
+#include <cstdlib>
+
+bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int height, bool visible) {
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    std::string failures;
+    const auto versions = DesktopGraphicsContextRequests(m_graphicsProfile);
+    for (const auto version : versions) {
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, version.major);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, version.minor);
+        SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 0);
+        // Failed attempts never flash a second application window. Each owns
+        // its native window and context, both retired before the next attempt.
+        m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                    width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+        std::string reason;
+        if (!m_window) {
+            reason = SDL_GetError();
+            if (reason.empty()) reason = "SDL window creation failed";
+        }
+        else {
+            m_glContext = SDL_GL_CreateContext(m_window);
+            if (!m_glContext) {
+                reason = SDL_GetError();
+                if (reason.empty()) reason = "SDL context creation failed";
+            } else if (SDL_GL_MakeCurrent(m_window, m_glContext) != 0) {
+                reason = SDL_GetError();
+                if (reason.empty()) reason = "SDL could not activate the new context";
+            }
+            else {
+                int major = 0, minor = 0;
+                if (SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major) != 0 ||
+                    SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor) != 0)
+                    reason = "the driver could not report the created context version";
+                else if (major < version.major || (major == version.major && minor < version.minor))
+                    reason = "the driver returned an older context than requested";
+            }
+        }
+        if (reason.empty()) {
+            SDL_GL_SetSwapInterval(1);
+            if (visible) SDL_ShowWindow(m_window);
+            std::fprintf(stderr, "[Graphics] created OpenGL %d.%d Core request (%s policy)\n",
+                         version.major, version.minor, GraphicsProfileName(m_graphicsProfile));
+            return true;
+        }
+        if (!failures.empty()) failures += "; ";
+        failures += std::to_string(version.major) + "." + std::to_string(version.minor) + ": " + reason;
+        std::fprintf(stderr, "[Graphics] OpenGL %d.%d request unavailable: %s\n",
+                     version.major, version.minor, reason.c_str());
+        if (m_glContext) {
+            SDL_GL_DeleteContext(m_glContext);
+            m_glContext = nullptr;
+        }
+        if (m_window) {
+            SDL_DestroyWindow(m_window);
+            m_window = nullptr;
+        }
+    }
+    m_lastError = "Cannot create a desktop OpenGL context for JUDAS_GL_PROFILE=" +
+                  std::string(GraphicsProfileName(m_graphicsProfile)) + ". Attempts: " + failures + ".";
+    if (m_graphicsProfile == GraphicsProfile::Modern)
+        m_lastError += " Modern rendering requires OpenGL 4.5+. Try JUDAS_GL_PROFILE=auto or portable.";
+    else
+        m_lastError += " Judas requires an OpenGL 3.3 Core driver and a working desktop graphics backend.";
+    return false;
+#else
+    (void)title; (void)width; (void)height; (void)visible;
+    return false; // Android and WebGL use their existing platform-owned path.
+#endif
+}
 
 bool Window::Init(const char* title, int width, int height, bool visible) {
+    m_lastError.clear();
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    if (!ParseGraphicsProfile(std::getenv("JUDAS_GL_PROFILE"), m_graphicsProfile, m_lastError)) {
+        std::fprintf(stderr, "%s\n", m_lastError.c_str());
+        return false;
+    }
+#endif
 #ifdef _WIN32
     SDL_SetMainReady();
 #endif
@@ -55,25 +132,23 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS,"0");
 #endif
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0) {
-        std::fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
+        m_lastError = "SDL_Init failed: " + std::string(SDL_GetError());
+        std::fprintf(stderr, "%s\n", m_lastError.c_str());
         return false;
     }
     m_sdlInitialized = true;
 
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-#else
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-#else
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 #endif
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 #ifdef __ANDROID__
     windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
@@ -83,9 +158,18 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width,
                                  height, windowFlags);
     if (!m_window) {
-        std::fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
+        m_lastError = "SDL_CreateWindow failed: " + std::string(SDL_GetError());
+        std::fprintf(stderr, "%s\n", m_lastError.c_str());
+        Shutdown();
         return false;
     }
+#else
+    if (!CreateDesktopGraphicsWindow(title, width, height, visible)) {
+        std::fprintf(stderr, "%s\n", m_lastError.c_str());
+        Shutdown();
+        return false;
+    }
+#endif
 
     std::string iconError;
     if (!ApplyAppIcon(m_window, "", iconError))
@@ -102,12 +186,15 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     attributes.proxyContextToMainThread=EMSCRIPTEN_WEBGL_CONTEXT_PROXY_DISALLOW;
     m_browserGLContext=emscripten_webgl_create_context("#canvas",&attributes);
     if(m_browserGLContext<=0||emscripten_webgl_make_context_current(m_browserGLContext)!=EMSCRIPTEN_RESULT_SUCCESS) {
-        std::fprintf(stderr,"Cannot create a WebGL2 context on the game worker\n");return false;
+        m_lastError = "Cannot create a WebGL2 context on the game worker";
+        std::fprintf(stderr,"%s\n", m_lastError.c_str());Shutdown();return false;
     }
-#else
+#elif defined(__ANDROID__)
     m_glContext = SDL_GL_CreateContext(m_window);
     if (!m_glContext) {
-        std::fprintf(stderr, "SDL_GL_CreateContext failed: %s\n", SDL_GetError());
+        m_lastError = "SDL_GL_CreateContext failed: " + std::string(SDL_GetError());
+        std::fprintf(stderr, "%s\n", m_lastError.c_str());
+        Shutdown();
         return false;
     }
 

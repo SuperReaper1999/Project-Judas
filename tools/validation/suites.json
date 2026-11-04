@@ -1,6 +1,9 @@
 {
   "format": 1,
   "tests": [
+    {"name":"graphics-capabilities","target":"judas_graphics_capabilities_tests","groups":["rendering","platform"]},
+    {"name":"renderer-shader-library","target":"judas_shader_library_tests","groups":["rendering","tooling"]},
+    {"name":"renderer-v2-submission","target":"judas_renderer_v2_submission_tests","groups":["rendering"],"args":["{output}/renderer-v2-submission"]},
     {"name":"editor-design-controls","target":"judas_editor_design_tests","groups":["editor","onboarding"]},
     {"name":"editor-hierarchy-selection","target":"judas_editor_hierarchy_selection_tests","groups":["editor","onboarding"]},
     {"name":"editor-hierarchy-creation","target":"judas_editor_hierarchy_creation_workflow_tests","groups":["editor","onboarding"]},

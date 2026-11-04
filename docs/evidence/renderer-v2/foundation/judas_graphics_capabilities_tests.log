@@ -1,0 +1,41 @@
+PASS absent override selects automatic desktop negotiation
+PASS portable override parses exactly
+PASS modern override parses exactly
+PASS invalid override is rejected usefully rather than silently selecting another profile
+PASS invalid override is rejected usefully rather than silently selecting another profile
+PASS invalid override is rejected usefully rather than silently selecting another profile
+PASS invalid override is rejected usefully rather than silently selecting another profile
+PASS invalid override is rejected usefully rather than silently selecting another profile
+PASS automatic context requests prefer 4.6 then 4.5 and retain the 3.3 fallback
+PASS forced portable requests only 3.3
+PASS forced modern never silently requests the portable context
+PASS complete desktop 4.6 capabilities qualify the modern tier
+PASS portable policy remains portable even if its driver returns a newer capable context
+PASS diagnostics distinguish selected policy from qualified hardware facilities
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS advertised modern version cannot hide a missing required entry-point group
+PASS automatic selection retains a usable portable path when a modern entry point is absent
+PASS 4.3 reports individual compute/storage/indirect support without inventing a complete 4.5 tier
+PASS forced modern rejects an older otherwise usable context with an actionable requirement
+PASS non-null function addresses alone do not imply version or extension support
+PASS verified extension facilities remain individually visible without claiming a 4.5 context
+PASS extension advertising without its entry points does not enable compute
+PASS GLES3/WebGL2 baseline cannot accidentally select desktop facilities from extension names
+PASS GLES3/WebGL2 baseline cannot accidentally select desktop facilities from extension names
+PASS no-current-context is explicitly rejected
+PASS older desktop contexts cannot pass the minimum rendering contract
+PASS invalid compute limits reject the facility despite version and function support
+PASS invalid shader-storage limits reject the facility
+PASS insufficient texture units cannot masquerade as a usable context
+Graphics capabilities: 40 checks, 0 failures

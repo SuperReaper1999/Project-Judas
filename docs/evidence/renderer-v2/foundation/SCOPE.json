@@ -1,0 +1,10 @@
+{
+  "baseline": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+  "images": {
+    "mixed": "pixel-identical",
+    "lights": "pixel-identical"
+  },
+  "nativeControls": "40 pure/52 native capabilities;47 shader;16 submission;44 architecture fresh-output",
+  "wrapperGateAttempt": "unavailable because concurrently authored untracked future-stage source fingerprints changed; not counted as a pass",
+  "historicalSource": "baseline/frozen is exact git archive, initial live source copy is not authoritative"
+}

@@ -1,0 +1,62 @@
+{
+  "baseline": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+  "originalRendererSha256": "4c15c5c94383f8f1dfd7af7b6a079238da288636c22db05c2c35c40c0c672725",
+  "sources": [
+    {
+      "name": "kVertexShaderSource",
+      "beforeSha256": "64f442d8acb8ecca8ce8acd556bd7ae2304e729757baebb79217b891a2258bfc",
+      "afterSha256": "64f442d8acb8ecca8ce8acd556bd7ae2304e729757baebb79217b891a2258bfc",
+      "equal": true,
+      "bytes": 3158
+    },
+    {
+      "name": "kFragmentShaderSource",
+      "beforeSha256": "7b2ec49025a671cdd3659245e37c227edea1485cd8f9862b0a46759467c3dbef",
+      "afterSha256": "7b2ec49025a671cdd3659245e37c227edea1485cd8f9862b0a46759467c3dbef",
+      "equal": true,
+      "bytes": 13493
+    },
+    {
+      "name": "kShadowVertexShaderSource",
+      "beforeSha256": "a856537ac9138a17fef6da184d12f1dce947f9a359e4d2905385243fadf0f425",
+      "afterSha256": "a856537ac9138a17fef6da184d12f1dce947f9a359e4d2905385243fadf0f425",
+      "equal": true,
+      "bytes": 1119
+    },
+    {
+      "name": "kShadowFragmentShaderSource",
+      "beforeSha256": "7f60b4fe72a592e01dfbf2976e800c8a8e733238a5a9606bf81c08c8d9f3a029",
+      "afterSha256": "7f60b4fe72a592e01dfbf2976e800c8a8e733238a5a9606bf81c08c8d9f3a029",
+      "equal": true,
+      "bytes": 850
+    },
+    {
+      "name": "kUIVertexShaderSource",
+      "beforeSha256": "66d8a61d984d376b804eab13825497facdba9f4cdc511fa617a6480e84854deb",
+      "afterSha256": "66d8a61d984d376b804eab13825497facdba9f4cdc511fa617a6480e84854deb",
+      "equal": true,
+      "bytes": 931
+    },
+    {
+      "name": "kUIFragmentShaderSource",
+      "beforeSha256": "b39b3b8aab832f4df8a5f48c2a6ba3c8b554dd68365476aff7451101943ba7f3",
+      "afterSha256": "b39b3b8aab832f4df8a5f48c2a6ba3c8b554dd68365476aff7451101943ba7f3",
+      "equal": true,
+      "bytes": 259
+    },
+    {
+      "name": "kDebugVertexShaderSource",
+      "beforeSha256": "faa7ec05c497fa1f9531f6358cf448813dee1ea9b54c02fd81b6a8faf3a4278a",
+      "afterSha256": "faa7ec05c497fa1f9531f6358cf448813dee1ea9b54c02fd81b6a8faf3a4278a",
+      "equal": true,
+      "bytes": 237
+    },
+    {
+      "name": "kDebugFragmentShaderSource",
+      "beforeSha256": "0816a90fd165c89c19fd178b6b705d7b235f24e05d3bcfb92dd3b984ccaf339e",
+      "afterSha256": "0816a90fd165c89c19fd178b6b705d7b235f24e05d3bcfb92dd3b984ccaf339e",
+      "equal": true,
+      "bytes": 105
+    }
+  ]
+}

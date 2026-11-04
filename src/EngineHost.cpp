@@ -78,7 +78,7 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
     m_resourceTrace = std::move(trace);
     m_renderer.SetResourceTrace(m_resourceTrace);
     if (!m_window.Init(title, width, height, visible)) {
-        outError = "Window initialization failed.";
+        outError = m_window.LastError().empty() ? "Window initialization failed." : m_window.LastError();
         return false;
     }
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
@@ -89,6 +89,9 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         return false;
     }
 #endif
+    m_graphicsCapabilities = QueryGraphicsCapabilities(m_window.RequestedGraphicsProfile());
+    if (!ValidateGraphicsCapabilities(m_graphicsCapabilities, outError)) return false;
+    std::fprintf(stderr, "%s\n", GraphicsCapabilitiesSummary(m_graphicsCapabilities).c_str());
     StartGpuDiagnostics();
     if (!m_renderer.Init()) {
         outError = "Renderer initialization failed.";
@@ -226,6 +229,7 @@ void EngineHost::Shutdown() {
     StopGpuDiagnostics();
     const bool hadContext = GraphicsContextCurrent();
     m_window.Shutdown();
+    m_graphicsCapabilities = {};
     if (hadContext && m_resourceTrace) {
         ResourceTraceEvent event{ResourceTracePoint::ContextDestroyed, {}, {}};
         event.contextCurrent = GraphicsContextCurrent();

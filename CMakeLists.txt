@@ -190,7 +190,7 @@ target_include_directories(judas_navigation_baker SYSTEM PRIVATE third_party/rec
 target_include_directories(judas_navigation_baker PUBLIC src)
 target_link_libraries(judas_navigation_baker PUBLIC judas_engine judas_navigation_backend)
 
-# GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
+# GLAD 2 exposes modern desktop facilities; context negotiation retains GL 3.3 fallback.
 if(ANDROID OR EMSCRIPTEN)
     add_library(judas_glad INTERFACE)
     if(ANDROID)
@@ -214,6 +214,15 @@ target_include_directories(judas_materials PUBLIC src)
 target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 
 include(cmake/JudasScripting.cmake)
+
+# Optional GPU facilities and shader ownership are shared by the engine and
+# the few historical tests that compile Window/Renderer directly.
+add_library(judas_graphics_caps STATIC src/render/GraphicsCapabilities.cpp)
+target_include_directories(judas_graphics_caps PUBLIC src)
+target_link_libraries(judas_graphics_caps PUBLIC judas_glad SDL2::SDL2)
+judas_warnings(judas_graphics_caps)
+set(JUDAS_RENDERER_SOURCES
+    src/Renderer.cpp src/render/ShaderLibrary.cpp)
 
 add_library(judas_engine STATIC
     ${JUDAS_SCRIPTING_SOURCES}
@@ -294,7 +303,7 @@ add_library(judas_engine STATIC
     src/InputDeviceHub.cpp
     src/LocalMultiplayer.cpp
     src/InputSystem.cpp
-    src/Renderer.cpp
+    ${JUDAS_RENDERER_SOURCES}
     src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/CharacterMotor.cpp
@@ -396,6 +405,8 @@ add_library(judas_engine STATIC
 target_include_directories(judas_engine PRIVATE "${JUDAS_SCRIPTING_GENERATED_DIR}")
 target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
 find_package(Threads REQUIRED)
+target_link_libraries(judas_engine PUBLIC judas_graphics_caps)
+
 add_library(judas_jobs STATIC src/JobSystem.cpp)
 target_include_directories(judas_jobs PUBLIC src)
 target_link_libraries(judas_jobs PUBLIC Threads::Threads)
@@ -780,14 +791,14 @@ add_executable(judas_ui_tests
     src/UIWidgets.cpp
     src/PauseMenu.cpp
     src/HUD.cpp
-    src/Renderer.cpp
+    ${JUDAS_RENDERER_SOURCES}
     src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
 )
 target_include_directories(judas_ui_tests PRIVATE src)
 target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
+target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
 judas_warnings(judas_ui_tests)
 
 # Milestone 14: headless tests for the dynamic-lighting math (src/
@@ -805,14 +816,14 @@ add_executable(judas_lighting_tests
     src/PauseMenu.cpp
     src/UIWidgets.cpp
     src/HUD.cpp
-    src/Renderer.cpp
+    ${JUDAS_RENDERER_SOURCES}
     src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
 )
 target_include_directories(judas_lighting_tests PRIVATE src)
 target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
+target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
 judas_warnings(judas_lighting_tests)
 
 # Milestone 15: headless tests for the shadow light-view/projection
@@ -850,7 +861,7 @@ add_executable(judas_interactable_tests
     src/PauseMenu.cpp
     src/UIWidgets.cpp
     src/HUD.cpp
-    src/Renderer.cpp
+    ${JUDAS_RENDERER_SOURCES}
     src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
@@ -859,7 +870,7 @@ add_executable(judas_interactable_tests
 )
 target_include_directories(judas_interactable_tests PRIVATE src)
 target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
+target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
 judas_warnings(judas_interactable_tests)
 
 # Milestone 17: player camera-pose math and view-input ownership. Pure CPU,
@@ -1402,7 +1413,7 @@ get_property(JUDAS_ICON_TARGETS DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
 foreach(JUDAS_ICON_TARGET IN LISTS JUDAS_ICON_TARGETS)
     get_target_property(JUDAS_ICON_SOURCES ${JUDAS_ICON_TARGET} SOURCES)
     if("src/Window.cpp" IN_LIST JUDAS_ICON_SOURCES)
-        target_link_libraries(${JUDAS_ICON_TARGET} PRIVATE judas_app_icon)
+        target_link_libraries(${JUDAS_ICON_TARGET} PRIVATE judas_app_icon judas_graphics_caps)
         if(NOT "src/InputDeviceHub.cpp" IN_LIST JUDAS_ICON_SOURCES)
             target_sources(${JUDAS_ICON_TARGET} PRIVATE src/InputDeviceHub.cpp)
         endif()
@@ -1968,6 +1979,13 @@ judas_add_engine_test(judas_editor_hierarchy_selection_tests tests/EditorHierarc
 judas_add_engine_test(judas_editor_hierarchy_creation_workflow_tests tests/EditorHierarchyCreationWorkflowTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_asset_thumbnail_tests tests/EditorAssetThumbnailTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_design_tests tests/EditorDesignTests.cpp LIBRARIES judas_editor_design)
+
+judas_add_engine_test(judas_graphics_capabilities_tests tests/GraphicsCapabilitiesTests.cpp)
+judas_add_engine_test(judas_shader_library_tests tests/ShaderLibraryTests.cpp)
+judas_add_engine_test(judas_renderer_v2_submission_tests tests/RendererV2SubmissionTests.cpp)
+add_executable(judas_renderer_v2_benchmark tests/RendererV2Benchmark.cpp)
+target_link_libraries(judas_renderer_v2_benchmark PRIVATE judas_engine)
+judas_warnings(judas_renderer_v2_benchmark)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)
