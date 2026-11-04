@@ -22,8 +22,7 @@ void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &pre
     const auto *viewport = ImGui::GetMainViewport();
     const float scale = std::max(.85f, ImGui::GetIO().FontGlobalScale);
     const float toolbarHeight = std::min(42.f * scale, viewport->WorkSize.y);
-    const float statusHeight =
-        std::min(25.f * scale, std::max(0.f, viewport->WorkSize.y - toolbarHeight));
+    const float statusHeight = std::min(25.f * scale, std::max(0.f, viewport->WorkSize.y - toolbarHeight));
     const ImVec2 position{viewport->WorkPos.x, viewport->WorkPos.y + toolbarHeight};
     const ImVec2 size{viewport->WorkSize.x,
                       std::max(1.f, viewport->WorkSize.y - toolbarHeight - statusHeight)};
@@ -41,10 +40,10 @@ void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &pre
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0, 0});
     ImGui::Begin("##JudasWorkspaceDockHost", nullptr,
-                 ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
-                     ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus |
-                     ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoSavedSettings);
+                 ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                     ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+                     ImGuiWindowFlags_NoSavedSettings);
     ImGui::PopStyleVar(3);
     dockspace = ImGui::GetID("Judas.Workspace.Dockspace");
     std::string preset;
@@ -78,8 +77,7 @@ void EditorWorkspace::BuildDefault(const std::string &workspace, ImVec2 size) {
         ImGui::DockBuilderDockWindow("JudasJS developer tools", center);
     } else if (workspace == "Animation") {
         ImGui::DockBuilderDockWindow("Animation timeline", bottom);
-        ImGui::DockBuilderDockWindow("Animation retargeting | IMPORT > MAP > PREVIEW > BAKE",
-                                     right);
+        ImGui::DockBuilderDockWindow("Animation retargeting | IMPORT > MAP > PREVIEW > BAKE", right);
     } else if (workspace == "UI") {
         ImGui::DockBuilderDockWindow("Asset Browser", center);
     } else if (workspace == "Audio") {
@@ -102,14 +100,12 @@ void EditorWorkspace::RecoverFloatingWindows() {
     const auto *main = ImGui::GetMainViewport();
     const auto &monitors = ImGui::GetPlatformIO().Monitors;
     const auto intersects = [](ImVec2 position, ImVec2 size, ImVec2 workPosition, ImVec2 workSize) {
-        return position.x < workPosition.x + workSize.x &&
-               position.y < workPosition.y + workSize.y && position.x + size.x > workPosition.x &&
-               position.y + std::min(size.y, 32.f) > workPosition.y;
+        return position.x < workPosition.x + workSize.x && position.y < workPosition.y + workSize.y &&
+               position.x + size.x > workPosition.x && position.y + std::min(size.y, 32.f) > workPosition.y;
     };
     for (auto *window : context->Windows) {
-        if (window->DockId ||
-            (window->Flags & (ImGuiWindowFlags_ChildWindow | ImGuiWindowFlags_Popup |
-                              ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoSavedSettings)))
+        if (window->DockId || (window->Flags & (ImGuiWindowFlags_ChildWindow | ImGuiWindowFlags_Popup |
+                                                ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoSavedSettings)))
             continue;
         bool visible = false;
         if (monitors.empty())
@@ -118,8 +114,7 @@ void EditorWorkspace::RecoverFloatingWindows() {
             for (const auto &monitor : monitors)
                 visible |= intersects(window->Pos, window->Size, monitor.WorkPos, monitor.WorkSize);
         if (!visible || !std::isfinite(window->Pos.x) || !std::isfinite(window->Pos.y)) {
-            ImGui::SetWindowPos(window, {main->WorkPos.x + 35, main->WorkPos.y + 35},
-                                ImGuiCond_Always);
+            ImGui::SetWindowPos(window, {main->WorkPos.x + 35, main->WorkPos.y + 35}, ImGuiCond_Always);
             ImGui::SetWindowSize(
                 window,
                 {std::min(std::max(200.f, window->Size.x), std::max(200.f, main->WorkSize.x - 70)),

@@ -16,5 +16,6 @@ struct EditorAssetBrowserState {
 };
 void DrawAssetList(EditorDocument &, EditorPanelState &, EditorRequests &, const AssetDatabase &);
 void DrawAssetDetails(EditorDocument &, EditorPanelState &, EditorRequests &, const AssetDatabase &);
-void DrawAssetImportTools(EditorDocument &, EditorPanelState &, EditorRequests &, const AssetDatabase &, bool revealModelTools = false);
+void DrawAssetImportTools(EditorDocument &, EditorPanelState &, EditorRequests &, const AssetDatabase &,
+                          bool revealModelTools = false);
 void DrawUIAssetDocument(const AssetRecord &, EditorPanelState &);

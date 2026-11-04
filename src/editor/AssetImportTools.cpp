@@ -97,16 +97,15 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                     text("Compatible motion source", state.modelMotionSource);
                     text("Source take", state.modelMotionTake);
                     text("Clip name", state.modelMotionName);
-                    if (state.mode == EditorMode::Edit &&
-                        ImGui::Button("Copy / add compatible motion")) {
+                    if (state.mode == EditorMode::Edit && ImGui::Button("Copy / add compatible motion")) {
                         auto root = std::filesystem::path(state.project->RootDir());
                         auto directory = (root / recipe.at("source").get<std::string>()).parent_path();
                         auto source = std::filesystem::path(state.modelMotionSource);
                         auto owned = directory / source.filename();
                         if (std::filesystem::weakly_canonical(source) !=
                             std::filesystem::weakly_canonical(owned))
-                            std::filesystem::copy_file(
-                                source, owned, std::filesystem::copy_options::overwrite_existing);
+                            std::filesystem::copy_file(source, owned,
+                                                       std::filesystem::copy_options::overwrite_existing);
                         recipe["motions"].push_back(
                             {{"source", owned.lexically_relative(root).generic_string()},
                              {"take", state.modelMotionTake},
@@ -145,16 +144,15 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                                 changed = true;
                             }
                             for (auto &part : preview.primitives) {
-                                bool selected = all || std::find(parts.begin(), parts.end(),
-                                                                 part.part) != parts.end();
+                                bool selected =
+                                    all || std::find(parts.begin(), parts.end(), part.part) != parts.end();
                                 if (ImGui::Checkbox(part.part.c_str(), &selected)) {
                                     if (all) {
                                         for (auto &p : preview.primitives)
                                             parts.push_back(p.part);
                                     }
                                     if (selected) {
-                                        if (std::find(parts.begin(), parts.end(), part.part) ==
-                                            parts.end())
+                                        if (std::find(parts.begin(), parts.end(), part.part) == parts.end())
                                             parts.push_back(part.part);
                                     } else
                                         parts.erase(std::remove(parts.begin(), parts.end(), part.part),
@@ -176,8 +174,7 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                     if (recipe.contains("clips"))
                         for (auto &clip : recipe["clips"]) {
                             ImGui::PushID(clip.at("sourceClip").get<std::string>().c_str());
-                            std::string name =
-                                clip.value("name", clip.at("sourceClip").get<std::string>());
+                            std::string name = clip.value("name", clip.at("sourceClip").get<std::string>());
                             text("Clip output name", name);
                             if (clip.value("name", std::string()) != name) {
                                 clip["name"] = name;
@@ -238,8 +235,7 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                             if (ImGui::InputFloat3("Extract twist around model axis (zero = none)",
                                                    &rotationAxis.x)) {
                                 if (glm::length(rotationAxis) > 1e-6f)
-                                    root["rotationAxis"] = {rotationAxis.x, rotationAxis.y,
-                                                            rotationAxis.z};
+                                    root["rotationAxis"] = {rotationAxis.x, rotationAxis.y, rotationAxis.z};
                                 else
                                     root.erase("rotationAxis");
                                 changed = true;
@@ -346,10 +342,10 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                                       p.part) == state.modelPreviewHidden.end();
                         if (ImGui::Checkbox(p.part.c_str(), &visible)) {
                             if (visible)
-                                state.modelPreviewHidden.erase(
-                                    std::remove(state.modelPreviewHidden.begin(),
-                                                state.modelPreviewHidden.end(), p.part),
-                                    state.modelPreviewHidden.end());
+                                state.modelPreviewHidden.erase(std::remove(state.modelPreviewHidden.begin(),
+                                                                           state.modelPreviewHidden.end(),
+                                                                           p.part),
+                                                               state.modelPreviewHidden.end());
                             else
                                 state.modelPreviewHidden.push_back(p.part);
                         }
@@ -359,8 +355,8 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                     "= extracted root track. These are preview axes, not simulation gravity.");
                 if (state.modelPreviewToken)
                     ImGui::Image((ImTextureID)(intptr_t)state.modelPreviewToken,
-                                 ImVec2(std::min(600.f, ImGui::GetContentRegionAvail().x), 360),
-                                 ImVec2(0, 1), ImVec2(1, 0));
+                                 ImVec2(std::min(600.f, ImGui::GetContentRegionAvail().x), 360), ImVec2(0, 1),
+                                 ImVec2(1, 0));
                 for (auto &diagnostic : t.report.diagnostics)
                     ImGui::TextWrapped("%s [%s]: %s. %s", diagnostic.severity.c_str(),
                                        diagnostic.code.c_str(), diagnostic.message.c_str(),
@@ -410,8 +406,8 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
             auto path = directory / (std::filesystem::path(source).stem().string() + ".judasenv");
             unsigned n = 2;
             while (std::filesystem::exists(path))
-                path = directory / (std::filesystem::path(source).stem().string() + std::to_string(n++) +
-                                    ".judasenv");
+                path = directory /
+                       (std::filesystem::path(source).stem().string() + std::to_string(n++) + ".judasenv");
             EnvironmentData data;
             std::string error;
             if (BakeEnvironment(source, unsigned(width), unsigned(samples), data, error) &&
@@ -432,8 +428,7 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
         if (ImGui::BeginCombo("Registered source",
                               selected ? selected->relativePath.c_str() : "Select OBJ/glTF/GLB")) {
             for (auto &[id, a] : db.Records())
-                if (a.type == AssetType::Mesh &&
-                    ImGui::Selectable(a.relativePath.c_str(), id == sourceId))
+                if (a.type == AssetType::Mesh && ImGui::Selectable(a.relativePath.c_str(), id == sourceId))
                     sourceId = id;
             ImGui::EndCombo();
         }
@@ -445,11 +440,9 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
         ImGui::DragFloat3("Baked translation", &offset.x, .01f);
         ImGui::DragFloat3("Baked rotation degrees", &angles.x, .5f);
         ImGui::InputText("Output relative to assets", output, sizeof(output));
-        ImGui::Checkbox("Explicit removal of true degenerates",
-                        &state.collisionCleanup.removeDegenerates);
+        ImGui::Checkbox("Explicit removal of true degenerates", &state.collisionCleanup.removeDegenerates);
         ImGui::Checkbox("Explicit orient connected patches", &state.collisionCleanup.orientPatches);
-        ImGui::InputDouble("Collision-only weld metres (0..0.001)",
-                           &state.collisionCleanup.weldTolerance);
+        ImGui::InputDouble("Collision-only weld metres (0..0.001)", &state.collisionCleanup.weldTolerance);
         if (!state.collisionDiagnostic.code.empty()) {
             auto &d = state.collisionDiagnostic;
             ImGui::TextWrapped("%s: %s / source face %u / point %.4f %.4f %.4f", d.code.c_str(),
@@ -487,17 +480,16 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
                 std::filesystem::create_directories(destination.parent_path(), ec);
                 if (ec)
                     error = ec.message();
-                else if (CookImportedCollisionFile(selected->path, sourceId, settings,
-                                                   state.collisionCleanup, destination.string(), asset,
-                                                   cleanupReport, state.collisionDiagnostic, error)) {
+                else if (CookImportedCollisionFile(selected->path, sourceId, settings, state.collisionCleanup,
+                                                   destination.string(), asset, cleanupReport,
+                                                   state.collisionDiagnostic, error)) {
                     requests.trackAssetPath = destination.string();
                     for (auto &[id, a] : db.Records())
                         if (a.path == destination.string() && state.resources)
                             state.resources->Invalidate(id);
                 }
             }
-            state.status =
-                error.empty() ? "Cooked collision; assign it in Body / Cooked geometry" : error;
+            state.status = error.empty() ? "Cooked collision; assign it in Body / Cooked geometry" : error;
         }
         if (ImGui::Button("Cook and assign selected Body")) {
             CollisionCookSettings settings;
@@ -538,9 +530,8 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
         char source[512], destination[256];
         CopyToBuffer(state.importSourceInput, source, sizeof(source));
         CopyToBuffer(state.importDestinationInput, destination, sizeof(destination));
-        if (ImGui::InputTextWithHint("Source file",
-                                     "/path/to/model.obj | texture.png | font.ttf | sound.wav", source,
-                                     sizeof(source)))
+        if (ImGui::InputTextWithHint("Source file", "/path/to/model.obj | texture.png | font.ttf | sound.wav",
+                                     source, sizeof(source)))
             state.importSourceInput = source;
         if (ImGui::InputTextWithHint("Destination (in assets)",
                                      "models/model.obj (empty keeps the file name)", destination,

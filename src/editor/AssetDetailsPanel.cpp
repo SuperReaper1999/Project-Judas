@@ -81,17 +81,15 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                     "remain intact. Drag the cooked asset onto a normal mesh/texture field.");
                 if (record->type == AssetType::Texture) {
                     ImGui::InputInt("Maximum dimension", &maxSize);
-                    ImGui::Combo("Texture role", &semantic,
-                                 "sRGB colour\0Linear data\0Tangent normal\0");
+                    ImGui::Combo("Texture role", &semantic, "sRGB colour\0Linear data\0Tangent normal\0");
                     ImGui::Checkbox("Lossless RGBA (no BC)", &lossless);
                 } else {
                     ImGui::SliderInt("LOD levels", &levels, 1, 8);
                     ImGui::DragFloat("Maximum object-space error", &error, .005f, 0, 10);
                     ImGui::DragFloat("Screen error pixels", &pixels, .1f, 0, 32);
                 }
-                ImGui::BeginDisabled(record->missing || record->readOnly ||
-                                     state.mode != EditorMode::Edit || bool(state.assetCookTask) ||
-                                     !state.importJobs);
+                ImGui::BeginDisabled(record->missing || record->readOnly || state.mode != EditorMode::Edit ||
+                                     bool(state.assetCookTask) || !state.importJobs);
                 if (ImGui::Button(cooked ? "Recook recorded source" : "Cook optimized copy")) {
                     auto task = std::make_shared<AssetCookPanelTask>();
                     task->root = state.project->RootDir();
@@ -111,11 +109,10 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                         }
                     } else {
                         auto path = std::filesystem::path(record->path);
-                        task->destination =
-                            (path.parent_path() /
-                             (path.stem().string() + ".packed" +
-                              (record->type == AssetType::Mesh ? ".judasmesh" : ".judastex")))
-                                .string();
+                        task->destination = (path.parent_path() /
+                                             (path.stem().string() + ".packed" +
+                                              (record->type == AssetType::Mesh ? ".judasmesh" : ".judastex")))
+                                                .string();
                     }
                     if (!task->destination.empty()) {
                         AssetCookSettings settings;
@@ -128,8 +125,8 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                         task->job = state.importJobs->Submit(
                             [task, settings](JobContext &context) {
                                 if (!context.CancelRequested())
-                                    PrepareAssetCook(task->source, task->destination, settings,
-                                                     task->bytes, task->recipe, task->error);
+                                    PrepareAssetCook(task->source, task->destination, settings, task->bytes,
+                                                     task->recipe, task->error);
                                 else
                                     task->error = "Cook cancelled";
                                 task->ready.store(true, std::memory_order_release);
@@ -148,9 +145,8 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                     std::string reason;
                     bool fresh = CookedAssetFresh(record->path, reason);
                     state.status =
-                        fresh
-                            ? "Cook generation current (or runtime-only asset without authoring recipe)"
-                            : reason;
+                        fresh ? "Cook generation current (or runtime-only asset without authoring recipe)"
+                              : reason;
                 }
                 ImGui::TreePop();
             }
@@ -172,8 +168,7 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
             if (ImGui::TreeNode("Current scene users")) {
                 for (auto id : users)
                     if (auto *user = doc.GetScene().Find(id))
-                        if (ImGui::Selectable(
-                                (user->name + " ##asset-user" + std::to_string(id)).c_str()))
+                        if (ImGui::Selectable((user->name + " ##asset-user" + std::to_string(id)).c_str()))
                             doc.Select(id);
                 ImGui::TreePop();
             }
@@ -218,8 +213,7 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                     auto source = db.Find(asset.sourceAsset);
                     bool stale =
                         !source || source->missing || CollisionAssetStale(asset, source->path, error);
-                    ImGui::TextWrapped("%s",
-                                       stale ? error.c_str() : "Source/settings fingerprint current");
+                    ImGui::TextWrapped("%s", stale ? error.c_str() : "Source/settings fingerprint current");
                     if (ImGui::Button("Rebake saved source/settings") && source) {
                         CollisionCookSettings settings;
                         settings.convex = asset.convex;
@@ -251,8 +245,7 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                     selected = record->id;
                     LoadMaterial(record->path, draft, error);
                 }
-                if (ImGui::CollapsingHeader("Edit SHARED material source",
-                                            ImGuiTreeNodeFlags_DefaultOpen)) {
+                if (ImGui::CollapsingHeader("Edit SHARED material source", ImGuiTreeNodeFlags_DefaultOpen)) {
                     int model = int(draft.model), alpha = int(draft.alpha);
                     const char *models[] = {"Legacy", "PBR metallic / roughness", "Unlit"};
                     const char *modes[] = {"Opaque", "Alpha cutout", "Alpha blend"};
@@ -402,8 +395,7 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                 SceneObjectId root = 0;
                 if (LoadPrefab(db, record->id, source, error)) {
                     doc.BeginEdit();
-                    if (InstantiatePrefab(doc.GetScene(), source, record->id, SceneTransform{}, root,
-                                          error))
+                    if (InstantiatePrefab(doc.GetScene(), source, record->id, SceneTransform{}, root, error))
                         doc.Select(root);
                     doc.CommitEdit(false);
                 }

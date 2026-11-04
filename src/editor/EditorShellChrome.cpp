@@ -25,8 +25,8 @@ using namespace EditorPanelWidgets;
 #include "WorldStreaming.h"
 
 namespace {
-void WorkspaceSplitter(const char *id, const EditorWorkspaceRect &rectangle, bool vertical,
-                       float &dimension, float direction, float minimum, float maximum) {
+void WorkspaceSplitter(const char *id, const EditorWorkspaceRect &rectangle, bool vertical, float &dimension,
+                       float direction, float minimum, float maximum) {
     if (rectangle.size.x <= 0 || rectangle.size.y <= 0)
         return;
     PlaceWorkspacePanel(rectangle);
@@ -41,15 +41,12 @@ void WorkspaceSplitter(const char *id, const EditorWorkspaceRect &rectangle, boo
     const bool active = ImGui::IsItemActive();
     if (active || ImGui::IsItemHovered()) {
         ImGui::SetMouseCursor(vertical ? ImGuiMouseCursor_ResizeEW : ImGuiMouseCursor_ResizeNS);
-        const auto color =
-            ImGui::GetColorU32(active ? ImGuiCol_SeparatorActive : ImGuiCol_SeparatorHovered);
-        ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(),
-                                                  color);
+        const auto color = ImGui::GetColorU32(active ? ImGuiCol_SeparatorActive : ImGuiCol_SeparatorHovered);
+        ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), color);
     }
     if (active) {
         const auto delta = ImGui::GetIO().MouseDelta;
-        dimension =
-            std::clamp(dimension + direction * (vertical ? delta.x : delta.y), minimum, maximum);
+        dimension = std::clamp(dimension + direction * (vertical ? delta.x : delta.y), minimum, maximum);
     }
     ImGui::End();
     ImGui::PopStyleVar(3);
@@ -62,12 +59,10 @@ void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize)
     const bool rails = state.mode == EditorMode::Edit || state.playPaused;
     state.workspace = CalculateEditorWorkspaceLayout(
         displaySize, state.hierarchyWidth, state.inspectorWidth, state.assetBrowserHeight,
-        state.showAssetBrowser && state.mode == EditorMode::Edit, rails,
-        ImGui::GetIO().FontGlobalScale);
+        state.showAssetBrowser && state.mode == EditorMode::Edit, rails, ImGui::GetIO().FontGlobalScale);
 }
 
-void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state,
-                               EditorRequests &requests,
+void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                                const std::function<void()> &workspaceSelector) {
     const bool editing = state.mode == EditorMode::Edit;
     const auto display = ImGui::GetIO().DisplaySize;
@@ -120,8 +115,7 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state,
         const auto tool = [&](const char *label, GizmoMode mode, const char *hint) {
             const bool selected = state.gizmoMode == mode;
             if (selected)
-                ImGui::PushStyleColor(ImGuiCol_Button,
-                                      ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+                ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
             if (ImGui::Button(label))
                 state.gizmoMode = mode;
             if (selected)
@@ -135,8 +129,7 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state,
     }
     if (ImGui::Button(logicalWidth >= 1000 ? "Options..." : "Transform..."))
         ImGui::OpenPopup("toolbarTransform");
-    ToolbarHint(
-        "Transform tools, world/local axes and snapping; W / E / R / X shortcuts remain available");
+    ToolbarHint("Transform tools, world/local axes and snapping; W / E / R / X shortcuts remain available");
     if (ImGui::BeginPopup("toolbarTransform")) {
         if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate))
             state.gizmoMode = GizmoMode::Translate;
@@ -146,8 +139,7 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state,
             state.gizmoMode = GizmoMode::Scale;
         ImGui::Separator();
         if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
-            state.gizmoSpace =
-                state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+            state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
         ImGui::MenuItem("Snap", "hold Ctrl", &state.gizmoSnap);
         ImGui::EndPopup();
     }
@@ -192,20 +184,18 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state,
         }
     } else if (logicalWidth >= 1100) {
         ImGui::SameLine();
-        ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(),
-                            doc.IsDirty() ? " *" : "");
+        ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(), doc.IsDirty() ? " *" : "");
     }
     ImGui::End();
     ImGui::PopStyleVar();
 
     if (!state.dockingEnabled && state.workspace.showRails) {
-        WorkspaceSplitter("##hierarchySplitter", state.workspace.leftSplitter, true,
-                          state.hierarchyWidth, 1.0f, 150.0f, std::max(150.0f, display.x * 0.40f));
-        WorkspaceSplitter("##inspectorSplitter", state.workspace.rightSplitter, true,
-                          state.inspectorWidth, -1.0f, 220.0f, std::max(220.0f, display.x * 0.46f));
-        WorkspaceSplitter("##assetsSplitter", state.workspace.bottomSplitter, false,
-                          state.assetBrowserHeight, -1.0f, 80.0f,
-                          std::max(80.0f, display.y * 0.55f));
+        WorkspaceSplitter("##hierarchySplitter", state.workspace.leftSplitter, true, state.hierarchyWidth,
+                          1.0f, 150.0f, std::max(150.0f, display.x * 0.40f));
+        WorkspaceSplitter("##inspectorSplitter", state.workspace.rightSplitter, true, state.inspectorWidth,
+                          -1.0f, 220.0f, std::max(220.0f, display.x * 0.46f));
+        WorkspaceSplitter("##assetsSplitter", state.workspace.bottomSplitter, false, state.assetBrowserHeight,
+                          -1.0f, 80.0f, std::max(80.0f, display.y * 0.55f));
     }
     if (!state.dockingEnabled)
         DrawEditorNavigationHelp(state, requests);
@@ -219,9 +209,8 @@ void DrawEditorNavigationHelp(EditorPanelState &state, EditorRequests &requests)
     if (ImGui::Begin("Editor help", &state.showNavigationHelp)) {
         ImGui::TextUnformatted("SCENE NAVIGATION");
         ImGui::Separator();
-        ImGui::TextWrapped(
-            "Wheel: zoom in / out. Middle drag: pan. Right drag: look; hold WASD / Q "
-            "/ E to fly. Shift flies faster. F frames selection.");
+        ImGui::TextWrapped("Wheel: zoom in / out. Middle drag: pan. Right drag: look; hold WASD / Q "
+                           "/ E to fly. Shift flies faster. F frames selection.");
         ImGui::Spacing();
         ImGui::TextWrapped("Start a camera drag inside the scene view. Release, Escape or leaving "
                            "the app ends capture.");
@@ -231,17 +220,14 @@ void DrawEditorNavigationHelp(EditorPanelState &state, EditorRequests &requests)
         ImGui::TextWrapped("Right-click hierarchy space to create an object, or a row to create a "
                            "child. Player presets include an editable JavaScript controller and "
                            "camera; V switches first/third person.");
-        ImGui::TextWrapped(
-            "Select an object, then use Create script & attach or Attach existing script in "
-            "the "
-            "Inspector. Edit script opens its source. Save source and scene before Play.");
-        ImGui::TextWrapped(
-            "W / E / R: move / rotate / scale. X: local / world axes. Ctrl: snap. "
-            "Left click selects; Ctrl adds; Shift selects a range in the hierarchy.");
+        ImGui::TextWrapped("Select an object, then use Create script & attach or Attach existing script in "
+                           "the "
+                           "Inspector. Edit script opens its source. Save source and scene before Play.");
+        ImGui::TextWrapped("W / E / R: move / rotate / scale. X: local / world axes. Ctrl: snap. "
+                           "Left click selects; Ctrl adds; Shift selects a range in the hierarchy.");
         ImGui::Spacing();
-        ImGui::TextWrapped(
-            "Ctrl+S: save. Ctrl+Z / Ctrl+Y: undo / redo. Ctrl+D: duplicate. F5: Play "
-            "/ Stop. Drag the dividers to resize this workspace.");
+        ImGui::TextWrapped("Ctrl+S: save. Ctrl+Z / Ctrl+Y: undo / redo. Ctrl+D: duplicate. F5: Play "
+                           "/ Stop. Drag the dividers to resize this workspace.");
         ImGui::Separator();
         if (ImGui::Button("JudasJS reference"))
             requests.openJudasJS = true;
@@ -277,8 +263,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
             ImGui::SetWindowFocus("Build & Export");
         }
         if (state.experimentalBrowserSupport &&
-            ImGui::MenuItem("Export browser game (Experimental)...", nullptr, false,
-                            editing && hasProject)) {
+            ImGui::MenuItem("Export browser game (Experimental)...", nullptr, false, editing && hasProject)) {
             state.showBrowserExport = true;
         }
         ImGui::Separator();
@@ -316,8 +301,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         if (ImGui::MenuItem("Scale gizmo", "R", state.gizmoMode == GizmoMode::Scale))
             state.gizmoMode = GizmoMode::Scale;
         if (ImGui::MenuItem("Local space", "X", state.gizmoSpace == GizmoSpace::Local)) {
-            state.gizmoSpace =
-                state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+            state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
         }
         ImGui::MenuItem("Snap (hold Ctrl)", nullptr, &state.gizmoSnap);
         ImGui::Separator();
@@ -336,8 +320,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         ImGui::EndMenu();
     }
     if (!windowMenu && ImGui::BeginMenu("View")) {
-        ImGui::MenuItem("Editor preferences (appearance / layouts)", nullptr,
-                        &state.showEditorPreferences);
+        ImGui::MenuItem("Editor preferences (appearance / layouts)", nullptr, &state.showEditorPreferences);
         ImGui::Separator();
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
@@ -351,14 +334,12 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         }
         if (ImGui::BeginMenu("2D authoring")) {
             ImGui::MenuItem("Tilemap painter", nullptr, &state.showTilemapEditor);
-            ImGui::MenuItem("Sprite sheets and frame animation", nullptr,
-                            &state.showSpriteSheetEditor);
+            ImGui::MenuItem("Sprite sheets and frame animation", nullptr, &state.showSpriteSheetEditor);
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Animation tools")) {
             ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
-            ImGui::MenuItem("Sprite sheets and frame animation", nullptr,
-                            &state.showSpriteSheetEditor);
+            ImGui::MenuItem("Sprite sheets and frame animation", nullptr, &state.showSpriteSheetEditor);
 
             ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
             ImGui::EndMenu();
@@ -429,9 +410,8 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("World", !editing)) {
-        ImGui::TextDisabled("%s", state.worldStatePath.empty()
-                                      ? "(no world-state path: save the scene first)"
-                                      : state.worldStatePath.c_str());
+        ImGui::TextDisabled("%s", state.worldStatePath.empty() ? "(no world-state path: save the scene first)"
+                                                               : state.worldStatePath.c_str());
         if (ImGui::MenuItem("Save world state", "F6", false, !state.worldStatePath.empty()))
             requests.saveWorldState = true;
         if (ImGui::MenuItem("Delete world state (pristine baseline next Play)", "F7", false,
@@ -469,8 +449,7 @@ void DrawStatusBar(EditorDocument &doc, EditorPanelState &state) {
     ImGui::Begin("##status", nullptr,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                      ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings);
-    const std::string message =
-        std::string(doc.IsDirty() ? "Unsaved edits  |  " : "") + state.status;
+    const std::string message = std::string(doc.IsDirty() ? "Unsaved edits  |  " : "") + state.status;
     ImGui::TextUnformatted(message.c_str());
     if (ImGui::IsItemHovered())
         ImGui::SetTooltip("%s\n%s", doc.Path().empty() ? "Unsaved scene" : doc.Path().c_str(),

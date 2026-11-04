@@ -31,7 +31,7 @@ class ProjectSettingsHistory;
 enum class EditorMode { Edit, Play };
 
 // The Asset Browser's drag payload type: the dragged asset's id bytes.
-constexpr const char* kAssetDragPayload = "JUDAS_ASSET_ID";
+constexpr const char *kAssetDragPayload = "JUDAS_ASSET_ID";
 
 // What the panels ask the application to do this frame.
 struct EditorRequests {
@@ -61,15 +61,15 @@ struct EditorRequests {
     bool openWorkflowGuide = false;
     bool checkMilestones = false;
     std::string openExternalPath;
-    std::string openSceneRelative;  // open this project-relative scene
-    std::string importSource;       // Asset Browser: import this file
-    std::string importDestination;  //   into <assets>/<this> ("" keeps the name)
-    std::string trackAssetPath;     // adopt an untracked file in place
-    std::string moveAssetId;        // rename/move this asset ...
-    std::string moveAssetTo;        //   ... to this assets-relative path
+    std::string openSceneRelative; // open this project-relative scene
+    std::string importSource;      // Asset Browser: import this file
+    std::string importDestination; //   into <assets>/<this> ("" keeps the name)
+    std::string trackAssetPath;    // adopt an untracked file in place
+    std::string moveAssetId;       // rename/move this asset ...
+    std::string moveAssetTo;       //   ... to this assets-relative path
     std::string removeAssetId;
     SceneObjectId duplicateId = kInvalidSceneObjectId;
-// Object creation: roots use the scene-view position; children start at local origin.
+    // Object creation: roots use the scene-view position; children start at local origin.
     std::string createKind;
     glm::vec3 createPosition{0.0f};
     SceneObjectId createParent = kInvalidSceneObjectId;
@@ -83,24 +83,25 @@ class RuntimeWorld;
 // Milestone 30: what the profiler panel shows. Every number is measured
 // by the code that does the work and labelled with what it counts.
 struct ProfilerData {
-    float frameMilliseconds = 0.0f;      // wall time between frames (rolling average)
+    float frameMilliseconds = 0.0f; // wall time between frames (rolling average)
     float framesPerSecond = 0.0f;
     int fixedStepsThisFrame = 0;
-    float fixedStepMilliseconds = 0.0f;  // wall time of the last StepPlayedWorld
-    float physicsMilliseconds = 0.0f;    // PhysicsWorld::Step inside it (0 when not measured)
-    std::size_t physicsBodies = 0;       // live PhysicsWorld bodies
+    float fixedStepMilliseconds = 0.0f; // wall time of the last StepPlayedWorld
+    float physicsMilliseconds = 0.0f;   // PhysicsWorld::Step inside it (0 when not measured)
+    std::size_t physicsBodies = 0;      // live PhysicsWorld bodies
     std::size_t dynamicBodies = 0;
-    std::size_t contacts = 0;            // last step's resolved contact points
+    std::size_t contacts = 0; // last step's resolved contact points
     std::size_t entitiesFull = 0, entitiesCoarse = 0, entitiesDormant = 0, entitiesDestroyed = 0;
     unsigned int drawCalls = 0, triangles = 0, shadowPasses = 0, dynamicLights = 0, debugLines = 0;
-    unsigned int meshesVisible=0,meshesCulled=0,emittersVisible=0,emittersCulled=0,particlesSubmitted=0;
+    unsigned int meshesVisible = 0, meshesCulled = 0, emittersVisible = 0, emittersCulled = 0,
+                 particlesSubmitted = 0;
     std::size_t fluidParticles = 0;
-    float fluidMilliseconds = 0.0f;      // fluid solve inside the last step (0 when not measured)
-    float surfaceMilliseconds = 0.0f;    // fluid surface rebuild (presentation)
-    float sceneMilliseconds = 0.0f;      // RenderWorldFrame submission
-    PhysicsWorld::StepStats physics;     // Milestone 32: broadphase/solver of the last step
+    float fluidMilliseconds = 0.0f;   // fluid solve inside the last step (0 when not measured)
+    float surfaceMilliseconds = 0.0f; // fluid surface rebuild (presentation)
+    float sceneMilliseconds = 0.0f;   // RenderWorldFrame submission
+    PhysicsWorld::StepStats physics;  // Milestone 32: broadphase/solver of the last step
     ResourceStats resources;
-    JobStats jobs;  // Milestone 31
+    JobStats jobs; // Milestone 31
     bool playing = false;
 };
 
@@ -110,8 +111,8 @@ struct RetargetPanelState;
 struct BrowserExportWorkflow;
 struct EditorPanelState {
     std::shared_ptr<BrowserExportWorkflow> browserExport;
-    bool showBrowserExport=false;
-    bool experimentalBrowserSupport=false; // explicit per-launch opt-in, not a project setting
+    bool showBrowserExport = false;
+    bool experimentalBrowserSupport = false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
     bool dockingEnabled = false; // Enabled by Editor V2 shell; isolated legacy panel tests retain fallback.
     bool showHierarchy = true, showInspector = true, showConsole = false;
@@ -129,12 +130,12 @@ struct EditorPanelState {
     bool view2D = false;
     bool showEditorPreferences = false;
     bool showRetarget = false;
-    bool showAnimationTimeline=false;
-    bool showUtilityAI=false;
+    bool showAnimationTimeline = false;
+    bool showUtilityAI = false;
     std::string utilityAIEdit;
-    SceneObjectId utilityAIEntity=0, utilityAISelected=0;
-    bool utilityAILiveRequested=false, utilityAIAuthorRequested=false;
-    std::string newAIBehaviourName="Guard", aiWorkflowMessage;
+    SceneObjectId utilityAIEntity = 0, utilityAISelected = 0;
+    bool utilityAILiveRequested = false, utilityAIAuthorRequested = false;
+    std::string newAIBehaviourName = "Guard", aiWorkflowMessage;
     bool showTerrain = false;
     bool showVolumeTerrain = false;
     bool showMods = false;
@@ -150,63 +151,78 @@ struct EditorPanelState {
     bool selectModelImportTools = false;
     std::string modelImportReviewOutput, modelImportReviewError;
     std::shared_ptr<AssetCookPanelTask> assetCookTask;
-    JobSystem* importJobs=nullptr;
-    std::shared_ptr<ModelCookTask> importTask,importAccepted;
-    bool importPublished=false;
-    unsigned modelPreviewClip=0;float modelPreviewTime=0,modelPreviewYaw=.45f;bool modelPreviewPlaying=false,modelPreviewSkeleton=true;
+    JobSystem *importJobs = nullptr;
+    std::shared_ptr<ModelCookTask> importTask, importAccepted;
+    bool importPublished = false;
+    unsigned modelPreviewClip = 0;
+    float modelPreviewTime = 0, modelPreviewYaw = .45f;
+    bool modelPreviewPlaying = false, modelPreviewSkeleton = true;
     std::vector<std::string> skeletonPicked;
     std::optional<RagdollDefinition> skeletonFitPreview;
-    SceneObjectId skeletonFitOwner=0;
-    uint64_t skeletonFitGeneration=0;
-    ModelCollisionCleanup collisionCleanup;CollisionDiagnostic collisionDiagnostic;std::string collisionDiagnosticAsset;bool modelDiagnosticVisible=false;
-    std::uintptr_t modelPreviewToken=0;std::vector<std::string> modelPreviewHidden;
-    std::string modelMapSource,modelMapTarget;
+    SceneObjectId skeletonFitOwner = 0;
+    uint64_t skeletonFitGeneration = 0;
+    ModelCollisionCleanup collisionCleanup;
+    CollisionDiagnostic collisionDiagnostic;
+    std::string collisionDiagnosticAsset;
+    bool modelDiagnosticVisible = false;
+    std::uintptr_t modelPreviewToken = 0;
+    std::vector<std::string> modelPreviewHidden;
+    std::string modelMapSource, modelMapTarget;
     CollisionDiagnostic modelCollisionDiagnostic;
     ModelCollisionCleanup modelCollisionCleanup;
-    std::string modelSource,modelOutput="Assets/models/model.judasmodel",modelRecipe,modelMotionSource,modelMotionTake,modelMotionName="Motion";
+    std::string modelSource, modelOutput = "Assets/models/model.judasmodel", modelRecipe, modelMotionSource,
+                             modelMotionTake, modelMotionName = "Motion";
     EditorMode mode = EditorMode::Edit;
     // Milestone 29: the live world while playing (null in edit mode) so the
     // inspector can show persistent identity, lifecycle and fidelity and
     // offer the debug override; and the world-state path for the World menu.
-    bool worldPreview=false;unsigned worldPreviewRevision=0;
-    RuntimeWorld* runtime = nullptr;
+    bool worldPreview = false;
+    unsigned worldPreviewRevision = 0;
+    RuntimeWorld *runtime = nullptr;
     std::shared_ptr<RuntimeRenderHistory> renderPreviewHistory; // discarded on Play/Stop or world replacement
     std::string worldStatePath;
     bool playPaused = false;
-    bool showWorldBuilding=false;
+    bool showWorldBuilding = false;
     DebugLineList recipePreview;
     DebugLineList navigationPreview;
     DebugLineList liquidPreview;
     DebugLineList deformablePreview;
     DebugLineList collisionPreview;
-    std::string deformableDestination="deformable.judasdeform",deformableSource,deformableGroup="selection",fractureInterface;
-    glm::vec3 deformableSelectionMin{-1,-1,-1},deformableSelectionMax{1,1,1};
-    int deformableColumns=12,deformableRows=16,deformableSubdivision=2;
-    glm::vec3 deformableSize{2,3,1};
-    bool textPreview=false,textReload=false;
-    bool showUIDocument=false;bool uiCanvasPreview=false;UIDocument uiPreviewDocument;uint64_t uiPreviewRevision=0;
-    std::uintptr_t uiPreviewToken=0;glm::ivec2 uiPreviewResolution{1280,720};
-    std::map<std::string,UILayout> uiPreviewLayout;std::string uiCanvasSelected;glm::vec2 uiCanvasPick{-1};
+    std::string deformableDestination = "deformable.judasdeform", deformableSource,
+                deformableGroup = "selection", fractureInterface;
+    glm::vec3 deformableSelectionMin{-1, -1, -1}, deformableSelectionMax{1, 1, 1};
+    int deformableColumns = 12, deformableRows = 16, deformableSubdivision = 2;
+    glm::vec3 deformableSize{2, 3, 1};
+    bool textPreview = false, textReload = false;
+    bool showUIDocument = false;
+    bool uiCanvasPreview = false;
+    UIDocument uiPreviewDocument;
+    uint64_t uiPreviewRevision = 0;
+    std::uintptr_t uiPreviewToken = 0;
+    glm::ivec2 uiPreviewResolution{1280, 720};
+    std::map<std::string, UILayout> uiPreviewLayout;
+    std::string uiCanvasSelected;
+    glm::vec2 uiCanvasPick{-1};
     UIElement textElement;
     std::string previewLocale;
-    glm::vec2 textPreviewPosition{0},textPreviewSize{0};
+    glm::vec2 textPreviewPosition{0}, textPreviewSize{0};
     std::string hierarchySearch;
     std::string status;
     std::string revealComponent;
     AssetId editScriptAsset;
     SceneObjectId newScriptOwner = kInvalidSceneObjectId;
     std::string newScriptName = "NewScript.js", scriptWorkflowMessage;
-    std::string pathInput;  // Open / Save As text field
+    std::string pathInput; // Open / Save As text field
     std::vector<std::string> terrainSurfaces;
-    glm::vec3 cameraFocus{0.0f};  // where "create" places new objects
-    std::string runtimeInfo;      // one-line runtime summary while playing
+    glm::vec3 cameraFocus{0.0f}; // where "create" places new objects
+    std::string runtimeInfo;     // one-line runtime summary while playing
 
     // Milestone 30: project, assets, gizmo, debug view, profiler.
     std::shared_ptr<ProjectSettingsHistory> projectHistory;
-    Project* project = nullptr;              // the open project (may be !IsLoaded())
-    AssetDatabase* assets = nullptr;   // its asset database
-    ResourceManager* resources = nullptr;    // Milestone 31: live resource states for the browser
-    std::vector<std::string> sceneFiles;     // project-relative .judas files
+    Project *project = nullptr;           // the open project (may be !IsLoaded())
+    AssetDatabase *assets = nullptr;      // its asset database
+    ResourceManager *resources = nullptr; // Milestone 31: live resource states for the browser
+    std::vector<std::string> sceneFiles;  // project-relative .judas files
     GizmoMode gizmoMode = GizmoMode::Translate;
     GizmoSpace gizmoSpace = GizmoSpace::World;
     bool gizmoSnap = false;
@@ -225,7 +241,7 @@ struct EditorPanelState {
     bool showAssetBrowser = true;
     ProfilerData profiler;
     std::string exportDestination;
-    std::string runProjectInfo;  // last Run Project outcome
+    std::string runProjectInfo; // last Run Project outcome
     // Asset Browser text fields.
     std::string importSourceInput;
     std::string importDestinationInput;
@@ -237,38 +253,41 @@ struct EditorPanelState {
     std::string renameBuffer;
 };
 
-void DrawEditorNavigationHelp(EditorPanelState& state, EditorRequests& requests);
-void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests,
-                        const std::function<void()>& windowMenu = {});
-void UpdateEditorWorkspaceLayout(EditorPanelState& state, glm::vec2 displaySize);
-void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests,
-                               const std::function<void()>& workspaceSelector = {});
-void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
-void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state);
-void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state);
-void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
-void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
-void DrawEditorBuildExportPanel(EditorPanelState& state, EditorRequests& requests);
-void DrawProfilerPanel(EditorPanelState& state);
-void DrawConsolePanel(EditorPanelState& state);
-void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
+void DrawEditorNavigationHelp(EditorPanelState &state, EditorRequests &requests);
+void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
+                        const std::function<void()> &windowMenu = {});
+void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize);
+void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
+                               const std::function<void()> &workspaceSelector = {});
+void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests);
+void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state);
+void DrawSceneSettingsPanel(EditorDocument &doc, EditorPanelState &state);
+void DrawAssetBrowserPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests);
+void DrawProjectSettingsPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests);
+void DrawEditorBuildExportPanel(EditorPanelState &state, EditorRequests &requests);
+void DrawProfilerPanel(EditorPanelState &state);
+void DrawConsolePanel(EditorPanelState &state);
+void DrawStatusBar(EditorDocument &doc, EditorPanelState &state);
 
 // Creates an object of `kind` ("empty", "box", "sphere", "dynamic-box",
 // "dynamic-sphere", "point-light", "spot-light", "player-start", "mesh",
 // "door", "gravity-region") at `position`, recording one undo step.
 // Returns its id (0 for a missing parent). Children start at their parent's local
 // origin. `meshAssetId` is used by "mesh"; creation selects the new object.
-SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
-                                 const std::string& meshAssetId, const SceneAnimationComponent* animation = nullptr,
-                                 SceneObjectId parent = kInvalidSceneObjectId,const glm::vec2* spriteSize=nullptr);
+SceneObjectId CreateObjectOfKind(EditorDocument &doc, const std::string &kind, const glm::vec3 &position,
+                                 const std::string &meshAssetId,
+                                 const SceneAnimationComponent *animation = nullptr,
+                                 SceneObjectId parent = kInvalidSceneObjectId,
+                                 const glm::vec2 *spriteSize = nullptr);
 
 // Duplicates an object under a new id (name suffixed " copy"), inserted
 // right after the original, recording one undo step. Returns the new id.
-SceneObjectId DuplicateObject(EditorDocument& doc, SceneObjectId id);
+SceneObjectId DuplicateObject(EditorDocument &doc, SceneObjectId id);
 
-void DrawStreamingPanel(EditorDocument&,EditorPanelState&,EditorRequests&);
+void DrawStreamingPanel(EditorDocument &, EditorPanelState &, EditorRequests &);
 
 struct CollisionCookSettings;
-bool BakeEditorCollision(EditorDocument&,SceneObjectId,EditorPanelState&,const AssetId&,const CollisionCookSettings&,const std::string&);
+bool BakeEditorCollision(EditorDocument &, SceneObjectId, EditorPanelState &, const AssetId &,
+                         const CollisionCookSettings &, const std::string &);
 
-void DrawWorldBuildingPanel(EditorDocument&,EditorPanelState&);
+void DrawWorldBuildingPanel(EditorDocument &, EditorPanelState &);

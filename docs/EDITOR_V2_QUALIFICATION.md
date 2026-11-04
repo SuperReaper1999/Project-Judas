@@ -27,7 +27,8 @@ This is an Experimental editor checkpoint, not an Alpha v2.0.0 release or human 
 
 See [owner map and extension instructions](EDITOR_V2.md#source-ownership).
 The original application had 2,301 lines and the original panels source 1,498.
-Responsibilities were extracted into cohesive owners rather than transferred to
+The formatted coordinator is 520 lines; the old panels file is an unused four-line
+compatibility marker. Responsibilities were extracted into cohesive owners rather than transferred to
 one replacement giant file. Line counts are descriptive, not acceptance tests.
 Automation is also split into workspace, assets, terrain/async, simulation and
 stabilization fixtures. Runtime engine code does not depend on editor or ImGui.

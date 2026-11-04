@@ -46,11 +46,10 @@ void DrawProfilerPanel(EditorPanelState &state) {
         ImGui::Text("Contacts (last step's manifold points): %zu", p.contacts);
         ImGui::Text("Broadphase: %zu candidate pairs of %zu possible (%.3f%%)", p.physics.candidatePairs,
                     p.physics.possiblePairs,
-                    p.physics.possiblePairs > 0
-                        ? 100.0 * p.physics.candidatePairs / p.physics.possiblePairs
-                        : 0.0);
-        ImGui::Text("  %zu colliding pairs, tree height %d, %zu proxy reinsertions",
-                    p.physics.collidingPairs, p.physics.treeHeight, p.physics.proxyReinsertions);
+                    p.physics.possiblePairs > 0 ? 100.0 * p.physics.candidatePairs / p.physics.possiblePairs
+                                                : 0.0);
+        ImGui::Text("  %zu colliding pairs, tree height %d, %zu proxy reinsertions", p.physics.collidingPairs,
+                    p.physics.treeHeight, p.physics.proxyReinsertions);
         ImGui::Text("  PhysicsWorld::Step %.3f ms (broadphase %.3f, narrowphase %.3f, solver %.3f)",
                     p.physics.totalMilliseconds, p.physics.broadphaseMilliseconds,
                     p.physics.narrowphaseMilliseconds, p.physics.solverMilliseconds);
@@ -90,14 +89,12 @@ void DrawProfilerPanel(EditorPanelState &state) {
         ImGui::Text("  resident %.1f MB of %.0f MB budget (peak %.1f MB)",
                     p.resources.bytesResident / 1048576.0, p.resources.budgetBytes / 1048576.0,
                     p.resources.peakBytesResident / 1048576.0);
-        ImGui::Text(
-            "  GPU payload %.1f MB / prepared CPU %.1f MB / pinned %.1f MB / over budget %.1f MB",
-            p.resources.gpuBytesResident / 1048576.0, p.resources.preparedBytes / 1048576.0,
-            p.resources.pinnedBytes / 1048576.0, p.resources.overBudgetBytes / 1048576.0);
-        ImGui::Text(
-            "  hits %llu / loads %llu / uploads %llu / evictions %llu / cancelled %llu / stale %llu",
-            p.resources.hits, p.resources.misses, p.resources.uploads, p.resources.evictions,
-            p.resources.cancelled, p.resources.staleDiscarded);
+        ImGui::Text("  GPU payload %.1f MB / prepared CPU %.1f MB / pinned %.1f MB / over budget %.1f MB",
+                    p.resources.gpuBytesResident / 1048576.0, p.resources.preparedBytes / 1048576.0,
+                    p.resources.pinnedBytes / 1048576.0, p.resources.overBudgetBytes / 1048576.0);
+        ImGui::Text("  hits %llu / loads %llu / uploads %llu / evictions %llu / cancelled %llu / stale %llu",
+                    p.resources.hits, p.resources.misses, p.resources.uploads, p.resources.evictions,
+                    p.resources.cancelled, p.resources.staleDiscarded);
         ImGui::Separator();
         const double utilization =
             p.jobs.workers > 0 && p.jobs.elapsedSeconds > 0.0
@@ -105,8 +102,8 @@ void DrawProfilerPanel(EditorPanelState &state) {
                 : 0.0;
         ImGui::Text("Jobs: %u workers, %zu queued, %zu running", p.jobs.workers, p.jobs.queued,
                     p.jobs.running);
-        ImGui::Text("  %llu completed / %llu failed / %llu cancelled of %llu submitted",
-                    p.jobs.completed, p.jobs.failed, p.jobs.cancelled, p.jobs.submitted);
+        ImGui::Text("  %llu completed / %llu failed / %llu cancelled of %llu submitted", p.jobs.completed,
+                    p.jobs.failed, p.jobs.cancelled, p.jobs.submitted);
         ImGui::Text("  worker utilization since start: %.1f%%", utilization);
         ImGui::TextDisabled("Specialized measurements above retain their original observation cadence; "
                             "resource bytes are estimates, not driver VRAM.");

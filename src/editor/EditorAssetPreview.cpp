@@ -263,73 +263,86 @@ void EditorAssetPreview::DrawUIAuthoringPreview(EditorContext &context) {
     }
 }
 
-void EditorAssetPreview::Pump(EditorContext& context){
- if(context.phase==EditorPanelPhase::Edit){PumpEditorAssetWorkflow(context.panels,context.requests);RefreshAssetDemand(context);}
+void EditorAssetPreview::Pump(EditorContext &context) {
+    if (context.phase == EditorPanelPhase::Edit) {
+        PumpEditorAssetWorkflow(context.panels, context.requests);
+        RefreshAssetDemand(context);
+    }
 }
 
-void EditorAssetPreview::DrawTextPreview(EditorContext& context){
- auto& host=context.host;
- auto& renderer=context.host.GetRenderer();auto& window=context.host.GetWindow();
-        if (context.panels.mode == EditorMode::Edit && context.panels.textPreview && context.panels.showAssetBrowser) {
-            auto key = context.project.ProjectFile() + context.project.Settings().localization.Encode();
-            if (key != localizationKey) {
-                localization.reset();
-                localization =
-                    std::make_unique<LocalizationSession>(context.project.Settings().localization);
-                localization->Bind(&host.Resources());
-                localizationKey = key;
-            }
-            std::string previewError;
-            if (!context.panels.previewLocale.empty() &&
-                localization->Locale() != context.panels.previewLocale)
-                localization->SetLocale(context.panels.previewLocale, previewError);
-            if (context.panels.textReload) {
-                localization->Reload();
-                context.panels.textReload = false;
-            }
-            localization->Refresh();
-            auto &e = context.panels.textElement;
-            auto text = e.text;
-            if (!e.textKey.empty())
-                text = localization->Format(e.textKey, {}, previewError);
-            std::vector<std::shared_ptr<const TextFont>> fonts;
-            if (!e.font.empty()) {
-                host.Resources().RequestFont(e.font);
-                if (auto f = host.Resources().TryGetFont(e.font))
-                    fonts.push_back(f);
-            }
-            if (fonts.empty())
-                if (auto f = renderer.DefaultTextFont())
-                    fonts.push_back(f);
-            auto fallback = localization->Fonts();
-            fonts.insert(fonts.end(), fallback.begin(), fallback.end());
-            renderer.SelectTextFonts(std::move(fonts));
-            TextOptions o;
-            o.pixels = e.fontSize;
-            o.width = context.panels.textPreviewSize.x;
-            o.wrap = e.wrap;
-            o.locale = localization->Locale();
-            o.direction = e.direction;
-            o.alignment = e.textLogicalAlign < 0 ? TextAlignment::Left : TextAlignment(e.textLogicalAlign);
-            renderer.BeginUIFrame(window.Width(), window.Height());
-            renderer.SetUIClip(context.panels.textPreviewPosition, context.panels.textPreviewSize);
-            renderer.DrawUIRect(context.panels.textPreviewPosition, context.panels.textPreviewSize, {.04, .05, .08, 1});
-            renderer.DrawTextLayout(*renderer.LayoutText(text, o), context.panels.textPreviewPosition, e.color);
-            renderer.ClearUIClip();
-            renderer.EndUIFrame();
+void EditorAssetPreview::DrawTextPreview(EditorContext &context) {
+    auto &host = context.host;
+    auto &renderer = context.host.GetRenderer();
+    auto &window = context.host.GetWindow();
+    if (context.panels.mode == EditorMode::Edit && context.panels.textPreview &&
+        context.panels.showAssetBrowser) {
+        auto key = context.project.ProjectFile() + context.project.Settings().localization.Encode();
+        if (key != localizationKey) {
+            localization.reset();
+            localization = std::make_unique<LocalizationSession>(context.project.Settings().localization);
+            localization->Bind(&host.Resources());
+            localizationKey = key;
         }
-
-
+        std::string previewError;
+        if (!context.panels.previewLocale.empty() && localization->Locale() != context.panels.previewLocale)
+            localization->SetLocale(context.panels.previewLocale, previewError);
+        if (context.panels.textReload) {
+            localization->Reload();
+            context.panels.textReload = false;
+        }
+        localization->Refresh();
+        auto &e = context.panels.textElement;
+        auto text = e.text;
+        if (!e.textKey.empty())
+            text = localization->Format(e.textKey, {}, previewError);
+        std::vector<std::shared_ptr<const TextFont>> fonts;
+        if (!e.font.empty()) {
+            host.Resources().RequestFont(e.font);
+            if (auto f = host.Resources().TryGetFont(e.font))
+                fonts.push_back(f);
+        }
+        if (fonts.empty())
+            if (auto f = renderer.DefaultTextFont())
+                fonts.push_back(f);
+        auto fallback = localization->Fonts();
+        fonts.insert(fonts.end(), fallback.begin(), fallback.end());
+        renderer.SelectTextFonts(std::move(fonts));
+        TextOptions o;
+        o.pixels = e.fontSize;
+        o.width = context.panels.textPreviewSize.x;
+        o.wrap = e.wrap;
+        o.locale = localization->Locale();
+        o.direction = e.direction;
+        o.alignment = e.textLogicalAlign < 0 ? TextAlignment::Left : TextAlignment(e.textLogicalAlign);
+        renderer.BeginUIFrame(window.Width(), window.Height());
+        renderer.SetUIClip(context.panels.textPreviewPosition, context.panels.textPreviewSize);
+        renderer.DrawUIRect(context.panels.textPreviewPosition, context.panels.textPreviewSize,
+                            {.04, .05, .08, 1});
+        renderer.DrawTextLayout(*renderer.LayoutText(text, o), context.panels.textPreviewPosition, e.color);
+        renderer.ClearUIClip();
+        renderer.EndUIFrame();
+    }
 }
 
-void EditorAssetPreview::Destroy(EditorContext& context){
-    auto& resources=context.host.Resources();auto& renderer=context.host.GetRenderer();
-    for(const auto& id:heldAssets)if(!resources.StreamableVisual(id))resources.ReleaseRef(id);
+void EditorAssetPreview::Destroy(EditorContext &context) {
+    auto &resources = context.host.Resources();
+    auto &renderer = context.host.GetRenderer();
+    for (const auto &id : heldAssets)
+        if (!resources.StreamableVisual(id))
+            resources.ReleaseRef(id);
     heldAssets.clear();
-    if(uiTarget.IsValid())renderer.DestroyRenderTarget(uiTarget);
-    if(modelTarget.IsValid())renderer.DestroyRenderTarget(modelTarget);
-    uiTarget={};modelTarget={};
-    ui.reset();localization.reset();localizationKey.clear();uiRevision=0;
-    if(!modelAsset.empty())resources.ReleaseRef(modelAsset);
-    modelAsset.clear();modelData.reset();
+    if (uiTarget.IsValid())
+        renderer.DestroyRenderTarget(uiTarget);
+    if (modelTarget.IsValid())
+        renderer.DestroyRenderTarget(modelTarget);
+    uiTarget = {};
+    modelTarget = {};
+    ui.reset();
+    localization.reset();
+    localizationKey.clear();
+    uiRevision = 0;
+    if (!modelAsset.empty())
+        resources.ReleaseRef(modelAsset);
+    modelAsset.clear();
+    modelData.reset();
 }

@@ -13,14 +13,14 @@ constexpr float kNearPlane = 0.1f;
 constexpr float kFarPlane = 5000.0f;
 constexpr float kFieldOfViewDegrees = 60.0f;
 constexpr double kDollyDistanceRatioPerStep = 0.8;
-}  // namespace
+} // namespace
 
 void EditorCameraGestureState::Cancel() {
     m_active = EditorCameraGesture::None;
     m_waitForRelease = true;
 }
 
-void EditorCameraGestureState::Update(const EditorCameraGestureInput& input) {
+void EditorCameraGestureState::Update(const EditorCameraGestureInput &input) {
     const bool rightPressed = input.rightDown && !m_rightWasDown;
     const bool middlePressed = input.middleDown && !m_middleWasDown;
     m_rightWasDown = input.rightDown;
@@ -31,11 +31,13 @@ void EditorCameraGestureState::Update(const EditorCameraGestureInput& input) {
         // A released button observed while another panel owns focus already
         // satisfies the release boundary. A fresh navigation press may focus
         // Scene directly; only a held pre-existing press must wait.
-        if (!input.rightDown && !input.middleDown) m_waitForRelease = false;
+        if (!input.rightDown && !input.middleDown)
+            m_waitForRelease = false;
         return;
     }
     if (m_waitForRelease) {
-        if (!input.rightDown && !input.middleDown) m_waitForRelease = false;
+        if (!input.rightDown && !input.middleDown)
+            m_waitForRelease = false;
         return;
     }
     if ((m_active == EditorCameraGesture::Look && !input.rightDown) ||
@@ -43,22 +45,27 @@ void EditorCameraGestureState::Update(const EditorCameraGestureInput& input) {
         m_active = EditorCameraGesture::None;
         return;
     }
-    if (m_active != EditorCameraGesture::None || !input.canStart || input.leftDown) return;
+    if (m_active != EditorCameraGesture::None || !input.canStart || input.leftDown)
+        return;
     // Simultaneous buttons are ambiguous: leave that press to editing.
-    if (rightPressed && !input.middleDown) m_active = EditorCameraGesture::Look;
-    else if (middlePressed && !input.rightDown) m_active = EditorCameraGesture::Pan;
+    if (rightPressed && !input.middleDown)
+        m_active = EditorCameraGesture::Look;
+    else if (middlePressed && !input.rightDown)
+        m_active = EditorCameraGesture::Pan;
 }
 
-bool EditorCameraCanDolly(const EditorCameraGestureInput& input, EditorCameraGesture active, bool editing) {
+bool EditorCameraCanDolly(const EditorCameraGestureInput &input, EditorCameraGesture active, bool editing) {
     return editing && input.focused && input.canStart && !input.cancel &&
-        active == EditorCameraGesture::None && !input.leftDown && !input.rightDown && !input.middleDown;
+           active == EditorCameraGesture::None && !input.leftDown && !input.rightDown && !input.middleDown;
 }
 
 glm::vec3 EditorCamera::Forward() const {
-    if(m_2d)return {0,0,-1};
+    if (m_2d)
+        return {0, 0, -1};
     const float yaw = glm::radians(m_yawDegrees);
     const float pitch = glm::radians(m_pitchDegrees);
-    return glm::normalize(glm::vec3(std::sin(yaw) * std::cos(pitch), std::sin(pitch), std::cos(yaw) * std::cos(pitch)));
+    return glm::normalize(
+        glm::vec3(std::sin(yaw) * std::cos(pitch), std::sin(pitch), std::cos(yaw) * std::cos(pitch)));
 }
 
 glm::vec3 EditorCamera::Right() const {
@@ -69,18 +76,20 @@ glm::vec3 EditorCamera::Up() const {
     return glm::normalize(glm::cross(Right(), Forward()));
 }
 
-void EditorCamera::Update(const Window& window, float deltaSeconds, bool lookActive, int mouseDeltaX,
+void EditorCamera::Update(const Window &window, float deltaSeconds, bool lookActive, int mouseDeltaX,
                           int mouseDeltaY, bool fast) {
     const glm::vec3 axes{
         float(window.IsActionActive(Action::StrafeRight)) - float(window.IsActionActive(Action::StrafeLeft)),
         float(window.IsActionActive(Action::MoveUp)) - float(window.IsActionActive(Action::MoveDown)),
-        float(window.IsActionActive(Action::MoveForward)) - float(window.IsActionActive(Action::MoveBackward))};
+        float(window.IsActionActive(Action::MoveForward)) -
+            float(window.IsActionActive(Action::MoveBackward))};
     UpdateLocal(deltaSeconds, lookActive, mouseDeltaX, mouseDeltaY, fast, axes);
 }
 
-void EditorCamera::UpdateLocal(float deltaSeconds, bool lookActive, int mouseDeltaX,
-                               int mouseDeltaY, bool fast, const glm::vec3& movementAxes) {
-    if (m_2d || !lookActive) return;
+void EditorCamera::UpdateLocal(float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
+                               bool fast, const glm::vec3 &movementAxes) {
+    if (m_2d || !lookActive)
+        return;
     m_yawDegrees -= static_cast<float>(mouseDeltaX) * kLookSensitivityDegreesPerPixel;
     m_pitchDegrees -= static_cast<float>(mouseDeltaY) * kLookSensitivityDegreesPerPixel;
     m_pitchDegrees = std::clamp(m_pitchDegrees, -89.0f, 89.0f);
@@ -98,31 +107,49 @@ glm::mat4 EditorCamera::ViewMatrix() const {
 }
 
 glm::mat4 EditorCamera::ProjectionMatrix(float aspectRatio) const {
-    if(m_2d)return glm::ortho(-m_orthoHeight*.5f*aspectRatio,m_orthoHeight*.5f*aspectRatio,-m_orthoHeight*.5f,m_orthoHeight*.5f,kNearPlane,kFarPlane);
+    if (m_2d)
+        return glm::ortho(-m_orthoHeight * .5f * aspectRatio, m_orthoHeight * .5f * aspectRatio,
+                          -m_orthoHeight * .5f, m_orthoHeight * .5f, kNearPlane, kFarPlane);
     return glm::perspective(glm::radians(kFieldOfViewDegrees), aspectRatio, kNearPlane, kFarPlane);
 }
 
-void EditorCamera::LookAt(const glm::vec3& point, float distance) {
-    if(m_2d){m_position={point.x,point.y,point.z+10};m_focusDistance=10;m_orthoHeight=std::max(.1f,distance*2);return;}
+void EditorCamera::LookAt(const glm::vec3 &point, float distance) {
+    if (m_2d) {
+        m_position = {point.x, point.y, point.z + 10};
+        m_focusDistance = 10;
+        m_orthoHeight = std::max(.1f, distance * 2);
+        return;
+    }
     m_focusDistance = std::max(distance, kNearPlane);
     m_position = point - Forward() * m_focusDistance;
 }
 
 void EditorCamera::Pan(int mouseDeltaX, int mouseDeltaY, int viewportHeight) {
-    if (viewportHeight <= 0) return;
-    const float metresPerPixel = m_2d?m_orthoHeight/viewportHeight:2.0f * m_focusDistance *
-        std::tan(glm::radians(kFieldOfViewDegrees) * 0.5f) / static_cast<float>(viewportHeight);
-    m_position += metresPerPixel * (-Right() * static_cast<float>(mouseDeltaX) +
-                                   Up() * static_cast<float>(mouseDeltaY));
+    if (viewportHeight <= 0)
+        return;
+    const float metresPerPixel = m_2d ? m_orthoHeight / viewportHeight
+                                      : 2.0f * m_focusDistance *
+                                            std::tan(glm::radians(kFieldOfViewDegrees) * 0.5f) /
+                                            static_cast<float>(viewportHeight);
+    m_position += metresPerPixel *
+                  (-Right() * static_cast<float>(mouseDeltaX) + Up() * static_cast<float>(mouseDeltaY));
 }
 
 void EditorCamera::Dolly(float wheelSteps) {
-    if(m_2d){if(std::isfinite(wheelSteps))m_orthoHeight=float(std::exp(std::clamp(std::log(double(m_orthoHeight))+double(wheelSteps)*std::log(.8),std::log(.01),std::log(1e6))));return;}
-    if (!std::isfinite(wheelSteps) || wheelSteps == 0.0f ||
-        !std::isfinite(m_focusDistance) || m_focusDistance <= 0.0f) return;
+    if (m_2d) {
+        if (std::isfinite(wheelSteps))
+            m_orthoHeight =
+                float(std::exp(std::clamp(std::log(double(m_orthoHeight)) + double(wheelSteps) * std::log(.8),
+                                          std::log(.01), std::log(1e6))));
+        return;
+    }
+    if (!std::isfinite(wheelSteps) || wheelSteps == 0.0f || !std::isfinite(m_focusDistance) ||
+        m_focusDistance <= 0.0f)
+        return;
     const auto forward = Forward();
     if (!std::isfinite(forward.x) || !std::isfinite(forward.y) || !std::isfinite(forward.z) ||
-        !std::isfinite(m_position.x) || !std::isfinite(m_position.y) || !std::isfinite(m_position.z)) return;
+        !std::isfinite(m_position.x) || !std::isfinite(m_position.y) || !std::isfinite(m_position.z))
+        return;
 
     const double current = m_focusDistance;
     // Clamp in log-distance space before exponentiating: precise fractional
@@ -131,34 +158,54 @@ void EditorCamera::Dolly(float wheelSteps) {
     // beyond the far-plane limit until an inward step brings it into range.
     const double minimum = std::min(current, static_cast<double>(kNearPlane));
     const double maximum = std::max(current, static_cast<double>(kFarPlane));
-    const double logarithm = std::clamp(std::log(current) +
-        static_cast<double>(wheelSteps) * std::log(kDollyDistanceRatioPerStep),
-        std::log(minimum), std::log(maximum));
+    const double logarithm =
+        std::clamp(std::log(current) + static_cast<double>(wheelSteps) * std::log(kDollyDistanceRatioPerStep),
+                   std::log(minimum), std::log(maximum));
     const float next = static_cast<float>(std::clamp(std::exp(logarithm), minimum, maximum));
     m_position += forward * (m_focusDistance - next);
     m_focusDistance = next;
 }
 
-void EditorCamera::SetPose(const glm::vec3& position, float yawDegrees, float pitchDegrees) {
+void EditorCamera::SetPose(const glm::vec3 &position, float yawDegrees, float pitchDegrees) {
     m_position = position;
     m_yawDegrees = yawDegrees;
     m_pitchDegrees = std::clamp(pitchDegrees, -89.0f, 89.0f);
 }
 
-void EditorCamera::PixelRay(int pixelX, int pixelY, int viewportWidth, int viewportHeight, glm::vec3& outOrigin,
-                            glm::vec3& outDirection) const {
-    const float aspect = static_cast<float>(std::max(viewportWidth, 1)) / static_cast<float>(std::max(viewportHeight, 1));
-    const float ndcX = (2.0f * (static_cast<float>(pixelX) + 0.5f) / static_cast<float>(std::max(viewportWidth, 1))) - 1.0f;
-    const float ndcY = 1.0f - (2.0f * (static_cast<float>(pixelY) + 0.5f) / static_cast<float>(std::max(viewportHeight, 1)));
-    if(m_2d){outOrigin=m_position+Right()*(ndcX*m_orthoHeight*.5f*aspect)+Up()*(ndcY*m_orthoHeight*.5f);outDirection=Forward();return;}
+void EditorCamera::PixelRay(int pixelX, int pixelY, int viewportWidth, int viewportHeight,
+                            glm::vec3 &outOrigin, glm::vec3 &outDirection) const {
+    const float aspect =
+        static_cast<float>(std::max(viewportWidth, 1)) / static_cast<float>(std::max(viewportHeight, 1));
+    const float ndcX =
+        (2.0f * (static_cast<float>(pixelX) + 0.5f) / static_cast<float>(std::max(viewportWidth, 1))) - 1.0f;
+    const float ndcY =
+        1.0f - (2.0f * (static_cast<float>(pixelY) + 0.5f) / static_cast<float>(std::max(viewportHeight, 1)));
+    if (m_2d) {
+        outOrigin = m_position + Right() * (ndcX * m_orthoHeight * .5f * aspect) +
+                    Up() * (ndcY * m_orthoHeight * .5f);
+        outDirection = Forward();
+        return;
+    }
     const float tanHalf = std::tan(glm::radians(kFieldOfViewDegrees) * 0.5f);
     outOrigin = m_position;
     outDirection = glm::normalize(Forward() + Right() * (ndcX * tanHalf * aspect) + Up() * (ndcY * tanHalf));
 }
 
 void EditorCamera::Set2D(bool enabled) {
-    if(m_2d==enabled)return;
-    if(enabled){m_savedPosition=m_position;m_savedYaw=m_yawDegrees;m_savedPitch=m_pitchDegrees;m_savedFocus=m_focusDistance;m_position={0,0,10};m_focusDistance=10;}
-    else {m_position=m_savedPosition;m_yawDegrees=m_savedYaw;m_pitchDegrees=m_savedPitch;m_focusDistance=m_savedFocus;}
-    m_2d=enabled;
+    if (m_2d == enabled)
+        return;
+    if (enabled) {
+        m_savedPosition = m_position;
+        m_savedYaw = m_yawDegrees;
+        m_savedPitch = m_pitchDegrees;
+        m_savedFocus = m_focusDistance;
+        m_position = {0, 0, 10};
+        m_focusDistance = 10;
+    } else {
+        m_position = m_savedPosition;
+        m_yawDegrees = m_savedYaw;
+        m_pitchDegrees = m_savedPitch;
+        m_focusDistance = m_savedFocus;
+    }
+    m_2d = enabled;
 }

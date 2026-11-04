@@ -11,13 +11,14 @@ class EngineHost;
 
 // Dock/UI orchestration only. It never updates a world or evaluates scripts.
 class EditorShell {
-public:
-    void RegisterPanels(EditorSceneViewport&,EditorPlaySession&,EditorToolServices);
-    void Draw(EditorContext&,EditorPreferences&);
-    void DrawStopped(EditorContext&,EditorPreferences&);
-    void Present(EngineHost&);
+  public:
+    void RegisterPanels(EditorSceneViewport &, EditorPlaySession &, EditorToolServices);
+    void Draw(EditorContext &, EditorPreferences &);
+    void DrawStopped(EditorContext &, EditorPreferences &);
+    void Present(EngineHost &);
     EditorViewportPresenter views;
-private:
+
+  private:
     EditorPanelRegistry panels;
     EditorWorkspace workspace;
 };

@@ -40,8 +40,7 @@ void DrawSceneSettingsPanel(EditorDocument &doc, EditorPanelState &state) {
                          state.project->Settings().classification.render);
     TextField(doc, "Name##scene", s.name);
     double origin[3] = {s.worldOrigin.x, s.worldOrigin.y, s.worldOrigin.z};
-    if (ImGui::InputScalarN("World origin (m)", ImGuiDataType_Double, origin, 3, nullptr, nullptr,
-                            "%.6g")) {
+    if (ImGui::InputScalarN("World origin (m)", ImGuiDataType_Double, origin, 3, nullptr, nullptr, "%.6g")) {
         s.worldOrigin = glm::dvec3(origin[0], origin[1], origin[2]);
     }
     TrackEdit(doc);

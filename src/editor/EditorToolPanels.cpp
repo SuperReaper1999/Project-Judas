@@ -16,37 +16,93 @@
 #include "EditorTheme.h"
 #include "imgui.h"
 
-void PumpEditorScriptTools(EditorContext& c,std::unique_ptr<ScriptTools>& scripts){
-    if(!scripts)scripts=std::make_unique<ScriptTools>();
-    if(!c.panels.editScriptAsset.empty()){
-        const auto* asset=c.assets.Find(c.panels.editScriptAsset);
-        c.panels.showScriptTools=true;
-        if(!asset||!scripts->OpenForEditing(asset->relativePath,c.assets))c.panels.status=scripts->status;
+void PumpEditorScriptTools(EditorContext &c, std::unique_ptr<ScriptTools> &scripts) {
+    if (!scripts)
+        scripts = std::make_unique<ScriptTools>();
+    if (!c.panels.editScriptAsset.empty()) {
+        const auto *asset = c.assets.Find(c.panels.editScriptAsset);
+        c.panels.showScriptTools = true;
+        if (!asset || !scripts->OpenForEditing(asset->relativePath, c.assets))
+            c.panels.status = scripts->status;
         c.panels.editScriptAsset.clear();
     }
 }
-void RegisterEditorToolPanels(EditorPanelRegistry& registry,EditorToolServices tools){
-    constexpr unsigned author=EditorPhaseMask(EditorPanelPhase::Edit);
-    constexpr unsigned live=author|EditorPhaseMask(EditorPanelPhase::Play)|EditorPhaseMask(EditorPanelPhase::Paused);
-    registry.Add({"scripts","JudasJS developer tools","Scripting",live,&EditorPanelState::showScriptTools},[tools](auto& c){
-        PumpEditorScriptTools(c,tools.scripts);tools.scripts->visible=c.panels.showScriptTools;tools.scripts->Panel(c.runtime,c.assets);c.panels.showScriptTools=tools.scripts->visible;
+void RegisterEditorToolPanels(EditorPanelRegistry &registry, EditorToolServices tools) {
+    constexpr unsigned author = EditorPhaseMask(EditorPanelPhase::Edit);
+    constexpr unsigned live =
+        author | EditorPhaseMask(EditorPanelPhase::Play) | EditorPhaseMask(EditorPanelPhase::Paused);
+    registry.Add(
+        {"scripts", "JudasJS developer tools", "Scripting", live, &EditorPanelState::showScriptTools},
+        [tools](auto &c) {
+            PumpEditorScriptTools(c, tools.scripts);
+            tools.scripts->visible = c.panels.showScriptTools;
+            tools.scripts->Panel(c.runtime, c.assets);
+            c.panels.showScriptTools = tools.scripts->visible;
+        });
+    registry.Add({"terrain", "Terrain tools", "World", author, &EditorPanelState::showTerrain},
+                 [tools](auto &c) {
+                     if (!tools.terrain)
+                         tools.terrain = std::make_unique<TerrainEditor>();
+                     tools.terrain->Panel(c.document, c.panels, c.requests);
+                 });
+    registry.Add({"volume", "Volumetric terrain", "World", author, &EditorPanelState::showVolumeTerrain},
+                 [tools](auto &c) {
+                     if (!tools.volume)
+                         tools.volume = std::make_unique<VolumeTerrainEditor>();
+                     tools.volume->Panel(c.document, c.panels, c.requests);
+                 });
+    registry.Add({"mods", "Local mods", "Project", author, &EditorPanelState::showMods}, [tools](auto &c) {
+        if (!tools.mods)
+            tools.mods = std::make_unique<ModTools>();
+        tools.mods->Panel(c.panels, c.requests);
     });
-    registry.Add({"terrain","Terrain tools","World",author,&EditorPanelState::showTerrain},[tools](auto& c){if(!tools.terrain)tools.terrain=std::make_unique<TerrainEditor>();tools.terrain->Panel(c.document,c.panels,c.requests);});
-    registry.Add({"volume","Volumetric terrain","World",author,&EditorPanelState::showVolumeTerrain},[tools](auto& c){if(!tools.volume)tools.volume=std::make_unique<VolumeTerrainEditor>();tools.volume->Panel(c.document,c.panels,c.requests);});
-    registry.Add({"mods","Local mods","Project",author,&EditorPanelState::showMods},[tools](auto& c){if(!tools.mods)tools.mods=std::make_unique<ModTools>();tools.mods->Panel(c.panels,c.requests);});
-    registry.Add({"animation","Animation timeline","Animation",live,&EditorPanelState::showAnimationTimeline},[tools](auto& c){if(!tools.animation)tools.animation=std::make_unique<AnimationTimeline>();tools.animation->visible=c.panels.showAnimationTimeline;tools.animation->Panel(c.panels,c.document.Selected());c.panels.showAnimationTimeline=tools.animation->visible;});
-    registry.Add({"ai","AI actions and decisions","AI",live,&EditorPanelState::showUtilityAI},[tools](auto& c){if(!tools.ai)tools.ai=std::make_unique<UtilityAIEditor>();c.panels.utilityAISelected=c.document.Selected();tools.ai->Panel(c.panels);});
-    registry.Add({"sprites","Sprite sheets and frame animation","Animation",author,&EditorPanelState::showSpriteSheetEditor},[tools](auto& c){if(!tools.sprites)tools.sprites=std::make_unique<SpriteSheetEditor>();tools.sprites->Panel(c.panels);});
-    registry.Add({"tilemaps","Tilemap painter","World",author,&EditorPanelState::showTilemapEditor},[tools](auto& c){if(!tools.tilemaps)tools.tilemaps=std::make_unique<TilemapEditor>();tools.tilemaps->Panel(c.document,c.panels);});
-    registry.Add({"judas-tools","Judas Tools","Tools",live,&EditorPanelState::showJudasTools},[](auto& c){
-        if(BeginEditorPanel("Judas Tools",&c.panels.showJudasTools,c.panels)){
-            ImGui::TextColored(EditorSecondaryAccent(),"Your project tools");
-            if(ImGui::Button("Open scripting",{-1,0}))c.panels.showScriptTools=true;
-            if(ImGui::Button("Build / export",{-1,0}))c.panels.showBuildExport=true;
-            if(ImGui::Button("Project settings",{-1,0}))c.panels.showProjectSettings=true;
-            ImGui::SeparatorText("Project scripts");
-            for(const auto& [id,asset]:c.assets.Records())if(asset.type==AssetType::Script&&!asset.missing)
-                if(ImGui::Selectable(asset.relativePath.c_str(),c.panels.browserSelection==id)){c.panels.browserSelection=id;c.panels.editScriptAsset=id;}
-        }ImGui::End();
-    });
+    registry.Add(
+        {"animation", "Animation timeline", "Animation", live, &EditorPanelState::showAnimationTimeline},
+        [tools](auto &c) {
+            if (!tools.animation)
+                tools.animation = std::make_unique<AnimationTimeline>();
+            tools.animation->visible = c.panels.showAnimationTimeline;
+            tools.animation->Panel(c.panels, c.document.Selected());
+            c.panels.showAnimationTimeline = tools.animation->visible;
+        });
+    registry.Add({"ai", "AI actions and decisions", "AI", live, &EditorPanelState::showUtilityAI},
+                 [tools](auto &c) {
+                     if (!tools.ai)
+                         tools.ai = std::make_unique<UtilityAIEditor>();
+                     c.panels.utilityAISelected = c.document.Selected();
+                     tools.ai->Panel(c.panels);
+                 });
+    registry.Add({"sprites", "Sprite sheets and frame animation", "Animation", author,
+                  &EditorPanelState::showSpriteSheetEditor},
+                 [tools](auto &c) {
+                     if (!tools.sprites)
+                         tools.sprites = std::make_unique<SpriteSheetEditor>();
+                     tools.sprites->Panel(c.panels);
+                 });
+    registry.Add({"tilemaps", "Tilemap painter", "World", author, &EditorPanelState::showTilemapEditor},
+                 [tools](auto &c) {
+                     if (!tools.tilemaps)
+                         tools.tilemaps = std::make_unique<TilemapEditor>();
+                     tools.tilemaps->Panel(c.document, c.panels);
+                 });
+    registry.Add(
+        {"judas-tools", "Judas Tools", "Tools", live, &EditorPanelState::showJudasTools}, [](auto &c) {
+            if (BeginEditorPanel("Judas Tools", &c.panels.showJudasTools, c.panels)) {
+                ImGui::TextColored(EditorSecondaryAccent(), "Your project tools");
+                if (ImGui::Button("Open scripting", {-1, 0}))
+                    c.panels.showScriptTools = true;
+                if (ImGui::Button("Build / export", {-1, 0}))
+                    c.panels.showBuildExport = true;
+                if (ImGui::Button("Project settings", {-1, 0}))
+                    c.panels.showProjectSettings = true;
+                ImGui::SeparatorText("Project scripts");
+                for (const auto &[id, asset] : c.assets.Records())
+                    if (asset.type == AssetType::Script && !asset.missing)
+                        if (ImGui::Selectable(asset.relativePath.c_str(), c.panels.browserSelection == id)) {
+                            c.panels.browserSelection = id;
+                            c.panels.editScriptAsset = id;
+                        }
+            }
+            ImGui::End();
+        });
 }

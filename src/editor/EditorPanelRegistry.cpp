@@ -26,7 +26,9 @@ void EditorPanelRegistry::DrawAll(EditorContext &context) {
         throw std::logic_error("Editor panels cannot recursively draw the registry");
     struct Scope {
         bool &active;
-        ~Scope() { active = false; }
+        ~Scope() {
+            active = false;
+        }
     } scope{drawing};
     drawing = true;
     for (auto &entry : entries) {
@@ -44,8 +46,7 @@ void EditorPanelRegistry::DrawWindowMenu(EditorContext &context) const {
     // stable and the registry needs no knowledge of individual panel types.
     std::vector<std::string> categories;
     for (const auto &entry : entries)
-        if (std::find(categories.begin(), categories.end(), entry.descriptor.category) ==
-            categories.end())
+        if (std::find(categories.begin(), categories.end(), entry.descriptor.category) == categories.end())
             categories.push_back(entry.descriptor.category);
     for (const auto &category : categories) {
         if (!ImGui::BeginMenu(category.c_str()))

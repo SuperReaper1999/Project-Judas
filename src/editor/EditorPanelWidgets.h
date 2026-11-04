@@ -5,9 +5,9 @@
 #include <string>
 
 namespace EditorPanelWidgets {
-inline constexpr ImGuiWindowFlags kWorkspacePanelFlags =
-    ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse |
-    ImGuiWindowFlags_NoSavedSettings;
+inline constexpr ImGuiWindowFlags kWorkspacePanelFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
+                                                         ImGuiWindowFlags_NoCollapse |
+                                                         ImGuiWindowFlags_NoSavedSettings;
 inline void NextActionOnRow(const char *nextLabel) {
     const float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
     const float needed = ImGui::CalcTextSize(nextLabel).x + 2 * ImGui::GetStyle().FramePadding.x;
@@ -26,7 +26,8 @@ inline void ToolbarHint(const char *hint) {
 }
 
 inline void CopyToBuffer(const std::string &s, char *buffer, std::size_t size) {
-    if (!size) return;
+    if (!size)
+        return;
     std::strncpy(buffer, s.c_str(), size - 1);
     buffer[size - 1] = '\0';
 }

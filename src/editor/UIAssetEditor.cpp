@@ -226,9 +226,9 @@ void DrawUIAssetDocument(const AssetRecord &record, EditorPanelState &state) {
         e.flow = UIFlow(flow);
     for (auto &parent : source.elements)
         if (parent.id == e.parent && parent.flow != UIFlow::Free)
-            ImGui::TextWrapped(
-                "%s owns this element's %s placement; offsets and margins still contribute.",
-                parent.id.c_str(), parent.flow == UIFlow::Horizontal ? "horizontal" : "vertical");
+            ImGui::TextWrapped("%s owns this element's %s placement; offsets and margins still contribute.",
+                               parent.id.c_str(),
+                               parent.flow == UIFlow::Horizontal ? "horizontal" : "vertical");
     if (auto it = state.uiPreviewLayout.find(e.id); it != state.uiPreviewLayout.end())
         ImGui::TextDisabled("Effective rectangle %.1f %.1f / %.1f %.1f px", it->second.rect.position.x,
                             it->second.rect.position.y, it->second.rect.size.x, it->second.rect.size.y);

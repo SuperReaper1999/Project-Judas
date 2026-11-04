@@ -20,8 +20,12 @@ class EditorAutomation {
     void BeforeRequests(EditorRequests &);
     void AfterRequests();
     void AfterRender(EditorRequests &deferredRequests);
-    bool Active() const { return autotest != nullptr; }
-    bool Failed() const { return terrainFailures || navigationFailures; }
+    bool Active() const {
+        return autotest != nullptr;
+    }
+    bool Failed() const {
+        return terrainFailures || navigationFailures;
+    }
 
   private:
     void RunTerrainAndAsyncChecks(EditorRequests &);

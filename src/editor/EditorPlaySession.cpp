@@ -119,7 +119,7 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
         renderer.DrawDebugLines(debugLines.Lines());
     });
     context.panels.runtime = world.get();
-    context.runtime=world.get();
+    context.runtime = world.get();
     context.panels.renderPreviewHistory.reset();
     context.panels.mode = EditorMode::Play;
     context.panels.status = world->legacyGameplay
@@ -163,7 +163,8 @@ void EditorPlaySession::StopPlay(EditorContext &context, EditorSceneViewport &vi
 }
 
 bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTools> &scriptTools,
-                              float deltaSeconds,bool render,bool allowCapture,const RenderTargetHandle* destination) {
+                              float deltaSeconds, bool render, bool allowCapture,
+                              const RenderTargetHandle *destination) {
     auto &window = context.host.GetWindow();
     auto &renderer = context.host.GetRenderer();
     auto &host = context.host;
@@ -176,7 +177,7 @@ bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTool
     play->SetPointerCaptureAllowed(allowCapture);
     // The identical frame the runtime runs. Escape opens the M13
     // pause menu, which releases the mouse for the editor panels.
-    lastAlpha=play->Frame(window, renderer, deltaSeconds, /*drawHud=*/true,render,destination);
+    lastAlpha = play->Frame(window, renderer, deltaSeconds, /*drawHud=*/true, render, destination);
     if (scriptTools->clockReset) {
         clockReset = true;
         scriptTools->clockReset = false;
@@ -205,7 +206,7 @@ bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTool
         if (previousWorld != world.get())
             window.Input().DiscardStickHistory();
         context.panels.runtime = world.get();
-    context.runtime=world.get();
+        context.runtime = world.get();
         context.panels.worldStatePath = play->WorldStatePath();
     }
     context.panels.playPaused = play->IsPaused();

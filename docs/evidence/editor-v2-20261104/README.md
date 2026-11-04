@@ -7,6 +7,10 @@ Linux, with final human acceptance pending. Source begins at Scripting V2
 fingerprint is in baseline/PROVENANCE.json; large binaries/disposable projects
 remain in .cache/editor-v2, not this evidence directory.
 
+Mechanical formatting is a subsequent, separate checkpoint. MECHANICAL_FORMAT.json
+records 69 files with identical C++ token sequences before/after clang-format19.1.7,
+with include sorting and string/comment rewriting disabled.
+
 ## Successful controls
 
 - viewport-focus-final.log and viewport-final-native.log: actual rendered pixels,

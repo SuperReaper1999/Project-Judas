@@ -77,8 +77,7 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
             CopyToBuffer(state.renameBuffer, buffer, sizeof(buffer));
             ImGui::SetKeyboardFocusHere();
             if (ImGui::InputText("##rename", buffer, sizeof(buffer),
-                                 ImGuiInputTextFlags_EnterReturnsTrue |
-                                     ImGuiInputTextFlags_AutoSelectAll)) {
+                                 ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
                 if (SceneObject *target = scene.Find(o.id)) {
                     doc.BeginEdit();
                     target->name = buffer;
@@ -249,9 +248,8 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
     DrawHierarchyCreationPopup(state, requests);
     if (reparent) {
         std::string error;
-        state.status = doc.ReparentSelection(reparentTo, error)
-                           ? "Parent changed; world placement preserved"
-                           : "Parent change rejected: " + error;
+        state.status = doc.ReparentSelection(reparentTo, error) ? "Parent changed; world placement preserved"
+                                                                : "Parent change rejected: " + error;
     }
     if (toDelete != kInvalidSceneObjectId) {
         std::string error;

@@ -18,7 +18,9 @@ class EditorWorkspace {
   public:
     void BeginFrame(EditorPanelState &, EditorPreferences &);
     void RecoverFloatingWindows();
-    ImGuiID DockspaceId() const { return dockspace; }
+    ImGuiID DockspaceId() const {
+        return dockspace;
+    }
 
   private:
     void BuildDefault(const std::string &workspace, ImVec2 size);

@@ -331,16 +331,17 @@ void EditorSceneViewport::UpdateCameraNavigation(EditorContext &context,
     context.panels.cameraFocus = camera.Is2D() ? camera.Focus() : camera.Position() + camera.Forward() * 8.0f;
 }
 
-void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSeconds,
-                                        TerrainEditor *terrain,
+void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSeconds, TerrainEditor *terrain,
                                         VolumeTerrainEditor *volumeTerrain, TilemapEditor *tilemapEditor) {
     JUDAS_PROFILE_SCOPE("Editor viewport");
     Window &window = context.host.GetWindow();
     Renderer &renderer = context.host.GetRenderer();
     const ImGuiIO &io = ImGui::GetIO();
     const bool insideViewport = context.panels.workspace.viewport.Contains({io.MousePos.x, io.MousePos.y});
-    const bool pointerAvailable=context.panels.dockingEnabled?context.panels.sceneViewHovered:!io.WantCaptureMouse;
-    const bool keyboardAvailable=context.panels.dockingEnabled?!io.WantTextInput:!io.WantCaptureKeyboard;
+    const bool pointerAvailable =
+        context.panels.dockingEnabled ? context.panels.sceneViewHovered : !io.WantCaptureMouse;
+    const bool keyboardAvailable =
+        context.panels.dockingEnabled ? !io.WantTextInput : !io.WantCaptureKeyboard;
 
     if (camera.Is2D() != context.panels.view2D) {
         CancelCameraNavigation(context);
@@ -432,30 +433,30 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
 
     // The Scene image accepts an actual ImGui drag-delivery. The viewport
     // owner applies the normal document operation after UI construction.
-    if(pendingDropDelivered){
-        pendingDropDelivered=false;
-            const AssetRecord *record = context.host.Assets().Find(pendingDropAsset);
-            if (record && (record->type == AssetType::Mesh || record->type == AssetType::Texture)) {
-                const int mx = static_cast<int>(pendingDropPosition.x), my = static_cast<int>(pendingDropPosition.y);
-                glm::vec3 rayOrigin, rayDirection;
-                ViewportRay(context, mx, my, rayOrigin, rayDirection);
-                glm::vec3 hit = context.panels.cameraFocus;
-                RayPlaneIntersection(rayOrigin, rayDirection, context.panels.cameraFocus, -camera.Forward(),
-                                     hit);
-                std::string error;
-                if (record->type == AssetType::Texture) {
-                    if (!CreateEditorSpriteFromImage(context.document, context.host.Assets(),
-                                                     pendingDropAsset, hit, kInvalidSceneObjectId, error)) {
-                        context.panels.status = error;
-                    } else
-                        context.panels.status = "Placed sprite: " + record->relativePath;
-                } else {
-                    CreateObjectOfKind(context.document, "mesh", hit, pendingDropAsset);
-                    context.panels.status = "Placed " + record->relativePath;
-                }
+    if (pendingDropDelivered) {
+        pendingDropDelivered = false;
+        const AssetRecord *record = context.host.Assets().Find(pendingDropAsset);
+        if (record && (record->type == AssetType::Mesh || record->type == AssetType::Texture)) {
+            const int mx = static_cast<int>(pendingDropPosition.x),
+                      my = static_cast<int>(pendingDropPosition.y);
+            glm::vec3 rayOrigin, rayDirection;
+            ViewportRay(context, mx, my, rayOrigin, rayDirection);
+            glm::vec3 hit = context.panels.cameraFocus;
+            RayPlaneIntersection(rayOrigin, rayDirection, context.panels.cameraFocus, -camera.Forward(), hit);
+            std::string error;
+            if (record->type == AssetType::Texture) {
+                if (!CreateEditorSpriteFromImage(context.document, context.host.Assets(), pendingDropAsset,
+                                                 hit, kInvalidSceneObjectId, error)) {
+                    context.panels.status = error;
+                } else
+                    context.panels.status = "Placed sprite: " + record->relativePath;
             } else {
-                context.panels.status = "Drop an image to create a sprite, or a mesh to create a model";
+                CreateObjectOfKind(context.document, "mesh", hit, pendingDropAsset);
+                context.panels.status = "Placed " + record->relativePath;
             }
+        } else {
+            context.panels.status = "Drop an image to create a sprite, or a mesh to create a model";
+        }
         pendingDropAsset.clear();
     }
 
@@ -599,25 +600,26 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     renderer.ClearWeather();
     renderer.BeginFrame(window.Width(), window.Height());
     renderer.EndFrame();
-
 }
 
 // A live Scene camera is a read-only presentation of the same authoritative
 // world. It never advances simulation, scripts, audio or save publication.
-void EditorSceneViewport::RenderLive(EditorContext& context,const EditorPlaySession& session,float dt){
-    if(!session.world)return;
-    auto& renderer=context.host.GetRenderer();
-    const auto size=renderer.RenderTargetSize(target);
-    if(size.x<1||size.y<1||!renderer.BeginRenderTarget(target))return;
-    const auto& io = ImGui::GetIO();
-    auto* sceneWindow = ImGui::FindWindowByName("Scene###Judas.Scene");
-    auto* navigationWindow = ImGui::GetCurrentContext()->NavWindow;
+void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySession &session, float dt) {
+    if (!session.world)
+        return;
+    auto &renderer = context.host.GetRenderer();
+    const auto size = renderer.RenderTargetSize(target);
+    if (size.x < 1 || size.y < 1 || !renderer.BeginRenderTarget(target))
+        return;
+    const auto &io = ImGui::GetIO();
+    auto *sceneWindow = ImGui::FindWindowByName("Scene###Judas.Scene");
+    auto *navigationWindow = ImGui::GetCurrentContext()->NavWindow;
     EditorCameraGestureInput navigation;
     navigation.focused = !io.AppFocusLost && sceneWindow && navigationWindow &&
-        (navigationWindow == sceneWindow ||
-         ImGui::IsWindowChildOf(navigationWindow, sceneWindow, false, false));
-    navigation.canStart = context.panels.sceneViewHovered && !io.WantTextInput &&
-        !ImGui::IsAnyItemActive() && !drag.Active();
+                         (navigationWindow == sceneWindow ||
+                          ImGui::IsWindowChildOf(navigationWindow, sceneWindow, false, false));
+    navigation.canStart =
+        context.panels.sceneViewHovered && !io.WantTextInput && !ImGui::IsAnyItemActive() && !drag.Active();
     navigation.cancel = io.WantTextInput || ImGui::IsKeyPressed(ImGuiKey_Escape);
     navigation.rightDown = !camera.Is2D() && ImGui::IsMouseDown(ImGuiMouseButton_Right);
     navigation.middleDown = ImGui::IsMouseDown(ImGuiMouseButton_Middle);
@@ -627,25 +629,30 @@ void EditorSceneViewport::RenderLive(EditorContext& context,const EditorPlaySess
     const auto active = gesture.Active();
     const int dx = active == previous ? int(io.MouseDelta.x) : 0;
     const int dy = active == previous ? int(io.MouseDelta.y) : 0;
-    if (active == EditorCameraGesture::Pan) camera.Pan(dx, dy, size.y);
+    if (active == EditorCameraGesture::Pan)
+        camera.Pan(dx, dy, size.y);
     glm::vec3 movement{0};
     if (navigation.focused && context.panels.sceneViewHovered && !io.WantTextInput) {
-        movement = {
-            float(ImGui::IsKeyDown(ImGuiKey_D)) - float(ImGui::IsKeyDown(ImGuiKey_A)),
-            float(ImGui::IsKeyDown(ImGuiKey_E)) - float(ImGui::IsKeyDown(ImGuiKey_Q)),
-            float(ImGui::IsKeyDown(ImGuiKey_W)) - float(ImGui::IsKeyDown(ImGuiKey_S))};
+        movement = {float(ImGui::IsKeyDown(ImGuiKey_D)) - float(ImGui::IsKeyDown(ImGuiKey_A)),
+                    float(ImGui::IsKeyDown(ImGuiKey_E)) - float(ImGui::IsKeyDown(ImGuiKey_Q)),
+                    float(ImGui::IsKeyDown(ImGuiKey_W)) - float(ImGui::IsKeyDown(ImGuiKey_S))};
     }
     // Observe editor physical keys without unclaiming or rerouting gameplay.
     // A press begun over another panel cannot turn into navigation while held.
     camera.UpdateLocal(dt, active == EditorCameraGesture::Look, dx, dy, io.KeyShift, movement);
-    if (EditorCameraCanDolly(navigation, active, true)) camera.Dolly(io.MouseWheel);
-    UpdateFluidSurface(renderer,*session.world,session.lastAlpha);
-    RenderWorldFrame(renderer,size.x,size.y,*session.world,&session.play->Session(),camera.ViewMatrix(),
-                     camera.ProjectionMatrix(float(size.x)/size.y),camera.Position(),session.lastAlpha,dt,WorldRenderPurpose::Observer);
+    if (EditorCameraCanDolly(navigation, active, true))
+        camera.Dolly(io.MouseWheel);
+    UpdateFluidSurface(renderer, *session.world, session.lastAlpha);
+    RenderWorldFrame(renderer, size.x, size.y, *session.world, &session.play->Session(), camera.ViewMatrix(),
+                     camera.ProjectionMatrix(float(size.x) / size.y), camera.Position(), session.lastAlpha,
+                     dt, WorldRenderPurpose::Observer);
     renderer.EndRenderTarget();
 }
 
-void EditorSceneViewport::Destroy(Renderer& renderer){
- if(target.IsValid())renderer.DestroyRenderTarget(target);
- target={};planetPreview.clear();regionPreview.clear();
+void EditorSceneViewport::Destroy(Renderer &renderer) {
+    if (target.IsValid())
+        renderer.DestroyRenderTarget(target);
+    target = {};
+    planetPreview.clear();
+    regionPreview.clear();
 }

@@ -41,8 +41,8 @@ bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneOb
         std::string(editor.name) == "Render" && o.render && o.render->shape == SceneShape::Sprite
             ? "Sprite"
             : editor.name;
-    bool open = ImGui::CollapsingHeader(title, common ? ImGuiTreeNodeFlags_DefaultOpen
-                                                      : ImGuiTreeNodeFlags_None);
+    bool open =
+        ImGui::CollapsingHeader(title, common ? ImGuiTreeNodeFlags_DefaultOpen : ImGuiTreeNodeFlags_None);
     ImGui::SetItemTooltip("Expand to edit. Right-click for component actions.");
     if (ImGui::BeginPopupContextItem("Component actions")) {
         if (ImGui::MenuItem("Remove component")) {
@@ -218,9 +218,8 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         if (ComponentHeader(doc, editor, *o, state))
             editor.draw(doc, *o, state);
     }
-    if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty()
-                                                           ? ImGuiTreeNodeFlags_DefaultOpen
-                                                           : ImGuiTreeNodeFlags_None))
+    if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty() ? ImGuiTreeNodeFlags_DefaultOpen
+                                                                          : ImGuiTreeNodeFlags_None))
         DrawEditorScriptWorkflow(doc, *o, state);
     ImGui::Spacing();
     if (ImGui::CollapsingHeader("Object settings")) {
@@ -263,8 +262,7 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
             DrawCategoryLayer(doc, "Render layer", o->renderLayer, c.render);
         }
     }
-    if (state.mode == EditorMode::Edit && state.project && state.assets &&
-        ImGui::TreeNode("Prefab tools")) {
+    if (state.mode == EditorMode::Edit && state.project && state.assets && ImGui::TreeNode("Prefab tools")) {
         if (ImGui::Button("Create prefab from hierarchy")) {
             Scene source;
             std::string error;
@@ -333,8 +331,7 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
                 o = doc.SelectedObject();
                 root = doc.GetScene().Find(o->prefabRoot);
             }
-            if (root && o->id == o->prefabRoot &&
-                ImGui::Button("Apply this hierarchy to prefab source")) {
+            if (root && o->id == o->prefabRoot && ImGui::Button("Apply this hierarchy to prefab source")) {
                 const auto id = o->id;
                 doc.BeginEdit();
                 std::string error;

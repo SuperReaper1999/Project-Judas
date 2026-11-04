@@ -37,8 +37,7 @@ std::vector<std::string> EditorAssetBrowserDirectories(const AssetDatabase &asse
     std::set<std::string> directories{std::string{}};
     for (const auto &[id, record] : assets.Records()) {
         (void)id;
-        auto parent =
-            std::filesystem::path(EditorAssetBrowserPath(record, assets.AssetsDir())).parent_path();
+        auto parent = std::filesystem::path(EditorAssetBrowserPath(record, assets.AssetsDir())).parent_path();
         while (!parent.empty()) {
             directories.insert(parent.generic_string());
             parent = parent.parent_path();

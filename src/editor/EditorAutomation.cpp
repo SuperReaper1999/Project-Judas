@@ -146,8 +146,8 @@ void EditorAutomation::screenshot(const std::string &path) {
 }
 
 bool EditorAutomation::Initialize() {
-    if(navigationAutotest||pickingAutotest){
-        app.m_panels.showSceneView=true;
+    if (navigationAutotest || pickingAutotest) {
+        app.m_panels.showSceneView = true;
         app.m_shell.views.RequestSceneFocus();
     }
     if (polishAutotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PREFS"))

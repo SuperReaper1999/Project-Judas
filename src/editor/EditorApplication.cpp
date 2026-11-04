@@ -118,15 +118,18 @@ bool EditorApplication::StartPlay(std::string &error) {
     }
     EditorRequests requests;
     auto context = Context(requests);
-    const bool started=m_playSession.StartPlay(context,m_sceneViewport,m_scriptTools,error);
-    if(started){m_panels.showGameView=true;m_shell.views.RequestGameFocus();}
+    const bool started = m_playSession.StartPlay(context, m_sceneViewport, m_scriptTools, error);
+    if (started) {
+        m_panels.showGameView = true;
+        m_shell.views.RequestGameFocus();
+    }
     return started;
 }
 void EditorApplication::StopPlay() {
     EditorRequests requests;
     auto context = Context(requests);
     m_playSession.StopPlay(context, m_sceneViewport);
-    m_panels.showSceneView=true;
+    m_panels.showSceneView = true;
     m_shell.views.RequestSceneFocus();
 }
 void EditorApplication::HandleRequests(EditorRequests &requests) {
@@ -168,8 +171,7 @@ void EditorApplication::UpdateCameraNavigation(const EditorCameraGestureInput &i
 void EditorApplication::FrameEditMode(float dt) {
     EditorRequests requests;
     auto context = Context(requests);
-    m_sceneViewport.FrameEditMode(context, dt, m_terrain.get(), m_volumeTerrain.get(),
-                                  m_tilemapEditor.get());
+    m_sceneViewport.FrameEditMode(context, dt, m_terrain.get(), m_volumeTerrain.get(), m_tilemapEditor.get());
 }
 void EditorApplication::DrawModelImportPreview(float dt) {
     EditorRequests requests;
@@ -187,12 +189,22 @@ void EditorApplication::DrawUIAuthoringPreview() {
     m_assetPreview.DrawUIAuthoringPreview(context);
 }
 
-void EditorApplication::LoadEditorPreferences(){m_preferences.LoadUserSettings(m_panels);}
-void EditorApplication::SaveEditorPreferences(){m_preferences.SaveUserSettings(m_panels);}
-void EditorApplication::CollectProfilerData(float dt){EditorRequests r;auto c=Context(r);m_profilerSnapshot.Collect(c,m_playSession,dt);}
+void EditorApplication::LoadEditorPreferences() {
+    m_preferences.LoadUserSettings(m_panels);
+}
+void EditorApplication::SaveEditorPreferences() {
+    m_preferences.SaveUserSettings(m_panels);
+}
+void EditorApplication::CollectProfilerData(float dt) {
+    EditorRequests r;
+    auto c = Context(r);
+    m_profilerSnapshot.Collect(c, m_playSession, dt);
+}
 
 EditorApplication::EditorApplication() = default;
-EditorApplication::~EditorApplication(){Shutdown();}
+EditorApplication::~EditorApplication() {
+    Shutdown();
+}
 
 int EditorApplication::Run(int argc, char **argv) {
     ProfileRun profileRun("editor");
@@ -212,8 +224,8 @@ int EditorApplication::Run(int argc, char **argv) {
         return 1;
     }
     std::string error;
-    m_ownedHost=std::make_unique<EngineHost>();
-    EngineHost& host=*m_ownedHost;
+    m_ownedHost = std::make_unique<EngineHost>();
+    EngineHost &host = *m_ownedHost;
     const auto editorTitle = std::string("Judas Editor V2 — ") + GetBuildIdentity().releaseName + " " +
                              GetBuildIdentity().version + " [" + GetBuildIdentity().channel + "] " +
                              GetBuildIdentity().buildId;
@@ -229,7 +241,7 @@ int EditorApplication::Run(int argc, char **argv) {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    m_guiContextOwned=true;
+    m_guiContextOwned = true;
     ImGuiIO &io = ImGui::GetIO();
     io.IniFilename = nullptr;
     const auto editorFont = ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf");
@@ -237,36 +249,53 @@ int EditorApplication::Run(int argc, char **argv) {
         io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    const char* driver=SDL_GetCurrentVideoDriver();
-    if(driver&&(std::string(driver)=="x11"||std::string(driver)=="windows"))
+    const char *driver = SDL_GetCurrentVideoDriver();
+    if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows"))
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-    m_panels.dockingEnabled=true;
-    m_shell.RegisterPanels(m_sceneViewport,m_playSession,{m_scriptTools,m_terrain,m_volumeTerrain,m_modTools,m_animationTimeline,m_utilityAIEditor,m_spriteSheetEditor,m_tilemapEditor});
-    if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
-    m_scriptTools->drawStoppedShell=[this]{EditorRequests requests;auto c=Context(requests);m_shell.DrawStopped(c,m_preferences);};
-    m_scriptTools->presentStoppedShell=[this,&host,&window]{m_shell.Present(host);window.SwapBuffers();};
+    m_panels.dockingEnabled = true;
+    m_shell.RegisterPanels(m_sceneViewport, m_playSession,
+                           {m_scriptTools, m_terrain, m_volumeTerrain, m_modTools, m_animationTimeline,
+                            m_utilityAIEditor, m_spriteSheetEditor, m_tilemapEditor});
+    if (!m_scriptTools)
+        m_scriptTools = std::make_unique<ScriptTools>();
+    m_scriptTools->drawStoppedShell = [this] {
+        EditorRequests requests;
+        auto c = Context(requests);
+        m_shell.DrawStopped(c, m_preferences);
+    };
+    m_scriptTools->presentStoppedShell = [this, &host, &window] {
+        m_shell.Present(host);
+        window.SwapBuffers();
+    };
 
     m_preferences.ApplyPending(m_panels);
     if (m_preferences.automaticUpdates && !std::getenv("JUDAS_EDITOR_AUTOTEST"))
         m_milestoneNotice.Check(false, m_preferences.updateChannel);
-    m_guiPlatformReady=ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
-    m_guiRendererReady=m_guiPlatformReady&&ImGui_ImplOpenGL3_Init("#version 330 core");
-    if(!m_guiRendererReady){std::fprintf(stderr,"Editor UI backend initialization failed: %s\n",SDL_GetError());return 1;}
-    window.SetEventHook(
-        [this, editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event &event) {
-            ImGui_ImplSDL2_ProcessEvent(&event);
-            if (event.type == SDL_MOUSEMOTION && event.motion.windowID == (m_shell.views.Scene().windowId?m_shell.views.Scene().windowId:editorWindowId)) {
-                m_sceneViewport.mouseDeltaX += event.motion.xrel;
-                m_sceneViewport.mouseDeltaY += event.motion.yrel;
-            } else if (event.type == SDL_WINDOWEVENT && event.window.windowID == (m_shell.views.Scene().windowId?m_shell.views.Scene().windowId:editorWindowId)) {
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    m_sceneViewport.focused = false;
-                    if (m_panels.mode == EditorMode::Edit)
-                        CancelCameraNavigation();
-                } else if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
-                    m_sceneViewport.focused = true;
-            }
-        });
+    m_guiPlatformReady = ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
+    m_guiRendererReady = m_guiPlatformReady && ImGui_ImplOpenGL3_Init("#version 330 core");
+    if (!m_guiRendererReady) {
+        std::fprintf(stderr, "Editor UI backend initialization failed: %s\n", SDL_GetError());
+        return 1;
+    }
+    window.SetEventHook([this,
+                         editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event &event) {
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        if (event.type == SDL_MOUSEMOTION &&
+            event.motion.windowID ==
+                (m_shell.views.Scene().windowId ? m_shell.views.Scene().windowId : editorWindowId)) {
+            m_sceneViewport.mouseDeltaX += event.motion.xrel;
+            m_sceneViewport.mouseDeltaY += event.motion.yrel;
+        } else if (event.type == SDL_WINDOWEVENT &&
+                   event.window.windowID ==
+                       (m_shell.views.Scene().windowId ? m_shell.views.Scene().windowId : editorWindowId)) {
+            if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                m_sceneViewport.focused = false;
+                if (m_panels.mode == EditorMode::Edit)
+                    CancelCameraNavigation();
+            } else if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+                m_sceneViewport.focused = true;
+        }
+    });
 
     // --- Milestone 30: open a project, then a scene ---
     std::string argument = argc == 2 ? argv[1] : std::string();
@@ -327,8 +356,11 @@ int EditorApplication::Run(int argc, char **argv) {
         // Last frame's UI focus decides whether the engine's own key/mouse
         // reading is suppressed this frame (a text field must not walk the
         // player or fly the camera).
-        if(m_panels.mode==EditorMode::Play)m_shell.views.ConfigureInput(window,true);
-        else window.SetInputClaimed(io.WantCaptureKeyboard&&!m_panels.sceneViewHovered,io.WantCaptureMouse&&!m_panels.sceneViewHovered);
+        if (m_panels.mode == EditorMode::Play)
+            m_shell.views.ConfigureInput(window, true);
+        else
+            window.SetInputClaimed(io.WantCaptureKeyboard && !m_panels.sceneViewHovered,
+                                   io.WantCaptureMouse && !m_panels.sceneViewHovered);
         window.SetHostTextInput(io.WantTextInput);
         m_sceneViewport.mouseDeltaX = m_sceneViewport.mouseDeltaY = 0;
         {
@@ -360,30 +392,45 @@ int EditorApplication::Run(int argc, char **argv) {
         PollBrowserExportWorkflow(m_panels);
         EditorRequests requests;
         requests.quit = closeRequested;
-        {auto shortcuts=Context(requests);RouteEditorShortcuts(shortcuts,m_sceneViewport.gesture);}
+        {
+            auto shortcuts = Context(requests);
+            RouteEditorShortcuts(shortcuts, m_sceneViewport.gesture);
+        }
 
         static ProfileLabel editorBuildLabel("Editor UI build");
         ProfileScope editorBuildScope(editorBuildLabel);
-        auto context=Context(requests);
+        auto context = Context(requests);
         m_assetPreview.Pump(context);
-        PumpEditorScriptTools(context,m_scriptTools);
-        DrawEditorImportReview(m_panels,requests);
+        PumpEditorScriptTools(context, m_scriptTools);
+        DrawEditorImportReview(m_panels, requests);
         m_preferences.Draw(m_panels);
-        m_shell.Draw(context,m_preferences);
-        if(m_preferences.ConsumeSaveRequest())SaveEditorPreferences();
-        m_milestoneNotice.Draw(m_panels.status,m_preferences.updateChannel);
+        m_shell.Draw(context, m_preferences);
+        if (m_preferences.ConsumeSaveRequest())
+            SaveEditorPreferences();
+        m_milestoneNotice.Draw(m_panels.status, m_preferences.updateChannel);
         editorBuildScope.End();
-        m_shell.views.ConfigureInput(window,m_panels.mode==EditorMode::Play);
-        if(m_panels.mode==EditorMode::Play){
-            const bool render=m_shell.views.GameTarget().IsValid();
-            const bool capture=m_shell.views.Game().focused&&(m_shell.views.Game().hovered||window.IsMouseCaptured())&&!io.WantTextInput&&!(m_panels.showProfiler&&m_panels.profilerInspect);
-            const bool resumed=m_playSession.Frame(context,m_scriptTools,deltaSeconds,render,capture,&m_shell.views.GameTarget());
-            if(m_shell.views.Scene().visible){auto liveContext=Context(requests);m_sceneViewport.RenderLive(liveContext,m_playSession,deltaSeconds);}
-            if(resumed){previousCounter=SDL_GetPerformanceCounter();auto refreshed=Context(requests);m_shell.Draw(refreshed,m_preferences);}
-        }else if(m_shell.views.Scene().visible){
-            m_sceneViewport.focused=m_shell.views.Scene().focused;
+        m_shell.views.ConfigureInput(window, m_panels.mode == EditorMode::Play);
+        if (m_panels.mode == EditorMode::Play) {
+            const bool render = m_shell.views.GameTarget().IsValid();
+            const bool capture = m_shell.views.Game().focused &&
+                                 (m_shell.views.Game().hovered || window.IsMouseCaptured()) &&
+                                 !io.WantTextInput && !(m_panels.showProfiler && m_panels.profilerInspect);
+            const bool resumed = m_playSession.Frame(context, m_scriptTools, deltaSeconds, render, capture,
+                                                     &m_shell.views.GameTarget());
+            if (m_shell.views.Scene().visible) {
+                auto liveContext = Context(requests);
+                m_sceneViewport.RenderLive(liveContext, m_playSession, deltaSeconds);
+            }
+            if (resumed) {
+                previousCounter = SDL_GetPerformanceCounter();
+                auto refreshed = Context(requests);
+                m_shell.Draw(refreshed, m_preferences);
+            }
+        } else if (m_shell.views.Scene().visible) {
+            m_sceneViewport.focused = m_shell.views.Scene().focused;
             FrameEditMode(deltaSeconds);
-        }else CancelCameraNavigation();
+        } else
+            CancelCameraNavigation();
         CollectProfilerData(deltaSeconds);
 
         // Requests raised by the automation hook on the previous frame,
@@ -428,22 +475,46 @@ int EditorApplication::Run(int argc, char **argv) {
                : 0;
 }
 
-void EditorApplication::Shutdown(bool savePreferences){
-    if(!m_host)return;
-    auto& host=*m_host;auto& window=host.GetWindow();auto& renderer=host.GetRenderer();
-    SDL_GL_MakeCurrent(window.NativeWindow(),window.NativeGLContext());
-    if(m_playSession.world)StopPlay();else CancelCameraNavigation();
-    window.ClearInputRegion();window.SetEventHook(nullptr);
-    if(m_scriptTools){m_scriptTools->drawStoppedShell={};m_scriptTools->presentStoppedShell={};}
-    m_shell.views.Destroy(renderer);m_sceneViewport.Destroy(renderer);
-    if(m_terrain){m_terrain->Shutdown(renderer,m_panels.importJobs);m_terrain.reset();}
-    if(m_volumeTerrain){m_volumeTerrain->Shutdown(renderer,m_panels.importJobs);m_volumeTerrain.reset();}
-    ShutdownRetargetPreview(m_panels,renderer);
-    EditorRequests requests;auto context=Context(requests);m_assetPreview.Destroy(context);
+void EditorApplication::Shutdown(bool savePreferences) {
+    if (!m_host)
+        return;
+    auto &host = *m_host;
+    auto &window = host.GetWindow();
+    auto &renderer = host.GetRenderer();
+    SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+    if (m_playSession.world)
+        StopPlay();
+    else
+        CancelCameraNavigation();
+    window.ClearInputRegion();
+    window.SetEventHook(nullptr);
+    if (m_scriptTools) {
+        m_scriptTools->drawStoppedShell = {};
+        m_scriptTools->presentStoppedShell = {};
+    }
+    m_shell.views.Destroy(renderer);
+    m_sceneViewport.Destroy(renderer);
+    if (m_terrain) {
+        m_terrain->Shutdown(renderer, m_panels.importJobs);
+        m_terrain.reset();
+    }
+    if (m_volumeTerrain) {
+        m_volumeTerrain->Shutdown(renderer, m_panels.importJobs);
+        m_volumeTerrain.reset();
+    }
+    ShutdownRetargetPreview(m_panels, renderer);
+    EditorRequests requests;
+    auto context = Context(requests);
+    m_assetPreview.Destroy(context);
     m_panels.importTask.reset();
-    if(savePreferences&&m_guiContextOwned)SaveEditorPreferences();
-    if(m_guiRendererReady)ImGui_ImplOpenGL3_Shutdown();
-    if(m_guiPlatformReady)ImGui_ImplSDL2_Shutdown();
-    if(m_guiContextOwned)ImGui::DestroyContext();
-    m_guiRendererReady=m_guiPlatformReady=m_guiContextOwned=false;m_host=nullptr;
+    if (savePreferences && m_guiContextOwned)
+        SaveEditorPreferences();
+    if (m_guiRendererReady)
+        ImGui_ImplOpenGL3_Shutdown();
+    if (m_guiPlatformReady)
+        ImGui_ImplSDL2_Shutdown();
+    if (m_guiContextOwned)
+        ImGui::DestroyContext();
+    m_guiRendererReady = m_guiPlatformReady = m_guiContextOwned = false;
+    m_host = nullptr;
 }

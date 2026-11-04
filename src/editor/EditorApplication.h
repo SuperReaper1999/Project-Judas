@@ -50,8 +50,8 @@ class EditorApplication {
     EditorDocument m_document;
     EditorPanelState m_panels;
     EditorPreferences m_preferences;
-    bool m_guiContextOwned=false,m_guiPlatformReady=false,m_guiRendererReady=false;
-    void Shutdown(bool savePreferences=false);
+    bool m_guiContextOwned = false, m_guiPlatformReady = false, m_guiRendererReady = false;
+    void Shutdown(bool savePreferences = false);
     std::unique_ptr<struct ScriptTools> m_scriptTools; // outlives the played world/debugger callback
     EditorShell m_shell;
     EditorProjectWorkflow m_projectWorkflow;

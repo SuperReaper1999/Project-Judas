@@ -16,7 +16,7 @@ struct WindowInputRegion {
     SDL_FPoint Normalize(int x, int y) const {
         return {float(x - content.x) / content.w, float(y - content.y) / content.h};
     }
-    void Map(int& x, int& y) const {
+    void Map(int &x, int &y) const {
         const auto point = Normalize(x, y);
         x = int(std::lround(point.x * renderWidth));
         y = int(std::lround(point.y * renderHeight));
@@ -24,8 +24,8 @@ struct WindowInputRegion {
     SDL_Rect ToNative(SDL_Rect rect) const {
         return {content.x + int(std::lround(double(rect.x) * content.w / renderWidth)),
                 content.y + int(std::lround(double(rect.y) * content.h / renderHeight)),
-                std::max(1,int(std::lround(double(rect.w) * content.w / renderWidth))),
-                std::max(1,int(std::lround(double(rect.h) * content.h / renderHeight)))};
+                std::max(1, int(std::lround(double(rect.w) * content.w / renderWidth))),
+                std::max(1, int(std::lround(double(rect.h) * content.h / renderHeight)))};
     }
     bool Contains(int x, int y) const {
         const auto p = Normalize(x, y);

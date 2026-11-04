@@ -363,7 +363,9 @@ bool EditorPreferences::QueueLayout(const std::string &name) {
         }
     return false;
 }
-void EditorPreferences::ResetLayout() { QueueWorkspace("Scene"); }
+void EditorPreferences::ResetLayout() {
+    QueueWorkspace("Scene");
+}
 void EditorPreferences::ApplyPending(EditorPanelState &state) {
     if (m_appearancePending) {
         ApplyAppearance(appearance);

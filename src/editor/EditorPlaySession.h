@@ -15,10 +15,10 @@ struct EditorPlaySession {
     ~EditorPlaySession();
     bool StartPlay(EditorContext &, EditorSceneViewport &, std::unique_ptr<ScriptTools> &, std::string &);
     void StopPlay(EditorContext &, EditorSceneViewport &);
-    bool Frame(EditorContext &, std::unique_ptr<ScriptTools> &, float deltaSeconds,bool render=true,bool allowCapture=true,
-               const RenderTargetHandle* destination=nullptr);
+    bool Frame(EditorContext &, std::unique_ptr<ScriptTools> &, float deltaSeconds, bool render = true,
+               bool allowCapture = true, const RenderTargetHandle *destination = nullptr);
     std::unique_ptr<RuntimeWorld> world;
     std::unique_ptr<InteractivePlay> play;
     DebugLineList debugLines;
-    float lastAlpha=0;
+    float lastAlpha = 0;
 };

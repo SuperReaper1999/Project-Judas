@@ -46,9 +46,14 @@ namespace fs = std::filesystem;
 void EditorAutomation::RunWorkspaceChecks() {
     auto &io = ImGui::GetIO();
     const std::string prefix = autotest;
-    if(navigationAutotest && autotestFrame<10) {
-        const auto& v=app.m_shell.views.Scene();
-        std::fprintf(stderr,"[editor navigation input] frame=%d mouse=%.1f,%.1f rect=%.1f,%.1f %.1f,%.1f hover=%d focus=%d middle=%d gesture=%d captured=%d text=%d\n",autotestFrame,io.MousePos.x,io.MousePos.y,v.bounds.position.x,v.bounds.position.y,v.bounds.size.x,v.bounds.size.y,v.hovered,v.focused,io.MouseDown[ImGuiMouseButton_Middle],int(app.m_sceneViewport.gesture.Active()),window.IsMouseCaptured(),io.WantTextInput);
+    if (navigationAutotest && autotestFrame < 10) {
+        const auto &v = app.m_shell.views.Scene();
+        std::fprintf(
+            stderr,
+            "[editor navigation input] frame=%d mouse=%.1f,%.1f rect=%.1f,%.1f %.1f,%.1f hover=%d focus=%d middle=%d gesture=%d captured=%d text=%d\n",
+            autotestFrame, io.MousePos.x, io.MousePos.y, v.bounds.position.x, v.bounds.position.y,
+            v.bounds.size.x, v.bounds.size.y, v.hovered, v.focused, io.MouseDown[ImGuiMouseButton_Middle],
+            int(app.m_sceneViewport.gesture.Active()), window.IsMouseCaptured(), io.WantTextInput);
     }
     if (pickingAutotest) {
         // A private authored fixture supplies two tiny children under

@@ -24,10 +24,9 @@ struct EditorSceneViewport {
     void DrawEditOverlay(EditorContext &, Renderer &, const Scene &);
     void CancelCameraNavigation(EditorContext &);
     void UpdateCameraNavigation(EditorContext &, const EditorCameraGestureInput &, int, int, float, bool);
-    void FrameEditMode(EditorContext &, float, TerrainEditor *, VolumeTerrainEditor *,
-                       TilemapEditor *);
+    void FrameEditMode(EditorContext &, float, TerrainEditor *, VolumeTerrainEditor *, TilemapEditor *);
     void Destroy(Renderer &);
-    void RenderLive(EditorContext&,const EditorPlaySession&,float);
+    void RenderLive(EditorContext &, const EditorPlaySession &, float);
     EditorCamera camera;
     EditorScenePicker picker;
     RenderTargetHandle target;
@@ -38,7 +37,7 @@ struct EditorSceneViewport {
     GizmoAxis hoverAxis = GizmoAxis::None;
     float gizmoHandleLength = 1;
     std::string pendingDropAsset;
-    bool pendingDropDelivered=false;
+    bool pendingDropDelivered = false;
     glm::vec2 pendingDropPosition{0};
     DebugLineList debugLines, gizmoLines;
     std::map<SceneObjectId, std::pair<std::string, std::unique_ptr<PlanetTiles>>> planetPreview;

@@ -1,0 +1,490 @@
+{
+  "baseRevision": "ebdc9a81a42eeea9c227b28dae771484d9b062c8",
+  "formatter": "clang-format 19.1.7",
+  "style": "{BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 110, SortIncludes: Never, ReflowComments: false, BreakStringLiterals: false, AllowShortFunctionsOnASingleLine: Empty, AllowShortIfStatementsOnASingleLine: Never, AllowShortLoopsOnASingleLine: false, PointerAlignment: Right}",
+  "files": [
+    {
+      "path": "src/WindowInputRegion.h",
+      "beforeSha256": "e38e89e08d447a450e887195c93b4702c512ddc638acc2f12a9089bbdc541919",
+      "afterSha256": "d32919b1980f5997e5493102c12065d54a1017d26231cf2f07c1efb0cc9d8e75",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetBrowserModel.cpp",
+      "beforeSha256": "5f233cc60c5c4155b774ae801db57ae25d80c0b767343e2f34c8de7f3a6a0d82",
+      "afterSha256": "922fc4f6c1b6930a565072577ff5ac3d70a2773442e629d29774ac1fcb205c96",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetBrowserModel.h",
+      "beforeSha256": "b00ef567418730aecd43bae2e8224e8955d23ca61f277e55a15b1f8d55014d94",
+      "afterSha256": "b00ef567418730aecd43bae2e8224e8955d23ca61f277e55a15b1f8d55014d94",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/AssetBrowserPanel.cpp",
+      "beforeSha256": "1d09a538186a779c892e42c59553f57825942cec3babd4cf413e5e2e1af18a8e",
+      "afterSha256": "1d09a538186a779c892e42c59553f57825942cec3babd4cf413e5e2e1af18a8e",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/AssetBrowserPanel.h",
+      "beforeSha256": "ce10012bd09a49ec02aeda654f594591dd3ff7c8c12cb65e7ec34d99fa48404a",
+      "afterSha256": "4475089ace322a6b9bcc95bdf35325eee5334d583b0fba69ba991bdfbf410107",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetCookPanelTask.h",
+      "beforeSha256": "b1620629f3ac89bc1075845aa615c532c5d1dd854bc92625d448fe11ffba13af",
+      "afterSha256": "b1620629f3ac89bc1075845aa615c532c5d1dd854bc92625d448fe11ffba13af",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/AssetDetailsPanel.cpp",
+      "beforeSha256": "2acc9c3062e015d16cc24eb6032e40dd5aff5418781fb3b9289426bfa3eb3129",
+      "afterSha256": "5ac75efba03e2db4833a3ea5ecfd097438cbe895d75d4921652cbc364264080b",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetImportTools.cpp",
+      "beforeSha256": "1784111b323c30d92f8c2809d0987a45f58ea4c73a13ae1508a5f81c53e5d096",
+      "afterSha256": "0c593a621594d63f9f8f9084b5c806568454801b8db838d4490a9ddcc795000c",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetListPanel.cpp",
+      "beforeSha256": "c9b612e06f83bc6f48f4e7d9e45fecad217aa48c26c0ef7d1dd70110ac098161",
+      "afterSha256": "a9d8eb944cea1042f2c3f73927f4dbfe0e69def67dcb05a90581f42aa238ab2a",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetPublicationWorkflow.cpp",
+      "beforeSha256": "323b4cb5288211932817847980900825c67b3471f67702f607965392686510ae",
+      "afterSha256": "de4dd3af6ed4a8dc13ed67829893d9fa08da463d78d88aa4b9ed38084688c100",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/AssetPublicationWorkflow.h",
+      "beforeSha256": "aea75215aa3dcede8b56f11446ec86d325d8496192d4bcc51c47b2742b12bd1a",
+      "afterSha256": "aea75215aa3dcede8b56f11446ec86d325d8496192d4bcc51c47b2742b12bd1a",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorApplication.cpp",
+      "beforeSha256": "352fb58a02437055108f3d82b9260707fe77a321b6afcc1db9cb06aa2e6d6307",
+      "afterSha256": "5ac4f92c405735d3f6fe7f2976e4275f1228860c0d86a83d58689861fb45b0f3",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorApplication.h",
+      "beforeSha256": "c72a8a62f0016d53b87573ed9ede413ee14615fdad5cd35ef74354ceefb9fbb4",
+      "afterSha256": "c8758be8bf345bab7b4991ea7afe9f5f45824e6a25b28860aed54031b69a22c2",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorAssetPreview.cpp",
+      "beforeSha256": "8002a044f8ae9c8c2cf4db828bc9d3fcb4eb775b49e032395d288965376575ef",
+      "afterSha256": "5861028d85d07d4925a1ea06808d6a40dbd05746b18ee1a2516bcae2fef00e34",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorAssetPreview.h",
+      "beforeSha256": "9bef080572eba3765d99f24f7355f9339149a5e37a15b3b85bdaa846991fb306",
+      "afterSha256": "9bef080572eba3765d99f24f7355f9339149a5e37a15b3b85bdaa846991fb306",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorAutomation.cpp",
+      "beforeSha256": "4bc10de8886a306e1c8ea7d64161c354a1815f6167a1649f4270602cff84d58d",
+      "afterSha256": "b19a74b8d9ce22c3aa29f3fa2bb6239db359a3493c59e678b3ec6db6bf06d9ae",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorAutomation.h",
+      "beforeSha256": "c3344084e540e2fff063e09f50d1d80fe21d147e1993c6e77ff32790c2804e6c",
+      "afterSha256": "30e58350c2212dc6c0813c498e7756410bec7eb0dc831f6800c31ce793776776",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorAutomationAssets.cpp",
+      "beforeSha256": "cf4ce4eabf61723d6761a331c5cffc29c5f41e3782c94fd12e385f802bb518ee",
+      "afterSha256": "cf4ce4eabf61723d6761a331c5cffc29c5f41e3782c94fd12e385f802bb518ee",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorAutomationCoordinates.h",
+      "beforeSha256": "85cb6a7fca11693b74c6861d65d934875cbf00f80d687c7470a7398b8189ca61",
+      "afterSha256": "85cb6a7fca11693b74c6861d65d934875cbf00f80d687c7470a7398b8189ca61",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorAutomationSimulation.cpp",
+      "beforeSha256": "44b407b5315cec2f1b7649161de790046de2bf73609d5b2a8c3bba6953b60a62",
+      "afterSha256": "44b407b5315cec2f1b7649161de790046de2bf73609d5b2a8c3bba6953b60a62",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorAutomationTerrainAndAsync.cpp",
+      "beforeSha256": "680c9f144a44fb8206cc14c5a6f5c7b0fc223be55a76f36cf397e9e0f6e23223",
+      "afterSha256": "680c9f144a44fb8206cc14c5a6f5c7b0fc223be55a76f36cf397e9e0f6e23223",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorAutomationWorkspace.cpp",
+      "beforeSha256": "42714502543bef9e9ce81746245fc8ec844c1d21c1e66273f3c95edb1d479faa",
+      "afterSha256": "ce6bd828826ab558eed60df31f544ee8de9c238367dd533709dcc56140ff40ac",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorCamera.cpp",
+      "beforeSha256": "26cdb9483933ba5461510078bff20cd0f56026282e239dc3803a84dbf750170c",
+      "afterSha256": "acf4b28e4c2d6bcfc341b1d4218ee447539241b2761308a978b5d53db5a8e2cf",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorCamera.h",
+      "beforeSha256": "87f1b4a7e97d90237f0afb801b8f83e961d9f88a2e69c4cebf0856fa2630aa7f",
+      "afterSha256": "54ad6953cd48c00b330aa7083f90e8ad1735623f0507120292d4883bec65ae5e",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorCollisionWorkflow.cpp",
+      "beforeSha256": "0a0b37b4a1241285c5bc31df764cc5711ca228a122f39568c4de5a68c57c311e",
+      "afterSha256": "0a0b37b4a1241285c5bc31df764cc5711ca228a122f39568c4de5a68c57c311e",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorConsolePanel.cpp",
+      "beforeSha256": "b33428ca4d54dbc356b22b6467f692a0d57709c6e2179c4f333f8bc1fc0eb36e",
+      "afterSha256": "be25c36f437ae2fe47cbe3b2c89edb4549a284fc957e7c017b900c8ed391db75",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorConsolePanel.h",
+      "beforeSha256": "a40b78baffba9680f27786f53181b5473a6c27a6d19e37c252623c175c942fce",
+      "afterSha256": "54a9584fb24c32652eb430706e381bca1adfda786f1a04a59d1515f7c410f795",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorContext.h",
+      "beforeSha256": "47c2fc8c0e65c917144a3713fc311f329381f3566f5e9b37e10313338bbf12a3",
+      "afterSha256": "1bcb8a0a7b8bbb16feefb58fea2f473339a457747c73ee2dcf3cd7d47c728c35",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorCorePanels.cpp",
+      "beforeSha256": "21f7e7b43c8bc08a3383ad72f853f9cfab86d8dc9c4e2921b6e44c6129c64f7b",
+      "afterSha256": "f98cc5a3d1aec0ba9778ccf3cda28955c806aeb61da1cc39ff1e2fa4908e8e90",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorCorePanels.h",
+      "beforeSha256": "6b59685f138dc624826afe140eb2146afe1d700ec48a4ed97de0d3b3bdb8ac85",
+      "afterSha256": "38798e3c61bf99085764e992809d2dedd4bc81d57fb2c0d5c5b1197a62f532b7",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorDiagnostics.cpp",
+      "beforeSha256": "d16dc5e7d02fae6fa95567ea9425fa78d2c6d605b55623f9ac7cf1bd642ce9fe",
+      "afterSha256": "d16dc5e7d02fae6fa95567ea9425fa78d2c6d605b55623f9ac7cf1bd642ce9fe",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorExportWorkflow.cpp",
+      "beforeSha256": "24d8f70cff17df307dcea8482af4e818c31bf5bd73ff818a91e54c7c58d0fe30",
+      "afterSha256": "24d8f70cff17df307dcea8482af4e818c31bf5bd73ff818a91e54c7c58d0fe30",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorObjectActions.cpp",
+      "beforeSha256": "5a8b44e96f9bcd839d1b3a325acf55df8b07679130e2c8806e964906da1f985a",
+      "afterSha256": "5a8b44e96f9bcd839d1b3a325acf55df8b07679130e2c8806e964906da1f985a",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorPanelRegistry.cpp",
+      "beforeSha256": "783999eafa131ad399eb6beb1334009a33ce42e2964250f50e148d02478224d5",
+      "afterSha256": "1a40c06f5f30054aeb0e8b7bb453a5d78fb6cc5819d0e19e300a348699886673",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPanelRegistry.h",
+      "beforeSha256": "a99433af75c3af2a6f7b8acf02851ed9f8bd887dfcb6764e80bbbd4d7856a193",
+      "afterSha256": "a99433af75c3af2a6f7b8acf02851ed9f8bd887dfcb6764e80bbbd4d7856a193",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorPanelWidgets.h",
+      "beforeSha256": "d38186cc42e985594d1243e99ad18d14ae149a26a6cb28ba9ecd18007605b1a9",
+      "afterSha256": "cddd79521f4ddacffa86cde031aa1d18c605e46086bab90d56180c32ed589587",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPanels.h",
+      "beforeSha256": "3755e0b3ce1f5aba1f80143d2aeec25830d94d19c0ed1fe0652124e0624118c0",
+      "afterSha256": "839c2a5c1e2d6ed5330bac8389cc6797626dab550db6f7f6f471ff3df549fd22",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPlaySession.cpp",
+      "beforeSha256": "2f26284fa19e5438587ddeb99d3ee1ddc1bdd05af839381f1201ab73dce3435a",
+      "afterSha256": "240e88eb48a96fa2b2ac331a7569393aaad0faa8d6fb081b0fd7698768ab96ec",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPlaySession.h",
+      "beforeSha256": "32e64a6d2f443bba57a34877ee9881074141a60756cbdad22de7c5188017d98c",
+      "afterSha256": "67f007d18b4b8549f93cd3daf28918a4d2f54ae749c42c5a905cc10aeb49a3c1",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPreferences.cpp",
+      "beforeSha256": "da38f83786d178b256432710289f08a62b22b59c07c7fb9a41c8c0bdbdd45907",
+      "afterSha256": "da801779a6f4e4145e46ba524d713cb10be7db2be1d95860ddf2ce8845ce3e71",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorPreferences.h",
+      "beforeSha256": "10498a42dadd9d9ee51cefa186fbfc08999807c5c7b174562e8ca66d500736ed",
+      "afterSha256": "79474f6021fab40c260a66a816afe7e344ced1903b5ee695b4da8d91a103cdd7",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorProfilerPanel.cpp",
+      "beforeSha256": "b37601cca19d724ce5a46025c1bdf3e9f5c4a9f7164045eaa79b18f9adc3f564",
+      "afterSha256": "f2321c9a23be54ffe8aad761e4ea12e121641c589f2a1fd33015cedceee450eb",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorProfilerSnapshot.h",
+      "beforeSha256": "e35799a4a5204339a004ce7c11ce3a02ffb65369978455cf94d170a93468d578",
+      "afterSha256": "e35799a4a5204339a004ce7c11ce3a02ffb65369978455cf94d170a93468d578",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorProjectWorkflow.cpp",
+      "beforeSha256": "e2d7091c99529ce948cc2003b7acdf6732f23e8b0b4e77f2742941593c103b0c",
+      "afterSha256": "e2d7091c99529ce948cc2003b7acdf6732f23e8b0b4e77f2742941593c103b0c",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorProjectWorkflow.h",
+      "beforeSha256": "4a417902ac91b07605ae6ff245634bef96c16f2aaa07a136aa01462864c40d9d",
+      "afterSha256": "4a417902ac91b07605ae6ff245634bef96c16f2aaa07a136aa01462864c40d9d",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorRequestWorkflow.cpp",
+      "beforeSha256": "22bd2d2123695c8c35917168cbf2afe7501fe3fae0dc1dcde4a2c50dd1a06c7c",
+      "afterSha256": "22bd2d2123695c8c35917168cbf2afe7501fe3fae0dc1dcde4a2c50dd1a06c7c",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorSceneGeometry.h",
+      "beforeSha256": "e7330777a7a61ca34a534571af2842e6cc789e85e7e4733cee8418c6158ac9b3",
+      "afterSha256": "e7330777a7a61ca34a534571af2842e6cc789e85e7e4733cee8418c6158ac9b3",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorSceneViewport.cpp",
+      "beforeSha256": "006e036280bd1ec8866555c0746a86d31ddbfba556530924c2e6b09ae3756975",
+      "afterSha256": "78706d1501f5889899f318ca4676f7e22d8fb6c9b10c1a933ed539f6484f654b",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorSceneViewport.h",
+      "beforeSha256": "29b93a3d2ae6cc4c8bb6e24e7d597d6da2b69a8a8f8077c7c57362def0f3ea42",
+      "afterSha256": "b9774f88a2c21a005af74a04820c75364a54670e880ffce2fa48247f39867418",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorShell.cpp",
+      "beforeSha256": "09a7136371697bbbdde1a67ba459f77f5857f56f22a9eaebefb9f5fe6b10193e",
+      "afterSha256": "2008f9292d378243edd590dbb81da8b50f1fcc2ec4cbd9a480450750571a0fe9",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorShell.h",
+      "beforeSha256": "02e16d16a925cc76e8577b9b5461dcb411d9928f8323eeec2338ce43aefe1078",
+      "afterSha256": "3cc0a10d1b8f49629d5750263f7d95f3e11f0697ae8aac2a92106a46c87911ee",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorShellChrome.cpp",
+      "beforeSha256": "c385901d0a62c465ffc4bf10a9ada8ab9f3440d3d45c4c9ba25d9c27746258c3",
+      "afterSha256": "badbd98cb2fde54f4fd0a3db2f40f05ff6d0e0384887bf88bf299809fd58cd49",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorShortcuts.cpp",
+      "beforeSha256": "28437f9f8916c5a0065d88650157a5c2b6f768ec4258fd723c3a67264842517f",
+      "afterSha256": "28437f9f8916c5a0065d88650157a5c2b6f768ec4258fd723c3a67264842517f",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorShortcuts.h",
+      "beforeSha256": "30bf1d667a89c12e2f03484dd209a7d59ba60e403803c91e32672d12b167f09a",
+      "afterSha256": "30bf1d667a89c12e2f03484dd209a7d59ba60e403803c91e32672d12b167f09a",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorStabilization.cpp",
+      "beforeSha256": "79a40eb14242fd2601440814ce068c1f1d247763caf9525b99d21be71bdd3b02",
+      "afterSha256": "79a40eb14242fd2601440814ce068c1f1d247763caf9525b99d21be71bdd3b02",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorStabilization.h",
+      "beforeSha256": "3e21f4e95d540f6b6e102c45745c3051f55057ad6a1fc94b05d5d83c95409c3b",
+      "afterSha256": "3e21f4e95d540f6b6e102c45745c3051f55057ad6a1fc94b05d5d83c95409c3b",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorStreamingPanel.cpp",
+      "beforeSha256": "56ef6358d4a51fc589617897b461b09692f288ee0aa3e379135ce76921e00da4",
+      "afterSha256": "56ef6358d4a51fc589617897b461b09692f288ee0aa3e379135ce76921e00da4",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/EditorToolPanels.cpp",
+      "beforeSha256": "0f29375eb3dfd2081607aab89f11cf84617b356f13a23da34c9b95d8e1f7811f",
+      "afterSha256": "d9dceba33ac40c4ab5c698635af6fd0e9b0e98c1f0433aa269b4ad957ecbe64c",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorToolPanels.h",
+      "beforeSha256": "6715e834c2a8b52354033840e8cb5b3ebbfdec4a5bcb71d554f77c0a637bb4ff",
+      "afterSha256": "32f44ea074979d8a387f1045558e4ad9f2fbe05d04cb9041d3062022a6d35c77",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorViewportPresenter.cpp",
+      "beforeSha256": "414e8f6e8594dd77fd17637f04aee10105cf36a46415c9756df1385498e5e0bd",
+      "afterSha256": "5e0f11d159ed979b523a1708f1b18173f072cc432c1c2ca530ede66c3c81875b",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorViewportPresenter.h",
+      "beforeSha256": "d3219b27cd33180a117f9ceb411a3ff3d9363c8599a74d98dfaaf5490f34489e",
+      "afterSha256": "7e96f899d0767f7482b9b4ea5bfab45402a153efe6f7b632e268789ce7370c75",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorWorkspace.cpp",
+      "beforeSha256": "16a6e69efb01646e479ad8c9f1cd9b24e67422ae04404ac2555b7b2f93f007c6",
+      "afterSha256": "1bf4ce174139d6cff42b5ef6a30516d271269f4784a08e6b88df6994b3e0bca7",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorWorkspace.h",
+      "beforeSha256": "d770d501cd19951025252482097f1c8ec848f98e5b3809624957fc413d93e1c9",
+      "afterSha256": "8d44b4245ba5455fdafc12f24a17bbf8fbc536177b1451032df7bb79e16b2fc5",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/EditorWorkspacePreferences.cpp",
+      "beforeSha256": "09cd69e847b5301a4ced8de2bb4032fa99b4fe81e011ebe1ae1aeedb89f3f791",
+      "afterSha256": "09cd69e847b5301a4ced8de2bb4032fa99b4fe81e011ebe1ae1aeedb89f3f791",
+      "sameCppTokenSequence": true,
+      "changed": false
+    },
+    {
+      "path": "src/editor/HierarchyPanel.cpp",
+      "beforeSha256": "f5a467ff81f25a4c00de6e220eaf8d374587e904ae00069021dc83c6db1dcbad",
+      "afterSha256": "8791120ac771ac525c2833a51ccdaa61cde7ebb9fa0a696fb77a0cefceb5aeec",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/InspectorPanel.cpp",
+      "beforeSha256": "cb90b9a07e1bc4b6111b9d03b2789634959948dd97db9de18ca760ccd75974d0",
+      "afterSha256": "cad67675410a20628f890e8f5a4e3a161baa118858ebaf2aed6e4e59bd9d77cb",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/SceneSettingsPanel.cpp",
+      "beforeSha256": "5751108de5f336b29809b3d5349ec4f6a280db4716a38648ae3a5d892ede3b92",
+      "afterSha256": "06475f0add6fefa3df4c061f6db804645679b73c28b8f29d99274f1a2f26b5ed",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "src/editor/UIAssetEditor.cpp",
+      "beforeSha256": "e0a0b30afa80c9f7f13d08a43daa7d32ca15de64e6a5ce1b812adee638ac262b",
+      "afterSha256": "2e5a900dcd35d7d40742048d5adee4a82f25bc0a7ed3655ade7771f40a44f751",
+      "sameCppTokenSequence": true,
+      "changed": true
+    },
+    {
+      "path": "tests/EditorWindowRoutingTests.cpp",
+      "beforeSha256": "af38408e7ca0f8f9290fbb0c0ce99f37fb0def1a89cc261e0214fe376a0b6dac",
+      "afterSha256": "3ad331640cd7b1732381c251e9636c85976e0ff8f8cae2d404e215c99ab8b3eb",
+      "sameCppTokenSequence": true,
+      "changed": true
+    }
+  ]
+}

@@ -78,7 +78,7 @@ void DrawConsolePanel(EditorPanelState &state) {
     ImGui::End();
 }
 
-void RegisterConsolePanel(EditorPanelRegistry& registry) {
+void RegisterConsolePanel(EditorPanelRegistry &registry) {
     registry.Add({"console", "Console", "Debug", kEditorAllPanelPhases, &EditorPanelState::showConsole},
-                 [](EditorContext& context) { DrawConsolePanel(context.panels); });
+                 [](EditorContext &context) { DrawConsolePanel(context.panels); });
 }

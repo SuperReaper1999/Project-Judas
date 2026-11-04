@@ -24,8 +24,7 @@ void PublishFinishedEditorImport(EditorPanelState &state, EditorRequests &reques
     if (state.mode != EditorMode::Edit || state.importPublished)
         return;
     std::string error;
-    const auto relative =
-        std::filesystem::path(task.output).lexically_relative(state.project->RootDir());
+    const auto relative = std::filesystem::path(task.output).lexically_relative(state.project->RootDir());
     if (relative.empty() || relative.is_absolute() || *relative.begin() == "..") {
         task.cancel = true;
         state.status = "Import belongs to previous project; publication cancelled";

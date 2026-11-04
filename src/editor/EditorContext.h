@@ -13,7 +13,9 @@ struct EditorRequests;
 // The world belongs to the session, never a panel. At a debugger stop only
 // read-only observation and debugger commands are permitted: no world pumping.
 enum class EditorPanelPhase : std::uint8_t { Edit = 1, Play = 2, Paused = 4, DebugStopped = 8 };
-constexpr unsigned EditorPhaseMask(EditorPanelPhase phase) { return static_cast<unsigned>(phase); }
+constexpr unsigned EditorPhaseMask(EditorPanelPhase phase) {
+    return static_cast<unsigned>(phase);
+}
 constexpr unsigned kEditorAllPanelPhases = 15;
 
 // A frame-scoped borrow, not a second editor model. Panels retain their own UI

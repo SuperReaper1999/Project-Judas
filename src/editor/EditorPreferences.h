@@ -41,11 +41,15 @@ class EditorPreferences {
     void ResetLayout();
     static std::vector<std::string> WorkspaceNames();
     bool QueueWorkspace(const std::string &name);
-    const std::string &WorkspaceName() const { return m_workspace; }
+    const std::string &WorkspaceName() const {
+        return m_workspace;
+    }
     bool ConsumeDockRebuild(std::string &name);
     void ApplyPending(EditorPanelState &); // between frames, before NewFrame
     void Draw(EditorPanelState &);
-    void RefreshAppearance() { m_appearancePending = true; }
+    void RefreshAppearance() {
+        m_appearancePending = true;
+    }
     bool ConsumeSaveRequest();
     std::string status;
 

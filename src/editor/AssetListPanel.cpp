@@ -52,10 +52,10 @@ void DrawAssetInteraction(const AssetRecord &record, EditorDocument &doc, Editor
         ImGui::EndDragDropSource();
     }
     if (ImGui::IsItemHovered())
-        ImGui::SetTooltip(
-            "%s\nID %s\nSource %s\n%s", record.path.c_str(), id.c_str(), record.source.c_str(),
-            record.type == AssetType::Script ? "Double-click to edit script; right-click for details."
-                                             : "Double-click to inspect; drag to a matching field.");
+        ImGui::SetTooltip("%s\nID %s\nSource %s\n%s", record.path.c_str(), id.c_str(), record.source.c_str(),
+                          record.type == AssetType::Script
+                              ? "Double-click to edit script; right-click for details."
+                              : "Double-click to inspect; drag to a matching field.");
     if (ImGui::BeginPopupContextItem("##assetActions")) {
         if (record.type == AssetType::Texture &&
             ImGui::MenuItem("Create/edit sprite sheet", nullptr, false,
@@ -169,8 +169,8 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
     char assetSearch[256];
     CopyToBuffer(state.assetSearch, assetSearch, sizeof(assetSearch));
     ImGui::SetNextItemWidth(-1);
-    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, folders, IDs and sources...",
-                                 assetSearch, sizeof(assetSearch)))
+    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, folders, IDs and sources...", assetSearch,
+                                 sizeof(assetSearch)))
         state.assetSearch = assetSearch;
     ImGuiTextFilter searchFilter(assetSearch);
     ImGui::BeginDisabled(state.mode != EditorMode::Edit);
@@ -225,8 +225,7 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
     if (!browser.directory.empty() &&
         std::find(directories.begin(), directories.end(), browser.directory) == directories.end())
         browser.directory.clear();
-    if (ImGui::BeginTable("Asset navigation", 2,
-                          ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
+    if (ImGui::BeginTable("Asset navigation", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
         ImGui::TableSetupColumn("Folders", ImGuiTableColumnFlags_WidthFixed,
                                 155 * ImGui::GetIO().FontGlobalScale);
         ImGui::TableSetupColumn("Files", ImGuiTableColumnFlags_WidthStretch);
@@ -284,8 +283,8 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                                                  state.assetMissingOnly);
         records.erase(std::remove_if(records.begin(), records.end(),
                                      [&](const auto *record) {
-                                         const auto searchable = record->relativePath + " " +
-                                                                 record->id + " " + record->source;
+                                         const auto searchable =
+                                             record->relativePath + " " + record->id + " " + record->source;
                                          return !searchFilter.PassFilter(searchable.c_str());
                                      }),
                       records.end());
@@ -315,8 +314,7 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
             if (!searching) {
                 for (const auto &directory : directories) {
                     if (directory.empty() ||
-                        std::filesystem::path(directory).parent_path().generic_string() !=
-                            browser.directory)
+                        std::filesystem::path(directory).parent_path().generic_string() != browser.directory)
                         continue;
                     ImGui::TableNextColumn();
                     ImGui::PushID(directory.c_str());
@@ -364,9 +362,9 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                 DrawAssetInteraction(record, doc, state, requests, db);
                 if (browser.grid) {
                     auto *draw = ImGui::GetWindowDrawList();
-                    const auto color = ImGui::GetColorU32(record.type == AssetType::Script
-                                                              ? ImVec4(.85f, .45f, .78f, 1)
-                                                              : ImVec4(.25f, .75f, .74f, 1));
+                    const auto color =
+                        ImGui::GetColorU32(record.type == AssetType::Script ? ImVec4(.85f, .45f, .78f, 1)
+                                                                            : ImVec4(.25f, .75f, .74f, 1));
                     const ImVec2 badgeMin{origin.x + 8, origin.y + 5},
                         badgeMax{origin.x + tile.x - 8, origin.y + tile.y - 28};
                     draw->AddRectFilled(badgeMin, badgeMax, ImGui::GetColorU32(ImGuiCol_FrameBg), 5);
@@ -376,8 +374,8 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                     draw->AddText({origin.x + (tile.x - typeSize.x) * .5f, origin.y + 18}, color, type);
                     draw->PushClipRect({origin.x + 4, origin.y + tile.y - 25},
                                        {origin.x + tile.x - 4, origin.y + tile.y}, true);
-                    draw->AddText({origin.x + 6, origin.y + tile.y - 24},
-                                  ImGui::GetColorU32(ImGuiCol_Text), name.c_str());
+                    draw->AddText({origin.x + 6, origin.y + tile.y - 24}, ImGui::GetColorU32(ImGuiCol_Text),
+                                  name.c_str());
                     draw->PopClipRect();
                 }
                 ImGui::PopID();
