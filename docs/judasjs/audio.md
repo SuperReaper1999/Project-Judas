@@ -14,7 +14,7 @@ An ordinary AudioEmitter refers to a stable audio asset ID. `entity.audio` retur
 | `setAudioEnabled(boolean)` | Disable and release owned voices, or permit creation again. |
 | `playAudioOneShot()` | Independent buffered non-looping voice at this emitter; returns false and drops the request when its group/master is paused. Throws for unavailable assets, streamed policy, disabled emitter or capacity exhaustion. The no-argument form also throws while the authored clip is loading. |
 | `seekAudio(seconds)` | Non-negative media seconds, before pitch/Doppler; false if voice absent or past known duration. |
-| `setAudio(settings)` | Partial runtime settings below; boolean. Invalid values throw. Does not edit source assets. |
+| `setAudio(settings)` | Partial runtime settings below; boolean. Invalid values and unknown enumerable option names throw before publishing the patch. Does not edit source assets. |
 | `setAudioVelocity(vectorOrNull)` | Explicit world metres/second, or `null` for automatic estimation. |
 
 `playAudio()` retains its original single-voice restart semantics. Use independent one-shots for overlapping shots, clicks or impacts: at most 32 one-shots per runtime world, 128 total backend voices, 32 concurrent streams and 64 combined live-stream/retirement slots. Full capacity fails explicitly rather than stealing another sound. Destruction, region removal and full Stop release the appropriate owned voices.

@@ -198,6 +198,12 @@ JSValue HandleAudio(BindingContext &context, const std::string &op, int argc, JS
             if (emitter.id == id) {
                 AudioSettings settings = emitter.settings;
                 auto options = arg(2);
+                if (!KnownOptions(c, options,
+                                  {"volume", "pitch", "doppler", "send", "occludedGain",
+                                   "occludedCutoff", "referenceDistance", "maximumDistance",
+                                   "rolloff", "loop", "spatial", "occlusion", "bypass", "group",
+                                   "loading", "attenuation", "streamPageFrames", "occlusionLayers"}))
+                    return JS_ThrowTypeError(c, "unknown audio setting");
                 for (auto item : {std::pair<const char *, float *>{"volume", &settings.volume},
                                   {"pitch", &settings.pitch},
                                   {"doppler", &settings.doppler},

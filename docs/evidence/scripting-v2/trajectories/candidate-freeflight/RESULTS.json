@@ -1,0 +1,63 @@
+{
+  "source_sha256": "640d330f6b3350d5430e72545f16049bb53f8a60ef26794baf9a3718b8cb115c",
+  "binary_sha256": "f8d8e52f51d64b7f80008bb329274b1a8f8485337896c82464135e62ac2b1511",
+  "commands": [
+    {
+      "mode": "full",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/probe",
+        "full",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/fixture",
+        "freeflight"
+      ],
+      "exit": 0
+    },
+    {
+      "mode": "read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/probe",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/fixture",
+        "freeflight"
+      ],
+      "exit": 0
+    },
+    {
+      "mode": "negative",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/probe",
+        "negative",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/evidence/candidate-freeflight/fixture",
+        "freeflight"
+      ],
+      "exit": 0
+    }
+  ],
+  "steps": 120,
+  "fixed_dt": "binary32 1/60",
+  "full_native_pose_velocity_sha256": "56da1a62225d38a6b47e4b27e650a9faf52e92eca64a229cb13d28ba4da6b7bb",
+  "native_cold_boundaries_compared": 61,
+  "native_cold_exact": true,
+  "native_cold_first_mismatch": null,
+  "native_cold_maximum_absolute_scalar_difference": 0.0,
+  "native_cold_first_differing_fields": [],
+  "native_cold_maximum_position_difference_m": 0.0,
+  "native_cold_maximum_linear_velocity_difference_mps": 0.0,
+  "native_cold_maximum_angular_velocity_difference_radps": 0.0,
+  "impulse_negative_control_changes_native_trajectory": true,
+  "physical_120": "PHYS 120 3 402ffffe c18e4496 3f15555a 3f1a3720 3e5a2b7e 3f253de7 3ed63b8b 400e6664 c19cf5bb 3f133330 3ec69025 3f79ea36 3f3c1fa5",
+  "native_settings_120": "NATIVE 120 audio 3f400000 3fa00000 loop=1 camera=0",
+  "native_save_chunks": [
+    "CHUNK animation 1 12 15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b",
+    "CHUNK articulation 1 4 df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "CHUNK audio 1 54 671dd242a2ccff9889ed7a73c68a3ccf40652c23093de71c215f9608c2d19db8",
+    "CHUNK contacts 1 4 df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "CHUNK entities 2 2150 fc353885cbcace5aeae3c87759de0d3a431442c39e7b67c50671fc97743197bc",
+    "CHUNK liquid 1 28 5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9",
+    "CHUNK motors 1 4 df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "CHUNK navigation 1 4 df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "CHUNK scripts 1 996 de1570e4733d0e03858d575715efa80ded091624aa07d7c2ef96dcf7e4db95b7",
+    "CHUNK sleep 1 30 191121f36f7f291c2434dd313da44d2fdf7f26cae6fa6ac03050704d62d08483"
+  ],
+  "humanAccepted": false
+}

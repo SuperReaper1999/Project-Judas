@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const source=fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../scripts/check_judasjs_api.mjs'),'utf8');
+const begin=source.indexOf('const compactCpp = ');
+const end=source.indexOf('// Follow the unchanged shape proof',begin);
+const containsShape=Function(source.slice(begin,end)+'; return containsShape;')();
+const shape={needles:['JS_SetPropertyStr(c,out,"ready",JS_NewBool(c,true))']};
+assert(containsShape('JS_SetPropertyStr (c, out, /* property */ "ready", JS_NewBool(c, true))',shape));
+assert(!containsShape('JS_SetPropertyStr(c,out,"ready ",JS_NewBool(c,true))',shape));
+assert(!containsShape('JS_SetPropertyStr(c,out,"finished",JS_NewBool(c,true))',shape));
+assert(!containsShape('// JS_SetPropertyStr(c,out,"ready",JS_NewBool(c,true))',shape));
+process.stdout.write('Native shape proof: formatting positive and renamed-key, literal-space, commented-code negative controls passed\n');

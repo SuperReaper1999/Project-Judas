@@ -1,0 +1,43 @@
+{
+  "runs": [
+    {
+      "name": "editor",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/editor-export/editor-project/developer_lab.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 1.0655950179989304
+    },
+    {
+      "name": "export",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/developer_lab/developer_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/editor-export/package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.414436425000531
+    },
+    {
+      "name": "relocated",
+      "argv": [
+        "/tmp/judas-m94-relocated-k9hxlmz9/judas"
+      ],
+      "cwd": "/tmp/judas-m94-unrelated-eam4zn3q",
+      "exit": 0,
+      "seconds": 0.5145790179994947
+    }
+  ],
+  "moved": "/tmp/judas-m94-relocated-k9hxlmz9",
+  "unrelatedCwd": "/tmp/judas-m94-unrelated-eam4zn3q",
+  "byteIdenticalBeforeLaunch": true,
+  "editorToolsNotPackaged": true,
+  "humanAccepted": false,
+  "windows": "not run",
+  "android": "not run",
+  "pass": true
+}

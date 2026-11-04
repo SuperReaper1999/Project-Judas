@@ -1,0 +1,15 @@
+PASS public player probe registered as ordinary asset
+PASS two ordinary motors in one authoritative world
+PASS actual JS creates/routes players, views, UI and negative controls
+PASS one player's JS moves only its own actual CharacterMotor
+PASS other player can independently drive its motor
+PASS stale handles, controlled-body destruction and player reuse fail safely
+PASS world teardown retires optional input hub
+PASS exact documented example world
+PASS exact cookbook consumes per-player input and accelerates a real motor
+PASS exact example executes without script faults
+PASS exact documented example world
+PASS API enumeration alone does not allocate multiplayer state
+PASS exact example executes without script faults
+PASS identity works with no Window/input device; unavailable assignment rejects
+14 checks 0 failures

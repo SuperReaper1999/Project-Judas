@@ -1,0 +1,25 @@
+{
+  "operation": "Entity.setAudio / audioSettings",
+  "before": {
+    "src/ScriptSystem.cpp": "1d37167ca21c2d702567930ea3cf91708108392f66ed175ca47ff91ad5ebd5f8",
+    "src/scripting/ScriptRuntimeInternal.h": "065c56a42cb257c16acbf03a6a72632c6d2e19182d80419e1b1f9d0a57352d8f",
+    "src/scripting/ScriptMetadata.cpp": "0164949fe8e8c9dc73a1c2a26f9ffc41bb1a74a151ca4f373a4aa71ba6bb0b77",
+    "src/scripting/BindingRegistry.cpp": "fc5e0fa27d8c503731bc3ea0a7322b962f10dab7aa780c27616228e32e85b293",
+    "src/scripting/BindingRegistry.h": "f231f3771e13a952c16b66dbd2787cb7a1d05173eef1155554a35cf9f3c78b8d",
+    "src/scripting/Modules.json": "e712d7fff93e4c0f5dabf1112b5dbe31d04a253d08417e01bab31d01505196de",
+    "src/scripting/modules/Audio.cpp": "22d720a7b5a736cf1922152b9d68286d8a0208718d5ea3dc267b0a17eeb03628"
+  },
+  "after": {
+    "src/ScriptSystem.cpp": "1d37167ca21c2d702567930ea3cf91708108392f66ed175ca47ff91ad5ebd5f8",
+    "src/scripting/ScriptRuntimeInternal.h": "065c56a42cb257c16acbf03a6a72632c6d2e19182d80419e1b1f9d0a57352d8f",
+    "src/scripting/ScriptMetadata.cpp": "0164949fe8e8c9dc73a1c2a26f9ffc41bb1a74a151ca4f373a4aa71ba6bb0b77",
+    "src/scripting/BindingRegistry.cpp": "fc5e0fa27d8c503731bc3ea0a7322b962f10dab7aa780c27616228e32e85b293",
+    "src/scripting/BindingRegistry.h": "f231f3771e13a952c16b66dbd2787cb7a1d05173eef1155554a35cf9f3c78b8d",
+    "src/scripting/Modules.json": "e712d7fff93e4c0f5dabf1112b5dbe31d04a253d08417e01bab31d01505196de",
+    "src/scripting/modules/Audio.cpp": "72babb662ddbfec81c945d2d89556e94ec58940e718ad2b3780d73ce52de583a"
+  },
+  "centralFilesUnchanged": true,
+  "owningModuleChanged": true,
+  "beforeControl": "accepted baseline and extracted candidate: 8 checks, 1 failure",
+  "afterControl": "combined candidate: 8 checks, 0 failures"
+}

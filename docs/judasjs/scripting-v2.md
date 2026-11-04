@@ -82,6 +82,13 @@ members by subsystem; member names, bodies, arities and property descriptors are
 preserved. Code must not assign gameplay meaning to native member ordering.
 
 
+The focused behavior correction is documented separately with its negative
+control: Audio settings reject unknown enumerable option names before changing
+native state. Use the documented `AudioSettings` keys; misspelled/foreign fields
+are errors rather than silently ignored properties. Native C++ handler failures are converted to contextual JavaScript errors at the
+registry boundary; existing JavaScript error types pass through. No general API redesign is
+part of this pass.
+
 ## Qualification
 
 See [implementation evidence](../evidence/scripting-v2/README.md). Baseline

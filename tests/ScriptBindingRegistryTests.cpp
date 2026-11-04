@@ -32,6 +32,33 @@ JSValue LocalOperation(ScriptBindings::BindingContext &, const std::string &, in
     return JS_UNDEFINED;
 }
 
+JSValue ThrowOperation(ScriptBindings::BindingContext &, const std::string &, int, JSValueConst *) {
+    throw std::logic_error("deliberate state misuse");
+}
+
+JSValue AllocationFailure(ScriptBindings::BindingContext &, const std::string &, int,
+                          JSValueConst *) {
+    throw std::bad_alloc();
+}
+
+JSValue UnknownFailure(ScriptBindings::BindingContext &, const std::string &, int, JSValueConst *) {
+    throw 7;
+}
+
+JSValue ScriptRejection(ScriptBindings::BindingContext &context, const std::string &, int,
+                        JSValueConst *) {
+    return JS_ThrowRangeError(context.js, "deliberate script rejection");
+}
+
+struct NativeCall {
+    const ScriptBindings::BindingRegistry &registry;
+    ScriptBindings::BindingContext &context;
+    static JSValue Invoke(JSContext *js, JSValueConst, int, JSValueConst *) {
+        auto &call = *static_cast<NativeCall *>(JS_GetContextOpaque(js));
+        return call.registry.Dispatch(call.context, "throw", 0, nullptr);
+    }
+};
+
 class RuntimeStub final : public ScriptBindings::RuntimeServices {
   public:
     bool Json(JSValueConst, std::string &, std::string &) const override { return false; }
@@ -66,7 +93,14 @@ struct Session {
         JS_FreeValue(js, exception);
         return present;
     }
-
+    std::string TakeExceptionText() {
+        JSValue exception = JS_GetException(js);
+        const char *text = JS_ToCString(js, exception);
+        const std::string result = text ? text : "";
+        JS_FreeCString(js, text);
+        JS_FreeValue(js, exception);
+        return result;
+    }
 };
 
 class RecordingState : public ScriptBindings::BindingModuleState {
@@ -138,6 +172,48 @@ int main() {
         value = registry.Dispatch(session.context, "needsWorld", 0, nullptr);
         Check(JS_IsException(value) && session.TakeException() && handlerCalls == 1,
               "world-dependent operation refuses a metadata context");
+    }
+    {
+        Session session;
+        registry.Add("Errors", {"throw"}, ThrowOperation, false);
+        registry.Add("Errors", {"allocationFailure"}, AllocationFailure, false);
+        registry.Add("Errors", {"unknownFailure"}, UnknownFailure, false);
+        registry.Add("Errors", {"scriptRejection"}, ScriptRejection, false);
+        auto value = registry.Dispatch(session.context, "throw", 0, nullptr);
+        const auto error = session.TakeExceptionText();
+        Check(JS_IsException(value) && error.find("InternalError") != std::string::npos &&
+                  error.find("Errors operation throw") != std::string::npos &&
+                  error.find("deliberate state misuse") != std::string::npos,
+              "native C++ errors become contextual JavaScript exceptions");
+        value = registry.Dispatch(session.context, "allocationFailure", 0, nullptr);
+        Check(JS_IsException(value) &&
+                  session.TakeExceptionText().find("out of memory") != std::string::npos,
+              "native allocation failure uses QuickJS's out-of-memory error");
+        value = registry.Dispatch(session.context, "unknownFailure", 0, nullptr);
+        Check(JS_IsException(value) &&
+                  session.TakeExceptionText().find(
+                      "Errors operation unknownFailure: unknown failure") != std::string::npos,
+              "non-standard native exception cannot escape the interpreter boundary");
+        value = registry.Dispatch(session.context, "scriptRejection", 0, nullptr);
+        Check(JS_IsException(value) &&
+                  session.TakeExceptionText() == "RangeError: deliberate script rejection",
+              "existing JavaScript errors keep their original type and message");
+
+        NativeCall call{registry, session.context};
+        JS_SetContextOpaque(session.js, &call);
+        auto global = JS_GetGlobalObject(session.js);
+        JS_SetPropertyStr(session.js, global, "nativeFailure",
+                          JS_NewCFunction(session.js, NativeCall::Invoke, "nativeFailure", 0));
+        JS_FreeValue(session.js, global);
+        const char source[] =
+            "let caught=false;try{nativeFailure()}catch(e){caught=e instanceof InternalError}caught && 6*7";
+        value = JS_Eval(session.js, source, sizeof(source) - 1, "native-boundary.js",
+                        JS_EVAL_TYPE_GLOBAL);
+        int32_t result = 0;
+        Check(!JS_IsException(value) && JS_ToInt32(session.js, &result, value) == 0 && result == 42,
+              "a script catches the native error and continues in the same live context");
+        JS_FreeValue(session.js, value);
+        JS_SetContextOpaque(session.js, nullptr);
     }
     {
         BindingStates states;

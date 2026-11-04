@@ -1,0 +1,114 @@
+{
+  "pass_": true,
+  "comparisons": [
+    {
+      "mode": "full",
+      "kind": "PHYS",
+      "records": 120,
+      "same": true,
+      "baseline_sha256": "56da1a62225d38a6b47e4b27e650a9faf52e92eca64a229cb13d28ba4da6b7bb",
+      "candidate_sha256": "56da1a62225d38a6b47e4b27e650a9faf52e92eca64a229cb13d28ba4da6b7bb",
+      "first_mismatch": null
+    },
+    {
+      "mode": "full",
+      "kind": "SCRIPT",
+      "records": 120,
+      "same": true,
+      "baseline_sha256": "80cc2e5c60baeed7e4e2681f96e67a8b299aeef95f10ee2a18c407fc177c326a",
+      "candidate_sha256": "80cc2e5c60baeed7e4e2681f96e67a8b299aeef95f10ee2a18c407fc177c326a",
+      "first_mismatch": null
+    },
+    {
+      "mode": "full",
+      "kind": "AI",
+      "records": 120,
+      "same": true,
+      "baseline_sha256": "169d5b7743d436ad4babcf9535200f12144143e06b4fe0c9241281ebac9dbe2f",
+      "candidate_sha256": "169d5b7743d436ad4babcf9535200f12144143e06b4fe0c9241281ebac9dbe2f",
+      "first_mismatch": null
+    },
+    {
+      "mode": "full",
+      "kind": "NATIVE",
+      "records": 120,
+      "same": true,
+      "baseline_sha256": "ddd0b2613938fce6628b64dd022fc576655f9f0b91ddafe321a849cbac2843f9",
+      "candidate_sha256": "ddd0b2613938fce6628b64dd022fc576655f9f0b91ddafe321a849cbac2843f9",
+      "first_mismatch": null
+    },
+    {
+      "mode": "read",
+      "kind": "PHYS",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "117c13702c94716762893ccadea55ee6adfffd3bcd6f6aa5fe76c81fe83608d9",
+      "candidate_sha256": "117c13702c94716762893ccadea55ee6adfffd3bcd6f6aa5fe76c81fe83608d9",
+      "first_mismatch": null
+    },
+    {
+      "mode": "read",
+      "kind": "SCRIPT",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "3b8386ac49d74e63e9d2cc77b4391d6d6456e4ab5fd2328886c17500eed54e6d",
+      "candidate_sha256": "3b8386ac49d74e63e9d2cc77b4391d6d6456e4ab5fd2328886c17500eed54e6d",
+      "first_mismatch": null
+    },
+    {
+      "mode": "read",
+      "kind": "AI",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "18325b42b65febb72c292230f5958d4d2b8ed1b88fbd84492f56e22909de9155",
+      "candidate_sha256": "18325b42b65febb72c292230f5958d4d2b8ed1b88fbd84492f56e22909de9155",
+      "first_mismatch": null
+    },
+    {
+      "mode": "read",
+      "kind": "NATIVE",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "a2ddd94af215456abf89c2917636e32085cbff35b2d982e048c61f431ee14735",
+      "candidate_sha256": "a2ddd94af215456abf89c2917636e32085cbff35b2d982e048c61f431ee14735",
+      "first_mismatch": null
+    },
+    {
+      "mode": "negative",
+      "kind": "PHYS",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "1b453a217effb218f2721f65c22ef734f555cab1813bedc0be47d9ed76bb9ddd",
+      "candidate_sha256": "1b453a217effb218f2721f65c22ef734f555cab1813bedc0be47d9ed76bb9ddd",
+      "first_mismatch": null
+    },
+    {
+      "mode": "negative",
+      "kind": "SCRIPT",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "789bed0a84d9102840745b0b565a6e929a34aaad90aab243481d3bd164a784d9",
+      "candidate_sha256": "789bed0a84d9102840745b0b565a6e929a34aaad90aab243481d3bd164a784d9",
+      "first_mismatch": null
+    },
+    {
+      "mode": "negative",
+      "kind": "AI",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "18325b42b65febb72c292230f5958d4d2b8ed1b88fbd84492f56e22909de9155",
+      "candidate_sha256": "18325b42b65febb72c292230f5958d4d2b8ed1b88fbd84492f56e22909de9155",
+      "first_mismatch": null
+    },
+    {
+      "mode": "negative",
+      "kind": "NATIVE",
+      "records": 61,
+      "same": true,
+      "baseline_sha256": "a2ddd94af215456abf89c2917636e32085cbff35b2d982e048c61f431ee14735",
+      "candidate_sha256": "a2ddd94af215456abf89c2917636e32085cbff35b2d982e048c61f431ee14735",
+      "first_mismatch": null
+    }
+  ],
+  "note": "Cold versus uninterrupted quality is recorded independently. This gate compares each sequence to its exact accepted-source counterpart; entities chunk hashes are excluded because new fixture roots acquire distinct asset IDs."
+}

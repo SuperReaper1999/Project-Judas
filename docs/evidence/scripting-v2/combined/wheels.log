@@ -1,0 +1,19 @@
+PASS registered wheel script
+PASS ordinary world constructs wheel component
+PASS partial commands preserve values and failed command is atomic
+PASS runtime configuration matches actual physics component
+PASS real VM reads contact and enforces phase/argument/snapshot contracts
+PASS public command produces real chassis traction
+PASS registered lifetime probe
+PASS independent wheel lifetime world
+PASS normal destruction retires wheel owner
+PASS retained public wheel never aliases a retired component
+PASS registered exact cookbook wheel script
+PASS ordinary cookbook world
+PASS project-owned logical wheel input map
+PASS exact cookbook executes logical input, tyre contact and spin reads
+PASS exact cookbook applies authored brake input
+PASS registered live API enumeration
+PASS ordinary live API world
+PASS actual QuickJS module exposes the declared wheel surface
+M81 wheel scripts: 18 checks PASS

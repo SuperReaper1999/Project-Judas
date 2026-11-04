@@ -1,0 +1,93 @@
+[
+  {
+    "name": "sdk-verify",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.666604547001043
+  },
+  {
+    "name": "sdk-inspect",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/tools/inspect_sdk.py",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk",
+      "--host-check",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/SDK_QUALIFICATION.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.816896132999318
+  },
+  {
+    "name": "editor-create",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_editor"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.6147422100002586
+  },
+  {
+    "name": "editor-play",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.3643631849990925
+  },
+  {
+    "name": "tool-operations",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/tool-workflows.py",
+      "--sdk",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk",
+      "--work",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.6166620229996624
+  },
+  {
+    "name": "sdk-verify-after",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.614673992000462
+  },
+  {
+    "name": "relocated-editor-export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/moved-editor-export/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/moved-editor-export/game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.26417918399965856
+  },
+  {
+    "name": "relocated-cli-export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/moved-cli-export/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/sdk-qualification/moved-cli-export/game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.21412750499985123
+  }
+]

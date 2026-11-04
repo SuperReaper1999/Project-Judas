@@ -410,6 +410,7 @@ declare module "judas" {
     readonly deformable: Deformable | null;
     readonly ragdoll: Ragdoll | null;
     readonly audio: AudioInfo | null;
+    /** Rejects invalid values and unknown enumerable option names before native mutation. */
     setAudio(settings:AudioSettingsPatch):boolean;
     seekAudio(seconds:number):boolean;
     setAudioVelocity(velocity?:Vec3|null):boolean;

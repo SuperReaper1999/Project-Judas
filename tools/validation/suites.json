@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"scripting-module-acceptance","target":"judas_script_module_acceptance_tests","groups":["core","scripting","lifecycle"]},
     {"name":"scripting-registry","target":"judas_script_binding_registry_tests","groups":["core","scripting","lifecycle"]},
     {"name":"ui-transfer","target":"judas_ui_drag_tests","groups":["core","input","lifecycle"]},
     {"name":"ui-menu-workflow","target":"judas_ui_menu_tests","groups":["application","rendering","lifecycle"],"args":["roundtrip","{root}/projects/menu_workshop/Satchel_Menu_Workshop.judasproj","{output}/ui-menu"]},

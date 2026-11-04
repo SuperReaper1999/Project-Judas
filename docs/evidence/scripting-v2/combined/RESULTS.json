@@ -1,0 +1,247 @@
+[
+  {
+    "name": "core",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.43897870300133945,
+    "binary_sha256": "0eda688930024c7eb23848cc110dda2f7315178675a9bfc38a6dc713ca95f949",
+    "samples": [
+      "STATE 1/4 {\"frames\":2,\"steps\":2,\"start\":1,\"speed\":7}",
+      "STATE 2/2 {\"frames\":2,\"steps\":2,\"start\":1,\"speed\":3}",
+      "PERFORMANCE scripts=0 frame_plus_fixed_us=0.007",
+      "PERFORMANCE scripts=10 frame_plus_fixed_us=12.388",
+      "PERFORMANCE scripts=100 frame_plus_fixed_us=152.924"
+    ],
+    "physical_and_state_sha256": "9b6a85033e55380e40c281648a04c3ef9213b3d82285559a190bec215e851b3e"
+  },
+  {
+    "name": "developer",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.21435836999989988,
+    "binary_sha256": "535b05a2b9874e080ed386b65ebea8396c42eec677a22bf7cbbe5c2572d27bbf",
+    "samples": [
+      "PERFORMANCE mode=off median_update_us=6.476 worst_batch_us=6.502",
+      "PERFORMANCE mode=debug-attached median_update_us=8.241 worst_batch_us=8.275",
+      "PERFORMANCE mode=debug-attached median_update_us=8.211 worst_batch_us=8.288"
+    ],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "presentation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_presentation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5481016510002519,
+    "binary_sha256": "89a285c8bd48653fcfe81dbac202bd650a1b4630403560ecc0a67ea46e20958c",
+    "samples": [
+      "POSE shooter_game baseline=0 alpha=0.25 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=0.000000000",
+      "POSE shooter_game baseline=0 alpha=0.75 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=0.000000000",
+      "POSE boundary_demo baseline=0 alpha=0.25 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=-0.000000119",
+      "POSE boundary_demo baseline=0 alpha=0.75 camera_error_m=0.000000238 avatar_error_m=0.000000000 camera_rotation_error=-0.000000119"
+    ],
+    "physical_and_state_sha256": "0ad1ed0d5b193aed592d77733d3481d025d4fcfa42944581437f8ac52478915e"
+  },
+  {
+    "name": "editor-source",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tools_editor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.7117321750010888,
+    "binary_sha256": "acf0fd67bfd37b82aaebb1a51bb498cde44f9a6c6e5a0e0216cebb0cedc0e6bc",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "editor-authoring",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_script_workflow_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.07416099999863945,
+    "binary_sha256": "d40645030d1e308b45b201dacbded4c1a82ddb6cc16ed384b6e0b510d2eaa969",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "consumer",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_consumer_tests"
+    ],
+    "exit": 0,
+    "seconds": 2.3292150979996222,
+    "binary_sha256": "9e807e91117a8c89c3b2bb862581c1c137d7bbe050985e594ff1c0f3e063e517",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "surface",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/surface",
+      "surface"
+    ],
+    "exit": 0,
+    "seconds": 0.42731912300041586,
+    "binary_sha256": "e4f0342b78162f1ce35a3fc14cc4322e9ecc18ad8188647da08e40924d373216",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "registry",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_binding_registry_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.005774244998974609,
+    "binary_sha256": "82a77937cb5a6a2f9b76fb47ac179739f754b0d117f1be057e54e7497a4e5ede",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "local-audio",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_module_acceptance_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.016884247999769286,
+    "binary_sha256": "baf1c957a2870606a970371bebe561265f739ca6c4579f05e168b5a471a4a8fa",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "ai",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_utility_ai_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/ai"
+    ],
+    "exit": 0,
+    "seconds": 0.08938916300030542,
+    "binary_sha256": "84f7efff4a5751d243c7d1bfef87302f706e6377ffa94350801a8366779eebe0",
+    "samples": [
+      "STATE {\"chosen\":{\"action\":\"eat\",\"target\":\"meal\"},\"coercions\":0,\"completed\":true,\"disposed\":true,\"rejected\":2,\"saved\":{\"activeAge\":0.09999999776482582,\"cooldowns\":{\"eat\":0,\"hide\":0},\"definition\":{\"actions\":[{\"considerations\":[{\"curve\":\"linear\",\"exponent\":2,\"fact\":\"hunger\",\"max\":1,\"min\":0,\"weight\":1}],\"cooldown\":0,\"id\":\"eat\",\"interruptible\":true,\"minCommitment\":0,\"mode\":\"product\",\"requiredFacts\":[],\"weight\":1},{\"considerations\":[{\"curve\":\"linear\",\"exponent\":2,\"fact\":\"danger\",\"max\":1,\"min\":0,\"weight\":1}],\"cooldown\":0,\"id\":\"hide\",\"interruptible\":true,\"minCommitment\":0,\"mode\":\"product\",\"requiredFacts\":[],\"weight\":1}],\"initialDelay\":0,\"interval\":0.1,\"name\":\"script-test\",\"switchAdvantage\":0.05,\"version\":1},\"elapsed\":0.11999999731779099,\"selected\":{\"action\":\"eat\",\"target\":\"meal\"},\"status\":\"running\",\"untilEvaluation\":0.08000000268220903,\"version\":1},\"sensors\":2,\"starts\":1,\"stops\":0,\"updates\":6}"
+    ],
+    "physical_and_state_sha256": "9f59388f8f2acec8466812ce0cccc2a33438f4284c07c423fd79bec779caf12c"
+  },
+  {
+    "name": "sensing",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ai_sensing_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.07999844400001166,
+    "binary_sha256": "2ec91068a3ce980f0919a50fbbd1f6f03376189f78a29b1f54494c66cbe85f9c",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "reservations",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ai_reservation_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/reservations"
+    ],
+    "exit": 0,
+    "seconds": 0.07727894299932814,
+    "binary_sha256": "06f7562635c3ecfca70631b3cc07ffcfe39b0b770358db1812a442b6317eee21",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "network",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/network"
+    ],
+    "exit": 0,
+    "seconds": 0.30244507499992324,
+    "binary_sha256": "46e358be2fd9303032237ed3332cd2de785931d32c472e755283ef6e8d3232b8",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "origin",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.094035920999886,
+    "binary_sha256": "50edbf916661e46fe3abd0a2edba1f67d1e9f95c0969f89833194652c309fb68",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "profiler",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.21694318699883297,
+    "binary_sha256": "f7dfdee83768ecb682706e7b1bcd9e3f0eb216d72c779b29f48c0669000268f5",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "wheels",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/wheels"
+    ],
+    "exit": 0,
+    "seconds": 0.07792447100109712,
+    "binary_sha256": "26c778b5f2dc80de18d4256e6f30ea7513fa47346a873fe926f4c02192c81285",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "powertrain",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/powertrain"
+    ],
+    "exit": 0,
+    "seconds": 0.08191136400091636,
+    "binary_sha256": "4c9c5d3d16945aa55e24e5557d95dc90fdf48b86555f8e9f1f81ee6c1d3e7b7e",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "queries",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_batch_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/scripting-v2/final-results/queries"
+    ],
+    "exit": 0,
+    "seconds": 0.08345345300040208,
+    "binary_sha256": "329bf6fda553c7bceff60ec4e9c28c5fdba6b2719957654eb25fe3515270523b",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "weather",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.0680301620013779,
+    "binary_sha256": "79b3881079ca398768d7300545841ee47ca55c14a97ef0c6eb1b33c38e964c1f",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "name": "local-players",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.08082944300076633,
+    "binary_sha256": "4ddf4ca4ea7bda7c9ae5d0dff0cf868bda85384b7994b76c6627770cc83f1033",
+    "samples": [],
+    "physical_and_state_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  }
+]

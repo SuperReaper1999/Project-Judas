@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const source=fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../scripts/check_judasjs_api.mjs'),'utf8');
+const begin=source.indexOf('function registeredOperations(');
+const end=source.indexOf('\nconst registeredOps = ',begin);
+const parse=Function(source.slice(begin,end)+'; return registeredOperations;')();
+const module={source:'m.cpp',registration:'RegisterDemoBindings'};
+const body='void RegisterDemoBindings(BindingRegistry& registry) {\n registry.Add("Demo", {"first", "second",}, Handler);\n}\n';
+assert.deepEqual([...parse([module],new Map([['m.cpp',body]]))],[['first','Demo'],['second','Demo']]);
+assert.throws(()=>parse([module],new Map([['m.cpp',body.replace('"second"','"first"')]])),/Duplicate/);
+assert.throws(()=>parse([module],new Map([['m.cpp',body.replace('"second"','dynamic')]])),/literal/);
+assert.throws(()=>parse([module],new Map([['m.cpp','']])),/one module/);
+assert.throws(()=>parse([module,module],new Map([['m.cpp',body]])),/duplicate module/);
+process.stdout.write('Registration source parser: valid registration and four malformed controls passed\n');
