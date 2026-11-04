@@ -258,7 +258,8 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
                         const std::function<void()> &windowMenu = {});
 void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize);
 void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
-                               const std::function<void()> &workspaceSelector = {});
+                               const std::function<void()> &workspaceSelector = {},
+                               const std::function<void()> &workflowSelector = {});
 void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests);
 void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state);
 void DrawSceneSettingsPanel(EditorDocument &doc, EditorPanelState &state);

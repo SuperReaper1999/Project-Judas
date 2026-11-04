@@ -179,11 +179,8 @@ bool EditorProjectWorkflow::OpenScene(EditorContext &context, EditorProjectServi
         return false;
     context.document.GetScene() = std::move(resolvedPrefabs);
     context.panels.pathInput = context.project.IsLoaded() ? context.project.MakeRelative(resolved) : resolved;
-    if (const SceneObject *first = context.document.GetScene().Objects().empty()
-                                       ? nullptr
-                                       : &context.document.GetScene().Objects().front()) {
-        services.viewport.camera.LookAt(first->transform.position,
-                                        services.viewport.camera.Is2D() ? 5.0f : 40.0f);
-    }
+    if (const auto target = EditorSceneGeometry::InitialFraming(context.document.GetScene()))
+        services.viewport.camera.LookAt(
+            target->point, services.viewport.camera.Is2D() ? 5.0f : std::max(12.f, 3.f * target->radius));
     return true;
 }

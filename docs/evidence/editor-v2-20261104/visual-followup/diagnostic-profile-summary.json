@@ -1,0 +1,62 @@
+[
+  {
+    "name": "baseline",
+    "frameMs": {
+      "samples": 110,
+      "median": 9.9931915,
+      "p95": 10.054302,
+      "worst": 44.76771
+    },
+    "scopes": {
+      "Editor UI build": {
+        "samples": 110,
+        "median": 0.176944,
+        "p95": 0.232719,
+        "worst": 0.499683
+      },
+      "Editor UI submission": {
+        "samples": 110,
+        "median": 0.0597875,
+        "p95": 0.101351,
+        "worst": 0.136427
+      }
+    },
+    "gpu": {
+      "samples": 110,
+      "median": 0.029728,
+      "p95": 0.030912,
+      "worst": 0.031616
+    },
+    "peakRSSKiB": 150200
+  },
+  {
+    "name": "visual-v2",
+    "frameMs": {
+      "samples": 111,
+      "median": 9.993948,
+      "p95": 10.049854,
+      "worst": 43.167182
+    },
+    "scopes": {
+      "Editor UI build": {
+        "samples": 111,
+        "median": 0.288885,
+        "p95": 0.333018,
+        "worst": 0.788106
+      },
+      "Editor UI submission": {
+        "samples": 111,
+        "median": 0.439178,
+        "p95": 0.548414,
+        "worst": 0.99145
+      }
+    },
+    "gpu": {
+      "samples": 111,
+      "median": 0.136832,
+      "p95": 0.22816,
+      "worst": 1.343008
+    },
+    "peakRSSKiB": 153512
+  }
+]

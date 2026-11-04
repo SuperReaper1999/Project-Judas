@@ -5,6 +5,8 @@
 #include "EditorPanelWidgets.h"
 #include "EditorPanels.h"
 #include "EditorScriptWorkflow.h"
+#include "EditorTheme.h"
+#include "EditorVisuals.h"
 #include "Project.h"
 #include "SpriteSheetEditor.h"
 #include "imgui.h"
@@ -12,6 +14,7 @@
 #include <cmath>
 #include <filesystem>
 #include <functional>
+#include <map>
 
 using namespace EditorPanelWidgets;
 namespace {
@@ -153,6 +156,120 @@ void DrawResourceState(const AssetRecord &record, EditorPanelState &state) {
     }
 }
 
+EditorVisuals::Icon AssetIcon(AssetType type) {
+    using Icon = EditorVisuals::Icon;
+    switch (type) {
+    case AssetType::Mesh:
+    case AssetType::Prefab:
+    case AssetType::Collision:
+        return Icon::Cube;
+    case AssetType::Texture:
+    case AssetType::SpriteSheet:
+        return Icon::Image;
+    case AssetType::Script:
+        return Icon::Script;
+    case AssetType::Audio:
+    case AssetType::AudioEffect:
+        return Icon::Audio;
+    case AssetType::UI:
+        return Icon::UI;
+    case AssetType::World:
+    case AssetType::Environment:
+        return Icon::Globe;
+    case AssetType::Material:
+    case AssetType::PhysicalMaterial:
+        return Icon::Light;
+    default:
+        return Icon::File;
+    }
+}
+
+void DrawAssetCard(const std::string &name, const char *kind, EditorVisuals::Icon icon, ImVec2 minimum,
+                   ImVec2 maximum, bool selected, bool missing = false) {
+    auto *draw = ImGui::GetWindowDrawList();
+    const float scale = ImGui::GetFontSize() / 15.f;
+    auto accent =
+        icon == EditorVisuals::Icon::Script ? EditorSecondaryAccent() : EditorVisuals::AccentColor();
+    const bool hovered = ImGui::IsItemHovered();
+    const auto surface = EditorVisuals::SurfaceColor(selected ? .065f : hovered ? .045f : .018f);
+    const float rounding = 7 * scale;
+    draw->AddRectFilled({minimum.x + scale, minimum.y + 2 * scale},
+                        {maximum.x + scale, maximum.y + 2 * scale}, IM_COL32(0, 0, 0, 30), rounding);
+    draw->AddRectFilled(minimum, maximum, ImGui::GetColorU32(surface), rounding);
+    draw->AddRect(minimum, maximum,
+                  selected ? ImGui::GetColorU32(accent) : ImGui::GetColorU32(ImGuiCol_Border), rounding, 0,
+                  selected ? 1.7f * scale : scale);
+    const float iconSize = 35 * scale;
+    EditorVisuals::DrawIcon(draw, icon,
+                            {minimum.x + (maximum.x - minimum.x - iconSize) * .5f, minimum.y + 12 * scale},
+                            iconSize, ImGui::GetColorU32(accent));
+    const float textY = minimum.y + 57 * scale;
+    const ImVec4 clip{minimum.x + 7 * scale, textY, maximum.x - 7 * scale, maximum.y - 20 * scale};
+    draw->AddText(ImGui::GetFont(), ImGui::GetFontSize(), {clip.x, textY}, ImGui::GetColorU32(ImGuiCol_Text),
+                  name.c_str(), nullptr, clip.z - clip.x, &clip);
+    const char *label = missing ? "Missing file" : kind;
+    draw->AddText(ImGui::GetFont(), ImGui::GetFontSize() * .78f,
+                  {minimum.x + 8 * scale, maximum.y - 16 * scale},
+                  missing ? IM_COL32(245, 136, 94, 255) : ImGui::GetColorU32(ImGuiCol_TextDisabled), label);
+    if (selected)
+        draw->AddCircleFilled({maximum.x - 10 * scale, minimum.y + 10 * scale}, 2.5f * scale,
+                              ImGui::GetColorU32(accent));
+}
+
+void ChangeDirectory(EditorAssetBrowserState &browser, EditorPanelState &state,
+                     const std::string &directory) {
+    browser.directory = directory;
+    state.assetSearch.clear();
+}
+
+void DrawFolderTree(EditorAssetBrowserState &browser, EditorPanelState &state,
+                    const std::vector<std::string> &directories) {
+    std::map<std::string, std::vector<std::string>> children;
+    for (const auto &directory : directories)
+        if (!directory.empty())
+            children[std::filesystem::path(directory).parent_path().generic_string()].push_back(directory);
+    const float iconSize = ImGui::GetFontSize();
+    std::function<void(const std::string &)> folder = [&](const std::string &directory) {
+        const bool root = directory.empty();
+        const bool hasChildren = children.find(directory) != children.end();
+        const bool selected = directory == browser.directory;
+        auto flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnArrow |
+                     ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_FramePadding;
+        if (selected)
+            flags |= ImGuiTreeNodeFlags_Selected;
+        if (!hasChildren)
+            flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+        if (root)
+            flags |= ImGuiTreeNodeFlags_DefaultOpen;
+        const bool ancestor = !browser.directory.empty() &&
+                              (root || (browser.directory.size() > directory.size() &&
+                                        browser.directory.compare(0, directory.size(), directory) == 0 &&
+                                        browser.directory[directory.size()] == '/'));
+        if (ancestor)
+            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        const auto label =
+            std::string("    ") + (root ? "Assets" : std::filesystem::path(directory).filename().string());
+        ImGui::PushID(root ? "##root" : directory.c_str());
+        const bool open = ImGui::TreeNodeEx(label.c_str(), flags);
+        const auto minimum = ImGui::GetItemRectMin();
+        EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), EditorVisuals::Icon::Folder,
+                                {minimum.x + ImGui::GetTreeNodeToLabelSpacing(),
+                                 minimum.y + (ImGui::GetItemRectSize().y - iconSize) * .5f},
+                                iconSize, ImGui::GetColorU32(EditorVisuals::AccentColor()));
+        if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+            ChangeDirectory(browser, state, directory);
+        if (ImGui::IsItemHovered())
+            ImGui::SetTooltip("%s", root ? "Registered project assets" : directory.c_str());
+        if (open && hasChildren) {
+            for (const auto &child : children.at(directory))
+                folder(child);
+            ImGui::TreePop();
+        }
+        ImGui::PopID();
+    };
+    folder({});
+}
+
 } // namespace
 
 void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
@@ -165,119 +282,133 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
         browser.projectRoot = projectRoot;
         browser.directory.clear();
     }
+    const float scale = ImGui::GetFontSize() / 15.f;
     ImGui::BeginChild("assets", {0, 0});
-    char assetSearch[256];
-    CopyToBuffer(state.assetSearch, assetSearch, sizeof(assetSearch));
-    ImGui::SetNextItemWidth(-1);
-    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, folders, IDs and sources...", assetSearch,
-                                 sizeof(assetSearch)))
-        state.assetSearch = assetSearch;
-    ImGuiTextFilter searchFilter(assetSearch);
     ImGui::BeginDisabled(state.mode != EditorMode::Edit);
-    if (ImGui::Button("Import assets..."))
+    if (EditorVisuals::ActionButton("Import assets...", EditorVisuals::Icon::Import, true))
         requests.browseImport = true;
     ImGui::EndDisabled();
-    NextActionOnRow("Filters...");
-    if (ImGui::Button("Filters..."))
+    ToolbarHint(
+        "Import files into this project. Registered assets can be dragged into the scene or inspector.");
+    NextActionOnRow("    Create");
+    ImGui::BeginDisabled(state.mode != EditorMode::Edit);
+    if (EditorVisuals::ActionButton("Create", EditorVisuals::Icon::Plus))
+        ImGui::OpenPopup("createAsset");
+    if (ImGui::BeginPopup("createAsset")) {
+        const auto *selected = db.Find(state.browserSelection);
+        if (ImGui::MenuItem("Sprite sheet from selected image", nullptr, false,
+                            selected && selected->type == AssetType::Texture && !selected->missing &&
+                                !selected->readOnly)) {
+            AssetRecord sheet;
+            std::string error;
+            if (CreateSpriteSheetAsset(*state.assets, selected->id, sheet, error)) {
+                state.spriteSheetEdit = sheet.id;
+                state.showSpriteSheetEditor = true;
+            } else
+                state.status = error;
+        }
+        if (ImGui::MenuItem("Create script on selected object...", nullptr, false,
+                            doc.Selection().size() == 1)) {
+            state.showInspector = true;
+            state.revealComponent = "Scripts";
+            state.status = "In the selected object's Scripts section, choose Create script & attach.";
+        }
+        ImGui::Separator();
+        if (ImGui::MenuItem("Materials, audio and asset tools..."))
+            state.selectModelImportTools = true;
+        ImGui::EndPopup();
+    }
+    ImGui::EndDisabled();
+    NextActionOnRow("Filters");
+    const bool filtering = state.assetTypeFilter >= 0 || state.assetMissingOnly || browser.recursive;
+    if (ImGui::Button(filtering ? "Filters *" : "Filters"))
         ImGui::OpenPopup("assetFilters");
     if (ImGui::BeginPopup("assetFilters")) {
-        const char *assetTypes[] = {
+        const char *types[] = {
             "All types",   "Mesh",  "Texture",      "Font",       "Audio",     "Prefab",
             "Script",      "UI",    "Navigation",   "Liquid",     "Material",  "Environment",
             "Catalog",     "World", "Audio effect", "Deformable", "Collision", "Physical material",
             "Sprite sheet"};
-        int selectedType = state.assetTypeFilter + 1;
-        ImGui::SetNextItemWidth(160.0f);
-        if (ImGui::Combo("##assetType", &selectedType, assetTypes, 19))
-            state.assetTypeFilter = selectedType - 1;
+        int type = state.assetTypeFilter + 1;
+        ImGui::SetNextItemWidth(190 * scale);
+        if (ImGui::Combo("Type", &type, types, 19))
+            state.assetTypeFilter = type - 1;
         ImGui::Checkbox("Missing only", &state.assetMissingOnly);
         ImGui::Checkbox("Include subfolders", &browser.recursive);
+        if (ImGui::Button("Reset filters")) {
+            state.assetTypeFilter = -1;
+            state.assetMissingOnly = false;
+            browser.recursive = false;
+        }
         ImGui::EndPopup();
     }
     NextActionOnRow("Rescan");
-    if (ImGui::SmallButton("Rescan"))
+    if (ImGui::Button("Rescan"))
         requests.rescanAssets = true;
-    ToolbarHint("Refresh registered, missing and untracked project files");
-    NextActionOnRow(browser.grid ? "List view" : "Grid view");
-    if (ImGui::SmallButton(browser.grid ? "List view" : "Grid view"))
-        browser.grid = !browser.grid;
+    ToolbarHint("Refresh registered, missing and untracked project files.");
+    NextActionOnRow("Grid  List");
+    if (ImGui::Button(browser.grid ? "Grid *" : "Grid"))
+        browser.grid = true;
+    ImGui::SameLine(0, 3 * scale);
+    if (ImGui::Button(browser.grid ? "List" : "List *"))
+        browser.grid = false;
+    char search[256];
+    CopyToBuffer(state.assetSearch, search, sizeof(search));
+    const float rowEnd = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+    if (rowEnd - ImGui::GetItemRectMax().x - ImGui::GetStyle().ItemSpacing.x >= 220 * scale)
+        ImGui::SameLine();
+    ImGui::SetNextItemWidth(-1);
+    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, IDs or source files...", search,
+                                 sizeof(search)))
+        state.assetSearch = search;
+    ImGuiTextFilter searchFilter(state.assetSearch.c_str());
     if (const auto *selected = db.Find(state.browserSelection);
         selected && selected->type == AssetType::Script) {
         ImGui::BeginDisabled(selected->missing || selected->readOnly);
-        if (ImGui::Button("Edit script"))
+        if (ImGui::SmallButton("Edit selected script"))
             RequestEditorScriptEdit(*selected, state);
         ImGui::EndDisabled();
         NextActionOnRow("Attach to selected object");
         ImGui::BeginDisabled(state.mode != EditorMode::Edit || doc.Selection().size() != 1 ||
                              selected->missing);
-        if (ImGui::Button("Attach to selected object")) {
+        if (ImGui::SmallButton("Attach to selected object")) {
             std::string error;
             state.status = AttachEditorScript(doc, doc.Selected(), db, selected->id, error)
                                ? "Script attached; save scene, then Play"
                                : error;
         }
         ImGui::EndDisabled();
-        ToolbarHint(
-            "Select one scene object, then attach this script. This is a normal undoable scene edit.");
+        ToolbarHint("Select one scene object, then attach this script. Attachment supports Undo.");
     }
+    ImGui::Separator();
 
     const auto directories = EditorAssetBrowserDirectories(db);
     if (!browser.directory.empty() &&
         std::find(directories.begin(), directories.end(), browser.directory) == directories.end())
         browser.directory.clear();
     if (ImGui::BeginTable("Asset navigation", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
-        ImGui::TableSetupColumn("Folders", ImGuiTableColumnFlags_WidthFixed,
-                                155 * ImGui::GetIO().FontGlobalScale);
+        ImGui::TableSetupColumn("Folders", ImGuiTableColumnFlags_WidthFixed, 175 * scale);
         ImGui::TableSetupColumn("Files", ImGuiTableColumnFlags_WidthStretch);
         ImGui::TableNextColumn();
         ImGui::BeginChild("Asset folders", {0, 0});
-        if (ImGui::Selectable("Assets", browser.directory.empty())) {
-            browser.directory.clear();
-            state.assetSearch.clear();
-        }
-        ImGui::SetItemTooltip("The tree contains registered asset folders. Import or track files to "
-                              "make them referenceable.");
-        for (const auto &directory : directories) {
-            if (directory.empty())
-                continue;
-            ImGui::PushID(directory.c_str());
-            const auto depth = std::count(directory.begin(), directory.end(), '/');
-            const auto indent = float(depth) * 12 * ImGui::GetIO().FontGlobalScale;
-            if (indent)
-                ImGui::Indent(indent);
-            const auto label = std::filesystem::path(directory).filename().string();
-            if (ImGui::Selectable(label.c_str(), browser.directory == directory)) {
-                browser.directory = directory;
-                state.assetSearch.clear();
-            }
-            if (ImGui::IsItemHovered())
-                ImGui::SetTooltip("%s", directory.c_str());
-            if (indent)
-                ImGui::Unindent(indent);
-            ImGui::PopID();
-        }
+        ImGui::TextDisabled("PROJECT");
+        DrawFolderTree(browser, state, directories);
         ImGui::EndChild();
         ImGui::TableNextColumn();
-        if (ImGui::SmallButton("Assets")) {
-            browser.directory.clear();
-            state.assetSearch.clear();
-        }
+        if (ImGui::SmallButton("Assets"))
+            ChangeDirectory(browser, state, {});
         std::string path;
         for (const auto &part : std::filesystem::path(browser.directory)) {
             path += (path.empty() ? "" : "/") + part.generic_string();
-            ImGui::SameLine();
-            ImGui::TextDisabled("/");
-            ImGui::SameLine();
+            ImGui::SameLine(0, 5 * scale);
+            ImGui::TextDisabled(">");
+            ImGui::SameLine(0, 5 * scale);
             ImGui::PushID(path.c_str());
-            if (ImGui::SmallButton(part.generic_string().c_str())) {
-                browser.directory = path;
-                state.assetSearch.clear();
-            }
+            if (ImGui::SmallButton(part.generic_string().c_str()))
+                ChangeDirectory(browser, state, path);
             ImGui::PopID();
         }
         const bool searching = !state.assetSearch.empty();
-        if (searching)
-            ImGui::TextDisabled("Search results across all folders");
         auto records = EditorAssetBrowserRecords(db, searching ? std::string{} : browser.directory,
                                                  searching || browser.recursive, state.assetTypeFilter,
                                                  state.assetMissingOnly);
@@ -288,29 +419,27 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                                          return !searchFilter.PassFilter(searchable.c_str());
                                      }),
                       records.end());
-        ImGui::TextDisabled("%zu asset%s", records.size(), records.size() == 1 ? "" : "s");
-        if (records.empty() && (searching || directories.size() == 1))
-            ImGui::TextWrapped(
-                "No matching assets. Choose another folder, clear search/filters, or import files.");
-        const float tileWidth = 112 * ImGui::GetIO().FontGlobalScale;
+        ImGui::SameLine();
+        ImGui::TextDisabled("  %zu asset%s%s", records.size(), records.size() == 1 ? "" : "s",
+                            searching ? " / all folders" : "");
+        const float tileWidth = 128 * scale;
         const int columns = browser.grid ? std::clamp(int(ImGui::GetContentRegionAvail().x /
                                                           (tileWidth + ImGui::GetStyle().ItemSpacing.x)),
                                                       1, 64)
                                          : 3;
-        if (ImGui::BeginTable(browser.grid ? "assetGrid" : "assetTable", columns,
-                              ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY |
-                                  (browser.grid ? ImGuiTableFlags_None
-                                                : ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV),
+        const auto flags =
+            ImGuiTableFlags_ScrollY | (browser.grid ? ImGuiTableFlags_None
+                                                    : ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg |
+                                                          ImGuiTableFlags_BordersInnerV);
+        if (ImGui::BeginTable(browser.grid ? "assetGrid" : "assetTable", columns, flags,
                               {0, std::max(35.f, ImGui::GetContentRegionAvail().y)})) {
             if (!browser.grid) {
                 ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
-                ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 85);
-                ImGui::TableSetupColumn("State", ImGuiTableColumnFlags_WidthFixed, 85);
+                ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 90 * scale);
+                ImGui::TableSetupColumn("State", ImGuiTableColumnFlags_WidthFixed, 78 * scale);
                 ImGui::TableSetupScrollFreeze(0, 1);
                 ImGui::TableHeadersRow();
             }
-            // Folder tiles mirror the tree; double-click enters a folder, and
-            // breadcrumbs/tree offer single-click navigation without a modal.
             if (!searching) {
                 for (const auto &directory : directories) {
                     if (directory.empty() ||
@@ -319,19 +448,17 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                     ImGui::TableNextColumn();
                     ImGui::PushID(directory.c_str());
                     const auto name = std::filesystem::path(directory).filename().string();
-                    const auto label = "[Folder] " + name;
-                    if (ImGui::Selectable(label.c_str(), false,
+                    const ImVec2 tile{std::max(40.f, ImGui::GetContentRegionAvail().x), 112 * scale};
+                    if (ImGui::Selectable(browser.grid ? "##folderTile" : name.c_str(), false,
                                           ImGuiSelectableFlags_AllowDoubleClick |
                                               (browser.grid ? 0 : ImGuiSelectableFlags_SpanAllColumns),
-                                          browser.grid
-                                              ? ImVec2(std::max(40.f, ImGui::GetContentRegionAvail().x),
-                                                       86 * ImGui::GetIO().FontGlobalScale)
-                                              : ImVec2{})) {
-                        if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-                            browser.directory = directory;
-                            state.assetSearch.clear();
-                        }
+                                          browser.grid ? tile : ImVec2{})) {
+                        if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                            ChangeDirectory(browser, state, directory);
                     }
+                    if (browser.grid)
+                        DrawAssetCard(name, "Folder", EditorVisuals::Icon::Folder, ImGui::GetItemRectMin(),
+                                      ImGui::GetItemRectMax(), false);
                     if (ImGui::IsItemHovered())
                         ImGui::SetTooltip("Double-click to open %s", directory.c_str());
                     ImGui::PopID();
@@ -342,15 +469,18 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                     }
                 }
             }
+            if (records.empty() && (searching || directories.size() == 1)) {
+                ImGui::TableNextColumn();
+                ImGui::TextWrapped(
+                    "No matching assets. Import files, select another folder or clear filters.");
+            }
             for (const auto *item : records) {
                 const auto &record = *item;
                 ImGui::TableNextColumn();
                 ImGui::PushID(record.id.c_str());
                 const auto name = std::filesystem::path(record.relativePath).filename().string();
                 const bool selected = state.browserSelection == record.id;
-                const auto origin = ImGui::GetCursorScreenPos();
-                const ImVec2 tile{std::max(40.f, ImGui::GetContentRegionAvail().x),
-                                  86 * ImGui::GetIO().FontGlobalScale};
+                const ImVec2 tile{std::max(40.f, ImGui::GetContentRegionAvail().x), 112 * scale};
                 if (ImGui::Selectable(browser.grid ? "##assetTile" : name.c_str(), selected,
                                       ImGuiSelectableFlags_AllowDoubleClick |
                                           (browser.grid ? 0 : ImGuiSelectableFlags_SpanAllColumns),
@@ -359,25 +489,10 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
                     if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                         OpenAsset(record, state);
                 }
+                if (browser.grid)
+                    DrawAssetCard(name, AssetTypeName(record.type), AssetIcon(record.type),
+                                  ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), selected, record.missing);
                 DrawAssetInteraction(record, doc, state, requests, db);
-                if (browser.grid) {
-                    auto *draw = ImGui::GetWindowDrawList();
-                    const auto color =
-                        ImGui::GetColorU32(record.type == AssetType::Script ? ImVec4(.85f, .45f, .78f, 1)
-                                                                            : ImVec4(.25f, .75f, .74f, 1));
-                    const ImVec2 badgeMin{origin.x + 8, origin.y + 5},
-                        badgeMax{origin.x + tile.x - 8, origin.y + tile.y - 28};
-                    draw->AddRectFilled(badgeMin, badgeMax, ImGui::GetColorU32(ImGuiCol_FrameBg), 5);
-                    draw->AddRect(badgeMin, badgeMax, color, 5);
-                    const auto *type = AssetTypeName(record.type);
-                    const auto typeSize = ImGui::CalcTextSize(type);
-                    draw->AddText({origin.x + (tile.x - typeSize.x) * .5f, origin.y + 18}, color, type);
-                    draw->PushClipRect({origin.x + 4, origin.y + tile.y - 25},
-                                       {origin.x + tile.x - 4, origin.y + tile.y}, true);
-                    draw->AddText({origin.x + 6, origin.y + tile.y - 24}, ImGui::GetColorU32(ImGuiCol_Text),
-                                  name.c_str());
-                    draw->PopClipRect();
-                }
                 ImGui::PopID();
                 if (!browser.grid) {
                     ImGui::TableNextColumn();

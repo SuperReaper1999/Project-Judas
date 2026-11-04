@@ -107,6 +107,14 @@ void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
             app.m_panels.worldPreview = true;
         if (!app.m_document.GetScene().Objects().empty())
             app.m_document.Select(app.m_document.GetScene().Objects().front().id);
+        if (const char *selection = std::getenv("JUDAS_EDITOR_AUTOTEST_SELECT")) {
+            char *end = nullptr;
+            const auto id = std::strtoull(selection, &end, 10);
+            if (end != selection && *end == '\0' && app.m_document.GetScene().Find(id))
+                app.m_document.Select(id);
+            else
+                navigationCheck(false, "requested visual-review selection exists");
+        }
         DebugViewOptions all;
         all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
             all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere =

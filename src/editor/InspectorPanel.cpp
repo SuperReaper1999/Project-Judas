@@ -4,6 +4,8 @@
 #include "EditorPanels.h"
 #include "EditorWidgets.h"
 #include "EditorWorkspace.h"
+#include "EditorTheme.h"
+#include "EditorVisuals.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
 #include "imgui.h"
@@ -29,6 +31,162 @@ using namespace EditorPanelWidgets;
 #include "RuntimeInspector.h"
 
 namespace {
+// A visual group, not a child window: original field IDs, popup ownership and
+// edit transactions stay in their existing inspector scope. Each card owns its
+// splitter so nested component tables/groups can split their own draw lists.
+class InspectorCard {
+  public:
+    explicit InspectorCard(bool secondary = false)
+        : draw(ImGui::GetWindowDrawList()), width(ImGui::GetContentRegionAvail().x),
+          padding(9.f * ImGui::GetIO().FontGlobalScale),
+          accent(secondary ? EditorSecondaryAccent() : EditorVisuals::AccentColor()) {
+        splitter.Split(draw, 2);
+        splitter.SetCurrentChannel(draw, 1);
+        ImGui::BeginGroup();
+        ImGui::Dummy({0, padding});
+        ImGui::Indent(padding);
+        ImGui::PushItemWidth(std::max(1.f, width - 2 * padding));
+        ImGui::PushTextWrapPos(ImGui::GetCursorPosX() + std::max(1.f, width - 2 * padding));
+    }
+    ~InspectorCard() {
+        ImGui::PopTextWrapPos();
+        ImGui::PopItemWidth();
+        ImGui::Unindent(padding);
+        ImGui::Dummy({width, padding});
+        ImGui::EndGroup();
+        const auto low = ImGui::GetItemRectMin(), high = ImGui::GetItemRectMax();
+        splitter.SetCurrentChannel(draw, 0);
+        draw->AddRectFilled(low, high, ImGui::GetColorU32(EditorVisuals::SurfaceColor()), 6.f);
+        accent.w = .28f;
+        draw->AddRect(low, high, ImGui::GetColorU32(accent), 6.f);
+        splitter.Merge(draw);
+        ImGui::Dummy({0, 7.f * ImGui::GetIO().FontGlobalScale});
+    }
+
+  private:
+    ImDrawList *draw;
+    ImDrawListSplitter splitter;
+    float width, padding;
+    ImVec4 accent;
+};
+
+EditorVisuals::Icon ObjectIcon(const SceneObject &object) {
+    using Icon = EditorVisuals::Icon;
+    if (object.characterMotor || object.playerStart)
+        return Icon::Person;
+    if (object.renderCamera)
+        return Icon::Camera;
+    if (object.light)
+        return Icon::Light;
+    if (object.planet || object.gravity || object.celestial)
+        return Icon::Globe;
+    if (object.ui)
+        return Icon::UI;
+    if (object.audioEmitter || object.audioListener)
+        return Icon::Audio;
+    if (!object.scripts.empty() && !object.render)
+        return Icon::Script;
+    return Icon::Cube;
+}
+
+const char *ObjectType(const SceneObject &object) {
+    if (object.characterMotor)
+        return "Character";
+    if (object.renderCamera)
+        return "Camera";
+    if (object.light)
+        return "Light";
+    if (object.planet)
+        return "Planet terrain";
+    if (object.body)
+        return "Physical object";
+    if (object.render && object.render->shape == SceneShape::Sprite)
+        return "Sprite";
+    if (!object.scripts.empty())
+        return "Scripted object";
+    return "Scene object";
+}
+
+EditorVisuals::Icon ComponentIcon(const char *name) {
+    using Icon = EditorVisuals::Icon;
+    const std::string title(name);
+    if (title == "Scripts")
+        return Icon::Script;
+    if (title == "Character motor" || title == "Player start")
+        return Icon::Person;
+    if (title.find("Audio") == 0)
+        return Icon::Audio;
+    if (title.find("Animation") == 0 || title == "Ragdoll")
+        return Icon::Animation;
+    if (title == "Render camera")
+        return Icon::Camera;
+    if (title == "Light")
+        return Icon::Light;
+    if (title == "Runtime UI")
+        return Icon::UI;
+    if (title == "Planet terrain" || title.find("Gravity") == 0)
+        return Icon::Globe;
+    return Icon::Cube;
+}
+
+template <class Publish>
+void CompactAxes(EditorDocument &doc, const char *id, const char *label, glm::vec3 values, float speed,
+                 const char *format, Publish publish) {
+    const auto originalId = ImGui::GetID(id);
+    const float scale = ImGui::GetIO().FontGlobalScale;
+    const bool narrow = ImGui::GetContentRegionAvail().x < 235.f * scale;
+    ImGui::BeginGroup();
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextDisabled("%s", label);
+    if (!narrow)
+        ImGui::SameLine(65.f * scale);
+    const float gap = 5.f * scale;
+    const float axisWidth = 12.f * scale;
+    const float fieldWidth = std::max(1.f, (ImGui::GetContentRegionAvail().x - 2 * gap) / 3);
+    const ImVec4 colors[] = {{.89f, .31f, .37f, 1}, {.22f, .69f, .45f, 1}, {.31f, .56f, .96f, 1}};
+    const char *axes[] = {"X", "Y", "Z"};
+    // Match the ID stack of the original StackedField + DragFloat3 controls.
+    ImGui::PushOverrideID(originalId);
+    ImGui::PushID("");
+    for (int axis = 0; axis < 3; ++axis) {
+        if (axis)
+            ImGui::SameLine(0, gap);
+        ImGui::PushID(axis);
+        ImGui::AlignTextToFramePadding();
+        ImGui::TextColored(colors[axis], "%s", axes[axis]);
+        ImGui::SameLine(0, 2.f * scale);
+        ImGui::SetNextItemWidth(std::max(1.f, fieldWidth - axisWidth - 2.f * scale));
+        const bool changed = ImGui::DragFloat("", &values[axis], speed, 0, 0, format);
+        if (ImGui::IsItemActivated())
+            doc.BeginEdit(); // Snapshot the authored quaternion before Euler conversion.
+        if (changed)
+            publish(values);
+        TrackEdit(doc);
+        ImGui::PopID();
+    }
+    ImGui::PopID();
+    ImGui::PopID();
+    ImGui::EndGroup();
+}
+
+void PinnedTransform(EditorDocument &doc, SceneObject &object) {
+    InspectorCard card;
+    ImGui::PushFont(EditorVisuals::HeadingFont());
+    EditorVisuals::IconText(EditorVisuals::Icon::Move, "Transform");
+    ImGui::PopFont();
+    ImGui::Spacing();
+    CompactAxes(doc, "Position", "Position", object.transform.position, .05f, "%.4g",
+                [&](glm::vec3 value) { object.transform.position = value; });
+    CompactAxes(
+        doc, "Rotation (deg)", "Rotation",
+        glm::degrees(glm::eulerAngles(glm::normalize(object.transform.rotation))), .5f, "%.3g",
+        [&](glm::vec3 value) { object.transform.rotation = glm::normalize(glm::quat(glm::radians(value))); });
+    CompactAxes(doc, "Scale", "Scale", object.transform.scale, .01f, "%.4g",
+                [&](glm::vec3 value) { object.transform.scale = value; });
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("Scale changes mesh rendering; physical dimensions belong to the Body component.");
+}
+
 bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneObject &o,
                      EditorPanelState &state) {
     ImGui::PushID(editor.name);
@@ -41,10 +199,33 @@ bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneOb
         std::string(editor.name) == "Render" && o.render && o.render->shape == SceneShape::Sprite
             ? "Sprite"
             : editor.name;
+    const auto headerId = ImGui::GetID(title);
+    ImGui::PushFont(EditorVisuals::HeadingFont());
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {6, 7});
+    ImGui::PushStyleColor(ImGuiCol_Header, EditorVisuals::SurfaceColor(.045f));
+    ImGui::PushOverrideID(headerId);
     bool open =
-        ImGui::CollapsingHeader(title, common ? ImGuiTreeNodeFlags_DefaultOpen : ImGuiTreeNodeFlags_None);
-    ImGui::SetItemTooltip("Expand to edit. Right-click for component actions.");
-    if (ImGui::BeginPopupContextItem("Component actions")) {
+        ImGui::CollapsingHeader("", common ? ImGuiTreeNodeFlags_DefaultOpen : ImGuiTreeNodeFlags_None);
+    ImGui::PopID();
+    ImGui::PopStyleColor();
+    ImGui::PopStyleVar();
+    const auto minimum = ImGui::GetItemRectMin(), maximum = ImGui::GetItemRectMax();
+    const float size = ImGui::GetFontSize();
+    const float top = minimum.y + (maximum.y - minimum.y - size) * .5f;
+    const auto color = common ? EditorSecondaryAccent() : EditorVisuals::AccentColor();
+    EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), ComponentIcon(editor.name),
+                            {minimum.x + size + 8, top}, size, ImGui::GetColorU32(color));
+    ImGui::GetWindowDrawList()->AddText({minimum.x + 2 * size + 15, top}, ImGui::GetColorU32(ImGuiCol_Text),
+                                        title);
+    ImGui::PopFont();
+    ImGui::SetItemTooltip("Expand to edit. Right-click or use ... for component actions.");
+    ImGui::OpenPopupOnItemClick("Component actions");
+    const auto afterHeader = ImGui::GetCursorScreenPos();
+    ImGui::SetCursorScreenPos({maximum.x - 28, minimum.y + 3});
+    if (ImGui::SmallButton("...##componentActions"))
+        ImGui::OpenPopup("Component actions");
+    ImGui::SetCursorScreenPos(afterHeader);
+    if (ImGui::BeginPopup("Component actions")) {
         if (ImGui::MenuItem("Remove component")) {
             doc.BeginEdit();
             editor.remove(o);
@@ -58,9 +239,16 @@ bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneOb
 }
 
 void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState &state) {
+    const auto accent = EditorVisuals::AccentColor();
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, {accent.x, accent.y, accent.z, .22f});
+    ImGui::PushStyleColor(ImGuiCol_Border, accent);
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10, 8});
     ImGui::SetNextItemWidth(-1);
     ImGui::SetNextWindowSizeConstraints({260, 0}, {600, 420});
-    if (!ImGui::BeginCombo("##add", "Add component..."))
+    const bool open = ImGui::BeginCombo("##add", "+  Add component...");
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor(2);
+    if (!open)
         return;
     static ImGuiTextFilter filter;
     if (ImGui::IsWindowAppearing()) {
@@ -186,18 +374,45 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         ImGui::End();
         return;
     }
-    if (state.mode == EditorMode::Play)
-        DrawRuntimeRenderPreview(doc, o->id, state);
     if (state.mode == EditorMode::Play) {
         ImGui::TextDisabled("Authored values are read-only while playing.");
         ImGui::BeginDisabled();
     }
-    TextField(doc, "Name", o->name);
-    DrawTransformEditor(doc, *o);
+    {
+        InspectorCard identity(true);
+        const float scale = ImGui::GetIO().FontGlobalScale;
+        const auto origin = ImGui::GetCursorScreenPos();
+        EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), ObjectIcon(*o),
+                                {origin.x + 1, origin.y + 5.f * scale}, 29.f * scale,
+                                ImGui::GetColorU32(EditorSecondaryAccent()));
+        ImGui::Indent(40.f * scale);
+        // Keep TextField("Name")'s original ID, buffer bound and transaction
+        // boundary while making the editable actual name the primary line.
+        char name[512];
+        CopyToBuffer(o->name, name, sizeof(name));
+        ImGui::PushOverrideID(ImGui::GetID("Name"));
+        ImGui::PushFont(EditorVisuals::HeadingFont());
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {6, 3});
+        ImGui::SetNextItemWidth(-1);
+        const bool renamed = ImGui::InputText("", name, sizeof(name));
+        if (ImGui::IsItemActivated())
+            doc.BeginEdit();
+        if (renamed)
+            o->name = name;
+        TrackEdit(doc);
+        ImGui::PopStyleVar();
+        ImGui::PopFont();
+        ImGui::PopID();
+        ImGui::TextDisabled("%s", ObjectType(*o));
+        ImGui::Unindent(40.f * scale);
+    }
+    PinnedTransform(doc, *o);
     // Name and Transform remain visible while component details scroll.
-    ImGui::BeginChild("Inspector component properties", {0, 0});
+    const float addHeight = ImGui::GetFontSize() + 16.f + ImGui::GetStyle().ItemSpacing.y;
+    ImGui::BeginChild("Inspector component properties", {0, -addHeight});
     if (state.mode == EditorMode::Play && state.runtime) {
         ImGui::EndDisabled();
+        DrawRuntimeRenderPreview(doc, o->id, state);
         DrawSelectedAIShortcuts(*o, state);
         if (ImGui::CollapsingHeader("Ownership & readiness")) {
             DrawRuntimeEntity(*state.runtime, o->id, &state);
@@ -210,17 +425,20 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
     }
     if (state.mode == EditorMode::Edit)
         DrawSelectedAIShortcuts(*o, state);
-    ImGui::SeparatorText("Components");
-    DrawAddComponentMenu(doc, *o, state);
+    ImGui::TextDisabled("COMPONENTS");
     for (const ComponentEditor &editor : ComponentEditorRegistry()) {
         if (!editor.has(*o))
             continue;
+        InspectorCard card(std::string(editor.name) == "Scripts");
         if (ComponentHeader(doc, editor, *o, state))
             editor.draw(doc, *o, state);
     }
-    if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty() ? ImGuiTreeNodeFlags_DefaultOpen
-                                                                          : ImGuiTreeNodeFlags_None))
-        DrawEditorScriptWorkflow(doc, *o, state);
+    {
+        InspectorCard scriptCard(true);
+        if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty() ? ImGuiTreeNodeFlags_DefaultOpen
+                                                                              : ImGuiTreeNodeFlags_None))
+            DrawEditorScriptWorkflow(doc, *o, state);
+    }
     ImGui::Spacing();
     if (ImGui::CollapsingHeader("Object settings")) {
         ImGui::TextDisabled("Object ID: %llu", static_cast<unsigned long long>(o->id));
@@ -424,5 +642,9 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         ImGui::Separator();
     }
     ImGui::EndChild();
+    ImGui::BeginDisabled(state.mode != EditorMode::Edit);
+    if (auto *selected = doc.SelectedObject())
+        DrawAddComponentMenu(doc, *selected, state);
+    ImGui::EndDisabled();
     ImGui::End();
 }

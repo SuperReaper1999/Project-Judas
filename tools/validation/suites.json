@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"editor-inspector-workflow","target":"judas_editor_inspector_workflow_tests","groups":["editor","onboarding"]},
     {"name":"editor-console","target":"judas_editor_console_tests","groups":["editor","scripting","lifecycle"]},
     {"name":"editor-v2-workspaces","target":"judas_editor_v2_workspace_tests","groups":["editor","onboarding"]},
     {"name":"editor-v2-assets","target":"judas_editor_asset_browser_tests","groups":["editor","lifecycle"]},

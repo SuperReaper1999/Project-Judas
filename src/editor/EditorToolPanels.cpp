@@ -1,4 +1,5 @@
 #include "EditorToolPanels.h"
+#include "JudasToolsPanel.h"
 #include "EditorContext.h"
 #include "EditorPanelRegistry.h"
 #include "EditorPanels.h"
@@ -85,24 +86,7 @@ void RegisterEditorToolPanels(EditorPanelRegistry &registry, EditorToolServices 
                          tools.tilemaps = std::make_unique<TilemapEditor>();
                      tools.tilemaps->Panel(c.document, c.panels);
                  });
-    registry.Add(
-        {"judas-tools", "Judas Tools", "Tools", live, &EditorPanelState::showJudasTools}, [](auto &c) {
-            if (BeginEditorPanel("Judas Tools", &c.panels.showJudasTools, c.panels)) {
-                ImGui::TextColored(EditorSecondaryAccent(), "Your project tools");
-                if (ImGui::Button("Open scripting", {-1, 0}))
-                    c.panels.showScriptTools = true;
-                if (ImGui::Button("Build / export", {-1, 0}))
-                    c.panels.showBuildExport = true;
-                if (ImGui::Button("Project settings", {-1, 0}))
-                    c.panels.showProjectSettings = true;
-                ImGui::SeparatorText("Project scripts");
-                for (const auto &[id, asset] : c.assets.Records())
-                    if (asset.type == AssetType::Script && !asset.missing)
-                        if (ImGui::Selectable(asset.relativePath.c_str(), c.panels.browserSelection == id)) {
-                            c.panels.browserSelection = id;
-                            c.panels.editScriptAsset = id;
-                        }
-            }
-            ImGui::End();
-        });
+    auto launcher = std::make_shared<JudasToolsPanel>();
+    registry.Add({"judas-tools", "Judas Tools", "Tools", live, &EditorPanelState::showJudasTools},
+                 [tools, launcher](auto &context) { launcher->Draw(context, tools.scripts); });
 }

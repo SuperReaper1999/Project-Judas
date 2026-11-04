@@ -55,11 +55,10 @@ int main() {
     EditorContext context{document, project, state, requests, host, host.Assets()};
     EditorPanelRegistry registry;
     std::vector<int> drawn;
-    registry.Add({"extension", "Extension proof", "Tools", kEditorAllPanelPhases},
-                 [&](EditorContext &value) {
-                     drawn.push_back(1);
-                     DrawExtensionPanel(value);
-                 });
+    registry.Add({"extension", "Extension proof", "Tools", kEditorAllPanelPhases}, [&](EditorContext &value) {
+        drawn.push_back(1);
+        DrawExtensionPanel(value);
+    });
     registry.Add({"authoring", "Authoring only", "Scene", EditorPhaseMask(EditorPanelPhase::Edit),
                   &EditorPanelState::showInspector},
                  [&](EditorContext &) { drawn.push_back(2); });
@@ -90,8 +89,7 @@ int main() {
     Check(drawn == std::vector<int>{1}, "debugger-stopped phase excludes authoring callback");
     bool mutationRejected = false;
     registry.Add({"mutation", "Mutation probe", "Tools"}, [&](auto &) {
-        mutationRejected =
-            Throws([&] { registry.Add({"during-draw", "Unsafe", "Tools"}, [](auto &) {}); });
+        mutationRejected = Throws([&] { registry.Add({"during-draw", "Unsafe", "Tools"}, [](auto &) {}); });
     });
     ImGui::NewFrame();
     registry.DrawAll(context);
@@ -119,6 +117,12 @@ int main() {
         if (BeginEditorPanel("Game###Judas.Game", &state.showGameView, state))
             ImGui::TextUnformatted("Play preview");
         ImGui::End();
+        if (BeginEditorPanel("Asset Browser", &state.showAssetBrowser, state))
+            ImGui::TextUnformatted("Project content");
+        ImGui::End();
+        if (BeginEditorPanel("Console", &state.showConsole, state))
+            ImGui::TextUnformatted("Script output");
+        ImGui::End();
         ImGui::Render();
     };
     frame();
@@ -126,13 +130,17 @@ int main() {
     auto *hierarchy = ImGui::FindWindowByName("Hierarchy");
     auto *inspector = ImGui::FindWindowByName("Inspector");
     auto *scene = ImGui::FindWindowByName("Scene###Judas.Scene");
-    Check(hierarchy && inspector && scene && hierarchy->DockId && inspector->DockId &&
-              scene->DockId && hierarchy->DockId != inspector->DockId,
+    Check(hierarchy && inspector && scene && hierarchy->DockId && inspector->DockId && scene->DockId &&
+              hierarchy->DockId != inspector->DockId,
           "real hierarchy, inspector and scene windows dock into independent regions");
     std::string error;
     const auto *game = ImGui::FindWindowByName("Game###Judas.Game");
     Check(game && scene && game->DockId == scene->DockId && scene->DockTabIsVisible,
           "Scene and Game share the central tabs with Scene visible initially");
+    const auto *assets = ImGui::FindWindowByName("Asset Browser");
+    const auto *console = ImGui::FindWindowByName("Console");
+    Check(assets && console && assets->DockId == console->DockId && assets->DockTabIsVisible,
+          "fresh Scene workspace opens content instead of the last-created Console tab");
     Check(preferences.SaveLayout("Docked scene", state, false, error),
           "named layout captures actual dock tree");
     const auto serialized = preferences.Serialize(state);
@@ -145,25 +153,21 @@ int main() {
     EditorPreferences loaded;
     EditorPanelState loadedState;
     loadedState.dockingEnabled = true;
-    Check(loaded.Load(preferences.Serialize(state), loadedState, error) &&
-              loaded.layouts.size() == 1 &&
+    Check(loaded.Load(preferences.Serialize(state), loadedState, error) && loaded.layouts.size() == 1 &&
               loaded.appearance.secondaryAccent == preferences.appearance.secondaryAccent,
           "fresh owner restores named layout and editable secondary accent");
     Check(preferences.QueueWorkspace("Scripting"), "built-in workspace switch is available");
     frame();
     frame();
-    Check(preferences.WorkspaceName() == "Scripting" && state.showScriptTools &&
-              state.showHierarchy,
+    Check(preferences.WorkspaceName() == "Scripting" && state.showScriptTools && state.showHierarchy,
           "workspace switch reveals relevant tools without modifying the document");
-    Check(!preferences.QueueWorkspace("Invented workflow") &&
-              preferences.WorkspaceName() == "Scripting",
+    Check(!preferences.QueueWorkspace("Invented workflow") && preferences.WorkspaceName() == "Scripting",
           "unknown workspace is rejected without resetting the current arrangement");
     auto broken = nlohmann::json::parse(preferences.Serialize(state));
     broken["current"]["workspace"] = "Unknown";
     Check(!loaded.Load(broken.dump(), loadedState, error) && loaded.layouts.size() == 1,
           "invalid workspace preference rejects transactionally");
-    Check(preferences.QueueWorkspace("Audio"),
-          "Audio workspace uses the existing settings workflow");
+    Check(preferences.QueueWorkspace("Audio"), "Audio workspace uses the existing settings workflow");
     frame();
     Check(state.showProjectSettings && state.projectSettingsPage == 4,
           "Audio workspace exposes genuine project Audio controls");
@@ -173,6 +177,19 @@ int main() {
     Check(preferences.WorkspaceName() == "Scene" && state.showHierarchy && state.showInspector &&
               !state.showScriptTools,
           "reset restores discoverable core panels and default task workspace");
+
+    const float regularInspectorWidth = inspector->Size.x;
+    preferences.appearance.scale = 1.5f;
+    preferences.RefreshAppearance();
+    preferences.ResetLayout();
+    frame();
+    frame();
+    Check(inspector->Size.x > regularInspectorWidth * 1.3f && scene->Size.x > 200.f,
+          "fresh large-text layout widens property rails while retaining a usable central view");
+    const float scaledInspectorWidth = inspector->Size.x;
+    frame();
+    Check(inspector->Size.x == scaledInspectorWidth,
+          "ordinary frames preserve the chosen dock tree instead of continuously resizing panels");
 
     ImGui::NewFrame();
     ImGui::SetNextWindowPos({50, 60}, ImGuiCond_Always);
@@ -186,9 +203,8 @@ int main() {
     Check(floating->Pos.x < io.DisplaySize.x && floating->Pos.y < io.DisplaySize.y,
           "tool saved on a disconnected monitor is recovered onto the visible workspace");
     ImGui::Render();
-    Check(
-        !document.IsDirty() && !state.runtime && !project.IsLoaded(),
-        "docking, workspace changes and recovery never create a game world or edit scene content");
+    Check(!document.IsDirty() && !state.runtime && !project.IsLoaded(),
+          "docking, workspace changes and recovery never create a game world or edit scene content");
     ImGui::DestroyContext();
     std::printf("SUMMARY %u checks %u failures\n", checks, failures);
     return failures ? 1 : 0;

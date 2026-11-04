@@ -19,9 +19,25 @@ bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &state,
 void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &preferences) {
     if (!state.dockingEnabled)
         return;
+    // New dock windows can focus themselves on their creation frame. Apply
+    // the chosen preset once they exist; never override a loaded/user layout.
+    const auto selectTab = [](const std::string &name) {
+        if (auto *window = ImGui::FindWindowByName(name.c_str()))
+            if (window->DockNode && window->DockNode->TabBar)
+                window->DockNode->TabBar->NextSelectedTabId = window->TabId;
+    };
+    if (!pendingBottomTab.empty()) {
+        selectTab(pendingBottomTab);
+        pendingBottomTab.clear();
+    }
+    if (!pendingDefaultFocus.empty()) {
+        selectTab(pendingDefaultFocus);
+        ImGui::SetWindowFocus(pendingDefaultFocus.c_str());
+        pendingDefaultFocus.clear();
+    }
     const auto *viewport = ImGui::GetMainViewport();
     const float scale = std::max(.85f, ImGui::GetIO().FontGlobalScale);
-    const float toolbarHeight = std::min(42.f * scale, viewport->WorkSize.y);
+    const float toolbarHeight = std::min(82.f * scale, viewport->WorkSize.y);
     const float statusHeight = std::min(25.f * scale, std::max(0.f, viewport->WorkSize.y - toolbarHeight));
     const ImVec2 position{viewport->WorkPos.x, viewport->WorkPos.y + toolbarHeight};
     const ImVec2 size{viewport->WorkSize.x,
@@ -60,10 +76,17 @@ void EditorWorkspace::BuildDefault(const std::string &workspace, ImVec2 size) {
     ImGui::DockBuilderRemoveNode(dockspace);
     ImGui::DockBuilderAddNode(dockspace, ImGuiDockNodeFlags_DockSpace);
     ImGui::DockBuilderSetNodeSize(dockspace, size);
+    // Fresh layouts must grow their property rails with readable UI text.
+    // Loaded/user dock trees are retained verbatim and never resized here.
+    const float scale = ImGui::GetIO().FontGlobalScale;
+    const float leftWidth = std::min(size.x * .27f, 250.f * scale);
+    const float rightWidth = std::min(size.x * .38f, 340.f * scale);
     ImGuiID center = dockspace;
-    ImGuiID left = ImGui::DockBuilderSplitNode(center, ImGuiDir_Left, .18f, nullptr, &center);
-    ImGuiID right = ImGui::DockBuilderSplitNode(center, ImGuiDir_Right, .28f, nullptr, &center);
-    ImGuiID bottom = ImGui::DockBuilderSplitNode(center, ImGuiDir_Down, .29f, nullptr, &center);
+    ImGuiID left = ImGui::DockBuilderSplitNode(center, ImGuiDir_Left, leftWidth / size.x, nullptr, &center);
+    ImGuiID right = ImGui::DockBuilderSplitNode(center, ImGuiDir_Right,
+        rightWidth / std::max(1.f, size.x - leftWidth), nullptr, &center);
+    const float contentRatio = std::clamp(.34f + .1f * (scale - 1.f), .30f, .42f);
+    ImGuiID bottom = ImGui::DockBuilderSplitNode(center, ImGuiDir_Down, contentRatio, nullptr, &center);
     ImGui::DockBuilderDockWindow("Hierarchy", left);
     ImGui::DockBuilderDockWindow("Inspector", right);
     ImGui::DockBuilderDockWindow("Scene###Judas.Scene", center);
@@ -71,7 +94,7 @@ void EditorWorkspace::BuildDefault(const std::string &workspace, ImVec2 size) {
     ImGui::DockBuilderDockWindow("Asset Browser", bottom);
     ImGui::DockBuilderDockWindow("Console", bottom);
     ImGui::DockBuilderDockWindow("Profiler", bottom);
-    ImGui::DockBuilderDockWindow("Judas Tools", right);
+    // Judas Tools starts as a small movable utility, not another inspector tab.
     ImGui::DockBuilderDockWindow("JudasJS developer tools", bottom);
     if (workspace == "Scripting") {
         ImGui::DockBuilderDockWindow("JudasJS developer tools", center);
@@ -90,7 +113,11 @@ void EditorWorkspace::BuildDefault(const std::string &workspace, ImVec2 size) {
                                : workspace == "Audio"   ? "Project Settings"
                                                         : "Scene###Judas.Scene";
         node->SelectedTabId = ImHashStr(selected);
+        pendingDefaultFocus = selected;
     }
+    pendingBottomTab = workspace == "Scripting" ? "Console" : "Asset Browser";
+    if (auto *node = ImGui::DockBuilderGetNode(bottom))
+        node->SelectedTabId = ImHashStr(pendingBottomTab.c_str());
 }
 
 void EditorWorkspace::RecoverFloatingWindows() {
@@ -124,12 +151,18 @@ void EditorWorkspace::RecoverFloatingWindows() {
     }
 }
 
-void DrawEditorWorkspaceSelector(EditorPreferences &preferences, EditorPanelState &) {
+void DrawEditorWorkspaceSelector(EditorPreferences &preferences, EditorPanelState &state) {
     ImGui::SetNextItemWidth(150 * ImGui::GetIO().FontGlobalScale);
     if (ImGui::BeginCombo("##workspacePreset", preferences.WorkspaceName().c_str())) {
-        for (const auto &name : EditorPreferences::WorkspaceNames())
+        for (const auto &name : EditorPreferences::WorkspaceNames()) {
+            const bool unavailable = state.mode != EditorMode::Edit && (name == "Audio" || name == "UI");
+            ImGui::BeginDisabled(unavailable);
             if (ImGui::Selectable(name.c_str(), preferences.WorkspaceName() == name))
                 preferences.QueueWorkspace(name);
+            ImGui::EndDisabled();
+            if (unavailable && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                ImGui::SetTooltip("Stop Play to use this authoring workspace.");
+        }
         ImGui::EndCombo();
     }
     if (ImGui::IsItemHovered())

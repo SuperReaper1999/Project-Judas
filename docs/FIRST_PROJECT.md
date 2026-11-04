@@ -41,9 +41,14 @@ Choose **Empty scene** if you want to assemble everything below yourself. That
 scene has a floor, authored gravity, light and historical start marker. The marker
 does not create a modern player: new projects use `legacy-gameplay false`.
 
-Create a box and name it **My rotating box**. Set its position to `(0, 2, 0)`.
+Use **Add object** at the top of Hierarchy and choose **Static box** (or right-click empty
+hierarchy space for the same root-creation menu). The new object is selected.
+Edit the bold name field at the top of Inspector to **My rotating box**, then set
+its compact Transform Position X/Y/Z values to `(0, 2, 0)`.
 Give it a **Render** component with box shape. Remove its **Body** component if
-the creation command added one. This example animates a visual object; assigning
+the creation command added one, using the Body card's **… → Remove component**
+menu. **Add component…** is pinned at the bottom of Inspector if a component is
+missing. This example animates a visual object; assigning
 a physical body's transform would teleport it rather than simulate motion.
 Keep the floor and light.
 
@@ -56,6 +61,13 @@ manually track a file when using the create action. See the
 For a playable character, use **Create → First-person player (JS + motor)** or
 **Third-person player (JS + motor)** instead of the legacy Player start marker;
 both include movement, jump and a switchable project-scripted camera.
+
+The Asset Browser starts in an icon grid; its Grid/List buttons and folder
+breadcrumbs change browsing without changing asset IDs. Double-click a script
+to edit it. **Window → Tools → Judas Tools** also opens a small floating launcher
+for scripts, source checks and build actions. It uses the same source editor and
+runtime. The top workflow strip's **Playtest** reveals Game; **Play** starts the
+scene, and **Stop** restores authored state.
 
 **Visible script starter users:** this step is already done for `Assets/game.js`;
 continue to step 3. The manual instructions below are for the Empty scene option.

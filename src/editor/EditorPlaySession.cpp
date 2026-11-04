@@ -108,6 +108,7 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
         StopPlay(context, viewport);
         return false;
     }
+    viewport.BeginObservation(context.document.GetScene().Settings().worldOrigin);
     play->SetScriptFaultNoticeEnabled(true);
     play->SetWorldStatePath(context.panels.worldStatePath, stateApplied);
     // The debug view over the played world, inside the 3D frame.
@@ -140,6 +141,7 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
 void EditorPlaySession::StopPlay(EditorContext &context, EditorSceneViewport &viewport) {
     context.host.GetWindow().ClearInputRegion();
     viewport.CancelCameraNavigation(context);
+    viewport.EndObservation(context);
     if (play)
         play->End();
     context.host.GetWindow().Input().StopRumble();

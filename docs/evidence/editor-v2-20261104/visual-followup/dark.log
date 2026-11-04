@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 598: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/final-visual-review/dark/editor.edit.png
+[editor autotest] edit frame: 139 draw calls, 23834 triangles, 66 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/final-visual-review/dark/editor.play.png
+[editor autotest] play frame: 2 steps, step 13.867 ms, 353 bodies, 0 contacts, 364 draw calls, 408202 triangles, 2 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 38 meshes, 23 textures, 0 terrain meshes, hits 90656, misses 121, failed 0, uploads 117, resident 200131792 bytes
+[editor autotest] jobs: 11 workers, 122 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: LIFE Day 1, 07:00 Aldric: relax -> a chair at home (score 0.253, next relax 0.253)
+JS: LIFE Day 1, 07:00 Mira: chat -> Aldric (score 0.301, next relax 0.251)
+JS: LIFE Day 1, 07:00 Tobin: buyFood -> the bakery counter (score 0.718, next relax 0.253)
+JS: LIFE Day 1, 07:00 Wren: drink -> the well (score 0.385, next eat 0.305)
+JS: LIFE Day 1, 07:01 Edwin: sleep -> own bed (score 0.327, next buyFood 0.253)
+JS: LIFE Day 1, 07:01 Hesta: relax -> a chair at home (score 0.303, next relax 0.302)

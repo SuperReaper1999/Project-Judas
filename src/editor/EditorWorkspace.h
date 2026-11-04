@@ -26,6 +26,8 @@ class EditorWorkspace {
     void BuildDefault(const std::string &workspace, ImVec2 size);
     ImGuiID dockspace = 0;
     bool firstFrame = true;
+    std::string pendingDefaultFocus;
+    std::string pendingBottomTab;
 };
 
 void DrawEditorWorkspaceSelector(EditorPreferences &, EditorPanelState &);

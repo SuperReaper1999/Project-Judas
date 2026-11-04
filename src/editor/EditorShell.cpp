@@ -1,3 +1,4 @@
+#include "EditorVisuals.h"
 #include "EditorShell.h"
 #include "EditorCorePanels.h"
 #include "EditorToolPanels.h"
@@ -30,8 +31,59 @@ void EditorShell::Draw(EditorContext &c, EditorPreferences &preferences) {
     ImGui::EndDisabled();
     workspace.BeginFrame(c.panels, preferences);
     ImGui::BeginDisabled(stopped);
-    DrawEditorWorkspaceChrome(c.document, c.panels, c.requests,
-                              [&] { DrawEditorWorkspaceSelector(preferences, c.panels); });
+    DrawEditorWorkspaceChrome(
+        c.document, c.panels, c.requests, [&] { DrawEditorWorkspaceSelector(preferences, c.panels); },
+        [&] {
+            using Icon = EditorVisuals::Icon;
+            const float width = ImGui::GetIO().DisplaySize.x / ImGui::GetIO().FontGlobalScale;
+            auto workflow = [&](const char *label, const char *preset, Icon icon) {
+                const bool selected = preferences.WorkspaceName() == preset && !views.Game().focused;
+                const bool authorOnly = std::string(preset) == "Audio" || std::string(preset) == "UI";
+                const bool unavailable = authorOnly && c.phase != EditorPanelPhase::Edit;
+                ImGui::BeginDisabled(unavailable);
+                if (EditorVisuals::ActionButton(label, icon, selected)) {
+                    preferences.QueueWorkspace(preset);
+                    if (std::string(preset) == "Scene")
+                        views.RequestSceneFocus();
+                }
+                ImGui::EndDisabled();
+                if (unavailable && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                    ImGui::SetTooltip("Stop Play to use this authoring workspace.");
+            };
+            workflow("Scene", "Scene", Icon::Scene);
+            ImGui::SameLine();
+            if (EditorVisuals::ActionButton("Playtest", Icon::Play, views.Game().focused)) {
+                c.panels.showGameView = true;
+                views.RequestGameFocus();
+            }
+            ImGui::SetItemTooltip(
+                "View the actual game. Press Play to start or Stop to return to authoring.");
+            if (width >= 720) {
+                ImGui::SameLine();
+                workflow(width < 1000 ? "Scripts" : "Scripting", "Scripting", Icon::Script);
+                ImGui::SameLine();
+                workflow(width < 1000 ? "Animate" : "Animation", "Animation", Icon::Animation);
+                ImGui::SameLine();
+                workflow("Audio", "Audio", Icon::Audio);
+                ImGui::SameLine();
+                workflow("UI", "UI", Icon::UI);
+            } else {
+                ImGui::SameLine();
+                if (EditorVisuals::ActionButton("Workflows...", Icon::Settings))
+                    ImGui::OpenPopup("editorWorkflows");
+                if (ImGui::BeginPopup("editorWorkflows")) {
+                    for (const auto &name : EditorPreferences::WorkspaceNames()) {
+                        const bool unavailable =
+                            c.phase != EditorPanelPhase::Edit && (name == "Audio" || name == "UI");
+                        if (ImGui::MenuItem(name.c_str(), nullptr, false, !unavailable))
+                            preferences.QueueWorkspace(name);
+                        if (unavailable && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                            ImGui::SetTooltip("Stop Play to use this authoring workspace.");
+                    }
+                    ImGui::EndPopup();
+                }
+            }
+        });
     ImGui::EndDisabled();
     panels.DrawAll(c);
     DrawStatusBar(c.document, c.panels);

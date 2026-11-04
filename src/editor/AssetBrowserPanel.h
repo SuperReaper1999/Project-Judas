@@ -11,7 +11,7 @@ struct EditorRequests;
 struct EditorAssetBrowserState {
     std::string directory;
     std::string projectRoot;
-    bool grid = false;
+    bool grid = true;
     bool recursive = false;
 };
 void DrawAssetList(EditorDocument &, EditorPanelState &, EditorRequests &, const AssetDatabase &);

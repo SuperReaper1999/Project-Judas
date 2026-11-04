@@ -1,7 +1,9 @@
 #pragma once
 #include "DebugDraw.h"
+#include "Prefab.h"
 #include "Scene.h"
 #include <algorithm>
+#include <optional>
 #include <glm/gtc/quaternion.hpp>
 namespace EditorSceneGeometry {
 // Framing and non-geometric selection outlines use a generous size hint.
@@ -33,6 +35,50 @@ inline float PickRadius(const SceneObject &o) {
                                       : glm::length(o.gravity->regionHalfExtents) * 0.1f);
     }
     return radius;
+}
+
+struct InitialFrameTarget {
+    SceneObjectId id = kInvalidSceneObjectId;
+    glm::vec3 point{0};
+    float radius = .75f;
+};
+
+// Opening a scene should show its playable area rather than whichever settings
+// owner happened to serialize first. Flatten into a copy: initial camera framing
+// neither changes authored local transforms nor constructs a physical world.
+inline std::optional<InitialFrameTarget> InitialFraming(const Scene &authored) {
+    Scene world;
+    std::string error;
+    if (!FlattenHierarchy(authored, world, error))
+        return std::nullopt;
+    const auto target = [](const SceneObject &object) {
+        return InitialFrameTarget{object.id, object.transform.position, PickRadius(object)};
+    };
+    for (const auto &object : world.Objects())
+        if (object.playerStart || object.characterMotor)
+            return target(object);
+    const auto visible = [&](const SceneObject &object) {
+        return object.renderVisible && object.render && object.render->visible &&
+               (world.Settings().mainCameraRenderMask & CategoryBit(object.renderLayer));
+    };
+    for (const auto &object : world.Objects())
+        if (visible(object) && !object.ui && !object.planet && !object.atmosphere && !object.celestial &&
+            !object.basicWater && !object.weather)
+            return target(object);
+    // Unrendered bodies, lights/cameras and plain transform groups are useful
+    // authoring fallbacks; pure settings/UI/environment owners are not.
+    for (const auto &object : world.Objects())
+        if (object.body || object.renderCamera || object.light ||
+            (!object.ui && !object.gravity && !object.planet && !object.atmosphere && !object.celestial &&
+             !object.basicWater && !object.weather && !object.fluidVolume && !object.liquidBasin &&
+             !object.liquidConnection))
+            return target(object);
+    // An environment-only scene still has a meaningful overview when it has
+    // actual visible geometry. A metadata-only/empty scene keeps the camera.
+    for (const auto &object : world.Objects())
+        if (visible(object))
+            return target(object);
+    return std::nullopt;
 }
 
 // The selection outline: the object's own shape where it has one.

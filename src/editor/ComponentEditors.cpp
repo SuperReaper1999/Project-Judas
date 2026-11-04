@@ -236,12 +236,43 @@ void DrawScripts(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
                     ScriptSystem::Inspect(*state.assets,slot.asset,m.schema,m.error);it=cache.insert_or_assign(record->path,std::move(m)).first;}
                 auto& metadata=it->second;std::vector<ScriptProperty> fields;std::string error=metadata.error;
                 if(error.empty()&&ScriptSystem::ReadProperties(metadata.schema,slot.properties,fields,error)){
-                    for(auto& f:fields){bool changed=false;
-                        if(f.type=="boolean")changed=ImGui::Checkbox(f.name.c_str(),&f.boolean);
-                        else if(f.type=="number")changed=ImGui::InputDouble(f.name.c_str(),&f.number);
-                        else if(f.type=="entity"){SceneObjectId id=0;try{id=std::stoull(f.text);}catch(...){}const auto* target=doc.GetScene().Find(id);if(ImGui::BeginCombo(f.name.c_str(),target?target->name.c_str():"None / missing")){if(ImGui::Selectable("None",id==0)){f.text="0";changed=true;}for(auto& candidate:doc.GetScene().Objects())if(ImGui::Selectable((candidate.name+" ##"+std::to_string(candidate.id)).c_str(),candidate.id==id)){f.text=std::to_string(candidate.id);changed=true;}ImGui::EndCombo();}}
-                        else {char value[1024];std::snprintf(value,sizeof(value),"%s",f.text.c_str());changed=ImGui::InputText(f.name.c_str(),value,sizeof(value));if(changed)f.text=value;}
-                        if(changed){doc.BeginEdit();slot.properties=ScriptSystem::WriteProperties(fields);doc.CommitEdit();}
+                    for (auto& f : fields) {
+                        // Property labels belong inside the Inspector, above
+                        // their full-width values, rather than off its right edge.
+                        const auto fieldId = ImGui::GetID(f.name.c_str());
+                        ImGui::PushTextWrapPos(0);
+                        ImGui::TextDisabled("%s", f.name.c_str());
+                        ImGui::PopTextWrapPos();
+                        ImGui::SetNextItemWidth(-1);
+                        ImGui::PushOverrideID(fieldId);
+                        bool changed = false;
+                        if (f.type == "boolean") {
+                            changed = ImGui::Checkbox("", &f.boolean);
+                            ImGui::SameLine();
+                            ImGui::TextUnformatted(f.boolean ? "On" : "Off");
+                        } else if (f.type == "number") {
+                            changed = ImGui::InputDouble("", &f.number);
+                        } else if (f.type == "entity") {
+                            SceneObjectId id = 0;
+                            try { id = std::stoull(f.text); } catch (...) {}
+                            const auto* target = doc.GetScene().Find(id);
+                            if (ImGui::BeginCombo("", target ? target->name.c_str() : "None / missing")) {
+                                if (ImGui::Selectable("None", id == 0)) { f.text = "0"; changed = true; }
+                                for (const auto& candidate : doc.GetScene().Objects())
+                                    if (ImGui::Selectable((candidate.name + " ##" + std::to_string(candidate.id)).c_str(), candidate.id == id)) {
+                                        f.text = std::to_string(candidate.id);
+                                        changed = true;
+                                    }
+                                ImGui::EndCombo();
+                            }
+                        } else {
+                            char value[1024];
+                            std::snprintf(value, sizeof(value), "%s", f.text.c_str());
+                            changed = ImGui::InputText("", value, sizeof(value));
+                            if (changed) f.text = value;
+                        }
+                        ImGui::PopID();
+                        if (changed) { doc.BeginEdit(); slot.properties = ScriptSystem::WriteProperties(fields); doc.CommitEdit(); }
                     }
                 }
                 if(!error.empty())ImGui::TextWrapped("Script metadata: %s",error.c_str());

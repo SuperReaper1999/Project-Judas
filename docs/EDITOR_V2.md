@@ -18,28 +18,50 @@ dock, split or float panels. Close tools independently and reopen them through
 the **Window** menu. The toolbar's **View…** popup offers quick view settings;
 the main menu uses Window categories and Help links.
 
-- **Hierarchy:** right-click empty space to create a root; right-click an object
-  to create a child. Creation selects the result. Search, rename, parenting,
-  multiple selection and Undo/Redo remain available.
-- **Inspector:** object identity and Transform precede the scrolling component
-  area. Add component and script attachment remain explicit; advanced object,
-  prefab and runtime information stays accessible in collapsed groups.
+- **Hierarchy:** **Add object** at the top creates a root; right-click empty
+  space offers the same creation menu, and right-click an object for **Create
+  child**. Creation selects the result. Type icons, indentation/branch guides
+  and the accent-coloured selection distinguish the scene tree. Search, rename,
+  parenting, multiple selection and Undo/Redo remain available.
+- **Inspector:** the actual editable object name is the primary line, beside a
+  type icon with a quiet type subtitle. Name and compact **X/Y/Z** Transform rows
+  stay above the scrolling component area. Components use separate bordered
+  cards; their **…** menu exposes the existing removal action, also available
+  by right-clicking the heading. **Add component…** is anchored at the bottom.
+  Script attachment remains explicit, and advanced object, prefab and runtime
+  information stays accessible in collapsed groups. Enable controls remain in
+  the components that support them.
 - **Asset Browser:** use folders and breadcrumbs to navigate; switch between
-  list and grid views. Search and type/missing filters narrow the registered
-  assets. Double-click a script to edit it; select a script for **Attach to
-  selected object**. **Selected asset** retains material/cook/dependency tools;
+  list and grid views. Grid is the initial view, with labelled vector type icons.
+  Import/Create actions,
+  search and type/missing filters narrow the registered assets. Double-click a
+  script to edit it; select a script for **Attach to selected object**.
+  **Selected asset** retains material/cook/dependency tools;
   **Import & tools** retains model, skeleton, motion and collider workflows.
-- **Judas Tools:** a small launcher for project scripts, existing scripting
-  tools, project settings and export. The source/debugger window remains named
-  **JudasJS developer tools**; the launcher is not a second script editor.
+- **Judas Tools:** open **Window → Tools → Judas Tools** for a small floating
+  utility which can also be docked. Its Scripts, Build and Utilities tabs expose
+  project scripts, deliberate reload/source checks and existing build/settings
+  actions. The source/debugger window remains named **JudasJS developer tools**;
+  the launcher is not a second script editor or a new compiler/runtime.
 - **Console:** presents existing runtime diagnostics and captured output, with
   search and source-opening actions. Script output capture still uses the
   existing debugger controls; errors do not require output capture. This pass
   does not introduce an always-on second logging/runtime system.
 
-Choose Scene, Scripting, Animation, Audio or UI in the workspace selector. These
-are arrangements of existing tools. Audio selects project audio settings, not a
-new sequencer; UI document authoring remains in the Asset Browser.
+The workflow strip puts **Scene**, **Playtest**, **Scripting**, **Animation**,
+**Audio** and **UI** above the ordinary Play/Stop and authoring controls. Playtest
+reveals/focuses Game; it does not start a second world or replace the Play button.
+Scene and the specialist buttons apply existing workspace arrangements. Smaller
+windows use shorter labels or a Workflows menu; the workspace selector remains
+available. Audio selects project audio settings, not a new sequencer; UI document
+authoring remains in the Asset Browser. Vector icons and heading emphasis follow
+the current Light/Dark/custom appearance rather than changing game materials.
+
+Opening a scene initially frames its world-transformed player-start or
+CharacterMotor area when present. Otherwise it chooses visible content or a
+spatial fallback, instead of blindly framing a first-serialized settings owner
+or planet centre. The 3D distance uses a size hint; 2D keeps its existing framing.
+This changes only the editor camera, not authored transforms, selection or physics.
 
 **Scene** is the authoring camera and observes the same runtime during Play,
 with authored values read-only. **Game** displays that single played world and

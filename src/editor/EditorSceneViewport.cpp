@@ -20,6 +20,7 @@
 #include "VolumeTerrainTools.h"
 #include "WorldCoordinates.h"
 #include "WorldPresentation.h"
+#include "WorldDebugView.h"
 #include "WorldStreaming.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -602,11 +603,34 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     renderer.EndFrame();
 }
 
+void EditorSceneViewport::BeginObservation(glm::dvec3 authoredOrigin) {
+    observedOrigin = authoredOrigin;
+}
+
+void EditorSceneViewport::SynchronizeObservationOrigin(EditorContext &context, glm::dvec3 origin) {
+    if (!observedOrigin)
+        BeginObservation(context.document.GetScene().Settings().worldOrigin);
+    const auto delta = origin - *observedOrigin;
+    if (delta != glm::dvec3(0)) {
+        camera.ShiftOrigin(delta);
+        context.panels.cameraFocus = glm::vec3(glm::dvec3(context.panels.cameraFocus) - delta);
+    }
+    observedOrigin = origin;
+}
+
+void EditorSceneViewport::EndObservation(EditorContext &context) {
+    if (!observedOrigin)
+        return;
+    SynchronizeObservationOrigin(context, context.document.GetScene().Settings().worldOrigin);
+    observedOrigin.reset();
+}
+
 // A live Scene camera is a read-only presentation of the same authoritative
 // world. It never advances simulation, scripts, audio or save publication.
 void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySession &session, float dt) {
     if (!session.world)
         return;
+    SynchronizeObservationOrigin(context, session.world->Settings().worldOrigin);
     auto &renderer = context.host.GetRenderer();
     const auto size = renderer.RenderTargetSize(target);
     if (size.x < 1 || size.y < 1 || !renderer.BeginRenderTarget(target))
@@ -646,6 +670,12 @@ void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySes
     RenderWorldFrame(renderer, size.x, size.y, *session.world, &session.play->Session(), camera.ViewMatrix(),
                      camera.ProjectionMatrix(float(size.x) / size.y), camera.Position(), session.lastAlpha,
                      dt, WorldRenderPurpose::Observer);
+    if (context.panels.debug.AnyEnabled()) {
+        debugLines.Clear();
+        BuildWorldDebugLines(*session.world, &session.play->Session(), session.lastAlpha,
+                             context.panels.debug, debugLines);
+        renderer.DrawDebugLines(debugLines.Lines());
+    }
     renderer.EndRenderTarget();
 }
 

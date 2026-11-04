@@ -1,0 +1,48 @@
+PASS original sphere-proxy fixture reproduces floor stealing the small-box click
+PASS actual small-box surface wins above a broad encompassing floor
+PASS floor remains selectable at its actual surface
+PASS nearer floor geometry correctly occludes an object behind it
+PASS box corner miss no longer selects the surrounding bounding sphere
+PASS zero visual scale safely rejects a degenerate box
+PASS zero ray direction is safely rejected
+PASS ordinary sphere hit returns world distance for a non-unit ray
+PASS sphere corner ray outside its true silhouette misses
+PASS ray starting inside a sphere picks the forward surface
+PASS scaled and rotated sphere follows its rendered ellipsoid
+PASS authored render mask excludes invisible geometry
+PASS compound child offset and rotation match rendering without applying entity scale
+PASS closed door visual selection uses its hinge-offset panel
+PASS closed door selection follows its unscaled authored-render dimensions
+PASS rotated and nonuniformly scaled nested fixture flattens
+PASS nested child keeps its own identity and rendered world transform and scale
+PASS non-render parent pivot in front cannot steal its child's visible hit
+PASS empty parent remains selectable when the ray hits no visual geometry
+PASS empty fallback is a small pivot proxy rather than inherited object bounds
+PASS startup framing prefers the player area over metadata and a planet centre
+PASS modern CharacterMotor owners receive the same initial framing priority
+PASS a scene without a player frames actual visible content and its size hint
+PASS hidden object render scope does not steal the initial view
+PASS a hidden Render component is likewise excluded from the visible fallback
+PASS initial player framing resolves translated, rotated and scaled authored parents
+PASS framing leaves authored hierarchy and local transforms unchanged
+PASS a plain spatial owner remains a useful fallback without render geometry
+PASS empty scenes have no fabricated framing target
+PASS metadata-only scenes preserve the current editor camera
+PASS invalid hierarchy rejects framing rather than guessing local coordinates
+PASS real CPU model archive and stable asset metadata fixture writes
+PASS model-loader CPU triangle hit preserves nonuniform world distance
+PASS ray inside mesh bounds but outside the actual triangle misses
+PASS double-sided imported material permits a mesh backface hit
+PASS visible second primitive range can be selected
+PASS hidden model part does not intercept scene selection
+PASS single-sided material fixture replaces the same stable asset
+PASS cache reload honors available single-sided material backface culling
+PASS mirrored visual scale preserves the renderer's corrected front-face convention
+PASS unloaded mesh selection follows the displayed half-unit scaled placeholder box
+PASS non-indexed ordinary mesh fixture writes through the current archive loader
+PASS non-indexed consecutive triangles are selectable without GPU readback
+PASS pending explicit material uses the renderer's single-sided fallback for front and back hits
+PASS failed explicit material uses the renderer's single-sided fallback for front and back hits
+PASS mirrored rest-skinned primitive accepts its rendered front and rejects the culled back
+PASS combined rest-skin and entity reflections preserve the renderer's front-face convention
+Editor geometry picking: 47 checks, 0 failures

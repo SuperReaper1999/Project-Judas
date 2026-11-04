@@ -1,3 +1,6 @@
+#include "EditorVisuals.h"
+#include "EditorOverlayMenu.h"
+#include <cstdio>
 #include "EditorViewportPresenter.h"
 #include "EditorContext.h"
 #include "EditorPanels.h"
@@ -7,6 +10,7 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "imgui.h"
+#include "imgui_internal.h"
 #include <algorithm>
 namespace {
 void Surface(EditorViewSurface &surface) {
@@ -61,7 +65,76 @@ void EditorViewportPresenter::DrawScene(EditorContext &context, EditorSceneViewp
         context.panels.workspace.viewport = scene.bounds;
         Image(scene, context.host.GetRenderer(), viewport.target,
               context.phase == EditorPanelPhase::DebugStopped, context.panels.status);
-        if (context.phase == EditorPanelPhase::Edit && ImGui::BeginDragDropTarget()) {
+        const auto afterImage = ImGui::GetCursorScreenPos();
+        const float scale = ImGui::GetIO().FontGlobalScale;
+        bool overlayOwns = false;
+        ImGui::SetCursorScreenPos(
+            {scene.bounds.position.x + 12 * scale, scene.bounds.position.y + 12 * scale});
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {9 * scale, 5 * scale});
+        ImGui::BeginDisabled(context.phase != EditorPanelPhase::Edit);
+        if (EditorVisuals::ActionButton(context.panels.view2D ? "2D Orthographic" : "Perspective",
+                                        EditorVisuals::Icon::Cube))
+            ImGui::OpenPopup("sceneProjection");
+        overlayOwns |= ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax()) ||
+                       ImGui::IsItemActive();
+        if (ImGui::BeginPopup("sceneProjection")) {
+            if (ImGui::MenuItem("Perspective (3D)", nullptr, !context.panels.view2D))
+                context.panels.view2D = false;
+            if (ImGui::MenuItem("Orthographic (2D)", nullptr, context.panels.view2D))
+                context.panels.view2D = true;
+            ImGui::EndPopup();
+        }
+        ImGui::EndDisabled();
+        const float toolsWidth = 185 * scale;
+        if (scene.bounds.size.x > 400 * scale) {
+            ImGui::SetCursorScreenPos({scene.bounds.position.x + scene.bounds.size.x - toolsWidth,
+                                       scene.bounds.position.y + 12 * scale});
+            ImGui::BeginDisabled(context.phase == EditorPanelPhase::DebugStopped);
+            if (EditorVisuals::ActionButton("Overlays", EditorVisuals::Icon::Light))
+                ImGui::OpenPopup("sceneOverlays");
+            overlayOwns |= ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax()) ||
+                           ImGui::IsItemActive();
+            if (ImGui::BeginPopup("sceneOverlays")) {
+                DrawEditorOverlayMenu(context.panels.debug);
+                ImGui::EndPopup();
+            }
+            ImGui::SameLine();
+            ImGui::BeginDisabled(context.phase != EditorPanelPhase::Edit ||
+                                 !context.document.SelectedObject());
+            if (EditorVisuals::ActionButton("Frame", EditorVisuals::Icon::Search))
+                context.requests.focusSelection = true;
+            overlayOwns |= ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax()) ||
+                           ImGui::IsItemActive();
+            ImGui::EndDisabled();
+            ImGui::EndDisabled();
+        }
+        ImGui::PopStyleVar();
+        if (const auto *selected = context.document.SelectedObject()) {
+            const auto position = ImVec2(scene.bounds.position.x + 12 * scale,
+                                         scene.bounds.position.y + scene.bounds.size.y - 31 * scale);
+            char status[512];
+            std::snprintf(status, sizeof(status), "%s    |    %s axes", selected->name.c_str(),
+                          context.panels.gizmoSpace == GizmoSpace::Local ? "Local" : "World");
+            auto background = EditorVisuals::SurfaceColor();
+            background.w = .92f;
+            const auto textSize = ImGui::CalcTextSize(status);
+            const float width = std::min(textSize.x + 20 * scale, scene.bounds.size.x - 24 * scale);
+            auto *draw = ImGui::GetWindowDrawList();
+            draw->AddRectFilled(position, {position.x + width, position.y + 25 * scale},
+                                ImGui::GetColorU32(background), 5 * scale);
+            draw->PushClipRect(position, {position.x + width, position.y + 25 * scale}, true);
+            draw->AddText({position.x + 9 * scale, position.y + 5 * scale}, ImGui::GetColorU32(ImGuiCol_Text),
+                          status);
+            draw->PopClipRect();
+        }
+        // Overlay widgets own their physical rectangles even while disabled.
+        // Submit the image's drop target only after those owners are known;
+        // otherwise dropping over a toolbar control creates an object below it.
+        const ImRect imageRect(
+            {scene.bounds.position.x, scene.bounds.position.y},
+            {scene.bounds.position.x + scene.bounds.size.x, scene.bounds.position.y + scene.bounds.size.y});
+        if (context.phase == EditorPanelPhase::Edit && !overlayOwns &&
+            ImGui::BeginDragDropTargetCustom(imageRect, ImGui::GetID("SceneAssetDrop"))) {
             if (const auto *payload = ImGui::AcceptDragDropPayload(kAssetDragPayload)) {
                 viewport.pendingDropAsset.assign(static_cast<const char *>(payload->Data), payload->DataSize);
                 viewport.pendingDropDelivered = true;
@@ -69,6 +142,9 @@ void EditorViewportPresenter::DrawScene(EditorContext &context, EditorSceneViewp
             }
             ImGui::EndDragDropTarget();
         }
+        ImGui::SetCursorScreenPos(afterImage);
+        ImGui::Dummy({0, 0});
+        scene.hovered &= !overlayOwns;
         context.panels.sceneViewHovered = scene.hovered;
     }
     ImGui::End();

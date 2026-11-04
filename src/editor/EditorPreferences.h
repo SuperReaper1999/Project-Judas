@@ -7,10 +7,10 @@ struct EditorPanelState;
 
 struct EditorAppearance {
     bool light = false;
-    std::array<float, 3> accent{.08f, .78f, .76f};
-    std::array<float, 3> secondaryAccent{.82f, .31f, .67f};
-    std::array<float, 3> background{.075f, .091f, .115f};
-    std::array<float, 3> text{.86f, .91f, .94f};
+    std::array<float, 3> accent{.04f, .81f, .82f};
+    std::array<float, 3> secondaryAccent{.86f, .29f, .68f};
+    std::array<float, 3> background{.065f, .063f, .087f};
+    std::array<float, 3> text{.91f, .90f, .95f};
     float scale = 1;
 };
 

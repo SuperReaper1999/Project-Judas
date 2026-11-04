@@ -472,6 +472,7 @@ add_library(judas_editor_core STATIC
     src/editor/EditorHistory.cpp
     src/editor/EditorConsolePanel.cpp
     src/editor/EditorCorePanels.cpp
+    src/editor/JudasToolsPanel.cpp
     src/editor/EditorToolPanels.cpp
     src/editor/EditorShell.cpp
     src/editor/EditorViewportPresenter.cpp
@@ -1955,6 +1956,7 @@ judas_add_engine_test(judas_editor_asset_browser_tests tests/EditorAssetBrowserT
 judas_add_engine_test(judas_editor_v2_viewport_tests tests/EditorViewportPresenterTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_application_lifecycle_tests tests/EditorApplicationLifecycleTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_console_tests tests/EditorConsolePanelTests.cpp LIBRARIES judas_editor_core)
+judas_add_engine_test(judas_editor_inspector_workflow_tests tests/EditorInspectorWorkflowTests.cpp LIBRARIES judas_editor_core)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

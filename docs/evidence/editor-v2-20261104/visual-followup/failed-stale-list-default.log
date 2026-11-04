@@ -1,0 +1,18 @@
+PASS ordinary asset database tracks real project scripts
+PASS browser paths are relative to Assets, retaining database IDs
+PASS folder navigation includes all registered parent folders in stable order
+PASS opening a folder shows its immediate files
+PASS recursive browsing includes descendants and stable filename sorting
+PASS directory matching cannot include similarly prefixed siblings
+PASS type filter is applied to actual records
+PASS missing-only filter excludes available assets
+PASS missing sidecar-backed assets remain discoverable in their folder
+PASS out-of-tree records are inspectable without navigation escape
+PASS mod ownership is visibly separate from writable project folders
+FAIL browser folder/view state belongs to its editor session
+PASS publication fixture is an ordinary saved project
+PASS real asset cook prepares valid bytes before authoring publication
+PASS hidden browser still publishes a prepared generation through its independent workflow
+PASS Play-time publication is refused even if the browser and worker are ready
+PASS previous-project completion cannot publish into the current authoring project
+SUMMARY 17 checks 1 failures

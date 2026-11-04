@@ -141,23 +141,53 @@ void ApplyAppearance(const EditorAppearance &a) {
                       a.background[1] * (1 - amount) + a.accent[1] * amount,
                       a.background[2] * (1 - amount) + a.accent[2] * amount, alpha);
     };
+    const auto surface = [&](float lift, float alpha = 1.f) {
+        const float direction = a.light ? -1.f : 1.f;
+        return ImVec4(std::clamp(a.background[0] + direction * lift, 0.f, 1.f),
+                      std::clamp(a.background[1] + direction * lift, 0.f, 1.f),
+                      std::clamp(a.background[2] + direction * lift, 0.f, 1.f), alpha);
+    };
+    // Neutral surfaces establish hierarchy. Saturated accents identify focus
+    // and primary actions rather than filling every engineering form.
     c[ImGuiCol_Text] = {a.text[0], a.text[1], a.text[2], 1};
-    c[ImGuiCol_TextDisabled] = {a.text[0], a.text[1], a.text[2], .58f};
-    c[ImGuiCol_WindowBg] = c[ImGuiCol_ChildBg] = c[ImGuiCol_PopupBg] = tint(0);
-    c[ImGuiCol_TitleBg] = c[ImGuiCol_MenuBarBg] = tint(.06f);
-    c[ImGuiCol_TitleBgActive] = tint(.17f);
-    c[ImGuiCol_DockingPreview] = tint(1, .45f);
-    c[ImGuiCol_DockingEmptyBg] = tint(.015f);
-    c[ImGuiCol_FrameBg] = tint(.10f);
-    c[ImGuiCol_FrameBgHovered] = tint(.22f);
-    c[ImGuiCol_FrameBgActive] = tint(.30f);
-    c[ImGuiCol_Button] = c[ImGuiCol_Header] = c[ImGuiCol_Tab] = tint(.18f);
-    c[ImGuiCol_ButtonHovered] = c[ImGuiCol_HeaderHovered] = c[ImGuiCol_TabHovered] = tint(.36f);
-    c[ImGuiCol_ButtonActive] = c[ImGuiCol_HeaderActive] = c[ImGuiCol_TabSelected] = tint(.48f);
+    c[ImGuiCol_TextDisabled] = {a.text[0], a.text[1], a.text[2], .60f};
+    c[ImGuiCol_WindowBg] = tint(0);
+    c[ImGuiCol_ChildBg] = surface(.008f);
+    c[ImGuiCol_PopupBg] = surface(.025f);
+    c[ImGuiCol_Border] = surface(a.light ? .18f : .13f);
+    c[ImGuiCol_TitleBg] = surface(.008f);
+    c[ImGuiCol_MenuBarBg] = surface(-.012f);
+    c[ImGuiCol_TitleBgActive] = surface(.04f);
+    c[ImGuiCol_DockingPreview] = tint(1, .35f);
+    c[ImGuiCol_DockingEmptyBg] = surface(-.02f);
+    c[ImGuiCol_FrameBg] = surface(-.006f);
+    c[ImGuiCol_FrameBgHovered] = tint(.10f);
+    c[ImGuiCol_FrameBgActive] = tint(.17f);
+    c[ImGuiCol_Button] = surface(.06f);
+    c[ImGuiCol_ButtonHovered] = tint(.16f);
+    c[ImGuiCol_ButtonActive] = tint(.28f);
+    c[ImGuiCol_Header] = surface(.035f);
+    c[ImGuiCol_HeaderHovered] = tint(.12f);
+    c[ImGuiCol_HeaderActive] = tint(.23f);
+    c[ImGuiCol_Tab] = surface(.018f);
+    c[ImGuiCol_TabHovered] = tint(.16f);
+    c[ImGuiCol_TabSelected] = tint(.15f);
+    c[ImGuiCol_TabDimmed] = surface(.012f);
+    c[ImGuiCol_TabDimmedSelected] = surface(.04f);
+    c[ImGuiCol_TabSelectedOverline] = tint(1, .85f);
+    c[ImGuiCol_TabDimmedSelectedOverline] = tint(.5f, .6f);
     c[ImGuiCol_CheckMark] = c[ImGuiCol_SliderGrabActive] = c[ImGuiCol_NavCursor] = tint(1);
     c[ImGuiCol_SliderGrab] = tint(.8f);
+    c[ImGuiCol_Separator] = surface(.10f);
     c[ImGuiCol_SeparatorHovered] = c[ImGuiCol_SeparatorActive] = tint(.85f);
-    c[ImGuiCol_TextSelectedBg] = tint(.7f, .45f);
+    c[ImGuiCol_ScrollbarBg] = surface(-.005f);
+    c[ImGuiCol_ScrollbarGrab] = surface(.15f);
+    c[ImGuiCol_ScrollbarGrabHovered] = surface(.23f);
+    c[ImGuiCol_ScrollbarGrabActive] = tint(.5f);
+    c[ImGuiCol_TableHeaderBg] = surface(.04f);
+    c[ImGuiCol_TableBorderStrong] = surface(.12f);
+    c[ImGuiCol_TableBorderLight] = surface(.07f);
+    c[ImGuiCol_TextSelectedBg] = tint(.6f, .4f);
     s.ScaleAllSizes(a.scale);
     ImGui::GetIO().FontGlobalScale = a.scale;
 }
@@ -535,8 +565,10 @@ bool EditorPreferences::QueueWorkspace(const std::string &name) {
     m_pendingLayout.name = name;
     m_pendingLayout.workspace = name;
     m_pendingLayout.panels = {"hierarchy", "inspector", "scene-view", "game-view", "assets", "console"};
-    if (name == "Scripting")
+    if (name == "Scripting") {
         m_pendingLayout.panels.emplace_back("scripts");
+        m_pendingLayout.panels.emplace_back("judas-tools");
+    }
     if (name == "Animation")
         m_pendingLayout.panels.emplace_back("animation");
     if (name == "Audio")

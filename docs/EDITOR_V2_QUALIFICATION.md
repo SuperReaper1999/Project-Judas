@@ -27,7 +27,7 @@ This is an Experimental editor checkpoint, not an Alpha v2.0.0 release or human 
 
 See [owner map and extension instructions](EDITOR_V2.md#source-ownership).
 The original application had 2,301 lines and the original panels source 1,498.
-The formatted coordinator is 520 lines; the old panels file is an unused four-line
+The formatted coordinator is 523 lines; the old panels file is an unused four-line
 compatibility marker. Responsibilities were extracted into cohesive owners rather than transferred to
 one replacement giant file. Line counts are descriptive, not acceptance tests.
 Automation is also split into workspace, assets, terrain/async, simulation and
@@ -113,6 +113,83 @@ Scopes overlap; CPU and GPU times must not be added as independent wall time.
 World geometry, physics cadence and acceptance conditions were not reduced.
 Showing multiple actual views costs additional rendering; it does not create or
 advance additional worlds. Raw profiles retain worst frames and scope data.
+
+## Visual and workflow follow-up
+
+The first V2 shell was too close to the previous flat engineering interface when
+compared with the operator's concept reference. The subsequent visual pass adds
+the indigo/teal/magenta hierarchy, vector icons and heading emphasis through the
+existing personal appearance controls. The hierarchy now has a top **Add object**
+action, type icons and a clear selected row. Inspector identity prioritizes the
+editable actual name and type subtitle, with pinned compact X/Y/Z transforms,
+separate component cards and a bottom **Add component** action. Asset grid cards,
+the workflow strip and the floating Judas Tools utility expose existing tools;
+they do not invent component enable states, a new runtime or an audio sequencer.
+
+Opening a scene now frames its world-transformed player area or useful visible
+content instead of blindly choosing its first serialized record. This corrected
+the initially empty-looking Hearthworld view, whose first record was a planet
+centre. The framing helper has direct positive/negative geometry controls and
+does not mutate authored transforms, selection or physical state.
+
+Further composition corrections in this follow-up are:
+
+- A live Scene observer translates its editor camera and focus consistently
+  when the authoritative world's origin chart changes, then restores its
+  authored document chart when observation ends. It remains an observer of the
+  existing world rather than advancing simulation.
+- Scene overlay controls own their actual screen rectangles. Drops and camera
+  gestures over those controls cannot act on the scene image beneath them.
+  The live observer also draws the selected existing debug overlays; it does
+  not provide a second debug simulation.
+- Audio and UI workflow actions are authoring-only during Play and explain that
+  the user must Stop. Their existing tools remain available in Edit mode.
+
+Latest focused Linux results for that follow-up, recorded separately from the
+earlier measurement table:
+
+| Contract | Observed result |
+|---|---|
+| Actual Inspector editing, Undo/quaternion preservation, actions, read-only behavior and narrow script fields | 41 checks passed |
+| Asset browsing, fresh Grid default and per-session isolation | 18 passed |
+| Geometry picking and initial authored scene framing | 47 passed |
+| Registry/workspace/layout behavior, including large-text initial rails | 24 passed |
+| Scene/Game composition, observer charts, overlay ownership and input | 87 offscreen / 102 native detached passed |
+| Window event/coordinate ownership | 23 passed |
+| Hosted debugger / debugger core / consumer debug-reload journeys | 24 / 49 / 37 passed |
+| Application lifetime and failure cleanup | 22 passed |
+
+These are bounded automated results. Native captures additionally cover Dark at
+0.85/1.0/1.5 and Light at 1.25, plus a selected player in a copy of the operator's
+RPG project. Capture projects were copies; the operator's project was preserved.
+Captures are agent review evidence, not combined operator acceptance. The narrow
+script-field correction now has actual registered metadata, preserved-ID input,
+serialized-value/Undo and rendered-glyph bounds checks. Initial rail widths grow
+with UI scale; saved layouts remain user-owned. Framing is a size-based camera
+hint, not collision-aware camera placement or occlusion avoidance.
+
+Two failed test attempts were classified rather than silently treated as engine
+defects or passes. The first read-only Inspector test directly forced an internal
+ImGui activation on a disabled widget, bypassing the native admission path; the
+replacement uses ordinary keyboard navigation/input and verifies unchanged
+authored data/history. A browser-state test still assumed the old List default
+after Grid intentionally became the initial view. It was corrected to the
+documented Grid policy and strengthened to check per-session independence.
+Original attempts and outputs remain retained alongside the corrected runs.
+
+The earlier CPU/GPU/RSS table is a **pre-visual-pass diagnostic sample**. It is not
+an exact-final-visual-source performance result, and these new correctness counts
+do not replace it with an inferred timing improvement. Final committed source,
+editor/SDK binary identities and hashes will be recorded after checkpointing in
+`.cache/editor-v2/FINAL_FINGERPRINTS.json`; no earlier dirty-build identity should
+be mistaken for that final record. Raw follow-up runs remain under
+`.cache/editor-v2/visual-qualified-gates/`, `native-visual-qualification/` and the
+related visual review/test folders. A portable subset is retained in
+[visual follow-up evidence](evidence/editor-v2-20261104/visual-followup/README.md).
+
+Combined human acceptance is pending. Windows V2 has not been rerun, and no new
+Android, browser, mixed-DPI or clean-machine qualification follows from these
+Linux checks.
 
 ## Reproduce and inspect
 

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/time.log",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/baseline/bin/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/project/developer_lab.judasproj"
+    ],
+    "returncode": 0,
+    "environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/config",
+      "JUDAS_EDITOR_AUTOTEST": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/editor",
+      "JUDAS_PROFILE": "1",
+      "JUDAS_PROFILE_OUTPUT": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/baseline/profile.json"
+    }
+  },
+  {
+    "name": "visual-v2",
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/time.log",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/project/developer_lab.judasproj"
+    ],
+    "returncode": 0,
+    "environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/config",
+      "JUDAS_EDITOR_AUTOTEST": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/editor",
+      "JUDAS_PROFILE": "1",
+      "JUDAS_PROFILE_OUTPUT": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/visual-profile/visual-v2/profile.json"
+    }
+  }
+]

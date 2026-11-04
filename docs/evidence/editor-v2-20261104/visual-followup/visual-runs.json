@@ -1,0 +1,20 @@
+[
+  {
+    "name": "dark",
+    "mode": "dark",
+    "scale": 1,
+    "returncode": 0
+  },
+  {
+    "name": "light",
+    "mode": "light",
+    "scale": 1.25,
+    "returncode": 0
+  },
+  {
+    "name": "large",
+    "mode": "dark",
+    "scale": 1.5,
+    "returncode": 0
+  }
+]

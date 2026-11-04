@@ -1,0 +1,28 @@
+PASS actual inspector idle frames preserve exact scene bytes and negative quaternion sign
+PASS drawing compact transform fields creates no pending edit or undo history
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact rotation scalar enters keyboard input mode
+PASS rotation transaction snapshots the exact negative-sign authored quaternion
+PASS keyboard editing rotation changes actual orientation to the requested angle
+PASS confirming rotation commits exactly one valid document edit
+PASS one Undo restores the complete original quaternion including its negative sign
+FAIL Play's disabled authored position rejects activation
+FAIL keyboard input cannot modify authored scene or history through the Play inspector
+PASS pinned Add component control opens its actual component menu
+PASS choosing Audio listener in the actual component menu adds it to the scene
+PASS one Undo removes the added component and restores exact authored scene
+Inspector workflow: 27 checks, 2 failures

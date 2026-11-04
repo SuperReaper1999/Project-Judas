@@ -1,3 +1,5 @@
+#include "EditorOverlayMenu.h"
+#include "EditorVisuals.h"
 #include "EditorAssetActions.h"
 #include "ComponentEditors.h"
 #include "EditorPanelWidgets.h"
@@ -63,7 +65,8 @@ void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize)
 }
 
 void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
-                               const std::function<void()> &workspaceSelector) {
+                               const std::function<void()> &workspaceSelector,
+                               const std::function<void()> &workflowSelector) {
     const bool editing = state.mode == EditorMode::Edit;
     const auto display = ImGui::GetIO().DisplaySize;
     PlaceWorkspacePanel(state.workspace.toolbar);
@@ -72,9 +75,30 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
     ImGui::Begin("##workspaceToolbar", nullptr,
                  kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar |
                      ImGuiWindowFlags_NoScrollWithMouse);
+    if (workflowSelector) {
+        workflowSelector();
+        if (workspaceSelector) {
+            const float right = ImGui::GetWindowContentRegionMax().x - 170.f * uiScale;
+            if (right > ImGui::GetCursorPosX() + 12.f * uiScale) {
+                ImGui::SameLine(right);
+                workspaceSelector();
+            } else {
+                ImGui::SameLine();
+                if (ImGui::SmallButton("Layout..."))
+                    ImGui::OpenPopup("workflowLayouts");
+                if (ImGui::BeginPopup("workflowLayouts")) {
+                    workspaceSelector();
+                    ImGui::EndPopup();
+                }
+            }
+        }
+        ImGui::Separator();
+        ImGui::Spacing();
+    }
     ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_HeaderActive));
     ImGui::PushStyleColor(ImGuiCol_Border, ImGui::GetStyleColorVec4(ImGuiCol_CheckMark));
-    if (ImGui::Button(editing ? "Play" : "Stop")) {
+    if (EditorVisuals::ActionButton(editing ? "Play" : "Stop",
+                                    editing ? EditorVisuals::Icon::Play : EditorVisuals::Icon::Stop, true)) {
         if (editing)
             requests.play = true;
         else
@@ -84,11 +108,11 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
     ToolbarHint("F5: play this scene / restore the authored scene");
     ImGui::SameLine();
     ImGui::BeginDisabled(!editing);
-    if (ImGui::Button("Save"))
+    if (EditorVisuals::ActionButton("Save", EditorVisuals::Icon::File))
         requests.save = true;
     ToolbarHint("Ctrl+S: save the scene");
     ImGui::SameLine();
-    if (ImGui::Button("Create..."))
+    if (EditorVisuals::ActionButton("Create...", EditorVisuals::Icon::Plus))
         ImGui::OpenPopup("toolbarCreate");
     ToolbarHint("Add objects, a first/third-person player, lights or a pause menu");
     if (ImGui::BeginPopup("toolbarCreate")) {
@@ -112,20 +136,20 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
     }
     ImGui::SameLine();
     if (logicalWidth >= 1000) {
-        const auto tool = [&](const char *label, GizmoMode mode, const char *hint) {
+        const auto tool = [&](const char *label, GizmoMode mode, EditorVisuals::Icon icon, const char *hint) {
             const bool selected = state.gizmoMode == mode;
             if (selected)
                 ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
-            if (ImGui::Button(label))
+            if (EditorVisuals::ActionButton(label, icon, selected))
                 state.gizmoMode = mode;
             if (selected)
                 ImGui::PopStyleColor();
             ToolbarHint(hint);
             ImGui::SameLine();
         };
-        tool("Move", GizmoMode::Translate, "W: move selected objects");
-        tool("Rotate", GizmoMode::Rotate, "E: rotate selected objects");
-        tool("Scale", GizmoMode::Scale, "R: scale selected objects");
+        tool("Move", GizmoMode::Translate, EditorVisuals::Icon::Move, "W: move selected objects");
+        tool("Rotate", GizmoMode::Rotate, EditorVisuals::Icon::Rotate, "E: rotate selected objects");
+        tool("Scale", GizmoMode::Scale, EditorVisuals::Icon::Scale, "R: scale selected objects");
     }
     if (ImGui::Button(logicalWidth >= 1000 ? "Options..." : "Transform..."))
         ImGui::OpenPopup("toolbarTransform");
@@ -163,7 +187,7 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
         ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
         ImGui::EndPopup();
     }
-    if (workspaceSelector) {
+    if (!workflowSelector && workspaceSelector) {
         const float selectorWidth = 166.f * uiScale;
         const float right = ImGui::GetWindowContentRegionMax().x - selectorWidth;
         const float current = ImGui::GetCursorPosX();
@@ -244,8 +268,20 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
                         const std::function<void()> &windowMenu) {
     if (!doc.ValidationError().empty())
         state.status = "Edit rejected; previous document restored: " + doc.ValidationError();
-    if (!ImGui::BeginMainMenuBar())
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10, 7});
+    if (!ImGui::BeginMainMenuBar()) {
+        ImGui::PopStyleVar();
         return;
+    }
+    const auto brandAt = ImGui::GetCursorScreenPos();
+    const float brandSize = ImGui::GetFontSize() * 1.15f;
+    EditorVisuals::BrandMark(ImGui::GetWindowDrawList(), {brandAt.x, brandAt.y + 1}, brandSize);
+    ImGui::Dummy({brandSize + 5, brandSize});
+    ImGui::SameLine();
+    ImGui::PushFont(EditorVisuals::HeadingFont());
+    ImGui::TextUnformatted("Judas Editor V2");
+    ImGui::PopFont();
+    ImGui::SameLine(0, 20 * ImGui::GetIO().FontGlobalScale);
     const bool editing = state.mode == EditorMode::Edit;
     const bool hasProject = state.project && state.project->IsLoaded();
     if (ImGui::BeginMenu("File")) {
@@ -390,23 +426,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Debug")) {
-        DebugViewOptions &d = state.debug;
-        ImGui::MenuItem("Collision shapes", nullptr, &d.collisionShapes);
-        ImGui::MenuItem("Player capsule + support", nullptr, &d.playerCapsule);
-        ImGui::MenuItem("Contacts", nullptr, &d.contacts);
-        ImGui::MenuItem("Gravity vectors + regions", nullptr, &d.gravity);
-        ImGui::MenuItem("Frame axes", nullptr, &d.frameAxes);
-        ImGui::MenuItem("Lights", nullptr, &d.lights);
-        ImGui::MenuItem("Interaction ranges", nullptr, &d.interactionRanges);
-        ImGui::MenuItem("Lifecycle / fidelity", nullptr, &d.lifecycle);
-        ImGui::MenuItem("Terrain normals (sampled)", nullptr, &d.terrainNormals);
-        ImGui::MenuItem("Fluid particles", nullptr, &d.fluidParticles);
-        ImGui::MenuItem("Atmosphere radii", nullptr, &d.atmosphere);
-        ImGui::MenuItem("Broadphase bounds", nullptr, &d.broadphase);
-        ImGui::MenuItem("Navigation mesh / routes", nullptr, &d.navigation);
-        ImGui::Separator();
-        if (ImGui::MenuItem("All off"))
-            d = DebugViewOptions{};
+        DrawEditorOverlayMenu(state.debug);
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("World", !editing)) {
@@ -441,6 +461,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         ImGui::TextDisabled("%s", context.c_str());
     }
     ImGui::EndMainMenuBar();
+    ImGui::PopStyleVar();
 }
 
 void DrawStatusBar(EditorDocument &doc, EditorPanelState &state) {

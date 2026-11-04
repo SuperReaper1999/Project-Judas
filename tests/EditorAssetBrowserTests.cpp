@@ -71,9 +71,12 @@ int main() {
     EditorPanelState first, second;
     first.assetBrowser = std::make_shared<EditorAssetBrowserState>();
     second.assetBrowser = std::make_shared<EditorAssetBrowserState>();
+    Check(first.assetBrowser->grid && second.assetBrowser->grid,
+          "fresh editor sessions start with the documented asset grid view");
     first.assetBrowser->directory = "scripts";
-    first.assetBrowser->grid = true;
-    Check(second.assetBrowser->directory.empty() && !second.assetBrowser->grid,
+    first.assetBrowser->grid = false;
+    Check(second.assetBrowser->directory.empty() && second.assetBrowser->grid &&
+              first.assetBrowser->directory == "scripts" && !first.assetBrowser->grid,
           "browser folder/view state belongs to its editor session");
     Project project;
     Check(Project::CreateNew(root.string(), "Browser publication", project, error),

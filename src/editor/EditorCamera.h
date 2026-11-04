@@ -95,6 +95,10 @@ class EditorCamera {
     void LookAt(const glm::vec3 &point, float distance);
     void SetPose(const glm::vec3 &position, float yawDegrees, float pitchDegrees);
 
+    // Translate editor-owned positions after a validated world-chart change.
+    // Subtract in binary64 before returning to the local float geometry frame.
+    void ShiftOrigin(glm::dvec3 delta);
+
     // A world-space ray through a viewport pixel (top-left origin).
     void PixelRay(int pixelX, int pixelY, int viewportWidth, int viewportHeight, glm::vec3 &outOrigin,
                   glm::vec3 &outDirection) const;

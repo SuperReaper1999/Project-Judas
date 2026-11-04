@@ -41,6 +41,7 @@
   ],
   "directories": [
     "assets/fonts",
+    "assets/editor",
     "docs/judasjs",
     "projects/beacon_grove",
     "projects/tilemap_workshop",

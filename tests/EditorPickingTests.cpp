@@ -11,34 +11,43 @@
 #include "ResourceManager.h"
 #include "SkeletalAnimation.h"
 #include "editor/EditorPicking.h"
+#include "editor/EditorSceneGeometry.h"
 
 namespace {
 int checks = 0, failures = 0;
-void Check(bool condition, const char* description) {
+void Check(bool condition, const char *description) {
     ++checks;
-    if (!condition) ++failures;
+    if (!condition)
+        ++failures;
     std::printf("%s %s\n", condition ? "PASS" : "FAIL", description);
 }
-bool Near(float actual, float expected) { return std::abs(actual - expected) < 1e-4f; }
-SceneObjectId AddBox(Scene& scene, glm::vec3 position, glm::vec3 half) {
-    auto& object = scene.CreateObject("Box");
+bool Near(float actual, float expected) {
+    return std::abs(actual - expected) < 1e-4f;
+}
+SceneObjectId AddBox(Scene &scene, glm::vec3 position, glm::vec3 half) {
+    auto &object = scene.CreateObject("Box");
     object.transform.position = position;
     object.render = SceneRenderComponent{};
     object.render->halfExtents = half;
     return object.id;
 }
-SceneObjectId OldSpherePick(const Scene& scene, glm::vec3 origin, glm::vec3 direction) {
+SceneObjectId OldSpherePick(const Scene &scene, glm::vec3 origin, glm::vec3 direction) {
     SceneObjectId result = 0;
     float nearest = 1e30f;
-    for (const auto& object : scene.Objects()) {
+    for (const auto &object : scene.Objects()) {
         float radius = 0.75f;
-        if (object.render) radius = std::max(radius, glm::length(object.render->halfExtents));
+        if (object.render)
+            radius = std::max(radius, glm::length(object.render->halfExtents));
         const auto delta = origin - object.transform.position;
         const float b = glm::dot(delta, direction), c = glm::dot(delta, delta) - radius * radius;
         const float discriminant = b * b - c;
-        if (discriminant < 0) continue;
+        if (discriminant < 0)
+            continue;
         const float distance = -b - std::sqrt(discriminant);
-        if (distance >= 0 && distance < nearest) { result = object.id; nearest = distance; }
+        if (distance >= 0 && distance < nearest) {
+            result = object.id;
+            nearest = distance;
+        }
     }
     return result;
 }
@@ -70,29 +79,34 @@ void FloorAndPrimitives() {
     Check(picker.Pick(corner, {0, 0, 5}, {0, 0, 0}).id == 0, "zero ray direction is safely rejected");
 
     Scene spheres;
-    auto& sphere = spheres.CreateObject("Sphere");
+    auto &sphere = spheres.CreateObject("Sphere");
     const auto sphereId = sphere.id;
     sphere.render = SceneRenderComponent{};
     sphere.render->shape = SceneShape::Sphere;
     sphere.render->radius = 1;
     hit = picker.Pick(spheres, {0, 0, 5}, {0, 0, -3});
-    Check(hit.id == sphereId && Near(hit.distance, 4), "ordinary sphere hit returns world distance for a non-unit ray");
+    Check(hit.id == sphereId && Near(hit.distance, 4),
+          "ordinary sphere hit returns world distance for a non-unit ray");
     Check(picker.Pick(spheres, {0.9f, 0.9f, 5}, {0, 0, -1}).id == 0,
           "sphere corner ray outside its true silhouette misses");
     hit = picker.Pick(spheres, {0, 0, 0}, {0, 0, 1});
-    Check(hit.id == sphereId && Near(hit.distance, 1), "ray starting inside a sphere picks the forward surface");
+    Check(hit.id == sphereId && Near(hit.distance, 1),
+          "ray starting inside a sphere picks the forward surface");
     sphere.transform.rotation = glm::angleAxis(glm::radians(37.0f), glm::vec3(0, 1, 0));
     sphere.transform.scale = {2, 1, 0.5f};
     const auto forward = sphere.transform.rotation * glm::vec3(0, 0, 1);
     hit = picker.Pick(spheres, forward * 5.0f, -forward);
-    Check(hit.id == sphereId && Near(hit.distance, 4.5f), "scaled and rotated sphere follows its rendered ellipsoid");
+    Check(hit.id == sphereId && Near(hit.distance, 4.5f),
+          "scaled and rotated sphere follows its rendered ellipsoid");
     spheres.Settings().mainCameraRenderMask = 0;
-    Check(picker.Pick(spheres, forward * 5.0f, -forward).id == 0, "authored render mask excludes invisible geometry");
+    Check(picker.Pick(spheres, forward * 5.0f, -forward).id == 0,
+          "authored render mask excludes invisible geometry");
 
     Scene compound;
-    auto& owner = compound.CreateObject("Compound visual");
+    auto &owner = compound.CreateObject("Compound visual");
     const auto compoundId = owner.id;
-    owner.render = SceneRenderComponent{}; owner.render->shape = SceneShape::Compound;
+    owner.render = SceneRenderComponent{};
+    owner.render->shape = SceneShape::Compound;
     owner.body = SceneBodyComponent{};
     owner.transform.position = {3, 1, 2};
     owner.transform.rotation = glm::angleAxis(glm::radians(90.0f), glm::vec3(0, 1, 0));
@@ -111,7 +125,8 @@ void FloorAndPrimitives() {
     doors.Find(door)->door = SceneDoorComponent{};
     doors.Find(door)->transform.scale = glm::vec3(5);
     hit = picker.Pick(doors, {1.75f, 0, 5}, {0, 0, -1});
-    Check(hit.id == door && Near(hit.distance, 4.8f), "closed door visual selection uses its hinge-offset panel");
+    Check(hit.id == door && Near(hit.distance, 4.8f),
+          "closed door visual selection uses its hinge-offset panel");
     Check(picker.Pick(doors, {2.2f, 0, 5}, {0, 0, -1}).id == 0,
           "closed door selection follows its unscaled authored-render dimensions");
 }
@@ -119,7 +134,7 @@ void FloorAndPrimitives() {
 void HierarchyAndFallback() {
     EditorScenePicker picker;
     Scene scene;
-    auto& parent = scene.CreateObject("Visual group");
+    auto &parent = scene.CreateObject("Visual group");
     const auto parentId = parent.id;
     parent.transform.position = {4, 1, -2};
     parent.transform.rotation = glm::angleAxis(glm::radians(90.0f), glm::vec3(0, 1, 0));
@@ -146,49 +161,139 @@ void HierarchyAndFallback() {
           "non-render parent pivot in front cannot steal its child's visible hit");
     group.Find(nested)->transform.position.x = 5;
     const auto icon = picker.Pick(group, {0, 0, 10}, {0, 0, -1});
-    Check(icon.id == groupId && !icon.visual, "empty parent remains selectable when the ray hits no visual geometry");
+    Check(icon.id == groupId && !icon.visual,
+          "empty parent remains selectable when the ray hits no visual geometry");
     Check(picker.Pick(group, {0.3f, 0, 10}, {0, 0, -1}).id == 0,
           "empty fallback is a small pivot proxy rather than inherited object bounds");
 }
 
-bool WriteMesh(const std::filesystem::path& path, const MeshData& mesh) {
+void InitialCameraFraming() {
+    using EditorSceneGeometry::InitialFraming;
+    Scene scene;
+    auto &metadata = scene.CreateObject("world settings, serialized first");
+    metadata.gravity = SceneGravityComponent{};
+    metadata.transform.position = {900, 0, 0};
+    auto &environment = scene.CreateObject("planet environment");
+    environment.planet = PlanetSettings{};
+    environment.render = SceneRenderComponent{};
+    environment.render->shape = SceneShape::Sphere;
+    environment.render->radius = 100;
+    const auto rendered = AddBox(scene, {3, 5, 7}, {1, 2, 3});
+    auto &player = scene.CreateObject("player area");
+    const auto playerId = player.id;
+    player.playerStart = ScenePlayerStartComponent{};
+    player.transform.position = {0, 102, 0};
+    auto focus = InitialFraming(scene);
+    Check(focus && focus->id == playerId && focus->point == glm::vec3(0, 102, 0),
+          "startup framing prefers the player area over metadata and a planet centre");
+    scene.Find(playerId)->playerStart.reset();
+    scene.Find(playerId)->characterMotor = CharacterMotorSettings{};
+    focus = InitialFraming(scene);
+    Check(focus && focus->id == playerId,
+          "modern CharacterMotor owners receive the same initial framing priority");
+    scene.Find(playerId)->characterMotor.reset();
+    focus = InitialFraming(scene);
+    Check(focus && focus->id == rendered && focus->point == glm::vec3(3, 5, 7) &&
+              Near(focus->radius, std::sqrt(14.f)),
+          "a scene without a player frames actual visible content and its size hint");
+    scene.Find(rendered)->renderVisible = false;
+    const auto visible = AddBox(scene, {-8, 1, 2}, glm::vec3(.5f));
+    focus = InitialFraming(scene);
+    Check(focus && focus->id == visible, "hidden object render scope does not steal the initial view");
+    scene.Find(rendered)->renderVisible = true;
+    scene.Find(rendered)->render->visible = false;
+    focus = InitialFraming(scene);
+    Check(focus && focus->id == visible,
+          "a hidden Render component is likewise excluded from the visible fallback");
+
+    Scene nested;
+    auto &parent = nested.CreateObject("transformed parent");
+    const auto parentId = parent.id;
+    parent.transform.position = {4, 7, -3};
+    parent.transform.rotation = glm::angleAxis(glm::radians(90.f), glm::vec3(0, 1, 0));
+    parent.transform.scale = {2, 3, 4};
+    auto &child = nested.CreateObject("nested player");
+    const auto childId = child.id;
+    child.parent = parentId;
+    child.transform.position = {1, 2, 3};
+    child.characterMotor = CharacterMotorSettings{};
+    focus = InitialFraming(nested);
+    Check(focus && focus->id == childId && glm::length(focus->point - glm::vec3(16, 13, -5)) < 1e-4f,
+          "initial player framing resolves translated, rotated and scaled authored parents");
+    Check(nested.Find(childId)->parent == parentId &&
+              nested.Find(childId)->transform.position == glm::vec3(1, 2, 3) &&
+              nested.Find(parentId)->transform.scale == glm::vec3(2, 3, 4),
+          "framing leaves authored hierarchy and local transforms unchanged");
+    Scene plain;
+    auto &group = plain.CreateObject("unrendered spatial group");
+    group.transform.position = {2, 4, 6};
+    focus = InitialFraming(plain);
+    Check(focus && focus->point == group.transform.position,
+          "a plain spatial owner remains a useful fallback without render geometry");
+    Scene empty;
+    Check(!InitialFraming(empty), "empty scenes have no fabricated framing target");
+    Scene settingsOnly;
+    settingsOnly.CreateObject("settings").gravity = SceneGravityComponent{};
+    Check(!InitialFraming(settingsOnly), "metadata-only scenes preserve the current editor camera");
+    nested.Find(parentId)->parent = childId;
+    Check(!InitialFraming(nested),
+          "invalid hierarchy rejects framing rather than guessing local coordinates");
+}
+
+bool WriteMesh(const std::filesystem::path &path, const MeshData &mesh) {
     std::vector<uint8_t> bytes;
     std::string error;
-    if (!EncodeModelArchive(mesh, bytes, error)) { std::printf("Fixture: %s\n", error.c_str()); return false; }
+    if (!EncodeModelArchive(mesh, bytes, error)) {
+        std::printf("Fixture: %s\n", error.c_str());
+        return false;
+    }
     std::ofstream file(path, std::ios::binary);
-    file.write(reinterpret_cast<const char*>(bytes.data()), std::streamsize(bytes.size()));
+    file.write(reinterpret_cast<const char *>(bytes.data()), std::streamsize(bytes.size()));
     return bool(file);
 }
 
-void MeshTriangles(const std::filesystem::path& output) {
+void MeshTriangles(const std::filesystem::path &output) {
     std::filesystem::create_directories(output / "Assets");
     MeshData mesh;
-    for (auto position : {glm::vec3(-1, -1, 0), glm::vec3(1, -1, 0), glm::vec3(-1, 1, 0),
-                          glm::vec3(2, -1, 0), glm::vec3(4, -1, 0), glm::vec3(2, 1, 0)}) {
-        MeshVertex vertex; vertex.position = position; vertex.normal = {0, 0, 1}; mesh.vertices.push_back(vertex);
+    for (auto position : {glm::vec3(-1, -1, 0), glm::vec3(1, -1, 0), glm::vec3(-1, 1, 0), glm::vec3(2, -1, 0),
+                          glm::vec3(4, -1, 0), glm::vec3(2, 1, 0)}) {
+        MeshVertex vertex;
+        vertex.position = position;
+        vertex.normal = {0, 0, 1};
+        mesh.vertices.push_back(vertex);
     }
     mesh.indices = {0, 1, 2, 3, 4, 5};
     mesh.primitives = {{0, 3, 0, "visible"}, {3, 3, 0, "optional"}};
-    MaterialDefinition material; material.doubleSided = true; mesh.materials.push_back(material);
+    MaterialDefinition material;
+    material.doubleSided = true;
+    mesh.materials.push_back(material);
     const auto path = output / "Assets/triangles.judasmodel";
     const std::string id(32, 'a');
     std::string error;
-    Check(WriteMesh(path, mesh) && AssetDatabase::WriteMeta(path.string() + ".judasmeta", id, AssetType::Mesh, "", error),
+    Check(WriteMesh(path, mesh) &&
+              AssetDatabase::WriteMeta(path.string() + ".judasmeta", id, AssetType::Mesh, "", error),
           "real CPU model archive and stable asset metadata fixture writes");
-    AssetDatabase assets; assets.Scan(output.string(), (output / "Assets").string());
+    AssetDatabase assets;
+    assets.Scan(output.string(), (output / "Assets").string());
     EditorScenePicker picker;
-    Scene scene; scene.Settings().linearRendering = true;
-    auto& object = scene.CreateObject("Triangle mesh");
+    Scene scene;
+    scene.Settings().linearRendering = true;
+    auto &object = scene.CreateObject("Triangle mesh");
     const auto objectId = object.id;
-    object.render = SceneRenderComponent{}; object.render->shape = SceneShape::Mesh; object.render->meshAsset = id;
+    object.render = SceneRenderComponent{};
+    object.render->shape = SceneShape::Mesh;
+    object.render->meshAsset = id;
     object.transform.position = {3, 2, -4};
     object.transform.rotation = glm::angleAxis(glm::radians(35.0f), glm::vec3(0, 1, 0));
     object.transform.scale = {2, 0.5f, 3};
-    const auto world = [&](glm::vec3 local) { return object.transform.position + object.transform.rotation * (object.transform.scale * local); };
+    const auto world = [&](glm::vec3 local) {
+        return object.transform.position + object.transform.rotation * (object.transform.scale * local);
+    };
     const auto forward = object.transform.rotation * glm::vec3(0, 0, 1);
     const auto centre = world({-0.5f, -0.5f, 0});
     auto hit = picker.Pick(scene, centre + forward * 10.0f, -forward, &assets);
-    Check(hit.id == objectId && Near(hit.distance, 10), "model-loader CPU triangle hit preserves nonuniform world distance");
+    Check(hit.id == objectId && Near(hit.distance, 10),
+          "model-loader CPU triangle hit preserves nonuniform world distance");
     const auto corner = world({0.8f, 0.8f, 0});
     Check(picker.Pick(scene, corner + forward * 10.0f, -forward, &assets).id == 0,
           "ray inside mesh bounds but outside the actual triangle misses");
@@ -219,8 +324,10 @@ void MeshTriangles(const std::filesystem::path& output) {
     Check(hit.id == objectId && Near(hit.distance, 8.5f),
           "unloaded mesh selection follows the displayed half-unit scaled placeholder box");
 
-    MeshData nonIndexed; nonIndexed.vertices.assign(mesh.vertices.begin(), mesh.vertices.begin() + 3);
-    Check(WriteMesh(path, nonIndexed), "non-indexed ordinary mesh fixture writes through the current archive loader");
+    MeshData nonIndexed;
+    nonIndexed.vertices.assign(mesh.vertices.begin(), mesh.vertices.begin() + 3);
+    Check(WriteMesh(path, nonIndexed),
+          "non-indexed ordinary mesh fixture writes through the current archive loader");
     std::filesystem::last_write_time(path, modified + std::chrono::seconds(2));
     Check(picker.Pick(scene, centre + forward * 10.0f, -forward, &assets).id == objectId,
           "non-indexed consecutive triangles are selectable without GPU readback");
@@ -228,7 +335,8 @@ void MeshTriangles(const std::filesystem::path& output) {
     const std::string pendingMaterial(32, 'c');
     const auto materialPath = output / "Assets/pending.judasmaterial";
     const bool materialSetup = SaveMaterial(materialPath.string(), MaterialDefinition{}, error) &&
-        AssetDatabase::WriteMeta(materialPath.string() + ".judasmeta", pendingMaterial, AssetType::Material, "", error);
+                               AssetDatabase::WriteMeta(materialPath.string() + ".judasmeta", pendingMaterial,
+                                                        AssetType::Material, "", error);
     assets.Scan(output.string(), (output / "Assets").string());
     resources.SetHeadlessResidency(true);
     resources.SetBlockingMode(true);
@@ -246,30 +354,42 @@ void MeshTriangles(const std::filesystem::path& output) {
           "failed explicit material uses the renderer's single-sided fallback for front and back hits");
 }
 
-void MirroredRestSkin(const std::filesystem::path& output) {
+void MirroredRestSkin(const std::filesystem::path &output) {
     MeshData mesh;
     for (auto position : {glm::vec3(-1, -1, 0), glm::vec3(1, -1, 0), glm::vec3(-1, 1, 0)}) {
-        MeshVertex vertex; vertex.position = position; vertex.normal = {0, 0, 1}; mesh.vertices.push_back(vertex);
+        MeshVertex vertex;
+        vertex.position = position;
+        vertex.normal = {0, 0, 1};
+        mesh.vertices.push_back(vertex);
     }
     mesh.indices = {0, 1, 2};
     mesh.primitives = {{0, 3, 0, "mirrored-rest-part"}};
     mesh.materials.push_back(MaterialDefinition{});
     auto rig = std::make_shared<SkeletalAsset>();
-    rig->skeleton.names = {"Reflected"}; rig->skeleton.parents = {-1}; rig->skeleton.order = {0};
-    JointTransform rest; rest.scale = {-1, 1, 1}; rig->skeleton.rest.local = {rest};
-    rig->skeleton.skinNodes = {0}; rig->skeleton.inverseBind = {glm::mat4(1)};
+    rig->skeleton.names = {"Reflected"};
+    rig->skeleton.parents = {-1};
+    rig->skeleton.order = {0};
+    JointTransform rest;
+    rest.scale = {-1, 1, 1};
+    rig->skeleton.rest.local = {rest};
+    rig->skeleton.skinNodes = {0};
+    rig->skeleton.inverseBind = {glm::mat4(1)};
     mesh.skeletal = std::move(rig);
     mesh.skinVertices.resize(mesh.vertices.size()); // Full influence from the reflected node.
     const auto path = output / "Assets/mirrored-rest.judasmodel";
     const std::string id(32, 'b');
     std::string error;
-    const bool fixture = WriteMesh(path, mesh) &&
-        AssetDatabase::WriteMeta(path.string() + ".judasmeta", id, AssetType::Mesh, "", error);
-    AssetDatabase assets; assets.Scan(output.string(), (output / "Assets").string());
+    const bool fixture = WriteMesh(path, mesh) && AssetDatabase::WriteMeta(path.string() + ".judasmeta", id,
+                                                                           AssetType::Mesh, "", error);
+    AssetDatabase assets;
+    assets.Scan(output.string(), (output / "Assets").string());
     EditorScenePicker picker;
-    Scene scene; scene.Settings().linearRendering = true;
-    auto& object = scene.CreateObject("Mirrored rest skin");
-    object.render = SceneRenderComponent{}; object.render->shape = SceneShape::Mesh; object.render->meshAsset = id;
+    Scene scene;
+    scene.Settings().linearRendering = true;
+    auto &object = scene.CreateObject("Mirrored rest skin");
+    object.render = SceneRenderComponent{};
+    object.render->shape = SceneShape::Mesh;
+    object.render->meshAsset = id;
     Check(fixture && picker.Pick(scene, {0.5f, -0.5f, 5}, {0, 0, -1}, &assets).id == object.id &&
               picker.Pick(scene, {0.5f, -0.5f, -5}, {0, 0, 1}, &assets).id == 0,
           "mirrored rest-skinned primitive accepts its rendered front and rejects the culled back");
@@ -279,12 +399,14 @@ void MirroredRestSkin(const std::filesystem::path& output) {
               picker.Pick(scene, {-1, -0.5f, -5}, {0, 0, 1}, &assets).id == 0,
           "combined rest-skin and entity reflections preserve the renderer's front-face convention");
 }
-}
+} // namespace
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     FloorAndPrimitives();
     HierarchyAndFallback();
-    const auto output = argc > 1 ? std::filesystem::path(argv[1]) : std::filesystem::path("build/editor-picking-tests");
+    InitialCameraFraming();
+    const auto output =
+        argc > 1 ? std::filesystem::path(argv[1]) : std::filesystem::path("build/editor-picking-tests");
     MeshTriangles(output);
     MirroredRestSkin(output);
     std::printf("Editor geometry picking: %d checks, %d failures\n", checks, failures);

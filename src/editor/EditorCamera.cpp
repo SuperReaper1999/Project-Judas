@@ -102,6 +102,12 @@ void EditorCamera::UpdateLocal(float deltaSeconds, bool lookActive, int mouseDel
     }
 }
 
+void EditorCamera::ShiftOrigin(glm::dvec3 delta) {
+    m_position = glm::vec3(glm::dvec3(m_position) - delta);
+    if (m_2d)
+        m_savedPosition = glm::vec3(glm::dvec3(m_savedPosition) - delta);
+}
+
 glm::mat4 EditorCamera::ViewMatrix() const {
     return glm::lookAt(m_position, m_position + Forward(), glm::vec3(0.0f, 1.0f, 0.0f));
 }

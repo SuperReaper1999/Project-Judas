@@ -247,6 +247,9 @@ int EditorApplication::Run(int argc, char **argv) {
     const auto editorFont = ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf");
     if (fs::is_regular_file(editorFont))
         io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
+    const auto editorHeading = ResolveEngineDataPath("assets/editor/DejaVuSans-Bold.ttf");
+    if (fs::is_regular_file(editorHeading))
+        io.Fonts->AddFontFromFileTTF(editorHeading.c_str(), 15.0f);
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     const char *driver = SDL_GetCurrentVideoDriver();

@@ -33,6 +33,12 @@ existing tools within the same project/session. Audio opens the existing project
 audio settings; it does not introduce a new audio sequencer. UI authoring still
 uses a registered UI document selected in the Asset Browser.
 
+The workflow strip provides direct **Scene**, **Playtest**, **Scripting**,
+**Animation**, **Audio** and **UI** actions above the Play/Stop controls. Playtest
+opens/focuses Game; press **Play** to start it. Smaller windows shorten labels or
+offer a **Workflows…** menu. These actions arrange the existing tools; they do
+not create separate worlds, script sessions or a new audio sequencer.
+
 **Scene** uses the editor camera for authoring; during Play it observes the same
 runtime with authored values read-only. **Game** presents that single played
 world and its real HUD. Resize/docking changes render dimensions and pointer
@@ -40,6 +46,11 @@ mapping, not physics cadence. Press Play/F5 to instantiate the scene, focus Game
 for gameplay controls, and Stop/F5 to return to authored content. Typing in a tool
 must not move the player. Escape keeps its existing game pause/capture behavior.
 Closing or hiding Game does not destroy or duplicate the played world.
+
+When opening a scene, the initial editor view prefers the world-transformed
+player start or CharacterMotor area, otherwise visible geometry or a spatial
+fallback. A metadata owner serialized first no longer determines the camera.
+Initial framing changes no project data, authored transforms or selection.
 
 The toolbar keeps Play/Stop, Save, Create and transform actions together. Wider
 windows show Undo/Redo and Move/Rotate/Scale. **Options…** (or **Transform…** at a
@@ -88,7 +99,8 @@ select obscured objects. Edit-mode meshes are picked in the same rest pose as th
 authoring view; transparent texture holes are not tested. Mesh geometry is cached
 on the first click and refreshed when its source file changes.
 
-Use **Create** for ordinary geometry, lights and other starter components.
+Use the hierarchy's top **Add object** action or **Create** for ordinary geometry,
+lights and other starter components.
 You can also right-click empty space in the hierarchy and choose the object type
 directly, creating a root object at the scene-view focus. Right-click an existing
 row for its **Create child** submenu; children start at their parent's local origin
@@ -96,25 +108,34 @@ with identity rotation and unit scale. Both select the new object immediately,
 use the ordinary component defaults and support Undo/Redo as one creation step.
 Scene creation is disabled in Play.
 Use the inspector's **Add component…** for scripts, motors, animation, bodies,
-UI and the other engine primitives. Common inspector fields have labels above
-their controls; some specialized controls retain side labels. Asset selections
+UI and the other engine primitives. Component fields generally place labels above
+their controls; Transform uses compact labelled rows and some specialized
+controls retain side labels. Asset selections
 show full paths/IDs in tooltips and missing/unknown status below the selector.
 The hierarchy supports search, renaming, multiple selection, grouping and
-copy/paste through the existing authoring tools. Its **Create…** footer offers
-root creation; right-click **Set parent** lets you search for a parent or choose
-Scene root. Reparenting preserves world placement, supports Undo/Redo and rejects
+copy/paste through the existing authoring tools. Type icons, branch indentation
+and the accent-coloured selection clarify the tree; **Actions** stays below it.
+The top **Add object** action offers root creation; right-click **Set parent** lets
+you search for a parent or choose Scene root. Reparenting preserves world
+placement, supports Undo/Redo and rejects
 cycles. The existing right-click child creation stays relative to its parent.
 
 ### Add gameplay to an object
 
-Select one object. Its name and always-visible **Transform** come first, followed
-by **Components**, **Add component…** and attached components. **Add gameplay
+Select one object. Its actual editable name is the bold primary line, with a
+type icon and a smaller type subtitle. Compact **X/Y/Z** Position, Rotation and
+Scale rows remain pinned above the component scroll area. Drag a numeric value
+or Ctrl+click it to type. Attached components appear in separate bordered cards;
+**Add component…** stays anchored at the bottom of the inspector. **Add gameplay
 script** holds the script creation/attachment actions; it starts open for an
 object without scripts. Scripts start expanded; other component sections are
 collapsed until expanded, and newly added components open automatically.
-**Object settings** holds parent, tags,
-render layer and visibility. Clipboard, prefab and runtime diagnostics stay in
+**Object settings** holds parent, tags, render layer and visibility. Clipboard,
+prefab and runtime diagnostics stay in
 separate collapsed sections. Right-click a component heading to remove it.
+The heading's **…** button opens that same component-action menu. Enable controls
+are shown only where the underlying component supports them; there is no generic
+object-enable toggle. Authored fields and Add component remain read-only in Play.
 The Add component selector supports a name search and alphabetical results.
 
 1. Expand **Add gameplay script** if needed. Click **Create script & attach**, type a file name and choose **Create & edit**.

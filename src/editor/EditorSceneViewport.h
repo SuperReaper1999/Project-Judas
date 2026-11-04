@@ -7,6 +7,7 @@
 #include "ResourceManager.h"
 #include <map>
 #include <memory>
+#include <optional>
 struct EditorContext;
 struct EditorPlaySession;
 struct EditorAssetPreview;
@@ -27,6 +28,8 @@ struct EditorSceneViewport {
     void FrameEditMode(EditorContext &, float, TerrainEditor *, VolumeTerrainEditor *, TilemapEditor *);
     void Destroy(Renderer &);
     void RenderLive(EditorContext &, const EditorPlaySession &, float);
+    void BeginObservation(glm::dvec3 authoredOrigin);
+    void EndObservation(EditorContext &);
     EditorCamera camera;
     EditorScenePicker picker;
     RenderTargetHandle target;
@@ -43,4 +46,8 @@ struct EditorSceneViewport {
     std::map<SceneObjectId, std::pair<std::string, std::unique_ptr<PlanetTiles>>> planetPreview;
     std::vector<Scene> regionPreview;
     std::string regionPreviewKey;
+
+  private:
+    void SynchronizeObservationOrigin(EditorContext &, glm::dvec3);
+    std::optional<glm::dvec3> observedOrigin;
 };
