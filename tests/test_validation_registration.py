@@ -66,7 +66,8 @@ class ValidationRegistrationTests(unittest.TestCase):
         entries = [entry for entry in MANIFEST['tests']
                    if include_known or not entry.get('manual', False)]
         tooling = {'prealpha.gate-negative-controls', 'prealpha.build-organization',
-                   'prealpha.gate-registration', 'prealpha.browser-export-boundaries'}
+                   'prealpha.gate-registration', 'prealpha.browser-export-boundaries',
+                   'prealpha.editor-v2-architecture', 'prealpha.scripting-catalogue'}
         self.assertEqual(set(tests), {'prealpha.' + entry['name'] for entry in entries} | tooling)
         browser_command=tests['prealpha.browser-export-boundaries']['command']
         browser_pattern=browser_command[browser_command.index('-p')+1]
@@ -107,6 +108,15 @@ class ValidationRegistrationTests(unittest.TestCase):
             self.skipTest('Ninja needed for explicit multi-config control')
         self.assert_contract(self.configure(channel='Alpha', generator='Ninja Multi-Config'),
                              channel='Alpha')
+
+    def test_removed_modular_editor_or_scripting_gate_is_detected(self):
+        original = MODULE.read_text(encoding='utf-8')
+        for name in ('editor-v2-architecture', 'scripting-catalogue'):
+            with self.subTest(gate=name):
+                changed = original.replace('prealpha.' + name, 'prealpha.missing-' + name)
+                self.assertNotEqual(original, changed)
+                with self.assertRaises(AssertionError):
+                    self.assert_contract(self.configure(module=changed))
 
     def test_removed_browser_workflow_discovery_is_detected(self):
         original=MODULE.read_text(encoding='utf-8')

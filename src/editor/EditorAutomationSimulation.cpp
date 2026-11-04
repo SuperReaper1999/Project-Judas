@@ -1,5 +1,6 @@
 #include "../authoring/AuthoringDocument.h"
 #include "AnimationTimeline.h"
+#include "AssetBrowserPanel.h"
 #include "AuthoringJSON.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
@@ -46,6 +47,18 @@ namespace fs = std::filesystem;
 void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
     auto &io = ImGui::GetIO();
     const std::string prefix = autotest;
+    // A content-browser review remains in Edit long enough to observe real
+    // asynchronous previews after ordinary scene-resource startup work.
+    const bool browserReview = std::getenv("JUDAS_EDITOR_AUTOTEST_BROWSER_DIR") != nullptr;
+    if (browserReview && autotestFrame == 140) {
+        screenshot(prefix + ".assets-ready.png");
+        const auto browser = app.m_panels.assetBrowser;
+        std::fprintf(stderr, "[editor autotest] idle browser: active=%u pending=%u blocking=%d jobs=%d\n",
+            browser && browser->thumbnails ? browser->thumbnails->ActiveCount() : 0,
+            browser && browser->thumbnails ? browser->thumbnails->PendingCount() : 0,
+            int(host.Resources().BlockingMode()), int(host.Resources().Jobs() != nullptr));
+        return;
+    }
     // Opt-in M56 diagnostic interaction; ordinary Play timing/state is unchanged.
     if (std::getenv("JUDAS_EDITOR_AUTOTEST_PROFILER")) {
         if (autotestFrame == 23)
@@ -115,6 +128,13 @@ void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
             else
                 navigationCheck(false, "requested visual-review selection exists");
         }
+        if (const char *directory = std::getenv("JUDAS_EDITOR_AUTOTEST_BROWSER_DIR")) {
+            if (!app.m_panels.assetBrowser) app.m_panels.assetBrowser = std::make_shared<EditorAssetBrowserState>();
+            app.m_panels.assetBrowser->projectRoot = app.m_project.RootDir();
+            app.m_panels.assetBrowser->directory = directory;
+            app.m_panels.assetSearch.clear();
+            app.m_panels.assetBrowser->grid = true;
+        }
         DebugViewOptions all;
         all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
             all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere =
@@ -160,7 +180,7 @@ void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
         std::fprintf(stderr, "[editor autotest] edit frame: %u draw calls, %u triangles, %u debug lines\n",
                      app.m_panels.profiler.drawCalls, app.m_panels.profiler.triangles,
                      app.m_panels.profiler.debugLines);
-        deferredRequests.play = true;
+        if (!browserReview) deferredRequests.play = true;
     } else if (autotestFrame == 140) {
         screenshot(prefix + ".play.png");
         if (std::getenv("JUDAS_EDITOR_AUTOTEST_STREAMING")) {

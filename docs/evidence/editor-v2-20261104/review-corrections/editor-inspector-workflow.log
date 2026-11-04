@@ -1,0 +1,66 @@
+PASS actual inspector idle frames preserve exact scene bytes and negative quaternion sign
+PASS drawing compact transform fields creates no pending edit or undo history
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact position scalar enters keyboard input mode
+PASS position keyboard activation opens one document transaction
+PASS typed position updates only the intended XYZ scalar in the actual scene
+PASS confirming position commits exactly one valid document edit
+PASS one Undo restores exact scene bytes before the compact position edit
+PASS actual compact rotation scalar enters keyboard input mode
+PASS rotation transaction snapshots the exact negative-sign authored quaternion
+PASS keyboard editing rotation changes actual orientation to the requested angle
+PASS confirming rotation commits exactly one valid document edit
+PASS one Undo restores the complete original quaternion including its negative sign
+PASS compact primary Name field preserves its original labelled input ID
+PASS activating the actual Name field starts one document transaction
+PASS ordinary text input updates the selected object's real name
+PASS confirming Name commits exactly one valid document edit
+PASS one Undo restores exact authored bytes before the primary Name edit
+PASS same native Tab/select-all/type/confirm sequence edits enabled inspector controls
+PASS Play's disabled authored position rejects activation
+PASS keyboard input cannot modify authored scene or history through the Play inspector
+PASS pinned Add component control opens its actual component menu
+PASS choosing Audio listener in the actual component menu adds it to the scene
+PASS one Undo removes the added component and restores exact authored scene
+PASS script property fixture creates a real project
+PASS script property fixture uses real create/register/attach authoring
+PASS actual inspector owns the script-property child panel
+PASS script settings are initially folded instead of overwhelming ordinary object editing
+PASS opening actual script settings reveals controls without editing authored content
+PASS stacked script property preserves its original named native widget ID
+PASS script value uses the readable available width inside a 293-pixel Inspector
+PASS long script-property label wraps above its value with every glyph inside the panel
+PASS actual script-property text entry updates serialized properties in one existing edit
+PASS one Undo restores exact scene bytes before the script-property edit
+PASS model inspection fixture creates a real project
+PASS model inspection fixture tracks a real source mesh
+PASS actual model action is reachable through ordinary keyboard navigation
+PASS actual Inspect model action opens details for the exact source mesh and requests model structure
+PASS inspecting a model does not create scene children or change authored content/history
+PASS Play's model action is disabled until the authored Asset Browser can actually display it
+PASS read-only navigation uses the actual component panel
+PASS Play component disclosure remains keyboard focusable
+PASS actual Play pointer expands component details without changing the authored scene
+PASS enabled authored toggle is reached through real keyboard navigation
+PASS same pointer stimulus changes the enabled collider control in Edit
+PASS actual header rectangle is available before Play comparison
+PASS Edit pointer reaches the real component-actions button and opens its menu
+PASS enabled component menu genuinely removes the body
+PASS Edit Add component is reachable as an actual native combo
+PASS Edit pointer opens the actual Add component menu
+PASS Play header stays navigable after authoring controls lock
+PASS actual Play pointer cannot change the authored collider toggle
+PASS component removal action stays disabled while Play disclosure is enabled
+PASS Add component stays disabled during Play despite enabled disclosure navigation
+PASS read-only header context still exposes its component action menu
+PASS disabled Remove menu and other Play pointers preserve exact authored bytes/history
+Inspector workflow: 65 checks, 0 failures

@@ -106,8 +106,8 @@ bool CreateAndAttachEditorScript(EditorDocument& doc, SceneObjectId owner, const
 
 void DrawEditorScriptWorkflow(EditorDocument& doc, SceneObject& object, EditorPanelState& state) {
     const bool editable=state.mode == EditorMode::Edit && state.project && state.project->IsLoaded() && state.assets && doc.Selection().size()==1;
-    DrawEditorAIWorkflow(doc,object,state);
     if(doc.Selection().size()!=1)ImGui::TextWrapped("Select one object to create or attach a script.");
+    else if (!state.project || !state.project->IsLoaded()) ImGui::TextWrapped("Open a project to create or attach scripts.");
     ImGui::BeginDisabled(!editable);
     if (ImGui::Button("Create script & attach", {-1, 0}) && editable) {
         state.newScriptOwner = object.id;
@@ -150,6 +150,8 @@ void DrawEditorScriptWorkflow(EditorDocument& doc, SceneObject& object, EditorPa
         ImGui::EndPopup();
     }
     ImGui::EndDisabled();
+    if (ImGui::TreeNodeEx("AI starter", ImGuiTreeNodeFlags_NoTreePushOnOpen))
+        DrawEditorAIWorkflow(doc,object,state);
 }
 
 SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument& doc, Project& project, AssetDatabase& assets,

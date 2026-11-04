@@ -238,6 +238,11 @@ int EditorApplication::Run(int argc, char **argv) {
     Renderer &renderer = host.GetRenderer();
     SDL_SetWindowMinimumSize(window.NativeWindow(), 640, 480);
     window.SetMouseCaptured(false);
+    // An explicit desktop launch option, also used for full-resolution visual
+    // qualification. The window manager owns work-area/maximization behavior.
+    if (const char *maximized = std::getenv("JUDAS_EDITOR_MAXIMIZED");
+        maximized && std::string(maximized) == "1")
+        SDL_MaximizeWindow(window.NativeWindow());
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -249,7 +254,7 @@ int EditorApplication::Run(int argc, char **argv) {
         io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
     const auto editorHeading = ResolveEngineDataPath("assets/editor/DejaVuSans-Bold.ttf");
     if (fs::is_regular_file(editorHeading))
-        io.Fonts->AddFontFromFileTTF(editorHeading.c_str(), 15.0f);
+        io.Fonts->AddFontFromFileTTF(editorHeading.c_str(), 16.0f);
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     const char *driver = SDL_GetCurrentVideoDriver();

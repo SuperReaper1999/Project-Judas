@@ -25,6 +25,14 @@ using namespace EditorPanelWidgets;
 #include "PerformanceProfiler.h"
 
 namespace {
+CategoryMask MatchingHierarchyTags(const EditorPanelState &state) {
+    CategoryMask result = 0;
+    if (state.project && !state.hierarchySearch.empty())
+        for (const auto &[id, name] : state.project->Settings().classification.tags.names)
+            if (name.find(state.hierarchySearch) != std::string::npos)
+                result |= CategoryBit(id);
+    return result;
+}
 EditorVisuals::Icon HierarchyIcon(const SceneObject &object) {
     using Icon = EditorVisuals::Icon;
     if (object.characterMotor || object.playerStart)
@@ -49,12 +57,44 @@ EditorVisuals::Icon HierarchyIcon(const SceneObject &object) {
 }
 } // namespace
 
+void ResetEditorHierarchyView(EditorPanelState &state) {
+    state.hierarchyObservedSelection = kInvalidSceneObjectId;
+    state.revealHierarchyObject = kInvalidSceneObjectId;
+    state.collapsedHierarchyParents.clear();
+    state.hierarchySearch.clear();
+}
+
 void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests) {
     if (state.dockingEnabled ? !state.showHierarchy : !state.workspace.showRails)
         return;
     JUDAS_PROFILE_SCOPE("Editor hierarchy");
+    if (state.hierarchyObservedSelection != doc.Selected()) {
+        state.hierarchyObservedSelection = doc.Selected();
+        state.revealHierarchyObject = doc.Selected();
+    }
+    const auto reveal = state.revealHierarchyObject;
+    if (reveal && doc.GetScene().Find(reveal)) {
+        // Reveal the tab without taking keyboard focus away from Scene or a
+        // property field. A selection made in Scene can also reopen the panel.
+        if (auto *window = ImGui::FindWindowByName("Hierarchy"))
+            if (window->DockNode && window->DockNode->TabBar) {
+                window->DockNode->SelectedTabId = window->TabId;
+                window->DockNode->TabBar->SelectedTabId = window->TabId;
+                window->DockNode->TabBar->VisibleTabId = window->TabId;
+                // NextSelectedTabId is deliberately not used: docking treats
+                // it as a navigation-focus request, which would steal Scene's keys.
+            }
+        std::set<SceneObjectId> visited;
+        for (auto *object = doc.GetScene().Find(reveal); object && visited.insert(object->id).second;
+             object = doc.GetScene().Find(object->parent))
+            state.collapsedHierarchyParents.erase(object->parent);
+        const auto &filtered = doc.HierarchyRows(state.hierarchySearch, MatchingHierarchyTags(state));
+        if (std::none_of(filtered.begin(), filtered.end(),
+                         [reveal](const auto &row) { return row.id == reveal; }))
+            state.hierarchySearch.clear();
+    }
     if (!BeginEditorPanel("Hierarchy", state.dockingEnabled ? &state.showHierarchy : nullptr, state,
-                          &state.workspace.hierarchy)) {
+                          &state.workspace.hierarchy, reveal ? ImGuiWindowFlags_NoFocusOnAppearing : 0)) {
         ImGui::End();
         return;
     }
@@ -74,39 +114,46 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
     ImGui::Spacing();
     char search[256];
     CopyToBuffer(state.hierarchySearch, search, sizeof(search));
-    ImGui::SetNextItemWidth(std::max(40.0f, ImGui::GetContentRegionAvail().x - 30.0f));
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {25.f * scale, 5.f * scale});
-    if (ImGui::InputTextWithHint("##hierarchySearch", "Search names, tags, folders...", search,
-                                 sizeof(search)))
+    if (EditorDesign::Search("##hierarchySearch", "Search scene objects", search, sizeof(search)))
         state.hierarchySearch = search;
-    ImGui::PopStyleVar();
-    const auto searchPosition = ImGui::GetItemRectMin();
-    EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), EditorVisuals::Icon::Search,
-                            {searchPosition.x + 6.f * scale, searchPosition.y + 6.f * scale}, 13.f * scale,
-                            ImGui::GetColorU32(ImGuiCol_TextDisabled));
-    ImGui::SameLine();
-    if (ImGui::SmallButton("X##clearSearch"))
-        state.hierarchySearch.clear();
-    ToolbarHint("Clear hierarchy search");
     ImGui::Spacing();
     ImGui::PushFont(EditorVisuals::HeadingFont());
     EditorVisuals::IconText(EditorVisuals::Icon::Scene,
                             scene.Settings().name.empty() ? "Scene" : scene.Settings().name.c_str(), 14);
     ImGui::PopFont();
-    ImGui::TextDisabled("%zu objects  /  %zu selected", scene.Objects().size(), doc.Selection().size());
     ImGui::Separator();
     SceneObjectId toDelete = kInvalidSceneObjectId;
     SceneObjectId reparentTo = kInvalidSceneObjectId;
     bool reparent = false;
     int move = 0;
     SceneObjectId moveId = kInvalidSceneObjectId;
-    ImGui::BeginChild("list", ImVec2(0.0f, -ImGui::GetFrameHeightWithSpacing()));
-    CategoryMask matchingTags = 0;
-    if (state.project && !state.hierarchySearch.empty())
-        for (const auto &[id, name] : state.project->Settings().classification.tags.names)
-            if (name.find(state.hierarchySearch) != std::string::npos)
-                matchingTags |= CategoryBit(id);
-    const auto &rows = doc.HierarchyRows(state.hierarchySearch, matchingTags);
+    const float footerHeight = std::max(ImGui::GetFrameHeight(), 32.f * scale) +
+                               ImGui::GetStyle().ItemSpacing.y;
+    ImGui::BeginChild("list", ImVec2(0.0f, -footerHeight));
+    const auto matchingTags = MatchingHierarchyTags(state);
+    const auto &matchedRows = doc.HierarchyRows(state.hierarchySearch, matchingTags);
+    std::vector<EditorHierarchyRow> foldedRows;
+    const auto &rows = [&]() -> const std::vector<EditorHierarchyRow> & {
+        if (state.collapsedHierarchyParents.empty() || !state.hierarchySearch.empty())
+            return matchedRows;
+        foldedRows.reserve(matchedRows.size());
+        unsigned foldedDepth = ~0u;
+        for (const auto &row : matchedRows) {
+            if (row.depth > foldedDepth)
+                continue;
+            foldedDepth = ~0u;
+            foldedRows.push_back(row);
+            if (state.collapsedHierarchyParents.count(row.id))
+                foldedDepth = row.depth;
+        }
+        return foldedRows;
+    }();
+    std::set<SceneObjectId> parents;
+    for (const auto &row : matchedRows)
+        if (scene.Objects()[row.sceneIndex].parent)
+            parents.insert(scene.Objects()[row.sceneIndex].parent);
+    const auto revealRow =
+        std::find_if(rows.begin(), rows.end(), [reveal](const auto &row) { return row.id == reveal; });
     // ImGui snaps item positions to pixels. A fractional row pitch would
     // round differently above the viewport and change the scroll extent.
     const float spacing = ImGui::GetStyle().ItemSpacing.y;
@@ -158,47 +205,67 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
         if (broken)
             label += "  (!)";
         label += "##" + std::to_string(o.id);
-        const float indentation = float(row.depth) * 12.0f * ImGui::GetIO().FontGlobalScale;
+        const float indentation = std::min(float(row.depth) * 16.f * scale,
+            std::max(0.f, ImGui::GetContentRegionAvail().x - 125.f * scale));
         if (indentation > 0)
             ImGui::Indent(indentation);
         const auto textColor = ImGui::GetColorU32(broken ? ImVec4(1.0f, 0.55f, 0.3f, 1.0f)
                                                          : ImGui::GetStyleColorVec4(ImGuiCol_Text));
-        auto accent = EditorVisuals::AccentColor();
-        accent.w = .18f;
-        ImGui::PushStyleColor(ImGuiCol_Header, accent);
-        accent.w = .26f;
-        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, accent);
-        accent.w = .36f;
-        ImGui::PushStyleColor(ImGuiCol_HeaderActive, accent);
-        // Keep the original selectable identity/interaction; draw its visible
-        // label beside a code-native type icon rather than a letter prefix.
-        ImGui::PushStyleColor(ImGuiCol_Text, {0, 0, 0, 0});
-        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick,
-                              {0, rowHeight})) {
+        const bool hasChildren = parents.count(o.id) != 0;
+        const auto start = ImGui::GetCursorScreenPos();
+        const auto pointer = ImGui::GetIO().MousePos;
+        const bool overDisclosure = hasChildren && pointer.x >= start.x && pointer.x < start.x + 14.f * scale &&
+                                    pointer.y >= start.y && pointer.y < start.y + rowHeight;
+        const bool activated = EditorDesign::Row(label.c_str(), selected, {0, rowHeight}, true,
+                                                  14.f * scale + 14.f * scale + 12.f * scale);
+        const auto rowId = ImGui::GetItemID();
+        const auto &navigation = *ImGui::GetCurrentContext();
+        const bool navigationActivated = navigation.NavActivateId == rowId ||
+                                         navigation.NavActivatePressedId == rowId;
+        // Pointer presses on the disclosure arrow fold without selecting.
+        // A resting pointer must not suppress keyboard/gamepad activation.
+        if (activated && (!overDisclosure || navigationActivated)) {
             if (ImGui::GetIO().KeyShift)
                 doc.SelectRange(o.id, rows, ImGui::GetIO().KeyCtrl);
             else
                 doc.Select(o.id, ImGui::GetIO().KeyCtrl);
+            state.hierarchyObservedSelection = doc.Selected();
             if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                 state.renamingId = o.id;
                 state.renameBuffer = o.name;
             }
         }
-        ImGui::PopStyleColor(4);
         const auto rowMinimum = ImGui::GetItemRectMin(), rowMaximum = ImGui::GetItemRectMax();
         auto *draw = ImGui::GetWindowDrawList();
         const float glyph = 14.f * scale;
         const float rowTop = rowMinimum.y + (rowMaximum.y - rowMinimum.y - glyph) * .5f;
-        EditorVisuals::DrawIcon(draw, HierarchyIcon(o), {rowMinimum.x + 5.f * scale, rowTop}, glyph,
+        const float arrowSize = 14.f * scale;
+        const bool folded = state.collapsedHierarchyParents.count(o.id) != 0;
+        if (hasChildren) {
+            const ImVec2 center{rowMinimum.x + arrowSize * .5f, rowMinimum.y + rowHeight * .5f};
+            const float r = 3.5f * scale;
+            if (folded)
+                draw->AddTriangleFilled({center.x - r * .5f, center.y - r},
+                                        {center.x - r * .5f, center.y + r}, {center.x + r, center.y},
+                                        textColor);
+            else
+                draw->AddTriangleFilled({center.x - r, center.y - r * .5f},
+                                        {center.x + r, center.y - r * .5f}, {center.x, center.y + r},
+                                        textColor);
+            if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left) &&
+                ImGui::GetIO().MousePos.x < rowMinimum.x + arrowSize) {
+                if (folded)
+                    state.collapsedHierarchyParents.erase(o.id);
+                else
+                    state.collapsedHierarchyParents.insert(o.id);
+            }
+        }
+        EditorVisuals::DrawIcon(draw, HierarchyIcon(o), {rowMinimum.x + arrowSize + 5.f * scale, rowTop},
+                                glyph,
                                 selected ? ImGui::GetColorU32(EditorVisuals::AccentColor()) : textColor);
-        const ImVec4 clip{rowMinimum.x + glyph + 12.f * scale, rowMinimum.y, rowMaximum.x - 4.f * scale,
-                          rowMaximum.y};
-        draw->AddText(ImGui::GetFont(), ImGui::GetFontSize(),
-                      {clip.x, rowMinimum.y + (rowHeight - ImGui::GetFontSize()) * .5f}, textColor,
-                      label.c_str(), ImGui::FindRenderedTextEnd(label.c_str()), 0, &clip);
-        if (selected) {
-            accent.w = .55f;
-            draw->AddRect(rowMinimum, rowMaximum, ImGui::GetColorU32(accent), 4.f);
+        if (o.id == reveal) {
+            ImGui::SetScrollFromPosY(rowMinimum.y - ImGui::GetWindowPos().y + rowHeight * .5f, .5f);
+            state.revealHierarchyObject = kInvalidSceneObjectId;
         }
         if (row.depth) {
             const float branchX = rowMinimum.x - 5.f * scale;
@@ -223,8 +290,13 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
             ImGui::EndTooltip();
         }
         if (editing && ImGui::BeginPopupContextItem()) {
-            if (!selected)
+            if (!selected) {
                 doc.Select(o.id);
+                // This is an internal hierarchy selection, just like a left
+                // click. Keep the row beside its open context menu rather
+                // than treating it as an external Scene reveal next frame.
+                state.hierarchyObservedSelection = doc.Selected();
+            }
             if (ImGui::BeginMenu("Create child")) {
                 DrawEditorCreationItems(state, requests, o.id);
                 ImGui::EndMenu();
@@ -284,6 +356,8 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
     } else {
         ImGuiListClipper clipper;
         clipper.Begin(static_cast<int>(rows.size()), rowPitch);
+        if (revealRow != rows.end())
+            clipper.IncludeItemByIndex(static_cast<int>(revealRow - rows.begin()));
         while (clipper.Step())
             for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; ++i)
                 drawRow(rows[i]);
@@ -292,9 +366,11 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
     JUDAS_PROFILE_COUNTER("Hierarchy submitted rows", double(submitted), ProfileCounterMode::Latest);
     DrawHierarchyCreationPopup(state, requests);
     ImGui::EndChild();
+    ImGui::TextDisabled("%zu objects", scene.Objects().size());
+    ImGui::SameLine(std::max(ImGui::GetCursorPosX(), ImGui::GetWindowContentRegionMax().x - 78.f * scale));
     if (editing) {
         ImGui::BeginDisabled(doc.Selected() == kInvalidSceneObjectId);
-        if (ImGui::Button("Actions", {-1, 0}))
+        if (EditorDesign::ActionButton("Actions", EditorDesign::Tone::Quiet, {78.f * scale, 0}))
             ImGui::OpenPopup("##selectionActions");
         ToolbarHint("Duplicate, group or delete the selection");
         if (ImGui::BeginPopup("##selectionActions")) {

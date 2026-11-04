@@ -162,6 +162,37 @@ Adding a panel is not a dynamic plug-in loader or automatic schema generator;
 if it needs saved visibility, add the named preference member/mapping and tests.
 Do not add a panel-specific branch to the main frame or an unrelated panel.
 
+## Shared Judas controls and model discovery
+
+[`EditorDesign`](../src/editor/EditorDesign.h) owns reusable, custom-painted
+actions, toggles, selection/tree rows, disclosure headers, search fields, inset
+fields and padded surfaces. It uses ImGui's existing input, keyboard navigation,
+disabled state, identity and docking infrastructure. It owns no project data or
+runtime. [`EditorWidgets`](../src/editor/EditorWidgets.cpp) retains authoring and
+Undo transaction boundaries; [`EditorVisuals`](../src/editor/EditorVisuals.h)
+supplies semantic vector icons. Panels compose these controls rather than
+duplicating their rendering or depending on default widget appearance.
+
+Hierarchy displays actual scene parenting in parent-first order, with folding
+and automatic reveal after Scene selection. Sibling order still follows the
+authored scene; it does not rewrite serialization or physical ownership. Create
+child creates a real scene child, while creation in empty space creates a root.
+
+A complete skinned character can be one scene object. Its skeleton and mesh
+parts are model internals, not missing scene children. Use **Inspect model** in
+the object's Inspector (Edit mode), then **Shared skeleton** in Asset Details.
+The model node list is read-only and follows the imported parent hierarchy.
+Runtime socket attachments and script-held entity references do not become
+authored scene children. They remain inspectable through their relevant
+component/script tools; this view does not invent a unified attachment tree.
+
+Asset grids reuse ResourceManager for asynchronous texture/sprite-sheet
+previews. Hidden browsers and Play release preview demand. The browser allows
+two pending previews, starts at most two per frame, pins at most sixteen ready
+entries and uses a ready-pin budget of the smaller of 32 MiB and one quarter of
+the configured resource budget. It currently requests full resource textures:
+these limits do **not** strictly bound transient image-decoding memory.
+
 ## Scripting, breakpoints and lifetime boundaries
 
 [Scripting V2](judasjs/scripting-v2.md) still provides one QuickJS session for the

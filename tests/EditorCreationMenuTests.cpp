@@ -144,16 +144,20 @@ int main() {
         scene.Find(leaf)->tags = CategoryBit(4);
         check(scene.MoveObject(leaf, -1) && scene.MoveObject(leaf, -1) && scene.MoveObject(leaf, -1), "hierarchy fixture puts a child before its ancestors");
         const auto& filteredRows = tree.HierarchyRows("Rare fixture tag", CategoryBit(4));
-        check(filteredRows.size() == 3 && filteredRows[0].id == leaf && filteredRows[0].depth == 2 &&
-                  filteredRows[1].id == trunk && filteredRows[1].depth == 0 &&
-                  filteredRows[2].id == branch && filteredRows[2].depth == 1,
-              "tag search includes all ancestors in drawn scene order with depth");
+        check(filteredRows.size() == 3 && filteredRows[0].id == trunk && filteredRows[0].depth == 0 &&
+                  filteredRows[1].id == branch && filteredRows[1].depth == 1 &&
+                  filteredRows[2].id == leaf && filteredRows[2].depth == 2,
+              "tag search displays a contiguous parent-first tree independent of serialized order");
         tree.Select(leaf);
         tree.SelectRange(trunk, filteredRows);
-        check(tree.Selection() == std::vector<SceneObjectId>{leaf, trunk} && tree.Selected() == trunk,
+        check(tree.Selection() == std::vector<SceneObjectId>{trunk, branch, leaf} && tree.Selected() == trunk,
               "Shift selects the visible span rather than numeric IDs");
-        tree.Select(unused, true);
         tree.Select(trunk, true);
+        check(!tree.IsSelected(trunk), "Ctrl toggling removes an existing tree selection");
+        tree.Select(trunk, true);
+        check(tree.IsSelected(trunk), "Ctrl toggling restores a tree selection without duplicate rows");
+        tree.Select(leaf);
+        tree.Select(unused, true);
         tree.Select(trunk, true);
         tree.SelectRange(branch, filteredRows, true);
         check(tree.Selection() == std::vector<SceneObjectId>{leaf, unused, trunk, branch},
@@ -166,7 +170,7 @@ int main() {
         scene.Find(leaf)->name = "Renamed leaf";
         tree.CommitEdit();
         check(tree.ValidationError().empty() && tree.HierarchyRows("Renamed leaf").size() == 3 &&
-                  tree.HierarchyRows("Renamed leaf").front().id == leaf,
+                  tree.HierarchyRows("Renamed leaf").back().id == leaf,
               "committed rename updates filtered rows");
         tree.Undo();
         check(tree.HierarchyRows("Renamed leaf").empty() && tree.HierarchyRows("Leaf").size() == 3,

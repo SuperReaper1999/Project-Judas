@@ -1,0 +1,10 @@
+Inspector fixture native remembered-focus identification (matching ImGui CRC32C):
+Properties window ID: eb6d028d
+Body header ID: 7980f042
+Body component-actions ID: 3772fd95
+Collider enabled ID: 7decaeae
+Advanced object tools ID: 59e55ed9
+Trace v3: expected Body header 7980f042 submitted enabled (ItemFlags 0x10); remembered 3772fd95 never advances with forward Tab.
+Trace v4: native Shift+Tab moves 3772fd95 -> 59e55ed9; subsequent Tab -> 7980f042. All 65 checks pass.
+The fixture directly switches mode and retains child focus. Actual application Play hands focus to Game; no production navigation bug established.
+Only fixture navigation helper changed. No forced NavId/visibility or weakened assertion. Production instrumentation removed before clean build.

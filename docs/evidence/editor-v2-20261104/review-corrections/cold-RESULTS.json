@@ -1,0 +1,22 @@
+[
+  {
+    "phase": "write",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-cold/relocated/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-cold/relocated/game.judasproj"
+    ],
+    "exit": 0,
+    "expectedLog": "COLD_WRITE_COMMITTED",
+    "observed": true
+  },
+  {
+    "phase": "read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-cold/relocated/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-cold/relocated/game.judasproj"
+    ],
+    "exit": 0,
+    "expectedLog": "COLD_ENDPOINT_PASS marker=48371 pose=3,2,1",
+    "observed": true
+  }
+]

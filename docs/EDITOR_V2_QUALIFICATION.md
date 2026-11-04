@@ -5,6 +5,21 @@
 Main remains `1094d64515604fe9d03fdab479efc7f880b112a8`.
 This is an Experimental editor checkpoint, not an Alpha v2.0.0 release or human acceptance.
 
+## Latest review corrections
+
+The subsequent review is recorded in
+[the review-correction receipt](evidence/editor-v2-20261104/review-corrections/README.md).
+It supersedes the earlier visual screenshots for the current UI. The timing
+sample and initial qualification below retain their original checkpoint scope.
+
+The review adds a shared Judas control layer, true parent-first hierarchy rows,
+Scene-to-Hierarchy reveal, readable script/advanced groups, model discovery and
+asynchronous texture thumbnails with explicit resource retirement. It does not
+create scene children for model bones or script references. An alleged wrong
+creation type was not reproduced by the original native menu controls; the
+reproduced child-display ordering defect is corrected, and creation feedback now
+records the requested kind and actual parent for further reports.
+
 ## Four-stage result
 
 1. **Shell and ownership:** official pinned ImGui `v1.91.9b-docking`, one dock

@@ -1,0 +1,20 @@
+script asset=c4945fe54d676a24b05f7577969fcca9 entity=1 slot=1 update: Error: Console consumer fault
+    at update (Assets/fault.js:1:99)
+
+PASS isolated ordinary project is created
+PASS faulting and live sources are tracked through the normal asset database
+PASS consumer world builds without a graphics runtime
+PASS real gameplay fault produces a source-bearing diagnostic
+PASS fault isolation leaves another script running without output capture
+PASS Console registers from its own module without an application frame
+PASS Console observation runs inside a genuine suspended callback
+PASS hidden Console executes no panel body or local-state allocation
+PASS registered Console actually draws diagnostic rows during a debugger stop
+PASS unknown diagnostic source stays visible without inventing an edit target
+PASS activating the real source row requests the registered script asset
+PASS ordinary request pump opens the existing source editor with exact source bytes
+PASS stopped Console draws preserve the same VM, script state and physical endpoint
+PASS inspection/source opening preserve diagnostics, authored content and on-disk source
+PASS resuming executes the suspended gameplay instruction exactly once
+PASS physical control moves when simulation is explicitly advanced
+EDITOR_CONSOLE 16 checks 0 failures

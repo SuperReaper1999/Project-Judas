@@ -112,6 +112,8 @@ public:
     void DestroyRenderTarget(RenderTargetHandle target);
     TextureHandle RenderTargetTexture(RenderTargetHandle target) const;
     std::uintptr_t EditorImageToken(TextureHandle) const;
+    // CPU metadata only; invalid/stale handles have no dimensions.
+    glm::ivec2 TextureSize(TextureHandle) const;
     glm::ivec2 RenderTargetSize(RenderTargetHandle target) const;
     void FinishForDiagnostics() const;
     // Preserve is for compositing an already resolved image (for example its HUD).

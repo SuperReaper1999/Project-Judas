@@ -6,6 +6,7 @@
 #include "EditorWorkspace.h"
 #include "EditorTheme.h"
 #include "EditorVisuals.h"
+#include "EditorDesign.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
 #include "imgui.h"
@@ -17,6 +18,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <optional>
 #include <glm/gtc/quaternion.hpp>
 #include <set>
 #include <sstream>
@@ -28,48 +30,12 @@ using namespace EditorPanelWidgets;
 #include "ModelCook.h"
 #include "Prefab.h"
 #include "RenderPreview.h"
+#include "ResourceManager.h"
 #include "RuntimeInspector.h"
 
 namespace {
-// A visual group, not a child window: original field IDs, popup ownership and
-// edit transactions stay in their existing inspector scope. Each card owns its
-// splitter so nested component tables/groups can split their own draw lists.
-class InspectorCard {
-  public:
-    explicit InspectorCard(bool secondary = false)
-        : draw(ImGui::GetWindowDrawList()), width(ImGui::GetContentRegionAvail().x),
-          padding(9.f * ImGui::GetIO().FontGlobalScale),
-          accent(secondary ? EditorSecondaryAccent() : EditorVisuals::AccentColor()) {
-        splitter.Split(draw, 2);
-        splitter.SetCurrentChannel(draw, 1);
-        ImGui::BeginGroup();
-        ImGui::Dummy({0, padding});
-        ImGui::Indent(padding);
-        ImGui::PushItemWidth(std::max(1.f, width - 2 * padding));
-        ImGui::PushTextWrapPos(ImGui::GetCursorPosX() + std::max(1.f, width - 2 * padding));
-    }
-    ~InspectorCard() {
-        ImGui::PopTextWrapPos();
-        ImGui::PopItemWidth();
-        ImGui::Unindent(padding);
-        ImGui::Dummy({width, padding});
-        ImGui::EndGroup();
-        const auto low = ImGui::GetItemRectMin(), high = ImGui::GetItemRectMax();
-        splitter.SetCurrentChannel(draw, 0);
-        draw->AddRectFilled(low, high, ImGui::GetColorU32(EditorVisuals::SurfaceColor()), 6.f);
-        accent.w = .28f;
-        draw->AddRect(low, high, ImGui::GetColorU32(accent), 6.f);
-        splitter.Merge(draw);
-        ImGui::Dummy({0, 7.f * ImGui::GetIO().FontGlobalScale});
-    }
-
-  private:
-    ImDrawList *draw;
-    ImDrawListSplitter splitter;
-    float width, padding;
-    ImVec4 accent;
-};
-
+// Shared surfaces do not introduce child windows or ID scopes. The inspector
+// owns edit transactions; the design primitives own only interaction/paint.
 EditorVisuals::Icon ObjectIcon(const SceneObject &object) {
     using Icon = EditorVisuals::Icon;
     if (object.characterMotor || object.playerStart)
@@ -129,6 +95,50 @@ EditorVisuals::Icon ComponentIcon(const char *name) {
     return Icon::Cube;
 }
 
+const char *ComponentTitle(const ComponentEditor &editor, const SceneObject &object) {
+    const std::string name(editor.name);
+    if (name == "Render")
+        return object.render && object.render->shape == SceneShape::Sprite ? "Sprite" : "Appearance";
+    if (name == "Body")
+        return "Physics body";
+    if (name == "Character motor")
+        return "Character movement";
+    if (name == "Render camera")
+        return "Camera";
+    if (name == "Runtime UI")
+        return "User interface";
+    if (name == "Visual socket")
+        return "Attachment";
+    return editor.name;
+}
+
+const char *ComponentPurpose(const char *name) {
+    const std::string type(name);
+    if (type == "Scripts")
+        return "Game behaviour written in JavaScript.";
+    if (type == "Render")
+        return "How this object looks. Collision is configured separately.";
+    if (type == "Body")
+        return "The shape that collides, and how physics moves it.";
+    if (type == "Character motor")
+        return "Collision and ground support for a character. Its script controls walking and jumping.";
+    if (type == "Animation")
+        return "Play and blend animation on this object's model.";
+    if (type == "Render camera")
+        return "A view of your game, including secondary-camera output.";
+    if (type == "Light")
+        return "Colour, brightness and reach of this light.";
+    if (type == "Audio emitter")
+        return "The sound this object plays.";
+    if (type == "Runtime UI")
+        return "An interface document displayed by this object.";
+    if (type == "Basic water")
+        return "An inexpensive water surface and swimming area; no advanced fluid simulation.";
+    if (type == "Navigation agent")
+        return "Route following for this character or moving object.";
+    return "Expand to edit this component. Its advanced options stay with it.";
+}
+
 template <class Publish>
 void CompactAxes(EditorDocument &doc, const char *id, const char *label, glm::vec3 values, float speed,
                  const char *format, Publish publish) {
@@ -156,6 +166,7 @@ void CompactAxes(EditorDocument &doc, const char *id, const char *label, glm::ve
         ImGui::TextColored(colors[axis], "%s", axes[axis]);
         ImGui::SameLine(0, 2.f * scale);
         ImGui::SetNextItemWidth(std::max(1.f, fieldWidth - axisWidth - 2.f * scale));
+        EditorDesign::FieldFrame field;
         const bool changed = ImGui::DragFloat("", &values[axis], speed, 0, 0, format);
         if (ImGui::IsItemActivated())
             doc.BeginEdit(); // Snapshot the authored quaternion before Euler conversion.
@@ -170,7 +181,7 @@ void CompactAxes(EditorDocument &doc, const char *id, const char *label, glm::ve
 }
 
 void PinnedTransform(EditorDocument &doc, SceneObject &object) {
-    InspectorCard card;
+    EditorDesign::Surface card(EditorDesign::Tone::Secondary);
     ImGui::PushFont(EditorVisuals::HeadingFont());
     EditorVisuals::IconText(EditorVisuals::Icon::Move, "Transform");
     ImGui::PopFont();
@@ -184,7 +195,7 @@ void PinnedTransform(EditorDocument &doc, SceneObject &object) {
     CompactAxes(doc, "Scale", "Scale", object.transform.scale, .01f, "%.4g",
                 [&](glm::vec3 value) { object.transform.scale = value; });
     if (ImGui::IsItemHovered())
-        ImGui::SetTooltip("Scale changes mesh rendering; physical dimensions belong to the Body component.");
+        ImGui::SetTooltip("Scale changes appearance. Collider dimensions are in Physics body.");
 }
 
 bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneObject &o,
@@ -195,34 +206,26 @@ bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneOb
         state.revealComponent.clear();
     }
     const bool common = std::string(editor.name) == "Scripts";
-    const char *title =
+    const char *title = ComponentTitle(editor, o);
+    // Display friendlier titles without changing existing collapse/widget IDs.
+    const char *originalTitle =
         std::string(editor.name) == "Render" && o.render && o.render->shape == SceneShape::Sprite
             ? "Sprite"
             : editor.name;
-    const auto headerId = ImGui::GetID(title);
-    ImGui::PushFont(EditorVisuals::HeadingFont());
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {6, 7});
-    ImGui::PushStyleColor(ImGuiCol_Header, EditorVisuals::SurfaceColor(.045f));
-    ImGui::PushOverrideID(headerId);
-    bool open =
-        ImGui::CollapsingHeader("", common ? ImGuiTreeNodeFlags_DefaultOpen : ImGuiTreeNodeFlags_None);
-    ImGui::PopID();
-    ImGui::PopStyleColor();
-    ImGui::PopStyleVar();
+    const auto headerId = ImGui::GetID(originalTitle);
+    bool open = InspectorDisclosure(title, common, headerId, ImGui::GetFontSize() + 9);
     const auto minimum = ImGui::GetItemRectMin(), maximum = ImGui::GetItemRectMax();
     const float size = ImGui::GetFontSize();
     const float top = minimum.y + (maximum.y - minimum.y - size) * .5f;
     const auto color = common ? EditorSecondaryAccent() : EditorVisuals::AccentColor();
     EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), ComponentIcon(editor.name),
                             {minimum.x + size + 8, top}, size, ImGui::GetColorU32(color));
-    ImGui::GetWindowDrawList()->AddText({minimum.x + 2 * size + 15, top}, ImGui::GetColorU32(ImGuiCol_Text),
-                                        title);
-    ImGui::PopFont();
-    ImGui::SetItemTooltip("Expand to edit. Right-click or use ... for component actions.");
+    ImGui::SetItemTooltip("%s\nComponent: %s\nRight-click or use ... for component actions.",
+                          ComponentPurpose(editor.name), editor.name);
     ImGui::OpenPopupOnItemClick("Component actions");
     const auto afterHeader = ImGui::GetCursorScreenPos();
     ImGui::SetCursorScreenPos({maximum.x - 28, minimum.y + 3});
-    if (ImGui::SmallButton("...##componentActions"))
+    if (EditorDesign::ActionButton("...##componentActions", EditorDesign::Tone::Quiet, {25, 22}))
         ImGui::OpenPopup("Component actions");
     ImGui::SetCursorScreenPos(afterHeader);
     if (ImGui::BeginPopup("Component actions")) {
@@ -245,7 +248,11 @@ void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState 
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10, 8});
     ImGui::SetNextItemWidth(-1);
     ImGui::SetNextWindowSizeConstraints({260, 0}, {600, 420});
-    const bool open = ImGui::BeginCombo("##add", "+  Add component...");
+    bool open;
+    {
+        EditorDesign::FieldFrame field;
+        open = ImGui::BeginCombo("##add", "+  Add component...");
+    }
     ImGui::PopStyleVar();
     ImGui::PopStyleColor(2);
     if (!open)
@@ -255,7 +262,9 @@ void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState 
         filter.Clear();
         ImGui::SetKeyboardFocusHere();
     }
-    filter.Draw("Find component", -1);
+    if (EditorDesign::Search("Find component", "Find a component...", filter.InputBuf,
+                             sizeof(filter.InputBuf)))
+        filter.Build();
     std::vector<const ComponentEditor *> editors;
     for (const auto &editor : ComponentEditorRegistry())
         editors.push_back(&editor);
@@ -265,14 +274,16 @@ void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState 
         const auto &editor = *entry;
         if (editor.has(o))
             continue;
-        if (!filter.PassFilter(editor.name))
+        if (!filter.PassFilter(editor.name) && !filter.PassFilter(ComponentTitle(editor, o)))
             continue;
-        if (ImGui::Selectable(editor.name)) {
+        const std::string label = std::string(ComponentTitle(editor, o)) + "###" + editor.name;
+        if (EditorDesign::Row(label.c_str(), false)) {
             doc.BeginEdit();
             editor.add(o);
             doc.CommitEdit();
             state.revealComponent = editor.name;
         }
+        ImGui::SetItemTooltip("%s", ComponentPurpose(editor.name));
     }
     ImGui::EndCombo();
 }
@@ -374,12 +385,13 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         ImGui::End();
         return;
     }
+    std::optional<InspectorReadOnlyScope> authoredLock;
     if (state.mode == EditorMode::Play) {
         ImGui::TextDisabled("Authored values are read-only while playing.");
-        ImGui::BeginDisabled();
+        authoredLock.emplace(true);
     }
     {
-        InspectorCard identity(true);
+        EditorDesign::Surface identity(EditorDesign::Tone::Quiet);
         const float scale = ImGui::GetIO().FontGlobalScale;
         const auto origin = ImGui::GetCursorScreenPos();
         EditorVisuals::DrawIcon(ImGui::GetWindowDrawList(), ObjectIcon(*o),
@@ -394,16 +406,36 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         ImGui::PushFont(EditorVisuals::HeadingFont());
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {6, 3});
         ImGui::SetNextItemWidth(-1);
-        const bool renamed = ImGui::InputText("", name, sizeof(name));
-        if (ImGui::IsItemActivated())
-            doc.BeginEdit();
-        if (renamed)
-            o->name = name;
-        TrackEdit(doc);
+        {
+            EditorDesign::FieldFrame nameField;
+            const bool renamed = ImGui::InputText("", name, sizeof(name));
+            if (ImGui::IsItemActivated())
+                doc.BeginEdit();
+            if (renamed)
+                o->name = name;
+            TrackEdit(doc);
+        }
         ImGui::PopStyleVar();
         ImGui::PopFont();
         ImGui::PopID();
         ImGui::TextDisabled("%s", ObjectType(*o));
+        if (o->render && o->render->shape == SceneShape::Mesh && !o->render->meshAsset.empty()) {
+            // The asset authoring panel is available after Stop, not during Play.
+            const auto skeleton =
+                state.resources ? state.resources->TryGetSkeletal(o->render->meshAsset) : nullptr;
+            if (skeleton && !skeleton->skeleton.skinNodes.empty())
+                ImGui::TextDisabled("Skinned model / %zu nodes", skeleton->skeleton.names.size());
+            if (EditorDesign::ActionButton("Inspect model", EditorDesign::Tone::Secondary)) {
+                state.browserSelection = o->render->meshAsset;
+                state.selectAssetDetails = true;
+                state.showAssetBrowser = true;
+                state.revealModelStructure = true;
+            }
+            ImGui::SetItemTooltip(
+                state.mode == EditorMode::Play
+                    ? "Stop Play to inspect the authored model in Assets."
+                    : "View the actual imported model and its skeleton in Assets. Model nodes are not scene children.");
+        }
         ImGui::Unindent(40.f * scale);
     }
     PinnedTransform(doc, *o);
@@ -411,7 +443,7 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
     const float addHeight = ImGui::GetFontSize() + 16.f + ImGui::GetStyle().ItemSpacing.y;
     ImGui::BeginChild("Inspector component properties", {0, -addHeight});
     if (state.mode == EditorMode::Play && state.runtime) {
-        ImGui::EndDisabled();
+        authoredLock.reset();
         DrawRuntimeRenderPreview(doc, o->id, state);
         DrawSelectedAIShortcuts(*o, state);
         if (ImGui::CollapsingHeader("Ownership & readiness")) {
@@ -421,230 +453,265 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
                 state.showRuntimeInspector = true;
             }
         }
-        ImGui::BeginDisabled();
+        authoredLock.emplace(true);
     }
     if (state.mode == EditorMode::Edit)
         DrawSelectedAIShortcuts(*o, state);
-    ImGui::TextDisabled("COMPONENTS");
-    for (const ComponentEditor &editor : ComponentEditorRegistry()) {
-        if (!editor.has(*o))
-            continue;
-        InspectorCard card(std::string(editor.name) == "Scripts");
-        if (ComponentHeader(doc, editor, *o, state))
+    // Keep ordinary authoring ahead of specialist systems regardless of the
+    // engine component registry's historical registration order.
+    std::vector<const ComponentEditor *> attached;
+    for (const auto &editor : ComponentEditorRegistry())
+        if (editor.has(*o))
+            attached.push_back(&editor);
+    const auto priority = [](const ComponentEditor *editor) {
+        const std::string name(editor->name);
+        return name == "Scripts"           ? 0
+               : name == "Render"          ? 1
+               : name == "Body"            ? 2
+               : name == "Character motor" ? 3
+               : name == "Animation"       ? 4
+                                           : 5;
+    };
+    std::stable_sort(attached.begin(), attached.end(),
+                     [&](const auto *a, const auto *b) { return priority(a) < priority(b); });
+    if (o->scripts.empty()) {
+        EditorDesign::Surface scriptCard(EditorDesign::Tone::Secondary);
+        ImGui::PushFont(EditorVisuals::HeadingFont());
+        EditorVisuals::IconText(EditorVisuals::Icon::Script, "Scripts");
+        ImGui::PopFont();
+        ImGui::TextWrapped("Add behaviour to this object with JavaScript.");
+        const auto owner = o->id;
+        DrawEditorScriptWorkflow(doc, *o, state);
+        o = doc.GetScene().Find(owner); // An AI starter may append scene objects.
+    }
+    for (const auto *entry : attached) {
+        const auto &editor = *entry;
+        EditorDesign::Surface card(EditorDesign::Tone::Secondary);
+        if (ComponentHeader(doc, editor, *o, state)) {
+            if (std::string(editor.name) != "Scripts")
+                ImGui::TextWrapped("%s", ComponentPurpose(editor.name));
             editor.draw(doc, *o, state);
+            if (std::string(editor.name) == "Scripts" && editor.has(*o) &&
+                InspectorDisclosure("Add another script")) {
+                const auto owner = o->id;
+                DrawEditorScriptWorkflow(doc, *o, state);
+                o = doc.GetScene().Find(owner);
+            }
+        }
     }
-    {
-        InspectorCard scriptCard(true);
-        if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty() ? ImGuiTreeNodeFlags_DefaultOpen
-                                                                              : ImGuiTreeNodeFlags_None))
-            DrawEditorScriptWorkflow(doc, *o, state);
-    }
+    authoredLock.reset();
     ImGui::Spacing();
-    if (ImGui::CollapsingHeader("Object settings")) {
-        ImGui::TextDisabled("Object ID: %llu", static_cast<unsigned long long>(o->id));
-        Checkbox(doc, "Entity render visible", o->renderVisible);
-        if (!o->prefabRoot) {
-            const auto *parent = doc.GetScene().Find(o->parent);
-            ImGui::TextWrapped("Parent (local transform)");
-            ImGui::SetNextItemWidth(-1);
-            ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
-            if (ImGui::BeginCombo("", parent ? parent->name.c_str() : "None")) {
-                if (ImGui::Selectable("None", !o->parent)) {
-                    doc.BeginEdit();
-                    o->parent = 0;
-                    doc.CommitEdit();
-                }
-                for (const auto &candidate : doc.GetScene().Objects())
-                    if (candidate.id != o->id &&
-                        ImGui::Selectable(candidate.name.c_str(), candidate.id == o->parent)) {
-                        const auto old = o->parent;
-                        doc.BeginEdit();
-                        o->parent = candidate.id;
-                        std::string error;
-                        if (!ValidateHierarchy(doc.GetScene(), error)) {
-                            o->parent = old;
-                            state.status = error;
+    if (EditorDesign::Disclosure("Advanced object tools")) {
+        {
+            InspectorReadOnlyScope advancedLock(state.mode != EditorMode::Edit);
+            if (ImGui::CollapsingHeader("Object settings")) {
+                ImGui::TextDisabled("Object ID: %llu", static_cast<unsigned long long>(o->id));
+                Checkbox(doc, "Entity render visible", o->renderVisible);
+                if (!o->prefabRoot) {
+                    const auto *parent = doc.GetScene().Find(o->parent);
+                    ImGui::TextWrapped("Parent (local transform)");
+                    ImGui::SetNextItemWidth(-1);
+                    ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
+                    if (ImGui::BeginCombo("", parent ? parent->name.c_str() : "None")) {
+                        if (ImGui::Selectable("None", !o->parent)) {
+                            doc.BeginEdit();
+                            o->parent = 0;
+                            doc.CommitEdit();
                         }
-                        doc.CommitEdit();
+                        for (const auto &candidate : doc.GetScene().Objects())
+                            if (candidate.id != o->id &&
+                                ImGui::Selectable(candidate.name.c_str(), candidate.id == o->parent)) {
+                                const auto old = o->parent;
+                                doc.BeginEdit();
+                                o->parent = candidate.id;
+                                std::string error;
+                                if (!ValidateHierarchy(doc.GetScene(), error)) {
+                                    o->parent = old;
+                                    state.status = error;
+                                }
+                                doc.CommitEdit();
+                            }
+                        ImGui::EndCombo();
                     }
-                ImGui::EndCombo();
-            }
-            ImGui::PopID();
-        }
-        if (state.project) {
-            const auto &c = state.project->Settings().classification;
-            DrawCategoryMask(doc, "Tags", o->tags, c.tags, false);
-            if (state.runtime)
-                ImGui::Text("Runtime entities matching these tags: %zu",
-                            state.runtime->QueryEntities(o->tags).size());
-            DrawCategoryLayer(doc, "Render layer", o->renderLayer, c.render);
-        }
-    }
-    if (state.mode == EditorMode::Edit && state.project && state.assets && ImGui::TreeNode("Prefab tools")) {
-        if (ImGui::Button("Create prefab from hierarchy")) {
-            Scene source;
-            std::string error;
-            if (CreatePrefab(doc.GetScene(), o->id, source, error)) {
-                auto path = std::filesystem::path(state.project->AssetsDir()) / "prefabs" /
-                            ("prefab-" + MintAssetId() + ".judasprefab");
-                std::filesystem::create_directories(path.parent_path());
-                if (SaveSceneToFile(source, path.string(), error)) {
-                    auto *db = const_cast<AssetDatabase *>(state.assets);
-                    AssetRecord record;
-                    if (db->Track(path.string(), record, error))
-                        state.status = "Created prefab asset " + record.id;
+                    ImGui::PopID();
+                }
+                if (state.project) {
+                    const auto &c = state.project->Settings().classification;
+                    DrawCategoryMask(doc, "Tags", o->tags, c.tags, false);
+                    if (state.runtime)
+                        ImGui::Text("Runtime entities matching these tags: %zu",
+                                    state.runtime->QueryEntities(o->tags).size());
+                    DrawCategoryLayer(doc, "Render layer", o->renderLayer, c.render);
                 }
             }
-            if (!error.empty())
-                state.status = error;
-        }
-        ImGui::TreePop();
-    }
-    if (state.mode == EditorMode::Edit && doc.SelectedObject() &&
-        ImGui::CollapsingHeader("Component clipboard")) {
-        static int component = 0;
-        const char *names[] = {"render", "body",     "animation", "socket",  "motor",
-                               "audio",  "particle", "joint",     "ragdoll", "scripts"};
-        ImGui::TextWrapped("Component clipboard");
-        ImGui::SetNextItemWidth(-1);
-        // Keep the original control identity while its visible label moves
-        // above the full-width selector in the narrow inspector rail.
-        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
-        ImGui::Combo("", &component, names, 10);
-        ImGui::PopID();
-        if (ImGui::Button("Copy component"))
-            doc.CopyComponent(names[component]);
-        ImGui::SameLine();
-        if (ImGui::Button("Paste to selection")) {
-            std::string error;
-            if (!doc.PasteComponent(error))
-                state.status = error;
-        }
-    }
-    ImGui::Separator();
-    if (state.mode == EditorMode::Play)
-        ImGui::EndDisabled();
-    if (o->prefabRoot && ImGui::CollapsingHeader("Prefab instance")) {
-        const auto *root = doc.GetScene().Find(o->prefabRoot);
-        ImGui::Text("Prefab member %llu / instance %llu", (unsigned long long)o->prefabSource,
-                    (unsigned long long)o->prefabRoot);
-        if (root)
-            ImGui::TextWrapped("Source asset: %s", root->prefabAsset.c_str());
-        ImGui::Text("Property overrides: %zu", o->prefabOverrides.size());
-        if (state.mode == EditorMode::Edit && state.assets) {
-            std::string revert;
-            for (const auto &pair : o->prefabOverrides) {
-                ImGui::PushID(pair.first.c_str());
-                ImGui::TextWrapped("%s = %s", pair.first.c_str(), pair.second.c_str());
-                if (ImGui::SmallButton("Revert property"))
-                    revert = pair.first;
-                ImGui::PopID();
-            }
-            if (!revert.empty()) {
-                doc.BeginEdit();
-                std::string error;
-                if (!RevertPrefabProperty(doc.GetScene(), o->id, revert, *state.assets, error))
-                    state.status = error;
-                doc.CommitEdit(false);
-                o = doc.SelectedObject();
-                root = doc.GetScene().Find(o->prefabRoot);
-            }
-            if (root && o->id == o->prefabRoot && ImGui::Button("Apply this hierarchy to prefab source")) {
-                const auto id = o->id;
-                doc.BeginEdit();
-                std::string error;
-                if (!ApplyPrefabSource(doc.GetScene(), id, *state.assets, error))
-                    state.status = error;
-                else
-                    state.status = "Saved prefab source; non-overridden instances refreshed";
-                doc.CommitEdit(false);
-                o = doc.SelectedObject();
-                root = doc.GetScene().Find(o->prefabRoot);
-            }
-            if (ImGui::Button("Reload prefab sources")) {
-                Scene resolved;
-                std::string error;
-                doc.BeginEdit();
-                if (ResolvePrefabs(doc.GetScene(), state.assets, resolved, error)) {
-                    doc.GetScene() = std::move(resolved);
-                    state.status = "Reloaded prefab sources";
-                } else
-                    state.status = error;
-                doc.CommitEdit(false);
-                o = doc.SelectedObject();
-                root = doc.GetScene().Find(o->prefabRoot);
-            }
-        }
-        if (state.mode == EditorMode::Play && state.runtime && root && o->id == o->prefabRoot) {
-            if (ImGui::Button("Spawn independent prefab")) {
-                std::string error;
-                auto placement = o->transform;
-                placement.position += glm::vec3(0, 2, 3);
-                const auto id = state.runtime->SpawnPrefab(root->prefabAsset, placement, error);
-                state.lastPrefabSpawn = id;
-                state.status = id ? "Spawned root " + std::to_string(id) : error;
-            }
-            if (state.lastPrefabSpawn && ImGui::Button("Destroy last spawned hierarchy")) {
-                std::string error;
-                state.status = state.runtime->DestroyHierarchy(state.lastPrefabSpawn, error)
-                                   ? "Destroyed spawned hierarchy"
-                                   : error;
-                state.lastPrefabSpawn = 0;
-            }
-        }
-    }
-    if (state.mode == EditorMode::Play && state.runtime) {
-        // Milestone 29: the runtime entity behind the selected object.
-        if (ImGui::CollapsingHeader("Runtime diagnostics")) {
-            const EntityRecord *e = state.runtime->FindEntity(o->id);
-            if (!e) {
-                ImGui::TextDisabled("Not a persistent entity (static content or no body).");
-            } else {
-                ImGui::Text("Persistent id: %llu (%s)", static_cast<unsigned long long>(e->id),
-                            e->authored ? "authored" : "runtime-created");
-                ImGui::Text("Lifecycle: %s", LifecycleName(e->lifecycle));
-                ImGui::Text("Fidelity: %s%s", FidelityName(e->fidelity),
-                            e->forcedFidelity ? " (forced)" : "");
-                ImGui::Text("Managed by policy: %s | reduced form: %s", e->managed ? "yes" : "no",
-                            e->requiresFull ? "none (Full-only)" : "coarse/dormant");
-                if (e->fidelity == SimulationFidelity::Coarse) {
-                    ImGui::Text("Coarse motion: %s | coarse steps: %llu",
-                                e->coarseMotion == CoarseMotion::Settled ? "settled" : "inertial",
-                                static_cast<unsigned long long>(e->coarseStepsSimulated));
-                }
-                ImGui::Text("Reconstructions: %u", e->reconstructions);
-                EntityPhysicalState live;
-                if (state.runtime->GetEntityState(e->id, live)) {
-                    ImGui::Text("Position: %.3f %.3f %.3f", live.position.x, live.position.y,
-                                live.position.z);
-                    ImGui::Text("Velocity: %.3f %.3f %.3f", live.linearVelocity.x, live.linearVelocity.y,
-                                live.linearVelocity.z);
-                }
-                if (e->lifecycle != EntityLifecycle::Destroyed) {
-                    ImGui::TextDisabled("Debug override:");
+            if (state.mode == EditorMode::Edit && state.project && state.assets &&
+                ImGui::TreeNode("Prefab tools")) {
+                if (ImGui::Button("Create prefab from hierarchy")) {
+                    Scene source;
                     std::string error;
-                    if (ImGui::SmallButton("Force Full"))
-                        state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Full, &error);
-                    ImGui::SameLine();
-                    if (ImGui::SmallButton("Force Coarse"))
-                        state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Coarse, &error);
-                    ImGui::SameLine();
-                    if (ImGui::SmallButton("Force Dormant"))
-                        state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Dormant, &error);
-                    ImGui::SameLine();
-                    if (ImGui::SmallButton("Clear"))
-                        state.runtime->ForceEntityFidelity(e->id, std::nullopt, &error);
+                    if (CreatePrefab(doc.GetScene(), o->id, source, error)) {
+                        auto path = std::filesystem::path(state.project->AssetsDir()) / "prefabs" /
+                                    ("prefab-" + MintAssetId() + ".judasprefab");
+                        std::filesystem::create_directories(path.parent_path());
+                        if (SaveSceneToFile(source, path.string(), error)) {
+                            auto *db = const_cast<AssetDatabase *>(state.assets);
+                            AssetRecord record;
+                            if (db->Track(path.string(), record, error))
+                                state.status = "Created prefab asset " + record.id;
+                        }
+                    }
                     if (!error.empty())
                         state.status = error;
                 }
+                ImGui::TreePop();
+            }
+            if (state.mode == EditorMode::Edit && doc.SelectedObject() &&
+                ImGui::CollapsingHeader("Component clipboard")) {
+                static int component = 0;
+                const char *names[] = {"render", "body",     "animation", "socket",  "motor",
+                                       "audio",  "particle", "joint",     "ragdoll", "scripts"};
+                ImGui::TextWrapped("Component clipboard");
+                ImGui::SetNextItemWidth(-1);
+                // Keep the original control identity while its visible label moves
+                // above the full-width selector in the narrow inspector rail.
+                ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
+                ImGui::Combo("", &component, names, 10);
+                ImGui::PopID();
+                if (ImGui::Button("Copy component"))
+                    doc.CopyComponent(names[component]);
+                ImGui::SameLine();
+                if (ImGui::Button("Paste to selection")) {
+                    std::string error;
+                    if (!doc.PasteComponent(error))
+                        state.status = error;
+                }
+            }
+            ImGui::Separator();
+        }
+        if (o->prefabRoot && ImGui::CollapsingHeader("Prefab instance")) {
+            const auto *root = doc.GetScene().Find(o->prefabRoot);
+            ImGui::Text("Prefab member %llu / instance %llu", (unsigned long long)o->prefabSource,
+                        (unsigned long long)o->prefabRoot);
+            if (root)
+                ImGui::TextWrapped("Source asset: %s", root->prefabAsset.c_str());
+            ImGui::Text("Property overrides: %zu", o->prefabOverrides.size());
+            if (state.mode == EditorMode::Edit && state.assets) {
+                std::string revert;
+                for (const auto &pair : o->prefabOverrides) {
+                    ImGui::PushID(pair.first.c_str());
+                    ImGui::TextWrapped("%s = %s", pair.first.c_str(), pair.second.c_str());
+                    if (ImGui::SmallButton("Revert property"))
+                        revert = pair.first;
+                    ImGui::PopID();
+                }
+                if (!revert.empty()) {
+                    doc.BeginEdit();
+                    std::string error;
+                    if (!RevertPrefabProperty(doc.GetScene(), o->id, revert, *state.assets, error))
+                        state.status = error;
+                    doc.CommitEdit(false);
+                    o = doc.SelectedObject();
+                    root = doc.GetScene().Find(o->prefabRoot);
+                }
+                if (root && o->id == o->prefabRoot &&
+                    ImGui::Button("Apply this hierarchy to prefab source")) {
+                    const auto id = o->id;
+                    doc.BeginEdit();
+                    std::string error;
+                    if (!ApplyPrefabSource(doc.GetScene(), id, *state.assets, error))
+                        state.status = error;
+                    else
+                        state.status = "Saved prefab source; non-overridden instances refreshed";
+                    doc.CommitEdit(false);
+                    o = doc.SelectedObject();
+                    root = doc.GetScene().Find(o->prefabRoot);
+                }
+                if (ImGui::Button("Reload prefab sources")) {
+                    Scene resolved;
+                    std::string error;
+                    doc.BeginEdit();
+                    if (ResolvePrefabs(doc.GetScene(), state.assets, resolved, error)) {
+                        doc.GetScene() = std::move(resolved);
+                        state.status = "Reloaded prefab sources";
+                    } else
+                        state.status = error;
+                    doc.CommitEdit(false);
+                    o = doc.SelectedObject();
+                    root = doc.GetScene().Find(o->prefabRoot);
+                }
+            }
+            if (state.mode == EditorMode::Play && state.runtime && root && o->id == o->prefabRoot) {
+                if (ImGui::Button("Spawn independent prefab")) {
+                    std::string error;
+                    auto placement = o->transform;
+                    placement.position += glm::vec3(0, 2, 3);
+                    const auto id = state.runtime->SpawnPrefab(root->prefabAsset, placement, error);
+                    state.lastPrefabSpawn = id;
+                    state.status = id ? "Spawned root " + std::to_string(id) : error;
+                }
+                if (state.lastPrefabSpawn && ImGui::Button("Destroy last spawned hierarchy")) {
+                    std::string error;
+                    state.status = state.runtime->DestroyHierarchy(state.lastPrefabSpawn, error)
+                                       ? "Destroyed spawned hierarchy"
+                                       : error;
+                    state.lastPrefabSpawn = 0;
+                }
             }
         }
-        ImGui::Separator();
-    }
+        if (state.mode == EditorMode::Play && state.runtime) {
+            // Milestone 29: the runtime entity behind the selected object.
+            if (ImGui::CollapsingHeader("Runtime diagnostics")) {
+                const EntityRecord *e = state.runtime->FindEntity(o->id);
+                if (!e) {
+                    ImGui::TextDisabled("Not a persistent entity (static content or no body).");
+                } else {
+                    ImGui::Text("Persistent id: %llu (%s)", static_cast<unsigned long long>(e->id),
+                                e->authored ? "authored" : "runtime-created");
+                    ImGui::Text("Lifecycle: %s", LifecycleName(e->lifecycle));
+                    ImGui::Text("Fidelity: %s%s", FidelityName(e->fidelity),
+                                e->forcedFidelity ? " (forced)" : "");
+                    ImGui::Text("Managed by policy: %s | reduced form: %s", e->managed ? "yes" : "no",
+                                e->requiresFull ? "none (Full-only)" : "coarse/dormant");
+                    if (e->fidelity == SimulationFidelity::Coarse) {
+                        ImGui::Text("Coarse motion: %s | coarse steps: %llu",
+                                    e->coarseMotion == CoarseMotion::Settled ? "settled" : "inertial",
+                                    static_cast<unsigned long long>(e->coarseStepsSimulated));
+                    }
+                    ImGui::Text("Reconstructions: %u", e->reconstructions);
+                    EntityPhysicalState live;
+                    if (state.runtime->GetEntityState(e->id, live)) {
+                        ImGui::Text("Position: %.3f %.3f %.3f", live.position.x, live.position.y,
+                                    live.position.z);
+                        ImGui::Text("Velocity: %.3f %.3f %.3f", live.linearVelocity.x, live.linearVelocity.y,
+                                    live.linearVelocity.z);
+                    }
+                    if (e->lifecycle != EntityLifecycle::Destroyed) {
+                        ImGui::TextDisabled("Debug override:");
+                        std::string error;
+                        if (ImGui::SmallButton("Force Full"))
+                            state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Full, &error);
+                        ImGui::SameLine();
+                        if (ImGui::SmallButton("Force Coarse"))
+                            state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Coarse, &error);
+                        ImGui::SameLine();
+                        if (ImGui::SmallButton("Force Dormant"))
+                            state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Dormant, &error);
+                        ImGui::SameLine();
+                        if (ImGui::SmallButton("Clear"))
+                            state.runtime->ForceEntityFidelity(e->id, std::nullopt, &error);
+                        if (!error.empty())
+                            state.status = error;
+                    }
+                }
+            }
+            ImGui::Separator();
+        }
+    } // Advanced object tools
     ImGui::EndChild();
-    ImGui::BeginDisabled(state.mode != EditorMode::Edit);
-    if (auto *selected = doc.SelectedObject())
-        DrawAddComponentMenu(doc, *selected, state);
-    ImGui::EndDisabled();
+    {
+        InspectorReadOnlyScope addLock(state.mode != EditorMode::Edit);
+        if (auto *selected = doc.SelectedObject())
+            DrawAddComponentMenu(doc, *selected, state);
+    }
     ImGui::End();
 }

@@ -41,7 +41,7 @@ void EditorShell::Draw(EditorContext &c, EditorPreferences &preferences) {
                 const bool authorOnly = std::string(preset) == "Audio" || std::string(preset) == "UI";
                 const bool unavailable = authorOnly && c.phase != EditorPanelPhase::Edit;
                 ImGui::BeginDisabled(unavailable);
-                if (EditorVisuals::ActionButton(label, icon, selected)) {
+                if (EditorVisuals::ActionButton(label, icon, selected, {0, 32.f * ImGui::GetIO().FontGlobalScale})) {
                     preferences.QueueWorkspace(preset);
                     if (std::string(preset) == "Scene")
                         views.RequestSceneFocus();
@@ -52,7 +52,7 @@ void EditorShell::Draw(EditorContext &c, EditorPreferences &preferences) {
             };
             workflow("Scene", "Scene", Icon::Scene);
             ImGui::SameLine();
-            if (EditorVisuals::ActionButton("Playtest", Icon::Play, views.Game().focused)) {
+            if (EditorVisuals::ActionButton("Playtest", Icon::Play, views.Game().focused, {0, 32.f * ImGui::GetIO().FontGlobalScale})) {
                 c.panels.showGameView = true;
                 views.RequestGameFocus();
             }

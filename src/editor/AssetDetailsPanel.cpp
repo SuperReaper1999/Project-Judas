@@ -194,11 +194,49 @@ void DrawAssetDetails(EditorDocument &doc, EditorPanelState &state, EditorReques
                 ImGui::TreePop();
             }
             if (record->type == AssetType::Mesh && state.resources) {
+                if (state.revealModelStructure)
+                    state.resources->RequestMesh(record->id);
                 if (auto model = state.resources->TryGetSkeletal(record->id)) {
-                    if (ImGui::TreeNode("Shared skeleton")) {
-                        for (auto &name : model->skeleton.names)
-                            ImGui::TextUnformatted(name.c_str());
+                    const bool reveal = state.revealModelStructure;
+                    if (reveal) ImGui::SetNextItemOpen(true);
+                    const bool open = ImGui::TreeNode("Shared skeleton");
+                    if (reveal) {
+                        ImGui::SetScrollHereY(.1f);
+                        state.revealModelStructure = false;
+                    }
+                    if (open) {
+                        ImGui::Text("%zu model nodes / joints  |  %zu animation clips",
+                                    model->skeleton.names.size(), model->clips.size());
+                        ImGui::TextWrapped("Read-only model structure. These joints live inside the model; "
+                                           "they are not separate scene objects or parenting targets.");
+                        for (const int node : model->skeleton.order) {
+                            const auto i = std::size_t(node);
+                            unsigned depth = 0;
+                            auto parent = model->skeleton.parents[i];
+                            while (parent >= 0 && std::size_t(parent) < model->skeleton.parents.size() &&
+                                   depth < model->skeleton.parents.size()) {
+                                ++depth;
+                                parent = model->skeleton.parents[std::size_t(parent)];
+                            }
+                            const float indent = std::min(float(depth) * 10.f,
+                                std::max(0.f, ImGui::GetContentRegionAvail().x - 120.f));
+                            if (indent > 0) ImGui::Indent(indent);
+                            ImGui::TextUnformatted(model->skeleton.names[i].c_str());
+                            if (indent > 0) ImGui::Unindent(indent);
+                        }
                         ImGui::TreePop();
+                    }
+                } else if (state.revealModelStructure) {
+                    const auto status = state.resources->StateOf(record->id);
+                    if (status == ResourceState::Failed) {
+                        ImGui::TextWrapped("Model structure could not be loaded: %s",
+                                           state.resources->ErrorOf(record->id).c_str());
+                        state.revealModelStructure = false;
+                    } else if (status == ResourceState::Ready) {
+                        ImGui::TextWrapped("This is a static mesh. It has no skeleton to inspect.");
+                        state.revealModelStructure = false;
+                    } else {
+                        ImGui::TextWrapped("Model structure is loading. Keep this asset selected to inspect it.");
                     }
                 }
             }

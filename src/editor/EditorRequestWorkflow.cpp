@@ -1,3 +1,4 @@
+#include "AssetBrowserPanel.h"
 #include "BrowserExportWorkflow.h"
 #include "ComponentEditors.h"
 #include "EditorAssetActions.h"
@@ -269,6 +270,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
     }
     if (r.rescanAssets || assetsChanged) {
         if (r.rescanAssets) {
+            ResetEditorAssetThumbnails(context.panels);
             context.host.OpenProjectAssets(context.project.RootDir(), context.project.AssetsDir());
             std::string assetError;
             if (!JudasMods::OpenAuthorAssets(context.project, context.host.Assets(), assetError))
@@ -280,6 +282,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
     // --- Scene ---
     if (r.newScene) {
         context.document.NewScene();
+        ResetEditorHierarchyView(context.panels);
         context.panels.status = "New scene";
     }
     if (r.open)
@@ -312,6 +315,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             context.document.Redo();
     }
     if (!r.createKind.empty()) {
+        SceneObjectId createdId = kInvalidSceneObjectId;
         std::string defaultMesh;
         for (const auto &[id, record] : context.host.Assets().Records()) {
             if (record.type == AssetType::Mesh && !record.missing) {
@@ -322,9 +326,10 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
         if (r.createKind == "planar-player" || r.createKind == "planar-topdown-player" ||
             r.createKind == "planar-grid-player") {
             std::string error;
-            CreateEditorPlanarPlayer(context.document, context.project, context.host.Assets(),
-                                     r.createPosition, r.createParent, error, r.createKind == "planar-player",
-                                     r.createKind == "planar-grid-player");
+            createdId = CreateEditorPlanarPlayer(context.document, context.project, context.host.Assets(),
+                                                r.createPosition, r.createParent, error,
+                                                r.createKind == "planar-player",
+                                                r.createKind == "planar-grid-player");
             context.panels.status = error.empty() ? "Created 2D player. Set scene gravity for platformers; "
                                                     "edit its project script in Assets."
                                                   : error;
@@ -333,6 +338,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             const auto id = CreateEditorFirstPersonPlayer(
                 context.document, context.project, context.host.Assets(), r.createPosition, r.createParent,
                 error, r.createKind == "third-person-player");
+            createdId = id;
             context.panels.status =
                 id ? "Player created. Save scene, then Play: WASD / mouse / Space; V switches camera. Escape "
                      "releases mouse. Unedited starter camera disabled."
@@ -343,6 +349,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             std::string error;
             const auto id = CreateEditorPauseExample(context.document, context.project, context.host.Assets(),
                                                      error, r.createParent);
+            createdId = id;
             context.panels.status = id ? "Optional pause menu created. Save scene; Escape opens Pause / "
                                          "Settings / Controls during Play."
                                        : error;
@@ -353,12 +360,14 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             const auto id =
                 CreateEditorPlanarPrimitive(context.document, context.project, context.host.Assets(),
                                             r.createKind, r.createPosition, r.createParent, error);
+            createdId = id;
             context.panels.status =
                 id ? "Created native 2D collision with a matching editable sprite image" : error;
         } else if (r.createKind == "capsule" || r.createKind == "cylinder") {
             std::string error;
             const auto id = CreateEditorPrimitive(context.document, context.project, context.host.Assets(),
                                                   r.createKind, r.createPosition, r.createParent, error);
+            createdId = id;
             context.panels.status =
                 id ? "Created " + r.createKind +
                          " with editable mesh and convex collision. Body > Motion selects static/dynamic."
@@ -367,8 +376,23 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             const auto created = CreateObjectOfKind(context.document, r.createKind, r.createPosition,
                                                     r.createKind == "sprite" ? std::string{} : defaultMesh,
                                                     nullptr, r.createParent);
+            createdId = created;
             context.panels.status =
                 created ? "Created " + r.createKind : "Creation failed: parent no longer exists";
+        }
+        // Report the published object, not the previous selection or merely the
+        // requested kind. Failure diagnostics above remain untouched.
+        if (const auto *created = context.document.GetScene().Find(createdId)) {
+            const auto *parent = context.document.GetScene().Find(created->parent);
+            const std::string placement = parent ? " as a child of '" + parent->name + "'. "
+                                                  : " at the scene root. ";
+            context.panels.status = "Created '" + created->name + "'" + placement + context.panels.status;
+            std::fprintf(stderr,
+                         "[editor creation] requested_kind=%s requested_parent=%llu result_id=%llu "
+                         "actual_parent=%llu\n",
+                         r.createKind.c_str(), static_cast<unsigned long long>(r.createParent),
+                         static_cast<unsigned long long>(createdId),
+                         static_cast<unsigned long long>(created->parent));
         }
     }
     if (!r.dropMeshAssetId.empty()) {

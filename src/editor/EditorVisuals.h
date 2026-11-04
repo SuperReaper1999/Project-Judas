@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorTheme.h"
+#include "EditorDesign.h"
 #include "imgui.h"
 #include <algorithm>
 #include <cmath>
@@ -223,34 +224,18 @@ inline void IconText(Icon icon, const char *text, float size = 16.f) {
     ImGui::SameLine();
     ImGui::TextUnformatted(text);
 }
+// Backward-compatible convenience for the existing icon catalogue. Painting
+// and interactions belong to the shared Judas control, not native Button style.
 inline bool ActionButton(const char *label, Icon icon, bool primary = false, ImVec2 size = {}) {
-    const auto &style = ImGui::GetStyle();
     const float glyph = ImGui::GetFontSize();
-    if (size.x == 0)
-        size.x = ImGui::CalcTextSize(label, nullptr, true).x + glyph + style.ItemInnerSpacing.x +
-                 2 * style.FramePadding.x;
-    if (size.y == 0)
-        size.y = ImGui::GetFrameHeight();
-    if (primary) {
-        auto a = AccentColor();
-        a.w = .20f;
-        ImGui::PushStyleColor(ImGuiCol_Button, a);
-        a.w = .35f;
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, a);
-        a.w = .50f;
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, a);
-        a.w = .75f;
-        ImGui::PushStyleColor(ImGuiCol_Border, a);
-    }
-    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, {1, .5f});
-    const bool clicked = ImGui::Button(label, size);
-    ImGui::PopStyleVar();
-    const auto min = ImGui::GetItemRectMin(), max = ImGui::GetItemRectMax();
-    DrawIcon(ImGui::GetWindowDrawList(), icon,
-             {min.x + style.FramePadding.x, min.y + (max.y - min.y - glyph) * .5f}, glyph,
-             ImGui::GetColorU32(primary ? AccentColor() : style.Colors[ImGuiCol_Text]));
-    if (primary)
-        ImGui::PopStyleColor(4);
+    const float leading = glyph + ImGui::GetStyle().ItemInnerSpacing.x;
+    const bool clicked = EditorDesign::ActionButton(label,
+        primary ? EditorDesign::Tone::Primary : EditorDesign::Tone::Secondary, size, leading);
+    const auto low = ImGui::GetItemRectMin(), high = ImGui::GetItemRectMax();
+    if (ImGui::IsItemVisible())
+        DrawIcon(ImGui::GetWindowDrawList(), icon,
+            {low.x + 12.f * ImGui::GetIO().FontGlobalScale, low.y + (high.y - low.y - glyph) * .5f},
+            glyph, ImGui::GetColorU32(primary ? AccentColor() : ImGui::GetStyleColorVec4(ImGuiCol_Text)));
     return clicked;
 }
 inline void BrandMark(ImDrawList *draw, ImVec2 at, float size) {

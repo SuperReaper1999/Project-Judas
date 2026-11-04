@@ -1324,6 +1324,11 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
 }
 
 std::uintptr_t Renderer::EditorImageToken(TextureHandle texture) const {return static_cast<std::uintptr_t>(ResolveTexture(texture));}
+glm::ivec2 Renderer::TextureSize(TextureHandle texture) const {
+    if (!ValidTexture(texture)) return {0, 0};
+    const auto &stored = m_textures[texture.id];
+    return {stored.width, stored.height};
+}
 
 GLuint Renderer::ResolveTexture(TextureHandle handle) const {
     if (ValidTexture(handle)) {

@@ -73,6 +73,10 @@ void EditorSceneViewport::PickAtPixel(EditorContext &context, int x, int y) {
         return;
     }
     context.document.Select(hit.id, ImGui::GetIO().KeyCtrl);
+    if (hit.id && context.document.IsSelected(hit.id)) {
+        context.panels.showHierarchy = true;
+        context.panels.revealHierarchyObject = hit.id;
+    }
 }
 
 void EditorSceneViewport::UpdateGizmo(EditorContext &context, bool allowInteraction) {

@@ -1,0 +1,469 @@
+[
+  {
+    "tool": "judas_scene_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_scene_author",
+      "--validate",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.012090240998077206,
+    "stdout": "valid project /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_scene_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Scenes/main.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.008408858000620967,
+    "stdout": "valid scene /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Scenes/main.judas\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_scene_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_scene_author",
+      "--create",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005579281998507213,
+    "stdout": "wrote /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_scene_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_scene_author",
+      "--validate",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004778282000188483,
+    "stdout": "valid ui /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_script_check",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.013428946000203723,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_script_check",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.007082306998199783,
+    "stdout": "1 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": "Assets/game.js: SyntaxError: Unexpected identifier 'invalid'\n    at Assets/game.js:1:47\n\n"
+  },
+  {
+    "tool": "judas_script_check",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007174611000664299,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_save",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_save",
+      "identity",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005032640998251736,
+    "stdout": "{\n  \"compatibility\": \"\",\n  \"content\": \"fb3649955141c09982dd44b772c3bafcc72446d5e81d0c77c3859b06e91f663a\",\n  \"version\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_model_import_cli",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_model_import_cli",
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.obj",
+      "Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.012032742997689638,
+    "stdout": "{\n  \"error\": \"\",\n  \"recipe\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Imports/triangle.judasimport\",\n  \"success\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_model_import_cli",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Imports/triangle.judasimport"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.011568126999918604,
+    "stdout": "{\n  \"assetId\": \"4c9635b4fe7eca176f694d819066fb40\",\n  \"decodedProducts\": 0,\n  \"diagnostics\": [],\n  \"error\": \"\",\n  \"hierarchyNodes\": 0,\n  \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/triangle.judasmodel\",\n  \"paletteEntries\": 0,\n  \"parts\": 1,\n  \"receiptHit\": false,\n  \"sourceBones\": 0,\n  \"sourceUnitMeters\": 1.0,\n  \"success\": true,\n  \"unchanged\": false,\n  \"vertices\": 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_model_import_cli",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_model_import_cli",
+      "--inspect",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.010579161997156916,
+    "stdout": "{\n  \"clips\": [],\n  \"joints\": [],\n  \"materialDefaults\": [\n    {\n      \"alpha\": 0,\n      \"factor\": [\n        1.0,\n        1.0,\n        1.0,\n        1.0\n      ],\n      \"imageAlphaMax\": 0,\n      \"imageAlphaMin\": 255\n    }\n  ],\n  \"materials\": [\n    \"__default\"\n  ],\n  \"parts\": [\n    {\n      \"identity\": \"triangle/material/__default\",\n      \"material\": 0,\n      \"ordinal\": 0,\n      \"triangles\": 1\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_cook",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/triangle.judasmodel",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.judasmesh"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005526913999347016,
+    "stdout": "Cooked /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.judasmesh\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_volume_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_volume_author",
+      "create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/soil.judasvolume",
+      "9",
+      "9",
+      "9",
+      "8",
+      "8",
+      "8"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007571169000584632,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_volume_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_volume_author",
+      "validate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0046900650013412815,
+    "stdout": "valid volume 729 samples\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_volume_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_volume_author",
+      "brush",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/soil.judasvolume",
+      "remove",
+      "0",
+      "0",
+      "0",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005397029002779163,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_volume_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_volume_author",
+      "cook",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj",
+      "Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.016422672997578047,
+    "stdout": "volume cook 11.0033 ms / 214177 bytes\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_deformable_bake",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_deformable_bake",
+      "sheet",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/sheet.judasdeform",
+      "4",
+      "4",
+      "2",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0077244780004548375,
+    "stdout": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/sheet.judasdeform: 16 nodes 18 triangles 0 tetrahedra 16 render vertices\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_terrain_author",
+      "create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/ground.judasterrain",
+      "9",
+      "9",
+      "8",
+      "8"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0074256539992347825,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_terrain_author",
+      "brush",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/ground.judasterrain",
+      "raise",
+      "0",
+      "0",
+      "0",
+      "2",
+      "0.5"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.006729572000040207,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_terrain_author",
+      "validate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/Assets/ground.judasterrain"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004727676001493819,
+    "stdout": "valid terrain 9 x 9\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_terrain_author",
+      "cook",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj",
+      "Assets/ground.judasterrain"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.021939527003269177,
+    "stdout": "cook 15.9168 ms, 1062935 bytes; geometry 1, appearance 1\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_collision_cook",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_collision_cook",
+      "mesh",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.judascollision",
+      "00000000000000000000000000000001",
+      "0"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.006922083997778827,
+    "stdout": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.judascollision: 3 vertices 1 triangles 1 BVH nodes, volume 0 m3\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_collision_cook",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_collision_cook",
+      "mesh",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/triangle.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/bad.judascollision",
+      "00000000000000000000000000000001",
+      "0",
+      "0",
+      "1",
+      "1"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.005171332002646523,
+    "stdout": "",
+    "stderr": "collision source transform requires positive nonsingular scale; mirrors unsupported\n"
+  },
+  {
+    "tool": "judas_environment_bake",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_environment_bake",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/studio.hdr",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/invalid.judasenv",
+      "8",
+      "8"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.014474998999503441,
+    "stdout": "",
+    "stderr": "environment width must be power-of-two 16..512, samples 32..1024\n"
+  },
+  {
+    "tool": "judas_environment_bake",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_environment_bake",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/studio.hdr",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/studio.judasenv",
+      "16",
+      "32"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.019110491000901675,
+    "stdout": "Baked /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/studio.judasenv content 91632939cbe6d8c40ce6056eae71a889792dac51c3c65d1729148cfcc9d01419, 5 levels in 0.014 s\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_mod",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_mod",
+      "kit",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/modding_lab/modding_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/kit",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/docs"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.05725617299685837,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_mod",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_mod",
+      "new",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/kit",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/new-mod",
+      "qualification-mod"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.026113858999451622,
+    "stdout": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/tool-operations/new-mod/qualification_mod.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_navigation_bake",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_navigation_bake",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/modding_lab/modding_lab.judasproj",
+      "Scenes/landscape.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.019117464998998912,
+    "stdout": "surface 50: 25 layers, 25 polygons, 11.75 ms, source 7879c86baaf801eca415099a74c0999f592fbbdd3d1ae6779df1581f409407be\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_liquid_bake",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_liquid_bake",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/liquid_reservoir_demo/liquid_reservoir_demo.judasproj",
+      "Scenes/lab.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.035164048000297043,
+    "stdout": "basin 20: 3392.000000 L capacity, 1025 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 25.724 ms; 72dc7ea2a91c833305fd49717f0ee20e7743d52335b8b53797adf23b728d7673\nbasin 21: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.188 ms; e9514a941445e6053227bfdbe431a30ff4f0909b4230626a18137a2a168c6bfc\nbasin 22: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.163 ms; 9c51210219fcd32682417417397c021f715cdd9535274ca36cc7e58817eceab0\nbasin 30: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.157 ms; 584bc22f75d153656c425471ac15054ad0e1e3208bc9f0f071421dac252fe763\nbasin 31: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.155 ms; fe9dbbd4bd2894f892de20d56d9d17bc1e0e156046e70c9458e9fbaa58b61f0a\nbasin 32: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.154 ms; 76fc6285e5ab309fb3c698aed7779c0517b75c6396a6a7cced5f30450be16eb9\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_server",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_server",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj",
+      "28978",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.0211570749997918,
+    "stdout": "Judas dedicated initialized: project=/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj port=28978 fixedHz=60 duration=1.000\nNo display, renderer or audio device; project scripts own host startup and gameplay.\nJS: My first Judas project is running.\nJudas dedicated stopped: fixedSteps=59 discardedCatchupSeconds=0.000000\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_server",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_server",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/fixtures/modding_lab/modding_lab.judasproj",
+      "28978",
+      "1"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.012477551998017589,
+    "stdout": "",
+    "stderr": "Judas dedicated: dedicated hosting of composed/streamed worlds is not supported yet\n"
+  },
+  {
+    "tool": "judas_export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/cli-export"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.24905069800297497,
+    "stdout": "Exported /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/sdk-workflow/cli-export: 7 assets, 1 scenes, 59534464 bytes, 0.242 seconds\n",
+    "stderr": ""
+  }
+]

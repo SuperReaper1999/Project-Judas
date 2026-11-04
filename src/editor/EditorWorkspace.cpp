@@ -1,4 +1,5 @@
 #include "EditorWorkspace.h"
+#include "EditorVisuals.h"
 #include "EditorPanels.h"
 #include "EditorPreferences.h"
 #include "imgui_internal.h"
@@ -13,7 +14,12 @@ bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &state,
         flags |= ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse |
                  ImGuiWindowFlags_NoSavedSettings;
     }
-    return ImGui::Begin(name, open, flags);
+    ImGui::PushFont(EditorVisuals::HeadingFont());
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {12, 7});
+    const bool visible = ImGui::Begin(name, open, flags);
+    ImGui::PopStyleVar();
+    ImGui::PopFont();
+    return visible;
 }
 
 void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &preferences) {
@@ -37,7 +43,7 @@ void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &pre
     }
     const auto *viewport = ImGui::GetMainViewport();
     const float scale = std::max(.85f, ImGui::GetIO().FontGlobalScale);
-    const float toolbarHeight = std::min(82.f * scale, viewport->WorkSize.y);
+    const float toolbarHeight = std::min(100.f * scale, viewport->WorkSize.y);
     const float statusHeight = std::min(25.f * scale, std::max(0.f, viewport->WorkSize.y - toolbarHeight));
     const ImVec2 position{viewport->WorkPos.x, viewport->WorkPos.y + toolbarHeight};
     const ImVec2 size{viewport->WorkSize.x,
@@ -67,7 +73,21 @@ void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &pre
     if (reset || (firstFrame && !ImGui::DockBuilderGetNode(dockspace)))
         BuildDefault(reset ? preset : preferences.WorkspaceName(), size);
     firstFrame = false;
+    // Keep one close button per panel tab. The dock-node close button is a
+    // duplicate; tabs still support close, drag, split and their context menu.
+    const auto tidyDock = [&](auto &&self, ImGuiDockNode *node) -> void {
+        if (!node)
+            return;
+        node->LocalFlags |= ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoWindowMenuButton;
+        self(self, node->ChildNodes[0]);
+        self(self, node->ChildNodes[1]);
+    };
+    tidyDock(tidyDock, ImGui::DockBuilderGetNode(dockspace));
+    ImGui::PushFont(EditorVisuals::HeadingFont());
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {12, 7});
     ImGui::DockSpace(dockspace, {0, 0}, ImGuiDockNodeFlags_None);
+    ImGui::PopStyleVar();
+    ImGui::PopFont();
     ImGui::End();
     RecoverFloatingWindows();
 }
@@ -83,8 +103,8 @@ void EditorWorkspace::BuildDefault(const std::string &workspace, ImVec2 size) {
     const float rightWidth = std::min(size.x * .38f, 340.f * scale);
     ImGuiID center = dockspace;
     ImGuiID left = ImGui::DockBuilderSplitNode(center, ImGuiDir_Left, leftWidth / size.x, nullptr, &center);
-    ImGuiID right = ImGui::DockBuilderSplitNode(center, ImGuiDir_Right,
-        rightWidth / std::max(1.f, size.x - leftWidth), nullptr, &center);
+    ImGuiID right = ImGui::DockBuilderSplitNode(
+        center, ImGuiDir_Right, rightWidth / std::max(1.f, size.x - leftWidth), nullptr, &center);
     const float contentRatio = std::clamp(.34f + .1f * (scale - 1.f), .30f, .42f);
     ImGuiID bottom = ImGui::DockBuilderSplitNode(center, ImGuiDir_Down, contentRatio, nullptr, &center);
     ImGui::DockBuilderDockWindow("Hierarchy", left);
@@ -152,6 +172,7 @@ void EditorWorkspace::RecoverFloatingWindows() {
 }
 
 void DrawEditorWorkspaceSelector(EditorPreferences &preferences, EditorPanelState &state) {
+    EditorDesign::Field workspaceField;
     ImGui::SetNextItemWidth(150 * ImGui::GetIO().FontGlobalScale);
     if (ImGui::BeginCombo("##workspacePreset", preferences.WorkspaceName().c_str())) {
         for (const auto &name : EditorPreferences::WorkspaceNames()) {

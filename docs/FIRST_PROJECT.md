@@ -45,12 +45,19 @@ Use **Add object** at the top of Hierarchy and choose **Static box** (or right-c
 hierarchy space for the same root-creation menu). The new object is selected.
 Edit the bold name field at the top of Inspector to **My rotating box**, then set
 its compact Transform Position X/Y/Z values to `(0, 2, 0)`.
-Give it a **Render** component with box shape. Remove its **Body** component if
-the creation command added one, using the Body card's **… → Remove component**
+Give it an **Appearance** (`Render`) component with box shape. Remove its
+**Physics body** (`Body`) component if the creation command added one, using
+that card's **… → Remove component**
 menu. **Add component…** is pinned at the bottom of Inspector if a component is
 missing. This example animates a visual object; assigning
 a physical body's transform would teleport it rather than simulate motion.
 Keep the floor and light.
+
+Selecting in Scene reveals the same object in Hierarchy. Right-click an existing
+Hierarchy row and choose **Create child** to parent a new object; empty space and
+**Add object** create roots. A skinned character can be a single scene object:
+use **Inspect model** in its Inspector to see the imported skeleton in Assets.
+Those model joints are not separate scene children.
 
 ## 2. Attach the complete starter script
 

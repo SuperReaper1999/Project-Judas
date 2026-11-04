@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstring>
 #include <filesystem>
+#include <fstream>
 #include <stdexcept>
 #include <string>
 #include <glm/gtc/quaternion.hpp>
@@ -107,6 +108,62 @@ class InspectorFrames {
     void Confirm() {
         Key(ImGuiKey_Enter, true);
         Key(ImGuiKey_Enter, false);
+        Frame();
+    }
+    ImGuiWindow *Properties() const {
+        for (auto *window : ImGui::GetCurrentContext()->Windows)
+            if (window->ParentWindow == Window() &&
+                std::strstr(window->Name, "Inspector component properties"))
+                return window;
+        return nullptr;
+    }
+    bool FocusNative(ImGuiID id, ImRect &rectangle, ImGuiWindow *owner = nullptr) {
+        if (!owner)
+            owner = Window();
+        ImGuiID previousId = 0;
+        ImGuiWindow *previousWindow = nullptr;
+        for (int i = 0; i < 64; ++i) {
+            const auto *g = ImGui::GetCurrentContext();
+            if (g->NavId == id && g->NavWindow == owner && g->NavCursorVisible) {
+                rectangle =
+                    ImGui::WindowRectRelToAbs(g->NavWindow, g->NavWindow->NavRectRel[ImGuiNavLayer_Main]);
+                return true;
+            }
+            const bool forwardTabStalled = g->NavId == previousId && g->NavWindow == previousWindow;
+            previousId = g->NavId;
+            previousWindow = g->NavWindow;
+            const auto *child = Properties();
+            if (child && owner == child && g->NavWindow == Window() && g->NavId == child->ChildId) {
+                // Normal ImGui navigation enters a child scope with Enter;
+                // Tab alone stays within the current focus scope.
+                Key(ImGuiKey_Enter, true);
+                Key(ImGuiKey_Enter, false);
+            } else if (child && owner == Window() && g->NavWindow == child) {
+                Key(ImGuiKey_Escape, true);
+                Key(ImGuiKey_Escape, false);
+            } else if (forwardTabStalled && g->NavWindow == owner) {
+                // A direct fixture mode change can restore a child's previous,
+                // now-disabled authored control. Normal Shift+Tab recovers from
+                // that native remembered focus without resetting navigation.
+                Key(ImGuiMod_Shift, true);
+                Key(ImGuiKey_Tab, true);
+                Key(ImGuiKey_Tab, false);
+                Key(ImGuiMod_Shift, false);
+            } else {
+                Key(ImGuiKey_Tab, true);
+                Key(ImGuiKey_Tab, false);
+            }
+        }
+        return false;
+    }
+    void Click(ImVec2 at, int button = ImGuiMouseButton_Left) {
+        ImGui::GetIO().AddMousePosEvent(at.x - 1, at.y);
+        Frame();
+        ImGui::GetIO().AddMousePosEvent(at.x, at.y);
+        Frame();
+        ImGui::GetIO().AddMouseButtonEvent(button, true);
+        Frame();
+        ImGui::GetIO().AddMouseButtonEvent(button, false);
         Frame();
     }
     std::string Bytes() const {
@@ -261,7 +318,7 @@ void AddComponent() {
     if (!Check(!popups.empty() && popups.back().Window && popups.back().Window->Active,
                "pinned Add component control opens its actual component menu"))
         return;
-    const auto item = popups.back().Window->GetID("Audio listener");
+    const auto item = popups.back().Window->GetID("Audio listener###Audio listener");
     ui.Activate(item, false);
     Check(ui.Object().audioListener.has_value() && ui.doc.CanUndo() && ui.doc.ValidationError().empty(),
           "choosing Audio listener in the actual component menu adds it to the scene");
@@ -273,11 +330,14 @@ void AddComponent() {
 void ScriptPropertyLayoutAndUndo() {
     namespace fs = std::filesystem;
     const auto root = fs::temp_directory_path() /
-        ("judas-inspector-properties-" + std::to_string(
-            std::chrono::steady_clock::now().time_since_epoch().count()));
+                      ("judas-inspector-properties-" +
+                       std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
     struct Cleanup {
         fs::path path;
-        ~Cleanup() { std::error_code ignored; fs::remove_all(path, ignored); }
+        ~Cleanup() {
+            std::error_code ignored;
+            fs::remove_all(path, ignored);
+        }
     } cleanup{root};
     Project project;
     AssetDatabase assets;
@@ -291,8 +351,8 @@ void ScriptPropertyLayoutAndUndo() {
     const char *source =
         "export const properties={maximumWalkingAccelerationMetresPerSecondSquared:{type:'number',default:3}};\n"
         "export default class InspectorProperties {}\n";
-    if (!Check(CreateAndAttachEditorScript(ui.doc, ui.Object().id, project, assets,
-                                           "InspectorProperties.js", record, error, source),
+    if (!Check(CreateAndAttachEditorScript(ui.doc, ui.Object().id, project, assets, "InspectorProperties.js",
+                                           record, error, source),
                "script property fixture uses real create/register/attach authoring"))
         return;
     ui.width = 293;
@@ -314,22 +374,33 @@ void ScriptPropertyLayoutAndUndo() {
     const auto widget = ImHashStr(name, 0, slotId);
     const auto before = ui.Bytes();
     const auto generation = ui.doc.Generation();
+    const auto settings = ImHashStr("Script settings", 0, slotId);
+    Check(!properties->StateStorage.GetBool(settings),
+          "script settings are initially folded instead of overwhelming ordinary object editing");
+    ui.Activate(settings, false);
+    ui.Frame();
+    Check(properties->StateStorage.GetBool(settings) && ui.Bytes() == before,
+          "opening actual script settings reveals controls without editing authored content");
     ui.Activate(widget);
     if (!Check(ImGui::GetActiveID() == widget,
                "stacked script property preserves its original named native widget ID"))
         return;
-    const auto relative = properties->NavRectRel[ImGuiNavLayer_Main];
-    const ImRect field{{relative.Min.x + properties->Pos.x, relative.Min.y + properties->Pos.y},
-                       {relative.Max.x + properties->Pos.x, relative.Max.y + properties->Pos.y}};
-    const float available = properties->WorkRect.Max.x - field.Min.x;
-    Check(field.GetWidth() >= available - 2 && field.Max.x <= properties->ClipRect.Max.x + 1,
+    const auto field = ImGui::WindowRectRelToAbs(properties, properties->NavRectRel[ImGuiNavLayer_Main]);
+    // The shared Surface owns an explicit 12px right inset. Its temporary
+    // WorkRect is restored after drawing, so use that documented content edge.
+    const float cardContentRight = properties->WorkRect.Max.x - 12.f * ImGui::GetIO().FontGlobalScale;
+    const float available = cardContentRight - field.Min.x;
+    Check(field.GetWidth() >= available - 2 && field.Max.x <= cardContentRight + 1 &&
+              field.Max.x <= properties->ClipRect.Max.x + 1,
           "script value uses the readable available width inside a 293-pixel Inspector");
-    const auto textColor = ImGui::GetColorU32(ImGuiCol_TextDisabled);
-    const float labelHeight = ImGui::CalcTextSize(name, nullptr, false, available).y;
+    const auto textColor = ImGui::GetColorU32(ImGuiCol_Text);
+    const char *visibleLabel = "Maximum Walking Acceleration Metres Per Second Squared";
+    const float labelHeight = ImGui::CalcTextSize(visibleLabel, nullptr, false, available).y;
     unsigned labelVertices = 0;
     bool labelInside = true;
     for (const auto &vertex : properties->DrawList->VtxBuffer)
-        if (vertex.col == textColor && vertex.pos.y >= field.Min.y - labelHeight - ImGui::GetStyle().ItemSpacing.y - 2 &&
+        if (vertex.col == textColor &&
+            vertex.pos.y >= field.Min.y - labelHeight - ImGui::GetStyle().ItemSpacing.y - 2 &&
             vertex.pos.y < field.Min.y) {
             ++labelVertices;
             labelInside = labelInside && vertex.pos.x >= properties->ClipRect.Min.x &&
@@ -345,6 +416,160 @@ void ScriptPropertyLayoutAndUndo() {
     ui.doc.Undo();
     Check(ui.Bytes() == before, "one Undo restores exact scene bytes before the script-property edit");
 }
+void ModelInspectionShortcut() {
+    namespace fs = std::filesystem;
+    const auto root = fs::temp_directory_path() /
+                      ("judas-inspector-model-" +
+                       std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+    struct Cleanup {
+        fs::path path;
+        ~Cleanup() {
+            std::error_code ignored;
+            fs::remove_all(path, ignored);
+        }
+    } cleanup{root};
+    Project project;
+    AssetDatabase assets;
+    std::string error;
+    if (!Check(Project::CreateNew(root.string(), "Model shortcut", project, error),
+               "model inspection fixture creates a real project"))
+        return;
+    const auto mesh = fs::path(project.AssetsDir()) / "model.obj";
+    std::ofstream(mesh) << "v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n";
+    assets.Scan(project.RootDir(), project.AssetsDir());
+    AssetRecord record;
+    if (!Check(assets.Track(mesh.string(), record, error),
+               "model inspection fixture tracks a real source mesh"))
+        return;
+    InspectorFrames ui;
+    ui.state.project = &project;
+    ui.state.assets = &assets;
+    ui.Object().render = SceneRenderComponent{};
+    ui.Object().render->shape = SceneShape::Mesh;
+    ui.Object().render->meshAsset = record.id;
+    ui.state.showAssetBrowser = false;
+    const auto before = ui.Bytes();
+    const auto generation = ui.doc.Generation();
+    ui.Frame();
+    ui.Frame();
+    ImRect modelAction;
+    if (!Check(ui.FocusNative(ui.Window()->GetID("Inspect model"), modelAction),
+               "actual model action is reachable through ordinary keyboard navigation"))
+        return;
+    ui.Click(modelAction.GetCenter());
+    Check(ui.state.showAssetBrowser && ui.state.selectAssetDetails && ui.state.revealModelStructure &&
+              ui.state.browserSelection == record.id,
+          "actual Inspect model action opens details for the exact source mesh and requests model structure");
+    Check(ui.Bytes() == before && ui.doc.Generation() == generation && !ui.doc.CanUndo() &&
+              !ui.doc.EditInProgress(),
+          "inspecting a model does not create scene children or change authored content/history");
+    ui.state.showAssetBrowser = ui.state.selectAssetDetails = ui.state.revealModelStructure = false;
+    ui.state.mode = EditorMode::Play;
+    ui.Frame();
+    auto modelInPlay = modelAction.GetCenter();
+    modelInPlay.y += ImGui::GetTextLineHeightWithSpacing(); // The read-only notice occupies one line.
+    ui.Click(modelInPlay);
+    Check(!ui.state.showAssetBrowser && !ui.state.revealModelStructure && ui.Bytes() == before,
+          "Play's model action is disabled until the authored Asset Browser can actually display it");
+}
+void ReadOnlyDisclosureNavigation() {
+    InspectorFrames ui;
+    ui.Object().body = SceneBodyComponent{};
+    ui.Frame();
+    ui.Frame();
+    auto *properties = ui.Properties();
+    if (!Check(properties != nullptr, "read-only navigation uses the actual component panel"))
+        return;
+    const auto header = ImHashStr("Body", 0, properties->GetID("Body"));
+    const auto before = ui.Bytes();
+    ui.state.mode = EditorMode::Play;
+    ui.Frame();
+    ImRect playHeader;
+    if (!Check(ui.FocusNative(header, playHeader, properties),
+               "Play component disclosure remains keyboard focusable"))
+        return;
+    ui.Click(playHeader.GetCenter());
+    Check(properties->StateStorage.GetBool(header) && ui.Bytes() == before,
+          "actual Play pointer expands component details without changing the authored scene");
+
+    ui.state.mode = EditorMode::Edit;
+    ui.Frame();
+    ImRect enabledField;
+    if (!Check(ui.FocusNative(properties->GetID("Collider enabled"), enabledField, properties),
+               "enabled authored toggle is reached through real keyboard navigation"))
+        return;
+    const bool originalEnabled = ui.Object().body->enabled;
+    ui.Click(enabledField.GetCenter());
+    Check(ui.Object().body->enabled != originalEnabled && ui.doc.CanUndo(),
+          "same pointer stimulus changes the enabled collider control in Edit");
+    ui.doc.Undo();
+    ui.Frame();
+    ImRect editHeader;
+    if (!Check(ui.FocusNative(header, editHeader, properties),
+               "actual header rectangle is available before Play comparison"))
+        return;
+    const auto ellipsis = [](ImRect headerRect) {
+        return ImVec2(headerRect.Max.x - 16, headerRect.Min.y + 14);
+    };
+    ui.Click(ellipsis(editHeader));
+    Check(!ImGui::GetCurrentContext()->OpenPopupStack.empty(),
+          "Edit pointer reaches the real component-actions button and opens its menu");
+    if (!ImGui::GetCurrentContext()->OpenPopupStack.empty()) {
+        ui.Frame(); // Popup auto-size resolves before observing its actual row bounds.
+        auto *popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ui.Click(popup->InnerClipRect.GetCenter());
+        Check(!ui.Object().body, "enabled component menu genuinely removes the body");
+        ui.doc.Undo();
+    }
+    ui.Frame();
+    ImRect addComponent;
+    if (!Check(ui.FocusNative(ui.Window()->GetID("##add"), addComponent),
+               "Edit Add component is reachable as an actual native combo"))
+        return;
+    ui.Click(addComponent.GetCenter());
+    Check(!ImGui::GetCurrentContext()->OpenPopupStack.empty(),
+          "Edit pointer opens the actual Add component menu");
+    ui.Key(ImGuiKey_Escape, true);
+    ui.Key(ImGuiKey_Escape, false);
+
+    const auto locked = ui.Bytes();
+    const auto generation = ui.doc.Generation();
+    // The fixture changes mode directly instead of handing focus to the Game
+    // viewport as the application's actual Play workflow does. The child can
+    // therefore remember its component-actions button, now disabled. Exercise
+    // ordinary keyboard recovery as well as the read-only pointer safeguards.
+    ui.state.mode = EditorMode::Play;
+    ui.Frame();
+    if (!Check(ui.FocusNative(header, playHeader, properties),
+               "Play header stays navigable after authoring controls lock"))
+        return;
+    const ImVec2 shift{playHeader.Min.x - editHeader.Min.x, playHeader.Min.y - editHeader.Min.y};
+    auto toggleInPlay = enabledField.GetCenter();
+    toggleInPlay.x += shift.x;
+    toggleInPlay.y += shift.y;
+    ui.Click(toggleInPlay);
+    Check(ui.Object().body && ui.Object().body->enabled == originalEnabled,
+          "actual Play pointer cannot change the authored collider toggle");
+    ui.Click(ellipsis(playHeader));
+    Check(ImGui::GetCurrentContext()->OpenPopupStack.empty() && ui.Object().body.has_value(),
+          "component removal action stays disabled while Play disclosure is enabled");
+    ui.Click(addComponent.GetCenter());
+    Check(ImGui::GetCurrentContext()->OpenPopupStack.empty(),
+          "Add component stays disabled during Play despite enabled disclosure navigation");
+    ui.Click(playHeader.GetCenter(), ImGuiMouseButton_Right);
+    Check(!ImGui::GetCurrentContext()->OpenPopupStack.empty(),
+          "read-only header context still exposes its component action menu");
+    if (!ImGui::GetCurrentContext()->OpenPopupStack.empty()) {
+        ui.Frame(); // Popup auto-size resolves before observing its actual row bounds.
+        auto *popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ui.Click(popup->InnerClipRect.GetCenter());
+        ui.Key(ImGuiKey_Escape, true);
+        ui.Key(ImGuiKey_Escape, false);
+    }
+    Check(ui.Object().body.has_value() && ui.Bytes() == locked && ui.doc.Generation() == generation &&
+              !ui.doc.EditInProgress(),
+          "disabled Remove menu and other Play pointers preserve exact authored bytes/history");
+}
 } // namespace
 
 int main() {
@@ -358,6 +583,8 @@ int main() {
         ReadOnlyPlay();
         AddComponent();
         ScriptPropertyLayoutAndUndo();
+        ModelInspectionShortcut();
+        ReadOnlyDisclosureNavigation();
     } catch (const std::exception &error) {
         Check(false, error.what());
     }

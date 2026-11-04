@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <set>
 #include <vector>
 #include <memory>
 #include <functional>
@@ -147,6 +148,7 @@ struct EditorPanelState {
     int assetTypeFilter = -1;
     bool assetMissingOnly = false;
     bool selectAssetDetails = false;
+    bool revealModelStructure = false;
     bool reviewAssetImport = false;
     bool selectModelImportTools = false;
     std::string modelImportReviewOutput, modelImportReviewError;
@@ -207,6 +209,9 @@ struct EditorPanelState {
     std::string previewLocale;
     glm::vec2 textPreviewPosition{0}, textPreviewSize{0};
     std::string hierarchySearch;
+    SceneObjectId hierarchyObservedSelection = kInvalidSceneObjectId;
+    SceneObjectId revealHierarchyObject = kInvalidSceneObjectId;
+    std::set<SceneObjectId> collapsedHierarchyParents;
     std::string status;
     std::string revealComponent;
     AssetId editScriptAsset;
@@ -260,6 +265,7 @@ void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize)
 void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                                const std::function<void()> &workspaceSelector = {},
                                const std::function<void()> &workflowSelector = {});
+void ResetEditorHierarchyView(EditorPanelState&);
 void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests);
 void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state);
 void DrawSceneSettingsPanel(EditorDocument &doc, EditorPanelState &state);

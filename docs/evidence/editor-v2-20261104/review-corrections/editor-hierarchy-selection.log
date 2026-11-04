@@ -1,0 +1,32 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS another real docked tab initially covers Hierarchy
+PASS real Scene pixel picking selects the intended geometry
+PASS Scene pick reopens Hierarchy and requests the exact selected row
+PASS Scene selection reveals Hierarchy even behind a different docked tab
+PASS an obstructing hierarchy filter clears when Scene selects a hidden object
+PASS selection reveal expands every collapsed parent
+PASS selection reveal scrolls the actual clipped hierarchy to its distant row
+PASS the selected row is actually inside the visible hierarchy clip, not merely included in its model
+PASS revealing selection does not steal Scene keyboard focus
+PASS manual scrolling remains free while the current selection is unchanged
+PASS picking the same object again explicitly reveals its row again
+PASS selection, filtering, folding and reveal never edit authored scene or history
+PASS clearing selection does not invent a target row
+PASS scene replacement retires folding and reveal state instead of applying reused IDs to another scene
+PASS narrow hierarchy retains the real thirty-level parent depth for tree operations
+PASS selected deep object's actual name glyphs remain visible inside a narrow hierarchy rail
+PASS actual disclosure press folds the parent, proving the pointer reached its arrow
+PASS releasing a disclosure click preserves the selected descendant and does not rename
+PASS genuine double-click on the disclosure arrow unfolds the same branch
+PASS double-clicking the disclosure arrow neither reselects its parent nor starts Rename
+PASS real disclosure click gives its parent row native keyboard focus
+PASS real Tab navigation visibly focuses the parent row before keyboard activation
+PASS pointer still rests on the focused parent's actual disclosure arrow
+PASS keyboard activation selects the focused parent despite a pointer resting on its disclosure arrow
+PASS context selection fixture targets a visible lower row rather than the current selection
+PASS real right-click selects the intended lower row and opens its context menu
+PASS context selection stays internal and does not scroll its row away from the open menu
+PASS disclosure interaction preserves exact authored bytes and document history
+Hierarchy selection: 28 checks, 0 failures

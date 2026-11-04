@@ -9,7 +9,7 @@ struct EditorAppearance {
     bool light = false;
     std::array<float, 3> accent{.04f, .81f, .82f};
     std::array<float, 3> secondaryAccent{.86f, .29f, .68f};
-    std::array<float, 3> background{.065f, .063f, .087f};
+    std::array<float, 3> background{.075f, .069f, .105f};
     std::array<float, 3> text{.91f, .90f, .95f};
     float scale = 1;
 };

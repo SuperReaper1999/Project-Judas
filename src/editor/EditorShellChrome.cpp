@@ -69,22 +69,29 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
                                const std::function<void()> &workflowSelector) {
     const bool editing = state.mode == EditorMode::Edit;
     const auto display = ImGui::GetIO().DisplaySize;
+    const float scale = ImGui::GetIO().FontGlobalScale;
+    const float logicalWidth = display.x / std::max(.85f, scale);
     PlaceWorkspacePanel(state.workspace.toolbar);
-    const float uiScale = ImGui::GetIO().FontGlobalScale;
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10 * uiScale, 6 * uiScale));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {14 * scale, 8 * scale});
     ImGui::Begin("##workspaceToolbar", nullptr,
                  kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar |
                      ImGuiWindowFlags_NoScrollWithMouse);
+    auto *draw = ImGui::GetWindowDrawList();
+    const auto position = ImGui::GetWindowPos(), size = ImGui::GetWindowSize();
+    const auto upper = ImGui::GetColorU32(EditorVisuals::SurfaceColor(.035f));
+    const auto lower = ImGui::GetColorU32(EditorVisuals::SurfaceColor(-.015f));
+    draw->AddRectFilledMultiColor(position, {position.x + size.x, position.y + size.y}, upper, upper, lower,
+                                  lower);
     if (workflowSelector) {
         workflowSelector();
         if (workspaceSelector) {
-            const float right = ImGui::GetWindowContentRegionMax().x - 170.f * uiScale;
-            if (right > ImGui::GetCursorPosX() + 12.f * uiScale) {
+            const float right = ImGui::GetWindowContentRegionMax().x - 180 * scale;
+            if (right > ImGui::GetCursorPosX() + 12 * scale) {
                 ImGui::SameLine(right);
                 workspaceSelector();
             } else {
                 ImGui::SameLine();
-                if (ImGui::SmallButton("Layout..."))
+                if (EditorDesign::ActionButton("Workspace...", EditorDesign::Tone::Quiet))
                     ImGui::OpenPopup("workflowLayouts");
                 if (ImGui::BeginPopup("workflowLayouts")) {
                     workspaceSelector();
@@ -92,93 +99,72 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
                 }
             }
         }
+        ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
     }
-    ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_HeaderActive));
-    ImGui::PushStyleColor(ImGuiCol_Border, ImGui::GetStyleColorVec4(ImGuiCol_CheckMark));
-    if (EditorVisuals::ActionButton(editing ? "Play" : "Stop",
-                                    editing ? EditorVisuals::Icon::Play : EditorVisuals::Icon::Stop, true)) {
-        if (editing)
-            requests.play = true;
-        else
-            requests.stop = true;
-    }
-    ImGui::PopStyleColor(2);
-    ToolbarHint("F5: play this scene / restore the authored scene");
-    ImGui::SameLine();
+    const float actionHeight = 30 * scale;
     ImGui::BeginDisabled(!editing);
-    if (EditorVisuals::ActionButton("Save", EditorVisuals::Icon::File))
-        requests.save = true;
-    ToolbarHint("Ctrl+S: save the scene");
+    if (EditorVisuals::ActionButton("Play", EditorVisuals::Icon::Play, true, {96 * scale, actionHeight}))
+        requests.play = true;
+    ToolbarHint("F5: play the scene using your project's scripts");
+    ImGui::EndDisabled();
     ImGui::SameLine();
-    if (EditorVisuals::ActionButton("Create...", EditorVisuals::Icon::Plus))
-        ImGui::OpenPopup("toolbarCreate");
-    ToolbarHint("Add objects, a first/third-person player, lights or a pause menu");
-    if (ImGui::BeginPopup("toolbarCreate")) {
-        DrawEditorCreationItems(state, requests);
-        ImGui::EndPopup();
-    }
-    const float logicalWidth = display.x / std::max(.85f, ImGui::GetIO().FontGlobalScale);
-    if (logicalWidth >= 800) {
-        ImGui::SameLine();
-        ImGui::BeginDisabled(!doc.CanUndo());
-        if (ImGui::Button("Undo"))
-            requests.undo = true;
-        ImGui::EndDisabled();
-        ToolbarHint("Ctrl+Z: undo the last scene edit");
-        ImGui::SameLine();
-        ImGui::BeginDisabled(!doc.CanRedo());
-        if (ImGui::Button("Redo"))
-            requests.redo = true;
-        ImGui::EndDisabled();
-        ToolbarHint("Ctrl+Y: redo the scene edit");
-    }
-    ImGui::SameLine();
-    if (logicalWidth >= 1000) {
+    ImGui::BeginDisabled(editing);
+    if (EditorVisuals::ActionButton("Stop", EditorVisuals::Icon::Stop, false, {90 * scale, actionHeight}))
+        requests.stop = true;
+    ToolbarHint("F5: stop and restore your authored scene");
+    ImGui::EndDisabled();
+    ImGui::SameLine(0, 22 * scale);
+    ImGui::BeginDisabled(!editing);
+    if (logicalWidth >= 1200) {
         const auto tool = [&](const char *label, GizmoMode mode, EditorVisuals::Icon icon, const char *hint) {
-            const bool selected = state.gizmoMode == mode;
-            if (selected)
-                ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
-            if (EditorVisuals::ActionButton(label, icon, selected))
+            if (EditorVisuals::ActionButton(label, icon, state.gizmoMode == mode, {0, actionHeight}))
                 state.gizmoMode = mode;
-            if (selected)
-                ImGui::PopStyleColor();
             ToolbarHint(hint);
             ImGui::SameLine();
         };
         tool("Move", GizmoMode::Translate, EditorVisuals::Icon::Move, "W: move selected objects");
         tool("Rotate", GizmoMode::Rotate, EditorVisuals::Icon::Rotate, "E: rotate selected objects");
-        tool("Scale", GizmoMode::Scale, EditorVisuals::Icon::Scale, "R: scale selected objects");
-    }
-    if (ImGui::Button(logicalWidth >= 1000 ? "Options..." : "Transform..."))
-        ImGui::OpenPopup("toolbarTransform");
-    ToolbarHint("Transform tools, world/local axes and snapping; W / E / R / X shortcuts remain available");
-    if (ImGui::BeginPopup("toolbarTransform")) {
-        if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate))
-            state.gizmoMode = GizmoMode::Translate;
-        if (ImGui::MenuItem("Rotate", "E", state.gizmoMode == GizmoMode::Rotate))
-            state.gizmoMode = GizmoMode::Rotate;
-        if (ImGui::MenuItem("Scale", "R", state.gizmoMode == GizmoMode::Scale))
-            state.gizmoMode = GizmoMode::Scale;
-        ImGui::Separator();
-        if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
-            state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
-        ImGui::MenuItem("Snap", "hold Ctrl", &state.gizmoSnap);
-        ImGui::EndPopup();
+        tool("Scale", GizmoMode::Scale, EditorVisuals::Icon::Scale, "R: resize selected objects");
+        {
+        EditorDesign::Field transformSpaceField;
+        ImGui::SetNextItemWidth(86 * scale);
+        if (ImGui::BeginCombo("##transformSpace",
+                              state.gizmoSpace == GizmoSpace::World ? "World" : "Local")) {
+            if (ImGui::Selectable("World", state.gizmoSpace == GizmoSpace::World))
+                state.gizmoSpace = GizmoSpace::World;
+            if (ImGui::Selectable("Local", state.gizmoSpace == GizmoSpace::Local))
+                state.gizmoSpace = GizmoSpace::Local;
+            ImGui::EndCombo();
+        }
+        }
+        ToolbarHint("X: switch world/local transform axes");
+        ImGui::SameLine();
+        EditorDesign::Toggle("Snap", &state.gizmoSnap);
+        ToolbarHint("Hold Ctrl temporarily or enable snapping here");
+    } else {
+        if (EditorDesign::ActionButton("Transform...", EditorDesign::Tone::Secondary, {0, actionHeight}))
+            ImGui::OpenPopup("toolbarTransform");
+        if (ImGui::BeginPopup("toolbarTransform")) {
+            if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate))
+                state.gizmoMode = GizmoMode::Translate;
+            if (ImGui::MenuItem("Rotate", "E", state.gizmoMode == GizmoMode::Rotate))
+                state.gizmoMode = GizmoMode::Rotate;
+            if (ImGui::MenuItem("Scale", "R", state.gizmoMode == GizmoMode::Scale))
+                state.gizmoMode = GizmoMode::Scale;
+            ImGui::Separator();
+            if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
+                state.gizmoSpace =
+                    state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+            ImGui::MenuItem("Snap", "hold Ctrl", &state.gizmoSnap);
+            ImGui::EndPopup();
+        }
     }
     ImGui::EndDisabled();
-    ImGui::SameLine();
-    if (ImGui::Button("View..."))
+    ImGui::SameLine(0, 22 * scale);
+    if (EditorDesign::ActionButton("View...", EditorDesign::Tone::Quiet, {0, actionHeight}))
         ImGui::OpenPopup("toolbarView");
-    if (logicalWidth >= 750) {
-        ImGui::SameLine();
-        ImGui::BeginDisabled(!editing);
-        if (ImGui::Button(state.view2D ? "2D view" : "3D view"))
-            state.view2D = !state.view2D;
-        ToolbarHint("Switch the editing view; gameplay cameras are unchanged.");
-        ImGui::EndDisabled();
-    }
     if (ImGui::BeginPopup("toolbarView")) {
         ImGui::MenuItem("2D scene view", nullptr, &state.view2D, editing);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
@@ -187,28 +173,34 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
         ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
         ImGui::EndPopup();
     }
-    if (!workflowSelector && workspaceSelector) {
-        const float selectorWidth = 166.f * uiScale;
-        const float right = ImGui::GetWindowContentRegionMax().x - selectorWidth;
-        const float current = ImGui::GetCursorPosX();
-        if (right > current + 12.f * uiScale) {
-            ImGui::SameLine(right);
-            ImGui::PushStyleColor(ImGuiCol_Border, EditorSecondaryAccent(.65f));
-            workspaceSelector();
-            ImGui::PopStyleColor();
-        } else {
-            ImGui::SameLine();
-            if (ImGui::Button("Layout..."))
-                ImGui::OpenPopup("compactWorkspaceSelector");
-            if (ImGui::BeginPopup("compactWorkspaceSelector")) {
-                ImGui::TextUnformatted("Workspace");
-                workspaceSelector();
-                ImGui::EndPopup();
-            }
-        }
-    } else if (logicalWidth >= 1100) {
+    // File/Edit/Create menus retain all project commands and shortcuts. Keep
+    // only the small, everyday document actions beside the scene tool group.
+    if (logicalWidth >= 850) {
+        ImGui::SameLine(0, 18 * scale);
+        ImGui::BeginDisabled(!editing);
+        if (EditorVisuals::ActionButton("Save", EditorVisuals::Icon::File, false, {0, actionHeight}))
+            requests.save = true;
+        ToolbarHint("Ctrl+S: save scene. File contains project and export commands.");
         ImGui::SameLine();
-        ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(), doc.IsDirty() ? " *" : "");
+        ImGui::BeginDisabled(!doc.CanUndo());
+        if (EditorDesign::ActionButton("Undo", EditorDesign::Tone::Quiet, {0, actionHeight}))
+            requests.undo = true;
+        ImGui::EndDisabled();
+        ImGui::SameLine();
+        ImGui::BeginDisabled(!doc.CanRedo());
+        if (EditorDesign::ActionButton("Redo", EditorDesign::Tone::Quiet, {0, actionHeight}))
+            requests.redo = true;
+        ImGui::EndDisabled();
+        ImGui::EndDisabled();
+    }
+    if (!workflowSelector && workspaceSelector) {
+        ImGui::SameLine();
+        if (EditorDesign::ActionButton("Workspace...", EditorDesign::Tone::Quiet))
+            ImGui::OpenPopup("compactWorkspaceSelector");
+        if (ImGui::BeginPopup("compactWorkspaceSelector")) {
+            workspaceSelector();
+            ImGui::EndPopup();
+        }
     }
     ImGui::End();
     ImGui::PopStyleVar();

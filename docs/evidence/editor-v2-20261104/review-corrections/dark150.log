@@ -1,0 +1,10 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 598: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/visual-qualified/dark150/editor.edit.png
+[editor autotest] edit frame: 167 draw calls, 141850 triangles, 268 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/visual-qualified/dark150/editor.assets-ready.png
+[editor autotest] idle browser: active=4 pending=0 blocking=0 jobs=1
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

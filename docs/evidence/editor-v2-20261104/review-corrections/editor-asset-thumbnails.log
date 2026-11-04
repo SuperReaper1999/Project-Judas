@@ -1,0 +1,41 @@
+PASS ordinary project fixture is created
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS first visible page starts two coalesced asynchronous image requests, not a directory burst
+PASS repeated same-frame sampling does not duplicate demand or exceed its admission limit
+PASS late workers cannot accumulate additional thumbnail requests across UI frames
+PASS late workers cannot accumulate additional thumbnail requests across UI frames
+PASS late workers cannot accumulate additional thumbnail requests across UI frames
+PASS late workers cannot accumulate additional thumbnail requests across UI frames
+PASS real uploaded image publishes its actual non-square dimensions and native texture token
+PASS stale and absent texture handles have no usable thumbnail dimensions
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS successive visible-page frames retain bounded asynchronous work and references
+PASS off-page images remain unloaded after the browser's active-demand ceiling
+PASS changing the visible page releases textures that left the page
+PASS explicit project/shutdown retirement releases all owned browser demand
+PASS blocking tools never decode unused thumbnails synchronously from the draw path
+PASS missing and non-image records do not start hidden resource work
+PASS sprite-sheet preview fixture uses a genuine registered sheet and texture dependency
+PASS sheet preview reuses its actual source texture instead of allocating decorative artwork
+PASS sheet retirement releases both metadata and image demand
+PASS already-resident images beyond the thumbnail pin budget remain unpinned borrowed views
+PASS actual browser draws the resident image with its original 2:1 aspect ratio
+PASS browser image presentation reuses resource-manager textures without duplicate GPU uploads
+PASS actual visible browser owns only the sampled image demand
+PASS hiding the browser releases its outstanding image demand
+PASS entering Play retires editor-only thumbnail demand
+PASS active-frame retirement replaces sampled image commands before deletion and leaves text intact
+PASS retirement negative control genuinely deleted the original GPU image before submission
+Asset thumbnails: 37 checks, 0 failures

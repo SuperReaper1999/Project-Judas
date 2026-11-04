@@ -1,0 +1,575 @@
+{
+  "format": 1,
+  "startedUtc": "2026-11-04T21:44:07.645067+00:00",
+  "sourceRevision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/EDITOR_V2.md\n M docs/EDITOR_V2_QUALIFICATION.md\n M src/Renderer.cpp\n M src/Renderer.h\n M src/editor/AssetBrowserPanel.cpp\n M src/editor/AssetBrowserPanel.h\n M src/editor/AssetDetailsPanel.cpp\n M src/editor/AssetListPanel.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorAssetPreview.cpp\n M src/editor/EditorAutomationSimulation.cpp\n M src/editor/EditorDocument.h\n M src/editor/EditorHistory.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPlaySession.cpp\n M src/editor/EditorPreferences.cpp\n M src/editor/EditorPreferences.h\n M src/editor/EditorProjectWorkflow.cpp\n M src/editor/EditorRequestWorkflow.cpp\n M src/editor/EditorSceneViewport.cpp\n M src/editor/EditorScriptWorkflow.cpp\n M src/editor/EditorShell.cpp\n M src/editor/EditorShellChrome.cpp\n M src/editor/EditorTheme.h\n M src/editor/EditorVisuals.h\n M src/editor/EditorWidgets.cpp\n M src/editor/EditorWidgets.h\n M src/editor/EditorWorkspace.cpp\n M src/editor/HierarchyPanel.cpp\n M src/editor/InspectorPanel.cpp\n M tests/EditorCreationMenuTests.cpp\n M tests/EditorInspectorWorkflowTests.cpp\n M tests/test_validation_registration.py\n M tools/validation/suites.json",
+  "manifestSha256": "c760d13de88e22cc568890ef688325b3b4b7d5b90c875965b68f143bb722c346",
+  "trackedDiffSha256": "1b3b710edd5e630320745a01a849d421dfd20d8a75efe74be37173ebb49f772e",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_design_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "f5ded8075bd9a130ea0b8e3249ba29e88ea50d55d99e0ad0e159a24c57b4c2e6",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f5ded8075bd9a130ea0b8e3249ba29e88ea50d55d99e0ad0e159a24c57b4c2e6",
+      "seconds": 0.018445697998686228,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-design-controls"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_hierarchy_selection_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "9aec5a2309943799bbb3d740b55b26658e16a66068a809630ee8202f48cd3509",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9aec5a2309943799bbb3d740b55b26658e16a66068a809630ee8202f48cd3509",
+      "seconds": 0.3324511780010653,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-hierarchy-selection"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_hierarchy_creation_workflow_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "5be5258739b2d8914a84ad1de1768329123f20d630386751b297cff534619080",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "5be5258739b2d8914a84ad1de1768329123f20d630386751b297cff534619080",
+      "seconds": 0.09876172999793198,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-hierarchy-creation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_asset_thumbnail_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "2afa69beab08a9de1f3123f08b7f6c62815f2ce6552c37fc565ed17a961df28b",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "2afa69beab08a9de1f3123f08b7f6c62815f2ce6552c37fc565ed17a961df28b",
+      "seconds": 0.33116330899792956,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-asset-thumbnails"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_inspector_workflow_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "375c9d0250031be68b02282feef6a9c3e54778ca0e317551363d7aabb36fdb72",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "375c9d0250031be68b02282feef6a9c3e54778ca0e317551363d7aabb36fdb72",
+      "seconds": 0.1274042590011959,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-inspector-workflow"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_console_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "eb53e52f3a0706e1b3b13dd06e03d18802e65240d273488d8374fdecd9b8fd77",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "eb53e52f3a0706e1b3b13dd06e03d18802e65240d273488d8374fdecd9b8fd77",
+      "seconds": 0.09933525200176518,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-console"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_v2_workspace_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "21de9ee09eed0d07ffa067ec6a845b8cce1f576df274bd5bc0fe52092af0dce6",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "21de9ee09eed0d07ffa067ec6a845b8cce1f576df274bd5bc0fe52092af0dce6",
+      "seconds": 0.08021626499976264,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-v2-workspaces"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_v2_viewport_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates/editor-v2-viewports"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "bc8876a8a0d67ec419a8e49b4f5cc75a3e66cecab346d3f2a78cd6153d97516e",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "bc8876a8a0d67ec419a8e49b4f5cc75a3e66cecab346d3f2a78cd6153d97516e",
+      "seconds": 0.9345357419988432,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-v2-viewports"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_window_routing_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "0231af1723642502b917168c55e826a6dd156579eb46af62c3c7e3479b2b6ec3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "0231af1723642502b917168c55e826a6dd156579eb46af62c3c7e3479b2b6ec3",
+      "seconds": 0.1166321330019855,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-window-routing"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_module_acceptance_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "aabe4b6123c15def352039a7ee21c066d4cb890cb17ca88f260c5b92f686190a",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "aabe4b6123c15def352039a7ee21c066d4cb890cb17ca88f260c5b92f686190a",
+      "seconds": 0.09489951599971391,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "scripting-module-acceptance"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_binding_registry_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "3729825df76766d9c951db502d381cbeef308abb45c523d7a186aa867ad1199d",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "3729825df76766d9c951db502d381cbeef308abb45c523d7a186aa867ad1199d",
+      "seconds": 0.06899471099677612,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "scripting-registry"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_script_workflow_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "9f8c85a8824ec0e82cad28cf58eccebe3d527d8bfcf0bb817a58bbb67c589210",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9f8c85a8824ec0e82cad28cf58eccebe3d527d8bfcf0bb817a58bbb67c589210",
+      "seconds": 0.1793187469993427,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-script-workflow"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_creation_menu_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "476f7684422a87f7152392808feb79a50f214e78f15c7e542ad09dc29c71768e",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "476f7684422a87f7152392808feb79a50f214e78f15c7e542ad09dc29c71768e",
+      "seconds": 0.07805685199855361,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-hierarchy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_preferences_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2-review/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "2a1fa00e76745f90f1cf5587de16f3914687ee2b0545c20a324efa039c68895e",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "2a1fa00e76745f90f1cf5587de16f3914687ee2b0545c20a324efa039c68895e",
+      "seconds": 0.07078241300041554,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-418b03a-dirty-831c26ac26d5-u0fea4623f93a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+        "source_origin": "git",
+        "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+        "source_tree": "f6ad6953e963f25f3b2cc064ac83602335da84f6",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "editor-preferences"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "FLU-ROOT-ADMISSION",
+      "status": "resolved-local-reconstruction",
+      "scheduled": true,
+      "reason": "Physical non-solid admission uses actual particle cubes and compact pair lenses, not nominal-bin occupancy. All original 34 controls pass unchanged, with neutral/swimming and existing vertical support preserved. New geometric/force controls cover compact support and numerical tangency. This is bounded sampling reconstruction, not exact multiphase topology or a conserved-volume solve. See docs/FLUID_LOCAL_WET_RECONSTRUCTION.txt.",
+      "evidence": "docs/evidence/fluid-local-wet-20261102"
+    },
+    {
+      "id": "FLU-KNOWN-GEOMETRY",
+      "status": "open-failing-diagnostic",
+      "scheduled": false,
+      "reason": "Analytic nonplanar geometry exposes error in both legacy PBF wet-volume reconstruction and the original remote-plane observer. Strict diagnostic stays failing; Advanced Fluids remain locked. See docs/FLUID_KNOWN_GEOMETRY_COMPARISON.md.",
+      "evidence": "docs/evidence/fluid-known-geometry-20261101"
+    },
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF remains locked in Alpha. The accumulated-motion epoch repair passes production acceptance windows and all five original four-second comparisons; original failed evidence is preserved. Two production and four player warm-up diagnostics still fail, and coarse impact/contact transients and geometric limitations remain. Active particle continuation/suspension/origin shifts are still unsupported. See docs/FLUID_MOTION_CLOCK_REPAIR.txt.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+    "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b"
+  },
+  "passed": true,
+  "finishedUtc": "2026-11-04T21:44:12.293623+00:00",
+  "sourceRevisionAfter": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/EDITOR_V2.md\n M docs/EDITOR_V2_QUALIFICATION.md\n M src/Renderer.cpp\n M src/Renderer.h\n M src/editor/AssetBrowserPanel.cpp\n M src/editor/AssetBrowserPanel.h\n M src/editor/AssetDetailsPanel.cpp\n M src/editor/AssetListPanel.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorAssetPreview.cpp\n M src/editor/EditorAutomationSimulation.cpp\n M src/editor/EditorDocument.h\n M src/editor/EditorHistory.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPlaySession.cpp\n M src/editor/EditorPreferences.cpp\n M src/editor/EditorPreferences.h\n M src/editor/EditorProjectWorkflow.cpp\n M src/editor/EditorRequestWorkflow.cpp\n M src/editor/EditorSceneViewport.cpp\n M src/editor/EditorScriptWorkflow.cpp\n M src/editor/EditorShell.cpp\n M src/editor/EditorShellChrome.cpp\n M src/editor/EditorTheme.h\n M src/editor/EditorVisuals.h\n M src/editor/EditorWidgets.cpp\n M src/editor/EditorWidgets.h\n M src/editor/EditorWorkspace.cpp\n M src/editor/HierarchyPanel.cpp\n M src/editor/InspectorPanel.cpp\n M tests/EditorCreationMenuTests.cpp\n M tests/EditorInspectorWorkflowTests.cpp\n M tests/test_validation_registration.py\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "1b3b710edd5e630320745a01a849d421dfd20d8a75efe74be37173ebb49f772e",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "418b03a01a27d82f5bf8189c01ddac0cc3f159f3",
+    "source_fingerprint": "831c26ac26d55cc38eda6799e7c4a0a74261d5ebc9cc25602bbfca0cbb987071",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "0fea4623f93a0ca5eb4d530c0041f924ab661f087f503e6da405ca11f76feb8b"
+  }
+}

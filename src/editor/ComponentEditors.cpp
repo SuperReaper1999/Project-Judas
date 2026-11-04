@@ -7,6 +7,7 @@
 #include "RuntimeWorld.h"
 #include "ComponentEditors.h"
 #include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <fstream>
 #include "ModelLoader.h"
@@ -24,6 +25,8 @@
 #include "EditorPanels.h"
 #include "CollisionAsset.h"
 #include "EditorWidgets.h"
+#include "EditorPanelWidgets.h"
+#include "EditorDesign.h"
 
 bool DrawMaterialOverrideControls(MaterialOverride& candidate,const MaterialDefinition& base,EditorPanelState& state) {
     auto resolved=ApplyMaterialOverride(base,candidate);bool changed=false;
@@ -209,57 +212,140 @@ void DrawPowertrain(EditorDocument& doc,SceneObject& object,EditorPanelState& st
     std::string error;if(!ValidatePowertrainSettings(train,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
     if(state.runtime)if(const auto* runtime=state.runtime->RuntimePowertrain(object.id)){ImGui::Text("Mechanical solve: %s | residual %.5g",runtime->state.converged?"converged":"failed",runtime->state.residual);for(size_t i=0;i<runtime->state.shafts.size();++i)ImGui::Text("%s: %.1f RPM",runtime->settings.shafts[i].name.c_str(),runtime->state.shafts[i].angularVelocity*60/(2*3.141592653589793));}
 }
-void DrawCharacter(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
-    auto& m=*object.characterMotor;Checkbox(doc,"Motor enabled",m.enabled);
-    DragScalar(doc,"Radius",m.radius,.01f);DragScalar(doc,"Cylinder half height",m.halfHeight,.01f);
-    DragScalar(doc,"Step height",m.stepHeight,.01f);DragScalar(doc,"Support probe",m.supportDistance,.01f);DragScalar(doc,"Skin",m.skin,.001f);
-    DragScalar(doc,"Maximum slope degrees",m.maxSlopeDegrees,1);DragScalar(doc,"Gravity multiplier",m.gravityScale,.1f);DragScalar(doc,"Reorientation degrees/sec",m.reorientationDegreesPerSecond,1);
-    DragScalar(doc,"Interaction mass kg",m.interactionMass,1);DragScalar(doc,"Max push impulse",m.maxPushImpulse,1);
-    DragVec3(doc,"Shape offset",m.offset);
-    if(state.project){const auto& categories=state.project->Settings().classification;
-        DrawCategoryLayer(doc,"Collision layer",m.collisionLayer,categories.collision);DrawCategoryMask(doc,"Collision mask",m.collisionMask,categories.collision);
-        DrawCategoryMask(doc,"Required collider tags",m.requiredTags,categories.tags,false);DrawCategoryMask(doc,"Excluded collider tags",m.excludedTags,categories.tags,false);}
-    ImGui::TextWrapped("Script fixedUpdate supplies world velocity and extra acceleration. No input, camera or gameplay state belongs to this component.");
+void DrawCharacter(EditorDocument &doc, SceneObject &object, EditorPanelState &state) {
+    auto &m = *object.characterMotor;
+    Checkbox(doc, "Motor enabled", m.enabled);
+    DragScalar(doc, "Radius", m.radius, .01f);
+    ImGui::SetItemTooltip("Width of the character's collision capsule, in metres.");
+    DragScalar(doc, "Cylinder half height", m.halfHeight, .01f);
+    ImGui::SetItemTooltip(
+        "Half the straight middle section; total height is twice this value plus twice the radius.");
+    DragScalar(doc, "Step height", m.stepHeight, .01f);
+    DragScalar(doc, "Maximum slope degrees", m.maxSlopeDegrees, 1);
+    ImGui::TextWrapped("Walking speed, jumping and input are set by the character's script.");
+    if (InspectorDisclosure("Advanced character settings")) {
+        DragScalar(doc, "Support probe", m.supportDistance, .01f);
+        DragScalar(doc, "Skin", m.skin, .001f);
+        DragScalar(doc, "Gravity multiplier", m.gravityScale, .1f);
+        DragScalar(doc, "Reorientation degrees/sec", m.reorientationDegreesPerSecond, 1);
+        DragScalar(doc, "Interaction mass kg", m.interactionMass, 1);
+        DragScalar(doc, "Max push impulse", m.maxPushImpulse, 1);
+        DragVec3(doc, "Shape offset", m.offset);
+        if (state.project) {
+            const auto &categories = state.project->Settings().classification;
+            DrawCategoryLayer(doc, "Collision layer", m.collisionLayer, categories.collision);
+            DrawCategoryMask(doc, "Collision mask", m.collisionMask, categories.collision);
+            DrawCategoryMask(doc, "Required collider tags", m.requiredTags, categories.tags, false);
+            DrawCategoryMask(doc, "Excluded collider tags", m.excludedTags, categories.tags, false);
+        }
+    }
 }
-void DrawScripts(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
-    size_t remove=o.scripts.size();
-    for(size_t i=0;i<o.scripts.size();++i){auto& slot=o.scripts[i];ImGui::PushID(static_cast<int>(i));
-        ImGui::Text("Script %zu",i+1);
-        AssetField(doc,"Script asset",slot.asset,AssetType::Script,false,state);Checkbox(doc,"Enabled",slot.enabled);
-        if(!slot.asset.empty()&&ImGui::Button("Edit script"))state.editScriptAsset=slot.asset;
-        if(state.assets&&!slot.asset.empty()){
-            struct Metadata {std::filesystem::file_time_type time;std::string schema,error;};
-            static std::map<std::string,Metadata> cache;
-            const auto* record=state.assets->Find(slot.asset);
-            if(record&&!record->missing){std::error_code ec;auto stamp=std::filesystem::last_write_time(record->path,ec);
-                auto it=cache.find(record->path);if(it==cache.end()||it->second.time!=stamp){Metadata m;m.time=stamp;
-                    ScriptSystem::Inspect(*state.assets,slot.asset,m.schema,m.error);it=cache.insert_or_assign(record->path,std::move(m)).first;}
-                auto& metadata=it->second;std::vector<ScriptProperty> fields;std::string error=metadata.error;
-                if(error.empty()&&ScriptSystem::ReadProperties(metadata.schema,slot.properties,fields,error)){
-                    for (auto& f : fields) {
-                        // Property labels belong inside the Inspector, above
-                        // their full-width values, rather than off its right edge.
+
+std::string ScriptPropertyLabel(const std::string &key) {
+    std::string result;
+    for (size_t i = 0; i < key.size(); ++i) {
+        const auto c = static_cast<unsigned char>(key[i]);
+        const bool separator = c == '_' || c == '-';
+        const bool boundary = i && std::isupper(c) &&
+                              (std::islower(static_cast<unsigned char>(key[i - 1])) ||
+                               (i + 1 < key.size() && std::isupper(static_cast<unsigned char>(key[i - 1])) &&
+                                std::islower(static_cast<unsigned char>(key[i + 1]))));
+        if ((separator || boundary) && !result.empty() && result.back() != ' ')
+            result += ' ';
+        if (!separator)
+            result += char(c);
+    }
+    if (!result.empty())
+        result[0] = char(std::toupper(static_cast<unsigned char>(result[0])));
+    return result;
+}
+
+void DrawScripts(EditorDocument &doc, SceneObject &o, EditorPanelState &state) {
+    size_t remove = o.scripts.size();
+    for (size_t i = 0; i < o.scripts.size(); ++i) {
+        auto &slot = o.scripts[i];
+        ImGui::PushID(static_cast<int>(i));
+        const auto *record = state.assets ? state.assets->Find(slot.asset) : nullptr;
+        if (record && !record->missing) {
+            const auto name = std::filesystem::u8path(record->relativePath).filename().u8string();
+            ImGui::TextWrapped("%s", name.c_str());
+            ImGui::SetItemTooltip("%s", record->relativePath.c_str());
+        } else if (slot.asset.empty()) {
+            ImGui::TextDisabled("Choose a script for this slot");
+            AssetField(doc, "Script asset", slot.asset, AssetType::Script, false, state);
+        } else if (state.assets) {
+            ImGui::TextWrapped("Script is missing. Open Script options to choose a replacement.");
+        } else {
+            ImGui::TextWrapped("Script attached. Open its project to inspect the source.");
+        }
+        Checkbox(doc, "Enabled", slot.enabled);
+        EditorPanelWidgets::NextActionOnRow("Edit script");
+        ImGui::BeginDisabled(slot.asset.empty());
+        if (EditorDesign::ActionButton("Edit script", EditorDesign::Tone::Secondary))
+            state.editScriptAsset = slot.asset;
+        ImGui::EndDisabled();
+        if (record && !record->missing) {
+            struct Metadata {
+                std::filesystem::file_time_type time;
+                std::string schema, error;
+            };
+            static std::map<std::string, Metadata> cache;
+            std::error_code ec;
+            const auto stamp = std::filesystem::last_write_time(record->path, ec);
+            auto it = cache.find(record->path);
+            if (it == cache.end() || it->second.time != stamp) {
+                Metadata metadata;
+                metadata.time = stamp;
+                ScriptSystem::Inspect(*state.assets, slot.asset, metadata.schema, metadata.error);
+                it = cache.insert_or_assign(record->path, std::move(metadata)).first;
+            }
+            auto &metadata = it->second;
+            std::vector<ScriptProperty> fields;
+            std::string error = metadata.error;
+            if (error.empty() &&
+                ScriptSystem::ReadProperties(metadata.schema, slot.properties, fields, error)) {
+                const auto settingsLabel = "Settings (" + std::to_string(fields.size()) + ")";
+                if (!fields.empty() &&
+                    InspectorDisclosure(settingsLabel.c_str(), false, ImGui::GetID("Script settings"))) {
+                    for (auto &f : fields) {
                         const auto fieldId = ImGui::GetID(f.name.c_str());
+                        const auto label = ScriptPropertyLabel(f.name);
                         ImGui::PushTextWrapPos(0);
-                        ImGui::TextDisabled("%s", f.name.c_str());
+                        ImGui::TextUnformatted(label.c_str());
                         ImGui::PopTextWrapPos();
+                        ImGui::SetItemTooltip("Script property: %s", f.name.c_str());
                         ImGui::SetNextItemWidth(-1);
                         ImGui::PushOverrideID(fieldId);
                         bool changed = false;
                         if (f.type == "boolean") {
-                            changed = ImGui::Checkbox("", &f.boolean);
+                            changed = EditorDesign::Toggle("", &f.boolean);
                             ImGui::SameLine();
                             ImGui::TextUnformatted(f.boolean ? "On" : "Off");
                         } else if (f.type == "number") {
+                            EditorDesign::FieldFrame field;
                             changed = ImGui::InputDouble("", &f.number);
                         } else if (f.type == "entity") {
                             SceneObjectId id = 0;
-                            try { id = std::stoull(f.text); } catch (...) {}
-                            const auto* target = doc.GetScene().Find(id);
-                            if (ImGui::BeginCombo("", target ? target->name.c_str() : "None / missing")) {
-                                if (ImGui::Selectable("None", id == 0)) { f.text = "0"; changed = true; }
-                                for (const auto& candidate : doc.GetScene().Objects())
-                                    if (ImGui::Selectable((candidate.name + " ##" + std::to_string(candidate.id)).c_str(), candidate.id == id)) {
+                            try {
+                                id = std::stoull(f.text);
+                            } catch (...) {
+                            }
+                            const auto *target = doc.GetScene().Find(id);
+                            bool open;
+                            {
+                                EditorDesign::FieldFrame field;
+                                open =
+                                    ImGui::BeginCombo("", target ? target->name.c_str() : "None / missing");
+                            }
+                            if (open) {
+                                if (ImGui::Selectable("None", id == 0)) {
+                                    f.text = "0";
+                                    changed = true;
+                                }
+                                for (const auto &candidate : doc.GetScene().Objects())
+                                    if (ImGui::Selectable(
+                                            (candidate.name + " ##" + std::to_string(candidate.id)).c_str(),
+                                            candidate.id == id)) {
                                         f.text = std::to_string(candidate.id);
                                         changed = true;
                                     }
@@ -268,32 +354,60 @@ void DrawScripts(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
                         } else {
                             char value[1024];
                             std::snprintf(value, sizeof(value), "%s", f.text.c_str());
+                            EditorDesign::FieldFrame field;
                             changed = ImGui::InputText("", value, sizeof(value));
-                            if (changed) f.text = value;
+                            if (changed)
+                                f.text = value;
                         }
                         ImGui::PopID();
-                        if (changed) { doc.BeginEdit(); slot.properties = ScriptSystem::WriteProperties(fields); doc.CommitEdit(); }
+                        if (changed) {
+                            doc.BeginEdit();
+                            slot.properties = ScriptSystem::WriteProperties(fields);
+                            doc.CommitEdit();
+                        }
                     }
                 }
-                if(!error.empty())ImGui::TextWrapped("Script metadata: %s",error.c_str());
             }
+            if (!error.empty())
+                ImGui::TextWrapped("Script metadata: %s", error.c_str());
         }
-        if(ImGui::Button("Remove behaviour"))remove=i;
+        if (InspectorDisclosure("Script options")) {
+            if (!slot.asset.empty())
+                AssetField(doc, "Script asset", slot.asset, AssetType::Script, false, state);
+            if (EditorDesign::ActionButton("Remove behaviour", EditorDesign::Tone::Danger))
+                remove = i;
+        }
+        if (i + 1 < o.scripts.size())
+            ImGui::Separator();
         ImGui::PopID();
     }
-    if(remove<o.scripts.size()){doc.BeginEdit();o.scripts.erase(o.scripts.begin()+remove);doc.CommitEdit();}
-    if(ImGui::TreeNode("Advanced script slots")){
-        if(ImGui::Button("Add empty slot")){doc.BeginEdit();uint64_t id=1;for(const auto& slot:o.scripts)id=std::max(id,slot.id+1);o.scripts.push_back({id,"",true,"{}"});doc.CommitEdit();}
-        ImGui::TreePop();
+    if (remove < o.scripts.size()) {
+        doc.BeginEdit();
+        o.scripts.erase(o.scripts.begin() + remove);
+        doc.CommitEdit();
+    }
+    if (InspectorDisclosure("Advanced script slots")) {
+        if (ImGui::Button("Add empty slot")) {
+            doc.BeginEdit();
+            uint64_t id = 1;
+            for (const auto &slot : o.scripts)
+                id = std::max(id, slot.id + 1);
+            o.scripts.push_back({id, "", true, "{}"});
+            doc.CommitEdit();
+        }
     }
 }
 
-void DrawParticleEmitter(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
-    auto& e=*o.particleEmitter;
-    Checkbox(doc,"Enabled",e.enabled);Checkbox(doc,"Continuous/loop",e.loop);
-    Checkbox(doc,"Local space",e.localSpace);Checkbox(doc,"Sample Judas gravity",e.useGravity);
-    DragScalar(doc,"Rate / second",e.rate,1,0,100000);DragScalar(doc,"Lifetime seconds",e.lifetime,0.05f,0.01f,3600);
-    DragScalar(doc,"Start size",e.size,0.01f,0,1000);DragScalar(doc,"End size",e.endSize,0.01f,0,1000);
+void DrawParticleEmitter(EditorDocument &doc, SceneObject &o, EditorPanelState &state) {
+    auto &e = *o.particleEmitter;
+    Checkbox(doc, "Enabled", e.enabled);
+    Checkbox(doc, "Continuous/loop", e.loop);
+    Checkbox(doc, "Local space", e.localSpace);
+    Checkbox(doc, "Sample Judas gravity", e.useGravity);
+    DragScalar(doc, "Rate / second", e.rate, 1, 0, 100000);
+    DragScalar(doc, "Lifetime seconds", e.lifetime, 0.05f, 0.01f, 3600);
+    DragScalar(doc, "Start size", e.size, 0.01f, 0, 1000);
+    DragScalar(doc, "End size", e.endSize, 0.01f, 0, 1000);
     auto integer=[&](const char* name,int& v,int lo,int hi){int next=v;if(ImGui::DragInt(name,&next,1,lo,hi)){doc.BeginEdit();v=std::clamp(next,lo,hi);doc.CommitEdit();}};
     integer("Capacity",e.maxParticles,1,100000);integer("Startup burst",e.burst,0,e.maxParticles);
     DragVec3(doc,"Position spread",e.spread,0.01f);DragVec3(doc,"Initial velocity",e.velocity,0.05f);
@@ -568,7 +682,10 @@ void DrawRagdoll(EditorDocument& doc,SceneObject& object,EditorPanelState& state
     for(size_t i=0;i<r.bones.size();++i){auto& b=r.bones[i];ImGui::PushID(int(i));if(ImGui::TreeNode("Mapped bone","%s",b.joint.c_str())){
         JointPicker(doc,object,state,"Skeleton joint",b.joint);JointPicker(doc,object,state,"Physical parent key",b.parent,true);const char* shapes[]={"Box","Sphere"};Combo(doc,"Shape",b.shape,shapes,2);
         DragVec3(doc,"Shape offset",b.offset,.01f);frame("Shape orientation",b.orientation);DragVec3(doc,"Half extents",b.halfExtents,.01f);DragScalar(doc,"Radius",b.radius,.01f);DragScalar(doc,"Mass",b.mass,.1f);DragScalar(doc,"Friction",b.friction,.01f);DragScalar(doc,"Restitution",b.restitution,.01f);
-        if(state.project){DrawCategoryLayer(doc,"Collision layer",b.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",b.collisionMask,state.project->Settings().classification.collision);}
+        if (state.project && InspectorDisclosure("Collision filtering")) {
+        DrawCategoryLayer(doc,"Collision layer",b.collisionLayer,state.project->Settings().classification.collision);
+        DrawCategoryMask(doc,"Collision mask",b.collisionMask,state.project->Settings().classification.collision);
+    }
         Checkbox(doc,"Suppress parent collision",b.suppressParentCollision);Checkbox(doc,"Capture anchors from current pose",b.autoAnchors);
         const char* types[]={"Fixed","Hinge","Ball","Slider"};Combo(doc,"Constraint",b.constraint.type,types,4);Checkbox(doc,"Constraint enabled",b.constraint.enabled);Checkbox(doc,"Limits",b.constraint.limits);DragScalar(doc,"Lower",b.constraint.lower,.01f);DragScalar(doc,"Upper",b.constraint.upper,.01f);DragScalar(doc,"Rotational resistance (N m s/rad)",b.constraint.rotationalResistance,.01f,0,100000);
         if(!b.autoAnchors){DragVec3(doc,"Child anchor",b.constraint.anchorA,.01f);DragVec3(doc,"Parent anchor",b.constraint.anchorB,.01f);}
@@ -725,7 +842,10 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     ImGui::SeparatorText("Collision and motion");
     Checkbox(doc,"Sensor (events, no response)",b.sensor);
     Checkbox(doc,"Collider enabled",b.enabled);
-    if(state.project){DrawCategoryLayer(doc,"Collision layer",b.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",b.collisionMask,state.project->Settings().classification.collision);}
+    if (state.project && InspectorDisclosure("Collision filtering")) {
+        DrawCategoryLayer(doc,"Collision layer",b.collisionLayer,state.project->Settings().classification.collision);
+        DrawCategoryMask(doc,"Collision mask",b.collisionMask,state.project->Settings().classification.collision);
+    }
     Combo(doc, "Motion", b.motion, kMotionNames, 3);
     ImGui::SetItemTooltip("Static holds its pose. Dynamic responds to forces and contacts. Kinematic follows explicit script targets or velocities.");
     ImGui::SeparatorText("Collider shape");
@@ -804,12 +924,14 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     if(b.motion!=SceneBodyMotion::Static)ImGui::SeparatorText("Mass and initial motion");
     if (b.motion == SceneBodyMotion::Dynamic) {
         DragScalar(doc, "Mass (kg)", b.mass, 0.1f, 0.001f, 1.0e30f);
-        DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
-        ImGui::SetItemTooltip("World COM velocity in metres per second at Play start.");
-        DragVec3(doc,"Initial angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
         Checkbox(doc, "Pickable (G/H)", b.pickable);
-        Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
-        if (!b.managed) ImGui::TextDisabled("Unmanaged: always fully simulated; the policy never touches it.");
+        if (InspectorDisclosure("Initial motion and streaming")) {
+            DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
+            ImGui::SetItemTooltip("World COM velocity in metres per second at Play start.");
+            DragVec3(doc,"Initial angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
+            Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
+            if (!b.managed) ImGui::TextDisabled("Always fully simulated; streaming policy does not suspend this body.");
+        }
     }
     if(b.motion==SceneBodyMotion::Kinematic){
         DragScalar(doc,"Transition mass (kg)",b.mass,.1f,.001f,1e30f);

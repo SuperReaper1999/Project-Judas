@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "imgui.h"
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -13,34 +14,57 @@
 // step through EditorDocument::BeginEdit/CommitEdit: drag/input widgets
 // snapshot on activation and commit when they deactivate having changed
 // something; instant widgets (checkbox, combo, selectable) commit at once.
+// Judas Design owns presentation; these wrappers retain the native input item
+// and own its document transaction. Paint must not replace LastItemData.
 // Value fields place wrapped labels above full-width controls, retaining
 // the IDs of their original labelled ImGui widgets.
-void TrackEdit(EditorDocument& doc);
-bool DragVec2(EditorDocument& doc,const char* label,glm::vec2& value,float speed=.05f,float min=0,float max=0);
-bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed = 0.05f);
+// Owns only the Inspector's authored-value lock. Navigation disclosures may
+// temporarily suspend this lock; an enclosing disabled host remains disabled.
+// Callers outside this owned scope get ordinary disclosure behavior.
+class InspectorReadOnlyScope {
+  public:
+    explicit InspectorReadOnlyScope(bool readOnly);
+    ~InspectorReadOnlyScope();
+    InspectorReadOnlyScope(const InspectorReadOnlyScope &) = delete;
+    InspectorReadOnlyScope &operator=(const InspectorReadOnlyScope &) = delete;
+
+  private:
+    bool enabled;
+    InspectorReadOnlyScope *previous = nullptr;
+    friend bool InspectorDisclosure(const char *, bool, ImGuiID, float);
+};
+bool InspectorDisclosure(const char *label, bool defaultOpen = false, ImGuiID explicitId = 0,
+                         float leadingIconSpace = 0);
+
+void TrackEdit(EditorDocument &doc);
+bool DragVec2(EditorDocument &doc, const char *label, glm::vec2 &value, float speed = .05f, float min = 0,
+              float max = 0);
+bool DragVec3(EditorDocument &doc, const char *label, glm::vec3 &value, float speed = 0.05f);
 // Euler degrees in the inspector, quaternion in the authored scene.
-bool DragRotation(EditorDocument& doc, const char* label, glm::quat& value);
-bool DragScalar(EditorDocument& doc, const char* label, float& value, float speed = 0.01f, float min = 0.0f,
+bool DragRotation(EditorDocument &doc, const char *label, glm::quat &value);
+bool DragScalar(EditorDocument &doc, const char *label, float &value, float speed = 0.01f, float min = 0.0f,
                 float max = 0.0f);
-bool DragInt(EditorDocument& doc, const char* label, int& value, int min = 0, int max = 100000);
-bool ColorEdit(EditorDocument& doc, const char* label, glm::vec3& value);
-bool Checkbox(EditorDocument& doc, const char* label, bool& value);
-bool TextField(EditorDocument& doc, const char* label, std::string& value);
+bool DragInt(EditorDocument &doc, const char *label, int &value, int min = 0, int max = 100000);
+bool ColorEdit(EditorDocument &doc, const char *label, glm::vec3 &value);
+bool Checkbox(EditorDocument &doc, const char *label, bool &value);
+bool TextField(EditorDocument &doc, const char *label, std::string &value);
 // A combo over string values; `allowNone` offers an empty selection.
-bool StringCombo(EditorDocument& doc, const char* label, std::string& value, const std::vector<std::string>& options,
-                 bool allowNone);
+bool StringCombo(EditorDocument &doc, const char *label, std::string &value,
+                 const std::vector<std::string> &options, bool allowNone);
 // A combo whose displayed labels differ from the stored values (asset
 // name shown, asset id stored). `labels` and `values` are parallel.
-bool LabelledCombo(EditorDocument& doc, const char* label, std::string& value, const std::vector<std::string>& labels,
-                   const std::vector<std::string>& values, bool allowNone, const char* noneLabel = "(none)");
+bool LabelledCombo(EditorDocument &doc, const char *label, std::string &value,
+                   const std::vector<std::string> &labels, const std::vector<std::string> &values,
+                   bool allowNone, const char *noneLabel = "(none)");
 
 // Raw ImGui combo over an int; returns true when the user picked a value.
-bool EnumCombo(const char* label, int& value, const char* const* names, int count);
+bool EnumCombo(const char *label, int &value, const char *const *names, int count);
 
 template <typename Enum>
-bool Combo(EditorDocument& doc, const char* label, Enum& value, const char* const* names, int count) {
+bool Combo(EditorDocument &doc, const char *label, Enum &value, const char *const *names, int count) {
     int index = static_cast<int>(value);
-    if (!EnumCombo(label, index, names, count)) return false;
+    if (!EnumCombo(label, index, names, count))
+        return false;
     doc.BeginEdit();
     value = static_cast<Enum>(index);
     doc.CommitEdit();

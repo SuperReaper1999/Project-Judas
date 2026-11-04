@@ -1,4 +1,5 @@
 #include "EditorPlaySession.h"
+#include "AssetBrowserPanel.h"
 #include "EditorContext.h"
 #include "EditorDocument.h"
 #include "EditorPanels.h"
@@ -66,6 +67,7 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
         if (playedProject.ModSession()->sceneFiles.count(logical) &&
             !LoadSceneFromFile(playedProject.Resolve(logical), playedScene, outError))
             return false;
+        ResetEditorAssetThumbnails(context.panels);
         context.host.OpenContentView(playedProject.ModSession()->assets);
         context.project.SetModSession(playedProject.ModSession());
     }
@@ -149,6 +151,7 @@ void EditorPlaySession::StopPlay(EditorContext &context, EditorSceneViewport &vi
     world.reset(); // the authored Scene was never written; nothing to revert
     if (context.project.ModSession()) {
         auto retiringContent = context.project.ModSession(); // ResourceManager release joins late readers
+        ResetEditorAssetThumbnails(context.panels);
         context.host.OpenProjectAssets(context.project.RootDir(), context.project.AssetsDir());
         context.project.SetModSession({});
         std::string error;

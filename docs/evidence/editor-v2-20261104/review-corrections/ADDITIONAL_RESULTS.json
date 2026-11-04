@@ -1,0 +1,27 @@
+[
+  {
+    "name": "judas_editor_widget_tests",
+    "exit": 0,
+    "seconds": 0.06381916999816895
+  },
+  {
+    "name": "judas_editor_application_lifecycle_tests",
+    "exit": 0,
+    "seconds": 0.3142823620000854
+  },
+  {
+    "name": "judas_script_developer_tools_tests",
+    "exit": 0,
+    "seconds": 0.3141470869995828
+  },
+  {
+    "name": "judas_script_developer_consumer_tests",
+    "exit": 0,
+    "seconds": 9.138527104998502
+  },
+  {
+    "name": "judas_script_presentation_tests",
+    "exit": 0,
+    "seconds": 0.7649454919992422
+  }
+]

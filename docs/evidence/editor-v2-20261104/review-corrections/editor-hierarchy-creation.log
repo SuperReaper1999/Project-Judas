@@ -1,0 +1,38 @@
+PASS actual Hierarchy owns its list window
+PASS right-clicking an actual object row opens its context menu
+PASS row context action targets the clicked object, not the old selection
+PASS native pointer finds the actual Create child action
+PASS Create child opens its real nested object-type menu
+PASS opening Create child alone never creates a game menu or other object
+PASS native pointer reaches requested shape in the nested menu
+PASS actual row/submenu pointer click emits exactly the requested shape and parent
+PASS created shape has the exact parent with identity parent-local placement
+PASS shape creation produces real render/collision components, never a UI game-menu object
+PASS child world placement follows the translated rotated scaled parent
+PASS newly created child is immediately the sole selected object
+PASS actual hierarchy rows show the new child directly beneath its real parent, before unrelated Game menu
+PASS one Undo restores exact authored bytes and preserves parent and unrelated Game menu
+PASS Redo restores the same shape and parent relationship
+PASS dismissed nested menu cannot repeat a creation request on later frames
+PASS actual Hierarchy owns its list window
+PASS right-clicking an actual object row opens its context menu
+PASS row context action targets the clicked object, not the old selection
+PASS native pointer finds the actual Create child action
+PASS Create child opens its real nested object-type menu
+PASS opening Create child alone never creates a game menu or other object
+PASS native pointer reaches requested shape in the nested menu
+PASS actual row/submenu pointer click emits exactly the requested shape and parent
+PASS created shape has the exact parent with identity parent-local placement
+PASS shape creation produces real render/collision components, never a UI game-menu object
+PASS child world placement follows the translated rotated scaled parent
+PASS newly created child is immediately the sole selected object
+PASS actual hierarchy rows show the new child directly beneath its real parent, before unrelated Game menu
+PASS one Undo restores exact authored bytes and preserves parent and unrelated Game menu
+PASS Redo restores the same shape and parent relationship
+PASS dismissed nested menu cannot repeat a creation request on later frames
+PASS root-creation fixture uses the actual list
+PASS empty list space opens root creation rather than an object context
+PASS native pointer finds root sphere creation
+PASS empty hierarchy creation remains a root at the scene focus
+PASS Play cannot create objects through the empty hierarchy menu
+Hierarchy creation workflow: 37 checks, 0 failures

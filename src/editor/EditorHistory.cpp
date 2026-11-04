@@ -210,14 +210,36 @@ const std::vector<EditorHierarchyRow>& EditorDocument::HierarchyRows(const std::
         }
     }
 
+    // Display a real tree, independent of serialization order. Appending a
+    // child must place its row beside its parent, not at the end of the scene.
+    // Authored order is retained among siblings and root objects.
+    std::vector<std::vector<std::size_t>> children(objects.size());
+    std::vector<std::size_t> roots;
+    for (std::size_t i = 0; i < objects.size(); ++i) {
+        if (parents[i] == missing || parents[i] == i) roots.push_back(i);
+        else children[parents[i]].push_back(i);
+    }
     m_hierarchyRows.clear();
     m_hierarchyRows.reserve(objects.size());
-    for (std::size_t i = 0; i < objects.size(); ++i) {
-        if (!visible[i]) continue;
-        unsigned depth = 0;
-        for (auto parent = parents[i]; parent != missing && depth < 8; parent = parents[parent]) ++depth;
-        m_hierarchyRows.push_back({objects[i].id, i, depth});
-    }
+    std::vector<bool> visited(objects.size(), false);
+    std::vector<std::pair<std::size_t, unsigned>> pending;
+    const auto appendTree = [&](std::size_t root) {
+        pending.emplace_back(root, 0);
+        while (!pending.empty()) {
+            const auto [index, depth] = pending.back();
+            pending.pop_back();
+            if (visited[index]) continue;
+            visited[index] = true;
+            if (visible[index]) m_hierarchyRows.push_back({objects[index].id, index, depth});
+            for (auto child = children[index].rbegin(); child != children[index].rend(); ++child)
+                pending.emplace_back(*child, depth + 1);
+        }
+    };
+    for (auto root : roots) appendTree(root);
+    // An invalid, not-yet-committed source draft must not hang the UI or hide
+    // every row. Validation still owns rejection of cyclic parent graphs.
+    for (std::size_t i = 0; i < objects.size(); ++i)
+        if (!visited[i]) appendTree(i);
     m_hierarchyQuery = query;
     m_hierarchyTags = matchingTags;
     m_hierarchyGeneration = m_generation;

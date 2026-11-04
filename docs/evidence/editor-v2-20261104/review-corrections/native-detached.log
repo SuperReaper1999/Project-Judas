@@ -1,0 +1,107 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real native graphics host starts
+VIDEO_DRIVER x11
+PASS actual physical scene builds
+PASS ordinary authoritative Play session begins for observer qualification
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Scene and Game expose independent real content rectangles
+PASS actual Scene and Game images sample their separate native targets
+PASS Game uses its content target rather than the whole main framebuffer
+PASS newly rendered Game pixels replace the previous frame without stale texture reuse
+PASS Game uses its content target rather than the whole main framebuffer
+PASS resizing Game updates render target and actual gameplay dimensions
+PASS offset image center maps to gameplay center instead of window origin
+PASS Scene target follows its own content size
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS real image drop target delivers an ordinary asset payload
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS dropping onto the projection overlay never publishes a world-placement request
+PASS disabled Frame overlay still rejects an asset drop instead of creating an object
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS moving over Scene does not steal the focused Game window
+PASS Game uses its content target rather than the whole main framebuffer
+PASS fresh middle press on the Scene image focuses its camera from Game
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS fresh right press on the Scene image focuses its camera from Game
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS negative fixture owns an actual text edit outside Scene
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS right press over Scene cannot steal an active text edit
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS negative fixture owns an actual slider drag outside Scene
+PASS Game uses its content target rather than the whole main framebuffer
+PASS middle press over Scene cannot steal another widget's active drag
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS fixture separates keyboard focus from pointer hover
+PASS game-specific input map installs through ordinary API
+PASS focused Game accepts keyboard input while pointer is outside its image
+PASS hidden Game releases capture and performs no target presentation
+PASS drawing, resizing, focus and visibility never advance or replace physical state
+PASS ordinary runtime presentation updates the actual authored camera
+PASS live Scene pixels match an independent observer render despite a conflicting gameplay view
+PASS observer rendering never updates authored camera targets
+PASS actual live Scene pixels differ from the remote gameplay camera instead of a stale frame
+PASS Scene observer overlays draw actual authoritative collision geometry in their own target
+PASS disabling observer overlays restores pixels without advancing cameras or physical state
+PASS three observer passes do not advance the runtime camera cadence
+PASS next ordinary runtime cadence boundary still updates its camera
+PASS two actual local-player identities are authored
+PASS independent split-screen camera views use the ordinary player API
+PASS actual Game destination composes both distinct local-player images without nested passes
+PASS live observer and secondary camera rendering preserve actual physical state
+PASS actual runtime commits a three-axis origin change during observer Play
+PASS live observer eye and actual rigid body retain their independent absolute positions
+PASS observer focus follows its chart without changing physical velocities
+PASS actual runtime accepts its return origin
+PASS return origin restores the observer's local camera frame
+PASS second real origin shift prepares Stop restoration
+PASS ending observation restores camera and focus to the authored document chart
+PASS fixture restores the original physical chart after Stop-like observer closure
+PASS 2D observer position translates in the same validated chart
+PASS leaving 2D restores the translated saved perspective position
+PASS explicit physics step changes the same body, validating the no-step observer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game is hosted in an actual secondary SDL OS window
+PASS secondary OpenGL context displays the main-context Game texture
+PASS detached Game input belongs to its native window
+PASS secondary view does not mutate the main native window lifecycle
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS detached Scene owns another SDL window and displays its shared Scene texture
+PASS detached Scene camera capture is routed to its own native window
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS closing a native Scene tool leaves the main editor alive
+SUMMARY 102 checks 0 failures

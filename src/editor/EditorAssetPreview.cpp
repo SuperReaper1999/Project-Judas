@@ -1,4 +1,5 @@
 #include "EditorAssetPreview.h"
+#include "AssetBrowserPanel.h"
 #include "AssetPublicationWorkflow.h"
 #include "EditorContext.h"
 #include "EditorDocument.h"
@@ -264,6 +265,7 @@ void EditorAssetPreview::DrawUIAuthoringPreview(EditorContext &context) {
 }
 
 void EditorAssetPreview::Pump(EditorContext &context) {
+    PumpEditorAssetThumbnails(context.panels);
     if (context.phase == EditorPanelPhase::Edit) {
         PumpEditorAssetWorkflow(context.panels, context.requests);
         RefreshAssetDemand(context);
@@ -325,6 +327,7 @@ void EditorAssetPreview::DrawTextPreview(EditorContext &context) {
 }
 
 void EditorAssetPreview::Destroy(EditorContext &context) {
+    ResetEditorAssetThumbnails(context.panels);
     auto &resources = context.host.Resources();
     auto &renderer = context.host.GetRenderer();
     for (const auto &id : heldAssets)

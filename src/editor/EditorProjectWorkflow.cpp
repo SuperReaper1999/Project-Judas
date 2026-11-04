@@ -1,4 +1,5 @@
 #include "EditorProjectWorkflow.h"
+#include "AssetBrowserPanel.h"
 #include "EditorContext.h"
 #include "EditorPreferences.h"
 #include "EditorSceneGeometry.h"
@@ -99,9 +100,11 @@ bool EditorProjectWorkflow::OpenProject(EditorContext &context, EditorProjectSer
     RetireRetargetProject(context.panels);
     auto retiringContent = context.project.ModSession(); // retain leases until old jobs are joined
     context.project = project;
+    ResetEditorHierarchyView(context.panels);
     context.panels.view2D = context.project.Settings().editor2D;
     services.viewport.camera.Set2D(context.panels.view2D);
     services.viewport.picker.Clear();
+    ResetEditorAssetThumbnails(context.panels);
     context.host.OpenProjectAssets(context.project.RootDir(), context.project.AssetsDir());
     context.panels.projectHistory.reset();
     context.host.Resources().ConfigureVisualStreaming(uint64_t(context.project.Settings().visualBudgetMiB) *
@@ -178,6 +181,7 @@ bool EditorProjectWorkflow::OpenScene(EditorContext &context, EditorProjectServi
     if (!context.document.Load(resolved, outError))
         return false;
     context.document.GetScene() = std::move(resolvedPrefabs);
+    ResetEditorHierarchyView(context.panels);
     context.panels.pathInput = context.project.IsLoaded() ? context.project.MakeRelative(resolved) : resolved;
     if (const auto target = EditorSceneGeometry::InitialFraming(context.document.GetScene()))
         services.viewport.camera.LookAt(

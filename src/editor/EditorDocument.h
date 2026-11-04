@@ -40,7 +40,7 @@ public:
     bool BatchTransform(glm::vec3 translation,glm::quat rotation,glm::vec3 scale,std::string& error,bool individual=true,bool world=false);
     bool ReparentSelection(SceneObjectId parent,std::string& error,bool preserveWorld=true);
     std::vector<SceneObjectId> SelectionRoots() const;
-    // Rows are in authored scene order and valid until the next hierarchy query.
+    // Rows are depth-first, with authored sibling order, and valid until the next hierarchy query.
     const std::vector<EditorHierarchyRow>& HierarchyRows(const std::string& query,
                                                          CategoryMask matchingTags = 0) const;
     void SelectRange(SceneObjectId id, const std::vector<EditorHierarchyRow>& rows, bool additive = false);

@@ -1,0 +1,27 @@
+PASS custom primary action retains its native labelled widget identity
+PASS friendly disclosure title retains its explicit original component identity
+PASS custom card and inset field retain native item metadata, IDs and balanced layout/style scopes
+PASS native pointer press/release activates the custom primary action
+PASS ordinary following frames do not repeat a released action
+PASS custom toggle changes actual state through ordinary pointer input
+PASS custom selectable row returns the native selection action
+PASS custom disclosure collapses through its actual native header hit target
+PASS the same custom disclosure reopens without an extra ID or tree scope
+PASS custom folder and leaf rows retain native open state without ID/tree pushes
+PASS folder arrow opens the custom row using native tree interaction
+PASS ordinary folder body selection does not accidentally close its branch
+PASS detailed-list row remains clickable in its third column, beyond the Name cell
+PASS custom search uses real native text editing and its original field identity
+PASS search clear action empties the buffer and returns keyboard focus to the real text field
+PASS a real input inside the custom card remains editable with native selection/text handling
+FAIL native keyboard focus and Space activate the painted action
+PASS disabled action rejects ordinary pointer activation
+PASS disabled toggle preserves state under pointer input
+PASS disabled search rejects native text input
+PASS native navigation cannot activate disabled custom controls
+PASS painted popup row responds to actual pointer selection
+PASS custom picker rows close their native popup like an ordinary selectable
+PASS SkipItems controls emit no custom geometry or state changes in a collapsed panel
+PASS offscreen custom controls and surfaces skip painting while retaining normal layout
+PASS scrolled spanning rows keep the frozen-header vertical clip while expanding their horizontal hit area
+Editor design: 26 checks, 1 failures
