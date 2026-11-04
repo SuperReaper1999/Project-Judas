@@ -12,19 +12,24 @@ controls, bounded streams, motion, obstruction, reverb, sound groups and lifetim
 
 `burst(count)` queues an authored visual emitter burst; boolean success, false
 when no emitter. Count is converted to uint32 and must be <=65536; use a nonnegative
-integer. Capacity/lifetime remain authored. `setParticles({enabled?,rate?})`
-changes runtime enable/emission rate only; boolean success, false without emitter,
-invalid rate/settings throw. No JS readback, collision, arbitrary particle-position
-editing or fluid-particle API exists. Pose follows entity transforms. Offscreen
-emitters continue ageing; rendering uses normal per-camera culling.
+integer. `setParticles({enabled, rate, size, endSize, velocity, velocityVariation,
+spread, acceleration})` applies a partial runtime patch. Invalid and unknown
+fields throw before mutation. It returns false without an emitter. Velocity,
+variation and spread affect new particles. Acceleration and size affect live
+particles too. Capacity, lifetime, texture and colours remain authored.
+Pose follows entity transforms. Offscreen emitters continue ageing.
 
 ## Cameras
 
 `camera` on Entity returns the runtime render-target camera snapshot
 `{enabled,width,height,near,far}`
-or null. `setCameraEnabled(bool)` returns success. No JS target resize/cadence,
-render-layer-mask setter or generated texture resource handle is exposed. Author
-those settings through normal M33/M39 scene/editor data.
+or null. `setCameraEnabled(bool)` returns success.
+`setCameraPresentation({fov:45, updateEveryFrames:2, renderLayers:['Default']})`
+patches an existing secondary camera for the current played world. FOV is vertical
+degrees, cadence is a positive frame count, and render layers are registered names.
+An empty array draws no entity layers and null restores the all-layer mask.
+Omitted fields retain their values. Invalid fields reject the whole patch.
+Render-target size remains authored.
 
 `world.setView(pose,fov=70)` publishes a separate runtime main view; partial transform
 omissions default to identity (not the previous view). FOV is degrees, strictly
@@ -124,3 +129,15 @@ no new camera or viewport scripting setter is introduced by that workflow.
 
 Main, local-player and render-target cameras now accept an optional lens.
 Perspective remains the default. See [native 2D cameras](sprites-2d.md#orthographic-and-pixel-perfect-views) for fields, content rectangles, project/unproject semantics and portal restrictions.
+
+## Basic Water regions
+
+`entity.basicWater` returns a detached settings snapshot or null when the
+component is absent. Use `entity.setBasicWater({flow:{x:2,y:0,z:0}, opacity:0.7})`
+in authoritative gameplay to update an existing region. Omitted fields keep
+their values. Invalid patches throw before publication. The current is in
+region-local m/s and half extents are in metres (Y is depth below the plane).
+Wave amplitude and wavelength are in metres and affect the visual surface.
+Region extent, enable and current changes also affect the swimming query.
+Project Basic Water and swimming toggles still apply. These calls do not
+unlock or run Advanced Fluid Dynamics.

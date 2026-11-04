@@ -81,13 +81,16 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.angularVelocity` | `angularVelocity`, `setAngularVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.animation` | `animationExists` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Entity.applyForce` | `force` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.applyForceAtPoint` | `forceAtPoint` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyImpulse` | `impulse` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyImpulseAtPoint` | `impulseAtPoint` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyTorque` | `torque` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.audio` | `audioInfo` | [declaration](../judas.d.ts) | [reference](audio.md) |
+| `Entity.basicWater` | `basicWater` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.body2D` | `body2DInfo` | [declaration](../judas.d.ts) | [reference](physics-2d.md) |
 | `Entity.burst` | `burst` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.camera` | `cameraInfo` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `Entity.centerOfMass` | `centerOfMass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Entity.children` | `children` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.classification` | `classification` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -134,9 +137,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setAudio` | `audioSettings` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.setAudioEnabled` | `audioEnabled` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.setAudioVelocity` | `audioVelocity` | [declaration](../judas.d.ts) | [reference](audio.md) |
+| `Entity.setBasicWater` | `basicWaterSet` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setCameraEnabled` | `camera` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setCameraPresentation` | `cameraPresentation` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setCameraProjection` | `cameraProjection` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setCollisionFilter` | `collisionFilter` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setKinematicVelocity` | `kinematicVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setLight` | `lightSettings` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setMotionType` | `motionTypeSet` | [declaration](../judas.d.ts) | [reference](entities.md) |

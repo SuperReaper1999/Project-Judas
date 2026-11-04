@@ -75,6 +75,74 @@ fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:
     Check(nativeText.find("\"tag\":true")!=std::string::npos&&nativeText.find("\"query\":1")!=std::string::npos&&nativeText.find("\"overlap\":1")!=std::string::npos,"tags and filtered authoritative physics queries");
     Check(nativeText.find("\"sweep\":true")!=std::string::npos,"world.sweepCapsule hits a body in a script-owned (non-legacy) world");
     Check(nativeText.find("\"velocity\":{\"x\":1")!=std::string::npos&&nativeText.find("\"position\":{\"x\":0,\"y\":2")!=std::string::npos,"forces/impulse/velocity and immediate authoritative transform readback");nativeWorld.Destroy();
+    std::ofstream(root/"Assets/runtime-controls.js")<<R"JS(
+export default class {
+  constructor({entity}) { this.entity=entity; this.state={}; }
+  fixedUpdate() {
+    const e=this.entity;
+    this.state.com=e.centerOfMass;
+    this.state.water=e.setBasicWater({flow:{x:2,y:0,z:0},opacity:0.5});
+    try { e.setBasicWater({opacity:0.2,wavelength:0}); }
+    catch { this.state.invalidWater=true; }
+    this.state.filter=e.setCollisionFilter({layer:'Default',mask:[]});
+    try { e.setCollisionFilter({mask:['Default','missing-layer']}); }
+    catch { this.state.invalidFilter=true; }
+    e.applyForceAtPoint({x:8,y:0,z:0},{x:2,y:1,z:0});
+    this.state.camera=e.setCameraPresentation({fov:42,updateEveryFrames:3,renderLayers:[]});
+    this.state.particles=e.setParticles({rate:0,size:0.4,velocity:{x:2,y:0,z:0}});
+    try { e.setCameraPresentation({fov:70,renderLayers:['missing-layer']}); }
+    catch { this.state.invalidCamera=true; }
+    try { e.setParticles({rate:33,spread:{x:-1,y:0,z:0}}); }
+    catch { this.state.invalidParticles=true; }
+  }
+})JS";
+    AssetRecord controls;
+    Check(db.Track(fs::absolute(root/"Assets/runtime-controls.js").string(),controls,error),"register runtime controls script");
+    Scene controlsScene;
+    auto& controlled=controlsScene.CreateObject("Runtime controls");
+    controlled.transform.position={2,0,0};
+    controlled.body=SceneBodyComponent{};
+    controlled.body->motion=SceneBodyMotion::Dynamic;
+    controlled.renderCamera=SceneRenderCameraComponent{};
+    controlled.basicWater=BasicWaterSettings{};
+    controlled.particleEmitter=ParticleEmitterSettings{};
+    controlled.scripts.push_back({1,controls.id,true,"{}"});
+    RuntimeWorld controlsWorld;
+    Check(controlsWorld.Build(controlsScene,&resources,error),"runtime controls fixture builds");
+    controlsWorld.FixedScripts(nullptr,1.f/60);
+    const auto observations=controlsWorld.Scripts()->Capture();
+    const auto observed=observations.empty()?std::string{}:observations.front().json;
+    Check(observed.find("\"com\":{\"x\":2")!=std::string::npos,
+          "script reads the physical centre of mass");
+    Check(observed.find("\"invalidWater\":true")!=std::string::npos&&
+          observed.find("\"invalidFilter\":true")!=std::string::npos&&
+          observed.find("\"invalidCamera\":true")!=std::string::npos&&
+          observed.find("\"invalidParticles\":true")!=std::string::npos,
+          "invalid control patches throw through the public API");
+    const auto waters=controlsWorld.BasicWaters();
+    const auto swim=controlsWorld.SampleWater({2,-1,0},{0,1,0},0.5f,0.2f);
+    Check(waters.size()==1&&waters.front().settings.opacity==0.5f&&swim.immersion>0.9f&&swim.velocity.x==2,
+          "basic water patch reaches presentation and swimming and rejects invalid settings atomically");
+    Check(controlsWorld.Scripts()->Diagnostics().empty(),"runtime controls run without unexpected script faults");
+    const auto& cameras=controlsWorld.PresentationCameras();
+    Check(cameras.size()==1&&cameras.front().settings.verticalFovDegrees==42&&
+          cameras.front().settings.updateEveryFrames==3&&cameras.front().settings.renderMask==0,
+          "camera patch reaches presentation and rejects an invalid layer atomically");
+    const auto& emitters=controlsWorld.VisualEmitters();
+    Check(emitters.size()==1&&emitters.front().pool.settings.size==0.4f&&
+          emitters.front().pool.settings.rate==0&&emitters.front().pool.settings.velocity.x==2,
+          "particle patch reaches the live emitter and rejects negative spread atomically");
+    auto controlledBody=controlsWorld.RuntimeBody(controlled.id);
+    unsigned collisionLayer=64;
+    CategoryMask collisionMask=kAllCategories;
+    Check(controlsWorld.Physics().GetCollisionFilter(controlledBody,collisionLayer,collisionMask)&&
+          collisionLayer==0&&collisionMask==0&&controlsWorld.RuntimeDefinition(controlled.id)->body->collisionMask==0,
+          "script collision filter updates native and retained settings atomically");
+    controlsWorld.Physics().Step(1.f/60);
+    Check(controlsWorld.Physics().GetLinearVelocity(controlledBody).x>0&&
+          controlsWorld.Physics().GetAngularVelocity(controlledBody).z<0,
+          "off-centre scripted force drives both translation and rotation");
+    controlsWorld.Destroy();
     for(int count:{0,10,100}){Scene load;for(int i=0;i<count;++i){auto& o=load.CreateObject("light script");o.scripts.push_back({1,script.id,true,"{}"});}RuntimeWorld perf;perf.Build(load,&resources,error);perf.UpdateScripts(&input,.016f);
         auto start=std::chrono::steady_clock::now();for(int i=0;i<200;++i){perf.UpdateScripts(&input,.016f);perf.FixedScripts(&input,.016f);}
         std::printf("PERFORMANCE scripts=%d frame_plus_fixed_us=%.3f\n",count,std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-start).count()/200);perf.Destroy();}

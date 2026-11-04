@@ -701,6 +701,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Entity.applyForceAtPoint",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
       "symbol": "Entity.applyImpulse",
       "minimum": 1,
       "maximum": 1
@@ -773,7 +778,7 @@
     {
       "symbol": "Entity.playAudioOneShot",
       "minimum": 0,
-      "maximum": 0
+      "maximum": 1
     },
     {
       "symbol": "Entity.pointVelocity",
@@ -821,7 +826,17 @@
       "maximum": 1
     },
     {
+      "symbol": "Entity.setBasicWater",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "Entity.setCameraEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setCameraPresentation",
       "minimum": 1,
       "maximum": 1
     },
@@ -832,6 +847,11 @@
     },
     {
       "symbol": "Entity.setColliderEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setCollisionFilter",
       "minimum": 1,
       "maximum": 1
     },
@@ -2644,6 +2664,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.applyForceAtPoint",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "forceAtPoint"
+      ],
+      "type": "docs/judas.d.ts:Entity.applyForceAtPoint",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.applyImpulse",
       "kinds": [
         "call"
@@ -2688,6 +2719,17 @@
       "reference": "docs/judasjs/audio.md"
     },
     {
+      "symbol": "Entity.basicWater",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "basicWater"
+      ],
+      "type": "docs/judas.d.ts:Entity.basicWater",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "symbol": "Entity.body2D",
       "kinds": [
         "get"
@@ -2719,6 +2761,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.camera",
       "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "Entity.centerOfMass",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "centerOfMass"
+      ],
+      "type": "docs/judas.d.ts:Entity.centerOfMass",
+      "reference": "docs/judasjs/entities.md"
     },
     {
       "symbol": "Entity.character",
@@ -3221,6 +3274,17 @@
       "reference": "docs/judasjs/audio.md"
     },
     {
+      "symbol": "Entity.setBasicWater",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "basicWaterSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setBasicWater",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "symbol": "Entity.setCameraEnabled",
       "kinds": [
         "call"
@@ -3230,6 +3294,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.setCameraEnabled",
       "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setCameraPresentation",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cameraPresentation"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCameraPresentation",
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.setCameraProjection",
@@ -3251,6 +3326,17 @@
         "colliderEnabled"
       ],
       "type": "docs/judas.d.ts:Entity.setColliderEnabled",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setCollisionFilter",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "collisionFilter"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCollisionFilter",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -7422,14 +7508,18 @@
     "audioSettings",
     "audioVelocity",
     "axis",
+    "basicWater",
+    "basicWaterSet",
     "body2DInfo",
     "burst",
     "camera",
     "cameraInfo",
+    "cameraPresentation",
     "cameraProjection",
     "cast",
     "cast2D",
     "castMany",
+    "centerOfMass",
     "characterAcceleration",
     "characterConfigure",
     "characterDisplacement",
@@ -7445,6 +7535,7 @@
     "closestPoint",
     "colliderEnabled",
     "colliderInfo",
+    "collisionFilter",
     "deformableAttach",
     "deformableEnabled",
     "deformableExists",
@@ -7468,6 +7559,7 @@
     "fixed",
     "fluidSample",
     "force",
+    "forceAtPoint",
     "fractureExists",
     "fractureForce",
     "fractureImpulse",

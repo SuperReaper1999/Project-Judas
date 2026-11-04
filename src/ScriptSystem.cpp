@@ -164,6 +164,7 @@ export class Entity {
  setSocket(target,joint,offset={}){return target==null?call('socketClear',this.id):call('socketSet',this.id,target.id,joint,offset)}
  clearSocket(){return call('socketClear',this.id)}
  get classification(){return call('classification',this.id)}
+ setCollisionFilter(settings){return call('collisionFilter',this.id,settings)}
  get animation(){return call('animationExists',this.id)?new Animation(this.id):null}
  get liquid(){const h=call("liquidOwner",this.id);return h?new LiquidVolume(h):null}
  get navigationObstacle(){return call("navObstacleInfo",this.id)}
@@ -183,7 +184,7 @@ export class Entity {
  setAudio(settings){return call('audioSettings',this.id,settings)}
  seekAudio(seconds){return call('audioSeek',this.id,seconds)}
  setAudioVelocity(velocity=null){return call('audioVelocity',this.id,velocity)}
- playAudioOneShot(){return call('audioOneShot',this.id)}
+ playAudioOneShot(clip=undefined){return call('audioOneShot',this.id,clip)}
  setAudioEnabled(enabled){return call('audioEnabled',this.id,enabled)}
  get terrain(){return new Terrain(this.id)}
  get weather(){return call('weatherExists',this.id)?new Weather(this.id):null}
@@ -210,6 +211,10 @@ export class Entity {
  applyTorque(value){call('torque',this.id,value)}
  get mass(){return call('mass',this.id)}
  get inertiaWorld(){return call('inertiaWorld',this.id)}
+ get basicWater(){return call('basicWater',this.id)}
+ setBasicWater(settings){return call('basicWaterSet',this.id,settings)}
+ get centerOfMass(){return call('centerOfMass',this.id)}
+ applyForceAtPoint(force,point){call('forceAtPoint',this.id,force,point)}
  get velocity(){return call('velocity',this.id)}
  set velocity(value){call('setVelocity',this.id,value)}
  get angularVelocity(){return call('angularVelocity',this.id)}
@@ -229,6 +234,7 @@ export class Entity {
  setParticles(settings){return call('particles',this.id,settings)}
  setCameraEnabled(enabled){return call('camera',this.id,enabled)}
  setCameraProjection(range){return call('cameraProjection',this.id,range)}
+ setCameraPresentation(settings){return call('cameraPresentation',this.id,settings)}
 }
 export const engine={get buildInfo(){return Object.freeze(call('engineBuildInfo'))}};
 export const audio={group:name=>call('audioGroup',name),setGroup:(name,settings,fadeSeconds=0)=>call('audioGroupSet',name,settings,fadeSeconds),get diagnostics(){return call('audioDiagnostics')}};
@@ -1811,6 +1817,95 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!ReadSpriteValues(c,arg(2),sprite))return JS_ThrowTypeError(c,"invalid sprite options, dimensions, pivot, image rectangle or sort keys");
         return JS_NewBool(c,world.SetSprite(id,sprite));
     }
+    if(op=="basicWater"||op=="basicWaterSet"){
+        if(!definition->basicWater)return op=="basicWater"?JS_NULL:JS_FALSE;
+        auto settings=*definition->basicWater;
+        const std::pair<const char*,glm::vec3*> vectors[]={
+            {"halfExtents",&settings.halfExtents},{"color",&settings.color},{"flow",&settings.flow}};
+        const std::pair<const char*,float*> scalars[]={
+            {"waveAmplitude",&settings.waveAmplitude},{"wavelength",&settings.wavelength},
+            {"waveSpeed",&settings.waveSpeed},{"opacity",&settings.opacity},{"density",&settings.density}};
+        if(op=="basicWater"){
+            auto result=JS_NewObject(c);
+            JS_SetPropertyStr(c,result,"enabled",JS_NewBool(c,settings.enabled));
+            for(auto [key,value]:vectors)JS_SetPropertyStr(c,result,key,Vec(c,*value));
+            for(auto [key,value]:scalars)JS_SetPropertyStr(c,result,key,JS_NewFloat64(c,*value));
+            return result;
+        }
+        if(s->inPresentation||world.NetworkClient())
+            return JS_ThrowTypeError(c,"basic water settings require authoritative gameplay");
+        auto options=arg(2);
+        if(!KnownOptions(c,options,{"enabled","halfExtents","color","flow","waveAmplitude","wavelength","waveSpeed","opacity","density"}))
+            return JS_ThrowTypeError(c,"unknown basic water setting");
+        auto enabled=JS_GetPropertyStr(c,options,"enabled");
+        const bool valid=JS_IsUndefined(enabled)||JS_IsBool(enabled);
+        if(JS_IsBool(enabled))settings.enabled=JS_ToBool(c,enabled);
+        JS_FreeValue(c,enabled);
+        if(!valid)return JS_ThrowTypeError(c,"basic water enabled must be boolean");
+        for(auto [key,value]:vectors){
+            auto property=JS_GetPropertyStr(c,options,key);
+            const bool validVector=JS_IsUndefined(property)||ReadVec(c,property,*value);
+            JS_FreeValue(c,property);
+            if(!validVector)return JS_ThrowTypeError(c,"finite basic water vector required");
+        }
+        for(auto [key,value]:scalars){
+            auto property=JS_GetPropertyStr(c,options,key);
+            const bool present=!JS_IsUndefined(property);
+            JS_FreeValue(c,property);
+            if(present&&!Number(c,options,key,*value))return JS_ThrowTypeError(c,"finite basic water scalar required");
+        }
+        std::string error;
+        if(!ValidateBasicWater(settings,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+        return JS_NewBool(c,world.SetBasicWater(id,settings));
+    }
+    auto namedLayerMask=[&](JSValueConst list,const CategoryRegistry& registry,CategoryMask& mask){
+        if(JS_IsNull(list)){mask=kAllCategories;return true;}
+        if(!JS_IsArray(list))return false;
+        auto length=JS_GetPropertyStr(c,list,"length");
+        uint32_t count=0;
+        bool valid=JS_ToUint32(c,&count,length)==0&&count<=64;
+        JS_FreeValue(c,length);
+        mask=0;
+        for(uint32_t i=0;valid&&i<count;++i){
+            auto item=JS_GetPropertyUint32(c,list,i);
+            const int index=JS_IsString(item)?registry.Find(String(c,item)):-1;
+            JS_FreeValue(c,item);
+            valid=index>=0;
+            if(valid)mask|=CategoryBit(index);
+        }
+        return valid;
+    };
+    if(op=="cameraPresentation"){
+        auto options=arg(2);
+        if(!KnownOptions(c,options,{"fov","updateEveryFrames","renderLayers"}))
+            return JS_ThrowTypeError(c,"unknown camera presentation setting");
+        for(auto& camera:world.PresentationCameras())if(camera.id==id){
+            auto settings=camera.settings;
+            for(const char* key:{"fov","updateEveryFrames"}){
+                auto property=JS_GetPropertyStr(c,options,key);
+                const bool present=!JS_IsUndefined(property);
+                JS_FreeValue(c,property);
+                if(!present)continue;
+                float value;
+                if(!Number(c,options,key,value))return JS_ThrowTypeError(c,"finite camera setting required");
+                if(std::string_view(key)=="fov"){
+                    if(value<=0||value>=179)return JS_ThrowRangeError(c,"camera fov must be between 0 and 179 degrees");
+                    settings.verticalFovDegrees=value;
+                }else{
+                    if(value<1||value>10000||std::floor(value)!=value)
+                        return JS_ThrowRangeError(c,"camera updateEveryFrames must be an integer from 1 to 10000");
+                    settings.updateEveryFrames=int(value);
+                }
+            }
+            auto layers=JS_GetPropertyStr(c,options,"renderLayers");
+            const bool valid=JS_IsUndefined(layers)||namedLayerMask(layers,world.Categories().render,settings.renderMask);
+            JS_FreeValue(c,layers);
+            if(!valid)return JS_ThrowTypeError(c,"renderLayers must contain registered render layer names or be null");
+            camera.settings=settings;
+            return JS_TRUE;
+        }
+        return JS_FALSE;
+    }
     if(op=="cameraProjection"){
         // Lens parsing is shared with script-owned main and local-player views.
         float nearPlane=0,farPlane=0;auto range=arg(2);
@@ -1847,6 +1942,30 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="transform"||op=="presentedTransform"){auto t=world.PresentedTransform(id,definition->transform,op=="presentedTransform"&&s->inPresentation?s->presentationAlpha:1);if(op=="transform"&&world.NetworkClient()){EntityPhysicalState physical;if(world.GetEntityState(id,physical)){t.position=physical.position;t.rotation=physical.rotation;}}auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"position",Vec(c,t.position));JS_SetPropertyStr(c,result,"scale",Vec(c,t.scale));auto q=Vec(c,{t.rotation.x,t.rotation.y,t.rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,t.rotation.w));JS_SetPropertyStr(c,result,"rotation",q);return result;}
     if(op=="setTransform"){auto t=world.PresentedTransform(id,definition->transform,1);if(!readTransform(arg(2),t)||!world.SetRuntimeTransform(id,t))return JS_ThrowTypeError(c,"invalid transform");return JS_TRUE;}
     if(op=="hasTag"||op=="addTag"||op=="removeTag"){auto tag=world.Categories().tags.Find(String(c,arg(2)));if(tag<0)return JS_ThrowTypeError(c,"unknown tag");return JS_NewBool(c,op=="hasTag"?world.HasTag(id,tag):op=="addTag"?world.AddTag(id,tag):world.RemoveTag(id,tag));}
+    if(op=="collisionFilter"){
+        if(s->inPresentation||world.NetworkClient())
+            return JS_ThrowTypeError(c,"collision filters require authoritative gameplay");
+        auto options=arg(2);
+        if(!KnownOptions(c,options,{"layer","mask"}))
+            return JS_ThrowTypeError(c,"unknown collision filter setting");
+        unsigned layer=0;
+        CategoryMask mask=0;
+        if(!world.Physics().GetCollisionFilter(world.RuntimeBody(id),layer,mask))return JS_FALSE;
+        const auto& registry=world.Categories().collision;
+        auto name=JS_GetPropertyStr(c,options,"layer");
+        const bool hasLayer=!JS_IsUndefined(name);
+        const int selected=JS_IsString(name)?registry.Find(String(c,name)):-1;
+        JS_FreeValue(c,name);
+        if(hasLayer){
+            if(selected<0)return JS_ThrowTypeError(c,"unknown collision layer");
+            layer=unsigned(selected);
+        }
+        auto list=JS_GetPropertyStr(c,options,"mask");
+        const bool valid=JS_IsUndefined(list)||namedLayerMask(list,registry,mask);
+        JS_FreeValue(c,list);
+        if(!valid)return JS_ThrowTypeError(c,"mask must contain registered collision layer names or be null");
+        return JS_NewBool(c,world.SetRuntimeCollisionFilter(id,layer,mask));
+    }
     if(op=="classification"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"renderLayer",JS_NewUint32(c,world.RenderLayerOf(id)));unsigned layer=0;CategoryMask mask=0;world.Physics().GetCollisionFilter(world.RuntimeBody(id),layer,mask);JS_SetPropertyStr(c,o,"collisionLayer",JS_NewUint32(c,layer));JS_SetPropertyStr(c,o,"collisionMask",JS_NewString(c,std::to_string(mask).c_str()));return o;}
     if(op=="audioEnabled"&&!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"audio enabled must be boolean");
     if(op=="audioEnabled")return JS_NewBool(c,world.SetAudioEnabled(id,JS_ToBool(c,arg(2))));
@@ -1860,7 +1979,20 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             return o;}return JS_NULL;}
     if(op=="audioSeek"){double seconds;if(JS_ToFloat64(c,&seconds,arg(2))!=0||!std::isfinite(seconds)||seconds<0||seconds>1e8)return JS_ThrowTypeError(c,"finite seek seconds required");return JS_NewBool(c,world.SeekAudio(id,seconds));}
     if(op=="audioVelocity"){glm::vec3 velocity;if(!JS_IsNull(arg(2))&&!ReadVec(c,arg(2),velocity))return JS_ThrowTypeError(c,"world velocity or null required");return JS_NewBool(c,world.SetAudioVelocity(id,JS_IsNull(arg(2))?std::nullopt:std::optional<glm::vec3>(velocity)));}
-    if(op=="audioOneShot"){std::string error;if(!world.PlayAudioOneShot(id,error)){if(error.empty())return JS_FALSE;return JS_ThrowTypeError(c,"one-shot: %s",error.c_str());}return JS_TRUE;}
+    if(op=="audioOneShot"){
+        std::optional<std::string> clip;
+        if(!JS_IsUndefined(arg(2))){
+            if(!JS_IsString(arg(2)))return JS_ThrowTypeError(c,"registered audio asset ID required");
+            clip=String(c,arg(2));
+            if(clip->empty())return JS_ThrowTypeError(c,"registered audio asset ID required");
+        }
+        std::string error;
+        if(!world.PlayAudioOneShot(id,error,clip?&*clip:nullptr)){
+            if(error.empty())return JS_FALSE;
+            return JS_ThrowTypeError(c,"one-shot: %s",error.c_str());
+        }
+        return JS_TRUE;
+    }
     if(op=="audioSettings"){
         if(!JS_IsObject(arg(2)))return JS_ThrowTypeError(c,"audio settings required");
         for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){AudioSettings settings=emitter.settings;auto options=arg(2);
@@ -1874,10 +2006,37 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(op=="playAudio"||op=="stopAudio"||op=="pauseAudio"||op=="resumeAudio")return JS_NewBool(c,op=="playAudio"?world.PlayAudio(id):op=="stopAudio"?world.StopAudio(id):op=="pauseAudio"?world.PauseAudio(id):world.ResumeAudio(id));
     if(op=="burst"){uint32_t n=0;JS_ToUint32(c,&n,arg(2));if(n>65536)return JS_ThrowTypeError(c,"burst too large");return JS_NewBool(c,world.EmitParticleBurst(id,n));}
-    if(op=="particles"){for(auto& e:world.VisualEmitters())if(e.id==id){auto settings=e.pool.settings;auto enabled=JS_GetPropertyStr(c,arg(2),"enabled");if(!JS_IsUndefined(enabled))settings.enabled=JS_ToBool(c,enabled);JS_FreeValue(c,enabled);
-            auto rate=JS_GetPropertyStr(c,arg(2),"rate");if(!JS_IsUndefined(rate)&&!Number(c,arg(2),"rate",settings.rate)){JS_FreeValue(c,rate);return JS_ThrowTypeError(c,"invalid rate");}JS_FreeValue(c,rate);
+    if(op=="particles"){
+        auto options=arg(2);
+        if(!KnownOptions(c,options,{"enabled","rate","size","endSize","velocity","velocityVariation","spread","acceleration"}))
+            return JS_ThrowTypeError(c,"unknown particle setting");
+        for(auto& emitter:world.VisualEmitters())if(emitter.id==id){
+            auto settings=emitter.pool.settings;
+            auto enabled=JS_GetPropertyStr(c,options,"enabled");
+            const bool hasEnabled=!JS_IsUndefined(enabled);
+            if(hasEnabled)settings.enabled=JS_ToBool(c,enabled);
+            JS_FreeValue(c,enabled);
+            for(auto [key,value]:{std::pair<const char*,float*>{"rate",&settings.rate},
+                                 {"size",&settings.size},{"endSize",&settings.endSize}}){
+                auto property=JS_GetPropertyStr(c,options,key);
+                const bool present=!JS_IsUndefined(property);
+                JS_FreeValue(c,property);
+                if(present&&!Number(c,options,key,*value))return JS_ThrowTypeError(c,"finite particle scalar required");
+            }
+            for(auto [key,value]:{std::pair<const char*,glm::vec3*>{"velocity",&settings.velocity},
+                                 {"velocityVariation",&settings.velocityVariation},
+                                 {"spread",&settings.spread},{"acceleration",&settings.acceleration}}){
+                auto property=JS_GetPropertyStr(c,options,key);
+                const bool valid=JS_IsUndefined(property)||ReadVec(c,property,*value);
+                JS_FreeValue(c,property);
+                if(!valid)return JS_ThrowTypeError(c,"finite particle vector required");
+            }
             if(!ValidParticleSettings(settings))return JS_ThrowTypeError(c,"invalid particles");
-            e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}
+            emitter.pool.settings=settings;
+            return JS_TRUE;
+        }
+        return JS_FALSE;
+    }
     if(op=="camera"&&!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"camera enabled must be boolean");
     if(op=="camera"){for(auto& camera:world.PresentationCameras())if(camera.id==id){camera.settings.enabled=JS_ToBool(c,arg(2));return JS_TRUE;}return JS_FALSE;}
     auto body=world.RuntimeBody(id);
@@ -1929,11 +2088,20 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         return Vec(c,op=="velocity"?world.Physics().GetLinearVelocity(body):world.Physics().GetAngularVelocity(body));
     if(!body.IsValid()||!world.Physics().IsDynamicBody(body))return JS_ThrowTypeError(c,"entity has no active dynamic body");
     if(op=="mass")return JS_NewFloat64(c,world.Physics().GetMass(body));
+    if(op=="centerOfMass")return Vec(c,world.Physics().GetCenterOfMass(body));
     if(op=="inertiaWorld"){const auto matrix=world.Physics().GetInertiaWorld(body);auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"x",Vec(c,matrix[0]));JS_SetPropertyStr(c,result,"y",Vec(c,matrix[1]));JS_SetPropertyStr(c,result,"z",Vec(c,matrix[2]));return result;}
     if(op=="velocity")return Vec(c,world.Physics().GetLinearVelocity(body));
     if(op=="angularVelocity")return Vec(c,world.Physics().GetAngularVelocity(body));
     glm::vec3 v;if(!ReadVec(c,arg(2),v))return JS_ThrowTypeError(c,"invalid vector");
     if(op=="force")world.Physics().ApplyForce(body,v);
+    else if(op=="forceAtPoint"){
+        glm::vec3 point;
+        if(!ReadVec(c,arg(3),point))return JS_ThrowTypeError(c,"invalid force point");
+        const auto torque=glm::cross(point-world.Physics().GetCenterOfMass(body),v);
+        if(!std::isfinite(torque.x)||!std::isfinite(torque.y)||!std::isfinite(torque.z))
+            return JS_ThrowRangeError(c,"force point produces non-finite torque");
+        world.Physics().ApplyForceAtPoint(body,v,point);
+    }
     else if(op=="impulse")world.Physics().ApplyLinearImpulse(body,v);
     else if(op=="impulseAtPoint"){glm::vec3 point;if(!ReadVec(c,arg(3),point))return JS_ThrowTypeError(c,"invalid impulse point");world.Physics().ApplyImpulseAtPoint(body,v,point);}
     else if(op=="torque")world.Physics().ApplyTorque(body,v);

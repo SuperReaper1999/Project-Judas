@@ -209,7 +209,10 @@ declare module "judas" {
   export interface AudioGroup {gain:number;mute:boolean;paused:boolean}
   export interface AudioDiagnostics {voices:number;streams:number;bufferedBytes:number;streamBytes:number;streamHighWater:number;pendingRetirements:number;reverbProcessors:number;underruns:number;decodedFrames:number;occlusionQueries:number;maximumDetachMilliseconds:number}
   export const audio:{group(name:string):AudioGroup|null;setGroup(name:string,settings:Partial<AudioGroup>,fadeSeconds?:number):boolean|null;readonly diagnostics:AudioDiagnostics|null};
-  export interface ParticleSettingsPatch { enabled?: boolean; rate?: number }
+  export interface ParticleSettingsPatch {
+    enabled?:boolean; rate?:number; size?:number; endSize?:number;
+    velocity?:Vec3; velocityVariation?:Vec3; spread?:Vec3; acceleration?:Vec3;
+  }
   export interface CastHit {
     physicalMaterial:AssetId|null;
     entity: Entity | null; entityId: EntityId; bodyId: number;
@@ -328,7 +331,13 @@ declare module "judas" {
     kind:'point'|'spot'; enabled:boolean; color:Vec3; intensity:number; range:number;
     innerConeDegrees:number; outerConeDegrees:number; castsShadow:boolean; shadowPriority:number;
   }
+  export interface BasicWaterSettings {
+    enabled:boolean; halfExtents:Vec3; color:Vec3; flow:Vec3;
+    waveAmplitude:number; wavelength:number; waveSpeed:number; opacity:number; density:number;
+  }
   export class Entity {
+    readonly basicWater:BasicWaterSettings|null;
+    setBasicWater(settings:Partial<BasicWaterSettings>):boolean;
     readonly body2D:Body2DInfo|null;
     readonly light: LightSettings|null;
     /** Atomic patch. Invalid values/unknown keys throw; never creates a component. */
@@ -380,6 +389,7 @@ declare module "judas" {
     addTag(tag: string): boolean;
     removeTag(tag: string): boolean;
     readonly classification: Classification;
+    setCollisionFilter(settings:{layer?:string;mask?:string[]|null}):boolean;
     readonly animation: Animation | null;
     readonly navigation: NavigationAgent | null;
     readonly navigationObstacle: NavigationObstacleInfo | null;
@@ -395,11 +405,14 @@ declare module "judas" {
     setAudio(settings:AudioSettingsPatch):boolean;
     seekAudio(seconds:number):boolean;
     setAudioVelocity(velocity?:Vec3|null):boolean;
-    playAudioOneShot():boolean;
+    playAudioOneShot(clip?:AssetId):boolean;
     setAudioEnabled(enabled: boolean): boolean;
     readonly camera: CameraInfo | null;
     scriptState(slot: string | number): JSONValue;
     applyForce(value: Vec3): void;
+    /** Sustained world-space force in N at a world-space point in metres. */
+    applyForceAtPoint(force: Vec3, point: Vec3): void;
+    readonly centerOfMass: Vec3;
     applyImpulse(value: Vec3): void;
     /** World-space impulse (N s) at a world-space point (metres). */
     applyImpulseAtPoint(impulse: Vec3, point: Vec3): void;
@@ -426,6 +439,8 @@ declare module "judas" {
     setParticles(settings: ParticleSettingsPatch): boolean;
     setCameraEnabled(enabled: boolean): boolean;
     setCameraProjection(range:CameraProjection):boolean;
+    /** Secondary-camera settings. Null renderLayers restores all layers. */
+    setCameraPresentation(settings:{fov?:number;updateEveryFrames?:number;renderLayers?:string[]|null}):boolean;
   }
   /** Does not check existence; null for absent/falsy input or string "0". Use .valid. */
   export function entity(id: string | number | bigint | null | undefined): Entity | null;

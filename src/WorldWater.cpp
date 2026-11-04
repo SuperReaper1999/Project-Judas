@@ -12,6 +12,16 @@ void RuntimeWorld::ConfigureProject(const ProjectSettings& project) {
     legacyGameplay=project.legacyGameplay;
     audioGroups=project.audio;
 }
+bool RuntimeWorld::SetBasicWater(EntityId id,const BasicWaterSettings& settings){
+    const auto* definition=RuntimeDefinition(id);
+    std::string error;
+    if(!definition||!definition->basicWater||!ValidateBasicWater(settings,error))return false;
+    m_scriptDefinitions.at(id).basicWater=settings;
+    if(auto* record=FindEntity(id);record&&record->definition.basicWater)
+        record->definition.basicWater=settings;
+    return true;
+}
+
 std::vector<BasicWaterInstance> RuntimeWorld::BasicWaters(float alpha) const {
     std::vector<BasicWaterInstance> result;
     if (!m_basicWaterEnabled) return result;

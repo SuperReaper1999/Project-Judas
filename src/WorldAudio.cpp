@@ -29,12 +29,17 @@ void RuntimeWorld::ReleaseEntityAudio(SceneObjectId id){
  for(auto& e:m_audioEmitters)if(e.id==id){if(m_audioSystem)m_audioSystem->DestroyVoice(e.voice);e.voice={};e.wantPlay=false;}
  for(auto it=m_audioOneShots.begin();it!=m_audioOneShots.end();)if(it->first==id){if(m_audioSystem)m_audioSystem->DestroyVoice(it->second);it=m_audioOneShots.erase(it);}else ++it;
 }
-bool RuntimeWorld::PlayAudioOneShot(SceneObjectId id,std::string& error){
+bool RuntimeWorld::PlayAudioOneShot(SceneObjectId id,std::string& error,const std::string* clipOverride){
  if(!m_audioRunning||!m_audioSystem||!m_assets||!IsPublished(id)){error="audio world is inactive";return false;}
  for(auto& e:m_audioEmitters)if(e.id==id){if(!e.settings.enabled||e.settings.loading!=AudioLoading::Buffered){error="one-shots require an enabled buffered emitter";return false;}
   AudioGroupSettings group,master;if(m_audioSystem->GetGroup(e.settings.group,group)&&m_audioSystem->GetGroup("master",master)&&(group.paused||master.paused)){error.clear();return false;}
   if(m_audioOneShots.size()>=32){error="32 world one-shots already active";return false;}
-  auto clip=m_assets->GetAudio(e.settings.asset,error);if(!clip.IsValid())return false;glm::vec3 p;glm::quat q;if(!Pose(*this,id,e.transform,1,p,q))return false;
+  auto clip=m_assets->GetAudio(clipOverride?*clipOverride:e.settings.asset,error);
+  if(!clip.IsValid()){
+   if(clipOverride&&error=="loading")error.clear();
+   return false;
+  }
+  glm::vec3 p;glm::quat q;if(!Pose(*this,id,e.transform,1,p,q))return false;
   auto h=m_audioSystem->PlayOneShot(clip,e.settings,p,error);if(!h.IsValid())return false;m_audioOneShots.push_back({id,h});return true;}
  error="entity has no audio emitter";return false;
 }

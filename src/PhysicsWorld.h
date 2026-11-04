@@ -486,6 +486,7 @@ public:
     // contribution this step — see law #22/#32 in Project_Persistent_Memory.md).
     // A no-op on a static or unknown handle.
     void ApplyForce(BodyHandle handle, const glm::vec3& force);
+    void ApplyForceAtPoint(BodyHandle handle, const glm::vec3& force, const glm::vec3& point);
     void ApplyTorque(BodyHandle handle, const glm::vec3& torque,bool wake=true);
 
     // Advances the simulation by exactly one fixed step. The caller owns

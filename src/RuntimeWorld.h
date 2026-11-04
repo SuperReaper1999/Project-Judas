@@ -115,7 +115,7 @@ public:
     ProjectAudioSettings audioGroups;
     std::vector<AudioZone>& AudioZones(){return m_audioZones;}
     void BeginAudio();void EndAudio();
-    bool PlayAudioOneShot(SceneObjectId,std::string& error);
+    bool PlayAudioOneShot(SceneObjectId,std::string& error,const std::string* clipOverride=nullptr);
     void ReleaseEntityAudio(SceneObjectId);
     bool SeekAudio(SceneObjectId,double seconds);
     bool SetAudioSettings(SceneObjectId,const AudioSettings&);
@@ -252,6 +252,7 @@ public:
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError, const ProjectClassification* categories=nullptr,const ProjectNavigation* navigation=nullptr,bool runtimeSnapshot=false);
     void ConfigureProject(const struct ProjectSettings&);
     bool AdvancedFluidsEnabled() const { return m_advancedFluids; }
+    bool SetBasicWater(EntityId,const BasicWaterSettings&);
     bool BasicWaterEnabled() const { return m_basicWaterEnabled; }
     bool WaterSwimmingEnabled() const { return m_waterSwimming; }
     std::vector<BasicWaterInstance> BasicWaters(float alpha=1) const;
@@ -343,6 +344,7 @@ public:
     void PresentationScripts(const InputSystem* input,float dt,float alpha);
     void DispatchPhysicsEvents(const InputSystem* input,float dt);
     bool SetColliderEnabled(EntityId id,bool enabled);
+    bool SetRuntimeCollisionFilter(EntityId id,unsigned layer,CategoryMask mask);
     void FixedScripts(const InputSystem* input,float dt);
     bool RestoreScriptState(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
     void EndScripts(){m_scripts.reset();m_ui.reset();m_players.reset();pointerCapture=false;}

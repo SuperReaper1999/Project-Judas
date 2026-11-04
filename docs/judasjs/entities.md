@@ -313,3 +313,15 @@ Legacy pose-only `.judasstate` deltas do not persist light patches. Scripts rest
 such old states must reapply their own intent. Mutating the returned copy has no effect.
 
 See [rendering](rendering.md) for tiled lighting, shadow budgets and current limits.
+
+For a live dynamic body, `entity.centerOfMass` returns the current centre of
+mass in world-local metres. `entity.applyForceAtPoint(force, point)` accumulates
+world-space force in newtons and its torque about that centre of mass for the
+physics step. Use fixedUpdate for a sustained force. Both vectors must be finite.
+
+`entity.setCollisionFilter({layer, mask})` patches an existing ordinary rigid
+body using registered project collision layer names. Omitted members are
+preserved. An empty mask prevents pair contacts and null restores all mask bits.
+Invalid names reject the whole patch. Use it in authoritative gameplay.
+CharacterMotor retains its own collision configuration. Query filters are
+separate from physical pair masks.

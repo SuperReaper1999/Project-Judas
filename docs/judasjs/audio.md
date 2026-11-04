@@ -12,7 +12,7 @@ An ordinary AudioEmitter refers to a stable audio asset ID. `entity.audio` retur
 | `pauseAudio()` / `resumeAudio()` | Hold and resume the media cursor; boolean, false when unavailable. |
 | `stopAudio()` | Stop and rewind, preserving the emitter binding. |
 | `setAudioEnabled(boolean)` | Disable and release owned voices, or permit creation again. |
-| `playAudioOneShot()` | Independent buffered non-looping voice at this emitter; returns false and drops the request when its group/master is paused. Throws for unavailable/loading data, streamed policy, disabled emitter or capacity exhaustion. |
+| `playAudioOneShot()` | Independent buffered non-looping voice at this emitter; returns false and drops the request when its group/master is paused. Throws for unavailable assets, streamed policy, disabled emitter or capacity exhaustion. The no-argument form also throws while the authored clip is loading. |
 | `seekAudio(seconds)` | Non-negative media seconds, before pitch/Doppler; false if voice absent or past known duration. |
 | `setAudio(settings)` | Partial runtime settings below; boolean. Invalid values throw. Does not edit source assets. |
 | `setAudioVelocity(vectorOrNull)` | Explicit world metres/second, or `null` for automatic estimation. |
@@ -80,3 +80,9 @@ M65 creation failures distinguish invalid clip, invalid settings, missing projec
 audio group and exhausted buffered/streamed voice capacity. Capacity remains128
 voices /32 active streams, with bounded retirements. One emitter/entity remains a
 limit; these diagnostics do not add multi-emitter ownership.
+
+`entity.playAudioOneShot(clipId)` optionally selects a registered audio asset
+for this one shot while retaining the enabled buffered emitter's settings and
+ownership. Omit the argument to use the authored clip. An override that is
+still loading returns false and does not queue playback. Retry only while the
+sound is still relevant. Include the clip in the project's exported assets.

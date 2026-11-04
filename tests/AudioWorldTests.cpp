@@ -23,6 +23,27 @@ int main(){std::string error;JobSystem jobs(2);AudioSystem audio;audio.SetJobSys
  // Physics-only occluder has no entity wrapper; body observations still matter.
  auto standalone=world.Physics().CreateStaticBox({0,0,0},{1,1,.2},.5,0);world.UpdateAudio(glm::mat4(1),1,.06);audio.Snapshot(h,snap);Check(snap.occlusionGain<1,"wall without entity wrapper still obstructs");world.Physics().DestroyBody(standalone);
  Check(world.PlayAudioOneShot(2,error)&&world.PlayAudioOneShot(2,error)&&audio.VoiceCount()==3,"repeated buffered shots have independent voices");world.SetAudioEnabled(2,false);Check(audio.VoiceCount()==0,"component disable releases every owned one-shot");world.SetAudioEnabled(2,true);world.UpdateAudio(glm::mat4(1),1,.06);world.EndAudio();world.Destroy();Check(audio.VoiceCount()==0,"full Stop cleans normal voices and effects");
+ const std::string alternate="60606060606060606060606060606004";
+ const std::string unknown="ffffffffffffffffffffffffffffffff";
+ Scene overrideScene;
+ auto& emitter=overrideScene.CreateObject("Clip override source");
+ emitter.audioEmitter=*s.Find(2)->audioEmitter;
+ emitter.audioEmitter->playOnStart=false;
+ emitter.audioEmitter->spatial=false;
+ RuntimeWorld overrideWorld;
+ Check(overrideWorld.Build(overrideScene,&resources,error),"clip override fixture builds");
+ resources.RequestAudio(alternate);
+ resources.WaitForAll();
+ overrideWorld.BeginAudio();
+ Check(!overrideWorld.PlayAudioOneShot(1,error,&unknown)&&!error.empty()&&audio.VoiceCount()==0,
+       "invalid clip override does not allocate a voice");
+ Check(overrideWorld.PlayAudioOneShot(1,error,&alternate)&&audio.VoiceCount()==1&&
+       overrideWorld.AudioEmitters().front().settings.asset!=alternate,
+       "registered override starts a voice without changing the authored clip");
+ audio.AdvanceWithoutDevice(60000);
+ audio.Update();
+ Check(audio.VoiceCount()==0,"one-second override retires before the two-second authored clip would");
+ overrideWorld.Destroy();
  // Manual one-shots are audible query demand even when the persistent source is stopped.
  Scene once;auto& ol=once.CreateObject("Listener");ol.audioListener=SceneAudioListenerComponent{};auto& oe=once.CreateObject("Manual emitter");oe.transform.position={0,0,-5};oe.audioEmitter=*s.Find(2)->audioEmitter;oe.audioEmitter->playOnStart=false;auto& ow=once.CreateObject("Wall");ow.transform.position={0,0,-2};ow.body=SceneBodyComponent{};ow.body->halfExtents={2,2,.2};RuntimeWorld one;Check(one.Build(once,&resources,error),"manual shot world");resources.WaitForAll();one.BeginAudio();one.UpdateAudio(glm::mat4(1),1,.06);Check(one.AudioQueryCount()==0&&one.PlayAudioOneShot(2,error),"stopped emitter has no ray until independent shot plays");one.UpdateAudio(glm::mat4(1),1,.06);Check(one.AudioQueryCount()==1,"independent shot participates in bounded obstruction demand");one.Destroy();
  // Point velocity of offset child under rotating parent, then discontinuity reset.

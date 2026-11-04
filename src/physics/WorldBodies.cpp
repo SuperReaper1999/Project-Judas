@@ -422,6 +422,15 @@ void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3 &force) {
     body->rigidBody.ApplyForce(force);
 }
 
+void PhysicsWorld::ApplyForceAtPoint(BodyHandle handle, const glm::vec3 &force, const glm::vec3 &point) {
+    Impl::Body *body = m_impl->Get(handle);
+    if (!body || body->simulationSuspended || body->rigidBody.IsStatic())
+        return;
+    if (glm::length(force) > 1e-8f)
+        m_impl->Wake(handle.id & Impl::kSlotMask);
+    body->rigidBody.ApplyForceAtPoint(force, point);
+}
+
 void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3 &torque, bool wake) {
     Impl::Body *body = m_impl->Get(handle);
     if (!body || body->simulationSuspended || body->rigidBody.IsStatic())

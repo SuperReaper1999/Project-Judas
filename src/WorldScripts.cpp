@@ -216,6 +216,22 @@ bool RuntimeWorld::SetColliderEnabled(EntityId id,bool enabled){
     auto& d=m_scriptDefinitions.at(id);if(d.body)d.body->enabled=enabled;return true;
 }
 
+bool RuntimeWorld::SetRuntimeCollisionFilter(EntityId id,unsigned layer,CategoryMask mask){
+    const auto* definition=RuntimeDefinition(id);
+    if(!definition||!definition->body||definition->characterMotor||definition->planet||
+       !m_categories.collision.names.count(layer))return false;
+    const auto handle=RuntimeBody(id);
+    if(!handle.IsValid()||!m_physics.SetCollisionFilter(handle,layer,mask))return false;
+    auto& settings=*m_scriptDefinitions.at(id).body;
+    settings.collisionLayer=layer;
+    settings.collisionMask=mask;
+    if(auto* entity=FindEntity(id);entity&&entity->definition.body){
+        entity->definition.body->collisionLayer=layer;
+        entity->definition.body->collisionMask=mask;
+    }
+    return true;
+}
+
 void RuntimeWorld::SynchronizeJoints(){
     for(auto owner:m_jointOwners){const auto* definition=RuntimeDefinition(owner);
         auto it=m_runtimeJoints.find(owner);JointState state;
