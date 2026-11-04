@@ -81,7 +81,7 @@ bool PaintTilemap(TilemapRecipe& r,const std::string& layer,glm::ivec2 from,glm:
     if(!ValidateTilemap(next,error))return false;
     r=std::move(next);return true;
 }
-bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase& assets,Scene& output,TilemapRecipe& baked,std::string& error){try{
+bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase& assets,Scene& output,TilemapRecipe& baked,std::string& error,bool replaceChanged){try{
     if(!ValidateTilemap(r,error))return false;
     if(!ValidateHierarchy(source,error))return false;
     const auto* root=source.Find(r.root);if(!root)return Fail(error,"root no longer exists");
@@ -101,8 +101,16 @@ bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase&
     std::map<std::string,const SpriteFrame*> frames;for(const auto& f:sheet.frames)frames.emplace(f.id,&f);
     auto scene=source;auto recipe=r;recipe.generated.clear();
     auto publish=[&](const std::string& key,SceneObject o){
-        auto found=old.find(key);if(found!=old.end()){o.id=found->second.entity;old.erase(found);}else o.id=scene.CreateObject(o.name).id;
-        o.parent=r.root;o.authoringFolder=root->name;*scene.Find(o.id)=o;recipe.generated.push_back({key,Hash(o),o.id});
+        o.parent=r.root;
+        o.authoringFolder=root->name;
+        auto found=old.find(key);
+        if(found!=old.end()){
+            o.id=found->second.entity;
+            if(!replaceChanged||Hash(o)==found->second.hash)old.erase(found);
+            else o.id=scene.CreateObject(o.name).id;
+        }else o.id=scene.CreateObject(o.name).id;
+        *scene.Find(o.id)=o;
+        recipe.generated.push_back({key,Hash(o),o.id});
     };
     for(const auto& layer:r.layers){
         std::map<std::pair<int,int>,std::array<bool,256>> chunks;

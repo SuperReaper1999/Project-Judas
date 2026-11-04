@@ -920,6 +920,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Entity.setTile",
+      "minimum": 4,
+      "maximum": 5
+    },
+    {
       "symbol": "Entity.stopAudio",
       "minimum": 0,
       "maximum": 0
@@ -3486,6 +3491,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.setSpriteAnimation",
       "reference": "docs/judasjs/sprite-animation.md"
+    },
+    {
+      "symbol": "Entity.setTile",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "tileSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setTile",
+      "reference": "docs/judasjs/tilemaps-2d.md"
     },
     {
       "symbol": "Entity.sleeping",
@@ -7829,6 +7845,7 @@
     "terrainBrush",
     "terrainCreate",
     "terrainState",
+    "tileSet",
     "tilt",
     "torque",
     "touches",

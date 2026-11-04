@@ -81,6 +81,7 @@ const pages={AISenses:'ai.md',AITargetReservations:'ai.md',UtilityAgent:'ai.md',
 // Component accessors and cross-cutting world operations belong at the page
 // documenting their actual contract, rather than all pointing to Entity's index.
 const referenceOverrides = {
+ 'Entity.setTile': 'tilemaps-2d.md',
  'Entity.setNavigationObstacle': 'navigation.md', 'Entity.setNavigationLink': 'navigation.md',
  'Entity.animation': 'animation-ragdolls.md', 'Entity.ragdoll': 'animation-ragdolls.md',
  'Entity.character': 'character.md', 'Entity.deformable': 'deformables.md',

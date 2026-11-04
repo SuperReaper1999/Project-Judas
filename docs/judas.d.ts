@@ -394,6 +394,8 @@ declare module "judas" {
     readonly navigation: NavigationAgent | null;
     readonly navigationObstacle: NavigationObstacleInfo | null;
     readonly navigationLink: NavigationLinkInfo | null;
+    /** Edit an authored grid from authoritative fixedUpdate. Null erases the cell. */
+    setTile(layer:string,x:number,y:number,frame:string|null,options?:{flipX?:boolean;flipY?:boolean}):boolean;
     setNavigationObstacle(settings:Partial<NavigationObstacleInfo>):boolean;
     setNavigationLink(settings:Partial<Omit<NavigationLinkInfo,"start"|"end">>):boolean;
     setNavigationEnabled(component: "agent" | "obstacle" | "link", enabled: boolean): boolean;

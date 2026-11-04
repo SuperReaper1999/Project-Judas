@@ -3,12 +3,14 @@
 #include "SceneSerialization.h"
 #include "Prefab.h"
 #include "RuntimeWorld.h"
+#include "ScriptSystem.h"
 #include "ResourceManager.h"
 #include "SceneFingerprint.h"
 #include "ScreenshotWriter.h"
 #include "WorldPersistence.h"
 #include "WorldStreaming.h"
 #include "Project.h"
+#include <algorithm>
 #include <thread>
 #include <chrono>
 #include <glm/gtc/quaternion.hpp>
@@ -19,6 +21,11 @@
 namespace fs=std::filesystem;
 unsigned checks=0;
 void Check(bool good,const std::string& label){++checks;std::printf("%s %s\n",good?"PASS":"FAIL",label.c_str());if(!good)throw std::runtime_error(label);}
+bool SolidCell(RuntimeWorld& world,int x,int y){
+ const auto hit=world.Physics().CastPlanar(Shape::Planar(PlanarBox({.1,.1})),
+     {{x+.5f,y+.5f,0},{1,0,0,0}},{1,0,0},0);
+ return hit.hit&&hit.initialOverlap;
+}
 int main(int argc,char** argv){try{
  const auto root=fs::absolute(argc>1?argv[1]:".cache/tilemap-tests");fs::create_directories(root/"Assets");std::string error;
  // Independently authored two-colour atlas: known frame identity and real pixels.
@@ -38,6 +45,14 @@ int main(int argc,char** argv){try{
   const auto body=world.RuntimeBody(id);Check(world.Physics().GetTransform(body).position==position&&world.Physics().GetLinearVelocity(body)==velocity,"cold actual physical endpoint matches saved boundary exactly");
   world.Physics().ApplyLinearImpulse(body,{1,0,0});for(int i=0;i<30;++i){world.Physics().ApplyForce(body,{0,-9.81f,0});world.Physics().Step(1.f/60);}
   Check(world.Physics().GetTransform(body).position.x>position.x&&world.Physics().GetTransform(body).position.y>1.2f,"cold restored object really moves and collides with painted floor");
+  Check(!SolidCell(world,-1,0)&&SolidCell(world,10,0),"cold save restores erased and added collision");
+  TilemapRecipe restoredRecipe;
+  Check(ParseTilemap(world.Settings().authoringRecipes.at(TilemapKey(1)),restoredRecipe,error)&&
+        std::any_of(restoredRecipe.cells.begin(),restoredRecipe.cells.end(),[](const auto& cell){
+            return cell.x==10&&cell.y==0&&cell.frame=="green";
+        }),"cold save restores edited tile recipe and palette frame");
+  Check(world.EditTilemapCell(1,"ground",{10,0},"",false,false,error)&&!SolidCell(world,10,0),
+        "cold-restored grid remains editable: "+error);
   std::printf("TILEMAP_COLD checks=%u failures=0\n",checks);return 0;
  }
  Scene source;auto owner=source.CreateObject("Map").id;TilemapRecipe r;r.root=owner;r.sheet=palette.id;
@@ -68,6 +83,21 @@ int main(int argc,char** argv){try{
  // Real native bodies, impulses, gravity and contact. No screen boundary.
  ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Scene physical=scene;
  auto& drop=physical.CreateObject("Native drop");drop.transform.position={2,4,0};drop.body=SceneBodyComponent{};drop.body->shape=SceneShape::Planar;drop.body->motion=SceneBodyMotion::Dynamic;drop.body->planar=PlanarBox({.3,.3});const auto dropId=drop.id;
+ const auto editsFile=root/"Assets/runtime-edits.js";
+ std::ofstream(editsFile)<<R"JS(export default class {
+  constructor({entity}) {this.entity=entity;this.state={};}
+  fixedUpdate() {
+   if(this.state.done)return;
+   this.state.erased=this.entity.setTile('ground',-1,0,null);
+   this.state.placed=this.entity.setTile('ground',10,0,'green',{flipX:true});
+   try {this.entity.setTile('ground',10,0,'not-in-the-palette');}
+   catch {this.state.rejected=true;}
+   this.state.done=true;
+  }
+ })JS";
+ AssetRecord editsScript;
+ Check(track(editsFile,editsScript),"register runtime tile edits script");
+ physical.Find(owner)->scripts.push_back({1,editsScript.id,true,"{}"});
  Check(world.Build(physical,&resources,error),"compiled map builds in ordinary runtime: "+error);auto body=world.RuntimeBody(dropId);
  for(int i=0;i<180;++i){world.Physics().ApplyForce(body,{0,-9.81f,0});world.Physics().Step(1.f/60);}
  const auto pose=world.Physics().GetTransform(body);Check(pose.position.y>1.2f&&pose.position.y<1.4f,"falling body rests on actual painted floor");
@@ -81,12 +111,46 @@ int main(int argc,char** argv){try{
  for(int i=0;i<180;++i){rotated.Physics().ApplyForce(rotated.RuntimeBody(dropId),rotation*glm::vec3(0,-9.81f,0));rotated.Physics().Step(1.f/60);}
  const auto local=glm::inverse(rotation)*rotated.Physics().GetTransform(rotated.RuntimeBody(dropId)).position;
  Check(std::abs(local.y-pose.position.y)<.001f&&std::abs(local.z)<.0001f,"rotated gravity preserves local landing and actual planar mobility");
+ Check(SolidCell(world,-1,0)&&!SolidCell(world,10,0),"pre-edit native geometry has the opposite occupancy");
+ world.FixedScripts(nullptr,1.f/60);
+ const auto editStates=world.Scripts()->Capture();
+ for(const auto& fault:world.Scripts()->Diagnostics())std::fprintf(stderr,"%s\n",fault.message.c_str());
+ Check(editStates.size()==1&&editStates[0].json.find("\"erased\":true")!=std::string::npos&&
+       editStates[0].json.find("\"placed\":true")!=std::string::npos&&
+       editStates[0].json.find("\"rejected\":true")!=std::string::npos,
+       "JudasJS erases and places tiles and rejects unknown frames");
+ Check(!SolidCell(world,-1,0)&&SolidCell(world,10,0),"runtime edits change actual planar collision immediately");
+ TilemapRecipe runtimeRecipe;
+ Check(ParseTilemap(world.Settings().authoringRecipes.at(TilemapKey(owner)),runtimeRecipe,error),
+       "updated live recipe is valid");
+ const auto created=std::find_if(runtimeRecipe.generated.begin(),runtimeRecipe.generated.end(),[](const auto& entry){
+     return entry.key=="tile/ground/10/0";
+ });
+ Check(created!=runtimeRecipe.generated.end()&&world.RuntimeDefinition(created->entity)->render->sprite.flipX&&
+       world.RuntimeDefinition(created->entity)->render->sprite.rect.x==.5f,
+       "runtime sprite publishes the selected frame and flip");
+ SceneObject liveDrop;
+ liveDrop.name="Drop above the runtime tile";
+ liveDrop.transform.position={10.5f,4,0};
+ liveDrop.body=physical.Find(dropId)->body;
+ const auto liveDropId=world.CreateEntity(liveDrop,nullptr,&error);
+ const auto liveDropBody=world.RuntimeBody(liveDropId);
+ Check(liveDropBody.IsValid(),"create real planar drop above the new tile");
+ for(int i=0;i<180;++i){
+    world.Physics().ApplyForce(liveDropBody,{0,-9.81f,0});
+    world.Physics().Step(1.f/60);
+ }
+ Check(std::abs(world.Physics().GetTransform(liveDropBody).position.y-1.3f)<.1f,
+       "a falling rigid body lands on the runtime-painted tile");
  GameSnapshot snapshot;snapshot.project="tilemap-proof";snapshot.scene="main";snapshot.content=std::string(64,'a');
  Check(WorldPersistence::Capture(world,snapshot.participants,error),"capture real tilemap physics participants");SaveStorage storage((root/"ColdSlots").string());Check(storage.Write("tilemap",snapshot,error),"publish durable cold-process fixture");
  SaveArchive endpoint;auto expectedPosition=world.Physics().GetTransform(body).position,expectedVelocity=world.Physics().GetLinearVelocity(body);endpoint(expectedPosition,expectedVelocity);std::ofstream(root/"endpoint.bin",std::ios::binary)<<endpoint.bytes;
  Project project;const auto projectFile=root/"Tilemap_Test.judasproj";
  if(fs::exists(projectFile))Check(project.Load(projectFile.string(),error),"reopen stream fixture project");else Check(Project::CreateNew(root.string(),"Tilemap Test",project,error),"create stream fixture project");
- fs::create_directories(root/"Scenes");Check(SaveSceneToFile(physical,(root/"Scenes/tiles.judas").string(),error),"write ordinary region with generated tile geometry");
+ // This original streaming control owns a precompiled, non-scripted grid.
+ Scene streamFixture=physical;
+ streamFixture.Find(owner)->scripts.clear();
+ fs::create_directories(root/"Scenes");Check(SaveSceneToFile(streamFixture,(root/"Scenes/tiles.judas").string(),error),"write ordinary region with generated tile geometry");
  JobSystem jobs(2);ResourceManager streamedResources(nullptr,&assets,&jobs);RuntimeWorld streamWorld;streamWorld.legacyGameplay=false;Scene empty;Check(streamWorld.Build(empty,&streamedResources,error),"streaming root has no hidden tile system");
  WorldManifest manifest;WorldRegion region;region.id="tiles";region.scene="Scenes/tiles.judas";manifest.regions.emplace(region.id,region);WorldStreaming stream(streamWorld,streamedResources,project,manifest);
  auto pump=[&](const std::function<bool()>& done){auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);while(std::chrono::steady_clock::now()<deadline){streamedResources.Pump();stream.Advance(false);if(done())return true;std::this_thread::sleep_for(std::chrono::milliseconds(1));}return false;};

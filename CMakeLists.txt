@@ -336,6 +336,7 @@ add_library(judas_engine STATIC
     src/Scene.cpp
     src/Sprite.cpp
     src/authoring/Tilemap.cpp
+    src/WorldTilemap.cpp
     src/SpriteAnimation.cpp
     src/WorldSpriteAnimation.cpp
     src/PlanarAuthoring.cpp

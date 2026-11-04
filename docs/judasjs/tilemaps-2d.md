@@ -65,3 +65,34 @@ These limits do not change existing 3D or small sprite projects.
 Try [Tilemap Workshop](../../projects/tilemap_workshop/Tilemap_Workshop.judasproj).
 WASD/arrows move, Space jumps on the trail, 1/2 switch trail/village, R restarts,
 F6/F7 save/load. Collect stars through real triggers and push the physical crates.
+
+## Runtime cell editing
+
+On the authored grid root entity, call this in authoritative `fixedUpdate`:
+
+```js
+grid.setTile('ground', 10, 0, 'stone', {flipX: true});
+grid.setTile('ground', 10, 0, null); // erase
+```
+
+The first argument is the authored layer ID. X and Y are integer cell
+coordinates from −512 to 512. Use a frame ID from the grid's registered
+sprite sheet. Optional flip flags default to false. A solid layer rebuilds
+native planar collision as part of the edit. A decorative layer changes
+presentation only. Each call completes synchronously before returning.
+Use it for discrete gameplay changes since the edit validates and
+compiles the bounded grid (up to 2,048 cells).
+
+Normal world saves retain the updated recipe and generated entities.
+Unchanged generated children keep their IDs. Replacement children get
+new IDs, so gameplay should identify a tile by grid, layer and cell.
+The authored scene on disk stays intact. An invalid edit leaves the
+previous recipe and collision in place.
+
+This path supports scene-owned grids with an unparented, unrotated,
+unit-scale root and cell positions that round-trip in the world's local
+coordinate frame. Streamed region and prefab-instance grids are outside
+this editing path. Authored tilemaps in those workflows retain their
+existing rendering and collision. Active online sessions reject edits
+because tile changes are not replicated. If you use closure-only
+exports, include the grid's sprite sheet as an explicit runtime asset.

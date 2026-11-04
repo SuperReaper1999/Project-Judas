@@ -414,6 +414,8 @@ public:
     const LiquidSystem& Liquids()const{return *m_liquid;}
     void UpdateLiquids(double dt){if(m_advancedFluids&&m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
     RuntimeTerrain& LiveTerrain(){if(!m_runtimeTerrain)m_runtimeTerrain=std::make_unique<RuntimeTerrain>(*this);return *m_runtimeTerrain;}
+    bool EditTilemapCell(EntityId,const std::string& layer,glm::ivec2 cell,
+                         const std::string& frame,bool flipX,bool flipY,std::string& error);
     bool RuntimeTerrainBusy(EntityId id)const{auto* status=m_runtimeTerrain?m_runtimeTerrain->Status(id):nullptr;return status&&status->busy;}
     bool HasRuntimeTerrain(EntityId id)const{return m_runtimeTerrain&&m_runtimeTerrain->Has(id);}
     void DrawRuntimeTerrain(Renderer& renderer)const{if(m_runtimeTerrain)m_runtimeTerrain->Draw(renderer);}

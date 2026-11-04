@@ -169,6 +169,7 @@ export class Entity {
  get liquid(){const h=call("liquidOwner",this.id);return h?new LiquidVolume(h):null}
  get navigationObstacle(){return call("navObstacleInfo",this.id)}
  get navigationLink(){return call("navLinkInfo",this.id)}
+ setTile(layer,x,y,frame,options={}){return call('tileSet',this.id,layer,x,y,frame,options)}
  setNavigationObstacle(settings){return call("navObstacleSet",this.id,settings)}
  setNavigationLink(settings){return call("navLinkSet",this.id,settings)}
  setNavigationEnabled(component,enabled){return call("navEnabled",this.id,component,enabled)}
@@ -1638,6 +1639,34 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto textures=JS_NewObject(c);const char* names[]={"baseColor","metallicRoughness","normal","occlusion","emissive"};for(size_t i=0;i<5;++i)JS_SetPropertyStr(c,textures,names[i],JS_NewString(c,m.maps[i].asset.c_str()));JS_SetPropertyStr(c,result,"textures",textures);return result;
     }
     if(op=="liquidOwner"){auto h=world.Liquids().Handle(id);if(!world.Liquids().Get(h))return JS_NULL;return JS_NewString(c,(std::to_string(h.generation)+":"+std::to_string(h.id)).c_str());}
+    if(op=="tileSet"){
+        if(!s->fixed||s->inPresentation||s->stopping||world.NetworkClient())
+            return JS_ThrowTypeError(c,"tile edits require an authoritative fixed callback");
+        double x=0,y=0;
+        auto readCell=[&](JSValueConst value,double& coordinate){
+            return JS_IsNumber(value)&&!JS_ToFloat64(c,&coordinate,value)&&
+                std::isfinite(coordinate)&&coordinate>=-512&&coordinate<=512&&coordinate==std::floor(coordinate);
+        };
+        if(!JS_IsString(arg(2))||!readCell(arg(3),x)||!readCell(arg(4),y)||
+           !(JS_IsNull(arg(5))||JS_IsString(arg(5)))||!KnownOptions(c,arg(6),{"flipX","flipY"}))
+            return JS_ThrowTypeError(c,"tile edit requires a layer, integer coordinates, and a palette frame or null");
+        auto frame=JS_IsNull(arg(5))?std::string{}:String(c,arg(5));
+        if(JS_IsString(arg(5))&&(frame.empty()||frame.size()>128))
+            return JS_ThrowTypeError(c,"tile frame must contain 1 to 128 bytes");
+        bool flips[2]{};
+        const char* keys[]={"flipX","flipY"};
+        for(unsigned i=0;i<2;++i){
+            auto value=JS_GetPropertyStr(c,arg(6),keys[i]);
+            const bool valid=JS_IsUndefined(value)||JS_IsBool(value);
+            flips[i]=JS_IsBool(value)&&JS_ToBool(c,value);
+            JS_FreeValue(c,value);
+            if(!valid)return JS_ThrowTypeError(c,"tile flip flags must be boolean");
+        }
+        std::string error;
+        if(!world.EditTilemapCell(id,String(c,arg(2)),{int(x),int(y)},frame,flips[0],flips[1],error))
+            return JS_ThrowTypeError(c,"%s",error.c_str());
+        return JS_TRUE;
+    }
     if(op=="navObstacleSet"||op=="navLinkSet"){
         if(s->inPresentation||world.NetworkClient())
             return JS_ThrowTypeError(c,"navigation edits require authoritative gameplay");

@@ -155,6 +155,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setSocket` | `socketClear`, `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSprite` | `spriteSet` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |
 | `Entity.setSpriteAnimation` | `spriteAnimationSet` | [declaration](../judas.d.ts) | [reference](sprite-animation.md) |
+| `Entity.setTile` | `tileSet` | [declaration](../judas.d.ts) | [reference](tilemaps-2d.md) |
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.sprite` | `spriteInfo` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |
 | `Entity.spriteAnimation` | `spriteAnimationInfo` | [declaration](../judas.d.ts) | [reference](sprite-animation.md) |

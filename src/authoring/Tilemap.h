@@ -33,9 +33,10 @@ bool ValidateTilemap(const TilemapRecipe&,std::string& error);
 bool PaintTilemap(TilemapRecipe&,const std::string& layer,glm::ivec2 from,
                   glm::ivec2 to,const std::string& frame,bool erase,bool flipX,bool flipY,std::string& error);
 // Pure CPU, transactional. Existing managed edits/missing children reject rather
-// than silently deleting user work. Stable cell keys retain ordinary entity IDs.
+// than silently deleting user work. Stable keys retain IDs unless the caller
+// requests fresh IDs for changed children so it can stage runtime replacements.
 bool BakeTilemap(const Scene&,const TilemapRecipe&,const AssetDatabase&,Scene& result,
-                 TilemapRecipe& baked,std::string& error);
+                 TilemapRecipe& baked,std::string& error,bool replaceChanged=false);
 // Editor lifecycle hooks: copying/deleting a grid must retain/retire its recipe
 // in the same undo transaction as the ordinary generated object hierarchy.
 bool DuplicateTilemapRecipes(const Scene& source,Scene& result,
