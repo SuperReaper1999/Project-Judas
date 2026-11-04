@@ -1,0 +1,13 @@
+PASS primary native window initializes
+PASS real secondary native window initializes
+PASS ordinary game input map configures
+PASS editor hook receives secondary native window events
+FAIL secondary resize never changes primary dimensions
+FAIL closing detached tool never exits the application
+FAIL secondary key events never become game controls
+PASS primary key still reaches game input
+FAIL secondary focus loss never clears held primary input
+PASS primary resize and key release still work
+PASS primary close retains application close request
+PASS legacy synthetic window-id zero events preserve their contract
+SUMMARY 12 checks 4 failures

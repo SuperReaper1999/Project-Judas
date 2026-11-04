@@ -1,0 +1,40 @@
+{
+  "files": {
+    "EditorShellChrome.cpp": [
+      "UpdateEditorWorkspaceLayout",
+      "DrawEditorWorkspaceChrome",
+      "DrawEditorMainMenu",
+      "DrawStatusBar"
+    ],
+    "HierarchyPanel.cpp": [
+      "DrawHierarchyPanel"
+    ],
+    "InspectorPanel.cpp": [
+      "DrawInspectorPanel"
+    ],
+    "SceneSettingsPanel.cpp": [
+      "DrawSceneSettingsPanel"
+    ],
+    "EditorProfilerPanel.cpp": [
+      "DrawProfilerPanel"
+    ],
+    "EditorObjectActions.cpp": [
+      "DuplicateObject"
+    ],
+    "EditorStreamingPanel.cpp": [
+      "DrawStreamingPanel"
+    ],
+    "UIAssetEditor.cpp": [
+      "DrawUILayoutEditor"
+    ],
+    "EditorCollisionWorkflow.cpp": [
+      "BakeEditorCollision"
+    ]
+  },
+  "assetModules": [
+    "AssetBrowserPanel.cpp",
+    "AssetListPanel.cpp",
+    "AssetDetailsPanel.cpp",
+    "AssetImportTools.cpp"
+  ]
+}

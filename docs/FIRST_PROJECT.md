@@ -1,5 +1,10 @@
 # Your first visible Judas project
 
+This page follows the current Experimental editor, including the Editor V2 preview.
+V2 has scoped Linux automated qualification; human acceptance/publication is
+pending. Older installed SDKs retain their matching guide. The current editor
+uses workspace/Window navigation, with quick view options in the toolbar.
+
 [Ownership, readiness, presentation and saves](DEVELOPER_WORKFLOWS.md)
 
 [API index](JUDASJS.md) · [Full authoring guide](judasjs/getting-started.md) ·
@@ -66,8 +71,8 @@ Copy [first-project.js](judasjs/examples/first-project.js) to your project's
   universal engine up direction.
 - `destroy()` releases the camera. Its JSON state belongs to this instance.
 
-Open **View → Asset Browser**, **Rescan**, then **Track** the script. Select your
-box, choose **Add component… → Scripts**, and select the tracked asset in an
+Open **Window → Content → Asset Browser**, **Rescan**, then **Track** the script.
+Select your box, choose **Add component… → Scripts**, and select the tracked asset in an
 enabled behaviour slot. Save the scene. Asset IDs and `.judasmeta` files are
 part of the project: retain them with the source.
 
@@ -76,15 +81,17 @@ The startup log says `My first Judas project is running.` Stop returns to the
 authored scene. The code needs no input capture; this first exercise does not
 provide walking or mouse look.
 
-The runtime currently shows its historical diagnostic HUD when a scene has no
-authored UI. Its player/spacecraft labels are compatibility diagnostics, not a
-controller supplied by this example. Use **Escape → Options → Show HUD: Off**
-to hide it. Build your own interface through [runtime UI](judasjs/ui.md).
+New projects use `legacy-gameplay false`: they do not inherit the historical
+player/spacecraft debug HUD. The visible starter owns its camera through its
+script. Use [runtime UI](judasjs/ui.md) for your game interface. In Editor V2,
+Game shows the played frame; Scene uses the editor camera to observe the same
+world during Play. Authored values remain read-only until Stop.
 
 ## 3. Edit, debug and deliberately reload
 
-Open **View → JudasJS developer tools** and select your script. Enable **Attach
-debugger (Play)** before Play, then put a breakpoint on `this.state.frames++;`. Play,
+Choose the **Scripting** workspace (or **Window → Scripting → JudasJS developer
+tools**) and select your script. Enable **Attach debugger (Play)** before Play,
+then put a breakpoint on `this.state.frames++;`. Play,
 inspect `this.state`, step once and continue. A line must contain an executable
 statement to stop there.
 

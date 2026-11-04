@@ -1,0 +1,21 @@
+PASS module-local registration exposes its own operations and owner
+PASS duplicate operation rejects the entire registration without prefix publication
+PASS duplicate names within one module are rejected
+PASS empty module, operation, handler and operation list are rejected
+PASS registered handler runs exactly once without allocating session state
+PASS unknown operation raises an exception without running a handler
+PASS world-dependent operation refuses a metadata context
+PASS native C++ errors become contextual JavaScript exceptions
+PASS native allocation failure uses QuickJS's out-of-memory error
+PASS non-standard native exception cannot escape the interpreter boundary
+PASS existing JavaScript errors keep their original type and message
+PASS a script catches the native error and continues in the same live context
+PASS optional native module state starts absent
+PASS repeated access retains the same state instance
+PASS a module cannot reuse a state identity with another native type
+PASS lifecycle hooks preserve stable module order and report every cleanup error
+PASS explicit runtime shutdown destroys every native state once
+PASS nested slot retirement is safe while state destruction and insertion are refused
+PASS lifecycle guard releases after nested retirement
+PASS catalogue installs real native modules through the shared registry
+SUMMARY 20 checks 0 failures

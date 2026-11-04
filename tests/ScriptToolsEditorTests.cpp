@@ -8,6 +8,7 @@
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
 #include <SDL2/SDL.h>
+#include "glad/gl.h"
 #include <thread>
 #include <mutex>
 #include <chrono>
@@ -26,9 +27,28 @@ int main(){
     auto probeBody=world.RuntimeBody(probeId);world.Physics().SetLinearVelocity(probeBody,{1,-3,0});
     auto& vm=world.PrepareScriptTools();ScriptTools tools;tools.visible=true;tools.enabled=true;tools.points={{"Assets/scripts/worker.js",10,true}};
     std::vector<ScriptDebugStop> stops;
+    unsigned stoppedShellDraws=0,stoppedShellPresents=0;
+
     vm.SetDebugger([&](const ScriptDebugStop& stop){
         const auto physicalBefore=world.Physics().GetTransform(probeBody);const auto velocityBefore=world.Physics().GetLinearVelocity(probeBody);
         stops.push_back(stop);const auto states=vm.Capture();auto before=states;
+        if(stops.size()==2) {
+            tools.drawStoppedShell=[&] {
+                ++stoppedShellDraws;
+                ImGui::Begin("Frozen scene snapshot");
+                ImGui::TextUnformatted("Stopped-mode presentation only");
+                ImGui::End();
+            };
+            tools.presentStoppedShell=[&] {
+                ++stoppedShellPresents;
+                glBindFramebuffer(GL_FRAMEBUFFER,0);
+                glViewport(0,0,window.Width(),window.Height());
+                glClearColor(.025f,.03f,.045f,1);
+                glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+                ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+                window.SwapBuffers();
+            };
+        }
         std::thread key([&]{SDL_Delay(90);Key(window.NativeWindow(),SDL_SCANCODE_F10,true);SDL_Delay(40);Key(window.NativeWindow(),SDL_SCANCODE_F10,false);});
         auto action=tools.Pause(stop,host);key.join();
         if(stops.size()==1){std::vector<unsigned char> pixels;host.GetRenderer().CaptureFrame(window.Width(),window.Height(),pixels);Check(WriteRgbPng(".cache/m94/editor-stopped.png",window.Width(),window.Height(),pixels),"stopped editor framebuffer captured");}
@@ -44,6 +64,10 @@ int main(){
     NewFrame();world.UpdateScripts(&window.Input(),.016f);ImGui::EndFrame();
     Check(stops.size()==2&&stops[0].frames[0].line==10&&stops[1].frames[0].line==11,"real editor pause loop steps an actual project callback");
     Check(tools.clockReset&&!tools.stopRequested,"debugger requests clock reset and preserves Play");
+    Check(stoppedShellDraws>0&&stoppedShellDraws==stoppedShellPresents,
+          "hosted debugger draws and presents its safe shell without replacing the VM pause boundary");
+    tools.drawStoppedShell={};tools.presentStoppedShell={};
+
     auto prior=world.Physics().GetTransform(probeBody).position;world.Physics().Step(1.f/60);Check(world.Physics().GetTransform(probeBody).position!=prior,"physical pause probe actually moves when authoritative physics is advanced");
     vm.SetDebugger({});NewFrame();tools.Panel(&world,host.Assets());ImGui::Render();ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());window.SwapBuffers();
     Check(vm.Diagnostics().empty(),"scene and developer panel remain fault-free after resuming");

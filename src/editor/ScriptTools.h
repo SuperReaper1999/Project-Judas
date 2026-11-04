@@ -1,5 +1,6 @@
 #pragma once
 #include "ScriptSystem.h"
+#include <functional>
 #include <string>
 #include <vector>
 class AssetDatabase;
@@ -15,6 +16,12 @@ struct ScriptTools {
     std::vector<ScriptBreakpoint> points;
     int requestedLine=1,selectedFrame=0;
     bool editing=false,scrollToLine=false;
+    // Safe stopped-mode shell hooks. Implementations may draw cached views and
+    // layout UI only: never advance the world, publish jobs, save or call JS.
+    // Empty callbacks retain the standalone fullscreen debugger used by tools/tests.
+    std::function<void()> drawStoppedShell;
+    std::function<void()> presentStoppedShell;
+
     void Attach(RuntimeWorld&,EngineHost&);
     void Panel(RuntimeWorld*,const AssetDatabase&);
     void ApplyReload(RuntimeWorld&);

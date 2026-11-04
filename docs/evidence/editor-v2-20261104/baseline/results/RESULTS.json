@@ -1,0 +1,56 @@
+[
+  {
+    "target": "judas_editor_workspace_tests",
+    "exit": 0,
+    "seconds": 0.0020549359996948624,
+    "sha256": "319dfd841a384041c00d4817d2842ccb9a5f876b765fd66623fad0941134f404"
+  },
+  {
+    "target": "judas_editor_preferences_tests",
+    "exit": 0,
+    "seconds": 0.03183800799888559,
+    "sha256": "d9c8a66628b23d6240fb1b1c2e8407c5139defbf1e28384a919dd312aed18476"
+  },
+  {
+    "target": "judas_editor_navigation_tests",
+    "exit": 0,
+    "seconds": 0.010403505000795121,
+    "sha256": "88f25039a227a2c53f9fd1d0842c56a456596a4a325a39cfde933f3869cd6b60"
+  },
+  {
+    "target": "judas_editor_picking_tests",
+    "exit": 0,
+    "seconds": 0.04708248400129378,
+    "sha256": "c2241ab8075c30cd6dd3ef648da2d7ccb30f4879df6db18442278403ef614ef7"
+  },
+  {
+    "target": "judas_editor_creation_menu_tests",
+    "exit": 0,
+    "seconds": 0.04992331300127262,
+    "sha256": "78470033ae73c56da9dbf5451698efd7068b0f30291135d08eadaa3aa9a8dafc"
+  },
+  {
+    "target": "judas_editor_asset_actions_tests",
+    "exit": 0,
+    "seconds": 0.06742800299980445,
+    "sha256": "7591df91b9274e06b163dc60f096ab6ae832162431f34247a624aefabf570f95"
+  },
+  {
+    "target": "judas_editor_script_workflow_tests",
+    "exit": 0,
+    "seconds": 0.1939398380000057,
+    "sha256": "d40645030d1e308b45b201dacbded4c1a82ddb6cc16ed384b6e0b510d2eaa969"
+  },
+  {
+    "target": "judas_script_tools_editor_tests",
+    "exit": 0,
+    "seconds": 0.8718056100005924,
+    "sha256": "acf0fd67bfd37b82aaebb1a51bb498cde44f9a6c6e5a0e0216cebb0cedc0e6bc"
+  },
+  {
+    "target": "judas_script_developer_tools_tests",
+    "exit": 0,
+    "seconds": 0.2954728549993888,
+    "sha256": "535b05a2b9874e080ed386b65ebea8396c42eec677a22bf7cbbe5c2572d27bbf"
+  }
+]

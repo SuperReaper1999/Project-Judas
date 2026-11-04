@@ -1,0 +1,22 @@
+[
+  {
+    "target": "judas_script_binding_registry_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_script_module_acceptance_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_editor_script_workflow_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_script_presentation_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_editor_preferences_tests",
+    "exit": 0
+  }
+]

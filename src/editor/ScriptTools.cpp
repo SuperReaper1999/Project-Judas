@@ -183,8 +183,15 @@ ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& hos
     while(!done&&!window.ShouldClose()){
         window.SetInputClaimed(true,true);window.SetHostTextInput(ImGui::GetIO().WantTextInput);window.PollEvents();
         ImGui_ImplOpenGL3_NewFrame();ImGui_ImplSDL2_NewFrame();ImGui::NewFrame();
-        ImGui::SetNextWindowPos(ImVec2(0,0));ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
-        ImGui::Begin("JudasJS stopped",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);
+
+        if(drawStoppedShell) drawStoppedShell();
+        else {
+            ImGui::SetNextWindowPos(ImVec2(0,0));
+            ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+        }
+        ImGui::Begin(drawStoppedShell ? "JudasJS developer tools" : "JudasJS stopped", nullptr,
+            drawStoppedShell ? ImGuiWindowFlags_None :
+            ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);
         ImGui::Text("World suspended | entity %llu / slot %llu",(unsigned long long)stop.entity,(unsigned long long)stop.slot);
         if(online)ImGui::TextWrapped("Online session paused at a script instruction. Transport is suspended with this world; remote peers may time out. Continue, then reconnect if needed. Ordinary gameplay pause keeps networking active.");
         auto button=[&](const char* label,ScriptDebugAction a){if(ImGui::Button(label)){action=a;done=true;}ImGui::SameLine();};
@@ -200,7 +207,14 @@ ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& hos
             else ImGui::TextWrapped("No registered project source for this frame (%s). Its binding snapshot is still available below.",f.file.c_str());
             ImGui::BeginChild("Variables",ImVec2(0,0),true);for(const auto& v:f.variables)Variables(v);ImGui::EndChild();
         }
-        ImGui::End();ImGui::Render();glBindFramebuffer(GL_FRAMEBUFFER,0);glViewport(0,0,window.Width(),window.Height());glClearColor(.025f,.03f,.045f,1);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());window.SwapBuffers();SDL_Delay(8);
+        ImGui::End();ImGui::Render();
+        if(presentStoppedShell) presentStoppedShell();
+        else {
+            glBindFramebuffer(GL_FRAMEBUFFER,0);glViewport(0,0,window.Width(),window.Height());
+            glClearColor(.025f,.03f,.045f,1);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());window.SwapBuffers();
+        }
+        SDL_Delay(8);
     }
     if(window.ShouldClose()){quitRequested=true;window.CancelCloseRequest();action=ScriptDebugAction::Cancel;}
     stopRequested|=action==ScriptDebugAction::Cancel;clockReset=true;

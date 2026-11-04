@@ -212,6 +212,43 @@ spawned identities are not universally replicated. Local player identity is
 independent of devices and controlled entities. See [network/security boundaries](M99_NETWORK.md)
 and [local multiplayer](M89_LOCAL_MULTIPLAYER.md).
 
+## Editor V2 ownership (Experimental)
+
+The desktop editor remains an engine consumer, with one project/document/history,
+one authoritative played world and the shared JudasJS runtime. `EditorApplication`
+coordinates the frame; it does not implement hierarchy, inspector, import or
+export bodies. [Editor V2](EDITOR_V2.md) maps the current source owners and
+qualification boundaries.
+
+`editor/EditorShell` owns dock/UI composition and platform-window presentation.
+`EditorPanelRegistry` performs deterministic setup-time registration and phase/
+visibility dispatch over a frame-scoped borrowed `EditorContext`. The existing
+`EditorDocument` owns authored mutations and undo. `EditorProjectWorkflow`,
+`EditorRequestWorkflow` and `EditorExportWorkflow` own project/document commands;
+`EditorPlaySession` owns Start/Stop and the single runtime; `EditorSceneViewport`
+and `EditorViewportPresenter` own camera/targets/content bounds and input mapping.
+
+Actual panel bodies live in `HierarchyPanel`, `InspectorPanel`, the separate
+asset list/details/import modules, scene settings, profiler, streaming and UI
+asset modules. `AssetPublicationWorkflow` publishes completed import/cook results
+at a safe authoring boundary even while the browser is hidden. Panel-local drafts
+remain local; shared services/selection and persistent visibility are explicit.
+The application frame does not gain a panel-specific branch when a descriptor is
+registered. The Console extension is the focused proof path, qualified separately.
+
+Breakpoint suspension draws the safe shell and debugger only. It must not pump
+simulation, save/load, streaming publication or recursive script execution while
+QuickJS's C/JS stacks are suspended. Platform windows share the one editor ImGui
+context; they do not create a scripting VM or physical world.
+
+Docking uses the pinned Dear ImGui docking vendor with its matching SDL2/OpenGL
+backends. Native OS detachment is admitted only for x11/windows; other backends
+retain docking/in-window floating. Linux V2 automated qualification covers native
+detached Scene/Game views; Windows V2 has not been rerun. Scene/Game targets use
+1× logical resolution, not native HiDPI backing-pixel resolution. The
+[qualification receipt](EDITOR_V2_QUALIFICATION.md) records the scoped checks;
+combined human acceptance remains pending. This is not an Alpha v2.0 release.
+
 ## Native interfaces, builds and validation
 
 Native headers document actual interfaces, not a stable binary SDK ABI promise.
@@ -231,7 +268,8 @@ See [build identity](BUILD_RELEASES.md), [distribution](DISTRIBUTION.md) and
 
 Linux is the acceptance reference. Windows VM/Android receipts have individual
 version/hardware scope. Main is human-tested release lineage; Experimental is
-development. No M100 or Alpha release is declared.
+development. Published Alpha identities remain in the release record; this
+Experimental editor work does not publish a version or change release channels.
 
 ## Project policy and basic water
 
@@ -267,7 +305,7 @@ same identity mismatch description to rejected loads and save listings; migratio
 policy and native participant validation remain unchanged. Current operating
 instructions and the shipped small SDK example are in `docs/DEVELOPER_WORKFLOWS.md`.
 
-### Experimental native 2D (v1.1.0 work in progress)
+### Native 2D
 
 Sprites and orthographic cameras share the existing renderer/scene path. Native
 planar bodies share MK2's world, clock, handles, CCD, contact and joint ownership;

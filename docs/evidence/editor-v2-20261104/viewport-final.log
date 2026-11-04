@@ -1,0 +1,37 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real native graphics host starts
+VIDEO_DRIVER offscreen
+PASS actual physical scene builds
+PASS ordinary authoritative Play session begins for observer qualification
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Scene and Game expose independent real content rectangles
+PASS actual Scene and Game images sample their separate native targets
+PASS Game uses its content target rather than the whole main framebuffer
+PASS newly rendered Game pixels replace the previous frame without stale texture reuse
+PASS Game uses its content target rather than the whole main framebuffer
+PASS resizing Game updates render target and actual gameplay dimensions
+PASS offset image center maps to gameplay center instead of window origin
+PASS Scene target follows its own content size
+PASS Game uses its content target rather than the whole main framebuffer
+PASS Game uses its content target rather than the whole main framebuffer
+PASS fixture separates keyboard focus from pointer hover
+PASS game-specific input map installs through ordinary API
+PASS focused Game accepts keyboard input while pointer is outside its image
+PASS hidden Game releases capture and performs no target presentation
+PASS drawing, resizing, focus and visibility never advance or replace physical state
+PASS runtime positive control owns a real target
+camera 2: cannot resize during a target pass
+FAIL ordinary runtime presentation updates the actual authored camera
+FAIL live Scene observer honors its supplied camera despite a conflicting gameplay view
+FAIL observer rendering never updates authored camera targets
+FAIL actual live Scene pixels differ from the remote gameplay camera instead of a stale frame
+PASS runtime positive control owns a real target
+FAIL three observer passes do not advance the runtime camera cadence
+PASS runtime positive control owns a real target
+FAIL next ordinary runtime cadence boundary still updates its camera
+PASS live observer and secondary camera rendering preserve actual physical state
+PASS explicit physics step changes the same body, validating the no-step observer
+SUMMARY 31 checks 6 failures

@@ -1,6 +1,11 @@
 {
   "format": 1,
   "tests": [
+    {"name":"editor-console","target":"judas_editor_console_tests","groups":["editor","scripting","lifecycle"]},
+    {"name":"editor-v2-workspaces","target":"judas_editor_v2_workspace_tests","groups":["editor","onboarding"]},
+    {"name":"editor-v2-assets","target":"judas_editor_asset_browser_tests","groups":["editor","lifecycle"]},
+    {"name":"editor-v2-viewports","target":"judas_editor_v2_viewport_tests","groups":["editor","rendering"],"args":["{output}/editor-v2-viewports"]},
+    {"name":"editor-window-routing","target":"judas_editor_window_routing_tests","groups":["editor","input"]},
     {"name":"scripting-module-acceptance","target":"judas_script_module_acceptance_tests","groups":["core","scripting","lifecycle"]},
     {"name":"scripting-registry","target":"judas_script_binding_registry_tests","groups":["core","scripting","lifecycle"]},
     {"name":"ui-transfer","target":"judas_ui_drag_tests","groups":["core","input","lifecycle"]},

@@ -1,0 +1,7 @@
+{
+  "upstream": "https://github.com/ocornut/imgui",
+  "tag": "v1.91.9b-docking",
+  "commit": "4806a1924ff6181180bf5e4b8b79ab4394118875",
+  "archive_sha256": "cc35a88df717dff3c488e43b4b148dcfe968bd3ff6798f60751b106eb9bcee48",
+  "scope": "Editor-only docking upgrade; matching SDL2/OpenGL3 backends; no runtime dependency"
+}

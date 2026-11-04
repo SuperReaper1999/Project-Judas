@@ -1,0 +1,32 @@
+PASS SDL preferences resolve inside the isolated fixture
+PASS fixture starts without an editor or GL context
+Specify -ExpBrowserSupport once, with exactly 0 or 1
+PASS malformed launch option rejects before host initialization
+PASS pre-host rejection creates no UI, GL context or native window
+PASS pre-host rejection leaves isolated preferences untouched
+PASS missing-project negative control is actually absent
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+could not open project file: /tmp/judas-editor-lifecycle-16684693107619/missing.judasproj
+PASS invalid project returns failure
+PASS project failure occurs after actual editor UI initialization
+PASS project failure exercises both initialized native UI backends
+PASS project failure exercises a real native window and GL context
+PASS application destruction retires ImGui context
+PASS application destruction retires current GL context and window
+PASS application destruction removes its native SDL window
+PASS failed startup preserves preference and layout bytes without new files or backups
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+/tmp/judas-editor-lifecycle-16684693107619/malformed.judasproj: [json.exception.parse_error.101] parse error at line 1, column 4: syntax error while parsing object key - invalid literal; last read: '{ no'; expected string literal
+PASS invalid project returns failure
+PASS project failure occurs after actual editor UI initialization
+PASS project failure exercises both initialized native UI backends
+PASS project failure exercises a real native window and GL context
+PASS application destruction retires ImGui context
+PASS application destruction retires current GL context and window
+PASS application destruction removes its native SDL window
+PASS failed startup preserves preference and layout bytes without new files or backups
+Editor application lifecycle: 22 checks, 0 failures

@@ -1,0 +1,10 @@
+test_application_coordinates_instead_of_implementing_panel_or_file_workflows (test_editor_v2_architecture.EditorV2ArchitectureTests.test_application_coordinates_instead_of_implementing_panel_or_file_workflows) ... ok
+test_console_extension_has_no_main_loop_special_case (test_editor_v2_architecture.EditorV2ArchitectureTests.test_console_extension_has_no_main_loop_special_case) ... ok
+test_coordinating_calls_and_comments_do_not_trigger_false_positives (test_editor_v2_architecture.EditorV2ArchitectureTests.test_coordinating_calls_and_comments_do_not_trigger_false_positives) ... ok
+test_forbidden_dispatch_and_workflow_negative_controls_are_detected (test_editor_v2_architecture.EditorV2ArchitectureTests.test_forbidden_dispatch_and_workflow_negative_controls_are_detected) ... ok
+test_real_panel_implementations_have_local_ownership (test_editor_v2_architecture.EditorV2ArchitectureTests.test_real_panel_implementations_have_local_ownership) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK

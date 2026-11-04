@@ -2,11 +2,23 @@
 
 #include "imgui.h"
 
+// Semantic secondary accent for scripting/tool emphasis. This is editor style
+// state, like ImGuiStyle, never game/project configuration.
+inline ImVec4 &EditorSecondaryAccentStorage() {
+    static ImVec4 value{.82f, .31f, .67f, 1};
+    return value;
+}
+inline ImVec4 EditorSecondaryAccent(float alpha = 1.f) {
+    auto color = EditorSecondaryAccentStorage();
+    color.w = alpha;
+    return color;
+}
+
 // Editor-only chrome. Scene materials and project runtime UI keep their own
 // authored appearance; this palette never changes game content.
 inline void ApplyEditorTheme() {
     ImGui::StyleColorsDark();
-    auto& s = ImGui::GetStyle();
+    auto &s = ImGui::GetStyle();
     s.WindowPadding = {12, 10};
     s.FramePadding = {7, 5};
     s.ItemSpacing = {8, 7};
@@ -21,7 +33,7 @@ inline void ApplyEditorTheme() {
     s.FrameBorderSize = 1;
     s.ScrollbarSize = 14;
     s.GrabMinSize = 12;
-    auto& c = s.Colors;
+    auto &c = s.Colors;
     c[ImGuiCol_Text] = {0.86f, 0.91f, 0.94f, 1};
     c[ImGuiCol_TextDisabled] = {0.56f, 0.64f, 0.70f, 1};
     c[ImGuiCol_WindowBg] = {0.075f, 0.091f, 0.115f, 1};
@@ -54,6 +66,8 @@ inline void ApplyEditorTheme() {
     c[ImGuiCol_ResizeGrip] = {0.25f, 0.46f, 0.49f, 0.3f};
     c[ImGuiCol_ResizeGripHovered] = {0.31f, 0.62f, 0.63f, 0.7f};
     c[ImGuiCol_ResizeGripActive] = {0.37f, 0.77f, 0.75f, 1};
+    c[ImGuiCol_DockingPreview] = {0.20f, 0.72f, 0.70f, 0.65f};
+    c[ImGuiCol_DockingEmptyBg] = {0.055f, 0.065f, 0.085f, 1};
     c[ImGuiCol_Tab] = {0.09f, 0.13f, 0.17f, 1};
     c[ImGuiCol_TabHovered] = {0.18f, 0.32f, 0.36f, 1};
     c[ImGuiCol_TabSelected] = {0.16f, 0.27f, 0.31f, 1};

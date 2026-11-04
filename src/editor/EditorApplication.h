@@ -1,104 +1,91 @@
-#include "../PlanetTiles.h"
 #pragma once
 
+#include "EditorAssetPreview.h"
+#include "EditorContext.h"
+#include "EditorShell.h"
+#include "EditorProfilerSnapshot.h"
+#include "EditorPlaySession.h"
+#include "EditorPreferences.h"
+#include "EditorProjectWorkflow.h"
+#include "EditorSceneViewport.h"
 #include <memory>
 #include <string>
-#include <vector>
-#include "EditorPreferences.h"
 
-#include "DebugDraw.h"
-#include "EditorCamera.h"
-#include "EditorMilestoneNotice.h"
 #include "EditorDocument.h"
+#include "EditorMilestoneNotice.h"
 #include "EditorPanels.h"
-#include "EditorPicking.h"
-#include "GizmoMath.h"
 #include "Project.h"
-#include "FileBrowser.h"
 
 class EngineHost;
-class InteractivePlay;
-class RuntimeWorld;
 struct AnimationTimeline;
 struct UtilityAIEditor;
 struct SpriteSheetEditor;
 struct TilemapEditor;
 
-// Milestone 28/30: the `judas_editor` executable's orchestration. Brings up
-// the same EngineHost the runtime uses, adds a Dear ImGui layer over the
-// window, opens a PROJECT (M30) and runs one of two modes over an
-// EditorDocument:
+// Coordinates one editor-process lifetime around the shared project/document
+// authority and EngineHost. Cohesive owners implement project requests, Play,
+// scene navigation, previews, tools and docked presentation; the frame loop
+// orders those services without owning their unrelated implementation details.
 //
-//   Edit  — the authored Scene is drawn directly (DrawAuthoredScene) from a
-//           free editor camera; panels and the viewport gizmo edit it;
-//           nothing is simulated.
-//   Play  — a RuntimeWorld is instantiated from the Scene and driven by
-//           the identical InteractivePlay frame the runtime runs; the
-//           Scene itself is never written. Stop discards the runtime
-//           world, so the authored scene is exactly what it was.
+// Edit changes the authored document. Play owns a separate RuntimeWorld and
+// advances it once per frame through InteractivePlay; Scene/Game panels only
+// present their views. Stop discards that world and returns to authoring.
+// "Run project" launches the standalone runtime as a separate process.
 //
-// "Run project" is a third thing: it launches the ordinary `judas` runtime
-// as a separate process on the project's startup scene, exactly as a
-// player would start the game. The editor never simulates that run.
-//
-// The engine never includes anything from src/editor or third_party/imgui.
+// Run is one-shot. The owned host outlives tools, GPU previews and callbacks,
+// including initialization failures. Exported games never link editor modules.
 class EditorApplication {
-public:
+  public:
     EditorApplication();
     ~EditorApplication();
-    int Run(int argc, char** argv);
+    int Run(int argc, char **argv);
 
-private:
-    std::unique_ptr<struct ScriptTools> m_scriptTools;
+  private:
+    friend class EditorAutomation;
+    EditorContext Context(EditorRequests &);
+    EditorProjectServices ProjectServices();
+    std::unique_ptr<EngineHost> m_ownedHost;
+    EngineHost *m_host = nullptr;
+    Project m_project;
+    EditorDocument m_document;
+    EditorPanelState m_panels;
+    EditorPreferences m_preferences;
+    bool m_guiContextOwned=false,m_guiPlatformReady=false,m_guiRendererReady=false;
+    void Shutdown(bool savePreferences=false);
+    std::unique_ptr<struct ScriptTools> m_scriptTools; // outlives the played world/debugger callback
+    EditorShell m_shell;
+    EditorProjectWorkflow m_projectWorkflow;
+    EditorSceneViewport m_sceneViewport;
+    EditorPlaySession m_playSession;
+    EditorAssetPreview m_assetPreview;
     EditorMilestoneNotice m_milestoneNotice;
     std::unique_ptr<struct TerrainEditor> m_terrain;
     std::unique_ptr<struct VolumeTerrainEditor> m_volumeTerrain;
     std::unique_ptr<struct ModTools> m_modTools;
-    std::map<SceneObjectId,std::pair<std::string,std::unique_ptr<PlanetTiles>>> m_planetPreview;
-    std::vector<Scene> m_regionPreview;
-    std::string m_regionPreviewKey;
-    std::unique_ptr<LocalizationSession> m_previewLocalization;
-    std::string m_previewLocalizationKey;
 
-    bool StartPlay(std::string& outError);
+    bool StartPlay(std::string &outError);
     void StopPlay();
-    void HandleRequests(EditorRequests& requests);
+    void HandleRequests(EditorRequests &requests);
     void PickAtPixel(int x, int y);
     void RefreshProjectLists();
-    bool OpenProject(const std::string& projectFile, std::string& outError);
-    bool CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter=true, int twoDTemplate=0);
-    bool OpenScene(const std::string& path, std::string& outError);
-    bool RunProject(std::string& outMessage);
-    std::string ResolveScenePath(const std::string& input) const;
-    std::string WorldStatePathFor(const std::string& scenePath) const;
+    bool OpenProject(const std::string &projectFile, std::string &outError);
+    bool CreateProject(const std::string &directory, const std::string &name, std::string &outError,
+                       bool visibleStarter = true, int twoDTemplate = 0);
+    bool OpenScene(const std::string &path, std::string &outError);
+    bool RunProject(std::string &outMessage);
+    std::string ResolveScenePath(const std::string &input);
+    std::string WorldStatePathFor(const std::string &scenePath);
     void FrameEditMode(float deltaSeconds);
-    void UpdateCameraNavigation(const EditorCameraGestureInput& input, int mouseDeltaX, int mouseDeltaY,
+    void UpdateCameraNavigation(const EditorCameraGestureInput &input, int mouseDeltaX, int mouseDeltaY,
                                 float deltaSeconds, bool fast);
     void CancelCameraNavigation();
     void LoadEditorPreferences();
     void SaveEditorPreferences();
-    void ViewportRay(int x, int y, glm::vec3& origin, glm::vec3& direction) const;
-    RenderTargetHandle m_sceneViewTarget;
-    std::string m_editorPreferencesPath, m_editorIniPath;
-    EditorPreferences m_preferences;
-    EditorRequests m_pendingDocumentAction;
-    bool m_documentActionPending = false;
-    bool m_documentActionApproved = false;
-    bool m_documentActionSaveAs = false;
-    bool m_actionNeedsScene=false, m_actionNeedsProject=false;
-    std::string m_confirmationTitle;
-    EditorFileBrowser m_fileBrowser;
-    std::string m_newProjectDirectory, m_newProjectName, m_fileBrowserParent;
-    int m_newProjectTemplate=0;
+    void ViewportRay(int x, int y, glm::vec3 &origin, glm::vec3 &direction);
     void DrawModelImportPreview(float deltaSeconds);
-    RenderTargetHandle m_modelPreviewTarget,m_uiPreviewTarget;
-    std::unique_ptr<RuntimeUI> m_uiPreview;uint64_t m_uiPreviewRevision=0;
     void DrawUIAuthoringPreview();
-    std::string m_modelPreviewAsset;
-    std::weak_ptr<const struct MeshData> m_modelPreviewData;
-    glm::vec3 m_modelPreviewMin{0},m_modelPreviewMax{0};
     void UpdateGizmo(bool allowInteraction);
-    void DrawEditOverlay(class Renderer& renderer, const Scene& scene);
+    void DrawEditOverlay(class Renderer &renderer, const Scene &scene);
     void CollectProfilerData(float frameDeltaSeconds);
     // Milestone 31: the open scene's assets are referenced (never evicted,
     // never cancelled) while it is open; the set follows every edit.
@@ -108,31 +95,12 @@ private:
     void AdvanceStabilizationAutomation();
     std::unique_ptr<StabilizationAutomation> m_stabilization;
 
-    EngineHost* m_host = nullptr;
-    Project m_project;
-    EditorDocument m_document;
-    EditorPanelState m_panels;
-    EditorCamera m_camera;
-    EditorScenePicker m_scenePicker;
-    std::unique_ptr<RuntimeWorld> m_world;
     std::unique_ptr<AnimationTimeline> m_animationTimeline;
     std::unique_ptr<UtilityAIEditor> m_utilityAIEditor;
     std::unique_ptr<SpriteSheetEditor> m_spriteSheetEditor;
     std::unique_ptr<TilemapEditor> m_tilemapEditor;
-    std::unique_ptr<InteractivePlay> m_play;
-    EditorCameraGestureState m_cameraGesture;
-    bool m_viewportFocused = true;
-    int m_viewportMouseDeltaX = 0;
-    int m_viewportMouseDeltaY = 0;
     bool m_quit = false;
 
     // Milestone 30: viewport gizmo interaction state.
-    GizmoDrag m_drag;
-    GizmoAxis m_hoverAxis = GizmoAxis::None;
-    float m_gizmoHandleLength = 1.0f;
-    std::string m_pendingDropAsset;  // Asset Browser drag currently over the viewport
-    DebugLineList m_debugLines;
-    DebugLineList m_gizmoLines;
-    float m_frameAverageMilliseconds = 16.0f;
-    std::vector<std::string> m_heldAssets;
+    EditorProfilerSnapshot m_profilerSnapshot;
 };

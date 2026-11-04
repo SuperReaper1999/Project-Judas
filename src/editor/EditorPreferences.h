@@ -7,7 +7,8 @@ struct EditorPanelState;
 
 struct EditorAppearance {
     bool light = false;
-    std::array<float, 3> accent{.30f, .70f, .69f};
+    std::array<float, 3> accent{.08f, .78f, .76f};
+    std::array<float, 3> secondaryAccent{.82f, .31f, .67f};
     std::array<float, 3> background{.075f, .091f, .115f};
     std::array<float, 3> text{.86f, .91f, .94f};
     float scale = 1;
@@ -15,6 +16,8 @@ struct EditorAppearance {
 
 struct EditorLayoutPreset {
     std::string name, windows;
+    std::string workspace = "Scene";
+    unsigned dockVersion = 1;
     float hierarchy = 250, inspector = 340, assets = 200;
     // Stable preference names, independent of scene/component serialization.
     std::vector<std::string> panels;
@@ -22,26 +25,36 @@ struct EditorLayoutPreset {
 
 // User-owned editor configuration. Never stored in a game project/export.
 class EditorPreferences {
-public:
+  public:
     EditorAppearance appearance;
     bool automaticUpdates = true;
     std::string updateChannel; // Empty: installed build channel, never an implicit Experimental opt-in.
     std::vector<EditorLayoutPreset> layouts;
-    bool Load(const std::string& json, EditorPanelState&, std::string& error);
-    std::string Serialize(const EditorPanelState&) const;
-    bool SaveFile(const std::string& path, const EditorPanelState&, std::string& error) const;
-    bool SaveLayout(const std::string& name, const EditorPanelState&, bool replace, std::string& error);
-    bool DeleteLayout(const std::string& name);
-    bool QueueLayout(const std::string& name);
+    void LoadUserSettings(EditorPanelState &);
+    void SaveUserSettings(const EditorPanelState &);
+    bool Load(const std::string &json, EditorPanelState &, std::string &error);
+    std::string Serialize(const EditorPanelState &) const;
+    bool SaveFile(const std::string &path, const EditorPanelState &, std::string &error) const;
+    bool SaveLayout(const std::string &name, const EditorPanelState &, bool replace, std::string &error);
+    bool DeleteLayout(const std::string &name);
+    bool QueueLayout(const std::string &name);
     void ResetLayout();
-    void ApplyPending(EditorPanelState&); // between frames, before NewFrame
-    void Draw(EditorPanelState&);
+    static std::vector<std::string> WorkspaceNames();
+    bool QueueWorkspace(const std::string &name);
+    const std::string &WorkspaceName() const { return m_workspace; }
+    bool ConsumeDockRebuild(std::string &name);
+    void ApplyPending(EditorPanelState &); // between frames, before NewFrame
+    void Draw(EditorPanelState &);
     void RefreshAppearance() { m_appearancePending = true; }
     bool ConsumeSaveRequest();
     std::string status;
-private:
-    EditorLayoutPreset Capture(const std::string&, const EditorPanelState&) const;
+
+  private:
+    std::string m_storagePath, m_iniPath;
+    EditorLayoutPreset Capture(const std::string &, const EditorPanelState &) const;
     EditorLayoutPreset m_pendingLayout;
-    bool m_layoutPending = false, m_appearancePending = true, m_saveRequested = false, m_saveAfterLayout = false;
-    std::string m_selected, m_newName = "My layout";
+    bool m_layoutPending = false, m_appearancePending = true, m_saveRequested = false,
+         m_saveAfterLayout = false;
+    std::string m_selected, m_newName = "My layout", m_workspace = "Scene";
+    bool m_dockRebuildRequested = false;
 };

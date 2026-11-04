@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <functional>
 
 #include <glm/glm.hpp>
 
@@ -23,6 +24,9 @@
 // and project/assets; gameplay policy remains in project scripts.
 
 struct AssetCookPanelTask;
+struct EditorAssetBrowserState;
+struct EditorConsoleState;
+struct EditorUIAssetState;
 class ProjectSettingsHistory;
 enum class EditorMode { Edit, Play };
 
@@ -109,6 +113,15 @@ struct EditorPanelState {
     bool showBrowserExport=false;
     bool experimentalBrowserSupport=false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
+    bool dockingEnabled = false; // Enabled by Editor V2 shell; isolated legacy panel tests retain fallback.
+    bool showHierarchy = true, showInspector = true, showConsole = false;
+    bool showSceneView = true, showGameView = true;
+    bool showJudasTools = false;
+    bool showWorldRegions = false;
+    bool sceneViewHovered = false;
+    std::shared_ptr<EditorAssetBrowserState> assetBrowser;
+    std::shared_ptr<EditorConsoleState> console;
+    std::shared_ptr<EditorUIAssetState> uiAuthoring;
     float hierarchyWidth = 250.0f;
     float inspectorWidth = 340.0f;
     float assetBrowserHeight = 200.0f;
@@ -224,9 +237,12 @@ struct EditorPanelState {
     std::string renameBuffer;
 };
 
-void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
+void DrawEditorNavigationHelp(EditorPanelState& state, EditorRequests& requests);
+void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests,
+                        const std::function<void()>& windowMenu = {});
 void UpdateEditorWorkspaceLayout(EditorPanelState& state, glm::vec2 displaySize);
-void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
+void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests,
+                               const std::function<void()>& workspaceSelector = {});
 void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
 void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state);
 void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state);
@@ -234,6 +250,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
 void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
 void DrawEditorBuildExportPanel(EditorPanelState& state, EditorRequests& requests);
 void DrawProfilerPanel(EditorPanelState& state);
+void DrawConsolePanel(EditorPanelState& state);
 void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
 
 // Creates an object of `kind` ("empty", "box", "sphere", "dynamic-box",

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/profile/baseline/time.log",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/baseline/bin/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/profile/baseline/project/developer_lab.judasproj"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "candidate",
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/profile/candidate/time.log",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/profile/candidate/project/developer_lab.judasproj"
+    ],
+    "exit": 0
+  }
+]

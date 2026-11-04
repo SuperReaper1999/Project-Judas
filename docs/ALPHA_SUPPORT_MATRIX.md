@@ -33,6 +33,22 @@ M100 defines Alpha/Experimental and reserves Stable for GA; preparing a candidat
 does not publish or promote it. Main remains operator controlled. Use
 `--build-info-json`, `BUILD_INFO.json` and package checksums for exact provenance.
 
+## Editor V2 development scope
+
+Editor V2 is an **Experimental preview with scoped Linux automated qualification;
+combined human acceptance remains pending** with Scripting V2. It does not change
+the published version or
+retroactively extend older Linux/Windows acceptance. Docking, tabbing and
+in-window floating use the desktop editor only. Native OS detachment is enabled
+only for SDL x11/windows backends; native Wayland is not advertised as supporting
+it. Linux native detached Scene/Game checks passed; Windows V2 has not been
+rerun. Scene/Game targets render at 1× logical UI resolution, not native HiDPI
+backing-pixel resolution. Agent-reviewed captures cover Dark at scales 0.85/1.0/1.5 and Light at
+1.0/1.25; operator acceptance remains pending. Android/browser
+game exports remain their existing workflows, not mobile or browser editor
+distributions. See the [V2 review guide](EDITOR_V2.md) and
+[Linux qualification receipt](EDITOR_V2_QUALIFICATION.md).
+
 ## Runtime systems
 
 | Area | Scope | Important boundary / evidence |

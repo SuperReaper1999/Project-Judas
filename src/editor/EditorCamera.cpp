@@ -28,6 +28,10 @@ void EditorCameraGestureState::Update(const EditorCameraGestureInput& input) {
 
     if (!input.focused || input.cancel) {
         Cancel();
+        // A released button observed while another panel owns focus already
+        // satisfies the release boundary. A fresh navigation press may focus
+        // Scene directly; only a held pre-existing press must wait.
+        if (!input.rightDown && !input.middleDown) m_waitForRelease = false;
         return;
     }
     if (m_waitForRelease) {
@@ -67,19 +71,23 @@ glm::vec3 EditorCamera::Up() const {
 
 void EditorCamera::Update(const Window& window, float deltaSeconds, bool lookActive, int mouseDeltaX,
                           int mouseDeltaY, bool fast) {
-    if(m_2d)return; // 2D uses middle-pan and wheel zoom; no accidental orbit.
-    if (!lookActive) return;
+    const glm::vec3 axes{
+        float(window.IsActionActive(Action::StrafeRight)) - float(window.IsActionActive(Action::StrafeLeft)),
+        float(window.IsActionActive(Action::MoveUp)) - float(window.IsActionActive(Action::MoveDown)),
+        float(window.IsActionActive(Action::MoveForward)) - float(window.IsActionActive(Action::MoveBackward))};
+    UpdateLocal(deltaSeconds, lookActive, mouseDeltaX, mouseDeltaY, fast, axes);
+}
+
+void EditorCamera::UpdateLocal(float deltaSeconds, bool lookActive, int mouseDeltaX,
+                               int mouseDeltaY, bool fast, const glm::vec3& movementAxes) {
+    if (m_2d || !lookActive) return;
     m_yawDegrees -= static_cast<float>(mouseDeltaX) * kLookSensitivityDegreesPerPixel;
     m_pitchDegrees -= static_cast<float>(mouseDeltaY) * kLookSensitivityDegreesPerPixel;
     m_pitchDegrees = std::clamp(m_pitchDegrees, -89.0f, 89.0f);
 
-    glm::vec3 move(0.0f);
-    if (window.IsActionActive(Action::MoveForward)) move += Forward();
-    if (window.IsActionActive(Action::MoveBackward)) move -= Forward();
-    if (window.IsActionActive(Action::StrafeRight)) move += Right();
-    if (window.IsActionActive(Action::StrafeLeft)) move -= Right();
-    if (window.IsActionActive(Action::MoveUp)) move += glm::vec3(0.0f, 1.0f, 0.0f);
-    if (window.IsActionActive(Action::MoveDown)) move -= glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 move = Forward() * movementAxes.z;
+    move += Right() * movementAxes.x;
+    move += glm::vec3(0.0f, movementAxes.y, 0.0f);
     if (glm::length(move) > 0.0f) {
         m_position += glm::normalize(move) * m_moveSpeed * (fast ? 4.0f : 1.0f) * deltaSeconds;
     }

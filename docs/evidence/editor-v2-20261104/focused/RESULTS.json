@@ -1,0 +1,74 @@
+[
+  {
+    "name": "workspaces",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_v2_workspace_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015593149000778794
+  },
+  {
+    "name": "assets",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_asset_browser_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.007527486999606481
+  },
+  {
+    "name": "lifecycle",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_application_lifecycle_tests"
+    ],
+    "exit": -11,
+    "seconds": 0.26407355300034396
+  },
+  {
+    "name": "navigation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_navigation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015670664999561268
+  },
+  {
+    "name": "debugger",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tools_editor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.6147301790006168
+  },
+  {
+    "name": "application",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_application_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.2174605689997406
+  },
+  {
+    "name": "camera",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests"
+    ],
+    "exit": 0,
+    "seconds": 2.968792288000259
+  },
+  {
+    "name": "rendering",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rendering_architecture_tests"
+    ],
+    "exit": 0,
+    "seconds": 2.0172013310002512
+  },
+  {
+    "name": "multiplayer",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_render_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.4664507850011432
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "actualToolOperations": 32,
+  "tools": [
+    "judas_collision_cook",
+    "judas_cook",
+    "judas_deformable_bake",
+    "judas_environment_bake",
+    "judas_export",
+    "judas_liquid_bake",
+    "judas_mod",
+    "judas_model_import_cli",
+    "judas_navigation_bake",
+    "judas_save",
+    "judas_scene_author",
+    "judas_script_check",
+    "judas_server",
+    "judas_terrain_author",
+    "judas_volume_author"
+  ]
+}

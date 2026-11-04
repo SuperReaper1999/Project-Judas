@@ -83,6 +83,10 @@ if(JUDAS_ENABLE_VALIDATION)
     endforeach()
     list(REMOVE_DUPLICATES judas_gate_targets)
     add_custom_target(judas_prealpha_tests DEPENDS ${judas_gate_targets})
+    add_test(NAME prealpha.editor-v2-architecture
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_editor_v2_architecture.py -v)
+    set_tests_properties(prealpha.editor-v2-architecture PROPERTIES LABELS "prealpha;editor;tooling")
     add_test(NAME prealpha.scripting-catalogue
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_scripting_catalogue.py -v)

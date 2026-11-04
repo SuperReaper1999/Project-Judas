@@ -1,0 +1,90 @@
+[
+  {
+    "name": "baseline",
+    "frames": 110,
+    "frameMs": {
+      "samples": 110,
+      "median": 9.992546,
+      "p95": 10.205818,
+      "worst": 44.723037
+    },
+    "scopes": {
+      "Editor UI build": {
+        "samples": 110,
+        "median": 0.1904495,
+        "p95": 0.239512,
+        "worst": 2.551082
+      },
+      "Editor UI submission": {
+        "samples": 110,
+        "median": 0.060459,
+        "p95": 0.10584,
+        "worst": 0.13759
+      },
+      "World render submission": {
+        "samples": 110,
+        "median": 0.120172,
+        "p95": 0.14837,
+        "worst": 0.245944
+      },
+      "QuickJS update": {},
+      "Input events": {
+        "samples": 110,
+        "median": 0.010905999999999999,
+        "p95": 0.014588,
+        "worst": 0.020459
+      }
+    },
+    "maxRSS": 142376960,
+    "gpu": {
+      "samples": 110,
+      "median": 0.029776,
+      "p95": 0.030912,
+      "worst": 0.031456
+    }
+  },
+  {
+    "name": "candidate",
+    "frames": 111,
+    "frameMs": {
+      "samples": 111,
+      "median": 9.99502,
+      "p95": 10.218822,
+      "worst": 42.686566
+    },
+    "scopes": {
+      "Editor UI build": {
+        "samples": 111,
+        "median": 0.252025,
+        "p95": 0.290928,
+        "worst": 0.303522
+      },
+      "Editor UI submission": {
+        "samples": 111,
+        "median": 0.409813,
+        "p95": 0.439529,
+        "worst": 0.57246
+      },
+      "World render submission": {
+        "samples": 111,
+        "median": 0.140886,
+        "p95": 0.160433,
+        "worst": 0.168248
+      },
+      "QuickJS update": {},
+      "Input events": {
+        "samples": 111,
+        "median": 0.010841,
+        "p95": 0.014067,
+        "worst": 0.020408
+      }
+    },
+    "maxRSS": 141459456,
+    "gpu": {
+      "samples": 111,
+      "median": 0.1328,
+      "p95": 0.15328,
+      "worst": 1.21328
+    }
+  }
+]

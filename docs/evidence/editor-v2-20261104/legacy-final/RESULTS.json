@@ -1,0 +1,26 @@
+[
+  {
+    "target": "judas_editor_workspace_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_editor_picking_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_editor_creation_menu_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_editor_asset_actions_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_script_developer_tools_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_script_developer_consumer_tests",
+    "exit": 0
+  }
+]

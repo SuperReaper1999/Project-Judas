@@ -1,0 +1,148 @@
+{
+  "methods": [
+    {
+      "method": "ViewportRay",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 88
+    },
+    {
+      "method": "PickAtPixel",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 218
+    },
+    {
+      "method": "UpdateGizmo",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": false,
+      "tokens": 910,
+      "first_difference": [
+        818,
+        "drag",
+        "m_drag"
+      ]
+    },
+    {
+      "method": "DrawEditOverlay",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 1467
+    },
+    {
+      "method": "CancelCameraNavigation",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": false,
+      "tokens": 22,
+      "first_difference": [
+        6,
+        "if",
+        "m_host"
+      ]
+    },
+    {
+      "method": "UpdateCameraNavigation",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 177
+    },
+    {
+      "method": "FrameEditMode",
+      "source": "EditorSceneViewport.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 2697
+    },
+    {
+      "method": "DrawModelImportPreview",
+      "source": "EditorAssetPreview.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 1586
+    },
+    {
+      "method": "RefreshAssetDemand",
+      "source": "EditorAssetPreview.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 545
+    },
+    {
+      "method": "DrawUIAuthoringPreview",
+      "source": "EditorAssetPreview.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 589
+    },
+    {
+      "method": "RefreshProjectLists",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": false,
+      "tokens": 198,
+      "first_difference": [
+        27,
+        "m_host",
+        "&"
+      ]
+    },
+    {
+      "method": "OpenProject",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 277
+    },
+    {
+      "method": "CreateProject",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 182
+    },
+    {
+      "method": "ResolveScenePath",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 109
+    },
+    {
+      "method": "WorldStatePathFor",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 35
+    },
+    {
+      "method": "OpenScene",
+      "source": "EditorProjectWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 188
+    },
+    {
+      "method": "HandleRequests",
+      "source": "EditorRequestWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 4449
+    },
+    {
+      "method": "RunProject",
+      "source": "EditorExportWorkflow.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 526
+    },
+    {
+      "method": "CollectProfilerData",
+      "source": "EditorDiagnostics.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 506
+    },
+    {
+      "method": "LoadEditorPreferences",
+      "source": "EditorWorkspacePreferences.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 180
+    },
+    {
+      "method": "SaveEditorPreferences",
+      "source": "EditorWorkspacePreferences.cpp",
+      "exact_tokens_after_owner_context_renames": true,
+      "tokens": 65
+    }
+  ],
+  "passed": 18,
+  "total": 21,
+  "note": "Checks actual implementation bodies modulo owner/context bindings; false rows remain explicit for review. Root docking changes are excluded by pre-docking snapshot."
+}

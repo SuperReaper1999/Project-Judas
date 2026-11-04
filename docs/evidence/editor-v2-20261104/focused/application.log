@@ -1,0 +1,85 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Tiny Game (/home/conner/Documents/GitHub/Project-Judas/projects/tiny_game/tiny_game.judasproj)
+Scene: Tiny game (/home/conner/Documents/GitHub/Project-Judas/projects/tiny_game/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+FTFT6 CHECK absent window override preserves default PASS
+FTFT6 CHECK landscape startup size parses PASS
+FTFT6 CHECK portrait startup size parses PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK malformed startup size rejects without mutation PASS
+FTFT6 CHECK project_parse PASS
+FTFT6 CHECK authored_startup_scene_parse PASS
+FTFT6 CHECK independent_authored_fingerprint PASS
+FTFT6 CHECK runtime_normal_async_path PASS
+FTFT6 CHECK runtime_matches_authored_startup_baseline PASS
+FTFT6 CHECK runtime_startup_scene_setting PASS
+FTFT6 CHECK ordinary_project_no_planetary_or_fluid_setup PASS
+FTFT6 CHECK runtime_initial_body_3 PASS
+FTFT6 CHECK runtime_initial_body_4 PASS
+FTFT6 CHECK runtime_initial_body_5 PASS
+FTFT6 CHECK runtime_ordinary_fixed_steps PASS
+FTFT6 CHECK runtime_actual_render_submission PASS
+FTFT6 CHECK runtime_baseline_stays_authored PASS
+FTFT6 CHECK runtime_scene_file_unchanged PASS
+FTFT6 CHECK runtime_project_assets_ready PASS
+FTFT6 RUNTIME frames=30 steps=30 fingerprint=b8d91d135719a24e3940913572d1e42f97cb37a3769279fbaf3dd5e469aa9c4b
+FTFT6 CHECK runtime_menu_frame_rendered_1 PASS
+FTFT6 CHECK runtime_options_mouse_click PASS
+FTFT6 CHECK runtime_menu_frame_rendered_2 PASS
+FTFT6 CHECK runtime_hud_toggle_mouse_click PASS
+FTFT6 CHECK runtime_menu_frame_rendered_3 PASS
+FTFT6 CHECK runtime_options_toggle_after_render PASS
+FTFT6 CHECK runtime_options_back_mouse_click PASS
+FTFT6 CHECK runtime_menu_frame_rendered_4 PASS
+FTFT6 CHECK runtime_menu_frame_rendered_5 PASS
+FTFT6 CHECK runtime_menu_resumes_after_options PASS
+FTFT6 CHECK runtime_quit_event PASS
+FTFT6 CHECK runtime_application_completed PASS
+FTFT6 CHECK runtime_shutdown_scene_unchanged PASS
+FTFT6 FRAME 0 604.563636000
+FTFT6 FRAME 1 1.953455000
+FTFT6 FRAME 2 12.216890000
+FTFT6 FRAME 3 11.543530000
+FTFT6 FRAME 4 11.329997000
+FTFT6 FRAME 5 11.053606000
+FTFT6 FRAME 6 10.763139000
+FTFT6 FRAME 7 11.122256000
+FTFT6 FRAME 8 11.284593000
+FTFT6 FRAME 9 10.849832000
+FTFT6 FRAME 10 11.555393000
+FTFT6 FRAME 11 12.705411000
+FTFT6 FRAME 12 11.354474000
+FTFT6 FRAME 13 11.401132000
+FTFT6 FRAME 14 11.603724000
+FTFT6 FRAME 15 12.395698000
+FTFT6 FRAME 16 11.948995000
+FTFT6 FRAME 17 11.267570000
+FTFT6 FRAME 18 11.659840000
+FTFT6 FRAME 19 11.710035000
+FTFT6 FRAME 20 11.614845000
+FTFT6 FRAME 21 11.199943000
+FTFT6 FRAME 22 10.903634000
+FTFT6 FRAME 23 10.956854000
+FTFT6 FRAME 24 10.795670000
+FTFT6 FRAME 25 10.882575000
+FTFT6 FRAME 26 11.635073000
+FTFT6 FRAME 27 12.768681000
+FTFT6 FRAME 28 11.324197000
+FTFT6 FRAME 29 11.654019000
+FTFT6 FRAME 30 22.672840000
+FTFT6 FRAME 31 12.890872000
+FTFT6 FRAME 32 12.157279000
+FTFT6 FRAME 33 1.153265000
+FTFT6 FRAME 34 11.563569000
+FTFT6 standalone: 42 checks, 0 failures

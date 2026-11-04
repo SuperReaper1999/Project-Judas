@@ -50,6 +50,12 @@ public:
     void Update(const Window& window, float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
                 bool fast);
 
+    // Editor-owned physical inputs, independent of a project's gameplay map.
+    // Axes are right, world-up and forward. Gesture ownership is decided by
+    // the caller; inactive navigation never rotates or moves the camera.
+    void UpdateLocal(float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
+                     bool fast, const glm::vec3& movementAxes);
+
     glm::mat4 ViewMatrix() const;
     glm::mat4 ProjectionMatrix(float aspectRatio) const;
     glm::vec3 Position() const { return m_position; }

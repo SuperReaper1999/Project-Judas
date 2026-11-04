@@ -1,0 +1,33 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor navigation input] frame=1 mouse=667.0,671.0 rect=320.0,235.0 1280.0,708.0 hover=0 focus=1 middle=0 gesture=0 captured=0 text=0
+[editor navigation input] frame=2 mouse=960.0,589.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=0 middle=0 gesture=0 captured=0 text=0
+[editor navigation input] frame=3 mouse=928.0,494.0 rect=552.0,260.0 753.0,469.0 hover=1 focus=1 middle=1 gesture=2 captured=1 text=0
+[editor navigation] SDL middle press captures only viewport camera: PASS
+[editor navigation input] frame=4 mouse=928.0,494.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=1 middle=1 gesture=2 captured=1 text=0
+[editor navigation] SDL drag translates camera and placement focus equally in view plane: PASS
+[editor navigation] pan preserves authored objects and gizmo undo state: PASS
+[editor navigation input] frame=5 mouse=928.0,494.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=1 middle=0 gesture=0 captured=0 text=0
+[editor navigation] SDL middle release frees capture: PASS
+[editor navigation input] frame=6 mouse=928.0,1079.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=1 middle=0 gesture=0 captured=0 text=0
+[editor navigation input] frame=7 mouse=928.0,494.0 rect=552.0,260.0 753.0,469.0 hover=1 focus=1 middle=1 gesture=2 captured=1 text=0
+[editor navigation] fresh middle press restarts pan: PASS
+[editor navigation input] frame=8 mouse=-340282346638528859811704183484516925440.0,-340282346638528859811704183484516925440.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=1 middle=0 gesture=0 captured=0 text=0
+[editor navigation] SDL window focus loss cancels and releases capture: PASS
+[editor navigation input] frame=9 mouse=928.0,974.0 rect=552.0,260.0 753.0,469.0 hover=0 focus=1 middle=0 gesture=0 captured=0 text=0
+[editor navigation] SDL focus regain cannot resume the old drag: PASS
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor navigation] pan active before ordinary Play request: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/journeys/navigation/sync.edit.png
+[editor autotest] edit frame: 3 draw calls, 132 triangles, 102 debug lines
+[editor navigation] ordinary Play retires editor pan ownership: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/editor-v2/journeys/navigation/sync.play.png
+[editor autotest] play frame: 1 steps, step 0.009 ms, 0 bodies, 0 contacts, 3 draw calls, 264 triangles, 1 shadow passes, 0 lights, 138 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 11 workers, 1 completed, 0 failed, 0 cancelled
+[editor navigation] ordinary Stop returns an uncaptured scene camera: PASS
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+JS: Worker retired. No physical world reset.

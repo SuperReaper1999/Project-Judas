@@ -1,0 +1,22 @@
+PASS independent module is admitted through registration without application code
+PASS duplicate panel rejects without replacing the installed implementation
+PASS invalid panel declarations fail before they can enter drawing
+PASS registered visible panels draw in deterministic order
+PASS hidden panel performs no callback work
+PASS debugger-stopped phase excludes authoring callback
+PASS registration during drawing cannot invalidate the active registry pass
+PASS real hierarchy, inspector and scene windows dock into independent regions
+PASS Scene and Game share the central tabs with Scene visible initially
+PASS named layout captures actual dock tree
+PASS versioned workspace contains real ImGui docking state
+PASS fresh owner restores named layout and editable secondary accent
+PASS built-in workspace switch is available
+PASS workspace switch reveals relevant tools without modifying the document
+PASS unknown workspace is rejected without resetting the current arrangement
+PASS invalid workspace preference rejects transactionally
+PASS Audio workspace uses the existing settings workflow
+PASS Audio workspace exposes genuine project Audio controls
+PASS reset restores discoverable core panels and default task workspace
+PASS tool saved on a disconnected monitor is recovered onto the visible workspace
+PASS docking, workspace changes and recovery never create a game world or edit scene content
+SUMMARY 21 checks 0 failures

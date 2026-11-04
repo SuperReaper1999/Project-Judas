@@ -1,0 +1,22 @@
+[
+  {
+    "name": "workspace",
+    "flag": "JUDAS_EDITOR_AUTOTEST_WORKSPACE",
+    "exit": 0
+  },
+  {
+    "name": "polish",
+    "flag": "JUDAS_EDITOR_AUTOTEST_POLISH",
+    "exit": 0
+  },
+  {
+    "name": "picking",
+    "flag": "JUDAS_EDITOR_AUTOTEST_PICKING",
+    "exit": 1
+  },
+  {
+    "name": "navigation",
+    "flag": "JUDAS_EDITOR_AUTOTEST_PAN",
+    "exit": 1
+  }
+]

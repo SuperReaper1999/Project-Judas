@@ -1,11 +1,14 @@
 # Using the Judas editor
 
-This is the current editor workflow, building on the accepted M71 foundation,
-[M72 render controls](M72.md) and later authoring/developer tools. Historical
-milestone reports retain their original review status. Physical Windows GPU/input
-acceptance remains separate; see [platform qualification](WINDOWS.md).
-[M74 retargeting](M74.md) retains its recorded pending human-validation status.
-[JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
+This guide describes the current **Editor V2 development preview on Experimental**.
+Focused Linux editor/Scripting V2 qualification passed; combined human acceptance
+is pending. It is not a new published Alpha version or a main promotion. Use the guide
+included with an installed SDK when its editor predates this checkout.
+
+[Editor V2 architecture and review checklist](EDITOR_V2.md) ·
+[JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) ·
+[Named authoring](NAMED_AUTHORING.md). Earlier milestone/platform receipts keep
+their original scope; they do not qualify the new desktop windowing integration.
 
 ## Making a 2D game
 
@@ -16,23 +19,48 @@ one that matches your game; they do not require a hidden engine controller.
 
 ## Workspace
 
-Open `judas_editor` with a `.judasproj` or a scene inside a project. Edit mode has
-a central scene view, hierarchy on the left, inspector on the right and asset
-browser below. Drag the dividers to resize them. **View → Asset Browser** hides
-the bottom panel; **View → Reset workspace layout** restores the defaults.
-The layout adapts to smaller windows; the minimum window is 640 × 480.
+Open `judas_editor` with a `.judasproj` or a scene inside a project. The default
+**Scene** workspace places Hierarchy left, Inspector right, Scene/Game in the
+centre and Asset Browser/Console below. Drag a panel tab onto docking guides to
+move, split or tab it; drag it away to float it. Panels close independently.
+Reopen them through **Window** and its Scene, Content, Scripting, Animation,
+World, Project and Debug categories. The toolbar's **View…** popup retains quick
+access to scene settings, assets, preferences and navigation help.
 
-The toolbar puts **Play**, **Save** and **Create…** first. Wider windows also
-show Undo/Redo and Move/Rotate/Scale. **Options…** (or **Transform…** in a smaller
-window) holds transform choices, world/local axes and snap. **View…** opens scene
-settings, assets, preferences/layouts and navigation help. These actions also
-remain in the main menus. Controls adapt to window width and UI scale. The status bar reports
-unsaved edits and operation results. Hover truncated names to see their full text.
+Choose **Scene**, **Scripting**, **Animation**, **Audio** or **UI** in the toolbar's
+workspace selector, or in **Edit → Editor preferences → Layouts**. These arrange
+existing tools within the same project/session. Audio opens the existing project
+audio settings; it does not introduce a new audio sequencer. UI authoring still
+uses a registered UI document selected in the Asset Browser.
 
-Panel sizes and auxiliary-window placement are saved in SDL's per-user
-`Judas/Editor` preferences directory, independently of project files. Invalid
-preferences fall back to defaults. There is no docking framework or workspace
-sharing requirement.
+**Scene** uses the editor camera for authoring; during Play it observes the same
+runtime with authored values read-only. **Game** presents that single played
+world and its real HUD. Resize/docking changes render dimensions and pointer
+mapping, not physics cadence. Press Play/F5 to instantiate the scene, focus Game
+for gameplay controls, and Stop/F5 to return to authored content. Typing in a tool
+must not move the player. Escape keeps its existing game pause/capture behavior.
+Closing or hiding Game does not destroy or duplicate the played world.
+
+The toolbar keeps Play/Stop, Save, Create and transform actions together. Wider
+windows show Undo/Redo and Move/Rotate/Scale. **Options…** (or **Transform…** at a
+smaller width) holds axes and snapping. Build/export remains a distinct project
+operation. Status reports unsaved edits and operation results. Hover truncated
+names or controls for details.
+
+Native detached OS windows are enabled only on the SDL **x11** and **windows**
+backends. Native Wayland and other backends retain docking/in-window floating.
+On a Linux Wayland desktop, `SDL_VIDEODRIVER=x11 ./judas_editor` requests the
+XWayland route when X11 support is available. That is a per-launch choice, not a
+project setting or a claim that native Wayland OS-window detachment works.
+Linux native detached Scene/Game qualification passed its scoped automated checks;
+Windows V2 has not been rerun. Older Windows engine acceptance is not that evidence.
+Scene/Game render targets currently use one pixel per logical UI unit, including
+on HiDPI displays; native backing-pixel rendering at higher display scales is not
+implemented. See the [qualification receipt](EDITOR_V2_QUALIFICATION.md).
+
+Layouts and colours are personal preferences, outside projects/exports. See
+[appearance and saved layouts](#personal-appearance-and-saved-layouts) for storage,
+migration, recovery and named snapshots.
 
 ## Move around and author objects
 
@@ -82,8 +110,9 @@ cycles. The existing right-click child creation stays relative to its parent.
 Select one object. Its name and always-visible **Transform** come first, followed
 by **Components**, **Add component…** and attached components. **Add gameplay
 script** holds the script creation/attachment actions; it starts open for an
-object without scripts. Component sections are collapsed until expanded; newly
-added components open automatically. **Object settings** holds parent, tags,
+object without scripts. Scripts start expanded; other component sections are
+collapsed until expanded, and newly added components open automatically.
+**Object settings** holds parent, tags,
 render layer and visibility. Clipboard, prefab and runtime diagnostics stay in
 separate collapsed sections. Right-click a component heading to remove it.
 The Add component selector supports a name search and alphabetical results.
@@ -173,7 +202,7 @@ script**. The first action creates and tracks a JavaScript file in
 `Assets/Scripts`; its **Create & edit** button opens the source editor. Attached
 scripts have an **Edit script** button. You can also import existing `.js` files
 through the asset browser and attach them through Scripts. Edit game rules
-externally or use **View → JudasJS developer tools → Edit source**.
+externally or use **Window → Scripting → JudasJS developer tools → Edit source**.
 The built-in source editor saves explicitly and refuses to overwrite a file
 changed externally. **Check project scripts** checks registered modules in Edit
 mode. During Play, **Check sources** compiles/links and **Reload scripts** applies
@@ -184,12 +213,12 @@ Use Stop/Play before cold saves or online sessions after a reload, as described
 in [debugging, stepping and reload boundaries](M94_DEVELOPER_TOOLS.md).
 Local file/document opening uses the
 OS default handler, which must be configured to open Markdown/scripts usefully.
-Use **View → JudasJS reference** or **Making your first project** for the offline
+Use **Help → JudasJS reference** or **Making your first project** for the offline
 reference and [hand-authoring guide](judasjs/getting-started.md).
 
 ## Animation retargeting
 
-Open **View → Animation tools → Animation retargeting**, or the retargeting button in **Asset
+Open **Window → Animation → Animation retargeting**, or the retargeting button in **Asset
 Browser → Import & tools**. This is an authoring workspace: it creates no game
 world, runs no scripts and does not mutate the open scene or Play state.
 
@@ -226,12 +255,12 @@ See [M74's transfer convention, bounds and limitations](M74.md) and
 [model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
 
 For ordinary clip preview, scrubbing and event-track authoring, use
-**View → Animation tools → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
+**Window → Animation → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
 Retargeting and the runtime animation timeline are separate tools.
 
 ## Terrain authoring and live edits
 
-**View → Terrain and world tools → Terrain sculpt / paint** opens shared-source height/radial terrain editing.
+**Window → World → Terrain tools** opens shared-source height/radial terrain editing.
 Select a terrain and open its source, or create/cook a new source and instance.
 Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and
 Cook are separate. Draft graphics are not published collision. This authoring
@@ -306,7 +335,7 @@ Offscreen checks do not establish physical desktop capture or human usability.
 
 ## Local mods and game kits
 
-Open **View / Local mods / game kits**. Export only a game's explicitly published
+Open **Window → Project → Local mods**. Export only a game's explicitly published
 kit. Create a separate kit-bound project and open it normally. Published Kit/base
 references are read-only; fork terrain into Imports before sculpting. The ordinary
 Terrain sculpt / paint panel, Save/Cook and navigation Bake remain the workflow.
@@ -336,34 +365,36 @@ remains historical and does not describe this implementation.
 
 ### Personal appearance and saved layouts
 
-Open **Edit → Editor preferences** (also available in **View**).
+Open **Edit → Editor preferences** (also available in **Window** or toolbar **View…**).
 
-- **Appearance:** choose Light or Dark, pick an accent preset or your own accent,
-  background and text colours, and adjust UI scale. Changes preview on the next
-  frame. Switching Light/Dark restores that theme's base colours while retaining
-  the scale; **Reset appearance** returns to the default dark palette.
-- **Layouts:** resize the hierarchy/inspector/asset rails, choose visible tools,
-  and move or resize floating tool windows. Enter a name and **Save as new
-  layout**. Choose a saved layout and **Apply selected**, **Update selected** or
-  **Delete selected**. Updating is explicit; saving a new name never overwrites
-  an existing one silently. Deletion asks for confirmation.
-- **Reset panel layout** restores default rail sizes and visible panels. It does
-  not erase saved layouts or reposition floating tools. Applying a saved layout
-  restores the tool positions included in that snapshot.
+- **Appearance:** choose Dark or Light, primary and secondary accent, background,
+  text colour and UI scale. The default dark palette uses teal for primary
+  interactions and magenta for secondary tool accents. Changes preview on the
+  next frame. Switching themes restores its base colours while retaining scale.
+- **Layouts:** choose a built-in workspace, dock/tab/float panels, choose visible
+  tools, enter a name and **Save as new layout**. Use **Apply selected**,
+  **Update selected** or **Delete selected** deliberately. Saving a new name does
+  not silently overwrite an existing one; deletion asks for confirmation.
+- **Reset panel layout** restores the Scene workspace. Saved named layouts remain
+  available. Off-screen floating tools are recovered into available monitor space;
+  recovery changes editor placement, not project or scene data.
 
-The main hierarchy and inspector remain fixed rails; this is not free-form
-docking. Layouts store panel visibility, dimensions and floating-tool positions,
-not scene state, selection or the editor camera. Smaller windows clamp the rail
-sizes to keep the viewport usable.
+Preference format **3** records workspace identity, docking/window settings and
+independent panel visibility. Version 1/2 preferences still load: appearance and
+named layouts remain, while layouts without a dock graph obtain a fresh V2
+arrangement. A reset may change old rail placement; it never converts or rewrites
+project content. Scene state, selection and editor camera are not layout data.
 
-Named save/update/delete/apply actions save preferences automatically. For colour,
-scale and manual panel changes, use **Save preferences**, or close the editor
-normally. Preferences are personal, shared across projects, and stored in the
-platform's Judas/Editor user-data directory (`workspace.json` and `windows.ini`),
-never in a game project or export. Existing workspace preferences migrate when
-saved. Replacing `workspace.json` retains its previous bytes in `.bak`; failed
-saves report an error and preserve the current file. Invalid preferences fall
-back to defaults with a diagnostic in the preference window.
+Named save/update/delete/apply actions request preference saving automatically.
+For manual colour, scale and panel changes, use **Save preferences** or close
+normally. Files live in SDL's per-user `Judas/Editor` directory as `workspace.json`
+and `windows.ini`, not in game projects. Existing workspace JSON is retained as
+`.bak` during replacement; failures preserve the current file and report an error.
+Invalid preferences fall back to defaults rather than preventing startup.
+
+Linux image review covers Dark at scales 0.85/1.0/1.5 and Light at 1.0/1.25.
+These agent-reviewed captures do not constitute operator acceptance. These checks do not substitute for combined usability
+acceptance or qualify every monitor/DPI configuration.
 
 The main **Create** menu and hierarchy creation menus have a search field.
 Search names or descriptions, for example `player`, `light` or `swimming`; hover
@@ -421,17 +452,17 @@ Choosing the saved version does not discard the live edits. See
 ## Finding specialized tools
 
 Ordinary scene editing keeps specialist windows closed unless your saved layout
-opens them. **View → Terrain and world tools**, **Animation tools** and
-**Diagnostics and extensions** group the existing terrain, world, animation,
-profiler and mod tools. JudasJS developer tools remain directly under View.
-Use **Editor preferences → Layouts** to save layouts for different tasks,
-including panel visibility, rail sizes and floating-window placement. Themes,
+opens them. **Window → World**, **Animation**, **Project** and **Debug** group the
+existing terrain, world, animation, mod and profiler tools. Find **JudasJS developer
+tools** under **Window → Scripting**. Use **Editor preferences → Layouts** to save
+layouts for different tasks, including panel visibility, dock splits/tabs and
+floating-window placement. Themes,
 custom colours and UI scale apply to the common editing controls.
 
 
 ## Inspect runtime ownership, readiness and saves
 
-During Play use **View → Diagnostics and extensions → Runtime Inspector**, or a
+During Play use **Window → Debug → Runtime Inspector**, or a
 selected object's **Ownership & readiness → Open Runtime Inspector**. The optional
 floating tool includes streamed entities, actual region demand/retention reasons,
 script lifecycle phases, physical publication and existing save identity diagnostics.

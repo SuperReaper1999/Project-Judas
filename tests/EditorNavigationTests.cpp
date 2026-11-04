@@ -77,6 +77,43 @@ void PanMath() {
     Check(glm::length(camera.Forward() - beforeLook) > 0.01f, "existing right-drag camera look still rotates");
     Check(glm::length(camera.Position() - startPosition) > 5.9f, "existing fly input still translates the camera");
 }
+void LocalMovement() {
+    Window gameplay;
+    gameplay.SetTestInputMode(true);
+    gameplay.SetTestActionState(Action::MoveBackward, true);
+    EditorCamera local;
+    local.SetPose({0, 0, 0}, 0, 0);
+    local.UpdateLocal(.5f, true, 0, 0, false, {0, 0, 1});
+    Check(Near(local.Position(), {0, 0, 6}),
+          "observer physical forward input moves independently of opposite gameplay input");
+    Check(gameplay.IsActionActive(Action::MoveBackward) && !gameplay.IsActionActive(Action::MoveForward),
+          "editor local camera input never changes authoritative gameplay actions");
+    const auto before = local.Position();
+    const auto forward = local.Forward();
+    local.UpdateLocal(.5f, false, 40, 20, false, {1, 1, 1});
+    Check(Near(local.Position(), before) && Near(local.Forward(), forward),
+          "unowned local navigation does not translate or rotate");
+    local.UpdateLocal(.5f, true, 0, 0, true, {1, 1, 1});
+    Check(std::abs(glm::length(local.Position() - before) - 24) < 2e-5f,
+          "local diagonal movement preserves normalized speed and Shift multiplier");
+    EditorCamera original, explicitInput;
+    original.SetPose({2, 4, 6}, 35, -20);
+    explicitInput.SetPose({2, 4, 6}, 35, -20);
+    gameplay.SetTestActionState(Action::MoveBackward, false);
+    gameplay.SetTestActionState(Action::MoveForward, true);
+    gameplay.SetTestActionState(Action::StrafeRight, true);
+    gameplay.SetTestActionState(Action::MoveUp, true);
+    original.Update(gameplay, .2f, true, 5, -3, false);
+    explicitInput.UpdateLocal(.2f, true, 5, -3, false, {1, 1, 1});
+    Check(Near(original.Position(), explicitInput.Position()) &&
+              Near(original.Forward(), explicitInput.Forward()),
+          "Window camera API and explicit movement share the same integration");
+    explicitInput.Set2D(true);
+    const auto twoD = explicitInput.Position();
+    explicitInput.UpdateLocal(.5f, true, 30, 20, true, {1, 1, 1});
+    Check(Near(explicitInput.Position(), twoD) && Near(explicitInput.Forward(), {0, 0, -1}),
+          "2D observer ignores fly movement and orbit input");
+}
 void DollyMath() {
     EditorCamera camera;
     camera.SetPose({4, 8, -12}, 37.0f, -26.0f);
@@ -240,11 +277,28 @@ void GestureOwnership() {
     Check(state.Active() == EditorCameraGesture::None, "held press after Play or Stop cannot resume old navigation");
 }
 }
+void FreshFocusGesture() {
+    for (const bool middle : {false, true}) {
+        EditorCameraGestureState state;
+        EditorCameraGestureInput input;
+        input.focused = false;
+        state.Update(input); // No buttons held while Inspector owns focus.
+        input.focused = true;
+        input.middleDown = middle;
+        input.rightDown = !middle;
+        state.Update(input);
+        Check(state.Active() == (middle ? EditorCameraGesture::Pan : EditorCameraGesture::Look),
+              "fresh released-to-pressed camera gesture can acquire Scene focus immediately");
+    }
+}
+
 int main() {
     PanMath();
+    LocalMovement();
     DollyMath();
     WheelEligibility();
     GestureOwnership();
+    FreshFocusGesture();
     std::printf("M71 editor navigation: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

@@ -1,9 +1,12 @@
+Editor V2 uses pinned `v1.91.9b-docking`; exact source provenance is in JUDAS_VENDOR.json.
+
 # Dear ImGui vendor note
 
-Judas vendors **Dear ImGui v1.91.9b** (upstream tag `v1.91.9b`, source
-commit `f5befd2d29e66809cd1110a152e375a7f1981f06` in
-[`ocornut/imgui`](https://github.com/ocornut/imgui)), licensed under the MIT
-License — `LICENSE.txt` is copied intact from that checkout.
+Judas vendors **Dear ImGui v1.91.9b-docking**, source commit
+`4806a1924ff6181180bf5e4b8b79ab4394118875` in
+[`ocornut/imgui`](https://github.com/ocornut/imgui), licensed under MIT.
+`LICENSE.txt` is copied intact; exact archive provenance is in JUDAS_VENDOR.json.
+The previous master-branch vendor was v1.91.9b (`f5befd2d…`).
 
 Only the files the Judas editor needs are included:
 

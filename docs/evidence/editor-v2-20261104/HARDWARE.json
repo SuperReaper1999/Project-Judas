@@ -1,0 +1,13 @@
+{
+  "CPU(s):": "12",
+  "Model name:": "AMD Ryzen 5 5600 6-Core Processor",
+  "Thread(s) per core:": "2",
+  "Core(s) per socket:": "6",
+  "kernel": "7.0.0-42-generic",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "baseline": "45fe558388710d46d6f346b6e19ca2be9e76d0e6",
+  "mainUnchanged": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "nativeGraphics": "NVIDIA GeForce GTX 970, 3.3.0 NVIDIA 580.178.04, SDL x11 on XWayland",
+  "offscreenGraphics": "Mesa 26.0.8 llvmpipe",
+  "note": "Linux automated qualification, not human or Windows acceptance"
+}

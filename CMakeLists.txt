@@ -460,8 +460,7 @@ add_library(judas_imgui STATIC
 target_include_directories(judas_imgui PUBLIC third_party/imgui third_party/imgui/backends ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
 
-add_executable(judas_editor
-    src/editor/EditorMain.cpp
+add_library(judas_editor_core STATIC
     src/editor/EditorMilestoneNotice.cpp
     src/ExperimentalBrowser.cpp
     src/editor/EditorAIWorkflow.cpp
@@ -471,7 +470,43 @@ add_executable(judas_editor
     src/editor/EditorCamera.cpp
     src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
-    src/editor/EditorPanels.cpp
+    src/editor/EditorConsolePanel.cpp
+    src/editor/EditorCorePanels.cpp
+    src/editor/EditorToolPanels.cpp
+    src/editor/EditorShell.cpp
+    src/editor/EditorViewportPresenter.cpp
+    src/editor/EditorPanelRegistry.cpp
+    src/editor/EditorWorkspace.cpp
+    src/editor/EditorAutomation.cpp
+    src/editor/EditorAutomationTerrainAndAsync.cpp
+    src/editor/EditorAutomationAssets.cpp
+    src/editor/EditorAutomationWorkspace.cpp
+    src/editor/EditorAutomationSimulation.cpp
+    src/editor/EditorStabilization.cpp
+    src/editor/EditorProjectWorkflow.cpp
+    src/editor/EditorRequestWorkflow.cpp
+    src/editor/EditorExportWorkflow.cpp
+    src/editor/EditorPlaySession.cpp
+    src/editor/EditorSceneViewport.cpp
+    src/editor/EditorAssetPreview.cpp
+    src/editor/EditorDiagnostics.cpp
+    src/editor/EditorShortcuts.cpp
+    src/editor/EditorWorkspacePreferences.cpp
+    src/editor/EditorShellChrome.cpp
+    src/editor/HierarchyPanel.cpp
+    src/editor/InspectorPanel.cpp
+    src/editor/SceneSettingsPanel.cpp
+    src/editor/EditorProfilerPanel.cpp
+    src/editor/EditorObjectActions.cpp
+    src/editor/EditorStreamingPanel.cpp
+    src/editor/UIAssetEditor.cpp
+    src/editor/EditorCollisionWorkflow.cpp
+    src/editor/AssetBrowserPanel.cpp
+    src/editor/AssetListPanel.cpp
+    src/editor/AssetDetailsPanel.cpp
+    src/editor/AssetImportTools.cpp
+    src/editor/AssetBrowserModel.cpp
+    src/editor/AssetPublicationWorkflow.cpp
     src/editor/RuntimeInspector.cpp
     src/editor/EditorCreationMenu.cpp
     src/editor/EditorScriptWorkflow.cpp
@@ -496,8 +531,11 @@ add_executable(judas_editor
     src/editor/ComponentEditors.cpp
     src/editor/GizmoMath.cpp
 )
-target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui judas_navigation_baker judas_model_import)
-target_include_directories(judas_editor PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+target_link_libraries(judas_editor_core PUBLIC judas_engine judas_imgui judas_navigation_baker judas_model_import)
+target_include_directories(judas_editor_core PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+judas_warnings(judas_editor_core)
+add_executable(judas_editor src/editor/EditorMain.cpp)
+target_link_libraries(judas_editor PRIVATE judas_editor_core)
 judas_warnings(judas_editor)
 
 # Milestone 30: the scene authoring tool that writes the shipped demonstration
@@ -1483,7 +1521,7 @@ target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation
 judas_warnings(judas_world_authoring)
 target_link_libraries(judas_navigation_bake PRIVATE judas_world_authoring)
 target_link_libraries(judas_scene_author PRIVATE judas_world_authoring)
-target_link_libraries(judas_editor PRIVATE judas_world_authoring)
+target_link_libraries(judas_editor_core PUBLIC judas_world_authoring)
 target_link_libraries(judas_world_building_tests PRIVATE judas_world_authoring)
 
 target_link_libraries(judas_scene_author PRIVATE judas_model_import)
@@ -1908,6 +1946,15 @@ judas_add_engine_test(judas_script_binding_registry_tests tests/ScriptBindingReg
 judas_add_engine_test(judas_script_module_acceptance_tests tests/ScriptModuleAcceptanceTests.cpp)
 
 judas_add_engine_test(judas_editor_window_routing_tests tests/EditorWindowRoutingTests.cpp)
+
+judas_add_engine_test(judas_editor_v2_workspace_tests tests/EditorV2WorkspaceTests.cpp
+    SOURCES src/editor/EditorPanelRegistry.cpp src/editor/EditorWorkspace.cpp src/editor/EditorPreferences.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+judas_add_engine_test(judas_editor_asset_browser_tests tests/EditorAssetBrowserTests.cpp
+    SOURCES src/editor/AssetBrowserModel.cpp src/editor/AssetPublicationWorkflow.cpp LIBRARIES judas_model_import)
+
+judas_add_engine_test(judas_editor_v2_viewport_tests tests/EditorViewportPresenterTests.cpp LIBRARIES judas_editor_core)
+judas_add_engine_test(judas_editor_application_lifecycle_tests tests/EditorApplicationLifecycleTests.cpp LIBRARIES judas_editor_core)
+judas_add_engine_test(judas_editor_console_tests tests/EditorConsolePanelTests.cpp LIBRARIES judas_editor_core)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)
