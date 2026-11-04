@@ -114,8 +114,10 @@ public:
     std::uintptr_t EditorImageToken(TextureHandle) const;
     glm::ivec2 RenderTargetSize(RenderTargetHandle target) const;
     void FinishForDiagnostics() const;
-    bool BeginRenderTarget(RenderTargetHandle target);
-    void EndRenderTarget();
+    // Preserve is for compositing an already resolved image (for example its HUD).
+    bool BeginRenderTarget(RenderTargetHandle target, bool preserveContents = false);
+    // World presentation may retain its final camera for a subsequent overlay.
+    void EndRenderTarget(bool restoreCamera = true);
     struct TargetDiagnostics { glm::ivec4 viewport{0}; bool defaultFramebuffer = false;
         std::size_t liveTargets = 0; bool passActive = false; };
     TargetDiagnostics RenderTargetDiagnostics() const;

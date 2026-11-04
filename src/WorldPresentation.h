@@ -14,6 +14,7 @@ class ResourceManager;
 struct AerodynamicDragResult;
 struct SceneRenderComponent;
 struct MaterialBinding;
+struct RenderTargetHandle;
 
 // Resolves durable instance intent to borrowed immutable GPU resources. Pending
 // or failed texture replacements keep the inherited map until a valid publish.
@@ -50,9 +51,16 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const Game
 // One complete presented frame: shadow passes, colour pass, transparents.
 // `shadowFocus` centres the directional shadow frustum (the player when
 // playing, the editor camera otherwise).
+// Observer uses the supplied camera and never advances authored camera cadence
+// or composites local-player views. Runtime behavior remains the default.
+// A destination is opened only after auxiliary passes; it receives the final
+// main/split-screen composition. No nesting of renderer target passes occurs.
+enum class WorldRenderPurpose { Runtime, Observer };
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const GameSession* session, const glm::mat4& view, const glm::mat4& projection,
-                      const glm::vec3& shadowFocus, float presentationAlpha,float frameSeconds=1.f/60);
+                      const glm::vec3& shadowFocus, float presentationAlpha,float frameSeconds=1.f/60,
+                      WorldRenderPurpose purpose=WorldRenderPurpose::Runtime,
+                      const RenderTargetHandle* destination=nullptr);
 
 // The fluid surface mesh is rebuilt from presented particle positions each
 // frame; call before RenderWorldFrame when the world has fluid.

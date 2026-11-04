@@ -14,6 +14,7 @@
 class Renderer;
 class RuntimeWorld;
 class Window;
+struct RenderTargetHandle;
 
 // Milestone 28: one interactive frame of a played scene — the loop body
 // the `judas` runtime has run since Milestone 13, factored out so the
@@ -65,7 +66,8 @@ public:
     // pause menu is open), and renders the presented world plus the HUD
     // and menu into the window. `drawHud` false skips the overlay (the
     // editor draws its own). Returns the presentation alpha used.
-    float Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud = true, bool render = true);
+    float Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud = true, bool render = true,
+                const RenderTargetHandle* destination = nullptr);
 
     GameSession& Session() { return m_session; }
     const GameSession& Session() const { return m_session; }

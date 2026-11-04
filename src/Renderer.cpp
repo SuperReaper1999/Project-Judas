@@ -1601,7 +1601,7 @@ TextureHandle Renderer::RenderTargetTexture(RenderTargetHandle target) const {
     return m_targets[target.id].color;
 }
 
-bool Renderer::BeginRenderTarget(RenderTargetHandle target) {
+bool Renderer::BeginRenderTarget(RenderTargetHandle target, bool preserveContents) {
     if (m_activeTarget.IsValid() || m_shadowPassActive || !RenderTargetTexture(target).IsValid()) return false;
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &m_savedDrawFramebuffer);
     glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &m_savedReadFramebuffer);
@@ -1610,10 +1610,12 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target) {
     m_savedView = m_view; m_savedProjection = m_projection;m_savedPixelGrid=m_spritePixelGrid; m_activeTarget = target;
     const auto& gpu = m_targets[target.id];
     glBindFramebuffer(GL_FRAMEBUFFER, gpu.framebuffer);
-    BeginFrame(gpu.width, gpu.height); ++m_stats.offscreenPasses; return true;
+    if (!preserveContents) BeginFrame(gpu.width, gpu.height);
+    else glViewport(0, 0, gpu.width, gpu.height);
+    ++m_stats.offscreenPasses; return true;
 }
 
-void Renderer::EndRenderTarget() {
+void Renderer::EndRenderTarget(bool restoreCamera) {
     if (!m_activeTarget.IsValid()) return;
     FlushMaterialBlends();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
@@ -1621,7 +1623,11 @@ void Renderer::EndRenderTarget() {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(m_savedDrawFramebuffer));
     glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(m_savedReadFramebuffer));
     glViewport(m_savedViewport[0], m_savedViewport[1], m_savedViewport[2], m_savedViewport[3]);
-    SetCamera(m_savedView,m_savedProjection);m_spritePixelGrid=m_savedPixelGrid;m_renderMask=m_savedRenderMask;m_renderLayer=m_savedRenderLayer; m_activeTarget = {};
+    if (restoreCamera) {
+        SetCamera(m_savedView,m_savedProjection);m_spritePixelGrid=m_savedPixelGrid;
+        m_renderMask=m_savedRenderMask;m_renderLayer=m_savedRenderLayer;
+    }
+    m_activeTarget = {};
 }
 
 Renderer::TargetDiagnostics Renderer::RenderTargetDiagnostics() const {

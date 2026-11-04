@@ -97,7 +97,7 @@ bool InteractivePlay::ConsumeResetOccurred() {
     return occurred;
 }
 
-float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud, bool render) {
+float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud, bool render, const RenderTargetHandle* destination) {
     JUDAS_PROFILE_SCOPE("Play frame");
     RuntimeWorld& world = m_session.World();
     world.PumpNetwork(std::chrono::duration<double>(Clock::now().time_since_epoch()).count());
@@ -110,13 +110,13 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // Everything UI-related is handled here, before any gameplay system
     // sees this frame's input. Gameplay code is never told a menu exists;
     // it simply isn't called while one owns input.
-    world.viewportWidth=window.Width();world.viewportHeight=std::max(1,window.Height());
+    world.viewportWidth=window.InputWidth();world.viewportHeight=std::max(1,window.InputHeight());
     if(auto* players=world.PlayersIfLoaded())if(auto devices=window.Input().localDevices.lock()){players->Route(*devices);if(world.UIIfLoaded())for(auto& p:players->All())world.UI().PlayerViewport(p.first,p.second.viewport);}
     window.Input().SuspendRumble(IsPaused());
     world.UpdateUIScripts(&window.Input(),frameDeltaTime);
     const bool authoredUI=world.UIIfLoaded()&&!world.UIIfLoaded()->Empty();
     bool uiOwned=false;
-    if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.Width(),window.Height());if(!ui.OwnsInput())if(auto* players=world.PlayersIfLoaded())for(auto& p:players->All()){const auto pointer=p.second.input.Pointer();ui.Input(p.second.input,{pointer.x*window.Width(),pointer.y*window.Height()},!window.IsMouseCaptured(),window.Width(),window.Height(),p.first);}
+    if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.InputWidth(),window.InputHeight());if(!ui.OwnsInput())if(auto* players=world.PlayersIfLoaded())for(auto& p:players->All()){const auto pointer=p.second.input.Pointer();ui.Input(p.second.input,{pointer.x*window.InputWidth(),pointer.y*window.InputHeight()},!window.IsMouseCaptured(),window.InputWidth(),window.InputHeight(),p.first);}
     world.DispatchUIEvents(&window.Input(),frameDeltaTime);uiOwned|=ui.OwnsInput();}
     auto textTarget=world.UIIfLoaded()?world.UI().TextTarget():std::optional<UITextTarget>{};if(textTarget)window.SetTextInput(true,textTarget->player,int(textTarget->rect.position.x),int(textTarget->rect.position.y),int(textTarget->rect.size.x),int(textTarget->rect.size.y),textTarget->token);else window.SetTextInput(false);
     if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),frameDeltaTime,true);
@@ -128,7 +128,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     int uiClickX = 0, uiClickY = 0;
     const bool uiClicked = window.ConsumeUIClickRequest(uiClickX, uiClickY);
     if (m_pauseMenu.IsOpen()) {
-        m_pauseMenu.Layout(window.Width(), window.Height());
+        m_pauseMenu.Layout(window.InputWidth(), window.InputHeight());
         if (uiUp) m_pauseMenu.NavigateUp();
         if (uiDown) m_pauseMenu.NavigateDown();
         if (uiActivate) m_pauseMenu.Activate();
@@ -215,8 +215,8 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     window.Input().SuspendRumble(IsPaused());
     world.PresentationScripts(&window.Input(),frameDeltaTime,presentationAlpha);
     if(m_resetOccurred)window.Input().StopRumble();
-    const int height = std::max(window.Height(), 1);
-    const float aspectRatio = static_cast<float>(window.Width()) / static_cast<float>(height);
+    const int height = std::max(window.InputHeight(), 1);
+    const float aspectRatio = static_cast<float>(window.InputWidth()) / static_cast<float>(height);
     const PlayerController& player = m_session.Player();
     glm::mat4 view(1.0f);
     if (world.legacyGameplay && m_session.IsPiloting()) {
@@ -229,7 +229,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         view = player.GetViewMatrix(presentationAlpha, m_session.ViewMode());
     }
     if(world.view){const auto& v=*world.view;view=glm::lookAt(v.pose.position,v.pose.position+v.pose.rotation*glm::vec3(0,0,-1),v.pose.rotation*glm::vec3(0,1,0));}
-    world.viewportWidth=window.Width();world.viewportHeight=height;
+    world.viewportWidth=window.InputWidth();world.viewportHeight=height;
     if(world.Scripts())world.Scripts()->SetView(view);
     world.UpdateAudio(view,presentationAlpha,frameDeltaTime);
     // Audio publication is a runtime service, independent of drawing/capture.
@@ -238,26 +238,30 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     UpdateFluidSurface(renderer, world, presentationAlpha);
     m_lastSurfaceMilliseconds = MillisecondsSince(surfaceStart);
     const auto sceneStart = Clock::now();
-    RenderWorldFrame(renderer, window.Width(), window.Height(), world, &m_session, view,
+    RenderWorldFrame(renderer, window.InputWidth(), window.InputHeight(), world, &m_session, view,
                      player.GetProjectionMatrix(aspectRatio), player.GetPresentedPosition(presentationAlpha),
-                     presentationAlpha,frameDeltaTime);
+                     presentationAlpha,frameDeltaTime,WorldRenderPurpose::Runtime,destination);
     m_lastSceneMilliseconds = MillisecondsSince(sceneStart);
+    // Auxiliary cameras have finished. Resume the display image without clearing
+    // or starting another HDR pass; overlays remain identical to desktop play.
+    if(destination&&!renderer.BeginRenderTarget(*destination, /*preserveContents=*/true))return presentationAlpha;
     if (m_overlay) m_overlay(renderer, presentationAlpha);
 
     // Milestone 13: HUD + pause menu overlay, drawn last, on top.
-    renderer.BeginUIFrame(window.Width(), window.Height());
+    renderer.BeginUIFrame(window.InputWidth(), window.InputHeight());
     if (world.legacyGameplay && drawHud && m_pauseMenu.IsHudVisible() && (!authoredUI||world.UI().debugOverlayVisible)) {
         m_worldCoordinates=WorldCoordinates(m_session.World().Settings().worldOrigin);
         HUDViewData hud = BuildHudView(m_session, m_worldCoordinates, m_lastAerodynamicDrag);
         hud.worldStateInfo = m_worldStateStatus;
         hud.lifecycleMessage = m_session.LastLifecycleMessage();
         if (!hud.worldStateInfo.empty() || !hud.lifecycleMessage.empty()) hud.lifecycleAvailable = true;
-        m_hud.Draw(renderer, window.Width(), window.Height(), hud);
+        m_hud.Draw(renderer, window.InputWidth(), window.InputHeight(), hud);
     }
-    if(world.legacyGameplay&&!authoredUI)m_pauseMenu.Draw(renderer, window.Width(), window.Height());
-    if(authoredUI)world.UI().Draw(renderer,window.Width(),window.Height(),&world);
-    if(m_scriptFaultNotice)DrawScriptFaultNotice(renderer,window.Width(),window.Height(),world.Scripts(),world.Resources()?world.Resources()->Assets():nullptr);
+    if(world.legacyGameplay&&!authoredUI)m_pauseMenu.Draw(renderer, window.InputWidth(), window.InputHeight());
+    if(authoredUI)world.UI().Draw(renderer,window.InputWidth(),window.InputHeight(),&world);
+    if(m_scriptFaultNotice)DrawScriptFaultNotice(renderer,window.InputWidth(),window.InputHeight(),world.Scripts(),world.Resources()?world.Resources()->Assets():nullptr);
     renderer.EndUIFrame();
+    if(destination)renderer.EndRenderTarget();
     return presentationAlpha;
 }
 

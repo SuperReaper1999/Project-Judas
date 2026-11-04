@@ -6,6 +6,8 @@
 #include <set>
 #include <tuple>
 #include "InputSystem.h"
+#include "WindowInputRegion.h"
+#include <optional>
 
 enum class Action {
     MoveForward,
@@ -94,6 +96,17 @@ public:
     void GetMousePosition(int& outX, int& outY) const;
 
     void SetMouseCaptured(bool captured);
+
+    // Desktop tools can host the same game in a content region or another
+    // SDL window. This never changes native main-window size/close ownership.
+    bool SetInputRegion(const WindowInputRegion&);
+    void ClearInputRegion();
+    int InputWidth() const { return m_inputRegion ? m_inputRegion->renderWidth : m_width; }
+    int InputHeight() const { return m_inputRegion ? m_inputRegion->renderHeight : m_height; }
+    SDL_Window* InputWindow() const;
+    void MapInputPosition(int&, int&) const;
+    SDL_FPoint NormalizeInputPosition(int x,int y) const;
+    bool InputContains(int x,int y) const;
 
     int Width() const { return m_width; }
     int Height() const { return m_height; }
@@ -185,6 +198,7 @@ private:
     bool m_uiClickRequested = false;
     int m_uiClickX = 0;
     int m_uiClickY = 0;
+    std::optional<WindowInputRegion> m_inputRegion;
     int m_width = 0;
     int m_height = 0;
 

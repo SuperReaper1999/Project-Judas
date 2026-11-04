@@ -169,6 +169,7 @@ Window::~Window() {
 }
 
 void Window::Shutdown() {
+    m_inputRegion.reset();
     m_input.StopRumble();
     m_input.rumbleBackend={};
 #ifdef __ANDROID__
@@ -290,7 +291,7 @@ void Window::RefreshLocalControllers(bool poll){
 void Window::SetTextInput(bool enabled,std::uint64_t player,int x,int y,int w,int h,std::uint64_t token){
  if(enabled&&m_textActive&&(m_textPlayer!=player||m_textToken!=token)&&!m_hostTextInput)SDL_StopTextInput();
  enabled=enabled&&m_inputFocused&&m_applicationActive&&!m_keyboardClaimed&&!m_hostTextInput;
- if(enabled){SDL_Rect rect{x,y,std::max(1,w),std::max(1,h)};SDL_SetTextInputRect(&rect);}
+ if(enabled){SDL_Rect rect{x,y,std::max(1,w),std::max(1,h)};if(m_inputRegion)rect=m_inputRegion->ToNative(rect);SDL_SetTextInputRect(&rect);}
  m_textActive=enabled;m_textPlayer=enabled?player:0;m_textToken=enabled?token:0;
  UpdateNativeTextInput();
 }
@@ -427,6 +428,35 @@ void Window::PollEvents(){
         if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT&&
            !(event.type>=SDL_APP_TERMINATING&&event.type<=SDL_APP_DIDENTERFOREGROUND)&&event.type!=SDL_RENDER_DEVICE_RESET)continue;
         if(m_eventHook)m_eventHook(event);
+        // UI backends receive every window's event. The authoritative game
+        // window only consumes its own window/input events.
+        Uint32 eventWindow = 0;
+        switch (event.type) {
+        case SDL_WINDOWEVENT: eventWindow = event.window.windowID; break;
+        case SDL_KEYDOWN: case SDL_KEYUP: eventWindow = event.key.windowID; break;
+        case SDL_TEXTINPUT: eventWindow = event.text.windowID; break;
+        case SDL_TEXTEDITING: eventWindow = event.edit.windowID; break;
+#if SDL_VERSION_ATLEAST(2,0,22)
+        case SDL_TEXTEDITING_EXT: eventWindow = event.editExt.windowID; break;
+#endif
+        case SDL_MOUSEMOTION: eventWindow = event.motion.windowID; break;
+        case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: eventWindow = event.button.windowID; break;
+        case SDL_MOUSEWHEEL: eventWindow = event.wheel.windowID; break;
+        default: break;
+        }
+        const bool focusEvent = event.type == SDL_WINDOWEVENT &&
+            (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED || event.window.event == SDL_WINDOWEVENT_FOCUS_LOST);
+        const Uint32 ownerWindow = event.type == SDL_WINDOWEVENT && !focusEvent
+            ? SDL_GetWindowID(m_window) : SDL_GetWindowID(InputWindow());
+        if (eventWindow && eventWindow != ownerWindow) {
+#if SDL_VERSION_ATLEAST(2,0,22)
+            if (event.type == SDL_TEXTEDITING_EXT) SDL_free(event.editExt.text);
+#endif
+            continue;
+        }
+        if(m_inputRegion && !m_mouseCaptured && event.type==SDL_MOUSEBUTTONDOWN &&
+           !InputContains(event.button.x,event.button.y))continue;
+
 #ifdef __ANDROID__
         if(event.type==SDL_SENSORUPDATE&&m_tiltSensor&&m_inputFocused&&m_applicationActive&&
            event.sensor.which==SDL_SensorGetInstanceID(m_tiltSensor)){
@@ -459,8 +489,8 @@ void Window::PollEvents(){
         }
         if(hub){
          if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP){if(!m_keyboardClaimed&&m_inputFocused&&m_applicationActive)hub->Set("keyboard",std::string("key:")+SDL_GetScancodeName(event.key.keysym.scancode),event.type==SDL_KEYDOWN?1:0);}
-         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP){if(!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.button.which!=SDL_TOUCH_MOUSEID)if(auto* name=MouseButton(event.button.button)){hub->Set("mouse",std::string("mouse:")+name,event.type==SDL_MOUSEBUTTONDOWN?1:0);const auto* d=hub->Find("mouse");auto left=d->values.find("mouse:Left");hub->Pointer("mouse",{float(event.button.x)/std::max(1,m_width),float(event.button.y)/std::max(1,m_height),left!=d->values.end()&&left->second>.5f});}}
-         else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.motion.which!=SDL_TOUCH_MOUSEID){auto* d=hub->Find("mouse");auto pointer=d->pointer;pointer.x=float(event.motion.x)/std::max(1,m_width);pointer.y=float(event.motion.y)/std::max(1,m_height);hub->Pointer("mouse",pointer);if(m_mouseCaptured)for(auto p:{std::pair<const char*,float>{"mouse:dx",mouseDX},{"mouse:dy",mouseDY}}){auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
+         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP){if(!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.button.which!=SDL_TOUCH_MOUSEID)if(auto* name=MouseButton(event.button.button)){hub->Set("mouse",std::string("mouse:")+name,event.type==SDL_MOUSEBUTTONDOWN?1:0);const auto* d=hub->Find("mouse");auto left=d->values.find("mouse:Left");hub->Pointer("mouse",{NormalizeInputPosition(event.button.x,event.button.y).x,NormalizeInputPosition(event.button.x,event.button.y).y,left!=d->values.end()&&left->second>.5f&&InputContains(event.button.x,event.button.y)});}}
+         else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.motion.which!=SDL_TOUCH_MOUSEID){auto* d=hub->Find("mouse");auto pointer=d->pointer;pointer.x=NormalizeInputPosition(event.motion.x,event.motion.y).x;pointer.y=NormalizeInputPosition(event.motion.x,event.motion.y).y;hub->Pointer("mouse",pointer);if(m_mouseCaptured)for(auto p:{std::pair<const char*,float>{"mouse:dx",mouseDX},{"mouse:dy",mouseDY}}){auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
          else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.wheel.which!=SDL_TOUCH_MOUSEID){float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1:1;for(auto p:{std::pair<const char*,float>{"mouse:wheelX",sign*event.wheel.x},{"mouse:wheelY",sign*event.wheel.y}}){auto* d=hub->Find("mouse");auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
          else if(event.type==SDL_CONTROLLERAXISMOTION){auto pad=m_localControllers.find(event.caxis.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* axis=PadAxis(event.caxis.axis))hub->Set(pad->second.second,std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));}
          else if(event.type==SDL_CONTROLLERBUTTONDOWN||event.type==SDL_CONTROLLERBUTTONUP){auto pad=m_localControllers.find(event.cbutton.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* button=PadButton(event.cbutton.button))hub->Set(pad->second.second,std::string("pad:")+button,event.type==SDL_CONTROLLERBUTTONDOWN?1:0);}
@@ -530,7 +560,8 @@ void Window::PollEvents(){
     if(!m_inputFocused||!m_applicationActive)m_input.Reset();
 #endif
     if(!m_testInputMode){int x=0,y=0;const auto buttons=SDL_GetMouseState(&x,&y);
-        m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&(buttons&SDL_BUTTON_LMASK));}
+        if(m_inputRegion&&!m_mouseCaptured&&SDL_GetMouseFocus()!=InputWindow()){x=m_inputRegion->content.x-1;y=m_inputRegion->content.y-1;}
+        m_input.SetPointer(NormalizeInputPosition(x,y).x,NormalizeInputPosition(x,y).y,!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&InputContains(x,y)&&(buttons&SDL_BUTTON_LMASK));}
     // Restore held physical keys after UI ownership ends without stale edges.
     if(!m_testInputMode&&!m_keyboardClaimed&&m_inputFocused){const auto* keys=SDL_GetKeyboardState(nullptr);for(int i=0;i<SDL_NUM_SCANCODES;++i)if(keys[i])m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(static_cast<SDL_Scancode>(i)),1);}
     if(!m_testInputMode)RefreshController();
@@ -545,8 +576,8 @@ void Window::PollEvents(){
     // A compositor/backend release need not produce another FOCUS_GAINED
     // event. Reconcile while this window owns focus; never grab it back from
     // another application, and leave an uncaptured menu alone.
-    if(m_mouseCaptured && m_inputFocused && m_applicationActive && (SDL_GetWindowFlags(m_window)&SDL_WINDOW_INPUT_FOCUS) &&
-       (!SDL_GetRelativeMouseMode() || !SDL_GetWindowGrab(m_window)))
+    if(m_mouseCaptured && m_inputFocused && m_applicationActive && (SDL_GetWindowFlags(InputWindow())&SDL_WINDOW_INPUT_FOCUS) &&
+       (!SDL_GetRelativeMouseMode() || !SDL_GetWindowGrab(InputWindow())))
         SetMouseCaptured(true);
 }
 bool Window::ConsumeNamedAction(const std::string& name){return m_input.Action(name).pressed&&m_consumed.insert(name).second;}
@@ -685,7 +716,7 @@ void Window::BeginTestFrame() { m_input.BeginFrame();m_consumed.clear(); }
 void Window::SetTestPointer(int x,int y) {
     if(!m_testInputMode)return;
     m_uiClickX=x;m_uiClickY=y;
-    m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),m_input.Pointer().down);
+    m_input.SetPointer(NormalizeInputPosition(x,y).x,NormalizeInputPosition(x,y).y,m_input.Pointer().down);
 }
 
 void Window::ApplyTestPhysical(const std::string& control,float value) {
@@ -760,28 +791,52 @@ bool Window::ConsumeUIClickRequest(int& outX, int& outY) {
     const bool requested = ConsumeNamedAction("ui_click");
     outX = m_uiClickX;
     outY = m_uiClickY;
+    MapInputPosition(outX,outY);
     m_uiClickRequested = false;
     return requested;
 }
 
 void Window::GetMousePosition(int& outX, int& outY) const {
-    if(m_testInputMode){outX=m_uiClickX;outY=m_uiClickY;return;}
-    if (m_testInputMode) {
-        outX = 0;
-        outY = 0;
-        return;
-    }
-    SDL_GetMouseState(&outX, &outY);
+    if(m_testInputMode){outX=m_uiClickX;outY=m_uiClickY;}
+    else {SDL_GetMouseState(&outX,&outY);if(m_inputRegion&&!m_mouseCaptured&&SDL_GetMouseFocus()!=InputWindow()){outX=m_inputRegion->content.x-1;outY=m_inputRegion->content.y-1;}}
+    MapInputPosition(outX,outY);
 }
+
+SDL_Window* Window::InputWindow() const {
+    if(m_inputRegion && m_inputRegion->windowId)
+        if(auto* target=SDL_GetWindowFromID(m_inputRegion->windowId))return target;
+    return m_window;
+}
+bool Window::SetInputRegion(const WindowInputRegion& region) {
+    if(!region.Valid() || (region.windowId && !SDL_GetWindowFromID(region.windowId)))return false;
+    const auto previous=SDL_GetWindowID(InputWindow());
+    const auto next=region.windowId?region.windowId:SDL_GetWindowID(m_window);
+    if(previous!=next){SetMouseCaptured(false);m_input.Reset();if(auto hub=m_input.localDevices.lock())hub->Reset();ClearPendingRequests();}
+    m_inputRegion=region;
+    if(previous!=next)m_inputFocused=SDL_GetKeyboardFocus()==InputWindow();
+    return true;
+}
+void Window::ClearInputRegion() {
+    if(!m_inputRegion)return;
+    const bool another=InputWindow()!=m_window;
+    if(another){SetMouseCaptured(false);m_input.Reset();if(auto hub=m_input.localDevices.lock())hub->Reset();ClearPendingRequests();}
+    m_inputRegion.reset();
+    if(another)m_inputFocused=SDL_GetKeyboardFocus()==m_window;
+}
+void Window::MapInputPosition(int& x,int& y) const {if(m_inputRegion)m_inputRegion->Map(x,y);}
+SDL_FPoint Window::NormalizeInputPosition(int x,int y) const {
+    return m_inputRegion?m_inputRegion->Normalize(x,y):SDL_FPoint{float(x)/std::max(1,m_width),float(y)/std::max(1,m_height)};
+}
+bool Window::InputContains(int x,int y) const {return !m_inputRegion || m_inputRegion->Contains(x,y);}
 
 void Window::SetMouseCaptured(bool captured) {
 #ifdef __EMSCRIPTEN__
     if(captured!=m_mouseCaptured)MAIN_THREAD_EM_ASM({Module.judasPointerCaptureRequested=!!$0;},captured);
 #endif
     m_mouseCaptured = captured;
-    SDL_SetWindowGrab(m_window,captured ? SDL_TRUE : SDL_FALSE);
+    SDL_SetWindowGrab(InputWindow(),captured ? SDL_TRUE : SDL_FALSE);
     if(SDL_SetRelativeMouseMode(captured ? SDL_TRUE : SDL_FALSE)!=0 &&
-       (SDL_GetWindowFlags(m_window)&SDL_WINDOW_SHOWN))
+       (SDL_GetWindowFlags(InputWindow())&SDL_WINDOW_SHOWN))
         std::fprintf(stderr,"Mouse capture failed: %s\n",SDL_GetError());
 }
 

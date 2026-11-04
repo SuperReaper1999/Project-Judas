@@ -1907,5 +1907,7 @@ judas_warnings(judas_fluid_coverage_replay)
 judas_add_engine_test(judas_script_binding_registry_tests tests/ScriptBindingRegistryTests.cpp)
 judas_add_engine_test(judas_script_module_acceptance_tests tests/ScriptModuleAcceptanceTests.cpp)
 
+judas_add_engine_test(judas_editor_window_routing_tests tests/EditorWindowRoutingTests.cpp)
+
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)
