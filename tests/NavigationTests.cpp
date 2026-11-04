@@ -29,6 +29,8 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
     this.state.applied=e.setNavigationObstacle({halfExtents:{x:1,y:1,z:9}});
     try {e.setNavigationObstacle({enabled:false,radius:-1});}
     catch {this.state.rejected=true;}
+    try {e.setNavigationObstacle({halfExtents:{x:20,y:1,z:20}});}
+    catch(error) {this.state.layerLimit=error.message.includes('eight tile layers');}
    } else {
     this.state.applied=e.setNavigationLink({bidirectional:true,localEnd:{x:6,y:0,z:1}});
     try {e.setNavigationLink({enabled:false,area:61});}
@@ -53,10 +55,25 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
  check(obstacleState.size()==1&&obstacleState[0].json.find("\"applied\":true")!=std::string::npos&&
        obstacleState[0].json.find("\"rejected\":true")!=std::string::npos&&
        world.RuntimeDefinition(oid)->navigationObstacle->enabled,"valid scripted obstacle resize and atomic invalid patch");
+ check(obstacleState.size()==1&&obstacleState[0].json.find("\"layerLimit\":true")!=std::string::npos&&
+       world.RuntimeDefinition(oid)->navigationObstacle->halfExtents==glm::vec3(1,1,9),
+       "oversized edit reports the eight-layer limit and preserves the accepted footprint");
  for(int i=0;i<30;++i)world.UpdateNavigation(.02f);
  check(world.Navigation().FindPath({-5,0,0},{6,0,0}).status!=NavigationPath::Status::Complete&&
        repathState&&repathState->path.status!=NavigationPath::Status::Complete,
        "resized obstacle blocks a real route and repaths the active agent before its 60-second interval");
+ auto oversized=*world.RuntimeDefinition(oid)->navigationObstacle;
+ oversized.halfExtents={20,1,20};
+ const auto beforeRejectedEdit=world.Navigation().Revision();
+ std::string oversizedError;
+ check(!world.SetNavigationObstacleSettings(oid,oversized,oversizedError)&&
+       oversizedError.find("eight tile layers")!=std::string::npos,
+       "native edit also rejects an oversized replacement of a live carve");
+ world.UpdateNavigation(.02f);
+ check(world.Navigation().Revision()==beforeRejectedEdit&&!world.Navigation().Sample({4,0,0},.2f),
+       "rejected replacement keeps the existing carve and navigation revision");
+ check(world.Navigation().Sample({-5,0,0},.2f).has_value(),
+       "oversized rejected footprint does not carve the walkable start");
  world.DestroyEntity(repathId,&error);
  auto before=world.Navigation().Revision();check(world.DestroyEntity(oid,&error),"obstacle destruction");for(int i=0;i<20;++i)world.UpdateNavigation(.02f);check(world.Navigation().Sample({0,0,0},.2f).has_value()&&world.Navigation().Revision()>before,"obstacle removal restores walkability");
  SceneObject agent;agent.navigationAgent=NavigationAgentSettings{};agent.characterMotor=CharacterMotorSettings{};agent.transform.position={-5,.9f,0};auto aid=world.CreateEntity(agent,nullptr,&error);world.UpdateNavigation(.02f);check(world.Navigation().SetDestination(aid,{5,0,0}),"destination accepted");auto position=world.RuntimeCharacter(aid)->position;world.UpdateNavigation(.02f);auto state=world.Navigation().Agent(aid);check(state&&state->steering.x>0&&state->remaining>8,"agent guidance and distance");check(world.RuntimeCharacter(aid)->position==position,"navigation does not move authoritative motor");auto second=world.CreateEntity(agent,nullptr,&error);world.UpdateNavigation(.02f);check(second!=aid&&world.Navigation().Agent(second)!=state,"independent agent instances");world.Navigation().ClearDestination(aid);check(!world.Navigation().Agent(aid)->hasDestination,"clear route");world.DestroyEntity(aid,&error);world.UpdateNavigation(.02f);check(!world.Navigation().Agent(aid),"destroy clears stale agent");auto replacement=world.CreateEntity(agent,nullptr,&error);world.UpdateNavigation(.02f);check(replacement!=aid&&!world.Navigation().Agent(aid),"runtime identity reuse cannot alias destroyed agent");world.SetNavigationEnabled(replacement,"agent",false);world.UpdateNavigation(.02f);check(!world.Navigation().Agent(replacement),"disable unregisters navigation state");world.SetNavigationEnabled(replacement,"agent",true);world.UpdateNavigation(.02f);world.Navigation().SetDestination(replacement,world.RuntimeCharacter(replacement)->position-glm::vec3(0,.9f,0));world.UpdateNavigation(.02f);check(world.Navigation().Agent(replacement)->path.status==NavigationPath::Status::Complete&&world.Navigation().Agent(replacement)->remaining<.3f,"already reached destination reports short resolved route");auto offsetMotor=world.RuntimeCharacter(replacement);auto offsetSettings=offsetMotor->settings;offsetSettings.offset={0,2,0};world.SetCharacterSettings(replacement,offsetSettings);offsetMotor->position.y=-1.1f;world.Navigation().SetDestination(replacement,{5,0,0});world.UpdateNavigation(.02f);check(world.Navigation().Agent(replacement)->path.status==NavigationPath::Status::Complete,"motor shape offset contributes to physical capsule foot");SceneObject mover;mover.navigationAgent=NavigationAgentSettings{};mover.transform.position={-5,.9f,0};auto pointAgent=world.CreateEntity(mover,nullptr,&error);world.UpdateNavigation(.02f);world.Navigation().SetDestination(pointAgent,{5,0,0});world.UpdateNavigation(.02f);check(world.Navigation().Agent(pointAgent)->steering.x>0&&world.RuntimeDefinition(pointAgent)->transform.position==mover.transform.position,"non-motor root projection yields guidance without moving entity");world.Destroy();check(!world.IsBuilt(),"world cleanup");

@@ -160,8 +160,12 @@ patches an existing obstacle's carving volume. Supported members are
 The edit leaves the baked source asset alone. Tile-cache carving
 publishes on navigation updates and may take several updates to settle.
 Runtime edits cap obstacle half extents, radius and height at 100 m.
-The existing Detour tile cache handles at most eight touched tile layers per
-obstacle, so split large blockers into smaller obstacles where needed.
+Detour handles at most eight touched tile layers per obstacle on each surface.
+An oversized edit against a loaded surface throws and preserves the previous
+settings and carve. If a later surface load or obstacle move exceeds the limit,
+navigation reports the error and keeps any previous carve on that surface.
+Bake permanent blockers into the mesh or split large dynamic blockers into
+smaller obstacles.
 
 `entity.setNavigationLink({localEnd: {x: 0, y: 0, z: 4}, bidirectional: true})`
 patches an existing link. Supported members are `enabled`, `bidirectional`,

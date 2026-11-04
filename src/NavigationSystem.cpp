@@ -9,6 +9,7 @@
 #include <DetourNavMeshQuery.h>
 #include <DetourNavMeshBuilder.h>
 #include <DetourTileCache.h>
+#include <DetourCommon.h>
 #include <DetourObstacleAvoidance.h>
 #include <glm/gtc/quaternion.hpp>
 
@@ -25,6 +26,40 @@ struct Surface {
  struct Obstacle{dtObstacleRef ref=0;SceneTransform pose;NavigationObstacleSettings settings;};std::map<SceneObjectId,Obstacle> obstacles;
  ~Surface(){dtFreeTileCache(cache);dtFreeNavMeshQuery(query);dtFreeNavMesh(mesh);}
  glm::vec3 local(glm::vec3 p)const{return glm::inverse(frame.rotation)*(p-frame.position);}glm::vec3 world(glm::vec3 p)const{return frame.position+frame.rotation*p;}
+ struct CarveBounds {glm::vec3 min,max;};
+ CarveBounds obstacleBounds(const SceneTransform& pose,const NavigationObstacleSettings& settings)const{
+    const auto center=local(pose.position);
+    if(settings.cylinder){
+        const glm::vec3 extent(settings.radius,settings.height*.5f,settings.radius);
+        auto minimum=center-extent;
+        // Match Detour's bottom-plus-height rounding.
+        auto maximum=center+extent;
+        maximum.y=minimum.y+settings.height;
+        return {minimum,maximum};
+    }
+    const auto rotation=glm::inverse(frame.rotation)*pose.rotation;
+    glm::vec3 extent(0);
+    for(int axis=0;axis<3;++axis){
+        glm::vec3 localAxis(0);
+        localAxis[axis]=settings.halfExtents[axis];
+        extent+=glm::abs(rotation*localAxis);
+    }
+    return {center-extent,center+extent};
+ }
+ bool accepts(const CarveBounds& bounds)const{
+    // Detour's queryTiles silently truncates at its supplied output capacity.
+    // Count actual compressed layers with the same tight bounds instead.
+    unsigned count=0;
+    for(int i=0;i<cache->getTileCount();++i){
+        const auto* tile=cache->getTile(i);
+        if(!tile->header)continue;
+        float minimum[3],maximum[3];
+        cache->calcTightTileBounds(tile->header,minimum,maximum);
+        if(dtOverlapBounds(&bounds.min.x,&bounds.max.x,minimum,maximum)&&++count>DT_MAX_TOUCHED_TILES)
+            return false;
+    }
+    return true;
+ }
  bool nearest(glm::vec3 point,float range,const Filter& f,dtPolyRef& ref,glm::vec3& result)const{glm::vec3 p=local(point),ext(range);return dtStatusSucceed(query->findNearestPoly(&p.x,&ext.x,&f,&ref,&result.x))&&ref;}
  NavigationPath path(glm::vec3 start,glm::vec3 end,const NavigationFilter& options)const{NavigationPath out;Filter f(options);dtPolyRef a=0,b=0;glm::vec3 p,q;if(!nearest(start,2,f,a,p)||!nearest(end,2,f,b,q))return out;dtPolyRef corridor[512];int n=0;auto status=query->findPath(a,b,&p.x,&q.x,&f,corridor,&n,512);if(dtStatusFailed(status)||!n)return out;out.status=(corridor[n-1]==b&&!dtStatusDetail(status,DT_BUFFER_TOO_SMALL))?NavigationPath::Status::Complete:NavigationPath::Status::Partial;if(corridor[n-1]!=b)query->closestPointOnPoly(corridor[n-1],&q.x,&q.x,nullptr);float points[512*3];unsigned char flags[512];dtPolyRef refs[512];int count=0;auto straight=query->findStraightPath(&p.x,&q.x,corridor,n,points,flags,refs,&count,512,DT_STRAIGHTPATH_ALL_CROSSINGS);if(dtStatusFailed(straight))return {};if(dtStatusDetail(straight,DT_BUFFER_TOO_SMALL))out.status=NavigationPath::Status::Partial;for(int i=0;i<count;++i){NavigationCorner c;c.position=world(glm::vec3(points[i*3],points[i*3+1],points[i*3+2]));if(i){float distance=glm::distance(out.corners.back().position,c.position);out.distance+=distance;const dtMeshTile* tile=nullptr;const dtPoly* poly=nullptr;out.cost+=distance*(refs[i-1]&&dtStatusSucceed(mesh->getTileAndPolyByRef(refs[i-1],&tile,&poly))?f.getAreaCost(poly->getArea()):1);}out.corners.push_back(c);}for(int i=0;i<n;++i){const dtMeshTile* t;const dtPoly* poly;if(dtStatusSucceed(mesh->getTileAndPolyByRef(corridor[i],&t,&poly))){unsigned area=poly->getArea()-1;if(std::find(out.areas.begin(),out.areas.end(),area)==out.areas.end())out.areas.push_back(area);}}return out;}
 };
@@ -56,6 +91,13 @@ NavigationAgentState* NavigationSystem::Agent(SceneObjectId id){auto it=m->agent
 bool NavigationSystem::SetDestination(SceneObjectId id,glm::vec3 p){auto a=Agent(id);if(!a||!std::isfinite(glm::dot(p,p)))return false;a->hasDestination=true;a->destination=p;a->elapsed=1e10f;return true;}
 void NavigationSystem::ClearDestination(SceneObjectId id){if(auto a=Agent(id)){a->hasDestination=false;a->steering={};a->path={};a->remaining=0;a->corner=0;a->onLink=false;}}
 bool NavigationSystem::CompleteLink(SceneObjectId id){auto a=Agent(id);if(!a||!a->onLink)return false;a->onLink=false;++a->corner;return true;}
+bool NavigationSystem::CanCarveObstacle(const SceneTransform& pose,const NavigationObstacleSettings& settings)const{
+    if(!settings.enabled)return true;
+    for(const auto& entry:m->surfaces)
+        if(!entry.second->accepts(entry.second->obstacleBounds(pose,settings)))return false;
+    return true;
+}
+
 void NavigationSystem::RequestEditedRouteRefresh(bool waitForCarving){
     if(waitForCarving)m->refreshObstacles=true;
     else m->refreshLinks=true;
@@ -69,7 +111,23 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
  for(auto it=m->agents.begin();it!=m->agents.end();)if(!liveAgents.count(it->first))it=m->agents.erase(it);else ++it;
  for(auto it=m->links.begin();it!=m->links.end();)if(!liveLinks.count(it->first)){it=m->links.erase(it);++m->revision;}else ++it;
  JUDAS_PROFILE_COUNTER("Navigation agents",double(m->agents.size()),ProfileCounterMode::Latest);
- for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(auto& o:objects)if(o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;if(it!=s->obstacles.end()){if(dtStatusFailed(s->cache->removeObstacle(it->second.ref)))continue;s->obstacles.erase(it);}dtObstacleRef ref=0;auto center=s->local(p.position);dtStatus status;if(settings.cylinder){center.y-=settings.height*.5f;status=s->cache->addObstacle(&center.x,settings.radius,settings.height,&ref);}else{auto rotation=glm::inverse(s->frame.rotation)*p.rotation;glm::vec3 h(0);for(int k=0;k<3;++k){glm::vec3 axis(0);axis[k]=settings.halfExtents[k];h+=glm::abs(rotation*axis);}auto lo=center-h,hi=center+h;status=s->cache->addBoxObstacle(&lo.x,&hi.x,&ref);}if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings};++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
+ for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(auto& o:objects)if(o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
+   if(!s->accepts(bounds)){
+       m->errors[o.id]="navigation obstacle exceeds Detour's eight tile layers";
+       continue;
+   }
+   if(it!=s->obstacles.end()){
+       if(dtStatusFailed(s->cache->removeObstacle(it->second.ref)))continue;
+       s->obstacles.erase(it);
+   }
+   dtObstacleRef ref=0;
+   dtStatus status;
+   if(settings.cylinder){
+       auto base=s->local(p.position);
+       base.y=bounds.min.y;
+       status=s->cache->addObstacle(&base.x,settings.radius,settings.height,&ref);
+   }else status=s->cache->addBoxObstacle(&bounds.min.x,&bounds.max.x,&ref);
+   if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings};++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
   for(auto it=s->obstacles.begin();it!=s->obstacles.end();)if(!present.count(it->first)&&dtStatusSucceed(s->cache->removeObstacle(it->second.ref))){it=s->obstacles.erase(it);++m->revision;}else ++it;
   bool ready=false;auto status=s->cache->update(dt,s->mesh,&ready);if(dtStatusFailed(status))m->errors[id]="tile cache update failed";if(!ready)m->pending.insert(id);else if(m->pending.erase(id))++m->revision;
  }

@@ -1598,18 +1598,29 @@ std::vector<EntityId> RuntimeWorld::QueryEntities(CategoryMask required,Category
     return result;
 }
 
-bool RuntimeWorld::SetNavigationObstacleSettings(EntityId id,const NavigationObstacleSettings& settings){
+bool RuntimeWorld::SetNavigationObstacleSettings(EntityId id,const NavigationObstacleSettings& settings,std::string& error){
     const auto* definition=RuntimeDefinition(id);
     if(!definition||!definition->navigationObstacle)return false;
     SceneObject candidate;
     candidate.navigationObstacle=settings;
-    std::string error;
     // Keep live edits in the editor's local-obstacle scale. The tile cache
     // enumerates grid coordinates across the complete obstacle AABB.
     constexpr float maxExtent=100;
     if(!ValidateNavigationComponents(candidate,error)||settings.radius>maxExtent||
-       settings.height>maxExtent||glm::any(glm::greaterThan(settings.halfExtents,glm::vec3(maxExtent))))
+       settings.height>maxExtent||glm::any(glm::greaterThan(settings.halfExtents,glm::vec3(maxExtent)))){
+        if(error.empty())error="invalid navigation obstacle dimensions";
         return false;
+    }
+    auto pose=definition->transform;
+    EntityPhysicalState physical;
+    if(GetEntityState(id,physical)){
+        pose.position=physical.position;
+        pose.rotation=physical.rotation;
+    }
+    if(!m_navigation->CanCarveObstacle(pose,settings)){
+        error="navigation obstacle exceeds Detour's eight tile layers";
+        return false;
+    }
     const auto& previous=*definition->navigationObstacle;
     if(previous.enabled==settings.enabled&&previous.cylinder==settings.cylinder&&
        previous.halfExtents==settings.halfExtents&&previous.radius==settings.radius&&

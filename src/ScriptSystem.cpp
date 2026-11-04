@@ -1671,9 +1671,11 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             if(!KnownOptions(c,options,{"enabled","cylinder","halfExtents","radius","height","updateDistance"})||
                !readBool("enabled",settings.enabled)||!readBool("cylinder",settings.cylinder)||
                !readVector("halfExtents",settings.halfExtents)||!readScalar("radius",settings.radius)||
-               !readScalar("height",settings.height)||!readScalar("updateDistance",settings.updateDistance)||
-               !world.SetNavigationObstacleSettings(id,settings))
+               !readScalar("height",settings.height)||!readScalar("updateDistance",settings.updateDistance))
                 return JS_ThrowTypeError(c,"invalid navigation obstacle patch");
+            std::string error;
+            if(!world.SetNavigationObstacleSettings(id,settings,error))
+                return JS_ThrowTypeError(c,"%s",error.empty()?"invalid navigation obstacle patch":error.c_str());
             return JS_TRUE;
         }
         if(!definition->navigationLink)return JS_FALSE;
