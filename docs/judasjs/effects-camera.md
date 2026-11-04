@@ -23,6 +23,8 @@ and reducing lifetime expires particles that already exceed it. Changing
 `localSpace` clears live particles. A new seed affects future emission. Changing
 `burst` does not replay a startup burst. Call `entity.burst(count)` for immediate emission.
 Modern save slots retain settings. Live particles are transient.
+`entity.particles` returns a detached snapshot of all current emitter settings,
+or null without an emitter. An untextured emitter reports `textureAsset: null`.
 Pose follows entity transforms. Offscreen emitters continue ageing.
 
 ## Cameras
@@ -34,6 +36,8 @@ or null. `setCameraEnabled(bool)` returns success.
 patches an existing secondary camera for the current played world. FOV is vertical
 degrees, cadence is a positive frame count, and render layers are registered names.
 An empty array draws no entity layers and null restores the all-layer mask.
+Read back `fov`, `updateEveryFrames` and `renderLayers` from `entity.camera`.
+The returned layer list is detached and uses registered names.
 Omitted fields retain their values. Invalid fields reject the whole patch.
 `setCameraTargetSize(width, height)` requests dimensions in integer pixels from
 1 to 4096. It returns false without a camera and throws for invalid dimensions.

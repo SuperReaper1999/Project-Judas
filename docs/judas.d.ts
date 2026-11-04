@@ -193,7 +193,7 @@ declare module "judas" {
   export interface CameraClipPlane {normal:Vec3;point:Vec3}
   /** Render-target camera projection: near/far plus optional frustum/clipPlane (omitted keeps, null clears). */
   export interface CameraProjection extends CameraRange {frustum?:CameraFrustum|null;clipPlane?:CameraClipPlane|null}
-  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; targetWidth:number; targetHeight:number; targetError:string|null; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
+  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; targetWidth:number; targetHeight:number; targetError:string|null; fov:number; updateEveryFrames:number; renderLayers:string[]|null; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -216,6 +216,7 @@ declare module "judas" {
     burst?:number; maxParticles?:number; seed?:number; textureAsset?:AssetId|null;
     velocity?:Vec3; velocityVariation?:Vec3; spread?:Vec3; acceleration?:Vec3;
   }
+  export type ParticleSettings = Required<ParticleSettingsPatch>;
   export interface CastHit {
     physicalMaterial:AssetId|null;
     entity: Entity | null; entityId: EntityId; bodyId: number;
@@ -443,6 +444,7 @@ declare module "judas" {
     pauseAudio(): boolean;
     resumeAudio(): boolean;
     burst(count: number): boolean;
+    readonly particles: ParticleSettings | null;
     setParticles(settings: ParticleSettingsPatch): boolean;
     setCameraEnabled(enabled: boolean): boolean;
     setCameraTargetSize(width:number,height:number):boolean;
@@ -622,7 +624,7 @@ declare module "judas" {
     /** Agent path corners have native linkId, not the top-level path's link wrappers. */
     path: Omit<NavigationPath, "corners"> & { corners: Omit<NavigationCorner, "link">[] };
   }
-  export interface NavigationAgentPatch extends NavigationFilter { speed?: number; arrival?: number; repathSeconds?: number; avoidance?: boolean }
+  export interface NavigationAgentPatch extends NavigationFilter { speed?: number; arrival?: number; cornerDistance?: number; repathSeconds?: number; avoidance?: boolean }
   export interface NavigationObstacleInfo { enabled: boolean; cylinder: boolean; halfExtents: Vec3; radius: number; height: number; updateDistance: number }
   export interface NavigationLinkInfo { enabled: boolean; bidirectional: boolean; start: Vec3; end: Vec3; area: number; radius: number; localStart: Vec3; localEnd: Vec3 }
   export class NavigationAgent {

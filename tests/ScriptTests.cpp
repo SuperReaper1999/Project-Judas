@@ -99,6 +99,22 @@ export default class {
     catch { this.state.invalidCamera=true; }
     try { e.setParticles({rate:33,spread:{x:-1,y:0,z:0}}); }
     catch { this.state.invalidParticles=true; }
+    const snapshot=e.particles;
+    snapshot.velocity.x=100;
+    snapshot.color.r=0;
+    this.state.particleReadback=e.particles.velocity.x===2&&e.particles.color.r===1&&
+      e.particles.textureAsset===null&&e.particles.seed===99&&e.particles.maxParticles===2;
+    this.state.cameraReadback=e.camera.fov===42&&e.camera.updateEveryFrames===3&&
+      Array.isArray(e.camera.renderLayers)&&e.camera.renderLayers.length===0;
+    e.setCameraPresentation({renderLayers:null});
+    this.state.allLayers=e.camera.renderLayers===null;
+    e.setCameraPresentation({renderLayers:['Default']});
+    this.state.namedLayers=e.camera.renderLayers.join(',')==='Default';
+    e.setCameraPresentation({renderLayers:[]});
+    this.state.nav=e.navigation.configure({cornerDistance:0.75});
+    try {e.navigation.configure({cornerDistance:0,speed:99});}
+    catch {this.state.invalidCorner=true;}
+
   }
 })JS";
     AssetRecord controls;
@@ -111,6 +127,7 @@ export default class {
     controlled.renderCamera=SceneRenderCameraComponent{};
     controlled.basicWater=BasicWaterSettings{};
     controlled.particleEmitter=ParticleEmitterSettings{};
+    controlled.navigationAgent=NavigationAgentSettings{};
     controlled.scripts.push_back({1,controls.id,true,"{}"});
     RuntimeWorld controlsWorld;
     Check(controlsWorld.Build(controlsScene,&resources,error),"runtime controls fixture builds");
@@ -126,6 +143,16 @@ export default class {
           observed.find("\"invalidParticles\":true")!=std::string::npos&&
           observed.find("\"invalidTexture\":true")!=std::string::npos,
           "invalid control patches throw through the public API");
+    Check(observed.find("\"particleReadback\":true")!=std::string::npos&&
+          observed.find("\"cameraReadback\":true")!=std::string::npos&&
+          observed.find("\"allLayers\":true")!=std::string::npos&&
+          observed.find("\"namedLayers\":true")!=std::string::npos,
+          "camera layer masks and detached particle settings round trip through JudasJS");
+    const auto& nav=*controlsWorld.RuntimeDefinition(controlled.id)->navigationAgent;
+    Check(observed.find("\"nav\":true")!=std::string::npos&&
+          observed.find("\"invalidCorner\":true")!=std::string::npos&&
+          nav.cornerDistance==.75f&&nav.speed==3.f,
+          "navigation corner tolerance reaches the agent and rejects invalid patches atomically");
     const auto waters=controlsWorld.BasicWaters();
     const auto swim=controlsWorld.SampleWater({2,-1,0},{0,1,0},0.5f,0.2f);
     Check(waters.size()==1&&waters.front().settings.opacity==0.5f&&swim.immersion>0.9f&&swim.velocity.x==2,

@@ -234,6 +234,7 @@ export class Entity {
  pauseAudio(){return call('pauseAudio',this.id)}
  resumeAudio(){return call('resumeAudio',this.id)}
  burst(count){return call('burst',this.id,count)}
+ get particles(){return call('particleInfo',this.id)}
  setParticles(settings){return call('particles',this.id,settings)}
  setCameraEnabled(enabled){return call('camera',this.id,enabled)}
  setCameraTargetSize(width,height){return call('cameraTargetSize',this.id,width,height)}
@@ -1737,7 +1738,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto* a=world.Navigation().Agent(id);if(!a||!definition->navigationAgent->enabled)return JS_ThrowReferenceError(c,"disabled/unregistered navigation agent");
         if(op=="navDestination"){glm::vec3 v;if(!ReadVec(c,arg(2),v))return JS_ThrowTypeError(c,"finite destination required");return JS_NewBool(c,world.Navigation().SetDestination(id,v));}
         if(op=="navClear"){world.Navigation().ClearDestination(id);return JS_TRUE;}if(op=="navStopped"){if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"boolean required");a->stopped=JS_ToBool(c,arg(2));return JS_TRUE;}if(op=="navCompleteLink")return JS_NewBool(c,world.Navigation().CompleteLink(id));
-        if(op=="navConfigure"){NavigationFilter f;f.profile=definition->navigationAgent->profile;f.include=definition->navigationAgent->areas;f.costs=definition->navigationAgent->costs;if(!navFilter(arg(2),f))return JS_ThrowTypeError(c,"invalid navigation filter");auto config=*definition->navigationAgent;config.profile=f.profile;config.areas=f.include&~f.exclude;config.costs=f.costs;for(auto field:{std::pair<const char*,float*>{"speed",&config.speed},{"arrival",&config.arrival},{"repathSeconds",&config.repathSeconds}}){auto v=JS_GetPropertyStr(c,arg(2),field.first);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,arg(2),field.first,*field.second))return JS_ThrowTypeError(c,"invalid navigation setting");}auto v=JS_GetPropertyStr(c,arg(2),"avoidance");if(!JS_IsUndefined(v)){if(!JS_IsBool(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"boolean required");}config.avoidance=JS_ToBool(c,v);}JS_FreeValue(c,v);SceneObject check;check.navigationAgent=config;std::string error;if(!ValidateNavigationComponents(check,error))return JS_ThrowTypeError(c,"%s",error.c_str());world.SetNavigationAgentSettings(id,config);return JS_TRUE;}
+        if(op=="navConfigure"){NavigationFilter f;f.profile=definition->navigationAgent->profile;f.include=definition->navigationAgent->areas;f.costs=definition->navigationAgent->costs;if(!navFilter(arg(2),f))return JS_ThrowTypeError(c,"invalid navigation filter");auto config=*definition->navigationAgent;config.profile=f.profile;config.areas=f.include&~f.exclude;config.costs=f.costs;for(auto field:{std::pair<const char*,float*>{"speed",&config.speed},{"arrival",&config.arrival},{"cornerDistance",&config.cornerDistance},{"repathSeconds",&config.repathSeconds}}){auto v=JS_GetPropertyStr(c,arg(2),field.first);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,arg(2),field.first,*field.second))return JS_ThrowTypeError(c,"invalid navigation setting");}auto v=JS_GetPropertyStr(c,arg(2),"avoidance");if(!JS_IsUndefined(v)){if(!JS_IsBool(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"boolean required");}config.avoidance=JS_ToBool(c,v);}JS_FreeValue(c,v);SceneObject check;check.navigationAgent=config;std::string error;if(!ValidateNavigationComponents(check,error))return JS_ThrowTypeError(c,"%s",error.c_str());world.SetNavigationAgentSettings(id,config);return JS_TRUE;}
         auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"stopped",JS_NewBool(c,a->stopped));JS_SetPropertyStr(c,result,"hasDestination",JS_NewBool(c,a->hasDestination));JS_SetPropertyStr(c,result,"destination",Vec(c,a->destination));JS_SetPropertyStr(c,result,"steering",Vec(c,a->steering));JS_SetPropertyStr(c,result,"remainingDistance",JS_NewFloat64(c,a->remaining));JS_SetPropertyStr(c,result,"reached",JS_NewBool(c,a->hasDestination&&a->path.status==NavigationPath::Status::Complete&&a->remaining<=definition->navigationAgent->arrival));JS_SetPropertyStr(c,result,"nextCorner",a->corner<a->path.corners.size()?Vec(c,a->path.corners[a->corner].position):JS_NULL);JS_SetPropertyStr(c,result,"onLink",JS_NewBool(c,a->onLink));JS_SetPropertyStr(c,result,"linkId",JS_NewString(c,std::to_string(a->onLink&&a->corner<a->path.corners.size()?a->path.corners[a->corner].link:0).c_str()));JS_SetPropertyStr(c,result,"linkEnd",Vec(c,a->onLink&&a->corner<a->path.corners.size()?a->path.corners[a->corner].linkEnd:glm::vec3(0)));JS_SetPropertyStr(c,result,"path",navPath(a->path));return result;
     }
     if(op.rfind("ragdoll",0)==0){
@@ -2092,6 +2093,17 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         JS_SetPropertyStr(c,o,"targetWidth",JS_NewInt32(c,camera.targetSize.x));
         JS_SetPropertyStr(c,o,"targetHeight",JS_NewInt32(c,camera.targetSize.y));
         JS_SetPropertyStr(c,o,"targetError",camera.error.empty()?JS_NULL:JS_NewString(c,camera.error.c_str()));
+        JS_SetPropertyStr(c,o,"fov",JS_NewFloat64(c,camera.settings.verticalFovDegrees));
+        JS_SetPropertyStr(c,o,"updateEveryFrames",JS_NewInt32(c,camera.settings.updateEveryFrames));
+        JSValue layers=JS_NULL;
+        if(camera.settings.renderMask!=kAllCategories){
+            layers=JS_NewArray(c);
+            unsigned index=0;
+            for(const auto& [bit,name]:world.Categories().render.names)
+                if(camera.settings.renderMask&CategoryBit(bit))
+                    JS_SetPropertyUint32(c,layers,index++,JS_NewString(c,name.c_str()));
+        }
+        JS_SetPropertyStr(c,o,"renderLayers",layers);
         if(camera.hasFrustum){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"left",JS_NewFloat64(c,camera.frustum.x));JS_SetPropertyStr(c,f,"right",JS_NewFloat64(c,camera.frustum.y));JS_SetPropertyStr(c,f,"bottom",JS_NewFloat64(c,camera.frustum.z));JS_SetPropertyStr(c,f,"top",JS_NewFloat64(c,camera.frustum.w));JS_SetPropertyStr(c,o,"frustum",f);}else JS_SetPropertyStr(c,o,"frustum",JS_NULL);
         if(camera.hasClipPlane){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"normal",Vec(c,camera.clipNormal));JS_SetPropertyStr(c,f,"point",Vec(c,camera.clipPoint));JS_SetPropertyStr(c,o,"clipPlane",f);}else JS_SetPropertyStr(c,o,"clipPlane",JS_NULL);
         return o;}return JS_NULL;}
@@ -2165,6 +2177,33 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(op=="playAudio"||op=="stopAudio"||op=="pauseAudio"||op=="resumeAudio")return JS_NewBool(c,op=="playAudio"?world.PlayAudio(id):op=="stopAudio"?world.StopAudio(id):op=="pauseAudio"?world.PauseAudio(id):world.ResumeAudio(id));
     if(op=="burst"){uint32_t n=0;JS_ToUint32(c,&n,arg(2));if(n>65536)return JS_ThrowTypeError(c,"burst too large");return JS_NewBool(c,world.EmitParticleBurst(id,n));}
+    if(op=="particleInfo"){
+        for(const auto& emitter:world.VisualEmitters())if(emitter.id==id){
+            const auto& p=emitter.pool.settings;
+            auto out=JS_NewObject(c);
+            for(auto [key,value]:{std::pair<const char*,bool>{"enabled",p.enabled},
+                {"loop",p.loop},{"localSpace",p.localSpace},{"useGravity",p.useGravity}})
+                JS_SetPropertyStr(c,out,key,JS_NewBool(c,value));
+            for(auto [key,value]:{std::pair<const char*,double>{"rate",p.rate},{"lifetime",p.lifetime},
+                {"size",p.size},{"endSize",p.endSize},{"burst",p.burst*1.0},
+                {"maxParticles",p.maxParticles*1.0},{"seed",p.seed*1.0}})
+                JS_SetPropertyStr(c,out,key,JS_NewFloat64(c,value));
+            for(auto [key,value]:{std::pair<const char*,glm::vec3>{"velocity",p.velocity},
+                {"velocityVariation",p.velocityVariation},{"spread",p.spread},{"acceleration",p.acceleration}})
+                JS_SetPropertyStr(c,out,key,Vec(c,value));
+            for(auto [key,value]:{std::pair<const char*,glm::vec4>{"color",p.color},{"endColor",p.endColor}}){
+                auto rgba=JS_NewObject(c);
+                JS_SetPropertyStr(c,rgba,"r",JS_NewFloat64(c,value.r));
+                JS_SetPropertyStr(c,rgba,"g",JS_NewFloat64(c,value.g));
+                JS_SetPropertyStr(c,rgba,"b",JS_NewFloat64(c,value.b));
+                JS_SetPropertyStr(c,rgba,"a",JS_NewFloat64(c,value.a));
+                JS_SetPropertyStr(c,out,key,rgba);
+            }
+            JS_SetPropertyStr(c,out,"textureAsset",p.textureAsset.empty()?JS_NULL:JS_NewString(c,p.textureAsset.c_str()));
+            return out;
+        }
+        return JS_NULL;
+    }
     if(op=="particles"){
         auto options=arg(2);
         if(!KnownOptions(c,options,{"enabled","loop","localSpace","useGravity","rate","lifetime","size","endSize","velocity","velocityVariation","spread","acceleration","color","endColor","burst","maxParticles","seed","textureAsset"}))

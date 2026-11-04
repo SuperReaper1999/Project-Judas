@@ -117,6 +117,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.parent` | `parent` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.particles` | `particleInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.pauseAudio` | `pauseAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.physicalMaterial` | `physicalMaterialInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.planetSample` | `planetSample` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |

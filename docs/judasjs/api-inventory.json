@@ -422,7 +422,10 @@
         "clipPlane",
         "targetWidth",
         "targetHeight",
-        "targetError"
+        "targetError",
+        "fov",
+        "updateEveryFrames",
+        "renderLayers"
       ],
       "nativeFile": "src/ScriptSystem.cpp",
       "needles": [
@@ -3077,6 +3080,17 @@
         "parent"
       ],
       "type": "docs/judas.d.ts:Entity.parent",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.particles",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "particleInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.particles",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -7741,6 +7755,7 @@
     "overlap",
     "overlapShape",
     "parent",
+    "particleInfo",
     "particles",
     "pauseAudio",
     "physicalMaterialInfo",

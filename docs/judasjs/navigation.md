@@ -89,8 +89,10 @@ stale/destroyed entity handles throw ReferenceError. No native pointer is expose
 - `clear()`: forget route/destination, zero guidance; returns true.
 - `stopped`: read/write bool; suppress guidance without forgetting destination.
 - `enabled`: setter-only bool; changes component state, reads yield undefined.
-- `configure({profile,includeAreas,excludeAreas,costs,speed,arrival,repathSeconds,avoidance})`:
-  partial settings patch. Speed m/s; arrival m; cadence seconds; positive finite values.
+- `configure({profile,includeAreas,excludeAreas,costs,speed,arrival,cornerDistance,repathSeconds,avoidance})`:
+  Partial settings patch. Speed is in m/s and cadence is in seconds.
+  `cornerDistance` is the positive distance in metres for advancing to a route
+  corner or entering a link. `arrival` separately controls destination tolerance.
 - `state`: snapshot with destination, hasDestination, stopped, path, steering,
   remainingDistance, reached, nextCorner, onLink, linkId/link, linkEnd.
 - `steering` / `remainingDistance`: conveniences returning snapshot values.
