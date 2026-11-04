@@ -473,6 +473,33 @@ PhysicsCastHit PhysicsWorld::Cast(const Shape &shape, const BodyTransform &pose,
     return result;
 }
 
+std::vector<BodyHandle> PhysicsWorld::OverlapShape(const Shape& shape,const BodyTransform& pose,
+                                                  const PhysicsQueryFilter& filter,unsigned limit,
+                                                  bool& truncated) const {
+    JUDAS_PROFILE_SCOPE("Physics shape overlap");
+    truncated=false;
+    std::vector<BodyHandle> hits;
+    if(!m_impl)return hits;
+    if(filter.planar)throw std::invalid_argument("overlapShape is a spatial query");
+    const auto bounds=ShapeAabb(shape,pose.position,pose.rotation);
+    for(const auto slot:m_impl->QuerySlots(bounds.Expanded(kSweepQueryEpsilon))){
+        if(!m_impl->MatchesQuery(slot,filter))continue;
+        const auto& body=m_impl->bodies[slot];
+        for(int part=0;part<PrimitiveCount(body.shape);++part){
+            const auto primitive=PrimitiveAt(body.shape,body.rigidBody,part);
+            const auto hit=CastAgainstPrimitive(shape,pose,{1,0,0},0,primitive,true);
+            if(!hit.hit)continue;
+            if(hits.size()==limit){
+                truncated=true;
+                return hits;
+            }
+            hits.push_back(m_impl->MakeHandle(slot));
+            break;
+        }
+    }
+    return hits;
+}
+
 PhysicsClosestPoint PhysicsWorld::ClosestPoint(const glm::vec3 &point, float maximum,
                                                const PhysicsQueryFilter &filter) const {
     for (int k = 0; k < 3; ++k)

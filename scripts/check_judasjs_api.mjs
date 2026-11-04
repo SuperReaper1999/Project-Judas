@@ -168,7 +168,7 @@ const schema={checkpoint:'Current public module including Utility AI sensing/res
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k==='physics.cast2D')native=['cast2D'];
- else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];
+ else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint','physics.overlapShape'].includes(k))native=['cast'];
  const page=referencePage(k);
  return {symbol:k,kinds:v.kinds.slice().sort(),native,type:'docs/judas.d.ts:'+k,reference:'docs/judasjs/'+page};}),nativeOperations:nativeOps,
  callbacks:['onOriginShift','onSignal','onFracture','start','restore','update','fixedUpdate','uiUpdate','presentationUpdate','destroy','onUI','onCollisionEnter','onCollisionStay','onCollisionExit','onTriggerEnter','onTriggerStay','onTriggerExit'],

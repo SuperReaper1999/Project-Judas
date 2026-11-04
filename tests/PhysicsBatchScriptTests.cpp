@@ -92,6 +92,26 @@ export default class {
   this.rejects(()=>physics.raycastMany([ray],{includeLayers:['does-not-exist']}));
   const runtime=physics.raycastMany([ray],{requiredTags:['runtime']})[0];this.check(runtime&&runtime.entity.valid&&this.near(runtime.distance,11.5),'runtime prefab query participates');
   const dynamic=physics.raycastMany([{origin:{x:0,y:3,z:0},direction,maximum:20}])[0];this.check(dynamic?.entity.id==='7'&&this.near(dynamic.distance,3.5),'dynamic body query');
+  const shape={kind:'sphere',radius:1}, placement={position:{x:30,y:0,z:0}};
+  const overlap=(limit=32,filter={})=>physics.overlapShape(shape,placement,limit,filter);
+  const matchingIds=result=>result.hits.map(hit=>hit.entity?.id).join(',');
+  const all=overlap();
+  this.check(matchingIds(all)==='8,9'&&!all.truncated,'compound deduplication and real geometry, no AABB corner false positive');
+  const limited=overlap(1);
+  this.check(matchingIds(limited)==='8'&&limited.truncated,'bounded stable first body and truncation');
+  this.check(!overlap(2).truncated,'exactly full output is not truncated');
+  this.check(matchingIds(overlap(32,{includeSensors:true}))==='8,9,11','sensor opt-in');
+  this.check(matchingIds(overlap(32,{ignored:[world.entity('8')]}))==='9','ignored compound body');
+  this.check(matchingIds(overlap(32,{includeLayers:['Other']}))==='9','named collision layer filtering');
+  this.check(physics.overlapShape({kind:'box',halfExtents:{x:1,y:1,z:1}},placement).hits.length===3,
+             'box overlaps the corner body missed by a sphere');
+  this.check(physics.overlapShape({kind:'capsule',radius:0.1,halfHeight:1},placement).hits.length===1,
+             'capsule uses its actual radius and axial extent');
+  this.check(physics.overlapShape({kind:'sphere',radius:0.499999}, {position:{x:30,y:-1,z:0}}).hits.length===0,
+             'positive sub-tolerance separation is not an overlap');
+  this.rejects(()=>overlap(257));
+  this.rejects(()=>physics.overlapShape(shape,{}));
+  this.rejects(()=>physics.overlapShape({kind:'sphere',radius:0},placement));
   this.state.ready=true;
  }
  fixedUpdate(){
@@ -116,6 +136,16 @@ export default class {
  auto rotated=box("Rotated",{0,0,-5},{1,1,1});definition.Find(rotated)->transform.rotation=glm::angleAxis(glm::radians(45.f),glm::vec3(0,1,0));
  auto disabled=box("Disabled",{1,0,0},{.1f,.1f,.1f});definition.Find(disabled)->body->enabled=false;
  auto dynamic=box("Dynamic",{4,3,0},{.5f,.5f,.5f});definition.Find(dynamic)->body->motion=SceneBodyMotion::Dynamic;
+ auto compound=box("Overlapping compound",{30,0,0},{.5f,.5f,.5f});
+ auto& compoundBody=*definition.Find(compound)->body;
+ compoundBody.shape=SceneShape::Compound;
+ compoundBody.compoundBoxes={{glm::vec3(-.2f,0,0),glm::vec3(.3f,.5f,.3f)},
+                             {glm::vec3(.2f,0,0),glm::vec3(.3f,.5f,.3f)}};
+ auto other=box("Other collision layer",{30.8f,0,0},{.15f,.15f,.15f});
+ definition.Find(other)->body->collisionLayer=otherLayer;
+ box("Broadphase corner only",{30.9f,0,.9f},{.05f,.05f,.05f});
+ auto overlapSensor=box("Overlap sensor",{30,0,.8f},{.1f,.1f,.1f});
+ definition.Find(overlapSensor)->body->sensor=true;
  Scene prefabScene;auto spawned=prefabScene.CreateObject("Runtime box").id;auto* spawn=prefabScene.Find(spawned);spawn->body=SceneBodyComponent{};spawn->tags=CategoryBit(runtimeTag);
  Check(SaveSceneToFile(prefabScene,(root/"Assets/query.judasprefab").string(),error)&&assets.Track((root/"Assets/query.judasprefab").string(),prefab,error),"ordinary prefab asset");
  ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(definition,&resources,error,&categories),"normal authoritative runtime world");

@@ -78,6 +78,12 @@ int main(){try{
  PhysicsWorld world;world.Init();auto h=world.CreateShape(hull,{{0,0,0},{1,0,0,0}},false,0,.5,0);auto hit=world.Raycast({0,0,5},{0,0,-1},10);require(hit.hit&&hit.body.id==h.id&&std::abs(hit.distance-4)<1e-5,"hull ray exact face");auto sphere=world.SphereCast({0,0,5},.5,{0,0,-1},10);require(sphere.hit&&std::abs(sphere.distance-3.5)<1e-4,"hull sphere cast");
  settings.convex=false;MeshData plane;for(auto p:{glm::vec3(-10,0,-10),glm::vec3(10,0,-10),glm::vec3(10,0,10),glm::vec3(-10,0,10)}){MeshVertex v;v.position=p;plane.vertices.push_back(v);}plane.indices={0,2,1,0,3,2};if(!CookCollision(plane,settings,loaded,error))throw std::runtime_error(error);require(true,"plane cook");require(!loaded.faces[0].active[0],"coplanar diagonal inactive");Shape mesh=Shape::Cooked(std::make_shared<CollisionAsset>(loaded),"plane");auto floor=world.CreateShape(mesh,{{0,-3,0},{1,0,0,0}},false,0,.5,0);auto ray=world.Raycast({5,0,5},{0,-1,0},10);require(ray.hit&&ray.body.id==floor.id&&std::abs(ray.distance-3)<1e-5,"mesh ray real triangle");require(!world.Raycast({5,-4,5},{0,1,0},.5).hit,"one sided mesh backface");
  auto touchingRay=world.Raycast({5,-3,5},{1,0,0},0);require(touchingRay.hit&&touchingRay.initialOverlap&&touchingRay.distance==0,"zero distance tangent ray detects existing mesh touch");
+ bool truncated=false;
+ auto overlaps=world.OverlapShape(Shape::Sphere(.25f),{{5,-2.8f,5},{1,0,0,0}}, {},8,truncated);
+ require(overlaps.size()==1&&overlaps.front().id==floor.id&&!truncated,
+         "stationary overlap finds the cooked floor once across its triangle seam");
+ require(world.OverlapShape(Shape::Sphere(.25f),{{5,-2.749999f,5},{1,0,0,0}}, {},8,truncated).empty(),
+         "stationary overlap rejects a positive gap within cast tolerance on the cooked mesh");
  auto dynamic=world.CreateShape(hull,{{5,-2.1f,0},{1,0,0,0}},true,2,.5,0);world.ApplyLinearAcceleration(dynamic,{0,-9.8,0},1.f/60);world.Step(1.f/60);require(world.LastStepContactCount()>0,"dynamic hull contact mesh");
 
  // Tilted face contacts must report their own witness depths, not one SAT

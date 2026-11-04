@@ -426,6 +426,10 @@ export class Joint {
  setSpring(rest,stiffness,damping,spring=true){return call('jointSet',this.id,{rest,stiffness,damping,spring})}
 }
 export const physics={
+ overlapShape:(shape,pose,limit=32,filter={})=>{
+   const result=call('overlapShape',shape,pose,limit,filter);
+   return {...result,hits:result.hits.map(hit=>({...hit,entity:entity(hit.entityId)}))};
+ },
  cast2D:(shape,pose,direction,maximum,filter={})=>castResult(call('cast2D',shape,pose,direction,maximum,filter)),
  gravity:point=>call('gravitySample',point),
  createJoint:(owner,settings)=>new Joint(call('jointCreate',owner.id,{...settings,bodyAId:settings.bodyA?.id,bodyBId:settings.bodyB?.id??'0'})),
@@ -1432,6 +1436,67 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
            !queryFilter(arg(5),filter,error))return JS_ThrowTypeError(c,"cast2D: convex native 2D shape, unit-scale pose, finite direction/distance and valid filter required");
         try{return castHit(world.Physics().CastPlanar(Shape::Planar(shape),{pose.position,pose.rotation},direction,float(maximum),filter));}
         catch(const std::exception& e){return JS_ThrowTypeError(c,"cast2D: %s",e.what());}
+    }
+    if(op=="overlapShape"){
+        const auto spec=arg(1);
+        const auto placement=arg(2);
+        double limit=0;
+        if(!JS_IsNumber(arg(3))||JS_ToFloat64(c,&limit,arg(3))||!std::isfinite(limit)||
+           limit<1||limit>256||limit!=std::floor(limit))
+            return JS_ThrowRangeError(c,"overlapShape limit must be an integer from 1 to 256");
+        auto kindValue=JS_GetPropertyStr(c,spec,"kind");
+        const auto kind=String(c,kindValue);
+        JS_FreeValue(c,kindValue);
+        Shape shape;
+        if(kind=="box"){
+            auto value=JS_GetPropertyStr(c,spec,"halfExtents");
+            glm::vec3 halfExtents;
+            const bool valid=ReadVec(c,value,halfExtents)&&glm::all(glm::greaterThan(halfExtents,glm::vec3(0)));
+            JS_FreeValue(c,value);
+            if(!valid)return JS_ThrowTypeError(c,"positive box halfExtents required");
+            shape=Shape::Box(halfExtents);
+        }else if(kind=="sphere"||kind=="capsule"){
+            float radius=0,halfHeight=0;
+            if(!Number(c,spec,"radius",radius)||radius<=0||
+               (kind=="capsule"&&(!Number(c,spec,"halfHeight",halfHeight)||halfHeight<0)))
+                return JS_ThrowTypeError(c,"positive radius and nonnegative capsule halfHeight required");
+            shape=kind=="sphere"?Shape::Sphere(radius):Shape::Capsule(radius,halfHeight);
+        }else return JS_ThrowTypeError(c,"overlapShape requires box, sphere or capsule");
+        SceneTransform pose;
+        if(!KnownOptions(c,placement,{"position","rotation"}))
+            return JS_ThrowTypeError(c,"overlapShape requires a finite position and optional rotation");
+        auto position=JS_GetPropertyStr(c,placement,"position");
+        auto rotation=JS_GetPropertyStr(c,placement,"rotation");
+        const bool validPose=ReadVec(c,position,pose.position)&&
+            (JS_IsUndefined(rotation)||(Number(c,rotation,"w",pose.rotation.w)&&
+                Number(c,rotation,"x",pose.rotation.x)&&Number(c,rotation,"y",pose.rotation.y)&&
+                Number(c,rotation,"z",pose.rotation.z)&&std::isfinite(glm::dot(pose.rotation,pose.rotation))&&
+                glm::dot(pose.rotation,pose.rotation)>1e-12f));
+        JS_FreeValue(c,position);
+        JS_FreeValue(c,rotation);
+        if(!validPose)return JS_ThrowTypeError(c,"overlapShape requires a finite position and optional rotation");
+        pose.rotation=glm::normalize(pose.rotation);
+        PhysicsQueryFilter filter;
+        std::string error;
+        if(!queryFilter(arg(4),filter,error))return JS_ThrowTypeError(c,"overlapShape filter: %s",error.c_str());
+        bool truncated=false;
+        std::vector<BodyHandle> matches;
+        try{
+            matches=world.Physics().OverlapShape(shape,{pose.position,pose.rotation},filter,unsigned(limit),truncated);
+        }catch(const std::exception& exception){
+            return JS_ThrowTypeError(c,"overlapShape: %s",exception.what());
+        }
+        auto hits=JS_NewArray(c);
+        for(uint32_t i=0;i<matches.size();++i){
+            auto hit=JS_NewObject(c);
+            JS_SetPropertyStr(c,hit,"bodyId",JS_NewUint32(c,matches[i].id));
+            JS_SetPropertyStr(c,hit,"entityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(matches[i])).c_str()));
+            JS_SetPropertyUint32(c,hits,i,hit);
+        }
+        auto result=JS_NewObject(c);
+        JS_SetPropertyStr(c,result,"hits",hits);
+        JS_SetPropertyStr(c,result,"truncated",JS_NewBool(c,truncated));
+        return result;
     }
     if(op=="castMany"){
         JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);

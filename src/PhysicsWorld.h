@@ -314,6 +314,9 @@ public:
     PhysicsCastHit BoxCast(const BodyTransform& pose,const glm::vec3& halfExtents,const glm::vec3& direction,float maximum,
         const PhysicsQueryFilter& filter={},PhysicsCastStats* stats=nullptr) const;
 
+    // One result per body, in ascending slot order. Stops after detecting truncation.
+    std::vector<BodyHandle> OverlapShape(const Shape&,const BodyTransform&,const PhysicsQueryFilter&,
+                                         unsigned limit,bool& truncated) const;
     void QueryBodiesInAabbInto(const glm::vec3& min,const glm::vec3& max,std::vector<BodyHandle>& output,const PhysicsQueryFilter& filter={})const;
     std::vector<BodyHandle> QueryBodiesInAabb(const glm::vec3& min, const glm::vec3& max, const PhysicsQueryFilter& filter = {}) const;
     bool SetCollisionFilter(BodyHandle,unsigned layer,CategoryMask mask);

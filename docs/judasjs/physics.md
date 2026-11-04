@@ -282,3 +282,37 @@ See [character](character.md), [lifecycle](lifecycle.md) and
 M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
 
 Native sprite-game bodies, casts, pin/weld joints and domain boundaries: [2D physics](physics-2d.md).
+
+## Multi-hit shape overlap
+
+`physics.overlapShape(shape, pose, limit = 32, filter = {})` tests a stationary
+3D box, sphere or capsule against current collision geometry. For example:
+
+```js
+const result = physics.overlapShape(
+  {kind: 'sphere', radius: 1.5},
+  {position: swordCenter},
+  16,
+  {requiredTags: ['damageable'], ignored: [attacker]}
+);
+for (const {entity} of result.hits) {
+  if (entity?.valid) applyDamage(entity);
+}
+```
+
+Use positive box half extents or sphere/capsule radius, and a nonnegative
+capsule half height. Dimensions and position are in metres. The optional
+quaternion orients the box or capsule. The capsule's local axis is +Y.
+The query shares the native cast geometry and sidedness rules. It checks
+initial contact only and excludes positive cast-tolerance gaps. Radial
+terrain retains the existing sampled sphere/capsule query. Box queries
+against radial terrain are unsupported. Planar colliders are excluded.
+
+Results contain at most `limit` body hits (1–256) in stable body-slot order
+for the current world. A compound collider contributes one body hit.
+Each hit has `bodyId`, `entityId`, and `entity` (null for a body without a
+script entity). Distinct bodies can map to the same gameplay target, so
+deduplicate by your target identity when applying damage. `truncated`
+means at least one additional qualifying body was found. This cap bounds
+returned results and stops narrowphase work after the first omitted hit.
+Dense broadphase matches can still make a query expensive.

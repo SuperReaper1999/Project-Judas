@@ -11,4 +11,4 @@ struct PrimitiveCastHit {
     uint32_t feature=UINT32_MAX;
 };
 PrimitiveCastHit CastAgainstPrimitive(const Shape& cast, const BodyTransform& pose,
-    const glm::vec3& unitDirection, double maxDistance, const PrimitivePose& target);
+    const glm::vec3& unitDirection, double maxDistance, const PrimitivePose& target, bool initialOnly=false);

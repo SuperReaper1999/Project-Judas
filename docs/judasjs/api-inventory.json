@@ -1584,6 +1584,11 @@
       "maximum": 1
     },
     {
+      "symbol": "physics.overlapShape",
+      "minimum": 2,
+      "maximum": 4
+    },
+    {
       "symbol": "physics.raycast",
       "minimum": 3,
       "maximum": 4
@@ -6519,6 +6524,17 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "physics.overlapShape",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "overlapShape"
+      ],
+      "type": "docs/judas.d.ts:physics.overlapShape",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
       "symbol": "physics.raycast",
       "kinds": [
         "call"
@@ -7653,6 +7669,7 @@
     "networkState",
     "networkValid",
     "overlap",
+    "overlapShape",
     "parent",
     "particles",
     "pauseAudio",

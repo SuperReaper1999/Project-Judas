@@ -46,7 +46,7 @@ PrimitiveCastHit MakeHit(double t,const Distance& d,bool overlap) {
 }
 
 PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pose,
-    const glm::vec3& direction,double maximum,const PrimitivePose& target) {
+    const glm::vec3& direction,double maximum,const PrimitivePose& target,bool initialOnly) {
     const auto targetR=PrimitiveRotation(target);
     const glm::dvec3 targetCenter=PrimitiveCenter(target);
     const auto queryR=ContactRotation(pose.rotation);
@@ -94,7 +94,7 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
             double half=cast.type==ShapeType::Capsule?cast.halfHeight:0;return SegmentGeometry(center-queryR[1]*half,center+queryR[1]*half,cast.radius,target,maximum-t+1e-5,false,feature);
         };
         auto result=[&](double t,const GeometryDistance& d,bool overlap){PrimitiveCastHit hit{true,overlap,t,glm::vec3(d.point),glm::vec3(d.normal)};hit.feature=d.feature;return hit;};
-        if(target.shape.asset->convex){auto first=sample(0);if(first.valid&&first.gap<=0)return result(0,first,true);}
+        if(target.shape.asset->convex){auto first=sample(0);if(first.valid&&first.gap<=0)return result(0,first,true);if(initialOnly)return {};}
         if(cast.type==ShapeType::Sphere&&cast.radius==0) {
             // A ray originating exactly on a mesh surface is already touching,
             // including zero distance or a direction tangent to that surface.
@@ -115,6 +115,10 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
             }return nearest;
         }
         auto advance=[&](uint32_t feature,double bound){
+            if(initialOnly){
+                auto d=sample(0,feature);
+                return d.valid&&d.gap<=0?result(0,d,true):PrimitiveCastHit{};
+            }
             double t=0;
             for(unsigned iteration=0;iteration<256;++iteration){
                 auto d=sample(t,feature);if(!d.valid)return PrimitiveCastHit{};
@@ -140,7 +144,7 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
         target.shape.asset->Candidates(lo-glm::dvec3(tolerance),hi+glm::dvec3(tolerance),candidates,&visited);
         CountCollisionQuery(visited,0);
         PrimitiveCastHit nearest;double bound=maximum;
-        for(auto feature:candidates){auto hit=advance(feature,bound);if(hit.hit&&(!nearest.hit||hit.distance<nearest.distance||(hit.distance==nearest.distance&&hit.feature<nearest.feature))){nearest=hit;bound=hit.distance;}}
+        for(auto feature:candidates){auto hit=advance(feature,bound);if(initialOnly&&hit.hit)return hit;if(hit.hit&&(!nearest.hit||hit.distance<nearest.distance||(hit.distance==nearest.distance&&hit.feature<nearest.feature))){nearest=hit;bound=hit.distance;}}
         return nearest;
     }
     if(target.shape.type==ShapeType::Terrain) {
@@ -154,6 +158,7 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
                 if(gap<best.gap)best={gap,targetR*glm::dvec3(s.outwardNormal),targetCenter+targetR*glm::dvec3(s.surfacePoint)};}
             return best;};
         auto first=sample(0);if(first.gap<=0)return MakeHit(0,first,true);
+        if(initialOnly)return {};
         // Restrict sampling to the target's actual conservative bounding sphere.
         double radius=target.shape.terrain->BoundRadius()+cast.radius+cast.halfHeight;
         double projection=glm::dot(origin,dir),disc=projection*projection-glm::dot(origin,origin)+radius*radius;
@@ -165,6 +170,10 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
                 for(int j=0;j<32;++j){double mid=(lower+upper)*.5;if(sample(mid).gap<=0)upper=mid;else lower=mid;}
                 return MakeHit(upper,sample(upper),false);}}
         return {};
+    }
+    if(initialOnly){
+        const auto first=distance(0);
+        return first.gap<=0?MakeHit(0,first,true):PrimitiveCastHit{};
     }
     // A ray is a radius-zero point. Analytic primitives avoid grazing convergence
     // and detect arbitrarily thin boxes regardless of cast length.

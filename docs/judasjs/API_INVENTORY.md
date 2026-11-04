@@ -440,6 +440,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `physics.createJoint` | `jointCreate` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.gravity` | `gravitySample` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.joint` | `joint` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `physics.overlapShape` | `overlapShape` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.raycast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.raycastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.sphereCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
