@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Current developer reference links; not historical evidence, archives or all consumer assets. Local destinations and Markdown anchors only; prose semantics remain reviewed.",
+  "scope": "Current developer reference links and managed release/finding summaries; excludes historical evidence and all-consumer-asset certification. Other prose semantics remain reviewed.",
   "documents": [
     "README.md",
     "docs/README.md",
@@ -112,7 +112,8 @@
     "docs/UI_TRANSFERS_AND_PREVIEWS.md",
     "docs/ALPHA_V1_2_2_NOTES.md",
     "docs/ALPHA_V1_2_4_NOTES.md",
-    "docs/ALPHA_V1_2_5_NOTES.md"
+    "docs/ALPHA_V1_2_5_NOTES.md",
+    "docs/OUTSTANDING_WORK.md"
   ],
   "historical_exclusions": [
     {

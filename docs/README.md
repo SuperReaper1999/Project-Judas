@@ -1,11 +1,18 @@
 # Judas documentation
 
-Start here for **Judas Engine Alpha v1.2.1 / `1.2.1-alpha.1`**,
-[published on 2 November 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.1-alpha.1)
-from `a461bab5`; its manifest identifies the exact source and packages.
-[Repository overview](../README.md), [current status and limits](PREALPHA.md),
-[architecture](ARCHITECTURE.md), [patch notes](ALPHA_V1_2_1_NOTES.md),
-[versioning](VERSIONING.md) and [publication](RELEASING.md).
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
+Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
+[SDK authoring](SDK_AUTHORING.md) and [current outstanding work](OUTSTANDING_WORK.md).
+[Versioning](VERSIONING.md) and [publication](RELEASING.md) describe distribution.
 
 ## Start a project
 
@@ -18,8 +25,8 @@ from `a461bab5`; its manifest identifies the exact source and packages.
 - [2D quick start](2D_QUICKSTART.md): presets, collision, scripts, tiles, animation and export.
 - [Game AI](GAME_AI.md) and [AI scripting](judasjs/ai.md): author actions, inspect decisions, sense physical targets and reserve resources.
 - [Experimental browser export](BROWSER_SUPPORT.md): explicit launch opt-in and a separate Linux/Emscripten toolchain; supported boundaries and qualification records.
-- [Experimental shadow-filter correction](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; separate from published release qualification.
-- [Experimental fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
+- [Shadow-filter correction evidence](SHADOW_FILTER_CONTINUITY.txt): continuous shadow edges, native controls and remaining graphics limitations; published with its recorded release qualification.
+- [Locked-fluid motion-clock repair](FLUID_MOTION_CLOCK_REPAIR.txt): impact-ejection correction, neutral-body controls and remaining fluid limits.
 - [Fluid contact transient and representation review](FLUID_TRANSIENT_AND_REPRESENTATION_REVIEW.txt): captured premature contact impulses, causal controls and non-particle alternatives; investigation, not a qualified replacement solver.
 - [Fluid clearance repair and grid prototype](FLUID_CLEARANCE_REPAIR_AND_GRID_PROTOTYPE.txt): coherent hard/soft contact handling, unchanged pool replay, final regression evidence and measured limits of an isolated non-particle design; Alpha lock retained.
 - [Advanced Fluids settling trials](FLUID_SETTLING_TRIALS_20261103.md) records the remaining settling failures, pressure and support experiments, and the player regression that ruled out the most promising candidate.

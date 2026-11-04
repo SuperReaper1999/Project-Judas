@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Final bounded Linux qualification from human-accepted c76e92dc. Experimental external-kick correction awaits human acceptance. Windows/Android and operator game-building trial deferred. No M100.",
+  "scope": "Original Pre-Alpha assessment reconciled through accepted Alpha v1.2.5. Original quotes and evidence remain; dated updates distinguish later qualification from checkpoint history.",
   "input_commit": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
   "assessment": "docs/evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md",
   "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
@@ -238,18 +238,18 @@
       "workstream": "P1-02",
       "original_quote": "The Windows SDK uses an explicit staging list that omits newer tools, including:",
       "status": "resolved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Published Alpha v1.2.5 Linux and native MSVC SDK qualification passed. Windows 11 hardware and Android phone acceptance retain their earlier recorded scopes. Controller hardware, other distributions and broad clean-machine coverage remain unqualified.",
+      "evidence": "docs/ALPHA_SUPPORT_MATRIX.md"
     },
     {
       "id": "D-02",
       "workstream": "P1-02",
       "original_quote": "The SDK configuration is included before later targets are declared, so its one-time target scan also misses later additions.",
       "status": "resolved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Published Alpha v1.2.5 Linux and native MSVC SDK qualification passed. Windows 11 hardware and Android phone acceptance retain their earlier recorded scopes. Controller hardware, other distributions and broad clean-machine coverage remain unqualified.",
+      "evidence": "docs/ALPHA_SUPPORT_MATRIX.md"
     },
     {
       "id": "E-01",
@@ -310,9 +310,9 @@
       "workstream": "P1-04",
       "original_quote": "Important behaviour is concentrated in large, densely written files:",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Physics coordinator remains 714 lines with coherent MK2 modules. Project settings have independent document ownership; targeted editor picker/starter modules improve usability without a wholesale rewrite.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "PhysicsWorld is a small coordinator with MK2 implementation modules. RuntimeWorld, scripting and editor modules still carry maintainability debt; follow OUTSTANDING_WORK.md rather than a frozen line count.",
+      "evidence": "docs/OUTSTANDING_WORK.md"
     },
     {
       "id": "M-02",
@@ -373,9 +373,9 @@
       "workstream": "P2-01",
       "original_quote": "New-project onboarding still requires substantial manual assembly of modern character, camera and input behaviour.",
       "status": "improved",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Project settings/picker/starter improvements human-accepted at 0aaef603. Fresh packaged SDK creation, editor navigation, Play/Stop and explicit export now pass automatically. Operator-built game trial is still outstanding.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Operator editor/game-building trial occurred and drove human-accepted picker, text entry, starter HUD, hierarchy, scripting/player, pause-menu, theme/layout and inspector improvements. Broader usability testing continues; the original trial is no longer globally outstanding.",
+      "evidence": "docs/EDITOR_GUIDE.md"
     },
     {
       "id": "DX-02",
@@ -391,9 +391,9 @@
       "workstream": "P2-02",
       "original_quote": "Some current documentation describes an older API surface.",
       "status": "improved",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "API/type checker passes for 473 symbols, 40 exports and 51 examples. Actual SDK script-check syntax-error/recovery controls pass; not every public value/ordering contract is certified.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Current JudasJS inventory/type/live-VM checks and packaged SDK controls cover the v1.2.5 API pass. Read docs/judasjs/API_INVENTORY.md for generated counts; this does not certify every behavioural permutation.",
+      "evidence": "docs/judasjs/API_INVENTORY.md"
     },
     {
       "id": "DX-04",
@@ -453,28 +453,28 @@
       "id": "PL-02",
       "workstream": "P2-03",
       "original_quote": "SDK completeness and latest-feature coverage need attention.",
-      "status": "improved",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Fresh tracked Linux checkout builds all 17 SDK tools. Relocated SDK tool identities, host-loader closure, ordinary project creation, positive/negative tool operations and moved exports pass. Windows deferred by operator.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "status": "resolved_tested_scope",
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Alpha v1.2.5 exact-source Linux SDK qualification and native Windows MSVC SDK/functional gates passed. Publication record links the runs. Hardware and clean-machine breadth retain separate limits.",
+      "evidence": "docs/RELEASING.md"
     },
     {
       "id": "PL-03",
       "workstream": "P2-03",
       "original_quote": "VM timings must remain diagnostic, not native-host performance claims.",
-      "status": "deferred",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Windows and Android qualification explicitly deferred by operator; no VM or hardware claims.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "status": "improved",
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Windows 11 operator project/save/reopen/game/audio/editor acceptance is recorded. Android phone gameplay is human-verified within recorded scope. Latest release CI adds native functional checks; VM timings remain diagnostic and controller/clean-machine breadth remains unqualified.",
+      "evidence": "docs/ALPHA_SUPPORT_MATRIX.md"
     },
     {
       "id": "PL-04",
       "workstream": "P1-02",
       "original_quote": "The packaging workflow is Linux-hosted.",
-      "status": "deferred",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Existing MinGW/MSVC paths preserved; no Windows qualification in this operator-deferred pass.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "status": "resolved_tested_scope",
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Optional Linux-to-Windows MinGW workflow and native MSVC SDK workflow exist. Alpha v1.2.5 MSVC qualification passed; MinGW evidence retains its own source scope.",
+      "evidence": "docs/WINDOWS.md"
     },
     {
       "id": "PL-05",
@@ -517,9 +517,9 @@
       "workstream": "P1-03",
       "original_quote": "**FLU-001:** deferred legacy-PBF settling issue; unchanged.",
       "status": "deferred",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "FLU-001 unchanged; not rerun and not claimed solved. Advanced fluids remain experimental opt-in.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Advanced Fluids are locked in Alpha. Production diagnostics and the conservative cut-cell prototype remain unresolved; follow the latest shared pressure/transport evidence instead of treating earlier FLU-001 figures as a current rerun.",
+      "evidence": "docs/OUTSTANDING_WORK.md"
     },
     {
       "id": "L-02",
@@ -598,9 +598,9 @@
       "workstream": "P2-03",
       "original_quote": "Unperformed hardware/platform validation.",
       "status": "improved",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Fresh exact-c76 Ubuntu24 SDK, all 17 older-loader checks, actual editor/tools and SDK/source-absent moved games pass; highest GLIBC 2.38. Corrected source retains the same baseline workflow. Other distributions/hardware and Windows/Android remain unqualified.",
-      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Published Alpha v1.2.5 Linux and native MSVC SDK qualification passed. Windows 11 hardware and Android phone acceptance retain their earlier recorded scopes. Controller hardware, other distributions and broad clean-machine coverage remain unqualified.",
+      "evidence": "docs/ALPHA_SUPPORT_MATRIX.md"
     },
     {
       "id": "CAP-01",
@@ -624,10 +624,10 @@
       "id": "D-03",
       "workstream": "P1-02",
       "original_quote": "clean-machine checks for every shipped executable.",
-      "status": "improved",
-      "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "status": "resolved_tested_scope",
+      "scope": "alpha_1_2_5_documentary_reconciliation",
+      "disposition": "Latest release qualification exercised all 17 Linux SDK tools and native Windows SDK/tool contracts. Hosted Windows validation is distinct from hardware acceptance and clean-machine coverage.",
+      "evidence": "docs/RELEASING.md"
     }
   ],
   "updates": [
@@ -651,6 +651,81 @@
       "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
       "status": "bounded_qualification_complete",
       "clean_runtime_checkpoint": "f7691198ee299a5752c8a55c93fb42e639d033cf"
+    },
+    {
+      "date": "2026-11-04",
+      "input_commit": "a1f363632582da2855b84f9adc79cfc6cf0521fa",
+      "finding": "current status and publication reconciliation",
+      "evidence": "docs/OUTSTANDING_WORK.md",
+      "superseded_dispositions": {
+        "M-01": {
+          "status": "improved",
+          "scope": "final_prealpha_current_or_explicit_carried_scope",
+          "disposition": "Physics coordinator remains 714 lines with coherent MK2 modules. Project settings have independent document ownership; targeted editor picker/starter modules improve usability without a wholesale rewrite.",
+          "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+        },
+        "DX-01": {
+          "status": "improved",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "Project settings/picker/starter improvements human-accepted at 0aaef603. Fresh packaged SDK creation, editor navigation, Play/Stop and explicit export now pass automatically. Operator-built game trial is still outstanding.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "DX-03": {
+          "status": "improved",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "API/type checker passes for 473 symbols, 40 exports and 51 examples. Actual SDK script-check syntax-error/recovery controls pass; not every public value/ordering contract is certified.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "PL-02": {
+          "status": "improved",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "Fresh tracked Linux checkout builds all 17 SDK tools. Relocated SDK tool identities, host-loader closure, ordinary project creation, positive/negative tool operations and moved exports pass. Windows deferred by operator.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "PL-03": {
+          "status": "deferred",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "Windows and Android qualification explicitly deferred by operator; no VM or hardware claims.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "PL-04": {
+          "status": "deferred",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "Existing MinGW/MSVC paths preserved; no Windows qualification in this operator-deferred pass.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "L-01": {
+          "status": "deferred",
+          "scope": "final_prealpha_current_or_explicit_carried_scope",
+          "disposition": "FLU-001 unchanged; not rerun and not claimed solved. Advanced fluids remain experimental opt-in.",
+          "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+        },
+        "D-03": {
+          "status": "improved",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred.",
+          "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+        },
+        "D-01": {
+          "status": "resolved",
+          "scope": "final_prealpha_current_or_explicit_carried_scope",
+          "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
+          "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+        },
+        "D-02": {
+          "status": "resolved",
+          "scope": "final_prealpha_current_or_explicit_carried_scope",
+          "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
+          "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+        },
+        "L-10": {
+          "status": "improved",
+          "scope": "linux_readiness_current_or_explicit_deferred",
+          "disposition": "Fresh exact-c76 Ubuntu24 SDK, all 17 older-loader checks, actual editor/tools and SDK/source-absent moved games pass; highest GLIBC 2.38. Corrected source retains the same baseline workflow. Other distributions/hardware and Windows/Android remain unqualified.",
+          "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
+        }
+      },
+      "superseded_external_kick_status": "resolved_linux_human_pending"
     }
   ],
   "new_findings": [
@@ -663,10 +738,10 @@
     },
     {
       "id": "MK2-EXTERNAL-KICK-TIMING",
-      "status": "resolved_linux_human_pending",
+      "status": "resolved_tested_scope_human_accepted",
       "severity": "P1: free-body external acceleration retimed relative to counter-impulses",
       "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
-      "disposition": "Exact accepted SDK qualification reproduced wheel settling failures on GCC13/GCC15. Balanced public-kick negative controls expose unintended free flight. Preserve chronological CCD while restoring unconstrained pre-step kick timing; both original wheel checks and all 29 affected follow-up invocations pass. No damping or budget changes."
+      "disposition": "Exact accepted SDK qualification reproduced wheel settling failures on GCC13/GCC15. Balanced public-kick negative controls expose unintended free flight. Preserve chronological CCD while restoring unconstrained pre-step kick timing; both original wheel checks and all 29 affected follow-up invocations pass. No damping or budget changes. Included in the operator-accepted Alpha baseline; its previous human-pending label is historical."
     }
   ],
   "linux_qualified_runtime_checkpoint": "f7691198ee299a5752c8a55c93fb42e639d033cf"

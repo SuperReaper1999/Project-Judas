@@ -1,16 +1,19 @@
 # Alpha scope and qualification matrix
 
-This is the source support boundary for **Alpha v1.2.2 / `1.2.2-alpha.1`**.
-[Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
-identify exact accepted source/artifacts; source-version changes do not publish a
-release. The original Alpha was human accepted on 27 October at `636eec47`.
-The [current release notes](ALPHA_V1_2_2_NOTES.md) describe native UI transfers,
-live camera previews and their tested boundaries. The
-[release record](RELEASING.md#current-boundary) identifies actual package gates.
-Earlier AI, browser, Hinge phone and desktop qualification retain their own scope.
-Previous Windows hardware acceptance is retained; no new Windows GPU/audio,
-controller or clean-machine certification is implied. Advanced Fluids remains
-locked. No universal component-composition claim is made.
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
+The latest recorded Alpha qualification includes Linux and native hosted Windows
+builds, selected functional gates and SDK workflows. Hardware/controller and
+clean-machine coverage remain separate. Advanced Fluids remains locked.
+[Outstanding work](OUTSTANDING_WORK.md) separates repairs from support boundaries.
 
 ## Platforms and distribution
 
@@ -51,6 +54,7 @@ does not publish or promote it. Main remains operator controlled. Use
 | Save migration / mods | Supported controlled policies | Explicit identities, source allowlists and ordered migrations. Not arbitrary physical topology rewrites, automatic merges of newly authored worlds, or universal mod compatibility. |
 | Local multiplayer | Supported implemented device/view combinations | Device identity, players and controlled entities are separate. Platform/device availability limits practical configuration. |
 | Online sessions / replication | Supported scoped foundation | Explicit server authority and supported authored-root representations. Dedicated hosting currently rejects streamed/composed worlds, mod-enabled projects and legacy gameplay. Not universal assembly replication, secure public-Internet deployment, rollback for every game or a managed online service. |
+| Runtime authoring APIs | Supported declared controls | Navigation obstacle/link edits and agent corner tolerance, tilemap cell/collision edits, bounded shape overlaps, effect settings/readback and camera target resizing are documented in the shipped JudasJS reference. Obstacle tile-carving limits remain enforced. [Navigation](judasjs/navigation.md), [tilemaps](judasjs/tilemaps-2d.md), [effects](judasjs/effects-camera.md). |
 | Resources, rendering, LOD and budgets | Supported documented paths | No universal per-mip residency, every-backend performance or all-camera combination certification. |
 | Animation, IK, UI, localization, audio, weather | Supported documented workflows | Their milestone-specific support boundaries remain. No new all-member validation claim from this final focused pass. |
 
@@ -74,8 +78,8 @@ deserves correction even if automated tests pass.
 
 ## Native 2D and experimental browser scope
 
-Native sprites, sheets/frame animation/events, orthographic cameras, static layered
-tilemaps, native planar MK2 collision, free top-down/platformer/grid presets,
+Native sprites, sheets/frame animation/events, orthographic cameras, editable layered
+tilemaps with collision and modern-save persistence, native planar MK2 collision, free top-down/platformer/grid presets,
 script parallax and sampled attack helpers are included. One-way platforms are
 static straight segments. Planar and 3D rigid bodies cannot share a physical
 world. Browser export is a separate experimental source workflow, explicitly

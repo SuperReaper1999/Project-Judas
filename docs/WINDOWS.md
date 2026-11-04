@@ -1,5 +1,15 @@
 # Windows editor and exported games
 
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
 ## Windows 11 human acceptance — 25 October 2026
 
 The operator human-accepted Windows portability checkpoint
@@ -32,7 +42,7 @@ An optional [MinGW-w64 cross-build/export workflow](WINDOWS_CROSS_BUILD.md) now
 builds native Windows x64 games on Linux. Native MSVC remains the editor/SDK
 workflow below. These are separate toolchains, not interchangeable C++ libraries.
 
-## Current Pre-Alpha SDK packaging
+## SDK packaging and qualification
 
 The checkpoint above has scoped native Windows 11 automation and operator
 hardware acceptance. New packaging changes or later source revisions do not
@@ -45,6 +55,7 @@ tools. Runtime DLL staging covers executables declared after M76 as well.
 
 | Recorded work | Actual scope | What it does not establish |
 |---|---|---|
+| [Latest recorded release](RELEASING.md#current-boundary) | Exact-source native MSVC SDK, selected functional gates and package inspection | A fresh Windows hardware trial or broad clean-machine certification |
 | [Windows 11 acceptance](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json) | Effective 59/59 native gate, 33/33 extras and operator project/save/game/audio trial at `6941b381` | Controller hardware, clean-machine distribution, universal GPU/configuration coverage or later revisions |
 | [Pass 4](evidence/prealpha-pass4/windows/REPORT.md) | Complete 18-executable SDK, native physics/persistence, editor and relocated export in Windows 10 VM | Physical GPU/audio/controller acceptance or every later revision |
 | [Pass 5](evidence/prealpha-pass5/windows/REPORT.md) | 16 selected native build targets; engine, editor, runtime/export and M70/M77 cold restoration | A rebuilt all-tool SDK, hardware performance or a clean-machine install |
@@ -52,7 +63,7 @@ tools. Runtime DLL staging covers executables declared after M76 as well.
 
 The Pass 4/5 reports preserve their four then-failing curved-mesh assertions.
 Later Linux corrections do not rewrite those historical Windows results. Linux
-is the current acceptance/performance platform; Windows VM timing is diagnostic
+is the measured performance reference; Windows VM timing is diagnostic
 and nonblocking. Use [Pre-Alpha status](PREALPHA.md) for current finding dispositions.
 
 `Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel Alpha`,

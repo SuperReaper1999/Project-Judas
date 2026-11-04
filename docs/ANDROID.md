@@ -1,5 +1,15 @@
 # Native Android games
 
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
 This guide describes the current optional APK workflow. On 27 October 2026 the
 operator additionally confirmed making and playing multiple Judas Android games:
 Android support is human-verified working. Exact revisions/devices were not

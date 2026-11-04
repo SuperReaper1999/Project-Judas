@@ -35,6 +35,8 @@ jobs:
         with:
           ref: ${{ inputs.candidate }}
           persist-credentials: false
+      - name: Verify release and status documentation before building
+        run: python3 tools/release_docs.py
       - name: Snapshot exact tracked source before qualification
         run: |
           mkdir -p "$RUNNER_TEMP/prepared"
@@ -96,6 +98,8 @@ jobs:
         with:
           ref: ${{ inputs.candidate }}
           persist-credentials: false
+      - name: Verify release and status documentation before building
+        run: python tools/release_docs.py
       - name: Build complete native MSVC SDK
         shell: pwsh
         run: |

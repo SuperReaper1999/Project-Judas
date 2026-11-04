@@ -1,9 +1,46 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Current source notes](ALPHA_V1_2_2_NOTES.md) ·
-[Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
+[Identity/channels](VERSIONING.md) · [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Verified publication on **2026-11-04** is
+[`v1.2.5-alpha.1`](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.5-alpha.1) from
+`a1f363632582da2855b84f9adc79cfc6cf0521fa`.
+[Linux/Windows qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41753879925)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41757770903) passed.
+The published packages and Alpha feed were verified. Native Windows CI
+is functional evidence. Earlier Windows hardware and Android phone
+acceptance keep their recorded scopes.
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
+The publication receipt records the exact accepted release. Development branches
+may advance afterward. Read [the maintenance procedure](DOCUMENTATION_MAINTENANCE.md)
+before preparing the next version.
+
+### Previous publication: v1.2.4
+
+[Alpha v1.2.4](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.4-alpha.1)
+was published from `96a74f07a75e84fed91ff827a906717315d3814f`.
+Its [notes](ALPHA_V1_2_4_NOTES.md) record device tilt, vibration, rig-scale validation
+and the retained locked-fluid work.
+
+### Previous publication: v1.2.3
+
+[Alpha v1.2.3](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.3-alpha.1)
+was published from `7660be45089808ba0cf7ab5011daa5e73aecd335`.
+Its [notes](ALPHA_V1_2_3_NOTES.md) record editor and performance improvements.
+
+### Previous publication: v1.2.2
 
 **[Judas Engine Alpha v1.2.2 / `1.2.2-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.2-alpha.1)**
 from `4ec20cece21b39756734591684056770116bcac4` on 3 November 2026, after explicit operator
@@ -127,6 +164,19 @@ factual changelog with `tools/generate_changelog.py --base ACCEPTED_BASE --head
 CANDIDATE --output PATH`. Review notes rather than treating commit subjects as
 validation claims. Keep protected historical evidence unchanged.
 
+Before freezing the candidate, refresh the maintained summaries and verify them:
+
+```sh
+python3 tools/release_docs.py --write
+python3 scripts/check_current_docs.py --require-tracked
+```
+
+Curated source notes must exist for the new engine version. The dated
+`docs/RELEASE_STATUS.json` publication receipt may still name the previous
+published version. Record a new receipt only after successful publication and
+verification, then refresh again on Experimental. See
+[documentation maintenance](DOCUMENTATION_MAINTENANCE.md#source-versions-publication-receipts-and-current-findings).
+
 Create a tracked engine-source archive with `tools/package_source.py --output
 OUTSIDE_SOURCE/source.tar.gz --channel Alpha`. When unrelated untracked
 experiments exist, `--allow-untracked` explicitly excludes them and records their
@@ -188,7 +238,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_2_2_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes PATH_TO_CURRENT_VERSION_NOTES --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,

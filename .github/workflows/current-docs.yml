@@ -5,6 +5,10 @@ on:
     branches: [Experimental, main]
     paths:
       - 'README.md'
+      - 'engine-version.json'
+      - 'tools/release_docs.py'
+      - 'tools/release_manifest.py'
+      - 'tests/test_release_docs.py'
       - 'docs/**/*.md'
       - 'docs/*.json'
       - '!docs/evidence/**'
@@ -17,6 +21,10 @@ on:
     branches: [Experimental, main]
     paths:
       - 'README.md'
+      - 'engine-version.json'
+      - 'tools/release_docs.py'
+      - 'tools/release_manifest.py'
+      - 'tests/test_release_docs.py'
       - 'docs/**/*.md'
       - 'docs/*.json'
       - '!docs/evidence/**'
@@ -40,6 +48,8 @@ jobs:
           persist-credentials: false
           fetch-depth: 1
       - name: Documentation checker positive and negative controls
-        run: python3 -m unittest discover -s tests -p test_current_docs.py -v
+        run: |
+          python3 -m unittest discover -s tests -p test_current_docs.py -v
+          python3 -m unittest discover -s tests -p test_release_docs.py -v
       - name: Verify tracked current documentation links
         run: python3 scripts/check_current_docs.py --require-tracked

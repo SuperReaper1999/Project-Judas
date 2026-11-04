@@ -36,7 +36,8 @@
     "tools/binary_dependencies.py",
     "tools/verify_android.py",
     "engine-version.json",
-    "tools/release_manifest.py"
+    "tools/release_manifest.py",
+    "docs/RELEASE_STATUS.json"
   ],
   "directories": [
     "assets/fonts",

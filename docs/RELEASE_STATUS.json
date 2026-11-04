@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "publication": {
+    "channel": "Alpha",
+    "version": "1.2.5-alpha.1",
+    "tag": "v1.2.5-alpha.1",
+    "source_revision": "a1f363632582da2855b84f9adc79cfc6cf0521fa",
+    "published_at": "2026-11-04T02:05:49Z",
+    "preparation_run": 41753879925,
+    "publication_run": 41757770903
+  }
+}

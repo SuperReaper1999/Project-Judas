@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Check an explicit current-reference set, leaving historical prose untouched.
 
-Only local inline/reference links and GitHub-style Markdown heading anchors are
-checked. This is not a Markdown renderer or a semantic/API/platform proof.
+Local inline/reference links, GitHub-style Markdown heading anchors and managed
+release/finding summaries are checked. This is not a Markdown renderer or a
+general semantic/API/platform proof.
 """
 from __future__ import annotations
 
@@ -142,6 +143,12 @@ def main() -> int:
     if args.require_tracked:
         tracked = set(subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0'))
     result = check(ROOT, documents, tracked)
+    freshness = subprocess.run([sys.executable, str(ROOT / 'tools/release_docs.py')],
+                               capture_output=True, text=True)
+    if freshness.returncode:
+        result['errors'].append('Release/status summaries are stale or invalid. ' +
+                                (freshness.stderr.strip() or freshness.stdout.strip()))
+        result['pass'] = False
     print(json.dumps(result, indent=2))
     return 0 if result['pass'] else 1
 

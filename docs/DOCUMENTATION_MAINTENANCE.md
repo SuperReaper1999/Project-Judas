@@ -49,7 +49,8 @@ python3 scripts/check_current_docs.py
 
 The explicit [current-reference inventory](../tools/verification/current-docs.json)
 selects maintained developer pages. The checker validates local file destinations
-and Markdown heading links; it excludes historical archives/evidence from its
+and Markdown heading links and checks the managed release/finding summaries. It
+excludes historical archives/evidence from its
 page selection. Update the inventory when adding a maintained reference. It does
 not inspect external URLs or certify prose, API semantics or platform support.
 
@@ -78,3 +79,41 @@ engine source archive and an unpacked SDK. SDK/archive profiles intentionally om
 repository games, and SDK executables live at its root rather than under `build/`.
 Local-link checks do not prove these commands work; qualify the actual moved SDK
 and create/export a new project before claiming that workflow passed.
+
+## Source versions, publication receipts and current findings
+
+The current release/status blocks in nine entry pages are generated from
+`engine-version.json` and [RELEASE_STATUS.json](RELEASE_STATUS.json).
+The source version can advance while the dated publication receipt still points
+to the last verified release. Updating the receipt requires an actual published
+tag, exact source SHA, publication timestamp and successful qualification and
+publication run IDs. Verify those against GitHub and the Alpha feed. A candidate
+or branch promotion alone does not supply them.
+
+When preparing a version, add its curated notes and update the authoritative
+engine version. Then refresh all managed summaries with one command:
+
+```sh
+python3 tools/release_docs.py --write
+python3 scripts/check_current_docs.py --require-tracked
+```
+
+Do not edit text between the `judas-release-status` markers by hand.
+`docs/PREALPHA_FINDINGS.json` owns the original finding dispositions. The same
+refresh command regenerates its Markdown table. Retain superseded dispositions
+in the dated updates list and link actual later evidence. The
+[outstanding-work register](OUTSTANDING_WORK.md) owns current follow-up priorities.
+Keep publication metadata out of project-specific installation claims.
+
+The documentation workflow runs when the engine version, publication/finding
+records, generator, current pages or checks change. Both release-candidate
+platform jobs verify the managed summaries before expensive builds. The existing
+current-document checker also runs that verification. A stale version, missing
+notes, altered summary, missing marker or divergent finding table fails with the
+refresh command, including in a source archive without Git.
+
+After publication, update the dated receipt from the published release metadata,
+refresh, verify and checkpoint the documentation on Experimental. The published
+tag and SDK remain immutable. Historical reports, archived failures and prose
+outside managed blocks are preserved; this check cannot certify every sentence
+or determine whether an untested feature is correct.

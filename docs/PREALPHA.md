@@ -8,19 +8,20 @@ longer a statement that M100 has not begun. Start with the
 
 ## Accepted release baseline
 
-The authoring/Android diagnostics patch Alpha v1.0.3 was published at
-`f2813324155166c6942fd68dde843d9775eb532d` on 30 October 2026.
-See [its release record](ALPHA_V1_0_3_NOTES.md#release-record). Current source
-prepares **Alpha v1.0.4** with [orientation/resize patch notes](ALPHA_V1_0_4_NOTES.md);
-[release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
-identify the latest published artifacts. Preparation alone is not publication.
-The original Alpha v1.0.0 checkpoint remains `636eec475b9955dcfd7d6d943d00c05d911135ad`.
-`main` contains human-accepted source; subsequent Experimental work requires its
-own acceptance before promotion. The older Windows 11 native/hardware acceptance
-at `6941b381` retains its own scope in [Windows qualification](WINDOWS.md).
-Fresh Alpha Linux and Windows VM package workflows are recorded separately;
-Android also has operator verification through multiple real games. MK2 remains
-the sole production solver. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
+<!-- judas-release-status:start -->
+Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
+[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+[Support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Source identity and publication are separate. The
+[publication record](RELEASE_STATUS.json) is a dated receipt.
+Check the release page for subsequently published packages.
+<!-- judas-release-status:end -->
+
+Current supported behaviour and limits are in the [support matrix](ALPHA_SUPPORT_MATRIX.md)
+and [outstanding-work register](OUTSTANDING_WORK.md). The earlier Windows 11
+hardware acceptance is documented in [Windows qualification](WINDOWS.md).
+Android phone acceptance retains its device/build scope. MK2 is the production solver.
 
 ## Retained Pre-Alpha correction history
 
