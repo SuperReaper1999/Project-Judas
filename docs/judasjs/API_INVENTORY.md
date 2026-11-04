@@ -147,6 +147,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setLight` | `lightSettings` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setMotionType` | `motionTypeSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `Entity.setNavigationLink` | `navLinkSet` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `Entity.setNavigationObstacle` | `navObstacleSet` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |

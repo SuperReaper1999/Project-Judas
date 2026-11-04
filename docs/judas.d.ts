@@ -394,6 +394,8 @@ declare module "judas" {
     readonly navigation: NavigationAgent | null;
     readonly navigationObstacle: NavigationObstacleInfo | null;
     readonly navigationLink: NavigationLinkInfo | null;
+    setNavigationObstacle(settings:Partial<NavigationObstacleInfo>):boolean;
+    setNavigationLink(settings:Partial<Omit<NavigationLinkInfo,"start"|"end">>):boolean;
     setNavigationEnabled(component: "agent" | "obstacle" | "link", enabled: boolean): boolean;
     readonly character: Character | null;
     readonly wheel: Wheel | null;
@@ -615,8 +617,8 @@ declare module "judas" {
     path: Omit<NavigationPath, "corners"> & { corners: Omit<NavigationCorner, "link">[] };
   }
   export interface NavigationAgentPatch extends NavigationFilter { speed?: number; arrival?: number; repathSeconds?: number; avoidance?: boolean }
-  export interface NavigationObstacleInfo { enabled: boolean; cylinder: boolean; halfExtents: Vec3; radius: number; height: number }
-  export interface NavigationLinkInfo { enabled: boolean; bidirectional: boolean; start: Vec3; end: Vec3; area: number }
+  export interface NavigationObstacleInfo { enabled: boolean; cylinder: boolean; halfExtents: Vec3; radius: number; height: number; updateDistance: number }
+  export interface NavigationLinkInfo { enabled: boolean; bidirectional: boolean; start: Vec3; end: Vec3; area: number; radius: number; localStart: Vec3; localEnd: Vec3 }
   export class NavigationAgent {
     constructor(id: EntityId);
     id: EntityId;

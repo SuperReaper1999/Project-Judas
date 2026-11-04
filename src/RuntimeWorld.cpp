@@ -1598,6 +1598,45 @@ std::vector<EntityId> RuntimeWorld::QueryEntities(CategoryMask required,Category
     return result;
 }
 
+bool RuntimeWorld::SetNavigationObstacleSettings(EntityId id,const NavigationObstacleSettings& settings){
+    const auto* definition=RuntimeDefinition(id);
+    if(!definition||!definition->navigationObstacle)return false;
+    SceneObject candidate;
+    candidate.navigationObstacle=settings;
+    std::string error;
+    // Keep live edits in the editor's local-obstacle scale. The tile cache
+    // enumerates grid coordinates across the complete obstacle AABB.
+    constexpr float maxExtent=100;
+    if(!ValidateNavigationComponents(candidate,error)||settings.radius>maxExtent||
+       settings.height>maxExtent||glm::any(glm::greaterThan(settings.halfExtents,glm::vec3(maxExtent))))
+        return false;
+    const auto& previous=*definition->navigationObstacle;
+    if(previous.enabled==settings.enabled&&previous.cylinder==settings.cylinder&&
+       previous.halfExtents==settings.halfExtents&&previous.radius==settings.radius&&
+       previous.height==settings.height&&previous.updateDistance==settings.updateDistance)return true;
+    m_scriptDefinitions.at(id).navigationObstacle=settings;
+    if(auto* record=FindEntity(id))record->definition.navigationObstacle=settings;
+    m_navigation->RequestEditedRouteRefresh(true);
+    return true;
+}
+
+bool RuntimeWorld::SetNavigationLinkSettings(EntityId id,const NavigationLinkSettings& settings){
+    const auto* definition=RuntimeDefinition(id);
+    if(!definition||!definition->navigationLink||!m_navigation->Configuration().areas.names.count(settings.area))return false;
+    SceneObject candidate;
+    candidate.navigationLink=settings;
+    std::string error;
+    if(!ValidateNavigationComponents(candidate,error))return false;
+    const auto& previous=*definition->navigationLink;
+    if(previous.enabled==settings.enabled&&previous.bidirectional==settings.bidirectional&&
+       previous.start==settings.start&&previous.end==settings.end&&previous.radius==settings.radius&&
+       previous.area==settings.area)return true;
+    m_scriptDefinitions.at(id).navigationLink=settings;
+    if(auto* record=FindEntity(id))record->definition.navigationLink=settings;
+    m_navigation->RequestEditedRouteRefresh(false);
+    return true;
+}
+
 bool RuntimeWorld::SetNavigationAgentSettings(EntityId id,const NavigationAgentSettings& settings){auto it=m_scriptDefinitions.find(id);if(it==m_scriptDefinitions.end()||!it->second.navigationAgent)return false;SceneObject check;check.navigationAgent=settings;std::string error;if(!ValidateNavigationComponents(check,error)||!m_navigation->Configuration().profiles.count(settings.profile))return false;it->second.navigationAgent=settings;if(auto agent=m_navigation->Agent(id))agent->elapsed=1e10f;return true;}
 
 bool RuntimeWorld::SetNavigationEnabled(EntityId id,const std::string& kind,bool enabled){auto it=m_scriptDefinitions.find(id);if(it==m_scriptDefinitions.end())return false;auto& o=it->second;if(kind=="agent"&&o.navigationAgent)o.navigationAgent->enabled=enabled;else if(kind=="obstacle"&&o.navigationObstacle)o.navigationObstacle->enabled=enabled;else if(kind=="link"&&o.navigationLink)o.navigationLink->enabled=enabled;else return false;return true;}

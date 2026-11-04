@@ -422,6 +422,8 @@ public:
     NavigationSystem& Navigation(){return *m_navigation;}
     const NavigationSystem& Navigation()const{return *m_navigation;}
     bool SetNavigationEnabled(EntityId id,const std::string& kind,bool enabled);
+    bool SetNavigationObstacleSettings(EntityId,const NavigationObstacleSettings&);
+    bool SetNavigationLinkSettings(EntityId,const NavigationLinkSettings&);
     bool SetNavigationAgentSettings(EntityId id,const NavigationAgentSettings& settings);
     void UpdateNavigation(float dt){if(m_navigation&&m_hasNavigation)m_navigation->Update(*this,dt);}
     bool SetCharacterSettings(EntityId,const CharacterMotorSettings&);

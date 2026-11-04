@@ -150,3 +150,29 @@ are conservatively projected. No moving navmesh surface, live rebasing or runtim
 
 See [authoring/baking](../NAVIGATION.md), [worked navigation script](examples/navigation.js),
 [input](input.md), [motor](character.md), [physics](physics.md), and [animation](animation-ragdolls.md).
+
+### Edit existing obstacles and links in Play
+
+`entity.setNavigationObstacle({halfExtents: {x: 1, y: 2, z: 4}})`
+patches an existing obstacle's carving volume. Supported members are
+`enabled`, `cylinder`, `halfExtents`, `radius`, `height`, and
+`updateDistance`. Lengths are metres. Physical collision is separate.
+The edit leaves the baked source asset alone. Tile-cache carving
+publishes on navigation updates and may take several updates to settle.
+Runtime edits cap obstacle half extents, radius and height at 100 m.
+The existing Detour tile cache handles at most eight touched tile layers per
+obstacle, so split large blockers into smaller obstacles where needed.
+
+`entity.setNavigationLink({localEnd: {x: 0, y: 0, z: 4}, bidirectional: true})`
+patches an existing link. Supported members are `enabled`, `bidirectional`,
+`localStart`, `localEnd`, `radius`, and `area` (a registered numeric ID).
+Endpoints are in the owner's local orientation and metres. The readback
+still provides world-local `start` and `end`, alongside the local values.
+Routes see the new link at the next navigation update. Agents already
+traversing a link retain the current handoff until the script completes
+or clears it. Other active routes replan after an explicit edit publishes, without waiting
+for their normal repath interval.
+
+Both setters preserve omitted fields, return false if the component is absent,
+and reject invalid patches atomically. Call from authoritative gameplay.
+Neither setter creates components or changes the authored scene on disk.

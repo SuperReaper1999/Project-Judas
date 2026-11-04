@@ -876,6 +876,16 @@
       "maximum": 2
     },
     {
+      "symbol": "Entity.setNavigationLink",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setNavigationObstacle",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "Entity.setPartVisible",
       "minimum": 2,
       "maximum": 2
@@ -3386,6 +3396,28 @@
         "navEnabled"
       ],
       "type": "docs/judas.d.ts:Entity.setNavigationEnabled",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "Entity.setNavigationLink",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navLinkSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setNavigationLink",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "Entity.setNavigationObstacle",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navObstacleSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setNavigationObstacle",
       "reference": "docs/judasjs/navigation.md"
     },
     {
@@ -7647,7 +7679,9 @@
     "navEnabled",
     "navErrors",
     "navLinkInfo",
+    "navLinkSet",
     "navObstacleInfo",
+    "navObstacleSet",
     "navPath",
     "navProfiles",
     "navRaycast",

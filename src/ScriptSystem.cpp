@@ -169,6 +169,8 @@ export class Entity {
  get liquid(){const h=call("liquidOwner",this.id);return h?new LiquidVolume(h):null}
  get navigationObstacle(){return call("navObstacleInfo",this.id)}
  get navigationLink(){return call("navLinkInfo",this.id)}
+ setNavigationObstacle(settings){return call("navObstacleSet",this.id,settings)}
+ setNavigationLink(settings){return call("navLinkSet",this.id,settings)}
  setNavigationEnabled(component,enabled){return call("navEnabled",this.id,component,enabled)}
  get navigation(){return call("navAgentExists",this.id)?new NavigationAgent(this.id):null}
  get fracture(){const epoch=call("fractureExists",this.id);return epoch?new Fracture(this.id,epoch):null}
@@ -1636,9 +1638,66 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto textures=JS_NewObject(c);const char* names[]={"baseColor","metallicRoughness","normal","occlusion","emissive"};for(size_t i=0;i<5;++i)JS_SetPropertyStr(c,textures,names[i],JS_NewString(c,m.maps[i].asset.c_str()));JS_SetPropertyStr(c,result,"textures",textures);return result;
     }
     if(op=="liquidOwner"){auto h=world.Liquids().Handle(id);if(!world.Liquids().Get(h))return JS_NULL;return JS_NewString(c,(std::to_string(h.generation)+":"+std::to_string(h.id)).c_str());}
+    if(op=="navObstacleSet"||op=="navLinkSet"){
+        if(s->inPresentation||world.NetworkClient())
+            return JS_ThrowTypeError(c,"navigation edits require authoritative gameplay");
+        auto options=arg(2);
+        auto readBool=[&](const char* key,bool& out){
+            auto value=JS_GetPropertyStr(c,options,key);
+            const bool valid=JS_IsUndefined(value)||JS_IsBool(value);
+            if(JS_IsBool(value))out=JS_ToBool(c,value);
+            JS_FreeValue(c,value);
+            return valid;
+        };
+        auto readVector=[&](const char* key,glm::vec3& out){
+            auto value=JS_GetPropertyStr(c,options,key);
+            const bool valid=JS_IsUndefined(value)||ReadVec(c,value,out);
+            JS_FreeValue(c,value);
+            return valid;
+        };
+        auto readScalar=[&](const char* key,float& out){
+            auto value=JS_GetPropertyStr(c,options,key);
+            double number=0;
+            const bool present=!JS_IsUndefined(value);
+            const bool valid=!present||(JS_IsNumber(value)&&!JS_ToFloat64(c,&number,value)&&
+                std::isfinite(number)&&number>0&&number<=1e20&&float(number)>0);
+            JS_FreeValue(c,value);
+            if(valid&&present)out=float(number);
+            return valid;
+        };
+        if(op=="navObstacleSet"){
+            if(!definition->navigationObstacle)return JS_FALSE;
+            auto settings=*definition->navigationObstacle;
+            if(!KnownOptions(c,options,{"enabled","cylinder","halfExtents","radius","height","updateDistance"})||
+               !readBool("enabled",settings.enabled)||!readBool("cylinder",settings.cylinder)||
+               !readVector("halfExtents",settings.halfExtents)||!readScalar("radius",settings.radius)||
+               !readScalar("height",settings.height)||!readScalar("updateDistance",settings.updateDistance)||
+               !world.SetNavigationObstacleSettings(id,settings))
+                return JS_ThrowTypeError(c,"invalid navigation obstacle patch");
+            return JS_TRUE;
+        }
+        if(!definition->navigationLink)return JS_FALSE;
+        auto settings=*definition->navigationLink;
+        if(!KnownOptions(c,options,{"enabled","bidirectional","localStart","localEnd","radius","area"})||
+           !readBool("enabled",settings.enabled)||!readBool("bidirectional",settings.bidirectional)||
+           !readVector("localStart",settings.start)||!readVector("localEnd",settings.end)||
+           !readScalar("radius",settings.radius))
+            return JS_ThrowTypeError(c,"invalid navigation link patch");
+        auto value=JS_GetPropertyStr(c,options,"area");
+        double area=0;
+        const bool present=!JS_IsUndefined(value);
+        const bool valid=!present||(JS_IsNumber(value)&&!JS_ToFloat64(c,&area,value)&&
+            std::isfinite(area)&&area>=0&&area<62&&area==std::floor(area));
+        JS_FreeValue(c,value);
+        if(!valid)return JS_ThrowTypeError(c,"invalid navigation area ID");
+        if(present)settings.area=unsigned(area);
+        if(!world.SetNavigationLinkSettings(id,settings))
+            return JS_ThrowTypeError(c,"invalid navigation link or unregistered area");
+        return JS_TRUE;
+    }
     if(op=="navEnabled"){if(!JS_IsBool(arg(3)))return JS_ThrowTypeError(c,"boolean required");return JS_NewBool(c,world.SetNavigationEnabled(id,String(c,arg(2)),JS_ToBool(c,arg(3))));}
-    if(op=="navObstacleInfo"){if(!definition->navigationObstacle)return JS_NULL;const auto& n=*definition->navigationObstacle;auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,n.enabled));JS_SetPropertyStr(c,v,"cylinder",JS_NewBool(c,n.cylinder));JS_SetPropertyStr(c,v,"halfExtents",Vec(c,n.halfExtents));JS_SetPropertyStr(c,v,"radius",JS_NewFloat64(c,n.radius));JS_SetPropertyStr(c,v,"height",JS_NewFloat64(c,n.height));return v;}
-    if(op=="navLinkInfo"){if(!definition->navigationLink)return JS_NULL;const auto& n=*definition->navigationLink;auto t=world.PresentedTransform(id,definition->transform,1);auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,n.enabled));JS_SetPropertyStr(c,v,"bidirectional",JS_NewBool(c,n.bidirectional));JS_SetPropertyStr(c,v,"start",Vec(c,t.position+t.rotation*n.start));JS_SetPropertyStr(c,v,"end",Vec(c,t.position+t.rotation*n.end));JS_SetPropertyStr(c,v,"area",JS_NewUint32(c,n.area));return v;}
+    if(op=="navObstacleInfo"){if(!definition->navigationObstacle)return JS_NULL;const auto& n=*definition->navigationObstacle;auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,n.enabled));JS_SetPropertyStr(c,v,"cylinder",JS_NewBool(c,n.cylinder));JS_SetPropertyStr(c,v,"halfExtents",Vec(c,n.halfExtents));JS_SetPropertyStr(c,v,"radius",JS_NewFloat64(c,n.radius));JS_SetPropertyStr(c,v,"height",JS_NewFloat64(c,n.height));JS_SetPropertyStr(c,v,"updateDistance",JS_NewFloat64(c,n.updateDistance));return v;}
+    if(op=="navLinkInfo"){if(!definition->navigationLink)return JS_NULL;const auto& n=*definition->navigationLink;auto t=world.PresentedTransform(id,definition->transform,1);auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,n.enabled));JS_SetPropertyStr(c,v,"bidirectional",JS_NewBool(c,n.bidirectional));JS_SetPropertyStr(c,v,"start",Vec(c,t.position+t.rotation*n.start));JS_SetPropertyStr(c,v,"end",Vec(c,t.position+t.rotation*n.end));JS_SetPropertyStr(c,v,"area",JS_NewUint32(c,n.area));JS_SetPropertyStr(c,v,"radius",JS_NewFloat64(c,n.radius));JS_SetPropertyStr(c,v,"localStart",Vec(c,n.start));JS_SetPropertyStr(c,v,"localEnd",Vec(c,n.end));return v;}
     if(op=="navAgentExists")return JS_NewBool(c,definition->navigationAgent.has_value());
     if(op=="navAgentState"||op=="navDestination"||op=="navClear"||op=="navStopped"||op=="navCompleteLink"||op=="navConfigure"){
         if(!definition->navigationAgent)return JS_ThrowTypeError(c,"entity has no navigation agent");

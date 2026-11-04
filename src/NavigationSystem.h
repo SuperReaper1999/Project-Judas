@@ -27,6 +27,7 @@ public:
  NavigationAgentState* Agent(SceneObjectId);const NavigationAgentState* Agent(SceneObjectId)const;
  bool CompleteLink(SceneObjectId);
  void Update(RuntimeWorld&,float);
+ void RequestEditedRouteRefresh(bool waitForCarving);
  // Detour geometry is surface-local. Retain polygon refs, pending obstacles,
  // link progress and revision while translating only the enclosing world frames.
  void ShiftOrigin(glm::dvec3 delta);
