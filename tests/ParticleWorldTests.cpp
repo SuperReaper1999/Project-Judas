@@ -110,6 +110,13 @@ void Lifecycle(EngineHost &host) {
             "restarted effect accepts a fresh bounded burst");
     world.UpdateVisualParticles(dt);
     Require(Live(Read(*emitter.gpu)) == 2, "restarted effect remains GPU-backed and usable");
+    settings = emitter.pool.settings;
+    settings.backend = ParticleBackend::Cpu;
+    Require(world.SetParticleSettings(1, settings), "explicit backend switch retains live particles");
+    const auto switched = world.GetParticleRuntimeStats(1);
+    Require(!emitter.gpu && emitter.pool.Particles().size() == 2 &&
+                switched.active == ParticleBackend::Cpu && switched.gpuBytes == 0,
+            "immediate backend readback reports the actual CPU owner and released GPU memory before another tick");
     world.Destroy();
     Require(world.VisualEmitters().empty(), "world teardown retires emitter owners before graphics context shutdown");
 }

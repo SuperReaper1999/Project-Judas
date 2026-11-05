@@ -5,6 +5,7 @@
 #include "RuntimeWorld.h"
 #include "SaveService.h"
 #include "SceneSession.h"
+#include "SceneSerialization.h"
 #include "ScreenshotWriter.h"
 
 #include <cstdio>
@@ -57,6 +58,18 @@ int main(int argc, char** argv) {
             std::filesystem::create_directories(output);
             std::filesystem::copy("projects/particle_v2_lab", projectRoot,
                                    std::filesystem::copy_options::recursive);
+            // Make real droplets compete for one aggregate cell. The F6 test
+            // must begin while a captured tick is genuinely backpressured;
+            // merely waiting two render frames cannot satisfy this control.
+            Scene constrained;
+            std::string error;
+            if (!LoadSceneFromFile((projectRoot / "Scenes/workshop.judas").string(), constrained, error))
+                throw std::runtime_error(error);
+            auto &emitter = *constrained.Find(10)->particleEmitter;
+            emitter.maxImpactCells = 1;
+            emitter.burst = 128;
+            if (!SaveSceneToFile(constrained, (projectRoot / "Scenes/workshop.judas").string(), error))
+                throw std::runtime_error(error);
         }
         Json expected = read ? Json::parse(Read(output / "EXPECTED.json")) : Json::object();
         const auto authored = Read(projectRoot / "Scenes/workshop.judas");
@@ -65,6 +78,7 @@ int main(int argc, char** argv) {
         Environment("JUDAS_TEST_SCRIPT", "");
         unsigned frames = 0, phase = 0;
         bool finished = false;
+        double minimumSavedCount = 0, minimumSavedWeight = 0;
         std::string release, pending;
         auto queue = [&](const char* key) { pending = key; };
         ApplicationControl control;
@@ -95,17 +109,33 @@ int main(int argc, char** argv) {
                       "ordinary project constructs all modest CPU workshop emitters");
                 if (read) { queue("key:F7"); phase = 3; }
             }
-            if (!read && phase == 0 && frames >= 150) {
+            if (!read && phase == 0 && frames >= 20 && state.value("count", 0.) > 0 &&
+                world.GetParticleRuntimeStats(10).pendingStep) {
                 Check(state.value("count", 0.) > 0 && !state.value("cells", Json::object()).empty(),
                       "actual collision impacts create nonzero game-owned receiver-local coating");
+                Check(world.GetParticleRuntimeStats(10).backpressure &&
+                          world.GetParticleRuntimeStats(10).queuedImpacts > 0,
+                      "F6 starts during a real one-cell-budget backpressured captured tick");
+                minimumSavedCount = state.value("count", 0.);
+                minimumSavedWeight = state.value("weight", 0.);
+                for (const auto &emitter : world.VisualEmitters())
+                    if (const auto *records = world.PeekParticleImpacts(emitter.id))
+                        for (const auto &record : *records) {
+                            minimumSavedCount += double(record.count);
+                            minimumSavedWeight += record.weight;
+                        }
                 queue("key:F6");
                 phase = 1;
-            } else if (!read && phase == 1 && frames > 155) {
+            } else if (!read && phase == 1) {
                 auto* saves = world.SceneControl() ? world.SceneControl()->SavesIfLoaded() : nullptr;
                 if (saves && !saves->Busy() && !saves->List().empty()) {
                     expected = state;
                     Check(state.value("paused", false) && state.value("count", 0.) > 0,
                           "save waits for a paused, drained reliable-particle boundary");
+                    Check(state.value("count", 0.) >= minimumSavedCount &&
+                              state.value("weight", 0.) + 1e-9 >= minimumSavedWeight &&
+                              !world.GetParticleRuntimeStats(10).pendingStep,
+                          "save retains observations queued before F6 and finishes the captured tick");
                     std::ofstream(output / "EXPECTED.json") << expected.dump(2) << '\n';
                     queue("key:C");
                     phase = 2;

@@ -140,7 +140,11 @@ bool GpuParticles::Initialize(const GraphicsCapabilities& caps,const ParticleEmi
  s.states=buffer(s.diagnostics.capacity*sizeof(GpuParticleState),ComputeBufferUse::Storage);
  s.params=buffer(sizeof(Params),ComputeBufferUse::Storage);
  s.counters=buffer(16*sizeof(unsigned),ComputeBufferUse::Storage);
- s.freeSlots=buffer(s.diagnostics.capacity*sizeof(unsigned),ComputeBufferUse::Storage);
+ // Keep the scalar element stride at four bytes, but allocate its complete
+ // linked block envelope. Mesa reports a 16-byte minimum for this std430
+ // runtime-array block, including when its logical capacity is one uint.
+ const auto freeSlotBytes=s.diagnostics.capacity*sizeof(unsigned);
+ s.freeSlots=buffer((freeSlotBytes+15u)&~std::size_t(15),ComputeBufferUse::Storage);
  s.events=buffer(EventHeaderBytes+s.impactCapacity*sizeof(ImpactRecord),ComputeBufferUse::Storage);
  s.colliders=buffer(sizeof(Collider),ComputeBufferUse::Storage);
  s.nodes=buffer(sizeof(Node),ComputeBufferUse::Storage);

@@ -12,7 +12,7 @@ export default class SurfaceWorkshop {
             eye: v(0, 14, 25), yaw: 0, pitch: -.35, viewId: null};
         this.statusAge = 1;
         this.request = null;
-        this.saveDelay = 0;
+        this.savePending = false;
     }
     start() { this.bind(); }
     restore() { this.bind(); }
@@ -136,16 +136,28 @@ export default class SurfaceWorkshop {
         for (let i = 0; i < CASES.length; ++i)
             if (input.pressed('case_' + (i + 1))) { this.openCase(i); return; }
         if (input.pressed('reset')) scenes.reload();
-        if (input.pressed('emission')) this.setPaused(!this.state.paused);
-        if (input.pressed('burst')) for (const emitter of this.emitters) emitter.burst(this.kind === 'stress' ? 1000 : 30);
+        if (!this.savePending && input.pressed('emission')) this.setPaused(!this.state.paused);
+        if (!this.savePending && input.pressed('burst'))
+            for (const emitter of this.emitters) emitter.burst(this.kind === 'stress' ? 1000 : 30);
         if (input.pressed('clean')) this.clean();
         if (input.pressed('save')) {
-            this.setPaused(true);
-            this.saveDelay = 2;
+            this.savePending = true;
+            this.state.paused = false;
+            // An already captured reliable tick must finish before it can be
+            // saved. Resume that work while stopping future emission; pausing
+            // immediately would also pause its backpressure recovery.
+            for (const emitter of this.emitters) {
+                emitter.controlParticles('play');
+                emitter.controlParticles('stop');
+            }
         }
-        if (this.saveDelay && --this.saveDelay === 0)
+        if (this.savePending && this.emitters.every(emitter => !emitter.particleStats?.pendingStep)) {
+            this.drainImpacts();
+            this.setPaused(true);
+            this.savePending = false;
             this.request = saves.save('particle-v2-workshop', {name: 'Surface coating / ' + this.kind});
-        if (input.pressed('load')) this.request = saves.load('particle-v2-workshop');
+        }
+        if (!this.savePending && input.pressed('load')) this.request = saves.load('particle-v2-workshop');
         if (input.pressed('watch')) {
             this.state.tour = !this.state.tour;
             input.pointerCapture = !this.state.tour;
@@ -170,6 +182,7 @@ export default class SurfaceWorkshop {
         text += '\nPersistent game coating: ' + this.state.count + ' impacts / ' + this.state.weight.toFixed(2) +
             ' weight / ' + Object.keys(this.state.cells).length + ' receiver cells';
         text += ' | ' + (this.state.paused ? 'PARTICLES PAUSED' : 'particles playing');
+        if (this.savePending) text += ' | finishing captured contacts before save';
         const diagnosis = stats.map(s => s.diagnostic).filter(Boolean).join(' | ');
         if (diagnosis) text += '\n' + diagnosis;
         if (this.request) {

@@ -180,6 +180,7 @@ JudasParticles::ParticleRuntimeStats RuntimeWorld::GetParticleRuntimeStats(Entit
         stats.requested=e.pool.settings.backend;
         const auto cpu=e.pool.RuntimeStats();stats.paused=e.pool.Paused();stats.pendingStep=e.pool.PendingStep();
         if(e.gpu){stats.active=ParticleBackend::Gpu;stats.gpuBytes=e.gpu->Stats().gpuBytes;}
+        else {stats.active=ParticleBackend::Cpu;stats.gpuBytes=0;}
         stats.queuedImpacts=cpu.queuedImpacts;stats.deliveredImpacts=cpu.deliveredImpacts;
         stats.cosmeticDropped=e.gpu?stats.cosmeticDropped+cpu.cosmeticDropped:
                                    e.retiredGpuDrops+cpu.cosmeticDropped;

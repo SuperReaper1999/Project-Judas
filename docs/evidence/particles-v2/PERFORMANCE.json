@@ -1,0 +1,1683 @@
+{
+  "implementation_checkpoint": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+  "baseline": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+  "scope": "Real fixed-step particle simulation, CPU presentation/GPU view preparation and draw submission at 1920x1080; not a complete engine/game frame.",
+  "runs": [
+    {
+      "name": "baseline-100k-1",
+      "command": [
+        ".cache/particles-v2/baseline/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/baseline-100k-1"
+      ],
+      "binary_sha256": "5731084efd6742c5932627cca7e06137b57cf9f150cdb1dfb3f1dfa131996304",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-621d6ed-clean-f940784aaa2d-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "f940784aaa2d21d9340a37adc964413e8a4e3da66a7b016a92d974932abebc52",
+        "source_origin": "git",
+        "source_revision": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+        "source_tree": "52bfa499aa2ea1719a779afda1d17f831d699d8b",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 16.519576,
+        "first_draw_submission_ms": 16.37331,
+        "first_simulation_ms": 2.324013,
+        "host_init_ms": 178.363165,
+        "resource_setup_ms": 0.125868,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 134520832,
+      "proof": {
+        "actual_live": 100000,
+        "expected_live": 100000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:10Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:07Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 9.96839,
+          "median": 8.501494,
+          "p95": 8.856564,
+          "p99": 9.536646,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 0.996544,
+          "median": 0.76288,
+          "p95": 0.823648,
+          "p99": 0.891648,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 9.085565,
+          "median": 7.747151,
+          "p95": 8.099205,
+          "p99": 8.720728,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 9.956,
+          "median": 8.503,
+          "p95": 8.858,
+          "p99": 9.539,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.880441,
+          "median": 0.750265,
+          "p95": 0.766656,
+          "p99": 0.812462,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "cpu-100k-1",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/cpu-100k-1"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 17.325486,
+        "first_draw_submission_ms": 17.271945,
+        "first_simulation_ms": 2.553827,
+        "host_init_ms": 164.837796,
+        "resource_setup_ms": 0.135666,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 134168576,
+      "proof": {
+        "actual_live": 100000,
+        "expected_live": 100000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:13Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:10Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 9.52858,
+          "median": 8.214122,
+          "p95": 8.732029,
+          "p99": 9.144427,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 1.149184,
+          "median": 0.77408,
+          "p95": 0.824192,
+          "p99": 0.973376,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 9.064155,
+          "median": 7.75728,
+          "p95": 8.213641,
+          "p99": 8.60029,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 9.532,
+          "median": 8.208,
+          "p95": 8.734,
+          "p99": 9.116,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.722222,
+          "median": 0.441292,
+          "p95": 0.462022,
+          "p99": 0.54113,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-100k-1",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-100k-1"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 3.776923,
+        "first_draw_submission_ms": 0.779791,
+        "first_simulation_ms": 0.414422,
+        "host_init_ms": 164.879234,
+        "resource_setup_ms": 73.08049,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 170266624,
+      "proof": {
+        "actual_live": 100000,
+        "asynchronous_readback_bytes": 14400,
+        "contacts": 0,
+        "dispatches": 18664,
+        "draws": 301,
+        "expected_live": 100000,
+        "final_blocking_diagnostic_state_bytes": 4800000,
+        "geometry_uploads": 0,
+        "gpu_owned_bytes": 10563648,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:14Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:13Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.356943,
+          "median": 0.177414,
+          "p95": 0.257145,
+          "p99": 0.332336,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 3.549952,
+          "median": 2.698176,
+          "p95": 3.114752,
+          "p99": 3.436032,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.28092,
+          "median": 0.123362,
+          "p95": 0.191371,
+          "p99": 0.252816,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.353,
+          "median": 0.179,
+          "p95": 0.26,
+          "p99": 0.335,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.08991,
+          "median": 0.050826,
+          "p95": 0.067628,
+          "p99": 0.080011,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "baseline-100k-2",
+      "command": [
+        ".cache/particles-v2/baseline/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "2",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/baseline-100k-2"
+      ],
+      "binary_sha256": "5731084efd6742c5932627cca7e06137b57cf9f150cdb1dfb3f1dfa131996304",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-621d6ed-clean-f940784aaa2d-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "f940784aaa2d21d9340a37adc964413e8a4e3da66a7b016a92d974932abebc52",
+        "source_origin": "git",
+        "source_revision": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+        "source_tree": "52bfa499aa2ea1719a779afda1d17f831d699d8b",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 24.15142,
+        "first_draw_submission_ms": 23.927007,
+        "first_simulation_ms": 2.270782,
+        "host_init_ms": 167.541606,
+        "resource_setup_ms": 0.485326,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 135708672,
+      "proof": {
+        "actual_live": 100000,
+        "expected_live": 100000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:19Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:14Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 17.574416,
+          "median": 15.879589,
+          "p95": 16.619725,
+          "p99": 17.000172,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 8.961696,
+          "median": 8.058528,
+          "p95": 8.291904,
+          "p99": 8.839392,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 16.758387,
+          "median": 15.115358,
+          "p95": 15.794508,
+          "p99": 16.131855,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 17.538,
+          "median": 15.881,
+          "p95": 16.606,
+          "p99": 16.989,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.966193,
+          "median": 0.759663,
+          "p95": 0.784309,
+          "p99": 0.877205,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-100k-2",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "2",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-100k-2"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 6.952693,
+        "first_draw_submission_ms": 1.223358,
+        "first_simulation_ms": 0.596956,
+        "host_init_ms": 173.51428,
+        "resource_setup_ms": 1.931823,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 114475008,
+      "proof": {
+        "actual_live": 100000,
+        "asynchronous_readback_bytes": 14352,
+        "contacts": 0,
+        "dispatches": 36122,
+        "draws": 602,
+        "expected_live": 100000,
+        "final_blocking_diagnostic_state_bytes": 4800000,
+        "geometry_uploads": 0,
+        "gpu_owned_bytes": 10563696,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:21Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:19Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.492018,
+          "median": 0.327918,
+          "p95": 0.394574,
+          "p99": 0.469376,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 6.17888,
+          "median": 5.353792,
+          "p95": 5.823968,
+          "p99": 5.947584,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.417036,
+          "median": 0.271162,
+          "p95": 0.336254,
+          "p99": 0.406848,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.494,
+          "median": 0.33,
+          "p95": 0.388,
+          "p99": 0.472,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.087595,
+          "median": 0.054342,
+          "p95": 0.06908,
+          "p99": 0.082236,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "cpu-100k-2",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "2",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/cpu-100k-2"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 23.613185,
+        "first_draw_submission_ms": 23.395154,
+        "first_simulation_ms": 2.611045,
+        "host_init_ms": 166.264437,
+        "resource_setup_ms": 0.48806,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 136663040,
+      "proof": {
+        "actual_live": 100000,
+        "expected_live": 100000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:26Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:21Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 17.212333,
+          "median": 15.586637,
+          "p95": 16.332824,
+          "p99": 16.795747,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 8.986144,
+          "median": 8.014752,
+          "p95": 8.58288,
+          "p99": 8.844704,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 16.771281,
+          "median": 15.137209,
+          "p95": 15.879068,
+          "p99": 16.309179,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 17.192,
+          "median": 15.586,
+          "p95": 16.319,
+          "p99": 16.766,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.619459,
+          "median": 0.442104,
+          "p95": 0.504621,
+          "p99": 0.601795,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "baseline-10k-1",
+      "command": [
+        ".cache/particles-v2/baseline/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "10000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/baseline-10k-1"
+      ],
+      "binary_sha256": "5731084efd6742c5932627cca7e06137b57cf9f150cdb1dfb3f1dfa131996304",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-621d6ed-clean-f940784aaa2d-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "f940784aaa2d21d9340a37adc964413e8a4e3da66a7b016a92d974932abebc52",
+        "source_origin": "git",
+        "source_revision": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+        "source_tree": "52bfa499aa2ea1719a779afda1d17f831d699d8b",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 2.832783,
+        "first_draw_submission_ms": 2.67734,
+        "first_simulation_ms": 0.149933,
+        "host_init_ms": 166.953927,
+        "resource_setup_ms": 0.112682,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 107667456,
+      "proof": {
+        "actual_live": 10000,
+        "expected_live": 10000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:27Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:27Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.946355,
+          "median": 0.743382,
+          "p95": 0.767698,
+          "p99": 0.905909,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 0.670784,
+          "median": 0.099584,
+          "p95": 0.107296,
+          "p99": 0.263712,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.852668,
+          "median": 0.667809,
+          "p95": 0.690582,
+          "p99": 0.824525,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.948,
+          "median": 0.745,
+          "p95": 0.769,
+          "p99": 0.901,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.094939,
+          "median": 0.073519,
+          "p95": 0.07938,
+          "p99": 0.091753,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 10000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-10k-1",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "free",
+        "--count",
+        "10000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-10k-1"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 0.886442,
+        "first_draw_submission_ms": 0.613767,
+        "first_simulation_ms": 0.513669,
+        "host_init_ms": 169.846963,
+        "resource_setup_ms": 1.49004,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 106528768,
+      "proof": {
+        "actual_live": 10000,
+        "asynchronous_readback_bytes": 14400,
+        "contacts": 0,
+        "dispatches": 10537,
+        "draws": 301,
+        "expected_live": 10000,
+        "final_blocking_diagnostic_state_bytes": 480000,
+        "geometry_uploads": 0,
+        "gpu_owned_bytes": 1168640,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:28Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:27Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.179398,
+          "median": 0.102683,
+          "p95": 0.128853,
+          "p99": 0.168919,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 0.452768,
+          "median": 0.39376,
+          "p95": 0.398304,
+          "p99": 0.416,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.117662,
+          "median": 0.062387,
+          "p95": 0.076865,
+          "p99": 0.109657,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.175,
+          "median": 0.104,
+          "p95": 0.131,
+          "p99": 0.171,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.083538,
+          "median": 0.039364,
+          "p95": 0.049533,
+          "p99": 0.05799,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "free",
+        "count": 10000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "cpu-collision-1k",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "collision",
+        "--count",
+        "1000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/cpu-collision-1k"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 2.513541,
+        "first_draw_submission_ms": 2.294628,
+        "first_simulation_ms": 0.024236,
+        "host_init_ms": 166.311246,
+        "resource_setup_ms": 0.214314,
+        "snapshot_capture_ms_included_in_resource_setup": 0.01064
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 134766592,
+      "proof": {
+        "actual_live": 1000,
+        "contacts": 25987,
+        "expected_live": 1000,
+        "query_failures": 0,
+        "snapshot_bodies": 13,
+        "snapshot_colliders": 13
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:29Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:28Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 2.626304,
+          "median": 2.167799,
+          "p95": 2.524491,
+          "p99": 2.589293,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 0.143296,
+          "median": 0.100032,
+          "p95": 0.10448,
+          "p99": 0.137376,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.123994,
+          "median": 0.100269,
+          "p95": 0.116069,
+          "p99": 0.121098,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 2.627,
+          "median": 2.169,
+          "p95": 2.526,
+          "p99": 2.59,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 2.512929,
+          "median": 2.069724,
+          "p95": 2.438589,
+          "p99": 2.482041,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "collision",
+        "count": 1000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-collision-1k",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "collision",
+        "--count",
+        "1000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-collision-1k"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 1.881088,
+        "first_draw_submission_ms": 1.722629,
+        "first_simulation_ms": 735.553033,
+        "host_init_ms": 167.308215,
+        "resource_setup_ms": 1.485502,
+        "snapshot_capture_ms_included_in_resource_setup": 0.007424
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 162619392,
+      "proof": {
+        "actual_live": 1000,
+        "asynchronous_readback_bytes": 14400,
+        "contacts": 25690,
+        "dispatches": 3915,
+        "draws": 301,
+        "expected_live": 1000,
+        "final_blocking_diagnostic_state_bytes": 48000,
+        "geometry_uploads": 1,
+        "gpu_owned_bytes": 167936,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:30Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:29Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.123132,
+          "median": 0.093076,
+          "p95": 0.101281,
+          "p99": 0.113804,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 0.239584,
+          "median": 0.21712,
+          "p95": 0.224032,
+          "p99": 0.237504,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.080872,
+          "median": 0.050906,
+          "p95": 0.05846,
+          "p99": 0.064071,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.125,
+          "median": 0.095,
+          "p95": 0.103,
+          "p99": 0.116,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.056386,
+          "median": 0.041087,
+          "p95": 0.045396,
+          "p99": 0.050675,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "collision",
+        "count": 1000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-collision-100k",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "collision",
+        "--count",
+        "100000",
+        "--views",
+        "1",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-collision-100k"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 4.281776,
+        "first_draw_submission_ms": 1.755761,
+        "first_simulation_ms": 2.615864,
+        "host_init_ms": 167.7827,
+        "resource_setup_ms": 1.584939,
+        "snapshot_capture_ms_included_in_resource_setup": 0.006973
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 116248576,
+      "proof": {
+        "actual_live": 100000,
+        "asynchronous_readback_bytes": 14352,
+        "contacts": 2726447,
+        "dispatches": 18664,
+        "draws": 301,
+        "expected_live": 100000,
+        "final_blocking_diagnostic_state_bytes": 4800000,
+        "geometry_uploads": 1,
+        "gpu_owned_bytes": 10564752,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:31Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:30Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.39215,
+          "median": 0.202572,
+          "p95": 0.233881,
+          "p99": 0.277794,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 4.583872,
+          "median": 3.970496,
+          "p95": 4.40576,
+          "p99": 4.510816,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.303763,
+          "median": 0.144643,
+          "p95": 0.167787,
+          "p99": 0.201039,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.395,
+          "median": 0.205,
+          "p95": 0.236,
+          "p99": 0.282,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.093075,
+          "median": 0.055594,
+          "p95": 0.065033,
+          "p99": 0.079911,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "collision",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 1,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "gpu-100k-2-repeat",
+      "command": [
+        "build/judas_particles_v2_benchmark",
+        "--backend",
+        "gpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "2",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/gpu-100k-2-repeat"
+      ],
+      "binary_sha256": "7538e4dd2ec13a3bed06e3035db803db9dc13dc74846da75bb812d4fb2257ab6",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-2cd2f6d-clean-7d9a15ab6810-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+        "source_origin": "git",
+        "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+        "source_tree": "005effad2d0a8e1b494f1fa4df338fc0ef7b80a5",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 5.89082,
+        "first_draw_submission_ms": 1.249837,
+        "first_simulation_ms": 0.617816,
+        "host_init_ms": 166.345991,
+        "resource_setup_ms": 1.922325,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 114966528,
+      "proof": {
+        "actual_live": 100000,
+        "asynchronous_readback_bytes": 14400,
+        "contacts": 0,
+        "dispatches": 36122,
+        "draws": 602,
+        "expected_live": 100000,
+        "final_blocking_diagnostic_state_bytes": 4800000,
+        "geometry_uploads": 0,
+        "gpu_owned_bytes": 10563648,
+        "query_failures": 0,
+        "state_upload_bytes": 0
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:33Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:31Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 0.506355,
+          "median": 0.316797,
+          "p95": 0.350832,
+          "p99": 0.383002,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 5.970656,
+          "median": 5.355584,
+          "p95": 5.820832,
+          "p99": 5.848928,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 0.438637,
+          "median": 0.25979,
+          "p95": 0.293203,
+          "p99": 0.330283,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 0.508,
+          "median": 0.319,
+          "p95": 0.353,
+          "p99": 0.385,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 0.096653,
+          "median": 0.05282,
+          "p95": 0.062317,
+          "p99": 0.077977,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "gpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    },
+    {
+      "name": "baseline-100k-2-repeat",
+      "command": [
+        ".cache/particles-v2/baseline/judas_particles_v2_benchmark",
+        "--backend",
+        "cpu",
+        "--case",
+        "free",
+        "--count",
+        "100000",
+        "--views",
+        "2",
+        "--frames",
+        "240",
+        "--warmup",
+        "60",
+        "--require-gpu-timers",
+        "--out",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/measurements-final/baseline-100k-2-repeat"
+      ],
+      "binary_sha256": "5731084efd6742c5932627cca7e06137b57cf9f150cdb1dfb3f1dfa131996304",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-621d6ed-clean-f940784aaa2d-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "f940784aaa2d21d9340a37adc964413e8a4e3da66a7b016a92d974932abebc52",
+        "source_origin": "git",
+        "source_revision": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+        "source_tree": "52bfa499aa2ea1719a779afda1d17f831d699d8b",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      },
+      "cold": {
+        "first_draw_completed_ms": 25.831449,
+        "first_draw_submission_ms": 25.611263,
+        "first_simulation_ms": 2.320937,
+        "host_init_ms": 178.067918,
+        "resource_setup_ms": 0.534218,
+        "snapshot_capture_ms_included_in_resource_setup": 0.0
+      },
+      "gpu_dropped": 0,
+      "gpu_samples": 240,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Complete real simulation/presentation/draw; no rigid solver stepping. Free is the identical baseline/candidate workload; collision is a separate CPU/GPU candidate capability case with gravity and 13 static boxes. Collision capture occurs once outside per-frame timing. CPU/GPU floating-point arithmetic and birth initialization require independent trajectory controls, not an assumed exact image match. GPU timing includes submission bubbles. Final blocking diagnostic read and screenshots are outside all samples. No per-frame full-state readback or GPU finish.",
+      "process_peak_rss_bytes": 135827456,
+      "proof": {
+        "actual_live": 100000,
+        "expected_live": 100000
+      },
+      "run": {
+        "completed_utc": "2026-11-05T04:13:38Z",
+        "sdl_video_driver": "x11",
+        "started_utc": "2026-11-05T04:13:33Z",
+        "xdg_session_type": "wayland"
+      },
+      "schema": 1,
+      "summary": {
+        "complete_cpu_ms": {
+          "max": 17.340113,
+          "median": 15.86456,
+          "p95": 16.614365,
+          "p99": 17.064253,
+          "samples": 240
+        },
+        "gpu_ms": {
+          "max": 9.090592,
+          "median": 8.015904,
+          "p95": 8.422528,
+          "p99": 8.680032,
+          "samples": 240
+        },
+        "presentation_draw_ms": {
+          "max": 16.578867,
+          "median": 15.104757,
+          "p95": 15.814667,
+          "p99": 16.307226,
+          "samples": 240
+        },
+        "process_cpu_ms": {
+          "max": 17.326,
+          "median": 15.861,
+          "p95": 16.52,
+          "p99": 17.038,
+          "samples": 240
+        },
+        "simulation_ms": {
+          "max": 1.092641,
+          "median": 0.755165,
+          "p95": 0.785541,
+          "p99": 0.904116,
+          "samples": 240
+        }
+      },
+      "truncated_frames": 0,
+      "workload": {
+        "backend": "cpu",
+        "case": "free",
+        "count": 100000,
+        "dt": 0.01666666753590107,
+        "frames": 240,
+        "height": 1080,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  ],
+  "capture_controls": [
+    {
+      "left": "baseline-100k-1/main.png",
+      "right": "cpu-100k-1/main.png",
+      "png_bytes_identical": true,
+      "left_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09",
+      "right_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09"
+    },
+    {
+      "left": "baseline-100k-2/main.png",
+      "right": "cpu-100k-2/main.png",
+      "png_bytes_identical": true,
+      "left_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09",
+      "right_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09"
+    },
+    {
+      "left": "baseline-100k-2/secondary.png",
+      "right": "cpu-100k-2/secondary.png",
+      "png_bytes_identical": true,
+      "left_sha256": "ebb61941160cc43f5adbc999d0f5bf2862308dba492f1e2e59621b9f0959874a",
+      "right_sha256": "ebb61941160cc43f5adbc999d0f5bf2862308dba492f1e2e59621b9f0959874a"
+    },
+    {
+      "left": "baseline-100k-2/main.png",
+      "right": "baseline-100k-2-repeat/main.png",
+      "png_bytes_identical": true,
+      "left_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09",
+      "right_sha256": "2abf76216a76686c35ab71a383067a4f97a4dca698144aa4cfeb84ed570d6b09"
+    },
+    {
+      "left": "baseline-100k-2/secondary.png",
+      "right": "baseline-100k-2-repeat/secondary.png",
+      "png_bytes_identical": true,
+      "left_sha256": "ebb61941160cc43f5adbc999d0f5bf2862308dba492f1e2e59621b9f0959874a",
+      "right_sha256": "ebb61941160cc43f5adbc999d0f5bf2862308dba492f1e2e59621b9f0959874a"
+    },
+    {
+      "left": "gpu-100k-2/main.png",
+      "right": "gpu-100k-2-repeat/main.png",
+      "png_bytes_identical": true,
+      "left_sha256": "6f441cdef0adfdaeb089728976c9bc6cecb7fbed8ed8832ad0fdc8decbfca8e0",
+      "right_sha256": "6f441cdef0adfdaeb089728976c9bc6cecb7fbed8ed8832ad0fdc8decbfca8e0"
+    },
+    {
+      "left": "gpu-100k-2/secondary.png",
+      "right": "gpu-100k-2-repeat/secondary.png",
+      "png_bytes_identical": true,
+      "left_sha256": "a7a6b05ee833a972da3e0f5dcad542193f449b88f3a91dc94e7426414b0cfd6e",
+      "right_sha256": "a7a6b05ee833a972da3e0f5dcad542193f449b88f3a91dc94e7426414b0cfd6e"
+    },
+    {
+      "left": "cpu-collision-1k/main.png",
+      "right": "gpu-collision-1k/main.png",
+      "png_bytes_identical": true,
+      "left_sha256": "00ed9db19f2e8b8c46c6c36e6f91e5cee753508f49e32423e487ef28cf6fde74",
+      "right_sha256": "00ed9db19f2e8b8c46c6c36e6f91e5cee753508f49e32423e487ef28cf6fde74"
+    }
+  ]
+}

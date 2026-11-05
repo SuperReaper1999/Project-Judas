@@ -171,6 +171,9 @@ newer geometry.
 
 `play`, `pause`, `stop`, `clear` and `restart` are deliberate runtime controls.
 Pause freezes the effect; stop halts new emission while existing particles age.
+`clear` and `restart` also refuse a nonempty native cosmetic queue: drain its
+observations first. This conservative control boundary prevents a settings or
+control command from silently erasing observations already available to scripts.
 The persisted `enabled` flag keeps its legacy meaning: disabled particles age
 but do not emit or draw. Changing local/world space clears live visuals.
 Backend transitions and settings edits must respect pending reliable work.
@@ -225,3 +228,53 @@ remaining capacity and do not allocate an unbounded queue.
 - Collision, CPU/GPU and integration suites separately qualify physical contact,
   timing, bounded aggregation, streaming, origins and save behaviour. Passing
   authoring tests alone is not evidence that every backend or platform passed.
+
+## Measured scope and review project
+
+[Surface Workshop](../projects/particle_v2_lab/README.md) is the editable project
+for this change. Its project-owned paint cells survive cold saves and restore
+both material appearance and real receiver friction. They are not saved decals
+or retained airborne particles. The workshop includes native cooked terrain,
+a moving receiver, rotated geometry/gravity and an explicitly selected GPU
+stress scene; the starting scene uses small CPU populations.
+
+Matched Release measurements used a Ryzen 5 5600, 8 GiB RAM and GTX 970 4 GiB
+(NVIDIA 580.178.04), at 1920×1080, fixed 1/60-second updates, 60 warm-up frames
+and 240 measured frames. The second view is 960×540. The desktop compositor was
+present. Values below are milliseconds, median / p95 / worst.
+
+| Workload | CPU simulation + draw submission | GPU elapsed interval |
+| --- | --- | --- |
+| Previous CPU particles, 100k, one view | 8.501 / 8.857 / 9.968 | 0.763 / 0.824 / 0.997 |
+| Retained CPU particles, 100k, one view | 8.214 / 8.732 / 9.529 | 0.774 / 0.824 / 1.149 |
+| Resident GPU, 100k, one view | 0.177 / 0.257 / 0.357 | 2.698 / 3.115 / 3.550 |
+| Previous CPU particles, 100k, two views | 15.880 / 16.620 / 17.574 | 8.059 / 8.292 / 8.962 |
+| Resident GPU, 100k, two views | 0.328 / 0.395 / 0.492 | 5.354 / 5.824 / 6.179 |
+| Resident GPU, 100k, 13 static collision bodies | 0.203 / 0.234 / 0.392 | 3.970 / 4.406 / 4.584 |
+
+These isolate particle simulation and presentation, not a complete game frame:
+there is no rigid solver stepping, and the fixed collision snapshot is captured
+once outside the timed loop. GPU intervals include submission bubbles. The GPU
+path moves substantial work off CPU and increases single-view GPU elapsed cost;
+this is not a universal GPU speedup claim. The collision run retained 100,000
+particles, recorded 2,726,447 contacts and reported zero query failures.
+Resident allocations were about 10.1 MiB; ordinary ticks made no full-state
+transfers. Process peak RSS varied by run, so this is not a general RAM-saving
+claim. Moving concave worlds, reliable events and unsupported combinations
+are outside the 100k GPU performance result.
+
+The first 100k birth dispatch exposed real global atomic contention. Replacing
+per-birth reservation with one bounded batch reservation reduced that isolated
+GPU phase's paired median from 341.590 to 0.081 ms. Raw samples and the rejected
+path are retained; this phase measurement is not a whole-frame p95 result.
+
+Qualification evidence is recorded in
+[the Particles V2 register](evidence/particles-v2/QUALIFICATION.json), including
+commands, fingerprints, raw measurements and preserved first failures. It
+distinguishes the measured implementation checkpoint from later diagnostics
+and portability corrections. Native Linux driver validation, portable compile
+checks and human review remain separate categories.
+
+For human review, use the single checklist in the
+[Surface Workshop guide](../projects/particle_v2_lab/README.md#qualification-and-human-checklist).
+No main promotion or human acceptance is implied by these automated results.

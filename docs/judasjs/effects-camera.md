@@ -57,7 +57,7 @@ Unknown commands throw. This is separate from the persisted `enabled` setting.
 and active backend, `live`, `simulated`, `contacts`, `queryFailures`,
 `queuedImpacts`, `deliveredImpacts`, `cosmeticDropped`, `snapshotBodies`,
 `snapshotColliders`, `snapshotTriangles`, `gpuBytes`, `geometryUploads`,
-`stateUploadBytes`, `paused`, `backpressure`, `pendingStep`, `simulationMs`,
+`stateTransferBytes`, `paused`, `backpressure`, `pendingStep`, `simulationMs`,
 `snapshotMs` and `diagnostic`. Check the active backend and diagnostic rather than
 assuming that requesting GPU made it available.
 

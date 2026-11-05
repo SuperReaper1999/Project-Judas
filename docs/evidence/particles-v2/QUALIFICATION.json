@@ -1,0 +1,456 @@
+{
+  "schema": 1,
+  "assembled_utc": "2026-11-05T04:47:36.295905+00:00",
+  "implementation_checkpoint": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+  "baseline": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
+  "final_delivery_checkpoint": null,
+  "follow_up_status": "Independent small-pool controls pass after Mesa padding, but the first integrated NVIDIA run retains a capacity-one admission assertion failure. GPU owner is investigating. A separate lab save/backpressure review correction is also in progress. Final integrated follow-up commit/qualification is owned by root and is not assigned a hash by this record.",
+  "tested_build_identity": {
+    "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+    "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
+    "source_dirty": false,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f"
+  },
+  "core_gate_passed": true,
+  "core_gate_invocations": 7,
+  "regression_invocations": 11,
+  "tests": [
+    {
+      "name": "particle-collision-snapshot",
+      "exit": 0,
+      "binary_sha256": "438fc31330f8bbb7e0db64c92fbc4f4b148222252bf1e57be515cfaf916fc7e5",
+      "seconds": 0.019636182994872797,
+      "checks": 35,
+      "failures": 0
+    },
+    {
+      "name": "particle-cpu-response",
+      "exit": 0,
+      "binary_sha256": "d601722771763133da00d05c33022329782cba23ee1ae2b7ffcceabd2b5ee2f5",
+      "seconds": 0.0196576950038434,
+      "checks": 45,
+      "failures": 0
+    },
+    {
+      "name": "particle-gpu-resident",
+      "exit": 0,
+      "binary_sha256": "66a658d2a1ce6d09d49dd6239b2820f49efa429999b148629b7598246e9d0514",
+      "seconds": 0.9699331169977086,
+      "checks": 58,
+      "failures": 0
+    },
+    {
+      "name": "particle-authoring",
+      "exit": 0,
+      "binary_sha256": "df84c011221c13d57da3b5a3383f49db0ed6d5e48493df3ad9b364880d35ce55",
+      "seconds": 0.07988892200228292,
+      "checks": 42,
+      "failures": 0
+    },
+    {
+      "name": "particle-world-lifecycle",
+      "exit": 0,
+      "binary_sha256": "93e26676801f89168050e507bba2b42acde13966e17576a159fbb20dd2835540",
+      "seconds": 0.27839534699887736,
+      "checks": 47,
+      "failures": 0
+    },
+    {
+      "name": "particle-script",
+      "exit": 0,
+      "binary_sha256": "f4ae4d6cac8cc9704781229b4d8261067874a76677a1f3481cd001b04933bdff",
+      "seconds": 0.09470501499890815,
+      "checks": 13,
+      "failures": 0
+    },
+    {
+      "name": "particle-persistence",
+      "exit": 0,
+      "binary_sha256": "cead85e936561eb99625b1262db169518e7251d601b051f7d179eec8ccd67199",
+      "seconds": 0.17743552600586554,
+      "checks": 44,
+      "failures": 0
+    },
+    {
+      "name": "judas_visual_particle_tests",
+      "argv": [
+        "build/judas_visual_particle_tests",
+        "--output",
+        ".cache/particles-v2/regressions-checkpoint/legacy-particles"
+      ],
+      "exit": 0,
+      "seconds": 0.3142914779964485,
+      "checks": 33,
+      "failures": 0
+    },
+    {
+      "name": "judas_particle_application_tests",
+      "argv": [
+        "build/judas_particle_application_tests",
+        "--output",
+        ".cache/particles-v2/regressions-checkpoint/legacy-game"
+      ],
+      "exit": 0,
+      "seconds": 2.2669229070015717,
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "name": "judas_particle_pass_tests",
+      "argv": [
+        "build/judas_particle_pass_tests",
+        "--native"
+      ],
+      "exit": 0,
+      "seconds": 0.2641899160007597,
+      "checks": 33,
+      "failures": 0
+    },
+    {
+      "name": "judas_compute_infrastructure_tests",
+      "argv": [
+        "build/judas_compute_infrastructure_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.2141568829974858,
+      "checks": 50,
+      "failures": 0
+    },
+    {
+      "name": "judas_compute_infrastructure_tests",
+      "argv": [
+        "build/judas_compute_infrastructure_tests",
+        "--portable"
+      ],
+      "exit": 0,
+      "seconds": 0.21409453499654774,
+      "checks": 6,
+      "failures": 0
+    },
+    {
+      "name": "judas_weather_world_tests",
+      "argv": [
+        "build/judas_weather_world_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.03173673600394977,
+      "checks": 50,
+      "failures": 0
+    },
+    {
+      "name": "judas_weather_render_tests",
+      "argv": [
+        "build/judas_weather_render_tests",
+        ".cache/particles-v2/regressions-checkpoint/weather",
+        "--correctness-only"
+      ],
+      "exit": 0,
+      "seconds": 0.8149429730037809,
+      "checks": 27,
+      "failures": 0
+    },
+    {
+      "name": "judas_script_module_acceptance_tests",
+      "argv": [
+        "build/judas_script_module_acceptance_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.03178999700321583,
+      "checks": 8,
+      "failures": 0
+    },
+    {
+      "name": "judas_save_storage_tests",
+      "argv": [
+        "build/judas_save_storage_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.16399047800223343,
+      "checks": 49,
+      "failures": 0
+    },
+    {
+      "name": "judas_mk2_rotation_tests",
+      "argv": [
+        "build/judas_mk2_rotation_tests"
+      ],
+      "exit": 0,
+      "seconds": 8.024571300004027,
+      "checks": 31404,
+      "failures": 0
+    },
+    {
+      "name": "judas_render_pass_state_tests",
+      "argv": [
+        "build/judas_render_pass_state_tests",
+        ".cache/particles-v2/regressions-checkpoint/passes"
+      ],
+      "exit": 0,
+      "seconds": 0.214139570001862,
+      "checks": 29,
+      "failures": 0
+    }
+  ],
+  "cold_process_workshop": [
+    {
+      "argv": [
+        "build/judas_particle_workshop_tests",
+        "--write",
+        ".cache/particles-v2/application-checkpoint/cold"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "build/judas_particle_workshop_tests",
+        "--read",
+        ".cache/particles-v2/application-checkpoint/cold"
+      ],
+      "exit": 0
+    }
+  ],
+  "sdk_workflow": {
+    "work": "/tmp/judas-particles-v2-delivery-nfmjgui6",
+    "rows": [
+      {
+        "name": "verify-relocated-sdk",
+        "argv": [
+          "python3",
+          "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+          "verify",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.6669201810000231
+      },
+      {
+        "name": "new-project",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_editor"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 1.8165854649996618
+      },
+      {
+        "name": "new-project-scripts",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_script_check",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/new-game/SDK_First_Game.judasproj"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.01593082599720219
+      },
+      {
+        "name": "recook-sdk-collision",
+        "argv": [
+          "python3",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/consumer/Tools/cook_collision.py",
+          "--tool",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_collision_cook"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.064027726999484
+      },
+      {
+        "name": "validate-workshop",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_scene_author",
+          "--validate",
+          "project",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/consumer/particle_v2_lab.judasproj"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.007727184005489107
+      },
+      {
+        "name": "check-workshop-script",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_script_check",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/consumer/particle_v2_lab.judasproj"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.01567852000152925
+      },
+      {
+        "name": "export-workshop",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas_export",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/consumer/particle_v2_lab.judasproj",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/package",
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk/judas"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 0.26420294999843463
+      },
+      {
+        "name": "relocated-runtime",
+        "argv": [
+          "/tmp/judas-particles-v2-delivery-nfmjgui6/relocated/SurfaceWorkshop/judas"
+        ],
+        "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+        "exit": 0,
+        "seconds": 1.3662431330012623
+      }
+    ]
+  },
+  "delivery": {
+    "work": "/tmp/judas-particles-v2-delivery-nfmjgui6",
+    "standalone": "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery/SurfaceWorkshop-Linux",
+    "created_project": "/tmp/judas-particles-v2-delivery-nfmjgui6/new-game/SDK_First_Game.judasproj",
+    "sdk": "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk-hidden",
+    "collision_hashes": {
+      "terrain.judascollision": "cd1b09dcc654195e8be6bc990f8954bb7182d0b3a47f32aaeef2966c8ac7146e",
+      "cave.judascollision": "16d9823845dcafd4894875ed8e9eddfdf6a58dc51fa9da73ae22723fa626e757"
+    },
+    "checkpoint": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7"
+  },
+  "relocation_proof": {
+    "argv": [
+      "strace",
+      "-f",
+      "-e",
+      "trace=file",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery/files.trace",
+      "/tmp/judas-particles-v2-delivery-nfmjgui6/relocated/SurfaceWorkshop/judas"
+    ],
+    "exit": 0,
+    "cwd": "/tmp/judas-particles-v2-delivery-nfmjgui6/empty",
+    "source_tree_accesses": [],
+    "hidden_source": "/tmp/judas-particles-v2-delivery-nfmjgui6/source-hidden",
+    "hidden_sdk": "/tmp/judas-particles-v2-delivery-nfmjgui6/sdk-hidden",
+    "observer_capture_directory_stats": [
+      "644410 newfstatat(AT_FDCWD, \"/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery\", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0",
+      "644410 newfstatat(AT_FDCWD, \"/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery\", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0",
+      "644410 newfstatat(AT_FDCWD, \"/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery\", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0"
+    ],
+    "audit_note": "The three initial matches are newfstatat on the explicitly requested screenshot output directory, not source/runtime reads. Raw trace and first classification are preserved."
+  },
+  "portability_syntax_only": {
+    "source_commit": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
+    "source_sha256": {
+      "src/render/ComputeDevice.cpp": "0ecfc6963b23713714608da60e1d36338061989af4723a4a6880397afb5e6dc0",
+      "src/render/GpuParticlePass.cpp": "3a0434a6c80482bf2b767f854c105c965f30dd8f2ddbce03e301f9c5b795a447",
+      "src/particles/GpuParticles.cpp": "457f60290bb134705b65bcd3fdd80974916e0b52d679f3c1d54f5538572704e6",
+      "src/particles/GpuParticleCollision.cpp": "ce182bf3ace911d876ba8cd0300cd2e28ce06f489daefe57829b22eca868dd0f",
+      "src/particles/GpuParticles.h": "51f6a02d28bc640df0674d6ce9daafdc9ecb3d7541a47669cb4fd9c49bb1da3c",
+      "src/particles/GpuParticleData.h": "0e4beb0e54f122030e0ce6d6252fd24e4de6d7846cbcaa8ec3099e02d44ddbe6",
+      "src/particles/GpuParticleCollision.h": "5b57a6376f49ab456556248522ee65233b9281eb33141714d047a83e70860455",
+      "src/particles/GpuParticleShaders.h": "b9325328b06683f38a700c70182178fc4111a5b4f44c16df3bee8abdb1a22b87",
+      "src/particles/ParticleSettings.h": "1230fca2e8aa1712811e964449cc05d3915ff80a925ad5942d6abbe1c4d1d369",
+      "src/particles/ParticleImpacts.h": "bf6772ef2d8a716abb1623b00a012fb7a8423d09023f69f7a05776637822129b",
+      "src/particles/CollisionSnapshot.h": "c18d192cca4a2ca72b847d352ff736cd7a73eda1e5b4aa6bbcf139a7ce11251e",
+      "src/render/ComputeDevice.h": "8c7e883fd49eae549e905a708a2760cd9e096ef24e1a9a4ccb2c5ff252bdb9f9",
+      "src/render/GpuParticlePass.h": "36a2efbb8031bf9014cb0c3d7581099eac9af7b2c39dba82a99c9962b3792f6d",
+      "src/render/GraphicsCapabilities.h": "d21d394a94404d8fe8f83e550ebd92da412a321d481bbdecc62b1264252eed0d",
+      "src/GraphicsApi.h": "15be272ddb68fd3809ea9edb1140043fe548f7e197ab1f778fcefe94f3e30e2c"
+    },
+    "scope": "Four frozen GPU translation units; host GLES3 Android-guard and actual Emscripten syntax controls only. No NDK/link/device/browser runtime or SDK rebuild qualification.",
+    "results": [
+      {
+        "profile": "android-guard",
+        "source": "src/render/ComputeDevice.cpp",
+        "returncode": 0,
+        "seconds": 0.6852174889936578
+      },
+      {
+        "profile": "android-guard",
+        "source": "src/render/GpuParticlePass.cpp",
+        "returncode": 0,
+        "seconds": 0.8089369759982219
+      },
+      {
+        "profile": "android-guard",
+        "source": "src/particles/GpuParticles.cpp",
+        "returncode": 0,
+        "seconds": 0.5694999850020395
+      },
+      {
+        "profile": "android-guard",
+        "source": "src/particles/GpuParticleCollision.cpp",
+        "returncode": 0,
+        "seconds": 0.5906330419966253
+      },
+      {
+        "profile": "emscripten",
+        "source": "src/render/ComputeDevice.cpp",
+        "returncode": 0,
+        "seconds": 1.360183684999356
+      },
+      {
+        "profile": "emscripten",
+        "source": "src/render/GpuParticlePass.cpp",
+        "returncode": 0,
+        "seconds": 0.884218046994647
+      },
+      {
+        "profile": "emscripten",
+        "source": "src/particles/GpuParticles.cpp",
+        "returncode": 0,
+        "seconds": 0.934202919001109
+      },
+      {
+        "profile": "emscripten",
+        "source": "src/particles/GpuParticleCollision.cpp",
+        "returncode": 0,
+        "seconds": 0.9238861420017201
+      }
+    ],
+    "all_passed": true,
+    "source_still_matches": true
+  },
+  "mesa_follow_up": {
+    "native_nvidia": {
+      "checks": 63,
+      "failures": 0
+    },
+    "software_mesa": {
+      "checks": 63,
+      "failures": 0
+    },
+    "first_red": {
+      "checks": 47,
+      "failures": 9
+    },
+    "integrated_first_nvidia": {
+      "checks": 63,
+      "failures": 1
+    },
+    "integrated_first_mesa": {
+      "checks": 63,
+      "failures": 0
+    },
+    "scope": "Independent production storage-block reflection and padding controls; not Windows/Android runtime qualification."
+  },
+  "machine_observed_at_assembly": {
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+    "memory_total": "MemTotal:        8045192 kB",
+    "note": "CPU/memory inspected while assembling evidence; run-time graphics/compiler/platform values remain in immutable raw results."
+  },
+  "benchmark_runs": 13,
+  "measured_frames_per_run": 240,
+  "warmup_frames": 60,
+  "all_benchmark_gpu_samples_valid": true,
+  "raw_archive_sha256": "7f42cca5c413ab18db9960fe86c4e6160d7627c9ac1adcd82a22498558635114",
+  "raw_archive_bytes": 3754605,
+  "raw_file_count": 372,
+  "advanced_fluids": "unchanged and locked",
+  "human_acceptance": "not established by this evidence",
+  "limitations": [
+    "100k performance uses visual particles, not 100k rigid bodies or a moving full-world geometry snapshot.",
+    "Collision performance uses 13 fixed native boxes and one cold snapshot; no MK2 solver stepping or moving-geometry capture cost is in frame samples.",
+    "One-view GPU elapsed intervals increase versus CPU particles even though CPU submission cost falls sharply.",
+    "CPU/GPU five-second collision paths are not asserted bit-identical; 1k contact totals differ and independent known-answer trajectory/surface tests define correctness.",
+    "Timers are asynchronous GPU intervals that include submission bubbles, not pure shader execution times. No per-frame full-state readback or finish occurs.",
+    "Short, serial runs on one shared desktop; no claim of isolated long-session percentile stability or universal platform performance.",
+    "Android guard and Emscripten syntax controls are not device/browser runtime qualification; Windows runtime remains untested for this change."
+  ]
+}

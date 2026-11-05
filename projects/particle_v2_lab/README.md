@@ -17,7 +17,7 @@ Standalone launch: `build/judas projects/particle_v2_lab/particle_v2_lab.judaspr
 | P | Pause/resume particle simulation and emission |
 | B | Burst particles within existing capacities |
 | C | Clear game-owned coating and restore dry body friction |
-| F6 | Pause particles, drain impacts, then save the world and coating |
+| F6 | Stop emission, finish/drain captured contacts, pause, then save the world and coating |
 | F7 | Load that save; coating reconstructs without saving the visual particle population |
 | R | Reset the current authored scene |
 | Escape | Pause menu |
@@ -31,7 +31,7 @@ triangle collision; collision is independent of camera visibility and render
 LOD. The tunnel is deliberately authored two-sided.
 
 `Assets/scripts/lab.js` owns the gameplay meaning of contacts. It drains bounded
-native batches during fixed updates and records count and weight in receiver-
+native batches during gameplay updates and records count and weight in receiver-
 local 0.5-metre cells, plus receiver totals. The colour/roughness of receiving
 materials and **actual physical friction** change with coating. The physical
 paint floor is one continuous body; 64 authored render-only 1-metre tiles show
@@ -43,8 +43,10 @@ receiver overflow cells rather than silently losing reliable events.
 The script state is the durable coating. On restore it reapplies material and
 friction from that state. It does not persist or recreate individual visual
 droplets, and it does not create duplicate decoration entities. Native pending
-reliable records remain the engine's responsibility; the F6 journey pauses and
-drains before requesting the save. P resumes after loading.
+reliable records remain the engine's responsibility. F6 stops future emission,
+drains queued observations and lets any backpressured captured tick finish.
+It then pauses and requests the save at the actual ready boundary, without a
+fixed frame delay. P resumes after loading.
 
 HUD counts are actual runtime readback. GPU population samples are asynchronous;
 they may lag. The stress scene explicitly requests `gpu`, so an unsupported

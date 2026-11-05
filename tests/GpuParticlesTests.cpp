@@ -2,6 +2,7 @@
 #include "CollisionAsset.h"
 #include "particles/CollisionSnapshot.h"
 #include "particles/GpuParticles.h"
+#include "particles/GpuParticleShaders.h"
 #include "particles/ParticleRandom.h"
 #include "render/GpuParticlePass.h"
 #include <algorithm>
@@ -58,6 +59,42 @@ void Pure(){
  const auto a=SampleParticleBirth(settings,1),b=SampleParticleBirth(settings,1);
  Check(a.position==b.position&&a.velocity==b.velocity&&a.state==b.state,"V2 seed and stable birth id give repeatable explicitly ordered random values");
 }
+void SmallPools(GraphicsTestHost& host){
+ // Query the actual production clear kernel's runtime scalar-array block.
+ // Some drivers report a rounded linked minimum larger than one uint.
+ const auto source=GpuDetail::ClearShader();const char* text=source.c_str();
+ const auto shader=glCreateShader(GL_COMPUTE_SHADER);glShaderSource(shader,1,&text,nullptr);glCompileShader(shader);
+ const auto program=glCreateProgram();glAttachShader(program,shader);glLinkProgram(program);
+ GLint linked=0;glGetProgramiv(program,GL_LINK_STATUS,&linked);
+ const auto block=linked?glGetProgramResourceIndex(program,GL_SHADER_STORAGE_BLOCK,"FreeSlots"):GL_INVALID_INDEX;
+ GLint minimum=0;if(block!=GL_INVALID_INDEX){const GLenum property=GL_BUFFER_DATA_SIZE;glGetProgramResourceiv(program,GL_SHADER_STORAGE_BLOCK,block,1,&property,1,nullptr,&minimum);}
+ std::printf("SMALL_POOL_LAYOUT free_slots_linked_minimum=%d scalar_bytes=%zu\n",minimum,sizeof(unsigned));
+ Check(linked&&block!=GL_INVALID_INDEX&&minimum>=GLint(sizeof(unsigned)),"production scalar-array storage reports its actual linked minimum");
+ glDeleteProgram(program);glDeleteShader(shader);
+ for(unsigned capacity=1;capacity<=4;++capacity){
+  ParticleEmitterSettings settings;settings.backend=ParticleBackend::Gpu;settings.maxParticles=int(capacity);settings.spread=settings.velocityVariation=settings.velocity=glm::vec3(0);
+  GpuParticles pool;std::string error;bool ready=pool.Initialize(host.GraphicsCaps(),settings,{},error);
+  if(!ready)std::fprintf(stderr,"SMALL_POOL_INITIALIZE capacity=%u error=%s\n",capacity,error.c_str());
+  GpuParticleStepInputs input;input.spawnCount=capacity;input.tick=1;
+  if(ready)ready=pool.Step(settings,input,nullptr,error);
+  auto state=ready?Live(pool,error):std::vector<GpuParticleState>{};bool exact=ready&&state.size()==capacity;
+  for(unsigned index=0;exact&&index<capacity;++index)exact=state[index].identity[1]==index+1;
+  const auto operationError=error;const auto sampled=pool.Stats().live;const auto tick=pool.Diagnostics().sampleTick;
+  if(!exact&&ready){
+   std::vector<GpuParticleState> raw;std::string diagnostic;
+   const bool read=pool.ReadStateForDiagnostics(raw,diagnostic);
+   std::fprintf(stderr,"SMALL_POOL_RAW read=%u slots=%zu error=%s\n",read?1u:0u,raw.size(),diagnostic.c_str());
+   for(const auto& particle:raw)std::fprintf(stderr,"SMALL_POOL_RAW_SLOT live=%u id=%u seed=%u age=%g lifetime=%g\n",particle.identity[0],particle.identity[1],particle.identity[2],particle.positionAge[3],particle.velocityLife[3]);
+  }
+  const bool retired=pool.Shutdown(error)&&pool.Stats().gpuBytes==0;
+  if(!exact||!retired){
+   std::fprintf(stderr,"SMALL_POOL_RESULT capacity=%u ready=%u actual_live=%zu sampled_live=%llu sample_tick=%llu retired=%u operation_error=%s shutdown_error=%s\n",capacity,ready?1u:0u,state.size(),static_cast<unsigned long long>(sampled),static_cast<unsigned long long>(tick),retired?1u:0u,operationError.c_str(),error.c_str());
+   for(const auto& particle:state)std::fprintf(stderr,"SMALL_POOL_PARTICLE live=%u id=%u seed=%u age=%g lifetime=%g pos=(%g,%g,%g) vel=(%g,%g,%g)\n",particle.identity[0],particle.identity[1],particle.identity[2],particle.positionAge[3],particle.velocityLife[3],particle.positionAge[0],particle.positionAge[1],particle.positionAge[2],particle.velocityLife[0],particle.velocityLife[1],particle.velocityLife[2]);
+  }
+  char label[128];std::snprintf(label,sizeof(label),"%u-slot resident pool admits its exact capacity and releases all allocations",capacity);
+  Check(exact&&retired,label);
+ }
+}
 struct Target {
  unsigned fbo=0,texture=0,white=0;
  bool Init(){glGenFramebuffers(1,&fbo);glBindFramebuffer(GL_FRAMEBUFFER,fbo);glGenTextures(1,&texture);glBindTexture(GL_TEXTURE_2D,texture);glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,32,32,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,texture,0);if(glCheckFramebufferStatus(GL_FRAMEBUFFER)!=GL_FRAMEBUFFER_COMPLETE)return false;
@@ -102,7 +139,7 @@ void Collision(GraphicsTestHost& host){
  PhysicsWorld world;world.Init();const auto box=world.CreateStaticBox({0,0,0},{.5f,.5f,.5f},0,0);CollisionSnapshot snapshot;std::string error;
  Check(snapshot.Capture(world,{{-10,-10,-10},{10,10,10}},.25,error,{},[](BodyHandle){return std::uint64_t(77);}),"collision snapshot captures actual static MK2 box geometry once");
  ParticleEmitterSettings settings;settings.backend=ParticleBackend::Gpu;settings.maxParticles=1;settings.collision=true;settings.collisionRadius=.1f;settings.restitution=.5f;settings.friction=.2f;settings.spread=settings.velocityVariation=glm::vec3(0);settings.velocity={2,-4,0};settings.lifetime=10;settings.impacts=ParticleImpactDelivery::Cosmetic;
- GpuParticles pool;if(!pool.Initialize(host.GraphicsCaps(),settings,{},error)){Check(false,"GPU collision pool initializes");return;}
+ GpuParticles pool;if(!pool.Initialize(host.GraphicsCaps(),settings,{},error)){Check(false,"GPU collision pool initializes");std::fprintf(stderr,"%s\n",error.c_str());return;}
  GpuParticleStepInputs input;input.position={0,1,0};input.spawnCount=1;input.tick=1;bool ready=pool.Step(settings,input,&snapshot,error);input.spawnCount=0;input.dt=.25f;input.tick=2;ready&=pool.Step(settings,input,&snapshot,error);
  const auto state=Live(pool,error);Check(ready&&state.size()==1&&Near(Velocity(state[0]),{.8f,2,0},1e-3f)&&Near(Position(state[0]),{.32f,.9001f,0},1e-3f),"resident sphere sweep, rebound, remaining-time motion and Coulomb friction match the independent analytic box oracle");
  Check(Sample(pool,2,error),"bounded nonblocking GPU impact/counter readbacks eventually complete");const auto impacts=pool.TakeImpacts();Check(impacts.size()==1&&impacts[0].receiver==77&&impacts[0].count==1&&std::abs(impacts[0].position.y-.5)<1e-3&&Near(impacts[0].normal,{0,1,0}),"GPU contacts deliver bounded receiver-local cosmetic impact data after asynchronous completion");
@@ -113,7 +150,7 @@ void Collision(GraphicsTestHost& host){
 
 void StaticFeatureControls(GraphicsTestHost& host){
  ParticleEmitterSettings settings;settings.backend=ParticleBackend::Gpu;settings.maxParticles=1;settings.collision=true;settings.collisionRadius=.1f;settings.restitution=1;settings.friction=0;settings.spread=settings.velocityVariation=glm::vec3(0);settings.lifetime=10;settings.impacts=ParticleImpactDelivery::Cosmetic;
- GpuParticles pool;std::string error;if(!pool.Initialize(host.GraphicsCaps(),settings,{},error)){Check(false,"static-feature GPU pool initializes");return;}
+ GpuParticles pool;std::string error;if(!pool.Initialize(host.GraphicsCaps(),settings,{},error)){Check(false,"static-feature GPU pool initializes");std::fprintf(stderr,"%s\n",error.c_str());return;}
  auto run=[&](const CollisionSnapshot& snapshot,glm::vec3 from,glm::vec3 velocity,bool expectedHit,const char* label){
   pool.Clear(error);settings.velocity=velocity;GpuParticleStepInputs input;input.position=from;input.spawnCount=1;input.tick=10;bool ready=pool.Step(settings,input,&snapshot,error);input.spawnCount=0;input.dt=.25f;input.tick=11;ready&=pool.Step(settings,input,&snapshot,error);
   const auto oracle=snapshot.SweepSphere(from,from+velocity*.25f,settings.collisionRadius);
@@ -185,6 +222,6 @@ void BatchAdmission(GraphicsTestHost& host){
  pool.Shutdown(error);
 }
 
-void Native(){GraphicsTestHost host;std::string error;const bool ready=host.Init("Particles V2 GPU proof",64,64,false,error);Check(ready,"native SDL/GLAD context qualifies the actual production GPU owners");if(!ready){std::fprintf(stderr,"%s\n",error.c_str());return;}if(!host.GraphicsCaps().modernTier){std::puts("SKIP native resident GPU proof: selected context is portable");return;}Randomized100k(host);{Target target;Check(target.Init(),"independent known-answer colour target initializes");ViewOrdering(host,target);}Collision(host);StaticFeatureControls(host);ExpiryAndOverflow(host);BatchAdmission(host);Check(glGetError()==GL_NO_ERROR,"resident simulation, collision and rendering finish without GL errors");host.Shutdown();}
+void Native(){GraphicsTestHost host;std::string error;const bool ready=host.Init("Particles V2 GPU proof",64,64,false,error);Check(ready,"native SDL/GLAD context qualifies the actual production GPU owners");if(!ready){std::fprintf(stderr,"%s\n",error.c_str());return;}if(!host.GraphicsCaps().modernTier){std::puts("SKIP native resident GPU proof: selected context is portable");return;}SmallPools(host);Randomized100k(host);{Target target;Check(target.Init(),"independent known-answer colour target initializes");ViewOrdering(host,target);}Collision(host);StaticFeatureControls(host);ExpiryAndOverflow(host);BatchAdmission(host);Check(glGetError()==GL_NO_ERROR,"resident simulation, collision and rendering finish without GL errors");host.Shutdown();}
 }
 int main(int argc,char** argv){if(argc>2||(argc==2&&std::string(argv[1])!="--native")){std::fprintf(stderr,"usage: GpuParticlesTests [--native]\n");return 2;}Pure();if(argc==2)Native();std::printf("GPU particles: %u checks, %u failures\n",checks,failures);return failures?1:0;}
