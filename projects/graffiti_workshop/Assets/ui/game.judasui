@@ -1,0 +1,540 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280.0,
+      720.0
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 22.0,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0.0,
+          0.0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "title",
+        "parent": "canvas",
+        "text": "GRAFFITI WORKSHOP",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 26,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          25,
+          20
+        ],
+        "size": [
+          900,
+          34
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.1,
+          0.95,
+          0.8,
+          1
+        ]
+      },
+      {
+        "id": "help",
+        "parent": "canvas",
+        "text": "WASD walk | mouse look | hold left mouse to spray | 1\u20134 colours\nSpace jump | Shift run | F5 save | F9 load | Esc pause",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 17,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          25,
+          58
+        ],
+        "size": [
+          1200,
+          54
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.85,
+          0.9,
+          0.92,
+          1
+        ]
+      },
+      {
+        "id": "status",
+        "parent": "canvas",
+        "text": "Loading paint\u2026",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 17,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          25,
+          120
+        ],
+        "size": [
+          1200,
+          120
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.85,
+          0.9,
+          0.92,
+          1
+        ]
+      },
+      {
+        "id": "crosshair",
+        "parent": "canvas",
+        "text": "+",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          24,
+          30
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          1,
+          1,
+          1,
+          0.9
+        ]
+      },
+      {
+        "id": "hint",
+        "parent": "canvas",
+        "text": "PLASTER / BRICK / MOVING CANVAS: paintable   \u2022   DARK STEEL: blocks droplets, rejects paint",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 15,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          1
+        ],
+        "anchorMax": [
+          0,
+          1
+        ],
+        "offset": [
+          25,
+          -65
+        ],
+        "size": [
+          1210,
+          30
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.85,
+          0.9,
+          0.92,
+          1
+        ]
+      },
+      {
+        "id": "debug",
+        "parent": "canvas",
+        "text": "B: pause receiver delivery to demonstrate reliable backpressure | C: clean courtyard",
+        "texture": "",
+        "font": "123a0724a3a4f2129c0b46c1aaf51b2f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 14,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          1
+        ],
+        "anchorMax": [
+          0,
+          1
+        ],
+        "offset": [
+          25,
+          -35
+        ],
+        "size": [
+          1210,
+          25
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.85,
+          0.9,
+          0.92,
+          1
+        ]
+      }
+    ]
+  }
+}

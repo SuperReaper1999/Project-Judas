@@ -104,8 +104,24 @@ GPU diagnostics. Pending reliable CPU work retains its original frozen snapshot.
 After returning to idle, cached geometry history is retained but `snapshotMs`,
 `snapshotBodies`, `snapshotColliders` and `snapshotTriangles` report zero work.
 
-Active emitters still capture independently, with their own layer/owner filters
-and geometry revision history. There is no general cross-emitter snapshot cache.
+Active emitters with identical layer/own-body filters and the same previous
+snapshot history now share one immutable capture within an `UpdateVisualParticles`
+call. Its chart, duration, world and origin are common to that fixed boundary.
+Different histories (including a paused or previously idle emitter), filters or
+emitting bodies remain independent. Pending reliable work keeps its frozen
+snapshot. At most 64 groups are retained per call; overflow captures normally.
+No world-wide or cross-frame mutable geometry cache is introduced.
+
+Compatible resident GPU emitters also alias the same immutable collision buffers.
+A captured-sample lifetime token proves that the peer consumed the same snapshot;
+a fingerprint alone is not used as proof of cross-emitter equivalence. Aliases
+are same-context, read-only, budget checked and remain alive until their final
+owner retires. Edits/origin changes publish new geometry; moving geometry retains
+the existing CPU fallback/required-GPU rejection. Each emitter keeps independent
+particle state, settings, queues and diagnostic readbacks. Conservative per-owner
+`gpuBytes` reservations include aliased storage and must not be summed as unique
+physical VRAM. Native `GpuParticleDiagnostics.geometryUploadBytes` counts actual
+uploads; `geometrySharedBytes` counts accepted aliases.
 The standalone collision microbenchmark excludes capture cost; world-level
 preparation must also be measured when assessing a game. A headless reproduction
 is available with `build/judas_particle_world_tests --idle-benchmark`.
@@ -306,3 +322,34 @@ checks and human review remain separate categories.
 For human review, use the single checklist in the
 [Surface Workshop guide](../projects/particle_v2_lab/README.md#qualification-and-human-checklist).
 No main promotion or human acceptance is implied by these automated results.
+
+## Shared-capture follow-up and playable Graffiti Workshop
+
+[Graffiti Workshop](../projects/graffiti_workshop/README.md) is a first-person
+consumer game: walk, spray four fixed-colour emitters, paint different receivers
+and reject steel surfaces. Game-owned impact-local paint discs survive genuine
+cold saves and relocated exports. No raycast produces a paint mark. `remove`
+already consumes a droplet after successful impact admission; a reliable full
+queue retains its captured hit before removal. The strengthened CPU regression
+checks that resumed removals never deposit again. Bounce, slide and stick remain
+separate responses.
+
+A fixed 250-box, twelve-active-emitter fixture (one live particle per emitter)
+was measured in three alternating before/after pairs on Ryzen 5 5600 / GTX 970,
+NVIDIA 580.178.04, Release GCC/Linux. Each process excludes 30 warm-up ticks and
+measures 300 ticks. No compiler or game test overlapped the accepted pairs.
+
+| Path | Before median range | Shared median range | Before p95 range | Shared p95 range |
+| --- | ---: | ---: | ---: | ---: |
+| CPU | 3.657–3.704 ms | 0.656–0.658 ms | 3.698–4.097 ms | 0.666–0.733 ms |
+| Resident GPU | 3.871–3.899 ms | 0.768–0.773 ms | 3.898–3.953 ms | 0.790–0.850 ms |
+
+Worst observed CPU ticks were 4.801 → 0.936 ms; GPU-path **CPU tick costs** were
+4.954 → 1.571 ms. These are world particle update/preparation costs, not GPU
+elapsed intervals, full-game FPS or high-count simulation benchmarks. The GPU
+fixture uploaded 266,112 geometry bytes before versus 22,176 after, with 243,936
+bytes accounted as aliases. Particle state and per-emitter work were unchanged.
+Run `judas_particle_world_tests --active-benchmark` or `--gpu-benchmark` (the latter
+requires native modern graphics). Raw controls and qualification are retained in
+`docs/evidence/particle-sharing/`. Independent snapshots remain the control for
+exact GPU trajectories, filter isolation, source retirement and moving anchors.

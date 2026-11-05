@@ -1,0 +1,90 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Graffiti Workshop",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.3,
+        0.85,
+        0.4
+      ],
+      "sun-color": [
+        1,
+        0.95,
+        0.86
+      ],
+      "ambient": [
+        0.35,
+        0.38,
+        0.42
+      ],
+      "background-color": [
+        0.12,
+        0.18,
+        0.24
+      ],
+      "linear-rendering": true,
+      "fluid-scale": 1,
+      "next-id": 1000,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Persistent game-owned paint disc",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "daaa8471486eb253adefdfc90d742687",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "mesh"
+          },
+          "tags": 2
+        }
+      }
+    ]
+  }
+}

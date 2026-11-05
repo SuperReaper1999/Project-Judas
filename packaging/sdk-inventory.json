@@ -52,7 +52,8 @@
     "projects/menu_workshop",
     "projects/terrain_navigation_workshop",
     "projects/renderer_v2_lab",
-    "projects/particle_v2_lab"
+    "projects/particle_v2_lab",
+    "projects/graffiti_workshop"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [
