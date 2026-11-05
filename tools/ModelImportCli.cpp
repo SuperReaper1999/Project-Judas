@@ -1,4 +1,5 @@
 #include "BuildIdentity.h"
+#include "RigNormalizationCli.h"
 #include "Project.h"
 #include "ModelImport.h"
 #include "PerformanceProfiler.h"
@@ -24,6 +25,10 @@ int main(int argc,char** argv){
   ProfileRun run("Model import CLI");ProfileFrame frame("Model import CLI");
  try{
   std::string error;
+  if(argc>1&&std::string(argv[1])=="--normalize-rig") {
+    if(argc!=4) throw std::runtime_error("usage: --normalize-rig INPUT NEW_OUTPUT.judasmodel");
+    return NormalizeRigCommand(argv[2],argv[3]);
+  }
   if(argc==3&&std::string(argv[1])=="--inspect") {MeshData mesh;if(!LoadModelMesh(argv[2],mesh,error))throw std::runtime_error(error);Json j={{"parts",Json::array()},{"clips",Json::array()},{"joints",Json::array()},{"materials",mesh.materialKeys}};for(size_t i=0;i<mesh.primitives.size();++i){auto& p=mesh.primitives[i];j["parts"].push_back({{"ordinal",i},{"identity",p.part},{"triangles",p.count/3},{"material",p.material}});}j["materialDefaults"]=Json::array();for(auto& m:mesh.materials){int low=255,high=0;for(size_t k=3;k<m.maps[0].embedded.pixels.size();k+=4){low=std::min(low,int(m.maps[0].embedded.pixels[k]));high=std::max(high,int(m.maps[0].embedded.pixels[k]));}j["materialDefaults"].push_back({{"factor",{m.baseColor.r,m.baseColor.g,m.baseColor.b,m.baseColor.a}},{"alpha",int(m.alpha)},{"imageAlphaMin",low},{"imageAlphaMax",high}});}if(mesh.skeletal){auto& a=*mesh.skeletal;for(size_t i=0;i<a.skeleton.names.size();++i)j["joints"].push_back(SkeletonJointKey(a.skeleton,int(i)));try{j["skeletonSignature"]=SkeletonRetargetSignature(a.skeleton);}catch(const std::exception& diagnostic){j["skeletonSignatureError"]=diagnostic.what();}for(auto& c:a.clips)j["clips"].push_back({{"name",c.name},{"duration",c.duration},{"rootMotion",!c.motion.empty()}});}std::cout<<j.dump(2)<<'\n';return 0;}
   if(argc==3&&std::string(argv[1])=="--inspect-motion"){
    MeshData source;ModelImportSettings settings;ModelImportReport report;if(!ImportMotionSource(argv[2],settings,source,report,error))throw std::runtime_error(error);Json j=Report(report);j["joints"]=Json::array();j["clips"]=Json::array();j["skeletonSignature"]=SkeletonRetargetSignature(source.skeletal->skeleton);for(size_t i=0;i<source.skeletal->skeleton.names.size();++i)j["joints"].push_back(SkeletonJointKey(source.skeletal->skeleton,int(i)));for(const auto& clip:source.skeletal->clips)j["clips"].push_back({{"name",clip.name},{"duration",clip.duration},{"motionExtracted",!clip.motion.empty()}});std::cout<<j.dump(2)<<'\n';return 0;
@@ -69,7 +74,7 @@ int main(int argc,char** argv){
   }
   // Direct source inspection/cook is useful for fixtures. Project publication
   // uses --create / --recipe; this path does not create a second asset registry.
-  if(argc<3){std::cerr<<"Usage: --retarget-profile SOURCE TARGET_RECIPE PROFILE SOURCE_ID TARGET_ASSET_ID | --retarget-validate SOURCE TARGET_RECIPE PROFILE | --create PROJECT SOURCE Assets/name.judasmodel | --recipe Imports/name.judasimport | SOURCE OUTPUT [MOTIONS...] | --collision MODEL PART OUTPUT [--orient --remove-degenerates --weld=0.00001 --convex]\n";return 64;}
+  if(argc<3){std::cerr<<"Usage: --normalize-rig INPUT NEW_OUTPUT.judasmodel | --retarget-profile SOURCE TARGET_RECIPE PROFILE SOURCE_ID TARGET_ASSET_ID | --retarget-validate SOURCE TARGET_RECIPE PROFILE | --create PROJECT SOURCE Assets/name.judasmodel | --recipe Imports/name.judasimport | SOURCE OUTPUT [MOTIONS...] | --collision MODEL PART OUTPUT [--orient --remove-degenerates --weld=0.00001 --convex]\n";return 64;}
   MeshData mesh;ModelImportReport report;ModelImportSettings settings;
   if(!ImportModelSource(argv[1],settings,mesh,report,error)){auto j=Report(report);j["error"]=error;std::cout<<j.dump(2)<<'\n';return 1;}
   if(argc>3&&mesh.skeletal){auto a=std::make_shared<SkeletalAsset>(*mesh.skeletal);for(int i=3;i<argc;++i){std::vector<AnimationClip> clips;ModelImportReport motion;if(!ImportCompatibleMotion(argv[i],settings,a->skeleton,clips,motion,error)){std::cerr<<error<<'\n';return 1;}for(auto& c:clips){c.name=std::filesystem::path(argv[i]).stem().string()+"/"+c.name;a->clips.push_back(std::move(c));}}mesh.skeletal=a;}

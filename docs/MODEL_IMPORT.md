@@ -102,6 +102,55 @@ Collision failure does not invalidate the visual model. Direct `SOURCE OUTPUT
 [MOTIONS...]` is a fixture/inspection operation; ordinary project imports use
 `--create` / `--recipe`. It does not register assets by itself.
 
+## Explicit rig unit normalisation
+
+The local V2 authoring tool can remove inherited centimetre/metre rig scale
+without changing the character's physical size. This is an explicit **derived
+asset** operation, not a change to ordinary imports or an automatic repair.
+Use a cooked model to retain its current clip names, events and root motion:
+
+```sh
+judas_model_import_cli --normalize-rig Character.judasmodel Character_Metres.judasmodel
+```
+
+FBX, glTF and GLB sources are also accepted through the existing importer. The
+output is always a new **Judas `.judasmodel`**, not an edited FBX or Blender file.
+The tool refuses existing destinations and never changes the source, project,
+recipe, scene, saved game or installed SDK. Keep the JSON output as its receipt:
+it includes source/output hashes, coordinate scale, sampled-pose count and
+maximum skin/bone matrix comparison error. Exit zero means successful conversion;
+exit one includes a diagnostic and does not replace an existing destination.
+Publishing uses a same-filesystem hard link from a completed temporary file;
+filesystems that cannot create hard links fail explicitly.
+
+The conversion chooses positive uniform coordinate units for each rest joint.
+For joint `i`, its new global matrix is `oldGlobal[i] * scale(1 / units[i])`.
+Local translations, fixed affine nodes, animation translations/scales (including
+cubic tangents), inverse binds and vertex positions are converted consistently.
+Consequently `newSkin * newVertex = oldSkin * oldVertex`; normal directions are
+preserved under the positive uniform coordinate conversion. Animated authored
+stretch/squash is retained. World-space extracted root motion, event payloads,
+clip times, names, topology, materials and bone identities remain unchanged.
+Before publication, native pose evaluation compares rest, every clip key time
+and three interior samples per distinct key interval. These are sampled checks
+of the algebraic invariant, not a claim to exhaust all continuous animation.
+
+Initial support is deliberately limited to positive, uniform, shear-free rest
+frames and skinned models before LOD generation. Reflections, non-uniform rest
+frames, shear, singular/extreme scales and failed equivalence checks reject with
+diagnostics. Review unsupported rigs in the source modeller. The archive encoder
+performs its normal structural validation before output publication.
+
+**Adoption needs a deliberate game-side pass.** Bone origins retain their model
+positions, but joint coordinate units change. Old `0.01` socket compensation,
+local weapon offsets/scales, IK/ragdoll profiles and external animation/retarget
+signatures must be reviewed. Do not silently replace an existing registered
+asset or expect old saved references to adopt a new asset identity. Register the
+derived model through ordinary **Import & tools**, or `--create` / `--recipe`,
+under a new asset name, test it, then switch the chosen entities. Recook collision
+for the new model; existing collision assets are not rewritten. Its old recipe
+record is deliberately cleared because it is no longer that unmodified product.
+
 ## Reviewable recipe fields
 
 Paths below are relative to the project root. Do not use machine paths in authored

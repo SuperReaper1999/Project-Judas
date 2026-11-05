@@ -1,0 +1,78 @@
+{
+  "scope": "Explicit authoring-only derived rig coordinate normalisation; no automatic import changes or game adoption",
+  "base_commit": "57661268978937f47a2a972cbfd820ec109d76ed",
+  "platform": "native Linux, Release, GNU 15.2",
+  "native_checks": 36,
+  "native_failures": 0,
+  "character_clips": 50,
+  "character_pose_checks": 12311,
+  "character_sampled_vertex_poses": 250,
+  "maximum_sampled_vertex_error_metres": 8.90585966e-07,
+  "character_rest_frames_unit_scale": true,
+  "import_regression_checks": 30,
+  "runtime_render_regression_checks": 23,
+  "scale_warning_regression_checks": 18,
+  "cmake_tests": 22,
+  "cli_controls": {
+    "checks": [
+      {
+        "name": "refuse-existing",
+        "pass": true,
+        "exit": 1
+      },
+      {
+        "name": "refuse-original",
+        "pass": true,
+        "exit": 1
+      },
+      {
+        "name": "refuse-wrong-extension",
+        "pass": true,
+        "exit": 1
+      },
+      {
+        "name": "refuse-missing-arguments",
+        "pass": true,
+        "exit": 1
+      },
+      {
+        "name": "source-fbx",
+        "pass": true,
+        "exit": 0
+      },
+      {
+        "name": "archive-idempotence",
+        "pass": true,
+        "exit": 0
+      },
+      {
+        "name": "refuse-unskinned",
+        "pass": true,
+        "exit": 1
+      },
+      {
+        "name": "original-and-converted-inspection",
+        "pass": true,
+        "clips": 50,
+        "joints": 63,
+        "parts": 7
+      }
+    ],
+    "inputSha256": "dc2aedeb1b7428ceebadca89b1820e658f40f369746f63102d98a48de8053ff0",
+    "outputSha256": "f8da8ee40487ba296439fd86b73217e888c7522131fc67aa5b95543af03f662b"
+  },
+  "platform_limitations": [
+    "Windows and Android not run for this authoring tool",
+    "No human acceptance of converted character"
+  ],
+  "source_changes": {
+    "src/RigNormalization.h": "88896807d0a979e45119ee6e00d681fe4da41157f041528bc0f3672ad3f175c3",
+    "src/RigNormalization.cpp": "85382557a1136782f3cd72667325a0ea3a7f0bff5ed1b3536b2d3f464912f9ca",
+    "tools/RigNormalizationCli.h": "5c14e484f44bdca3cde2bc240152c60a1b2ec20f4fd601cd4d63b92a9d237f29",
+    "tools/RigNormalizationCli.cpp": "c1c127ed277d84f1ebeb2bf4aa8784f99d275c27161e553f1a70ed45158f752e",
+    "tests/RigNormalizationTests.cpp": "247e15c8a825fdbea39fef440e0ed3675cc83efc321260a7683c74dd2610974c"
+  },
+  "rejected_experiments": [
+    "First affine synthetic control incorrectly combined a fixed conversion root with animated local scale values authored for the previous TRS root; corrected the fixture units, retained all vertex assertions. First failure log remains in .cache/rig-normalization/tests-final.log."
+  ]
+}
