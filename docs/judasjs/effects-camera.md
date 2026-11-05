@@ -50,7 +50,8 @@ Offscreen particles still simulate; extra cameras never add simulation ticks.
 `entity.controlParticles(command)` supports `"play"`, `"pause"`, `"stop"`,
 `"clear"` and `"restart"`. Pause freezes simulation; stop stops future emission
 while existing particles age. Destructive reset commands can return false while
-reliable impacts or a captured blocked step are pending: drain the events first.
+native impacts (including queued cosmetic observations) or a captured blocked
+step are pending: drain the events first.
 Unknown commands throw. This is separate from the persisted `enabled` setting.
 
 `entity.particleStats` returns a detached `ParticleRuntimeStats` or null: requested

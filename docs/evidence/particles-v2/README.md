@@ -5,12 +5,28 @@ This record pins the implemented and Linux-qualified Experimental checkpoint
 `621d6ed1cea6eefb93d3d1760ab6c262d8c09b41`. It does not certify a release,
 human acceptance or a later final delivery commit. Advanced Fluids remain locked.
 
-The subsequent small-pool Mesa correction and delayed-stat reporting corrections
-are recorded as follow-ups. Independent Mesa/NVIDIA controls pass; the **first
-integrated NVIDIA run still fails one capacity-one admission assertion** and is
-being investigated. A lab save/backpressure review correction is also in progress.
-This is not a green final handoff. The final integrated follow-up hash and CI
-results belong to their own checkpoint evidence.
+The corrected implementation is checkpoint
+`908a6185cf8ce35f263b8cc97459aa67ab66fd04`. Its seven particle gates pass with
+291 assertions, including 63 GPU controls and 49 world-lifecycle checks. The
+strengthened workshop test starts F6 during actual one-cell backpressure and
+passes 14 write-process and nine fresh read-process assertions. A refreshed
+relocated SDK/export workflow also passes, with zero source-tree accesses in
+the traced standalone run. [FOLLOWUP.json](FOLLOWUP.json) records exact source,
+binary identities, commands and the separate CI status.
+
+[Clean CI](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41970505309)
+passes all 161 registered cases in each existing Alpha/Experimental configuration.
+Unavailable fluid cases retain their explicit channel classification; this does
+not unlock or certify Advanced Fluids. Both jobs also verify the 17-tool SDK
+on Ubuntu 24.04 with a maximum glibc requirement of 2.39. These are clean CI
+builds, separate from the host-built human-review SDK and standalone below.
+
+One earlier integrated NVIDIA run failed a capacity-one admission assertion.
+That first failure remains **unexplained**, rather than being relabelled fixed.
+Three subsequent complete native suites, final NVIDIA/Mesa integration and
+400 complete small-pool lifecycles (508 assertions) passed unchanged checks.
+Precise failure diagnostics were added for recurrence. This is an open diagnostic
+limitation, distinct from the demonstrated and corrected Mesa allocation defect.
 
 ## What was measured
 
@@ -116,9 +132,19 @@ qualification. The locked-fluid policy and existing weather path are unchanged.
   allocated 4–12 bytes and failed validation. Padding the allocation envelope
   preserves logical capacity and indices. The original 47/9 failure, manual-link
   setup failure and all **63/63** corrected controls on both drivers are retained.
-  That independent pass does not supersede the later integrated 62/63 NVIDIA
-  result; `mesa-minimum/integrated/nvidia.log` retains its first failure. The
-  final integration owner is investigating the discrepancy.
+  Those independent passes do not erase the first integrated 62/63 NVIDIA
+  result; `mesa-minimum/integrated/nvidia.log` retains it. Final integration,
+  repeated runs and the 400-lifecycle stress pass, without an established cause
+  for that one-off assertion. No speculative production change was made.
+- `application-source-checkpoint`: F6 no longer pauses a blocked step before it
+  can finish. It stops future emission, drains/resumes captured work, then saves
+  at the actual ready boundary. The negative control forces a one-cell queue
+  and verifies that already queued paint count/weight survive cold restoration.
+- `portable-compile/handoff/first-harness`: an observer setup error copied some
+  headers while other includes reached live copies, defining the same inline
+  helper twice. Restoring the original four-CPP observer layout passes all eight
+  portable syntax controls; shared header hashes are checked before and after.
+  No engine change or platform-runtime claim is inferred from that setup repair.
 - `measurements` is the earlier, superseded suite; **`measurements-final` alone
   supplies the table above**. The archive labels both instead of replacing rows.
 
@@ -129,6 +155,8 @@ small rejected-source snapshots. It contains no executable, object, library,
 entire build directory or unrelated research. Its file list and per-file hashes
 are in [ARCHIVE_CONTENTS.json](ARCHIVE_CONTENTS.json), also embedded inside the
 archive as `RAW_SHA256SUMS.json`. [SHA256SUMS](SHA256SUMS) checks the durable files.
+The folder's scoped Git attributes preserve these exact bytes across platforms;
+automatic line-ending conversion must not invalidate the recorded checksums.
 
 ```sh
 cd docs/evidence/particles-v2

@@ -90,6 +90,9 @@ step. It does not mutate MK2 or issue a world query for every particle. Moving
 boundaries use the captured motion and COM frame. Response is one-way visual
 collision: bounce/slide use boundary-relative velocity; stick follows a captured
 surface anchor; remove ends the particle. It does not push rigid bodies.
+The emitting object's own native body is excluded; other bodies follow
+`collisionLayers`. Use a separate emitter object when particles must also hit
+the source body's geometry. This owner filter is independent of camera culling.
 Gravity and wind come from the engine's existing fields when explicitly enabled.
 
 Wind is sampled once at the emitter per fixed step, then applies the simple
@@ -268,8 +271,8 @@ per-birth reservation with one bounded batch reservation reduced that isolated
 GPU phase's paired median from 341.590 to 0.081 ms. Raw samples and the rejected
 path are retained; this phase measurement is not a whole-frame p95 result.
 
-Qualification evidence is recorded in
-[the Particles V2 register](evidence/particles-v2/QUALIFICATION.json), including
+Qualification evidence is retained in the source repository's
+[Particles V2 register](https://github.com/SuperReaper1999/Project-Judas/blob/Experimental/docs/evidence/particles-v2/QUALIFICATION.json), including
 commands, fingerprints, raw measurements and preserved first failures. It
 distinguishes the measured implementation checkpoint from later diagnostics
 and portability corrections. Native Linux driver validation, portable compile

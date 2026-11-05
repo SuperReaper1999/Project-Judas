@@ -56,7 +56,7 @@ def main():
 
     text_suffixes = {".json", ".csv", ".log", ".txt", ".md", ".py", ".cpp", ".h", ".test", ".err", ".d"}
     for name in ["measurements-final", "measurements", "checkpoint-gates", "regressions-checkpoint",
-                 "application-checkpoint", "first-units", "ownership-final", "early-collision", "early-gpu",
+                 "application-checkpoint", "application-backpressure", "application-source-checkpoint", "handoff-source-gates", "handoff-fingerprints", "first-units", "ownership-final", "early-collision", "early-gpu",
                  "cpu-review", "cold-birth", "mesa-minimum", "portable-compile", "final-fingerprints"]:
         for path in sorted((CACHE / name).rglob("*")):
             if path.suffix in text_suffixes:
@@ -67,13 +67,14 @@ def main():
     for path in sorted((CACHE / "ci").glob("*")):
         if path.suffix in text_suffixes:
             add(path)
-    for name in ["run_benchmarks_final.py", "run_regressions_checkpoint.py", "run_final_application.py", "qualify_sdk_delivery.py",
+    for name in ["run_benchmarks_final.py", "run_regressions_checkpoint.py", "run_final_application.py", "qualify_sdk_delivery.py", "qualify_sdk_delivery_final.py",
                  "baseline/PROVENANCE.json", "baseline/OBSERVER_BUILD.json", "baseline/ParticlesV2Benchmark.d",
                  "baseline/observer-build.log", "baseline/judas-build-info-Release.json", "pre-spawn/gpu-source.tgz"]:
         add(CACHE / name)
-    for path in sorted((CACHE / "delivery").glob("*")):
-        if path.suffix in text_suffixes | {".png", ".trace", ".judas"}:
-            add(path)
+    for folder in ["delivery", "delivery-final-source"]:
+        for path in sorted((CACHE / folder).glob("*")):
+            if path.suffix in text_suffixes | {".png", ".trace", ".judas"}:
+                add(path)
     for name in ["BUILD_PROVENANCE.json", "DEPENDENCIES.json", "RUNTIME_REQUIREMENTS.txt", "judas-package.txt", "game.judasproj"]:
         add(CACHE / "delivery/SurfaceWorkshop-Linux" / name)
     for name in ["editor/run.log", "editor/shot.edit.png", "editor/shot.play.png", "editor-stress/run.log", "editor-stress/shot.play.png"]:
@@ -114,7 +115,7 @@ def main():
               "gpu_median_ms", "gpu_p95_ms", "gpu_p99_ms", "gpu_max_ms", "simulation_median_ms", "draw_median_ms", "rss_bytes",
               "gpu_owned_bytes", "contacts", "query_failures", "snapshot_capture_ms", "first_simulation_ms", "first_draw_completed_ms"]
     with (HERE / "PERFORMANCE.csv").open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fields)
+        writer = csv.DictWriter(stream, fields, lineterminator="\n")
         writer.writeheader()
         for run in performance:
             summary, proof = run["summary"], run["proof"]
@@ -184,6 +185,11 @@ def main():
             "Timers are asynchronous GPU intervals that include submission bubbles, not pure shader execution times. No per-frame full-state readback or finish occurs.",
             "Short, serial runs on one shared desktop; no claim of isolated long-session percentile stability or universal platform performance.",
             "Android guard and Emscripten syntax controls are not device/browser runtime qualification; Windows runtime remains untested for this change."]}
+    followup = HERE / "FOLLOWUP.json"
+    if followup.exists():
+        qualification["follow_up"] = load(followup)
+        qualification["final_delivery_checkpoint"] = qualification["follow_up"]["qualified_source_checkpoint"]
+        qualification["follow_up_status"] = qualification["follow_up"]["status"]
     write("QUALIFICATION.json", qualification)
     sums = []
     for path in sorted(HERE.iterdir()):

@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "assembled_utc": "2026-11-05T04:47:36.295905+00:00",
+  "assembled_utc": "2026-11-05T05:30:38.829032+00:00",
   "implementation_checkpoint": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
   "baseline": "621d6ed1cea6eefb93d3d1760ab6c262d8c09b41",
-  "final_delivery_checkpoint": null,
-  "follow_up_status": "Independent small-pool controls pass after Mesa padding, but the first integrated NVIDIA run retains a capacity-one admission assertion failure. GPU owner is investigating. A separate lab save/backpressure review correction is also in progress. Final integrated follow-up commit/qualification is owned by root and is not assigned a hash by this record.",
+  "final_delivery_checkpoint": "908a6185cf8ce35f263b8cc97459aa67ab66fd04",
+  "follow_up_status": "All seven exact-source Linux particle gates pass. Both clean Ubuntu24.04 CI channels pass their focused native gates and SDK qualification. Corrected Mesa allocation and the backpressured lab save pass. One earlier integrated NVIDIA one-slot assertion remains unexplained and retained as an open diagnostic.",
   "tested_build_identity": {
     "source_revision": "2cd2f6d59d30c986fc5eee01ccc29cc3cceef0d7",
     "source_fingerprint": "7d9a15ab6810c6dcb7a5eb97a431745ce85658648302e72e9b481ec5630ae1eb",
@@ -439,9 +439,9 @@
   "measured_frames_per_run": 240,
   "warmup_frames": 60,
   "all_benchmark_gpu_samples_valid": true,
-  "raw_archive_sha256": "7f42cca5c413ab18db9960fe86c4e6160d7627c9ac1adcd82a22498558635114",
-  "raw_archive_bytes": 3754605,
-  "raw_file_count": 372,
+  "raw_archive_sha256": "6095cc7100c3a50a653b8481cb7d6b38bb2f3754b93361c6ef459629c39cf478",
+  "raw_archive_bytes": 4360239,
+  "raw_file_count": 492,
   "advanced_fluids": "unchanged and locked",
   "human_acceptance": "not established by this evidence",
   "limitations": [
@@ -452,5 +452,802 @@
     "Timers are asynchronous GPU intervals that include submission bubbles, not pure shader execution times. No per-frame full-state readback or finish occurs.",
     "Short, serial runs on one shared desktop; no claim of isolated long-session percentile stability or universal platform performance.",
     "Android guard and Emscripten syntax controls are not device/browser runtime qualification; Windows runtime remains untested for this change."
-  ]
+  ],
+  "follow_up": {
+    "schema": 1,
+    "qualified_source_checkpoint": "908a6185cf8ce35f263b8cc97459aa67ab66fd04",
+    "status": "All seven exact-source Linux particle gates pass. Both clean Ubuntu24.04 CI channels pass their focused native gates and SDK qualification. Corrected Mesa allocation and the backpressured lab save pass. One earlier integrated NVIDIA one-slot assertion remains unexplained and retained as an open diagnostic.",
+    "build": {
+      "source_revision": "908a6185cf8ce35f263b8cc97459aa67ab66fd04",
+      "source_fingerprint": "d741afdf78cdec442ebe40b3272698ee1058f25edce49bbc7813a6e9642c17c6",
+      "source_dirty": false,
+      "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f"
+    },
+    "tests": [
+      {
+        "name": "particle-collision-snapshot",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "3b0cdfaf713e3ff9abc11656e9b594aa463990417c274d9f1ca32cf004aa0e50",
+        "checks": 35,
+        "failures": 0
+      },
+      {
+        "name": "particle-cpu-response",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "f3cbaaf83a1f5e174707a7019f35f857a1d9eb13c56b7526eadf0287cc5746ff",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "name": "particle-gpu-resident",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "d22c86613fee70428d7a10cc4ad3963bb37151bb2ddc2b50a9668828149df445",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "name": "particle-authoring",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "3cdeb1edaaf620c565f6da8bd0d3aba6c061a0f92b21c251400d54ef29e8345e",
+        "checks": 42,
+        "failures": 0
+      },
+      {
+        "name": "particle-world-lifecycle",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "b54c17315081ea6ff220209430bedab9a4b615c25f177539b203fe8303311783",
+        "checks": 49,
+        "failures": 0
+      },
+      {
+        "name": "particle-script",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "727d7a8be8ff4a21087da5fd2f3d30952ff3a42ee17f5f7cc57a66a3ba465c5f",
+        "checks": 13,
+        "failures": 0
+      },
+      {
+        "name": "particle-persistence",
+        "status": "passed",
+        "exit": 0,
+        "binary_sha256": "94ea4b42a1ff3717c5293fc152a4d224bf8f099acb06f4b3e9362ef2f9cfa179",
+        "checks": 44,
+        "failures": 0
+      }
+    ],
+    "application_cold": [
+      {
+        "argv": [
+          "build/judas_particle_workshop_tests",
+          "--write",
+          ".cache/particles-v2/application-source-checkpoint/cold"
+        ],
+        "exit": 0
+      },
+      {
+        "argv": [
+          "build/judas_particle_workshop_tests",
+          "--read",
+          ".cache/particles-v2/application-source-checkpoint/cold"
+        ],
+        "exit": 0
+      }
+    ],
+    "portable_syntax": {
+      "source_commit": "908a6185cf8ce35f263b8cc97459aa67ab66fd04",
+      "source_sha256": {
+        "src/render/ComputeDevice.cpp": "0ecfc6963b23713714608da60e1d36338061989af4723a4a6880397afb5e6dc0",
+        "src/render/GpuParticlePass.cpp": "3a0434a6c80482bf2b767f854c105c965f30dd8f2ddbce03e301f9c5b795a447",
+        "src/particles/GpuParticles.cpp": "151d9738ac76912594fdef40eaa47055f09005b0ea4c32c9ae487a2e00130d13",
+        "src/particles/GpuParticleCollision.cpp": "ce182bf3ace911d876ba8cd0300cd2e28ce06f489daefe57829b22eca868dd0f",
+        "src/particles/GpuParticles.h": "51f6a02d28bc640df0674d6ce9daafdc9ecb3d7541a47669cb4fd9c49bb1da3c",
+        "src/particles/GpuParticleData.h": "0e4beb0e54f122030e0ce6d6252fd24e4de6d7846cbcaa8ec3099e02d44ddbe6",
+        "src/particles/GpuParticleCollision.h": "5b57a6376f49ab456556248522ee65233b9281eb33141714d047a83e70860455",
+        "src/particles/GpuParticleShaders.h": "b9325328b06683f38a700c70182178fc4111a5b4f44c16df3bee8abdb1a22b87",
+        "src/particles/ParticleSettings.h": "1230fca2e8aa1712811e964449cc05d3915ff80a925ad5942d6abbe1c4d1d369",
+        "src/particles/ParticleImpacts.h": "bf6772ef2d8a716abb1623b00a012fb7a8423d09023f69f7a05776637822129b",
+        "src/particles/CollisionSnapshot.h": "c18d192cca4a2ca72b847d352ff736cd7a73eda1e5b4aa6bbcf139a7ce11251e",
+        "src/render/ComputeDevice.h": "8c7e883fd49eae549e905a708a2760cd9e096ef24e1a9a4ccb2c5ff252bdb9f9",
+        "src/render/GpuParticlePass.h": "36a2efbb8031bf9014cb0c3d7581099eac9af7b2c39dba82a99c9962b3792f6d",
+        "src/render/GraphicsCapabilities.h": "d21d394a94404d8fe8f83e550ebd92da412a321d481bbdecc62b1264252eed0d",
+        "src/GraphicsApi.h": "15be272ddb68fd3809ea9edb1140043fe548f7e197ab1f778fcefe94f3e30e2c"
+      },
+      "scope": "Four frozen GPU translation units; host GLES3 Android-guard and actual Emscripten syntax controls only. No NDK/link/device/browser runtime or SDK rebuild qualification.",
+      "results": [
+        {
+          "argv": [
+            "/usr/bin/c++",
+            "-std=gnu++17",
+            "-O0",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-D__ANDROID__",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/generated/scripting",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/render/ComputeDevice.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.7148938040045323
+        },
+        {
+          "argv": [
+            "/usr/bin/c++",
+            "-std=gnu++17",
+            "-O0",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-D__ANDROID__",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/generated/scripting",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/render/GpuParticlePass.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.8655900079975254
+        },
+        {
+          "argv": [
+            "/usr/bin/c++",
+            "-std=gnu++17",
+            "-O0",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-D__ANDROID__",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/generated/scripting",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/particles/GpuParticles.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.6149291699985042
+        },
+        {
+          "argv": [
+            "/usr/bin/c++",
+            "-std=gnu++17",
+            "-O0",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-D__ANDROID__",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/generated/scripting",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/particles/GpuParticleCollision.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.6662475070043001
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/upstream/emscripten/em++",
+            "-std=gnu++17",
+            "-O0",
+            "-pthread",
+            "-fexceptions",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include-config-release/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_glm-src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/render/ComputeDevice.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.7662052779996884
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/upstream/emscripten/em++",
+            "-std=gnu++17",
+            "-O0",
+            "-pthread",
+            "-fexceptions",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include-config-release/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_glm-src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/render/GpuParticlePass.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.8655693190012244
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/upstream/emscripten/em++",
+            "-std=gnu++17",
+            "-O0",
+            "-pthread",
+            "-fexceptions",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include-config-release/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_glm-src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/particles/GpuParticles.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.965349635000166
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/upstream/emscripten/em++",
+            "-std=gnu++17",
+            "-O0",
+            "-pthread",
+            "-fexceptions",
+            "-Wall",
+            "-Wextra",
+            "-fsyntax-only",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_sdl-build/include-config-release/SDL2",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_glm-src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/unicode/icu/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/render",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src/particles",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/portable-compile/handoff/sources/src/particles/GpuParticleCollision.cpp"
+          ],
+          "exit": 0,
+          "seconds": 0.9655313179973746
+        }
+      ],
+      "all_passed": true,
+      "source_still_matches": true,
+      "first_harness_failure": "The first local observer copied only some headers. Quoted includes reached both copied GraphicsApi.h and the same live header through ShaderLibrary.h, causing two definitions under Emscripten. The original four-CPP-only observer layout was restored; live shared-header hashes are checked before/after. No engine change."
+    },
+    "sdk_workflow": {
+      "work": "/tmp/judas-particles-v2-delivery-6n5l91nd",
+      "rows": [
+        {
+          "name": "verify-relocated-sdk",
+          "argv": [
+            "python3",
+            "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+            "verify",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 2.399777555001492
+        },
+        {
+          "name": "new-project",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_editor"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 1.8186141269979998
+        },
+        {
+          "name": "new-project-scripts",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_script_check",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/new-game/SDK_First_Game.judasproj"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.015805619004822802
+        },
+        {
+          "name": "recook-sdk-collision",
+          "argv": [
+            "python3",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/consumer/Tools/cook_collision.py",
+            "--tool",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_collision_cook"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.06423387600079877
+        },
+        {
+          "name": "validate-workshop",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_scene_author",
+            "--validate",
+            "project",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/consumer/particle_v2_lab.judasproj"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.008007472002645954
+        },
+        {
+          "name": "check-workshop-script",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_script_check",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/consumer/particle_v2_lab.judasproj"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.01578789699851768
+        },
+        {
+          "name": "export-workshop",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas_export",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/consumer/particle_v2_lab.judasproj",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/package",
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk/judas"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.2641764889995102
+        },
+        {
+          "name": "relocated-runtime",
+          "argv": [
+            "/tmp/judas-particles-v2-delivery-6n5l91nd/relocated/SurfaceWorkshop/judas"
+          ],
+          "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+          "exit": 0,
+          "seconds": 0.4644518889981555
+        }
+      ]
+    },
+    "sdk_tools": [
+      "judas",
+      "judas_editor",
+      "judas_export",
+      "judas_scene_author",
+      "judas_navigation_bake",
+      "judas_liquid_bake",
+      "judas_environment_bake",
+      "judas_deformable_bake",
+      "judas_collision_cook",
+      "judas_model_import_cli",
+      "judas_terrain_author",
+      "judas_volume_author",
+      "judas_mod",
+      "judas_cook",
+      "judas_script_check",
+      "judas_save",
+      "judas_server"
+    ],
+    "sdk_files": 726,
+    "relocation": {
+      "argv": [
+        "strace",
+        "-f",
+        "-e",
+        "trace=file",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/particles-v2/delivery-final-source/files.trace",
+        "/tmp/judas-particles-v2-delivery-6n5l91nd/relocated/SurfaceWorkshop/judas"
+      ],
+      "cwd": "/tmp/judas-particles-v2-delivery-6n5l91nd/empty",
+      "exit": 0,
+      "source_tree_accesses": [],
+      "hidden_source": "/tmp/judas-particles-v2-delivery-6n5l91nd/source-hidden",
+      "hidden_sdk": "/tmp/judas-particles-v2-delivery-6n5l91nd/sdk-hidden",
+      "source_and_sdk_hidden": true
+    },
+    "ci": {
+      "conclusion": "success",
+      "headSha": "908a6185cf8ce35f263b8cc97459aa67ab66fd04",
+      "jobs": [
+        {
+          "completedAt": "2026-11-05T05:29:19Z",
+          "conclusion": "success",
+          "databaseId": 127057381182,
+          "name": "linux (Experimental)",
+          "startedAt": "2026-11-05T04:52:55Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v7",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v7",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Native and optional verification prerequisites",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Tooling positive and negative controls",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Configure an explicitly identified build",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build focused dependencies and public SDK",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Focused native gates",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Qualify SDK on its declared Linux baseline",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Preserve diagnostics even on failure",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v7",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v7",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 21,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/41970505309/job/127057381182"
+        },
+        {
+          "completedAt": "2026-11-05T05:18:56Z",
+          "conclusion": "success",
+          "databaseId": 127057381557,
+          "name": "linux (Alpha)",
+          "startedAt": "2026-11-05T04:52:55Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v7",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v7",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Native and optional verification prerequisites",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Tooling positive and negative controls",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Configure an explicitly identified build",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build focused dependencies and public SDK",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Focused native gates",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Qualify SDK on its declared Linux baseline",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Preserve diagnostics even on failure",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v7",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v7",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 21,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/41970505309/job/127057381557"
+        },
+        {
+          "completedAt": "2026-11-05T04:52:53Z",
+          "conclusion": "skipped",
+          "databaseId": 127057383108,
+          "name": "promotion",
+          "startedAt": "2026-11-05T04:52:53Z",
+          "status": "completed",
+          "steps": [],
+          "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/41970505309/job/127057383108"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/41970505309",
+      "full_log_sha256": "ea94f5fe6396055e6c49a38d9173c6ae919805f7bcdf8c2eb7126b34b47704df",
+      "scope": "Clean Ubuntu24.04 Linux jobs in existing Alpha and Experimental configurations; no branch promotion, release, Windows or device qualification."
+    },
+    "open_diagnostics": [
+      {
+        "id": "PARTICLE-GPU-SMALL-POOL-ONE-OFF",
+        "status": "unexplained-not-reproduced",
+        "evidence": "raw/mesa-minimum/integrated/nvidia.log",
+        "observed": "One integrated NVIDIA capacity-one admission assertion failed without the later detailed diagnostic output.",
+        "subsequent": "Three complete63/63 native runs, complete corrected NVIDIA/Mesa63/63 integration and400 complete pool lifecycles508/508 checks passed. Assertions remain unchanged; failure logging now captures actual state, errors and teardown. No speculative production fix or claim of demonstrated resolution."
+      }
+    ],
+    "main": "1094d64515604fe9d03fdab479efc7f880b112a8",
+    "human_acceptance": "pending",
+    "advanced_fluids": "unchanged and locked",
+    "qualification_boundaries": [
+      "Linux desktop native NVIDIA and software Mesa exercised.",
+      "Android guard and actual Emscripten syntax checks only; no new Windows, Android-device or browser runtime certification.",
+      "Host Linux SDK workflow; no claim of Ubuntu24.04 ABI certification for these host-built artifacts.",
+      "Performance measurements remain the pinned2cd implementation. Follow-up changes do not alter the measured100k shader/batch algorithm; no later performance rerun or invented timing."
+    ]
+  }
 }
