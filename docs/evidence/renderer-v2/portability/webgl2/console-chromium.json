@@ -1,0 +1,145 @@
+{
+  "consoleRows": [
+    {
+      "kind": "log",
+      "text": "PASS a real WebGL2 canvas context starts without SDL or application bootstrap"
+    },
+    {
+      "kind": "log",
+      "text": "PASS real browser capability query exposes the portable tier and rejects desktop-only features"
+    },
+    {
+      "kind": "log",
+      "text": "PASS bounded independent colour target, canonical inputs and complete textures initialize"
+    },
+    {
+      "kind": "log",
+      "text": "PASS actual canonical mesh stages compile and link through ES300 with their view block"
+    },
+    {
+      "kind": "log",
+      "text": "PASS actual canonical mesh reflects and binds the 720-byte std140 block"
+    },
+    {
+      "kind": "log",
+      "text": "PASS actual canonical Legacy material draws the independently known ambient-only colour on WebGL2"
+    },
+    {
+      "kind": "log",
+      "text": "PASS material controls use a finite exterior camera and explicitly excluded shadow chart"
+    },
+    {
+      "kind": "log",
+      "text": "PASS actual canonical Unlit material ignores quarter-strength ambient and preserves white"
+    },
+    {
+      "kind": "log",
+      "text": "PASS actual canonical PBR material matches quarter ambient, luminance tone mapping and sRGB"
+    },
+    {
+      "kind": "log",
+      "text": "PASS independent view-block known-answer program links on the browser driver"
+    },
+    {
+      "kind": "log",
+      "text": "PASS camera, projection and final shadow slot publish through the production UBO owner"
+    },
+    {
+      "kind": "log",
+      "text": "PASS camera red, ninth-shadow green and projection blue agree with independent numeric answers"
+    },
+    {
+      "kind": "log",
+      "text": "PASS view binding recovers from another pass without a redundant unchanged upload"
+    },
+    {
+      "kind": "log",
+      "text": "PASS changing the last shadow updates only the expected known-answer channel with one upload"
+    },
+    {
+      "kind": "log",
+      "text": "PASS view UBO is explicitly retired while its WebGL2 context still exists"
+    },
+    {
+      "kind": "log",
+      "text": "PASS production compact billboards render the independently expected red-plus-half-blue colour"
+    },
+    {
+      "kind": "log",
+      "text": "PASS reversing input preserves the depth-sorted particle image"
+    },
+    {
+      "kind": "log",
+      "text": "PASS reversing physical depth changes the visible result rather than silently ignoring ordering"
+    },
+    {
+      "kind": "log",
+      "text": "PASS equal-depth particle ordering retains original-index tie semantics"
+    },
+    {
+      "kind": "log",
+      "text": "PASS portable particles submit all records in 32-byte instances without persistent buffers or waits"
+    },
+    {
+      "kind": "log",
+      "text": "PASS particle shutdown retires all owned shaders, vertex arrays and portable storage"
+    },
+    {
+      "kind": "log",
+      "text": "PASS stream working-set hint remains CPU-only on WebGL2"
+    },
+    {
+      "kind": "log",
+      "text": "PASS a persistent request falls back to exact-size portable upload without desktop entry points"
+    },
+    {
+      "kind": "log",
+      "text": "PASS independent GPU stream-payload consumer links"
+    },
+    {
+      "kind": "log",
+      "text": "PASS the real portable stream buffer reaches the GPU with the exact known colour payload"
+    },
+    {
+      "kind": "log",
+      "text": "PASS invalid stream uploads preserve allocation and cannot publish a stale slice"
+    },
+    {
+      "kind": "log",
+      "text": "PASS stream storage is retired before context teardown"
+    },
+    {
+      "kind": "log",
+      "text": "PASS forged desktop capability flags cannot enable compute on the compiled WebGL2 backend"
+    },
+    {
+      "kind": "log",
+      "text": "PASS unsupported compute allocation fails explicitly and remains allocation-free"
+    },
+    {
+      "kind": "log",
+      "text": "PASS all production-owner browser controls leave no GL errors"
+    },
+    {
+      "kind": "log",
+      "text": "PASS explicit target shutdown leaves no graphics errors"
+    },
+    {
+      "kind": "log",
+      "text": "PASS the single test context is explicitly destroyed without a background rendering loop"
+    },
+    {
+      "kind": "log",
+      "text": "PASS no graphics context remains current after qualification"
+    },
+    {
+      "kind": "warning",
+      "text": "[.WebGL-0x3ccc001bec00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "kind": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "errors": []
+}

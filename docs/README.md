@@ -18,6 +18,7 @@ Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
 
 - [First visible project](FIRST_PROJECT.md): build, camera, script, Play and export.
 - [Editor guide](EDITOR_GUIDE.md): authoring, selection, tools and iteration.
+- [Renderer V2](RENDERER_V2.md): capability-based desktop OpenGL, modular GPU owners, measured submission/shader improvements and portable boundaries.
 - [Editor V2 preview](EDITOR_V2.md): docked workspaces, module ownership and pending combined review.
 - [JudasJS reference](JUDASJS.md): public module, handles, lifecycle and subsystem API.
 - [Editor completion](judasjs/getting-started.md) with [judas.d.ts](judas.d.ts).

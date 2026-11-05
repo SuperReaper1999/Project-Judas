@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "operations": 23,
+  "constructorGold": 0,
+  "newGameGold": 37,
+  "coldRestoredGold": 37,
+  "differentProcesses": true,
+  "runtimeSha256": "348c276266cdc14ddfd637fd9818b4394020d915760392c3e41de47b689af177",
+  "relocated": "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game",
+  "savedParticipants": 13,
+  "initialFixture": "earlier constructor37 fixture retained as weaker/superseded state oracle",
+  "sourceTreeTrace": "earlier same engine-binary relocated run traced zero source/build/SDK path references; strong run not separately traced",
+  "releaseQualification": false
+}

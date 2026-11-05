@@ -12,42 +12,60 @@ void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights){
  if(!m_lightTexture)glGenTextures(1,&m_lightTexture);
  glActiveTexture(GL_TEXTURE14);glBindTexture(GL_TEXTURE_2D,m_lightTexture);
  if(rows>m_lightTextureRows){m_lightTextureRows=rows;glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA32F,1024,GLsizei(rows),0,GL_RGBA,GL_FLOAT,nullptr);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);}
- glTexSubImage2D(GL_TEXTURE_2D,0,0,0,1024,GLsizei(rows),GL_RGBA,GL_FLOAT,m_lightGrid.texels.data());glActiveTexture(GL_TEXTURE0);
+ glTexSubImage2D(GL_TEXTURE_2D,0,0,0,1024,GLsizei(rows),GL_RGBA,GL_FLOAT,m_lightGrid.texels.data());m_stats.uploadedBytes+=size_t(rows)*1024*sizeof(glm::vec4);++m_stats.uploadCalls;glActiveTexture(GL_TEXTURE0);
  m_stats.lightBytes=size_t(m_lightTextureRows)*1024*sizeof(glm::vec4);
  m_stats.shadowBytes=m_shadowsEnabled?size_t(m_shadowLayers)*kShadowMapResolution*kShadowMapResolution*4:0;
 }
 void Renderer::BeginMeshBatch(){
  if(m_collectingBatch)return;
- m_meshBatches.clear();m_batchLookup.clear();m_collectingBatch=true;
+ m_render->submission.Clear();m_collectingBatch=true;
 }
 void Renderer::QueueMeshInstance(MeshHandle mesh,TextureHandle texture,const glm::mat4& model,glm::vec4 tint,unsigned lod){
- // Exact material state defines compatibility. Tint and transform are instance
- // attributes, not grouping keys. Immutable mesh handles are never retained
- // across the pass, resource replacement or scene lifetime.
- std::string key;auto append=[&](const auto& value){key.append(reinterpret_cast<const char*>(&value),sizeof(value));};
- append(mesh.id);append(mesh.generation);append(texture.id);append(texture.generation);append(lod);bool reversed=glm::determinant(glm::mat3(model))<0;append(reversed);
- for(const auto& b:m_materialBindings){append(b.handle.id);append(b.handle.generation);append(b.explicitAsset);append(b.failed);for(unsigned i=0;i<5;++i){append(b.textures[i].id);append(b.textures[i].generation);append(b.textureOverrides[i]);}auto text=EncodeMaterialOverrides(b.overrides);key+=std::to_string(text.size())+":"+text;}
- auto [it,inserted]=m_batchLookup.emplace(key,m_meshBatches.size());if(inserted)m_meshBatches.push_back({mesh,texture,m_materialBindings,reversed,lod,{}});
- m_meshBatches[it->second].instances.push_back({model,tint});
- // A bounded pass flush avoids an unbounded transient upload on huge worlds.
- if(m_meshBatches[it->second].instances.size()==16384){EndMeshBatch();BeginMeshBatch();}
+ const bool reversed=glm::determinant(glm::mat3(model))<0;
+ if(m_render->orderedInstances?m_render->submission.AddOrdered(mesh,texture,model,tint,lod,reversed,m_materialBindings):
+                       m_render->submission.Add(mesh,texture,model,tint,lod,reversed,m_materialBindings)){
+     EndMeshBatch();BeginMeshBatch();
+ }
 }
 void Renderer::EndMeshBatch(){
  if(!m_collectingBatch)return;
  m_collectingBatch=false;
- if(m_meshBatches.empty())return;
+ if(m_render->submission.Batches().empty())return;
  JUDAS_PROFILE_SCOPE("Opaque instance submission");RendererProfileScope gpu(*this,"Opaque instances");
  auto saved=m_materialBindings;auto layer=m_renderLayer;
+ // Size persistent pages from the actual pass working set, rather than the
+ // largest tiny draw. This avoids forcing reuse waits between material groups.
+ std::size_t workingSet=0;
+ for(const auto& batch:m_render->submission.Batches()){
+     const auto bytes=batch.instances.size()*sizeof(Instance);
+     const auto aligned=(workingSet+255)&~std::size_t(255);
+     workingSet=bytes>=JudasRender::StreamArena::PageBytes||aligned>JudasRender::StreamArena::PageBytes-bytes?
+         JudasRender::StreamArena::PageBytes:aligned+bytes;
+ }
+ m_render->instanceArena.SetWorkingSetHint(workingSet);
  if(!m_instanceBuffer)glGenBuffers(1,&m_instanceBuffer);
- for(auto& batch:m_meshBatches){auto* mesh=GetMesh(batch.mesh);if(!mesh)continue;
-  glBindVertexArray(mesh->vao);glBindBuffer(GL_ARRAY_BUFFER,m_instanceBuffer);auto bytes=batch.instances.size()*sizeof(Instance);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(bytes),batch.instances.data(),GL_STREAM_DRAW);m_stats.instanceBytes=std::max(m_stats.instanceBytes,bytes);
-  for(unsigned c=0;c<4;++c){glEnableVertexAttribArray(9+c);glVertexAttribPointer(9+c,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(sizeof(glm::vec4)*c));glVertexAttribDivisor(9+c,1);}
-  glEnableVertexAttribArray(13);glVertexAttribPointer(13,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(offsetof(Instance,tint)));glVertexAttribDivisor(13,1);
+ for(const auto& batch:m_render->submission.Batches()){auto* mesh=GetMesh(batch.mesh);if(!mesh)continue;
+  const auto bytes=batch.instances.size()*sizeof(Instance);
+  JudasRender::StreamSlice slice;std::string error;
+  if(!m_render->instanceArena.Upload(batch.instances.data(),bytes,m_render->persistentUploads&&m_capabilities.modernTier&&m_capabilities.bufferStorage,slice,error)){
+      // Preserve the draw if an optional streaming facility fails. Orphaned
+      // storage has the same ownership and ordering as the portable renderer.
+      std::fprintf(stderr,"Instance arena fallback; persistent uploads disabled for this renderer: %s\n",error.c_str());
+      m_render->persistentUploads=false;
+      glBindBuffer(GL_ARRAY_BUFFER,m_instanceBuffer);
+      glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(bytes),batch.instances.data(),GL_STREAM_DRAW);
+      slice={m_instanceBuffer,0};
+  }
+  glBindVertexArray(mesh->vao);glBindBuffer(GL_ARRAY_BUFFER,slice.buffer);
+  m_stats.instanceBytes=std::max(m_stats.instanceBytes,bytes);
+  m_stats.uploadedBytes+=bytes;++m_stats.uploadCalls;
+  for(unsigned c=0;c<4;++c){glEnableVertexAttribArray(9+c);glVertexAttribPointer(9+c,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(slice.offset+sizeof(glm::vec4)*c));glVertexAttribDivisor(9+c,1);}
+  glEnableVertexAttribArray(13);glVertexAttribPointer(13,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(slice.offset+offsetof(Instance,tint)));glVertexAttribDivisor(13,1);
   m_materialBindings=batch.bindings;m_submittingBatch=true;m_activeInstances=unsigned(batch.instances.size());m_activeBatchReversed=batch.reversed;m_activeBatchLod=batch.lod;
   DrawMesh(batch.mesh,{0,0,0},{1,0,0,0},{1,1,1},batch.texture,{1,1,1},1);
   m_submittingBatch=false;glBindVertexArray(mesh->vao);for(unsigned c=9;c<=13;++c){glDisableVertexAttribArray(c);glVertexAttribDivisor(c,0);}
  }
- glBindVertexArray(0);m_materialBindings=std::move(saved);m_renderLayer=layer;m_meshBatches.clear();m_batchLookup.clear();
+ glBindVertexArray(0);m_materialBindings=std::move(saved);m_renderLayer=layer;m_render->submission.Clear();
 }
 
 void Renderer::ReserveShadowLayers(unsigned layers){
@@ -117,4 +135,22 @@ size_t Renderer::EnvironmentResidentBytes(EnvironmentHandle h) const {
                    m_environments[h.id].alive
                ? m_environments[h.id].bytes
                : 0;
+}
+
+bool Renderer::HasViewDependentMeshLods() const {
+    // The multiplier is set per renderable. The previous object's choice is
+    // not a world-wide policy and cannot qualify reuse for another camera.
+    for (const auto& mesh : m_meshes)
+        if (mesh.alive && mesh.lods.size() > 1 && mesh.lodPixels > 0)
+            return true;
+    return false;
+}
+
+bool Renderer::ReuseShadowChart(int slot,const glm::mat4& matrix) {
+    if(slot<0||slot>=kShadowMapCount||!m_shadowsEnabled||m_shadowPassActive||
+       unsigned(slot)>=m_shadowLayers||!m_shadowContentValid[unsigned(slot)])return false;
+    if(!m_render->viewUniforms.SetShadow(unsigned(slot),matrix))return false;
+    m_shadowLightSpaceMatrix[slot]=matrix;
+    ++m_stats.reusedShadowPasses;
+    return true;
 }

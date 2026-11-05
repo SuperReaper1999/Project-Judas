@@ -25,6 +25,11 @@ Basic Water and swimming remain available. See the
 
 ## Current status
 
+Experimental includes the [Renderer V2 work](docs/RENDERER_V2.md) and
+[editable Renderer Workshop](projects/renderer_v2_lab/README.md), alongside
+Editor V2 and Scripting V2. These are pending combined human review; the
+published Alpha packages remain unchanged.
+
 The [SDK authoring reference](docs/SDK_AUTHORING.md) includes exact scene fields
 and a packaged terrain-to-NPC workflow.
 

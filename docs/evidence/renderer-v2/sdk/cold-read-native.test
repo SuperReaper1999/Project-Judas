@@ -1,0 +1,6 @@
+FRAMES 30
+LOG_EVERY 10
+ENTITY 9
+ACTION load 1 5 6
+WAIT_SERVICES save 10000 10
+SCREENSHOT 20 /tmp/judas-renderer-v2-sdk-relocated-rnplxzas/cold-read-native.png

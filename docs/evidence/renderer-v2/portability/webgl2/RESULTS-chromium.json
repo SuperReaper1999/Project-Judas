@@ -1,0 +1,202 @@
+{
+  "browser": "chromium",
+  "browserVersion": "156.0.8078.4",
+  "build": {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/upstream/emscripten/em++",
+      "-std=c++17",
+      "-O2",
+      "-fexceptions",
+      "-Wall",
+      "-Wextra",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas/.cache/browser-build/_deps/judas_glm-src",
+      "/home/conner/Documents/GitHub/Project-Judas/tests/RendererPortableWebTests.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/GraphicsCapabilities.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/ShaderLibrary.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/ViewUniforms.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/ParticlePass.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/StreamArena.cpp",
+      "/home/conner/Documents/GitHub/Project-Judas/src/render/ComputeDevice.cpp",
+      "-sMIN_WEBGL_VERSION=2",
+      "-sMAX_WEBGL_VERSION=2",
+      "-sINITIAL_MEMORY=33554432",
+      "-sALLOW_MEMORY_GROWTH=0",
+      "-sSTACK_SIZE=1048576",
+      "-sENVIRONMENT=web",
+      "-sEXIT_RUNTIME=0",
+      "-sASSERTIONS=1",
+      "-sEXPORTED_RUNTIME_METHODS=['UTF8ToString']",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/web-proof/proof.js"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.78149676322937,
+    "sources": {
+      "tests/RendererPortableWebTests.cpp": "54edbfd5fd0085189ba2e00fdd88d84f743428fa7389028aac4602d828e801f5",
+      "src/render/GraphicsCapabilities.cpp": "0abe9e9c25c222383d9b7efc8ae674bdf367b9d1aa4086c79c167bb18eddb162",
+      "src/render/ShaderLibrary.cpp": "7fc3ae0c062ddc72844339cb6d7c1c1905622c7d6592deb496c451b059afb0c8",
+      "src/render/ViewUniforms.cpp": "79fa3298c508f1d4db2a110140670683fb0198e174e8603a4dbbfac1c696d4db",
+      "src/render/ParticlePass.cpp": "dfc9ece821f5ef9ed05a4bb25cc5e85a9c1e5f471088049728cc8f5632e492e3",
+      "src/render/StreamArena.cpp": "7f6015801c0ffbfb6c850f7513f431ea08a6e9d1e59ee78560d9f0c77d7afbae",
+      "src/render/ComputeDevice.cpp": "dbaf79fd565a0e2002c087a3c8baab25cb1d225233ca25a6e09f329ee7156312",
+      "src/GraphicsApi.h": "15be272ddb68fd3809ea9edb1140043fe548f7e197ab1f778fcefe94f3e30e2c",
+      "src/VisualParticles.h": "57dfdf43a7be921f497739684f160066d74039d7a3eb03b459940d6986223b56",
+      "src/render/GraphicsCapabilities.h": "d21d394a94404d8fe8f83e550ebd92da412a321d481bbdecc62b1264252eed0d",
+      "src/render/ShaderLibrary.h": "ae3f50cb9cddf6e0397b1fa1aafccb91ba514b069625b36e44e7d3626bd9e7ad",
+      "src/render/ViewUniforms.h": "5fe6ca8b1f6fdaa7661ca2b12b06649c591e88742eaf58be2555ad3a76ea0c64",
+      "src/render/ParticlePass.h": "55190c1b97359b6111d5aa3ffe674148c5b1ceb608914cf8a892262318408770",
+      "src/render/StreamArena.h": "b94502a797f09e09e6e2221850e6047e7b415f6eb3f7550669a0873929fe6b1f",
+      "src/render/ComputeDevice.h": "a8756ba8d8224973687c3c032ffad5e79c0abf237b2c6fc1288b983b5db7c94b"
+    },
+    "unchangedDuringBuild": true,
+    "wasmMemoryBytes": 33554432,
+    "allowMemoryGrowth": false,
+    "scope": "Production render owners on WebGL2; no whole-engine/editor/game qualification."
+  },
+  "result": {
+    "passed": true,
+    "checks": 33,
+    "failures": 0,
+    "profile": "webgl2",
+    "version": "OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))",
+    "renderer": "WebKit WebGL",
+    "contextDestroyed": true,
+    "rows": [
+      {
+        "name": "a real WebGL2 canvas context starts without SDL or application bootstrap",
+        "passed": true
+      },
+      {
+        "name": "real browser capability query exposes the portable tier and rejects desktop-only features",
+        "passed": true
+      },
+      {
+        "name": "bounded independent colour target, canonical inputs and complete textures initialize",
+        "passed": true
+      },
+      {
+        "name": "actual canonical mesh stages compile and link through ES300 with their view block",
+        "passed": true
+      },
+      {
+        "name": "actual canonical mesh reflects and binds the 720-byte std140 block",
+        "passed": true
+      },
+      {
+        "name": "actual canonical Legacy material draws the independently known ambient-only colour on WebGL2",
+        "passed": true
+      },
+      {
+        "name": "material controls use a finite exterior camera and explicitly excluded shadow chart",
+        "passed": true
+      },
+      {
+        "name": "actual canonical Unlit material ignores quarter-strength ambient and preserves white",
+        "passed": true
+      },
+      {
+        "name": "actual canonical PBR material matches quarter ambient, luminance tone mapping and sRGB",
+        "passed": true
+      },
+      {
+        "name": "independent view-block known-answer program links on the browser driver",
+        "passed": true
+      },
+      {
+        "name": "camera, projection and final shadow slot publish through the production UBO owner",
+        "passed": true
+      },
+      {
+        "name": "camera red, ninth-shadow green and projection blue agree with independent numeric answers",
+        "passed": true
+      },
+      {
+        "name": "view binding recovers from another pass without a redundant unchanged upload",
+        "passed": true
+      },
+      {
+        "name": "changing the last shadow updates only the expected known-answer channel with one upload",
+        "passed": true
+      },
+      {
+        "name": "view UBO is explicitly retired while its WebGL2 context still exists",
+        "passed": true
+      },
+      {
+        "name": "production compact billboards render the independently expected red-plus-half-blue colour",
+        "passed": true
+      },
+      {
+        "name": "reversing input preserves the depth-sorted particle image",
+        "passed": true
+      },
+      {
+        "name": "reversing physical depth changes the visible result rather than silently ignoring ordering",
+        "passed": true
+      },
+      {
+        "name": "equal-depth particle ordering retains original-index tie semantics",
+        "passed": true
+      },
+      {
+        "name": "portable particles submit all records in 32-byte instances without persistent buffers or waits",
+        "passed": true
+      },
+      {
+        "name": "particle shutdown retires all owned shaders, vertex arrays and portable storage",
+        "passed": true
+      },
+      {
+        "name": "stream working-set hint remains CPU-only on WebGL2",
+        "passed": true
+      },
+      {
+        "name": "a persistent request falls back to exact-size portable upload without desktop entry points",
+        "passed": true
+      },
+      {
+        "name": "independent GPU stream-payload consumer links",
+        "passed": true
+      },
+      {
+        "name": "the real portable stream buffer reaches the GPU with the exact known colour payload",
+        "passed": true
+      },
+      {
+        "name": "invalid stream uploads preserve allocation and cannot publish a stale slice",
+        "passed": true
+      },
+      {
+        "name": "stream storage is retired before context teardown",
+        "passed": true
+      },
+      {
+        "name": "forged desktop capability flags cannot enable compute on the compiled WebGL2 backend",
+        "passed": true
+      },
+      {
+        "name": "unsupported compute allocation fails explicitly and remains allocation-free",
+        "passed": true
+      },
+      {
+        "name": "all production-owner browser controls leave no GL errors",
+        "passed": true
+      },
+      {
+        "name": "explicit target shutdown leaves no graphics errors",
+        "passed": true
+      },
+      {
+        "name": "the single test context is explicitly destroyed without a background rendering loop",
+        "passed": true
+      },
+      {
+        "name": "no graphics context remains current after qualification",
+        "passed": true
+      }
+    ],
+    "heapBytes": 33554432
+  },
+  "pageErrors": []
+}

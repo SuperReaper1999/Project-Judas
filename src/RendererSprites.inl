@@ -37,10 +37,12 @@ void Renderer::FlushSprites() {
     std::stable_sort(m_spriteDraws.begin(),m_spriteDraws.end(),[](const auto& a,const auto& b){
         return SpriteSortKey(a.settings,a.position.y,a.identity)<SpriteSortKey(b.settings,b.position.y,b.identity);
     });
+    EndMeshBatch(); // An ordered sprite pass cannot absorb an earlier opaque queue.
     const auto savedBindings=m_materialBindings;const auto savedLayer=m_renderLayer;
     const bool savedFlush=m_flushingBlends;
     m_flushingBlends=true; // already ordered; do not enqueue the mesh depth sort
     BeginTransparentPass();
+    m_render->orderedInstances=true;BeginMeshBatch();
     for(const auto& draw:m_spriteDraws) {
         auto position=draw.position;
         if(m_spritePixelGrid>0&&draw.settings.pixelSnap)
@@ -55,6 +57,7 @@ void Renderer::FlushSprites() {
         m_materialBindings={binding};m_renderLayer=draw.layer;
         DrawMesh(m_spriteQuad,position,draw.rotation,scale,draw.texture,glm::vec3(draw.tint),draw.tint.a);
     }
+    EndMeshBatch();m_render->orderedInstances=false;
     EndTransparentPass();m_flushingBlends=savedFlush;m_materialBindings=savedBindings;m_renderLayer=savedLayer;
     m_spriteDraws.clear();
 }

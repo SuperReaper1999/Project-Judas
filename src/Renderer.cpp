@@ -1,3 +1,4 @@
+#include "render/RendererInfrastructure.h"
 #include "PerformanceProfiler.h"
 #include "CookedTexture.h"
 #include "Tangents.h"
@@ -166,14 +167,25 @@ constexpr int kShadowMapResolution = 1024;
 
 }  // namespace
 
+Renderer::Renderer():m_render(std::make_unique<JudasRender::RendererInfrastructure>()){}
+Renderer::~Renderer()=default;
+
 bool Renderer::CompileShader(GLenum type, const char* source, GLuint& result) const {
     const auto profile = m_capabilities.modernTier ? JudasRender::Shaders::Profile::Desktop450
                                                    : JudasRender::Shaders::PortableProfile();
+    std::string error;
+    if(source==kVertexShaderSource || source==kFragmentShaderSource) {
+        auto transformed=JudasRender::MakeViewBlockSource(source,error);
+        if(transformed.empty()){std::fprintf(stderr,"View shader: %s\n",error.c_str());return false;}
+        return JudasRender::Shaders::CompileShader(type,transformed.c_str(),result,profile,"mesh-view-block");
+    }
     return JudasRender::Shaders::CompileShader(type, source, result, profile);
 }
 
 bool Renderer::Init() {
     m_capabilities = QueryGraphicsCapabilities();
+    m_render->persistentUploads=true;
+    if(const char* setting=std::getenv("JUDAS_PERSISTENT_UPLOADS"))m_render->persistentUploads=std::strcmp(setting,"0")!=0;
     if(const char* batching=std::getenv("JUDAS_RENDER_BATCHING"))m_batchingEnabled=std::strcmp(batching,"0")!=0;
     const char* shadows=std::getenv("JUDAS_SHADOWS");m_shadowsEnabled=!(shadows&&std::string(shadows)=="0");
     std::fprintf(stderr,"Shadow maps: %s\n",m_shadowsEnabled?"on":"off");
@@ -395,8 +407,10 @@ bool Renderer::Init() {
     alwaysOutOfRangeMatrix[3][3] = 1.0f;
     for (int slot = 0; slot < kShadowMapCount; ++slot) {
         m_shadowLightSpaceMatrix[slot] = alwaysOutOfRangeMatrix;
+        m_render->viewUniforms.SetShadow(unsigned(slot),alwaysOutOfRangeMatrix);
     }
 
+    m_render->viewUniforms.SetCamera(m_view,m_projection);
     return true;
 }
 
@@ -427,7 +441,7 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 #endif
 }
 void Renderer::Shutdown() {
-    m_meshBatches.clear();m_batchLookup.clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
+    m_render->submission.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
     if(m_lightTexture)glDeleteTextures(1,&m_lightTexture);
     m_lightTexture=0;m_lightTextureRows=0;
     if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
@@ -443,11 +457,10 @@ void Renderer::Shutdown() {
     EndRenderTarget();
     ShutdownAppearance();
     m_spriteDraws.clear();m_spriteQuad={};m_spriteMaterials={};m_spritePixelGrid=0;
-    if(m_particleProgram)glDeleteProgram(m_particleProgram);
-    if(m_particleVbo)glDeleteBuffers(1,&m_particleVbo);
-    if(m_particleVao)glDeleteVertexArrays(1,&m_particleVao);
-    m_particleProgram=m_particleVbo=m_particleVao=0;
-    m_particleVertices.clear();m_particleOrder.clear();
+    m_render->particlePass.Shutdown();
+    m_render->instanceArena.Shutdown();
+    m_render->viewUniforms.Shutdown();
+    m_shadowContentValid.fill(false);
     for (unsigned int i = 0; i < m_targets.size(); ++i) DestroyRenderTarget(RenderTargetHandle{i});
     m_targets.clear();
     for (std::size_t i = 0; i < m_meshes.size(); ++i) {
@@ -533,6 +546,10 @@ void Renderer::BeginFrame(int windowWidth, int windowHeight) {
 }
 
 void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
+    if(!m_render->viewUniforms.SetCamera(view,projection)){
+        std::fprintf(stderr,"Camera rejected: view must be invertible and matrices finite\n");
+        return;
+    }
     m_spritePixelGrid=0;
     m_view = view;
     m_projection = projection;
@@ -576,7 +593,10 @@ void Renderer::SetLighting(const glm::vec3& direction, const glm::vec3& lightCol
 #include "RendererScale.inl"
 
 void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProjection) {
-    if(shadowSlot<0||shadowSlot>=kShadowMapCount||!m_shadowsEnabled)return;
+    if(shadowSlot<0||shadowSlot>=kShadowMapCount||!m_shadowsEnabled||m_shadowPassActive)return;
+    if(!m_render->viewUniforms.SetShadow(unsigned(shadowSlot),lightViewProjection)){
+        std::fprintf(stderr,"Shadow chart rejected: matrix must be finite\n");return;
+    }
     ReserveShadowLayers(unsigned(shadowSlot+1));
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
@@ -594,6 +614,8 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
 }
 
 void Renderer::EndShadowPass() {
+    if(!m_shadowPassActive)return;
+    if(m_shadowPassActive && m_currentShadowSlot>=0)m_shadowContentValid[unsigned(m_currentShadowSlot)]=true;
     EndProfilePass(m_profileShadow);m_profileShadow=0;
     m_shadowPassActive = false;
     m_frustum=Frustum(m_projection*m_view);
@@ -605,6 +627,7 @@ void Renderer::InvalidateShadowSlot(int shadowSlot) {
     if(shadowSlot<0||shadowSlot>=kShadowMapCount)return;
     glm::mat4 outside(0.0f);outside[3][2]=2.0f;outside[3][3]=1.0f;
     m_shadowLightSpaceMatrix[shadowSlot]=outside;
+    m_render->viewUniforms.SetShadow(unsigned(shadowSlot),outside);
 }
 
 MeshHandle Renderer::CreateMesh(const MeshData& data) {
@@ -936,7 +959,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     if(m_collectingBatch&&m_batchingEnabled&&!m_submittingBatch&&palette->empty()&&(!hiddenParts||hiddenParts->empty())){
         bool opaque=true;for(size_t i=0;i<parts;++i)opaque&=alphaAt(i,materialAt(i))==MaterialAlpha::Opaque;
-        if(opaque&&std::abs(glm::determinant(glm::mat3(model)))>1e-12f){QueueMeshInstance(mesh,texture,model,{tintColor,alpha},lod);return;}
+        if((opaque||m_render->orderedInstances)&&std::abs(glm::determinant(glm::mat3(model)))>1e-12f){QueueMeshInstance(mesh,texture,model,{tintColor,alpha},lod);return;}
     }
     // Milestone 15: while a shadow pass is active (see BeginShadowPass),
     // every DrawMesh call writes depth only, from that light's own view/
@@ -960,21 +983,17 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     const glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
 
     glUseProgram(m_shaderProgram);
-    glUniform1i(m_uInstanced,m_submittingBatch);
-    glUniform1i(m_uSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uBones,15);}
-    glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix3fv(m_uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
-    glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));
-    glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    glUniform4f(m_uColor, tintColor.r, tintColor.g, tintColor.b, alpha);
-    // Milestone 15: this frame's three shadow light-space matrices — see
-    // BeginShadowPass's own comment for why every normal-mode draw simply
-    // reuses whatever this frame's shadow passes most recently cached,
-    // with no separate "apply shadow data" call needed from the caller.
-    for (int slot = 0; slot < kShadowMapCount; ++slot) {
-        glUniformMatrix4fv(m_uLightSpaceMatrix[slot], 1, GL_FALSE,
-                            glm::value_ptr(m_shadowLightSpaceMatrix[slot]));
-    }
+    glUniform1i(MaterialUniform("uInstanced"),m_submittingBatch);
+    glUniform1i(MaterialUniform("uBones"),15);
+    glUniform1i(MaterialUniform("uSkinned"),!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(MaterialUniform("uBones"),15);}
+    glUniformMatrix4fv(MaterialUniform("uModel"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix3fv(MaterialUniform("uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniform4f(MaterialUniform("uColor"), tintColor.r, tintColor.g, tintColor.b, alpha);
+    std::string viewError;const auto viewBefore=m_render->viewUniforms.Stats();
+    if(!m_render->viewUniforms.Bind(m_shaderProgram,viewError)){std::fprintf(stderr,"View upload failed: %s\n",viewError.c_str());return;}
+    const auto viewAfter=m_render->viewUniforms.Stats();
+    m_stats.uploadedBytes+=viewAfter.bytesUploaded-viewBefore.bytesUploaded;
+    m_stats.uploadCalls+=viewAfter.uploads-viewBefore.uploads;
 
     glActiveTexture(GL_TEXTURE0);
     if (m_activeTarget.IsValid() && texture.IsValid() &&
@@ -1037,6 +1056,12 @@ void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& o
 }
 
 void Renderer::EndFrame() {
+    JUDAS_PROFILE_COUNTER("Presentation upload bytes (view/light/instances/billboards)",double(m_stats.uploadedBytes),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Presentation upload calls",double(m_stats.uploadCalls),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Material applications",double(m_stats.materialApplications),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Reused shadow passes",double(m_stats.reusedShadowPasses),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Instance arena bytes",double(m_render->instanceArena.AllocatedBytes()),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Billboard arena bytes",double(m_render->particlePass.Stats().arenaBytes),ProfileCounterMode::Latest);
     FlushMaterialBlends();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
     ResolveLinearPass();m_environmentBackground=background;
@@ -1089,166 +1114,27 @@ void Renderer::EndUIFrame() {
     glEnable(GL_DEPTH_TEST);
 }
 
-RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::string& error,bool display) {
-    error.clear();
-    GLint maximum = 0; glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maximum);
-    if (width < 1 || height < 1 || width > maximum || height > maximum || m_activeTarget.IsValid()) {
-        error = "invalid render-target dimensions or creation during an active target pass"; return {};
-    }
-    GLint draw = 0, read = 0, texture = 0, depth = 0;
-    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &draw); glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &read);
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, &texture); glGetIntegerv(GL_RENDERBUFFER_BINDING, &depth);
-    GpuTarget target; target.width = width; target.height = height;
-    GpuTexture color;color.width=width;color.height=height; color.sceneLinear=m_linearRendering&&!display;color.renderTarget=true;color.uploadedBytes = static_cast<std::size_t>(width) * height * (color.sceneLinear?8:4);
-    glGenTextures(1, &color.textureId); glBindTexture(GL_TEXTURE_2D, color.textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, color.sceneLinear?GL_RGBA16F:GL_RGBA8, width, height, 0, GL_RGBA, color.sceneLinear?GL_HALF_FLOAT:GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glGenRenderbuffers(1, &target.depth); glBindRenderbuffer(GL_RENDERBUFFER, target.depth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-    glGenFramebuffers(1, &target.framebuffer); glBindFramebuffer(GL_FRAMEBUFFER, target.framebuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color.textureId, 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, target.depth);
-    const GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(draw));
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(read));
-    glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture));
-    glBindRenderbuffer(GL_RENDERBUFFER, static_cast<GLuint>(depth));
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        glDeleteFramebuffers(1, &target.framebuffer); glDeleteRenderbuffers(1, &target.depth);
-        glDeleteTextures(1, &color.textureId);
-        error = "render-target framebuffer incomplete: " + std::to_string(status); return {};
-    }
-    color.alive = true; target.color=InstallTexture(color);
-    m_targets.push_back(target);
-    TraceResourceOperation(ResourceTracePoint::TextureCreated, target.color.id, color.uploadedBytes);
-    return RenderTargetHandle{static_cast<unsigned int>(m_targets.size() - 1)};
-}
-
-bool Renderer::ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error,bool display) {
-    if (m_activeTarget.IsValid()) { error = "cannot resize during a target pass"; return false; }
-    if (target.IsValid() && target.id < m_targets.size()) {
-        const auto& old = m_targets[target.id];
-        if (old.framebuffer && old.width == width && old.height == height && m_textures[old.color.id].sceneLinear==(m_linearRendering&&!display)) { error.clear(); return true; }
-    }
-    auto replacement = CreateRenderTarget(width, height, error,display);
-    if (!replacement.IsValid()) return false;
-    DestroyRenderTarget(target); target = replacement; return true;
-}
-
-void Renderer::DestroyRenderTarget(RenderTargetHandle target) {
-    if (!target.IsValid() || target.id >= m_targets.size()) return;
-    if (m_activeTarget.id == target.id) EndRenderTarget();
-    auto& gpu = m_targets[target.id];
-    const GLuint oldFramebuffer = gpu.framebuffer, oldDepth = gpu.depth;
-    const GLuint oldColor = gpu.color.IsValid() && gpu.color.id < m_textures.size() ? m_textures[gpu.color.id].textureId : 0;
-    if (gpu.framebuffer) glDeleteFramebuffers(1, &gpu.framebuffer);
-    if (gpu.depth) glDeleteRenderbuffers(1, &gpu.depth);
-    DestroyTexture(gpu.color); gpu = GpuTarget{};
-    if ((oldFramebuffer && glIsFramebuffer(oldFramebuffer)) || (oldDepth && glIsRenderbuffer(oldDepth)) ||
-        (oldColor && glIsTexture(oldColor))) ++m_stats.targetDeletionFailures;
-}
-
-TextureHandle Renderer::RenderTargetTexture(RenderTargetHandle target) const {
-    if (!target.IsValid() || target.id >= m_targets.size() || !m_targets[target.id].framebuffer) return {};
-    return m_targets[target.id].color;
-}
-
-bool Renderer::BeginRenderTarget(RenderTargetHandle target, bool preserveContents) {
-    if (m_activeTarget.IsValid() || m_shadowPassActive || !RenderTargetTexture(target).IsValid()) return false;
-    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &m_savedDrawFramebuffer);
-    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &m_savedReadFramebuffer);
-    glGetIntegerv(GL_VIEWPORT, m_savedViewport);
-    m_savedRenderMask=m_renderMask;m_savedRenderLayer=m_renderLayer;
-    m_savedView = m_view; m_savedProjection = m_projection;m_savedPixelGrid=m_spritePixelGrid; m_activeTarget = target;
-    const auto& gpu = m_targets[target.id];
-    glBindFramebuffer(GL_FRAMEBUFFER, gpu.framebuffer);
-    if (!preserveContents) BeginFrame(gpu.width, gpu.height);
-    else glViewport(0, 0, gpu.width, gpu.height);
-    ++m_stats.offscreenPasses; return true;
-}
-
-void Renderer::EndRenderTarget(bool restoreCamera) {
-    if (!m_activeTarget.IsValid()) return;
-    FlushMaterialBlends();const bool background=m_environmentBackground;
-    if(m_weather.enabled)m_environmentBackground=false;
-    ResolveLinearPass(m_textures[m_targets[m_activeTarget.id].color.id].sceneLinear);m_environmentBackground=background;
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(m_savedDrawFramebuffer));
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(m_savedReadFramebuffer));
-    glViewport(m_savedViewport[0], m_savedViewport[1], m_savedViewport[2], m_savedViewport[3]);
-    if (restoreCamera) {
-        SetCamera(m_savedView,m_savedProjection);m_spritePixelGrid=m_savedPixelGrid;
-        m_renderMask=m_savedRenderMask;m_renderLayer=m_savedRenderLayer;
-    }
-    m_activeTarget = {};
-}
-
-Renderer::TargetDiagnostics Renderer::RenderTargetDiagnostics() const {
-    TargetDiagnostics result; GLint framebuffer = 0;
-    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &framebuffer);
-    glGetIntegerv(GL_VIEWPORT, &result.viewport[0]); result.defaultFramebuffer = framebuffer == 0;
-    result.passActive = m_activeTarget.IsValid();
-    for (const auto& gpu : m_targets) if (gpu.framebuffer) ++result.liveTargets;
-    return result;
-}
-
-glm::ivec2 Renderer::RenderTargetSize(RenderTargetHandle target) const {
-    if (!RenderTargetTexture(target).IsValid()) return glm::ivec2(0);
-    return glm::ivec2(m_targets[target.id].width, m_targets[target.id].height);
-}
-void Renderer::FinishForDiagnostics() const { glFinish(); }
-
-
 void Renderer::DrawParticles(const std::vector<ParticleBillboard>& particles,const VisualBounds& bounds,TextureHandle texture){
     if(m_shadowPassActive||particles.empty())return;
     if(!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedEmitters;return;}
     ++m_stats.particleEmittersConsidered;
     if(!IsVisible(bounds)){++m_stats.particleEmittersCulled;return;}
     ++m_stats.particleEmittersVisible;
-    if(!m_particleProgram){
-        const char* vs=R"(#version 330 core
-layout(location=0)in vec3 position;layout(location=1)in vec2 uv;layout(location=2)in vec4 color;
-uniform mat4 vp;out vec2 texcoord;out vec4 tint;
-void main(){gl_Position=vp*vec4(position,1);texcoord=uv;tint=color;})";
-        const char* fs=R"(#version 330 core
-in vec2 texcoord;in vec4 tint;uniform sampler2D image;uniform bool modern,imageLinear;out vec4 result;
-vec3 linear(vec3 c){return mix(c/12.92,pow((c+0.055)/1.055,vec3(2.4)),step(vec3(.04045),c));}
-void main(){vec4 sampleColour=texture(image,texcoord);result=sampleColour*tint;if(modern)result.rgb=(imageLinear?sampleColour.rgb:linear(sampleColour.rgb))*linear(tint.rgb);})";
-        GLuint v=0,f=0;
-        if(!CompileShader(GL_VERTEX_SHADER,vs,v))return;
-        if(!CompileShader(GL_FRAGMENT_SHADER,fs,f)){glDeleteShader(v);return;}
-        bool ok=LinkProgram(v,f,m_particleProgram);glDeleteShader(v);glDeleteShader(f);if(!ok)return;
-        glGenVertexArrays(1,&m_particleVao);glGenBuffers(1,&m_particleVbo);
-        glBindVertexArray(m_particleVao);glBindBuffer(GL_ARRAY_BUFFER,m_particleVbo);
-        glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(ParticleVertex),reinterpret_cast<void*>(offsetof(ParticleVertex,position)));glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,sizeof(ParticleVertex),reinterpret_cast<void*>(offsetof(ParticleVertex,uv)));glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2,4,GL_FLOAT,GL_FALSE,sizeof(ParticleVertex),reinterpret_cast<void*>(offsetof(ParticleVertex,color)));glEnableVertexAttribArray(2);
-    }
-    // Per-emitter back-to-front stable ordering, separately for each camera.
-    m_particleOrder.resize(particles.size());for(size_t i=0;i<particles.size();++i)m_particleOrder[i]=i;
-    std::sort(m_particleOrder.begin(),m_particleOrder.end(),[&](size_t a,size_t b){
-        float za=(m_view*glm::vec4(particles[a].position,1)).z,zb=(m_view*glm::vec4(particles[b].position,1)).z;
-        return za==zb?a<b:za<zb;});
-    const auto inverse=glm::inverse(m_view);const auto right=glm::vec3(inverse[0]),up=glm::vec3(inverse[1]);
-    const glm::vec2 corners[4]={{-0.5f,-0.5f},{0.5f,-0.5f},{0.5f,0.5f},{-0.5f,0.5f}};
-    const unsigned indices[6]={0,1,2,0,2,3};m_particleVertices.clear();m_particleVertices.reserve(particles.size()*6);
-    for(size_t i:m_particleOrder){const auto& p=particles[i];for(auto k:indices){auto c=corners[k];m_particleVertices.push_back({p.position+p.size*(right*c.x+up*c.y),c+glm::vec2(0.5f),p.color});}}
     if(m_linearRendering)texture=ColourTexture(texture);
-    glUseProgram(m_particleProgram);glUniform1i(glGetUniformLocation(m_particleProgram,"imageLinear"),ValidTexture(texture)&&(m_textures[texture.id].srgb||m_textures[texture.id].sceneLinear));glUniform1i(glGetUniformLocation(m_particleProgram,"modern"),m_linearRendering);glBindSampler(0,0);glUniformMatrix4fv(glGetUniformLocation(m_particleProgram,"vp"),1,GL_FALSE,glm::value_ptr(m_projection*m_view));
+    const bool imageLinear=ValidTexture(texture)&&(m_textures[texture.id].srgb||m_textures[texture.id].sceneLinear);
     if(m_activeTarget.IsValid()&&texture.id==RenderTargetTexture(m_activeTarget).id){texture={};++m_stats.feedbackFallbacks;}
-    glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glUniform1i(glGetUniformLocation(m_particleProgram,"image"),0);
-    glBindVertexArray(m_particleVao);glBindBuffer(GL_ARRAY_BUFFER,m_particleVbo);
-    glBufferData(GL_ARRAY_BUFFER,static_cast<GLsizeiptr>(m_particleVertices.size()*sizeof(ParticleVertex)),m_particleVertices.data(),GL_STREAM_DRAW);
-    // Restore exactly the state touched by this presentation pass.
-    GLboolean depthMask,cull=glIsEnabled(GL_CULL_FACE),blend=glIsEnabled(GL_BLEND);glGetBooleanv(GL_DEPTH_WRITEMASK,&depthMask);
-    GLint srcRgb,dstRgb,srcAlpha,dstAlpha;glGetIntegerv(GL_BLEND_SRC_RGB,&srcRgb);glGetIntegerv(GL_BLEND_DST_RGB,&dstRgb);glGetIntegerv(GL_BLEND_SRC_ALPHA,&srcAlpha);glGetIntegerv(GL_BLEND_DST_ALPHA,&dstAlpha);
-    glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);glDisable(GL_CULL_FACE);glDepthMask(GL_FALSE);
-    glDrawArrays(GL_TRIANGLES,0,static_cast<GLsizei>(m_particleVertices.size()));
-    glDepthMask(depthMask);if(cull)glEnable(GL_CULL_FACE);if(!blend)glDisable(GL_BLEND);glBlendFuncSeparate(srcRgb,dstRgb,srcAlpha,dstAlpha);
-    glBindVertexArray(0);glBindBuffer(GL_ARRAY_BUFFER,0);
-    ++m_stats.drawCalls;m_stats.triangles+=static_cast<unsigned>(particles.size()*2);m_stats.particlesSubmitted+=static_cast<unsigned>(particles.size());
+    const auto before=m_render->particlePass.Stats();
+    std::string error;
+    const auto profile=m_capabilities.modernTier?JudasRender::Shaders::Profile::Desktop450:JudasRender::Shaders::PortableProfile();
+    if(!m_render->particlePass.Draw(m_view,m_projection,particles,ResolveTexture(texture),imageLinear,m_linearRendering,
+                           m_render->persistentUploads&&m_capabilities.modernTier&&m_capabilities.bufferStorage,profile,error))
+        std::fprintf(stderr,"Particle presentation failed: %s\n",error.c_str());
+    const auto after=m_render->particlePass.Stats();
+    m_stats.drawCalls+=unsigned(after.draws-before.draws);
+    m_stats.triangles+=unsigned(after.triangles-before.triangles);
+    m_stats.particlesSubmitted+=unsigned(after.particles-before.particles);
+    m_stats.uploadedBytes+=after.uploadedBytes-before.uploadedBytes;
+    m_stats.uploadCalls+=after.uploadCalls-before.uploadCalls;
 }
 
 bool Renderer::SelectUIFont(const std::string& path,std::string& error){

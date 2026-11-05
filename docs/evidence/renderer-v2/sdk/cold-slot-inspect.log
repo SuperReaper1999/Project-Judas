@@ -1,0 +1,13 @@
+{
+  "build": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-ff158234ba91-ud14f6754ce2f",
+  "compatibility": "",
+  "content": "00cd7106f079b2f983d309801b0305e1735d97d2433d7ba663c5f0fae345361c",
+  "engineSchema": 1,
+  "modContext": "",
+  "ms": 6.534965,
+  "participants": 13,
+  "project": "d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6",
+  "recoveredPrevious": false,
+  "scene": "Scenes/main.judas",
+  "version": 0
+}

@@ -1,0 +1,19 @@
+JudasMaterial 1
+model 1
+alpha 0
+base 0.22 0.41000000000000003 0.58 1
+metallic 0.0
+roughness 0.67
+emissive 0 0 0
+emission 1
+normal 1
+occlusion 1
+cutoff .5
+doubleSided 0
+flipV 0
+uv 2 2 0 0
+map 0 "90f012428aa76e581fea5669b52d3c83" 10497 10497 9987 9729
+map 1 "" 10497 10497 9987 9729
+map 2 "3aae9f554a20452bc22b92ad1c1827e3" 10497 10497 9987 9729
+map 3 "" 10497 10497 9987 9729
+map 4 "" 10497 10497 9987 9729

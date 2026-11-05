@@ -13,3 +13,8 @@ docs/evidence/windows-cross/** -text
 
 # Preserve native qualification captures and their recorded byte hashes.
 docs/evidence/prealpha-clean-distribution-20261020/** -text
+
+# Renderer qualification hashes raw CSV/log bytes, including original endings.
+docs/evidence/renderer-v2/** -text -whitespace
+# Retain the bundled font's original licence text verbatim.
+projects/renderer_v2_lab/Assets/fonts/LICENSE.txt -whitespace

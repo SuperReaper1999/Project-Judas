@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots/qualification.save",
+    "bytes": 2884,
+    "sha256": "1b2a869a75326b1cd5cfd2895eb4a3bf5d2baba3b7bb05619d8225d6f559ee26"
+  },
+  {
+    "path": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots/.lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "operations": 15,
+  "sdk": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk",
+  "relocated": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game",
+  "hostBaseline": "local glibc2.43; not Ubuntu24 certification",
+  "coldProcessRestoredGold": 37,
+  "mk2Body": 9,
+  "sourceTreeHidden": false,
+  "releasePackage": false,
+  "initialRestrictedGraphicsFailure": "write.log retained; desktop-authorized rerun passed"
+}

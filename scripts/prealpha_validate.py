@@ -30,7 +30,8 @@ from package_sdk import probe_identity  # Same bounded tool probe as distributio
 # original tests and direct geometry/storage coverage; unavailability is never
 # a numerical pass. CTest and release qualification consume this same policy.
 ADVANCED_RUNTIME_TARGETS = {'judas_origin_environment_tests', 'judas_liquid_surface_tests',
-                            'judas_fluid_cadence_motion_tests'}
+                            'judas_fluid_cadence_motion_tests',
+                            'judas_material_application_tests'}
 CHANNELS = ('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')
 
 

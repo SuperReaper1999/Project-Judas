@@ -2,6 +2,7 @@
 // depth planes/occluders provide independent answers, without scene physics,
 // browser automation or a second copy of the shader under test.
 #include "EngineHost.h"
+#include "render/ShaderLibrary.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -40,15 +41,13 @@ GLuint Compile(GLenum kind, const std::string& source) {
     return shader;
 }
 
-std::string ProductionFunction(const char* file) {
-    std::ifstream stream(file);
-    if (!stream) throw std::runtime_error(std::string("Cannot read ") + file);
-    const std::string text((std::istreambuf_iterator<char>(stream)), {});
-    const auto begin = text.find("float ComputeShadowFactor(");
-    const auto end = text.find("\n}", begin);
-    if (begin == std::string::npos || end == std::string::npos)
-        throw std::runtime_error("Production shadow function not found");
-    return text.substr(begin, end + 2 - begin);
+std::string ProductionFunction() {
+    const std::string text=JudasRender::Shaders::Source(JudasRender::Shaders::Builtin::MeshFragment);
+    const auto begin=text.find("float ComputeShadowFactor(");
+    const auto end=text.find("\n}",begin);
+    if(begin==std::string::npos||end==std::string::npos)
+        throw std::runtime_error("Production shadow function not found in ShaderLibrary");
+    return text.substr(begin,end+2-begin);
 }
 
 glm::mat4 LightMatrix(float projective) {
@@ -58,10 +57,10 @@ glm::mat4 LightMatrix(float projective) {
 }
 } // namespace
 
-int main(int argc, char** argv) {
+int main() {
     std::setvbuf(stdout, nullptr, _IOLBF, 0);
     try {
-        const auto function = ProductionFunction(argc > 1 ? argv[1] : "src/Renderer.cpp");
+        const auto function = ProductionFunction();
         EngineHost host;
         std::string error;
         if (!host.Init("Shadow sampling contracts", kSize, kSize, false, error))

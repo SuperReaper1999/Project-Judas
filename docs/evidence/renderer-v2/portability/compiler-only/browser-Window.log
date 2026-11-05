@@ -1,0 +1,4 @@
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp:953:61: warning: unused parameter 'device' [-Wunused-parameter]
+  953 | bool Window::DispatchRumble(RumbleOperation op,RumbleDevice device,const std::string& gamepad,
+      |                                                             ^
+1 warning generated.

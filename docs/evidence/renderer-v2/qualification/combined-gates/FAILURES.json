@@ -1,0 +1,146 @@
+{
+  "sourceRevision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+  "expectedSourceIdentity": {
+    "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+    "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1"
+  },
+  "failures": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_shader_library_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates",
+      "timeoutSeconds": 150.0,
+      "binarySha256": "fbcce057d66280aeba5de8a3f5fb8563075a299b773b4995fb8bf6cfd83b6324",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "fbcce057d66280aeba5de8a3f5fb8563075a299b773b4995fb8bf6cfd83b6324",
+      "seconds": 0.008006490003026556,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+        "source_origin": "git",
+        "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+        "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+        "source_untracked_count": 42,
+        "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "renderer-shader-library"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_pipeline_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates/asset-pipeline"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates",
+      "timeoutSeconds": 150.0,
+      "binarySha256": "f3bc160f6079244b6cf9ce19d79ccaf901db98f928dde44c722868a4c02876c3",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "f3bc160f6079244b6cf9ce19d79ccaf901db98f928dde44c722868a4c02876c3",
+      "seconds": 0.06899155800056178,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+        "source_origin": "git",
+        "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+        "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+        "source_untracked_count": 42,
+        "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "asset-pipeline"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_residency_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates/asset-residency"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates",
+      "timeoutSeconds": 150.0,
+      "binarySha256": "c2a53ee11d704a8e7b703d81ee16fc706a08a56a9f389ab9163107ac52419d1c",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "c2a53ee11d704a8e7b703d81ee16fc706a08a56a9f389ab9163107ac52419d1c",
+      "seconds": 0.4765679150004871,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+        "source_origin": "git",
+        "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+        "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+        "source_untracked_count": 42,
+        "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "asset-residency"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates/material-application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/combined-gates",
+      "timeoutSeconds": 150.0,
+      "binarySha256": "ff0f4749aad0573162ced5d3cd5322aefeb00347a466781691e3b86e0fa3b488",
+      "exit": -6,
+      "status": "failed",
+      "binarySha256After": "ff0f4749aad0573162ced5d3cd5322aefeb00347a466781691e3b86e0fa3b488",
+      "seconds": 1.029066444003547,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+        "source_origin": "git",
+        "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+        "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+        "source_untracked_count": 42,
+        "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+        "version": "1.2.5-alpha.1"
+      },
+      "name": "material-application"
+    }
+  ]
+}

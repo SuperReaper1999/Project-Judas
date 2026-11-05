@@ -1,0 +1,58 @@
+{
+  "dateUTC": "2026-11-05T00:37:20.327373+00:00",
+  "baseCommit": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+  "identityNote": "Source includes the current Renderer V2 candidate working changes; exact hashes in receipts are authoritative, not baseCommit alone.",
+  "compilerOnly": {
+    "android-arm64": {
+      "passed": 12,
+      "total": 12
+    },
+    "browser": {
+      "passed": 12,
+      "total": 12
+    },
+    "windows-cross": {
+      "passed": 12,
+      "total": 12
+    }
+  },
+  "allCompilerSourceHashesStillMatch": true,
+  "allWebBuildSourceHashesStillMatch": true,
+  "webgl2": {
+    "browser": "Chromium 156.0.8078.4",
+    "backend": "software ANGLE/SwiftShader",
+    "checks": 33,
+    "failures": 0,
+    "pageErrors": 0,
+    "glErrors": 0,
+    "wasmBytes": 33554432,
+    "memoryGrowth": false,
+    "contextDestroyed": true,
+    "runtimeSeconds": 3.224,
+    "cpuSeconds": 2.914,
+    "memoryPeakMiB": 501.5,
+    "swapBytes": 0,
+    "accountingSource": "Captured systemd-run completion output, invocation eaa7765dd8894d49b17d59576610a9a3"
+  },
+  "infrastructureAttempts": [
+    {
+      "scope": "sandbox user-bus attempt",
+      "exitCode": 1,
+      "output": "Failed to connect to user scope bus via local transport: Operation not permitted"
+    },
+    {
+      "scope": "bounded user service with inherited PATH",
+      "exitCode": 127,
+      "invocation": "f3290a10d8864486b656c8d5a432e418",
+      "output": "timeout: failed to execute process: No such file or directory (os error 2)",
+      "cause": "Node is installed through nvm and not available in the user-service PATH; corrected with absolute Node path and explicit working directory."
+    }
+  ],
+  "limits": [
+    "Windows cross and Android checks are compiler-only, not links or runtime/device qualification.",
+    "WebGL checks exercise the changed production render owners, not the entire engine/editor/game/browser application.",
+    "The linked WebGL proof uses software rendering; it is not a desktop/mobile GPU hardware performance claim.",
+    "One unchanged unused-parameter warning remains in browser Window.cpp.",
+    "Initial missing-SDL-forwarding-header failures are preserved; isolated source/config overlays are recorded."
+  ]
+}

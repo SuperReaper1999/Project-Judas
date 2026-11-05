@@ -1,0 +1,98 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "SDK Renderer Qualification",
+    "basicWater": true,
+    "waterSwimming": true,
+    "advancedFluidDynamics": false,
+    "legacyGameplay": false,
+    "saveIdentity": "d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/main.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "all",
+    "runtimeAssets": [],
+    "exportScenes": [],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 0,
+        "entries": []
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {}
+  }
+}

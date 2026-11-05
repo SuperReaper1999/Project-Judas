@@ -1,0 +1,2172 @@
+{
+  "format": 1,
+  "raw_root": ".cache/renderer-v2/final-matched",
+  "started_utc": "2026-11-05T00:19:32Z",
+  "aggregation": "Nearest-rank percentiles of pooled raw samples from the two A or two B runs. CSV values have the observer's default stream precision; original full-precision individual-run summaries are retained in per-run.json.",
+  "gpu_scope": "Whole-scene GPU timestamps may include CPU submission starvation; CPU/GPU durations are not additive.",
+  "cases": {
+    "mixed": {
+      "A": {
+        "workload": {
+          "case": "mixed",
+          "frames": 4000,
+          "height": 1080,
+          "lights": 8,
+          "objects": 2048,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": false,
+          "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+          "source_origin": "git",
+          "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+          "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+          "source_untracked_count": 18,
+          "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "mixed-0-A",
+          "mixed-3-A"
+        ],
+        "rss_bytes": [
+          110825472,
+          110395392
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            8.274325,
+            7.380299
+          ],
+          "first_submission_ms": [
+            4.239566,
+            4.134147
+          ],
+          "host_init_ms": [
+            175.025973,
+            165.863082
+          ],
+          "resource_setup_ms": [
+            12.157508,
+            10.197392
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 8000,
+            "median": 2.17686,
+            "p95": 2.52614,
+            "p99": 2.89597,
+            "max": 9.64097
+          },
+          "process_cpu_submission_ms": {
+            "samples": 8000,
+            "median": 2.177,
+            "p95": 2.521,
+            "p99": 2.882,
+            "max": 4.679
+          },
+          "outer_frame_ms": {
+            "samples": 8000,
+            "median": 2.78271,
+            "p95": 3.2086,
+            "p99": 3.3984,
+            "max": 9.71323
+          },
+          "gpu_ms": {
+            "samples": 8000,
+            "median": 2.80256,
+            "p95": 3.1303,
+            "p99": 3.30698,
+            "max": 9.76045
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "129",
+              "samples": 8000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "24588",
+              "samples": 8000
+            }
+          ],
+          "instances": [
+            {
+              "value": "2049",
+              "samples": 8000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "129",
+              "samples": 8000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "lights": [
+            {
+              "value": "8",
+              "samples": 8000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "81920",
+              "samples": 8000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 8000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "2400",
+              "samples": 8000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ]
+        }
+      },
+      "B": {
+        "workload": {
+          "case": "mixed",
+          "frames": 4000,
+          "height": 1080,
+          "lights": 8,
+          "objects": 2048,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+          "source_origin": "git",
+          "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+          "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+          "source_untracked_count": 42,
+          "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "mixed-1-B",
+          "mixed-2-B"
+        ],
+        "rss_bytes": [
+          179945472,
+          117366784
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            6.366467,
+            7.064965
+          ],
+          "first_submission_ms": [
+            3.957974,
+            4.618851
+          ],
+          "host_init_ms": [
+            367.359147,
+            172.14511
+          ],
+          "resource_setup_ms": [
+            10.827912,
+            10.846967
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 8000,
+            "median": 1.74768,
+            "p95": 1.83017,
+            "p99": 2.08165,
+            "max": 2.70891
+          },
+          "process_cpu_submission_ms": {
+            "samples": 8000,
+            "median": 1.748,
+            "p95": 1.83,
+            "p99": 2.079,
+            "max": 2.701
+          },
+          "outer_frame_ms": {
+            "samples": 8000,
+            "median": 1.93893,
+            "p95": 2.29667,
+            "p99": 2.40345,
+            "max": 2.7808
+          },
+          "gpu_ms": {
+            "samples": 8000,
+            "median": 1.96672,
+            "p95": 2.20925,
+            "p99": 2.328,
+            "max": 3.11632
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "129",
+              "samples": 8000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "24588",
+              "samples": 8000
+            }
+          ],
+          "instances": [
+            {
+              "value": "2049",
+              "samples": 8000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "129",
+              "samples": 8000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "lights": [
+            {
+              "value": "8",
+              "samples": 8000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "81920",
+              "samples": 8000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 8000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "2400",
+              "samples": 8000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "246560",
+              "samples": 8000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "131",
+              "samples": 8000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "129",
+              "samples": 8000
+            }
+          ]
+        }
+      },
+      "median_cost_reduction_percent": {
+        "cpu_submission_ms": 19.715553595545888,
+        "process_cpu_submission_ms": 19.706017455213598,
+        "outer_frame_ms": 30.322239830956143,
+        "gpu_ms": 29.82416076729847
+      }
+    },
+    "repeated": {
+      "A": {
+        "workload": {
+          "case": "repeated",
+          "frames": 4000,
+          "height": 1080,
+          "lights": 0,
+          "objects": 4096,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 2,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": false,
+          "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+          "source_origin": "git",
+          "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+          "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+          "source_untracked_count": 18,
+          "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "repeated-0-A",
+          "repeated-3-A"
+        ],
+        "rss_bytes": [
+          153092096,
+          152776704
+        ],
+        "appearance_owned_bytes": [
+          28512000,
+          28512000
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            7.024077,
+            7.116942
+          ],
+          "first_submission_ms": [
+            6.2831,
+            6.253664
+          ],
+          "host_init_ms": [
+            170.910702,
+            168.275432
+          ],
+          "resource_setup_ms": [
+            0.581396,
+            0.586546
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 8000,
+            "median": 3.53758,
+            "p95": 3.7029,
+            "p99": 4.03108,
+            "max": 6.66582
+          },
+          "process_cpu_submission_ms": {
+            "samples": 8000,
+            "median": 3.537,
+            "p95": 3.702,
+            "p99": 4.025,
+            "max": 6.089
+          },
+          "outer_frame_ms": {
+            "samples": 8000,
+            "median": 3.5936,
+            "p95": 3.76234,
+            "p99": 4.11471,
+            "max": 6.77611
+          },
+          "gpu_ms": {
+            "samples": 8000,
+            "median": 3.63738,
+            "p95": 3.95392,
+            "p99": 4.22064,
+            "max": 7.09469
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "6",
+              "samples": 8000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "98328",
+              "samples": 8000
+            }
+          ],
+          "instances": [
+            {
+              "value": "8194",
+              "samples": 8000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "6",
+              "samples": 8000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 8000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "302400",
+              "samples": 8000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "NA",
+              "samples": 8000
+            }
+          ]
+        }
+      },
+      "B": {
+        "workload": {
+          "case": "repeated",
+          "frames": 4000,
+          "height": 1080,
+          "lights": 0,
+          "objects": 4096,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 2,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+          "source_origin": "git",
+          "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+          "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+          "source_untracked_count": 42,
+          "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "repeated-1-B",
+          "repeated-2-B"
+        ],
+        "rss_bytes": [
+          142794752,
+          142970880
+        ],
+        "appearance_owned_bytes": [
+          28512000,
+          28512000
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            8.947555,
+            7.474196
+          ],
+          "first_submission_ms": [
+            8.27133,
+            6.80862
+          ],
+          "host_init_ms": [
+            170.134438,
+            195.192596
+          ],
+          "resource_setup_ms": [
+            0.885449,
+            1.063716
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 8000,
+            "median": 2.01161,
+            "p95": 2.04964,
+            "p99": 2.2332,
+            "max": 3.5399
+          },
+          "process_cpu_submission_ms": {
+            "samples": 8000,
+            "median": 2.012,
+            "p95": 2.048,
+            "p99": 2.234,
+            "max": 3.498
+          },
+          "outer_frame_ms": {
+            "samples": 8000,
+            "median": 2.06692,
+            "p95": 2.1074,
+            "p99": 2.29702,
+            "max": 3.69454
+          },
+          "gpu_ms": {
+            "samples": 8000,
+            "median": 2.11117,
+            "p95": 2.20294,
+            "p99": 2.35626,
+            "max": 3.78282
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "6",
+              "samples": 8000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "98328",
+              "samples": 8000
+            }
+          ],
+          "instances": [
+            {
+              "value": "8194",
+              "samples": 8000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "6",
+              "samples": 8000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 8000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 8000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "302400",
+              "samples": 8000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "656960",
+              "samples": 8000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "8",
+              "samples": 8000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "6",
+              "samples": 8000
+            }
+          ]
+        }
+      },
+      "median_cost_reduction_percent": {
+        "cpu_submission_ms": 43.13598561728639,
+        "process_cpu_submission_ms": 43.115634718688156,
+        "outer_frame_ms": 42.48330365093499,
+        "gpu_ms": 41.95904744623877
+      }
+    },
+    "sprites": {
+      "A": {
+        "workload": {
+          "case": "sprites",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 0,
+          "objects": 4096,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": false,
+          "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+          "source_origin": "git",
+          "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+          "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+          "source_untracked_count": 18,
+          "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "sprites-0-A",
+          "sprites-3-A"
+        ],
+        "rss_bytes": [
+          120520704,
+          121020416
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            23.222206,
+            22.554307
+          ],
+          "first_submission_ms": [
+            22.738674,
+            22.065144
+          ],
+          "host_init_ms": [
+            165.138085,
+            168.085874
+          ],
+          "resource_setup_ms": [
+            0.164741,
+            0.125877
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 19.1772,
+            "p95": 19.3524,
+            "p99": 20.6521,
+            "max": 30.0177
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 19.176,
+            "p95": 19.349,
+            "p99": 20.642,
+            "max": 29.612
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 19.2328,
+            "p95": 19.4145,
+            "p99": 20.7177,
+            "max": 30.0828
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 19.2227,
+            "p95": 19.5979,
+            "p99": 20.8636,
+            "max": 30.6274
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "4096",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "8192",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "B": {
+        "workload": {
+          "case": "sprites",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 0,
+          "objects": 4096,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+          "source_origin": "git",
+          "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+          "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+          "source_untracked_count": 42,
+          "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "sprites-1-B",
+          "sprites-2-B"
+        ],
+        "rss_bytes": [
+          124514304,
+          124948480
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            18.079067,
+            19.096886
+          ],
+          "first_submission_ms": [
+            17.59833,
+            18.583287
+          ],
+          "host_init_ms": [
+            170.960606,
+            170.022336
+          ],
+          "resource_setup_ms": [
+            0.113383,
+            0.136828
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 12.8809,
+            "p95": 13.0958,
+            "p99": 13.249,
+            "max": 16.2312
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 12.88,
+            "p95": 13.095,
+            "p99": 13.249,
+            "max": 15.804
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 12.9394,
+            "p95": 13.1559,
+            "p99": 13.3187,
+            "max": 16.349
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 13.0173,
+            "p95": 13.4657,
+            "p99": 13.771,
+            "max": 16.2876
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "1697",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "8192",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "4096",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "1697",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "640",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "328400",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "1698",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "1697",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "median_cost_reduction_percent": {
+        "cpu_submission_ms": 32.832217424858676,
+        "process_cpu_submission_ms": 32.83270755110554,
+        "outer_frame_ms": 32.72222453308932,
+        "gpu_ms": 32.28162537000525
+      }
+    },
+    "particles": {
+      "A": {
+        "workload": {
+          "case": "particles",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 0,
+          "objects": 100000,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 2,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": false,
+          "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+          "source_origin": "git",
+          "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+          "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+          "source_untracked_count": 18,
+          "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "particles-0-A",
+          "particles-3-A"
+        ],
+        "rss_bytes": [
+          174354432,
+          171950080
+        ],
+        "appearance_owned_bytes": [
+          28512000,
+          28512000
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            61.303526,
+            63.67557
+          ],
+          "first_submission_ms": [
+            59.825058,
+            61.976246
+          ],
+          "host_init_ms": [
+            170.04521,
+            167.656224
+          ],
+          "resource_setup_ms": [
+            2.101283,
+            2.263659
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 27.9134,
+            "p95": 29.014,
+            "p99": 30.3324,
+            "max": 36.0075
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 27.91,
+            "p95": 29.016,
+            "p99": 30.333,
+            "max": 35.932
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 28.0029,
+            "p95": 29.1137,
+            "p99": 30.4737,
+            "max": 36.1047
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 28.0874,
+            "p95": 29.2344,
+            "p99": 30.6803,
+            "max": 36.1127
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "2",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "400000",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "200000",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "B": {
+        "workload": {
+          "case": "particles",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 0,
+          "objects": 100000,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 2,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+          "source_origin": "git",
+          "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+          "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+          "source_untracked_count": 42,
+          "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "particles-1-B",
+          "particles-2-B"
+        ],
+        "rss_bytes": [
+          118157312,
+          119169024
+        ],
+        "appearance_owned_bytes": [
+          28512000,
+          28512000
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            21.623671,
+            21.011217
+          ],
+          "first_submission_ms": [
+            20.86459,
+            20.269598
+          ],
+          "host_init_ms": [
+            168.554178,
+            169.338817
+          ],
+          "resource_setup_ms": [
+            2.237871,
+            2.197795
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 11.1527,
+            "p95": 11.428,
+            "p99": 11.9969,
+            "max": 18.7929
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 11.152,
+            "p95": 11.426,
+            "p99": 11.989,
+            "max": 18.784
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 11.2116,
+            "p95": 11.4881,
+            "p99": 12.0638,
+            "max": 18.9445
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 11.2565,
+            "p95": 11.5947,
+            "p99": 12.0907,
+            "max": 17.4158
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "2",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "400000",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "200000",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "6400000",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "2",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "median_cost_reduction_percent": {
+        "cpu_submission_ms": 60.04535456089191,
+        "process_cpu_submission_ms": 60.04299534217127,
+        "outer_frame_ms": 59.96271814704905,
+        "gpu_ms": 59.92331080840518
+      }
+    },
+    "lights": {
+      "A": {
+        "workload": {
+          "case": "lights",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 128,
+          "objects": 256,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": false,
+          "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+          "source_origin": "git",
+          "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+          "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+          "source_untracked_count": 18,
+          "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "lights-0-A",
+          "lights-3-A"
+        ],
+        "rss_bytes": [
+          121384960,
+          119599104
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            30.582107,
+            25.935473
+          ],
+          "first_submission_ms": [
+            4.329896,
+            4.496039
+          ],
+          "host_init_ms": [
+            166.369969,
+            171.552111
+          ],
+          "resource_setup_ms": [
+            0.231657,
+            0.220445
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 0.699569,
+            "p95": 1.00177,
+            "p99": 1.27667,
+            "max": 2.18245
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 0.699,
+            "p95": 0.998,
+            "p99": 1.277,
+            "max": 2.163
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 21.2908,
+            "p95": 21.6339,
+            "p99": 21.8996,
+            "max": 22.4137
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 21.2146,
+            "p95": 21.4002,
+            "p99": 21.6041,
+            "max": 22.053
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "3",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "3084",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "257",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "3",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "128",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "1064960",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "18880",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "NA",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "B": {
+        "workload": {
+          "case": "lights",
+          "frames": 1500,
+          "height": 1080,
+          "lights": 128,
+          "objects": 256,
+          "secondary_height": 540,
+          "secondary_width": 960,
+          "shadows": 0,
+          "views": 1,
+          "warmup": 120,
+          "width": 1920
+        },
+        "build": {
+          "architecture": "x86_64",
+          "build_id": "1.2.5-alpha.1-Experimental-6ac95d7-dirty-7ff8f7e086cd-u5de31c3f2bb2",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "alpha",
+          "platform": "Linux",
+          "release_name": "Judas Engine Alpha v1.2.5",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "7ff8f7e086cdb08cc22731af1a5a2b0494df4b960aaadca0dbce0b662f160d99",
+          "source_origin": "git",
+          "source_revision": "6ac95d7ba6e95cc7f12be4f586c8a297637a4ba9",
+          "source_tree": "970994931e69d91a56034dba93da0acc3d1611ca",
+          "source_untracked_count": 42,
+          "source_untracked_fingerprint": "5de31c3f2bb2a356bfbb9384028224d69b0c2212b81fbb1690f84c1c667343d1",
+          "version": "1.2.5-alpha.1"
+        },
+        "runs": [
+          "lights-1-B",
+          "lights-2-B"
+        ],
+        "rss_bytes": [
+          120983552,
+          119828480
+        ],
+        "appearance_owned_bytes": [
+          22809600,
+          22809600
+        ],
+        "cold_ms": {
+          "first_completed_ms": [
+            19.966656,
+            19.297244
+          ],
+          "first_submission_ms": [
+            4.564348,
+            4.63404
+          ],
+          "host_init_ms": [
+            170.837724,
+            169.107631
+          ],
+          "resource_setup_ms": [
+            0.221597,
+            0.219494
+          ]
+        },
+        "summary": {
+          "cpu_submission_ms": {
+            "samples": 3000,
+            "median": 0.599982,
+            "p95": 0.720589,
+            "p99": 0.828532,
+            "max": 1.03176
+          },
+          "process_cpu_submission_ms": {
+            "samples": 3000,
+            "median": 0.6,
+            "p95": 0.719,
+            "p99": 0.827,
+            "max": 1.024
+          },
+          "outer_frame_ms": {
+            "samples": 3000,
+            "median": 14.9366,
+            "p95": 15.4703,
+            "p99": 15.7648,
+            "max": 16.2397
+          },
+          "gpu_ms": {
+            "samples": 3000,
+            "median": 14.8861,
+            "p95": 15.3397,
+            "p99": 15.5923,
+            "max": 16.3013
+          }
+        },
+        "counters": {
+          "draws": [
+            {
+              "value": "3",
+              "samples": 3000
+            }
+          ],
+          "triangles": [
+            {
+              "value": "3084",
+              "samples": 3000
+            }
+          ],
+          "instances": [
+            {
+              "value": "257",
+              "samples": 3000
+            }
+          ],
+          "instanced_draws": [
+            {
+              "value": "3",
+              "samples": 3000
+            }
+          ],
+          "particles": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "lights": [
+            {
+              "value": "128",
+              "samples": 3000
+            }
+          ],
+          "light_overflow": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "shadow_passes": [
+            {
+              "value": "0",
+              "samples": 3000
+            }
+          ],
+          "light_allocated_bytes": [
+            {
+              "value": "1064960",
+              "samples": 3000
+            }
+          ],
+          "shadow_allocated_bytes": [
+            {
+              "value": "4194304",
+              "samples": 3000
+            }
+          ],
+          "instance_upload_high_water_bytes": [
+            {
+              "value": "18880",
+              "samples": 3000
+            }
+          ],
+          "uploaded_bytes": [
+            {
+              "value": "1086240",
+              "samples": 3000
+            }
+          ],
+          "upload_calls": [
+            {
+              "value": "5",
+              "samples": 3000
+            }
+          ],
+          "material_applications": [
+            {
+              "value": "3",
+              "samples": 3000
+            }
+          ]
+        }
+      },
+      "median_cost_reduction_percent": {
+        "cpu_submission_ms": 14.235479273667073,
+        "process_cpu_submission_ms": 14.163090128755362,
+        "outer_frame_ms": 29.844815601104703,
+        "gpu_ms": 29.830871192480647
+      }
+    }
+  },
+  "images": [
+    {
+      "run": "mixed-0-A",
+      "image": "main.png",
+      "reference": "mixed-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "39873b5075a7748d728c8c4aaa034946a946db994f2d4384d3776a7ab75ac570"
+    },
+    {
+      "run": "mixed-1-B",
+      "image": "main.png",
+      "reference": "mixed-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "39873b5075a7748d728c8c4aaa034946a946db994f2d4384d3776a7ab75ac570"
+    },
+    {
+      "run": "mixed-2-B",
+      "image": "main.png",
+      "reference": "mixed-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "39873b5075a7748d728c8c4aaa034946a946db994f2d4384d3776a7ab75ac570"
+    },
+    {
+      "run": "mixed-3-A",
+      "image": "main.png",
+      "reference": "mixed-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "39873b5075a7748d728c8c4aaa034946a946db994f2d4384d3776a7ab75ac570"
+    },
+    {
+      "run": "repeated-0-A",
+      "image": "main.png",
+      "reference": "repeated-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "8548c016a4484c2dd4fd4c651e4b482b5cdfa5c96de84604f1e7a50adda61ca7"
+    },
+    {
+      "run": "repeated-0-A",
+      "image": "view-1.png",
+      "reference": "repeated-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "ad0920cfd839629c11ab728b71a38c2406f895ce114996c9f55748e6264a8aa9"
+    },
+    {
+      "run": "repeated-1-B",
+      "image": "main.png",
+      "reference": "repeated-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "8548c016a4484c2dd4fd4c651e4b482b5cdfa5c96de84604f1e7a50adda61ca7"
+    },
+    {
+      "run": "repeated-1-B",
+      "image": "view-1.png",
+      "reference": "repeated-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "ad0920cfd839629c11ab728b71a38c2406f895ce114996c9f55748e6264a8aa9"
+    },
+    {
+      "run": "repeated-2-B",
+      "image": "main.png",
+      "reference": "repeated-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "8548c016a4484c2dd4fd4c651e4b482b5cdfa5c96de84604f1e7a50adda61ca7"
+    },
+    {
+      "run": "repeated-2-B",
+      "image": "view-1.png",
+      "reference": "repeated-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "ad0920cfd839629c11ab728b71a38c2406f895ce114996c9f55748e6264a8aa9"
+    },
+    {
+      "run": "repeated-3-A",
+      "image": "main.png",
+      "reference": "repeated-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "8548c016a4484c2dd4fd4c651e4b482b5cdfa5c96de84604f1e7a50adda61ca7"
+    },
+    {
+      "run": "repeated-3-A",
+      "image": "view-1.png",
+      "reference": "repeated-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "ad0920cfd839629c11ab728b71a38c2406f895ce114996c9f55748e6264a8aa9"
+    },
+    {
+      "run": "sprites-0-A",
+      "image": "main.png",
+      "reference": "sprites-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "12d60e1904ae3479860d437db45df8d4c97a735573ccfde267cdfba8512e9c15"
+    },
+    {
+      "run": "sprites-1-B",
+      "image": "main.png",
+      "reference": "sprites-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "12d60e1904ae3479860d437db45df8d4c97a735573ccfde267cdfba8512e9c15"
+    },
+    {
+      "run": "sprites-2-B",
+      "image": "main.png",
+      "reference": "sprites-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "12d60e1904ae3479860d437db45df8d4c97a735573ccfde267cdfba8512e9c15"
+    },
+    {
+      "run": "sprites-3-A",
+      "image": "main.png",
+      "reference": "sprites-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "12d60e1904ae3479860d437db45df8d4c97a735573ccfde267cdfba8512e9c15"
+    },
+    {
+      "run": "particles-0-A",
+      "image": "main.png",
+      "reference": "particles-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "926142d56c067517a32ef16b7b7a345b84e7f88ddc8f1a90d8c0f9a8c32260d4"
+    },
+    {
+      "run": "particles-0-A",
+      "image": "view-1.png",
+      "reference": "particles-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "32106fcbe2421964b2069e3066d10dec01be64d379578ce16baa25267da21fcd"
+    },
+    {
+      "run": "particles-1-B",
+      "image": "main.png",
+      "reference": "particles-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "926142d56c067517a32ef16b7b7a345b84e7f88ddc8f1a90d8c0f9a8c32260d4"
+    },
+    {
+      "run": "particles-1-B",
+      "image": "view-1.png",
+      "reference": "particles-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "32106fcbe2421964b2069e3066d10dec01be64d379578ce16baa25267da21fcd"
+    },
+    {
+      "run": "particles-2-B",
+      "image": "main.png",
+      "reference": "particles-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "926142d56c067517a32ef16b7b7a345b84e7f88ddc8f1a90d8c0f9a8c32260d4"
+    },
+    {
+      "run": "particles-2-B",
+      "image": "view-1.png",
+      "reference": "particles-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "32106fcbe2421964b2069e3066d10dec01be64d379578ce16baa25267da21fcd"
+    },
+    {
+      "run": "particles-3-A",
+      "image": "main.png",
+      "reference": "particles-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "926142d56c067517a32ef16b7b7a345b84e7f88ddc8f1a90d8c0f9a8c32260d4"
+    },
+    {
+      "run": "particles-3-A",
+      "image": "view-1.png",
+      "reference": "particles-0-A/view-1.png",
+      "width": 960,
+      "height": 540,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "32106fcbe2421964b2069e3066d10dec01be64d379578ce16baa25267da21fcd"
+    },
+    {
+      "run": "lights-0-A",
+      "image": "main.png",
+      "reference": "lights-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "0858f2d20eb2da2ddfe7dcbd7e12974a893ec6ffb790828a83b39437d75d6783"
+    },
+    {
+      "run": "lights-1-B",
+      "image": "main.png",
+      "reference": "lights-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "0858f2d20eb2da2ddfe7dcbd7e12974a893ec6ffb790828a83b39437d75d6783"
+    },
+    {
+      "run": "lights-2-B",
+      "image": "main.png",
+      "reference": "lights-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "0858f2d20eb2da2ddfe7dcbd7e12974a893ec6ffb790828a83b39437d75d6783"
+    },
+    {
+      "run": "lights-3-A",
+      "image": "main.png",
+      "reference": "lights-0-A/main.png",
+      "width": 1920,
+      "height": 1080,
+      "pixel_equivalent": true,
+      "maximum_channel_error": 0,
+      "mean_absolute_channel_error": 0.0,
+      "decoded_rgb_sha256": "0858f2d20eb2da2ddfe7dcbd7e12974a893ec6ffb790828a83b39437d75d6783"
+    }
+  ],
+  "checked_runs": 20,
+  "checked_captures": 28,
+  "checked_cpu_frames": 50000
+}

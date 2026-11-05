@@ -1,0 +1,5 @@
+Run after other compilation/benchmarks finish. One browser; fixed 32 MiB Wasm; 768 MiB whole-process-group memory ceiling; zero swap; 60 second lifetime.
+
+systemd-run --user --wait --pipe --collect --unit=judas-renderer-webproof-chromium --working-directory=/home/conner/Documents/GitHub/Project-Judas --property=MemoryMax=768M --property=MemorySwapMax=0 --property=RuntimeMaxSec=60s /usr/bin/timeout --kill-after=5s 50s /home/conner/.nvm/versions/node/v20.20.2/bin/node /home/conner/Documents/GitHub/Project-Judas/tools/validation/renderer_web_observer.cjs chromium
+
+The Node path and working directory are explicit because user services may not inherit the interactive shell PATH or project directory. No persistent profile or long-running observer is created. The observer closes its browser and HTTP server.

@@ -26,6 +26,8 @@
 #include "GraphicsApi.h"
 #include "render/GraphicsCapabilities.h"
 
+namespace JudasRender {struct RendererInfrastructure;struct MeshInstance;}
+
 struct WeatherSample;
 struct WeatherShelterGrid;
 
@@ -36,6 +38,7 @@ struct WeatherShelterGrid;
 // `triangles` include shadow-pass submissions (each shadow pass re-draws
 // the scene); `shadowPasses` says how many such passes ran; `debugLines`
 // counts line segments, which are not triangles.
+#define JUDAS_RENDER_STATS_VERSION 2
 struct RenderStats {
     unsigned int drawCalls = 0;
     unsigned int layerRejectedDraws=0,layerRejectedEmitters=0;
@@ -51,6 +54,10 @@ struct RenderStats {
     unsigned int feedbackFallbacks = 0;
     unsigned int targetDeletionFailures = 0;
     unsigned int debugLines = 0;
+    // Actual bytes/calls for view, light, mesh-instance and billboard uploads.
+    // This excludes asset residency, UI, skin palettes and transient water meshes.
+    std::uint64_t uploadedBytes=0, uploadCalls=0, materialApplications=0;
+    unsigned reusedShadowPasses=0;
 };
 
 // Owns the GL objects and draw calls. Low-level calls (glClear, glDrawArrays,
@@ -62,6 +69,8 @@ struct RenderStats {
 // this boundary held even once textures/lighting/indexed meshes arrived.
 class Renderer {
 public:
+    Renderer();
+    ~Renderer();
     bool Init();
     const GraphicsCapabilities& Capabilities() const { return m_capabilities; }
     MaterialHandle CreateMaterial(const MaterialDefinition&);
@@ -166,6 +175,8 @@ public:
     void SetShadowBudget(unsigned n){m_shadowBudget=std::min(n,8u);}
     unsigned ShadowBudget()const{return m_shadowBudget;}
     void ReserveShadowLayers(unsigned layers);
+    bool HasViewDependentMeshLods() const;
+    bool ReuseShadowChart(int slot,const glm::mat4&);
 
     // --- Judas-owned mesh/texture resources (Milestone 9) ---
     //
@@ -472,6 +483,14 @@ private:
     float m_exposure=1,m_environmentIntensity=1;glm::quat m_environmentRotation{1,0,0,0};EnvironmentHandle m_environment;
     struct LinearTarget {GLuint fbo=0,color=0,depth=0;int width=0,height=0;};
     std::vector<LinearTarget> m_linearTargets;
+    // BeginRenderTarget may temporarily interrupt the main HDR pass. Its
+    // scratch chart remains owned and must not be reused or evicted by the
+    // offscreen pass, including when both views have identical dimensions.
+    struct SuspendedLinearPass {
+        bool active = false;
+        LinearTarget target;
+        GLint outputFramebuffer = 0;
+    } m_suspendedLinearPass;
     GLuint m_hdrFbo=0,m_hdrColor=0,m_hdrDepth=0,m_outputProgram=0,m_outputVao=0;
     GLint m_outputFramebuffer=0;int m_hdrWidth=0,m_hdrHeight=0;unsigned m_textureUnitLimit=0;
     struct BlendDraw {MeshHandle mesh;glm::vec3 position,scale,tint;glm::quat rotation;TextureHandle texture;float alpha;std::vector<glm::mat4> skin;std::vector<MaterialBinding> materials;float depth;unsigned layer;std::vector<std::string> hiddenParts;};
@@ -502,21 +521,16 @@ private:
     unsigned m_lightTextureRows=0,m_shadowBudget=4,m_shadowLayers=0;
     GLint m_uInstanced=-1,m_uShadowInstanced=-1;
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
-    struct Instance {glm::mat4 model;glm::vec4 tint;};
-    struct MeshBatch {MeshHandle mesh;TextureHandle texture;std::vector<MaterialBinding> bindings;bool reversed=false;unsigned lod=0;std::vector<Instance> instances;};
+    using Instance=JudasRender::MeshInstance;
+    std::unique_ptr<JudasRender::RendererInfrastructure> m_render;
     unsigned m_activeInstances=0,m_activeBatchLod=0;bool m_activeBatchReversed=false;float m_meshLodMultiplier=1;
     void QueueMeshInstance(MeshHandle,TextureHandle,const glm::mat4&,glm::vec4,unsigned lod);
-    std::vector<MeshBatch> m_meshBatches;
-    std::map<std::string,size_t> m_batchLookup;
+
     GLint m_shadowSavedFramebuffer=0;glm::ivec4 m_shadowSavedViewport{0};
     CategoryMask m_renderMask=kAllCategories;
     unsigned m_renderLayer=0;
     Frustum m_frustum;
     bool m_cullingEnabled=true;
-    GLuint m_particleProgram=0,m_particleVao=0,m_particleVbo=0;
-    struct ParticleVertex {glm::vec3 position;glm::vec2 uv;glm::vec4 color;};
-    std::vector<ParticleVertex> m_particleVertices;
-    std::vector<std::size_t> m_particleOrder;
     glm::mat4 m_view{1.0f};
     glm::mat4 m_projection{1.0f};
 
@@ -529,6 +543,7 @@ private:
     // light. `m_shadowLightSpaceMatrix` is cached by BeginShadowPass and
     // read by every subsequent normal-mode DrawMesh call this same frame
     // (see DrawMesh's own comment).
+    std::array<bool,kShadowMapCount> m_shadowContentValid{};
     GLuint m_shadowShaderProgram = 0;
     GLint m_uShadowModel = -1,m_uShadowSkinned=-1,m_uShadowBones=-1;
     GLint m_uShadowLightViewProj = -1;

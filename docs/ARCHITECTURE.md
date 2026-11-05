@@ -181,6 +181,14 @@ the half-turn grid-query identity limitation remain. See [reservoirs](LIQUID_RES
 
 ## Rendering, cameras and resources
 
+Experimental Renderer V2 keeps one renderer and shared portable scene path.
+`Renderer` coordinates public operations, while private `render/` owners handle
+capabilities, shader programs, typed submission, streaming storage, view uniforms,
+particle presentation, scoped targets and bounded compute. Their coordinator state
+is hidden behind `RendererInfrastructure`, so an implementation-owner change does
+not force unrelated users of `Renderer.h` to include its private modules.
+[Ownership, controls and qualification](RENDERER_V2.md).
+
 Renderer owns graphics/context use. Resource workers decode CPU content; private
 GPU upload/replacement publishes on the graphics owner. Cancellation and eviction
 must not expose incomplete resources. Async pumps have soft time budgets:

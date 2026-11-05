@@ -1,0 +1,2246 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Generic particle presentation",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.3,
+        0.8,
+        0.4
+      ],
+      "sun-color": [
+        0.65,
+        0.7,
+        0.8
+      ],
+      "ambient": [
+        0.18,
+        0.21,
+        0.26
+      ],
+      "linear-rendering": true,
+      "next-id": 50000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Renderer V2 workshop controller",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "976adfb1bd740285917be6704a2d3bda",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"caseKey\": \"particles\"}",
+          "ui.asset": "18a2a91d0a9c88a60313763e2a947adc",
+          "ui.name": "rendering_lab",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 2,
+        "name": "Graphite foundation",
+        "fields": {
+          "position": [
+            0,
+            -0.3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            48,
+            0.3,
+            38
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.16,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "West colonnade",
+        "fields": {
+          "position": [
+            -43,
+            3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.5,
+            3,
+            36
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.25,
+            0.31,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "name": "East colonnade",
+        "fields": {
+          "position": [
+            43,
+            3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.5,
+            3,
+            36
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.25,
+            0.31,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10000,
+        "name": "Independent luminaire 1",
+        "fields": {
+          "position": [
+            -37.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "spot"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": true,
+          "light.shadow-priority": 0
+        }
+      },
+      {
+        "id": 20000,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -37.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10001,
+        "name": "Independent luminaire 2",
+        "fields": {
+          "position": [
+            -32.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.5,
+            2.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 1
+        }
+      },
+      {
+        "id": 20001,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -32.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10002,
+        "name": "Independent luminaire 3",
+        "fields": {
+          "position": [
+            -27.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            3.0,
+            1.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 2
+        }
+      },
+      {
+        "id": 20002,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -27.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10003,
+        "name": "Independent luminaire 4",
+        "fields": {
+          "position": [
+            -22.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 3
+        }
+      },
+      {
+        "id": 20003,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -22.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10004,
+        "name": "Independent luminaire 5",
+        "fields": {
+          "position": [
+            -17.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.5,
+            2.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 0
+        }
+      },
+      {
+        "id": 20004,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -17.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10005,
+        "name": "Independent luminaire 6",
+        "fields": {
+          "position": [
+            -12.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            3.0,
+            1.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 1
+        }
+      },
+      {
+        "id": 20005,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -12.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10006,
+        "name": "Independent luminaire 7",
+        "fields": {
+          "position": [
+            -7.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 2
+        }
+      },
+      {
+        "id": 20006,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -7.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10007,
+        "name": "Independent luminaire 8",
+        "fields": {
+          "position": [
+            -2.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.5,
+            2.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 3
+        }
+      },
+      {
+        "id": 20007,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            -2.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10008,
+        "name": "Independent luminaire 9",
+        "fields": {
+          "position": [
+            2.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "spot"
+          },
+          "light.color": [
+            3.0,
+            1.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": true,
+          "light.shadow-priority": 0
+        }
+      },
+      {
+        "id": 20008,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            2.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10009,
+        "name": "Independent luminaire 10",
+        "fields": {
+          "position": [
+            7.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 1
+        }
+      },
+      {
+        "id": 20009,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            7.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10010,
+        "name": "Independent luminaire 11",
+        "fields": {
+          "position": [
+            12.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.5,
+            2.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 2
+        }
+      },
+      {
+        "id": 20010,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            12.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10011,
+        "name": "Independent luminaire 12",
+        "fields": {
+          "position": [
+            17.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            3.0,
+            1.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 3
+        }
+      },
+      {
+        "id": 20011,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            17.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10012,
+        "name": "Independent luminaire 13",
+        "fields": {
+          "position": [
+            22.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 0
+        }
+      },
+      {
+        "id": 20012,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            22.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10013,
+        "name": "Independent luminaire 14",
+        "fields": {
+          "position": [
+            27.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.5,
+            2.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 1
+        }
+      },
+      {
+        "id": 20013,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            27.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10014,
+        "name": "Independent luminaire 15",
+        "fields": {
+          "position": [
+            32.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            3.0,
+            1.0,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 2
+        }
+      },
+      {
+        "id": 20014,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            32.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 10015,
+        "name": "Independent luminaire 16",
+        "fields": {
+          "position": [
+            37.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            -0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            2.0,
+            1.5,
+            2.5
+          ],
+          "light.intensity": 35,
+          "light.range": 18,
+          "light.cone": {
+            "innerDegrees": 30,
+            "outerDegrees": 50
+          },
+          "light.shadows": false,
+          "light.shadow-priority": 3
+        }
+      },
+      {
+        "id": 20015,
+        "name": "Luminaire housing",
+        "fields": {
+          "position": [
+            37.5,
+            6,
+            -12.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.18,
+            0.1,
+            0.18
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.58,
+            0.5,
+            0.25
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 30000,
+        "name": "Bounded generic emitter 1",
+        "fields": {
+          "position": [
+            -15.0,
+            2,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.2,
+            0.8,
+            0.95
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92000
+        }
+      },
+      {
+        "id": 30001,
+        "name": "Bounded generic emitter 2",
+        "fields": {
+          "position": [
+            -5.0,
+            2,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.28,
+            0.8,
+            0.8899999999999999
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92001
+        }
+      },
+      {
+        "id": 30002,
+        "name": "Bounded generic emitter 3",
+        "fields": {
+          "position": [
+            5.0,
+            2,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.36,
+            0.8,
+            0.83
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92002
+        }
+      },
+      {
+        "id": 30003,
+        "name": "Bounded generic emitter 4",
+        "fields": {
+          "position": [
+            15.0,
+            2,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.44,
+            0.8,
+            0.77
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92003
+        }
+      },
+      {
+        "id": 30004,
+        "name": "Bounded generic emitter 5",
+        "fields": {
+          "position": [
+            -15.0,
+            2,
+            7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.52,
+            0.8,
+            0.71
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92004
+        }
+      },
+      {
+        "id": 30005,
+        "name": "Bounded generic emitter 6",
+        "fields": {
+          "position": [
+            -5.0,
+            2,
+            7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.6000000000000001,
+            0.8,
+            0.6499999999999999
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92005
+        }
+      },
+      {
+        "id": 30006,
+        "name": "Bounded generic emitter 7",
+        "fields": {
+          "position": [
+            5.0,
+            2,
+            7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.6799999999999999,
+            0.8,
+            0.59
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92006
+        }
+      },
+      {
+        "id": 30007,
+        "name": "Bounded generic emitter 8",
+        "fields": {
+          "position": [
+            15.0,
+            2,
+            7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 4,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 300,
+          "particle.lifetime": 4,
+          "particle.size": 0.25,
+          "particle.end-size": 0.55,
+          "particle.burst": 1250,
+          "particle.capacity": 1250,
+          "particle.spread": [
+            6,
+            1,
+            6
+          ],
+          "particle.velocity": [
+            0,
+            0.65,
+            0
+          ],
+          "particle.variation": [
+            0.8,
+            0.2,
+            0.8
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "fe76dc5a42736ebf58c30f83e19da19a",
+          "particle.color": [
+            0.76,
+            0.8,
+            0.53
+          ],
+          "particle.alpha": 0.65,
+          "particle.end-color": [
+            0.9,
+            0.25,
+            0.6
+          ],
+          "particle.end-alpha": 0,
+          "particle.seed": 92007
+        }
+      },
+      {
+        "id": 40000,
+        "name": "Independent gallery camera 1",
+        "fields": {
+          "position": [
+            -27,
+            7,
+            26
+          ],
+          "rotation": [
+            0.9173322375,
+            -0.0729548464,
+            -0.3901492023,
+            -0.0310283166
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 2,
+          "render-camera": [],
+          "camera.enabled": false,
+          "camera.width": 384,
+          "camera.height": 216,
+          "camera.cadence": 2,
+          "camera.fov": 65,
+          "camera.near": 0.1,
+          "camera.far": 200
+        }
+      },
+      {
+        "id": 40010,
+        "name": "Live camera monitor",
+        "fields": {
+          "position": [
+            -5,
+            5,
+            -27
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            4,
+            2.25,
+            0.12
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "render.texture-camera": 40000
+        }
+      },
+      {
+        "id": 40001,
+        "name": "Independent gallery camera 2",
+        "fields": {
+          "position": [
+            29,
+            9,
+            -24
+          ],
+          "rotation": [
+            0.4233636166,
+            -0.044490349,
+            0.8999113451,
+            0.094569699
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 2,
+          "render-camera": [],
+          "camera.enabled": false,
+          "camera.width": 384,
+          "camera.height": 216,
+          "camera.cadence": 2,
+          "camera.fov": 65,
+          "camera.near": 0.1,
+          "camera.far": 200
+        }
+      },
+      {
+        "id": 40011,
+        "name": "Live camera monitor",
+        "fields": {
+          "position": [
+            5,
+            5,
+            -27
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            4,
+            2.25,
+            0.12
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "render.texture-camera": 40001
+        }
+      }
+    ]
+  }
+}

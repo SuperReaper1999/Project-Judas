@@ -1,0 +1,6 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Renderer.cpp:5:
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Renderer.h:26:
+/home/conner/Documents/GitHub/Project-Judas/src/GraphicsApi.h:14:10: fatal error: 'SDL2/SDL.h' file not found
+   14 | #include <SDL2/SDL.h>
+      |          ^~~~~~~~~~~~
+1 error generated.

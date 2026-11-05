@@ -222,7 +222,11 @@ target_include_directories(judas_graphics_caps PUBLIC src)
 target_link_libraries(judas_graphics_caps PUBLIC judas_glad SDL2::SDL2)
 judas_warnings(judas_graphics_caps)
 set(JUDAS_RENDERER_SOURCES
-    src/Renderer.cpp src/render/ShaderLibrary.cpp)
+    src/Renderer.cpp src/render/ShaderLibrary.cpp
+    src/render/SubmissionQueue.cpp src/render/StreamArena.cpp
+    src/render/ViewUniforms.cpp src/render/ParticlePass.cpp
+    src/render/ComputeDevice.cpp
+    src/render/ShadowPassCache.cpp src/render/RenderTargets.cpp)
 
 add_library(judas_engine STATIC
     ${JUDAS_SCRIPTING_SOURCES}
@@ -1982,6 +1986,13 @@ judas_add_engine_test(judas_editor_design_tests tests/EditorDesignTests.cpp LIBR
 
 judas_add_engine_test(judas_graphics_capabilities_tests tests/GraphicsCapabilitiesTests.cpp)
 judas_add_engine_test(judas_shader_library_tests tests/ShaderLibraryTests.cpp)
+judas_add_engine_test(judas_view_uniforms_tests tests/ViewUniformsTests.cpp)
+judas_add_engine_test(judas_shadow_pass_cache_tests tests/ShadowPassCacheTests.cpp)
+judas_add_engine_test(judas_render_pass_state_tests tests/RenderPassStateTests.cpp)
+judas_add_engine_test(judas_submission_queue_tests tests/SubmissionQueueTests.cpp)
+judas_add_engine_test(judas_stream_arena_tests tests/StreamArenaTests.cpp)
+judas_add_engine_test(judas_compute_infrastructure_tests tests/ComputeInfrastructureTests.cpp)
+judas_add_engine_test(judas_particle_pass_tests tests/ParticlePassTests.cpp)
 judas_add_engine_test(judas_renderer_v2_submission_tests tests/RendererV2SubmissionTests.cpp)
 add_executable(judas_renderer_v2_benchmark tests/RendererV2Benchmark.cpp)
 target_link_libraries(judas_renderer_v2_benchmark PRIVATE judas_engine)

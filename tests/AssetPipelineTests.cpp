@@ -13,6 +13,7 @@
 #include "TextureLoader.h"
 #include "WorldPersistence.h"
 #include "WorldPresentation.h"
+#include "fixtures/M93AssetFixtures.h"
 #include <cmath>
 #include <cstdio>
 #include <filesystem>
@@ -110,7 +111,15 @@ int main(int argc, char **argv) {
         "normal mips renormalize and retain lossless vector channels");
   settings = AssetCookSettings{};
   MeshData source;
-  Check(LoadModelMesh(".cache/m93/fixtures/Assets/column.obj", source, error),
+  const auto column = root / "SourceArt/column.obj";
+  const bool fixtureReady = M93AssetFixtures::WriteColumn(column, error);
+  Check(fixtureReady,
+        "original detailed source fixture is generated in this test's output tree");
+  if (!fixtureReady) {
+    puts(error.c_str());
+    return 1;
+  }
+  Check(LoadModelMesh(column.string(), source, error),
         "detailed source fixture loads through current importer");
   if (source.vertices.empty())
     return 1;

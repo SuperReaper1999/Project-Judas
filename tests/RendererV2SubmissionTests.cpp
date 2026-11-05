@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
+#include <limits>
 #include <vector>
 
 namespace {
@@ -230,6 +231,24 @@ int main(int argc, char **argv) {
     r.EndFrame();
     Check(Near(Pixel(Capture(r)), {255, 0, 0}) && Near(Pixel(secondary, 160, 90, 320), {0, 255, 0}),
           "sprite queues and colour state remain isolated across actual primary and secondary targets");
+    Begin(r);
+    const auto validView=r.ViewMatrix(),validProjection=r.ProjectionMatrix();
+    r.SetCamera(glm::mat4(0),validProjection);
+    auto invalidProjection=validProjection;invalidProjection[0][0]=std::numeric_limits<float>::quiet_NaN();
+    r.SetCamera(validView,invalidProjection);
+    r.QueueSprite(sprite,{0,0,0},{1,0,0,0},{1,1,1},texture,{0,0,1,1},3);
+    r.FlushSprites();r.EndFrame();
+    Check(r.ViewMatrix()==validView&&r.ProjectionMatrix()==validProjection&&Near(Pixel(Capture(r)),{0,0,255}),
+          "rejected camera input preserves coherent public matrices, culling and actual GPU pixels");
+    Check(r.BeginRenderTarget(target),"target scope remains available for shadow failure controls");
+    const auto beforeInvalidShadow=r.RenderTargetDiagnostics();
+    r.BeginShadowPass(kShadowMapCount,glm::mat4(1));r.EndShadowPass();
+    auto invalidShadow=glm::mat4(1);invalidShadow[0][0]=std::numeric_limits<float>::quiet_NaN();
+    r.BeginShadowPass(0,invalidShadow);r.EndShadowPass();
+    const auto afterInvalidShadow=r.RenderTargetDiagnostics();
+    Check(beforeInvalidShadow.viewport==afterInvalidShadow.viewport&&!afterInvalidShadow.defaultFramebuffer&&afterInvalidShadow.passActive,
+          "invalid shadow scopes cannot reset an active target framebuffer or viewport");
+    r.EndRenderTarget();
     r.DestroyRenderTarget(target);
     r.DestroyTexture(texture);
     Check(glGetError() == GL_NO_ERROR,

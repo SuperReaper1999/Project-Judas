@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "rawTraceBytes": 2740705,
+  "rawTraceLines": 26420,
+  "rawTraceSha256": "6992b8fc1897710c30e3a475d37ebafa0bc4c61769d7eee8d1f073fa5bf72c40",
+  "sourceOrSdkTreePathReferences": 0,
+  "observedEngineFont": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/engine/assets/fonts/DejaVuSans.ttf",
+  "processResult": "exit0; SDK_COLD_RESTORE_OK gold=37",
+  "traceScope": "strace -f -e trace=%file, hidden 30-frame cold load",
+  "namespaceIsolation": false,
+  "claim": "No file accesses to source/build/SDK tree occurred in this exercised relocated workload, not universal clean-machine certification"
+}

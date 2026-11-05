@@ -245,6 +245,21 @@ class GateTests(unittest.TestCase):
         self.assertEqual(selected, [entry])
         self.assertFalse(unavailable)
 
+    def test_material_optics_requires_advanced_runtime_without_hiding_ordinary_water(self):
+        # The combined material/application fixture renders the actual M55
+        # optical boundary. It must exercise that system on Experimental, not
+        # silently certify empty optical paths while Alpha keeps it locked.
+        material = dict(name='material-application', target='judas_material_application_tests')
+        ordinary = dict(name='hydrostatics', target='judas_fluid_hydrostatics_tests')
+        selected, unavailable = gate.partition_channel_tests([material, ordinary], 'Alpha')
+        self.assertEqual(selected, [ordinary])
+        self.assertEqual(len(unavailable), 1)
+        self.assertEqual(unavailable[0]['target'], material['target'])
+        self.assertEqual(unavailable[0]['status'], 'not-exercised')
+        selected, unavailable = gate.partition_channel_tests([material, ordinary], 'Experimental')
+        self.assertEqual(selected, [material, ordinary])
+        self.assertFalse(unavailable)
+
     def test_unavailable_main_receipt_is_not_a_pass(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

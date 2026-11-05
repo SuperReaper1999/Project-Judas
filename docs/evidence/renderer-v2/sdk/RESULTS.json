@@ -1,0 +1,282 @@
+[
+  {
+    "name": "create-project",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_scene_author",
+      "--create",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015703677003330085
+  },
+  {
+    "name": "create-scene",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_scene_author",
+      "--create",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/Scenes/main.judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007626985003298614
+  },
+  {
+    "name": "validate-project",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_scene_author",
+      "--validate",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007564266001281794
+  },
+  {
+    "name": "validate-scene",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/Scenes/main.judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.00762225500511704
+  },
+  {
+    "name": "script-positive",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007705992997216526
+  },
+  {
+    "name": "script-negative",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.007587779997265898
+  },
+  {
+    "name": "script-restored",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015819596002984326
+  },
+  {
+    "name": "save-identity",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "identity",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007659465001779608
+  },
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project/SDK_Renderer_Qualification.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/cli-export"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.46464741000090726
+  },
+  {
+    "name": "write",
+    "argv": [
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/judas",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/game.judasproj"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 1,
+    "expected": 0,
+    "seconds": 0.01584823899611365
+  },
+  {
+    "name": "write-native",
+    "argv": [
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/judas",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/game.judasproj"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2641884409968043
+  },
+  {
+    "name": "cold-read-native",
+    "argv": [
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/judas",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/game.judasproj"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2642837400053395
+  },
+  {
+    "name": "cold-slot-inspect",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "inspect",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+      "qualification"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0157632390037179
+  },
+  {
+    "name": "cold-slot-check",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "check",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/game/game.judasproj",
+      "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+      "qualification"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015756355998746585
+  },
+  {
+    "name": "sdk-verify-after",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-relocated-rnplxzas/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 2.017879141996673
+  },
+  {
+    "name": "strong-script",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project-v2/SDK_Renderer_Qualification.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015770863996294793
+  },
+  {
+    "name": "strong-export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/fresh-project-v2/SDK_Renderer_Qualification.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-qualification/cli-export-v2"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2643301269999938
+  },
+  {
+    "name": "strong-write",
+    "argv": [
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game/judas",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game/game.judasproj"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2642101909950725
+  },
+  {
+    "name": "strong-cold-read",
+    "argv": [
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game/judas",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game/game.judasproj"
+    ],
+    "cwd": "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/empty-cwd",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.26427737799531315
+  },
+  {
+    "name": "strong-slot-inspect",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "inspect",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+      "qualification"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.01572873400436947
+  },
+  {
+    "name": "strong-slot-check",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "check",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/game/game.judasproj",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+      "qualification"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015649353998014703
+  },
+  {
+    "name": "strong-missing-slot-negative",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/judas_save",
+      "inspect",
+      "/tmp/judas-renderer-v2-sdk-cold-oracle-eyxvxe84/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+      "never-created"
+    ],
+    "cwd": "/tmp",
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.015659433003747836
+  },
+  {
+    "name": "strong-sdk-verify",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.9666551160044037
+  }
+]

@@ -1,0 +1,4 @@
+Assets/game.js: SyntaxError: Unexpected end of input
+    at Assets/game.js:1:41
+
+1 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.

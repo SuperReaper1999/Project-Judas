@@ -220,8 +220,13 @@ void main() {
 
 
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
+    vec3 lighting = vec3(0.0);
+    // Material model is uniform for the draw. PBR evaluates its own BRDF/light
+    // loop below; Unlit needs neither light loop. Geometric derivatives above
+    // remain outside all branches, and weather still uses diffuseFactor.
+    if (uMaterialModel == 0) {
     float dirShadow = ComputeShadowFactor(0, vWorldPos, diffuseFactor);
-    vec3 lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
+    lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
 
     ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
  for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
@@ -255,6 +260,7 @@ void main() {
         shadow=ComputeShadowFactor(shadowIndex,vWorldPos,lightDiffuse);
 
         lighting += lightColor * lightDiffuse * attenuation * spotFactor * shadow;
+    }
     }
 
     vec4 texColor = texture(uTexture,materialUV);

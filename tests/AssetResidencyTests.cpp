@@ -5,6 +5,7 @@
 #include "SceneSerialization.h"
 #include "WorldPersistence.h"
 #include "WorldPresentation.h"
+#include "fixtures/M93AssetFixtures.h"
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -22,9 +23,16 @@ int main(int argc, char **argv) {
   std::filesystem::create_directories(root / "Assets");
   std::string error;
   AssetCookSettings settings;
+  const auto column = root / "SourceArt/column.obj";
+  Check(M93AssetFixtures::WriteColumn(column, error),
+        "original detailed source fixture is generated in this test's output tree");
+  if (failures) {
+    puts(error.c_str());
+    return 1;
+  }
   for (int i = 0; i < 3; ++i)
     Check(CookAssetFile(
-              ".cache/m93/fixtures/Assets/column.obj",
+              column.string(),
               (root / ("Assets/form" + std::to_string(i) + ".judasmesh"))
                   .string(),
               settings, error),
@@ -170,8 +178,13 @@ int main(int argc, char **argv) {
   assets.ReleaseAll();
   std::filesystem::create_directories(root / "SourceArt");
   auto source = root / "SourceArt/image.png";
-  std::filesystem::copy_file(".cache/m93/fixtures/Assets/tile1.png", source,
-                             std::filesystem::copy_options::overwrite_existing);
+  const bool tileReady = M93AssetFixtures::WriteTile1(source, error);
+  Check(tileReady,
+        "original painted tile fixture is generated in this test's output tree");
+  if (!tileReady) {
+    puts(error.c_str());
+    return 1;
+  }
   auto destination = root / "Assets/image.judastex";
   Check(CookAssetFile(source.string(), destination.string(), settings, error) &&
             CookedAssetFresh(destination.string(), error),

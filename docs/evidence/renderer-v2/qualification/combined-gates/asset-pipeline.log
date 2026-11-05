@@ -1,0 +1,10 @@
+PASS BC texture cooking is byte deterministic
+PASS full BC1 chain includes sub-block tail mips
+PASS BC1 keeps representative authored colour detail within measured RMS bound
+PASS corrupt cook fails without publishing partial texture
+PASS alpha content selects BC3 rather than discarding transparency
+PASS BC3 transparent pixel survives decoding
+PASS sRGB mip filter averages linear light
+PASS linear data does not receive colour gamma
+PASS normal mips renormalize and retain lossless vector channels
+FAIL detailed source fixture loads through current importer

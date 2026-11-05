@@ -52,6 +52,7 @@ EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
 void Renderer::DestroyEnvironment(EnvironmentHandle handle){if(!handle.IsValid()||handle.id>=m_environments.size())return;auto& e=m_environments[handle.id];if(!e.alive)return;glDeleteTextures(1,&e.specular);glDeleteTextures(1,&e.diffuse);glDeleteTextures(1,&e.brdf);e={};}
 void Renderer::SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour){glClearColor(colour.x,colour.y,colour.z,1);m_weatherBackground=colour;m_linearRendering=linear;m_exposure=exposure;m_environment=environment;m_environmentIntensity=intensity;m_environmentRotation=glm::normalize(rotation);m_environmentBackground=background;}
 void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialBinding& binding,TextureHandle generated,const glm::vec3&,float alpha,bool shadow){
+ ++m_stats.materialApplications;
  MaterialDefinition legacy;legacy.model=MaterialModel::Legacy;
  auto m=ApplyMaterialOverride(gpu?gpu->definition:legacy,binding.overrides);
  auto program=shadow?m_shadowShaderProgram:m_shaderProgram;
@@ -70,7 +71,6 @@ void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialBinding& bindin
  else{
   glUniform1i(location("uMaterialModel"),int(m.model));glUniform1i(location("uModern"),m_linearRendering);glUniform1i(location("uBaseLinear"),ValidTexture(base)&&(m_textures[base.id].sceneLinear||m_textures[base.id].srgb));
   glUniform4fv(location("uBaseFactor"),1,glm::value_ptr(m.baseColor));glUniform1f(location("uMetallic"),m.metallic);glUniform1f(location("uRoughness"),m.roughness);glUniform1f(location("uNormalStrength"),m.normalStrength);glUniform1f(location("uOcclusionStrength"),m.occlusionStrength);glUniform3fv(location("uEmission"),1,glm::value_ptr(m.emissive));glUniform1f(location("uEmissionIntensity"),m.emissiveIntensity);
-  auto eye=glm::vec3(glm::inverse(m_view)[3]);glUniform3fv(location("uCameraPosition"),1,glm::value_ptr(eye));
   glUniform1i(location("uEmissiveLinear"),ValidTexture(emissionTexture)&&(m_textures[emissionTexture.id].srgb||m_textures[emissionTexture.id].sceneLinear));
   const char* names[]={"uMR","uNormal","uOcclusion","uEmissive"};const char* present[]={"uHasMR","uHasNormal","uHasOcclusion","uHasEmissive"};
   for(unsigned i=1;i<5;++i){glActiveTexture(GL_TEXTURE0+4+i);auto texture=i==4?emissionTexture:mapTexture(i);glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glBindSampler(4+i,gpu?gpu->samplers[i]:0);glUniform1i(location(names[i-1]),int(4+i));glUniform1i(location(present[i-1]),texture.IsValid());}
@@ -91,14 +91,29 @@ void Renderer::BeginLinearPass(int width,int height){
  if(m_linearPass)return;
  glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_outputFramebuffer);
  // Cache by camera output size: main and M33 targets do not reallocate each frame.
- auto existing=std::find_if(m_linearTargets.begin(),m_linearTargets.end(),[&](const auto& t){return t.width==width&&t.height==height;});
+ const auto suspended = [&](const auto& target) {
+     return m_suspendedLinearPass.active && target.fbo == m_suspendedLinearPass.target.fbo;
+ };
+ auto existing = std::find_if(m_linearTargets.begin(), m_linearTargets.end(), [&](const auto& target) {
+     return target.width == width && target.height == height && !suspended(target);
+ });
  if(existing==m_linearTargets.end()){
   LinearTarget target;target.width=width;target.height=height;glGenFramebuffers(1,&target.fbo);glBindFramebuffer(GL_FRAMEBUFFER,target.fbo);
   auto texture=[&](GLuint& t,GLint format,GLenum channels,GLenum type){glGenTextures(1,&t);glBindTexture(GL_TEXTURE_2D,t);glTexImage2D(GL_TEXTURE_2D,0,format,width,height,0,channels,type,nullptr);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);};
   texture(target.color,GL_RGBA16F,GL_RGBA,GL_FLOAT);texture(target.depth,GL_DEPTH_COMPONENT24,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT);glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,target.color,0);glFramebufferTexture2D(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,GL_TEXTURE_2D,target.depth,0);
   if(glCheckFramebufferStatus(GL_FRAMEBUFFER)!=GL_FRAMEBUFFER_COMPLETE){std::fprintf(stderr,"HDR framebuffer incomplete\n");glDeleteFramebuffers(1,&target.fbo);glDeleteTextures(1,&target.color);glDeleteTextures(1,&target.depth);glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));m_linearRendering=false;return;}
-  // Bounded resize cache. Old dimensions are never live during this outer boundary.
-  if(m_linearTargets.size()==8){auto old=m_linearTargets.front();glDeleteFramebuffers(1,&old.fbo);glDeleteTextures(1,&old.color);glDeleteTextures(1,&old.depth);m_linearTargets.erase(m_linearTargets.begin());}
+  // Keep the bounded resize cache, but a suspended main chart still contains
+  // live pixels. Evict an inactive chart even when size churn reaches it first.
+  if (m_linearTargets.size() == 8) {
+      const auto victim = std::find_if(m_linearTargets.begin(), m_linearTargets.end(),
+                                       [&](const auto& chart) { return !suspended(chart); });
+      // Only one chart can be suspended: recursive target scopes are rejected.
+      auto old = *victim;
+      glDeleteFramebuffers(1, &old.fbo);
+      glDeleteTextures(1, &old.color);
+      glDeleteTextures(1, &old.depth);
+      m_linearTargets.erase(victim);
+  }
   m_linearTargets.push_back(target);existing=m_linearTargets.end()-1;
  }
  m_hdrFbo=existing->fbo;m_hdrColor=existing->color;m_hdrDepth=existing->depth;m_hdrWidth=width;m_hdrHeight=height;

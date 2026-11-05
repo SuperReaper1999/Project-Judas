@@ -1,0 +1,42 @@
+PASS fresh render-sample cache has no completed shadow content
+PASS completed exact chart/source/options can reuse the same physical slot
+PASS a different shadow source cannot inherit another light's slot
+PASS physical slots have independent latest-content keys
+PASS one-ULP light projection change invalidates exact chart reuse
+PASS player-caster omission cannot inherit a chart rendered with the player
+PASS overwriting a physical slot retires its older chart key
+PASS view-dependent LOD permits reuse with an exactly identical colour view
+PASS different colour-eye position invalidates view-dependent caster LOD
+PASS different colour projection invalidates view-dependent caster LOD
+PASS viewport resolution invalidates screen-error caster LOD
+PASS viewport origin is part of the exact view-dependent key
+PASS LOD-policy changes cannot inherit a differently qualified chart
+PASS view-independent caster geometry can share an identical spotlight chart across eyes
+PASS exact matching conservatively distinguishes signed-zero chart bits
+PASS invalid negative slots cannot index or publish cache storage
+PASS out-of-range slots cannot alias the final physical shadow layer
+PASS non-finite light charts cannot overwrite valid completed content
+PASS view-dependent reuse requires a nonempty actual viewport
+PASS non-finite colour projections cannot qualify LOD-dependent reuse
+PASS explicit clear retires every physical slot
+PASS a new render sample cannot inherit last frame's moving casters
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native fixture owns a real physical shadow caster
+PASS negative control redraws the shared spotlight once per independent view
+PASS two real world views reuse exactly one identical completed spotlight chart
+PASS frame-local shadow reuse preserves exact native multi-view pixels
+PASS view/shadow reuse never advances or changes the physical sample
+PASS independent shadow-off control changes actual pixels, excluding a blank/no-shadow false pass
+PASS native LOD fixture activates the renderer's actual view-dependent-mesh predicate
+FAIL the previous object's disabled LOD cannot hide other view-dependent casters
+FAIL different eyes retain independent shadow draws when caster LOD can depend on the colour view
+PASS the next render sample performs a fresh real shadow pass before reusing within that sample
+PASS camera-backed-caster guard fixture rebuilds through the normal world path
+PASS camera-backed caster textures conservatively disable frame-local content reuse
+Shadow pass cache: 34 checks, 2 failures

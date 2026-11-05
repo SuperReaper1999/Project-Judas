@@ -24,25 +24,27 @@ std::uint64_t Fingerprint(std::string_view source) {
 
 int main() {
     using namespace JudasRender::Shaders;
-    // Pins the behavior-preserving extraction independently of profile
-    // preparation. These are the original Renderer.cpp source byte identities.
+    // Seven shaders retain the original Renderer.cpp extraction identities.
+    // The fragment identity deliberately advances for the draw-uniform Legacy
+    // lighting guard; the original was 0xbcfc7c527b10a7ba. Independent native
+    // pixels and matched workloads qualify that functional change separately.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
-    const std::array<std::uint64_t, 8> original = {
-        0xa489fa0ee7ef5e6full, 0xbcfc7c527b10a7baull, 0x0ef81ea9763f020dull, 0xc7555650c92125ebull,
+    const std::array<std::uint64_t, 8> approved = {
+        0xa489fa0ee7ef5e6full, 0x61e1ebd9f7bdef94ull, 0x0ef81ea9763f020dull, 0xc7555650c92125ebull,
         0x83393b059e8364efull, 0x32630b836494ebd9ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);
-        Check(source && Fingerprint(source) == original[i],
-              "canonical built-in retains its exact extracted portable shader bytes");
+        Check(source && Fingerprint(source) == approved[i],
+              "canonical built-in matches its reviewed portable shader identity");
         std::string prepared, error;
         Check(PrepareSource(source, Profile::Desktop330, prepared, error) && prepared == source &&
                   error.empty(),
               "desktop 330 preparation preserves all canonical source bytes");
         Check(PrepareSource(source, Profile::Desktop450, prepared, error) &&
                   prepared == std::string("#version 450 core") + std::string(source).substr(17),
-              "desktop 450 profile changes only the declared version before specialization");
+              "desktop 450 profile changes only the declared version before view-block preparation");
         Check(PrepareSource(source, Profile::ES300, prepared, error) &&
                   prepared.find("#version 300 es\nprecision highp float;") == 0 &&
                   prepared.find("samplerBuffer uBones") == std::string::npos &&

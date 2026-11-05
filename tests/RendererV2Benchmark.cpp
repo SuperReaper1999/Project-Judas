@@ -308,8 +308,11 @@ struct Workload {
         r.ClearWeather();
         r.SetRenderMask(kAllCategories);
         r.SetRenderLayer(0);
-        r.BeginFrame(Width, Height);
-        for (unsigned view = 0; view < o.views; ++view) {
+        // Complete auxiliary views before opening the main HDR pass, matching
+        // production WorldPresentation. No pass borrows an unfinished parent.
+        for (unsigned step = 1; step <= o.views; ++step) {
+            const unsigned view=step%o.views;
+            if(!view)r.BeginFrame(Width,Height);
             if (view && !r.BeginRenderTarget(targets[view - 1]))
                 throw std::runtime_error("Secondary target failed");
             Camera(view, frame);
@@ -446,7 +449,7 @@ int main(int argc, char **argv) {
         csv << "sample,profile_frame,cpu_submission_ms,process_cpu_submission_ms,outer_frame_ms,gpu_ms,"
                "draws,triangles,instances,instanced_draws,particles,lights,light_overflow,shadow_"
                "passes,light_allocated_bytes,shadow_allocated_bytes,instance_upload_high_water_bytes,"
-               "uploaded_bytes,upload_calls,state_changes\n";
+               "uploaded_bytes,upload_calls,material_applications\n";
         std::vector<double> gpu;
         for (std::size_t i = 0; i < samples.size(); ++i) {
             const auto &s = samples[i];
@@ -463,7 +466,7 @@ int main(int argc, char **argv) {
                 << v.lightTileOverflow << ',' << v.shadowPasses << ',' << v.lightBytes << ','
                 << v.shadowBytes << ',' << v.instanceBytes << ',';
 #if defined(JUDAS_RENDER_STATS_VERSION) && JUDAS_RENDER_STATS_VERSION >= 2
-            csv << v.uploadedBytes << ',' << v.uploadCalls << ',' << v.stateChanges;
+            csv << v.uploadedBytes << ',' << v.uploadCalls << ',' << v.materialApplications;
 #else
             csv << "NA,NA,NA";
 #endif
