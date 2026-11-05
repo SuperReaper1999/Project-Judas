@@ -374,7 +374,20 @@ void main() {
 }
 )";
 
-const char *const kUIFragmentShaderSource = R"(#version 330 core
+const char *DisplayTransformSource() {
+    return R"(
+vec3 JudasDisplayColour(vec3 colour, float exposure) {
+    colour = max(colour, vec3(0.0)) * exposure;
+    float luminance = dot(colour, vec3(.2126, .7152, .0722));
+    colour = clamp(colour / (1.0 + luminance), 0.0, 1.0);
+    return mix(colour * 12.92,
+               1.055 * pow(colour, vec3(1.0 / 2.4)) - 0.055,
+               step(vec3(0.0031308), colour));
+}
+)";
+}
+namespace {
+const std::string kUIFragmentShaderText = std::string(R"(#version 330 core
 in vec2 vUnit;
 out vec4 FragColor;
 
@@ -382,12 +395,19 @@ uniform sampler2D uTexture;
 uniform vec4 uColor;
 uniform vec2 uUVOffset;
 uniform vec2 uUVScale;
+uniform bool uSceneLinear;
+uniform float uExposure;
+)" ) + DisplayTransformSource() + R"(
 
 void main() {
     vec2 uv = uUVOffset + vUnit * uUVScale;
-    FragColor = texture(uTexture, uv) * uColor;
+    vec4 sampled = texture(uTexture, uv);
+    if (uSceneLinear) sampled.rgb = JudasDisplayColour(sampled.rgb, uExposure);
+    FragColor = sampled * uColor;
 }
 )";
+} // namespace
+const char *const kUIFragmentShaderSource = kUIFragmentShaderText.c_str();
 
 const char *const kDebugVertexShaderSource = R"(#version 330 core
 layout(location = 0) in vec3 aPosition;

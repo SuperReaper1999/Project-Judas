@@ -139,7 +139,10 @@ ordinary geometry/material/transparency submissions and the main-focused shadow
 maps. They keep their authored resolution, cadence and render masks; no independent
 shadow focus or main-view quality guarantee is added. Modern auxiliary targets
 store scene-linear radiance without exposure/tone mapping; the final main view
-converts it once. Feedback protection and target ownership remain in force.
+converts it once. UI Images displaying these targets apply the same scene exposure,
+luminance-Reinhard and sRGB conversion before their display tint/opacity. The
+shared source remains scene-linear for material consumers; legacy/display targets
+are not converted again. Feedback protection and target ownership remain in force.
 Visibility governs supported submissions in every view. UI/debug display colours
 remain independent of world exposure. Point/spot counts and controls retain their
 existing bounded authoring surface; M72 adds no new light classes or counts.

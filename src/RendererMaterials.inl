@@ -128,11 +128,11 @@ void Renderer::ResolveLinearPass(bool sceneLinear){
  JUDAS_PROFILE_SCOPE("Display resolve");RendererProfileScope gpu(*this,"Display resolve",m_activeTarget.IsValid()?m_activeTarget.id:0);
  if(!m_outputProgram){const char* vs=R"(#version 330 core
 out vec2 uv;void main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);uv=p;gl_Position=vec4(p*2.0-1.0,0,1);})";
- const char* fs=R"(#version 330 core
+ const auto fs=std::string(R"(#version 330 core
 in vec2 uv;out vec4 result;uniform sampler2D image,depthImage,environment;uniform bool background,linearOutput;uniform float exposure,intensity;uniform mat4 inverseViewProjection;uniform mat3 environmentInverse;uniform vec3 eye;
-vec3 encode(vec3 c){return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c));}
-void main(){vec3 colour=texture(image,uv).rgb;if(background&&texture(depthImage,uv).r>=0.999999){vec4 w=inverseViewProjection*vec4(uv*2.0-1.0,1,1);vec3 d=environmentInverse*normalize(w.xyz/w.w-eye);vec2 e=vec2(atan(d.z,d.x)/6.28318530718,acos(clamp(d.y,-1.0,1.0))/3.14159265359);colour=textureLod(environment,e,0.0).rgb*intensity;}if(linearOutput){result=vec4(max(colour,vec3(0.0)),1);return;}colour=max(colour,vec3(0.0))*exposure;float luminance=dot(colour,vec3(.2126,.7152,.0722));colour/=1.0+luminance;result=vec4(encode(clamp(colour,0.0,1.0)),1.0);})";
- GLuint v=0,f=0;if(!CompileShader(GL_VERTEX_SHADER,vs,v)||!CompileShader(GL_FRAGMENT_SHADER,fs,f)||!LinkProgram(v,f,m_outputProgram)){glDeleteShader(v);glDeleteShader(f);m_linearPass=false;return;}glDeleteShader(v);glDeleteShader(f);glGenVertexArrays(1,&m_outputVao);
+)") + JudasRender::Shaders::DisplayTransformSource() + R"(
+void main(){vec3 colour=texture(image,uv).rgb;if(background&&texture(depthImage,uv).r>=0.999999){vec4 w=inverseViewProjection*vec4(uv*2.0-1.0,1,1);vec3 d=environmentInverse*normalize(w.xyz/w.w-eye);vec2 e=vec2(atan(d.z,d.x)/6.28318530718,acos(clamp(d.y,-1.0,1.0))/3.14159265359);colour=textureLod(environment,e,0.0).rgb*intensity;}if(linearOutput){result=vec4(max(colour,vec3(0.0)),1);return;}result=vec4(JudasDisplayColour(colour,exposure),1.0);})";
+ GLuint v=0,f=0;if(!CompileShader(GL_VERTEX_SHADER,vs,v)||!CompileShader(GL_FRAGMENT_SHADER,fs.c_str(),f)||!LinkProgram(v,f,m_outputProgram)){glDeleteShader(v);glDeleteShader(f);m_linearPass=false;return;}glDeleteShader(v);glDeleteShader(f);glGenVertexArrays(1,&m_outputVao);
  }
  glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));glViewport(0,0,m_hdrWidth,m_hdrHeight);glDisable(GL_DEPTH_TEST);glDisable(GL_BLEND);glDisable(GL_CULL_FACE);
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)

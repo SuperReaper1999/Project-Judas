@@ -154,6 +154,11 @@ Virtual-list rows and editing controls are not item-drag sources.
 render-camera entity in the same world. Clear with null; authored texture resumes.
 The binding is transient: reacquire in restore. Disable that camera when its menu
 closes. No new scene, physics world or render target ownership is introduced.
+With linear rendering enabled, scene-linear camera pixels receive the scene's
+exposure, luminance-Reinhard tone mapping and sRGB encoding when the UI displays
+them, then the Image's tint and opacity. Legacy/display-resolved targets pass
+through without another conversion. The binding needs no colour-mode argument;
+ordinary UI images, panels and text remain display-referred.
 `fontSize` reads the authored/current size; change it with configure.
 
 See [the practical guide and editable menu](../UI_TRANSFERS_AND_PREVIEWS.md)

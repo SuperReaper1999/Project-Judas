@@ -10,6 +10,7 @@
     {"name":"renderer-particle-pass","target":"judas_particle_pass_tests","groups":["rendering"],"args":["--native"]},
     {"name":"rendering-architecture","target":"judas_rendering_architecture_tests","groups":["rendering"],"args":["{output}/rendering-architecture"]},
     {"name":"render-cameras","target":"judas_render_camera_tests","groups":["rendering"],"args":["--output","{output}/render-cameras"]},
+    {"name":"ui-preview-colour","target":"judas_ui_preview_color_tests","groups":["rendering","ui"]},
     {"name":"particle-collision-snapshot","target":"judas_particle_collision_tests","groups":["particles","physics"]},
     {"name":"particle-cpu-response","target":"judas_cpu_particles_tests","groups":["particles","physics"]},
     {"name":"particle-gpu-resident","target":"judas_gpu_particles_tests","groups":["particles","rendering"],"args":["--native"]},

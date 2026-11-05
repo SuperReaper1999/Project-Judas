@@ -53,6 +53,11 @@ this.document.get('preview').setPreviewCamera(null);
 Only a live render-camera Entity in the same world is accepted; an invalid binding
 throws without replacing the current one. The UI borrows the current GPU target
 at draw time, preserves its orientation and clips it like an ordinary Image.
+Scene-linear HDR targets receive the same scene exposure, luminance-Reinhard and
+sRGB display conversion as the main view, before the Image tint/opacity. This is
+automatic: `setPreviewCamera` needs no additional option. The shared target stays
+linear for world materials, and legacy/display-ready targets are not converted
+twice. Ordinary UI images, panels and glyphs remain independent of world exposure.
 There is no CPU readback or second render target allocation. Disabled/unpublished
 cameras show the image background rather than a stale frame.
 

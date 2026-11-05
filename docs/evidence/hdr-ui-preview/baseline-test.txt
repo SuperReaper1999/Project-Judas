@@ -1,0 +1,68 @@
+[Graphics] OpenGL 4.6 request unavailable: Could not create EGL context (call to eglCreateContext failed, reporting an error of EGL_BAD_MATCH)
+[Graphics] created OpenGL 4.5 Core request (auto policy)
+[Graphics] API=OpenGL 4.5 requested=auto selected=modern vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits)
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=120 uniformBlockBytes=65536 storageBindings=80 storageBlockBytes=134217728 computeInvocations=1024 computeSharedBytes=32768
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native renderer initializes
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 0.00 main 0 0 0 preview 20 51 8
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 0.80 main 67 105 40 preview 20 51 8
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 2.00 main 97 149 60 preview 20 51 8
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 0.00 main 0 0 0 preview 255 204 38
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 0.80 main 255 148 67 preview 255 204 38
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS main resolve matches independent exposure/luminance-Reinhard/sRGB oracle
+PASS create and render scene-linear target
+COLOUR exposure 2.00 main 255 172 79 preview 255 204 38
+FAIL UI linear preview has exactly one display conversion
+FAIL preview tint and opacity apply after display conversion
+PASS ordinary panels after HDR preview retain display colours
+PASS ordinary image after HDR preview is not tone mapped
+PASS create explicit display target
+PASS already-resolved display target is not converted twice
+PASS legacy camera target begins
+PASS legacy camera target remains display-ready
+PASS preview and mixed UI operations have no GL errors
+PASS all test camera targets are released
+53 checks, 12 failures

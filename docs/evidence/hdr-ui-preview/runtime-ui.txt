@@ -1,0 +1,32 @@
+[Graphics] OpenGL 4.6 request unavailable: Could not create EGL context (call to eglCreateContext failed, reporting an error of EGL_BAD_MATCH)
+PASS UI document round-trip
+PASS duplicate stable IDs rejected
+PASS stable lookup
+PASS reference-resolution anchors at two sizes
+PASS real pointer press/release click
+PASS controller focus and toggle activation
+PASS shared-binding consumption blocks gameplay and fixed input
+PASS hidden/disabled controls do not activate
+PASS unload invalidates handles
+PASS unloaded handle never revives
+PASS UI demo project loads
+[Graphics] created OpenGL 4.5 Core request (auto policy)
+[Graphics] API=OpenGL 4.5 requested=auto selected=modern vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits)
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=120 uniformBlockBytes=65536 storageBindings=80 storageBlockBytes=134217728 computeInvocations=1024 computeSharedBytes=32768
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real engine host and GL context
+PASS normal UI asset registry
+PASS scene UI/script component load
+PASS normal world constructs UI document
+PASS authored main menu modal
+PASS UI draws modify actual GL framebuffer pixels
+PASS actual GL UI pixels captured
+PASS JS receives click and starts HUD
+PASS JS modifies HUD text
+PASS JS migrates pause menu to authored panel
+PASS Stop releases UI/VM and leaves authored scene unchanged
+PERFORMANCE elements=100 layout_us=0.415 render_us=1214.330 submissions=103
+SUMMARY 22 checks 0 failures

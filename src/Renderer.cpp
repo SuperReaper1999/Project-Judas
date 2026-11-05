@@ -332,6 +332,8 @@ bool Renderer::Init() {
     m_uiUSize = glGetUniformLocation(m_uiShaderProgram, "uSize");
     m_uiUColor = glGetUniformLocation(m_uiShaderProgram, "uColor");
     m_uiUTexture = glGetUniformLocation(m_uiShaderProgram, "uTexture");
+    m_uiUSceneLinear = glGetUniformLocation(m_uiShaderProgram, "uSceneLinear");
+    m_uiUExposure = glGetUniformLocation(m_uiShaderProgram, "uExposure");
     m_uiUUVOffset = glGetUniformLocation(m_uiShaderProgram, "uUVOffset");
     m_uiUUVScale = glGetUniformLocation(m_uiShaderProgram, "uUVScale");
     glUseProgram(m_uiShaderProgram);
@@ -1089,11 +1091,14 @@ void Renderer::BeginUIFrame(int windowWidth, int windowHeight) {
     glUseProgram(m_uiShaderProgram);
     glUniform2f(m_uiUScreenSize, m_uiScreenSize.x, m_uiScreenSize.y);
     glUniform1i(m_uiUTextVertices,0);
+    glUniform1i(m_uiUSceneLinear,0);
+    glUniform1f(m_uiUExposure,m_exposure);
     glBindVertexArray(m_uiQuadVao);
 }
 
 void Renderer::DrawUIRect(const glm::vec2& position, const glm::vec2& size,
                            const glm::vec4& colorRgba) {
+    glUniform1i(m_uiUSceneLinear,0);
     glUniform2f(m_uiUPosition, position.x, position.y);
     glUniform2f(m_uiUSize, size.x, size.y);
     glUniform4f(m_uiUColor, colorRgba.r, colorRgba.g, colorRgba.b, colorRgba.a);
@@ -1169,6 +1174,9 @@ void Renderer::SetUIClip(glm::vec2 position,glm::vec2 size){
 void Renderer::ClearUIClip(){glDisable(GL_SCISSOR_TEST);}
 void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical){
     if(!texture.IsValid())return;
+    // Camera surfaces stay linear for world-material consumers. UI is a display
+    // boundary: convert only textures whose allocation carries linear ownership.
+    glUniform1i(m_uiUSceneLinear,ValidTexture(texture)&&m_textures[texture.id].sceneLinear);
     if(fit){const auto* image=ValidTexture(texture)?&m_textures[texture.id]:nullptr;
         if(image&&image->width>0&&image->height>0){auto scaled=glm::vec2(image->width,image->height);scaled*=std::min(size.x/scaled.x,size.y/scaled.y);position+=(size-scaled)*.5f;size=scaled;}}
     glUniform2f(m_uiUPosition,position.x,position.y);glUniform2f(m_uiUSize,size.x,size.y);

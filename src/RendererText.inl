@@ -3,6 +3,7 @@ void Renderer::ResetProjectText(){for(auto& p:m_textPages)DestroyTexture(p.textu
 void Renderer::SelectTextFonts(std::vector<std::shared_ptr<const TextFont>> fonts){if(fonts.empty()&&m_defaultTextFont)fonts.push_back(m_defaultTextFont);m_textFonts=std::move(fonts);}
 std::shared_ptr<const TextLayout> Renderer::LayoutText(const std::string& s,const TextOptions& o)const{try{auto layout=m_textEngine.Layout(s,m_textFonts,o);static unsigned missing=0;if(layout->missingClusters&&missing++<16)std::fprintf(stderr,"Text coverage missing for %u clusters; primary-font .notdef shown\n",layout->missingClusters);return layout;}catch(const std::exception& e){static unsigned warnings=0;if(warnings++<8)std::fprintf(stderr,"Text layout: %s\n",e.what());return std::make_shared<TextLayout>();}}
 void Renderer::DrawTextLayout(const TextLayout& layout,glm::vec2 position,glm::vec4 tint){
+ glUniform1i(m_uiUSceneLinear,0);
  JUDAS_PROFILE_SCOPE("Shaped text submission");glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
  glUniform1i(m_uiUTextVertices,1);glUniform2f(m_uiUUVOffset,0,0);glUniform2f(m_uiUUVScale,1,1);glBindVertexArray(m_textVao);
  std::vector<glm::vec4> vertices;vertices.reserve(layout.glyphs.size()*6);unsigned batchPage=~0u;

@@ -40,6 +40,8 @@ extern const char *const kShadowVertexShaderSource;
 extern const char *const kShadowFragmentShaderSource;
 extern const char *const kUIVertexShaderSource;
 extern const char *const kUIFragmentShaderSource;
+// Shared scene-linear -> display conversion, used at main and UI boundaries.
+const char *DisplayTransformSource();
 extern const char *const kDebugVertexShaderSource;
 extern const char *const kDebugFragmentShaderSource;
 

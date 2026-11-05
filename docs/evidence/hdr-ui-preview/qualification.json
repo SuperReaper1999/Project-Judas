@@ -1,0 +1,80 @@
+{
+  "scope": "HDR camera targets displayed in runtime UI; one scene output transform at UI display boundary",
+  "baseline_sdk_source": "57661268978937f47a2a972cbfd820ec109d76ed",
+  "baseline_source_parent": "cae53e27fbd80a650500590a7f136472770dadc0",
+  "baseline_colour_checks": 53,
+  "baseline_colour_failures": 12,
+  "fixed_colour_checks_per_profile": 73,
+  "fixed_colour_failures": 0,
+  "profiles": [
+    "modern desktop GLSL 450",
+    "portable desktop GLSL 330"
+  ],
+  "hardware": "Mesa 26.0.8 llvmpipe LLVM21.1.8; OpenGL4.5. This is native Linux software GL, not a fresh GTX970 hardware qualification.",
+  "shader_library": [
+    47,
+    0
+  ],
+  "render_cameras": [
+    59,
+    0
+  ],
+  "runtime_ui": [
+    22,
+    0
+  ],
+  "ui_menu_fresh_processes": {
+    "write": [
+      53,
+      0
+    ],
+    "read": [
+      38,
+      0
+    ],
+    "application": [
+      10,
+      0
+    ]
+  },
+  "cmake_organization": [
+    22,
+    0
+  ],
+  "current_docs": "pass",
+  "sample_comparison": {
+    "legacy_png_byte_identical": true,
+    "hdr_changed_pixels": 72000,
+    "hdr_changed_bbox": [
+      259,
+      180,
+      498,
+      479
+    ],
+    "image_dimensions": [
+      1024,
+      768
+    ],
+    "fixed_hdr_sha256": "5c89abe7fb96394a7412931cebee20c5054629c7c5933af6086401a5a431b4a2",
+    "baseline_hdr_sha256": "b33f2316d77019dd229bfed8fd345c67058f4b68c3c109cea38167229f0c1211"
+  },
+  "intentional_shader_identity_change": {
+    "before": "0x32630b836494ebd9",
+    "after": "0x28a3c2a8126fe9e3",
+    "reason": "UI now owns display conversion for scene-linear camera textures; other reviewed source fingerprints retained"
+  },
+  "platforms_not_run": [
+    "Windows",
+    "Android",
+    "browser runtime"
+  ],
+  "human_acceptance": "pending",
+  "environmental_attempt": "The first UI application save failed because its default HOME save directory is read-only to this runner. Reran unchanged tests with a new isolated writable XDG_DATA_HOME; all three processes passed. Initial raw logs retained in .cache/hdr-ui-preview/menu-roundtrip.",
+  "source_sha256": {
+    "src/render/ShaderLibrary.cpp": "a67e7a016f51e99e040e8dc03763209e85dfdcaf1d7c04ede1b84387a5a48241",
+    "src/Renderer.cpp": "b06375d3a6da784ef85730f9b82ae1e766a9d71fd13881e8b5b507ecb994927e",
+    "src/RendererMaterials.inl": "f8f7db4d043cae7f79bf55744ac5193f80853b3c06fd4f69384cba1ff7c1c8dd",
+    "src/RendererText.inl": "934ade15ebb89471785c9e8b49754cdc1efc771b1b75c847d90d0b3306286e11",
+    "tests/UIPreviewColorTests.cpp": "76cfbb146ac5fbd62bab127693afc51f1bd7e86b0fb9cf7ba6e071735cd4bb55"
+  }
+}

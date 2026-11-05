@@ -1204,6 +1204,7 @@ judas_add_engine_test(judas_production_fluid_performance tests/ProductionFluidPe
 
 # M33: actual Renderer/RuntimeWorld GL passes, authored round-trip and Play/Stop.
 judas_add_engine_test(judas_render_camera_tests tests/RenderCameraTests.cpp SOURCES src/editor/EditorHistory.cpp)
+judas_add_engine_test(judas_ui_preview_color_tests tests/UIPreviewColorTests.cpp)
 judas_add_engine_test(judas_portal_camera_tests tests/PortalCameraTests.cpp)
 
 judas_add_engine_test(judas_audio_tests tests/AudioTests.cpp SOURCES src/editor/EditorHistory.cpp)

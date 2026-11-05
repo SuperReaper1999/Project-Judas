@@ -575,6 +575,7 @@ private:
     GLint m_uiUSize = -1;
     GLint m_uiUColor = -1;
     GLint m_uiUTexture = -1;
+    GLint m_uiUSceneLinear = -1, m_uiUExposure = -1;
     GLint m_uiUUVOffset = -1;
     GLint m_uiUUVScale = -1;
     glm::vec2 m_uiScreenSize{0.0f, 0.0f};
