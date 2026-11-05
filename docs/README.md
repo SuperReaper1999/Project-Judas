@@ -1,8 +1,8 @@
 # Judas documentation
 
 <!-- judas-release-status:start -->
-Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
-[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
+[Source notes](ALPHA_V2_0_0_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
 [Support boundaries](ALPHA_SUPPORT_MATRIX.md).
 
 Source identity and publication are separate. The
@@ -16,6 +16,7 @@ Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
 
 ## Start a project
 
+- [Local Alpha V2 consumer guide](V2_CONSUMER_GUIDE.md): select the matching SDK, learn the V2 workflows, check intentional API differences and retain unpublished-build boundaries.
 - [First visible project](FIRST_PROJECT.md): build, camera, script, Play and export.
 - [Editor guide](EDITOR_GUIDE.md): authoring, selection, tools and iteration.
 - [Renderer V2](RENDERER_V2.md): capability-based desktop OpenGL, modular GPU owners, measured submission/shader improvements and portable boundaries.

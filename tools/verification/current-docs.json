@@ -4,6 +4,8 @@
   "documents": [
     "README.md",
     "docs/README.md",
+    "docs/ALPHA_V2_0_0_NOTES.md",
+    "docs/V2_CONSUMER_GUIDE.md",
     "docs/ARCHITECTURE.md",
     "docs/PREALPHA.md",
     "docs/DOCUMENTATION_MAINTENANCE.md",

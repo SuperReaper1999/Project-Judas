@@ -156,6 +156,7 @@ struct EditorPanelState {
     JobSystem *importJobs = nullptr;
     std::shared_ptr<ModelCookTask> importTask, importAccepted;
     bool importPublished = false;
+    std::weak_ptr<ModelCookTask> importScaleConfirmed, importScalePrompted;
     unsigned modelPreviewClip = 0;
     float modelPreviewTime = 0, modelPreviewYaw = .45f;
     bool modelPreviewPlaying = false, modelPreviewSkeleton = true;

@@ -5,3 +5,5 @@ struct EditorRequests;
 // Safe authoring-frame tick, independent of panel visibility. Workers prepare;
 // only this workflow publishes accepted generations after project/mode checks.
 void PumpEditorAssetWorkflow(EditorPanelState &, EditorRequests &);
+// A cooked result can be inspected without replacing the last accepted model.
+bool EditorModelScaleReviewPending(const EditorPanelState &);

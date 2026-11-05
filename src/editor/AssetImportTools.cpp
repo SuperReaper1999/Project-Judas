@@ -22,6 +22,7 @@ using namespace EditorPanelWidgets;
 #include "../../third_party/nlohmann/json.hpp"
 #include "../AssetCook.h"
 #include "AssetBrowserPanel.h"
+#include "AssetPublicationWorkflow.h"
 #include "AssetCookPanelTask.h"
 #include "CollisionAsset.h"
 #include "ContentReferences.h"
@@ -33,6 +34,8 @@ using namespace EditorPanelWidgets;
 #include "PoseComposition.h"
 #include "SpriteSheetEditor.h"
 #include "RetargetPanel.h"
+#include "EditorDesign.h"
+#include "ModelImportScale.h"
 
 void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                           const AssetDatabase &db, bool revealModelTools) {
@@ -44,6 +47,27 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
         ImGui::SetScrollY(0.0f);
     }
     if (ImGui::CollapsingHeader("Model import / reimport", ImGuiTreeNodeFlags_DefaultOpen)) {
+        if (EditorModelScaleReviewPending(state)) {
+            EditorDesign::Surface review;
+            ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_PlotHistogram));
+            ImGui::TextUnformatted("CHECK SCALE: possible 100x units mismatch");
+            ImGui::PopStyleColor();
+            const auto *warning = JudasImport::ScaleWarning(state.importTask->report);
+            ImGui::TextWrapped("%s", warning->message.c_str());
+            ImGui::TextWrapped("%s", warning->action.c_str());
+            ImGui::TextWrapped("The current model is unchanged. Cancel to review source units below, "
+                               "then retry; or keep this scale if it is intentional.");
+            ImGui::BeginDisabled(state.mode != EditorMode::Edit);
+            if (EditorDesign::ActionButton("Keep this scale and import", EditorDesign::Tone::Primary))
+                state.importScaleConfirmed = state.importTask;
+            NextActionOnRow("Cancel / review units");
+            if (EditorDesign::ActionButton("Cancel / review units")) {
+                state.importTask->cancel = true;
+                state.importPublished = true;
+                state.status = "Scale review cancelled; last accepted model retained. Review units and retry.";
+            }
+            ImGui::EndDisabled();
+        }
         if (ImGui::TreeNode("Source and recipe settings")) {
             auto text = [](const char *label, std::string &value) {
                 std::vector<char> buffer(std::max(size_t(4096), value.size() + 256), 0);
@@ -291,7 +315,7 @@ void DrawAssetImportTools(EditorDocument &doc, EditorPanelState &state, EditorRe
             if (!state.importTask->success)
                 ImGui::TextWrapped("Import failed; last good model retained: %s",
                                    state.importTask->error.c_str());
-            else if (!state.importPublished)
+            else if (!state.importPublished && !EditorModelScaleReviewPending(state))
                 ImGui::TextWrapped(
                     "Cook ready. Stop Play to publish; live skeleton buffers remain unchanged.");
         }

@@ -1,5 +1,6 @@
 #include "PerformanceProfiler.h"
 #include "ModelImport.h"
+#include "ModelImportScale.h"
 #include "TextureLoader.h"
 #include "Tangents.h"
 #include "ModelLoader.h"
@@ -81,7 +82,7 @@ bool ImportModelSource(const std::string& path,const ModelImportSettings& settin
   auto basis=glm::mat4_cast(settings.basisRotation);float units=settings.sourceUnitMeters>0?float(settings.sourceUnitMeters):1.f;if(!std::isfinite(units)||units<1e-6f||units>1000)throw std::runtime_error("unit override bound");basis*=glm::scale(glm::mat4(1),glm::vec3(units));
   if(mesh.skeletal){auto shared=std::make_shared<SkeletalAsset>(*mesh.skeletal);auto& s=shared->skeleton;if(s.affine.empty())s.affine.assign(s.names.size(),glm::mat4(1));for(size_t i=0;i<s.parents.size();++i)if(s.parents[i]<0)s.affine[i]=basis*s.affine[i];mesh.skeletal=shared;}
   else for(auto& v:mesh.vertices){v.position=glm::vec3(basis*glm::vec4(v.position,1));v.normal=glm::normalize(glm::inverseTranspose(glm::mat3(basis))*v.normal);v.tangent=glm::vec4(glm::normalize(glm::mat3(basis)*glm::vec3(v.tangent)),v.tangent.w);}
-  result=std::move(mesh);report.hierarchyNodes=result.skeletal?result.skeletal->skeleton.names.size():0;report.skinJoints=result.skeletal?result.skeletal->skeleton.skinNodes.size():0;report.parts=result.primitives.size();report.vertices=result.vertices.size();return true;
+  report.sourceUnitMeters=1;JudasImport::InspectScale(path,settings,mesh,report);result=std::move(mesh);report.hierarchyNodes=result.skeletal?result.skeletal->skeleton.names.size():0;report.skinJoints=result.skeletal?result.skeletal->skeleton.skinNodes.size():0;report.parts=result.primitives.size();report.vertices=result.vertices.size();return true;
  }
  auto source=Load(path,settings);auto& scene=*source;MeshData mesh;auto asset=std::make_shared<SkeletalAsset>();asset->skeleton=Hierarchy(scene);auto& s=asset->skeleton;report.sourceUnitMeters=scene.settings.unit_meters;report.sourceBones=scene.bones.count;report.hierarchyNodes=scene.nodes.count;
  std::map<uint32_t,int> ids;std::set<std::string> keys;for(size_t i=0;i<scene.nodes.count;++i){ids[scene.nodes.data[i]->element_id]=int(i);auto key=Key(s,int(i));if(!keys.insert(key).second)throw std::runtime_error("ambiguous hierarchy path: "+key);mesh.sourceNodes.push_back(key);}asset->clips=Clips(scene,settings,ids);
@@ -118,7 +119,7 @@ bool ImportModelSource(const std::string& path,const ModelImportSettings& settin
  }
  if(mesh.vertices.empty())throw std::runtime_error("FBX contains no selected visual geometry");
  if(!GenerateMeshTangents(mesh))throw std::runtime_error("FBX tangent generation failed");
- mesh.skeletal=asset;report.skinJoints=s.skinNodes.size();report.parts=mesh.primitives.size();report.vertices=mesh.vertices.size();report.diagnostics.push_back({"warning","fbx-material-approximation",path,"","Remap material slots for unsupported appearance","FBX factors/maps converted to Judas metallic/roughness; source shader graphs are not reproduced"});result=std::move(mesh);error.clear();return true;
+ mesh.skeletal=asset;report.skinJoints=s.skinNodes.size();report.parts=mesh.primitives.size();report.vertices=mesh.vertices.size();report.diagnostics.push_back({"warning","fbx-material-approximation",path,"","Remap material slots for unsupported appearance","FBX factors/maps converted to Judas metallic/roughness; source shader graphs are not reproduced"});JudasImport::InspectScale(path,settings,mesh,report);result=std::move(mesh);error.clear();return true;
  }catch(const std::exception& e){error=std::string("Model import: ")+e.what();report.diagnostics.push_back({"error","import-failed",path,"","Correct source/settings or remap dependency; last generation remains intact",error});return false;}}
 bool ImportMotionSource(const std::string& path,const ModelImportSettings& settings,MeshData& result,ModelImportReport& report,std::string& error){JUDAS_PROFILE_SCOPE("Motion source normalization");try{
  if(std::filesystem::file_size(path)>256*1024*1024)throw std::runtime_error("motion source exceeds 256 MiB");

@@ -1500,6 +1500,10 @@ add_executable(judas_model_reimport_tests tests/ModelReimportTests.cpp)
 target_link_libraries(judas_model_reimport_tests PRIVATE judas_model_import)
 judas_warnings(judas_model_reimport_tests)
 
+add_executable(judas_model_import_scale_tests tests/ModelImportScaleTests.cpp)
+target_link_libraries(judas_model_import_scale_tests PRIVATE judas_model_import)
+judas_warnings(judas_model_import_scale_tests)
+
 add_executable(judas_model_runtime_tests tests/ModelRuntimeTests.cpp)
 target_link_libraries(judas_model_runtime_tests PRIVATE judas_engine)
 

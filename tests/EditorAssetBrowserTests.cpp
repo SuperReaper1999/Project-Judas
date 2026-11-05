@@ -1,6 +1,8 @@
 #include "AssetCook.h"
 #include "AssetDatabase.h"
 #include "Project.h"
+#include "ModelCook.h"
+#include "ModelImportScale.h"
 #include "editor/AssetBrowserModel.h"
 #include "editor/AssetBrowserPanel.h"
 #include "editor/AssetCookPanelTask.h"
@@ -121,6 +123,56 @@ int main() {
     Check(!fs::exists(blocked->destination) && !publishing.assetCookTask &&
               requests.trackAssetPath.empty(),
           "previous-project completion cannot publish into the current authoring project");
+    // Real cooked model publication pauses on scale advice, even while the
+    // browser is hidden, and retains the accepted generation until confirmed.
+    const auto largeSource = root / "large.obj";
+    std::ofstream(largeSource) << "o wall\nv 0 0 0\nv 200 0 0\nv 0 200 0\nf 1 2 3\n";
+    std::string scaleRecipe;
+    Check(CreateModelRecipe(root.string(), largeSource.string(), "Assets/large.judasmodel", scaleRecipe, error),
+          "scale-review fixture creates a real source-owned import recipe");
+    auto large = std::make_shared<ModelCookTask>();
+    Check(CookModelRecipe(scaleRecipe, *large) && JudasImport::ScaleWarning(large->report),
+          "real model cook exposes suspicious normalized dimensions before publication");
+    large->done = true;
+    publishing.mode = EditorMode::Edit;
+    publishing.importTask = large;
+    publishing.importPublished = false;
+    publishing.importScaleConfirmed.reset();
+    publishing.importScalePrompted.reset();
+    const auto lastGood = std::make_shared<ModelCookTask>();
+    publishing.importAccepted = lastGood;
+    publishing.showAssetBrowser = false;
+    requests = {};
+    PumpEditorAssetWorkflow(publishing, requests);
+    Check(EditorModelScaleReviewPending(publishing) && !fs::exists(large->output) &&
+              publishing.importAccepted == lastGood && !requests.rescanAssets &&
+              publishing.showAssetBrowser && publishing.selectModelImportTools,
+          "100x review reveals its controls and cannot silently replace the last accepted asset");
+    publishing.importScaleConfirmed = large;
+    PumpEditorAssetWorkflow(publishing, requests);
+    Check(publishing.importPublished && publishing.importAccepted == large &&
+              fs::is_regular_file(large->output) && requests.rescanAssets,
+          "explicit keep-scale confirmation publishes the intact legitimate large model");
+    auto repeated = std::make_shared<ModelCookTask>();
+    Check(CookModelRecipe(scaleRecipe, *repeated) && repeated->unchanged &&
+              JudasImport::ScaleWarning(repeated->report),
+          "unchanged receipt retains scale advice for a later editor session");
+    repeated->done = true;
+    publishing.importTask = repeated;
+    publishing.importPublished = false;
+    Check(EditorModelScaleReviewPending(publishing),
+          "approval belongs to the exact cooked task and cannot leak to a later direct reimport");
+    requests = {};
+    publishing.mode = EditorMode::Play;
+    PumpEditorAssetWorkflow(publishing, requests);
+    Check(!publishing.importPublished && !requests.rescanAssets,
+          "scale confirmation cannot bypass the existing Edit-only publication boundary");
+    publishing.mode = EditorMode::Edit;
+    repeated->cancel = true;
+    publishing.importPublished = true; // same deliberate cancel action as the card
+    PumpEditorAssetWorkflow(publishing, requests);
+    Check(publishing.importAccepted == large && !requests.rescanAssets,
+          "cancelling scale review leaves the last accepted model and asset demand intact");
     fs::remove_all(root);
     std::printf("SUMMARY %d checks %d failures\n", checks, failures);
     return failures ? 1 : 0;

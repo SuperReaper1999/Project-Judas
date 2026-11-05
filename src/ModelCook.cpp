@@ -1,4 +1,5 @@
 #include "ModelCook.h"
+#include "ModelImportScale.h"
 #include "modding/ModRuntime.h"
 #include "PerformanceProfiler.h"
 #include "ModelArchive.h"
@@ -22,6 +23,15 @@ void Require(bool b,const std::string& e){if(!b)throw std::runtime_error(e);}
 Json ReadJson(const fs::path& path){JUDAS_PROFILE_SCOPE("Model recipe/receipt parsing");std::ifstream f(path);Require(bool(f),"cannot read recipe: "+path.string());Require(fs::file_size(path)<=4*1024*1024,"recipe/report exceeds 4 MiB");return Json::parse(f,[](int depth,Json::parse_event_t,const Json&){Require(depth<48,"recipe nesting bound");return true;},true,false);}
 void Write(const fs::path& p,const void* data,size_t size){fs::create_directories(p.parent_path());std::ofstream f(p,std::ios::binary);f.write(static_cast<const char*>(data),size);Require(bool(f),"write failed: "+p.string());}
 void WriteJson(const fs::path& p,const Json& j){auto text=j.dump(2)+'\n';Write(p,text.data(),text.size());}
+void RestoreDiagnostics(const Json& value, ModelImportReport& report) {
+ if(!value.contains("diagnostics"))return;
+ const auto& diagnostics=value.at("diagnostics");
+ Require(diagnostics.is_array()&&diagnostics.size()<=4096,"import diagnostic bound");
+ for(const auto& d:diagnostics)report.diagnostics.push_back({d.at("severity"),d.at("code"),d.value("source",std::string()),d.value("node",std::string()),d.value("action",std::string()),d.at("message"),d.value("face",-1),d.value("vertex",-1)});
+}
+Json DiagnosticRecords(const ModelImportReport& report) {
+ Json records=Json::array();for(const auto& d:report.diagnostics)records.push_back({{"severity",d.severity},{"code",d.code},{"source",fs::path(d.source).filename().string()},{"node",d.node},{"face",d.face},{"vertex",d.vertex},{"message",d.message},{"action",d.action}});return records;
+}
 fs::path Relative(const fs::path& root,const std::string& path){auto p=fs::weakly_canonical(root/path);auto relative=p.lexically_relative(root);Require(!relative.empty()&&!relative.is_absolute()&&*relative.begin()!="..","recipe path outside approved project: "+path);return p;}
 std::string Hash(const fs::path& p){JUDAS_PROFILE_SCOPE("Model content hashing");std::string h,e;Require(SceneFingerprintSha256File(p.string(),h,e),e);return h;}
 std::string Stamp(const fs::path& p){return ImportFileStamp(p);}
@@ -148,7 +158,7 @@ bool CookModelRecipe(const std::string& recipe,ModelCookTask& t){JUDAS_PROFILE_S
   if(same){
    if(t.previewRequired&&!decoded){std::vector<uint8_t> bytes;Require(ReadWholeFile(t.output,bytes,error)&&DecodeModelArchive(bytes.data(),bytes.size(),accepted,error),error);++t.decodedProducts;decoded=true;}
    if(t.previewRequired)t.preview=std::make_shared<MeshData>(std::move(accepted));
-   t.report.sourceBones=previous.at("sourceBones");t.report.hierarchyNodes=previous.at("hierarchyNodes");t.report.skinJoints=previous.at("skinPaletteEntries");t.report.parts=previous.at("parts").size();t.report.vertices=previous.value("vertices",size_t(0));t.report.sourceUnitMeters=previous.value("sourceUnitMeters",1.0);
+   t.report.sourceBones=previous.at("sourceBones");t.report.hierarchyNodes=previous.at("hierarchyNodes");t.report.skinJoints=previous.at("skinPaletteEntries");t.report.parts=previous.at("parts").size();t.report.vertices=previous.value("vertices",size_t(0));t.report.sourceUnitMeters=previous.value("sourceUnitMeters",1.0);RestoreDiagnostics(previous,t.report);if(t.preview)JudasImport::InspectScale(source.string(),ImportSettings(root,j.value("settings",Json::object())),*t.preview,t.report);
    VerifyInputs(t,root,Json::parse(t.importRecord));CheckCancelled(t);t.unchanged=t.success=true;t.progress=100;return true;
   }
  }
@@ -158,8 +168,8 @@ bool CookModelRecipe(const std::string& recipe,ModelCookTask& t){JUDAS_PROFILE_S
  auto cache=root/".cache"/"model-import"/(inputs[j.at("source").get<std::string>()].get<std::string>()+"-"+SceneFingerprintSha256(options.dump()+Revision));
  bool cacheValid=fs::exists(cache.string()+".judasmodel")&&fs::exists(cache.string()+".json");
  Json cacheInfo;if(cacheValid)try{cacheInfo=ReadJson(cache.string()+".json");cacheValid=cacheInfo.value("payloadHash",std::string())==Hash(cache.string()+".judasmodel");for(auto it=cacheInfo.at("dependencies").begin();it!=cacheInfo.at("dependencies").end();++it){auto path=Relative(root,it.key());if(!fs::exists(path)||Hash(path)!=it.value())cacheValid=false;}}catch(const std::exception&){cacheValid=false;}
- if(cacheValid){std::vector<uint8_t> cached;Require(ReadWholeFile(cache.string()+".judasmodel",cached,error)&&DecodeModelArchive(cached.data(),cached.size(),mesh,error),error);t.report.sourceBones=cacheInfo.at("sourceBones");t.report.hierarchyNodes=cacheInfo.at("nodes");t.report.skinJoints=mesh.skeletal?mesh.skeletal->skeleton.skinNodes.size():0;t.report.parts=mesh.primitives.size();t.report.vertices=mesh.vertices.size();for(auto it=cacheInfo.at("dependencies").begin();it!=cacheInfo.at("dependencies").end();++it)t.report.dependencies.push_back(Relative(root,it.key()).string());}
- else {Require(ImportModelSource(source.string(),settings,mesh,t.report,error),error);std::vector<uint8_t> cached;Require(EncodeModelArchive(mesh,cached,error),error);Json deps=Json::object();for(auto& p:t.report.dependencies){auto rel=fs::weakly_canonical(p).lexically_relative(root);Require(!rel.empty()&&!rel.is_absolute()&&*rel.begin()!="..","copy/remap texture into project Sources");deps[rel.generic_string()]=Hash(p);}auto payloadHash=AtomicCache(cache.string()+".judasmodel",cached.data(),cached.size());AtomicCacheJson(cache.string()+".json",{{"sourceBones",t.report.sourceBones},{"nodes",t.report.hierarchyNodes},{"dependencies",deps},{"payloadHash",payloadHash}});}
+ if(cacheValid){std::vector<uint8_t> cached;Require(ReadWholeFile(cache.string()+".judasmodel",cached,error)&&DecodeModelArchive(cached.data(),cached.size(),mesh,error),error);t.report.sourceBones=cacheInfo.at("sourceBones");t.report.hierarchyNodes=cacheInfo.at("nodes");t.report.skinJoints=mesh.skeletal?mesh.skeletal->skeleton.skinNodes.size():0;t.report.parts=mesh.primitives.size();t.report.vertices=mesh.vertices.size();t.report.sourceUnitMeters=cacheInfo.value("sourceUnitMeters",0.0);RestoreDiagnostics(cacheInfo,t.report);for(auto it=cacheInfo.at("dependencies").begin();it!=cacheInfo.at("dependencies").end();++it)t.report.dependencies.push_back(Relative(root,it.key()).string());}
+ else {Require(ImportModelSource(source.string(),settings,mesh,t.report,error),error);std::vector<uint8_t> cached;Require(EncodeModelArchive(mesh,cached,error),error);Json deps=Json::object();for(auto& p:t.report.dependencies){auto rel=fs::weakly_canonical(p).lexically_relative(root);Require(!rel.empty()&&!rel.is_absolute()&&*rel.begin()!="..","copy/remap texture into project Sources");deps[rel.generic_string()]=Hash(p);}auto payloadHash=AtomicCache(cache.string()+".judasmodel",cached.data(),cached.size());AtomicCacheJson(cache.string()+".json",{{"sourceBones",t.report.sourceBones},{"nodes",t.report.hierarchyNodes},{"sourceUnitMeters",t.report.sourceUnitMeters},{"diagnostics",DiagnosticRecords(t.report)},{"dependencies",deps},{"payloadHash",payloadHash}});}
  t.progress=45;CheckCancelled(t);
  for(auto& path:t.report.dependencies){auto relative=fs::weakly_canonical(path).lexically_relative(root);Require(!relative.empty()&&!relative.is_absolute()&&*relative.begin()!="..","dependency must be copied/remapped into project-owned Sources: "+path);inputs[relative.generic_string()]=Hash(path);}
  if(mesh.skeletal){
@@ -226,7 +236,7 @@ bool CookModelRecipe(const std::string& recipe,ModelCookTask& t){JUDAS_PROFILE_S
  mesh.importRecord=Json{{"recipe",fs::path(t.recipe).lexically_relative(root).generic_string()},{"revision",Revision},{"digest",digest},{"inputs",inputs}}.dump();
  if(previous.contains("joints")&&mesh.skeletal){std::set<std::string> keys;for(size_t i=0;i<mesh.skeletal->skeleton.names.size();++i)keys.insert(Key(mesh.skeletal->skeleton,int(i)));for(auto& key:previous["joints"])Require(keys.count(key.get<std::string>()),"required joint renamed/deleted: "+key.get<std::string>()+"; remap authored consumers explicitly before accepting a replacement");}
  if(!mesh.skeletal)ApplyAliases(mesh,options);
- StableMaterials(mesh,previous);SelectParts(mesh,options);SortParts(mesh,previous);
+ StableMaterials(mesh,previous);SelectParts(mesh,options);SortParts(mesh,previous);JudasImport::InspectScale(source.string(),settings,mesh,t.report);
  auto manifest=Report(t,mesh,inputs,digest);auto record=Json::parse(mesh.importRecord);record["manifest"]=manifest;mesh.importRecord=record.dump();
  t.importRecord=mesh.importRecord;VerifyInputs(t,root,Json::parse(t.importRecord));
  t.progress=75;CheckCancelled(t);std::vector<uint8_t> bytes;Require(EncodeModelArchive(mesh,bytes,error),error);t.temporary=StagePath(t.output);Write(t.temporary,bytes.data(),bytes.size());auto report=Report(t,mesh,inputs,digest);t.outputHash=Hash(t.temporary);report["outputHash"]=t.outputHash;report["importRecord"]=t.importRecord;report["recordHash"]=SceneFingerprintSha256(t.importRecord);WriteJson(t.temporary+".report",report);CheckCancelled(t);t.preview=std::make_shared<MeshData>(std::move(mesh));t.success=true;t.progress=95;return true;

@@ -23,6 +23,26 @@ under `Sources/`, saves an editable JSON recipe under `Imports/` and starts the
 worker. **Import & tools → Model import / reimport** shows progress and the
 accepted preview. A valid import also appears in the ordinary asset list.
 
+Suspicious scale now pauses editor publication for an explicit review in
+**Import & tools**. The warning shows the normalized rest-pose X/Y/Z dimensions
+in **metres** and explains a possible 100× centimetres/metres mismatch. Choose
+**Keep this scale and import** for an intentional large level or tiny prop, or
+**Cancel / review units**, change **Source metres per unit**, and retry. The
+previous accepted model remains intact until confirmation; nothing is silently
+rescaled. The source-only registration option explicitly bypasses normalization
+and this scale review.
+
+This is authoring advice, not knowledge of an object's intended real size. It
+checks selected rendered parts, including their rest-pose skin/bind transforms:
+dimensions of 100 m or more, nonzero dimensions of 1 cm or less, and effective
+geometry transforms around 100× or larger warrant review. A distant world
+position is not a large dimension. Correctly normalized centimetre FBX rigs are
+not warned merely for retaining a compensated 100× hierarchy scale; a correct
+0.01 unit override that produces ordinary metre-size geometry clears size advice.
+Warnings remain in import reports through receipt/cache reuse, including CLI
+success-with-warnings (exit 2). CLI publication remains an explicit author/tool
+operation and does not display the editor confirmation card.
+
 Use **Source and recipe settings** in that section to review units, basis,
 sampling and remaps. To configure these before the first cook, use **Copy source
 and create import recipe**, review the settings and then choose **Import / reimport / retry**.

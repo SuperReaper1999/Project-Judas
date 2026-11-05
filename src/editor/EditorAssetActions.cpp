@@ -81,6 +81,8 @@ bool QueueEditorModelCook(EditorPanelState& state) {
     }
     state.importTask = std::move(task);
     state.importPublished = false;
+    state.importScaleConfirmed.reset();
+    state.importScalePrompted.reset();
     state.status = "Cooking model. Preview and placement will be available under Import & tools.";
     return true;
 }
@@ -156,6 +158,9 @@ void DrawEditorImportReview(EditorPanelState& state, EditorRequests& requests) {
             const bool showDirect = !model || ImGui::TreeNode("Register source only");
             if (showDirect) {
                 ImGui::TextWrapped("Copy and register the selected file as-is. The original is kept.");
+                if (model)
+                    ImGui::TextWrapped("Source-only skips model unit normalization and scale review. "
+                                       "Use Cook & import model to inspect metre dimensions and possible 100x mismatches.");
                 char destination[512];
                 std::snprintf(destination, sizeof(destination), "%s", state.importDestinationInput.c_str());
                 ImGui::TextUnformatted("Destination inside Assets (optional)");

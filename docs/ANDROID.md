@@ -1,8 +1,8 @@
 # Native Android games
 
 <!-- judas-release-status:start -->
-Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
-[Source notes](ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
+[Source notes](ALPHA_V2_0_0_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
 [Support boundaries](ALPHA_SUPPORT_MATRIX.md).
 
 Source identity and publication are separate. The

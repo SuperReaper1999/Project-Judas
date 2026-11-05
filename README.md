@@ -10,8 +10,8 @@ transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
 <!-- judas-release-status:start -->
-Source identity is **Judas Engine Alpha v1.2.5** (`1.2.5-alpha.1`).
-[Source notes](docs/ALPHA_V1_2_5_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
+Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
+[Source notes](docs/ALPHA_V2_0_0_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
 [Support boundaries](docs/ALPHA_SUPPORT_MATRIX.md).
 
 Source identity and publication are separate. The

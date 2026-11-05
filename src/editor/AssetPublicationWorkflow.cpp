@@ -3,6 +3,7 @@
 #include "AssetCookPanelTask.h"
 #include "EditorPanels.h"
 #include "ModelCook.h"
+#include "ModelImportScale.h"
 #include "Project.h"
 #include <filesystem>
 
@@ -28,7 +29,19 @@ void PublishFinishedEditorImport(EditorPanelState &state, EditorRequests &reques
     if (relative.empty() || relative.is_absolute() || *relative.begin() == "..") {
         task.cancel = true;
         state.status = "Import belongs to previous project; publication cancelled";
-    } else if (PublishModelImport(task, error)) {
+        state.importPublished = true;
+        return;
+    }
+    if (EditorModelScaleReviewPending(state)) {
+        state.status = "Model ready: review the possible 100x scale mismatch under Import & tools before publication.";
+        if (state.importScalePrompted.lock() != state.importTask) {
+            state.showAssetBrowser = true;
+            state.selectModelImportTools = true;
+            state.importScalePrompted = state.importTask;
+        }
+        return;
+    }
+    if (PublishModelImport(task, error)) {
         state.importAccepted = state.importTask;
         state.status = task.unchanged ? "Unchanged import; reused accepted model"
                                       : "Published complete model; sources retained";
@@ -41,6 +54,13 @@ void PublishFinishedEditorImport(EditorPanelState &state, EditorRequests &reques
     state.importPublished = true;
 }
 } // namespace
+
+bool EditorModelScaleReviewPending(const EditorPanelState &state) {
+    return state.importTask && state.importTask->done.load(std::memory_order_acquire) &&
+           state.importTask->success && !state.importPublished &&
+           state.importScaleConfirmed.lock() != state.importTask &&
+           JudasImport::ScaleWarning(state.importTask->report);
+}
 
 void PumpEditorAssetWorkflow(EditorPanelState &state, EditorRequests &requests) {
     if (!state.project || !state.project->IsLoaded() || !state.assets || state.mode != EditorMode::Edit)
