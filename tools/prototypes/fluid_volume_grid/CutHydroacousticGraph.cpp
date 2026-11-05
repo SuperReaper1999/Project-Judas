@@ -261,15 +261,24 @@ double CheckPhysicalRows(const CompactGraph& graph,
 
 } // namespace
 
-bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
-                               const std::vector<CutHydroacousticGraphLink>& links,
-                               const std::vector<double>& rhs, double volumeTolerance,
-                               CutHydroacousticGraphResult& output, std::string& error) {
+static bool SolveGraph(const std::vector<double>& groundStorage,
+                       const std::vector<CutHydroacousticGraphLink>& links,
+                       const std::vector<double>& rhs, double volumeTolerance,
+                       const std::vector<double>* rowTolerance,
+                       CutHydroacousticGraphResult& output, std::string& error,
+                       CutHydroacousticGraphFailure* diagnostic) {
     const auto count = rhs.size();
     if (count == 0 || count >= absent || links.size() >= absent ||
         groundStorage.size() != count || !(volumeTolerance > 0. && std::isfinite(volumeTolerance)))
         return Fail(error, "invalid hydroacoustic pressure graph dimensions or tolerance");
 
+    if (rowTolerance) {
+        if (rowTolerance->size() != count)
+            return Fail(error, "hydroacoustic row tolerances do not match the graph");
+        for (double tolerance : *rowTolerance)
+            if (!(tolerance > 0. && std::isfinite(tolerance)))
+                return Fail(error, "invalid hydroacoustic local row tolerance");
+    }
     CompactGraph graph;
     if (!graph.Build(groundStorage, links, rhs, error))
         return false;
@@ -279,7 +288,12 @@ bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
     CutHydroacousticGraphResult result;
     const auto audit = [&] {
         result.maximumResidual = CheckPhysicalRows(graph, groundStorage, links, rhs, pressure, physicalRows);
-        return result.maximumResidual <= volumeTolerance;
+        if (!rowTolerance)
+            return result.maximumResidual <= volumeTolerance;
+        for (std::size_t i = 0; i < count; ++i)
+            if (!(std::abs(physicalRows[i].Value()) <= (*rowTolerance)[i]))
+                return false;
+        return true;
     };
 
     if (!audit()) {
@@ -305,7 +319,12 @@ bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
                 residual[i] -= step * applied[i];
                 largest = std::max(largest, std::abs(residual[i]));
             }
-            const bool refresh = largest <= volumeTolerance || (result.iterations + 1) % 256 == 0;
+            bool recursiveClosed = largest <= volumeTolerance;
+            if (recursiveClosed && rowTolerance)
+                for (std::size_t i = 0; i < active; ++i)
+                    recursiveClosed = recursiveClosed &&
+                        std::abs(residual[i]) <= (*rowTolerance)[graph.original[i]];
+            const bool refresh = recursiveClosed || (result.iterations + 1) % 256 == 0;
             if (refresh) {
                 if (audit()) {
                     ++result.iterations;
@@ -322,8 +341,33 @@ bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
                 direction[i] = scaled[i] + ratio * direction[i];
             product = next;
         }
-        if (!converged && !audit())
+        if (!converged && !audit()) {
+            if (diagnostic && rowTolerance) {
+                CutHydroacousticGraphFailure failure;
+                failure.iterations = result.iterations;
+                for (std::size_t i = 0; i < count; ++i) {
+                    const double ratio = std::abs(physicalRows[i].Value()) / (*rowTolerance)[i];
+                    if (ratio > failure.normalizedResidual) {
+                        failure.normalizedResidual = ratio;
+                        failure.row = i;
+                    }
+                }
+                const auto index = graph.indices[failure.row];
+                failure.pressure = index == absent ? 0. : pressure[index];
+                failure.storage = groundStorage[failure.row];
+                failure.source = rhs[failure.row];
+                failure.tolerance = (*rowTolerance)[failure.row];
+                failure.residual = physicalRows[failure.row].Value();
+                for (const auto& link : links) {
+                    if (link.left != failure.row && link.right != failure.row) continue;
+                    const auto other = link.left == failure.row ? link.right : link.left;
+                    const auto j = graph.indices[other];
+                    failure.neighbors.push_back({link.conductance, j == absent ? 0. : pressure[j]});
+                }
+                *diagnostic = std::move(failure);
+            }
             return Fail(error, "hydroacoustic pressure graph failed original row balance");
+        }
     }
 
     result.pressure.resize(count);
@@ -332,6 +376,24 @@ bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
     output = std::move(result);
     error.clear();
     return true;
+}
+
+bool SolveCutHydroacousticGraph(const std::vector<double>& groundStorage,
+                               const std::vector<CutHydroacousticGraphLink>& links,
+                               const std::vector<double>& rhs, double volumeTolerance,
+                               CutHydroacousticGraphResult& output, std::string& error) {
+    return SolveGraph(groundStorage, links, rhs, volumeTolerance, nullptr, output, error, nullptr);
+}
+
+bool SolveCutHydroacousticGraphLocal(const std::vector<double>& groundStorage,
+                                    const std::vector<CutHydroacousticGraphLink>& links,
+                                    const std::vector<double>& rhs,
+                                    const std::vector<double>& rowTolerance,
+                                    CutHydroacousticGraphResult& output, std::string& error,
+                                    CutHydroacousticGraphFailure* diagnostic) {
+    const double maximum = rowTolerance.empty() ? 0. :
+        *std::max_element(rowTolerance.begin(), rowTolerance.end());
+    return SolveGraph(groundStorage, links, rhs, maximum, &rowTolerance, output, error, diagnostic);
 }
 
 } // namespace judas::volume_grid

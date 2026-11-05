@@ -1,0 +1,49 @@
+{
+  "scope": "analytic oracle only; no engine acceptance",
+  "cases": [
+    {
+      "dt": "1/4",
+      "incomingWater": "1/2",
+      "analyticEndWater": "1/2",
+      "analyticOutletWater": "0",
+      "analyticOutletGas": "1/2",
+      "frozenOutletEndWater": "1/2",
+      "frozenOutletEndGasMass": "3/5",
+      "frozenEOSResidual": "0",
+      "frozenStatePhysical": true
+    },
+    {
+      "dt": "1/2",
+      "incomingWater": "1",
+      "analyticEndWater": "1",
+      "analyticOutletWater": "0",
+      "analyticOutletGas": "1",
+      "frozenOutletEndWater": "1",
+      "frozenOutletEndGasMass": "0",
+      "frozenEOSResidual": "0",
+      "frozenStatePhysical": true
+    },
+    {
+      "dt": "1",
+      "incomingWater": "2",
+      "analyticEndWater": "1",
+      "analyticOutletWater": "1",
+      "analyticOutletGas": "1",
+      "frozenOutletEndWater": "2",
+      "frozenOutletEndGasMass": "-6/5",
+      "frozenEOSResidual": "0",
+      "frozenStatePhysical": false
+    },
+    {
+      "dt": "2",
+      "incomingWater": "4",
+      "analyticEndWater": "1",
+      "analyticOutletWater": "3",
+      "analyticOutletGas": "1",
+      "frozenOutletEndWater": "4",
+      "frozenOutletEndGasMass": "-18/5",
+      "frozenEOSResidual": "0",
+      "frozenStatePhysical": false
+    }
+  ]
+}

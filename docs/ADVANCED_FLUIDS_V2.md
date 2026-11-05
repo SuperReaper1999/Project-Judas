@@ -1,5 +1,8 @@
 # Advanced Fluids V2 — first integration gate
 
+Follow-up: [bounded connected-material ownership correction](FLUID_CONNECTED_MATERIAL_OWNERS.md).
+That report is the newer status; the first checkpoint below is retained as evidence.
+
 Status: **Stage 1 blocked; no runtime backend integrated.** This is an
 Experimental implementation/evidence checkpoint, not completion of the approved
 four-stage delivery. Main, Basic Water, the production particle solver, Alpha
