@@ -55,7 +55,18 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
         e.runtime.requested=settings.backend;
         if(e.pool.Paused()){e.runtime.paused=true;continue;}
         e.runtime.paused=false;
-        if(settings.collision&&!e.pool.PendingStep()){
+        e.runtime.snapshotMs=0;
+        // CPU births from rate/initial burst occur after UpdateWorld integrates
+        // the existing population. Empty CPU steps still advance that emission
+        // clock, but have no collision queries to prepare. Queued explicit
+        // bursts are different: fallback consumes them before integration.
+        // Never infer GPU emptiness from its asynchronous live-count readback.
+        const bool emptyCpu=!e.gpu&&(settings.backend==ParticleBackend::Cpu||e.cpuPinned)&&
+                            e.pool.Particles().empty()&&e.gpuBurst==0&&!e.pool.PendingStep();
+        if(!settings.collision||emptyCpu){
+            e.runtime.snapshotBodies=0;e.runtime.snapshotColliders=0;e.runtime.snapshotTriangles=0;
+        }
+        if(settings.collision&&!emptyCpu&&!e.pool.PendingStep()){
             const auto prepare=Clock::now();
             auto next=e.collision?std::make_shared<JudasParticles::CollisionSnapshot>(*e.collision):
                                   std::make_shared<JudasParticles::CollisionSnapshot>();

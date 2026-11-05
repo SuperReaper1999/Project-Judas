@@ -50,6 +50,41 @@ ParticleEmitterSettings Settings() {
     s.restitution = 1; s.friction = 0;
     return s;
 }
+void EmptyCollisionSteps() {
+    auto settings = Settings();
+    CpuParticles cpu;
+    std::vector<VisualParticle> particles;
+    Check(cpu.Update(particles, settings, .05f, {}, zero, nullptr, {}, 1) &&
+              cpu.CompletedSeconds() == .05f && !cpu.PendingStep(),
+          "empty collision step advances time without world geometry");
+    particles.push_back({{0, 1, 0}, {0, -4, 0}, 0});
+    const auto before = particles[0];
+    Check(!cpu.Update(particles, settings, .05f, {}, zero, nullptr, {}, 2) &&
+              particles[0].position == before.position && particles[0].velocity == before.velocity &&
+              particles[0].age == before.age && cpu.CompletedSeconds() == 0,
+          "live collision particle still rejects missing geometry without advancing");
+
+    PhysicsWorld world; world.Init();
+    world.CreateStaticBox({0, -.1f, 0}, {4, .1f, 4}, 0, 0);
+    const auto snapshot = Capture(world, .05);
+    settings.burst = 1; settings.loop = true; settings.rate = 4;
+    settings.lifetime = .15f; settings.velocity = {0, -8, 0};
+    settings.velocityVariation = {.1f, .1f, .1f};
+    VisualParticlePool baseline(settings), candidate(settings);
+    bool identical = true;
+    for (unsigned tick = 0; tick < 40; ++tick) {
+        baseline.UpdateWorld(.05f, {0, .6f, 0}, {1, 0, 0, 0}, {1, 1, 1}, zero, snapshot, {}, tick);
+        candidate.UpdateWorld(.05f, {0, .6f, 0}, {1, 0, 0, 0}, {1, 1, 1}, zero,
+                              candidate.Particles().empty() ? nullptr : snapshot, {}, tick);
+        const auto &a = baseline.Particles(); const auto &b = candidate.Particles();
+        identical &= a.size() == b.size();
+        for (std::size_t i = 0; i < std::min(a.size(), b.size()); ++i)
+            identical &= a[i].position == b[i].position && a[i].velocity == b[i].velocity && a[i].age == b[i].age;
+        identical &= baseline.RuntimeStats().contacts == candidate.RuntimeStats().contacts &&
+                     candidate.RuntimeStats().diagnostic.empty();
+    }
+    Check(identical, "omitting only empty-step geometry preserves exact seeded births, ages, trajectories and contacts");
+}
 void KnownAnswers() {
     PhysicsWorld world;
     world.Init();
@@ -313,7 +348,7 @@ void ImpactsAndLifecycle() {
 } // namespace
 int main() {
     try {
-        KnownAnswers(); ReliableResume(); AttachmentsAndSettings();
+        EmptyCollisionSteps(); KnownAnswers(); ReliableResume(); AttachmentsAndSettings();
         LocalFramesAndBirths(); ImpactsAndLifecycle();
     } catch (const std::exception& error) {
         Check(false, error.what());

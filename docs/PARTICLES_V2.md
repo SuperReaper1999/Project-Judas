@@ -95,6 +95,31 @@ The emitting object's own native body is excluded; other bodies follow
 the source body's geometry. This owner filter is independent of camera culling.
 Gravity and wind come from the engine's existing fields when explicitly enabled.
 
+An empty, known-CPU emitter does not prepare a collision snapshot. Its emission
+clock still advances: rate and authored initial-burst births are created at the
+end of the empty step, then receive fresh geometry before their first movement.
+Explicit bursts already present at step entry require geometry immediately.
+Queued Auto/GPU births and GPU populations are not considered empty from delayed
+GPU diagnostics. Pending reliable CPU work retains its original frozen snapshot.
+After returning to idle, cached geometry history is retained but `snapshotMs`,
+`snapshotBodies`, `snapshotColliders` and `snapshotTriangles` report zero work.
+
+Active emitters still capture independently, with their own layer/owner filters
+and geometry revision history. There is no general cross-emitter snapshot cache.
+The standalone collision microbenchmark excludes capture cost; world-level
+preparation must also be measured when assessing a game. A headless reproduction
+is available with `build/judas_particle_world_tests --idle-benchmark`.
+
+On 5 November 2026, Release GCC/Linux on Ryzen 5 5600, three alternating-order
+before/after pairs (250 static boxes, 30 warm-up + 300 measured ticks per process)
+measured twelve idle CPU collision emitters at **3.244–3.248 ms median before**
+and **0.00385–0.00389 ms after**. Before p95 was 3.273–3.692 ms, worst
+4.038–5.834 ms; after p95 was 0.00388–0.00393 ms, worst 0.00957–0.01189 ms.
+This isolates `UpdateVisualParticles`; it is not a measured whole-game speedup
+or a reproduction of the RPG's reported 61/25-second end-to-end comparison.
+Raw results, original failing controls and qualification metadata are retained
+in `docs/evidence/particle-idle-cost/`. The RPG and its selected SDK were untouched.
+
 Wind is sampled once at the emitter per fixed step, then applies the simple
 acceleration `(windVelocity - particleVelocity) * 1/s`. It is a visual drag
 approximation, not a per-particle weather query or aerodynamic solver. Gravity

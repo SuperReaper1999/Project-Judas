@@ -60,7 +60,9 @@ bool CpuParticles::Update(std::vector<VisualParticle>& particles,const ParticleE
     const auto start=std::chrono::steady_clock::now();
     if(!s.work){
         s.stats.diagnostic.clear();
-        if(settings.collision&&!collision){s.stats.diagnostic="particle collision snapshot is not ready";return false;}
+        // An empty step has no sweeps; allow its emission clock to advance.
+        // Live particles must still refuse missing collision geometry.
+        if(settings.collision&&!collision&&!particles.empty()){s.stats.diagnostic="particle collision snapshot is not ready";return false;}
         Work w;w.settings=settings;w.pose=pose;w.collision=std::move(collision);w.origin=origin;w.tick=tick;w.dt=dt;
         w.prepared.reserve(particles.size());s.anchors.resize(particles.size());s.births.resize(particles.size());
         const auto previous=s.hasPose?s.lastPose:pose;

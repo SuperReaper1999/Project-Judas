@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <chrono>
+#include <cstring>
 #include <cstdio>
 #include <stdexcept>
 
@@ -30,6 +32,121 @@ Scene Fixture(ParticleBackend backend, bool collision = false) {
         floor.body = SceneBodyComponent{}; floor.body->halfExtents = {5, .5f, 5};
     }
     return scene;
+}
+// Isolates world-owned snapshot preparation from rendering and fixed-step physics.
+int IdleBenchmark() {
+    for (unsigned emitters : {0u, 1u, 12u}) {
+        Scene scene;
+        for (unsigned i = 0; i < 250; ++i) {
+            auto &body = scene.CreateObject("Static prop");
+            body.transform.position = {float(i % 25) * 3, 0, float(i / 25) * 3};
+            body.body = SceneBodyComponent{};
+        }
+        for (unsigned i = 0; i < emitters; ++i) {
+            auto &object = scene.CreateObject("Parked CPU effect");
+            object.transform.position = {0, -20, 0};
+            object.particleEmitter = ParticleEmitterSettings{};
+            auto &settings = *object.particleEmitter;
+            settings.backend = ParticleBackend::Cpu; settings.collision = true;
+            settings.rate = settings.burst = 0; settings.loop = false;
+            settings.maxParticles = 192; settings.collisionRadius = .01f;
+        }
+        RuntimeWorld world; world.legacyGameplay = false;
+        std::string error;
+        Require(world.Build(scene, nullptr, error), "headless idle fixture: " + error);
+        std::vector<double> rows;
+        for (unsigned tick = 0; tick < 330; ++tick) {
+            const auto start = std::chrono::steady_clock::now();
+            world.UpdateVisualParticles(1.f / 60);
+            const auto ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+            if (tick >= 30) rows.push_back(ms);
+        }
+        std::sort(rows.begin(), rows.end());
+        double sum = 0; for (double ms : rows) sum += ms;
+        std::printf("IDLE emitters=%u bodies=250 samples=300 mean_ms=%.9f median_ms=%.9f p95_ms=%.9f worst_ms=%.9f\n",
+                    emitters, sum / rows.size(), rows[150], rows[284], rows.back());
+        world.Destroy();
+    }
+    return 0;
+}
+void IdleCpuLifecycle() {
+    auto scene = Fixture(ParticleBackend::Cpu, true);
+    auto &settings = *scene.Objects()[0].particleEmitter;
+    settings.loop = false; settings.velocity = {0, -40, 0};
+    settings.useGravity = false; settings.restitution = 1; settings.collisionRadius = .1f;
+    RuntimeWorld world; world.legacyGameplay = false;
+    std::string error;
+    Require(world.Build(scene, nullptr, error), "CPU collision lifecycle builds without graphics: " + error);
+    world.UpdateVisualParticles(dt);
+    Require(!world.VisualEmitters()[0].collision && world.GetParticleRuntimeStats(1).snapshotBodies == 0 &&
+                world.GetParticleRuntimeStats(1).snapshotMs == 0,
+            "idle CPU emitter performs no collision capture");
+    Require(world.EmitParticleBurst(1, 1), "idle colliding CPU emitter accepts immediate burst");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision && world.GetParticleRuntimeStats(1).contacts == 1 &&
+                world.VisualEmitters()[0].pool.Particles()[0].velocity.y > 0,
+            "first live step captures geometry and bounces against the actual floor");
+    const auto snapshot = world.VisualEmitters()[0].collision;
+    Require(world.ControlParticles(1, "clear"), "clear retires the live CPU population");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision == snapshot && world.GetParticleRuntimeStats(1).snapshotMs == 0 &&
+                world.GetParticleRuntimeStats(1).snapshotBodies == 0,
+            "return to idle retains geometry history but reports no current capture work");
+    auto changed = world.VisualEmitters()[0].pool.settings;
+    changed.loop = true; changed.rate = 20;
+    Require(world.SetParticleSettings(1, changed), "enable ordinary rate emission on idle CPU emitter");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].pool.Particles().size() == 1 &&
+                world.VisualEmitters()[0].collision == snapshot,
+            "empty tick advances emission credit and creates a birth without moving it");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != snapshot && world.GetParticleRuntimeStats(1).contacts >= 2,
+            "automatic birth receives fresh collision before its first movement");
+    world.Destroy();
+
+    scene = Fixture(ParticleBackend::Cpu, true);
+    scene.Objects()[0].particleEmitter->burst = 1;
+    Require(world.Build(scene, nullptr, error), "authored initial-burst fixture builds");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].pool.Particles().size() == 1 && !world.VisualEmitters()[0].collision,
+            "authored initial burst is not lost when its initial empty step skips capture");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != nullptr,
+            "authored initial birth captures on the next step before movement");
+    world.Destroy();
+
+    scene = Fixture(ParticleBackend::Auto, true);
+    scene.Objects()[0].particleEmitter->velocity = {0, -40, 0};
+    scene.Objects()[0].particleEmitter->useGravity = false;
+    scene.Objects()[0].particleEmitter->collisionRadius = .1f;
+    Require(world.Build(scene, nullptr, error) && world.EmitParticleBurst(1, 1),
+            "Auto queues an explicit burst before headless fallback");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].cpuPinned && world.VisualEmitters()[0].collision &&
+                world.GetParticleRuntimeStats(1).contacts == 1,
+            "queued Auto fallback burst captures before moving and collides on that tick");
+    world.Destroy();
+
+    scene = Fixture(ParticleBackend::Cpu, true);
+    scene.Objects()[0].particleEmitter->burst = 1;
+    for (unsigned i = 0; i < 512; ++i) {
+        auto &body = scene.CreateObject("Snapshot limit control");
+        body.transform.position = {float(i) * 2, -10, 0};
+        body.body = SceneBodyComponent{};
+    }
+    Require(world.Build(scene, nullptr, error), "over-limit collision fixture builds");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].pool.Particles().size() == 1 &&
+                !world.VisualEmitters()[0].collision,
+            "idle emitter does not need geometry even in an over-limit world");
+    const auto before = world.VisualEmitters()[0].pool.Particles()[0];
+    world.UpdateVisualParticles(dt);
+    Require(world.GetParticleRuntimeStats(1).queryFailures == 1 &&
+                world.GetParticleRuntimeStats(1).diagnostic.find("snapshot unavailable") != std::string::npos &&
+                world.VisualEmitters()[0].pool.Particles()[0].position == before.position &&
+                world.VisualEmitters()[0].pool.Particles()[0].age == before.age,
+            "first live step still refuses over-limit geometry without silently disabling collision");
+    world.Destroy();
 }
 std::vector<JudasParticles::GpuParticleState> Read(JudasParticles::GpuParticles &gpu) {
     std::vector<JudasParticles::GpuParticleState> result;
@@ -220,8 +337,15 @@ void Portable(EngineHost &host) {
 }
 } // namespace
 
-int main() {
+int main(int argc, char **argv) {
     try {
+        if (argc == 2 && std::strcmp(argv[1], "--idle-benchmark") == 0) return IdleBenchmark();
+        if (argc == 2 && std::strcmp(argv[1], "--cpu-only") == 0) {
+            IdleCpuLifecycle();
+            std::printf("CPU world: %u checks PASS\n", checks);
+            return 0;
+        }
+        IdleCpuLifecycle();
         EngineHost host;
         std::string error;
         Require(host.Init("Particle world lifecycle", 128, 128, false, error), "actual renderer/compute context: " + error);

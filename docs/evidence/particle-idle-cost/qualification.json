@@ -1,0 +1,48 @@
+{
+  "timestamp_utc": "2026-11-05T19:47:24.243011+00:00",
+  "baseline_commit": "5de28d35e414a74d0aef9700c086fafd0c49570e",
+  "configuration": "CMake Release, /usr/bin/c++, Linux native; no Windows or Android qualification",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "kernel": "Linux 7.0.0-42-generic x86_64 GNU/Linux",
+  "cpu": "AMD Ryzen 5 5600",
+  "graphics_validation": "GTX 970, NVIDIA 580.178.04, modern GL4.6 and portable GL3.3 (native logs retained)",
+  "benchmark_scope": "UpdateVisualParticles only, headless, 250 static boxes; 0/1/12 idle CPU collision emitters; 30 warmup,300 measured ticks per case",
+  "matched_order": [
+    "before1",
+    "after1",
+    "after2",
+    "before2",
+    "before3",
+    "after3"
+  ],
+  "benchmark_commands": [
+    "cmake --build build --target judas_particle_world_tests -j2",
+    "build/judas_particle_world_tests --idle-benchmark"
+  ],
+  "baseline_reproduction": "Build the same --idle-benchmark test driver against the baseline engine commit. Retained baseline executable is .cache/particle-idle-cost/before-world-tests. The fixture is in tests/ParticleWorldTests.cpp; no renderer or physics stepping is timed.",
+  "baseline_binary_sha256": "6745320117b8bf755b4162c27358ed8fdbc1ba86f75536a18b72e1e4a64fdd9a",
+  "candidate_binary_sha256": "e0f006553da2bb9dfc6026e81426964c00e93429b57b97e6ea272e088cc1c34a",
+  "source_sha256": {
+    "src/particles/WorldParticles.cpp": "b9c5c437bed5074c903b17db2455e5b4522b4af725a2a7fce28efd4fd02684fa",
+    "src/particles/CpuParticles.cpp": "2b0d0bc5e109c0912083325068a94fca68a4d4adc88b018120ad443a340c99ac",
+    "tests/ParticleWorldTests.cpp": "d58f0c3c3692b5bb92cf385ea590a96043ff486289d32d573ba855d0abcabea4",
+    "tests/CpuParticlesTests.cpp": "d90bd40ee703e598a1be8c1b6bbc30af59c0a9f9eb275a9d9675e21050bcf4b7"
+  },
+  "checks": {
+    "cpu_particles": 48,
+    "collision_snapshot": 35,
+    "particle_persistence": 44,
+    "particle_scripting": 13,
+    "visual_particles": 33,
+    "world_headless": 17,
+    "world_modern_including_headless": 66,
+    "world_portable_including_headless": 22
+  },
+  "negative_controls": "Before correction, the new empty-step CPU check and world no-capture assertion fail. Original raw failures preserved.",
+  "limitations": [
+    "RPG reported 61s/25s whole-game comparison not independently rerun; original project and SDK untouched",
+    "Active emitters still capture independently",
+    "No GPU empty-population optimization; delayed GPU counts are not safe evidence",
+    "No main promotion, fluid unlock, release or packaged SDK update"
+  ]
+}
