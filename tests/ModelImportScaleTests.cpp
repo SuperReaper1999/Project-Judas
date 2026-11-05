@@ -80,7 +80,7 @@ void Pure() {
     JudasImport::InspectScale("selected.gltf",settings,mesh,report);
     Check(!JudasImport::ScaleWarning(report),"unselected/unreferenced vertices do not inflate the reported selected part bounds");
 }
-void Real(const fs::path &root) {
+void Real(const fs::path &root, const fs::path &fbxFixture) {
     fs::create_directories(root / "Assets"); const auto source=root/"large.obj";
     std::ofstream(source)<<"o wall\nv 0 0 0\nv 200 0 0\nv 0 200 0\nf 1 2 3\n";
     MeshData mesh;ModelImportSettings settings;ModelImportReport report;std::string error;
@@ -91,7 +91,7 @@ void Real(const fs::path &root) {
               glm::length(mesh.vertices[1].position-mesh.vertices[0].position)<=2.0001f,
           "explicit centimetre correction produces metre geometry and clears the size warning");
     ModelImportReport fbx;
-    Check(ImportModelSource("tests/fixtures/m66/pivot-centimetres.fbx",{},mesh,fbx,error)&&
+    Check(ImportModelSource(fbxFixture.string(),{},mesh,fbx,error)&&
               !JudasImport::ScaleWarning(fbx),
           "real metadata-normalized centimetre/pivot FBX remains a no-scale-warning negative control");
     std::string recipe;Check(CreateModelRecipe(root.string(),source.string(),"Assets/large.judasmodel",recipe,error),
@@ -119,11 +119,13 @@ void Real(const fs::path &root) {
 int main(int argc,char **argv) {
     std::setvbuf(stdout,nullptr,_IOLBF,0);
     try {
-        if(argc>2)throw std::invalid_argument("usage: ModelImportScaleTests [FRESH_OUTPUT]");
-        const auto root=argc==2?fs::absolute(argv[1]):fs::temp_directory_path()/
+        if(argc>3)throw std::invalid_argument("usage: ModelImportScaleTests [FRESH_OUTPUT [FBX_FIXTURE]]");
+        const auto root=argc>=2?fs::absolute(argv[1]):fs::temp_directory_path()/
             ("judas-scale-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+        const auto fbxFixture=argc==3?fs::absolute(argv[2]):
+            fs::path(__FILE__).parent_path()/"fixtures/m66/pivot-centimetres.fbx";
         if(fs::exists(root))throw std::invalid_argument("scale fixture requires a fresh output directory");
-        Pure();Real(root);
+        Pure();Real(root,fbxFixture);
     } catch(const std::exception &e){Check(false,e.what());}
     std::printf("Model scale: %u checks, %u failures\n",checks,failures);return failures?1:0;
 }

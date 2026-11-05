@@ -29,7 +29,7 @@
     {"name":"editor-hierarchy-selection","target":"judas_editor_hierarchy_selection_tests","groups":["editor","onboarding"]},
     {"name":"editor-hierarchy-creation","target":"judas_editor_hierarchy_creation_workflow_tests","groups":["editor","onboarding"]},
     {"name":"editor-asset-thumbnails","target":"judas_editor_asset_thumbnail_tests","groups":["editor","rendering"]},
-    {"name":"model-import-scale","target":"judas_model_import_scale_tests","groups":["assets","onboarding"]},
+    {"name":"model-import-scale","target":"judas_model_import_scale_tests","groups":["assets","onboarding"],"args":["{output}/model-import-scale","{root}/tests/fixtures/m66/pivot-centimetres.fbx"]},
     {"name":"editor-inspector-workflow","target":"judas_editor_inspector_workflow_tests","groups":["editor","onboarding"]},
     {"name":"editor-console","target":"judas_editor_console_tests","groups":["editor","scripting","lifecycle"]},
     {"name":"editor-v2-workspaces","target":"judas_editor_v2_workspace_tests","groups":["editor","onboarding"]},
