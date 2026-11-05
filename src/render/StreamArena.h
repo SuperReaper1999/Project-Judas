@@ -10,8 +10,10 @@ struct StreamSlice {
     unsigned buffer = 0;
     std::size_t offset = 0;
 };
-// Context-owned upload storage. Each persistent page is fenced after its last
-// consumer before reuse. Portable uploads use driver orphaning; callers retain
+// Context-owned CPU-upload/read-only-GPU storage. Private completion timestamps
+// retire persistent pages after preceding consumers finish; this does not replace
+// GPU-to-CPU visibility barriers for writable compute/readback buffers. Portable
+// uploads use driver orphaning; callers retain
 // identical draw order and never retain a mapped pointer. Valid uploads acquire
 // the current context/thread; subsequent use and explicit Shutdown must stay on
 // that owner. ARRAY_BUFFER is left bound to the returned slice's buffer.

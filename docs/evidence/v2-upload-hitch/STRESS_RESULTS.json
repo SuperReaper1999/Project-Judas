@@ -1,0 +1,882 @@
+[
+  {
+    "case": "repeated",
+    "kind": "before",
+    "index": 0,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-2dacfa8b2a47-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "2dacfa8b2a4715a622f0f3840e007a8e919da4d08f556c8eb782c983f5b51078",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 41.235373,
+        "first_submission_ms": 39.899824,
+        "host_init_ms": 393.520907,
+        "resource_setup_ms": 3.371699
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 212135936,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 4.246209,
+          "median": 2.342729,
+          "p95": 2.580317,
+          "p99": 2.918394,
+          "samples": 180
+        },
+        "draws": {
+          "max": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 5.399904,
+          "median": 2.639392,
+          "p95": 3.0896,
+          "p99": 3.425792,
+          "samples": 180
+        },
+        "instances": {
+          "max": 8194.0,
+          "median": 8194.0,
+          "p95": 8194.0,
+          "p99": 8194.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 4.310059,
+          "median": 2.628077,
+          "p95": 3.086742,
+          "p99": 3.600731,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 4.239,
+          "median": 2.342,
+          "p95": 2.573,
+          "p99": 2.919,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 98328.0,
+          "median": 98328.0,
+          "p95": 98328.0,
+          "p99": 98328.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "repeated",
+        "frames": 180,
+        "height": 1080,
+        "lights": 8,
+        "objects": 4096,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "repeated",
+    "kind": "after",
+    "index": 1,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-a9b6e5af0200-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "a9b6e5af02007155aa25e5f7f5b775e406ad760eddfaa69dcf0d4659ded08893",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 14.367317,
+        "first_submission_ms": 12.977927,
+        "host_init_ms": 203.709348,
+        "resource_setup_ms": 0.69502
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 212193280,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 3.584852,
+          "median": 2.362055,
+          "p95": 2.497601,
+          "p99": 2.808276,
+          "samples": 180
+        },
+        "draws": {
+          "max": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 2.81776,
+          "median": 2.540448,
+          "p95": 2.724352,
+          "p99": 2.739296,
+          "samples": 180
+        },
+        "instances": {
+          "max": 8194.0,
+          "median": 8194.0,
+          "p95": 8194.0,
+          "p99": 8194.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 3.652038,
+          "median": 2.482963,
+          "p95": 2.704081,
+          "p99": 2.87899,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 3.585,
+          "median": 2.362,
+          "p95": 2.498,
+          "p99": 2.808,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 98328.0,
+          "median": 98328.0,
+          "p95": 98328.0,
+          "p99": 98328.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "repeated",
+        "frames": 180,
+        "height": 1080,
+        "lights": 8,
+        "objects": 4096,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "repeated",
+    "kind": "after",
+    "index": 2,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-a9b6e5af0200-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "a9b6e5af02007155aa25e5f7f5b775e406ad760eddfaa69dcf0d4659ded08893",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 8.418508,
+        "first_submission_ms": 6.973212,
+        "host_init_ms": 167.041582,
+        "resource_setup_ms": 0.608888
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 154189824,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 3.645225,
+          "median": 2.357035,
+          "p95": 2.430565,
+          "p99": 2.909778,
+          "samples": 180
+        },
+        "draws": {
+          "max": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 2.75392,
+          "median": 2.383136,
+          "p95": 2.698848,
+          "p99": 2.714944,
+          "samples": 180
+        },
+        "instances": {
+          "max": 8194.0,
+          "median": 8194.0,
+          "p95": 8194.0,
+          "p99": 8194.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 3.704467,
+          "median": 2.430875,
+          "p95": 2.71486,
+          "p99": 2.97452,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 3.644,
+          "median": 2.357,
+          "p95": 2.431,
+          "p99": 2.909,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 98328.0,
+          "median": 98328.0,
+          "p95": 98328.0,
+          "p99": 98328.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "repeated",
+        "frames": 180,
+        "height": 1080,
+        "lights": 8,
+        "objects": 4096,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "repeated",
+    "kind": "before",
+    "index": 3,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-2dacfa8b2a47-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "2dacfa8b2a4715a622f0f3840e007a8e919da4d08f556c8eb782c983f5b51078",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 8.275418,
+        "first_submission_ms": 6.806938,
+        "host_init_ms": 166.809324,
+        "resource_setup_ms": 0.563863
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 152223744,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 3.656526,
+          "median": 2.332309,
+          "p95": 2.380791,
+          "p99": 2.490858,
+          "samples": 180
+        },
+        "draws": {
+          "max": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 4.697696,
+          "median": 2.454144,
+          "p95": 2.904192,
+          "p99": 2.915104,
+          "samples": 180
+        },
+        "instances": {
+          "max": 8194.0,
+          "median": 8194.0,
+          "p95": 8194.0,
+          "p99": 8194.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 3.715738,
+          "median": 2.441956,
+          "p95": 2.913354,
+          "p99": 3.072324,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 3.656,
+          "median": 2.332,
+          "p95": 2.381,
+          "p99": 2.491,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 98328.0,
+          "median": 98328.0,
+          "p95": 98328.0,
+          "p99": 98328.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "repeated",
+        "frames": 180,
+        "height": 1080,
+        "lights": 8,
+        "objects": 4096,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "particles",
+    "kind": "before",
+    "index": 0,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-2dacfa8b2a47-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "2dacfa8b2a4715a622f0f3840e007a8e919da4d08f556c8eb782c983f5b51078",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 59.916798,
+        "first_submission_ms": 59.168296,
+        "host_init_ms": 163.855513,
+        "resource_setup_ms": 2.261044
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 182185984,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 12.713569,
+          "median": 11.056323,
+          "p95": 11.327705,
+          "p99": 12.596058,
+          "samples": 180
+        },
+        "draws": {
+          "max": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "p99": 2.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 12.827552,
+          "median": 11.163104,
+          "p95": 11.499712,
+          "p99": 12.588224,
+          "samples": 180
+        },
+        "instances": {
+          "max": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 12.856909,
+          "median": 11.116015,
+          "p95": 11.3885,
+          "p99": 12.69788,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 12.716,
+          "median": 11.056,
+          "p95": 11.328,
+          "p99": 12.582,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 400000.0,
+          "median": 400000.0,
+          "p95": 400000.0,
+          "p99": 400000.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "particles",
+        "frames": 180,
+        "height": 1080,
+        "lights": 0,
+        "objects": 100000,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "particles",
+    "kind": "after",
+    "index": 1,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-a9b6e5af0200-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "a9b6e5af02007155aa25e5f7f5b775e406ad760eddfaa69dcf0d4659ded08893",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 21.418697,
+        "first_submission_ms": 20.682389,
+        "host_init_ms": 163.528525,
+        "resource_setup_ms": 2.137852
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 123043840,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 11.964246,
+          "median": 10.779691,
+          "p95": 11.108201,
+          "p99": 11.558269,
+          "samples": 180
+        },
+        "draws": {
+          "max": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "p99": 2.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 11.899104,
+          "median": 10.898176,
+          "p95": 11.244672,
+          "p99": 11.712832,
+          "samples": 180
+        },
+        "instances": {
+          "max": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 12.042163,
+          "median": 10.841147,
+          "p95": 11.171701,
+          "p99": 11.630576,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 11.948,
+          "median": 10.78,
+          "p95": 11.109,
+          "p99": 11.559,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 400000.0,
+          "median": 400000.0,
+          "p95": 400000.0,
+          "p99": 400000.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "particles",
+        "frames": 180,
+        "height": 1080,
+        "lights": 0,
+        "objects": 100000,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "particles",
+    "kind": "after",
+    "index": 2,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-a9b6e5af0200-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "a9b6e5af02007155aa25e5f7f5b775e406ad760eddfaa69dcf0d4659ded08893",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 21.556307,
+        "first_submission_ms": 20.821321,
+        "host_init_ms": 163.319081,
+        "resource_setup_ms": 2.173098
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 123125760,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 11.29349,
+          "median": 10.775944,
+          "p95": 10.947558,
+          "p99": 11.138799,
+          "samples": 180
+        },
+        "draws": {
+          "max": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "p99": 2.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 11.486624,
+          "median": 10.877152,
+          "p95": 11.097088,
+          "p99": 11.218336,
+          "samples": 180
+        },
+        "instances": {
+          "max": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 11.362149,
+          "median": 10.837119,
+          "p95": 11.004716,
+          "p99": 11.202048,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 11.294,
+          "median": 10.772,
+          "p95": 10.948,
+          "p99": 11.139,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 400000.0,
+          "median": 400000.0,
+          "p95": 400000.0,
+          "p99": 400000.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "particles",
+        "frames": 180,
+        "height": 1080,
+        "lights": 0,
+        "objects": 100000,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  },
+  {
+    "case": "particles",
+    "kind": "before",
+    "index": 3,
+    "summary": {
+      "appearance_owned_bytes": 28512000,
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-7178dfe-dirty-2dacfa8b2a47-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "2dacfa8b2a4715a622f0f3840e007a8e919da4d08f556c8eb782c983f5b51078",
+        "source_origin": "git",
+        "source_revision": "7178dfe9af1c53a22cd56a88b856f6a3a5ae234c",
+        "source_tree": "a89944096de44600a0060a5b7f2a9e07f915ca89",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "2.0.0-alpha.1"
+      },
+      "cold": {
+        "first_completed_ms": 21.461748,
+        "first_submission_ms": 20.726101,
+        "host_init_ms": 162.901463,
+        "resource_setup_ms": 2.188919
+      },
+      "format": 1,
+      "gpu_dropped": 0,
+      "gpu_samples_observed": 180,
+      "gpu_timing_valid": true,
+      "graphics": {
+        "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+        "vendor": "NVIDIA Corporation",
+        "version": "4.6.0 NVIDIA 580.178.04"
+      },
+      "notes": "Nearest-rank percentiles. CPU submission excludes swap/collection/readback/IO; process CPU uses std::clock and includes process worker activity. GPU timestamps may include command starvation. instanceBytes is maximum upload size, not total bytes. Raw gpu.csv retains completed records beyond the bounded profiler history. Cold work is outside measured frames. No simulated physics.",
+      "process_peak_rss_bytes": 122294272,
+      "profiler_truncated_frames": 0,
+      "summary": {
+        "cpu_submission_ms": {
+          "max": 11.710737,
+          "median": 11.048568,
+          "p95": 11.284994,
+          "p99": 11.602192,
+          "samples": 180
+        },
+        "draws": {
+          "max": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "p99": 2.0,
+          "samples": 180
+        },
+        "gpu_ms": {
+          "max": 11.812928,
+          "median": 11.174016,
+          "p95": 11.434496,
+          "p99": 11.783904,
+          "samples": 180
+        },
+        "instances": {
+          "max": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "samples": 180
+        },
+        "outer_frame_ms_including_swap": {
+          "max": 11.774297,
+          "median": 11.107128,
+          "p95": 11.365065,
+          "p99": 11.668377,
+          "samples": 180
+        },
+        "process_cpu_submission_ms": {
+          "max": 11.711,
+          "median": 11.049,
+          "p95": 11.285,
+          "p99": 11.603,
+          "samples": 180
+        },
+        "triangles": {
+          "max": 400000.0,
+          "median": 400000.0,
+          "p95": 400000.0,
+          "p99": 400000.0,
+          "samples": 180
+        }
+      },
+      "workload": {
+        "case": "particles",
+        "frames": 180,
+        "height": 1080,
+        "lights": 0,
+        "objects": 100000,
+        "secondary_height": 540,
+        "secondary_width": 960,
+        "shadows": 0,
+        "views": 2,
+        "warmup": 60,
+        "width": 1920
+      }
+    }
+  }
+]

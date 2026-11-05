@@ -1,0 +1,42 @@
+PASS an unused optional stream arena has no graphics storage or waits
+PASS even an oversized working-set hint is CPU-only and performs no graphics allocation
+PASS null data rejects with an empty unpublished slice
+PASS zero-byte uploads reject without allocating a placeholder buffer
+PASS oversized upload rejects before dereferencing input or allocating GPU storage
+PASS valid input without a current context rejects before any GL dispatch
+PASS null data rejects with an empty unpublished slice
+PASS zero-byte uploads reject without allocating a placeholder buffer
+PASS oversized upload rejects before dereferencing input or allocating GPU storage
+PASS valid input without a current context rejects before any GL dispatch
+PASS empty shutdown is idempotent and needs no graphics context
+[Graphics] created OpenGL 3.3 Core request (portable policy)
+[Graphics] API=OpenGL 3.3 requested=portable selected=portable vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=0 SSBO=0 DSA=1 bufferStorage=1 textureViews=0 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=0 storageBlockBytes=0 computeInvocations=0 computeSharedBytes=0
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native engine context starts for stream-storage qualification
+PASS engine startup leaves a clean graphics-error baseline
+PASS uploads preserve unrelated VAO/read-buffer/texture state and expose their ARRAY_BUFFER binding
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS independent transform-feedback lifetime oracle links successfully
+PASS queued GPU consumers retain every older portable payload after repeated orphaning
+[Graphics] Stream uploads require a current owning graphics context.
+PASS foreign-thread upload and shutdown preserve the original owner's live buffer
+PASS portable allocation remains live until its explicit owning shutdown
+PASS portable owning shutdown actually deletes its GL object and resets storage accounting
+PASS failed buffer-name allocation cannot publish a successful stream slice
+PASS unallocated portable buffer storage rejects and retires the failed object
+PASS allocation failures leave the arena usable for a successful retry
+SKIP persistent pages: selected context has no qualified modern buffer storage
+PASS stream payload, failure and lifetime controls leave no GL errors
+PASS uploads after context teardown fail without creating or leaking graphics objects
+Stream arena: 32 checks, 0 failures

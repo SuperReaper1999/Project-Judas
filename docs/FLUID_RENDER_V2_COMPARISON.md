@@ -1,5 +1,9 @@
 # Advanced fluids with Renderer/Particles V2 — 5 November 2026
 
+Follow-up: the [stream retirement correction](RENDERER_V2_UPLOAD_HITCH.md) resolves
+the upload-path hitch below. This report and its raw measurements remain the
+unchanged before-fix comparison.
+
 ## Verdict
 
 Typical GPU rendering cost is essentially unchanged in the original flat and

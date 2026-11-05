@@ -26,7 +26,7 @@ struct StreamArena::Storage {
     };
     std::array<Page, 3> pages{};
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
-    std::array<GLsync, 3> fences{};
+    std::array<GLuint, 3> fences{};
 #endif
     unsigned current = 0, portable = 0;
     std::size_t cursor = 0, portableBytes = 0, capacity = 0, workingSetHint = 0;
@@ -34,6 +34,7 @@ struct StreamArena::Storage {
     std::uintptr_t context = 0;
     std::thread::id thread;
     bool initialized = false;
+    int timestampBits = -1;
 
     bool OwnContext(std::string &error) {
         const auto active = CurrentContext();
@@ -70,25 +71,39 @@ struct StreamArena::Storage {
     void ReleasePersistent() {
         for (auto &fence : fences) {
             if (fence)
-                glDeleteSync(fence);
-            fence = nullptr;
+                glDeleteQueries(1, &fence);
+            fence = 0;
         }
         ReleasePages(pages);
         initialized = false;
         current = 0;
         cursor = capacity = 0;
     }
-    bool Wait(GLsync fence, const char *reason, std::string &error) {
+    bool Wait(GLuint marker, const char *reason, std::string &error) {
         const auto begin = std::chrono::steady_clock::now();
-        const GLenum result = glClientWaitSync(fence, GL_SYNC_FLUSH_COMMANDS_BIT, 1000000000);
+        // Completion, not GPU-to-CPU data visibility, is the dependency. These
+        // private timestamps are independent of optional profiling queries.
+        GLint queryBuffer = 0;
+        if (GLAD_GL_VERSION_4_4) {
+            glGetIntegerv(GL_QUERY_BUFFER_BINDING, &queryBuffer);
+            if (queryBuffer) glBindBuffer(GL_QUERY_BUFFER, 0);
+        }
+        GLint available = 0;
+        glGetQueryObjectiv(marker, GL_QUERY_RESULT_AVAILABLE, &available);
+        if (!available) glFlush();
+        while (!available && std::chrono::steady_clock::now() - begin < std::chrono::seconds(1)) {
+            // Preserve the existing bounded wait without burning a CPU core.
+            std::this_thread::sleep_for(std::chrono::microseconds(50));
+            glGetQueryObjectiv(marker, GL_QUERY_RESULT_AVAILABLE, &available);
+        }
         waited += std::chrono::duration_cast<std::chrono::nanoseconds>(
-                      std::chrono::steady_clock::now() - begin)
-                      .count();
-        if (result == GL_ALREADY_SIGNALED || result == GL_CONDITION_SATISFIED)
-            return true;
+                      std::chrono::steady_clock::now() - begin).count();
+        if (queryBuffer) glBindBuffer(GL_QUERY_BUFFER, GLuint(queryBuffer));
+        if (available) return true;
         error = reason;
         return false;
     }
+
 #endif
 };
 
@@ -116,8 +131,12 @@ bool StreamArena::Upload(const void *data, std::size_t bytes, bool persistent, S
     if (!s.OwnContext(error))
         return false;
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
-    if (persistent && glBufferStorage && glMapBufferRange && glUnmapBuffer && glFenceSync &&
-        glClientWaitSync && glDeleteSync) {
+    const bool retirementAPI = persistent && glBufferStorage && glMapBufferRange &&
+        glUnmapBuffer && glQueryCounter && glGetQueryObjectiv && glGetQueryiv &&
+        glGenQueries && glDeleteQueries;
+    if (retirementAPI && s.timestampBits < 0)
+        glGetQueryiv(GL_TIMESTAMP, GL_QUERY_COUNTER_BITS, &s.timestampBits);
+    if (retirementAPI && s.timestampBits > 0) {
         const auto desiredCapacity = std::max(bytes, s.workingSetHint);
         if (!s.initialized || desiredCapacity > s.capacity) {
             std::size_t capacity = 64 * 1024;
@@ -144,7 +163,9 @@ bool StreamArena::Upload(const void *data, std::size_t bytes, bool persistent, S
                 }
             }
             if (s.initialized) {
-                const auto last = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+                GLuint last = 0;
+                glGenQueries(1, &last);
+                if (last) glQueryCounter(last, GL_TIMESTAMP);
                 if (!last) {
                     Storage::ReleasePages(replacement);
                     error = "Cannot fence stream growth.";
@@ -152,7 +173,7 @@ bool StreamArena::Upload(const void *data, std::size_t bytes, bool persistent, S
                 }
                 const bool completed =
                     s.Wait(last, "GPU did not complete bounded stream growth.", error);
-                glDeleteSync(last);
+                glDeleteQueries(1, &last);
                 if (!completed) {
                     Storage::ReleasePages(replacement);
                     return false;
@@ -171,13 +192,15 @@ bool StreamArena::Upload(const void *data, std::size_t bytes, bool persistent, S
             const auto next = (s.current + 1) % s.pages.size();
             // Do not advance the active page or replace its fence until the
             // destination is available. A timeout must remain safely retryable.
-            if (const auto fence = s.fences[next]) {
+            if (auto fence = s.fences[next]) {
                 if (!s.Wait(fence, "GPU did not complete bounded stream page reuse.", error))
                     return false;
-                glDeleteSync(fence);
-                s.fences[next] = nullptr;
+                glDeleteQueries(1, &fence);
+                s.fences[next] = 0;
             }
-            const auto sealed = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+            GLuint sealed = 0;
+            glGenQueries(1, &sealed);
+            if (sealed) glQueryCounter(sealed, GL_TIMESTAMP);
             if (!sealed) {
                 error = "Cannot fence stream page.";
                 return false;

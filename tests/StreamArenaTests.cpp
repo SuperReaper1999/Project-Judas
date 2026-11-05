@@ -151,16 +151,27 @@ void main(){copied=value;gl_Position=vec4(0,0,0,1);}
     }
 };
 
-GLsync timedOutFence = nullptr;
+GLuint timedOutFence = 0;
 unsigned timeoutCalls = 0;
 bool sameTimeoutFence = true;
-GLenum GLAD_API_PTR ForcedTimeout(GLsync fence, GLbitfield, GLuint64) {
-    if (timeoutCalls && fence != timedOutFence)
-        sameTimeoutFence = false;
-    timedOutFence = fence;
-    ++timeoutCalls;
-    return GL_TIMEOUT_EXPIRED;
+PFNGLGETQUERYOBJECTIVPROC savedQueryStatus = nullptr;
+void GLAD_API_PTR ForcedTimeout(GLuint query, GLenum field, GLint *result) {
+    if(field!=GL_QUERY_RESULT_AVAILABLE){savedQueryStatus(query,field,result);return;}
+    if(timeoutCalls && query!=timedOutFence)sameTimeoutFence=false;
+    timedOutFence=query;++timeoutCalls;*result=GL_FALSE;
 }
+std::vector<GLuint> createdMarkers;
+unsigned deletedMarkers=0;
+PFNGLGENQUERIESPROC realGenMarkers=nullptr;
+PFNGLDELETEQUERIESPROC realDeleteMarkers=nullptr;
+void GLAD_API_PTR TrackMarkers(GLsizei count,GLuint *ids){
+    realGenMarkers(count,ids);for(GLsizei i=0;i<count;++i)if(ids[i])createdMarkers.push_back(ids[i]);
+}
+void GLAD_API_PTR DeleteMarkers(GLsizei count,const GLuint *ids){
+    for(GLsizei i=0;i<count;++i)if(ids[i])++deletedMarkers;
+    realDeleteMarkers(count,ids);
+}
+void GLAD_API_PTR NoTimestampPrecision(GLenum, GLenum, GLint *bits) {*bits=0;}
 void GLAD_API_PTR MissingBuffers(GLsizei count, GLuint *buffers) {
     std::fill(buffers, buffers + count, 0);
 }
@@ -301,18 +312,19 @@ void PersistentControls() {
         for (unsigned round = 0; round < 12; ++round) {
             queued.push_back(Pattern(64 * 1024, round + 21));
             if (round == 3) {
-                const auto savedWait = glad_glClientWaitSync;
+                const auto savedWait = glad_glGetQueryObjectiv;
+                savedQueryStatus=savedWait;
                 const auto before = arena.AllocatedBytes();
-                timedOutFence = nullptr;
+                timedOutFence = 0;
                 timeoutCalls = 0;
                 sameTimeoutFence = true;
-                glad_glClientWaitSync = ForcedTimeout;
+                glad_glGetQueryObjectiv = ForcedTimeout;
                 for (unsigned attempt = 0; attempt < 2; ++attempt)
                     correct &= !arena.Upload(queued.back().data(), queued.back().size(), true, slice,
                                               error) &&
                                !error.empty() && !slice.buffer && arena.AllocatedBytes() == before;
-                glad_glClientWaitSync = savedWait;
-                Check(correct && timeoutCalls == 2 && sameTimeoutFence,
+                glad_glGetQueryObjectiv = savedWait;
+                Check(correct && timeoutCalls >= 2 && sameTimeoutFence,
                       "repeated page-wait timeouts retry the same dependency without advancing pages");
             }
             correct &= arena.Upload(queued.back().data(), queued.back().size(), true, slice, error);
@@ -454,9 +466,46 @@ void NativeControls() {
     PortableControls();
     AllocationFailureControls(false);
     if (host.GraphicsCaps().modernTier && host.GraphicsCaps().bufferStorage) {
+        realGenMarkers=glad_glGenQueries;realDeleteMarkers=glad_glDeleteQueries;
+        glad_glGenQueries=TrackMarkers;glad_glDeleteQueries=DeleteMarkers;
         PersistentControls();
         WorkingSetControls();
         AllocationFailureControls(true);
+        {
+            StreamArena arena;StreamSlice slice;auto data=Pattern(65536,41);
+            auto get=glad_glGetQueryiv;glad_glGetQueryiv=NoTimestampPrecision;
+            const bool uploaded=arena.Upload(data.data(),data.size(),true,slice,error);
+            glad_glGetQueryiv=get;
+            Check(uploaded&&arena.AllocatedBytes()==data.size()&&ExactBytes(slice,data),
+                  "unsupported timestamp precision uses exact orphan storage instead of unsafe retirement");
+            arena.Shutdown();
+        }
+        {
+            StreamArena arena;StreamSlice slice;auto data=Pattern(65536,42);
+            bool correct=arena.Upload(data.data(),data.size(),true,slice,error);
+            const auto first=slice;const auto allocated=arena.AllocatedBytes();
+            auto gen=glad_glGenQueries;glad_glGenQueries=MissingBuffers;
+            correct &= !arena.Upload(data.data(),data.size(),true,slice,error)&&!error.empty()&&!slice.buffer&&arena.AllocatedBytes()==allocated;
+            glad_glGenQueries=gen;
+            Check(correct&&ExactBytes(first,data)&&arena.Upload(data.data(),data.size(),true,slice,error)&&ExactBytes(slice,data),
+                  "failed retirement marker preserves the live page and remains retryable");
+            arena.Shutdown();
+        }
+        if(GLAD_GL_VERSION_4_4){
+            StreamArena arena;StreamSlice slice;auto data=Pattern(65536,43);GLuint unrelated=0;
+            glGenBuffers(1,&unrelated);glBindBuffer(GL_QUERY_BUFFER,unrelated);glBufferData(GL_QUERY_BUFFER,64,nullptr,GL_STREAM_DRAW);
+            bool correct=true;
+            for(unsigned i=0;i<5;++i){
+                correct &= arena.Upload(data.data(),data.size(),true,slice,error)&&ExactBytes(slice,data);
+                GLint bound=0;glGetIntegerv(GL_QUERY_BUFFER_BINDING,&bound);correct &= bound==GLint(unrelated);
+            }
+            glBindBuffer(GL_QUERY_BUFFER,0);glDeleteBuffers(1,&unrelated);arena.Shutdown();
+            Check(correct,"retirement reads status on CPU and preserves unrelated query-buffer bindings");
+        }
+        glad_glGenQueries=realGenMarkers;glad_glDeleteQueries=realDeleteMarkers;
+        Check(!createdMarkers.empty()&&createdMarkers.size()==deletedMarkers&&
+              std::none_of(createdMarkers.begin(),createdMarkers.end(),[](GLuint q){return glIsQuery(q);}),
+              "retirement markers including growth and failure controls are all destroyed");
     } else {
         std::printf("SKIP persistent pages: selected context has no qualified modern buffer storage\n");
     }

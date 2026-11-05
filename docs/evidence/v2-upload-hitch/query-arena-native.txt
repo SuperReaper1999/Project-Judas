@@ -1,0 +1,62 @@
+PASS an unused optional stream arena has no graphics storage or waits
+PASS even an oversized working-set hint is CPU-only and performs no graphics allocation
+PASS null data rejects with an empty unpublished slice
+PASS zero-byte uploads reject without allocating a placeholder buffer
+PASS oversized upload rejects before dereferencing input or allocating GPU storage
+PASS valid input without a current context rejects before any GL dispatch
+PASS null data rejects with an empty unpublished slice
+PASS zero-byte uploads reject without allocating a placeholder buffer
+PASS oversized upload rejects before dereferencing input or allocating GPU storage
+PASS valid input without a current context rejects before any GL dispatch
+PASS empty shutdown is idempotent and needs no graphics context
+[Graphics] created OpenGL 4.6 Core request (modern policy)
+[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native engine context starts for stream-storage qualification
+PASS engine startup leaves a clean graphics-error baseline
+PASS uploads preserve unrelated VAO/read-buffer/texture state and expose their ARRAY_BUFFER binding
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS portable orphaning preserves exact odd, full-page and shrinking payloads
+PASS portable orphaning reuses its buffer object name
+PASS independent transform-feedback lifetime oracle links successfully
+PASS queued GPU consumers retain every older portable payload after repeated orphaning
+[Graphics] Stream uploads require a current owning graphics context.
+PASS foreign-thread upload and shutdown preserve the original owner's live buffer
+PASS portable allocation remains live until its explicit owning shutdown
+PASS portable owning shutdown actually deletes its GL object and resets storage accounting
+PASS failed buffer-name allocation cannot publish a successful stream slice
+PASS unallocated portable buffer storage rejects and retires the failed object
+PASS allocation failures leave the arena usable for a successful retry
+PASS coherent persistent storage publishes the exact initial odd-length payload
+PASS successive persistent slices are aligned and do not overwrite earlier payloads
+PASS persistent growth retains exact data with bounded storage and cumulative wait accounting
+PASS persistent draw-lifetime oracle initializes
+PASS repeated page-wait timeouts retry the same dependency without advancing pages
+PASS three fenced persistent pages wrap repeatedly without changing queued GPU payloads
+PASS full-page persistent growth preserves payload and previously accumulated wait time
+PASS switching to portable storage preserves bounded live persistent allocations
+PASS owning shutdown deletes every retained page and portable allocation
+PASS individually small uploads reproduce a page boundary within the complete pass demand
+PASS a realistic pass working-set hint leaves optional GPU storage unallocated until upload
+PASS working-set draw-lifetime oracle initializes
+PASS aligned pass demand stays on one persistent page with exact GPU payloads and no reuse waits
+PASS clearing a hint does not synchronously shrink or retire live graphics storage
+PASS an absurd hint is capped at the bounded page maximum and preserves upload contents
+PASS zero resets the pending hint and restores on-demand minimum-page allocation
+PASS failed buffer-name allocation cannot publish a successful stream slice
+PASS failed persistent mapping releases partial allocations without publishing a slice
+PASS allocation failures leave the arena usable for a successful retry
+PASS failed hint-driven growth retains the old allocation and exact published payload
+PASS hint-driven growth can retry successfully after a mapping failure
+PASS stream payload, failure and lifetime controls leave no GL errors
+PASS uploads after context teardown fail without creating or leaking graphics objects
+Stream arena: 53 checks, 0 failures

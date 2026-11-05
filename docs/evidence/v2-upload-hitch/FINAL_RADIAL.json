@@ -1,0 +1,16 @@
+[
+  {
+    "kind": "before",
+    "median": 0.37408,
+    "p99": 0.749856,
+    "max": 0.766816,
+    "over_half_ms": 15
+  },
+  {
+    "kind": "after",
+    "median": 0.373984,
+    "p99": 0.383584,
+    "max": 0.386048,
+    "over_half_ms": 0
+  }
+]

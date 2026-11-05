@@ -99,6 +99,7 @@ int main(int argc,char **argv)try {
     };
     control.beforeFrame=[&](EngineHost &host,RuntimeWorld&,InteractivePlay &play){
         play.SetFixedStepObserver(observer);play.SetFixedStepMeasurementFlags(false,false,true);
+        host.GetWindow().Input().Reset(); // isolate hidden benchmark from desktop input
         host.GetRenderer().ResetStats();started=Clock::now();
     };
     control.afterFrame=[&](EngineHost &host,RuntimeWorld &world,InteractivePlay &play) {
@@ -115,6 +116,8 @@ int main(int argc,char **argv)try {
             MeshData surface;
             if(!host.GetRenderer().ReadMeshForDiagnostics(world.FluidMesh(),surface))throw std::runtime_error("cannot read uploaded fluid geometry");
             environment["surface_vertices"]=surface.vertices.size();
+            environment["view"]=Json::array();environment["projection"]=Json::array();
+            for(int c=0;c<4;++c)for(int k=0;k<4;++k){environment["view"].push_back(host.GetRenderer().ViewMatrix()[c][k]);environment["projection"].push_back(host.GetRenderer().ProjectionMatrix()[c][k]);}
             std::string vertices;for(const auto &v:surface.vertices)for(float x:{v.position.x,v.position.y,v.position.z,v.normal.x,v.normal.y,v.normal.z})vertices.append(reinterpret_cast<const char*>(&x),sizeof(x));
             environment["surface_sha256"]=SceneFingerprintSha256(vertices);
             std::vector<unsigned char> image;host.GetRenderer().CaptureFrame(1280,720,image);

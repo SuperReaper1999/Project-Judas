@@ -1,0 +1,34 @@
+[
+  {
+    "run": 0,
+    "name": "before",
+    "median": 0.375248,
+    "p99": 0.742304,
+    "worst": 0.754688,
+    "over_half_ms": 14
+  },
+  {
+    "run": 1,
+    "name": "candidate",
+    "median": 0.375104,
+    "p99": 0.385312,
+    "worst": 0.39008,
+    "over_half_ms": 0
+  },
+  {
+    "run": 2,
+    "name": "candidate",
+    "median": 0.37488,
+    "p99": 0.38352,
+    "worst": 0.386528,
+    "over_half_ms": 0
+  },
+  {
+    "run": 3,
+    "name": "before",
+    "median": 0.375328,
+    "p99": 0.74016,
+    "worst": 0.751104,
+    "over_half_ms": 14
+  }
+]

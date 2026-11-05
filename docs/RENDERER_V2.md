@@ -139,9 +139,10 @@ These controls do not change scene counts or graphics quality.
 
 The [5 November fluid comparison](FLUID_RENDER_V2_COMPARISON.md) found unchanged
 typical water-scene GPU cost but a reproducible small-scene tail regression
-associated with persistent uploads on the GTX 970. The persistent-off control
-removes those measured spikes; the exact mechanism is not yet fixed. Keep that
-finding in V2 qualification rather than claiming every workload improves.
+associated with persistent uploads on the GTX 970. The subsequent
+[stream retirement correction](RENDERER_V2_UPLOAD_HITCH.md) removes the measured
+spikes while retaining persistent uploads. The original comparison remains
+before-fix evidence rather than a claim that every workload improves.
 
 The editable project is `projects/renderer_v2_lab/renderer_v2_lab.judasproj`.
 Its README describes the six cases, ordinary controls and save/load smoke route.
