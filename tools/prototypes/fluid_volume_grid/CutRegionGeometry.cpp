@@ -557,12 +557,14 @@ bool BuildCutRegionGeometry(const CutRegionChart& chart, const GridVec& startOff
     return true;
 }
 
-bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+bool ReconstructCutRegionPhasePlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                                     int defaultAxis, const std::vector<double>& startWater,
+                                    const std::vector<double>& gasVolumes,
                                     const std::vector<CutRegionInterface>& interfaces,
                                     std::vector<CutRegionWaterPlane>& waterPlanes, std::string& error) {
     if (defaultAxis < 0 || defaultAxis > 2 || startWater.size() != chart.regions.size() ||
         geometry.startCapacity.size() != chart.regions.size() ||
+        (!gasVolumes.empty() && gasVolumes.size() != chart.regions.size()) ||
         (!interfaces.empty() && interfaces.size() != chart.regions.size()))
         return Fail(error, "cut region phase data does not match its pressure geometry");
     std::vector<CutRegionWaterPlane> planes;
@@ -579,6 +581,10 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
         if (!(0. <= capacity && std::isfinite(capacity) && 0. <= water &&
               std::isfinite(water) && water <= capacity + tolerance))
             return Fail(error, "water is outside its cut region capacity");
+        const double air = gasVolumes.empty() ? std::max(0., capacity - water) : gasVolumes[i];
+        if (!gasVolumes.empty() && !(air >= 0. && std::isfinite(air) &&
+              std::abs((capacity - water) - air) <= tolerance))
+            return Fail(error, "independent gas volume disagrees with cut region capacity");
         // A region without water has no wet ownership, including where
         // the moving solid exposes additional volume during the interval.
         if (water == 0.) {
@@ -592,7 +598,6 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
         }
         std::sort(cuts.begin(), cuts.end());
         auto clipLo = region.lo, clipHi = region.hi;
-        const double air = std::max(0., capacity - water);
         const bool locateWet = water <= air;
         const bool fromHigh = locateWet == orientation.wetAbove;
         double remaining = locateWet ? water : air;
@@ -619,6 +624,14 @@ bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegio
     waterPlanes = std::move(planes);
     error.clear();
     return true;
+}
+
+bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                    int defaultAxis, const std::vector<double>& startWater,
+                                    const std::vector<CutRegionInterface>& interfaces,
+                                    std::vector<CutRegionWaterPlane>& waterPlanes, std::string& error) {
+    return ReconstructCutRegionPhasePlanes(chart, geometry, defaultAxis, startWater, {},
+                                           interfaces, waterPlanes, error);
 }
 
 std::array<double, 2> MeasureCutRegionPhaseVolumes(const CutRegion& region,

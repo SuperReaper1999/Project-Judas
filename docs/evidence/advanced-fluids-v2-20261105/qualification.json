@@ -1,0 +1,243 @@
+{
+  "status": "blocked-stage-1",
+  "runtimeIntegrated": false,
+  "sourceParent": "95b614478957e427f2bb10b386737a5d7f8a5fcf",
+  "completedUTC": "2026-11-05T22:29:56.850569+00:00",
+  "retainedChecks": 1030,
+  "retainedSuites": 26,
+  "targetedRerunChecks": 88,
+  "newChecks": 149,
+  "newFailures": 0,
+  "sanitizedChecks": 149,
+  "sanitizedFailures": 0,
+  "leakDetection": false,
+  "projectPolicyChecks": 26,
+  "projectPolicyChannel": "Experimental",
+  "authoredTrials": 36,
+  "authoredAdmitted": 0,
+  "transactionalRejections": 36,
+  "authoredExit": 1,
+  "peakRSSKiB": 89288,
+  "geometry": [
+    {
+      "rotated": 0.0,
+      "merged": 0.0,
+      "regions": 20344.0,
+      "faces": 57348.0,
+      "min_capacity": 2.7940982860741315e-12,
+      "min_width": 2.2351741790771484e-08,
+      "tiny_regions": 1792.0,
+      "retained_sub_ulp_gas_owners": 0.0,
+      "water_delta": 0.0,
+      "gas_mass_delta": 0.0
+    },
+    {
+      "rotated": 0.0,
+      "merged": 1.0,
+      "regions": 17577.0,
+      "faces": 54081.0,
+      "min_capacity": 5.588196572148263e-12,
+      "min_width": 2.2351741790771484e-08,
+      "tiny_regions": 168.0,
+      "retained_sub_ulp_gas_owners": 0.0,
+      "water_delta": -8.673617379884035e-19,
+      "gas_mass_delta": -1.3704315460216776e-16
+    },
+    {
+      "rotated": 1.0,
+      "merged": 0.0,
+      "regions": 35840.0,
+      "faces": 101292.0,
+      "min_capacity": 7.754599321005272e-26,
+      "min_width": 6.677518538111826e-10,
+      "tiny_regions": 4094.0,
+      "retained_sub_ulp_gas_owners": 0.0,
+      "water_delta": 0.0,
+      "gas_mass_delta": 0.0
+    },
+    {
+      "rotated": 1.0,
+      "merged": 1.0,
+      "regions": 31838.0,
+      "faces": 96502.0,
+      "min_capacity": 4.470557257718605e-12,
+      "min_width": 6.677518538111826e-10,
+      "tiny_regions": 812.0,
+      "retained_sub_ulp_gas_owners": 2.0,
+      "water_delta": -6.331740687315346e-17,
+      "gas_mass_delta": -2.2898349882893854e-16
+    }
+  ],
+  "timing": [
+    {
+      "rotated": 0.0,
+      "merged": 0.0,
+      "dt": 0.01666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 144.93278233333334,
+      "median_ms": 144.769848,
+      "p95_ms": 145.433069,
+      "worst_ms": 145.433069
+    },
+    {
+      "rotated": 0.0,
+      "merged": 0.0,
+      "dt": 0.0001666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 40.93115233333334,
+      "median_ms": 40.902398,
+      "p95_ms": 40.992127,
+      "worst_ms": 40.992127
+    },
+    {
+      "rotated": 0.0,
+      "merged": 0.0,
+      "dt": 1.666666753590107e-06,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 17.014794,
+      "median_ms": 16.970661,
+      "p95_ms": 17.117267,
+      "worst_ms": 17.117267
+    },
+    {
+      "rotated": 0.0,
+      "merged": 1.0,
+      "dt": 0.01666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 135.5732133333333,
+      "median_ms": 135.539402,
+      "p95_ms": 135.684637,
+      "worst_ms": 135.684637
+    },
+    {
+      "rotated": 0.0,
+      "merged": 1.0,
+      "dt": 0.0001666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 41.86748533333333,
+      "median_ms": 41.856799,
+      "p95_ms": 41.924215,
+      "worst_ms": 41.924215
+    },
+    {
+      "rotated": 0.0,
+      "merged": 1.0,
+      "dt": 1.666666753590107e-06,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 13.702625666666668,
+      "median_ms": 13.717167,
+      "p95_ms": 13.744838,
+      "worst_ms": 13.744838
+    },
+    {
+      "rotated": 1.0,
+      "merged": 0.0,
+      "dt": 0.01666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 394.43373933333334,
+      "median_ms": 393.336273,
+      "p95_ms": 397.258349,
+      "worst_ms": 397.258349
+    },
+    {
+      "rotated": 1.0,
+      "merged": 0.0,
+      "dt": 0.0001666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 83.59709033333333,
+      "median_ms": 83.597748,
+      "p95_ms": 83.753382,
+      "worst_ms": 83.753382
+    },
+    {
+      "rotated": 1.0,
+      "merged": 0.0,
+      "dt": 1.666666753590107e-06,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 34.37062833333333,
+      "median_ms": 34.188959,
+      "p95_ms": 34.878079,
+      "worst_ms": 34.878079
+    },
+    {
+      "rotated": 1.0,
+      "merged": 1.0,
+      "dt": 0.01666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 7115.625206333333,
+      "median_ms": 7111.614908,
+      "p95_ms": 7134.438625,
+      "worst_ms": 7134.438625
+    },
+    {
+      "rotated": 1.0,
+      "merged": 1.0,
+      "dt": 0.0001666666753590107,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 103.397701,
+      "median_ms": 103.592813,
+      "p95_ms": 103.601829,
+      "worst_ms": 103.601829
+    },
+    {
+      "rotated": 1.0,
+      "merged": 1.0,
+      "dt": 1.666666753590107e-06,
+      "samples": 3.0,
+      "admitted": 0.0,
+      "unchanged_rejections": 3.0,
+      "mean_ms": 31.746229666666665,
+      "median_ms": 31.714163,
+      "p95_ms": 31.931472,
+      "worst_ms": 31.931472
+    }
+  ],
+  "negativeControls": {
+    "NoLocalEOS": {
+      "exit": 1,
+      "checks": 149,
+      "failures": 1
+    },
+    "NoPrismAudit": {
+      "exit": 1,
+      "checks": 149,
+      "failures": 1
+    }
+  },
+  "notQualified": [
+    "nativeMK2Coupling",
+    "movingBodyWork",
+    "momentumEnergyEvolution",
+    "liveRadialGravity",
+    "runtimeTerrain",
+    "V2Saves",
+    "V2Streaming",
+    "V2Export",
+    "V2Authoring",
+    "V2Rendering",
+    "Windows",
+    "Android"
+  ]
+}

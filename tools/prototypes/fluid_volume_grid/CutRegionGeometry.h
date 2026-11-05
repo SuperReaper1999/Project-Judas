@@ -74,6 +74,16 @@ struct CutRegionWaterPlane {
     double RelativeTo(double anchor) const { return (coordinate - anchor) + remainder; }
 };
 
+// Preserve independently owned minority phases. Subtracting rounded water
+// from total capacity can otherwise erase real gas smaller than one water
+// ULP after owner aggregation. Empty gasVolumes retains the historical
+// water-only input contract.
+bool ReconstructCutRegionPhasePlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
+                                    int defaultAxis, const std::vector<double>& startWater,
+                                    const std::vector<double>& gasVolumes,
+                                    const std::vector<CutRegionInterface>& interfaces,
+                                    std::vector<CutRegionWaterPlane>& waterPlanes, std::string& error);
+
 bool ReconstructCutRegionWaterPlanes(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                                     int defaultAxis, const std::vector<double>& startWater,
                                     const std::vector<CutRegionInterface>& interfaces,

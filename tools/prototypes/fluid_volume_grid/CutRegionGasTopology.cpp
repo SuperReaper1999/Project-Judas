@@ -143,6 +143,21 @@ CutRegionAperture MeasureCutRegionGasVent(const CutRegion& region, const std::op
     return phase.dry[vent.sign > 0 ? 0 : 1];
 }
 
+bool ValidateCutRegionGasVents(const CutRegionChart& chart,
+                              const std::vector<CutRegionGasVent>& vents, std::string& error) {
+    if (chart.layout.CheckedCellCount() == 0)
+        return Fail(error, "invalid cut-region gas vent chart");
+    for (std::size_t i = 0; i < vents.size(); ++i) {
+        if (!ValidVent(chart, vents[i]))
+            return Fail(error, "gas vent is not a valid chart boundary rectangle");
+        for (std::size_t j = 0; j < i; ++j)
+            if (Overlaps(vents[i], vents[j]))
+                return Fail(error, "gas vent rectangles overlap");
+    }
+    error.clear();
+    return true;
+}
+
 bool BuildCutRegionGasTopology(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                               const std::vector<CutRegionWaterPlane>& water,
                               const std::vector<CutRegionGasVent>& vents,
@@ -151,13 +166,8 @@ bool BuildCutRegionGasTopology(const CutRegionChart& chart, const CutRegionGeome
     if (count == 0 || geometry.startCapacity.size() != count || water.size() != count ||
         geometry.faces.size() != chart.faces.size() || chart.layout.CheckedCellCount() == 0)
         return Fail(error, "invalid cut-region gas topology dimensions");
-    for (std::size_t i = 0; i < vents.size(); ++i) {
-        if (!ValidVent(chart, vents[i]))
-            return Fail(error, "gas vent is not a valid chart boundary rectangle");
-        for (std::size_t j = 0; j < i; ++j)
-            if (Overlaps(vents[i], vents[j]))
-                return Fail(error, "gas vent rectangles overlap");
-    }
+    if (!ValidateCutRegionGasVents(chart, vents, error))
+        return false;
 
     // Connectivity owns start-of-step geometry. The interval average would
     // incorrectly join a chamber before a translating solid uncovers a vent.

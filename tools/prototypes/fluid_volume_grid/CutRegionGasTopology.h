@@ -27,6 +27,9 @@ struct CutRegionGasTopology {
 
 CutRegionGasVent FullCutRegionGasVent(const CutRegionChart& chart, int axis, int sign);
 
+bool ValidateCutRegionGasVents(const CutRegionChart& chart,
+                              const std::vector<CutRegionGasVent>& vents, std::string& error);
+
 CutRegionAperture MeasureCutRegionGasVent(const CutRegion& region, const std::optional<BoxMotion>& solid,
                                          const CutRegionGasVent& vent, const CutRegionWaterPlane& water);
 
