@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "before",
+    "index": 4,
+    "gpu_median": 0.37704000000000004,
+    "gpu_p95": 0.379936,
+    "gpu_worst": 0.390176,
+    "render_cpu_median": 0.17481999999999998,
+    "frame_cpu_worst": 25.634298
+  },
+  {
+    "kind": "v2",
+    "index": 5,
+    "gpu_median": 0.37585599999999997,
+    "gpu_p95": 0.389856,
+    "gpu_worst": 1.331712,
+    "render_cpu_median": 0.1847935,
+    "frame_cpu_worst": 23.924964
+  },
+  {
+    "kind": "v2",
+    "index": 6,
+    "gpu_median": 0.376032,
+    "gpu_p95": 0.385952,
+    "gpu_worst": 1.827232,
+    "render_cpu_median": 0.2027025,
+    "frame_cpu_worst": 27.077299
+  },
+  {
+    "kind": "before",
+    "index": 7,
+    "gpu_median": 0.378304,
+    "gpu_p95": 0.38144,
+    "gpu_worst": 0.390368,
+    "render_cpu_median": 0.1825845,
+    "frame_cpu_worst": 23.88574
+  }
+]

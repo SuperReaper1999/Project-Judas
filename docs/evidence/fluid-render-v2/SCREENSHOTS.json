@@ -1,0 +1,14 @@
+{
+  "pool": {
+    "before": "cc0874f5ce9bb23a7f04c4b13f782c58d6439797bde53026e1757f9c84a1c3eb",
+    "v2": "cc0874f5ce9bb23a7f04c4b13f782c58d6439797bde53026e1757f9c84a1c3eb"
+  },
+  "planet": {
+    "before": "58f5989109856796257f2f9aa7ca42960da1f2a32dedf44a0307d3b1ff671aef",
+    "v2": "58f5989109856796257f2f9aa7ca42960da1f2a32dedf44a0307d3b1ff671aef"
+  },
+  "pool-hdr": {
+    "before": "d04ced27b15b3da60c4bdd004957d23ecbcda3e123ae1dffa8391f7aad58a28d",
+    "v2": "d04ced27b15b3da60c4bdd004957d23ecbcda3e123ae1dffa8391f7aad58a28d"
+  }
+}

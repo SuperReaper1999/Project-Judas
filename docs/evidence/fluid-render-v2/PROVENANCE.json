@@ -1,0 +1,35 @@
+{
+  "current_parent": "3ffe83ae9f5efe2669995e8a3ee36dbc7ef56bc7",
+  "baseline": {
+    "architecture": "x86_64",
+    "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v1.2.5",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+    "source_origin": "git",
+    "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+    "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "1.2.5-alpha.1"
+  },
+  "baseline_binary_sha256": "47ca2abe7f6b885cfda5a158ec7d6c74f8efcf5a9fb8add94879158824f2f45b",
+  "probe_source_sha256": "d8aa70dc9cdc0fea837d433c00f2bd7197a9275bdef7557540dcfb883185f2d4",
+  "unchanged_sources": {
+    "src/FluidWorld.cpp": true,
+    "src/FluidWorld.h": true,
+    "src/ProductionFluidCoupling.cpp": true,
+    "src/physics/WorldMk2Solver.cpp": true,
+    "src/InteractivePlay.cpp": true,
+    "src/PerformanceProfiler.cpp": true,
+    "src/PerformanceProfiler.h": true
+  },
+  "note": "Updated from the initial pilot source hash to the unchanged final source compiled for all matched runs; binary identities/hashes are in RUNS.json. The initial prototype metadata is retained separately."
+}

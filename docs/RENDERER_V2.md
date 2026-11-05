@@ -137,6 +137,12 @@ immutable until renderer shutdown.
 `JUDAS_PERSISTENT_UPLOADS=0` and `JUDAS_SHADOW_REUSE=0` independently select the established fallback paths.
 These controls do not change scene counts or graphics quality.
 
+The [5 November fluid comparison](FLUID_RENDER_V2_COMPARISON.md) found unchanged
+typical water-scene GPU cost but a reproducible small-scene tail regression
+associated with persistent uploads on the GTX 970. The persistent-off control
+removes those measured spikes; the exact mechanism is not yet fixed. Keep that
+finding in V2 qualification rather than claiming every workload improves.
+
 The editable project is `projects/renderer_v2_lab/renderer_v2_lab.judasproj`.
 Its README describes the six cases, ordinary controls and save/load smoke route.
 The starting scene is modest; stress cases require an explicit selection.

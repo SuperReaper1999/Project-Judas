@@ -1,0 +1,99 @@
+{
+  "time_utc": "2026-11-05T18:31:59.592663+00:00",
+  "frames": 360,
+  "warmup": 60,
+  "order": [
+    "before",
+    "v2",
+    "v2",
+    "before"
+  ],
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "tools": {
+    "before": {
+      "sha256": "d765d7362bd55a9b8daaba54d80e5db78292fa38d4c9a6484384223b46a766b7",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.2.5-alpha.1-Experimental-d7bee29-clean-d2c1d9d7ac84-u159529a78ae7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.2.5",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "d2c1d9d7ac8451461402e3e86fd22f73fd2b50b52d98fd889a6c9e9fccd7697a",
+        "source_origin": "git",
+        "source_revision": "d7bee296e86dc3f01e401d69512e0c1522aeb525",
+        "source_tree": "bf1234137dd3bd5047a9da87db9c6e264d3af112",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+        "version": "1.2.5-alpha.1"
+      }
+    },
+    "v2": {
+      "sha256": "ad9e7c3333398dc60d69f6b79e9862f7b1b7584c466be3f34c4ce291f566f2bf",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-3ffe83a-dirty-b4769dd4345c-u8100d76439b2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b4769dd4345c7327b483b0509cdd309a788cd6cac73d88446b6bae2a9400feae",
+        "source_origin": "git",
+        "source_revision": "3ffe83ae9f5efe2669995e8a3ee36dbc7ef56bc7",
+        "source_tree": "49ba161905dee4702aed9327c199a1e7ff685d0b",
+        "source_untracked_count": 19,
+        "source_untracked_fingerprint": "8100d76439b260dca98ab438012dd91c0149697debdf88a7bf2613e45a362e4b",
+        "version": "2.0.0-alpha.1"
+      }
+    }
+  },
+  "runs": [
+    {
+      "case": "planet",
+      "kind": "before",
+      "index": 4,
+      "returncode": 0,
+      "seconds": 2.921656200000143,
+      "gpu_before": "NVIDIA GeForce GTX 970, 580.178.04, 324 MHz, 324 MHz, P8, 42, 14 %, 835 MiB",
+      "output": ".cache/fluid-v2-render-audit/runs/planet/4-before"
+    },
+    {
+      "case": "planet",
+      "kind": "v2",
+      "index": 5,
+      "returncode": 0,
+      "seconds": 2.9709398910017626,
+      "gpu_before": "NVIDIA GeForce GTX 970, 580.178.04, 1113 MHz, 3505 MHz, P0, 44, 6 %, 833 MiB",
+      "output": ".cache/fluid-v2-render-audit/runs/planet/5-v2"
+    },
+    {
+      "case": "planet",
+      "kind": "v2",
+      "index": 6,
+      "returncode": 0,
+      "seconds": 3.1733986969993566,
+      "gpu_before": "NVIDIA GeForce GTX 970, 580.178.04, 1113 MHz, 3505 MHz, P0, 44, 10 %, 833 MiB",
+      "output": ".cache/fluid-v2-render-audit/runs/planet/6-v2"
+    },
+    {
+      "case": "planet",
+      "kind": "before",
+      "index": 7,
+      "returncode": 0,
+      "seconds": 2.9712887490022695,
+      "gpu_before": "NVIDIA GeForce GTX 970, 580.178.04, 1113 MHz, 3505 MHz, P0, 45, 7 %, 832 MiB",
+      "output": ".cache/fluid-v2-render-audit/runs/planet/7-before"
+    }
+  ]
+}

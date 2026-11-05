@@ -1,0 +1,16 @@
+[
+  {
+    "index": 8,
+    "gpu_median": 0.374608,
+    "gpu_p95": 0.377408,
+    "gpu_worst": 0.385472,
+    "render_cpu_median": 0.15811799999999998
+  },
+  {
+    "index": 9,
+    "gpu_median": 0.375024,
+    "gpu_p95": 0.377664,
+    "gpu_worst": 0.387616,
+    "render_cpu_median": 0.154892
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "GL": "3.3.0 NVIDIA 580.178.04",
+  "bodies": 16,
+  "fluid_hz": 20.0,
+  "frame_seconds": 0.016666666666666666,
+  "gpu_dropped": 0,
+  "height": 720,
+  "initial_particles": 380,
+  "linear_rendering": true,
+  "renderer": "NVIDIA GeForce GTX 970/PCIe/SSE2",
+  "simulation_source": "unchanged ordinary Application/InteractivePlay",
+  "surface_sha256": "5a1a513c632ae7d8b0ca5fd006ff7469af0ae8def22e2076947cd8516ad33c06",
+  "surface_vertices": 18768,
+  "vendor": "NVIDIA Corporation",
+  "width": 1280
+}

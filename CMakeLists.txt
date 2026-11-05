@@ -1277,6 +1277,10 @@ target_link_libraries(judas_ragdoll_application_tests PRIVATE judas_engine)
 add_executable(judas_fluid_demo_probe tools/FluidDemoProbe.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_fluid_demo_probe PRIVATE judas_engine)
 judas_warnings(judas_fluid_demo_probe)
+add_executable(judas_fluid_render_probe tools/benchmarks/FluidRenderProbe.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_fluid_render_probe PRIVATE judas_engine)
+target_compile_definitions(judas_fluid_render_probe PRIVATE JUDAS_FLUID_PROBE_V2=1)
+judas_warnings(judas_fluid_render_probe)
 
 judas_add_engine_test(judas_fluid_demo_integration_tests tests/FluidDemoIntegrationTests.cpp)
 
