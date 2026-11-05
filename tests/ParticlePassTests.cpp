@@ -1,6 +1,7 @@
 #include "EngineHost.h"
 #include "GraphicsApi.h"
 #include "render/ParticlePass.h"
+#include "render/ComputeDevice.h"
 #include "render/ShaderLibrary.h"
 #include "render/StreamArena.h"
 
@@ -398,6 +399,15 @@ void NativeControls() {
               "compact-upload accounting");
         Check(pass.Shutdown(&error) && pass.Stats().arenaBytes == 0 && glIsTexture(fixture.texture),
               "explicit particle shutdown releases owned storage and preserves the borrowed texture");
+        if(host.GraphicsCaps().modernTier){
+            JudasRender::ComputeDevice compute;
+            const bool initialized=compute.Initialize(host.GraphicsCaps(),{1024,1,1},error);
+            const char* source="#version 450 core\nlayout(local_size_x=1)in;void main(){}";
+            const auto kernel=initialized?compute.CreateKernel(source,"particle-shutdown/compute-continuation",error):JudasRender::ComputeKernel{};
+            Check(initialized&&kernel.IsValid()&&compute.Dispatch(kernel,{1,1,1},error)&&glGetError()==GL_NO_ERROR,
+                  "drawing then retiring a particle program leaves no deleted current name for the next compute dispatch");
+            Check(compute.Shutdown(error),"cross-pass particle/compute lifetime control releases its kernel");
+        }
         Check(glGetError() == GL_NO_ERROR, "particle known-answer operations leave no graphics errors");
     }
     host.Shutdown();

@@ -7,6 +7,7 @@
 #include "SkeletalAnimation.h"
 #include "Weather.h"
 #include "BasicWater.h"
+#include "particles/GpuParticles.h"
 
 #include <algorithm>
 #include <cmath>
@@ -458,6 +459,7 @@ void Renderer::Shutdown() {
     ShutdownAppearance();
     m_spriteDraws.clear();m_spriteQuad={};m_spriteMaterials={};m_spritePixelGrid=0;
     m_render->particlePass.Shutdown();
+    m_render->gpuParticlePass.Shutdown();
     m_render->instanceArena.Shutdown();
     m_render->viewUniforms.Shutdown();
     m_shadowContentValid.fill(false);
@@ -1135,6 +1137,25 @@ void Renderer::DrawParticles(const std::vector<ParticleBillboard>& particles,con
     m_stats.particlesSubmitted+=unsigned(after.particles-before.particles);
     m_stats.uploadedBytes+=after.uploadedBytes-before.uploadedBytes;
     m_stats.uploadCalls+=after.uploadCalls-before.uploadCalls;
+}
+
+void Renderer::DrawGpuParticles(JudasParticles::GpuParticles& particles,const VisualBounds& bounds,TextureHandle texture){
+    if(m_shadowPassActive)return;
+    if(!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedEmitters;return;}
+    ++m_stats.particleEmittersConsidered;
+    if(!IsVisible(bounds)){++m_stats.particleEmittersCulled;return;}
+    ++m_stats.particleEmittersVisible;
+    if(m_linearRendering)texture=ColourTexture(texture);
+    const bool imageLinear=ValidTexture(texture)&&(m_textures[texture.id].srgb||m_textures[texture.id].sceneLinear);
+    if(m_activeTarget.IsValid()&&texture.id==RenderTargetTexture(m_activeTarget).id){texture={};++m_stats.feedbackFallbacks;}
+    const auto before=m_render->gpuParticlePass.Stats();std::string error;
+    if(!m_render->gpuParticlePass.Draw(particles,m_view,m_projection,ResolveTexture(texture),imageLinear,m_linearRendering,error))
+        std::fprintf(stderr,"GPU particle presentation failed: %s\n",error.c_str());
+    const auto after=m_render->gpuParticlePass.Stats();
+    m_stats.drawCalls+=unsigned(after.draws-before.draws);m_stats.gpuParticleDraws+=unsigned(after.draws-before.draws);
+    m_stats.gpuParticleLiveSample=particles.Stats().live;m_stats.gpuParticleSampleTick=particles.Diagnostics().sampleTick;
+    JUDAS_PROFILE_COUNTER("GPU particle draws",double(after.draws-before.draws),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("GPU particle live (delayed sample)",double(particles.Stats().live),ProfileCounterMode::Latest);
 }
 
 bool Renderer::SelectUIFont(const std::string& path,std::string& error){

@@ -35,7 +35,7 @@ Additional controls:
 | **H** | Toggle authored spot-shadow requests. Directional sunlight remains part of the scene. |
 | **C** | Toggle the two real live camera monitors in 3D cases. Initially off. |
 | **V** | Toggle two independent local-player views over the same world. |
-| **F8** | Open the built-in profiler for actual CPU/GPU passes, draws and resource counters. |
+| **F8 (editor)** | Toggle the editor profiler for actual CPU/GPU passes, draws and resource counters. The standalone has no F8 panel. |
 | **F6 / F7** | Save / load the workshop state using its own save identity. |
 | **R** | Reset the current authored case. |
 | **Esc** | Pause/resume and show the simple menu. |
@@ -95,7 +95,7 @@ and native Windows results belong to their own qualification records.
 
 1. Let the starting watch camera run, then try free flight and hand control back.
 2. Select every case. Check material normals, sprite transparency/order and
-   particle appearance; try F8 instead of assuming a low presentation rate is GPU cost.
+   particle appearance; use the editor profiler instead of assuming a low presentation rate is GPU cost.
 3. Toggle shadows, monitors and split views separately. Verify all views remain
    correct and ordinary controls work after returning to the first case.
 4. Save, change case and load; pause/resume; reset. Edit/save/reopen the project

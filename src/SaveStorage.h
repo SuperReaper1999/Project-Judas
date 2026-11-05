@@ -4,6 +4,10 @@
 #include <functional>
 #include <memory>
 
+// One envelope bound shared by capture, migration and load. Subsystems remain
+// optional; this includes the current maximum supported participant composition.
+constexpr std::size_t kMaxSaveParticipants = 25;
+
 struct SaveChunk {uint32_t version=1;std::string data;void Save(SaveArchive& a){a(version,data);}};
 struct GameSnapshot {
  std::string project,scene,content,displayName,metadata="{}",diagnosticBuild="unknown",modContext;

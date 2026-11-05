@@ -5,6 +5,11 @@
 #include "EditorDocument.h"
 
 struct EditorPanelState;
+enum class AssetType;
+
+// Shared typed asset picker, including Asset Browser drag/drop and undo.
+void AssetField(EditorDocument&, const char*, std::string&, AssetType, bool allowNone,
+                EditorPanelState&);
 
 // Edits a detached candidate; its caller publishes through authored undo or the
 // runtime setter. Shared controls never mutate an imported material asset.

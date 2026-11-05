@@ -140,7 +140,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(s.operation!="load"){Finish("");return;}
   auto& saved=m_product->snapshot;
   if(std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="saved/migrated scene is not registered";Finish(error);return;}
-  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>24)){error="unsupported save game/participant schema";Finish(error);return;}
+  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>kMaxSaveParticipants)){error="unsupported save game/participant schema";Finish(error);return;}
   Scene scene;if(!WorldPersistence::SceneFrom(saved.participants,scene,error)){Finish(error);return;}
   const bool hasWeather=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.weather);});
   if(bool(saved.participants.count("weather"))!=hasWeather){error="weather participant does not match snapshot components";Finish(error);return;}
@@ -148,6 +148,8 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("planets"))!=hasPlanet){error="planet participant does not match snapshot components";Finish(error);return;}
   const bool hasSpriteAnimation=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.render&&o.render->spritePlayback.has_value();});
   if(bool(saved.participants.count("sprite-content"))!=hasSpriteAnimation){error="sprite animation content participant does not match snapshot components";Finish(error);return;}
+  const bool hasParticleImpacts=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable;});
+  if(bool(saved.participants.count("particle-impacts"))!=hasParticleImpacts){error="particle impact participant does not match snapshot components";Finish(error);return;}
   const bool hasDeformable=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.deformable);});
   const bool hasKinematic=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.body&&o.body->motion==SceneBodyMotion::Kinematic;});
   const bool hasWheel=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.wheel);});
@@ -155,7 +157,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("powertrains"))!=hasPowertrain){error="powertrain participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("wheels"))!=hasWheel){error="wheel participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("kinematic-motion"))!=hasKinematic){error="kinematic motion participant does not match snapshot components";Finish(error);return;}
-  if(saved.participants.size()!=size_t(11+hasSpriteAnimation+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
+  if(saved.participants.size()!=size_t(11+hasSpriteAnimation+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+hasParticleImpacts+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
   m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;m_staged->legacyGameplay=m_session.m_project.Settings().legacyGameplay;
   m_staged->ConfigureProject(m_session.m_project.Settings());
   if(!m_staged->Build(scene,&m_resources,error,&m_session.m_project.Settings().classification,&m_session.m_project.Settings().navigation,true)){Finish(error);return;}s.state="preparing";s.waitingFor="restoration";
@@ -169,7 +171,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
  if(!WorldPersistence::Restore(*m_staged,saved.participants,error)){Finish(error);return;}
  try{
   auto it=saved.participants.find("session");if(it==saved.participants.end()||it->second.version!=1)throw std::runtime_error("required session participant missing/newer");SaveArchive a(it->second.data);std::map<std::string,std::string> values;std::string locale;a(values,locale);a.Finish();for(auto& [key,json]:values)if(!m_stagedSession->Set(key,json,error))throw std::runtime_error(error);if(!m_stagedSession->Localization(&m_resources).Configuration().locales.empty()&&!m_stagedSession->Localization(&m_resources).SetLocale(locale,error))throw std::runtime_error(error);
-  it=saved.participants.find("streaming");if(it==saved.participants.end()||(it->second.version<1||it->second.version>9))throw std::runtime_error("required streaming participant missing/newer");SaveArchive b(it->second.data);bool composed=false;b(composed);if(composed!=m_session.ComposedProject())throw std::runtime_error("saved composition mismatch");if(composed){auto* stream=m_stagedSession->Streaming(*m_staged,error);if(!stream)throw std::runtime_error(error);stream->Persist(b,it->second.version);}b.Finish();
+  it=saved.participants.find("streaming");if(it==saved.participants.end()||(it->second.version<1||it->second.version>10))throw std::runtime_error("required streaming participant missing/newer");SaveArchive b(it->second.data);bool composed=false;b(composed);if(composed!=m_session.ComposedProject())throw std::runtime_error("saved composition mismatch");if(composed){auto* stream=m_stagedSession->Streaming(*m_staged,error);if(!stream)throw std::runtime_error(error);stream->Persist(b,it->second.version);}b.Finish();
  }catch(const std::exception& e){error=e.what();Finish(error);return;}
  s.state="restoring";
  }

@@ -51,7 +51,8 @@
     "projects/willow_town",
     "projects/menu_workshop",
     "projects/terrain_navigation_workshop",
-    "projects/renderer_v2_lab"
+    "projects/renderer_v2_lab",
+    "projects/particle_v2_lab"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [

@@ -32,6 +32,12 @@ struct KernelSlot {
     unsigned name = 0, generation = 1;
     std::array<int, 3> local{};
     std::vector<KernelBinding> bindings;
+    std::vector<std::pair<std::string, int>> uint2Uniforms;
+};
+struct ReadbackSlot {
+    unsigned buffer = 0, generation = 1;
+    GLsync fence = nullptr;
+    std::size_t bytes = 0;
 };
 struct StorageBinding {
     ComputeBuffer buffer;
@@ -54,7 +60,8 @@ struct ComputeDevice::State {
     std::vector<BufferSlot> buffers;
     std::vector<KernelSlot> kernels;
     std::vector<StorageBinding> bindings;
-    std::size_t bytes = 0;
+    std::array<ReadbackSlot, MaxReadbacks> readbacks{};
+    std::size_t bytes = 0, readbackBytes = 0;
     unsigned liveBuffers = 0, liveKernels = 0;
 
     BufferSlot *Buffer(ComputeBuffer handle, std::string &error) {
@@ -72,6 +79,22 @@ struct ComputeDevice::State {
             return nullptr;
         }
         return &kernels[handle.slot];
+    }
+    ReadbackSlot *Readback(ComputeReadback handle, std::string &error) {
+        if (handle.owner != owner || handle.slot >= readbacks.size() ||
+            !readbacks[handle.slot].buffer || readbacks[handle.slot].generation != handle.generation) {
+            Fail(error, "compute readback is stale or belongs to another device");
+            return nullptr;
+        }
+        return &readbacks[handle.slot];
+    }
+    void RetireReadback(ReadbackSlot &entry) {
+        if (entry.fence) glDeleteSync(entry.fence);
+        if (entry.buffer) glDeleteBuffers(1, &entry.buffer);
+        readbackBytes -= entry.bytes;
+        const auto generation = NextGeneration(entry.generation);
+        entry = {};
+        entry.generation = generation;
     }
 };
 
@@ -137,7 +160,8 @@ ComputeBuffer ComputeDevice::CreateBuffer(std::size_t bytes, ComputeBufferUse us
     const auto uses = unsigned(use);
     if (!bytes || !uses || (uses & ~allBufferUses) || bytes > state->caps.limits.storageBlockSize ||
         bytes > std::size_t(std::numeric_limits<GLsizeiptr>::max()) ||
-        bytes > state->budget.bytes - state->bytes || state->liveBuffers == state->budget.buffers) {
+        bytes > state->budget.bytes - state->bytes - state->readbackBytes ||
+        state->liveBuffers == state->budget.buffers) {
         Fail(error, "compute buffer size, use or allocation budget is invalid");
         return {};
     }
@@ -404,6 +428,117 @@ bool ComputeDevice::Barrier(ComputeBarrier barrier, std::string &error) {
     return true;
 }
 
+bool ComputeDevice::SetKernelUInt2(ComputeKernel handle, const char *name,
+                                   std::array<unsigned, 2> values, std::string &error) {
+    if (!Current(error)) return false;
+    auto *kernel = state->Kernel(handle, error);
+    if (!kernel) return false;
+    if (!name || !*name || !glProgramUniform2ui)
+        return Fail(error, "compute uint parameters require a name and program-uniform support");
+    for (const auto &uniform : kernel->uint2Uniforms)
+        if (uniform.first == name) {
+            glProgramUniform2ui(kernel->name, uniform.second, values[0], values[1]);
+            return true;
+        }
+    const auto location = glGetUniformLocation(kernel->name, name);
+    GLuint index = GL_INVALID_INDEX;
+    glGetUniformIndices(kernel->name, 1, &name, &index);
+    GLint type = 0, size = 0;
+    if (index != GL_INVALID_INDEX) {
+        glGetActiveUniformsiv(kernel->name, 1, &index, GL_UNIFORM_TYPE, &type);
+        glGetActiveUniformsiv(kernel->name, 1, &index, GL_UNIFORM_SIZE, &size);
+    }
+    if (location < 0 || type != GL_UNSIGNED_INT_VEC2 || size != 1)
+        return Fail(error, "compute parameter must name an active non-array uvec2 uniform");
+    kernel->uint2Uniforms.emplace_back(name, location);
+    glProgramUniform2ui(kernel->name, location, values[0], values[1]);
+    return true;
+}
+
+ComputeReadback ComputeDevice::RequestReadback(ComputeBuffer handle, std::size_t offset,
+                                               std::size_t bytes, std::string &error) {
+    if (!Current(error)) return {};
+    const auto *source = state->Buffer(handle, error);
+    if (!source) return {};
+    if (!bytes || bytes > MaxReadbackBytes || offset > source->bytes || bytes > source->bytes-offset ||
+        bytes > state->budget.bytes-state->bytes-state->readbackBytes) {
+        Fail(error, "compute readback exceeds its source, staging or device budget"); return {};
+    }
+    if (source->pending & unsigned(ComputeBarrier::BufferUpdate)) {
+        Fail(error, "compute readback copy requires a BufferUpdate barrier"); return {};
+    }
+    unsigned slot = 0;
+    while (slot < state->readbacks.size() && (state->readbacks[slot].buffer ||
+           state->readbacks[slot].generation == std::numeric_limits<unsigned>::max())) ++slot;
+    if (slot == state->readbacks.size()) {
+        Fail(error, "bounded compute readback queue is full"); return {};
+    }
+    GLint previousRead = 0, previousWrite = 0;
+    glGetIntegerv(GL_COPY_READ_BUFFER_BINDING, &previousRead);
+    glGetIntegerv(GL_COPY_WRITE_BUFFER_BINDING, &previousWrite);
+    unsigned buffer = 0;
+    glGenBuffers(1, &buffer);
+    if (!buffer) { Fail(error, "cannot create compute readback storage"); return {}; }
+    glBindBuffer(GL_COPY_WRITE_BUFFER, buffer);
+    glBufferData(GL_COPY_WRITE_BUFFER, GLsizeiptr(bytes), nullptr, GL_STREAM_READ);
+    GLint actual = 0;
+    glGetBufferParameteriv(GL_COPY_WRITE_BUFFER, GL_BUFFER_SIZE, &actual);
+    GLsync fence = nullptr;
+    if (buffer && actual == GLint(bytes)) {
+        glBindBuffer(GL_COPY_READ_BUFFER, source->name);
+        glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, GLintptr(offset), 0,
+                           GLsizeiptr(bytes));
+        fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+    }
+    glBindBuffer(GL_COPY_READ_BUFFER, GLuint(previousRead));
+    glBindBuffer(GL_COPY_WRITE_BUFFER, GLuint(previousWrite));
+    if (!fence) {
+        if (buffer) glDeleteBuffers(1, &buffer);
+        Fail(error, "cannot allocate or fence bounded compute readback storage"); return {};
+    }
+    auto &entry = state->readbacks[slot];
+    entry.buffer = buffer; entry.fence = fence; entry.bytes = bytes;
+    state->readbackBytes += bytes;
+    glFlush(); // Submit without waiting, including headless callers without SwapBuffers.
+    return {slot, entry.generation, state->owner};
+}
+
+ComputeReadbackStatus ComputeDevice::PollReadback(ComputeReadback handle, void *output,
+                                                  std::size_t bytes, std::string &error) {
+    if (!Current(error)) return ComputeReadbackStatus::Failed;
+    auto *entry = state->Readback(handle, error);
+    if (!entry) return ComputeReadbackStatus::Failed;
+    if (!output || bytes != entry->bytes) {
+        Fail(error, "compute readback output must match the requested bounded size");
+        return ComputeReadbackStatus::Failed;
+    }
+    const auto result = glClientWaitSync(entry->fence, 0, 0);
+    if (result == GL_TIMEOUT_EXPIRED) return ComputeReadbackStatus::Pending;
+    if (result != GL_ALREADY_SIGNALED && result != GL_CONDITION_SATISFIED) {
+        state->RetireReadback(*entry);
+        Fail(error, "compute readback fence failed"); return ComputeReadbackStatus::Failed;
+    }
+    GLint previous = 0;
+    glGetIntegerv(GL_COPY_READ_BUFFER_BINDING, &previous);
+    glBindBuffer(GL_COPY_READ_BUFFER, entry->buffer);
+    glGetBufferSubData(GL_COPY_READ_BUFFER, 0, GLsizeiptr(bytes), output);
+    glBindBuffer(GL_COPY_READ_BUFFER, GLuint(previous));
+    state->RetireReadback(*entry);
+    return ComputeReadbackStatus::Ready;
+}
+bool ComputeDevice::CancelReadback(ComputeReadback handle, std::string &error) {
+    if (!Current(error)) return false;
+    auto *entry = state->Readback(handle, error);
+    if (!entry) return false;
+    state->RetireReadback(*entry);
+    return true;
+}
+
+bool ComputeDevice::FinishForDiagnostics(std::string& error) {
+    if (!Current(error)) return false;
+    glFinish();
+    return true;
+}
 bool ComputeDevice::ReadForDiagnostics(ComputeBuffer handle, std::size_t offset, void *output,
                                        std::size_t bytes, std::string &error) {
     if (!Current(error))
@@ -429,6 +564,8 @@ bool ComputeDevice::Shutdown(std::string &error) {
         return true;
     if (!Current(error))
         return false;
+    for (auto &entry : state->readbacks)
+        if (entry.buffer) state->RetireReadback(entry);
     for (const auto &entry : state->kernels)
         if (entry.name)
             glDeleteProgram(entry.name);
@@ -440,7 +577,7 @@ bool ComputeDevice::Shutdown(std::string &error) {
     return true;
 }
 bool ComputeDevice::Supported() const { return state != nullptr; }
-std::size_t ComputeDevice::AllocatedBytes() const { return state ? state->bytes : 0; }
+std::size_t ComputeDevice::AllocatedBytes() const { return state ? state->bytes + state->readbackBytes : 0; }
 unsigned ComputeDevice::LiveBuffers() const { return state ? state->liveBuffers : 0; }
 unsigned ComputeDevice::LiveKernels() const { return state ? state->liveKernels : 0; }
 #else
@@ -476,11 +613,16 @@ bool ComputeDevice::DestroyKernel(ComputeKernel, std::string &e) { return Curren
 bool ComputeDevice::Dispatch(ComputeKernel, std::array<unsigned, 3>, std::string &e) {
     return Current(e);
 }
+bool ComputeDevice::SetKernelUInt2(ComputeKernel, const char *, std::array<unsigned, 2>, std::string &e) { return Current(e); }
+ComputeReadback ComputeDevice::RequestReadback(ComputeBuffer, std::size_t, std::size_t, std::string &e) { Current(e); return {}; }
+ComputeReadbackStatus ComputeDevice::PollReadback(ComputeReadback, void *, std::size_t, std::string &e) { Current(e); return ComputeReadbackStatus::Failed; }
+bool ComputeDevice::CancelReadback(ComputeReadback, std::string &e) { return Current(e); }
 bool ComputeDevice::Barrier(ComputeBarrier, std::string &e) { return Current(e); }
 bool ComputeDevice::ReadForDiagnostics(ComputeBuffer, std::size_t, void *, std::size_t,
                                        std::string &e) {
     return Current(e);
 }
+bool ComputeDevice::FinishForDiagnostics(std::string& e) { return Current(e); }
 bool ComputeDevice::Shutdown(std::string &error) {
     error.clear();
     return true;

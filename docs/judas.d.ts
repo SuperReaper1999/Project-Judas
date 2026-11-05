@@ -209,14 +209,46 @@ declare module "judas" {
   export interface AudioGroup {gain:number;mute:boolean;paused:boolean}
   export interface AudioDiagnostics {voices:number;streams:number;bufferedBytes:number;streamBytes:number;streamHighWater:number;pendingRetirements:number;reverbProcessors:number;underruns:number;decodedFrames:number;occlusionQueries:number;maximumDetachMilliseconds:number}
   export const audio:{group(name:string):AudioGroup|null;setGroup(name:string,settings:Partial<AudioGroup>,fadeSeconds?:number):boolean|null;readonly diagnostics:AudioDiagnostics|null};
+  export type ParticleBackend = "cpu" | "auto" | "gpu";
+  export type ParticleResponse = "bounce" | "slide" | "stick" | "remove";
+  export type ParticleImpactDelivery = "off" | "cosmetic" | "reliable";
+  export type ParticleControl = "play" | "pause" | "stop" | "clear" | "restart";
   export interface ParticleSettingsPatch {
     enabled?:boolean; loop?:boolean; localSpace?:boolean; useGravity?:boolean;
     rate?:number; lifetime?:number; size?:number; endSize?:number;
     color?:{r:number;g:number;b:number;a:number}; endColor?:{r:number;g:number;b:number;a:number};
     burst?:number; maxParticles?:number; seed?:number; textureAsset?:AssetId|null;
     velocity?:Vec3; velocityVariation?:Vec3; spread?:Vec3; acceleration?:Vec3;
+    backend?:ParticleBackend; collision?:boolean; useWind?:boolean;
+    collisionRadius?:number; restitution?:number; friction?:number; response?:ParticleResponse;
+    /** Registered names, an exact unsigned decimal 64-bit mask, or null for all layers. */
+    collisionLayers?:string[]|string|null; maxContacts?:number;
+    impacts?:ParticleImpactDelivery; impactCellSize?:number; impactWeight?:number; maxImpactCells?:number;
   }
-  export type ParticleSettings = Required<ParticleSettingsPatch>;
+  export type ParticleSettings = Omit<Required<ParticleSettingsPatch>, "collisionLayers"> & {collisionLayers:string};
+  export interface ParticleRuntimeStats {
+    requested:ParticleBackend;
+    /** Actual backend; null when required GPU is unavailable. Auto is request policy only. */
+    active:"cpu"|"gpu"|null;
+    live:number; simulated:number; contacts:number; queryFailures:number;
+    queuedImpacts:number; deliveredImpacts:number; cosmeticDropped:number;
+    snapshotBodies:number; snapshotColliders:number; snapshotTriangles:number;
+    gpuBytes:number; geometryUploads:number; stateTransferBytes:number;
+    paused:boolean; backpressure:boolean; pendingStep:boolean;
+    simulationMs:number; snapshotMs:number; diagnostic:string;
+  }
+  export interface ParticleImpact {
+    /** Exact unsigned 64-bit identities and ordering tokens. */
+    sequence:string; tick:string; receiver:EntityId; geometryRevision:string;
+    childKey:number; feature:number|null;
+    /** Historical absolute position; survives later world-origin changes. */
+    position:Vec3;
+    /** Historical body-COM-local position; not the authored entity pivot. */
+    localPosition:Vec3;
+    normal:Vec3; localNormal:Vec3; velocity:Vec3; surfaceVelocity:Vec3;
+    color:{r:number;g:number;b:number;a:number}; size:number; age:number;
+    count:number; weight:number;
+  }
   export interface CastHit {
     physicalMaterial:AssetId|null;
     entity: Entity | null; entityId: EntityId; bodyId: number;
@@ -447,6 +479,10 @@ declare module "judas" {
     burst(count: number): boolean;
     readonly particles: ParticleSettings | null;
     setParticles(settings: ParticleSettingsPatch): boolean;
+    readonly particleStats:ParticleRuntimeStats|null;
+    /** Drains complete aggregated records only after successful JavaScript publication. */
+    takeParticleImpacts():ParticleImpact[];
+    controlParticles(command:ParticleControl):boolean;
     setCameraEnabled(enabled: boolean): boolean;
     setCameraTargetSize(width:number,height:number):boolean;
     setCameraProjection(range:CameraProjection):boolean;

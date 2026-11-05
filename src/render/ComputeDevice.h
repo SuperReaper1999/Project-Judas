@@ -18,6 +18,12 @@ struct ComputeKernel {
     std::uint64_t owner = 0;
     bool IsValid() const { return slot != ~0u; }
 };
+struct ComputeReadback {
+    unsigned slot = ~0u, generation = 0;
+    std::uint64_t owner = 0;
+    bool IsValid() const { return slot != ~0u; }
+};
+enum class ComputeReadbackStatus { Pending, Ready, Failed };
 enum class ComputeBufferUse : unsigned { Storage = 1, Vertex = 2, Indirect = 4 };
 enum class ComputeAccess { ReadOnly, WriteOnly, ReadWrite };
 enum class ComputeBarrier : unsigned {
@@ -60,6 +66,7 @@ class ComputeDevice {
 
     bool Initialize(const GraphicsCapabilities &, ComputeBudget, std::string &error);
     bool Supported() const;
+    bool ValidateOwner(std::string& error) const { return Current(error); }
     const std::string &Diagnostic() const;
     bool Shutdown(std::string &error);
 
@@ -75,9 +82,24 @@ class ComputeDevice {
     ComputeKernel CreateKernel(const char *source, const char *identity, std::string &error);
     bool DestroyKernel(ComputeKernel, std::string &error);
     bool Dispatch(ComputeKernel, std::array<unsigned, 3> groups, std::string &error);
+    // Small per-dispatch parameters without overwriting an in-flight SSBO.
+    // The named default-block uniform must be an active uvec2.
+    bool SetKernelUInt2(ComputeKernel, const char *name, std::array<unsigned, 2>, std::string &error);
     bool Barrier(ComputeBarrier, std::string &error);
 
+    // GPU copy into at most three bounded staging slots. Poll never waits:
+    // pending leaves output untouched; Ready consumes the request. Gameplay
+    // must account for delayed delivery and explicit queue-full rejection.
+    static constexpr unsigned MaxReadbacks = 3;
+    static constexpr std::size_t MaxReadbackBytes = 256 * 1024;
+    ComputeReadback RequestReadback(ComputeBuffer, std::size_t offset, std::size_t bytes,
+                                    std::string &error);
+    ComputeReadbackStatus PollReadback(ComputeReadback, void *output, std::size_t bytes,
+                                       std::string &error);
+    bool CancelReadback(ComputeReadback, std::string &error);
+
     // Intentionally blocking diagnostics. This is not a frame-loop transfer API.
+    bool FinishForDiagnostics(std::string& error);
     bool ReadForDiagnostics(ComputeBuffer, std::size_t offset, void *output, std::size_t bytes,
                             std::string &error);
     std::size_t AllocatedBytes() const;

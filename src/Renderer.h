@@ -27,6 +27,7 @@
 #include "render/GraphicsCapabilities.h"
 
 namespace JudasRender {struct RendererInfrastructure;struct MeshInstance;}
+namespace JudasParticles {class GpuParticles;}
 
 struct WeatherSample;
 struct WeatherShelterGrid;
@@ -38,7 +39,7 @@ struct WeatherShelterGrid;
 // `triangles` include shadow-pass submissions (each shadow pass re-draws
 // the scene); `shadowPasses` says how many such passes ran; `debugLines`
 // counts line segments, which are not triangles.
-#define JUDAS_RENDER_STATS_VERSION 2
+#define JUDAS_RENDER_STATS_VERSION 3
 struct RenderStats {
     unsigned int drawCalls = 0;
     unsigned int layerRejectedDraws=0,layerRejectedEmitters=0;
@@ -58,6 +59,10 @@ struct RenderStats {
     // This excludes asset residency, UI, skin palettes and transient water meshes.
     std::uint64_t uploadedBytes=0, uploadCalls=0, materialApplications=0;
     unsigned reusedShadowPasses=0;
+    // Indirect draws are exact; live samples are delayed GPU observations, not
+    // a fabricated current-frame triangle/submission count.
+    unsigned gpuParticleDraws=0;
+    std::uint64_t gpuParticleLiveSample=0,gpuParticleSampleTick=0;
 };
 
 // Owns the GL objects and draw calls. Low-level calls (glClear, glDrawArrays,
@@ -143,6 +148,7 @@ public:
     bool IsVisible(const VisualBounds& bounds)const{return !m_cullingEnabled || m_frustum.IsVisible(bounds);}
     void DrawSphereTransformed(const glm::vec3& p,const glm::quat& q,const glm::vec3& scale,float radius,const glm::vec3& color,float alpha,TextureHandle texture){DrawMesh(m_sphereMesh,p,q,scale*radius,texture,color,alpha);}
     void DrawParticles(const std::vector<ParticleBillboard>& particles,const VisualBounds& bounds,TextureHandle texture={});
+    void DrawGpuParticles(JudasParticles::GpuParticles&,const VisualBounds&,TextureHandle texture={});
 
     // Milestone 9: the demo's one directional light, plus a small constant
     // ambient term. `direction` points FROM a lit surface TOWARD the light

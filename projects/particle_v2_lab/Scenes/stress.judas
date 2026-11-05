@@ -1,0 +1,1091 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Particles V2 / stress",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.3,
+        0.85,
+        0.4
+      ],
+      "sun-color": [
+        0.8,
+        0.85,
+        1
+      ],
+      "ambient": [
+        0.24,
+        0.26,
+        0.3
+      ],
+      "linear-rendering": true,
+      "next-id": 2000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Particles V2 game controller",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "ce9096e7169532e93194580e1eebd84f",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"caseKey\": \"stress\"}",
+          "ui.asset": "8a41b145c39bc64d8081d1532044471f",
+          "ui.name": "particle_lab",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 100,
+        "name": "Stress floor",
+        "fields": {
+          "position": [
+            0,
+            -0.3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            18,
+            0.3,
+            13
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            18,
+            0.3,
+            13
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.25,
+            0.3,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 110,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -9.0,
+            1,
+            -7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 111,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -3.0,
+            1,
+            -7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 112,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            3.0,
+            1,
+            -7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 113,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            9.0,
+            1,
+            -7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 114,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -9.0,
+            1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 115,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -3.0,
+            1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 116,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            3.0,
+            1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 117,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            9.0,
+            1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 118,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -9.0,
+            1,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 119,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            -3.0,
+            1,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 120,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            3.0,
+            1,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 121,
+        "name": "Static GPU collider",
+        "fields": {
+          "position": [
+            9.0,
+            1,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            1.25,
+            1,
+            1.25
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.4,
+            0.55
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 10,
+        "name": "Explicit 100,000 GPU visual particles",
+        "fields": {
+          "position": [
+            0,
+            7,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": false,
+          "particle.local-space": false,
+          "particle.gravity": false,
+          "particle.rate": 0,
+          "particle.lifetime": 3600,
+          "particle.size": 0.045,
+          "particle.end-size": 0.045,
+          "particle.burst": 100000,
+          "particle.capacity": 100000,
+          "particle.spread": [
+            14,
+            5,
+            10
+          ],
+          "particle.velocity": [
+            0,
+            -0.15,
+            0
+          ],
+          "particle.variation": [
+            0.1,
+            0.1,
+            0.1
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "ce4eb0fafd08204ca0d5e3eef78af776",
+          "particle.color": [
+            1,
+            0.45,
+            0.08
+          ],
+          "particle.alpha": 0.85,
+          "particle.end-color": [
+            1,
+            0.15,
+            0.04
+          ],
+          "particle.end-alpha": 0.85,
+          "particle.seed": 8510,
+          "particle.backend": "gpu",
+          "particle.collision": true,
+          "particle.collision-radius": 0.025,
+          "particle.restitution": 0.65,
+          "particle.friction": 0.2,
+          "particle.response": "bounce",
+          "particle.impacts": "off",
+          "particle.impact-cell-size": 0.5,
+          "particle.impact-weight": 0.2,
+          "particle.max-impact-cells": 512,
+          "particle.max-contacts": 8,
+          "gravity-selection.mode": "uniform",
+          "gravity-selection.source": 0,
+          "gravity-selection.acceleration": [
+            0,
+            -9.81,
+            0
+          ]
+        }
+      }
+    ]
+  }
+}

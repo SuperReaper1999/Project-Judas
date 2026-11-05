@@ -1,0 +1,3655 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Particles V2 / rotated",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.3,
+        0.85,
+        0.4
+      ],
+      "sun-color": [
+        0.8,
+        0.85,
+        1
+      ],
+      "ambient": [
+        0.24,
+        0.26,
+        0.3
+      ],
+      "linear-rendering": true,
+      "next-id": 2000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Particles V2 game controller",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "ce9096e7169532e93194580e1eebd84f",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"caseKey\": \"rotated\"}",
+          "ui.asset": "8a41b145c39bc64d8081d1532044471f",
+          "ui.name": "particle_lab",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 100,
+        "name": "Continuous physical paint receiver",
+        "fields": {
+          "position": [
+            0.15,
+            -6,
+            0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            4,
+            0.15,
+            4
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            4,
+            0.15,
+            4
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 2
+        }
+      },
+      {
+        "id": 500,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 501,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 502,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 503,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 504,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 505,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 506,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 507,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            -3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 508,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 509,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 510,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 511,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 512,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 513,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 514,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 515,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            -2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 516,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 517,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 518,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 519,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 520,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 521,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 522,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 523,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            -1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 524,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 525,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 526,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 527,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 528,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 529,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 530,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 531,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            -0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 532,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 533,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 534,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 535,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 536,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 537,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 538,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 539,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            0.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 540,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 541,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 542,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 543,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 544,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 545,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 546,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 547,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            1.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 548,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 549,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 550,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 551,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 552,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 553,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 554,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 555,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            2.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 556,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -9.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 557,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -8.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 558,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -7.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 559,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -6.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 560,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -5.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 561,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -4.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 562,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -3.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 563,
+        "name": "Game-owned coating tile",
+        "fields": {
+          "position": [
+            -0.006,
+            -2.5,
+            3.5
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render.half-extents": [
+            0.49,
+            0.005,
+            0.49
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 200,
+        "name": "Bounce tray floor",
+        "fields": {
+          "position": [
+            0.2,
+            6,
+            0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            3.8,
+            0.2,
+            4
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            3.8,
+            0.2,
+            4
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.17,
+            0.22,
+            0.3
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 0
+        }
+      },
+      {
+        "id": 201,
+        "name": "Native rotating paint receiver",
+        "fields": {
+          "position": [
+            -1.8,
+            6,
+            0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            2.5,
+            0.18,
+            0.45
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            2.5,
+            0.18,
+            0.45
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "render": {
+            "symbol": "box"
+          },
+          "body": [
+            {
+              "symbol": "kinematic"
+            },
+            {
+              "symbol": "box"
+            }
+          ],
+          "tags": 2
+        }
+      },
+      {
+        "id": 10,
+        "name": "Reliable paint droplets",
+        "fields": {
+          "position": [
+            -5,
+            -6,
+            0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": true,
+          "particle.rate": 35,
+          "particle.lifetime": 5,
+          "particle.size": 0.13,
+          "particle.end-size": 0.1,
+          "particle.burst": 0,
+          "particle.capacity": 160,
+          "particle.spread": [
+            3,
+            0.1,
+            3
+          ],
+          "particle.velocity": [
+            0,
+            -2,
+            0
+          ],
+          "particle.variation": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "ce4eb0fafd08204ca0d5e3eef78af776",
+          "particle.color": [
+            0.08,
+            0.65,
+            1
+          ],
+          "particle.alpha": 0.85,
+          "particle.end-color": [
+            0.1,
+            0.55,
+            1
+          ],
+          "particle.end-alpha": 0.85,
+          "particle.seed": 8510,
+          "particle.backend": "cpu",
+          "particle.collision": true,
+          "particle.collision-radius": 0.055,
+          "particle.restitution": 0.65,
+          "particle.friction": 0.2,
+          "particle.response": "remove",
+          "particle.impacts": "reliable",
+          "particle.impact-cell-size": 0.5,
+          "particle.impact-weight": 0.2,
+          "particle.max-impact-cells": 512,
+          "particle.max-contacts": 8,
+          "gravity-selection.mode": "uniform",
+          "gravity-selection.source": 0,
+          "gravity-selection.acceleration": [
+            9.81,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "id": 11,
+        "name": "One-way bounce particles",
+        "fields": {
+          "position": [
+            -5,
+            6,
+            0
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": true,
+          "particle.rate": 35,
+          "particle.lifetime": 5,
+          "particle.size": 0.13,
+          "particle.end-size": 0.1,
+          "particle.burst": 0,
+          "particle.capacity": 160,
+          "particle.spread": [
+            3,
+            0.1,
+            3
+          ],
+          "particle.velocity": [
+            0,
+            -2,
+            0
+          ],
+          "particle.variation": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "ce4eb0fafd08204ca0d5e3eef78af776",
+          "particle.color": [
+            1,
+            0.45,
+            0.08
+          ],
+          "particle.alpha": 0.85,
+          "particle.end-color": [
+            1,
+            0.15,
+            0.04
+          ],
+          "particle.end-alpha": 0.85,
+          "particle.seed": 8511,
+          "particle.backend": "cpu",
+          "particle.collision": true,
+          "particle.collision-radius": 0.055,
+          "particle.restitution": 0.65,
+          "particle.friction": 0.2,
+          "particle.response": "bounce",
+          "particle.impacts": "off",
+          "particle.impact-cell-size": 0.5,
+          "particle.impact-weight": 0.2,
+          "particle.max-impact-cells": 512,
+          "particle.max-contacts": 8,
+          "gravity-selection.mode": "uniform",
+          "gravity-selection.source": 0,
+          "gravity-selection.acceleration": [
+            9.81,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "id": 300,
+        "name": "Cooked undulating terrain",
+        "fields": {
+          "position": [
+            0,
+            -6,
+            -11
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "f71cadfe18a07fe9f66e14013d7092ed",
+          "render.texture-asset": "",
+          "tags": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "triangle-mesh"
+            }
+          ],
+          "body.collision-asset": "6710169e67cad6f474015c9fc55845d0"
+        }
+      },
+      {
+        "id": 301,
+        "name": "Two-sided cooked cave arch",
+        "fields": {
+          "position": [
+            0,
+            6,
+            -11
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.75,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "c91b5a5e81f10bd2075a96b8cc644f70",
+          "render.texture-asset": "",
+          "tags": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "body": [
+            {
+              "symbol": "static"
+            },
+            {
+              "symbol": "triangle-mesh"
+            }
+          ],
+          "body.collision-asset": "20620a4407f02bd4dd4a518e6169454f"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Reliable terrain paint",
+        "fields": {
+          "position": [
+            -5,
+            -6,
+            -11
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": true,
+          "particle.rate": 12,
+          "particle.lifetime": 5,
+          "particle.size": 0.13,
+          "particle.end-size": 0.1,
+          "particle.burst": 0,
+          "particle.capacity": 64,
+          "particle.spread": [
+            2,
+            0.1,
+            2
+          ],
+          "particle.velocity": [
+            0,
+            -2,
+            0
+          ],
+          "particle.variation": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "ce4eb0fafd08204ca0d5e3eef78af776",
+          "particle.color": [
+            0.08,
+            0.65,
+            1
+          ],
+          "particle.alpha": 0.85,
+          "particle.end-color": [
+            0.1,
+            0.55,
+            1
+          ],
+          "particle.end-alpha": 0.85,
+          "particle.seed": 8512,
+          "particle.backend": "cpu",
+          "particle.collision": true,
+          "particle.collision-radius": 0.055,
+          "particle.restitution": 0.65,
+          "particle.friction": 0.2,
+          "particle.response": "remove",
+          "particle.impacts": "reliable",
+          "particle.impact-cell-size": 0.5,
+          "particle.impact-weight": 0.2,
+          "particle.max-impact-cells": 512,
+          "particle.max-contacts": 8,
+          "gravity-selection.mode": "uniform",
+          "gravity-selection.source": 0,
+          "gravity-selection.acceleration": [
+            9.81,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "id": 13,
+        "name": "Reliable cave paint",
+        "fields": {
+          "position": [
+            -5,
+            6,
+            -11
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "particle-emitter": [],
+          "particle.enabled": true,
+          "particle.loop": true,
+          "particle.local-space": false,
+          "particle.gravity": true,
+          "particle.rate": 12,
+          "particle.lifetime": 5,
+          "particle.size": 0.13,
+          "particle.end-size": 0.1,
+          "particle.burst": 0,
+          "particle.capacity": 64,
+          "particle.spread": [
+            2,
+            0.1,
+            2
+          ],
+          "particle.velocity": [
+            0,
+            -2,
+            0
+          ],
+          "particle.variation": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "particle.acceleration": [
+            0,
+            0,
+            0
+          ],
+          "particle.texture": "ce4eb0fafd08204ca0d5e3eef78af776",
+          "particle.color": [
+            0.08,
+            0.65,
+            1
+          ],
+          "particle.alpha": 0.85,
+          "particle.end-color": [
+            0.1,
+            0.55,
+            1
+          ],
+          "particle.end-alpha": 0.85,
+          "particle.seed": 8513,
+          "particle.backend": "cpu",
+          "particle.collision": true,
+          "particle.collision-radius": 0.055,
+          "particle.restitution": 0.65,
+          "particle.friction": 0.2,
+          "particle.response": "remove",
+          "particle.impacts": "reliable",
+          "particle.impact-cell-size": 0.5,
+          "particle.impact-weight": 0.2,
+          "particle.max-impact-cells": 512,
+          "particle.max-contacts": 8,
+          "gravity-selection.mode": "uniform",
+          "gravity-selection.source": 0,
+          "gravity-selection.acceleration": [
+            9.81,
+            0,
+            0
+          ]
+        }
+      }
+    ]
+  }
+}

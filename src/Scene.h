@@ -24,7 +24,7 @@
 #include "CharacterMotor.h"
 #include "Wheel.h"
 #include "Powertrain.h"
-#include "VisualParticles.h"
+#include "particles/ParticleSettings.h"
 #include <string>
 #include <vector>
 

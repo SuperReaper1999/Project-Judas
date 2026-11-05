@@ -30,6 +30,7 @@
 #include "ReferenceFrame.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "VisualParticles.h"
 #include "AudioSystem.h"
 #include "ScriptSystem.h"
 #include "SkeletalAnimation.h"
@@ -44,6 +45,7 @@ class RadialTerrain;
 class ResourceManager;
 struct PhysicalMaterial;
 class ProductionFluidCoupling;
+namespace JudasParticles {class GpuParticles;}
 
 // Milestone 28: the RUNTIME instance of a Scene.
 //
@@ -94,10 +96,30 @@ public:
     };
     struct ParticleEmitter {
         SceneObjectId id=0;SceneTransform transform;VisualParticlePool pool;
+        std::shared_ptr<JudasParticles::CollisionSnapshot> collision;
+        std::shared_ptr<JudasParticles::GpuParticles> gpu;
+        JudasParticles::ParticleRuntimeStats runtime;
+        double gpuCredit=0;
+        bool gpuStarted=false,cpuPinned=false;
+        unsigned gpuBurst=0;
+        std::uint64_t retiredGpuDrops=0;
     };
     bool SetParticleSettings(EntityId,const ParticleEmitterSettings&);
     void UpdateVisualParticles(float dt);
     bool EmitParticleBurst(SceneObjectId id,unsigned count);
+    JudasParticles::ParticleRuntimeStats GetParticleRuntimeStats(EntityId) const;
+    std::vector<JudasParticles::ParticleImpact> TakeParticleImpacts(EntityId);
+    const std::vector<JudasParticles::ParticleImpact>* PeekParticleImpacts(EntityId) const;
+    bool AcknowledgeParticleImpacts(EntityId,std::uint64_t lastSequence);
+    bool ControlParticles(EntityId,const std::string&);
+    bool PrepareParticlePersistence(std::string& error) const;
+    void PersistParticleImpacts(class SaveArchive&);
+    bool CaptureParticleImpacts(EntityId,std::string&,std::string&) const;
+    bool RestoreParticleImpacts(EntityId,const std::string&,std::string&);
+    bool HasPendingParticleImpacts(EntityId) const;
+    void ShutdownParticleEmitter(SceneObjectId);
+    bool CanShiftParticleOrigin(glm::dvec3,std::string&) const;
+    void ShiftParticleOrigin(glm::dvec3);
     std::vector<ParticleEmitter>& VisualEmitters()const{return m_particleEmitters;}
     struct AudioEmitter {
         SceneObjectId id=0;SceneTransform transform;BodyHandle staticBody;

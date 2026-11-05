@@ -88,7 +88,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.audio` | `audioInfo` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.basicWater` | `basicWater` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.body2D` | `body2DInfo` | [declaration](../judas.d.ts) | [reference](physics-2d.md) |
-| `Entity.burst` | `burst` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.burst` | `burst` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.camera` | `cameraInfo` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.centerOfMass` | `centerOfMass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](character.md) |
@@ -98,6 +98,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.clearSocket` | `socketClear` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.collider` | `colliderInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.controlParticles` | `particleControl` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.deformable` | `deformableExists` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Entity.destroy` | `destroy` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.fracture` | `fractureExists` | [declaration](../judas.d.ts) | [reference](fracture.md) |
@@ -117,7 +118,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.parent` | `parent` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.particles` | `particleInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.particleStats` | `particleStats` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `Entity.particles` | `particleInfo` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.pauseAudio` | `pauseAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.physicalMaterial` | `physicalMaterialInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.planetSample` | `planetSample` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
@@ -152,7 +154,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setNavigationLink` | `navLinkSet` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.setNavigationObstacle` | `navObstacleSet` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSocket` | `socketClear`, `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSprite` | `spriteSet` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |
@@ -163,6 +165,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.spriteAnimation` | `spriteAnimationInfo` | [declaration](../judas.d.ts) | [reference](sprite-animation.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.takeParticleImpacts` | `particleImpacts` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |

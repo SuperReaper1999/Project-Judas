@@ -269,6 +269,21 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("particle.color",V(glm::vec3(e.color)));w.Line("particle.alpha",F(e.color.a));
         w.Line("particle.end-color",V(glm::vec3(e.endColor)));w.Line("particle.end-alpha",F(e.endColor.a));
         w.Line("particle.seed",std::to_string(e.seed));
+        // Default extensions are omitted so existing visual-only authored files
+        // retain their canonical representation and CPU behaviour.
+        if(e.backend!=ParticleBackend::Cpu)w.Line("particle.backend",Quote(e.backend==ParticleBackend::Auto?"auto":e.backend==ParticleBackend::Gpu?"gpu":"invalid"));
+        if(e.collision)w.Line("particle.collision",B(e.collision));
+        if(e.useWind)w.Line("particle.wind",B(e.useWind));
+        if(e.collisionRadius!=.025f)w.Line("particle.collision-radius",F(e.collisionRadius));
+        if(e.restitution!=.35f)w.Line("particle.restitution",F(e.restitution));
+        if(e.friction!=.2f)w.Line("particle.friction",F(e.friction));
+        if(e.response!=ParticleResponse::Bounce)w.Line("particle.response",Quote(e.response==ParticleResponse::Slide?"slide":e.response==ParticleResponse::Stick?"stick":e.response==ParticleResponse::Remove?"remove":"invalid"));
+        if(e.collisionLayers!=kAllCategories)w.Line("particle.collision-layers",std::to_string(e.collisionLayers));
+        if(e.maxContacts!=8)w.Line("particle.max-contacts",std::to_string(e.maxContacts));
+        if(e.impacts!=ParticleImpactDelivery::Off)w.Line("particle.impacts",Quote(e.impacts==ParticleImpactDelivery::Cosmetic?"cosmetic":e.impacts==ParticleImpactDelivery::Reliable?"reliable":"invalid"));
+        if(e.impactCellSize!=.5f)w.Line("particle.impact-cell-size",F(e.impactCellSize));
+        if(e.impactWeight!=1)w.Line("particle.impact-weight",F(e.impactWeight));
+        if(e.maxImpactCells!=1024)w.Line("particle.max-impact-cells",std::to_string(e.maxImpactCells));
     }
     if (o.audioEmitter) {
         const auto& a=*o.audioEmitter;w.Line("audio-emitter", "");
@@ -933,6 +948,40 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         e.color=glm::vec4(color,e.color.a);e.endColor=glm::vec4(endColor,e.endColor.a);
         if(seed>0xffffffffu)return reader.Fail("particle seed exceeds uint32");
         e.seed=static_cast<std::uint32_t>(seed);
+        std::string particleOption;
+        if(p.Has("particle.backend")){
+            if(!p.String("particle.backend",particleOption))return false;
+            if(particleOption=="cpu")e.backend=ParticleBackend::Cpu;
+            else if(particleOption=="auto")e.backend=ParticleBackend::Auto;
+            else if(particleOption=="gpu")e.backend=ParticleBackend::Gpu;
+            else return reader.Fail("particle backend must be cpu, auto or gpu");
+        }
+        if(p.Has("particle.response")){
+            if(!p.String("particle.response",particleOption))return false;
+            if(particleOption=="bounce")e.response=ParticleResponse::Bounce;
+            else if(particleOption=="slide")e.response=ParticleResponse::Slide;
+            else if(particleOption=="stick")e.response=ParticleResponse::Stick;
+            else if(particleOption=="remove")e.response=ParticleResponse::Remove;
+            else return reader.Fail("particle response must be bounce, slide, stick or remove");
+        }
+        if(p.Has("particle.impacts")){
+            if(!p.String("particle.impacts",particleOption))return false;
+            if(particleOption=="off")e.impacts=ParticleImpactDelivery::Off;
+            else if(particleOption=="cosmetic")e.impacts=ParticleImpactDelivery::Cosmetic;
+            else if(particleOption=="reliable")e.impacts=ParticleImpactDelivery::Reliable;
+            else return reader.Fail("particle impacts must be off, cosmetic or reliable");
+        }
+        if(p.Has("particle.collision")&&!p.Bool("particle.collision",e.collision))return false;
+        if(p.Has("particle.wind")&&!p.Bool("particle.wind",e.useWind))return false;
+        for(auto [key,value]:{std::pair<const char*,float*>{"particle.collision-radius",&e.collisionRadius},{"particle.restitution",&e.restitution},{"particle.friction",&e.friction},{"particle.impact-cell-size",&e.impactCellSize},{"particle.impact-weight",&e.impactWeight}})
+            if(p.Has(key)&&!p.Float(key,*value))return false;
+        if(p.Has("particle.collision-layers")&&!p.Mask("particle.collision-layers",e.collisionLayers))return false;
+        for(auto [key,value]:{std::pair<const char*,unsigned*>{"particle.max-contacts",&e.maxContacts},{"particle.max-impact-cells",&e.maxImpactCells}}){
+            if(!p.Has(key))continue;
+            int number=0;if(!p.Int(key,number))return false;
+            if(number<0)return reader.Fail("particle contact/cell limit must be a positive integer");
+            *value=static_cast<unsigned>(number);
+        }
         if(!ValidParticleSettings(e)||(!e.textureAsset.empty()&&!IsValidAssetId(e.textureAsset)))return reader.Fail("invalid particle emitter settings");
         o.particleEmitter=e;
     }

@@ -381,6 +381,27 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
             w.Text(e.textureAsset);w.U32(e.seed);
         }
     }
+    const auto extendedParticles=[](const ParticleEmitterSettings& e){
+        const ParticleEmitterSettings defaults;
+        return e.backend!=defaults.backend||e.collision!=defaults.collision||e.useWind!=defaults.useWind||
+               e.collisionRadius!=defaults.collisionRadius||e.restitution!=defaults.restitution||
+               e.friction!=defaults.friction||e.response!=defaults.response||
+               e.collisionLayers!=defaults.collisionLayers||e.maxContacts!=defaults.maxContacts||
+               e.impacts!=defaults.impacts||e.impactCellSize!=defaults.impactCellSize||
+               e.impactWeight!=defaults.impactWeight||e.maxImpactCells!=defaults.maxImpactCells;
+    };
+    size_t extendedEmitterCount=0;
+    for(const auto& o:scene.Objects())if(o.particleEmitter&&extendedParticles(*o.particleEmitter))++extendedEmitterCount;
+    if(extendedEmitterCount){
+        w.Text("Judas.ParticleEmitters.2");w.U64(extendedEmitterCount);
+        for(const auto& o:scene.Objects())if(o.particleEmitter&&extendedParticles(*o.particleEmitter)){
+            const auto& e=*o.particleEmitter;w.U64(o.id);
+            w.U32(unsigned(e.backend));w.Boolean(e.collision);w.Boolean(e.useWind);
+            w.Number(e.collisionRadius);w.Number(e.restitution);w.Number(e.friction);
+            w.U32(unsigned(e.response));w.U64(e.collisionLayers);w.U32(e.maxContacts);
+            w.U32(unsigned(e.impacts));w.Number(e.impactCellSize);w.Number(e.impactWeight);w.U32(e.maxImpactCells);
+        }
+    }
     size_t uiCount=0;for(const auto& o:scene.Objects())if(o.ui)++uiCount;
     if(uiCount){w.Text("Judas.RuntimeUI.1");w.U64(uiCount);for(const auto& o:scene.Objects())if(o.ui){if(!IsValidAssetId(o.ui->asset)||o.ui->name.empty())w.Fail("invalid UI asset/name");w.U64(o.id);w.Text(o.ui->asset);w.Text(o.ui->name);w.Boolean(o.ui->enabled);}}
     size_t scriptCount=0;for(const auto& o:scene.Objects())scriptCount+=o.scripts.size();

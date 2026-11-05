@@ -424,7 +424,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         // A validated cold snapshot contains scene-authored global owners too.
         // Runtime-spawn restrictions must not omit their saved state records.
@@ -1099,6 +1099,10 @@ bool RuntimeWorld::ForceEntityFidelity(EntityId id, std::optional<SimulationFide
 }
 
 bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) const {
+    if (HasPendingParticleImpacts(id)) {
+        error = "consume reliable particle impacts before destroying their emitter/receiver";
+        return false;
+    }
     const EntityRecord* e = FindEntity(id);
     if (!e) {
         error = "unknown entity id " + std::to_string(id);
@@ -1135,6 +1139,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
         const auto eraseId=[id](auto& values){values.erase(std::remove_if(values.begin(),values.end(),[id](const auto& v){return v.id==id;}),values.end());};
         eraseId(m_staticBodies);eraseId(m_staticRenderables);eraseId(m_staticLights);
     }
+    ShutdownParticleEmitter(id);
     m_particleEmitters.erase(std::remove_if(m_particleEmitters.begin(),m_particleEmitters.end(),[&](const auto& e){return e.id==id;}),m_particleEmitters.end());
     ReleaseEntityAudio(id);
     if(m_ui)m_ui->RemoveOwner(id);
@@ -1468,6 +1473,7 @@ void RuntimeWorld::Destroy() {
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
     m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
     EndAudio();
+    ShutdownParticleEmitter(0);
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;
     if (!m_built) return;
@@ -1542,20 +1548,6 @@ TextureHandle RuntimeWorld::CameraTexture(SceneObjectId id) const {
     return {};
 }
 
-
-void RuntimeWorld::UpdateVisualParticles(float dt){
- JUDAS_PROFILE_SCOPE("Visual particle simulation");
-    for(auto& e:m_particleEmitters){
-        if(!IsPublished(e.id))continue;
-        if(const auto* entity=FindEntity(e.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
-        const auto t=PresentedTransform(e.id,e.transform,1);
-        e.pool.Update(dt,t.position,t.rotation,t.scale,GravityForEntity(e.id));
-    }
-}
-bool RuntimeWorld::EmitParticleBurst(SceneObjectId id,unsigned count){
-    for(auto& e:m_particleEmitters)if(e.id==id){const auto t=PresentedTransform(e.id,e.transform,1);e.pool.Burst(count,t.position,t.rotation,t.scale);return true;}
-    return false;
-}
 
 CategoryMask RuntimeWorld::TagsOf(EntityId id)const{
     const auto it=m_entityCategories.find(id);const auto* entity=FindEntity(id);
@@ -1663,21 +1655,6 @@ bool ValidRenderSlot(ResourceManager* resources,const MaterialSlot& value){
 }
 void RuntimeWorld::ReleaseRenderResources(EntityId id){if(auto it=m_renderAssetDemand.find(id);it!=m_renderAssetDemand.end()){if(m_assets)for(const auto& asset:it->second)m_assets->ReleaseRef(asset);
  m_renderAssetDemand.erase(it);}}
-bool RuntimeWorld::SetParticleSettings(EntityId id,const ParticleEmitterSettings& settings){
-    const auto* definition=RuntimeDefinition(id);
-    if(!definition||!definition->particleEmitter||!ValidParticleSettings(settings)||
-       !ValidRenderAsset(m_assets,settings.textureAsset,AssetType::Texture))return false;
-    for(auto& emitter:m_particleEmitters)if(emitter.id==id){
-        if(ParticleSettingsEqual(emitter.pool.settings,settings))return true;
-        const bool textureChanged=emitter.pool.settings.textureAsset!=settings.textureAsset;
-        emitter.pool.SetSettings(settings);
-        m_scriptDefinitions.at(id).particleEmitter=settings;
-        if(auto* record=FindEntity(id))record->definition.particleEmitter=settings;
-        if(textureChanged)ReconcileRenderResources(id);
-        return true;
-    }
-    return false;
-}
 void RuntimeWorld::ReconcileRenderResources(EntityId id){
  std::set<AssetId> demand;
  auto it=m_scriptDefinitions.find(id);

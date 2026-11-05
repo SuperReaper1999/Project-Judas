@@ -1,0 +1,765 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280.0,
+      720.0
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 22.0,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0.0,
+          0.0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "title",
+        "parent": "canvas",
+        "text": "PARTICLES V2 / SURFACE WORKSHOP",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          16
+        ],
+        "size": [
+          1000,
+          36
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.15,
+          0.9,
+          0.88,
+          1
+        ]
+      },
+      {
+        "id": "help",
+        "parent": "canvas",
+        "text": "1 Workshop | 2 100k visual stress | 3 Rotated gravity | T watch/free camera\nP pause particles | B burst | C clean coating | F6 save | F7 load | Esc menu",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 15,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          1
+        ],
+        "anchorMax": [
+          0,
+          1
+        ],
+        "offset": [
+          24,
+          -76
+        ],
+        "size": [
+          1230,
+          58
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.8,
+          0.88,
+          0.92,
+          1
+        ]
+      },
+      {
+        "id": "status",
+        "parent": "canvas",
+        "text": "Actual collisions paint receiving materials. Choose the 100k stress case explicitly.",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          1
+        ],
+        "anchorMax": [
+          0,
+          1
+        ],
+        "offset": [
+          24,
+          -230
+        ],
+        "size": [
+          1230,
+          136
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          12,
+          8,
+          12,
+          8
+        ],
+        "background": [
+          0.025,
+          0.035,
+          0.055,
+          0.91
+        ],
+        "color": [
+          0.91,
+          0.95,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "pause",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 1,
+        "flow": 2,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          380,
+          170
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "background": [
+          0.06,
+          0.09,
+          0.14,
+          0.95
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "resume",
+        "parent": "pause",
+        "text": "RESUME",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          350,
+          55
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.2,
+          0.4,
+          0.5,
+          1
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "reload",
+        "parent": "pause",
+        "text": "RESET THIS CASE",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          350,
+          55
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.2,
+          0.4,
+          0.5,
+          1
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "case_1",
+        "parent": "canvas",
+        "text": "1 Surface workshop",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          62
+        ],
+        "size": [
+          220,
+          37
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.055,
+          0.115,
+          0.15,
+          0.93
+        ],
+        "color": [
+          0.85,
+          0.95,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "case_2",
+        "parent": "canvas",
+        "text": "2 100k GPU stress",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          254,
+          62
+        ],
+        "size": [
+          220,
+          37
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.055,
+          0.115,
+          0.15,
+          0.93
+        ],
+        "color": [
+          0.85,
+          0.95,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "case_3",
+        "parent": "canvas",
+        "text": "3 Rotated gravity",
+        "texture": "",
+        "font": "8741e421d985b1da4bce85cd9c361054",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          484,
+          62
+        ],
+        "size": [
+          220,
+          37
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.055,
+          0.115,
+          0.15,
+          0.93
+        ],
+        "color": [
+          0.85,
+          0.95,
+          1,
+          1
+        ]
+      }
+    ]
+  }
+}

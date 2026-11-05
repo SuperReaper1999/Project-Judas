@@ -139,7 +139,7 @@ export default class RendererWorkshop {
         text += ' | monitors ' + (this.state.monitors && this.cameras.length ? 'ON' : 'OFF');
         text += '\nLights ' + (this.state.lights ? 'ON' : 'OFF') + ' | spot requests ' +
             (this.state.shadows ? 'ON' : 'OFF') + ' | presentation ~' + this.presentationRate.toFixed(1) + ' Hz';
-        text += ' | F8: actual CPU / GPU / draw diagnostics';
+        text += ' | Editor F8: CPU / GPU / draw diagnostics';
         if (this.request) {
             const operation = saves.status(this.request);
             text += '\nSave/load: ' + (operation?.state || 'pending') + ' ' + (operation?.error || '');

@@ -6,6 +6,7 @@
 #include "StreamArena.h"
 #include "SubmissionQueue.h"
 #include "ViewUniforms.h"
+#include "GpuParticlePass.h"
 
 namespace JudasRender {
 struct RendererInfrastructure {
@@ -13,6 +14,7 @@ struct RendererInfrastructure {
     StreamArena instanceArena;
     ViewUniforms viewUniforms;
     ParticlePass particlePass;
+    GpuParticlePass gpuParticlePass;
     bool persistentUploads=true, orderedInstances=false;
 };
 } // namespace JudasRender

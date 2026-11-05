@@ -323,6 +323,13 @@ bool ParticlePass::Shutdown(std::string *error) {
     }
     if (storage->HasResources())
         storage->arena.Shutdown();
+    if (storage->HasResources()) {
+        GLint current = 0;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+        if (std::any_of(storage->programs.begin(), storage->programs.end(),
+                        [&](const auto& program) { return program.handle && program.handle == GLuint(current); }))
+            glUseProgram(0);
+    }
     for (auto &program : storage->programs) {
         if (program.handle)
             glDeleteProgram(program.handle);

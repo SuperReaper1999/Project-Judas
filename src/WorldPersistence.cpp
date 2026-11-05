@@ -12,6 +12,12 @@
 #include <sstream>
 
 namespace {
+bool ReliableParticleParticipant(const RuntimeWorld& world) {
+    for(const auto& object:world.ScriptObjects())
+        if(object.particleEmitter && object.particleEmitter->impacts==ParticleImpactDelivery::Reliable &&
+           !world.IsTransientEntity(object.id)) return true;
+    return false;
+}
 void transform(SaveArchive& a,SceneTransform& t){a(t.position,t.rotation,t.scale);}
 void physical(SaveArchive& a,EntityPhysicalState& s){a(s.position,s.rotation,s.linearVelocity,s.angularVelocity);}
 void pose(SaveArchive& a,SkeletalPose& p){uint32_t n=uint32_t(p.local.size());a(n);a.Require(n<=kModelNodeLimit,"saved pose joint limit");if(a.reading)p.local.resize(n);for(auto& t:p.local)a(t.translation,t.rotation,t.scale);}
@@ -291,6 +297,7 @@ bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,Save
  // intent without synthesizing a previous displacement or CCD history.
  std::vector<EntityId> kinematicIds;for(const auto& o:w.ScriptObjects())if(w.Physics().IsKinematicBody(w.RuntimeBody(o.id))&&!w.IsTransientEntity(o.id))kinematicIds.push_back(o.id);
  if(!kinematicIds.empty()){SaveArchive motions;auto n=count(motions,kinematicIds.size());for(unsigned i=0;i<n;++i){auto id=kinematicIds[i];motions(id);w.Physics().PersistKinematic(motions,w.RuntimeBody(id));}chunks["kinematic-motion"]={1,std::move(motions.bytes)};}
+ if(ReliableParticleParticipant(w)){SaveArchive observations;w.PersistParticleImpacts(observations);chunks["particle-impacts"]={1,std::move(observations.bytes)};}
  if(!w.m_wheelOwners.empty()){SaveArchive wheels;Wheels(w,wheels);chunks["wheels"]={1,std::move(wheels.bytes)};}
  if(!w.m_powertrainOwners.empty()){SaveArchive trains;Powertrains(w,trains);chunks["powertrains"]={1,std::move(trains.bytes)};}
  if(!w.m_balances.empty()){SaveArchive balanceState;PhysicalBalance(w,balanceState);chunks["physical-balance"]={1,std::move(balanceState.bytes)};}
@@ -316,6 +323,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
   return false;
  }
 
+ if(!w.PrepareParticlePersistence(error))return false;
  if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->ReadyToSave()){error="loading";return false;}
  // A boot/menu save can precede the first fixed step. Materialize normal lazy
  // participants without advancing motion or rebuilding existing navigation.
@@ -350,6 +358,10 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
  if(!w.Liquids().PreparePersistence(w,error))return false;
  for(auto id:w.m_animationOwners){auto* v=w.RuntimeAnimation(id);if(!v||!v->asset){auto* d=w.RuntimeDefinition(id);auto* resources=w.Resources();if(d&&d->render&&resources&&resources->StateOf(d->render->meshAsset)==ResourceState::Failed){error="required skeleton "+std::to_string(id)+": "+resources->ErrorOf(d->render->meshAsset);return false;}error="loading";return false;}}return true;}
 bool WorldPersistence::Restore(RuntimeWorld& w,const std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before loading";return false;}JUDAS_PROFILE_SCOPE("Save restoration");try{
+ const bool needsParticleImpacts=ReliableParticleParticipant(w);
+ const auto particleChunk=chunks.find("particle-impacts");
+ if(needsParticleImpacts?(particleChunk==chunks.end()||particleChunk->second.version!=1):particleChunk!=chunks.end())
+  throw std::runtime_error("reliable particle impact participant missing/newer/unexpected");
  const auto spriteContent=SpriteContent(w,[&](auto id){return IncludesEntity(w,id);});auto spriteChunk=chunks.find("sprite-content");
  if(spriteContent.empty()?spriteChunk!=chunks.end():(spriteChunk==chunks.end()||spriteChunk->second.version!=1||spriteChunk->second.data!=spriteContent))throw std::runtime_error("sprite sheet content changed; migrate the save explicitly before restoration");
 if(auto it=chunks.find("runtime-terrain");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer runtime terrain participant");SaveArchive a(it->second.data);uint32_t n=0;a(n);a.Require(n<=8,"runtime terrain owner bound");std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;std::string data;a(id,data);a.Require(seen.insert(id).second&&data.size()<=2*1024*1024,"invalid runtime terrain record");a.Require(w.LiveTerrain().Restore(id,data,error),"runtime terrain restoration: "+error);}a.Finish();}if(!w.m_weather.empty()){auto it=chunks.find("weather");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required weather state missing/newer");SaveArchive a(it->second.data);uint32_t n=0;a(n);a.Require(n==w.m_weather.size(),"weather owner count mismatch");std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;std::string record;a(id,record);a.Require(w.m_weather.count(id)&&seen.insert(id).second,"invalid/duplicate weather owner");std::string detail;a.Require(w.RestoreWeather(id,record,detail),"weather continuation: "+detail);}a.Finish();}else if(chunks.count("weather"))throw std::runtime_error("unexpected weather participant");if(!w.m_planets.empty()){auto it=chunks.find("planets");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required planet collision interest missing/newer");SaveArchive a(it->second.data);uint32_t n=0;a(n);a.Require(n==w.m_planets.size(),"planet owner count mismatch");std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;bool ready=false;glm::dvec3 focus{0};a(id,ready,focus);a.Require(w.m_planets.count(id)&&seen.insert(id).second,"invalid planet owner");if(ready){std::string e;a.Require(w.m_planets.at(id)->Collision(focus,w.Settings().worldOrigin),"saved planet collision preparation failed: "+e);}}a.Finish();}std::string deferredJointContinuation;bool hasJointContinuation=false;const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(name=="entities"&&it->second.version==2)&&!(name=="articulation"&&(it->second.version==2||it->second.version==3||it->second.version==4||it->second.version==5))))throw std::runtime_error("required participant missing/newer: "+name);ProfileScope participant(PerformanceProfiler::Get().Intern("Save restore "+name));SaveArchive a(it->second.data);if(name=="articulation"){ArticulationExtended(w,a,it->second.version,&deferredJointContinuation);hasJointContinuation=it->second.version>=4;}else if(name=="entities")EntitiesExtended(w,a,it->second.version);else fn(w,a);a.Finish();}
@@ -371,6 +383,7 @@ if(auto it=chunks.find("runtime-terrain");it!=chunks.end()){if(it->second.versio
  w.PublishPowertrainConnections();
  if(hasJointContinuation){SaveArchive state(deferredJointContinuation);JointContinuation(w,state);state.Finish();}
  if(auto it=chunks.find("sleep");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer sleep participant");SaveArchive sleeping(it->second.data);auto n=count(sleeping,0);std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;sleeping(id);auto h=w.RuntimeBody(id);sleeping.Require(w.Physics().IsDynamicBody(h)&&seen.insert(id).second,"saved sleep body unavailable/duplicate");w.Physics().PersistSleep(sleeping,h);}sleeping.Finish();}
+if(needsParticleImpacts){SaveArchive observations(particleChunk->second.data);w.PersistParticleImpacts(observations);observations.Finish();}
 for(auto name:{"liquid","scripts","contacts"}){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(std::string(name)=="contacts"&&it->second.version==2)))throw std::runtime_error("required participant missing/newer");SaveArchive a(it->second.data);if(std::string(name)=="liquid")w.Liquids().Persist(a);else if(std::string(name)=="contacts"){
  a.Require((hasJointContinuation&&it->second.version==2)||(!hasJointContinuation&&it->second.version==1),"required joint/contact continuation pair missing");
  w.Physics().PersistTouches(a,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);});
@@ -397,6 +410,7 @@ bool WorldPersistence::PrepareAudio(RuntimeWorld& w,std::string& error){
 // Required subsystem state cannot disappear behind an exclusion flag.
 bool RuntimeWorld::SetTransientEntity(EntityId id,bool transient,std::string& error){
  auto* e=FindEntity(id);const auto* d=RuntimeDefinition(id);if(!e||!d){error="stale entity";return false;}
+ if(d->particleEmitter&&d->particleEmitter->impacts==ParticleImpactDelivery::Reliable){error="entity "+std::to_string(id)+": reliable particle observations require a persistent owner";return false;}
  if(m_wheelParticipants.count(id)||m_powertrainParticipants.count(id)||d->socket||d->deformable||d->liquidBasin||d->liquidContainer||d->liquidConnection||d->characterMotor||d->wheel||d->powertrain||d->animation||d->ragdoll||d->joint||d->navigationAgent||d->navigationSurface||d->navigationObstacle||d->navigationLink||d->audioEmitter||d->audioListener||d->gravity||d->weather||!d->scripts.empty()){error="entity "+std::to_string(id)+": required component cannot be transient";return false;}
  e->transient=transient;return true;
 }

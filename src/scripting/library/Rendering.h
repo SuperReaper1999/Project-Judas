@@ -75,6 +75,15 @@ extendEntity({
     setParticles(settings) {
         return call("particles", this.id, settings);
     },
+    get particleStats() {
+        return call("particleStats", this.id);
+    },
+    takeParticleImpacts() {
+        return call("particleImpacts", this.id);
+    },
+    controlParticles(command) {
+        return call("particleControl", this.id, command);
+    },
     setCameraEnabled(enabled) {
         return call("camera", this.id, enabled);
     },

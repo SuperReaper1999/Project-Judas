@@ -1,0 +1,20 @@
+[
+  [
+    "judas_collision_cook",
+    "mesh",
+    "Assets/models/terrain.obj",
+    "Assets/collision/terrain.judascollision",
+    "f71cadfe18a07fe9f66e14013d7092ed",
+    "0",
+    "--two-sided"
+  ],
+  [
+    "judas_collision_cook",
+    "mesh",
+    "Assets/models/cave.obj",
+    "Assets/collision/cave.judascollision",
+    "c91b5a5e81f10bd2075a96b8cc644f70",
+    "0",
+    "--two-sided"
+  ]
+]

@@ -225,8 +225,17 @@ set(JUDAS_RENDERER_SOURCES
     src/Renderer.cpp src/render/ShaderLibrary.cpp
     src/render/SubmissionQueue.cpp src/render/StreamArena.cpp
     src/render/ViewUniforms.cpp src/render/ParticlePass.cpp
-    src/render/ComputeDevice.cpp
+    src/render/ComputeDevice.cpp src/render/GpuParticlePass.cpp
     src/render/ShadowPassCache.cpp src/render/RenderTargets.cpp)
+
+# Visual particle simulation/collision/publication is separate from MK2 and fluids.
+set(JUDAS_PARTICLE_SOURCES
+    src/VisualParticles.cpp
+    src/particles/ParticleSettings.cpp src/particles/ParticleImpacts.cpp
+    src/particles/CollisionSnapshot.cpp src/particles/CpuParticles.cpp
+    src/particles/GpuParticleCollision.cpp src/particles/GpuParticleShaders.cpp
+    src/particles/GpuParticles.cpp src/particles/WorldParticles.cpp
+    src/particles/ParticlePersistence.cpp)
 
 add_library(judas_engine STATIC
     ${JUDAS_SCRIPTING_SOURCES}
@@ -353,7 +362,7 @@ add_library(judas_engine STATIC
     src/CelestialGravity.cpp
     src/AtmosphereField.cpp
     src/AerodynamicDrag.cpp
-    src/VisualParticles.cpp
+    ${JUDAS_PARTICLE_SOURCES}
     src/Prefab.cpp
     src/Scene.cpp
     src/Sprite.cpp
@@ -552,6 +561,7 @@ add_library(judas_editor_core STATIC
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
     src/editor/ComponentEditors.cpp
+    src/editor/ParticleEmitterEditor.cpp
     src/editor/GizmoMath.cpp
 )
 target_link_libraries(judas_editor_core PUBLIC judas_engine judas_editor_design judas_imgui judas_navigation_baker judas_model_import)
@@ -790,19 +800,8 @@ judas_warnings(judas_reference_frame_tests)
 # judas_spacecraft_control_tests already applies to Window.cpp: the code
 # must link, but this suite never actually calls Draw or touches a real GL
 # context — see tests/UITests.cpp's own header comment).
-add_executable(judas_ui_tests
-    tests/UITests.cpp
-    src/UIWidgets.cpp
-    src/PauseMenu.cpp
-    src/HUD.cpp
-    ${JUDAS_RENDERER_SOURCES}
-    src/RenderLightGrid.cpp
-    src/SkeletalAnimation.cpp
-    src/FontLoader.cpp
-)
-target_include_directories(judas_ui_tests PRIVATE src)
-target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
+add_executable(judas_ui_tests tests/UITests.cpp)
+target_link_libraries(judas_ui_tests PRIVATE judas_engine)
 judas_warnings(judas_ui_tests)
 
 # Milestone 14: headless tests for the dynamic-lighting math (src/
@@ -813,21 +812,8 @@ judas_warnings(judas_ui_tests)
 # font. Actual GLSL shader correctness (Renderer.cpp's fragment shader) is
 # verified by human visual validation instead, per this milestone's own
 # brief — see docs/ARCHITECTURE.md, "Milestone 14, Automated evidence."
-add_executable(judas_lighting_tests
-    tests/LightingTests.cpp
-    src/LightTransforms.cpp
-    src/LightAttenuation.cpp
-    src/PauseMenu.cpp
-    src/UIWidgets.cpp
-    src/HUD.cpp
-    ${JUDAS_RENDERER_SOURCES}
-    src/RenderLightGrid.cpp
-    src/SkeletalAnimation.cpp
-    src/FontLoader.cpp
-)
-target_include_directories(judas_lighting_tests PRIVATE src)
-target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
+add_executable(judas_lighting_tests tests/LightingTests.cpp)
+target_link_libraries(judas_lighting_tests PRIVATE judas_engine)
 judas_warnings(judas_lighting_tests)
 
 # Milestone 15: headless tests for the shadow light-view/projection
@@ -856,25 +842,8 @@ judas_warnings(judas_shadow_tests)
 # reference Renderer's drawing methods at compile time — this suite never
 # calls any of them (same reasoning judas_lighting_tests/judas_shadow_tests
 # already document for their own Renderer-touching dependencies).
-add_executable(judas_interactable_tests
-    tests/InteractableTests.cpp
-    src/HingeTransform.cpp
-    src/InteractionSystem.cpp
-    src/Door.cpp
-    src/LightSwitch.cpp
-    src/PauseMenu.cpp
-    src/UIWidgets.cpp
-    src/HUD.cpp
-    ${JUDAS_RENDERER_SOURCES}
-    src/RenderLightGrid.cpp
-    src/SkeletalAnimation.cpp
-    src/FontLoader.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_interactable_tests PRIVATE src)
-target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad judas_graphics_caps)
+add_executable(judas_interactable_tests tests/InteractableTests.cpp)
+target_link_libraries(judas_interactable_tests PRIVATE judas_engine)
 judas_warnings(judas_interactable_tests)
 
 # Milestone 17: player camera-pose math and view-input ownership. Pure CPU,
@@ -1997,6 +1966,19 @@ judas_add_engine_test(judas_renderer_v2_submission_tests tests/RendererV2Submiss
 add_executable(judas_renderer_v2_benchmark tests/RendererV2Benchmark.cpp)
 target_link_libraries(judas_renderer_v2_benchmark PRIVATE judas_engine)
 judas_warnings(judas_renderer_v2_benchmark)
+
+# Particles V2: independent physical queries, retained observations and real GPU proof.
+judas_add_engine_test(judas_particle_collision_tests tests/ParticleCollisionTests.cpp)
+judas_add_engine_test(judas_cpu_particles_tests tests/CpuParticlesTests.cpp)
+judas_add_engine_test(judas_gpu_particles_tests tests/GpuParticlesTests.cpp)
+judas_add_engine_test(judas_particle_authoring_tests tests/ParticleAuthoringTests.cpp LIBRARIES judas_editor_core)
+judas_add_engine_test(judas_particle_script_tests tests/ParticleScriptTests.cpp)
+judas_add_engine_test(judas_particle_world_tests tests/ParticleWorldTests.cpp)
+judas_add_engine_test(judas_particle_persistence_tests tests/ParticlePersistenceTests.cpp)
+judas_add_engine_test(judas_particle_workshop_tests tests/ParticleWorkshopApplicationTests.cpp APPLICATION)
+add_executable(judas_particles_v2_benchmark tests/ParticlesV2Benchmark.cpp)
+target_link_libraries(judas_particles_v2_benchmark PRIVATE judas_engine)
+judas_warnings(judas_particles_v2_benchmark)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

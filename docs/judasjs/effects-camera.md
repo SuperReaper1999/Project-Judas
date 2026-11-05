@@ -10,22 +10,73 @@ controls, bounded streams, motion, obstruction, reverb, sound groups and lifetim
 
 ## Particles
 
-`burst(count)` queues an authored visual emitter burst; boolean success, false
-when no emitter. Count is converted to uint32 and must be <=65536; use a nonnegative
-integer. `setParticles({enabled, rate, size, endSize, velocity, velocityVariation,
-spread, acceleration, loop, localSpace, useGravity, lifetime, color, endColor,
-burst, maxParticles, seed, textureAsset})` applies a partial runtime patch. Invalid
-and unknown fields throw before mutation. It returns false without an emitter.
-Use a registered texture asset ID or `null` to clear the texture. Colours are RGBA.
-Velocity, variation and spread affect new particles. Acceleration, gravity, size,
-colour and texture affect live particles too. Reducing capacity trims the pool,
-and reducing lifetime expires particles that already exceed it. Changing
-`localSpace` clears live particles. A new seed affects future emission. Changing
-`burst` does not replay a startup burst. Call `entity.burst(count)` for immediate emission.
-Modern save slots retain settings. Live particles are transient.
-`entity.particles` returns a detached snapshot of all current emitter settings,
-or null without an emitter. An untextured emitter reports `textureAsset: null`.
-Pose follows entity transforms. Offscreen emitters continue ageing.
+An authored **Particle Emitter** is optional visual simulation, separate from
+Advanced Fluid Dynamics. The default remains portable CPU billboards without
+collision. [Particle V2 authoring and limits](../PARTICLES_V2.md) describes the
+backends, collision snapshots, bounded work and persistence contract.
+
+`entity.burst(count)` emits up to the available capacity and returns success,
+or false without an emitter. Count must be an integer number from 0 to 100000;
+fractions, numeric strings, negative and nonfinite values throw. This deliberately
+replaces the former uint32 coercion. Changing the authored `burst` setting does
+not replay startup emission; call `burst` explicitly.
+
+`entity.setParticles(patch)` updates an existing emitter transactionally. The
+common fields are `enabled`, `loop`, `rate`, `lifetime`, `size`, `endSize`, `color`,
+`endColor`, `velocity`, `velocityVariation`, `spread`, `acceleration`, `burst`,
+`maxParticles`, `seed`, `textureAsset`, `localSpace` and `useGravity`. New optional
+fields are:
+
+- `backend`: `"cpu"` (default), `"auto"` or `"gpu"`.
+- `collision`, `useWind`: booleans; `collisionRadius`, `restitution`, `friction`,
+  `maxContacts`; `response`: `"bounce"`, `"slide"`, `"stick"` or `"remove"`.
+- `collisionLayers`: registered collision-layer names, an exact unsigned decimal
+  64-bit mask string, or `null` for all layers. Readback is always a decimal string.
+- `impacts`: `"off"` (default), `"cosmetic"` or `"reliable"`; `impactCellSize`,
+  `impactWeight` and `maxImpactCells` bound spatially aggregated contact records.
+
+Unknown or invalid fields throw before changing the emitter; no emitter returns
+false. Use a registered texture AssetId or `null` to clear it. Colours are RGBA.
+`entity.particles` is a detached complete settings snapshot, or null; an
+untextured emitter reports `textureAsset: null`.
+
+Velocity, variation and spread affect future spawns. Acceleration, gravity, size,
+colour and texture affect live particles. Reducing capacity trims the pool and
+reducing lifetime expires older particles. Changing `localSpace` clears the live
+pool; a seed change affects future emission. Disabled emitters keep legacy
+behaviour: their particles continue ageing, while emission and drawing stop.
+Offscreen particles still simulate; extra cameras never add simulation ticks.
+
+`entity.controlParticles(command)` supports `"play"`, `"pause"`, `"stop"`,
+`"clear"` and `"restart"`. Pause freezes simulation; stop stops future emission
+while existing particles age. Destructive reset commands can return false while
+reliable impacts or a captured blocked step are pending: drain the events first.
+Unknown commands throw. This is separate from the persisted `enabled` setting.
+
+`entity.particleStats` returns a detached `ParticleRuntimeStats` or null: requested
+and active backend, `live`, `simulated`, `contacts`, `queryFailures`,
+`queuedImpacts`, `deliveredImpacts`, `cosmeticDropped`, `snapshotBodies`,
+`snapshotColliders`, `snapshotTriangles`, `gpuBytes`, `geometryUploads`,
+`stateUploadBytes`, `paused`, `backpressure`, `pendingStep`, `simulationMs`,
+`snapshotMs` and `diagnostic`. Check the active backend and diagnostic rather than
+assuming that requesting GPU made it available.
+
+`entity.takeParticleImpacts()` publishes and drains a detached array of
+`ParticleImpact` records. Consume it in `fixedUpdate`. Each contains exact string
+`sequence`, `tick`, `receiver` EntityId and `geometryRevision`; `childKey`,
+nullable `feature`; historical absolute `position`, body-COM `localPosition`,
+world/local normals, incoming `velocity`, `surfaceVelocity`, RGBA `color`, `size`,
+`age`, aggregated `count` and authored summed `weight`. These are historical
+samples, not current receiver poses. Resolve `receiver` before using it; the body
+may have been destroyed or streamed out. `geometryRevision` is diagnostic, not a
+portable collider handle. JavaScript owns damage, sounds, decals and gameplay.
+
+Reliable delivery uses CPU simulation and applies explicit backpressure when the
+queue is full; it preserves the exact captured step instead of dropping contacts.
+The queue is acknowledged only after the complete JS array is created. Cosmetic
+events may be dropped within their budget and are unsuitable as gameplay truth.
+Modern saves retain settings and queued durable aggregates; individual live
+particles and GPU buffers remain transient. See the [example](examples/particles.js).
 
 ## Cameras
 

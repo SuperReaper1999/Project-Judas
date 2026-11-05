@@ -6,6 +6,7 @@
 #include "Prefab.h"
 #include "RuntimeWorld.h"
 #include "ComponentEditors.h"
+#include "ParticleEmitterEditor.h"
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -64,15 +65,6 @@ bool DrawMaterialOverrideControls(MaterialOverride& candidate,const MaterialDefi
     return changed;
 }
 
-namespace {
-const char* const kShapeNames[] = {"box", "sphere", "compound", "mesh", "terrain", "convex hull", "static triangle mesh"};
-const char* const kBodyShapeNames[] = {"box", "sphere", "compound", "(mesh: not a body shape)", "terrain", "convex hull", "static triangle mesh"};
-const char* const kMotionNames[] = {"static", "dynamic", "kinematic"};
-const char* const kGravityKindNames[] = {"radial", "uniform"};
-const char* const kRegionNames[] = {"sphere", "box"};
-const char* const kLightKindNames[] = {"point", "spot"};
-const char* const kVehicleGravityNames[] = {"local", "celestial"};
-const char* const kViewNames[] = {"third-person", "first-person"};
 
 // The inspector's asset fields: a combo over the project's assets of one
 // type (name shown, id stored), a drop target for the Asset Browser's
@@ -127,6 +119,17 @@ void AssetField(EditorDocument& doc, const char* label, std::string& assetId, As
     }
     ImGui::PopTextWrapPos();
 }
+
+namespace {
+const char* const kShapeNames[] = {"box", "sphere", "compound", "mesh", "terrain", "convex hull", "static triangle mesh"};
+const char* const kBodyShapeNames[] = {"box", "sphere", "compound", "(mesh: not a body shape)", "terrain", "convex hull", "static triangle mesh"};
+const char* const kMotionNames[] = {"static", "dynamic", "kinematic"};
+const char* const kGravityKindNames[] = {"radial", "uniform"};
+const char* const kRegionNames[] = {"sphere", "box"};
+const char* const kLightKindNames[] = {"point", "spot"};
+const char* const kVehicleGravityNames[] = {"local", "celestial"};
+const char* const kViewNames[] = {"third-person", "first-person"};
+
 
 void DrawUIComponent(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     auto& u=*o.ui;AssetField(doc,"UI document",u.asset,AssetType::UI,false,state);Checkbox(doc,"Enabled",u.enabled);
@@ -398,25 +401,6 @@ void DrawScripts(EditorDocument &doc, SceneObject &o, EditorPanelState &state) {
     }
 }
 
-void DrawParticleEmitter(EditorDocument &doc, SceneObject &o, EditorPanelState &state) {
-    auto &e = *o.particleEmitter;
-    Checkbox(doc, "Enabled", e.enabled);
-    Checkbox(doc, "Continuous/loop", e.loop);
-    Checkbox(doc, "Local space", e.localSpace);
-    Checkbox(doc, "Sample Judas gravity", e.useGravity);
-    DragScalar(doc, "Rate / second", e.rate, 1, 0, 100000);
-    DragScalar(doc, "Lifetime seconds", e.lifetime, 0.05f, 0.01f, 3600);
-    DragScalar(doc, "Start size", e.size, 0.01f, 0, 1000);
-    DragScalar(doc, "End size", e.endSize, 0.01f, 0, 1000);
-    auto integer=[&](const char* name,int& v,int lo,int hi){int next=v;if(ImGui::DragInt(name,&next,1,lo,hi)){doc.BeginEdit();v=std::clamp(next,lo,hi);doc.CommitEdit();}};
-    integer("Capacity",e.maxParticles,1,100000);integer("Startup burst",e.burst,0,e.maxParticles);
-    DragVec3(doc,"Position spread",e.spread,0.01f);DragVec3(doc,"Initial velocity",e.velocity,0.05f);
-    DragVec3(doc,"Velocity variation",e.velocityVariation,0.05f);DragVec3(doc,"Acceleration",e.acceleration,0.05f);
-    auto color=[&](const char* label,glm::vec4& v){auto next=v;if(ImGui::ColorEdit4(label,&next.x)){doc.BeginEdit();v=next;doc.CommitEdit();}};
-    color("Start color/alpha",e.color);color("End color/alpha",e.endColor);
-    unsigned seed=e.seed;if(ImGui::InputScalar("Seed",ImGuiDataType_U32,&seed)){doc.BeginEdit();e.seed=seed;doc.CommitEdit();}
-    AssetField(doc,"Particle texture",e.textureAsset,AssetType::Texture,true,state);
-}
 
 void DrawAudioEmitter(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     auto& a=*o.audioEmitter;

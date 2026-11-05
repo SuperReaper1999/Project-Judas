@@ -25,6 +25,7 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin, std::string &error) const 
         return false;
     }
     const auto delta = origin - m_settings.worldOrigin;
+    if(!CanShiftParticleOrigin(delta,error))return false;
     if (!OriginLimits::ValidTranslation(delta)) {
         error =
             "origin translation outside finite native precision range; use intermediate chart anchors";
@@ -219,10 +220,7 @@ bool RuntimeWorld::CommitOrigin() {
         }
         ++record.revision;
     }
-    for (auto &emitter : m_particleEmitters) {
-        shift(emitter.transform.position);
-        emitter.pool.ShiftOrigin(delta);
-    }
+    ShiftParticleOrigin(delta);
     for (auto &emitter : m_audioEmitters) {
         shift(emitter.transform.position);
         shift(emitter.lastPosition);

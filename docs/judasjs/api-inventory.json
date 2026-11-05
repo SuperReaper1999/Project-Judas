@@ -3,6 +3,102 @@
   "authority": "src/scripting/Modules.json: compiled native modules, library fragments and shared value sources",
   "resultShapes": [
     {
+      "binding": "Entity.particleStats",
+      "declaration": "ParticleRuntimeStats",
+      "fields": [
+        "requested",
+        "active",
+        "live",
+        "simulated",
+        "contacts",
+        "queryFailures",
+        "queuedImpacts",
+        "deliveredImpacts",
+        "cosmeticDropped",
+        "snapshotBodies",
+        "snapshotColliders",
+        "snapshotTriangles",
+        "gpuBytes",
+        "geometryUploads",
+        "stateTransferBytes",
+        "paused",
+        "backpressure",
+        "pendingStep",
+        "simulationMs",
+        "snapshotMs",
+        "diagnostic"
+      ],
+      "nativeFile": "src/scripting/modules/Particles.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,out,\"requested\"",
+        "JS_SetPropertyStr(c,out,\"active\"",
+        "{\"live\",stats.live}",
+        "{\"simulated\",stats.simulated}",
+        "{\"contacts\",stats.contacts}",
+        "{\"queryFailures\",stats.queryFailures}",
+        "{\"queuedImpacts\",stats.queuedImpacts}",
+        "{\"deliveredImpacts\",stats.deliveredImpacts}",
+        "{\"cosmeticDropped\",stats.cosmeticDropped}",
+        "{\"snapshotBodies\",stats.snapshotBodies}",
+        "{\"snapshotColliders\",stats.snapshotColliders}",
+        "{\"snapshotTriangles\",stats.snapshotTriangles}",
+        "{\"gpuBytes\",stats.gpuBytes}",
+        "{\"geometryUploads\",stats.geometryUploads}",
+        "{\"stateTransferBytes\",stats.stateTransferBytes}",
+        "{\"paused\",stats.paused}",
+        "{\"backpressure\",stats.backpressure}",
+        "{\"pendingStep\",stats.pendingStep}",
+        "JS_SetPropertyStr(c,out,\"simulationMs\"",
+        "JS_SetPropertyStr(c,out,\"snapshotMs\"",
+        "JS_SetPropertyStr(c,out,\"diagnostic\""
+      ],
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "binding": "Entity.takeParticleImpacts",
+      "declaration": "ParticleImpact",
+      "fields": [
+        "sequence",
+        "tick",
+        "receiver",
+        "geometryRevision",
+        "childKey",
+        "feature",
+        "position",
+        "localPosition",
+        "normal",
+        "localNormal",
+        "velocity",
+        "surfaceVelocity",
+        "color",
+        "size",
+        "age",
+        "count",
+        "weight"
+      ],
+      "nativeFile": "src/scripting/modules/Particles.cpp",
+      "needles": [
+        "{\"sequence\",impact.sequence}",
+        "{\"tick\",impact.tick}",
+        "{\"receiver\",impact.receiver}",
+        "{\"geometryRevision\",impact.geometryRevision}",
+        "set(\"childKey\"",
+        "set(\"feature\"",
+        "set(\"position\"",
+        "set(\"localPosition\"",
+        "set(\"normal\"",
+        "set(\"localNormal\"",
+        "set(\"velocity\"",
+        "set(\"surfaceVelocity\"",
+        "set(\"color\"",
+        "set(\"size\"",
+        "set(\"age\"",
+        "set(\"count\"",
+        "set(\"weight\""
+      ],
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "binding": "scripts.faults",
       "declaration": "ScriptFault",
       "fields": [
@@ -747,6 +843,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Entity.controlParticles",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "Entity.destroy",
       "minimum": 0,
       "maximum": 0
@@ -942,6 +1043,11 @@
     },
     {
       "symbol": "Entity.stopKinematic",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.takeParticleImpacts",
       "minimum": 0,
       "maximum": 0
     },
@@ -2780,7 +2886,7 @@
         "burst"
       ],
       "type": "docs/judas.d.ts:Entity.burst",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.camera",
@@ -2878,6 +2984,17 @@
       "native": [],
       "type": "docs/judas.d.ts:Entity.constructor",
       "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.controlParticles",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "particleControl"
+      ],
+      "type": "docs/judas.d.ts:Entity.controlParticles",
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.deformable",
@@ -3083,6 +3200,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.particleStats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "particleStats"
+      ],
+      "type": "docs/judas.d.ts:Entity.particleStats",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "symbol": "Entity.particles",
       "kinds": [
         "get"
@@ -3091,7 +3219,7 @@
         "particleInfo"
       ],
       "type": "docs/judas.d.ts:Entity.particles",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.pauseAudio",
@@ -3478,7 +3606,7 @@
         "particles"
       ],
       "type": "docs/judas.d.ts:Entity.setParticles",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.setPhysicalMaterial",
@@ -3590,6 +3718,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.stopKinematic",
       "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.takeParticleImpacts",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "particleImpacts"
+      ],
+      "type": "docs/judas.d.ts:Entity.takeParticleImpacts",
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.terrain",
@@ -7755,7 +7894,10 @@
     "overlap",
     "overlapShape",
     "parent",
+    "particleControl",
+    "particleImpacts",
     "particleInfo",
+    "particleStats",
     "particles",
     "pauseAudio",
     "physicalMaterialInfo",

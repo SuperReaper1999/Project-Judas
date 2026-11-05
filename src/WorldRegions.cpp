@@ -130,6 +130,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     if(m_ui)m_ui->RemoveOwner(id);
     auto erase=[&](auto& v){v.erase(std::remove_if(v.begin(),v.end(),[&](const auto& e){return e.id==id;}),v.end());};
     erase(m_entities);erase(m_extraEntities);m_entityIndexVersion=~0u;erase(m_staticBodies);erase(m_staticRenderables);erase(m_staticLights);
+    ShutdownParticleEmitter(id);
     erase(m_audioZones);erase(m_audioEmitters);erase(m_particleEmitters);erase(m_renderCameras);
     if(auto character=m_characters.find(id);character!=m_characters.end())m_physics.DestroyBody(character->second.motor.observationBody);
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();

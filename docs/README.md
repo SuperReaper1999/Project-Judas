@@ -75,7 +75,8 @@ Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
   [content authoring](CONTENT_AUTHORING.md), [materials](MATERIALS.md),
   [cooked assets/LOD/residency](M93_ASSET_PIPELINE.md), [scalability contracts](SCALABILITY.md).
 - [Rendering/lights](judasjs/rendering.md), [weather](M86_WEATHER.md),
-  [audio](M60_AUDIO.md), [particles/cameras](judasjs/effects-camera.md).
+  [audio](M60_AUDIO.md), [particle emitters/backends](PARTICLES_V2.md),
+  [particle/camera scripting](judasjs/effects-camera.md).
 - [Runtime UI](RUNTIME_UI.md), [UI toolkit](M96_UI_TOOLKIT.md),
   [localization](judasjs/localization.md), [developer tools](M94_DEVELOPER_TOOLS.md).
 - [Scene transitions](SCENE_TRANSITIONS.md), [saves/migrations/recovery](M98_SAVE_EVOLUTION.md),
@@ -83,6 +84,11 @@ Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
   [online multiplayer/security boundaries](M99_NETWORK.md).
 
 ## Learn from a consumer game
+
+[Surface Workshop](../projects/particle_v2_lab/README.md) is the editable particle
+project: reliable game-owned coating, native moving receivers, rotated gravity,
+saves and a separately selected GPU stress scene. It does not enable Advanced
+Fluids. See its controls and qualification boundaries before entering stress.
 
 [Little Haven](../projects/ai_workshop/README.md) demonstrates native Utility AI
 with project-owned needs and patrol/hide actions.

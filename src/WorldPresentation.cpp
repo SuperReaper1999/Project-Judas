@@ -383,8 +383,15 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
         if(!emitter.pool.settings.enabled)continue;
         if(const auto* entity=world.FindEntity(emitter.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
         const auto t=world.PresentedTransform(emitter.id,emitter.transform,alpha);
-        const auto& particles=emitter.pool.Presentation(t.position,t.rotation,t.scale);
         const auto texture=world.Resources()?world.Resources()->TryGetTexture(emitter.pool.settings.textureAsset):TextureHandle{};
+        if(emitter.gpu){
+            // Resident state is view-independent. Each eye only prepares its
+            // own GPU order/indirect command; no simulation or state download.
+            VisualBounds bounds;
+            r.DrawGpuParticles(*emitter.gpu,bounds,texture);
+            continue;
+        }
+        const auto& particles=emitter.pool.Presentation(t.position,t.rotation,t.scale);
         r.DrawParticles(particles,emitter.pool.Bounds(),texture);
     }
 
