@@ -207,6 +207,8 @@ peak, and the repeated case's first completed frame is slightly slower. These
 are recorded rather than removed from the comparison. Raw CSVs and rejected
 experiments remain in `.cache/renderer-v2/`; compact evidence is in the checkout.
 
+The [qualification report](evidence/renderer-v2/qualification/README.md) records
+32/32 final-checkpoint native gates and the exact SDK/export receipts.
 Focused native qualification covers the new owners, actual HDR nesting,
 shadow/LOD invalidation, sprites, tilemaps, animation, weather, material and asset
 workflows, Editor V2 viewports, Scripting V2 registration/lifecycle, UI previews,

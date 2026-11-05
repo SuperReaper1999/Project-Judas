@@ -179,7 +179,7 @@
         "axis": false,
         "bindings": [
           {
-            "control": "key:F5",
+            "control": "key:T",
             "scale": 1,
             "deadzone": 0
           }

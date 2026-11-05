@@ -1,0 +1,31 @@
+{
+  "revision": "fb4ef80f79aee1d8d3aad9137ee1c44508124ec4",
+  "files": {
+    "src/Renderer.cpp": "59e8ac0c250253a3059d3b19e148ad357fdc601aff4f3c3277947308750a8cb9",
+    "src/Renderer.h": "41ef4fefbd4bcab6b8422b5b06c8bc7345dc9ac548f8fa9982aa499e945c9e24",
+    "src/RendererMaterials.inl": "0f46d53d31326b378afccbdf0a84be5fd86eaa0892277652aea71b5846c379ad",
+    "src/RendererScale.inl": "5bb8e7cc0e820f49dc5a9a2803e22699633786d5dddbaf347d5576422b2c551b",
+    "src/RendererSprites.inl": "9031d8836c87974a9aa898477758cc3d78dc9877a62251dd9e15fca9ff897a6f",
+    "src/RendererWeather.inl": "8c002fd922bd0a36297da8254f1f8366d05622308af476c2eec63271e8a1f3b8",
+    "src/WorldPresentation.cpp": "fc5e3909ad4cfb1dfba501169571d2cb94528286d89854e11e4a766d190a2217",
+    "src/render/ComputeDevice.cpp": "dbaf79fd565a0e2002c087a3c8baab25cb1d225233ca25a6e09f329ee7156312",
+    "src/render/ComputeDevice.h": "a8756ba8d8224973687c3c032ffad5e79c0abf237b2c6fc1288b983b5db7c94b",
+    "src/render/GraphicsCapabilities.cpp": "0abe9e9c25c222383d9b7efc8ae674bdf367b9d1aa4086c79c167bb18eddb162",
+    "src/render/GraphicsCapabilities.h": "d21d394a94404d8fe8f83e550ebd92da412a321d481bbdecc62b1264252eed0d",
+    "src/render/ParticlePass.cpp": "dfc9ece821f5ef9ed05a4bb25cc5e85a9c1e5f471088049728cc8f5632e492e3",
+    "src/render/ParticlePass.h": "55190c1b97359b6111d5aa3ffe674148c5b1ceb608914cf8a892262318408770",
+    "src/render/RenderTargets.cpp": "e806fa493709c7f52d0fbf2b272da7cccf1214e94f30d5b088e912fa7c159fb4",
+    "src/render/RenderTypes.h": "ade5976400164c28fecd73a3894967a4351c0c967effd30bc7953274b03c4d66",
+    "src/render/RendererInfrastructure.h": "d353524babdb2769ca90976b6a7b6c367b6e2af3834ccbbb1b1a33bde2a2ad20",
+    "src/render/ShaderLibrary.cpp": "7fc3ae0c062ddc72844339cb6d7c1c1905622c7d6592deb496c451b059afb0c8",
+    "src/render/ShaderLibrary.h": "ae3f50cb9cddf6e0397b1fa1aafccb91ba514b069625b36e44e7d3626bd9e7ad",
+    "src/render/ShadowPassCache.cpp": "01af7c96cf590ee8688e7bca4f016b58c9a9545457dbf5e4afca4114ac36346f",
+    "src/render/ShadowPassCache.h": "c3be1a2b45db2eec4aa861f75ef378fa2c276e842be853e672de16b9ddb414ef",
+    "src/render/StreamArena.cpp": "7f6015801c0ffbfb6c850f7513f431ea08a6e9d1e59ee78560d9f0c77d7afbae",
+    "src/render/StreamArena.h": "b94502a797f09e09e6e2221850e6047e7b415f6eb3f7550669a0873929fe6b1f",
+    "src/render/SubmissionQueue.cpp": "9c0b7c2375c89a4d69e87033893b1667105917404b8bad6ba99141d0fc94cf49",
+    "src/render/SubmissionQueue.h": "b919d90949bae6355f6f61e497a1fe87c63458f5150bf7eb9cf7e6a639669196",
+    "src/render/ViewUniforms.cpp": "79fa3298c508f1d4db2a110140670683fb0198e174e8603a4dbbfac1c696d4db",
+    "src/render/ViewUniforms.h": "5fe6ca8b1f6fdaa7661ca2b12b06649c591e88742eaf58be2555ad3a76ea0c64"
+  }
+}

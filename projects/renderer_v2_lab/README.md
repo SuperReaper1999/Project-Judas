@@ -29,7 +29,7 @@ Additional controls:
 
 | Control | Action |
 |---|---|
-| **F5** | Watch camera / free camera. Watch mode releases the pointer for clicking the case buttons. |
+| **T** | Watch camera / free camera. Watch mode releases the pointer for clicking the case buttons. |
 | **WASD + Q/E, mouse** | Move vertically/horizontally and look in free 3D flight. In the sprite case, WASD pans the orthographic view. |
 | **L** | Toggle individual authored light sources. |
 | **H** | Toggle authored spot-shadow requests. Directional sunlight remains part of the scene. |

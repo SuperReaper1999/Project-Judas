@@ -163,7 +163,7 @@
       {
         "id": "help",
         "parent": "canvas",
-        "text": "1\u20136: choose case  |  F5: watch / free camera  |  WASD + Q/E fly  |  mouse look\nL: lights  |  H: spot shadows  |  C: live monitors  |  V: split views  |  F6/F7: save/load  |  Esc: pause",
+        "text": "1\u20136: choose case  |  T: watch / free camera  |  WASD + Q/E fly  |  mouse look\nL: lights  |  H: spot shadows  |  C: live monitors  |  V: split views  |  F6/F7: save/load  |  Esc: pause",
         "texture": "",
         "font": "3335af8b60b1e6602592e40aacbbb54d",
         "textKey": "",

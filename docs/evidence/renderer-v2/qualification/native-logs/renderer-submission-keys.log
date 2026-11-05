@@ -1,0 +1,301 @@
+PASS mesh identity [opaque] splits real output batches rather than aliasing another material/draw state
+PASS mesh identity [ordered] splits real output batches rather than aliasing another material/draw state
+PASS mesh generation [opaque] splits real output batches rather than aliasing another material/draw state
+PASS mesh generation [ordered] splits real output batches rather than aliasing another material/draw state
+PASS whole-draw texture identity [opaque] splits real output batches rather than aliasing another material/draw state
+PASS whole-draw texture identity [ordered] splits real output batches rather than aliasing another material/draw state
+PASS whole-draw texture generation [opaque] splits real output batches rather than aliasing another material/draw state
+PASS whole-draw texture generation [ordered] splits real output batches rather than aliasing another material/draw state
+PASS render LOD [opaque] splits real output batches rather than aliasing another material/draw state
+PASS render LOD [ordered] splits real output batches rather than aliasing another material/draw state
+PASS mirrored winding [opaque] splits real output batches rather than aliasing another material/draw state
+PASS mirrored winding [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material slot count [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material slot count [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material slot order [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material slot order [ordered] splits real output batches rather than aliasing another material/draw state
+PASS an additional otherwise identical slot [opaque] splits real output batches rather than aliasing another material/draw state
+PASS an additional otherwise identical slot [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS material resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS material resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS explicit-asset ownership state in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS explicit-asset ownership state in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS explicit-asset ownership state in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS explicit-asset ownership state in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS failed-material state in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS failed-material state in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS failed-material state in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS failed-material state in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 override-enable flag in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 override-enable flag in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 override-enable flag in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 override-enable flag in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 authored asset override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 authored asset override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 authored asset override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 authored asset override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 explicit-removal override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 explicit-removal override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 explicit-removal override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 explicit-removal override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 absent override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 absent override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 0 absent override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 0 absent override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 override-enable flag in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 override-enable flag in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 override-enable flag in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 override-enable flag in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 authored asset override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 authored asset override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 authored asset override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 authored asset override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 explicit-removal override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 explicit-removal override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 explicit-removal override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 explicit-removal override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 absent override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 absent override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 1 absent override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 1 absent override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 override-enable flag in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 override-enable flag in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 override-enable flag in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 override-enable flag in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 authored asset override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 authored asset override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 authored asset override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 authored asset override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 explicit-removal override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 explicit-removal override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 explicit-removal override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 explicit-removal override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 absent override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 absent override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 2 absent override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 2 absent override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 override-enable flag in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 override-enable flag in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 override-enable flag in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 override-enable flag in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 authored asset override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 authored asset override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 authored asset override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 authored asset override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 explicit-removal override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 explicit-removal override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 explicit-removal override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 explicit-removal override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 absent override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 absent override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 3 absent override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 3 absent override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource identity in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource identity in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource identity in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource identity in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource generation in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource generation in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource generation in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 resource generation in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 override-enable flag in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 override-enable flag in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 override-enable flag in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 override-enable flag in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 authored asset override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 authored asset override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 authored asset override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 authored asset override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 explicit-removal override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 explicit-removal override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 explicit-removal override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 explicit-removal override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 absent override in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 absent override in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS map 4 absent override in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS map 4 absent override in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 0 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 0 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 0 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 0 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 1 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 1 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 1 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 1 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 2 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 2 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 2 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 2 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 3 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 3 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 3 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour component 3 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS base-colour presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS base-colour presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 0 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 0 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 0 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 0 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 1 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 1 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 1 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 1 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 2 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 2 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 2 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive component 2 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 0 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 0 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 0 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 0 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 0 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 0 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 0 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 0 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 1 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 1 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 1 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV scale component 1 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 1 in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 1 in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 1 in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV offset component 1 in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV-scale presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV-scale presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV-scale presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV-scale presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV-offset presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV-offset presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS UV-offset presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS UV-offset presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS metallic value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS metallic value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS metallic value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS metallic value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS metallic presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS metallic presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS metallic presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS metallic presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS roughness value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS roughness value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS roughness value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS roughness value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS roughness presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS roughness presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS roughness presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS roughness presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS emissive intensity presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha cutoff presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS normal strength value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS normal strength value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS normal strength value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS normal strength value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS normal strength presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS normal strength presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS normal strength presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS normal strength presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS occlusion strength presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS masked alpha mode in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS masked alpha mode in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS masked alpha mode in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS masked alpha mode in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS blended alpha mode in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS blended alpha mode in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS blended alpha mode in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS blended alpha mode in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha-mode presence in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha-mode presence in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS alpha-mode presence in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS alpha-mode presence in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS double-sided value in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS double-sided value in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS double-sided value in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS double-sided value in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS explicit false versus absent double-sided in material slot 0 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS explicit false versus absent double-sided in material slot 0 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS explicit false versus absent double-sided in material slot 1 [opaque] splits real output batches rather than aliasing another material/draw state
+PASS explicit false versus absent double-sided in material slot 1 [ordered] splits real output batches rather than aliasing another material/draw state
+PASS different translations, rotations, positive nonuniform scales and tint remain compatible instances
+PASS coalescing retains both exact model/tint payloads in their original submission order
+PASS batch owns a copied material snapshot rather than a mutable caller reference
+PASS Clear retires the pass's records and compatibility lookup
+PASS a subsequent pass observes changed caller state without resurrecting previous instances
+PASS nonadjacent compatible opaque submissions coalesce while first-seen group order remains stable
+PASS existing 16,384-instance flush boundary applies per compatible group, not total pass count
+PASS the exact per-group boundary requests the coordinator's existing bounded flush
+PASS clearing after a flush resets both group count and flush eligibility
+PASS ordinary default draws with no material slots remain a compatible fast-path control
+PASS ordered A/B/A cannot regroup the final A across a distinct material's alpha paint barrier
+PASS ordered alpha groups preserve exact transform, tint and independent material payloads
+PASS ordered A/A/B/B/A/A merges adjacent compatible runs and preserves all three run boundaries
+PASS Clear retires the previous ordered tail rather than reusing a nonexistent last batch
+PASS an intervening opaque call cannot make ordered A append its payload to incompatible B
+PASS an ordered paint barrier invalidates earlier opaque regrouping eligibility
+PASS ordered run limits never add compatible instances across the intervening B barrier
+PASS a single ordered run requests a flush at the same existing 16,384-instance boundary
+Submission queue: 300 checks, 0 failures

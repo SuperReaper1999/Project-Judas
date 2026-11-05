@@ -1,0 +1,14 @@
+[Graphics] created OpenGL 3.3 Core request (portable policy)
+[Graphics] API=OpenGL 3.3 requested=portable selected=portable vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=0 SSBO=0 DSA=1 bufferStorage=1 textureViews=0 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=0 storageBlockBytes=0 computeInvocations=0 computeSharedBytes=0
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS disabled compute capability rejects opt-in with an actionable diagnostic
+PASS unsupported compute does not allocate hidden GPU buffers
+PASS unsupported kernel/dispatch operations remain unavailable
+PASS unsupported device shuts down without GPU work
+PASS native EngineHost respects the forced-portable graphics policy
+PASS forced portable cannot enable compute even when the driver exposes newer entry points
+Compute portable: 6 checks, 0 failures

@@ -1,0 +1,22 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS independent atlas pixels
+PASS track known image
+PASS track typed frame palette
+PASS compile tested native render recipe
+PASS real GL window
+PASS normal compiled world builds
+PASS painted neighbouring cells sample distinct frames without atlas bleed or unintended tint
+PASS decorative layer overlaps without adding physical collision
+PASS normal compiled world builds
+PASS layer sort order changes actual framebuffer result
+PASS erase foreground
+PASS rebuild erased layer
+PASS normal compiled world builds
+PASS erasing foreground reveals original lower layer
+TILEMAP_PIXELS checks=14 failures=0

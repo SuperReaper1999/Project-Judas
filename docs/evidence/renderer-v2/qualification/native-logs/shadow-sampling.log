@@ -1,0 +1,28 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS flat receiver
+PASS oblique receiver
+PASS opposite receiver slope
+PASS projective receiver
+PASS real occluder retained
+PASS adjacent tiles select different lights
+MEASURE edge_max_error=0 edge_max_adjacent_jump=0.0208333731
+PASS fractional shadow-edge coverage matches analytic filter overlap
+PASS subtexel motion has no whole-texel shadow jump
+PASS occluder transition remains monotone
+MEASURE horizontal_edge_max_error=0 horizontal_edge_max_adjacent_jump=0.0208333731
+PASS horizontal shadow-edge coverage matches analytic filter overlap
+PASS vertical subtexel motion has no whole-texel shadow jump
+PASS horizontal occluder transition remains monotone
+MEASURE corner_max_error=5.96046448e-08
+PASS two-axis shadow-corner coverage matches analytic intersection area
+PASS unassigned/out-of-range shadow slot remains lit
+PASS unassigned/out-of-range shadow slot remains lit
+PASS outside-chart receiver remains lit
+PASS no GL errors during production sampling controls
+SUMMARY 17 checks 0 failures

@@ -1,0 +1,9 @@
+PASS register ordinary project script
+PASS build ordinary audio/camera scripted world
+PASS valid Audio patch changes the actual emitter
+PASS unknown Audio option rejects the whole patch before native mutation
+PASS invalid recognized Audio value preserves previously published settings
+PASS a property accessor can make a nested camera call during Audio validation
+PASS handled validation errors do not fault the owner slot
+PASS normal world teardown retires the scripting session
+SUMMARY 8 checks 0 failures

@@ -1,0 +1,43 @@
+PASS CPU view block has the explicit 720-byte std140 offsets independent of GLM alignment
+PASS CPU construction initializes both camera matrices, every shadow and camera homogeneous component
+PASS camera update preserves column-major matrices and independently known eye coordinates
+PASS last shadow slot retains nonsymmetric column-major coefficients without transposition
+PASS invalid shadow slots reject without changing any published CPU value
+PASS nonfinite matrices and a singular camera preserve the previous coherent block
+PASS CPU setters allocate and upload no graphics resources
+PASS actual canonical mesh vertex declarations become one std140 block without rewriting its arithmetic
+PASS actual fragment keeps nine shadows and maps the vec3 camera onto its explicit vec4 storage
+PASS block preparation never mutates canonical shader storage
+PASS the existing GLES3/WebGL2 profile adaptation preserves the standard block and bone fallback
+PASS unrelated shader declarations are rejected instead of broadly rewritten
+PASS a changed canonical shadow count fails explicitly rather than silently using a wrong layout
+PASS duplicate declarations and an already prepared block cannot be transformed twice
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS view block test owns a real platform context and initialized renderer
+PASS real native compiler links traditional uniforms and the transformed std140 shaders
+PASS independent known-answer colour target is complete
+PASS traditional shader independently produces the analytic camera/shadow colour
+PASS view values configure and bind the actual standard uniform block
+PASS first consumer uploads exactly one complete 720-byte block
+PASS actual GPU std140 result is pixel-identical to the traditional uniforms
+PASS indexed uniform binding names the real allocated context-owned buffer
+PASS independent GPU readback matches every CPU matrix and camera byte
+PASS native reflection exposes the intended block members
+PASS native std140 reflection independently agrees with all declared CPU offsets
+PASS unchanged values rebind after foreign presentation state without uploading again
+PASS recovering a clobbered indexed binding preserves actual output
+PASS a thread without the owning context cannot issue a view upload
+PASS a changed shadow uploads one new block at its next consumer
+PASS changed block data produces the independent updated physical camera/shadow colour
+PASS wrong block layout and invalid programs are rejected instead of receiving mismatched data
+PASS a rejected program configuration preserves the previous valid view publication
+PASS explicit shutdown retires the actual GPU buffer while its owner context still exists
+PASS known-answer view-block operations leave no graphics errors
+PASS shutdown after explicit retirement performs no GL work after context teardown
+View uniforms: 35 checks, 0 failures

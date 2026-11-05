@@ -134,7 +134,7 @@ export default class RendererWorkshop {
         if (this.statusAge < .3) return;
         this.statusAge = 0;
         let text = this.case.count + '\n' + this.case.detail + '\n';
-        text += this.state.tour ? 'WATCH CAMERA — F5 takes control' : 'FREE CAMERA — F5 returns to watch';
+        text += this.state.tour ? 'WATCH CAMERA — T takes control' : 'FREE CAMERA — T returns to watch';
         text += ' | ' + (this.state.split ? '2 PLAYER VIEWS' : '1 MAIN VIEW');
         text += ' | monitors ' + (this.state.monitors && this.cameras.length ? 'ON' : 'OFF');
         text += '\nLights ' + (this.state.lights ? 'ON' : 'OFF') + ' | spot requests ' +

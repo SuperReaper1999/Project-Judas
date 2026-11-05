@@ -1,0 +1,39 @@
+PASS back-to-front order uses original indices as its exact equal-depth tie breaker
+PASS finite cancellation-heavy fixture produces a complete depth permutation
+PASS precomputed depths and total ordering are bit-identical to the original expression/comparator
+PASS nonfinite particle input rejects rather than leaving a partial ordering available for drawing
+PASS empty presentation produces an empty successful order
+PASS empty optional particle presentation creates no GPU storage or commands
+PASS nonempty draw without an owning context fails before GPU allocation
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS expanded reference independently gives the analytic back-to-front RGB and legacy alpha factors
+PASS compact instanced particles are pixel-identical to the frozen expanded reference
+PASS actual submission uploads one 32-byte record per particle rather than six expanded vertices
+PASS reversing input cannot reverse unequal-depth transparency ordering
+PASS equal-depth instances retain current input-index ordering
+PASS reversing a tie changes compositing exactly as the original index tie breaker requires
+PASS side-facing camera basis and every colour-space flag preserve the expanded reference image
+PASS side-facing camera basis and every colour-space flag preserve the expanded reference image
+PASS side-facing camera basis and every colour-space flag preserve the expanded reference image
+PASS side-facing camera basis and every colour-space flag preserve the expanded reference image
+PASS particle pass restores culling, blending, separate factors and depth mask without taking depth-test ownership
+PASS separate emitter draws preserve their order and never write transparent depth
+PASS existing opaque depth still occludes particles
+PASS invalid particle data fails before issuing draws or uploads
+PASS singular views and unknown shader profiles fail explicitly
+PASS a foreign thread without the owning context cannot touch the particle GPU resources
+PASS page-chunked and wrapped particle draws retain the final visible records beyond a full page
+PASS page-chunked and wrapped particle draws retain the final visible records beyond a full page
+PASS page-chunked and wrapped particle draws retain the final visible records beyond a full page
+PASS page-chunked and wrapped particle draws retain the final visible records beyond a full page
+PASS all large input particles are submitted with bounded arena storage and exact compact-upload accounting
+PASS explicit particle shutdown releases owned storage and preserves the borrowed texture
+PASS particle known-answer operations leave no graphics errors
+PASS nonempty presentation after context teardown cannot issue commands or leak new resources
+Particle pass: 31 checks, 0 failures

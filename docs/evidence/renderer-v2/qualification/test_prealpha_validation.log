@@ -1,0 +1,15 @@
+.usage: gate [-h] [--build-dir BUILD_DIR] [--manifest MANIFEST] [--group GROUP]
+            [--test TEST] [--output OUTPUT] [--timeout TIMEOUT] [--list]
+            [--check-manifest] [--registration-plan]
+            [--channel {Alpha,Beta,Experimental,Stable,Local}]
+            [--expected-channel {Alpha,Beta,Experimental,Stable,Local}]
+gate: error: --channel is only valid with --registration-plan; execution uses embedded identity
+.....scratch passed
+........./tmp/tmp0bveivab/results/RESULTS.json
+liquid-surface not-exercised
+.
+----------------------------------------------------------------------
+Ran 16 tests in 0.448s
+
+OK
+/tmp/tmpduxezb_q/results/RESULTS.json

@@ -1,0 +1,33 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS independent unlit colour materials are available
+PASS same-size and twelve distinct auxiliary outputs are allocated
+PASS sequential auxiliary display matches independent tone-map/sRGB arithmetic
+PASS sequential auxiliary returns to the external default framebuffer
+PASS sequential main colours agree with known physical linear inputs
+PASS invalid target leaves the active main HDR view untouched
+FAIL same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+FAIL main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+FAIL same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+FAIL main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+FAIL same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+FAIL main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+FAIL same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+FAIL main continuation resolves once to the original output without frame-history feedback
+FAIL more than eight child sizes cannot evict the suspended main HDR chart
+FAIL cache churn and implicit child resolve preserve original main content and continuation
+PASS resolved child can be reopened for a read-only overlay
+PASS a second nested target is explicitly rejected without disturbing the first
+PASS EndRenderTarget implicitly resolves an unfinished child frame
+FAIL preserved target readback restores the external framebuffer
+FAIL scoped render passes leave no graphics errors
+PASS independent main-view comparisons are recorded
+Scoped HDR passes: 29 checks, 12 failures

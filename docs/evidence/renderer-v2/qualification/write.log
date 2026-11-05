@@ -1,0 +1,18 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: SDK Renderer Qualification (/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/game.judasproj)
+Scene: Packaged SDK fresh scene (/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+JS: SDK_NEW_GAME gold=37
+0,0.00000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000
+[TestHarness] service save ready after 3 wait frames at frame 10
+10,0.16667,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,10,0,0,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000
+JS: SDK_SAVE_REQUEST_COMPLETED gold=37
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/checkpoint-sdk/write.png
+20,0.33333,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,20,1,0,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000

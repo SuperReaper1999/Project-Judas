@@ -1,0 +1,47 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS frustum accepts visible bounds
+PASS frustum rejects outside bounds
+PASS rotated scaled corner bounds conservative
+PASS independent camera accepts other bounds
+PASS orthographic projection uses same extraction
+PASS startup burst fills reusable pool
+PASS actual arbitrary Judas gravity acceleration
+PASS seed and updates repeat deterministically
+PASS emitter bounds contain active billboard extents
+PASS expiry returns particles to pool
+PASS nonzero random variation repeats with emitter seed
+PASS local particles follow transformed emitter
+PASS all authored particle properties roundtrip
+PASS particle changes invalidate authored baseline
+PASS ordinary component works in prefab source
+PASS ordinary runtime builds emitter
+PASS runtime update owns particle state
+PASS ordinary runtime entity supports burst API
+PASS destroying emitter releases its pool
+PASS Play particle state discarded without authored mutation
+PASS actual engine GL context
+PASS culled ordinary mesh has no draw submission
+PASS visible ordinary mesh still renders actual pixels
+PASS offscreen emitter no particle submission
+PASS offscreen particles age coherently
+PASS same emitter visible from different camera
+PASS target end restores camera frustum
+PASS write known-colour particle textures
+PASS register both runtime particle textures
+PASS build textured particle world
+PASS runtime texture swap uses registered texture
+PASS new texture changes actual pixels without resetting the live particles
+PERFORMANCE culling=0 facing=1 median_cpu_ms=1.483649 draws=300 culled=0
+PERFORMANCE culling=0 facing=0 median_cpu_ms=1.455685 draws=300 culled=0
+PERFORMANCE culling=1 facing=1 median_cpu_ms=1.463631 draws=300 culled=0
+PERFORMANCE culling=1 facing=0 median_cpu_ms=0.018715 draws=0 culled=300
+PERFORMANCE emitters=8 visible=1 cpu_ms=0.022473 draws=8 particles=32
+PERFORMANCE emitters=8 visible=0 cpu_ms=0.000160 draws=0 particles=0
+PASS world shutdown releases visual state
+SUMMARY 33 checks 0 failures

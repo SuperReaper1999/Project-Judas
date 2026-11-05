@@ -1,0 +1,62 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS disabled compute capability rejects opt-in with an actionable diagnostic
+PASS unsupported compute does not allocate hidden GPU buffers
+PASS unsupported kernel/dispatch operations remain unavailable
+PASS unsupported device shuts down without GPU work
+PASS compute queries numeric limits from its actual context rather than a caller snapshot
+PASS queried-limit control releases its optional owner
+PASS caller capability metadata cannot enlarge actual context limits
+PASS forged extra storage binding is rejected at the actual driver boundary
+PASS forged-limit control releases all GPU allocations
+PASS real native modern context initializes the optional compute owner
+PASS double initialization is rejected without replacing the live owner
+PASS zero-size and over-budget buffers are rejected before publication
+PASS unknown buffer-use bits are rejected
+PASS bounded compute buffer contains the declared native allocation
+PASS native compute shader compiles, links and reflects its local/storage contract
+PASS missing required storage binding rejects dispatch
+PASS storage binding cannot exceed the queried device limit
+PASS compute buffer is assigned explicitly to its linked storage binding
+PASS zero and excessive dispatch group counts are rejected
+PASS rejected dispatches preserve the original GPU payload
+PASS known-answer arithmetic kernel executes on the GPU
+PASS CPU diagnostic consumer cannot bypass the required publication barrier
+PASS a second storage writer cannot bypass a write-after-write barrier
+PASS empty and unknown barrier masks are rejected
+PASS explicit storage and buffer-update barriers publish diagnostic results
+PASS all 64 GPU outputs match the independent integer arithmetic oracle
+PASS overflowing update/read ranges are rejected without touching adjacent memory
+PASS in-bounds CPU updates use the same owned allocation
+Shader compile error [qualification/malformed.comp; desktop GLSL 450; source=78b7932d1ff4498c]: 0(2) : error C0000: syntax error, unexpected reserved word "this" at token "this"
+
+PASS malformed shader cannot publish or leak a partial compute kernel
+Shader compile error [qualification/local-limit.comp; desktop GLSL 450; source=482ea45c9070d616]: 0(2) : error C7604: layout(layout_size_x = 1537) exceeds maximum value
+
+PASS invalid linked local workgroup limits are rejected without replacing existing kernels
+PASS compute resources cannot be manipulated from a foreign thread
+PASS test temporarily releases its actual native context
+PASS context-free operations cannot touch the device's GPU state
+PASS test restores the owning native graphics context
+PASS compute owns bounded vertex and indirect-command allocations
+PASS GPU kernel writes actual triangle vertices and an indirect draw command
+PASS vertex and indirect consumers both reject unpublished shader writes
+PASS explicit vertex/command barriers enable the actual draw consumers
+PASS ordinary graphics stages link for the generated GPU draw
+PASS known-answer framebuffer is an ordinary owned render target
+PASS negative framebuffer control is black before the GPU-generated draw
+PASS compute-generated vertices and indirect command produce the independently expected green pixel
+PASS image and texture publication barrier categories are explicit supported hooks
+PASS destroy releases the known allocation
+PASS recycled buffer slots cannot be accessed through stale generations
+PASS destroy releases the original compute kernel
+PASS recycled kernel slots reject stale program generations
+PASS an otherwise matching slot cannot cross compute-device ownership
+PASS owning-context shutdown retires all compute allocations and kernels
+PASS old handles remain invalid after an entire device lifecycle restarts
+Compute infrastructure: 50 checks, 0 failures

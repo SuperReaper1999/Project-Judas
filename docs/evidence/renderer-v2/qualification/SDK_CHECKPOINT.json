@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "sourceRevision": "fb4ef80f79aee1d8d3aad9137ee1c44508124ec4",
+  "runtimeSha256": "9dd55087ec888eea7552de51ffaa64421cf6af7019df6346d4db112d73586f22",
+  "constructorGold": 0,
+  "savedGold": 37,
+  "coldGold": 37,
+  "sdkTools": 17,
+  "labScenes": 6,
+  "labCaptures": 10,
+  "operations": [
+    {
+      "name": "export-mini",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/checkpoint-sdk/fresh-project/SDK_Renderer_Qualification.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/checkpoint-sdk/mini-package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/judas",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "cold-read",
+      "command": [
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/judas",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "saved-slot-inspect",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas_save",
+        "inspect",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+        "qualification"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "saved-slot-check",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas_save",
+        "check",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini/game.judasproj",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/data/judas/games/d227981541541295866f2b07f66d6c7ebfb4f3f30530d09e6d12ddcc1ea3dbc6/Saves/Slots",
+        "qualification"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "export-workshop",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/projects/renderer_v2_lab/renderer_v2_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/checkpoint-sdk/lab-package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/judas"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "workshop",
+      "command": [
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/workshop/judas",
+        "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/workshop/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    },
+    {
+      "name": "verify-sdk",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final"
+      ],
+      "cwd": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/empty-cwd",
+      "exit": 0
+    }
+  ],
+  "relocatedMini": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/mini",
+  "relocatedLab": "/tmp/judas-renderer-v2-checkpoint-9k6ymag5/workshop",
+  "sdk": "/home/conner/Documents/GitHub/Project-Judas/.cache/renderer-v2/sdk-final"
+}

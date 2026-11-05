@@ -1,0 +1,20 @@
+{
+  "architecture": "x86_64",
+  "build_id": "1.2.5-alpha.1-Experimental-fb4ef80-clean-db96d1fde95e-u159529a78ae7",
+  "channel": "Experimental",
+  "compiler": "GNU",
+  "compiler_version": "15.2.0",
+  "configuration": "Release",
+  "maturity": "alpha",
+  "platform": "Linux",
+  "release_name": "Judas Engine Alpha v1.2.5",
+  "schema": 1,
+  "source_dirty": false,
+  "source_fingerprint": "db96d1fde95efbefae133d4c538c7ab19b314a292987274275400bc64853d8b6",
+  "source_origin": "git",
+  "source_revision": "fb4ef80f79aee1d8d3aad9137ee1c44508124ec4",
+  "source_tree": "a496c50f0712452459c1e79bbc7297686c6a3048",
+  "source_untracked_count": 18,
+  "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+  "version": "1.2.5-alpha.1"
+}

@@ -1,0 +1,20 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS create independently coloured atlas fixture
+PASS track actual PNG
+PASS slice two adjacent cells without gutters
+PASS write typed sheet
+PASS track sheet resource
+PASS start actual GL runtime
+PASS normal scene requests sheet and image
+PASS first frame is red over its entire physical visual extent, not whole-sheet red/green
+PASS exact frame boundary changes actual runtime pixels to green
+PASS seek/pause smooth sprite without gameplay events
+PASS linear sampling cannot bleed adjacent green cell at either sprite edge
+PASS multiple render views never advance animation or emit events
+SUMMARY 12 checks 0 failures

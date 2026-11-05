@@ -1,0 +1,35 @@
+PASS original detailed source fixture is generated in this test's output tree
+PASS independent fixture cook succeeds
+PASS independent fixture cook succeeds
+PASS independent fixture cook succeeds
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native host initializes
+PASS ordinary cooked asset registration
+PASS ordinary cooked asset registration
+PASS ordinary cooked asset registration
+PASS ordinary optional residency world builds
+PASS optional pure visual ownership does not eagerly pin or load geometry
+PASS main and secondary viewpoints demand their distinct assets; unseen negative control stays unloaded
+PASS cached secondary view retains residency between sparse render updates
+PASS visible working-set overcommit is observable rather than silently discarded
+PASS disabled secondary view releases its demand and allows eviction while main stays intact
+PASS independent split viewpoints retain distinct actual resources
+PASS masked split view releases demand without disturbing the other view
+PASS durable world keeps asset identity rather than GPU slot/generation
+PASS restored world reconstructs ordinary visual owners
+PASS restored physical/presentation world reloads actual required geometry
+PASS default projects retain prior eager/pinned visual behaviour
+PASS original painted tile fixture is generated in this test's output tree
+PASS published cook has a verifiable source/output generation
+PASS authoring cook recipes survive project relocation
+PASS cook preparation is separate from publication
+PASS conflicting publication preserves prior output and another writer's temporary file
+PASS changed source is detected and stale prepared generation cannot publish
+PASS no GL errors through camera demand, save restoration and scene teardown
+SUMMARY 27 checks 0 failures

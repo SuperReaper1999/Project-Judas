@@ -1,0 +1,30 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary shared texture is created through the renderer owner
+PASS sprite ordering reproduces independently known opaque-red / half-blue compositing
+PASS insertion permutation preserves explicit sprite layer/order/identity compositing
+PASS negative order control changes real pixels rather than merely reported draw counts
+PASS generic particle presentation reproduces the same independent alpha-compositing answer
+PASS particle input permutation retains actual camera-depth ordering
+PASS negative particle-depth control produces the independently different front-most result
+PASS particle control exercises two real presented particles
+PASS mixed normal-mapped PBR material overrides, mirrored and nonuniform transforms retain matched pixels
+PASS mixed-material control exercises actual bounded instanced submission with all 64 instances
+PASS destroyed mesh generation cannot alias replacement resources through a queued draw
+PASS replacement mesh positive control draws using its new live generation
+PASS independent secondary render target is created
+PASS secondary view begins after primary sprite submission
+PASS sprite queues and colour state remain isolated across actual primary and secondary targets
+Camera rejected: view must be invertible and matrices finite
+Camera rejected: view must be invertible and matrices finite
+PASS rejected camera input preserves coherent public matrices, culling and actual GPU pixels
+PASS target scope remains available for shadow failure controls
+Shadow chart rejected: matrix must be finite
+PASS invalid shadow scopes cannot reset an active target framebuffer or viewport
+PASS no graphics errors after submission, generation reuse and target retirement
+Renderer V2 submission: 19 checks, 0 failures

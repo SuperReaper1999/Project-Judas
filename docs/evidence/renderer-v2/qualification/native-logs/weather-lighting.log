@@ -1,0 +1,122 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native renderer starts
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS night weather respects authored darkness even with an above-horizon moon light
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS dusk retains authored warm sky rather than fixed daylight blue
+LIGHTING linear=0 day=172.595 night=11.3065
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS night weather respects authored darkness even with an above-horizon moon light
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS dusk retains authored warm sky rather than fixed daylight blue
+LIGHTING linear=1 day=153.682 night=36.7927
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather off stays disabled
+PASS disabled weather preserves the ordinary dark background
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS cloud ambient/direct illumination follows scene night lighting
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS negative control: unlit clouds do not emit fixed daylight
+PASS clouds receive actual scene ambient illumination
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS lightning still illuminates a night storm
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS fog illumination follows scene ambient without a fixed daylight term
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS lighting is covariant under arbitrary-up rotation
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION squalls linear=0 paired_contrast=0.437669753 minimum_channel_delta=0
+PASS dim daytime rain retains visible contrast against its unchanged sky
+PASS thin rain highlights do not replace matching sky with opaque albedo
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION storm linear=0 paired_contrast=0.307797068 minimum_channel_delta=0
+PASS dim daytime rain retains visible contrast against its unchanged sky
+PASS thin rain highlights do not replace matching sky with opaque albedo
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION unlit linear=0 paired_contrast=0.000000000 minimum_channel_delta=0
+PASS negative control: rain has no emissive brightness floor in darkness
+PASS rain scattering preserves the opaque sky target alpha
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION squalls linear=1 paired_contrast=0.135736883 minimum_channel_delta=0
+PASS dim daytime rain retains visible contrast against its unchanged sky
+PASS thin rain highlights do not replace matching sky with opaque albedo
+PASS rain scattering preserves the opaque sky target alpha
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION storm linear=1 paired_contrast=0.130603781 minimum_channel_delta=0
+PASS dim daytime rain retains visible contrast against its unchanged sky
+PASS thin rain highlights do not replace matching sky with opaque albedo
+PASS rain scattering preserves the opaque sky target alpha
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS capture paired precipitation control
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PASS precipitation contrast has no GL error
+PRECIPITATION unlit linear=1 paired_contrast=0.000000000 minimum_channel_delta=0
+PASS negative control: rain has no emissive brightness floor in darkness
+WEATHER_LIGHTING checks=106 failures=0
