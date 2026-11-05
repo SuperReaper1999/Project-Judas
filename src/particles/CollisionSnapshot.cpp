@@ -217,12 +217,14 @@ bool CollisionSnapshot::Capture(const PhysicsWorld& physics, const Aabb& domain,
         }
         stats.retainedBodies = bodies.size();
         stats.colliders = colliders.size();
+        auto token=std::make_shared<const unsigned char>(0);
         m_bodies.swap(bodies);
         m_colliders.swap(colliders);
         m_domain = domain;
         m_dt = dt;
         m_stats = stats;
         m_nextGeometryRevision = next;
+        m_captureToken = std::move(token);
         error.clear();
         return true;
     } catch (const std::exception& exception) {

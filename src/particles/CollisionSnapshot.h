@@ -92,12 +92,17 @@ public:
     const CollisionCaptureStats& Stats() const { return m_stats; }
     const Aabb& Domain() const { return m_domain; }
     double Duration() const { return m_dt; }
+    // Copies of one captured sample retain this token. Successful recapture
+    // publishes a new token; consumers can prove sharing without pointer reuse
+    // or treating a geometry fingerprint as an identity proof.
+    const std::shared_ptr<const void>& CaptureToken() const { return m_captureToken; }
     // Exact anchored MK2 pose evaluation. Endpoint corrections are sampled at
     // the endpoint, never interpreted as a finite-duration swept trajectory.
     BodyTransform PoseAt(std::size_t body, double fraction) const;
     bool IsStationary(std::size_t body) const;
 
 private:
+    std::shared_ptr<const void> m_captureToken=std::make_shared<const unsigned char>(0);
     Aabb m_domain;
     double m_dt = 0;
     std::uint64_t m_nextGeometryRevision = 1;

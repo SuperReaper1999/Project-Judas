@@ -1,6 +1,7 @@
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
 #include "particles/GpuParticles.h"
+#include "particles/CollisionSnapshot.h"
 
 #include <algorithm>
 #include <cmath>
@@ -34,7 +35,7 @@ Scene Fixture(ParticleBackend backend, bool collision = false) {
     return scene;
 }
 // Isolates world-owned snapshot preparation from rendering and fixed-step physics.
-int IdleBenchmark() {
+int IdleBenchmark(bool active = false, ParticleBackend backend = ParticleBackend::Cpu, ResourceManager *resources = nullptr) {
     for (unsigned emitters : {0u, 1u, 12u}) {
         Scene scene;
         for (unsigned i = 0; i < 250; ++i) {
@@ -47,13 +48,15 @@ int IdleBenchmark() {
             object.transform.position = {0, -20, 0};
             object.particleEmitter = ParticleEmitterSettings{};
             auto &settings = *object.particleEmitter;
-            settings.backend = ParticleBackend::Cpu; settings.collision = true;
-            settings.rate = settings.burst = 0; settings.loop = false;
+            settings.backend = backend; settings.collision = true;
+            settings.rate = 0; settings.burst = active ? 1 : 0; settings.loop = false;
+            settings.lifetime = 3600; settings.velocity = settings.velocityVariation = glm::vec3(0);
+            settings.spread = glm::vec3(0); settings.useGravity = false;
             settings.maxParticles = 192; settings.collisionRadius = .01f;
         }
         RuntimeWorld world; world.legacyGameplay = false;
         std::string error;
-        Require(world.Build(scene, nullptr, error), "headless idle fixture: " + error);
+        Require(world.Build(scene, resources, error), "collision benchmark fixture: " + error);
         std::vector<double> rows;
         for (unsigned tick = 0; tick < 330; ++tick) {
             const auto start = std::chrono::steady_clock::now();
@@ -61,6 +64,14 @@ int IdleBenchmark() {
             const auto ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
             if (tick >= 30) rows.push_back(ms);
         }
+        std::uint64_t uploadBytes = 0, sharedBytes = 0;
+        double captureMs = 0;
+        for (const auto &emitter : world.VisualEmitters()) {
+            if (emitter.gpu) { uploadBytes += emitter.gpu->Diagnostics().geometryUploadBytes; sharedBytes += emitter.gpu->Diagnostics().geometrySharedBytes; }
+            captureMs += emitter.runtime.snapshotMs;
+        }
+        std::printf("CAPTURE active=%d backend=%u emitters=%u last_capture_ms=%.9f geometry_upload_bytes=%llu shared_bytes=%llu\n",
+                    active, unsigned(backend), emitters, captureMs, (unsigned long long)uploadBytes, (unsigned long long)sharedBytes);
         std::sort(rows.begin(), rows.end());
         double sum = 0; for (double ms : rows) sum += ms;
         std::printf("IDLE emitters=%u bodies=250 samples=300 mean_ms=%.9f median_ms=%.9f p95_ms=%.9f worst_ms=%.9f\n",
@@ -68,6 +79,82 @@ int IdleBenchmark() {
         world.Destroy();
     }
     return 0;
+}
+void SharedSnapshots() {
+    auto scene = Fixture(ParticleBackend::Cpu, true);
+    scene.Objects()[1].body->motion = SceneBodyMotion::Kinematic;
+    scene.Objects()[0].particleEmitter->response = ParticleResponse::Stick;
+    scene.Objects()[0].particleEmitter->velocity = {0,-40,0};
+    scene.Objects()[0].particleEmitter->useGravity = false;
+    const auto original = *scene.Objects()[0].particleEmitter;
+    auto &second = scene.CreateObject("Compatible emitter");
+    second.transform = scene.Objects()[0].transform; second.particleEmitter = original;
+    RuntimeWorld world; world.legacyGameplay = false; std::string error;
+    Require(world.Build(scene, nullptr, error) && world.EmitParticleBurst(1,1) && world.EmitParticleBurst(3,1),
+            "compatible live CPU emitters build and emit");
+    world.UpdateVisualParticles(dt);
+    const auto first = world.VisualEmitters()[0].collision;
+    Require(first && first == world.VisualEmitters()[1].collision &&
+                world.GetParticleRuntimeStats(3).snapshotMs == 0,
+            "compatible emitters share one captured snapshot, not two measured captures");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != first &&
+                world.VisualEmitters()[0].collision == world.VisualEmitters()[1].collision &&
+                world.VisualEmitters()[0].collision->Colliders()[0].geometryRevision == first->Colliders()[0].geometryRevision,
+            "next boundary refreshes the shared snapshot and preserves geometry history");
+    Require(world.Physics().SetKinematicVelocity(world.RuntimeBody(2),{1,0,0},{0,0,0}),
+            "shared stick receiver starts native prescribed movement");
+    world.Physics().Step(dt);
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision == world.VisualEmitters()[1].collision &&
+                std::abs(world.VisualEmitters()[0].pool.Particles()[0].position.x-.175f)<1e-5f &&
+                world.VisualEmitters()[0].pool.Particles()[0].position == world.VisualEmitters()[1].pool.Particles()[0].position,
+            "shared fresh motion preserves actual stick anchors on a moving native body");
+    world.ControlParticles(3,"pause"); world.UpdateVisualParticles(dt);
+    world.ControlParticles(3,"play"); world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != world.VisualEmitters()[1].collision,
+            "divergent capture histories do not share or reassign stick-anchor revisions");
+    world.Destroy();
+    scene.Objects()[2].particleEmitter->collisionLayers = 0;
+    Require(world.Build(scene, nullptr, error) && world.EmitParticleBurst(1,1) && world.EmitParticleBurst(3,1),
+            "different-filter control builds");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != world.VisualEmitters()[1].collision &&
+                !world.VisualEmitters()[0].collision->Bodies().empty() && world.VisualEmitters()[1].collision->Bodies().empty(),
+            "different layers never borrow a more permissive or restrictive snapshot");
+    world.Destroy();
+    scene.Objects()[2].particleEmitter->collisionLayers = original.collisionLayers;
+    scene.Objects()[0].body = SceneBodyComponent{};
+    scene.Objects()[2].body = SceneBodyComponent{};
+    Require(world.Build(scene, nullptr, error) && world.EmitParticleBurst(1,1) && world.EmitParticleBurst(3,1),
+            "own-body exclusion control builds");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters()[0].collision != world.VisualEmitters()[1].collision,
+            "different emitting body exclusions do not share even with matching layers");
+    world.Destroy();
+
+    scene = Fixture(ParticleBackend::Cpu, true);
+    const auto base = *scene.Objects()[0].particleEmitter;
+    for (unsigned i=1;i<65;++i) {
+        auto &effect = scene.CreateObject("Bounded cache overflow control");
+        effect.transform = scene.Objects()[0].transform; effect.particleEmitter = base;
+        effect.particleEmitter->collisionLayers = std::uint64_t(i+1);
+    }
+    scene.Objects()[0].particleEmitter->collisionLayers = 1;
+    Require(world.Build(scene,nullptr,error), "65 incompatible capture groups build");
+    bool emitted=true;
+    for(const auto &effect:world.VisualEmitters()) emitted &= world.EmitParticleBurst(effect.id,1);
+    Require(emitted,"all 65 overflow controls emit");
+    world.UpdateVisualParticles(dt);
+    const auto overflow=world.VisualEmitters().back().collision;
+    Require(overflow && overflow->Bodies().size()==1 &&
+                overflow!=world.VisualEmitters().front().collision,
+            "cache overflow captures independently with full collision coverage");
+    world.UpdateVisualParticles(dt);
+    Require(world.VisualEmitters().back().collision!=overflow &&
+                world.VisualEmitters().back().collision->Colliders()[0].geometryRevision==overflow->Colliders()[0].geometryRevision,
+            "overflow retains its own geometry history across fixed boundaries");
+    world.Destroy();
 }
 void IdleCpuLifecycle() {
     auto scene = Fixture(ParticleBackend::Cpu, true);
@@ -316,6 +403,50 @@ void SelectedGravity(EngineHost &host) {
             "rotated uniform gravity changes the real resident velocity without resetting prior motion");
     world.Destroy();
 }
+void SharedGpu(EngineHost &host) {
+    auto scene = Fixture(ParticleBackend::Auto, true);
+    scene.Objects()[0].particleEmitter->velocity = {0,-40,0};
+    scene.Objects()[0].particleEmitter->useGravity = false;
+    auto settings = *scene.Objects()[0].particleEmitter;
+    auto &second = scene.CreateObject("Shared GPU emitter");
+    second.transform = scene.Objects()[0].transform; second.particleEmitter = settings;
+    RuntimeWorld shared, control; shared.legacyGameplay = control.legacyGameplay = false;
+    std::string error;
+    Require(shared.Build(scene,&host.Resources(),error) && control.Build(scene,&host.Resources(),error),
+            "shared and independent GPU worlds build from identical authored geometry");
+    // Independent histories force the control to capture/upload separately.
+    for (auto &effect : control.VisualEmitters())
+        effect.collision = std::make_shared<JudasParticles::CollisionSnapshot>();
+    for (auto *world : {&shared,&control})
+        Require(world->EmitParticleBurst(1,3) && world->EmitParticleBurst(3,3), "both GPU fixtures queue identical births");
+    for (unsigned tick=0;tick<4;++tick) {
+        shared.UpdateVisualParticles(dt); control.UpdateVisualParticles(dt);
+        for (unsigned i=0;i<2;++i) {
+            const auto a=Read(*shared.VisualEmitters()[i].gpu), b=Read(*control.VisualEmitters()[i].gpu);
+            bool same=a.size()==b.size();
+            for(std::size_t j=0;j<a.size()&&same;++j)
+                same=a[j].positionAge==b[j].positionAge&&a[j].velocityLife==b[j].velocityLife&&a[j].identity==b[j].identity;
+            Require(same,"shared collision buffers preserve exact resident particle trajectories");
+        }
+    }
+    Require(shared.VisualEmitters()[1].gpu->Diagnostics().geometryUploadBytes==0 &&
+                shared.VisualEmitters()[1].gpu->Diagnostics().geometrySharedBytes>0 &&
+                control.VisualEmitters()[1].gpu->Diagnostics().geometryUploadBytes>0,
+            "compatible GPU emitter aliases actual immutable storage; independent control uploads");
+    auto changed=shared.VisualEmitters()[0].pool.settings; changed.backend=ParticleBackend::Cpu;
+    Require(shared.SetParticleSettings(1,changed),"retire the original GPU geometry owner into CPU");
+    shared.UpdateVisualParticles(dt);
+    Require(!shared.VisualEmitters()[0].gpu && shared.VisualEmitters()[1].gpu &&
+                Live(Read(*shared.VisualEmitters()[1].gpu))==3,
+            "remaining GPU consumer survives source-owner teardown with real live particle state");
+    auto transform=scene.Objects()[1].transform; transform.position.y=.3f;
+    Require(shared.SetRuntimeTransform(2,transform),"edit collision geometry placement after sharing");
+    const auto bytes=shared.VisualEmitters()[1].gpu->Diagnostics().geometryUploadBytes;
+    shared.UpdateVisualParticles(dt);
+    Require(shared.VisualEmitters()[1].gpu && shared.VisualEmitters()[1].gpu->Diagnostics().geometryUploadBytes>bytes,
+            "changed geometry invalidates the retained shared upload and publishes a new allocation");
+    shared.Destroy(); control.Destroy();
+}
 void Portable(EngineHost &host) {
     RuntimeWorld automatic, required;
     automatic.legacyGameplay = required.legacyGameplay = false;
@@ -340,16 +471,23 @@ void Portable(EngineHost &host) {
 int main(int argc, char **argv) {
     try {
         if (argc == 2 && std::strcmp(argv[1], "--idle-benchmark") == 0) return IdleBenchmark();
+        if (argc == 2 && std::strcmp(argv[1], "--active-benchmark") == 0) return IdleBenchmark(true);
+        if (argc == 2 && std::strcmp(argv[1], "--gpu-benchmark") == 0) {
+            EngineHost host; std::string error;
+            Require(host.Init("Shared collision benchmark", 128, 128, false, error), error);
+            Require(host.GraphicsCaps().modernTier, "GPU benchmark requires modern graphics");
+            return IdleBenchmark(true, ParticleBackend::Gpu, &host.Resources());
+        }
         if (argc == 2 && std::strcmp(argv[1], "--cpu-only") == 0) {
-            IdleCpuLifecycle();
+            SharedSnapshots(); IdleCpuLifecycle();
             std::printf("CPU world: %u checks PASS\n", checks);
             return 0;
         }
-        IdleCpuLifecycle();
+        SharedSnapshots(); IdleCpuLifecycle();
         EngineHost host;
         std::string error;
         Require(host.Init("Particle world lifecycle", 128, 128, false, error), "actual renderer/compute context: " + error);
-        if (host.GraphicsCaps().modernTier) { Lifecycle(host); Fallback(host); SelectedGravity(host); }
+        if (host.GraphicsCaps().modernTier) { Lifecycle(host); Fallback(host); SelectedGravity(host); SharedGpu(host); }
         else Portable(host);
         host.Shutdown();
         std::printf("Particle world: %u checks PASS\n", checks);

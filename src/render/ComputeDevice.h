@@ -72,6 +72,10 @@ class ComputeDevice {
 
     ComputeBuffer CreateBuffer(std::size_t bytes, ComputeBufferUse, const void *initial,
                                std::string &error);
+    // Same-context immutable storage alias; no upload/copy. Both handles become
+    // permanently read-only. Each device reserves the bytes against its own
+    // budget; the native allocation survives until the last alias is retired.
+    ComputeBuffer ShareReadOnlyBuffer(ComputeDevice &source, ComputeBuffer, std::string &error);
     bool DestroyBuffer(ComputeBuffer, std::string &error);
     bool UpdateBuffer(ComputeBuffer, std::size_t offset, const void *data, std::size_t bytes,
                       std::string &error);

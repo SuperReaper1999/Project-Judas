@@ -47,6 +47,17 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
     if(m_particleEmitters.empty())return;
     JUDAS_PROFILE_SCOPE("Visual particle simulation");
     const auto tick=std::uint64_t(std::max(0.,std::round(SimulationTimeSeconds()/std::max(double(dt),1e-9))));
+    // Only this completed fixed-boundary call is shared. The predecessor owner
+    // is part of the key: stick anchors and suspended reliable work must not
+    // adopt another owner's geometry-revision history. Keep at most 64 groups;
+    // overflow captures independently rather than reducing collision coverage.
+    struct Batch {
+        std::shared_ptr<JudasParticles::CollisionSnapshot> previous, snapshot;
+        CategoryMask layers;
+        BodyHandle ignored;
+        std::shared_ptr<JudasParticles::GpuParticles> gpu;
+    };
+    std::vector<Batch> batches;
     for(auto& e:m_particleEmitters){
         if(!IsPublished(e.id))continue;
         if(const auto* entity=FindEntity(e.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
@@ -66,26 +77,42 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
         if(!settings.collision||emptyCpu){
             e.runtime.snapshotBodies=0;e.runtime.snapshotColliders=0;e.runtime.snapshotTriangles=0;
         }
+        std::size_t batch=batches.size();
         if(settings.collision&&!emptyCpu&&!e.pool.PendingStep()){
-            const auto prepare=Clock::now();
-            auto next=e.collision?std::make_shared<JudasParticles::CollisionSnapshot>(*e.collision):
-                                  std::make_shared<JudasParticles::CollisionSnapshot>();
-            PhysicsQueryFilter filter;filter.includeLayers=settings.collisionLayers;
-            auto own=RuntimeBody(e.id);if(own.IsValid())filter.ignoredBodies.push_back(own);
-            auto identity=[&](BodyHandle body){
-                for(const auto& [id,planet]:m_planets)if(planet->Owns(body))return id;
-                return EntityIdOfBody(body);
-            };
-            std::string error;
-            // The whole supported local physics chart is conservative even for
-            // old GPU positions and movers crossing/departing an emitter. No
-            // per-particle world queries or guessed render-LOD collision field.
-            if(!next->Capture(m_physics,{{-8192,-8192,-8192},{8192,8192,8192}},dt,error,filter,identity)){
-                e.runtime.diagnostic="particle collision snapshot unavailable: "+error;
-                ++e.runtime.queryFailures;continue;
+            const auto own=RuntimeBody(e.id);
+            for(std::size_t i=0;i<batches.size();++i)
+                if(batches[i].previous==e.collision&&batches[i].layers==settings.collisionLayers&&
+                   batches[i].ignored.id==own.id&&batches[i].ignored.world==own.world){batch=i;break;}
+            if(batch<batches.size()){
+                e.collision=batches[batch].snapshot;
+                JUDAS_PROFILE_COUNTER("Particle snapshot reuses",1,ProfileCounterMode::Sum);
+            }else{
+                const auto prepare=Clock::now();
+                auto next=e.collision?std::make_shared<JudasParticles::CollisionSnapshot>(*e.collision):
+                                      std::make_shared<JudasParticles::CollisionSnapshot>();
+                PhysicsQueryFilter filter;filter.includeLayers=settings.collisionLayers;
+                if(own.IsValid())filter.ignoredBodies.push_back(own);
+                auto identity=[&](BodyHandle body){
+                    for(const auto& [id,planet]:m_planets)if(planet->Owns(body))return id;
+                    return EntityIdOfBody(body);
+                };
+                std::string error;
+                // The whole supported local physics chart is conservative even for
+                // old GPU positions and movers crossing/departing an emitter. No
+                // per-particle world queries or guessed render-LOD collision field.
+                if(!next->Capture(m_physics,{{-8192,-8192,-8192},{8192,8192,8192}},dt,error,filter,identity)){
+                    e.runtime.diagnostic="particle collision snapshot unavailable: "+error;
+                    ++e.runtime.queryFailures;continue;
+                }
+                if(batches.size()<64){
+                    if(batches.empty())batches.reserve(std::min<std::size_t>(64,m_particleEmitters.size()));
+                    batch=batches.size();
+                    batches.push_back({e.collision,next,settings.collisionLayers,own,{}});
+                }
+                e.collision=std::move(next);
+                JUDAS_PROFILE_COUNTER("Particle snapshot captures",1,ProfileCounterMode::Sum);
+                e.runtime.snapshotMs=std::chrono::duration<double,std::milli>(Clock::now()-prepare).count();
             }
-            e.collision=std::move(next);
-            e.runtime.snapshotMs=std::chrono::duration<double,std::milli>(Clock::now()-prepare).count();
             e.runtime.snapshotBodies=e.collision->Stats().retainedBodies;
             e.runtime.snapshotColliders=e.collision->Stats().colliders;
             e.runtime.snapshotTriangles=e.collision->Stats().uniqueTriangles;
@@ -129,7 +156,9 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
                     if(settings.loop){nextCredit+=double(dt)*settings.rate;const auto count=unsigned(nextCredit);nextCredit-=count;spawn+=count;}
                 }
                 inputs.spawnCount=spawn;
-                if(e.gpu->Step(settings,inputs,settings.collision?e.collision.get():nullptr,reason)){
+                auto* peer=batch<batches.size()?batches[batch].gpu.get():nullptr;
+                if(e.gpu->Step(settings,inputs,settings.collision?e.collision.get():nullptr,reason,peer)){
+                    if(batch<batches.size()&&!batches[batch].gpu)batches[batch].gpu=e.gpu;
                     e.gpuCredit=nextCredit;e.gpuStarted=nextStarted;e.gpuBurst=0;
                     std::string polling;e.gpu->PollEvents(polling);
                     for(const auto& impact:e.gpu->TakeImpacts())e.pool.ImpactState().Add(impact,settings);

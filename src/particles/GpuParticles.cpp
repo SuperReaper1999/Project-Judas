@@ -45,6 +45,8 @@ struct GpuParticles::Storage {
  GpuParticleDiagnostics diagnostics;
  ParticleImpacts impacts;
  std::uint64_t geometryFingerprint=0;
+ std::size_t geometryBytes=0;
+ std::shared_ptr<const void> captureToken;
  std::vector<std::shared_ptr<const CollisionAsset>> retainedAssets;
  unsigned topRoot=0,colliderCount=0,impactCapacity=0,nextBirth=1;
  std::uint64_t gpuDropped=0,invalidImpactDropped=0;
@@ -94,17 +96,27 @@ struct GpuParticles::Storage {
    device.BindStorage(events,7,ComputeAccess::ReadWrite,error);
  }
  bool UploadParams(std::string& error){if(!device.UpdateBuffer(params,0,&parameters,sizeof(parameters),error))return false;diagnostics.parameterUploadBytes+=sizeof(parameters);return true;}
- bool UploadGeometry(const CollisionSnapshot& snapshot,std::uint64_t fingerprint,std::string& error){
+ bool UploadGeometry(const CollisionSnapshot& snapshot,std::uint64_t fingerprint,
+                     Storage* peer,std::string& error){
   if(fingerprint==geometryFingerprint)return true;
-  PackedGeometry geometry;
-  if(!PackGeometry(snapshot,geometry,error))return false;
-  if(geometry.colliders.empty())geometry.colliders.emplace_back();
-  if(geometry.nodes.empty())geometry.nodes.emplace_back();
-  if(geometry.triangles.empty())geometry.triangles.emplace_back();
   ComputeBuffer replacements[3];
-  replacements[0]=device.CreateBuffer(geometry.colliders.size()*sizeof(Collider),ComputeBufferUse::Storage,geometry.colliders.data(),error);
-  if(replacements[0].IsValid())replacements[1]=device.CreateBuffer(geometry.nodes.size()*sizeof(Node),ComputeBufferUse::Storage,geometry.nodes.data(),error);
-  if(replacements[1].IsValid())replacements[2]=device.CreateBuffer(geometry.triangles.size()*sizeof(Triangle),ComputeBufferUse::Storage,geometry.triangles.data(),error);
+  PackedGeometry geometry;
+  const bool share=peer&&peer!=this&&peer->captureToken==snapshot.CaptureToken()&&peer->geometryFingerprint==fingerprint;
+  std::size_t bytes=0;
+  if(share){
+   replacements[0]=device.ShareReadOnlyBuffer(peer->device,peer->colliders,error);
+   if(replacements[0].IsValid())replacements[1]=device.ShareReadOnlyBuffer(peer->device,peer->nodes,error);
+   if(replacements[1].IsValid())replacements[2]=device.ShareReadOnlyBuffer(peer->device,peer->triangles,error);
+  }else{
+   if(!PackGeometry(snapshot,geometry,error))return false;
+   if(geometry.colliders.empty())geometry.colliders.emplace_back();
+   if(geometry.nodes.empty())geometry.nodes.emplace_back();
+   if(geometry.triangles.empty())geometry.triangles.emplace_back();
+   replacements[0]=device.CreateBuffer(geometry.colliders.size()*sizeof(Collider),ComputeBufferUse::Storage,geometry.colliders.data(),error);
+   if(replacements[0].IsValid())replacements[1]=device.CreateBuffer(geometry.nodes.size()*sizeof(Node),ComputeBufferUse::Storage,geometry.nodes.data(),error);
+   if(replacements[1].IsValid())replacements[2]=device.CreateBuffer(geometry.triangles.size()*sizeof(Triangle),ComputeBufferUse::Storage,geometry.triangles.data(),error);
+   bytes=geometry.colliders.size()*sizeof(Collider)+geometry.nodes.size()*sizeof(Node)+geometry.triangles.size()*sizeof(Triangle);
+  }
   if(!replacements[2].IsValid()){
    const auto cause=error;std::string ignored;for(auto buffer:replacements)if(buffer.IsValid())device.DestroyBuffer(buffer,ignored);error=cause;return false;
   }
@@ -112,9 +124,11 @@ struct GpuParticles::Storage {
   for(auto buffer:{colliders,nodes,triangles})if(buffer.IsValid())device.DestroyBuffer(buffer,ignored);
   colliders=replacements[0];nodes=replacements[1];triangles=replacements[2];
   retainedAssets.clear();for(const auto& collider:snapshot.Colliders())if(collider.asset)retainedAssets.push_back(collider.asset);
-  geometryFingerprint=fingerprint;topRoot=geometry.root;colliderCount=unsigned(snapshot.Colliders().size());
-  diagnostics.geometryUploadBytes+=geometry.colliders.size()*sizeof(Collider)+geometry.nodes.size()*sizeof(Node)+geometry.triangles.size()*sizeof(Triangle);
-  ++stats.geometryUploads;stats.snapshotBodies=snapshot.Bodies().size();stats.snapshotColliders=colliderCount;stats.snapshotTriangles=snapshot.Stats().uniqueTriangles;
+  geometryFingerprint=fingerprint;topRoot=share?peer->topRoot:geometry.root;colliderCount=unsigned(snapshot.Colliders().size());
+  if(share)diagnostics.geometrySharedBytes+=peer->geometryBytes;
+  else {diagnostics.geometryUploadBytes+=bytes;++stats.geometryUploads;}
+  geometryBytes=share?peer->geometryBytes:bytes;
+  stats.snapshotBodies=snapshot.Bodies().size();stats.snapshotColliders=colliderCount;stats.snapshotTriangles=snapshot.Stats().uniqueTriangles;
   return true;
  }
 };
@@ -172,7 +186,7 @@ bool GpuParticles::Initialize(const GraphicsCapabilities& caps,const ParticleEmi
 }
 
 bool GpuParticles::Step(const ParticleEmitterSettings& settings,const GpuParticleStepInputs& input,
-                        const CollisionSnapshot* snapshot,std::string& error){
+                        const CollisionSnapshot* snapshot,std::string& error,GpuParticles* geometryPeer){
  error.clear();auto& s=*storage;
  // Every unsupported combination is rejected before simulation, spawning or
  // random-id mutation, so a deliberate one-time CPU transfer remains possible.
@@ -195,7 +209,7 @@ bool GpuParticles::Step(const ParticleEmitterSettings& settings,const GpuParticl
  }
  if(!PollEvents(error))return false;
  const bool changed=settings.collision&&fingerprint!=s.geometryFingerprint;
- if(settings.collision&&!s.UploadGeometry(*snapshot,fingerprint,error))return false;
+ if(settings.collision&&!s.UploadGeometry(*snapshot,fingerprint,geometryPeer?geometryPeer->storage.get():nullptr,error))return false;
  if(settings.collision&&!s.collide.IsValid()){
   const auto source=SimulationShader(true);s.collide=s.device.CreateKernel(source.c_str(),"ParticlesV2/static-BVH-collision",error);
   if(!s.collide.IsValid())return false;
@@ -231,6 +245,7 @@ bool GpuParticles::Step(const ParticleEmitterSettings& settings,const GpuParticl
  if(pending.handle.IsValid()){
   s.pending.push_back(std::move(pending));s.previousReported=true;
  }else{++s.diagnostics.skippedReadbacks;s.unreported=std::make_unique<Storage::Pending>(std::move(pending));error.clear();}
+ s.captureToken=snapshot?snapshot->CaptureToken():nullptr;
  s.stats.gpuBytes=s.device.AllocatedBytes();return true;
 }
 
@@ -324,6 +339,6 @@ bool GpuParticles::Shutdown(std::string& error){
  for(auto* buffer:{&s.states,&s.params,&s.counters,&s.freeSlots,&s.events,&s.colliders,&s.nodes,&s.triangles,&s.keys,&s.viewParams,&s.records,&s.commands})*buffer={};
  for(auto* kernel:{&s.reset,&s.clear,&s.shift,&s.spawn,&s.simulate,&s.collide,&s.finalize,&s.viewKeys,&s.sortLocal,&s.sortMerge,&s.gather})*kernel={};
  s.parameters={};s.settings={};s.stats={};s.stats.requested=requested;s.diagnostics={};s.impacts=ParticleImpacts{};s.pending.clear();s.unreported.reset();
- s.retainedAssets.clear();s.geometryFingerprint=0;s.gpuDropped=s.invalidImpactDropped=0;s.topRoot=s.colliderCount=s.impactCapacity=0;s.nextBirth=1;s.previousReported=true;s.viewReady=false;return true;
+ s.captureToken.reset();s.retainedAssets.clear();s.geometryFingerprint=0;s.gpuDropped=s.invalidImpactDropped=0;s.topRoot=s.colliderCount=s.impactCapacity=0;s.nextBirth=1;s.previousReported=true;s.viewReady=false;return true;
 }
 } // namespace JudasParticles

@@ -1,0 +1,86 @@
+{
+  "timestamp_utc": "2026-11-05T21:02:07.346885+00:00",
+  "base_commit": "9f022cf176a5ed33b6fb09906e3c482fdf326ca1",
+  "configuration": "Release / GCC 15.2 / Linux",
+  "hardware": "Ryzen 5 5600 / GTX 970 4 GiB / NVIDIA 580.178.04",
+  "scope": "Fixed-boundary CPU capture sharing and same-context immutable GPU storage aliases; no particle-state/event sharing",
+  "timed_fixture": "250 static boxes, 1 live particle per emitter, 0/1/12 emitters; 30 warm-up + 300 measured ticks; --active-benchmark or --gpu-benchmark",
+  "matched_runs": "final-before/after-{cpu,gpu}-{1,2,3}.log; pair 2 reverses order; no concurrent benchmark/compiler/game processes",
+  "exploratory_runs": "Earlier before-cpu/before-gpu runs overlap each other; not accepted performance distributions. Earlier matched-* retained separately before lazy reserve follow-up. Failed compile logs are retained, not qualified passes.",
+  "before_binary_sha256": "faca881c4339b214c0b4e4ce94cc7852ce6582780a22f28da474fb8933a6e3e8",
+  "source_sha256": {
+    "src/particles/CollisionSnapshot.cpp": "df33e6af394f757e9c4ea4b9861f5861f6db2466739b56d5b2930e7742197ed1",
+    "src/particles/CollisionSnapshot.h": "57e8247ea58b27fb747d63315ab042f55fc5f9a119b38fb00e1bf185637a8b5c",
+    "src/particles/WorldParticles.cpp": "cbec990ccdc4c19df4c52fbd327ea84e080bb334bd9802ea7aed3fbb2f548260",
+    "src/particles/GpuParticles.cpp": "075eaa3e0d53c103aedd5c8322fe85803e04c56709540a098b96e873695dfa3d",
+    "src/particles/GpuParticles.h": "caf3102d69b596987a3cef3f39a5b7306a0860718398435ec0960c58b8b721ef",
+    "src/render/ComputeDevice.cpp": "e5201ad1b64e82b297b8ffc49a22869be151c04283928dc951ef2dc975dc48ad",
+    "src/render/ComputeDevice.h": "202fc60f57f6e64abd7af2dc3f92a55bf14896303ade3744fbccbd65adaffe3d"
+  },
+  "validation": {
+    "cpu_response": {
+      "checks": 49,
+      "failures": 0
+    },
+    "collision_snapshot": {
+      "checks": 37,
+      "failures": 0
+    },
+    "world_native_modern": {
+      "checks": 113,
+      "failures": 0
+    },
+    "world_native_portable": {
+      "checks": 36,
+      "failures": 0
+    },
+    "gpu_particles_native_explicit": {
+      "checks": 63,
+      "failures": 0
+    },
+    "compute_native": {
+      "checks": 59,
+      "failures": 0
+    },
+    "compute_portable": {
+      "checks": 6,
+      "failures": 0
+    },
+    "persistence": {
+      "checks": 44,
+      "failures": 0
+    },
+    "scripting": {
+      "checks": 13,
+      "failures": 0
+    },
+    "legacy_visuals": {
+      "checks": 33,
+      "failures": 0
+    },
+    "original_surface_workshop_cold_processes": {
+      "write_checks": 14,
+      "read_checks": 9,
+      "failures": 0
+    }
+  },
+  "coverage": [
+    "identical resident GPU trajectories versus independent captures/uploads",
+    "mismatched filters and owner exclusions",
+    "divergent/paused histories",
+    "65-group overflow preserves capture and revisions",
+    "moving native receiver stick anchors",
+    "geometry placement invalidates uploads",
+    "source GPU retirement while aliases remain live",
+    "immutable mutation/prebound writer rejection and budget/stale-handle controls",
+    "reliable remove admits before consumption; retries and later ticks cannot duplicate deposits"
+  ],
+  "limitations": [
+    "sharing is per update call and same previous-history owner; no cross-history merge",
+    "64 groups, then independent fallback with full coverage",
+    "GPU requires stationary supported snapshots; moving geometry retains CPU fallback or explicit rejection",
+    "per-owner gpuBytes reserves alias bytes and is not additive unique VRAM",
+    "Windows/Android/browser runtime qualification not performed",
+    "main, Alpha fluid lock and RPG SDK unchanged"
+  ]
+}

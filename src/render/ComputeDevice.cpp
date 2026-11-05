@@ -23,7 +23,16 @@ std::atomic<std::uint64_t> nextOwner{1};
 struct BufferSlot {
     unsigned name = 0, generation = 1, uses = 0, pending = 0;
     std::size_t bytes = 0;
+    // Token only: GL deletion occurs explicitly on the validated owner context,
+    // never from an arbitrary shared_ptr destructor/thread.
+    std::shared_ptr<unsigned char> immutable;
 };
+void ReleaseBuffer(BufferSlot &entry) {
+    if (!entry.immutable || entry.immutable.use_count() == 1)
+        glDeleteBuffers(1, &entry.name);
+    entry.immutable.reset();
+    entry.name = 0;
+}
 struct KernelBinding {
     unsigned index = 0;
     std::size_t minimumBytes = 0;
@@ -198,6 +207,31 @@ ComputeBuffer ComputeDevice::CreateBuffer(std::size_t bytes, ComputeBufferUse us
     return {slot, entry.generation, state->owner};
 }
 
+ComputeBuffer ComputeDevice::ShareReadOnlyBuffer(ComputeDevice &source, ComputeBuffer handle,
+                                                 std::string &error) {
+    if (!Current(error) || !source.Current(error)) return {};
+    auto *original = source.state->Buffer(handle, error);
+    if (!original) return {};
+    if (&source == this || state->context != source.state->context || original->pending ||
+        original->uses != unsigned(ComputeBufferUse::Storage) ||
+        original->bytes > state->budget.bytes - state->bytes - state->readbackBytes ||
+        state->liveBuffers == state->budget.buffers) {
+        Fail(error, "immutable storage sharing requires same-context, completed storage and available budget");
+        return {};
+    }
+    unsigned slot = 0;
+    while (slot < state->buffers.size() && (state->buffers[slot].name ||
+           state->buffers[slot].generation == std::numeric_limits<unsigned>::max())) ++slot;
+    if (slot == state->buffers.size()) state->buffers.emplace_back();
+    if (!original->immutable) original->immutable = std::make_shared<unsigned char>(0);
+    auto &entry = state->buffers[slot];
+    entry.name = original->name; entry.bytes = original->bytes;
+    entry.uses = unsigned(ComputeBufferUse::Storage); entry.pending = 0;
+    entry.immutable = original->immutable;
+    state->bytes += entry.bytes; ++state->liveBuffers;
+    return {slot, entry.generation, state->owner};
+}
+
 bool ComputeDevice::DestroyBuffer(ComputeBuffer handle, std::string &error) {
     if (!Current(error))
         return false;
@@ -208,7 +242,7 @@ bool ComputeDevice::DestroyBuffer(ComputeBuffer handle, std::string &error) {
         if (binding.buffer.owner == handle.owner && binding.buffer.slot == handle.slot &&
             binding.buffer.generation == handle.generation)
             binding.buffer = {};
-    glDeleteBuffers(1, &entry->name);
+    ReleaseBuffer(*entry);
     state->bytes -= entry->bytes;
     --state->liveBuffers;
     entry->name = 0;
@@ -225,6 +259,7 @@ bool ComputeDevice::UpdateBuffer(ComputeBuffer handle, std::size_t offset, const
     auto *entry = state->Buffer(handle, error);
     if (!entry)
         return false;
+    if (entry->immutable) return Fail(error, "shared immutable storage cannot be updated");
     if (!data || !bytes || offset > entry->bytes || bytes > entry->bytes - offset)
         return Fail(error, "compute buffer update lies outside its allocation");
     if (entry->pending & unsigned(ComputeBarrier::BufferUpdate))
@@ -248,6 +283,8 @@ bool ComputeDevice::BindStorage(ComputeBuffer handle, unsigned binding, ComputeA
         (access != ComputeAccess::ReadOnly && access != ComputeAccess::WriteOnly &&
          access != ComputeAccess::ReadWrite))
         return Fail(error, "compute storage binding, access or buffer use is invalid");
+    if (entry->immutable && access != ComputeAccess::ReadOnly)
+        return Fail(error, "shared immutable storage requires read-only access");
     state->bindings[binding] = {handle, access};
     return true;
 }
@@ -380,6 +417,8 @@ bool ComputeDevice::Dispatch(ComputeKernel handle, std::array<unsigned, 3> group
         auto *buffer = state->Buffer(binding.buffer, error);
         if (!buffer)
             return false;
+        if (buffer->immutable && binding.access != ComputeAccess::ReadOnly)
+            return Fail(error, "shared immutable storage cannot be dispatched through a writable binding");
         if (buffer->bytes < required.minimumBytes)
             return Fail(error, "compute storage allocation is smaller than the linked block");
         if (buffer->pending & unsigned(ComputeBarrier::Storage))
@@ -569,9 +608,8 @@ bool ComputeDevice::Shutdown(std::string &error) {
     for (const auto &entry : state->kernels)
         if (entry.name)
             glDeleteProgram(entry.name);
-    for (const auto &entry : state->buffers)
-        if (entry.name)
-            glDeleteBuffers(1, &entry.name);
+    for (auto &entry : state->buffers)
+        if (entry.name) ReleaseBuffer(entry);
     state.reset();
     diagnostic = "compute device is shut down";
     return true;
@@ -594,6 +632,9 @@ bool ComputeDevice::Current(std::string &error) const {
 ComputeBuffer ComputeDevice::CreateBuffer(std::size_t, ComputeBufferUse, const void *, std::string &e) {
     Current(e);
     return {};
+}
+ComputeBuffer ComputeDevice::ShareReadOnlyBuffer(ComputeDevice &, ComputeBuffer, std::string &e) {
+    Current(e); return {};
 }
 bool ComputeDevice::DestroyBuffer(ComputeBuffer, std::string &e) { return Current(e); }
 bool ComputeDevice::UpdateBuffer(ComputeBuffer, std::size_t, const void *, std::size_t,

@@ -75,6 +75,35 @@ int main(int argc, char **argv) {
         return failures ? 1 : 77;
     }
     {
+        ComputeDevice source, receiver, small;
+        Check(source.Initialize(caps, {}, error) && receiver.Initialize(caps, {}, error) &&
+                  small.Initialize(caps, {16, 1, 1}, error), "immutable alias owners initialize");
+        std::array<unsigned,64> original{}; original.fill(123);
+        const auto buffer = source.CreateBuffer(sizeof(original), ComputeBufferUse::Storage, original.data(), error);
+        Check(source.BindStorage(buffer, 0, ComputeAccess::ReadWrite, error),
+              "source writable binding predates immutable sharing");
+        Check(!small.ShareReadOnlyBuffer(source, buffer, error).IsValid() && small.LiveBuffers() == 0 &&
+                  !source.ShareReadOnlyBuffer(source, buffer, error).IsValid(),
+              "alias budget and self-sharing reject without allocations");
+        const auto alias = receiver.ShareReadOnlyBuffer(source, buffer, error);
+        Check(alias.IsValid() && receiver.AllocatedBytes() == sizeof(original),
+              "read-only alias reserves bounded storage without uploading");
+        const auto writer = source.CreateKernel(arithmetic, "immutable-prebound-writer", error);
+        Check(!source.UpdateBuffer(buffer, 0, original.data(), sizeof(original), error) &&
+                  !receiver.UpdateBuffer(alias, 0, original.data(), sizeof(original), error) &&
+                  !receiver.BindStorage(alias, 0, ComputeAccess::ReadWrite, error) &&
+                  !source.Dispatch(writer, {{8,1,1}}, error),
+              "sharing seals both handles and rejects an already-bound writer at dispatch");
+        Check(source.Shutdown(error), "original owner can retire before its aliases");
+        std::array<unsigned,64> read{};
+        Check(receiver.ReadForDiagnostics(alias, 0, read.data(), sizeof(read), error) && read == original,
+              "alias retains actual GPU payload after original device teardown");
+        Check(receiver.DestroyBuffer(alias, error) && receiver.LiveBuffers() == 0 &&
+                  !receiver.ReadForDiagnostics(alias, 0, read.data(), sizeof(read), error),
+              "last alias retires storage and stale handle rejects");
+        Check(receiver.Shutdown(error) && small.Shutdown(error), "alias owners release cleanly");
+    }
+    {
         ComputeDevice queried;
         auto incompleteSnapshot = caps;
         incompleteSnapshot.limits = {};

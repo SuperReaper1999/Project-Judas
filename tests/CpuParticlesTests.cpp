@@ -149,6 +149,9 @@ void ReliableResume() {
               second[0].weight == 3 && Near(second[0].position, {101, 200, 300}) &&
               cpu.Stats().deliveredImpacts == 2 && cpu.Stats().simulated == 2,
           "resumed event cannot adopt newer geometry/origin/tick or replay the first impact");
+    Check(cpu.Update(p, s, .5f, {}, zero, newer, {}, 100) && p.empty() &&
+              cpu.Impacts().Take().empty() && cpu.Stats().contacts == 2,
+          "consumed reliable deposition particles never move or deposit again on later steps");
 
     PhysicsWorld corridor;
     corridor.Init();

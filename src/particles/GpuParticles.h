@@ -30,7 +30,7 @@ struct alignas(16) GpuParticleState {
 static_assert(sizeof(GpuParticleState)==48);
 struct GpuParticleDiagnostics {
     std::uint64_t dispatches=0, draws=0, readbackBytes=0, skippedReadbacks=0;
-    std::uint64_t parameterUploadBytes=0, geometryUploadBytes=0;
+    std::uint64_t parameterUploadBytes=0, geometryUploadBytes=0, geometrySharedBytes=0;
     std::uint64_t sampleTick=0, emitted=0;
     unsigned capacity=0, sortCapacity=0;
 };
@@ -47,7 +47,7 @@ public:
     bool Initialize(const GraphicsCapabilities&, const ParticleEmitterSettings&,
                     JudasRender::ComputeBudget, std::string& error);
     bool Step(const ParticleEmitterSettings&, const GpuParticleStepInputs&,
-              const CollisionSnapshot*, std::string& error);
+              const CollisionSnapshot*, std::string& error, GpuParticles *geometryPeer=nullptr);
     bool PrepareView(const glm::mat4& view,const glm::mat4& projection,bool sorted,std::string& error);
     bool BindDrawBuffers(std::string& error);
     bool CanMutate(std::string& error) const;

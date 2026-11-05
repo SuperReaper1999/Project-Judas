@@ -111,6 +111,9 @@ void FiniteMeshAndReplacement() {
     const auto anchor = snapshot.MakeAnchor(hit);
     const auto retained = snapshot;
     Capture(snapshot, world, 1);
+    Check(snapshot.CaptureToken() != retained.CaptureToken() &&
+              CollisionSnapshot(snapshot).CaptureToken() == snapshot.CaptureToken(),
+          "recapture publishes a fresh sharing token while immutable copies retain the same sample identity");
     glm::dvec3 p, n;
     Check(snapshot.ResolveAnchor(anchor, 1, p, n) && Near(p, {0, 0, 0}),
           "unchanged immutable geometry retains anchor identity across captures");
@@ -136,10 +139,12 @@ void FiniteMeshAndReplacement() {
           "two-sided geometry independently accepts the reverse side with the opposite normal");
     CollisionCaptureLimits limits;
     limits.maxTriangles = 0;
+    const auto token = snapshot.CaptureToken();
     std::string error;
     Check(!snapshot.Capture(world, domain, 1, error, {}, {}, limits) && !error.empty() &&
               snapshot.SweepSphere({0, -2, 0}, {0, 2, 0}, .1).fraction == reverse.fraction,
           "failed capture is transactional and retains the previous accepted collision sample");
+    Check(snapshot.CaptureToken() == token, "failed capture cannot replace the published sharing identity");
 }
 void Moving() {
     PhysicsWorld world;

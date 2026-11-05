@@ -60,7 +60,11 @@ and active backend, `live`, `simulated`, `contacts`, `queryFailures`,
 `snapshotColliders`, `snapshotTriangles`, `gpuBytes`, `geometryUploads`,
 `stateTransferBytes`, `paused`, `backpressure`, `pendingStep`, `simulationMs`,
 `snapshotMs` and `diagnostic`. Check the active backend and diagnostic rather than
-assuming that requesting GPU made it available.
+assuming that requesting GPU made it available. Compatible emitters can share
+one fixed-boundary capture; `snapshotMs` measures actual capture work (zero for a
+reuse), while snapshot counts still describe the geometry used. GPU `gpuBytes`
+is the conservative per-owner reservation, including read-only aliases; adding
+it across emitters can double-count shared physical storage.
 
 `entity.takeParticleImpacts()` publishes and drains a detached array of
 `ParticleImpact` records. Consume it in `fixedUpdate`. Each contains exact string
