@@ -38,6 +38,25 @@ int main(){
         Check(ve<(atZero?1e-7:1e-9),"material and EOS derivative matches nonlinear difference");
         Check(me<(atZero?2e-5:1e-6),"mass/advection/pressure/gravity momentum derivative matches nonlinear difference");
     }
+    // Zero normal flow does not imply zero tangential momentum. The joint
+    // derivative must average complete one-sided momentum fluxes, not multiply
+    // independently averaged density and velocity across a material interface.
+    for(bool portCorner:{false,true}){
+        auto corner=f;CutVelocityDual cornerDual;Check(cornerDual.Build(corner,e),"build zero-normal-flow material interface");
+        std::vector<Real> cu(cornerDual.Nodes().size()),cp(4),cz(cu.size());std::vector<double> cdu(cu.size()),cdp(4);
+        auto cm=sm;if(portCorner){cm[2]=cm[2]*Real(3.);cm[3]=cm[3]*Real(.3);}
+        for(std::size_t j=0;j<cu.size();++j){auto node=cornerDual.Nodes()[j];if(node.fixed)continue;
+            if(portCorner){if(node.axis==0)cu[j]=j%2?.2:-.3;else if(node.port!=SIZE_MAX)cdu[j]=.7;}
+            else {if(node.axis==0)cdu[j]=.7;else cu[j]=j%2?.2:-.3;}}
+        CutCoupledResidual base,plus,minus;std::vector<Real> vr,mr;
+        bool built=base.Build(corner,cornerDual,s,sw,cm,cz,cp,cu,CutMomentumBackend::Fast,e)&&base.Tangent(cdp,cdu,vr,mr,e);
+        const double h=1e-7;auto up=cu,um=cu;for(std::size_t j=0;j<cu.size();++j){up[j]=cu[j]+Real(h*cdu[j]);um[j]=cu[j]-Real(h*cdu[j]);}
+        built=built&&plus.Build(corner,cornerDual,s,sw,cm,cz,cp,up,CutMomentumBackend::Fast,e)&&minus.Build(corner,cornerDual,s,sw,cm,cz,cp,um,CutMomentumBackend::Fast,e);
+        Check(built,"evaluate independent one-sided flux continuations");double mismatch=0.;
+        if(built)for(auto j:base.momentum.FreeNodes())mismatch=std::max(mismatch,std::abs(((plus.momentumRows[j]-minus.momentumRows[j])/Real(2.*h)-mr[j]).Value()));
+        std::cout<<"ZERO_NORMAL_FLUX port="<<portCorner<<" momentumDerivativeError="<<mismatch<<'\n';
+        Check(built&&mismatch<1e-5,"joint derivative agrees at zero normal flow with nonzero tangential momentum");
+    }
     f=Square();f.boundaries.clear();
     Check(dual.Build(f,e),"compile disturbed mixed-phase fixture");
     CutCoupledState converged;
@@ -62,7 +81,12 @@ int main(){
     CutCoupledState state;CutCoupledSettings options;f=Square();f.boundaries.clear();f.water={0.,0.,0.,0.};f.gas={1.,1.,1.,1.};f.gasMass={1.2,1.2,1.2,1.2};
     Check(dual.Build(f,e),"compile ordinary gas coupling fixture");s.gravity={0.,0.,0.};
     Check(AdvanceCutCoupledPressure(f,dual,s,options,state,e),"uniform quiescent gas admitted");
-    auto saved=state;auto invalid=options;invalid.iterationLimit=0;
+    auto saved=state;CutCoupledInitialGuess guess;
+    guess.pressure=state.material.pressure;guess.velocity=state.velocity;
+    Check(AdvanceCutCoupledPressure(f,dual,s,options,state,e,nullptr,{},&guess),"numerical initial guess leaves the physical source and admission unchanged");
+    guess.velocity.clear();
+    Check(!AdvanceCutCoupledPressure(f,dual,s,options,state,e,nullptr,{},&guess),"invalid numerical guess rejects");
+    auto invalid=options;invalid.iterationLimit=0;
     Check(!AdvanceCutCoupledPressure(f,dual,s,invalid,state,e,&saved),"invalid solve rejected");
     Check(state.material.water.size()==saved.material.water.size()&&state.material.water[0].hi==saved.material.water[0].hi&&state.material.water[0].lo==saved.material.water[0].lo,"failed advance leaves publication intact");
     std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;

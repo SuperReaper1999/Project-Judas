@@ -1,5 +1,10 @@
 # Advanced Fluids V2 — first integration gate
 
+Current follow-up: [incompressible water and finite air](FLUID_WATER_AIR_MODEL.md).
+The operator approved replacing dynamic air waves with finite isothermal air
+compartments. That implementation is still a prototype; the full authored-basin
+advance gate remains required. The first-gate account below is historical.
+
 Follow-up: [bounded connected-material ownership correction](FLUID_CONNECTED_MATERIAL_OWNERS.md).
 That report is the newer status; the first checkpoint below is retained as evidence.
 

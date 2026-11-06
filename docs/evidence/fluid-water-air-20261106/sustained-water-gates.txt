@@ -1,0 +1,9 @@
+Sustained closed two-column water + finite-air control, 240 x 1/60 s.
+Each complete interval must publish. No skipped geometry events or clipping.
+Total water and total gas mass stay within 1e-12 of cold initial quantities.
+Energy is mean water kinetic + analytic column gravitational potential +
+ideal isothermal gas free energy relative to the reference atmosphere.
+Every adjacent interval must be non-increasing within 1e-8 * max(previousE,1).
+This does not qualify moving bodies, arbitrary phase topology or native gameplay.
+This gate is declared after the first pre-refinement flow run rejected at step71,
+but before inspection of any later sustained state or the refined run.

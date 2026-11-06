@@ -1,6 +1,7 @@
 #include "BasinFixture.h"
 #include "CutCoupledPressure.h"
 #include "CutOrthogonalField.h"
+#include "CutTransparentGrid.h"
 #include <chrono>
 #include <iomanip>
 #include <iostream>
@@ -40,11 +41,18 @@ int main(int argc,char** argv){
  for(bool rotated:{false,true}){
   if((which=="level"&&rotated)||(which=="rotated"&&!rotated))continue;
   CutSpatialField field;std::string error;if(!BuildFixture(rotated,field,error)){std::cerr<<error;return 2;}
-  if(argc>4 && std::string(argv[4])=="orthogonal"){
+  if(argc>4 && (std::string(argv[4])=="orthogonal"||std::string(argv[4])=="compact")){
    CutSpatialField uniform;CutOrthogonalRemap report;
    if(!BuildCutOrthogonalField(field,uniform,report,error)){std::cerr<<error;return 4;}
    std::cout<<"ORTHOGONAL rotated="<<rotated<<" old="<<report.originalCells<<" cells="<<report.orthogonalCells<<" x="<<report.intervals[0]<<" y="<<report.intervals[1]<<" z="<<report.intervals[2]<<" water="<<report.waterError<<" gas="<<report.gasMassError<<std::endl;
    field=std::move(uniform);
+  }
+  if(argc>4&&std::string(argv[4])=="compact"){
+   CutSpatialField compact;CutTransparentGridReport report;
+   if(!CoarsenCutTransparentGrid(field,compact,report,error)){std::cerr<<error;return 5;}
+   std::cout<<"COMPACT cells="<<report.outputCells<<" planesRemoved="<<report.removedPlanes<<" minimumCapacityBefore="<<report.minimumCapacityBefore<<" minimumCapacityAfter="<<report.minimumCapacityAfter<<" water="<<report.waterError<<" gas="<<report.gasMassError;
+   for(int a=0;a<3;++a)std::cout<<" waterMoment"<<a<<"="<<report.waterFirstMomentChange[a]<<" gasMoment"<<a<<"="<<report.gasFirstMomentChange[a];
+   std::cout<<std::endl;field=std::move(compact);
   }
   CutDynamicSettings settings;settings.dt=double(tick);settings.gravity={0.,-double(gravity),0.};settings.iterationLimit=85;
   std::vector<double> seed;

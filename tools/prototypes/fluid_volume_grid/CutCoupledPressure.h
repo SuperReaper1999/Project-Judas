@@ -11,6 +11,9 @@ struct CutCoupledState {
     double elapsedMilliseconds=0.;
 };
 enum class CutCoupledLinearization { Newton, Oseen };
+struct CutCoupledInitialGuess {
+    std::vector<CutCompensated> pressure,velocity;
+};
 struct CutCoupledSettings {
     int iterationLimit=60;
     double momentumTolerance=1e-10;
@@ -19,5 +22,6 @@ struct CutCoupledSettings {
 };
 bool AdvanceCutCoupledPressure(const CutSpatialField&,const CutVelocityDual&,
     const CutDynamicSettings&,const CutCoupledSettings&,CutCoupledState&,std::string&,
-    const CutCoupledState* previous=nullptr,const std::vector<double>& pressureSeed={});
+    const CutCoupledState* previous=nullptr,const std::vector<double>& pressureSeed={},
+    const CutCoupledInitialGuess* initialGuess=nullptr);
 } // namespace judas::volume_grid

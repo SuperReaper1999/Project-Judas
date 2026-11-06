@@ -11,7 +11,7 @@ bool Finite(Real x) { return std::isfinite(x.hi) && std::isfinite(x.lo); }
 bool Fail(std::string& error, const char* text) { error = text; return false; }
 }
 
-bool CutVelocityDual::Build(const CutSpatialField& field, std::string& error) {
+bool CutVelocityDual::Build(const CutSpatialField& field, std::string& error,bool productReference) {
     const auto n = field.parent.size(), nf = field.geometry.faces.size();
     if (n == 0 || n > 1'000'000 || field.chart.regions.size() != n ||
         field.geometry.startCapacity.size() != n || field.geometry.endCapacity != field.geometry.startCapacity ||
@@ -97,17 +97,41 @@ bool CutVelocityDual::Build(const CutSpatialField& field, std::string& error) {
         if (!(v.Value()>0. && Finite(v))) return Fail(error,"velocity dual has no geometric owner");
         next.dualCapacity_.push_back(v.Value());
     }
+    // A full rectangular MAC chart has physical half-cell neighbours. A
+    // primal transfer contributes to the two adjacent normal dual boundaries,
+    // or to matching transverse half-faces. The product reference instead
+    // creates nonlocal diagonal/skip routes, though its totals still balance.
+    bool geometric=!productReference&&!field.geometry.motion;
+    std::vector<std::array<std::size_t,2>> sides(3*n,{SIZE_MAX,SIZE_MAX});
+    for(std::size_t cell=0;cell<n;++cell)for(int axis=0;axis<3;++axis){
+        auto& pair=sides[3*cell+axis];std::size_t fixed=SIZE_MAX;
+        for(auto share:next.shares_[3*cell+axis]){auto node=next.nodes_[share.node];
+            if(node.fixed){fixed=share.node;continue;}
+            if(std::abs(share.fraction.Value()-.5)>512.*std::numeric_limits<double>::epsilon())geometric=false;
+            const int side=node.face!=SIZE_MAX?(field.geometry.faces[node.face].left==cell):node.sign>0;
+            if(pair[side]!=SIZE_MAX)geometric=false;
+            pair[side]=share.node;
+        }
+        for(auto& owner:pair)if(owner==SIZE_MAX)owner=fixed;
+        if(pair[0]==SIZE_MAX||pair[1]==SIZE_MAX)geometric=false;
+    }
+    for(auto face:field.geometry.faces)if(face.meanArea>0.)for(int a=0;a<3;++a)if(a!=face.axis){
+        auto l=field.chart.regions[face.left],r=field.chart.regions[face.right];
+        if(l.lo[a]!=r.lo[a]||l.hi[a]!=r.hi[a]||face.lo[a]!=l.lo[a]||face.hi[a]!=l.hi[a])geometric=false;
+    }
+    if(!productReference&&!geometric)return Fail(error,"geometric velocity routing requires a complete conforming frozen chart; product mode is diagnostic only");
+    next.geometricRouting_=geometric;
     next.faceScatter_.resize(nf);
     std::size_t entries=0;
-    for (std::size_t f=0;f<nf;++f) {
-        const auto& face=field.geometry.faces[f]; if (face.meanArea==0.) continue;
-        for (int axis=0;axis<3;++axis)
-            for (const auto& a:next.shares_[3*face.left+axis])
-                for (const auto& b:next.shares_[3*face.right+axis]) {
-                    if (a.node==b.node) continue;
-                    if (++entries>8'000'000) return Fail(error,"velocity-dual carrier budget exceeded");
-                    next.faceScatter_[f].push_back({a.node,b.node,a.fraction*b.fraction});
-                }
+    for(std::size_t f=0;f<nf;++f){const auto& face=field.geometry.faces[f];if(face.meanArea==0.)continue;
+        auto append=[&](std::size_t from,std::size_t to,Real weight){if(from==to)return;next.faceScatter_[f].push_back({from,to,weight});++entries;};
+        for(int axis=0;axis<3;++axis){
+            if(geometric){auto l=sides[3*face.left+axis],r=sides[3*face.right+axis];
+                if(axis==face.axis){append(l[0],next.faceNodes_[f],Real(.5));append(next.faceNodes_[f],r[1],Real(.5));}
+                else for(int side=0;side<2;++side)append(l[side],r[side],Real(.5));
+            }else for(auto a:next.shares_[3*face.left+axis])for(auto b:next.shares_[3*face.right+axis])append(a.node,b.node,a.fraction*b.fraction);
+        }
+        if(entries>8'000'000)return Fail(error,"velocity-dual carrier budget exceeded");
     }
     next.portScatter_.resize(field.boundaries.size());
     for (std::size_t j=0;j<field.boundaries.size();++j) for (int axis=0;axis<3;++axis)

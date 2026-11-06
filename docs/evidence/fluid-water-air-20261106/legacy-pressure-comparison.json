@@ -1,0 +1,38 @@
+[
+  {
+    "rotated": 0,
+    "step": 1,
+    "byteIdentical": true,
+    "sha256": "2616cd076e9d5b7b36a820038fda6d0a0656205f21c0cbb05a77ecf9b2430f56"
+  },
+  {
+    "rotated": 0,
+    "step": 2,
+    "byteIdentical": true,
+    "sha256": "d702170102446419d0fe2d68af7c3402392aa3bcab53850feb5703f80a08605a"
+  },
+  {
+    "rotated": 0,
+    "step": 3,
+    "byteIdentical": true,
+    "sha256": "9d70b60da6611776c54806b26349f7d6d0062993236cccbceff50f08548d2042"
+  },
+  {
+    "rotated": 1,
+    "step": 1,
+    "byteIdentical": true,
+    "sha256": "c1177312a6d201eba7087f47d9314471c0ea4088175bfc25f87502ec61faad1d"
+  },
+  {
+    "rotated": 1,
+    "step": 2,
+    "byteIdentical": true,
+    "sha256": "a8b612ccc70a77b3e841298af85bf8d7b204f7a23d274cee49102fee529d741c"
+  },
+  {
+    "rotated": 1,
+    "step": 3,
+    "byteIdentical": true,
+    "sha256": "45620fd368ca2ec8e86d16d5a2837476d86bc9ccb59743d5fa92fcc7f422fbff"
+  }
+]

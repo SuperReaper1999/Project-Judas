@@ -1,5 +1,6 @@
 #include "CutCoupledResidual.h"
 #include "CutPressurePreconditioner.h"
+#include "CutCoupledKrylov.h"
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -20,7 +21,7 @@ bool Orthogonal(const CutSpatialField& f){
 }
 bool AdvanceCutCoupledPressure(const CutSpatialField& field,const CutVelocityDual& dual,
     const CutDynamicSettings& settings,const CutCoupledSettings& options,CutCoupledState& output,
-    std::string& error,const CutCoupledState* previous,const std::vector<double>& seed){
+    std::string& error,const CutCoupledState* previous,const std::vector<double>& seed,const CutCoupledInitialGuess* initialGuess){
     const auto n=field.parent.size(),nu=dual.Nodes().size();
     if(previous==&output||options.iterationLimit<1||!(options.momentumTolerance>0.&&std::isfinite(options.momentumTolerance))||
         !n||!dual.Matches(field)||field.chart.regions.size()!=n||field.geometry.startCapacity.size()!=n||
@@ -58,6 +59,10 @@ bool AdvanceCutCoupledPressure(const CutSpatialField& field,const CutVelocityDua
         std::vector<Real>(field.boundaries.size()),su,error,options.momentumBackend))return false;
     std::vector<Real> predictedQ,predictedPort;
     if(!predictor.Flow(p,predictedQ,predictedPort,error,&u))return false;
+    if(initialGuess){
+        if(initialGuess->pressure.size()!=n||initialGuess->velocity.size()!=nu)return Fail(error,"coupled initial guess dimensions mismatch");
+        p=initialGuess->pressure;u=initialGuess->velocity;
+    }
     auto current=std::make_unique<CutCoupledResidual>();
     if(!current->Build(field,dual,settings,sw,sm,su,p,u,options.momentumBackend,error))return false;
     std::vector<double> sorted=field.geometry.startCapacity;std::sort(sorted.begin(),sorted.end());
@@ -126,21 +131,10 @@ bool AdvanceCutCoupledPressure(const CutSpatialField& field,const CutVelocityDua
         };
         auto rhs=flatten(current->volumeRows,current->momentumRows);for(auto& x:rhs)x=-x;
         double norm=std::sqrt(Dot(rhs,rhs));if(!(norm>0.&&std::isfinite(norm)))return Fail(error,"invalid joint residual norm");
-        std::vector<std::vector<double>> basis(1,rhs),directions;for(auto& x:basis[0])x/=norm;
-        constexpr int width=40;std::vector<std::vector<double>> h(width+1,std::vector<double>(width));
-        std::vector<double> cosine(width),sine(width),projection(width+1);projection[0]=norm;int used=0;
-        for(int k=0;k<width;++k){std::vector<double> d,w;if(!precondition(basis[k],d)||!apply(d,w))return false;directions.push_back(std::move(d));
-
-            for(int pass=0;pass<2;++pass)for(int j=0;j<=k;++j){double dot=Dot(w,basis[j]);h[j][k]+=dot;for(std::size_t i=0;i<total;++i)w[i]-=dot*basis[j][i];}
-            h[k+1][k]=std::sqrt(Dot(w,w));if(h[k+1][k]>0.){for(auto& x:w)x/=h[k+1][k];basis.push_back(std::move(w));}
-            for(int j=0;j<k;++j){double a=h[j][k],b=h[j+1][k];h[j][k]=cosine[j]*a+sine[j]*b;h[j+1][k]=-sine[j]*a+cosine[j]*b;}
-            double length=std::hypot(h[k][k],h[k+1][k]);if(!(length>0.))return Fail(error,"singular joint Krylov direction");
-            cosine[k]=h[k][k]/length;sine[k]=h[k+1][k]/length;h[k][k]=length;h[k+1][k]=0.;
-            projection[k+1]=-sine[k]*projection[k];projection[k]*=cosine[k];used=k+1;
-            if(std::abs(projection[k+1])<norm*.005||basis.size()<=std::size_t(k+1))break;
-        }
-        std::vector<double> weights(used);for(int k=used;k-->0;){double value=projection[k];for(int j=k+1;j<used;++j)value-=h[k][j]*weights[j];weights[k]=value/h[k][k];}
-        std::vector<Real> dp(n),du(nu);for(int k=0;k<used;++k){for(std::size_t i=0;i<n;++i)dp[i]=dp[i]+Real(directions[k][i])*Real(weights[k]);for(std::size_t j=0;j<free.size();++j)du[free[j]]=du[free[j]]+Real(directions[k][n+j])*Real(weights[k]);}
+        CutKrylovStats linear;std::vector<Real> direction;
+        if(!SolveCutCoupledKrylov(rhs,apply,precondition,direction,linear,error))return false;
+        std::vector<Real> dp(direction.begin(),direction.begin()+n),du(nu);
+        for(std::size_t j=0;j<free.size();++j)du[free[j]]=direction[n+j];
         double line=1.;for(std::size_t i=0;i<n;++i)if(dp[i].Value()<0.){Real rho=Real(settings.gasDensity)+p[i]/Real(settings.soundSpeed*settings.soundSpeed);line=std::min(line,(Real(.9)*rho*Real(settings.soundSpeed*settings.soundSpeed)/(Real()-dp[i])).Value());}
         bool accepted=false;std::string rejected;
         for(int backtrack=0;backtrack<28;++backtrack){auto trialP=p,trialU=u;for(std::size_t i=0;i<n;++i)trialP[i]=trialP[i]+dp[i]*Real(line);for(auto j:free)trialU[j]=trialU[j]+du[j]*Real(line);
@@ -151,8 +145,8 @@ bool AdvanceCutCoupledPressure(const CutSpatialField& field,const CutVelocityDua
             }
             line*=.5;
         }
-        std::cout<<"JOINT_STEP krylov="<<used<<" predicted="<<std::abs(projection[used])/norm<<" line="<<line<<std::endl;
-        if(!accepted){error="joint pressure/momentum line search exhausted (linear relative residual="+std::to_string(std::abs(projection[used])/norm)+"): "+rejected;return false;}
+        std::cout<<"JOINT_STEP krylov="<<linear.applications<<" predicted="<<linear.relativeResidual<<" line="<<line<<std::endl;
+        if(!accepted){error="joint pressure/momentum line search exhausted (linear relative residual="+std::to_string(linear.relativeResidual)+"): "+rejected;return false;}
     }
     return Fail(error,"joint pressure/momentum nonlinear budget exhausted");
 }

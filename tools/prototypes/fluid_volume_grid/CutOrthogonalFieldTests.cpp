@@ -33,7 +33,7 @@ int main(){
     Check(cooked.parent==saved.parent&&report.orthogonalCells==savedReport.orthogonalCells,"failed cook leaves old publication intact");
     auto moving=source;moving.flux[0]=.01;
     Check(!BuildCutOrthogonalField(moving,cooked,report,error),"existing velocity cannot be silently discarded by initial-state cooking");
-    CutVelocityDual dual;Check(dual.Build(source,error),"old chart still representable by mass routing");
+    CutVelocityDual dual;Check(dual.Build(source,error,true),"old chart still representable by explicit reference mass routing");
     CutCoupledState state;CutDynamicSettings settings;CutCoupledSettings options;
     Check(!AdvanceCutCoupledPressure(source,dual,settings,options,state,error),"normal pressure solver rejects nonorthogonal geometry explicitly");
     std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;

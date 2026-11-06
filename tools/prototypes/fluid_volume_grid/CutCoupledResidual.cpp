@@ -72,13 +72,25 @@ bool CutCoupledResidual::Tangent(const std::vector<double>& dp,const std::vector
         Real flux=massFlux_[k]*route.fraction,delta=df[k]*route.fraction,carried;
         if(flux.Value()>0.)carried=delta*velocity[route.from]+flux*Real(du[route.from]);
         else if(flux.Value()<0.)carried=delta*velocity[route.to]+flux*Real(du[route.to]);
-        else carried=delta*(velocity[route.from]+velocity[route.to])*Real(.5);
+        else {
+            // The same primal sign chooses BOTH density and momentum donor.
+            // Average the one-sided PRODUCTS; multiplying separate midpoint
+            // averages loses their covariance at a material/shear interface.
+            const auto& face=f.geometry.faces[k];
+            Real left=(Real(s.waterDensity)*material.water[face.left]+material.gasMass[face.left])/Real(f.geometry.startCapacity[face.left]);
+            Real right=(Real(s.waterDensity)*material.water[face.right]+material.gasMass[face.right])/Real(f.geometry.startCapacity[face.right]);
+            carried=dq[k]*route.fraction*(left*velocity[route.from]+right*velocity[route.to])*Real(.5);
+        }
         rows[route.from]=rows[route.from]+carried;rows[route.to]=rows[route.to]-carried;
     }
     for(std::size_t k=0;k<db.size();++k)for(auto route:dual.PortScatter()[k]){
         auto j=route.from;Real flux=portMass_[k]*route.fraction,delta=db[k]*route.fraction;
         if(flux.Value()>0.)rows[j]=rows[j]+delta*velocity[j]+flux*Real(du[j]);
-        else if(flux.Value()==0.)rows[j]=rows[j]+delta*velocity[j]*Real(.5);
+        else if(flux.Value()==0.&&dv[k].Value()!=0.){
+            auto cell=f.boundaries[k].fragment;
+            Real outgoingDensity=material.gasMass[cell]/(Real(f.geometry.startCapacity[cell])-material.water[cell]);
+            rows[j]=rows[j]+dv[k]*route.fraction*outgoingDensity*velocity[j]*Real(.5);
+        }
     }
     momentumRowsOut=std::move(rows);error.clear();return true;
 }

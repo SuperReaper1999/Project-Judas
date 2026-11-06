@@ -17,10 +17,14 @@ struct CutVelocityNode {
 // Fluid-only frozen geometry. Material transport represents a cell mixture;
 // velocity inertia uses that SAME mixture, rather than a separate sharp plane.
 // Each component partitions every cell's mass among its incident aperture
-// columns and stationary-wall remainder. No positive aperture is discarded.
+// columns and stationary-wall remainder. Full conforming charts route through
+// adjacent MAC half-faces. Product routing remains a diagnostic reference for
+// partial charts only when explicitly requested; it is not geometric advection.
+// No positive aperture is discarded.
 class CutVelocityDual {
 public:
-    bool Build(const CutSpatialField&, std::string&);
+    bool Build(const CutSpatialField&, std::string&,bool productReference=false);
+    bool UsesGeometricRouting()const{return geometricRouting_;}
     bool Matches(const CutSpatialField& field) const { return sourceField_==&field; }
     const std::vector<CutVelocityNode>& Nodes() const { return nodes_; }
     const std::vector<double>& Capacity() const { return dualCapacity_; }
@@ -43,6 +47,7 @@ private:
     std::vector<std::vector<CutVelocityShare>> shares_;
     std::vector<std::size_t> faceNodes_, portNodes_;
     std::vector<std::vector<CutVelocityScatter>> faceScatter_, portScatter_;
+    bool geometricRouting_=false;
     double partitionRoundoff_ = 0.;
     const CutSpatialField* sourceField_=nullptr; // caller retains this frozen chart
 };

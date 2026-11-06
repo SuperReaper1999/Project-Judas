@@ -1,0 +1,2 @@
+WATER_BASIN mode=advance rotated=0 repeat=0 accepted=0 elapsedMs=2049.746948 pressureMs=0 strictMinority=0 partition=0 momentum=0 water=0 gas=0 speed=0 reason=disconnected receding gas fronts require separate geometric fragments
+WATER_BASIN mode=advance rotated=1 repeat=0 accepted=0 elapsedMs=5372.9730010000003 pressureMs=0 strictMinority=0 partition=0 momentum=0 water=0 gas=0 speed=0 reason=liquid cell original momentum/work audit failed in source cell 29986

@@ -1,0 +1,35 @@
+ORTHOGONAL rotated=0 old=21696 cells=41376 x=36 y=40 z=36 water=-6.5602701764845561e-19 gas=8.0287029362241616e-17
+TRANSPARENT cells=24532 removed=19 minBefore=4.9962370742692914e-19 minAfter=1.1176387481894508e-12 water=-1.2481030477792115e-18 gas=1.8104042899795989e-17 moment=-7.9064516898339458e-18
+GEOMETRY mode=original rotated=0 nodes=79170 ms=32.317189999999997
+JOINT iteration=0 volume=27248730673.683331 momentum=0.14411913750105987 speed=0.16350001552080151
+JOINT_STEP krylov=37 predicted=0.0023682432400815717 line=0.000244140625
+JOINT iteration=1 volume=27353676518.12508 momentum=1.0118161028440387 speed=1.1730490902316353
+JOINT_STEP krylov=122 predicted=0.0046484353083875466 line=7.62939453125e-06
+JOINT iteration=2 volume=36876618365.216858 momentum=1.0117656250797966 speed=1.139550807126652
+JOINT_STEP krylov=68 predicted=0.0048392904709298754 line=0.001953125
+JOINT iteration=3 volume=28084969299.795387 momentum=3.3289019670008368 speed=6.9696785385403865
+BASIN mode=original rotated=0 step=1 admitted=0 ms=93381.301877999998 outer=0 volume=0 momentum=0 speed=0 energy=0 workError=0 reason=coupled Krylov budget exhausted with original relative residual=0.130651
+Command exited with non-zero status 1
+	Command being timed: "timeout 240 .cache/fluid-coupled-repair-20261106/corner-basin original level 1 orthogonal"
+	User time (seconds): 92.27
+	System time (seconds): 1.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:33.59
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 317320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 487142
+	Voluntary context switches: 4
+	Involuntary context switches: 3718
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 24
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
