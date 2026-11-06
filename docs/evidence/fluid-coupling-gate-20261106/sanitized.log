@@ -1,0 +1,5 @@
+COUPLING backend=fast density=1.2 frozenVelocity=3299.2337958479102 postprocessedVelocity=2.9972744159581697 coupledVelocity=97.998496906593886 frozenMomentumResidual=0.00048659492465968733 impulse=4.4246173147307705e-07 coupledEnergyResidual=-1.128474576789396e-36
+COUPLING backend=fast density=1000 frozenVelocity=3299.2337958479102 postprocessedVelocity=0.0035999958840652931 coupledVelocity=3.4445378079133255 frozenMomentumResidual=0.40549577054973945 impulse=4.4246173147307705e-07 coupledEnergyResidual=-2.350988701644575e-38
+COUPLING backend=reference density=1.2 frozenVelocity=3299.2337958479102 postprocessedVelocity=2.9972744159581697 coupledVelocity=97.998496906593886 frozenMomentumResidual=0.00048659492465968733 impulse=4.4246173147307705e-07 coupledEnergyResidual=-1.128474576789396e-36
+COUPLING backend=reference density=1000 frozenVelocity=3299.2337958479102 postprocessedVelocity=0.0035999958840652931 coupledVelocity=3.4445378079133255 frozenMomentumResidual=0.40549577054973945 impulse=4.4246173147307705e-07 coupledEnergyResidual=-2.350988701644575e-38
+24 checks, 0 failures

@@ -1,0 +1,21 @@
+{
+  "status": "POSTPROCESSING_SHORTCUT_REJECTED_FOR_DECLARED_COUPLED_IMPLICIT_EQUATIONS",
+  "sourceDependency": "fc90aa1ee142811fc9672711ffe56690652eb4ca",
+  "utc": "2026-11-06T15:59:01.825472+00:00",
+  "normalChecks": 24,
+  "sanitizedChecks": 24,
+  "failures": 0,
+  "negativeControls": [
+    "frozen inertia with advecting mass",
+    "postprocessed velocity with frozen advecting flux"
+  ],
+  "analyticCoupledRoots": [
+    97.99849690659389,
+    3.4445378079133255
+  ],
+  "originalBasinIntegrated": false,
+  "fullPressureFieldSolved": false,
+  "adoptedAsFluidFix": false,
+  "mainModified": false,
+  "fluidLockModified": false
+}

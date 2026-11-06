@@ -115,6 +115,40 @@ incompatible pressure flux. The new carrier supplies the checked transport
 operator, but not that missing geometric/coupling map. Moving bodies remain
 postponed until this fixed-geometry integration is qualified.
 
+## Bounded pressure/momentum feedback experiment
+
+After checkpointing the carrier, a one-component conservative through-flow
+control tested the tempting shortcut of updating momentum while retaining the
+old pressure-driven advecting flux. For a stipulated transverse inlet with
+zero momentum in the tested component and equal axial outflow, the chosen
+backward-Euler equations require
+
+`(m + k*u)*u = J`, where `k = rho*dt*A`.
+
+The small control uses the observed first-face mass, area and impulse. With
+water-density carrier, the frozen-inertia pressure law gives 3,299.23 m/s.
+Updating momentum afterward at that old flux gives 0.00360 m/s, whereas solving
+the **coupled** scalar equation gives 3.44454 m/s. All three answers are different.
+The frozen solution's momentum residual is 0.405496 N s, versus its imposed
+impulse of only `4.42462e-7 N s`. The gas-density control shows the same issue.
+Fast and compensated-reference operators pass 24 controls, including the
+analytic coupled root and discrete work identity; sanitizer checks also pass.
+
+This is a reduced operator gate with prescribed boundary policy, **not an
+original-basin pressure solve or an independently modelled complete channel**.
+It establishes why postprocessing is not a correction for the declared coupled
+implicit equations. It is not a general claim that every operator-split fluid
+method is invalid: a different split would need its own time-centering,
+advecting-velocity, geometry, pressure-work and material-ownership qualification.
+
+The shortcut was not integrated or adopted. The next implementation must
+construct compatible velocity-dual carriers and include momentum transport in
+the pressure/flux solve (or explicitly qualify a complete alternate split),
+not just smooth/reweight velocity after accepting the old pressure flux. No
+fundamental impossibility of the conservative architecture has been proved.
+
+[Control source, raw output and reproduction](evidence/fluid-coupling-gate-20261106/README.md).
+
 ## Runtime profile and rejected optimization
 
 A three-interval rotated run with GCC `-O3 -pg` attributes sampled self time
