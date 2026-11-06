@@ -16,14 +16,16 @@ struct Sum {
     double Get() const { return v+c; }
 };
 struct Port { std::size_t face,left,right; double g,predictor; };
-struct Vent { std::size_t owner; double g,predictor; };
+struct Vent { std::size_t owner,fragment; double g,predictor; };
 }
 
 bool ProjectCutOwnedMaterial(const CutRegionChart& chart, const CutRegionGeometry& geometry,
                               const CutConnectedOwners& owners, const CutDynamicState& source,
                               const CutDynamicSettings& settings, const std::vector<CutRegionGasVent>& vents,
                               CutOwnedProjection& output, std::string& error,
-                              CutHydroacousticGraphFailure* pressureFailure) {
+                              CutHydroacousticGraphFailure* pressureFailure,
+                              CutOwnedProjection* diagnosticTrial) {
+    if (diagnosticTrial == &output) return Fail(error,"diagnostic pressure trial must not alias physical output");
     const auto fragments=chart.regions.size(), count=owners.members.size();
     if (count==0 || owners.owner.size()!=fragments || owners.capacity.size()!=count ||
         owners.lo.size()!=count || owners.hi.size()!=count ||
@@ -107,7 +109,7 @@ bool ProjectCutOwnedMaterial(const CutRegionChart& chart, const CutRegionGeometr
             if (area==0.) continue;
             const double length=.5*(region.hi[vent.axis]-region.lo[vent.axis]);
             const double g=settings.dt*settings.dt*area/(settings.gasDensity*length);
-            boundary.push_back({owners.owner[f],g,settings.dt*settings.dt*area*settings.gravity[vent.axis]*vent.sign});
+            boundary.push_back({owners.owner[f],f,g,settings.dt*settings.dt*area*settings.gravity[vent.axis]*vent.sign});
         }
     CutOwnedProjection next;
     next.faceVolume.resize(geometry.faces.size());next.waterFlux.resize(geometry.faces.size());
@@ -148,8 +150,10 @@ bool ProjectCutOwnedMaterial(const CutRegionChart& chart, const CutRegionGeometr
             next.faceVolume[port.face]=q;next.waterFlux[port.face]=wet;
         }
         next.externalGasMass=0.;
+        next.ventVolume.clear();
         for (const auto& vent:boundary) {
             const double q=vent.predictor+vent.g*pressure[vent.owner];
+            next.ventVolume.push_back({vent.fragment,q});
             const double gm=q*(q>=0.?density[vent.owner]:settings.gasDensity);
             outMass[vent.owner].Add(gm);next.externalGasMass+=gm;
             if (gm>=0.) outgoingMass[vent.owner]+=gm;else incomingMass[vent.owner].Add(-gm);
@@ -174,6 +178,7 @@ bool ProjectCutOwnedMaterial(const CutRegionChart& chart, const CutRegionGeometr
         for (const auto& vent:boundary)storage[vent.owner]+=vent.g;
         next.iterations=iteration+1;
         if (localClosed && next.residual<=settings.volumeTolerance) {
+            if (diagnosticTrial) { *diagnosticTrial=next; diagnosticTrial->pressure=pressure; }
             for (std::size_t o=0;o<count;++o) {
                 const bool pureWater=mass[o]==0. && incomingMass[o].Get()==0.;
                 const bool pureGas=water[o]==0. && incomingWater[o].Get()==0.;

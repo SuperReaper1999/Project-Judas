@@ -1,0 +1,184 @@
+{
+  "status": "BLOCKED_NOT_RUNTIME_QUALIFIED",
+  "createdUtc": "2026-11-06T00:37:14.562143+00:00",
+  "sourceParent": "b0b2abc852ebd9544a6b55cd0341d4083367155a",
+  "branch": "Experimental",
+  "mainPreserved": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "buildFlags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "logicalCpus": 12,
+  "physicalRamBytes": 8238276608,
+  "newControls": 50,
+  "connectedOwnerControls": 33,
+  "dynamicControls": 149,
+  "retainedSuites": [
+    {
+      "suite": "CutHydroacousticGraphTests",
+      "checks": 14,
+      "summary": "14/14 passed"
+    },
+    {
+      "suite": "CutHydroacousticPressureTests",
+      "checks": 49,
+      "summary": "SUMMARY 49 checks 0 failures"
+    },
+    {
+      "suite": "CutRegionGasTopologyTests",
+      "checks": 17,
+      "summary": "CHECKS 17 FAILURES 0"
+    },
+    {
+      "suite": "CutRegionGeometryTests",
+      "checks": 22,
+      "summary": "SUMMARY cut region geometry 22 checks 0 failures"
+    },
+    {
+      "suite": "CutRegionMomentumTests",
+      "checks": 16,
+      "summary": "SUMMARY cut-region momentum 16 checks 0 failures"
+    },
+    {
+      "suite": "CutRegionPhaseTests",
+      "checks": 14,
+      "summary": "SUMMARY cut-region phase 14 checks 0 failures"
+    },
+    {
+      "suite": "CutRegionStepTests",
+      "checks": 19,
+      "summary": "SUMMARY cut-region step 19 checks, 0 failures"
+    },
+    {
+      "suite": "EvolvingVolumeTests",
+      "checks": 47,
+      "summary": "SUMMARY evolving volume 47 checks 0 failures"
+    },
+    {
+      "suite": "ExposureVolumePressureTests",
+      "checks": 14,
+      "summary": "SUMMARY exposed-volume pressure 14 checks 0 failures"
+    },
+    {
+      "suite": "GridCellPhaseTests",
+      "checks": 18,
+      "summary": "18 cell phase checks, 0 failures"
+    },
+    {
+      "suite": "GridConservativeRemapTests",
+      "checks": 41,
+      "summary": "41/41 checks passed"
+    },
+    {
+      "suite": "GridGeometricMomentumTests",
+      "checks": 40,
+      "summary": "SUMMARY geometric momentum 40 checks 0 failures"
+    },
+    {
+      "suite": "GridHalfCellGeometryTests",
+      "checks": 47,
+      "summary": "SUMMARY grid half-cell geometry 47 checks 0 failures"
+    },
+    {
+      "suite": "GridOrientedGeometryTests",
+      "checks": 16,
+      "summary": "16 oriented cut geometry checks, 0 failures"
+    },
+    {
+      "suite": "GridOrientedSweepTests",
+      "checks": 16,
+      "summary": "16 oriented sweep checks, 0 failures"
+    },
+    {
+      "suite": "GridParcelSeedTests",
+      "checks": 13,
+      "summary": "SUMMARY parcel seed import 13 checks 0 failures"
+    },
+    {
+      "suite": "GridPhaseFluxRepairTests",
+      "checks": 17,
+      "summary": "SUMMARY phase flux repair 17 checks 0 failures"
+    },
+    {
+      "suite": "GridPhaseGeometryTests",
+      "checks": 28,
+      "summary": "28 flat phase geometry checks, 0 failures"
+    },
+    {
+      "suite": "GridPressureReactionTests",
+      "checks": 48,
+      "summary": "SUMMARY grid pressure reaction 48 checks 0 failures"
+    },
+    {
+      "suite": "GridWaterQueryTests",
+      "checks": 16,
+      "summary": "16 water geometry query checks, 0 failures"
+    },
+    {
+      "suite": "GridWaterSurfaceTests",
+      "checks": 28,
+      "summary": "SUMMARY grid water surface 28 checks 0 failures"
+    },
+    {
+      "suite": "HalfDualVolumeMomentumTests",
+      "checks": 82,
+      "summary": "SUMMARY checks=82 failures=0"
+    },
+    {
+      "suite": "MovingGridTests",
+      "checks": 315,
+      "summary": "SUMMARY checks=315 failures=0"
+    },
+    {
+      "suite": "MovingVolumeMomentumTests",
+      "checks": 26,
+      "summary": "SUMMARY checks=26 failures=0"
+    },
+    {
+      "suite": "OrientedMovingVolumeTests",
+      "checks": 17,
+      "summary": "SUMMARY oriented moving-volume pressure 17 checks 0 failures"
+    },
+    {
+      "suite": "PlanarMovingVolumeTests",
+      "checks": 50,
+      "summary": "SUMMARY solved planar volume 50 checks 0 failures"
+    }
+  ],
+  "retainedChecks": 1030,
+  "sanitizers": "50 controls pass address, undefined behavior and leak checks outside tracing wrapper; initial tracing-environment failure preserved",
+  "negativeControl": {
+    "change": "freeze internal face material to gas",
+    "exit": 1,
+    "failures": 2,
+    "checksActuallyExecuted": 40
+  },
+  "originalBasins": {
+    "level": "rejected, output unchanged",
+    "rotated": "rejected, output unchanged",
+    "processExit": 1,
+    "maximumAttempts": 128,
+    "bodyMotion": "frozen",
+    "nativeRuntimeIntegrated": false
+  },
+  "coface": {
+    "exit": 1,
+    "maximumAttempts": 64,
+    "centralErrorOverH": 0.25,
+    "ownerL1ErrorOverH": "approaches 0.5",
+    "fullIntervalAdvanced": false
+  },
+  "alphaFluidLock": "unchanged",
+  "mainChanged": false,
+  "humanValidation": false,
+  "performanceClaim": null,
+  "platformQualification": [
+    "Linux x86_64 prototype only"
+  ]
+}

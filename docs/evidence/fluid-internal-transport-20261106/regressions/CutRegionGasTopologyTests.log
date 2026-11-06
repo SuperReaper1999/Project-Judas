@@ -1,0 +1,18 @@
+PASS overlapping one-sided dry traces own only their common area 
+PASS sub-coordinate upper gas retains its real top boundary 
+PASS the same gas depth below the interface is sealed by its actual wet top 
+PASS explicit partial top vent leaves the wall's far side closed 
+PASS overlapping vent rectangles reject without publication
+PASS wet top prevents a geometrically open boundary from venting gas 
+PASS exact contact keeps far-side gas sealed
+PASS native-scale 22 nm aperture connects gas without widening
+PASS moving body on chart boundary physically seals the explicit vent 
+PASS uncovered portion of an obstructed vent retains exact support 
+PASS a connected full volume cannot silently connect a split dry complement
+PASS a transient split between connected endpoint slabs rejects
+PASS upper cut's dry inlet joins the original pocket without creating a top vent 
+PASS oriented gas labels and physical apertures are deterministic 
+PASS invalid phase coordinate rejects transactionally
+PASS independent gravity-top slabs create a disconnected gas label on matched inventory 
+PASS interval-average opening cannot vent a chamber before its solid moves 
+CHECKS 17 FAILURES 0

@@ -1,0 +1,23 @@
+PASS overlapping wall union preserves two separate free components value=0
+PASS authored 1 mm seams retain exact shared aperture value=0.0020000934600830078
+PASS stationary union and translating body close separate volume ledgers value=1.3552527156068805e-19
+PASS matched sealed faces retain exactly zero seam value=0
+PASS stationary union and translating body close separate volume ledgers value=1.3552527156068805e-19
+PASS native cap slit shrinks with motion and retains complete wall patches value=6.249999999999999e-16
+PASS consecutive sweeps share region and face ownership value=0
+PASS partly occupied regions reconstruct the same geometric wet storage value=8.6736173798840355e-19
+PASS rejected sweep keeps the previous geometry value=0
+PASS transient divider rejects rather than joining isolated pressure pockets value=0
+PASS shared face keeps independent wet and dry traces on either side value=0
+PASS independent clipping preserves a one-ULP dry layer value=2.7755575615628914e-17
+PASS normal face at the waterline sees the correct one-sided phase value=0
+PASS a local plane retains the air inventory below a chart-coordinate step value=6.7423822601442307e-19
+PASS only the positive thin phase has a physical aperture value=5.3939058081153846e-18
+PASS the same tiny shared phase opening connects only when both sides are dry value=5.3939058081153846e-18
+PASS swept aperture reaches the same saturation limit on the actual free slab value=6.2500000000000003e-06
+PASS crossed interfaces partition the swept aperture without subtractive phase support value=8.1250000000005621e-05
+PASS a retreating solid cannot expose water from an entirely dry cut value=5.6249999999994489e-05
+PASS vertical inertia excludes fluid behind a solid and is continuous across phase axes value=0.0009765625
+PASS swept inertia integrates the actual wet and newly opened dry depths value=0.00048828125
+PASS a moving occluder removes column inertia only after it covers the aperture value=0.00390625
+SUMMARY cut region geometry 22 checks 0 failures

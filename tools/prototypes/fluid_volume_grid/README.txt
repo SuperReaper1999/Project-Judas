@@ -32,3 +32,13 @@ is a static affine patch control, not a general moving-body coupling method.
 First-order upwind transport is numerically dissipative. Fine-grid pressure
 cost is still unsuitable for replacing current advanced water; no unlock or
 production replacement is justified by these results.
+
+Later cut-cell work (separate from the regular-grid executable above):
+  docs/FLUID_CONNECTED_MATERIAL_OWNERS.md
+  docs/FLUID_INTERNAL_TRANSPORT.md
+  bash tools/prototypes/fluid_volume_grid/qualify_internal_transport.sh OUTPUT
+
+Internal-flux/channel controls pass; the original authored basins and a
+three-region coface counterexample still reject. The full reproduction script
+in docs/evidence/fluid-internal-transport-20261106 intentionally returns failure
+while that basin qualification is unresolved. No runtime backend is enabled.

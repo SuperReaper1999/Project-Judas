@@ -1,0 +1,21 @@
+PASS near-disconnected pressure graph  0
+PASS source-free leaf recovers exact pressure and work 0
+PASS incompatible sealed graph rejects without publishing 0
+PASS stationary chart with a real 4 mm dry gap  0
+PASS hydrostatic cut-region step  0
+PASS dry body sees only gas buoyancy in level or rotated chart 0.26486999999999988
+PASS stationary chart with a real 4 mm dry gap  0
+PASS hydrostatic cut-region step  0
+PASS dry body sees only gas buoyancy in level or rotated chart 0.26486999999999988
+PASS wet translating body drives real shared flux 1.5666261165234033e-05
+PASS repeated cut-region pressure, phase and momentum close 1.1102230246251565e-15
+MEASURE work_J=5.2735593669694936e-16 momentum_kg_m_s=2.1999190978878958e-15
+PASS air entering from below remains at the lower inlet 0.94999999999999996
+PASS reconstructed pressure and transport inlet has a dry receiving side 0
+PASS return transports the anchored air and catches a gravity-only reconstruction -0.024250166611129626
+PASS pressure also consumes the transported interface on the return 8.3222259246919922e-05
+PASS air entering from below remains at the lower inlet 0.94999999999999996
+PASS reconstructed pressure and transport inlet has a dry receiving side 0
+PASS return transports the anchored air and catches a gravity-only reconstruction -0.024250166611129626
+PASS pressure also consumes the transported interface on the return 8.3222259246919922e-05
+SUMMARY cut-region step 19 checks, 0 failures

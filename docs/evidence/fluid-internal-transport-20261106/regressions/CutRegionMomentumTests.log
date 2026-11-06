@@ -1,0 +1,17 @@
+PASS reverse wet face carries its signed physical water mass
+PASS receiver's independently weighted speed uses 250 kg water and 1 kg air
+PASS pressure impulse work and physical mixing loss close independently
+PASS new momentum equals initial momentum plus impulse
+PASS a sourced thin-region relay transports both phases with its mass-weighted mixed speed
+PASS throughflow closes the independent mass, momentum and kinetic ledgers
+PASS even a tiny pressure impulse on an initially empty region rejects transactionally
+PASS momentum cannot accept a phase flux opposing its shared pressure face
+PASS nonfinite pressure impulse rejects transactionally
+PASS terminal pressure kick applies to actual arrived water after transport
+PASS initial and terminal impulses have independent work and combined momentum ledgers
+PASS terminal impulse without ending material rejects transactionally
+PASS arithmetic excess on an exhausted donor preserves the shared flux and velocity
+PASS an absent air donor cannot send even a roundoff-sized flux
+PASS a local physical deficit still fails within the absolute phase-solve tolerance
+PASS trace air roundoff in an exhausted mixed region preserves phase flux and carrier speed
+SUMMARY cut-region momentum 16 checks 0 failures
