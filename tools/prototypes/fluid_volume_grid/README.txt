@@ -42,3 +42,8 @@ Internal-flux/channel controls pass; the original authored basins and a
 three-region coface counterexample still reject. The full reproduction script
 in docs/evidence/fluid-internal-transport-20261106 intentionally returns failure
 while that basin qualification is unresolved. No runtime backend is enabled.
+
+Spatial field continuation (6 November): docs/FLUID_SPATIAL_TRANSPORT.md.
+The coface transport control now converges with time subdivision. Original
+basin fields build, but pressure/transport coupling still rejects; no native
+fluid timestep or new playable backend is qualified.

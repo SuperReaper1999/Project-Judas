@@ -28,9 +28,9 @@ bool ReconstructCutOwnedFlux(const CutRegionChart& chart,const CutRegionGeometry
  const CutConnectedOwners& owners,const std::vector<double>& external,
  const std::vector<CutBoundaryTransfer>& vents,const std::vector<double>& gasVolume,
  const std::vector<double>& predictor,const std::vector<double>& mobility,
- CutOwnedFlux& output,std::string& error,double relativePressureResidual,bool projectExternal,const std::vector<double>* ownerSources){
+ CutOwnedFlux& output,std::string& error,double relativePressureResidual,bool projectExternal,const std::vector<double>* ownerSources,const std::vector<double>* fragmentSources){
  const auto n=chart.regions.size(),nf=geometry.faces.size();
- if((ownerSources&&ownerSources->size()!=owners.members.size())||geometry.startCapacity.size()!=n||owners.capacity.size()!=owners.members.size()||!(relativePressureResidual>=0.&&std::isfinite(relativePressureResidual)) || owners.owner.size()!=n || gasVolume.size()!=n || external.size()!=nf || predictor.size()!=nf || mobility.size()!=nf)
+ if((fragmentSources&&fragmentSources->size()!=n)||(ownerSources&&ownerSources->size()!=owners.members.size())||geometry.startCapacity.size()!=n||owners.capacity.size()!=owners.members.size()||!(relativePressureResidual>=0.&&std::isfinite(relativePressureResidual)) || owners.owner.size()!=n || gasVolume.size()!=n || external.size()!=nf || predictor.size()!=nf || mobility.size()!=nf)
   return Fail(error,"internal flux dimensions do not match geometry");
  std::vector<bool> seen(n);
  for(std::size_t o=0;o<owners.members.size();++o){
@@ -62,7 +62,8 @@ bool ReconstructCutOwnedFlux(const CutRegionChart& chart,const CutRegionGeometry
  if(nr&&projectExternal){
   std::vector<double> diagonal(nr),rhs(nr),tolerance(nr);
   std::vector<CutHydroacousticGraphLink> links;
-  for(std::size_t o=0;o<no;++o)if(row[o]!=no){rhs[row[o]]=-net[o].Get();tolerance[row[o]]=std::max(relativePressureResidual,4096.*std::numeric_limits<double>::epsilon())*owners.capacity[o];}
+  for(std::size_t o=0;o<no;++o)if(row[o]!=no){rhs[row[o]]=-net[o].Get();// Reserve the remaining error budget for disaggregation into spatial fragments.
+   tolerance[row[o]]=.01*std::max(relativePressureResidual,4096.*std::numeric_limits<double>::epsilon())*owners.capacity[o];}
   for(std::size_t f=0;f<nf;++f){const auto& face=geometry.faces[f];auto l=owners.owner[face.left],r=owners.owner[face.right];if(l==r||face.meanArea==0.)continue;
    const double w=mobility[f];if(!(w>0.&&std::isfinite(w)))return Fail(error,"invalid external kinetic mobility");
    if(row[l]!=no&&row[r]!=no)links.push_back({row[l],row[r],w});
@@ -90,7 +91,7 @@ bool ReconstructCutOwnedFlux(const CutRegionChart& chart,const CutRegionGeometry
   if(!std::isfinite(volume))return Fail(error,"nonfinite retained owner source");
   if(ownerSources&&std::abs(volume-total.Get())>std::max(relativePressureResidual,4096.*std::numeric_limits<double>::epsilon())*owners.capacity[o])
    return Fail(error,"retained owner source is incompatible with its fixed pressure field");
-  if(gasTotal==0.){double magnitude=0.;for(auto m:members)magnitude+=std::abs(exterior[m].Get());
+  if(gasTotal==0.&&!fragmentSources){double magnitude=0.;for(auto m:members)magnitude+=std::abs(exterior[m].Get());
    if(std::abs(volume)>std::max(relativePressureResidual,4096.*std::numeric_limits<double>::epsilon())*(owners.capacity[o]+magnitude))
     {std::ostringstream s;s.precision(17);s<<"pure-water owner="<<o<<" source="<<volume<<" capacity="<<owners.capacity[o]<<" flux="<<magnitude;return Fail(error,s.str());}
   }
@@ -98,6 +99,10 @@ bool ReconstructCutOwnedFlux(const CutRegionChart& chart,const CutRegionGeometry
   for(auto m:members)if(gasVolume[m]>0.)last=m;
   for(auto m:members){if(m==last)continue;next.divergence[m]=gasTotal>0.?volume*(gasVolume[m]/gasTotal):0.;assigned.Add(next.divergence[m]);}
   if(last!=n)next.divergence[last]=volume-assigned.Get();
+  if(fragmentSources){Sum prescribed;
+   for(auto m:members){if(!std::isfinite((*fragmentSources)[m]))return Fail(error,"nonfinite spatial divergence");next.divergence[m]=(*fragmentSources)[m];prescribed.Add(next.divergence[m]);}
+   if(std::abs(prescribed.Get()-total.Get())>std::max(relativePressureResidual,4096.*std::numeric_limits<double>::epsilon())*owners.capacity[o])return Fail(error,"spatial divergence does not balance actual owner ports");
+  }
   if(count>1){const auto k=count-1;std::vector<long double> a(k*k),rhs(k);
    for(std::size_t i=1;i<count;++i)rhs[i-1]=next.divergence[members[i]]-exterior[members[i]].Get();
    for(auto f:internal[o]){const auto& face=geometry.faces[f];auto l=local[face.left],r=local[face.right];const double w=mobility[f];

@@ -7,12 +7,12 @@ output_dir=$(cd -- "$output_dir" && pwd)
 cxx=${CXX:-c++}
 flags=(-std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror)
 objects=()
-for source in CutRegionGeometry CutRegionGasTopology CutHydroacousticGraph CutConnectedOwners CutOwnedFlux CutOwnedProjection CutPhaseFronts CutDynamicTransport CutRectangularOwners; do
+for source in CutRegionGeometry CutRegionGasTopology CutHydroacousticGraph CutConnectedOwners CutOwnedFlux CutOwnedProjection CutPhaseFronts CutSpatialTransport CutDynamicTransport CutRectangularOwners; do
     object="$output_dir/$source.o"
     "$cxx" "${flags[@]}" -c "$source_dir/$source.cpp" -o "$object"
     objects+=("$object")
 done
-for suite in CutPhaseFrontsTests CutConnectedOwnersTests CutDynamicTransportTests; do
+for suite in CutSpatialTransportTests CutPhaseFrontsTests CutConnectedOwnersTests CutDynamicTransportTests; do
     "$cxx" "${flags[@]}" "$source_dir/$suite.cpp" "${objects[@]}" -o "$output_dir/$suite"
     "$output_dir/$suite" | tee "$output_dir/$suite.log"
 done

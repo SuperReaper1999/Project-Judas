@@ -19,5 +19,6 @@ bool ReconstructCutOwnedFlux(const CutRegionChart&, const CutRegionGeometry&,
                              const std::vector<double>& mobility,
                              CutOwnedFlux&, std::string& error,
                              double relativePressureResidual = 1e-10, bool projectExternal = true,
-                             const std::vector<double>* ownerSources = nullptr);
+                             const std::vector<double>* ownerSources = nullptr,
+                             const std::vector<double>* fragmentSources = nullptr);
 }

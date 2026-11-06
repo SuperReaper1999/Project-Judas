@@ -1,0 +1,49 @@
+{
+  "status": "SPATIAL_CONTROL_PASSES_BASIN_PRESSURE_COUPLING_UNRESOLVED",
+  "sourceParent": "9a651f31a9857ccc24372b96104cf383b203e6ea",
+  "utc": "2026-11-06T01:06:49.181946+00:00",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "spatialChecks": 22,
+  "retainedInternalTransportChecks": 232,
+  "sanitizers": "22 passed address, undefined behavior and leaks",
+  "basins": [
+    {
+      "orientation": "level",
+      "cells": 150360,
+      "buildMs": 250.42788,
+      "rejectedTransportMedianMs": 41.791707,
+      "p95Ms": 43.029492,
+      "worstMs": 43.029492
+    },
+    {
+      "orientation": "rotated",
+      "cells": 264800,
+      "buildMs": 422.034433,
+      "rejectedTransportMedianMs": 137.772352,
+      "p95Ms": 139.776551,
+      "worstMs": 139.776551
+    }
+  ],
+  "timingSamples": 7,
+  "peakProcessKiB": 340184,
+  "completedPhysicalIntervals": 0,
+  "couplingExperiments": {
+    "constantOwnerPressure": "failed EOS/stock admission",
+    "finePressure": "original row balance failed at first iteration on both basins",
+    "localAuxiliaryProjection": "failed coupled closure; selected run timed out after 90 seconds"
+  },
+  "cpu": "Ryzen 5 5600",
+  "physicalRamBytes": 8238276608,
+  "mainModified": false,
+  "fluidLockModified": false,
+  "nativeRuntimeIntegrated": false,
+  "humanAcceptance": false
+}
