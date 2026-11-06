@@ -66,3 +66,10 @@ docs/FLUID_SUSTAINED_PRESSURE.md and qualify_sustained_pressure.sh. Earlier
 reports above remain historical. This is still a slow numerical prototype;
 high-speed small-face modes, momentum transport and native/body integration
 remain unqualified. Main and the Alpha fluid lock are unchanged.
+
+Momentum/geometry follow-up (6 November 2026):
+  docs/FLUID_MOMENTUM_GEOMETRY.md
+  qualify_momentum_geometry.sh OUTPUT_DIRECTORY
+This adds a checked cell-momentum carrier and actual-basin diagnostics, not a
+coupled momentum backend. Extreme face velocities remain unresolved. Uniform
+sampled distances cannot replace the retained conservative cut geometry.

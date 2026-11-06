@@ -1,0 +1,15 @@
+0 previous done
+0 prepared done
+1 prepared done
+1 previous done
+2 previous done
+2 prepared done
+3 prepared done
+3 previous done
+4 previous done
+4 prepared done
+0 previous samples 15 median 973.74193 p95 1048.536682 worst 1048.536682
+0 prepared samples 15 median 968.13825 p95 982.214453 worst 982.214453
+1 previous samples 15 median 2005.807101 p95 2175.422461 worst 2175.422461
+1 prepared samples 15 median 2021.255423 p95 2105.66985 worst 2105.66985
+All paired physical states byte-identical

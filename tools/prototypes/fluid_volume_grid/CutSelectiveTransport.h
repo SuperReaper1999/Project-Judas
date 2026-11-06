@@ -23,6 +23,10 @@ public:
     const std::vector<CutCompensated>& Water() const { return water_; }
     const std::vector<CutCompensated>& Mass() const { return mass_; }
     std::vector<CutCompensated> GasPortMass() const;
+    // Signed extensive mass, using the same accepted upwind phase fractions.
+    // This is a carrier for momentum transport, not a reconstructed wet area.
+    bool InteriorMassFlux(double waterDensity, std::vector<CutCompensated>&,
+                          std::string&) const;
     // The prepared water operator has no exterior edge at any gas-only port.
     std::vector<CutCompensated> WaterPortVolume() const { return std::vector<CutCompensated>(ports_.size()); }
     CutFastTransportStats Stats() const;

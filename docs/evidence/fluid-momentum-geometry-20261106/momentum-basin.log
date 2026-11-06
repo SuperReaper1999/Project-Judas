@@ -1,0 +1,3 @@
+METRIC rotated=0 step=1 sourceK=0 pressureMetricK=78.197380697107349 endpointK=89.003918669646225 pressureGravityWork=68.704901717800027 massMetricWork=10.806537972538884 fixedMetricWorkError=9.492478979307311 maxVelocityLawRelativeError=inf maxMassRatio=833.33333316251901
+FASTEST rotated=0 step=1 face=9931 speed=1664.1516097857498 oldSpeed=0 sourceMass=1.7204178495155987e-07 endpointMass=3.492458047985193e-07 pressureJump=-7487.9461034392079
+invalid selective transport dimensions or settings

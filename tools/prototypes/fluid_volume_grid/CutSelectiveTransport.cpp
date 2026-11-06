@@ -118,6 +118,21 @@ std::vector<Real> CutSelectiveTransport::GasPortMass() const {
     return result;
 }
 
+bool CutSelectiveTransport::InteriorMassFlux(double waterDensity,
+    std::vector<Real>& output, std::string& error) const {
+    if (capacity_.empty() || !(waterDensity > 0. && std::isfinite(waterDensity)))
+        return Fail(error, "invalid prepared mass-flux density or state");
+    std::vector<Real> next;
+    next.reserve(faces_.size());
+    for (const auto& face : faces_) {
+        const auto donor = face.volume.Value() >= 0. ? face.left : face.right;
+        Real mass = face.volume * (Real(waterDensity) * alpha_[donor] + gamma_[donor]);
+        if (!Finite(mass)) return Fail(error, "unrepresentable interior mass flux");
+        next.push_back(mass);
+    }
+    output = std::move(next); error.clear(); return true;
+}
+
 CutFastTransportStats CutSelectiveTransport::Stats() const {
     const auto& a = waterSolver_.Stats(); const auto& b = gasSolver_.Stats();
     return {a.solves + b.solves, a.corrections + b.corrections,

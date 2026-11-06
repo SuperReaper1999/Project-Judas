@@ -1,0 +1,167 @@
+{
+  "status": "CONSERVATIVE_MOMENTUM_CARRIER_QUALIFIED_PRESSURE_DUAL_COUPLING_STILL_OPEN",
+  "sourceParent": "8ed450f057c68653d5595827110a055d77d47329",
+  "branch": "Experimental",
+  "utc": "2026-11-06T15:45:56.805189+00:00",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "qualification": {
+    "normal-final": {
+      "checks": 3293,
+      "checksPerSuite": {
+        "CutPressurePreconditionerTests": 12,
+        "CutGasPortPressureTests": 9,
+        "CutConservativeBalanceTests": 11,
+        "CutHydroacousticGraphTests": 14,
+        "CutLocalPressureTests": 16,
+        "CutDirectedTransportTests": 9,
+        "CutPhaseFrontsTests": 50,
+        "CutExactResidualTests": 6,
+        "CutDynamicTransportTests": 149,
+        "CutMassMomentumReferenceTests": 50,
+        "CutFastTransportTests": 325,
+        "CutMassMomentumTests": 50,
+        "CutCondensedPressureTests": 14,
+        "CutSpatialTransportTests": 22,
+        "CutSelectiveTransportTests": 12,
+        "CutConnectedOwnersTests": 33,
+        "CutLocalContinuationTests": 2511
+      },
+      "exactRationalChecks": 842,
+      "negativeInvocations": 5,
+      "stageExits": {
+        "pressure": 0,
+        "momentum": 0,
+        "momentum-reference": 0,
+        "distance": 0,
+        "final-cli-replay": 0
+      },
+      "originalGeometryFieldComparisons": 12,
+      "maximumReferenceVelocityDifference": 8.204556398961574e-24
+    },
+    "sanitized-final": {
+      "checks": 3293,
+      "checksPerSuite": {
+        "CutPressurePreconditionerTests": 12,
+        "CutGasPortPressureTests": 9,
+        "CutConservativeBalanceTests": 11,
+        "CutHydroacousticGraphTests": 14,
+        "CutLocalPressureTests": 16,
+        "CutDirectedTransportTests": 9,
+        "CutPhaseFrontsTests": 50,
+        "CutExactResidualTests": 6,
+        "CutDynamicTransportTests": 149,
+        "CutMassMomentumReferenceTests": 50,
+        "CutFastTransportTests": 325,
+        "CutMassMomentumTests": 50,
+        "CutCondensedPressureTests": 14,
+        "CutSpatialTransportTests": 22,
+        "CutSelectiveTransportTests": 12,
+        "CutConnectedOwnersTests": 33,
+        "CutLocalContinuationTests": 2511
+      },
+      "exactRationalChecks": 842,
+      "negativeInvocations": 5,
+      "stageExits": {
+        "pressure": 0,
+        "momentum": 0,
+        "momentum-reference": 0,
+        "distance": 0,
+        "final-cli-replay": 0
+      },
+      "originalGeometryFieldComparisons": 12,
+      "maximumReferenceVelocityDifference": 8.204556398961574e-24
+    }
+  },
+  "nativeRuntimeIntegrated": false,
+  "pressureMomentumCoupled": false,
+  "movingBodyCoupling": false,
+  "mainModified": false,
+  "fluidLockModified": false,
+  "humanValidated": false,
+  "adoptedRuntimeSpeedup": false,
+  "factorCacheAdopted": false,
+  "qualificationNotes": [
+    "Initial full controls contained 46 new assertions per backend; four arrival assertions were subsequently added and the final 50-check test rerun in both normal and sanitized builds. Library algorithms unchanged.",
+    "Final probe-only argument guards were checked with five negative controls and first-interval replay in both basins/builds.",
+    "Sanitizer reference initially hit 180-second wall-time budget after 11 cases; full rerun at 600 seconds passed all 12. Timeout preserved."
+  ],
+  "priorPressureQualification": "120 intervals per fixture retained at parent; not relabelled as coupled momentum qualification",
+  "pressureStateComparisons": [
+    {
+      "rotated": 0,
+      "step": 1,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "2616cd076e9d5b7b36a820038fda6d0a0656205f21c0cbb05a77ecf9b2430f56"
+    },
+    {
+      "rotated": 0,
+      "step": 2,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "d702170102446419d0fe2d68af7c3402392aa3bcab53850feb5703f80a08605a"
+    },
+    {
+      "rotated": 0,
+      "step": 3,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "9d70b60da6611776c54806b26349f7d6d0062993236cccbceff50f08548d2042"
+    },
+    {
+      "rotated": 1,
+      "step": 1,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "c1177312a6d201eba7087f47d9314471c0ea4088175bfc25f87502ec61faad1d"
+    },
+    {
+      "rotated": 1,
+      "step": 2,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "a8b612ccc70a77b3e841298af85bf8d7b204f7a23d274cee49102fee529d741c"
+    },
+    {
+      "rotated": 1,
+      "step": 3,
+      "byteIdenticalToParentAndSanitized": true,
+      "sha256": "45620fd368ca2ec8e86d16d5a2837476d86bc9ccb59743d5fa92fcc7f422fbff"
+    }
+  ],
+  "geometryTimingsMs": [
+    3.539436,
+    5.068031,
+    5.097987,
+    6.715047,
+    9.14964,
+    8.793758
+  ],
+  "dryPortGeometryTimingsMs": [
+    1.278432,
+    1.291146,
+    1.376547,
+    2.150166,
+    2.180894,
+    2.418001
+  ],
+  "factorCacheExperiment": {
+    "processPairs": 5,
+    "intervalsPerProcessPerOrientation": 3,
+    "allFieldsByteIdentical": true,
+    "adopted": false,
+    "conclusion": "No worthwhile whole-interval improvement established"
+  },
+  "sampledDistance": {
+    "role": "negative architecture experiment; not an adopted conservative geometry representation",
+    "rotatedFreeCentresClassifiedSolid": 366,
+    "maximumRotatedDistanceErrorMetres": 0.05000000361781365,
+    "independentThinGapControlClosed": true,
+    "performanceSamples": 1
+  }
+}

@@ -1,0 +1,92 @@
+BUILD rotated=0 cells=21696 faces=61230 ms=35.863481999999998
+LOCAL_PRESSURE iteration=0 normalized=27248730673.683327 residual=4.2578131262497871e-05
+NEWTON_STEP krylov=1 predictedResidual=0.0019307499755917027 line=1
+LOCAL_PRESSURE iteration=1 normalized=52554954669.607422 residual=5.33627939742996e-07
+NEWTON_STEP krylov=1 predictedResidual=0.0014954986322532843 line=1
+LOCAL_PRESSURE iteration=2 normalized=867788436.87279749 residual=3.3314960983393087e-09
+NEWTON_STEP krylov=2 predictedResidual=3.2741456521357152e-05 line=1
+LOCAL_PRESSURE iteration=3 normalized=56574.49378760832 residual=8.1070407608799931e-14
+NEWTON_STEP krylov=2 predictedResidual=1.9316576315782216e-05 line=1
+LOCAL_PRESSURE iteration=4 normalized=1.2424995693977023 residual=2.0102183461721795e-18
+NEWTON_STEP krylov=2 predictedResidual=3.1072367317344167e-05 line=1
+LOCAL_PRESSURE iteration=5 normalized=3.1997276919802361e-05 residual=4.8811615246200851e-23
+BASIN rotated=0 admitted=1 dt=0.01666666753590107 iterations=6 normalized=3.1997276919802361e-05 residual_m3=4.8811615246200851e-23 ms=1000.890182 reason=
+PREFIX rotated=0 step=1 admitted=1 waterError=-2.6089561264073354e-23 gasError=-5.2807198993119906e-23 minDensity=1.2000018334790588 maxPressure=8082.9444225561847 maxNormalSpeed=1664.1516097857498
+LOCAL_PRESSURE iteration=0 normalized=24155036117.699856 residual=0.00024155036117699856
+NEWTON_STEP krylov=1 predictedResidual=0.0072320393632552289 line=1
+LOCAL_PRESSURE iteration=1 normalized=90769986857.448685 residual=1.5962259205612305e-06
+NEWTON_STEP krylov=1 predictedResidual=0.0071392072453551813 line=1
+LOCAL_PRESSURE iteration=2 normalized=2162956614.2391448 residual=2.4032216710135465e-08
+NEWTON_STEP krylov=2 predictedResidual=0.00010916700724967809 line=1
+LOCAL_PRESSURE iteration=3 normalized=1625666.8535217321 residual=6.7727223598208819e-12
+NEWTON_STEP krylov=2 predictedResidual=0.00076471442733186401 line=1
+LOCAL_PRESSURE iteration=4 normalized=401.64644654749662 residual=1.2470552268703597e-15
+NEWTON_STEP krylov=2 predictedResidual=9.6060297641351207e-05 line=1
+LOCAL_PRESSURE iteration=5 normalized=0.0455550372520971 residual=2.3422181887162208e-19
+CONTINUATION rotated=0 step=2 admitted=1 ms=973.74193000000002 iterations=6 normalized=0.0455550372520971 transport_ms=283.28761900000001 tangent_ms=179.27988200000001 linear_ms=286.23846599999996 prep_ms=120.480814 pressureFallbacks=0 rejectedTrials=0 reason=
+PREFIX rotated=0 step=2 admitted=1 waterError=-4.4510218288908686e-22 gasError=-1.2866223502015105e-21 minDensity=1.2000033465641669 maxPressure=12104.312364946774 maxNormalSpeed=1666.3835593293372
+LOCAL_PRESSURE iteration=0 normalized=13777200568.370829 residual=0.00013777200568370829
+NEWTON_STEP krylov=1 predictedResidual=0.00087497171423984597 line=1
+LOCAL_PRESSURE iteration=1 normalized=260747734266.62717 residual=2.3313807670525445e-06
+NEWTON_STEP krylov=2 predictedResidual=3.1447477668123973e-05 line=1
+LOCAL_PRESSURE iteration=2 normalized=94275184.125274926 residual=2.0287979082936383e-09
+NEWTON_STEP krylov=2 predictedResidual=4.881726622046326e-05 line=1
+LOCAL_PRESSURE iteration=3 normalized=11152.80611909535 residual=5.0052330062778795e-15
+NEWTON_STEP krylov=1 predictedResidual=0.0023560310936624564 line=1
+LOCAL_PRESSURE iteration=4 normalized=26.136540311181829 residual=1.2434390177014002e-17
+NEWTON_STEP krylov=1 predictedResidual=0.002096472667945186 line=1
+LOCAL_PRESSURE iteration=5 normalized=0.052365955109911405 residual=2.7034808731074573e-20
+CONTINUATION rotated=0 step=3 admitted=1 ms=921.12062700000001 iterations=6 normalized=0.052365955109911405 transport_ms=286.35171000000003 tangent_ms=163.74811200000002 linear_ms=241.94653499999998 prep_ms=121.60564600000001 pressureFallbacks=0 rejectedTrials=0 reason=
+PREFIX rotated=0 step=3 admitted=1 waterError=-1.2251012610552056e-21 gasError=-1.2740418321572413e-20 minDensity=1.2000049251421465 maxPressure=17188.089107342134 maxNormalSpeed=1668.6597713583026
+END rotated=0 intervals=3 simulatedSeconds=0.050000002607703209
+QUANTITIES rotated=0 independentAdmission=1 waterLedgerError_m3=-1.2251012610552056e-21 gasLedgerError_kg=-1.274041832374178e-20 sourceWaterRemapError_m3=7.1828393927164669e-19 sourceGasRemapError_kg=-1.9531908878523581e-17 minWater=0 minGasMass=4.7240802088845217e-28 maxOverCapacity_m3=1.9792222822866283e-23
+FAST solves=26 corrections=84 sweeps=477 fallbacks=0
+COST rotated=0 transport_ms=286.35171000000003 tangent_ms=163.74811200000002 pressureLinear_ms=241.94653499999998 transportEvaluations=6 linearApplications=7
+BUILD rotated=1 cells=37334 faces=105471 ms=55.624648999999998
+LOCAL_PRESSURE iteration=0 normalized=27248730673.683334 residual=2.7250004007998745e-05
+NEWTON_STEP krylov=1 predictedResidual=0.00077965139530003003 line=1
+LOCAL_PRESSURE iteration=1 normalized=2113928605622.658 residual=1.3155548956430548e-06
+NEWTON_STEP krylov=1 predictedResidual=0.0072949965513104831 line=1
+LOCAL_PRESSURE iteration=2 normalized=51625051836.810768 residual=1.0440578598178196e-08
+NEWTON_STEP krylov=2 predictedResidual=8.7015366806628887e-05 line=1
+LOCAL_PRESSURE iteration=3 normalized=2810956.0065903682 residual=2.4898325678670075e-13
+NEWTON_STEP krylov=1 predictedResidual=0.00018465213823566276 line=1
+LOCAL_PRESSURE iteration=4 normalized=8552.6911043902219 residual=4.007633666223231e-17
+NEWTON_STEP krylov=1 predictedResidual=0.0023372216361740418 line=1
+LOCAL_PRESSURE iteration=5 normalized=18.509335793050806 residual=8.7610252687209497e-20
+NEWTON_STEP krylov=1 predictedResidual=0.0020345352796446135 line=1
+LOCAL_PRESSURE iteration=6 normalized=0.039869285244141323 residual=1.9117214157510274e-22
+BASIN rotated=1 admitted=1 dt=0.01666666753590107 iterations=7 normalized=0.039869285244141323 residual_m3=1.9117214157510274e-22 ms=2158.932675 reason=
+PREFIX rotated=1 step=1 admitted=1 waterError=-4.1809627976713626e-29 gasError=-4.2211947038376342e-27 minDensity=1.2000024112246515 maxPressure=12331.687850694629 maxNormalSpeed=3299.2337958479102
+LOCAL_PRESSURE iteration=0 normalized=39988636087.598686 residual=0.00010128779695608391
+NEWTON_STEP krylov=1 predictedResidual=0.0045255694943572211 line=1
+LOCAL_PRESSURE iteration=1 normalized=62221231107.262566 residual=2.2500925233140696e-06
+NEWTON_STEP krylov=1 predictedResidual=0.0056874457067921189 line=1
+LOCAL_PRESSURE iteration=2 normalized=10364086305.530602 residual=2.7301490242289233e-08
+NEWTON_STEP krylov=2 predictedResidual=7.6349077893120323e-05 line=1
+LOCAL_PRESSURE iteration=3 normalized=22162833.276808478 residual=2.5082064666285226e-13
+NEWTON_STEP krylov=1 predictedResidual=0.0074666249073727436 line=1
+LOCAL_PRESSURE iteration=4 normalized=152554.11097326226 residual=1.779755071922477e-15
+NEWTON_STEP krylov=1 predictedResidual=0.0060118191694695632 line=1
+LOCAL_PRESSURE iteration=5 normalized=399.81144417276596 residual=4.7801860278071552e-18
+NEWTON_STEP krylov=1 predictedResidual=0.0088762983918091627 line=1
+LOCAL_PRESSURE iteration=6 normalized=0.78667169220106936 residual=9.5105891268288791e-21
+CONTINUATION rotated=1 step=2 admitted=1 ms=2005.8071010000001 iterations=7 normalized=0.78667169220106936 transport_ms=663.10409900000002 tangent_ms=320.554329 linear_ms=495.20319199999994 prep_ms=281.09397300000001 pressureFallbacks=0 rejectedTrials=0 reason=
+PREFIX rotated=1 step=2 admitted=1 waterError=-8.0372875533807618e-22 gasError=-1.0393301464636977e-21 minDensity=1.2000043977982386 maxPressure=19092.122396043953 maxNormalSpeed=3302.4894878693726
+LOCAL_PRESSURE iteration=0 normalized=43979253308591.102 residual=6.1164715931045837e-05
+NEWTON_STEP krylov=1 predictedResidual=0.0066365467151022301 line=1
+LOCAL_PRESSURE iteration=1 normalized=57551951058.767372 residual=1.3492849437323532e-06
+NEWTON_STEP krylov=1 predictedResidual=0.0038778476643843885 line=1
+LOCAL_PRESSURE iteration=2 normalized=5873151014.4434052 residual=1.2435957295704993e-08
+NEWTON_STEP krylov=2 predictedResidual=3.1897817285922285e-05 line=1
+LOCAL_PRESSURE iteration=3 normalized=2183267.0077719241 residual=4.1170810514679116e-13
+NEWTON_STEP krylov=2 predictedResidual=1.051449721171687e-05 line=1
+LOCAL_PRESSURE iteration=4 normalized=20.450160410182974 residual=1.9250069031736616e-18
+NEWTON_STEP krylov=1 predictedResidual=0.0047176142940749078 line=1
+LOCAL_PRESSURE iteration=5 normalized=0.047699253184142962 residual=5.7897164286927238e-21
+CONTINUATION rotated=1 step=3 admitted=1 ms=1836.4341489999999 iterations=6 normalized=0.047699253184142962 transport_ms=601.52302300000008 tangent_ms=321.47132799999997 linear_ms=474.74978900000002 prep_ms=233.58790700000003 pressureFallbacks=0 rejectedTrials=0 reason=
+PREFIX rotated=1 step=3 admitted=1 waterError=-1.2320261548953753e-21 gasError=-6.4773721382861123e-21 minDensity=1.2000055661784366 maxPressure=24541.362674240012 maxNormalSpeed=3305.2390199755
+END rotated=1 intervals=3 simulatedSeconds=0.050000002607703209
+QUANTITIES rotated=1 independentAdmission=1 waterLedgerError_m3=-1.2320261548953753e-21 gasLedgerError_kg=-6.4773721414415559e-21 sourceWaterRemapError_m3=-2.7244921899446431e-17 sourceGasRemapError_kg=-6.2701241165821823e-17 minWater=0 minGasMass=2.490962373778934e-59 maxOverCapacity_m3=2.2407315877048824e-23
+FAST solves=26 corrections=92 sweeps=505 fallbacks=0
+COST rotated=1 transport_ms=601.52302300000008 tangent_ms=321.47132799999997 pressureLinear_ms=474.74978900000002 transportEvaluations=6 linearApplications=7

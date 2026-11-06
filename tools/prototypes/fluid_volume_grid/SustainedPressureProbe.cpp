@@ -16,6 +16,8 @@ bool Save(const char* path,const CutLocalPressureResult& s){
 }
 int main(int argc,char** argv){
  bool fast=true;int steps=argc>1?std::stoi(argv[1]):120;if(steps<1)return 2;
+ const bool saveEach=argc>4&&std::string(argv[4])=="--each";
+ if(argc>4&&!saveEach)return 2;
  std::cout<<std::setprecision(17);int failed=0;
  for(bool rotated:{false,true}){
   if(argc>2&&((std::string(argv[2])=="rotated"&&!rotated)||(std::string(argv[2])=="level"&&rotated)))continue;
@@ -38,6 +40,7 @@ int main(int argc,char** argv){
   if(!ok){std::cout<<"OUTPUT_UNCHANGED "<<(result.water.size()==1&&result.water[0].Value()==-7.)<<std::endl;continue;}
   CutCompensated coldW,coldM;for(double w:field.water)coldW=coldW+CutCompensated(w);for(double m:field.gasMass)coldM=coldM+CutCompensated(m);
   auto prefix=[&](const CutLocalPressureResult& state,int step){
+   if(saveEach){auto file=std::string(argv[3])+"-"+std::to_string(rotated)+"-"+std::to_string(step)+".bin";if(!Save(file.c_str(),state))return false;}
    CutCompensated w=state.externalWater,m=state.externalGasMass;double minDensity=1e300,maxPressure=0.,maxSpeed=0.;
    for(std::size_t i=0;i<state.water.size();++i){w=w+state.water[i];m=m+state.gasMass[i];minDensity=std::min(minDensity,(CutCompensated(settings.gasDensity)+state.pressure[i]/CutCompensated(settings.soundSpeed*settings.soundSpeed)).Value());maxPressure=std::max(maxPressure,std::abs(state.pressure[i].Value()));}
    for(std::size_t f=0;f<state.flux.size();++f)if(field.geometry.faces[f].meanArea>0.)maxSpeed=std::max(maxSpeed,std::abs(state.flux[f].Value())/(settings.dt*field.geometry.faces[f].meanArea));

@@ -1,0 +1,150 @@
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build two-cell hydrostatic geometry
+PASS shared-face hydrostatic column advances on each gravity axis
+PASS hydrostatic column has no resolved flow
+PASS pressure balances the independently integrated half-column weight
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build independently owned minority phase
+PASS retain gas smaller than one water ULP
+PASS minority gas has actual reconstructed geometric volume
+PASS retain water smaller than one gas ULP
+PASS minority water has actual reconstructed geometric volume
+PASS build legacy arithmetic-boundary control
+PASS water-only entry point preserves its original rounded upper admission bound
+PASS build closed circulation geometry
+PASS build translated local-frame geometry
+PASS a finite plug crosses a pure water-air shared face
+PASS incoming water matches the analytic departure volume
+PASS new mixed owner retains its actual incoming face orientation
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS sub-coordinate-ULP departures use a local geometric frame
+PASS a tiny owned water arrival is retained
+PASS build closed circulation geometry
+PASS build translated local-frame geometry
+PASS a finite plug crosses a pure water-air shared face
+PASS incoming water matches the analytic departure volume
+PASS new mixed owner retains its actual incoming face orientation
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS sub-coordinate-ULP departures use a local geometric frame
+PASS a tiny owned water arrival is retained
+PASS build connected pure-phase through-flow
+PASS pure phase transits more than one donor volume without an interface shortcut
+PASS all transit owners are explicitly accounted for
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS mixed interface cannot borrow pure-phase transit permission
+PASS build connected pure-phase through-flow
+PASS pure phase transits more than one donor volume without an interface shortcut
+PASS all transit owners are explicitly accounted for
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS mixed interface cannot borrow pure-phase transit permission
+PASS build finite-air compression control
+PASS finite-air acoustic pressure advances
+PASS air loses and gains pressure according to actual mass transport
+PASS finite gas pressure opposes compression without reversing it
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS NaN water is rejected
+PASS rejection preserves published state
+PASS unowned missing gas mass is rejected
+PASS rejection preserves published state
+PASS nonfinite gravity is rejected
+PASS rejection preserves published state
+PASS invalid interval is rejected
+PASS rejection preserves published state
+PASS invalid face ownership is rejected
+PASS rejection preserves published state
+PASS unsupported moving-solid remap is explicit
+PASS rejection preserves published state
+PASS build tiny mixed owner pressure-oracle control
+PASS a small global residual cannot publish a locally empty gas owner
+PASS build explicit finite gas vent control
+PASS finite ambient vent advances with an explicit mass ledger
+PASS vent releases pressure gradually rather than identifying the chamber with ambient
+PASS water inventory is conserved
+PASS finite gas mass plus explicit boundary transfer is conserved
+PASS phase volumes and nonlinear gas EOS close independently
+PASS overlapping vents reject without double-counting a physical opening
+PASS nonfinite vent geometry rejects transactionally
+PASS microscopic gas vent retains finite inertance
+PASS tiny aperture is neither closed nor instant atmosphere
+PASS build occluded mixed departure control
+PASS compile a partial solid behind the departure aperture
+PASS a solid-occluded prism cannot be scaled into an invented material departure
+PASS build exact thin rectangular cut
+PASS agglomerate exact rectangular union
+PASS a fully open internal boundary is removed
+PASS owner capacity keeps the original geometric quantity ledger
+PASS no internal boundary survives as an external flow port
+PASS closed wall prevents ownership merging and remains closed
+PASS microscopic aperture retains finite area and separate owners
+SUMMARY 149 checks 0 failures

@@ -1,0 +1,15 @@
+PASS grounded known endpoint 
+PASS closed gauge, parallel edges, independent ground, and isolated row 
+PASS incompatible closed source and rollback ungrounded hydroacoustic component has incompatible volume source
+PASS isolated ownerless volume rejects even below tolerance hydroacoustic source has no pressure owner
+PASS roundoff-eligible pin still checked on original row hydroacoustic pressure graph failed original row balance
+PASS self link rejects invalid hydroacoustic pressure link
+PASS invalid endpoint rejects invalid hydroacoustic pressure link
+PASS zero link rejects invalid hydroacoustic pressure link
+PASS negative storage rejects invalid hydroacoustic pressure storage or source
+PASS NaN source rejects invalid hydroacoustic pressure storage or source
+PASS infinite conductance rejects invalid hydroacoustic pressure link
+PASS invalid tolerance rejects invalid hydroacoustic pressure graph dimensions or tolerance
+PASS weak physical connection preserved 
+PASS empty active matrix 
+14/14 passed
