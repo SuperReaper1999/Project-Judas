@@ -13,7 +13,7 @@ bool Fail(std::string& e,const char* why){e=why;return false;}
 double Norm(const std::vector<double>& x){long double s=0.;for(double a:x)s+=static_cast<long double>(a)*a;return std::sqrt(double(s));}
 }
 bool ProjectWaterGasPressure(const WaterMimeticGeometry& water,const WaterGasGeometry& gas,
-    const WaterGasSettings& settings,WaterGasProjectionResult& output,std::string& error,int limit){
+    const WaterGasSettings& settings,WaterGasProjectionResult& output,std::string& error,const WaterGasProjectionResult* seed,int limit){
     const auto nw=water.sharedFaces,ng=gas.volume.size(),n=nw+ng;
     for(auto l:gas.links)if(l.left>=ng||l.right>=ng||l.left==l.right||!(l.massConductance>0.&&std::isfinite(l.massConductance)))return Fail(error,"invalid liquid/gas finite connection");
     for(auto v:gas.vents)if(v.node>=ng||!(v.massConductance>0.&&std::isfinite(v.massConductance)&&v.gaugePressure>-settings.referencePressure&&std::isfinite(v.gaugePressure)))return Fail(error,"invalid liquid/gas atmospheric port");
@@ -64,7 +64,7 @@ bool ProjectWaterGasPressure(const WaterMimeticGeometry& water,const WaterGasGeo
             for(std::size_t a=0;a<m;++a){auto p=r.response.free[a];auto o=r.owners[p];h[a]=o.shared!=SIZE_MAX?x[o.shared]:x[nw+o.gas]-Real(settings.referencePressure)+r.potential[p]-datum;}
             std::vector<Real> difference(m);auto refPatch=r.response.free[r.response.reference];auto refOwner=r.owners[refPatch];
             for(std::size_t b=0;b<m;++b){auto patch=r.response.free[b];auto owner=r.owners[patch];difference[b]=h[b]-h[r.response.reference];
-                if(owner.gas!=SIZE_MAX&&refOwner.gas!=SIZE_MAX){difference[b]=x[nw+owner.gas]-x[nw+refOwner.gas];for(int axis=0;axis<3;++axis)difference[b]=difference[b]-Real(water.density*water.gravity[axis])*(Real(r.patches[patch].offset[axis])-Real(r.patches[refPatch].offset[axis]));}}
+                if(owner.gas!=SIZE_MAX&&refOwner.gas!=SIZE_MAX){difference[b]=x[nw+owner.gas]-x[nw+refOwner.gas];for(int axis=0;axis<3;++axis)difference[b]=difference[b]-Real(water.density*water.gravity[axis])*(r.patches[patch].Offset(axis)-r.patches[refPatch].Offset(axis));}}
             for(std::size_t a=0;a<m;++a)if(a!=r.response.reference){q[a]=r.response.predictor[a];for(std::size_t b=0;b<m;++b)if(b!=r.response.reference)q[a]=q[a]-Real(settings.dt*r.response.mobility[a*m+b])*difference[b];}
             next.difference.push_back(difference);next.referencePressure.push_back(refOwner.gas!=SIZE_MAX?x[nw+refOwner.gas]-Real(settings.referencePressure):x[refOwner.shared]-r.potential[refPatch]+datum);
             for(std::size_t a=0;a<m;++a)if(a!=r.response.reference)q[r.response.reference]=q[r.response.reference]-q[a];
@@ -83,6 +83,11 @@ bool ProjectWaterGasPressure(const WaterMimeticGeometry& water,const WaterGasGeo
     for(const auto& r:water.regions)for(auto p:r.response.free)if(r.owners[p].gas!=SIZE_MAX&&(r.potential[p]-datum).Value()!=0.)level=false;
     for(const auto& r:water.regions)for(auto p:r.response.free){auto owner=r.owners[p];if(owner.shared!=SIZE_MAX&&!seeded[owner.shared]){x[owner.shared]=level?Real():r.potential[p]-datum;seeded[owner.shared]=true;}}
     for(std::size_t g=0;g<ng;++g)x[nw+g]=Real(settings.referencePressure);
+    if(seed){
+        if(seed->head.size()!=nw||seed->gasAbsolutePressure.size()!=ng)return Fail(error,"pressure initial guess dimensions do not match the current geometry");
+        for(std::size_t i=0;i<nw;++i){x[i]=seed->head[i]+seed->headDatum-datum;if(!std::isfinite(x[i].Value()))return Fail(error,"pressure initial guess is not finite");}
+        for(std::size_t g=0;g<ng;++g){x[nw+g]=seed->gasAbsolutePressure[g];if(!(x[nw+g].Value()>0.&&std::isfinite(x[nw+g].Value())))return Fail(error,"air pressure initial guess is not positive finite");}
+    }
     Evaluation current;if(!evaluate(x,current))return Fail(error,"liquid projection initial pressure invalid");int applications=0,fallbacks=0;
     for(int iteration=0;iteration<limit;++iteration){double maximum=0.;std::size_t largest=0;Real aggregate;for(std::size_t i=0;i<n;++i){aggregate=aggregate+current.rows[i];double ratio=std::abs(current.rows[i].Value())/tolerance[i];if(ratio>maximum){maximum=ratio;largest=i;}}maximum=std::max(maximum,std::abs(aggregate.Value())/(settings.massTolerance/settings.referenceDensity));
         if(settings.trace)std::cout<<"WATER_PRESSURE iteration="<<iteration<<" normalized="<<maximum<<" row="<<largest<<" value="<<current.rows[largest].Value()<<" tol="<<tolerance[largest]<<" gasV="<<(largest>=nw?gas.volume[largest-nw].Value():0.)<<" pressure="<<x[largest].Value()<<" density="<<(largest>=nw?current.density[largest-nw].Value():0.)<<std::endl;
@@ -149,4 +154,9 @@ bool ProjectWaterGasPressure(const WaterMimeticGeometry& water,const WaterGasGeo
     }
     return Fail(error,"liquid/gas pressure iteration budget exhausted");
 }
+bool ProjectWaterGasPressure(const WaterMimeticGeometry& water,const WaterGasGeometry& gas,
+    const WaterGasSettings& settings,WaterGasProjectionResult& output,std::string& error,int limit){
+    return ProjectWaterGasPressure(water,gas,settings,output,error,nullptr,limit);
+}
+
 }

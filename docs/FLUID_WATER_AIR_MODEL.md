@@ -1,5 +1,7 @@
 # Incompressible water and finite air — 6 November 2026
 
+**Follow-up:** [local material-fragment checkpoint](FLUID_MATERIAL_FRAGMENTS.md) implements spatial pieces and crossing events, but complete basin gates remain red. The results below describe this earlier checkpoint.
+
 **Numerical prototype, not a runtime backend or an Advanced Fluids unlock.**
 The original authored basins remain the acceptance gate. Pressure proposals,
 short controls and sustained two-column flow are separate from that gate.

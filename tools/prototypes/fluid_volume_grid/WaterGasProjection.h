@@ -14,4 +14,9 @@ struct WaterGasProjectionResult {
 // or a native MK2 step. Original mass and volume rows gate publication.
 bool ProjectWaterGasPressure(const WaterMimeticGeometry&,const WaterGasGeometry&,
     const WaterGasSettings&,WaterGasProjectionResult&,std::string&,int iterationLimit=30);
+// A numerical initial guess only; quantities, geometry and momentum remain
+// owned by the current input. Used while locating a conservative crossing.
+bool ProjectWaterGasPressure(const WaterMimeticGeometry&,const WaterGasGeometry&,
+    const WaterGasSettings&,WaterGasProjectionResult&,std::string&,
+    const WaterGasProjectionResult* numericalSeed,int iterationLimit=30);
 }

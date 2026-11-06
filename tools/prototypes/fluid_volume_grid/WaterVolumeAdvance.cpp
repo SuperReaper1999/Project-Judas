@@ -45,7 +45,7 @@ bool AdvanceWaterVolume(const CutSpatialField& authored,const WaterGasSettings& 
     for(std::size_t index=0;index<water.regions.size();++index){
         const auto& region=water.regions[index];const auto cell=region.sourceCell;const auto& flux=next.pressure.liquidFlux[index];
         Real offset=next.pressure.liquidReferencePressure[index];
-        if(!region.response.free.empty()){auto ref=region.response.free[region.response.reference];for(int a=0;a<3;++a)offset=offset-Real(density*gravity[a])*Real(region.patches[ref].offset[a]);}
+        if(!region.response.free.empty()){auto ref=region.response.free[region.response.reference];for(int a=0;a<3;++a)offset=offset-Real(density*gravity[a])*region.patches[ref].Offset(a);}
         WaterCellAudit audit;
         if(!AuditWaterCell(field.water[cell],density,settings.dt,gravity,region.patches,region.response,flux,next.pressure.liquidHeadDifference[index],audit,error,true,offset)){error+=" in source cell "+std::to_string(cell);return false;}
         next.maximumMomentumResidual=std::max(next.maximumMomentumResidual,audit.maximumMomentumResidual);

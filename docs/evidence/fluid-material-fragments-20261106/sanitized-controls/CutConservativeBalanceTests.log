@@ -1,0 +1,12 @@
+PASS conservative balance assembles
+PASS matches independent two-cell balance
+PASS full tangent assembles for either donor direction
+PASS tangent agrees with independent centered differences including dT term
+PASS full tangent assembles for either donor direction
+PASS tangent agrees with independent centered differences including dT term
+PASS full tangent assembles for either donor direction
+PASS tangent agrees with independent centered differences including dT term
+PASS negative control detects missing derivative of transport
+PASS invalid capacity rejects transactionally
+PASS invalid topology preserves previous output
+11 checks, 0 failures
