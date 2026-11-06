@@ -1,0 +1,33 @@
+ORTHOGONAL rotated=0 old=21696 cells=41376 x=36 y=40 z=36 water=-6.5602701764845561e-19 gas=8.0287029362241616e-17
+GEOMETRY mode=original rotated=0 nodes=132584 ms=69.288432999999998
+JOINT iteration=0 volume=27248730673.683331 momentum=0.14367156527489047 speed=0.16350001552080151
+JOINT_LINEAR k=0 norm=1098.7198675152497 rhs=12238.605649521291
+JOINT_LINEAR k=1 norm=3.7191351157826613 rhs=12238.605649521291
+JOINT_LINEAR k=2 norm=18.896085010331259 rhs=12238.605649521291
+JOINT_LINEAR k=3 norm=26.504860195981035 rhs=12238.605649521291
+JOINT_STEP krylov=40 predicted=0.99997893043111385 line=3.7252902984619141e-09
+BASIN mode=original rotated=0 step=1 admitted=0 ms=20495.908968 outer=0 volume=0 momentum=0 speed=0 energy=0 workError=0 reason=joint pressure/momentum line search exhausted: 
+Command exited with non-zero status 1
+	Command being timed: "timeout 180 .cache/fluid-dual-coupling-20261106/joint-unit-scale-basin original level 1 orthogonal"
+	User time (seconds): 16.64
+	System time (seconds): 4.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:20.69
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 632340
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2216742
+	Voluntary context switches: 4
+	Involuntary context switches: 294
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

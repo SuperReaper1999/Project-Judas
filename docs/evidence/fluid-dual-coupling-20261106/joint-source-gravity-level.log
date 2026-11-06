@@ -1,0 +1,55 @@
+ORTHOGONAL rotated=0 old=21696 cells=41376 x=36 y=40 z=36 water=-6.5602701764845561e-19 gas=8.0287029362241616e-17
+GEOMETRY mode=original rotated=0 nodes=132584 ms=67.255579999999995
+JOINT iteration=0 volume=27248730673.683331 momentum=0.0072083807707279774 speed=0.16350001552080151
+JOINT_STEP krylov=5 predicted=0.002057450818513106 line=1.1920928955078125e-07
+JOINT iteration=1 volume=28710506541.784904 momentum=0.020002330535728828 speed=0.1636143961711829
+JOINT_STEP krylov=4 predicted=0.00024266191057987745 line=9.5367431640625e-07
+JOINT iteration=2 volume=27412681796.877239 momentum=0.18134900198313106 speed=0.16409034375023121
+JOINT_STEP krylov=11 predicted=0.0013946481974457469 line=3.814697265625e-06
+JOINT iteration=3 volume=27289882922.740421 momentum=0.28303761370829061 speed=0.39939686243686329
+JOINT_STEP krylov=11 predicted=0.0015352120389854425 line=3.0517578125e-05
+JOINT iteration=4 volume=33466465542.623859 momentum=0.5804954393273305 speed=0.51789780621654957
+JOINT_STEP krylov=12 predicted=0.0023636868435622086 line=3.0517578125e-05
+JOINT iteration=5 volume=30382902808.659424 momentum=0.84735155062591383 speed=1.0681140652553041
+JOINT_STEP krylov=27 predicted=0.0034647127079000997 line=0.0009765625
+JOINT iteration=6 volume=27221267943.553532 momentum=2.0259024810931474 speed=4.5557407098840432
+JOINT_STEP krylov=31 predicted=0.0039459674279085158 line=0.00390625
+JOINT iteration=7 volume=51185229535.07618 momentum=1.9269463567867247 speed=9.4603516712292564
+JOINT_STEP krylov=40 predicted=0.57907850746659961 line=0.001953125
+JOINT iteration=8 volume=27084553521.292683 momentum=3.1758974533003692 speed=8.0821865652976559
+JOINT_STEP krylov=40 predicted=0.072936564258948913 line=0.001953125
+JOINT iteration=9 volume=27033679286.481163 momentum=2.3953699963771311 speed=8.6393396143183718
+JOINT_STEP krylov=40 predicted=0.27631554019010729 line=0.0078125
+JOINT iteration=10 volume=26970306046.730991 momentum=16.445552231766904 speed=13.486770067255122
+JOINT_STEP krylov=40 predicted=0.32322884300977084 line=0.0078125
+JOINT iteration=11 volume=26948745577.052921 momentum=36.163817889082758 speed=18.013903038410898
+JOINT_STEP krylov=40 predicted=0.24214346276813323 line=0.00048828125
+JOINT iteration=12 volume=26934241459.792942 momentum=35.415967050009719 speed=18.150336170957747
+JOINT_STEP krylov=40 predicted=0.35490130552886417 line=0.00048828125
+JOINT iteration=13 volume=26925344409.610844 momentum=34.842709169959392 speed=18.411327183834238
+JOINT_STEP krylov=40 predicted=0.24140846882912478 line=6.103515625e-05
+JOINT iteration=14 volume=26923554218.474571 momentum=34.752966502100598 speed=18.428348840854298
+Command exited with non-zero status 124
+	Command being timed: "timeout 240 .cache/fluid-dual-coupling-20261106/joint-source-gravity-basin original level 2 orthogonal"
+	User time (seconds): 217.63
+	System time (seconds): 22.18
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:00.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 785124
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 12003020
+	Voluntary context switches: 5
+	Involuntary context switches: 3848
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 48
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 124

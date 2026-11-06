@@ -133,6 +133,34 @@ bool CutSelectiveTransport::InteriorMassFlux(double waterDensity,
     output = std::move(next); error.clear(); return true;
 }
 
+bool CutSelectiveTransport::MassTangent(const std::vector<Real>& dq,const std::vector<Real>& dv,
+    double waterDensity,std::vector<Real>& dw,std::vector<Real>& dm,std::vector<Real>& interior,
+    std::vector<Real>& boundary,std::string& error){
+    if(!(waterDensity>0.&&std::isfinite(waterDensity)))return Fail(error,"invalid mass tangent density");
+    const void* outputs[]={&dw,&dm,&interior,&boundary};
+    for(int i=0;i<4;++i)for(int j=0;j<i;++j)if(outputs[i]==outputs[j])return Fail(error,"aliased mass tangent output");
+    std::vector<Real> nextWater,nextMass;
+    if(!Tangent(dq,dv,nextWater,nextMass,error))return false;
+    std::vector<Real> next,ports;
+    for(std::size_t f=0;f<faces_.size();++f){const auto& face=faces_[f];
+        const auto donor=face.volume.Value()>=0.?face.left:face.right;
+        Real concentration=Real(waterDensity)*alpha_[donor]+gamma_[donor];
+        if(face.volume.Value()==0.)concentration=(Real(waterDensity)*(alpha_[face.left]+alpha_[face.right])+gamma_[face.left]+gamma_[face.right])*Real(.5);
+        next.push_back(dq[f]*concentration+face.volume*(Real(waterDensity)*nextWater[donor]+nextMass[donor])/Real(capacity_[donor]));
+    }
+    for(std::size_t j=0;j<ports_.size();++j){const auto& port=ports_[j];auto i=port.cell;
+        const Real gap=Real(capacity_[i])-water_[i];
+        if(port.volume.Value()>0.)ports.push_back(dv[j]*mass_[i]/gap+port.volume*(nextMass[i]/gap+mass_[i]*nextWater[i]/(gap*gap)));
+        else if(port.volume.Value()<0.)ports.push_back(dv[j]*Real(ambientDensity_));
+        else{
+            if(!(gap.Value()>0.))return Fail(error,"mass tangent at a gas port has no gas owner");
+            ports.push_back(dv[j]*(mass_[i]/gap+Real(ambientDensity_))*Real(.5));
+        }
+    }
+    for(const auto* values:{&next,&ports})for(auto x:*values)if(!Finite(x))return Fail(error,"nonfinite mass tangent output");
+    dw=std::move(nextWater);dm=std::move(nextMass);interior=std::move(next);boundary=std::move(ports);error.clear();return true;
+}
+
 CutFastTransportStats CutSelectiveTransport::Stats() const {
     const auto& a = waterSolver_.Stats(); const auto& b = gasSolver_.Stats();
     return {a.solves + b.solves, a.corrections + b.corrections,

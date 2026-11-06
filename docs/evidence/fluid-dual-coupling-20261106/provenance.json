@@ -1,0 +1,13 @@
+{
+  "recordedUtc": "2026-11-06T17:29:44.990795+00:00",
+  "parentCommit": "42e233ee430456bb920c61e62947df83baf9d0e1",
+  "branch": "Experimental",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "host": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "configuration": "C++17 -O3 -Wall -Wextra -Wpedantic -Werror; no fast-math",
+  "sanitizerConfiguration": "C++17 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer; detect_leaks=1 outside incompatible tracer",
+  "scope": "Prototype only: immutable geometry, cell-mixture mass, dual momentum. No native engine, fluid-lock, SDK, main, or research change.",
+  "timingStatus": "Single diagnostic runs; some rejected experiments overlapped compilers or another probe. Not isolated before/after benchmarks.",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "memTotal": "MemTotal:        8045184 kB"
+}

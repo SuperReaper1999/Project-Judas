@@ -1,0 +1,13 @@
+PASS prepare positive pressure accelerator
+PASS match independently inverted two-row operator
+PASS reuse factorization with a different source
+PASS zero source returns zero correction even with empty reduced graph
+PASS failed preparation preserves previous operator
+PASS invalid source preserves previous correction
+PASS prepare positive pressure accelerator
+PASS match independently inverted two-row operator
+PASS reuse factorization with a different source
+PASS zero source returns zero correction even with empty reduced graph
+PASS failed preparation preserves previous operator
+PASS invalid source preserves previous correction
+12 checks, 0 failures

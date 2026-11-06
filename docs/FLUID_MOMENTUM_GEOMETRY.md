@@ -1,5 +1,10 @@
 # Fluid momentum, face-metric energy and geometry cost — 6 November 2026
 
+Follow-up: [velocity-dual coupling](FLUID_DUAL_MOMENTUM_COUPLING.md) adds owned
+mass routes and a checked coupled prototype. Small and quiet controls pass;
+the original basins still reject their first momentum-coupled interval. The
+findings below remain the evidence of this earlier checkpoint.
+
 The conservative pressure/quantity prototype still has an incomplete motion
 integrator. This investigation identifies a concrete, previously unaccounted
 kinetic-energy term, adds a checked conservative momentum carrier, and measures

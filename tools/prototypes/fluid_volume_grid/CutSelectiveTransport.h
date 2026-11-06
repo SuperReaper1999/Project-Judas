@@ -27,6 +27,9 @@ public:
     // This is a carrier for momentum transport, not a reconstructed wet area.
     bool InteriorMassFlux(double waterDensity, std::vector<CutCompensated>&,
                           std::string&) const;
+    bool MassTangent(const std::vector<CutCompensated>& dq,const std::vector<CutCompensated>& dv,
+        double waterDensity,std::vector<CutCompensated>& dw,std::vector<CutCompensated>& dm,
+        std::vector<CutCompensated>& interior,std::vector<CutCompensated>& boundary,std::string&);
     // The prepared water operator has no exterior edge at any gas-only port.
     std::vector<CutCompensated> WaterPortVolume() const { return std::vector<CutCompensated>(ports_.size()); }
     CutFastTransportStats Stats() const;

@@ -1,0 +1,66 @@
+TANGENT zero=0 volume=3.99997e-14 momentum=1.31581e-09
+TANGENT zero=1 volume=1.46977e-10 momentum=3.4113e-06
+JOINT iteration=0 volume=3.90866e+11 momentum=0.000297496 speed=0.1962
+JOINT_STEP krylov=1 predicted=0.00155249 line=1
+JOINT iteration=1 volume=1.63436e+09 momentum=8.1507e-05 speed=0.130809
+JOINT_STEP krylov=1 predicted=0.000269111 line=1
+JOINT iteration=2 volume=1.13054e+06 momentum=3.0459e-07 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.00185679 line=1
+JOINT iteration=3 volume=2307.38 momentum=4.89663e-10 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.000767603 line=1
+JOINT iteration=4 volume=1.61237 momentum=5.53596e-13 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.00225151 line=1
+JOINT iteration=5 volume=0.00391216 momentum=1.67338e-15 speed=0.130992
+JOINT iteration=0 volume=5.42247e+11 momentum=0.000491472 speed=0.262111
+JOINT_STEP krylov=1 predicted=0.00154429 line=1
+JOINT iteration=1 volume=3.07532e+09 momentum=0.000117402 speed=0.174594
+JOINT_STEP krylov=1 predicted=0.000207922 line=1
+JOINT iteration=2 volume=1.46162e+06 momentum=4.6786e-07 speed=0.174931
+JOINT_STEP krylov=1 predicted=0.00317618 line=1
+JOINT iteration=3 volume=3955.58 momentum=2.21687e-09 speed=0.174931
+JOINT_STEP krylov=2 predicted=7.75048e-07 line=1
+JOINT iteration=4 volume=0.00180892 momentum=2.93937e-15 speed=0.174931
+JOINT iteration=0 volume=4.77178e+11 momentum=0.000394448 speed=0.219083
+JOINT_STEP krylov=1 predicted=0.000505383 line=1
+JOINT iteration=1 volume=2.53819e+09 momentum=7.87833e-05 speed=0.145963
+JOINT_STEP krylov=1 predicted=0.000746516 line=1
+JOINT iteration=2 volume=3.53448e+06 momentum=3.30037e-07 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.000749284 line=1
+JOINT iteration=3 volume=2391.48 momentum=4.52143e-10 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.00215133 line=1
+JOINT iteration=4 volume=4.90454 momentum=4.47712e-13 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.00105344 line=1
+JOINT iteration=5 volume=0.00493701 momentum=1.43901e-15 speed=0.146205
+JOINT iteration=0 volume=3.90866e+11 momentum=0.000297496 speed=0.1962
+JOINT_STEP krylov=1 predicted=0.00155249 line=1
+JOINT iteration=1 volume=1.63436e+09 momentum=8.1507e-05 speed=0.130809
+JOINT_STEP krylov=1 predicted=0.000269111 line=1
+JOINT iteration=2 volume=1.13054e+06 momentum=3.0459e-07 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.00185679 line=1
+JOINT iteration=3 volume=2307.38 momentum=4.89663e-10 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.000767603 line=1
+JOINT iteration=4 volume=1.61237 momentum=5.53596e-13 speed=0.130992
+JOINT_STEP krylov=1 predicted=0.00225151 line=1
+JOINT iteration=5 volume=0.00391216 momentum=1.67338e-15 speed=0.130992
+JOINT iteration=0 volume=5.42247e+11 momentum=0.000491472 speed=0.262111
+JOINT_STEP krylov=1 predicted=0.00154429 line=1
+JOINT iteration=1 volume=3.07532e+09 momentum=0.000117402 speed=0.174594
+JOINT_STEP krylov=1 predicted=0.000207922 line=1
+JOINT iteration=2 volume=1.46162e+06 momentum=4.6786e-07 speed=0.174931
+JOINT_STEP krylov=1 predicted=0.00317618 line=1
+JOINT iteration=3 volume=3955.58 momentum=2.21687e-09 speed=0.174931
+JOINT_STEP krylov=2 predicted=1.319e-06 line=1
+JOINT iteration=4 volume=0.00312143 momentum=1.7651e-12 speed=0.174931
+JOINT iteration=0 volume=4.77178e+11 momentum=0.000394448 speed=0.219083
+JOINT_STEP krylov=1 predicted=0.000505383 line=1
+JOINT iteration=1 volume=2.53819e+09 momentum=7.87833e-05 speed=0.145963
+JOINT_STEP krylov=1 predicted=0.000746516 line=1
+JOINT iteration=2 volume=3.53448e+06 momentum=3.30037e-07 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.000749284 line=1
+JOINT iteration=3 volume=2391.48 momentum=4.52143e-10 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.00215133 line=1
+JOINT iteration=4 volume=4.90454 momentum=4.47712e-13 speed=0.146205
+JOINT_STEP krylov=1 predicted=0.00105344 line=1
+JOINT iteration=5 volume=0.00491504 momentum=1.43899e-15 speed=0.146205
+JOINT iteration=0 volume=0 momentum=0 speed=0
+28 checks, 0 failures

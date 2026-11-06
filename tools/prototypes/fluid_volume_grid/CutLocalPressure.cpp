@@ -73,6 +73,13 @@ bool Transport(const CutSpatialField& field,const std::vector<Real>& q,const std
  water.resize(n);mass.resize(n);for(std::size_t i=0;i<n;++i){water[i]=alpha[i]*Real(field.geometry.startCapacity[i]);mass[i]=gamma[i]*Real(field.geometry.startCapacity[i]);}return true;
 }
 }
+std::uint64_t CutLocalGeometryStamp(const CutSpatialField& field){return FrozenGeometryStamp(field);}
+bool CutLocalDryPorts(const CutSpatialField& field,const std::vector<Real>& w,const std::vector<Real>& m,
+ const std::vector<Real>& p,const CutDynamicSettings& s,std::string& error){
+ if(w.size()!=field.parent.size()||m.size()!=w.size()||p.size()!=w.size()||!(s.gasDensity>0.&&s.soundSpeed>0.))return Fail(error,"invalid dry-port admission dimensions or law");
+ std::vector<Real> rho;for(auto x:p){Real density=Real(s.gasDensity)+x/Real(s.soundSpeed*s.soundSpeed);if(!(density.Value()>0.&&std::isfinite(density.hi)&&std::isfinite(density.lo)))return Fail(error,"invalid dry-port admission density");rho.push_back(density);}
+ return DryGasPorts(field,w,m,rho,error);
+}
 bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettings& settings,
  const std::vector<double>& seed,CutLocalPressureResult& output,std::string& error,CutLocalTransport mode,const CutLocalPressureResult* previous){
  const auto n=field.parent.size();if(n==0||(!seed.empty()&&seed.size()!=n)||!(settings.dt>0.))return Fail(error,"invalid local pressure input");

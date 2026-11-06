@@ -1,0 +1,25 @@
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=5.28314e-38 speed=4.59702e-18 energy=1.05663e-32 workResidual=-7.0804e-49
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=2.11326e-37 speed=9.19403e-18 energy=4.22651e-32 workResidual=-7.0634e-49
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=4.75483e-37 speed=1.37911e-17 energy=9.50966e-32 workResidual=8.31351e-48
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=1.57688e-33 speed=1.83881e-17 energy=1.69061e-31 workResidual=-4.23415e-48
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=1.32079e-36 speed=2.29851e-17 energy=2.64157e-31 workResidual=1.38111e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=1.90193e-36 speed=2.75821e-17 energy=3.80386e-31 workResidual=1.38332e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=7.9145e-34 speed=3.21791e-17 energy=5.17748e-31 workResidual=2.48117e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=3.15206e-33 speed=3.67761e-17 energy=6.76242e-31 workResidual=-9.87893e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=1.57344e-33 speed=4.13732e-17 energy=8.55869e-31 workResidual=-8.7789e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=2.3613e-33 speed=4.59702e-17 energy=1.05663e-30 workResidual=-5.48802e-47
+LOCAL_PRESSURE iteration=0 normalized=0 residual=0
+COUPLED iteration=0 momentum=3.14905e-33 speed=5.05672e-17 energy=1.27852e-30 workResidual=-9.85904e-47
+LOCAL_PRESSURE iteration=0 normalized=0.00325948 residual=3.25948e-17
+COUPLED iteration=0 momentum=6.30986e-18 speed=7.71881e-18 energy=1.49145e-32 workResidual=2.02958e-35
+24 checks, 0 failures

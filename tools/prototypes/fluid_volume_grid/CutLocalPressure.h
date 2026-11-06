@@ -3,6 +3,10 @@
 #include "CutSpatialTransport.h"
 #include <cstdint>
 namespace judas::volume_grid {
+std::uint64_t CutLocalGeometryStamp(const CutSpatialField&);
+bool CutLocalDryPorts(const CutSpatialField&,const std::vector<CutCompensated>& water,
+ const std::vector<CutCompensated>& gasMass,const std::vector<CutCompensated>& pressure,
+ const CutDynamicSettings&,std::string&);
 enum class CutLocalTransport { Reference, Fast };
 struct CutLocalPressureResult {
  std::vector<CutCompensated> pressure,water,gasMass,flux,portFlux;

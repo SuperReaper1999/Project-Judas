@@ -1,0 +1,16 @@
+GEOMETRY mode=original rotated=1 nodes=121712 ms=64.255756000000005
+LOCAL_PRESSURE iteration=0 normalized=27248730673.683334 residual=2.7250004007998745e-05
+NEWTON_STEP krylov=1 predictedResidual=0.00077397188760812993 line=1
+LOCAL_PRESSURE iteration=1 normalized=63065887573.179306 residual=1.3149140286552604e-06
+NEWTON_STEP krylov=1 predictedResidual=0.0053036035610457381 line=1
+LOCAL_PRESSURE iteration=2 normalized=7293958885.9670324 residual=1.034176432470974e-08
+NEWTON_STEP krylov=2 predictedResidual=0.0002745929679500987 line=1
+LOCAL_PRESSURE iteration=3 normalized=12575904.337130714 residual=1.4852868627135491e-12
+NEWTON_STEP krylov=1 predictedResidual=0.00050820468978123067 line=1
+LOCAL_PRESSURE iteration=4 normalized=178158.81975997507 residual=1.390136599144858e-15
+NEWTON_STEP krylov=1 predictedResidual=0.001694359307748985 line=1
+LOCAL_PRESSURE iteration=5 normalized=222.60067552413832 residual=1.6723414271308054e-18
+NEWTON_STEP krylov=1 predictedResidual=0.0014991913184706157 line=1
+LOCAL_PRESSURE iteration=6 normalized=0.28607540784996355 residual=2.4716172843414815e-21
+COUPLED iteration=0 momentum=798.5397839261185 speed=3299.2338434169155 energy=57.220250688965358 workResidual=640448.34133800236
+BASIN mode=original rotated=1 step=1 admitted=0 ms=4964.5750410000001 outer=0 volume=0 momentum=0 speed=0 energy=0 workError=0 reason=directed original quantity audit exhausted total=3.911977386318704e-32 budget=9.9999999999999998e-13
