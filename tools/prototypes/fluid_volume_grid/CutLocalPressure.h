@@ -11,7 +11,8 @@ struct CutLocalPressureResult {
  CutCompensated externalWater,externalGasMass;
  double maximumVolumeResidual=0.,maximumNormalizedResidual=0.;
  int iterations=0;
- double transportMilliseconds=0.,tangentMilliseconds=0.,linearMilliseconds=0.;
+ double transportMilliseconds=0.,tangentMilliseconds=0.,linearMilliseconds=0.,pressurePreparationMilliseconds=0.;
+ int pressurePreconditionerBuilds=0,pressurePreconditionerFallbacks=0;
  int transportEvaluations=0,linearApplications=0,rejectedTransportTrials=0;
  std::size_t fastSolves=0,fastCorrections=0,fastSweeps=0,fastFallbacks=0;
 };

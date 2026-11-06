@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "reference",
+    "sample": 0,
+    "startedUtc": "2026-11-06T14:22:44.778477+00:00",
+    "rotated": false,
+    "milliseconds": 35948.048456,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171234914637
+  },
+  {
+    "kind": "reference",
+    "sample": 0,
+    "startedUtc": "2026-11-06T14:22:44.778477+00:00",
+    "rotated": true,
+    "milliseconds": 39186.469678,
+    "iterations": 11,
+    "normalizedResidual": 0.000627740138896133
+  },
+  {
+    "kind": "candidate",
+    "sample": 0,
+    "startedUtc": "2026-11-06T14:24:00.166473+00:00",
+    "rotated": false,
+    "milliseconds": 988.467726,
+    "iterations": 6,
+    "normalizedResidual": 3.199727691980236e-05
+  },
+  {
+    "kind": "candidate",
+    "sample": 0,
+    "startedUtc": "2026-11-06T14:24:00.166473+00:00",
+    "rotated": true,
+    "milliseconds": 2091.442413,
+    "iterations": 7,
+    "normalizedResidual": 0.03986928524414132
+  }
+]

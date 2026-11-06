@@ -1,0 +1,4 @@
+e9876a504c114788bc2e7aa429a9daeafbcae664e126c88d278afdf9623624be  candidate-0-level.bin
+f03c0ec6bdffbcf0963c9b5d810266c8c843659a3583da1690fd8b146ee5491b  candidate-0-rotated.bin
+4d68b158e84cf1be55cb60ed6bf11829077e040005d8acab39a0e97ef8a465de  reference-0-level.bin
+204e72a7ddc34a95d30d5582e835f238daa35071d8587a5356956666c0d57bad  reference-0-rotated.bin

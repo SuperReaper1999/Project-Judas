@@ -1,0 +1,13 @@
+PASS part-filled cell prepares selective gas outflow
+PASS gas-only outlet removes no water
+PASS gas transport uses gas density rather than mixture dilution
+PASS gas mass including exterior flux is conserved
+PASS known one-cell outlet tangent
+PASS gas inflow retains ambient density and independent water
+PASS coupled two-cell selective operator prepares
+PASS water-dependent gas-density tangent solves
+PASS full selective tangent agrees with finite differences
+PASS two-cell water and exterior gas ledgers close
+PASS missing outlet gas capacity rejects without replacing prepared evaluation
+PASS aliased tangent outputs reject instead of overwriting a phase
+12 checks, 0 failures

@@ -58,3 +58,11 @@ Fast transport continuation (6 November 2026):
 See docs/FLUID_FAST_TRANSPORT.md and qualify_fast_pressure.sh. The slow
 reference is archived separately. Original first intervals pass faster, but
 the rotated sustained case remains a recorded failure; no runtime or unlock.
+
+Sustained-pressure follow-up (6 November 2026):
+The retained fourth-step stall is corrected; both authored fixtures advance
+120 intervals with original volume/cumulative quantity checks. See
+docs/FLUID_SUSTAINED_PRESSURE.md and qualify_sustained_pressure.sh. Earlier
+reports above remain historical. This is still a slow numerical prototype;
+high-speed small-face modes, momentum transport and native/body integration
+remain unqualified. Main and the Alpha fluid lock are unchanged.

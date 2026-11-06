@@ -1,0 +1,5 @@
+{
+  "byteIdentical": true,
+  "sha256": "fdace235d059996a2fb2f680b7afcde86f3786dec35cd5ec22974289139f09e1",
+  "scope": "retained fourth-interval replay; cleanup removed an obsolete wrapper and exposed the already-zero water-port flux"
+}
