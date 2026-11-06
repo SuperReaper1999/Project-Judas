@@ -1,0 +1,104 @@
+{
+  "status": "FIRST_INTERVAL_IMPROVEMENT_SUSTAINED_ROTATED_FAILURE",
+  "sourceParent": "574fa22f5a6d93205c69db24da593628d41797e0",
+  "utc": "2026-11-06T12:36:40.794569+00:00",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "tests": {
+    "activeChecks": 3135,
+    "sanitizerChecks": 3135,
+    "referenceChecks": 299,
+    "independentExactRationalChecks": 842
+  },
+  "mainModified": false,
+  "fluidLockModified": false,
+  "runtimeIntegrated": false,
+  "bodyMotionSupported": false,
+  "momentumAdvection": false,
+  "humanAcceptance": false,
+  "benchmark": {
+    "level": {
+      "pressurePa": {
+        "maximumAbsoluteDifference": "2.160595936693351056270763916E-21",
+        "l1Difference": "1.137070862175274206222394655E-17"
+      },
+      "waterM3": {
+        "maximumAbsoluteDifference": "2.949051673926896590167916660E-27",
+        "l1Difference": "3.871515167834657905131562182E-26"
+      },
+      "gasKg": {
+        "maximumAbsoluteDifference": "2.294463617732516299163150629E-27",
+        "l1Difference": "5.278561485974192303664320359E-26"
+      },
+      "intervalFluxM3": {
+        "maximumAbsoluteDifference": "9.680184938778594705198270542E-28",
+        "l1Difference": "1.380370955661309016259365079E-25"
+      },
+      "reference": {
+        "samples": 3,
+        "medianMs": 34571.628509,
+        "p95Ms": 34574.789551,
+        "worstMs": 34574.789551
+      },
+      "candidate": {
+        "samples": 3,
+        "medianMs": 5985.334219,
+        "p95Ms": 6011.840312,
+        "worstMs": 6011.840312
+      }
+    },
+    "rotated": {
+      "pressurePa": {
+        "maximumAbsoluteDifference": "3.572702577154402190233114457E-16",
+        "l1Difference": "1.836021015360406287877514439E-14"
+      },
+      "waterM3": {
+        "maximumAbsoluteDifference": "1.488577823048942321318090049E-24",
+        "l1Difference": "8.735229414544123809198627514E-23"
+      },
+      "gasKg": {
+        "maximumAbsoluteDifference": "4.054016799670200946166625016E-24",
+        "l1Difference": "6.630229338082793678796068677E-22"
+      },
+      "intervalFluxM3": {
+        "maximumAbsoluteDifference": "1.677040932008776796005501535E-23",
+        "l1Difference": "1.222218317982234792357796552E-20"
+      },
+      "reference": {
+        "samples": 3,
+        "medianMs": 35773.858419,
+        "p95Ms": 35994.943178,
+        "worstMs": 35994.943178
+      },
+      "candidate": {
+        "samples": 3,
+        "medianMs": 6048.066985,
+        "p95Ms": 6057.392314,
+        "worstMs": 6057.392314
+      }
+    }
+  },
+  "p95Policy": "nearest rank; with three samples p95 equals maximum; no broad tail-distribution claim",
+  "referencePeakRSSKiB": 155120,
+  "candidatePeakRSSKiB": 157032,
+  "continuation": {
+    "smallChannelIntervals": 500,
+    "smallChannelSimulatedSeconds": 5,
+    "levelAdmittedIntervals": 4,
+    "rotatedAdmittedIntervals": 3,
+    "rotatedFailureInterval": 4,
+    "failure": "coupled pressure line search exhausted",
+    "processExit": 1,
+    "referenceRetry": "180-second combined reproduction budget expired; reference fourth-step retry stagnated at normalized residual about 4.956e10 with step factors about 1e-14",
+    "referenceRetryExit": 124
+  }
+}

@@ -1,32 +1,60 @@
 #include "CutLocalPressure.h"
 #include "CutDirectedTransport.h"
+#include "CutFastDirectedTransport.h"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <numeric>
 #include <chrono>
+#include <cstring>
 namespace judas::volume_grid {
 namespace {
 using Real=CutCompensated;
 bool Fail(std::string& error,const char* reason){error=reason;return false;}
+// Mutation diagnostic for owner-local continuation, not a cryptographic ID.
+// The caller must retain the same frozen chart; moving charts reject above.
+std::uint64_t FrozenGeometryStamp(const CutSpatialField& field){
+ std::uint64_t stamp=1469598103934665603ull;
+ auto integer=[&](std::uint64_t x){stamp^=x;stamp*=1099511628211ull;};
+ auto scalar=[&](double x){std::uint64_t bits=0;if(x!=0.)std::memcpy(&bits,&x,sizeof(bits));integer(bits);};
+ integer(field.chart.regions.size());integer(field.geometry.faces.size());
+ for(auto& r:field.chart.regions)for(int a=0;a<3;++a){scalar(r.lo[a]);scalar(r.hi[a]);}
+ for(double c:field.geometry.startCapacity)scalar(c);
+ for(double c:field.geometry.endCapacity)scalar(c);
+ for(auto& f:field.geometry.faces){integer(f.left);integer(f.right);integer(f.axis);scalar(f.meanArea);for(int a=0;a<3;++a){scalar(f.lo[a]);scalar(f.hi[a]);}}
+ for(auto& b:field.boundaries){integer(b.fragment);integer(b.axis);integer(b.sign);integer(b.gasOnly);}
+ return stamp;
+}
 struct Timing {double& milliseconds;std::chrono::steady_clock::time_point start=std::chrono::steady_clock::now();~Timing(){milliseconds+=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();}};
+// Both paths share equations, nonlinear iteration and final admission.
+// Only the prepared transport linear algebra is selected here.
+struct TransportLinear {
+ CutLocalTransport mode;
+ CutLocalPressureResult& result;
+ CutDirectedTransport reference;
+ CutFastDirectedTransport fast;
+ TransportLinear(CutLocalTransport m,CutLocalPressureResult& r):mode(m),result(r){}
+ ~TransportLinear(){auto& s=fast.Stats();result.fastSolves+=s.solves;result.fastCorrections+=s.corrections;result.fastSweeps+=s.sweeps;result.fastFallbacks+=s.fallbacks;}
+ bool Build(const std::vector<double>& c,const std::vector<CutDirectedEdge>& e,const std::vector<Real>& o,std::string& error){return mode==CutLocalTransport::Fast?fast.Build(c,e,o,error):reference.Build(c,e,o,error);}
+ bool SolveFraction(const std::vector<Real>& rhs,double budget,std::vector<Real>& out,std::string& error,double quantityBudget=INFINITY){return mode==CutLocalTransport::Fast?fast.SolveFraction(rhs,budget,out,error,quantityBudget):reference.SolveFraction(rhs,budget,out,error);}
+};
 struct Port{std::size_t i;int axis,sign;Real g,predictor;};
 bool Transport(const CutSpatialField& field,const std::vector<Real>& q,const std::vector<Port>& ports,
- const std::vector<Real>& v,std::vector<Real>& water,std::vector<Real>& mass,std::string& error,double referenceGasDensity){
+ const std::vector<Real>& v,std::vector<Real>& water,std::vector<Real>& mass,std::string& error,double referenceGasDensity,CutLocalTransport mode,CutLocalPressureResult& result,const CutLocalPressureResult* previous,double physicalBudget){
  const auto n=field.parent.size();
  std::vector<CutDirectedEdge> edges;std::vector<Real> exterior(n),wrhs(n),mrhs(n),alpha,gamma;
- for(std::size_t i=0;i<n;++i){wrhs[i]=field.water[i];mrhs[i]=field.gasMass[i];}
+ for(std::size_t i=0;i<n;++i){wrhs[i]=previous?previous->water[i]:Real(field.water[i]);mrhs[i]=previous?previous->gasMass[i]:Real(field.gasMass[i]);}
  for(std::size_t f=0;f<q.size();++f){auto face=field.geometry.faces[f];if(q[f].Value()>=0.)edges.push_back({face.left,face.right,q[f]});else edges.push_back({face.right,face.left,Real(0.)-q[f]});}
  for(std::size_t j=0;j<ports.size();++j){auto i=ports[j].i;if(v[j].Value()>=0.)exterior[i]=exterior[i]+v[j];else mrhs[i]=mrhs[i]-v[j]*Real(referenceGasDensity);}
- CutDirectedTransport linear;
+ TransportLinear linear{mode,result};
  if(!linear.Build(field.geometry.startCapacity,edges,exterior,error))return false;
 
- if(!linear.SolveFraction(wrhs,1e-12,alpha,error)||!linear.SolveFraction(mrhs,referenceGasDensity*1e-12,gamma,error))return false;
+ if(!linear.SolveFraction(wrhs,1e-12,alpha,error,physicalBudget/8.)||!linear.SolveFraction(mrhs,referenceGasDensity*1e-12,gamma,error,referenceGasDensity*physicalBudget/8.))return false;
  water.resize(n);mass.resize(n);for(std::size_t i=0;i<n;++i){water[i]=alpha[i]*Real(field.geometry.startCapacity[i]);mass[i]=gamma[i]*Real(field.geometry.startCapacity[i]);}return true;
 }
 }
 bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettings& settings,
- const std::vector<double>& seed,CutLocalPressureResult& output,std::string& error){
+ const std::vector<double>& seed,CutLocalPressureResult& output,std::string& error,CutLocalTransport mode,const CutLocalPressureResult* previous){
  const auto n=field.parent.size();if(n==0||(!seed.empty()&&seed.size()!=n)||!(settings.dt>0.))return Fail(error,"invalid local pressure input");
  if(field.chart.regions.size()!=n||field.geometry.startCapacity.size()!=n||field.water.size()!=n||field.gas.size()!=n||field.gasMass.size()!=n||field.geometry.faces.size()!=field.flux.size()||!(std::isfinite(settings.dt)&&settings.waterDensity>0.&&std::isfinite(settings.waterDensity)&&settings.gasDensity>0.&&std::isfinite(settings.gasDensity)&&settings.soundSpeed>0.&&std::isfinite(settings.soundSpeed*settings.soundSpeed)&&settings.volumeTolerance>0.&&std::isfinite(settings.volumeTolerance)&&settings.relativeVolumeTolerance>0.&&settings.relativeVolumeTolerance<1.&&settings.iterationLimit>0))return Fail(error,"invalid local pressure state or settings");
  if(field.geometry.motion&&field.geometry.motion->translation!=GridVec{})return Fail(error,"local pressure currently requires frozen solid geometry");
@@ -34,10 +62,34 @@ bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettin
  for(double g:settings.gravity)if(!std::isfinite(g))return Fail(error,"nonfinite local gravity");
  for(std::size_t i=0;i<n;++i){double c=field.geometry.startCapacity[i];if(!(c>0.&&std::isfinite(c)&&field.water[i]>=0.&&std::isfinite(field.water[i])&&field.gas[i]>=0.&&std::isfinite(field.gas[i])&&field.gasMass[i]>=0.&&std::isfinite(field.gasMass[i]))||(!seed.empty()&&!std::isfinite(seed[i])))return Fail(error,"invalid local material state");}
  for(auto& b:field.boundaries)if(b.fragment>=n||b.axis<0||b.axis>2||(b.sign!=1&&b.sign!=-1)||!b.gasOnly)return Fail(error,"local pressure supports explicit gas ports only");
+ auto geometryStamp=FrozenGeometryStamp(field);
+ if(previous){
+  if(previous->frozenGeometryStamp!=geometryStamp||previous->waterDensity!=settings.waterDensity||previous->gasDensity!=settings.gasDensity||previous->soundSpeed!=settings.soundSpeed)return Fail(error,"continuation geometry or material law changed");
+  if(previous==&output||previous->water.size()!=n||previous->gasMass.size()!=n||previous->pressure.size()!=n||previous->flux.size()!=field.flux.size()||previous->portFlux.size()!=field.boundaries.size()||!(previous->dt>0.&&std::isfinite(previous->dt)))return Fail(error,"invalid local continuation state or alias");
+  for(const auto* values:{&previous->water,&previous->gasMass,&previous->pressure,&previous->flux,&previous->portFlux})for(auto x:*values)if(!std::isfinite(x.hi)||!std::isfinite(x.lo))return Fail(error,"nonfinite local continuation state");
+  for(std::size_t i=0;i<n;++i)if(previous->water[i].Value()<0.||previous->gasMass[i].Value()<0.)return Fail(error,"negative local continuation quantity");
+ }
  const double c2=settings.soundSpeed*settings.soundSpeed;
- std::vector<double> gas(n);for(std::size_t i=0;i<n;++i)gas[i]=field.gas[i];
+ std::vector<double> gas(n),phaseWater=field.water;
+ for(std::size_t i=0;i<n;++i){
+  gas[i]=field.gas[i];if(!previous)continue;
+  Real rho=Real(settings.gasDensity)+previous->pressure[i]/Real(c2);
+  if(!(rho.Value()>0.))return Fail(error,"invalid continuation EOS");
+  Real actualGas=previous->gasMass[i]/rho,capacity=field.geometry.startCapacity[i];
+  double tolerance=std::min(settings.volumeTolerance,settings.relativeVolumeTolerance*capacity.Value());
+  if(std::abs((capacity-previous->water[i]-actualGas).Value())>tolerance)return Fail(error,"continuation source exceeds original volume tolerance");
+  // One interface fills geometric capacity. Retain the smaller independent
+  // phase exactly; reconcile only the dominant geometric complement within
+  // the already accepted EOS defect. Physical W and M are never modified.
+  if(previous->water[i].Value()<=actualGas.Value()){
+   phaseWater[i]=previous->water[i].Value();gas[i]=(capacity-previous->water[i]).Value();
+  }else{
+   gas[i]=actualGas.Value();phaseWater[i]=(capacity-actualGas).Value();
+  }
+ }
+
  std::vector<CutRegionWaterPlane> planes;
- if(!ReconstructCutRegionPhasePlanes(field.chart,field.geometry,1,field.water,gas,{},planes,error))return false;
+ if(!ReconstructCutRegionPhasePlanes(field.chart,field.geometry,1,phaseWater,gas,{},planes,error))return false;
  std::vector<Real> conductance(field.flux.size()),predictor(field.flux.size());
  std::vector<CutHydroacousticGraphLink> links;
  std::vector<std::size_t> active;
@@ -45,21 +97,24 @@ bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettin
   auto a=MeasureCutRegionFaceInertiaVolumes(face,field.geometry.motion,field.chart.regions[face.left],true,planes[face.left]);auto b=MeasureCutRegionFaceInertiaVolumes(face,field.geometry.motion,field.chart.regions[face.right],false,planes[face.right]);
   double inertia=settings.waterDensity*(a[0]+b[0])+settings.gasDensity*(a[1]+b[1]);
   double g=settings.dt*settings.dt*face.meanArea*face.meanArea/inertia;
-  conductance[f]=g;predictor[f]=settings.dt*settings.dt*face.meanArea*settings.gravity[face.axis];links.push_back({face.left,face.right,g});active.push_back(f);
+  conductance[f]=g;predictor[f]=settings.dt*settings.dt*face.meanArea*settings.gravity[face.axis];if(previous)predictor[f]=predictor[f]+previous->flux[f]*Real(settings.dt/previous->dt);links.push_back({face.left,face.right,g});active.push_back(f);
  }
  std::vector<Port> ports;
  for(auto& b:field.boundaries){auto r=field.chart.regions[b.fragment];double area=(r.hi[(b.axis+1)%3]-r.lo[(b.axis+1)%3])*(r.hi[(b.axis+2)%3]-r.lo[(b.axis+2)%3]);double g=settings.dt*settings.dt*area/(settings.gasDensity*.5*(r.hi[b.axis]-r.lo[b.axis]));ports.push_back({b.fragment,b.axis,b.sign,g,settings.dt*settings.dt*area*settings.gravity[b.axis]*b.sign});}
+ if(previous)for(std::size_t j=0;j<ports.size();++j)ports[j].predictor=ports[j].predictor+previous->portFlux[j]*Real(settings.dt/previous->dt);
  std::vector<std::size_t> component(n);std::iota(component.begin(),component.end(),0);
  auto componentRoot=[&](std::size_t i){while(component[i]!=i){component[i]=component[component[i]];i=component[i];}return i;};
  for(auto& edge:links){auto a=componentRoot(edge.left),b=componentRoot(edge.right);if(a!=b)component[b]=a;}
  for(std::size_t i=0;i<n;++i)component[i]=componentRoot(i);
- CutLocalPressureResult next;next.pressure.resize(n);for(std::size_t i=0;i<n;++i)if(!seed.empty())next.pressure[i]=seed[i];
+ CutLocalPressureResult next;next.dt=settings.dt;next.waterDensity=settings.waterDensity;next.gasDensity=settings.gasDensity;next.soundSpeed=settings.soundSpeed;next.frozenGeometryStamp=geometryStamp;next.pressure.resize(n);if(previous)next.pressure=previous->pressure;for(std::size_t i=0;i<n;++i)if(!seed.empty())next.pressure[i]=seed[i];
  std::vector<double> tolerance(n);std::vector<bool> small(n);std::vector<double> sorted=field.geometry.startCapacity;std::sort(sorted.begin(),sorted.end());double median=sorted[n/2];
  for(std::size_t i=0;i<n;++i){tolerance[i]=std::min(settings.volumeTolerance,settings.relativeVolumeTolerance*field.geometry.startCapacity[i]);small[i]=field.geometry.startCapacity[i]<.125*median;}
+ bool acceptedTransport=false;
  for(int iteration=0;iteration<settings.iterationLimit;++iteration){
   next.flux.resize(field.flux.size());for(auto f:active){auto face=field.geometry.faces[f];next.flux[f]=predictor[f]+conductance[f]*(next.pressure[face.left]-next.pressure[face.right]);}
   std::vector<Real> v(ports.size());for(std::size_t j=0;j<ports.size();++j)v[j]=ports[j].predictor+ports[j].g*next.pressure[ports[j].i];
-  {Timing time{next.transportMilliseconds};++next.transportEvaluations;if(!Transport(field,next.flux,ports,v,next.water,next.gasMass,error,settings.gasDensity))return false;}
+  if(!acceptedTransport){Timing time{next.transportMilliseconds};++next.transportEvaluations;if(!Transport(field,next.flux,ports,v,next.water,next.gasMass,error,settings.gasDensity,mode,next,previous,settings.volumeTolerance))return false;}
+  acceptedTransport=false;
   std::vector<Real> residual(n),rho(n);std::vector<double> rhs(n),storage(n);
   next.maximumVolumeResidual=next.maximumNormalizedResidual=0.;
   for(std::size_t i=0;i<n;++i){rho[i]=Real(settings.gasDensity)+next.pressure[i]/Real(c2);if(!(rho[i].Value()>0.))return Fail(error,"local EOS outside domain");residual[i]=Real(field.geometry.startCapacity[i])-next.water[i]-next.gasMass[i]/rho[i];rhs[i]=-residual[i].Value();storage[i]=(next.gasMass[i]/(rho[i]*rho[i]*Real(c2))).Value();next.maximumVolumeResidual=std::max(next.maximumVolumeResidual,std::abs(residual[i].Value()));next.maximumNormalizedResidual=std::max(next.maximumNormalizedResidual,std::abs(residual[i].Value())/tolerance[i]);}
@@ -67,13 +122,13 @@ bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettin
   std::cout<<"LOCAL_PRESSURE iteration="<<iteration<<" normalized="<<next.maximumNormalizedResidual<<" residual="<<next.maximumVolumeResidual<<std::endl;
   if(next.maximumNormalizedResidual<=1.){for(std::size_t i=0;i<n;++i)if(next.water[i].Value()<0.||next.gasMass[i].Value()<0.||(next.water[i]-Real(field.geometry.startCapacity[i])).Value()>tolerance[i])return Fail(error,"local phase admission failed");
    Real totalW,totalM,initialW,initialM;
-   for(std::size_t i=0;i<n;++i){totalW=totalW+next.water[i];totalM=totalM+next.gasMass[i];initialW=initialW+Real(field.water[i]);initialM=initialM+Real(field.gasMass[i]);}
+   for(std::size_t i=0;i<n;++i){totalW=totalW+next.water[i];totalM=totalM+next.gasMass[i];initialW=initialW+(previous?previous->water[i]:Real(field.water[i]));initialM=initialM+(previous?previous->gasMass[i]:Real(field.gasMass[i]));}
    for(std::size_t j=0;j<ports.size();++j){auto i=ports[j].i;
     if(v[j].Value()>0.){Real w=v[j]*next.water[i]/Real(field.geometry.startCapacity[i]);if(w.Value()>0.)return Fail(error,"water reached gas-only pressure boundary");totalW=totalW+w;next.externalWater=next.externalWater+w;Real m=v[j]*next.gasMass[i]/Real(field.geometry.startCapacity[i]);totalM=totalM+m;next.externalGasMass=next.externalGasMass+m;}
     else {Real m=v[j]*Real(settings.gasDensity);totalM=totalM+m;next.externalGasMass=next.externalGasMass+m;}
    }
    if(std::abs((totalW-initialW).Value())>settings.volumeTolerance||std::abs((totalM-initialM).Value())>settings.gasDensity*settings.volumeTolerance)return Fail(error,"local pressure physical quantity ledger failed");
-   output=std::move(next);error.clear();return true;}
+   next.portFlux=std::move(v);output=std::move(next);error.clear();return true;}
   for(auto& port:ports)storage[port.i]+=port.g.Value();
   // Right-preconditioned GMRES applies the derivative of the actual
   // implicit two-material transport, not a frozen phase pressure graph.
@@ -105,7 +160,7 @@ bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettin
    std::vector<CutDirectedEdge> tangentEdges;std::vector<Real> exterior(n);
    for(std::size_t i=0;i<n;++i)for(auto& edge:incoming[i])tangentEdges.push_back({edge.donor,i,edge.q});
    for(std::size_t j=0;j<ports.size();++j)if(v[j].Value()>=0.)exterior[ports[j].i]=exterior[ports[j].i]+v[j];
-   CutDirectedTransport linear;if(!linear.Build(field.geometry.startCapacity,tangentEdges,exterior,error))return false;
+   TransportLinear linear{mode,next};if(!linear.Build(field.geometry.startCapacity,tangentEdges,exterior,error))return false;
 
    if(!linear.SolveFraction(dw,1e-12,aw,error)||!linear.SolveFraction(dm,settings.gasDensity*1e-12,am,error))return false;
    applied.resize(n);for(std::size_t i=0;i<n;++i){Real derivative=(Real(0.)-aw[i]-am[i]/rho[i])*Real(field.geometry.startCapacity[i])+next.gasMass[i]*Real(direction[i])/(rho[i]*rho[i]*Real(c2));applied[i]=derivative.Value()/rowScale[i];}return true;
@@ -152,9 +207,9 @@ bool AdvanceCutLocalPressure(const CutSpatialField& field,const CutDynamicSettin
    for(std::size_t i=0;i<n;++i)trialP[i]=next.pressure[i]+dp[i]*Real(line);
    for(auto f:active){auto face=field.geometry.faces[f];trialQ[f]=predictor[f]+conductance[f]*(trialP[face.left]-trialP[face.right]);}
    for(std::size_t j=0;j<ports.size();++j)trialV[j]=ports[j].predictor+ports[j].g*trialP[ports[j].i];
-   {Timing time{next.transportMilliseconds};++next.transportEvaluations;if(!Transport(field,trialQ,ports,trialV,trialW,trialM,error,settings.gasDensity))return false;}
+   {Timing time{next.transportMilliseconds};++next.transportEvaluations;if(!Transport(field,trialQ,ports,trialV,trialW,trialM,error,settings.gasDensity,mode,next,previous,settings.volumeTolerance)){if(mode==CutLocalTransport::Fast){++next.rejectedTransportTrials;line*=.5;continue;}return false;}}
    double merit=0.;for(std::size_t i=0;i<n;++i){Real r=Real(field.geometry.startCapacity[i])-trialW[i]-trialM[i]/(Real(settings.gasDensity)+trialP[i]/Real(c2));double normalized=r.Value()/rowScale[i];merit+=normalized*normalized;}
-   if(std::sqrt(merit)<norm*(1.-1e-4*line)){next.pressure=std::move(trialP);accepted=true;break;}line*=.5;
+   if(std::sqrt(merit)<norm*(1.-1e-4*line)){next.pressure=std::move(trialP);if(mode==CutLocalTransport::Fast){next.water=std::move(trialW);next.gasMass=std::move(trialM);acceptedTransport=true;}accepted=true;break;}line*=.5;
   }
   std::cout<<"NEWTON_STEP krylov="<<used<<" predictedResidual="<<std::abs(projection[used])/norm<<" line="<<line<<std::endl;
   if(!accepted)return Fail(error,"coupled pressure line search exhausted");

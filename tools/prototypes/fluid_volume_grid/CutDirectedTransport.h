@@ -12,6 +12,7 @@ public:
  bool SolveFraction(const std::vector<CutCompensated>& rhs,double errorBudget,
                     std::vector<CutCompensated>&,std::string&);
 private:
+ friend class CutFastDirectedTransport; // Shares the unchanged reference factorization and original operator.
  bool Prepare(const std::vector<double>&,const std::vector<CutDirectedEdge>&,const std::vector<CutCompensated>&,std::string&);
  bool SolveInternal(const std::vector<CutCompensated>&,double,std::vector<CutCompensated>&,std::string&,const std::vector<CutCompensated>* barrier=nullptr)const;
  struct Step {std::size_t node;CutCompensated diagonal;std::vector<std::pair<std::size_t,CutCompensated>> in,out;};

@@ -7,14 +7,9 @@
 #include <numeric>
 namespace judas::volume_grid {
 namespace {
-CutCompensated Normalize(double a,double b){CutCompensated r;r.hi=a+b;r.lo=b-(r.hi-a);return r;}
 struct Elimination {std::size_t node;CutCompensated diagonal;std::vector<std::pair<std::size_t,CutCompensated>> edges;};
 bool Fail(std::string& e,const char* s){e=s;return false;}
 }
-CutCompensated operator+(CutCompensated a,CutCompensated b){double s=a.hi+b.hi,v=s-a.hi;double e=(a.hi-(s-v))+(b.hi-v);return Normalize(s,e+a.lo+b.lo);}
-CutCompensated operator-(CutCompensated a,CutCompensated b){b.hi=-b.hi;b.lo=-b.lo;return a+b;}
-CutCompensated operator*(CutCompensated a,CutCompensated b){double p=a.hi*b.hi;double e=std::fma(a.hi,b.hi,-p)+a.hi*b.lo+a.lo*b.hi;return Normalize(p,e+a.lo*b.lo);}
-CutCompensated operator/(CutCompensated a,CutCompensated b){double q=a.hi/b.hi;auto r=a-b*CutCompensated(q);double q2=r.hi/b.hi;auto result=CutCompensated(q)+CutCompensated(q2);r=a-b*result;return result+CutCompensated(r.hi/b.hi);}
 bool SolveCutCondensedPressure(const std::vector<double>& storage,
  const std::vector<CutHydroacousticGraphLink>& links,const std::vector<double>& source,
  const std::vector<double>& tolerance,const std::vector<bool>& condense,

@@ -1,0 +1,110 @@
+[
+  {
+    "kind": "reference",
+    "sample": 0,
+    "startedUtc": "2026-11-06T12:29:22.213785+00:00",
+    "rotated": false,
+    "milliseconds": 34429.610254,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171234914637
+  },
+  {
+    "kind": "reference",
+    "sample": 0,
+    "startedUtc": "2026-11-06T12:29:22.213785+00:00",
+    "rotated": true,
+    "milliseconds": 35994.943178,
+    "iterations": 11,
+    "normalizedResidual": 0.000627740138896133
+  },
+  {
+    "kind": "candidate",
+    "sample": 0,
+    "startedUtc": "2026-11-06T12:30:32.835843+00:00",
+    "rotated": false,
+    "milliseconds": 6011.840312,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171216977224
+  },
+  {
+    "kind": "candidate",
+    "sample": 0,
+    "startedUtc": "2026-11-06T12:30:32.835843+00:00",
+    "rotated": true,
+    "milliseconds": 6057.392314,
+    "iterations": 11,
+    "normalizedResidual": 0.0006277398352327615
+  },
+  {
+    "kind": "candidate",
+    "sample": 1,
+    "startedUtc": "2026-11-06T12:30:45.098126+00:00",
+    "rotated": false,
+    "milliseconds": 5972.433269,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171216977224
+  },
+  {
+    "kind": "candidate",
+    "sample": 1,
+    "startedUtc": "2026-11-06T12:30:45.098126+00:00",
+    "rotated": true,
+    "milliseconds": 6044.921085,
+    "iterations": 11,
+    "normalizedResidual": 0.0006277398352327615
+  },
+  {
+    "kind": "reference",
+    "sample": 1,
+    "startedUtc": "2026-11-06T12:30:57.305931+00:00",
+    "rotated": false,
+    "milliseconds": 34574.789551,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171234914637
+  },
+  {
+    "kind": "reference",
+    "sample": 1,
+    "startedUtc": "2026-11-06T12:30:57.305931+00:00",
+    "rotated": true,
+    "milliseconds": 35689.865343,
+    "iterations": 11,
+    "normalizedResidual": 0.000627740138896133
+  },
+  {
+    "kind": "reference",
+    "sample": 2,
+    "startedUtc": "2026-11-06T12:32:07.763462+00:00",
+    "rotated": false,
+    "milliseconds": 34571.628509,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171234914637
+  },
+  {
+    "kind": "reference",
+    "sample": 2,
+    "startedUtc": "2026-11-06T12:32:07.763462+00:00",
+    "rotated": true,
+    "milliseconds": 35773.858419,
+    "iterations": 11,
+    "normalizedResidual": 0.000627740138896133
+  },
+  {
+    "kind": "candidate",
+    "sample": 2,
+    "startedUtc": "2026-11-06T12:33:18.305247+00:00",
+    "rotated": false,
+    "milliseconds": 5985.334219,
+    "iterations": 15,
+    "normalizedResidual": 0.0005709171216977224
+  },
+  {
+    "kind": "candidate",
+    "sample": 2,
+    "startedUtc": "2026-11-06T12:33:18.305247+00:00",
+    "rotated": true,
+    "milliseconds": 6048.066985,
+    "iterations": 11,
+    "normalizedResidual": 0.0006277398352327615
+  }
+]

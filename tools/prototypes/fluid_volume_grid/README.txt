@@ -53,3 +53,8 @@ Locally constrained pressure reference (6 November):
 Both original frozen-body basin fixtures now pass one original-timestep
 pressure/transport interval. It is a slow correctness reference, not an
 integrated runtime backend. Main and the fluid lock remain unchanged.
+
+Fast transport continuation (6 November 2026):
+See docs/FLUID_FAST_TRANSPORT.md and qualify_fast_pressure.sh. The slow
+reference is archived separately. Original first intervals pass faster, but
+the rotated sustained case remains a recorded failure; no runtime or unlock.

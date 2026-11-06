@@ -1,5 +1,6 @@
 #pragma once
 #include "CutHydroacousticGraph.h"
+#include <cmath>
 namespace judas::volume_grid {
 struct CutCompensated {
  double hi=0.,lo=0.;
@@ -7,10 +8,13 @@ struct CutCompensated {
  CutCompensated(double value):hi(value){}
  double Value()const{return hi+lo;}
 };
-CutCompensated operator+(CutCompensated,CutCompensated);
-CutCompensated operator-(CutCompensated,CutCompensated);
-CutCompensated operator*(CutCompensated,CutCompensated);
-CutCompensated operator/(CutCompensated,CutCompensated);
+// Keep these small value operations visible to hot-loop callers. The
+// arithmetic sequence is unchanged from the pinned slow reference.
+inline CutCompensated NormalizeCutCompensated(double a,double b){CutCompensated r;r.hi=a+b;r.lo=b-(r.hi-a);return r;}
+inline CutCompensated operator+(CutCompensated a,CutCompensated b){double s=a.hi+b.hi,v=s-a.hi;double e=(a.hi-(s-v))+(b.hi-v);return NormalizeCutCompensated(s,e+a.lo+b.lo);}
+inline CutCompensated operator-(CutCompensated a,CutCompensated b){b.hi=-b.hi;b.lo=-b.lo;return a+b;}
+inline CutCompensated operator*(CutCompensated a,CutCompensated b){double p=a.hi*b.hi;double e=std::fma(a.hi,b.hi,-p)+a.hi*b.lo+a.lo*b.hi;return NormalizeCutCompensated(p,e+a.lo*b.lo);}
+inline CutCompensated operator/(CutCompensated a,CutCompensated b){double q=a.hi/b.hi;auto r=a-b*CutCompensated(q);double q2=r.hi/b.hi;auto result=CutCompensated(q)+CutCompensated(q2);r=a-b*result;return result+CutCompensated(r.hi/b.hi);}
 struct CutCondensedResult {
  std::vector<CutCompensated> pressure,flux;
  double maximumNormalizedResidual=0.;
