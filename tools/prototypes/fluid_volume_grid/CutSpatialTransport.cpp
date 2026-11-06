@@ -15,7 +15,7 @@ CutRegionFace Face(std::size_t l,std::size_t r,int axis,GridVec lo,GridVec hi){
 }
 bool BuildCutSpatialField(const CutRegionChart& chart,const CutRegionGeometry& geometry,
  const CutConnectedOwners& owners,const CutDynamicState& source,const std::vector<double>& flux,
- const std::vector<CutPhaseBoundary>& boundaries,CutSpatialField& output,std::string& error){
+ const std::vector<CutPhaseBoundary>& boundaries,CutSpatialField& output,std::string& error,bool splitMidplanes){
  const auto n=chart.regions.size();
  if(n==0||owners.lo.size()!=owners.members.size()||owners.hi.size()!=owners.members.size())return Fail(error,"invalid spatial ownership");
  if(source.water.size()!=n||source.gasMass.size()!=n||owners.owner.size()!=n||flux.size()!=geometry.faces.size()||
@@ -26,7 +26,7 @@ bool BuildCutSpatialField(const CutRegionChart& chart,const CutRegionGeometry& g
  if(geometry.motion&&geometry.motion->translation!=GridVec{})return Fail(error,"spatial field currently requires frozen geometry");
  CutSpatialField next;next.chart.layout=chart.layout;next.chart.moving=geometry.motion;
  std::vector<std::array<std::vector<double>,3>> cuts(n);
- for(std::size_t i=0;i<n;++i)for(int a=0;a<3;++a){const auto& r=chart.regions[i];cuts[i][a]={r.lo[a],r.hi[a]};if(r.hi[a]-r.lo[a]>=.25*chart.layout.h)cuts[i][a].push_back(r.lo[a]+.5*(r.hi[a]-r.lo[a]));}
+ for(std::size_t i=0;i<n;++i)for(int a=0;a<3;++a){const auto& r=chart.regions[i];cuts[i][a]={r.lo[a],r.hi[a]};if(splitMidplanes&&r.hi[a]-r.lo[a]>=.25*chart.layout.h)cuts[i][a].push_back(r.lo[a]+.5*(r.hi[a]-r.lo[a]));}
  for(const auto& f:geometry.faces)for(auto i:{f.left,f.right})for(int a=0;a<3;++a)if(a!=f.axis){cuts[i][a].push_back(f.lo[a]);cuts[i][a].push_back(f.hi[a]);}
  std::vector<double> gas(n);
  for(std::size_t i=0;i<n;++i){double rho=1.2+(source.pressure.empty()?0.:source.pressure[i])/(343.*343.);if(!(rho>0.&&std::isfinite(rho)))return Fail(error,"invalid spatial source density");gas[i]=source.gasMass[i]/rho;}

@@ -47,3 +47,9 @@ Spatial field continuation (6 November): docs/FLUID_SPATIAL_TRANSPORT.md.
 The coface transport control now converges with time subdivision. Original
 basin fields build, but pressure/transport coupling still rejects; no native
 fluid timestep or new playable backend is qualified.
+
+Locally constrained pressure reference (6 November):
+  docs/FLUID_LOCAL_PRESSURE.md
+Both original frozen-body basin fixtures now pass one original-timestep
+pressure/transport interval. It is a slow correctness reference, not an
+integrated runtime backend. Main and the fluid lock remain unchanged.

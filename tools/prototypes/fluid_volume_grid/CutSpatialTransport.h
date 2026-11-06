@@ -20,7 +20,7 @@ bool BuildCutSpatialField(const CutRegionChart&,const CutRegionGeometry&,
                          const CutConnectedOwners&,const CutDynamicState&,
                          const std::vector<double>& faceFlux,
                          const std::vector<CutPhaseBoundary>&,
-                         CutSpatialField&,std::string&);
+                         CutSpatialField&,std::string&, bool splitMidplanes = true);
 // Conservative backward-Euler donor-cell transport on the spatial field.
 // Water quantity and gas mass are advected independently. Pressure acts
 // through the supplied flux, not a density knob. This is NOT a pressure/EOS

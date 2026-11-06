@@ -1,0 +1,18 @@
+OWNERS rotated=0 fragments=20344 owners=17231 minCapacity=2.7939683899802503e-10 maxMembers=32
+PROJECTION rotated=0 admitted=0 unchanged=1 ms=205.15777 reason=connected mixed-owner continuation lacks a geometric path: owner=2407 members=2 capacity=1.5625730156898499e-05 unsupported_m3=9.282909354091813e-07 outgoingWater=0 initialWater=0 incomingWater=3.8808374454760998e-06 initialGasMass=1.8750876188278197e-05 outgoingGasMass=4.9943229439439137e-06 incomingGasMass=3.4124554755562869e-07 trialWater=3.8808374454760998e-06 trialGasMass=1.4097798791889912e-05 iteration=9 globalResidual=7.1633237536117278e-16 bounds=[0.5,0.625;0.5,0.5010000467300415;0.375,0.5]
+FILM fragment=2844 owner=2661 members=2 bounds=1,1.125;1.625,1.75;0.49999997764825821,0.5 water=0 gas=3.4924596548080444e-10
+FILM_FACE index=7940 left=2812 right=2844 axis=1 q=1.0459490332901211e-09 donorWet=0 sameOwner=0
+FILM_FACE index=8025 left=2843 right=2844 axis=0 q=1.3747539067924997e-10 donorWet=0 sameOwner=0
+FILM_FACE index=8028 left=2844 right=2845 axis=0 q=1.1490626345503238e-10 donorWet=0 sameOwner=0
+FILM_FACE index=8029 left=2844 right=2876 axis=1 q=9.7705437662402996e-10 donorWet=0 sameOwner=0
+FILM_FACE index=8030 left=2844 right=3748 axis=2 q=-4.6036105002357359e-12 donorWet=1 sameOwner=1
+SPATIAL_BUILD rotated=0 ok=1 cells=150360 ms=250.62615500000001 reason=
+SPATIAL_TRANSPORT rotated=0 ok=0 iterations=0 ms=40.887976999999999 reason=spatial candidate fails capacity or gas-only port admission
+CONDENSED_LINEAR nodes=150360 ok=1 eliminated=6621 retained=143739 refinements=4 normalizedResidual=0.00010207939022327696 ms=1668.7274649999999 reason=
+FINE_COUPLED rotated=0 ok=0 ms=1750.3010569999999 reason=owned pressure closure failed: diagnostic pressure solve only; compensated state not cast to physical output requested=4.9962370742692914e-29 globalResidual=1.0644532815624495e-05 iteration=1
+OWNERS rotated=1 fragments=35840 owners=30930 minCapacity=2.2351741790771401e-10 maxMembers=19
+PROJECTION rotated=1 admitted=0 unchanged=1 ms=465.39624199999997 reason=connected mixed-owner continuation lacks a geometric path: owner=3780 members=2 capacity=2.2351747119842022e-10 unsupported_m3=4.9383905282855115e-11 outgoingWater=0 initialWater=2.2351741790771499e-10 incomingWater=1.9122315542025537e-10 initialGasMass=6.3948846277966075e-17 outgoingGasMass=3.2763551023542928e-10 incomingGasMass=9.8059914937551422e-11 trialWater=4.1474057332797034e-10 trialGasMass=-2.2957553134903161e-10 iteration=10 globalResidual=5.6074936360950289e-16 bounds=[2.5,2.5000000223517418;0.5,0.60000000000000009;0.39999997615814209,0.5]
+SPATIAL_BUILD rotated=1 ok=1 cells=264800 ms=344.24486200000001 reason=
+SPATIAL_TRANSPORT rotated=1 ok=0 iterations=0 ms=131.590766 reason=spatial candidate fails capacity or gas-only port admission
+CONDENSED_LINEAR nodes=264800 ok=1 eliminated=14542 retained=250258 refinements=4 normalizedResidual=0.00014794581022972418 ms=4223.2219539999996 reason=
+FINE_COUPLED rotated=1 ok=0 ms=4362.4337219999998 reason=owned pressure closure failed: diagnostic pressure solve only; compensated state not cast to physical output requested=4.9962370742692914e-29 globalResidual=6.8125010019997353e-06 iteration=1

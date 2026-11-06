@@ -1,0 +1,66 @@
+{
+  "status": "BOTH_AUTHORED_FROZEN_BASINS_PASS_ONE_REST_INTERVAL_NOT_RUNTIME_READY",
+  "sourceParent": "6930344983fc3c8df7bc5257da7fac062060d3bd",
+  "branch": "Experimental",
+  "main": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "utc": "2026-11-06T02:21:29.473626+00:00",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "cpu": "AMD Ryzen 5 5600",
+  "physicalRamBytes": 8238276608,
+  "referenceBasins": [
+    {
+      "rotated": false,
+      "cells": 21696,
+      "dt": 0.01666666753590107,
+      "iterations": 15,
+      "maximumNormalizedVolumeResidual": 0.0005709171234914637,
+      "maximumVolumeResidual": 1.1805440576341249e-23,
+      "milliseconds": 34956.696028,
+      "waterLedgerError": -8.992180315878209e-17,
+      "gasLedgerError": -5.279422262565947e-23,
+      "minimumWater": 0.0,
+      "minimumGasMass": 0.0
+    },
+    {
+      "rotated": true,
+      "cells": 37334,
+      "dt": 0.01666666753590107,
+      "iterations": 11,
+      "maximumNormalizedVolumeResidual": 0.000627740138896133,
+      "maximumVolumeResidual": 1.974909932467068e-19,
+      "milliseconds": 35988.977539,
+      "waterLedgerError": -3.638620925331917e-29,
+      "gasLedgerError": -4.2089673598067085e-27,
+      "minimumWater": 0.0,
+      "minimumGasMass": 0.0
+    }
+  ],
+  "samplesPerBasin": 1,
+  "completedReferenceIntervals": 2,
+  "nativeRuntimeIntegrated": false,
+  "solidMotion": "frozen",
+  "initialMomentum": "rest",
+  "momentumAdvection": false,
+  "tests": {
+    "condensedPressure": 14,
+    "directedTransport": 9,
+    "exactResidual": 6,
+    "localCoupling": 16,
+    "retainedSpatialAndTransport": 254,
+    "total": 299,
+    "sanitizers": "all 299 checks pass address, undefined behavior, leaks outside tracing wrapper"
+  },
+  "mainModified": false,
+  "fluidLockModified": false,
+  "humanAcceptance": false,
+  "performanceClaim": "not real-time; these are single reference solve timings, not a speedup distribution",
+  "peakRssKiB": 154788
+}

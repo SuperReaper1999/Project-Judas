@@ -1,0 +1,10 @@
+PASS condense stiff circulating cells without discarding storage
+PASS solve original quantity equations to strict absolute budget
+PASS positive physical input has nonnegative transported state
+PASS closed circulation preserves independent material quantity
+PASS dry material stays absent without numerical seeding
+PASS assemble directed throughflow
+PASS match independent triangular transport solution
+PASS independent minority mass is not dropped by a fraction tolerance
+PASS invalid right hand side preserves prior output
+9 checks, 0 failures

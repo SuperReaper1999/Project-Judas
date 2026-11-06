@@ -1,0 +1,7 @@
+PASS bound cancellation in represented compensated state
+PASS expansion enclosure contains independent exact binary answer
+PASS audit does not falsely report zero after large cancellation
+PASS subnormal product uncertainty is enclosed
+PASS underflow does not claim an exact zero residual
+PASS nonfinite data rejects transactionally
+6 checks, 0 failures
