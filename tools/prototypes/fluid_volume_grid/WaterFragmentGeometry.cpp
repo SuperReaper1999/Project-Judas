@@ -1,7 +1,10 @@
 #include "WaterFragmentGeometry.h"
+#include "WaterGasAperture.h"
 #include <algorithm>
 #include <cmath>
 #include <numeric>
+#include <map>
+#include <tuple>
 #include <iostream>
 #include <iomanip>
 namespace judas::volume_grid {
@@ -55,6 +58,12 @@ bool PrepareWaterFragmentGeometry(const CutSpatialField& field,const WaterMateri
         if(gasOwner[r]==SIZE_MAX){gasOwner[r]=gas.nodeCell.size();gas.nodeCell.push_back(i);gas.volume.push_back({});gas.mass.push_back({});gas.containingCapacity.push_back(field.geometry.startCapacity[state.fragments[i].cell]);}
         auto id=gasOwner[r];gas.cellNode[i]=id;next.carrier[i]=gas.nodeCell[id];gas.volume[id]=gas.volume[id]+MaterialVolume(state.fragments[i]);gas.mass[id]=gas.mass[id]+state.fragments[i].gasMass;
     }
+    std::vector<WaterCoordinate> gasLo(gas.nodeCell.size()),gasHi(gas.nodeCell.size());
+    std::vector<bool> gasBounds(gas.nodeCell.size());
+    for(std::size_t i=0;i<n;++i)if(!state.fragments[i].water){auto node=gas.cellNode[i];const auto& f=state.fragments[i];
+        if(!gasBounds[node]){gasLo[node]=f.lo;gasHi[node]=f.hi;gasBounds[node]=true;}
+        else for(int d=0;d<3;++d){gasLo[node][d]=Min(gasLo[node][d],f.lo[d]);gasHi[node][d]=Max(gasHi[node][d],f.hi[d]);}
+    }
     std::vector<std::size_t> parent(n);std::iota(parent.begin(),parent.end(),0);
     auto root=[&](std::size_t i){while(parent[i]!=i){parent[i]=parent[parent[i]];i=parent[i];}return i;};
     for(auto f:next.faces)if(state.fragments[f.left].water&&state.fragments[f.right].water&&state.fragments[f.left].cell==state.fragments[f.right].cell){auto a=root(f.left),b=root(f.right);if(a!=b)parent[b]=a;}
@@ -70,22 +79,38 @@ bool PrepareWaterFragmentGeometry(const CutSpatialField& field,const WaterMateri
         auto patchId=region.patches.size();region.patches.push_back(patch);region.owners.push_back({shared,gasNode});region.potential.push_back(potential);
         if(fixed)++water.solidFaces;else if(gasNode!=SIZE_MAX)++water.freeSurfaces;return patchId;
     };
+    std::map<std::tuple<std::size_t,std::size_t,int>,std::size_t> sharedIndex;
+    struct Opening {std::size_t left,right;int axis,sign;double length;std::vector<WaterMaterialFragment> rectangles;};
+    std::vector<Opening> openings;
+    std::map<std::tuple<std::size_t,std::size_t,int,int,double,double>,std::size_t> openingIndex;
+    auto aperture=[&](std::size_t left,std::size_t right,int axis,int sign,Rectangle face,double length){
+        Real plane=face.lo[axis];auto key=std::make_tuple(left,right,axis,sign,plane.hi,plane.lo);
+        auto entry=openingIndex.emplace(key,openings.size());
+        if(entry.second)openings.push_back({left,right,axis,sign,length,{}});
+        WaterMaterialFragment footprint;footprint.lo=face.lo;footprint.hi=face.hi;footprint.lo[axis]={};footprint.hi[axis]=Real(1.);
+        openings[entry.first->second].rectangles.push_back(footprint);
+    };
     for(auto face:next.faces){auto& l=state.fragments[face.left];auto& r=state.fragments[face.right];Rectangle a{face.lo,face.hi},b=a;
         for(int d=0;d<3;++d){Real shift=Real(field.chart.regions[l.cell].lo[d])-Real(field.chart.regions[r.cell].lo[d]);b.lo[d]=b.lo[d]+shift;b.hi[d]=b.hi[d]+shift;}
         if(!Subtract(remaining[face.left][2*face.axis+1],a,face.axis)||!Subtract(remaining[face.right][2*face.axis],b,face.axis))return Fail(error,"material neighbour faces overlap or leave inconsistent ownership");
-        if(l.water&&r.water){if(water.cellWater[face.left]==water.cellWater[face.right])continue;auto id=water.sharedFaces++;next.sharedWater.push_back({face.left,face.right});append(face.left,face.axis,1,a,id,SIZE_MAX,false);append(face.right,face.axis,-1,b,id,SIZE_MAX,false);}
-        else if(!l.water&&!r.water){if(gas.cellNode[face.left]==gas.cellNode[face.right])continue;double conductance=0.;int x=(face.axis+1)%3,y=(face.axis+2)%3;double length=((l.hi[face.axis]-l.lo[face.axis]+r.hi[face.axis]-r.lo[face.axis])*Real(.5)).Value();
-            if(!RectangularGasMassConductance((a.hi[x]-a.lo[x]).Value(),(a.hi[y]-a.lo[y]).Value(),length,settings.referenceDensity,settings.referencePressure,1.8e-5,conductance,error))return false;
-            gas.links.push_back({gas.cellNode[face.left],gas.cellNode[face.right],conductance});gas.sharedDryArea.push_back(Area(a,face.axis).Value());}
+        if(l.water&&r.water){if(water.cellWater[face.left]==water.cellWater[face.right])continue;auto entry=sharedIndex.emplace(std::make_tuple(water.cellWater[face.left],water.cellWater[face.right],face.axis),water.sharedFaces);auto id=entry.first->second;if(entry.second){++water.sharedFaces;next.sharedWater.push_back({face.left,face.right});}append(face.left,face.axis,1,a,id,SIZE_MAX,false);append(face.right,face.axis,-1,b,id,SIZE_MAX,false);}
+        else if(!l.water&&!r.water){auto left=gas.cellNode[face.left],right=gas.cellNode[face.right];if(left==right)continue;
+            double length=((gasHi[left][face.axis]-gasLo[left][face.axis]+gasHi[right][face.axis]-gasLo[right][face.axis])*Real(.5)).Value();
+            aperture(left,right,face.axis,1,a,length);
+        }
         else{auto w=l.water?face.left:face.right,g=l.water?face.right:face.left;Rectangle p=l.water?a:b;int sign=l.water?1:-1;auto patch=append(w,face.axis,sign,p,SIZE_MAX,gas.cellNode[g],false);next.interfaces.push_back({w,g,patch,face.axis,sign,p.lo,p.hi});}
     }
     for(std::size_t i=0;i<n;++i)for(int axis=0;axis<3;++axis)for(int side=0;side<2;++side)for(auto p:remaining[i][2*axis+side]){
         const auto& f=state.fragments[i];int sign=side?1:-1;bool vent=false;
         for(auto port:field.boundaries)if(port.fragment==f.cell&&port.axis==axis&&port.sign==sign){Real coordinate=side?Real(field.chart.regions[f.cell].hi[axis]-field.chart.regions[f.cell].lo[axis]):Real();if((p.lo[axis]-coordinate).Value()==0.)vent=true;}
         if(f.water){if(vent)return Fail(error,"water escape through an exterior air port needs an explicit boundary receiver");append(i,axis,sign,p,SIZE_MAX,SIZE_MAX,true);}
-        else if(vent){int x=(axis+1)%3,y=(axis+2)%3;double length=((f.hi[axis]-f.lo[axis])*Real(.5)).Value(),conductance=0.;
-            if(!RectangularGasMassConductance((p.hi[x]-p.lo[x]).Value(),(p.hi[y]-p.lo[y]).Value(),length,settings.referenceDensity,settings.referencePressure,1.8e-5,conductance,error))return false;
-            gas.vents.push_back({gas.cellNode[i],conductance,0.});}
+        else if(vent){auto node=gas.cellNode[i];double length=((gasHi[node][axis]-gasLo[node][axis])*Real(.5)).Value();aperture(node,SIZE_MAX,axis,sign,p,length);}
+
+    }
+    for(const auto& opening:openings){double area=0.,conductance=0.;
+        if(!MeasureWaterGasAperture(opening.rectangles,opening.axis,opening.length,settings,area,conductance,error))return false;
+        if(opening.right==SIZE_MAX)gas.vents.push_back({opening.left,conductance,0.});
+        else{gas.links.push_back({opening.left,opening.right,conductance});gas.sharedDryArea.push_back(area);}
     }
     // Boundary rectangles are integration pieces, not independent velocity
     // degrees of freedom. One constant normal velocity per oriented boundary

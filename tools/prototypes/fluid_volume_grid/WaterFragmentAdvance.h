@@ -3,6 +3,8 @@
 namespace judas::volume_grid {
 struct WaterFragmentAdvanceStats {
     std::size_t intervals=0,rejected=0,geometricConstraints=0;
+    std::size_t maximumFragmentsBeforeRegrid=0,maximumFragmentsAfterRegrid=0;
+    double regridMs=0.,mixingKineticPerDensityLoss=0.;
     double geometryMs=0.,pressureMs=0.,transportMs=0.,totalMs=0.,minimumInterval=0.;
     CutCompensated advancedTime;
 };

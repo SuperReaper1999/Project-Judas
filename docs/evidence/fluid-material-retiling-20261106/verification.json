@@ -1,0 +1,273 @@
+{
+  "source_parent": "3d03de09347d1c4fd2b06460f4048206e0d6d5b9",
+  "branch": "Experimental",
+  "recorded_utc": "2026-11-06T23:05:45.430354+00:00",
+  "main_unchanged": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "host": {
+    "cpu": "AMD Ryzen 5 5600, 6 cores / 12 threads",
+    "ram_mib": 7856,
+    "kernel": "Linux 7.0.0-43-generic x86_64 GNU/Linux",
+    "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0"
+  },
+  "flags": "-std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror; no fast-math",
+  "sanitizers": "-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer; native leak detection",
+  "controls": {
+    "normal-controls": {
+      "suites": 36,
+      "checks": 3559,
+      "failures": 0
+    },
+    "sanitized-controls": {
+      "suites": 36,
+      "checks": 3559,
+      "failures": 0
+    }
+  },
+  "preserved_old_flow_intervals": 240,
+  "reference_checks": 50,
+  "independent_exact_checks": 842,
+  "fragment_flow": {
+    "complete_240_intervals": false,
+    "failed_interval_zero_based": 1,
+    "checks": 14,
+    "failures": 3,
+    "normal_exit": 1,
+    "sanitized_exit": 1,
+    "sanitizer_findings": 0
+  },
+  "original_basins": {
+    "level": {
+      "exit": 1,
+      "raw_summary": "WHOLE_INTERVAL rotated=0 ok=0 time=8.1380212577641942e-06 intervals=1 rejected=11 constraints=134 pieces=0 geometryMs=482.35744399999999 pressureMs=26086.325947999994 transportMs=3827.959758 elapsedMs=30486.010483999999 error=hydroacoustic incomplete factorization is not representable",
+      "complete_interval_published": false
+    },
+    "rotated": {
+      "exit": 1,
+      "raw_summary": "WHOLE_INTERVAL rotated=1 ok=0 time=0 intervals=0 rejected=16 constraints=19 pieces=0 geometryMs=330.62807900000001 pressureMs=72051.084986000016 transportMs=1299.0765749999996 elapsedMs=73752.110706000007 error=liquid cell original momentum/work audit failed volume=0.0010000002787693839 workResidual=-6.9975965870856266e-22 workScale=6.3722928661169754e-12 momentumResidual=2.7765372702499037e-16 momentumBudget=1.0000002787693838e-10 maximumPatchSpeed=2.5504421906249868e-06",
+      "complete_interval_published": false
+    }
+  },
+  "performance": {
+    "kind": "exact reconstruction of regular redundant subdivisions; not fluid throughput",
+    "timings": [
+      {
+        "input_pieces": 2,
+        "output_pieces": 2,
+        "samples": 5,
+        "median_ms": 0.003246,
+        "worst_ms": 0.02657
+      },
+      {
+        "input_pieces": 32,
+        "output_pieces": 2,
+        "samples": 5,
+        "median_ms": 0.078257,
+        "worst_ms": 0.12168
+      },
+      {
+        "input_pieces": 128,
+        "output_pieces": 2,
+        "samples": 5,
+        "median_ms": 0.773799,
+        "worst_ms": 0.852007
+      },
+      {
+        "input_pieces": 512,
+        "output_pieces": 2,
+        "samples": 5,
+        "median_ms": 10.012094,
+        "worst_ms": 11.401493
+      }
+    ],
+    "rows": [
+      {
+        "input": 2,
+        "output": 2,
+        "repeat": 0,
+        "ok": 1,
+        "work": 20,
+        "ms": 0.02657
+      },
+      {
+        "input": 2,
+        "output": 2,
+        "repeat": 1,
+        "ok": 1,
+        "work": 20,
+        "ms": 0.003607
+      },
+      {
+        "input": 2,
+        "output": 2,
+        "repeat": 2,
+        "ok": 1,
+        "work": 20,
+        "ms": 0.003246
+      },
+      {
+        "input": 2,
+        "output": 2,
+        "repeat": 3,
+        "ok": 1,
+        "work": 20,
+        "ms": 0.003126
+      },
+      {
+        "input": 2,
+        "output": 2,
+        "repeat": 4,
+        "ok": 1,
+        "work": 20,
+        "ms": 0.003166
+      },
+      {
+        "input": 32,
+        "output": 2,
+        "repeat": 0,
+        "ok": 1,
+        "work": 3584,
+        "ms": 0.12168
+      },
+      {
+        "input": 32,
+        "output": 2,
+        "repeat": 1,
+        "ok": 1,
+        "work": 3584,
+        "ms": 0.082916
+      },
+      {
+        "input": 32,
+        "output": 2,
+        "repeat": 2,
+        "ok": 1,
+        "work": 3584,
+        "ms": 0.078257
+      },
+      {
+        "input": 32,
+        "output": 2,
+        "repeat": 3,
+        "ok": 1,
+        "work": 3584,
+        "ms": 0.074099
+      },
+      {
+        "input": 32,
+        "output": 2,
+        "repeat": 4,
+        "ok": 1,
+        "work": 3584,
+        "ms": 0.06885
+      },
+      {
+        "input": 128,
+        "output": 2,
+        "repeat": 0,
+        "ok": 1,
+        "work": 53248,
+        "ms": 0.852007
+      },
+      {
+        "input": 128,
+        "output": 2,
+        "repeat": 1,
+        "ok": 1,
+        "work": 53248,
+        "ms": 0.799046
+      },
+      {
+        "input": 128,
+        "output": 2,
+        "repeat": 2,
+        "ok": 1,
+        "work": 53248,
+        "ms": 0.773799
+      },
+      {
+        "input": 128,
+        "output": 2,
+        "repeat": 3,
+        "ok": 1,
+        "work": 53248,
+        "ms": 0.749563
+      },
+      {
+        "input": 128,
+        "output": 2,
+        "repeat": 4,
+        "ok": 1,
+        "work": 53248,
+        "ms": 0.725358
+      },
+      {
+        "input": 512,
+        "output": 2,
+        "repeat": 0,
+        "ok": 1,
+        "work": 819200,
+        "ms": 11.401493
+      },
+      {
+        "input": 512,
+        "output": 2,
+        "repeat": 1,
+        "ok": 1,
+        "work": 819200,
+        "ms": 10.019428
+      },
+      {
+        "input": 512,
+        "output": 2,
+        "repeat": 2,
+        "ok": 1,
+        "work": 819200,
+        "ms": 10.012094
+      },
+      {
+        "input": 512,
+        "output": 2,
+        "repeat": 3,
+        "ok": 1,
+        "work": 819200,
+        "ms": 9.98884
+      },
+      {
+        "input": 512,
+        "output": 2,
+        "repeat": 4,
+        "ok": 1,
+        "work": 819200,
+        "ms": 10.002546
+      }
+    ],
+    "large_basin_timing": "shared-host qualification diagnostic, overlapping compiler jobs; no matched speedup claim"
+  },
+  "rejected_trials": {
+    "pressure_owner_coarsening": "3 original controls fail; not adopted",
+    "event_bracket_dependent_accuracy": "crossing still fails, tolerance demand reaches arithmetic floor; not adopted",
+    "adjacent_binary64_time_search": "crossing still fails; not adopted",
+    "endpoint_coordinate_reuse": "512 old/new probes both pass; no reproduced defect, not adopted"
+  },
+  "adopted": [
+    "exact material union with work budgets and physical ledgers",
+    "physical aperture composition and control-span length",
+    "shared pressure trace per oriented water-control pair",
+    "reconstruction at accepted internal prefixes"
+  ],
+  "bounded_resolution_backend_complete": false,
+  "operator_decision": "explicitly approved conservative subgrid water/air storage with approximate geometry below resolution; replacement not yet implemented or qualified",
+  "main_promoted": false,
+  "alpha_lock_changed": false,
+  "runtime_backend_changed": false,
+  "unqualified": [
+    "sustained new fragment flow",
+    "complete authored basins",
+    "native moving MK2 coupling",
+    "radial fields",
+    "runtime cold saves and streaming",
+    "rendering and standalone export",
+    "Windows",
+    "Android"
+  ]
+}

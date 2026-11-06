@@ -1,5 +1,6 @@
 #include "WaterFragmentAdvance.h"
 #include "CutDualLinear.h"
+#include "WaterMaterialRegrid.h"
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -90,6 +91,14 @@ bool AdvanceWaterFragments(const CutSpatialField& field,const WaterMaterialState
                 continue;
             }
             t=Clock::now();if(!Momentum(next,geometry,flux,density,error)){work.totalMs=Milliseconds(started);stats=work;return false;}work.transportMs+=Milliseconds(t);
+            WaterMaterialState retiled;WaterMaterialRegridStats remap;
+            t=Clock::now();bool rebuilt=RegridWaterMaterial(field,next,retiled,remap,error);work.regridMs+=Milliseconds(t);
+            if(!rebuilt){work.totalMs=Milliseconds(started);stats=work;return false;}
+            work.maximumFragmentsBeforeRegrid=std::max(work.maximumFragmentsBeforeRegrid,remap.maximumCellBefore);
+            work.maximumFragmentsAfterRegrid=std::max(work.maximumFragmentsAfterRegrid,remap.maximumCellAfter);
+            work.mixingKineticPerDensityLoss+=remap.mixingKineticPerDensityLoss;
+            if(requested.trace)std::cout<<"MATERIAL_RETILE before="<<remap.piecesBefore<<" after="<<remap.piecesAfter<<" maximumCellBefore="<<remap.maximumCellBefore<<" maximumCellAfter="<<remap.maximumCellAfter<<" ms="<<remap.milliseconds<<std::endl;
+            next=std::move(retiled);
             next.externalGasMass=current.externalGasMass+pressure.externalGasMass;
             Real water,gas=next.externalGasMass;for(auto& f:next.fragments){if(f.water)water=water+MaterialVolume(f);else gas=gas+f.gasMass;}
             if(std::abs((water-source.importedWater-source.waterImportError).Value())>1e-14||std::abs((gas-source.importedGasMass).Value())>requested.massTolerance){work.totalMs=Milliseconds(started);stats=work;return Fail(error,"whole fragment interval violated its cold material ledger");}

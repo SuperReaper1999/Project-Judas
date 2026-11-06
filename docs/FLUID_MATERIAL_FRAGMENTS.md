@@ -1,5 +1,7 @@
 # Local material fragments — 6 November 2026
 
+**Follow-up:** [exact retiling and physical-aperture corrections](FLUID_MATERIAL_RETILING.md) retain the failed original gates and identify the pending finite-resolution policy. The measurements below describe this earlier checkpoint.
+
 **Isolated numerical prototype. Not a qualified runtime backend or a fluid unlock.**
 The original authored basins still fail the complete-interval gate. This checkpoint
 preserves useful geometry/event work and a reproducible rejection of the current
