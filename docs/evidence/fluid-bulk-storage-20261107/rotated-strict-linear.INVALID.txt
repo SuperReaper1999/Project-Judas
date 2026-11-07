@@ -1,0 +1,1 @@
+First command did not stop after a compile warning treated as error. It linked the previous donor-inexact object. This log is NOT strict-linear evidence; repeat under set -e.

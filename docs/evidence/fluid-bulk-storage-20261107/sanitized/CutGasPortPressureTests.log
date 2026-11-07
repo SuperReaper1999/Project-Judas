@@ -1,0 +1,29 @@
+PASS compile one-cell gas outlet
+LOCAL_PRESSURE iteration=0 normalized=9.79079e+10 residual=0.000979079
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=1 normalized=9.41269e+07 residual=9.41269e-07
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=2 normalized=86.8298 residual=8.68298e-13
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=3 normalized=7.38925e-11 residual=7.38925e-25
+PASS part-filled top gas outlet reaches original volume admission
+PASS pressure agrees with independent quadratic gas-mass balance
+PASS physical gas port leaves water unchanged
+PASS physical gas port closes the original mass ledger
+LOCAL_PRESSURE iteration=0 normalized=9.79079e+10 residual=0.000979079
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=1 normalized=9.41269e+07 residual=9.41269e-07
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=2 normalized=86.8298 residual=8.68298e-13
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=3 normalized=7.38929e-11 residual=7.38929e-25
+PASS non-default ambient density is used consistently at gas ports
+LOCAL_PRESSURE iteration=0 normalized=9.81e+10 residual=0.000981
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=1 normalized=4.00454e+06 residual=4.00454e-08
+NEWTON_STEP krylov=1 predictedResidual=0 line=1
+LOCAL_PRESSURE iteration=2 normalized=0.00667351 residual=6.67351e-17
+PASS water-covered gas opening remains explicit unsupported topology
+PASS compile solid-blocked gas opening
+PASS an interior solid face cannot be misdeclared as an exterior gas opening
+9 checks, 0 failures

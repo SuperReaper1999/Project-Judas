@@ -11,6 +11,10 @@ Source parent: `3d03de09347d1c4fd2b06460f4048206e0d6d5b9`.
 [Exact sources, commands and raw evidence](evidence/fluid-material-retiling-20261106/README.md).
 [Previous fragment investigation](FLUID_MATERIAL_FRAGMENTS.md).
 
+Subsequent work: [bounded storage and pressure experiment](FLUID_BULK_STORAGE.md).
+Its original sustained-basin gate also remains red; it does not supersede the
+failures or numerical evidence recorded here.
+
 ## Adopted implementation
 
 `WaterMaterialRegrid` reconstructs connected regions with exact local sweep

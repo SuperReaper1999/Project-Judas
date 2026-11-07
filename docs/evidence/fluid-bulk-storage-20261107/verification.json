@@ -1,0 +1,450 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-07T01:12:51.134419+00:00",
+  "branch": "Experimental",
+  "source_parent": "cc6c2bbb29642f148bac261c0b3aba930fd87001",
+  "geometry_parent": "eed2d0e3fe0e601e88fed30cf938584a0b6e0d8f",
+  "main_unchanged": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "native_engine_changed": false,
+  "alpha_fluid_lock_changed": false,
+  "advanced_fluids_ready": false,
+  "human_acceptance": false,
+  "host": {
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+    "logical_cpus": 12,
+    "memory_mib": 7856,
+    "kernel": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "glm": "1.0.1+ds-3",
+    "gpu_used": false,
+    "windows_qualified": false,
+    "android_qualified": false
+  },
+  "control_results": {
+    "normal": {
+      "suite_count": 38,
+      "checks": 3631,
+      "failures": 0,
+      "suites": {
+        "CutCondensedPressureTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "CutConnectedOwnersTests": {
+          "checks": 33,
+          "failures": 0
+        },
+        "CutConservativeBalanceTests": {
+          "checks": 11,
+          "failures": 0
+        },
+        "CutCoupledKrylovTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutCoupledResidualTests": {
+          "checks": 36,
+          "failures": 0
+        },
+        "CutDirectedTransportTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutDualLinearTests": {
+          "checks": 21,
+          "failures": 0
+        },
+        "CutDualMomentumTests": {
+          "checks": 24,
+          "failures": 0
+        },
+        "CutDynamicTransportTests": {
+          "checks": 149,
+          "failures": 0
+        },
+        "CutExactResidualTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "CutFastTransportTests": {
+          "checks": 325,
+          "failures": 0
+        },
+        "CutGasPortPressureTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutGeometricRoutingTests": {
+          "checks": 15,
+          "failures": 0
+        },
+        "CutHydroacousticGraphTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "CutLocalContinuationTests": {
+          "checks": 2511,
+          "failures": 0
+        },
+        "CutLocalPressureTests": {
+          "checks": 16,
+          "failures": 0
+        },
+        "CutMassMomentumTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "CutOrthogonalFieldTests": {
+          "checks": 10,
+          "failures": 0
+        },
+        "CutPhaseFrontsTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "CutPressurePreconditionerTests": {
+          "checks": 12,
+          "failures": 0
+        },
+        "CutSelectiveTransportTests": {
+          "checks": 12,
+          "failures": 0
+        },
+        "CutSpatialTransportTests": {
+          "checks": 22,
+          "failures": 0
+        },
+        "CutTransparentGridTests": {
+          "checks": 17,
+          "failures": 0
+        },
+        "CutVelocityDualTests": {
+          "checks": 37,
+          "failures": 0
+        },
+        "WaterBuoyancyTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "WaterCellAuditTests": {
+          "checks": 17,
+          "failures": 0
+        },
+        "WaterFragmentBuoyancyTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "WaterGasApertureTests": {
+          "checks": 13,
+          "failures": 0
+        },
+        "WaterGasGeometryTests": {
+          "checks": 16,
+          "failures": 0
+        },
+        "WaterGasPocketsTests": {
+          "checks": 22,
+          "failures": 0
+        },
+        "WaterGasRemapTests": {
+          "checks": 7,
+          "failures": 0
+        },
+        "WaterInterfaceEventTests": {
+          "checks": 20,
+          "failures": 0
+        },
+        "WaterMaterialRegridTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "WaterMimeticCellTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "WaterPressureILUTests": {
+          "checks": 15,
+          "failures": 0
+        },
+        "WaterVolumeTests": {
+          "checks": 10,
+          "failures": 0
+        },
+        "WaterBulkTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "WaterBulkCondensationTests": {
+          "checks": 14,
+          "failures": 0
+        }
+      },
+      "dependency_run": ".cache/fluid-bulk-storage-20261106/qualified-normal/controls",
+      "final_module_run": ".cache/fluid-bulk-storage-20261106/admitted-normal",
+      "scope": "private numerical prototype controls, not native runtime or original-basin acceptance",
+      "build_flags": "-std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror"
+    },
+    "sanitized": {
+      "suite_count": 38,
+      "checks": 3631,
+      "failures": 0,
+      "suites": {
+        "CutCondensedPressureTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "CutConnectedOwnersTests": {
+          "checks": 33,
+          "failures": 0
+        },
+        "CutConservativeBalanceTests": {
+          "checks": 11,
+          "failures": 0
+        },
+        "CutCoupledKrylovTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutCoupledResidualTests": {
+          "checks": 36,
+          "failures": 0
+        },
+        "CutDirectedTransportTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutDualLinearTests": {
+          "checks": 21,
+          "failures": 0
+        },
+        "CutDualMomentumTests": {
+          "checks": 24,
+          "failures": 0
+        },
+        "CutDynamicTransportTests": {
+          "checks": 149,
+          "failures": 0
+        },
+        "CutExactResidualTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "CutFastTransportTests": {
+          "checks": 325,
+          "failures": 0
+        },
+        "CutGasPortPressureTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "CutGeometricRoutingTests": {
+          "checks": 15,
+          "failures": 0
+        },
+        "CutHydroacousticGraphTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "CutLocalContinuationTests": {
+          "checks": 2511,
+          "failures": 0
+        },
+        "CutLocalPressureTests": {
+          "checks": 16,
+          "failures": 0
+        },
+        "CutMassMomentumTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "CutOrthogonalFieldTests": {
+          "checks": 10,
+          "failures": 0
+        },
+        "CutPhaseFrontsTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "CutPressurePreconditionerTests": {
+          "checks": 12,
+          "failures": 0
+        },
+        "CutSelectiveTransportTests": {
+          "checks": 12,
+          "failures": 0
+        },
+        "CutSpatialTransportTests": {
+          "checks": 22,
+          "failures": 0
+        },
+        "CutTransparentGridTests": {
+          "checks": 17,
+          "failures": 0
+        },
+        "CutVelocityDualTests": {
+          "checks": 37,
+          "failures": 0
+        },
+        "WaterBuoyancyTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "WaterCellAuditTests": {
+          "checks": 17,
+          "failures": 0
+        },
+        "WaterFragmentBuoyancyTests": {
+          "checks": 6,
+          "failures": 0
+        },
+        "WaterGasApertureTests": {
+          "checks": 13,
+          "failures": 0
+        },
+        "WaterGasGeometryTests": {
+          "checks": 16,
+          "failures": 0
+        },
+        "WaterGasPocketsTests": {
+          "checks": 22,
+          "failures": 0
+        },
+        "WaterGasRemapTests": {
+          "checks": 7,
+          "failures": 0
+        },
+        "WaterInterfaceEventTests": {
+          "checks": 20,
+          "failures": 0
+        },
+        "WaterMaterialRegridTests": {
+          "checks": 14,
+          "failures": 0
+        },
+        "WaterMimeticCellTests": {
+          "checks": 9,
+          "failures": 0
+        },
+        "WaterPressureILUTests": {
+          "checks": 15,
+          "failures": 0
+        },
+        "WaterVolumeTests": {
+          "checks": 10,
+          "failures": 0
+        },
+        "WaterBulkTests": {
+          "checks": 50,
+          "failures": 0
+        },
+        "WaterBulkCondensationTests": {
+          "checks": 14,
+          "failures": 0
+        }
+      },
+      "dependency_run": ".cache/fluid-bulk-storage-20261106/qualified-sanitized/controls",
+      "final_module_run": ".cache/fluid-bulk-storage-20261106/admitted-sanitized",
+      "scope": "private numerical prototype controls, not native runtime or original-basin acceptance",
+      "build_flags": "-std=c++17 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+    }
+  },
+  "authored_basin_results": {
+    "level": {
+      "requested_intervals": 10,
+      "accepted_intervals": 3,
+      "complete": false,
+      "exit": 1,
+      "timeout_seconds": 90,
+      "rows": [
+        {
+          "rotated": 0,
+          "step": 0,
+          "ok": 1,
+          "ms": 32085.655168,
+          "Newton": 19,
+          "KrylovApplications": 532,
+          "residual": 1.5053616468278112e-15,
+          "energyChange": -57.74372483245679,
+          "waterReconciliation": 1.946326599176343e-20,
+          "massReconciliation": 7.793305709835453e-19,
+          "error": ""
+        },
+        {
+          "rotated": 0,
+          "step": 1,
+          "ok": 1,
+          "ms": 11450.419112,
+          "Newton": 8,
+          "KrylovApplications": 145,
+          "residual": 9.1621110918525e-11,
+          "energyChange": -62.28663823203533,
+          "waterReconciliation": 7.139484719814609e-17,
+          "massReconciliation": 1.5989069646671602e-15,
+          "error": ""
+        },
+        {
+          "rotated": 0,
+          "step": 2,
+          "ok": 1,
+          "ms": 10877.06588,
+          "Newton": 6,
+          "KrylovApplications": 189,
+          "residual": 3.5570296733317006e-13,
+          "energyChange": -65.99329063578625,
+          "waterReconciliation": 6.257383567130539e-24,
+          "massReconciliation": 7.590605584119384e-23,
+          "error": ""
+        },
+        {
+          "rotated": 0,
+          "step": 3,
+          "ok": 0,
+          "ms": 14053.993531,
+          "Newton": 8,
+          "KrylovApplications": 252,
+          "residual": 5.047079511762742e-12,
+          "energyChange": 0.0,
+          "waterReconciliation": 0.0,
+          "massReconciliation": 0.0,
+          "error": "invalid bulk face momentum"
+        }
+      ],
+      "maximum_rss_kib": 326992,
+      "started_utc": "2026-11-07T01:06:02.749916+00:00",
+      "finished_utc": "2026-11-07T01:07:11.377112+00:00",
+      "scope": "unchanged authored rounded geometry and seed; frozen solid; authored binary32 timestep/gravity; uniform chart gravity; no compiler job overlap"
+    },
+    "rotated": {
+      "requested_intervals": 10,
+      "accepted_intervals": 0,
+      "complete": false,
+      "exit": 124,
+      "timeout_seconds": 90,
+      "rows": [],
+      "maximum_rss_kib": 468044,
+      "started_utc": "2026-11-07T01:07:11.377283+00:00",
+      "finished_utc": "2026-11-07T01:08:41.404894+00:00",
+      "scope": "unchanged authored rounded geometry and seed; frozen solid; authored binary32 timestep/gravity; uniform chart gravity; no compiler job overlap"
+    }
+  },
+  "separate_controls": {
+    "invalid_cli_expected_exit": 2,
+    "old_zero_fill_physical_rows_identical": 241,
+    "tangent_checks": 128,
+    "tangent_failures": 0,
+    "maximum_tangent_relative_error": 2.180185115192425e-10,
+    "perturbed_tangent_checks": 128,
+    "perturbed_tangent_expected_failures": 8,
+    "perturbed_tangent_expected_exit": 1,
+    "tangent_final_source_rerun": true,
+    "tangent_final_source_notes": "Current-source recompilation after admission-helper change; perturbation changes the independent analytic tangent used by the test, not the physical solver."
+  },
+  "precision": "binary64 matrix products; independently compensated binary64-pair material, roots, corrections and scalar conversions; no runtime multiprecision library",
+  "energy_scope": "kinetic + gravitational + isothermal gas free energy relative to exterior; not full thermodynamic gas total energy",
+  "rejected_experiments_archive": {
+    "path": "prior-attempts.tar.gz",
+    "files": 175,
+    "sha256": "7e46e017bb2b7917086a6efdfae5d2d02027d1f48d78dc8e566b3e4f7c7da910"
+  },
+  "interpretation": "GREEN private controls and RED original basins. No complete-runtime, moving-MK2, radial-field, save/streaming or performance-readiness claim."
+}

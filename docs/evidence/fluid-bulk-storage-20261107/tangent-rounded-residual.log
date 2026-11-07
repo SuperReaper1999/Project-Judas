@@ -1,0 +1,7 @@
+BAD capacity=1e-12 modes=00 row=1 col=3 FD=-0.596046 analytic=-0.568912 relative=0.0455233
+BAD capacity=1e-12 modes=01 row=3 col=1 FD=-0.000102073 analytic=-0.000101836 relative=0.00231951
+BAD capacity=1e-12 modes=01 row=1 col=3 FD=-0.000101328 analytic=-0.000101937 relative=0.00597334
+BAD capacity=1e-12 modes=10 row=1 col=3 FD=-0.596046 analytic=-0.568912 relative=0.0455233
+BAD capacity=1e-12 modes=11 row=3 col=1 FD=-0.0001017 analytic=-0.000101836 relative=0.00133322
+BAD capacity=1e-12 modes=11 row=1 col=3 FD=-0.000101328 analytic=-0.000101937 relative=0.00597334
+128 checks 6 failures maximumRelative=0.04552329626759067

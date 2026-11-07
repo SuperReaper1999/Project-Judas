@@ -1,0 +1,4 @@
+HYDROSTATIC height=1 flux=0
+HYDROSTATIC height=0.01 flux=0
+HYDROSTATIC height=1e-08 flux=0
+9 checks, 0 failures
