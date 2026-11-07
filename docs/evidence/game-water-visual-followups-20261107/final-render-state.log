@@ -1,0 +1,36 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS independent unlit colour materials are available
+PASS same-size and twelve distinct auxiliary outputs are allocated
+PASS sequential auxiliary display matches independent tone-map/sRGB arithmetic
+PASS sequential auxiliary returns to the external default framebuffer
+PASS sequential main colours agree with known physical linear inputs
+PASS invalid target leaves the active main HDR view untouched
+PASS same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+PASS main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+PASS same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+PASS main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+PASS same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+PASS main continuation resolves once to the original output without frame-history feedback
+PASS invalid target leaves the active main HDR view untouched
+PASS same-size child uses independent scratch and resolves only its own green image
+PASS child restores the suspended main chart, viewport and camera
+PASS main continuation resolves once to the original output without frame-history feedback
+PASS more than eight child sizes cannot evict the suspended main HDR chart
+PASS cache churn and implicit child resolve preserve original main content and continuation
+PASS resolved child can be reopened for a read-only overlay
+PASS a second nested target is explicitly rejected without disturbing the first
+PASS EndRenderTarget implicitly resolves an unfinished child frame
+PASS preserved target readback restores the external framebuffer
+PASS scoped render passes leave no graphics errors
+Scoped HDR passes: 28 checks, 0 failures

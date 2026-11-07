@@ -1,0 +1,130 @@
+[Graphics] created OpenGL 3.3 Core request (portable policy)
+[Graphics] API=OpenGL 3.3 requested=portable selected=portable vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=0 SSBO=0 DSA=1 bufferStorage=1 textureViews=0 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=0 storageBlockBytes=0 computeInvocations=0 computeSharedBytes=0
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS initialize physical reference pool
+PASS continuous reconstruction reproduces a level pool
+PASS no height seam at a render patch boundary
+PASS visual refinement is independent of simulation resolution
+PASS quiet pool has smooth shared upward normals and finite outline faces
+PASS reconstruction leaves physical water quantity unchanged
+PASS moving-solid exclusion does not punch a render hole around a swimmer
+PASS optical continuation does not manufacture physical water
+PASS displacement waves do not create internal closing faces in a fully wet pool footprint
+PASS multi-cell held-body interior continues the optical medium from connected wet witnesses
+PASS entering the water with an adjacent held object does not open an optical camera pocket
+PASS held-object optical reconstruction preserves physical quantity
+PASS a dry swimmer behind a closed static wall does not acquire an optical water cavity
+PASS changing level across a cell boundary reuses surface topology
+PASS render intervals preserve an actual dry gap between separate layers
+PASS separate water layers retain both known surface heights without bridging their air gap
+PASS production GPU height/normal vs CPU: 0 m / 2.6742e-07; affine oracle error=2.99701e-07; old mesh y=1.6, current GPU y=2.10421; white/dry=255, near RGB=234,248,251, far RGB=186,231,242; clear-water red=255; later-object colour error=0; GL state restored=1; coplanar wall channel mismatches=0 in 6760 opaque pixels; free-side difference=157 [-0.45: 210,240,247 vs 210,240,247] [0: 210,239,247 vs 210,239,247] [0.45: 210,239,247 vs 210,239,247]
+PASS pool unseen water performs no visual field, surface, upload or optics work
+PASS capture pool above
+PASS capture pool grazing
+PASS capture pool waterline
+PASS capture pool under-horizontal
+PASS capture pool wall-close
+PASS capture pool under-up
+PASS capture pool under-down
+PASS capture pool shore
+PASS capture pool cross-0
+PASS capture pool cross-1
+PASS capture pool cross-2
+PASS capture pool cross-3
+PASS capture pool cross-4
+PASS capture pool cross-5
+PASS capture pool cross-6
+PASS pool disturbance remains physically healthy
+PASS pool presentation and impulses conserve physical quantity
+PASS capture pool disturbed
+PASS capture pool rising-level
+PASS pool changing levels follow real source receipts
+MEASURE pool simulation n=180 median=6.58504 p95=6.75683 worst=7.03144 ms
+MEASURE pool sampled render (quick gate; not a benchmark) n=6 median=0.878497 p95=10.5615 worst=10.5615 ms
+PASS retain named CPU/GPU intervals
+PASS pool water rendering has no GL errors
+PASS pool normal game scripts remain healthy
+PASS rotated unseen water performs no visual field, surface, upload or optics work
+PASS capture rotated above
+PASS capture rotated grazing
+PASS capture rotated waterline
+PASS capture rotated under-horizontal
+PASS capture rotated wall-close
+PASS capture rotated under-up
+PASS capture rotated under-down
+PASS capture rotated shore
+PASS capture rotated cross-0
+PASS capture rotated cross-1
+PASS capture rotated cross-2
+PASS capture rotated cross-3
+PASS capture rotated cross-4
+PASS capture rotated cross-5
+PASS capture rotated cross-6
+PASS rotated disturbance remains physically healthy
+PASS rotated presentation and impulses conserve physical quantity
+PASS capture rotated disturbed
+PASS capture rotated rising-level
+PASS rotated changing levels follow real source receipts
+MEASURE rotated simulation n=180 median=6.57487 p95=7.03608 worst=7.76243 ms
+MEASURE rotated sampled render (quick gate; not a benchmark) n=6 median=0.840205 p95=7.57279 worst=7.57279 ms
+PASS retain named CPU/GPU intervals
+PASS rotated water rendering has no GL errors
+PASS rotated normal game scripts remain healthy
+PASS radial unseen water performs no visual field, surface, upload or optics work
+PASS capture radial above
+PASS capture radial grazing
+PASS capture radial waterline
+PASS capture radial under-horizontal
+PASS capture radial wall-close
+PASS capture radial under-up
+PASS capture radial under-down
+PASS capture radial shore
+PASS capture radial cross-0
+PASS capture radial cross-1
+PASS capture radial cross-2
+PASS capture radial cross-3
+PASS capture radial cross-4
+PASS capture radial cross-5
+PASS capture radial cross-6
+PASS radial disturbance remains physically healthy
+PASS radial presentation and impulses conserve physical quantity
+PASS capture radial disturbed
+PASS capture radial rising-level
+PASS radial changing levels follow real source receipts
+MEASURE radial simulation n=180 median=6.65085 p95=6.84493 worst=7.82135 ms
+MEASURE radial sampled render (quick gate; not a benchmark) n=6 median=5.86401 p95=6.04548 worst=6.04548 ms
+PASS retain named CPU/GPU intervals
+PASS radial water rendering has no GL errors
+PASS radial normal game scripts remain healthy
+PASS planet-basin unseen water performs no visual field, surface, upload or optics work
+PASS capture planet-basin above
+PASS capture planet-basin grazing
+PASS capture planet-basin waterline
+PASS capture planet-basin under-horizontal
+PASS capture planet-basin wall-close
+PASS capture planet-basin under-up
+PASS capture planet-basin under-down
+PASS capture planet-basin shore
+PASS capture planet-basin cross-0
+PASS capture planet-basin cross-1
+PASS capture planet-basin cross-2
+PASS capture planet-basin cross-3
+PASS capture planet-basin cross-4
+PASS capture planet-basin cross-5
+PASS capture planet-basin cross-6
+PASS planet-basin disturbance remains physically healthy
+PASS planet-basin presentation and impulses conserve physical quantity
+PASS capture planet-basin disturbed
+PASS capture planet-basin rising-level
+PASS planet-basin changing levels follow real source receipts
+MEASURE planet-basin simulation n=180 median=5.31327 p95=5.59942 worst=6.17298 ms
+MEASURE planet-basin sampled render (quick gate; not a benchmark) n=6 median=0.737672 p95=0.870111 worst=0.870111 ms
+PASS retain named CPU/GPU intervals
+PASS planet-basin water rendering has no GL errors
+PASS planet-basin normal game scripts remain healthy
+PASS small-camera optics remain correct after larger views: production GPU height/normal vs CPU: 0 m / 2.6742e-07; affine oracle error=2.99701e-07; old mesh y=1.6, current GPU y=2.10421; white/dry=255, near RGB=234,248,251, far RGB=186,231,242; clear-water red=255; later-object colour error=0; GL state restored=1; coplanar wall channel mismatches=0 in 6760 opaque pixels; free-side difference=157 [-0.45: 210,240,247 vs 210,240,247] [0: 210,239,247 vs 210,239,247] [0.45: 210,239,247 vs 210,239,247]
+114 checks, 0 failures

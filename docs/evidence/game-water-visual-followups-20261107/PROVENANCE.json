@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-07T16:39:30.783374+00:00",
+  "parent": "f3648eab6cf404143763ab4d50072db0031c85af",
+  "channel": "Experimental",
+  "human_acceptance": false,
+  "physics_solver_changes": false,
+  "hardware": "Ryzen 5 5600, GTX 970 NVIDIA 580.178.04, 8 GiB RAM",
+  "build": "Release GNU 15.2.0",
+  "resolution": [
+    1280,
+    800
+  ],
+  "source_sha256": {
+    "src/fluid/GameWaterSurface.cpp": "031e65b402f21271eacab412dff9100a8ecaa8e32cebdcd838314911592a699d",
+    "src/fluid/GameWaterSurface.h": "fdaae5661dae4a8c5820ece7df7c39a3cfe7e63d4796111ce5607c931dd61390",
+    "src/render/WaterShaders.cpp": "1ecb9a588c011246b4833b742789f79e63bf28cdef1b4d3af32b8aadf21ee4b8",
+    "tests/WaterVisualGpuControls.cpp": "54db61895560df1430491bdaead349f2e5f5c3aa4ad3ae39608a440eed0b7364",
+    "tests/WaterVisualGpuControls.h": "e7581fea6c4f68ed9b859183409684f74077f81f40276cf264764627350845e4",
+    "tests/WaterVisualTests.cpp": "21658e64323da36b0c0ad6a9f22c6f7e034b44e11449940d91ed0dac4f77469f"
+  }
+}

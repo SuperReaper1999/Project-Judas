@@ -2,6 +2,7 @@
 #include "GraphicsApi.h"
 #include "Renderer.h"
 #include "BasicWater.h"
+#include "ScreenshotWriter.h"
 #include "fluid/GameWaterSurface.h"
 #include "render/ShaderLibrary.h"
 #include "render/WaterShaders.h"
@@ -14,17 +15,20 @@
 
 // Capture the actual production vertex shader. The independent CPU interpolant
 // supplies its known answer; neither a blue image nor a source substring is an oracle.
-WaterGpuControls RunWaterVisualGpuControls(Renderer& renderer) {
+WaterGpuControls RunWaterVisualGpuControls(Renderer& renderer,const std::string& captureDirectory) {
     using namespace JudasRender;
     WaterGpuControls result;
     JudasWater::Settings settings;settings.cells={8,8,8};settings.cellSize=.4f;settings.origin={-1.6f,0,-1.6f};
     JudasWater::Grid water;std::string error;
     if(!water.Initialize(settings,error)){result.details=error;return result;}
     water.FillBox({-2,0,-2},{2,1.99f,2});auto field=JudasWater::BuildSurfaceField(water);
-    // FillBox seeds whole physical cells. Prescribe an independent 1.7 m
-    // render-field plane here, including its partial upper row, rather than
-    // pretending a cell-centre fill describes an exact sub-cell height.
-    for(auto& interval:field.intervals)if(interval.z>0)interval.y=1.7f;
+    // Independent affine render field: h(x)=1.6+.5*x, spanning several Y
+    // cells. Both the height and slope have analytic answers. Fluid seeding
+    // quadrature is deliberately not used as a height oracle.
+    for(int z=0;z<8;++z)for(int y=0;y<8;++y)for(int x=0;x<8;++x){
+        const float height=1.6f+.5f*(x+.5f)*.4f;
+        field.intervals[field.Index(x,y,z)]=y*.4f<height?glm::vec4(0,height,1,0):glm::vec4(-1,-1,0,8);
+    }
     GLuint vertex=0,program=0,vao=0,input=0,output=0,texture=0;
     if(!Shaders::CompileShader(GL_VERTEX_SHADER,WaterShaders::SurfaceVertex,vertex)){
         result.details="production vertex shader did not compile";return result;
@@ -57,14 +61,15 @@ WaterGpuControls RunWaterVisualGpuControls(Renderer& renderer) {
         float captured[6]{};
         const auto* bytes=glMapBufferRange(GL_TRANSFORM_FEEDBACK_BUFFER,0,sizeof(captured),GL_MAP_READ_BIT);
         if(bytes){std::copy_n(static_cast<const float*>(bytes),6,captured);glUnmapBuffer(GL_TRANSFORM_FEEDBACK_BUFFER);}
-        const auto expected=field.At(1,1.4f,1.6f);
+        const auto expected=field.At(1,1.4f,1.6f,0);
         const float wave=.008f*std::sin(1.7f+1.4f*1.1f)+.005f*std::sin(-2.3f+1.4f*2.8f);
         const auto position=field.origin+glm::vec3(1,expected.height+wave,1.4f);
         const auto normal=glm::normalize(glm::vec3(-expected.gradient.x,1,-expected.gradient.y));
         const float positionError=glm::length(position-glm::vec3(captured[0],captured[1],captured[2]));
         const float normalError=glm::length(normal-glm::vec3(captured[3],captured[4],captured[5]));
-        result.passed=bytes&&positionError<2e-5f&&normalError<2e-5f&&captured[1]>1.69f;
-        std::ostringstream details;details<<"production GPU height/normal vs CPU: "<<positionError<<" m / "<<normalError<<"; old mesh y=1.6, current GPU y="<<captured[1];result.details=details.str();
+        const float analyticError=std::abs(expected.height-2.1f)+glm::length(expected.gradient-glm::vec2(.5f,0));
+        result.passed=bytes&&positionError<2e-5f&&normalError<2e-5f&&analyticError<2e-5f&&captured[1]>2.09f;
+        std::ostringstream details;details<<"production GPU height/normal vs CPU: "<<positionError<<" m / "<<normalError<<"; affine oracle error="<<analyticError<<"; old mesh y=1.6, current GPU y="<<captured[1];result.details=details.str();
     }else result.details="transform-feedback program did not link";
     glUseProgram(0);glBindVertexArray(0);glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER,0,0);
     glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER,0);glBindBuffer(GL_ARRAY_BUFFER,0);glActiveTexture(GL_TEXTURE2);glBindTexture(GL_TEXTURE_2D,0);glActiveTexture(GL_TEXTURE0);
@@ -115,10 +120,61 @@ WaterGpuControls RunWaterVisualGpuControls(Renderer& renderer) {
     const auto late=pixel(2.f,true,.82f,true);
     const bool optics=dry.r>245&&nearPixel.r<dry.r-10&&farPixel.r<nearPixel.r-20&&farPixel.b>farPixel.r+15&&clear.r>farPixel.r+20
         &&glm::length(late-farPixel)<2;
+    // A liquid's finite-domain closing face may coincide with an authored pool
+    // wall. The opaque wall must win, exactly as if that hidden water face were
+    // absent; otherwise depth ties produce striped reflection/refraction.
+    const auto closedMesh=JudasWater::BuildPoolSurface(optical);
+    MeshData topMesh;
+    for(std::size_t i=0;i+2<closedMesh.vertices.size();i+=3)
+        if(closedMesh.vertices[i].tangent.z<.5f)
+            topMesh.vertices.insert(topMesh.vertices.end(),closedMesh.vertices.begin()+i,closedMesh.vertices.begin()+i+3);
+    const auto topSurface=renderer.CreateMesh(topMesh);
+    auto wallImage=[&](bool closed,bool wall,glm::vec3 eye){
+        renderer.BeginFrame(256,192);
+        const auto target=wall?glm::vec3(eye.x+1.6f,.8f,eye.z-.4f):glm::vec3(eye.x,.8f,eye.z< -1.6f?0.f:-2.5f);
+        renderer.SetCamera(glm::lookAt(eye,target,{0,1,0}),
+                           glm::perspective(glm::radians(70.f),256.f/192,.05f,30.f));
+        renderer.SetLighting({0,1,0},{0,0,0},{1,1,1});renderer.SetMaterialBindings({});
+        // Dyadic thickness preserves the exact float boundary; decimal .05/.1
+        // can put the wall one ULP in front and accidentally hide a depth tie.
+        if(wall)renderer.DrawBox({0,.8f,optical.origin.z-.125f},{1,0,0,0},{1.6f,.8f,.125f},{1,1,1});
+        std::vector<float> opaque(256*192);
+        GLint read=0,draw=0;glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&read);glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&draw);
+        glBindFramebuffer(GL_READ_FRAMEBUFFER,draw);glReadPixels(0,0,256,192,GL_DEPTH_COMPONENT,GL_FLOAT,opaque.data());glBindFramebuffer(GL_READ_FRAMEBUFFER,read);
+        BasicWaterSettings style;renderer.DrawGridWater(closed?surface:topSurface,optical,style,0,1);
+        renderer.EndFrame();
+        std::vector<unsigned char> pixels;renderer.CaptureFrame(256,192,pixels);return std::make_pair(std::move(pixels),std::move(opaque));
+    };
+    unsigned wallPixels=0,wallSamples=0;std::ostringstream wallDetails;
+    for(float x:{-.45f,0.f,.45f}){
+        const auto withSides=wallImage(true,true,{x-.8f,.8f,-1.3f}),withoutSides=wallImage(false,true,{x-.8f,.8f,-1.3f});
+        const auto centre=(96*256+128)*3;
+        wallDetails<<" ["<<x<<": "<<int(withSides.first[centre])<<','<<int(withSides.first[centre+1])<<','<<int(withSides.first[centre+2])
+                   <<" vs "<<int(withoutSides.first[centre])<<','<<int(withoutSides.first[centre+1])<<','<<int(withoutSides.first[centre+2])<<']';
+        if(x==0&&!captureDirectory.empty()){
+            WriteRgbPng(captureDirectory+"/wall-with-sides.png",256,192,withSides.first);
+            WriteRgbPng(captureDirectory+"/wall-reference.png",256,192,withoutSides.first);
+        }
+        for(int y=76;y<116;++y)for(int xx=88;xx<168;++xx){
+            const auto i=(y*256+xx)*3;
+            // At grazing angles the finite wall ends inside the view. Compare
+            // actual opaque-wall pixels; an exposed liquid edge against sky is
+            // correctly different and is tested independently below.
+            if(withoutSides.second[(191-y)*256+xx]<.99999f){
+                ++wallSamples;
+                for(int c=0;c<3;++c)wallPixels+=std::abs(int(withSides.first[i+c])-int(withoutSides.first[i+c]))>2;
+            }
+        }
+    }
+    const auto freeSide=wallImage(true,false,{0,.8f,-2.3f}),noSide=wallImage(false,false,{0,.8f,-2.3f});
+    const auto centre=(96*256+128)*3;
+    unsigned freeDifference=0;for(int c=0;c<3;++c)freeDifference+=std::abs(int(freeSide.first[centre+c])-int(noSide.first[centre+c]));
     std::ostringstream detail;detail<<result.details<<"; white/dry="<<dry.r<<", near RGB="<<nearPixel.r<<','<<nearPixel.g<<','<<nearPixel.b
-        <<", far RGB="<<farPixel.r<<','<<farPixel.g<<','<<farPixel.b<<"; clear-water red="<<clear.r<<"; later-object colour error="<<glm::length(late-farPixel)<<"; GL state restored="<<restored;
-    result.details=detail.str();result.passed=result.passed&&optics&&restored&&glGetError()==GL_NO_ERROR;
+        <<", far RGB="<<farPixel.r<<','<<farPixel.g<<','<<farPixel.b<<"; clear-water red="<<clear.r<<"; later-object colour error="<<glm::length(late-farPixel)<<"; GL state restored="<<restored
+        <<"; coplanar wall channel mismatches="<<wallPixels<<" in "<<wallSamples<<" opaque pixels; free-side difference="<<freeDifference<<wallDetails.str();
+    result.details=detail.str();result.passed=result.passed&&optics&&restored&&wallPixels==0&&wallSamples>1000&&freeDifference>20&&glGetError()==GL_NO_ERROR;
     glDeleteSamplers(1,&foreignSampler);
     renderer.DestroyMesh(surface);
+    renderer.DestroyMesh(topSurface);
     return result;
 }

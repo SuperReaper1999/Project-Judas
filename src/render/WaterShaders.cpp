@@ -14,22 +14,26 @@ uniform sampler2D field;
 out vec3 world,baseNormal;
 out vec2 uv;
 out float activity;
+flat out int closingFace;
 vec4 intervalAt(ivec3 p){int i=(p.z*cells.y+p.y)*cells.x+p.x;return texelFetch(field,ivec2(i%1024,i/1024),0);}
 vec4 weights(float t){float a=1.-t;return vec4(a*a*a,3.*t*t*t-6.*t*t+4.,-3.*t*t*t+3.*t*t+3.*t+1.,t*t*t)/6.;}
 vec4 derivatives(float t){return vec4(-.5*(1.-t)*(1.-t),1.5*t*t-2.*t,-1.5*t*t+t+.5,.5*t*t);}
 void main(){
     uv=coordinate;float referenceHeight=referenceData.w;
+    closingFace=referenceData.z>.5?1:0;
     vec2 p=uv/spacing-.5;ivec2 first=ivec2(floor(p));vec2 phase=fract(p);
     vec4 wx=weights(phase.x),wz=weights(phase.y),dx=derivatives(phase.x),dz=derivatives(phase.y);
-    int y=int(ceil(referenceHeight/spacing))-1;
+    float referenceBottom=referenceData.y;
     float sum=0.,bottom=0.,total=0.;vec2 gradient=vec2(0),weightGradient=vec2(0);float speed=0.;
     for(int b=0;b<4;++b)for(int a=0;a<4;++a){
         ivec2 q=clamp(first+ivec2(a-1,b-1),ivec2(0),cells.xz-1);
-        vec4 interval=vec4(0);float distance=spacing*1.6;
-        for(int yy=y-1;yy<=y+1;++yy){
-            if(yy<0||yy>=cells.y)continue;
+        vec4 interval=vec4(0);float distance=1.e30;
+        for(int yy=0;yy<cells.y;){
             vec4 candidate=intervalAt(ivec3(q.x,yy,q.y));
-            if(candidate.z>0.&&abs(candidate.y-referenceHeight)<distance){interval=candidate;distance=abs(candidate.y-referenceHeight);}
+            if(candidate.z<=0.){yy=max(yy+1,int(candidate.w));continue;}
+            if(candidate.x>referenceHeight)break;
+            if(candidate.y>referenceBottom&&abs(candidate.y-referenceHeight)<distance){interval=candidate;distance=abs(candidate.y-referenceHeight);}
+            yy=max(yy+1,int(ceil(candidate.y/spacing-.0001)));
         }
         if(interval.z<=0.)continue;
         float w=wx[a]*wz[b];vec2 d=vec2(dx[a]*wz[b],wx[a]*dz[b]);
@@ -51,6 +55,7 @@ const char* const SurfaceFragment=R"GLSL(#version 330 core
 in vec3 world,baseNormal;
 in vec2 uv;
 in float activity;
+flat in int closingFace;
 out vec4 result;
 uniform sampler2D sceneColour,sceneDepth;
 uniform mat4 vp,inverseVP,view;
@@ -75,6 +80,19 @@ vec3 sky(vec3 direction){
     return colour+sunColour*pow(max(dot(direction,sun),0.),350.)*2.;
 }
 void main(){
+    vec2 screen=(gl_FragCoord.xy-viewportOrigin)/resolution;
+    if(closingFace!=0){
+        float opaqueDepth=texture(sceneDepth,screen*captureScale).r;
+        if(opaqueDepth<.99999){
+            vec3 opaque=unproject(screen,opaqueDepth);
+            // A pool wall may coincide with the finite-domain closing face.
+            // Its existing opaque depth owns that interface. Reject the hidden
+            // liquid face instead of depth-biasing either surface or reflecting
+            // the wall back onto itself through near-identical depth samples.
+            float separation=dot(opaque-world,normalize(world-eye));
+            if(separation<=max(.002,length(world-eye)*.00001))discard;
+        }
+    }
     // Continuous analytic detail, independently sampled per fragment. Geometry
     // subdivision is therefore not the resolution of the specular highlights.
     // Instantaneous flow modulates detail strength, never accumulated phase.
@@ -93,7 +111,6 @@ void main(){
     float nv=clamp(dot(n,v),0.,1.);
     float fresnel=.0204+.9796*pow(1.-nv,5.);
     if(below&&1.333*1.333*(1.-nv*nv)>1.)fresnel=1.;
-    vec2 screen=(gl_FragCoord.xy-viewportOrigin)/resolution;
     vec3 screenNormal=mat3(view)*n;
     vec2 refracted=clamp(screen+screenNormal.xy*.009,vec2(.002),vec2(.998));
     float surfaceDepth=gl_FragCoord.z;

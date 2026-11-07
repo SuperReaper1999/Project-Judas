@@ -1,0 +1,30 @@
+{
+  "pool": {
+    "gpu_samples": 118,
+    "gpu_median_ms": 3.944,
+    "gpu_p95_ms": 4.2810880000000004,
+    "gpu_worst_ms": 4.329984,
+    "field_cpu_median_ms": 0.476254
+  },
+  "rotated": {
+    "gpu_samples": 118,
+    "gpu_median_ms": 4.627712,
+    "gpu_p95_ms": 4.845312,
+    "gpu_worst_ms": 5.0190079999999995,
+    "field_cpu_median_ms": 0.475136
+  },
+  "radial": {
+    "gpu_samples": 118,
+    "gpu_median_ms": 4.571696,
+    "gpu_p95_ms": 4.782912,
+    "gpu_worst_ms": 4.976896,
+    "field_cpu_median_ms": 0.45592
+  },
+  "planet-basin": {
+    "gpu_samples": 118,
+    "gpu_median_ms": 4.139887999999999,
+    "gpu_p95_ms": 4.1692480000000005,
+    "gpu_worst_ms": 4.517856,
+    "field_cpu_median_ms": 0.3624785
+  }
+}

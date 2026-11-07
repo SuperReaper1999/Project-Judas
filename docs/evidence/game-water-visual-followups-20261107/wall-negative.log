@@ -1,0 +1,24 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS initialize physical reference pool
+PASS continuous reconstruction reproduces a level pool
+PASS no height seam at a render patch boundary
+PASS visual refinement is independent of simulation resolution
+PASS quiet pool has smooth shared upward normals and finite outline faces
+PASS reconstruction leaves physical water quantity unchanged
+PASS moving-solid exclusion does not punch a render hole around a swimmer
+PASS optical continuation does not manufacture physical water
+PASS displacement waves do not create internal closing faces in a fully wet pool footprint
+PASS multi-cell held-body interior continues the optical medium from connected wet witnesses
+PASS entering the water with an adjacent held object does not open an optical camera pocket
+PASS held-object optical reconstruction preserves physical quantity
+PASS a dry swimmer behind a closed static wall does not acquire an optical water cavity
+PASS changing level across a cell boundary reuses surface topology
+PASS render intervals preserve an actual dry gap between separate layers
+PASS production GPU height/normal vs CPU: 0 m / 1.02658e-07; old mesh y=1.6, current GPU y=1.70421; white/dry=255, near RGB=234,248,251, far RGB=186,231,242; clear-water red=255; later-object colour error=0; GL state restored=1; coplanar wall channel mismatches=0; free-side difference=157 [-0.45: 180,228,240 vs 181,229,241] [0: 180,228,240 vs 181,229,241] [0.45: 179,227,239 vs 180,228,240] [1,-0.45 depth=0.978904] [0,-0.45 depth=0.978904] [1,0 depth=0.978904] [0,0 depth=0.978904] [1,0.45 depth=0.978904] [0,0.45 depth=0.978904]
+16 checks, 0 failures

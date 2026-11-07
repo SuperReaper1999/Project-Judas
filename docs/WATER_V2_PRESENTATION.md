@@ -17,13 +17,21 @@ occupied coarse cells form a visible column rather than separate glass sheets.
 A genuinely dry cell preserves the gap between different pools or cave air.
 Sub-2 mm films stay physical but do not generate shimmering render sheets.
 
-Moving-body exclusions are continued from adjacent wet witnesses through open
-**static** connections. The opaque body normally hides this visual continuation;
+Moving-body exclusions are continued from wet witnesses through the whole
+connected exclusion, across open **static** connections. Equal-distance fronts
+blend their witnesses deterministically; a large/held body cannot leave an
+unfilled interior simply because it spans more than one cell. Ordinary dry cells
+and separate dry layers are not filled. The opaque body normally hides this visual continuation;
 a CharacterMotor capsule must not leave an apparent air cavity around its camera.
 A closed wall does not give a dry swimmer an optical water volume. This field is
 never passed back to physical immersion, forces, gas pressure or inventory.
 
-Fine surface topology uses cubic interpolation and clipped shorelines. Close,
+Fine surface topology uses one patch per column water run, cubic interpolation
+and clipped shorelines. Interpolation follows overlapping run intervals, rather
+than assuming adjacent water tops occupy the same vertical cell. Rising water
+around a moving body therefore does not create duplicate patches or internal
+curtains down to the floor. Dry atlas entries link to the next wet run, so CPU/GPU
+lookups skip empty vertical spans instead of scanning every cell. Close,
 medium and distant views use four, two and one subdivisions per physical cell.
 Changing heights/normals are reconstructed in the vertex shader; the fine mesh
 is retained until its footprint/layers change or its reference needs reanchoring.
@@ -40,6 +48,10 @@ identity without imposing a 3-D texture-axis limit. Only changed field revisions
 upload. Refraction scratch allocations grow in small buckets and are reused by
 smaller cameras rather than reallocating for every split-screen/secondary view.
 Mesh destruction retires its field texture; renderer shutdown clears all owners.
+
+Finite water closing faces defer to existing opaque scene depth when a pool wall
+occupies the same interface. A small depth-precision tolerance is visual only;
+neither collider nor surface is moved. Exposed water boundaries remain visible.
 
 `render/WaterShaders` owns the portable shader sources. Above water these provide
 continuous animated normal detail, small depth-tapered waves, depth colour and
@@ -121,3 +133,7 @@ than treating any screenshot or numerical gate as automatic visual approval.
 The [7 November qualification report](evidence/game-water-visuals-20261107/REPORT.md)
 contains full-resolution captures, measured CPU/GPU costs, preserved failed
 controls, cold-export results and a practical human checklist.
+
+The [wall and transient-pocket follow-up](evidence/game-water-visual-followups-20261107/REPORT.md)
+records reproduced failures, independent negative controls and the subsequent
+connected-column/opaque-wall corrections.

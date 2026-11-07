@@ -55,6 +55,29 @@ int main(int argc,char** argv){
     const auto near=carved.At(1.6f,1.6f,1.6f);
     Check(near.coverage>.9f&&near.height>1.5f,"moving-solid exclusion does not punch a render hole around a swimmer");
     Check(grid.Quantity()==afterMotion,"optical continuation does not manufacture physical water");
+    const auto displacedSurface=JudasWater::BuildPoolSurface(carved);
+    const float extent=config.cells.x*config.cellSize;
+    Check(std::none_of(displacedSurface.vertices.begin(),displacedSurface.vertices.end(),[&](const auto& v){
+        return v.tangent.z>.5f&&v.uv.x>.001f&&v.uv.y>.001f&&v.uv.x<extent-.001f&&v.uv.y<extent-.001f;
+    }),"displacement waves do not create internal closing faces in a fully wet pool footprint");
+    JudasWater::Settings broad=config;broad.cells={12,8,12};broad.origin={-2.4f,0,-2.4f};
+    JudasWater::Grid held;held.Initialize(broad,error);held.FillBox({-3,0,-3},{3,1.6f,3});
+    JudasWater::SolidBox parcel;parcel.center={0,.8f,-.6f};parcel.half={.85f,.8f,.65f};
+    body.center={0,1,.6f};
+    held.SetSolids({body,parcel});held.Step(1.f/60,error);
+    const auto heldQuantity=held.Quantity();const auto heldField=JudasWater::BuildSurfaceField(held);
+    const auto covered=heldField.intervals[heldField.Index(6,2,4)];
+    Check(covered.z>0&&covered.y>1.5f,
+          "multi-cell held-body interior continues the optical medium from connected wet witnesses");
+    bool entry=true;
+    for(int i=0;i<45;++i){
+        body.center={0,2.3f-i*.04f,.6f};held.SetSolids({body,parcel});held.Step(1.f/60,error);
+        const auto optical=JudasWater::BuildSurfaceField(held);
+        const float eye=body.center.y+.65f; // Actual Workshop camera height.
+        if(eye<1.58f){const auto interval=optical.intervals[optical.Index(6,int(eye/.4f),7)];entry=entry&&interval.z>0&&interval.y>=eye;}
+    }
+    Check(entry,"entering the water with an adjacent held object does not open an optical camera pocket");
+    Check(std::abs(held.Quantity()-heldQuantity)<1e-9,"held-object optical reconstruction preserves physical quantity");
     JudasWater::Grid divided;divided.Initialize(config,error);
     divided.BakeStatic([](glm::vec3 p){return std::abs(p.x)<.06f;});
     divided.Fill([](glm::vec3 p){return p.x<0&&p.y<1.6f;});
@@ -73,12 +96,23 @@ int main(int argc,char** argv){
     const auto layered=JudasWater::BuildSurfaceField(layers);
     const auto gap=layered.intervals[layered.Index(3,3,3)];
     Check(gap.z==0,"render intervals preserve an actual dry gap between separate layers");
+    JudasWater::Grid exactLayers;exactLayers.Initialize(config,error);
+    // Put analytic boundaries between seed sample planes, rather than exactly
+    // on a float-rounded .7/2.3 quadrature point from the separate gap fixture.
+    exactLayers.Fill([](glm::vec3 p){return p.y<.8f||(p.y>1.6f&&p.y<2.4f);});
+    const auto layerMesh=JudasWater::BuildPoolSurface(JudasWater::BuildSurfaceField(exactLayers));
+    bool lowerLayer=false,upperLayer=false,distinct=true;
+    for(const auto& v:layerMesh.vertices)if(v.tangent.z<.5f){
+        const bool low=std::abs(v.position.y-.8f)<1e-5f,high=std::abs(v.position.y-2.4f)<1e-5f;
+        lowerLayer|=low;upperLayer|=high;distinct=distinct&&(low||high);
+    }
+    Check(lowerLayer&&upperLayer&&distinct,"separate water layers retain both known surface heights without bridging their air gap");
 
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"projects/water_v2_workshop";
     Project project;if(!project.Load((root/"water_v2_workshop.judasproj").string(),error)){std::cerr<<error;return 1;}
     EngineHost host;if(!host.Init("Water visual qualification",1280,800,false,error)){std::cerr<<error;return 1;}
     host.OpenProjectAssets(project.RootDir(),project.AssetsDir());host.Resources().SetBlockingMode(true);
-    const auto gpuControl=RunWaterVisualGpuControls(host.GetRenderer());Check(gpuControl.passed,gpuControl.details);
+    const auto gpuControl=RunWaterVisualGpuControls(host.GetRenderer(),out.string());Check(gpuControl.passed,gpuControl.details);
     if(argc>2&&std::string(argv[2])=="--gpu-only"){
         std::cout<<checks<<" checks, "<<failures<<" failures\n";
         return failures?1:0;
@@ -117,6 +151,8 @@ int main(int argc,char** argv){
         render({-3,level+.2f,3},{1,level-.05f,-2},"grazing",true);
         render({-3,level+.015f,2},{-1,level,-2},"waterline",true);
         render({-3,level-.55f,2},{1,level-.55f,-2},"under-horizontal",true);
+        const float bank=-settings.cells.x*settings.cellSize*.5f;
+        render({bank+.4f,level-.45f,0},{bank,level-.4f,-1},"wall-close",true);
         render({-3,level-.55f,2},{-2,level+1.5f,0},"under-up",true);
         render({-3,level-.55f,2},{-2,.2f,0},"under-down",true);
         render({-.8f,level+.45f,3.6f},{.1f,level-1.2f,2.6f},"shore",true);

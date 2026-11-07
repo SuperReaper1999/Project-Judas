@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
-#include <set>
+#include <limits>
 
 namespace JudasWater {
 int SurfaceField::Index(int x,int y,int z) const {
@@ -17,21 +17,22 @@ std::array<float,4> Derivatives(float t) {
     return {-.5f*(1-t)*(1-t),1.5f*t*t-2*t,-1.5f*t*t+t+.5f,.5f*t*t};
 }
 }
-SurfaceField::Sample SurfaceField::At(float x,float z,float height) const {
+SurfaceField::Sample SurfaceField::At(float x,float z,float height,float lower) const {
     Sample out; out.height=height;
     const float px=x/spacing-.5f,pz=z/spacing-.5f;
-    const int ix=int(std::floor(px)),iz=int(std::floor(pz)),iy=int(std::ceil(height/spacing))-1;
+    const int ix=int(std::floor(px)),iz=int(std::floor(pz));
     const auto wx=Weights(px-ix),wz=Weights(pz-iz),dx=Derivatives(px-ix),dz=Derivatives(pz-iz);
     float sum=0,bottom=0,total=0;glm::vec2 derivative(0),weightDerivative(0),velocity(0);
     for(int b=0;b<4;++b) for(int a=0;a<4;++a) {
         // Extend to the finite region edge, without joining vertically separate pools.
         const int xx=std::clamp(ix+a-1,0,cells.x-1),zz=std::clamp(iz+b-1,0,cells.z-1);
-        int selected=-1;float distance=spacing*1.6f;
-        for(int yy=iy-1;yy<=iy+1;++yy) {
-            const int j=Index(xx,yy,zz);
-            if(j>=0&&intervals[j].z>0&&std::abs(intervals[j].y-height)<distance) {
-                selected=j;distance=std::abs(intervals[j].y-height);
-            }
+        int selected=-1;float distance=lower<0?spacing*1.6f:std::numeric_limits<float>::max();
+        for(int yy=0;yy<cells.y;) {
+            const int j=Index(xx,yy,zz);const auto v=intervals[j];
+            if(v.z<=0){yy=std::max(yy+1,int(v.w));continue;}
+            if(v.x>height)break;
+            if(v.y>lower&&std::abs(v.y-height)<distance){selected=j;distance=std::abs(v.y-height);}
+            yy=std::max(yy+1,int(std::ceil(v.y/spacing-.0001f)));
         }
         if(selected<0)continue;
         const float w=wx[a]*wz[b],h=intervals[selected].y;
@@ -81,15 +82,38 @@ SurfaceField BuildSurfaceField(const Grid &grid) {
     // A swimmer or floating solid excludes physical volume. Its visible hull
     // occludes the water; that exclusion must not punch a voxel-shaped air hole
     // in the optical medium around an immersed camera.
+    std::vector<unsigned char> excluded(cells.size());
+    std::vector<int> distance(cells.size(),-1),front;
+    std::vector<float> support(cells.size());
+    std::vector<unsigned> witnesses(cells.size());
+    for(std::size_t i=0;i<cells.size();++i)
+        excluded[i]=cells[i].staticCapacity-cells[i].capacity>=h*h*h*.02f;
+    const std::array<glm::ivec2,4> neighbours={glm::ivec2(-1,0),{1,0},{0,-1},{0,1}};
     for(int z=0;z<n.z;++z)for(int y=0;y<n.y;++y)for(int x=0;x<n.x;++x) {
         const int i=grid.Index(x,y,z);
-        if(cells[i].staticCapacity-cells[i].capacity<h*h*h*.02f)continue;
+        if(!excluded[i])continue;
         float sum=0;int count=0;
-        for(const auto offset:{glm::ivec2(-1,0),glm::ivec2(1,0),glm::ivec2(0,-1),glm::ivec2(0,1)}) {
+        for(const auto offset:neighbours) {
             const int j=grid.Index(x+offset.x,y,z+offset.y);
-            if(j>=0&&grid.StaticOpening(i,j)>0&&physical[j]>y*h&&cells[j].staticCapacity-cells[j].capacity<h*h*h*.02f){sum+=physical[j];++count;}
+            if(j>=0&&!excluded[j]&&physical[j]>y*h&&grid.StaticOpening(i,j)>0){sum+=physical[j];++count;}
         }
-        if(count)levels[i]=std::max(levels[i],sum/count);
+        if(count){levels[i]=std::max(levels[i],sum/count);distance[i]=0;front.push_back(i);}
+    }
+    // Continue through the whole connected exclusion, not merely its outer
+    // cell ring. Multi-source breadth-first fronts average equal-distance wet
+    // witnesses deterministically. Never fill ordinary dry cells, rise into a
+    // dry layer, or cross a closed static aperture. This remains optical data.
+    for(std::size_t at=0;at<front.size();++at){
+        const int i=front[at],x=i%n.x,y=(i/n.x)%n.y,z=i/(n.x*n.y);
+        for(const auto offset:neighbours){
+            const int j=grid.Index(x+offset.x,y,z+offset.y);
+            if(j<0||!excluded[j]||grid.StaticOpening(i,j)<=0)continue;
+            if(distance[j]<0){distance[j]=distance[i]+1;front.push_back(j);}
+            if(distance[j]==distance[i]+1){
+                support[j]+=levels[i];++witnesses[j];
+                levels[j]=std::max(physical[j],support[j]/witnesses[j]);
+            }
+        }
     }
     for(int z=0;z<n.z;++z)for(int x=0;x<n.x;++x)for(int y=0;y<n.y;) {
         if(levels[grid.Index(x,y,z)]<0){++y;continue;}
@@ -107,45 +131,59 @@ SurfaceField BuildSurfaceField(const Grid &grid) {
         }
         ++y;
     }
+    // Dry entries carry a next-wet-run link. Interpolation visits connected
+    // columns rather than scanning every cell or assuming all tops occupy the
+    // same Y cell. Wet entries retain physical activity in their fourth lane.
+    for(int z=0;z<n.z;++z)for(int x=0;x<n.x;++x){
+        int next=n.y;
+        for(int y=n.y-1;y>=0;--y){auto& v=field.intervals[field.Index(x,y,z)];if(v.z>0)next=y;else v.w=float(next);}
+    }
     return field;
 }
 MeshData BuildPoolSurface(const SurfaceField &field,unsigned subdivisions) {
     MeshData mesh;if(field.intervals.empty())return mesh;
     const auto n=field.cells;const float h=field.spacing;
     subdivisions=std::clamp(subdivisions,1u,6u);
-    // Only top patches and a one-cell shoreline halo are refined. Never tessellate
-    // the entire three-dimensional simulation volume.
-    std::set<std::array<int,3>> patches;
-    for(int z=0;z<n.z;++z)for(int y=0;y<n.y;++y)for(int x=0;x<n.x;++x) {
+    // One patch per visible column run, independent of its top's Y cell.
+    // Height differences within connected water must not spawn overlapping
+    // patches and false curtains extending to the pool floor.
+    struct Patch {int x,z;float bottom,top;};
+    std::vector<Patch> sources;
+    std::vector<std::vector<Patch>> columns(std::size_t(n.x)*n.z);
+    for(int z=0;z<n.z;++z)for(int x=0;x<n.x;++x)for(int y=0;y<n.y;){
         const auto v=field.intervals[field.Index(x,y,z)];
-        if(v.z<=0||v.y>(y+1)*h+h*.001f)continue;
-        for(int dz=-1;dz<=1;++dz)for(int dx=-1;dx<=1;++dx)
-            if(x+dx>=0&&z+dz>=0&&x+dx<n.x&&z+dz<n.z)patches.insert({x+dx,y,z+dz});
+        if(v.z<=0){y=std::max(y+1,int(v.w));continue;}
+        Patch patch{x,z,v.x,v.y};sources.push_back(patch);columns[z*n.x+x].push_back(patch);
+        y=std::max(y+1,int(std::ceil(v.y/h-.0001f)));
+    }
+    for(const auto& patch:sources)for(int dz=-1;dz<=1;++dz)for(int dx=-1;dx<=1;++dx){
+        const int x=patch.x+dx,z=patch.z+dz;if(x<0||z<0||x>=n.x||z>=n.z)continue;
+        auto& column=columns[z*n.x+x];
+        const bool overlap=std::any_of(column.begin(),column.end(),[&](const auto& v){return v.bottom<patch.top&&v.top>patch.bottom;});
+        if(!overlap)column.push_back({x,z,patch.bottom,patch.top});
     }
     struct Point {MeshVertex vertex;float coverage;};
-    auto point=[&](float x,float z,float height) {
-        const auto s=field.At(x,z,height);MeshVertex v;
+    auto point=[&](float x,float z,float height,float lower) {
+        const auto s=field.At(x,z,height,lower);MeshVertex v;
         v.position=field.origin+field.rotation*glm::vec3(x,s.height,z);
         v.normal=field.rotation*glm::normalize(glm::vec3(-s.gradient.x,1,-s.gradient.y));
         v.uv={x,z};v.uv1=s.velocity;
         // Private water-vertex payload: stable layer reference for GPU height
         // reconstruction. No surface mass or collision data is stored here.
-        v.tangent.w=height;
+        v.tangent.w=height;v.tangent.y=lower;
         return Point{v,s.coverage};
     };
-    mesh.vertices.reserve(patches.size()*subdivisions*subdivisions*6);
-    for(const auto &patch:patches) {
-        const int x=patch[0],y=patch[1],z=patch[2];
-        const auto own=field.intervals[field.Index(x,y,z)];
-        if(own.z>0&&own.y>(y+1)*h+h*.001f)continue;
-        float reference=own.z>0?own.y:(y+1)*h;
+    mesh.vertices.reserve(sources.size()*subdivisions*subdivisions*6);
+    for(const auto& column:columns)for(const auto &patch:column) {
+        const int x=patch.x,z=patch.z;
+        const float reference=patch.top,lower=patch.bottom;
         // Adjacent quads share their corner samples. Retain one bounded patch
         // grid rather than evaluating the same cubic stencil four times and
         // allocating two clipping vectors for every little quad.
         std::array<Point,49> samples;
         const unsigned stride=subdivisions+1;
         for(unsigned b=0;b<=subdivisions;++b)for(unsigned a=0;a<=subdivisions;++a)
-            samples[b*stride+a]=point((x+float(a)/subdivisions)*h,(z+float(b)/subdivisions)*h,reference);
+            samples[b*stride+a]=point((x+float(a)/subdivisions)*h,(z+float(b)/subdivisions)*h,reference,lower);
         for(unsigned b=0;b<subdivisions;++b)for(unsigned a=0;a<subdivisions;++a) {
             const std::array<Point,4> polygon={samples[b*stride+a],samples[(b+1)*stride+a],samples[(b+1)*stride+a+1],samples[b*stride+a+1]};
             std::array<Point,8> clipped;unsigned count=0;
@@ -158,7 +196,7 @@ MeshData BuildPoolSurface(const SurfaceField &field,unsigned subdivisions) {
                     Point r;r.coverage=.35f;r.vertex.position=glm::mix(p.vertex.position,q.vertex.position,t);
                     r.vertex.normal=glm::normalize(glm::mix(p.vertex.normal,q.vertex.normal,t));
                     r.vertex.uv=glm::mix(p.vertex.uv,q.vertex.uv,t);r.vertex.uv1=glm::mix(p.vertex.uv1,q.vertex.uv1,t);
-                    r.vertex.tangent.w=reference;clipped[count++]=r;
+                    r.vertex.tangent.w=reference;r.vertex.tangent.y=lower;clipped[count++]=r;
                 }
             }
             for(unsigned i=1;i+1<count;++i)
@@ -172,8 +210,8 @@ MeshData BuildPoolSurface(const SurfaceField &field,unsigned subdivisions) {
                 if(!((p.coverage<.351f&&q.coverage<.351f)||edge(0,0)||edge(1,0)||edge(0,n.x*h)||edge(1,n.z*h)))continue;
                 auto pTop=p.vertex,qTop=q.vertex,pBottom=p.vertex,qBottom=q.vertex;
                 const auto outward=glm::normalize(glm::cross(qTop.position-pTop.position,field.rotation*glm::vec3(0,1,0)));
-                pBottom.position=field.origin+field.rotation*glm::vec3(pTop.uv.x,field.At(pTop.uv.x,pTop.uv.y,reference).bottom,pTop.uv.y);
-                qBottom.position=field.origin+field.rotation*glm::vec3(qTop.uv.x,field.At(qTop.uv.x,qTop.uv.y,reference).bottom,qTop.uv.y);
+                pBottom.position=field.origin+field.rotation*glm::vec3(pTop.uv.x,field.At(pTop.uv.x,pTop.uv.y,reference,lower).bottom,pTop.uv.y);
+                qBottom.position=field.origin+field.rotation*glm::vec3(qTop.uv.x,field.At(qTop.uv.x,qTop.uv.y,reference,lower).bottom,qTop.uv.y);
                 for(auto* v:{&pTop,&qTop,&pBottom,&qBottom}){v->normal=outward;v->tangent.z=1;}
                 pBottom.tangent.x=qBottom.tangent.x=0;
                 for(const auto* v:{&pBottom,&qBottom,&qTop,&pBottom,&qTop,&pTop})mesh.vertices.push_back(*v);
