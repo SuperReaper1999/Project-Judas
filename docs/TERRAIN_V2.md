@@ -174,8 +174,8 @@ are checked before publication; a failed read leaves the previous result intact.
 This is corruption detection, not asset authentication. Native source size is
 bounded to 96 MiB and the existing source sample budget still applies.
 
-Asset-backed saves keep the immutable base ID/fingerprint plus the actual edit
-journal; they do not copy unchanged sample arrays. A changed/missing base fails
+Asset-backed saves keep the immutable base ID/fingerprint, the actual edit
+journal and sparse changed height/material samples; unchanged arrays are not copied. A changed/missing base fails
 with an explicit migration diagnostic. Runtime-created sources use complete
 native snapshots within the existing 8 MiB save-string budget. Earlier JSON
 snapshots remain readable. Restore preserves old support until the entire new
@@ -268,3 +268,10 @@ These cover geometry worker preparation only, excluding JSON, merged mesh,
 collision cooking and GPU work. No builds or other qualification ran during
 the final timing series. Raw results and preserved failed test-oracle attempts
 are under `docs/evidence/terrain-v2/stage4-authoring`.
+
+Runtime `terrain.surfaceBrush` now shares the editor's raise/lower/flatten/smooth/
+paint implementation. Surface changes coexist with excavation and persist through
+versioned native references. Paint leaves real collision handles intact; sculpt
+replaces affected support atomically. See the scripting reference for defaults,
+coordinate frames and the explicit changed-sample save budget. This does not yet
+qualify navigation/fluid publication or planetary surface sculpting.

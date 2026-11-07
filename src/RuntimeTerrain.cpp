@@ -109,6 +109,11 @@ bool RuntimeTerrain::Brush(uint64_t id,glm::vec3 point,const VolumeBrush& brush,
  if(!ApplyVolumeBrush(source,local,brush,error))return false;
  return Submit(id,std::move(source),i->second.committed->navigated,i->second.committed->profile,error);
 }
+bool RuntimeTerrain::Surface(uint64_t id,glm::vec3 point,const TerrainV2::SurfaceBrush& brush,std::string& error){
+ const auto i=records.find(id);
+ if(i==records.end()||!i->second.landscape){error="surface brushes require an initialized V2 landscape";return false;}
+ return i->second.landscape->Surface(point,brush,error);
+}
 bool RuntimeTerrain::Publish(uint64_t id,Record& record,std::shared_ptr<Product> product,std::string& error,bool privateOwner){
  auto start=Clock::now();auto definition=world.m_scriptDefinitions.find(id);auto* d=privateOwner&&definition!=world.m_scriptDefinitions.end()?&definition->second:world.RuntimeDefinition(id);auto category=world.m_entityCategories.find(id);auto body=privateOwner&&category!=world.m_entityCategories.end()?category->second.body:world.RuntimeBody(id);if(!d||!body.IsValid()){error="terrain owner disappeared";return false;}
  // Stage native navigation first. Failure leaves all current geometry intact.

@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "terrain/TerrainAsset.h"
+#include "terrain/TerrainBrush.h"
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -77,6 +78,23 @@ int main(int argc, char **argv) {
             Require(initial.ready && initial.chunks == 1024, "initial native collision incomplete");
             const auto hit = world.Physics().Raycast({0, 100, 0}, {0, -1, 0}, 200);
             Require(hit.hit, "native terrain has no real collision");
+            TerrainV2::SurfaceBrush surface;
+            surface.radius = 6;
+            surface.strength = .25f;
+            start = Clock::now();
+            Require(world.LiveTerrain().Surface(1, hit.point, surface, error), error);
+            Require(world.LiveTerrain().Wait(1, error), error);
+            const auto sculptMs = Ms(start);
+            auto raised = world.Physics().Raycast({0, 100, 0}, {0, -1, 0}, 200);
+            Require(raised.hit && std::abs(raised.point.y - hit.point.y - .25f) < .001f,
+                    "runtime sculpt did not change actual support");
+            surface.kind = TerrainV2::SurfaceBrush::Kind::Paint;
+            surface.layer = 1;
+            surface.strength = 1;
+            start = Clock::now();
+            Require(world.LiveTerrain().Surface(1, hit.point, surface, error), error);
+            Require(world.LiveTerrain().Wait(1, error), error);
+            const auto paintMs = Ms(start);
             start = Clock::now();
             Require(world.LiveTerrain().Brush(1, hit.point, {VolumeBrushKind::Remove, 6, 1}, error),
                     error);
@@ -96,6 +114,8 @@ int main(int argc, char **argv) {
                       << ",\"initial_prepare_ms\":" << initial.prepareMs
                       << ",\"initial_publish_ms\":" << initial.publishMs
                       << ",\"edit_complete_ms\":" << editMs
+                      << ",\"sculpt_complete_ms\":" << sculptMs
+                      << ",\"paint_complete_ms\":" << paintMs
                       << ",\"edit_prepare_ms\":" << edited.prepareMs
                       << ",\"edit_publish_ms\":" << edited.publishMs << ",\"capture_ms\":" << saveMs
                       << ",\"snapshot_bytes\":" << snapshot.size()

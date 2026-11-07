@@ -17,6 +17,11 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
     auto next = source;
     const float halfX = (source.samplesX - 1) * source.spacing * .5f,
                 halfZ = (source.samplesZ - 1) * source.spacing * .5f;
+    if (double(point.x) - brush.radius > halfX || double(point.x) + brush.radius < -halfX ||
+        double(point.z) - brush.radius > halfZ || double(point.z) + brush.radius < -halfZ) {
+        error = "brush outside terrain";
+        return false;
+    }
     const int x0 = std::max(0, int(std::floor((point.x - brush.radius + halfX) / source.spacing))),
               z0 = std::max(0, int(std::floor((point.z - brush.radius + halfZ) / source.spacing)));
     const int x1 = std::min(int(source.samplesX) - 1,

@@ -14,6 +14,8 @@ source, preview and gameplay products; save the scene separately as usual.
 - Left click: dig where a real physics ray selects terrain.
 - Right click: add rock at the selected surface. Digging is field editing, not
   scripted replacement meshes or disabled collision.
+- 1/2/3/4 select dig/raise/lower/paint for left click; 5 cycles the four paint
+  layers. Surface sculpting and paint survive saving alongside the tunnel.
 - F6/F7: ordinary save/load; R: fresh scene; Escape: pause.
 
 Wait for the tunnel queue to finish, walk through, save, quit and relaunch/load.

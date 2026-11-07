@@ -308,6 +308,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Terrain.createLandscape` | `terrainLandscape` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.state` | `terrainState` | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.surfaceBrush` | `terrainSurface` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.accessibility` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.beginDrag` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |

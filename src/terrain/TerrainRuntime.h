@@ -2,7 +2,9 @@
 #include "JobSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
+#include "TerrainBrush.h"
 #include "TerrainLod.h"
+#include "TerrainPersistence.h"
 #include "TerrainSource.h"
 #include "TerrainStatus.h"
 #include <map>
@@ -22,6 +24,7 @@ class Runtime {
     ~Runtime();
     bool Create(Source, std::string &);
     bool Brush(glm::vec3 worldPoint, const Edit &, std::string &);
+    bool Surface(glm::vec3 worldPoint, const SurfaceBrush &, std::string &);
     void Advance();
     void Wait();
     void Draw(Renderer &) const;
@@ -47,6 +50,7 @@ class Runtime {
         std::shared_ptr<const HeightLod> lod;
         bool replaceAll = false;
         std::string baseAsset, baseFingerprint;
+        RasterChanges raster;
     };
     struct Resident {
         Prepared geometry;
@@ -61,6 +65,7 @@ class Runtime {
     std::map<ChunkKey, Resident> chunks;
     RuntimeTerrainStatus status;
     std::string baseAsset, baseFingerprint;
+    RasterChanges raster;
     mutable TextureHandle weightTexture;
     mutable TextureHandle heightTexture;
     std::shared_ptr<const HeightLod> lod;

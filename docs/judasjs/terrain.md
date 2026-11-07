@@ -96,3 +96,43 @@ source-build work, not a published supported-release update. Planetary
 excavation, large-world physical residency and full cross-system qualification are
 still being developed; the initial flat landscape slice must not be treated as
 completion of those capabilities.
+
+### Runtime landscape sculpting and painting
+
+`terrain.surfaceBrush(point, options)` applies a deterministic surface dab to an
+initialized V2 landscape. `kind` is `raise`, `lower`, `flatten`, `smooth` or
+`paint`. Radius is source-local metres, from sample spacing through 128 m.
+Strength defaults to 0.25 and must be finite, 0–10; raise/lower use metres per
+dab, while flatten/smooth/paint blend with a falloff and saturate their blend at
+one. `height` defaults to zero and specifies the flatten target in **source-local
+height**, even when the landscape is rotated. `layer` defaults to zero and must
+be an integer 0–3. Paint uses the same four material layers as the editor.
+
+```js
+if (landscape.terrain.state?.ready && !landscape.terrain.state.busy) {
+  landscape.terrain.surfaceBrush(hit.point, {
+    kind: 'raise', radius: 3, strength: 0.15
+  });
+}
+```
+
+Points use the current simulation frame. Source rotation/translation is applied
+by the engine. One busy owner returns false; invalid/no-effect/out-of-bounds dabs
+throw. Painting queues no collision extraction and preserves collider identities.
+Sculpted geometry publishes atomically with its source and visual revision; old
+support remains usable while preparation is pending. Excavation and surface
+changes coexist, including at chunk corners. This edits the height raster under
+the excavation journal; it is not a smooth 3D SDF sculpting operation.
+
+Native asset-backed saves now preserve exact changed height/material samples as
+a versioned sparse override, alongside the base fingerprint and volume journal.
+Repeated dabs replace sample values rather than growing a brush-history log.
+The current bound is 65,536 distinct changed samples per native landscape; an
+edit exceeding it is rejected before publication, retaining the previous source.
+Procedural sources continue to use complete native snapshots within the existing
+8 MiB save-string limit. Existing journal-only reference saves remain readable.
+Invalid sample indices, weights and changed base assets are rejected.
+
+This API does not yet rebuild independent authored navigation surfaces or update
+a fluid solid-volume bake. Those integrations remain explicit Terrain V2 work;
+do not infer a successful terrain publication also rebuilt those systems.

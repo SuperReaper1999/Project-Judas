@@ -1422,6 +1422,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Terrain.surfaceBrush",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
       "symbol": "UIDocument.beginDrag",
       "minimum": 1,
       "maximum": 1
@@ -5283,6 +5288,17 @@
       "reference": "docs/judasjs/terrain.md"
     },
     {
+      "symbol": "Terrain.surfaceBrush",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainSurface"
+      ],
+      "type": "docs/judas.d.ts:Terrain.surfaceBrush",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
       "symbol": "UIDocument",
       "kinds": [
         "class"
@@ -8202,6 +8218,7 @@
     "terrainCreate",
     "terrainLandscape",
     "terrainState",
+    "terrainSurface",
     "tileSet",
     "tilt",
     "torque",

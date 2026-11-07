@@ -21,41 +21,35 @@ Restricted default commands see llvmpipe. Use require_escalated for native deskt
 GPU tests/profiles. User explicitly corrected the unavailable-driver assumption.
 Use j2 on the8GB host, one build at a time, no timing during compiler activity.
 
-## Active continuation — authoring qualified, checkpoint pending
+## Active continuation — runtime surface qualification
 
-Native checkpoint58e73071 is pushed. Authoring continuation is implemented and
-qualified, but still uncommitted. Current authoring source and evidence are scoped
-under stage4-authoring. Do not include unrelated water screenshots or research.
+Authoring is committed and pushed at b63d707e (native predecessor58e73071).
+Runtime surface sculpt/paint is implemented and qualified, not yet committed.
+TerrainSurface.cpp reuses ApplySurfaceBrush and the existing async publication.
+Paint schedules no geometry and preserves collider handles. JTRREF3 references
+retain exact sparse changed samples plus original base identity and edit journal;
+JTRREF2 remains readable. Changed-index/weights and native budget failures retain
+old state. Current persistent sample override limit65536 is explicit and tested.
 
-New TerrainGeneration owns deterministic flat/highlands/island creation and real
-grayscale16 heightmap import. New TerrainV2Creation owns the existing native file
-browser, immutable generation/cook jobs, retained recipe/original heightmap and
-undoable scene insertion. Explicit selected-ground replacement preserves the old
-object's gravity/scripts/children and disables only its render/collision. Inspector
-and Asset Browser requests route locally; optional ComponentEditor.requestAdd
-supports asset-backed workflows without frame-loop changes. Source picker now
-handles multiple sources and selects their actual owners; dirty drafts are guarded.
-Four-layer texture/tint authoring, geometry-free paint, byte-bounded history and
-shared V1/V2 protected-kit write validation are implemented.
+Actual new surface tests44 + separate-process read10 pass, including actual JS,
+rotated owner and real collision, alongside geometry416/world93/component35,
+render978 each modern/portable, editor15 and API/type consistency542symbols.
+Relocated Workshop now uses ordinary project tools1..5 for dig/raise/lower/paint/
+layer; it sculpts/paints, traverses, saves/quits/restores with two saved dabs.
+Evidence stage4-runtime-surface preserves initial fixture failures and a rejected
+mismatched-build export. Frozen matching products pass. No human acceptance.
+Five native1km instances measure complete sculpt23.04ms median, paint3.72ms,
+volume edit24.28ms, snapshot capture.027ms/1198bytes. Full source/1024physical
+chunks remain resident. These are warm-file calls, not renderFPS or streaming.
 
-Final build succeeded (/tmp/terrain-v2-authoring-final-build.log), no compiler
-warnings. Fresh creation46, generation23, existing editor15, geometry416, world93,
-LOD339, components35, cold-read3 and modern/portable NVIDIA render978each pass.
-Original authoring/pipeline and planet-source10074 also pass. Relocated export
-excavates, traverses, saves/quits and restores in a separate process. This is
-engineering qualification, not human acceptance. Native editor capture also completes Play/Stop with identical authored state.
-Inspected landscape source controls are ahead of optional empty script starters.
-
-Thirty isolated alternating geometry-worker pairs reproduce exact geometry. At
-513samples, former per-chunk full validation median727.85ms vs batch32.82ms;
-129/257 raw distributions are retained. Excludes IO, merge, BVH and GPU, notFPS.
-Earlier timing overlapped other qualification, so only isolated logs are reported.
-Failed fresh-project/file-picker test setup/ID oracles are retained unchanged.
-
-Next: inspect actual editor capture; scope/commit/push authoring. Then CONTINUE
-remaining approved Terrain V2, including runtime surface sculpt/paint with real
-persistence, physical residency, planetary excavation and cross-system integration.
-No full Terrain V2 completion claim is warranted at this authoring checkpoint.
+NEXT: scoped commit/push this qualified continuation. Then investigate actual
+terrain solid occupancy/navigation and physical residency/planetary excavation.
+Native fluid geometry currently sees open generated triangle surfaces rather than
+Source.Density interior; verify and correct using one source-owned query snapshot,
+without introducing a second terrain representation. Particle snapshots already
+see real chunk triangles/owner IDs; body-COM local impact coordinates are documented
+and must not be misrepresented as source-root coordinates. Main and fluid lock
+remain unchanged. Do not stop at this intermediate checkpoint.
 
 ## Completed committed foundations
 

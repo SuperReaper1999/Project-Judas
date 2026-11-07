@@ -1,0 +1,38 @@
+{
+  "source_parent": "b63d707e0d0966579b10af1c7cd66d972faa9bc1",
+  "timestamp_utc": "2026-11-07T22:28:34.644774+00:00",
+  "human_acceptance": false,
+  "scope": "5 warm-file 1024m native scene instances; complete calls include immutable source preparation, job queue/wait, extraction/BVH where required and publication; no builds or other qualification during measurement; five-sample p95 equals worst",
+  "metrics": {
+    "scene_build_ms": {
+      "median": 440.33,
+      "p95": 473.846,
+      "worst": 473.846
+    },
+    "sculpt_complete_ms": {
+      "median": 23.0369,
+      "p95": 23.198,
+      "worst": 23.198
+    },
+    "paint_complete_ms": {
+      "median": 3.72002,
+      "p95": 3.78457,
+      "worst": 3.78457
+    },
+    "edit_complete_ms": {
+      "median": 24.2798,
+      "p95": 25.3897,
+      "worst": 25.3897
+    },
+    "capture_ms": {
+      "median": 0.027292,
+      "p95": 0.033864,
+      "worst": 0.033864
+    },
+    "snapshot_bytes": {
+      "median": 1198,
+      "p95": 1198,
+      "worst": 1198
+    }
+  }
+}

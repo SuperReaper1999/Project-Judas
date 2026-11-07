@@ -30,7 +30,14 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
             auto metadata = SerializeMetadata(*source);
             auto id = baseAsset, digest = baseFingerprint;
             archive(id, digest, metadata);
-            bytes = std::string(ReferenceMagic) + archive.bytes;
+            if (!raster.empty()) {
+                auto changes = raster;
+                archive(changes);
+            }
+            if (archive.bytes.size() + 8 > 8 * 1024 * 1024)
+                throw std::runtime_error("terrain reference exceeds the save string budget");
+            bytes =
+                std::string(raster.empty() ? ReferenceMagic : RasterReferenceMagic) + archive.bytes;
             error.clear();
             return true;
         } catch (const std::exception &e) {
@@ -52,11 +59,14 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
 bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchronous) {
     Source next;
     std::string assetId, digest;
+    RasterChanges changes;
     if (IsReferenceSnapshot(bytes)) {
         try {
             SaveArchive archive(bytes.substr(ReferenceMagic.size()));
             std::string metadata;
             archive(assetId, digest, metadata);
+            if (bytes.compare(0, 8, RasterReferenceMagic) == 0)
+                archive(changes);
             archive.Finish();
             auto *assets = world.Resources() ? world.Resources()->Assets() : nullptr;
             auto *record = assets ? assets->Find(assetId) : nullptr;
@@ -77,6 +87,12 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
                     "saved terrain base lattice does not match its immutable asset");
             next.heights = std::move(base.heights);
             next.weights = std::move(base.weights);
+            for (const auto &[index, sample] : changes) {
+                if (index >= next.heights.size())
+                    throw std::runtime_error("saved terrain sample index is outside its base");
+                next.heights[index] = sample.height;
+                next.weights[index] = sample.weights;
+            }
             if (!Validate(next, error))
                 throw std::runtime_error(error);
         } catch (const std::exception &e) {
@@ -96,6 +112,7 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
     if (!Submit(std::make_shared<const Source>(std::move(next)), std::move(keys), error, true))
         return false;
     BindAsset(std::move(assetId), std::move(digest));
+    pending->raster = std::move(changes);
     if (!asynchronous) {
         Wait();
         error = status.error;

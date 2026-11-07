@@ -58,7 +58,7 @@ def main():
     meta(model.with_suffix('.judasterrain'),'native','terrain')
     controls=[('move_x',[('key:A',-1),('key:D',1)],1),('move_y',[('key:S',-1),('key:W',1)],1),
               ('look_x',[('mouse:dx',1)],1),('look_y',[('mouse:dy',1)],1)]
-    for key,physical in [('jump','Space'),('pause','Escape'),('save','F6'),('load','F7'),('reset','R'),('tunnel','T'),('dig','mouse:Left'),('build','mouse:Right')]:
+    for key,physical in [('jump','Space'),('pause','Escape'),('save','F6'),('load','F7'),('reset','R'),('tunnel','T'),('dig','mouse:Left'),('build','mouse:Right'),('mode_dig','1'),('mode_raise','2'),('mode_lower','3'),('mode_paint','4'),('paint_layer','5')]:
         controls.append((key,[(physical if ':' in physical else 'key:'+physical,1)],0))
     controls.extend([('ui_click',[('mouse:Left',1)],0),('ui_activate',[('key:Return',1)],0),
                      ('ui_next',[('key:Tab',1)],0),('ui_scroll',[('mouse:wheelY',1)],1)])

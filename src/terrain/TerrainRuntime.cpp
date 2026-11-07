@@ -154,6 +154,8 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
     work->baseAsset = baseAsset;
     work->baseFingerprint = baseFingerprint;
     work->replaceAll = replaceAll;
+    if (!replaceAll)
+        work->raster = raster;
     work->source = std::move(value);
     if (source && source->samplesX == work->source->samplesX &&
         source->samplesZ == work->source->samplesZ &&
@@ -298,6 +300,7 @@ bool Runtime::Publish(std::string &error) {
     source = pending->source;
     baseAsset = pending->baseAsset;
     baseFingerprint = pending->baseFingerprint;
+    raster = std::move(pending->raster);
     lod = pending->lod;
     status.ready = true;
     ++status.revision;

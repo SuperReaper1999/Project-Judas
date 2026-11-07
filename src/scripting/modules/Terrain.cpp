@@ -15,6 +15,7 @@
 
 #include "../../PlanetTiles.h"
 #include "../../terrain/TerrainSource.h"
+#include "../../terrain/TerrainBrush.h"
 
 using namespace ScriptBindingValues;
 namespace ScriptBindings {
@@ -44,7 +45,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
         return o;
     };
 
-    if (op == "terrainState" || op == "terrainCreate" || op == "terrainBrush" || op == "terrainLandscape") {
+    if (op == "terrainState" || op == "terrainCreate" || op == "terrainBrush" || op == "terrainLandscape" || op == "terrainSurface") {
         EntityId owner = 0;
         try {
             auto identity = String(c, arg(1));
@@ -80,6 +81,45 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
             return result;
         }
         std::string error;
+        if (op == "terrainSurface") {
+            TerrainV2::SurfaceBrush brush;
+            glm::vec3 point;
+            const auto options = arg(3);
+            auto kind = JS_GetPropertyStr(c, options, "kind");
+            const auto name = String(c, kind);
+            JS_FreeValue(c, kind);
+            const std::array<const char *, 5> names = {"raise", "lower", "flatten", "smooth", "paint"};
+            const auto found = std::find(names.begin(), names.end(), name);
+            if (found == names.end())
+                return JS_ThrowTypeError(c, "surface brush kind must be raise/lower/flatten/smooth/paint");
+            brush.kind = TerrainV2::SurfaceBrush::Kind(found - names.begin());
+            if (!ReadVec(c, arg(2), point) || !Number(c, options, "radius", brush.radius))
+                return JS_ThrowTypeError(c, "finite surface brush point and radius required");
+            for (const auto field : {"strength", "height", "layer"}) {
+                auto value = JS_GetPropertyStr(c, options, field);
+                const bool absent = JS_IsUndefined(value);
+                JS_FreeValue(c, value);
+                if (absent)
+                    continue;
+                float number = 0;
+                if (!Number(c, options, field, number))
+                    return JS_ThrowTypeError(c, "finite surface brush %s required", field);
+                if (std::string(field) == "layer") {
+                    if (number < 0 || number > 3 || number != std::floor(number))
+                        return JS_ThrowTypeError(c, "surface material layer must be an integer 0..3");
+                    brush.layer = unsigned(number);
+                } else if (std::string(field) == "height")
+                    brush.height = number;
+                else
+                    brush.strength = number;
+            }
+            const auto *state = world.LiveTerrain().Status(owner);
+            if (state && state->busy)
+                return JS_FALSE;
+            if (!world.LiveTerrain().Surface(owner, point, brush, error))
+                return JS_ThrowTypeError(c, "%s", error.c_str());
+            return JS_TRUE;
+        }
         if (op == "terrainLandscape") {
             TerrainV2::Source source;
             if (!JS_IsString(arg(2)) || !TerrainV2::Parse(String(c, arg(2)), source, error))
@@ -228,7 +268,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
 } // namespace
 void RegisterTerrainBindings(BindingRegistry &registry) {
     registry.Add("Terrain",
-                 {"terrainState", "terrainCreate", "terrainLandscape", "terrainBrush", "planetInfo", "planetSample",
+                 {"terrainState", "terrainCreate", "terrainLandscape", "terrainBrush", "terrainSurface", "planetInfo", "planetSample",
                   "planetCollision", "planetClear"},
                  HandleTerrain);
 }

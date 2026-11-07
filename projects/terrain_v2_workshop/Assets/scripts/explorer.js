@@ -5,28 +5,34 @@ const size=a=>Math.hypot(a.x,a.y,a.z);
 const norm=a=>size(a)>1e-6?mul(a,1/size(a)):{x:0,y:0,z:0};
 const rotation=(yaw,pitch)=>{const cy=Math.cos(yaw/2),sy=Math.sin(yaw/2),cp=Math.cos(pitch/2),sp=Math.sin(pitch/2);return {w:cy*cp,x:cy*sp,y:sy*cp,z:-sy*sp}};
 export default class {
- constructor({entity}){this.entity=entity;this.state={yaw:0,pitch:-.05};this.queue=[];}
+ constructor({entity}){this.entity=entity;this.state={yaw:0,pitch:-.05,tool:'dig',layer:2,surfaceDabs:0};this.queue=[];}
  start(){this.owner=world.entity('1');this.hud=ui.get('game_ui');
   ui.debugOverlayVisible=false;input.pointerCapture=true;
   if(this.hud){this.hud.modal=false;for(const id of ['main','options','pause','image'])this.hud.get(id).visible=false;
    this.hud.get('hud').visible=true;this.hud.get('hud_title').text='TERRAIN V2 / HIGHLANDS WORKSHOP';
-   this.hud.get('hud_help').text='WASD + mouse: explore | Space: jump\nT: excavate a real tunnel through the hill\nLeft click: dig | Right click: add material\nF6/F7: save/load | R: reset | Esc: pause';}
+   this.hud.get('hud_help').text='WASD + mouse: explore | Space: jump | T: tunnel\n1: dig | 2: raise | 3: lower | 4: paint | 5: next layer\nLeft click: selected tool | Right click: add material\nF6/F7: save/load | R: reset | Esc: pause';}
+  this.state.tool??='dig';this.state.layer??=2;this.state.surfaceDabs??=0;
   if(!this.owner.terrain.state?.ready)throw new Error('Native terrain was not initialized; check terrain.asset on the landscape.');
  }
- restore(){this.start();console.log('TERRAIN_V2_RESTORED '+JSON.stringify({position:this.entity.transform.position,terrain:this.owner.terrain.state}));}
+ restore(){this.start();console.log('TERRAIN_V2_RESTORED '+JSON.stringify({position:this.entity.transform.position,terrain:this.owner.terrain.state,surfaceDabs:this.state.surfaceDabs}));}
  view(){const p=this.entity.presentedTransform.position;world.setView({position:add(p,{x:0,y:.65,z:0}),rotation:rotation(this.state.yaw,this.state.pitch)},70);}
  presentationUpdate(){this.view();}
  update(dt){if(this.hud?.modal)return;
   this.state.yaw-=input.axis('look_x')*.0021;this.state.pitch=Math.max(-1.45,Math.min(1.45,this.state.pitch-input.axis('look_y')*.0021));
   if(input.pressed('reset'))scenes.reload();
+  for(const tool of ['dig','raise','lower','paint'])if(input.pressed('mode_'+tool))this.state.tool=tool;
+  if(input.pressed('paint_layer'))this.state.layer=(this.state.layer+1)%4;
   if(input.pressed('save'))this.request=saves.save('highlands');if(input.pressed('load'))this.request=saves.load('highlands');
   if(input.pressed('tunnel')&&!this.queue.length)for(let z=10;z>=-10;z-=1.1)this.queue.push({point:{x:0,y:2.2,z},kind:'remove',radius:1.65});
   if(input.pressed('dig')||input.pressed('build')){const origin=add(this.entity.transform.position,{x:0,y:.65,z:0});
    const cp=Math.cos(this.state.pitch),direction={x:-Math.sin(this.state.yaw)*cp,y:Math.sin(this.state.pitch),z:-Math.cos(this.state.yaw)*cp};
    const hit=physics.raycast(origin,direction,7,{ignored:[this.entity]});
-   if(hit?.entity?.id===this.owner.id)this.queue.push({point:hit.point,kind:input.pressed('build')?'add':'remove',radius:1.35});
+   if(hit?.entity?.id===this.owner.id){const surface=!input.pressed('build')&&this.state.tool!=='dig';
+    this.queue.push({point:hit.point,surface,kind:surface?this.state.tool:(input.pressed('build')?'add':'remove'),radius:surface?2:1.35,layer:this.state.layer});}
   }
-  const s=this.owner.terrain.state;if(s?.ready&&!s.busy&&this.queue.length){const b=this.queue.shift();this.owner.terrain.brush(b.point,{kind:b.kind,radius:b.radius});}
+  const s=this.owner.terrain.state;if(s?.ready&&!s.busy&&this.queue.length){const b=this.queue.shift();
+   if(b.surface){this.owner.terrain.surfaceBrush(b.point,{kind:b.kind,radius:b.radius,strength:b.kind==='paint'?1:.25,layer:b.layer});this.state.surfaceDabs++;console.log('TERRAIN_V2_SURFACE_DAB '+b.kind);}
+   else this.owner.terrain.brush(b.point,{kind:b.kind,radius:b.radius});}
  }
  fixedUpdate(dt){const motor=this.entity.character;if(!motor)return;
   if(!this.owner.terrain.state?.ready){motor.velocity={x:0,y:0,z:0};return;}
@@ -41,6 +47,7 @@ export default class {
   input.pointerCapture=!this.hud.modal;this.hud.get('crosshair').visible=!this.hud.modal;
   const s=this.owner.terrain.state;
   let text=s?`${s.ready?'Ready':'Preparing terrain'} | revision ${s.revision} | ${s.chunks} chunks / ${s.volumeChunks} excavated\n${s.triangles} triangles | ${(s.bytes/1048576).toFixed(1)} MiB geometry\nPrepare ${s.prepareMs.toFixed(2)} ms (worker) | publish ${s.publishMs.toFixed(2)} ms\n${s.error|| (this.queue.length?'Excavating tunnel: '+this.queue.length+' cuts remaining':'Press T, then walk through the hillside. Geometry and collision change together.')}`:'Preparing source';
+  text+='\nTool: '+this.state.tool+' | layer '+(this.state.layer+1)+' | saved surface dabs '+this.state.surfaceDabs;
   if(this.request){const r=saves.status(this.request);text+='\nSave/load: '+r?.state+' '+(r?.error||'');}
   this.hud.get('counter').text=text;
  }

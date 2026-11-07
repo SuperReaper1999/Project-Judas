@@ -18,6 +18,9 @@ export class Terrain {
     brush(point, options) {
         return call("terrainBrush", this.id, point, options);
     }
+    surfaceBrush(point, options) {
+        return call("terrainSurface", this.id, point, options);
+    }
 }
 extendEntity({
     get terrain() {

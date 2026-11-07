@@ -64,7 +64,12 @@ def main():
             'write': '''FRAMES 1800
 FRAME_SECONDS 0.016666667
 LOG_EVERY 120
-ACTION tunnel 1 100 101
+ACTION mode_raise 1 100 101
+ACTION dig 1 120 121
+ACTION mode_paint 1 160 161
+ACTION dig 1 180 181
+ACTION mode_dig 1 220 221
+ACTION tunnel 1 250 251
 AXIS move_y 1 950 1310
 SCREENSHOT 1150 TUNNEL_SCREENSHOT
 ACTION save 1 1450 1451
@@ -89,6 +94,10 @@ EXPECT_SCENE Scenes/highlands.judas 45
                        JUDAS_WINDOW_SIZE='1280x800', XDG_DATA_HOME=str(out / 'user-data'))
             run(name, [package / 'judas', package / 'game.judasproj'], work, env)
         restored = []
+        write_log = (out / 'write.log').read_text()
+        for kind in ('raise', 'paint'):
+            if 'TERRAIN_V2_SURFACE_DAB ' + kind not in write_log:
+                raise RuntimeError('Actual gameplay did not apply the ' + kind + ' surface tool.')
         for line in (out / 'read.log').read_text().splitlines():
             marker = 'TERRAIN_V2_RESTORED '
             if marker in line:
@@ -98,7 +107,7 @@ EXPECT_SCENE Scenes/highlands.judas 45
         state = restored[0]
         terrain = state['terrain']
         if (not terrain['ready'] or terrain['busy'] or terrain['error'] or
-                terrain['volumeChunks'] < 8 or state['position']['z'] > -8):
+                terrain['volumeChunks'] < 8 or state['position']['z'] > -8 or state['surfaceDabs'] < 2):
             raise RuntimeError('Cold restore lost the edited terrain or real tunnel traversal.')
         record.update(passed=True, restored=state)
     except Exception as error:

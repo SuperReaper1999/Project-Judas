@@ -103,3 +103,9 @@ previewImage.setPreviewCamera(42);
 previewImage.fontSize=24;
 // @ts-expect-error Drag sources use stable element names.
 menuDocument.beginDrag(42);
+
+// V2 runtime surface authoring uses the same source as local excavation.
+owner.terrain.surfaceBrush(origin,{kind:'paint',radius:2,layer:3});
+owner.terrain.surfaceBrush(origin,{kind:'flatten',radius:3,height:1,strength:.5});
+// @ts-expect-error Surface layers are the four authored slots.
+owner.terrain.surfaceBrush(origin,{kind:'paint',radius:2,layer:4});

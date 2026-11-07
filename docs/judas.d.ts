@@ -762,6 +762,10 @@ declare module "judas" {
     readonly chunks:number; readonly volumeChunks:number; readonly pendingChunks:number;
   }
   export interface TerrainBrushOptions {kind:"remove"|"add"|"smooth";radius:number;strength?:number;}
+  export interface TerrainSurfaceBrushOptions {
+    kind:"raise"|"lower"|"flatten"|"smooth"|"paint";
+    radius:number; strength?:number; height?:number; layer?:0|1|2|3;
+  }
   export class Terrain {
     constructor(id:string);
     id:string;
@@ -771,6 +775,8 @@ declare module "judas" {
     createLandscape(source:string):boolean;
     /** Point is in the current simulation frame; radius is in metres. */
     brush(point:Vec3,options:TerrainBrushOptions):boolean;
+    /** V2 surface raster; height is source-local metres. Paint leaves collision unchanged. */
+    surfaceBrush(point:Vec3,options:TerrainSurfaceBrushOptions):boolean;
   }
   export class Character {
     /** Add WORLD-space metres for the next fixed step, through motor sweeps. Does not accumulate into velocity. */
