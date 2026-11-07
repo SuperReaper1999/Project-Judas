@@ -17,11 +17,17 @@ bool TerrainEditor::Guard(EditorPanelState& s){if(v2&&v2->Active()){bool ok=v2->
 void TerrainEditor::Shutdown(Renderer& r,JobSystem* jobs){if(v2)v2->Shutdown(r,jobs);draft.Cancel();if(task&&jobs){jobs->Cancel(task->job);jobs->Wait(task->job);}if(navigationTask&&jobs){jobs->Cancel(navigationTask->job);jobs->Wait(navigationTask->job);}r.DestroyMesh(mesh);r.DestroyTexture(texture);mesh={};texture={};}
 void TerrainEditor::Panel(EditorDocument& doc,EditorPanelState& s,EditorRequests& requests){
  if(!v2)v2=std::make_shared<TerrainV2Editor>();
- if(v2->Panel(doc,s,requests)){loaded=v2->Loaded();editing=v2->Editing();return;}
+ const bool retainLegacyDraft=!v2->Active()&&loaded&&draft.Dirty();
+ if(retainLegacyDraft&&(!s.terrainEditAsset.empty()||s.terrainCreateRequested))s.status="Save or discard the legacy terrain draft before opening a V2 source.";
+ if(!retainLegacyDraft&&v2->Panel(doc,s,requests)){usingV2=v2->Active();loaded=usingV2&&v2->Loaded();editing=usingV2&&v2->Editing();return;}
+ if(usingV2){usingV2=false;loaded=false;editing=false;preview.reset();}
  if(!s.showTerrain)return;
  ImGui::SetNextWindowSize({440,650},ImGuiCond_FirstUseEver);
  if(!ImGui::Begin("Terrain - sculpt / paint",&s.showTerrain)){ImGui::End();return;}
  if(!s.project||!s.assets){ImGui::TextUnformatted("Open a project first.");ImGui::End();return;}
+ ImGui::BeginDisabled(Busy(s)||(loaded&&draft.Dirty()));
+ if(ImGui::Button("Create Terrain V2 landscape")){v2->BeginCreation();ImGui::EndDisabled();ImGui::End();return;}
+ ImGui::EndDisabled();
  if(projectKey!=s.project->ProjectFile()){if(loaded&&draft.Dirty()){ImGui::TextUnformatted("Previous project's draft is retained. Save/discard before replacing.");}else{loaded=false;editing=false;preview.reset();projectKey=s.project->ProjectFile();}}
  // Keep readiness and recovery above the fold; opening the panel alone used
  // to leave three independent prerequisites hidden among source controls.

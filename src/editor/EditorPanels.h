@@ -138,6 +138,8 @@ struct EditorPanelState {
     bool utilityAILiveRequested = false, utilityAIAuthorRequested = false;
     std::string newAIBehaviourName = "Guard", aiWorkflowMessage;
     bool showTerrain = false;
+    std::string terrainEditAsset;
+    bool terrainCreateRequested = false;
     bool showVolumeTerrain = false;
     bool showMods = false;
     std::shared_ptr<RetargetPanelState> retarget;

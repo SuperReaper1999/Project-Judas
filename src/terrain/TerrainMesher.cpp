@@ -270,10 +270,11 @@ bool BuildChunk(const Source &source, ChunkKey key, Chunk &output, std::string &
 }
 bool BuildChunks(const Source &source, const std::vector<ChunkKey> &keys,
                  std::vector<Chunk> &output, std::string &error,
-                 const std::function<bool()> &cancelled) {
+                 const std::function<bool()> &cancelled, size_t maximumTriangles) {
     if (!Validate(source, error))
         return false;
     std::vector<Chunk> prepared;
+    size_t triangles = 0;
     prepared.reserve(keys.size());
     for (auto key : keys) {
         if (cancelled && cancelled()) {
@@ -283,6 +284,12 @@ bool BuildChunks(const Source &source, const std::vector<ChunkKey> &keys,
         Chunk chunk;
         if (!ExtractChunk(source, key, chunk, error, cancelled))
             return false;
+        const size_t count = chunk.mesh.indices.size() / 3;
+        if (count > maximumTriangles - triangles) {
+            error = "terrain preparation exceeds its triangle budget; previous product retained";
+            return false;
+        }
+        triangles += count;
         prepared.push_back(std::move(chunk));
     }
     output = std::move(prepared);

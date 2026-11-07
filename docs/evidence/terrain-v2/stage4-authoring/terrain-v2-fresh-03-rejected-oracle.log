@@ -1,0 +1,12 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+terrain V2 cooked 18496 vertices 32768 triangles
+terrain V2 cooked 18496 vertices 32768 triangles
+terrain V2 cooked 18496 vertices 32768 triangles
+terrain V2 cooked 18496 vertices 32768 triangles
+FAIL heightmap workflow opens the existing native file browser after 29 checks

@@ -5,7 +5,7 @@
 #include "TerrainAsset.h"
 
 namespace TerrainV2 {
-bool ValidateOwner(const SceneObject &o, const AssetDatabase *assets, std::string &error) {
+bool ValidateOwnerPlacement(const SceneObject &o, std::string &error) {
     if (!o.landscape)
         return true;
     if (!o.body || o.body->motion != SceneBodyMotion::Static || o.body->shape != SceneShape::Box ||
@@ -18,6 +18,14 @@ bool ValidateOwner(const SceneObject &o, const AssetDatabase *assets, std::strin
                 "geometry/motion owners";
         return false;
     }
+    error.clear();
+    return true;
+}
+bool ValidateOwner(const SceneObject &o, const AssetDatabase *assets, std::string &error) {
+    if (!o.landscape)
+        return true;
+    if (!ValidateOwnerPlacement(o, error))
+        return false;
     const auto *asset = assets ? assets->Find(o.landscape->asset) : nullptr;
     if (!asset || asset->missing || asset->type != AssetType::Terrain) {
         error = "landscape requires a registered native terrain asset";

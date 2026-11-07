@@ -31,6 +31,11 @@ void SelectAsset(const AssetRecord &record, EditorPanelState &state, const Asset
 void OpenAsset(const AssetRecord &record, EditorPanelState &state) {
     const auto &id = record.id;
     const auto name = std::filesystem::path(record.relativePath).filename().string();
+    if (record.type == AssetType::Terrain) {
+        state.terrainEditAsset = id;
+        state.showTerrain = true;
+        return;
+    }
     if (record.type == AssetType::SpriteSheet) {
         state.spriteSheetEdit = id;
         state.showSpriteSheetEditor = true;
@@ -178,6 +183,7 @@ EditorVisuals::Icon AssetIcon(AssetType type) {
         return Icon::UI;
     case AssetType::World:
     case AssetType::Environment:
+    case AssetType::Terrain:
         return Icon::Globe;
     case AssetType::Material:
     case AssetType::PhysicalMaterial:

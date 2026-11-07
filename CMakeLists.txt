@@ -557,6 +557,8 @@ add_library(judas_editor_core STATIC
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp src/editor/TerrainV2Editor.cpp
+    src/editor/TerrainV2Creation.cpp
+    src/editor/TerrainV2Inspector.cpp
     src/editor/VolumeTerrainTools.cpp
     src/editor/ModTools.cpp
     src/editor/ProfilerView.cpp
@@ -1521,7 +1523,9 @@ judas_add_engine_test(judas_model_application_tests tests/ModelApplicationTests.
 
 judas_add_engine_test(judas_world_building_tests tests/WorldBuildingTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
-add_library(judas_world_authoring STATIC src/terrain/TerrainCook.cpp src/terrain/TerrainPreview.cpp src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
+add_library(judas_world_authoring STATIC src/terrain/TerrainCook.cpp src/terrain/TerrainPreview.cpp
+    src/terrain/TerrainGeneration.cpp
+    src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation_baker)
 judas_warnings(judas_world_authoring)

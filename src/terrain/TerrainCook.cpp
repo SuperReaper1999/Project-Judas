@@ -4,6 +4,7 @@
 #include "Project.h"
 #include "SceneFingerprint.h"
 #include "TerrainAsset.h"
+#include "TerrainGeneration.h"
 #include "TerrainMesher.h"
 #include "TerrainPreview.h"
 #include "TerrainSource.h"
@@ -11,7 +12,9 @@
 #include "authoring/AuthoringDocument.h"
 #include "authoring/TerrainAuthoring.h"
 #include <algorithm>
+#include <charconv>
 #include <cmath>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -29,7 +32,31 @@ std::string Read(const std::string &path) {
         throw std::runtime_error("terrain source read failed");
     return bytes;
 }
+template <class T> T Number(const char *text) {
+    T value{};
+    const auto end = text + std::strlen(text);
+    const auto result = std::from_chars(text, end, value);
+    if (result.ec != std::errc{} || result.ptr != end)
+        throw std::runtime_error("invalid terrain recipe number");
+    return value;
+}
 } // namespace
+bool ValidateTerrainWritePath(const std::string &path, std::string &error) {
+    try {
+        const auto file = Project::FindProjectFileFor(path);
+        if (file.empty()) { error.clear(); return true; }
+        Project project;
+        if (!project.Load(file,error)) return false;
+        const auto root = std::filesystem::weakly_canonical(project.RootDir());
+        const auto relative = std::filesystem::weakly_canonical(std::filesystem::absolute(path)).lexically_relative(root);
+        if (relative.empty() || relative.is_absolute() || *relative.begin() == "..")
+            throw std::runtime_error("terrain destination leaves the project through a link; choose an owned source path");
+        if (std::filesystem::exists(root / "mod-authoring.json") &&
+            (*relative.begin() == "Kit" || *relative.begin() == "Dependencies"))
+            throw std::runtime_error("published kit/dependency source is read-only; fork into this project's Authoring or Imports first");
+        error.clear(); return true;
+    } catch (const std::exception &e) { error=e.what(); return false; }
+}
 int TerrainV2AuthorCommand(int argc, char **argv) {
     try {
         if (argc < 3)
@@ -40,6 +67,53 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
         std::string error;
         const std::string command = argv[1];
         TerrainV2::Source source;
+        if (command == "v2-new" || command == "v2-heightmap") {
+            if (argc != 8)
+                throw std::runtime_error(
+                    "v2-new OUTPUT flat|highlands|island SAMPLES SPACING SEED HEIGHT | "
+                    "v2-heightmap IMAGE OUTPUT SAMPLES SPACING MIN_HEIGHT MAX_HEIGHT");
+            TerrainV2::LandscapeRecipe recipe;
+            recipe.samples = Number<unsigned>(argv[4]);
+            recipe.spacing = Number<float>(argv[5]);
+            std::filesystem::path destination;
+            if (command == "v2-new") {
+                const std::string preset = argv[3];
+                if (preset == "flat")
+                    recipe.preset = TerrainV2::LandscapeRecipe::Preset::Flat;
+                else if (preset == "highlands")
+                    recipe.preset = TerrainV2::LandscapeRecipe::Preset::Highlands;
+                else if (preset == "island")
+                    recipe.preset = TerrainV2::LandscapeRecipe::Preset::Island;
+                else
+                    throw std::runtime_error("terrain preset must be flat, highlands or island");
+                recipe.seed = Number<unsigned>(argv[6]);
+                recipe.height = Number<float>(argv[7]);
+                if (!TerrainV2::Generate(recipe, source, error))
+                    throw std::runtime_error(error);
+                destination = argv[2];
+            } else {
+                recipe.base = Number<float>(argv[6]);
+                recipe.height = Number<float>(argv[7]) - recipe.base;
+                if (!TerrainV2::ImportHeightmap(Read(argv[2]), recipe, source, error))
+                    throw std::runtime_error(error);
+                destination = argv[3];
+            }
+            destination = std::filesystem::absolute(destination);
+            if (!ValidateTerrainWritePath(destination.string(),error)) throw std::runtime_error(error);
+            if (std::filesystem::exists(destination))
+                throw std::runtime_error(
+                    "choose a new terrain source path; existing data is never overwritten");
+            const auto text = TerrainV2::Serialize(source);
+            if (text.size() > 64 * 1024 * 1024)
+                throw std::runtime_error(
+                    "generated editable JSON exceeds the 64 MiB source budget; "
+                    "choose fewer samples or split the landscape into regions");
+            if (!PublishAuthoringOutputs(destination.parent_path().string(),
+                                         {{destination.string(), text, {}, false}}, error))
+                throw std::runtime_error(error);
+            std::cout << "created terrain source " << destination << '\n';
+            return 0;
+        }
         if (command == "v2-import") {
             if (argc != 4 || std::filesystem::exists(argv[3]))
                 throw std::runtime_error(
@@ -67,6 +141,7 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                 source.layerColours[i] = glm::vec3(1);
             }
             const auto destination = std::filesystem::absolute(argv[3]);
+            if (!ValidateTerrainWritePath(destination.string(),error)) throw std::runtime_error(error);
             if (!PublishAuthoringOutputs(
                     destination.parent_path().string(),
                     {{destination.string(), TerrainV2::Serialize(source), {}, false}}, error))
@@ -81,6 +156,8 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                       << " chunks\n";
             return 0;
         }
+        if (!ValidateTerrainWritePath(argv[2],error)) throw std::runtime_error(error);
+        if (argc > 3 && !ValidateTerrainWritePath(argv[3],error)) throw std::runtime_error(error);
         if (command == "v2-pack") {
             if (argc != 4)
                 throw std::runtime_error("v2-pack SOURCE OUTPUT.judasterrain");

@@ -31,9 +31,10 @@ struct ComponentEditor {
     const char* name;      // header/menu label
     char indicator;        // one letter for the hierarchy row
     bool (*has)(const SceneObject&);
-    void (*add)(SceneObject&);
+    void (*add)(SceneObject&); // null when a dedicated asset/authoring workflow creates it
     void (*remove)(SceneObject&);
     void (*draw)(EditorDocument& doc, SceneObject& object, EditorPanelState& state);
+    void (*requestAdd)(EditorPanelState&) = nullptr; // asset-backed creation workflow, instead of add
 };
 
 const std::vector<ComponentEditor>& ComponentEditorRegistry();

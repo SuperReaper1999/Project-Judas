@@ -44,7 +44,7 @@ EditorVisuals::Icon ObjectIcon(const SceneObject &object) {
         return Icon::Camera;
     if (object.light)
         return Icon::Light;
-    if (object.planet || object.gravity || object.celestial)
+    if (object.planet || object.landscape || object.gravity || object.celestial)
         return Icon::Globe;
     if (object.ui)
         return Icon::UI;
@@ -64,6 +64,8 @@ const char *ObjectType(const SceneObject &object) {
         return "Light";
     if (object.planet)
         return "Planet terrain";
+    if (object.landscape)
+        return "Landscape";
     if (object.body)
         return "Physical object";
     if (object.render && object.render->shape == SceneShape::Sprite)
@@ -90,7 +92,7 @@ EditorVisuals::Icon ComponentIcon(const char *name) {
         return Icon::Light;
     if (title == "Runtime UI")
         return Icon::UI;
-    if (title == "Planet terrain" || title.find("Gravity") == 0)
+    if (title == "Planet terrain" || title == "Landscape" || title.find("Gravity") == 0)
         return Icon::Globe;
     return Icon::Cube;
 }
@@ -109,6 +111,8 @@ const char *ComponentTitle(const ComponentEditor &editor, const SceneObject &obj
         return "User interface";
     if (name == "Visual socket")
         return "Attachment";
+    if (name == "Landscape" && !object.landscape)
+        return "New landscape (Terrain tools)";
     return editor.name;
 }
 
@@ -134,6 +138,8 @@ const char *ComponentPurpose(const char *name) {
         return "An interface document displayed by this object.";
     if (type == "Basic water")
         return "An inexpensive water surface and swimming area; no advanced fluid simulation.";
+    if (type == "Landscape")
+        return "An editable landscape with source-owned collision. Opens its terrain authoring workflow.";
     if (type == "Navigation agent")
         return "Route following for this character or moving object.";
     return "Expand to edit this component. Its advanced options stay with it.";
@@ -205,7 +211,7 @@ bool ComponentHeader(EditorDocument &doc, const ComponentEditor &editor, SceneOb
         ImGui::SetNextItemOpen(true);
         state.revealComponent.clear();
     }
-    const bool common = std::string(editor.name) == "Scripts";
+    const bool common = std::string(editor.name) == "Scripts" || std::string(editor.name) == "Landscape";
     const char *title = ComponentTitle(editor, o);
     // Display friendlier titles without changing existing collapse/widget IDs.
     const char *originalTitle =
@@ -272,16 +278,19 @@ void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState 
               [](const auto *a, const auto *b) { return std::strcmp(a->name, b->name) < 0; });
     for (const auto *entry : editors) {
         const auto &editor = *entry;
-        if (editor.has(o))
+        if (editor.has(o) || (!editor.add && !editor.requestAdd))
             continue;
         if (!filter.PassFilter(editor.name) && !filter.PassFilter(ComponentTitle(editor, o)))
             continue;
         const std::string label = std::string(ComponentTitle(editor, o)) + "###" + editor.name;
         if (EditorDesign::Row(label.c_str(), false)) {
-            doc.BeginEdit();
-            editor.add(o);
-            doc.CommitEdit();
-            state.revealComponent = editor.name;
+            if (editor.requestAdd) editor.requestAdd(state);
+            else {
+                doc.BeginEdit();
+                editor.add(o);
+                doc.CommitEdit();
+                state.revealComponent = editor.name;
+            }
         }
         ImGui::SetItemTooltip("%s", ComponentPurpose(editor.name));
     }
@@ -465,7 +474,8 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
             attached.push_back(&editor);
     const auto priority = [](const ComponentEditor *editor) {
         const std::string name(editor->name);
-        return name == "Scripts"           ? 0
+        return name == "Landscape" ? -1
+               : name == "Scripts" ? 0
                : name == "Render"          ? 1
                : name == "Body"            ? 2
                : name == "Character motor" ? 3
@@ -474,7 +484,7 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
     };
     std::stable_sort(attached.begin(), attached.end(),
                      [&](const auto *a, const auto *b) { return priority(a) < priority(b); });
-    if (o->scripts.empty()) {
+    const auto drawScriptStarter = [&] {
         EditorDesign::Surface scriptCard(EditorDesign::Tone::Secondary);
         ImGui::PushFont(EditorVisuals::HeadingFont());
         EditorVisuals::IconText(EditorVisuals::Icon::Script, "Scripts");
@@ -483,7 +493,12 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
         const auto owner = o->id;
         DrawEditorScriptWorkflow(doc, *o, state);
         o = doc.GetScene().Find(owner); // An AI starter may append scene objects.
-    }
+    };
+    // A landscape's primary workflow is editing its source, not attaching a
+    // script. Keep the optional script starter available below its components.
+    const bool landscape = bool(o->landscape);
+    if (o->scripts.empty() && !landscape)
+        drawScriptStarter();
     for (const auto *entry : attached) {
         const auto &editor = *entry;
         EditorDesign::Surface card(EditorDesign::Tone::Secondary);
@@ -499,6 +514,8 @@ void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
             }
         }
     }
+    if (o->scripts.empty() && landscape)
+        drawScriptStarter();
     authoredLock.reset();
     ImGui::Spacing();
     if (EditorDesign::Disclosure("Advanced object tools")) {

@@ -1,0 +1,64 @@
+{
+  "timestamp_utc": "2026-11-07T22:11:53.503283+00:00",
+  "source_parent": "58e73071d7fd1e3d0b5b7d9129d5a70905e8e40c",
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-58e7307-dirty-1fe13c6590d4-u3ed0f303c5e1",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "1fe13c6590d47c0fb538316eac9bb0d4b728a4147f4e22807c31b1a392e50527",
+    "source_origin": "git",
+    "source_revision": "58e73071d7fd1e3d0b5b7d9129d5a70905e8e40c",
+    "source_tree": "a0552faa927e8a55190323a2503e4112ddbd1b47",
+    "source_untracked_count": 27,
+    "source_untracked_fingerprint": "3ed0f303c5e1a0449349eb66a0a69f19a77af7206bc5d77166860bfa158a755f",
+    "version": "2.0.0-alpha.1"
+  },
+  "human_acceptance": false,
+  "benchmark_scope": "geometry worker only; excludes IO, merge, BVH and GPU; 30 alternating pairs; exact geometry equality; no builds or other qualification during final timing",
+  "benchmark": {
+    "129": {
+      "former_worker_ms": {
+        "median_ms": 4.563610000000001,
+        "p95_ms": 5.16735,
+        "worst_ms": 5.64705
+      },
+      "batch_worker_ms": {
+        "median_ms": 1.9043549999999998,
+        "p95_ms": 2.04397,
+        "worst_ms": 2.08024
+      }
+    },
+    "257": {
+      "former_worker_ms": {
+        "median_ms": 50.047650000000004,
+        "p95_ms": 58.184,
+        "worst_ms": 64.7683
+      },
+      "batch_worker_ms": {
+        "median_ms": 7.815435,
+        "p95_ms": 8.60426,
+        "worst_ms": 9.08396
+      }
+    },
+    "513": {
+      "former_worker_ms": {
+        "median_ms": 727.8454999999999,
+        "p95_ms": 797.213,
+        "worst_ms": 797.228
+      },
+      "batch_worker_ms": {
+        "median_ms": 32.8227,
+        "p95_ms": 35.7764,
+        "worst_ms": 36.6728
+      }
+    }
+  }
+}

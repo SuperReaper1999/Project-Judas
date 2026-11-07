@@ -1,5 +1,6 @@
 #include "TerrainV2Editor.h"
 #include "../../third_party/nlohmann/json.hpp"
+#include "EditorDesign.h"
 #include "Project.h"
 #include "SceneFingerprint.h"
 #include "WorldPresentation.h"
@@ -7,6 +8,7 @@
 #include "authoring/TerrainAuthoring.h"
 #include "imgui.h"
 #include "terrain/TerrainCook.h"
+#include "terrain/TerrainMesher.h"
 #include <cstring>
 #include <filesystem>
 #include <fstream>
@@ -38,16 +40,31 @@ bool TerrainV2Editor::Open(EditorPanelState &state) {
         return false;
     const auto model = fs::path(path).stem().string();
     meshId.clear();
+    std::vector<std::string> exact, fallback;
+    const auto relative =
+        fs::path(path).lexically_relative(state.project->RootDir()).generic_string();
     for (const auto &[id, asset] : state.assets->Records())
-        if (asset.type == AssetType::Mesh && fs::path(asset.path).stem() == model) {
-            meshId = id;
-            break;
+        if (asset.type == AssetType::Mesh) {
+            if (asset.source == relative)
+                exact.push_back(id);
+            if (fs::path(asset.path).stem() == model)
+                fallback.push_back(id);
         }
+    const auto &matches = exact.empty() ? fallback : exact;
+    if (matches.size() == 1)
+        meshId = matches.front();
+    else if (matches.size() > 1) {
+        error = "Multiple terrain previews match this source. Keep one registered editable preview "
+                "per source, with project-relative source metadata.";
+        return false;
+    }
     if (meshId.empty()) {
         error = "Cook this source to a matching .judasmodel asset before viewport editing.";
         return false;
     }
     source = std::move(next);
+    ReadPalette();
+    brush.radius = std::clamp(std::max(brush.radius, source.spacing * 2), source.spacing, 128.f);
     ++revision;
     disk = std::move(bytes);
     loaded = true;
@@ -79,25 +96,14 @@ void TerrainV2Editor::Queue(const std::vector<TerrainV2::ChunkKey> &keys, Editor
     auto captured = std::make_shared<const TerrainV2::Source>(source);
     work->job = state.importJobs->Submit(
         [work, captured, keys](JobContext &context) {
-            size_t triangles = 0;
-            for (auto key : keys) {
-                TerrainV2::Chunk chunk;
-                if (!TerrainV2::BuildChunk(*captured, key, chunk, work->error,
-                                           [&] { return context.CancelRequested(); })) {
-                    if (context.CancelRequested())
-                        context.ReportCancelled();
-                    else
-                        context.SetError(work->error);
-                    return;
-                }
-                triangles += chunk.mesh.indices.size() / 3;
-                if (triangles > 524288) {
-                    work->error = "Preview exceeds 524288 prepared triangles; choose a smaller "
-                                  "editable region.";
+            if (!TerrainV2::BuildChunks(
+                    *captured, keys, work->chunks, work->error,
+                    [&] { return context.CancelRequested(); }, 1048576)) {
+                if (context.CancelRequested())
+                    context.ReportCancelled();
+                else
                     context.SetError(work->error);
-                    return;
-                }
-                work->chunks.push_back(std::move(chunk));
+                return;
             }
         },
         JobPriority::High, "Terrain V2 editor dirty chunks");
@@ -106,30 +112,173 @@ void TerrainV2Editor::Queue(const std::vector<TerrainV2::ChunkKey> &keys, Editor
     else
         error = "Terrain preview job could not be queued.";
 }
+void TerrainV2Editor::DiscoverSources(const EditorPanelState &state) {
+    sources.clear();
+    const auto root = fs::path(state.project->RootDir()) / "Authoring";
+    std::error_code ec;
+    if (fs::is_directory(root, ec))
+        for (fs::recursive_directory_iterator it(root, ec), end; it != end && !ec; it.increment(ec))
+            if (it->is_regular_file(ec) && !it->is_symlink(ec) &&
+                it->path().extension() == ".judasterrain2") {
+                sources.push_back(it->path().string());
+                if (sources.size() == 512)
+                    break;
+            }
+    std::sort(sources.begin(), sources.end());
+}
+void TerrainV2Editor::TrimHistory() {
+    auto bytes = [](const auto &history) {
+        size_t count = 0;
+        for (const auto &s : history)
+            count += s.heights.size() * 20 + s.edits.size() * sizeof(TerrainV2::Edit);
+        return count;
+    };
+    // Keep the immediate undo/redo snapshot even at the maximum source size.
+    // Other history is bounded by bytes as well as count, across BOTH stacks.
+    while (undo.size() + redo.size() > 1 &&
+           (bytes(undo) + bytes(redo) > 64 * 1024 * 1024 || undo.size() + redo.size() > 16)) {
+        if (!undo.empty() && (undo.size() > 1 || redo.empty()))
+            undo.erase(undo.begin());
+        else if (!redo.empty())
+            redo.erase(redo.begin());
+    }
+}
+void TerrainV2Editor::ReadPalette() {
+    paletteTextures = source.layerTextures;
+    paletteColours = source.layerColours;
+}
+bool TerrainV2Editor::PaletteDirty() const {
+    return loaded &&
+           (paletteTextures != source.layerTextures || paletteColours != source.layerColours);
+}
+void TerrainV2Editor::ApplyPalette() {
+    if (!PaletteDirty())
+        return;
+    undo.push_back(source);
+    redo.clear();
+    source.layerTextures = paletteTextures;
+    source.layerColours = paletteColours;
+    TrimHistory();
+    dirty = productsDirty = appearanceDirty = true;
+    ++revision;
+}
+void TerrainV2Editor::PalettePanel(const EditorPanelState &state) {
+    if (!ImGui::CollapsingHeader("Surface materials"))
+        return;
+    ImGui::TextWrapped("Select textures or drag them from Assets. Apply updates the preview; Save "
+                       "and update also applies pending material choices.");
+    for (unsigned i = 0; i < 4; ++i) {
+        ImGui::PushID(int(i));
+        ImGui::Text("Layer %u", i + 1);
+        const auto *current = state.assets->Find(paletteTextures[i]);
+        if (ImGui::BeginCombo("Texture", current ? current->relativePath.c_str() : "Colour only")) {
+            if (ImGui::Selectable("Colour only", paletteTextures[i].empty()))
+                paletteTextures[i].clear();
+            for (const auto &[id, asset] : state.assets->Records())
+                if (asset.type == AssetType::Texture && !asset.missing &&
+                    ImGui::Selectable(asset.relativePath.c_str(), paletteTextures[i] == id))
+                    paletteTextures[i] = id;
+            ImGui::EndCombo();
+        }
+        if (ImGui::BeginDragDropTarget()) {
+            if (const auto *payload = ImGui::AcceptDragDropPayload(kAssetDragPayload)) {
+                std::string id(static_cast<const char *>(payload->Data), payload->DataSize);
+                const auto *asset = state.assets->Find(id);
+                if (asset && asset->type == AssetType::Texture && !asset->missing)
+                    paletteTextures[i] = id;
+            }
+            ImGui::EndDragDropTarget();
+        }
+        ImGui::ColorEdit3("Tint", &paletteColours[i].x);
+        ImGui::PopID();
+    }
+    if (ImGui::Button("Apply surface materials"))
+        ApplyPalette();
+    ImGui::SameLine();
+    if (ImGui::Button("Revert material choices"))
+        ReadPalette();
+}
 bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
                             EditorRequests &requests) {
     if (!state.project || !state.assets)
         return false;
     if (projectKey != state.project->ProjectFile()) {
         if (dirty || Busy())
-            return activeProject;
+            return Active();
         projectKey = state.project->ProjectFile();
+        legacy = false;
         activeProject = false;
         resetPending = true;
         preview.reset();
         loaded = false;
         path.clear();
-        const auto root = fs::path(state.project->RootDir()) / "Authoring";
-        std::error_code ec;
-        if (fs::is_directory(root, ec))
-            for (const auto &file : fs::directory_iterator(root, ec))
-                if (file.path().extension() == ".judasterrain2") {
-                    path = file.path().string();
-                    activeProject = true;
-                    break;
-                }
+        DiscoverSources(state);
+        if (!sources.empty()) {
+            path = sources.front();
+            activeProject = true;
+        }
     }
-    if (!activeProject)
+    auto selectOwner = [&] {
+        const auto *selected = doc.GetScene().Find(doc.Selected());
+        if (selected && selected->render && selected->render->meshAsset == meshId)
+            return;
+        for (const auto &object : doc.GetScene().Objects())
+            if (object.render && object.render->meshAsset == meshId) {
+                doc.Select(object.id);
+                break;
+            }
+    };
+    if (state.terrainCreateRequested) {
+        if (dirty || PaletteDirty() || productsDirty || Busy() || gesture)
+            state.status =
+                "Save/update or discard current terrain edits before creating another source.";
+        else {
+            BeginCreation();
+            state.terrainCreateRequested = false;
+        }
+    }
+    if (!state.terrainEditAsset.empty()) {
+        if (dirty || PaletteDirty() || productsDirty || Busy() || gesture)
+            state.status =
+                "Save/update or discard current terrain edits before opening another source.";
+        else {
+            const auto *asset = state.assets->Find(state.terrainEditAsset);
+            DiscoverSources(state);
+            auto found = sources.end();
+            if (asset && asset->type == AssetType::Terrain)
+                found = std::find_if(sources.begin(), sources.end(), [&](const auto &candidate) {
+                    return fs::path(candidate)
+                               .lexically_relative(state.project->RootDir())
+                               .generic_string() == asset->source;
+                });
+            if (found == sources.end() && asset && asset->type == AssetType::Terrain) {
+                const auto count =
+                    std::count_if(sources.begin(), sources.end(), [&](const auto &candidate) {
+                        return fs::path(candidate).stem() == fs::path(asset->path).stem();
+                    });
+                if (count == 1)
+                    found =
+                        std::find_if(sources.begin(), sources.end(), [&](const auto &candidate) {
+                            return fs::path(candidate).stem() == fs::path(asset->path).stem();
+                        });
+            }
+            if (found == sources.end())
+                state.status = "This native terrain has no matching editable source under "
+                               "Authoring. Keep the source files with your project.";
+            else {
+                path = *found;
+                legacy = false;
+                activeProject = true;
+                preview.reset();
+                resetPending = true;
+                loaded = false;
+                if (Open(state))
+                    selectOwner();
+            }
+            state.terrainEditAsset.clear();
+        }
+    }
+    if (!Active())
         return false;
     frameState = &state;
     if (!state.showTerrain)
@@ -142,10 +291,52 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
     ImGui::TextUnformatted("Terrain V2 — landscape and caves");
     ImGui::TextWrapped("One source owns the landscape, painted materials and excavations. Save and "
                        "update publishes the editor preview and the playable source together.");
+    ImGui::BeginDisabled(dirty || PaletteDirty() || productsDirty || Busy() || gesture ||
+                         creation.Active());
+    if (ImGui::Button("New landscape"))
+        creation.Show();
+    ImGui::SameLine();
+    if (ImGui::Button("Refresh terrain sources"))
+        DiscoverSources(state);
+    if (!sources.empty() &&
+        ImGui::BeginCombo("Source", fs::path(path).filename().string().c_str())) {
+        for (const auto &candidate : sources)
+            if (ImGui::Selectable(fs::path(candidate).filename().string().c_str(),
+                                  candidate == path)) {
+                path = candidate;
+                preview.reset();
+                resetPending = true;
+                loaded = false;
+                if (Open(state))
+                    selectOwner();
+            }
+        ImGui::EndCombo();
+    }
+    if (ImGui::Button("Legacy terrain tools")) {
+        legacy = true;
+        editing = false;
+    }
+    ImGui::EndDisabled();
+    creation.Panel(doc, state, requests);
+    if (auto created = creation.TakeCreatedPath(); !created.empty()) {
+        path = std::move(created);
+        activeProject = true;
+        preview.reset();
+        resetPending = true;
+        loaded = false;
+        DiscoverSources(state);
+        Open(state);
+    }
+    if (creation.Active()) {
+        ImGui::End();
+        return true;
+    }
     if (!loaded) {
         ImGui::TextWrapped("%s", path.c_str());
         if (ImGui::Button("Edit landscape"))
             Open(state);
+        if (!error.empty())
+            ImGui::TextWrapped("%s", error.c_str());
         ImGui::End();
         return true;
     }
@@ -162,8 +353,15 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
     ImGui::BeginDisabled(Busy());
     const char *modes[] = {"Raise", "Lower", "Flatten", "Smooth", "Paint", "Excavate", "Add rock"};
     ImGui::Combo("Tool", &mode, modes, 7);
-    ImGui::SliderFloat("Radius (metres)", &brush.radius, source.spacing, 8);
+    const float maximumRadius = mode >= 5 ? 64.f : 128.f;
+    if (source.spacing <= maximumRadius) {
+        brush.radius = std::clamp(brush.radius, source.spacing, maximumRadius);
+        ImGui::SliderFloat("Radius (metres)", &brush.radius, source.spacing, maximumRadius);
+    } else
+        ImGui::TextWrapped("This source is too coarse for excavation; use a local detailed "
+                           "landscape patch with spacing of 64 metres or less.");
     ImGui::SliderFloat("Strength", &brush.strength, .01f, 1);
+    PalettePanel(state);
     if (mode == 4) {
         std::array<std::string, 4> names;
         for (unsigned i = 0; i < 4; ++i) {
@@ -188,27 +386,34 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
     if (ImGui::Button("Undo") && !undo.empty()) {
         redo.push_back(source);
         source = std::move(undo.back());
+        ReadPalette();
         undo.pop_back();
         dirty = true;
         productsDirty = true;
         ++revision;
         appearanceDirty = true;
         Queue(All(source), state);
+        TrimHistory();
     }
     ImGui::SameLine();
     if (ImGui::Button("Redo") && !redo.empty()) {
         undo.push_back(source);
         source = std::move(redo.back());
+        ReadPalette();
         redo.pop_back();
         dirty = true;
         productsDirty = true;
         ++revision;
         appearanceDirty = true;
         Queue(All(source), state);
+        TrimHistory();
     }
-    if (ImGui::Button("Save and update playable terrain")) {
+    if (EditorDesign::ActionButton("Save and update playable terrain",
+                                   EditorDesign::Tone::Primary)) {
+        ApplyPalette();
         const auto bytes = TerrainV2::Serialize(source);
-        if (PublishAuthoringOutputs(fs::path(path).parent_path().string(),
+        if (ValidateTerrainWritePath(path, error) &&
+            PublishAuthoringOutputs(fs::path(path).parent_path().string(),
                                     {{path, bytes, disk, true}}, error)) {
             disk = bytes;
             dirty = false;
@@ -337,7 +542,8 @@ bool TerrainV2Editor::Dab(glm::vec3 point, EditorPanelState &state) {
     dirty = true;
     productsDirty = true;
     ++revision;
-    Queue(changed, state);
+    if (mode != 4)
+        Queue(changed, state); // Paint changes material samples, not triangles.
     lastDab = point;
     return true;
 }
@@ -361,9 +567,8 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
     if ((!down || !focused) && gesture) {
         gesture = false;
         undo.push_back(std::move(before));
-        if (undo.size() > 16)
-            undo.erase(undo.begin());
         redo.clear();
+        TrimHistory();
     }
     if (!editing || !focused || !preview)
         return false;
@@ -431,7 +636,7 @@ void TerrainV2Editor::Draw(Renderer &renderer, Scene &scene, ResourceManager &re
         }
 }
 bool TerrainV2Editor::Guard(EditorPanelState &state) {
-    if (activeProject && (dirty || productsDirty || Busy() || gesture)) {
+    if (Active() && (dirty || PaletteDirty() || productsDirty || Busy() || gesture)) {
         state.showTerrain = true;
         error = "Save and update terrain, or discard the source edits, before Play or closing.";
         state.status = error;
@@ -440,6 +645,7 @@ bool TerrainV2Editor::Guard(EditorPanelState &state) {
     return true;
 }
 void TerrainV2Editor::Shutdown(Renderer &renderer, JobSystem *jobs) {
+    creation.Shutdown(jobs);
     for (auto h : {task ? task->job : JobHandle{}, cook ? cook->job : JobHandle{}})
         if (h.IsValid() && jobs) {
             jobs->Cancel(h);

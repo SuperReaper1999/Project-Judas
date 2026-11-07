@@ -6,6 +6,7 @@
 #include "Prefab.h"
 #include "RuntimeWorld.h"
 #include "ComponentEditors.h"
+#include "TerrainV2Inspector.h"
 #include "ParticleEmitterEditor.h"
 #include <algorithm>
 #include <cctype>
@@ -1353,6 +1354,7 @@ void DrawPlanet(EditorDocument& doc,SceneObject& o,EditorPanelState&){
 }
 const std::vector<ComponentEditor>& ComponentEditorRegistry() {
     static const std::vector<ComponentEditor> registry = {
+        TerrainV2ComponentEditor(),
         Make<WeatherSettings>("Weather region",'W',&SceneObject::weather,DrawWeather),
         Make<WeatherResponseSettings>("Weather wind response",'W',&SceneObject::weatherResponse,DrawWeatherResponse),
         Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),

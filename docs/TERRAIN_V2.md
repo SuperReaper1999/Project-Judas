@@ -14,12 +14,45 @@ runtime. In Play, press T to excavate a tunnel, wait for the queue, then walk
 through the hill. WASD/mouse move/look; Space jumps; left/right click remove/add
 terrain; F6/F7 save/load; Escape pauses. Quit and reload to verify persistence.
 
+For a new project, open World → Terrain tools → Create Terrain V2 landscape.
+Choose Flat, Highlands, Island or Import heightmap, then Create landscape. The
+workflow writes source, native data, preview and recipe, adds/selects the object
+through normal scene undo and opens its brushes. No bootstrap script or hand-made
+scene keys are needed. Add component → New landscape opens the same workflow.
+
+If replacing an existing floor, select it first and explicitly choose Replace
+selected ground. This disables its old appearance/collision in the same undo
+transaction, preserving its identity, gravity, scripts and children. The new
+landscape is placed at the old top surface. Gravity keeps its authored bounds;
+enlarge its region if your new landscape extends beyond them. Leaving an old
+floor enabled underneath an excavation will still block that excavation.
+
 In the editor choose World → Terrain tools, Edit landscape, then Select landscape.
 Raise/lower, flatten, smooth, paint, dig and add use the actual viewport. A gesture
 is one undo item. Save and update playable terrain publishes the editable source
 and cooked products; ordinary scene Save remains separate. Pending or unsaved
 terrain prevents starting Play with stale products. Changes made in Play remain
 runtime state and do not rewrite the authored source.
+
+The Source chooser switches between authored landscapes and selects their actual
+scene owners. The Inspector's Landscape card and double-clicking a native terrain
+asset open the corresponding source. Project-relative provenance connects assets
+to sources; the older unique-filename fallback remains, but ambiguous matches are
+rejected. Legacy terrain tools remain available without discarding a dirty draft.
+
+Surface materials offers four texture/tint layers, including asset drag/drop.
+Apply previews material changes; Save and update also applies pending choices.
+Painting changes material samples without rebuilding geometry. Undo/redo retains
+up to 16 snapshots and a 64 MiB sample/journal payload budget across both stacks,
+retaining the immediate snapshot if a single allowed source exceeds that budget.
+This is history payload, not total editor RAM.
+
+Heightmaps retain grayscale 16-bit samples, deliberately resampled to the chosen
+grid with image top mapping to negative local Z. Height values map to the chosen
+minimum/range in metres. The file picker accepts PNG; the importer also handles
+other grayscale formats supported by the existing decoder. Colour images are
+rejected. Original input and recipe are retained under Authoring. This is not a
+GIS/GeoTIFF pipeline. The text-source budget remains 64 MiB.
 
 ## Ownership and implementation
 
@@ -54,6 +87,20 @@ Source commands in `judas_terrain_author` are `v2-validate SOURCE`,
 Import preserves the original and rejects unsupported resampling or material
 tiling explicitly. Do not overwrite an old project to try V2.
 
+Additional source-generation commands:
+
+```sh
+build/judas_terrain_author v2-new Authoring/hills.judasterrain2 highlands 129 1 77 48
+build/judas_terrain_author v2-heightmap heightmap.png Authoring/imported.judasterrain2 129 1 0 64
+```
+
+New-source commands never overwrite existing files. Both V1/V2 writers share
+published-kit/dependency write protection; fork those sources into owned locations.
+Generated landscapes are ordinary editable data, with no procedural simulation
+cost during gameplay. Flat starts with one clear material; other presets seed
+slope/shore materials. Sculpting retains the source's normal vertical headroom
+rather than limiting a new flat source to a short decorative slab.
+
 See [JudasJS terrain](judasjs/terrain.md) and the editable project's README for
 the scripting contract and controls.
 
@@ -84,11 +131,10 @@ render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
 multi-view streaming remain work. Planet
 precision and existing LOD remain intact, but planetary
-excavation is not implemented by this slice. Fresh-source creation/import UI,
-high-bit-depth heightmaps, broader material authoring, incremental navigation,
+excavation is not implemented by this slice. Broader PBR material authoring, incremental navigation,
 fluid/particle integrations, representative consumer scenes and final SDK
-qualification remain. The current workspace discovers the first V2 source in
-Authoring; it is not yet a general multi-source project browser.
+qualification remain. Source discovery currently covers up to 512 editable
+sources under Authoring; large-data demand paging remains separate work.
 
 Runtime landscapes require a unit-scale root static owner. Translation and
 rotation move derived support; live scaling and authority changes are rejected.
@@ -199,3 +245,26 @@ larger integrated consumer scenes. A source page exceeding the device's texture
 size fails before allocation with an actionable request to split its regions.
 This checkpoint does not certify Android/browser terrain rendering or qualify
 the complete five-stage Terrain V2 delivery.
+
+## Native authoring checkpoint
+
+Fresh-project qualification exercises the real creation controls, file browser,
+16-bit image import, palette, material-only painting, save/update, scene undo,
+multiple sources, Inspector entry point and explicit old-ground replacement.
+The 46-check workflow and 23 generation/policy controls pass on Linux, together
+with the existing editor and runtime controls. A relocated standalone still
+excavates, traverses and cold-restores the tunnel. Human acceptance remains pending.
+
+The editor worker previously revalidated all source samples for every chunk.
+Thirty alternating pairs with identical geometry measure these preparation costs:
+
+| Samples | Former median / p95 / worst ms | Batch median / p95 / worst ms |
+| --- | --- | --- |
+| 129² | 4.564 / 5.167 / 5.647 | 1.904 / 2.044 / 2.080 |
+| 257² | 50.048 / 58.184 / 64.768 | 7.815 / 8.604 / 9.084 |
+| 513² | 727.846 / 797.213 / 797.228 | 32.823 / 35.776 / 36.673 |
+
+These cover geometry worker preparation only, excluding JSON, merged mesh,
+collision cooking and GPU work. No builds or other qualification ran during
+the final timing series. Raw results and preserved failed test-oracle attempts
+are under `docs/evidence/terrain-v2/stage4-authoring`.

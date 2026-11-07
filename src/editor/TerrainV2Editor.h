@@ -1,5 +1,6 @@
 #pragma once
 #include "EditorPanels.h"
+#include "TerrainV2Creation.h"
 #include "WorldDebugView.h"
 #include "terrain/TerrainBrush.h"
 #include "terrain/TerrainSource.h"
@@ -17,13 +18,18 @@ class TerrainV2Editor {
     void Draw(Renderer &, Scene &, ResourceManager &);
     bool Guard(EditorPanelState &);
     void Shutdown(Renderer &, JobSystem *);
-    bool Active() const { return activeProject; }
+    bool Active() const { return !legacy && (activeProject || creation.Active()); }
+    void BeginCreation() {
+        legacy = false;
+        creation.Show();
+    }
     bool Loaded() const { return loaded; }
     bool Editing() const { return editing; }
-    bool Publishing() const { return bool(cook); }
-    bool Busy() const { return bool(task) || bool(cook); }
+    bool Publishing() const { return bool(cook) || creation.Busy(); }
+    bool Busy() const { return bool(task) || bool(cook) || creation.Busy(); }
     const std::shared_ptr<MeshData> &Preview() const { return preview; }
     const std::string &MeshId() const { return meshId; }
+    const std::vector<std::string> &Sources() const { return sources; }
     const DebugLineList &Footprint() const { return footprint; }
 
   private:
@@ -42,7 +48,12 @@ class TerrainV2Editor {
         MeshHandle mesh;
     };
     std::string projectKey, path, meshId, error, disk;
+    std::vector<std::string> sources;
+    TerrainV2Creation creation;
+    bool legacy = false;
     TerrainV2::Source source, before;
+    std::array<std::string, 4> paletteTextures;
+    std::array<glm::vec3, 4> paletteColours;
     std::vector<TerrainV2::Source> undo, redo;
     TerrainV2::SurfaceBrush brush;
     std::map<TerrainV2::ChunkKey, Resident> chunks;
@@ -58,6 +69,12 @@ class TerrainV2Editor {
     uint64_t revision = 0;
     bool productsDirty = false, resetPending = false;
     bool Open(EditorPanelState &);
+    void DiscoverSources(const EditorPanelState &);
+    void TrimHistory();
+    bool PaletteDirty() const;
+    void ReadPalette();
+    void ApplyPalette();
+    void PalettePanel(const EditorPanelState &);
     void Queue(const std::vector<TerrainV2::ChunkKey> &, EditorPanelState &);
     bool Dab(glm::vec3, EditorPanelState &);
     EditorPanelState *frameState = nullptr;

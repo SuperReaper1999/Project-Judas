@@ -8,7 +8,7 @@ class TerrainV2Editor;
 struct TerrainEditor {
  std::shared_ptr<TerrainV2Editor> v2;
  TerrainDraft draft;TerrainBrush brush;
- std::string projectKey,error;bool loaded=false,editing=false,replaceRequested=false;
+ std::string projectKey,error;bool loaded=false,editing=false,replaceRequested=false,usingV2=false;
  // Editor smoke tests click the real primary control through SDL/ImGui.
  glm::vec2 editButtonCenter{};
  char path[512]="Imports/landscape.judasterrain";int resolution=65;float width=64,depth=64;

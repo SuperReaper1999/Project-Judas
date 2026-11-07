@@ -7,11 +7,12 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified live branch state
 
-Experimental/origin: 84ae3332b8555f6f05defa4b1896727d1923d6b7.
+Experimental/origin: 58e73071d7fd1e3d0b5b7d9129d5a70905e8e40c.
+Native asset/scene/persistence integration is now committed and pushed there.
 Earlier terrain foundation: 6932fe0b744b3ca16c44384ef0fa10e0cf282185.
 Main/origin: 1094d64515604fe9d03fdab479efc7f880b112a8.
-The native-source integration described below is UNCOMMITTED until a later
-explicit entry records its new hash. These checkpoints are not full completion.
+The native-source integration below is committed at58e73071. New authoring work
+is uncommitted as detailed next. These checkpoints are not full completion.
 Unrelated water screenshots and untracked structural/physics/research files were
 present initially; never stage/clean/reset them. Stage terrain paths explicitly.
 
@@ -19,6 +20,42 @@ The desktop NVIDIA GTX970 works: 4096MiB, driver580.178.04, OpenGL4.6.
 Restricted default commands see llvmpipe. Use require_escalated for native desktop
 GPU tests/profiles. User explicitly corrected the unavailable-driver assumption.
 Use j2 on the8GB host, one build at a time, no timing during compiler activity.
+
+## Active continuation — authoring qualified, checkpoint pending
+
+Native checkpoint58e73071 is pushed. Authoring continuation is implemented and
+qualified, but still uncommitted. Current authoring source and evidence are scoped
+under stage4-authoring. Do not include unrelated water screenshots or research.
+
+New TerrainGeneration owns deterministic flat/highlands/island creation and real
+grayscale16 heightmap import. New TerrainV2Creation owns the existing native file
+browser, immutable generation/cook jobs, retained recipe/original heightmap and
+undoable scene insertion. Explicit selected-ground replacement preserves the old
+object's gravity/scripts/children and disables only its render/collision. Inspector
+and Asset Browser requests route locally; optional ComponentEditor.requestAdd
+supports asset-backed workflows without frame-loop changes. Source picker now
+handles multiple sources and selects their actual owners; dirty drafts are guarded.
+Four-layer texture/tint authoring, geometry-free paint, byte-bounded history and
+shared V1/V2 protected-kit write validation are implemented.
+
+Final build succeeded (/tmp/terrain-v2-authoring-final-build.log), no compiler
+warnings. Fresh creation46, generation23, existing editor15, geometry416, world93,
+LOD339, components35, cold-read3 and modern/portable NVIDIA render978each pass.
+Original authoring/pipeline and planet-source10074 also pass. Relocated export
+excavates, traverses, saves/quits and restores in a separate process. This is
+engineering qualification, not human acceptance. Native editor capture also completes Play/Stop with identical authored state.
+Inspected landscape source controls are ahead of optional empty script starters.
+
+Thirty isolated alternating geometry-worker pairs reproduce exact geometry. At
+513samples, former per-chunk full validation median727.85ms vs batch32.82ms;
+129/257 raw distributions are retained. Excludes IO, merge, BVH and GPU, notFPS.
+Earlier timing overlapped other qualification, so only isolated logs are reported.
+Failed fresh-project/file-picker test setup/ID oracles are retained unchanged.
+
+Next: inspect actual editor capture; scope/commit/push authoring. Then CONTINUE
+remaining approved Terrain V2, including runtime surface sculpt/paint with real
+persistence, physical residency, planetary excavation and cross-system integration.
+No full Terrain V2 completion claim is warranted at this authoring checkpoint.
 
 ## Completed committed foundations
 
@@ -34,7 +71,7 @@ Motor seam travel matches monolithic collision exactly over300supported steps.
 Matched two-camera1km render results/evidence remain in stage2/. GPU timestamp
 scope includes submission bubbles; do not call it pure GPU arithmetic speedup.
 
-## Current native integration (uncommitted)
+## Native integration committed at58e73071
 
 TerrainAsset.*: deterministic indexed64x64 sample pages with checksums, exact
 binary32 heights/fourweights, bounded header/index-only and independent page
@@ -87,7 +124,7 @@ Large cook/export/play logs /tmp/terrain-v2-native-large-*.log. Profile has no
 resolved GPU timestamps: DO NOT derive GPU timings from that particular capture.
 No false passing GPU measurement. Existing stage2 native GPU benchmark remains.
 
-NEXT: final reconfigure/build all changed native targets; component35 and focused
+COMPLETED for58e73071: final reconfigure/build all changed native targets; component35 and focused
 native geometry/world/LOD/assets/components provenance runner; cold3;
 modern/portableGPU+editor15; relocated game qualification with latest receipt;
 original planet/lifecycle controls. No new functional edits unless failure reveals
@@ -111,6 +148,5 @@ freshSDK/export and platform coverage. Do NOT replace installedRPG SDK or assets
 
 Known bounds: V1 import squarepitch/16cell/4mtiling; whole-empty ordinary editor
 model unsupported (runtime emptychunks valid); runtime V2 smoothvolume unsupported;
-volume spacing follows source heightspacing; editor currently first source under
-Authoring and merged picker; undo16snapshots countonly. Fix where practical or
-document honestly. Never hide deferred work behind another green demonstration.
+volume spacing follows source heightspacing; editor uses a multi-source picker and byte-bounded history; large merged mesh
+picking still needs scaling work. Fix where practical or document honestly. Never hide deferred work behind another green demonstration.
