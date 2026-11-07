@@ -29,7 +29,7 @@ from package_sdk import probe_identity  # Same bounded tool probe as distributio
 # RuntimeWorld-owned advanced simulation is unavailable in Alpha. Keep the
 # original tests and direct geometry/storage coverage; unavailability is never
 # a numerical pass. CTest and release qualification consume this same policy.
-ADVANCED_RUNTIME_TARGETS = {'judas_game_water_runtime_tests', 'judas_game_water_script_tests', 'judas_water_workshop_tests', 'judas_origin_environment_tests', 'judas_liquid_surface_tests',
+ADVANCED_RUNTIME_TARGETS = {'judas_game_water_runtime_tests', 'judas_game_water_script_tests', 'judas_water_workshop_tests', 'judas_water_visual_tests', 'judas_origin_environment_tests', 'judas_liquid_surface_tests',
                             'judas_fluid_cadence_motion_tests',
                             'judas_material_application_tests'}
 CHANNELS = ('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')

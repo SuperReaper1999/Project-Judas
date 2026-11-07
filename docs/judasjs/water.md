@@ -6,6 +6,13 @@ Basic Water is inexpensive prescribed water, enabled by default. It renders and
 supports swimming without a fluid solver. `entity.basicWater` and
 `entity.setBasicWater(patch)` configure that existing system.
 
+Grid Water V2's [continuous presentation](../WATER_V2_PRESENTATION.md) follows
+its physical levels at a finer render resolution. It includes depth/refraction
+and above/below-water presentation. Its visual waves and optical continuation
+are not used by `fluidSample`, buoyancy or quantity accounting. Author colour and
+opacity on the Fluid Volume; opacity controls absorption/tint, while interface
+reflections remain visible even in clear water.
+
 Grid Water V2 is optional physical water in **Experimental source builds**.
 Alpha's Advanced Fluid Dynamics lock remains effective. A project must explicitly
 enable **Project Settings → Experimental → Advanced Fluid Dynamics** before Play

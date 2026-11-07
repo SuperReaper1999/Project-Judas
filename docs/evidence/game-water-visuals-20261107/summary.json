@@ -1,0 +1,240 @@
+{
+  "pool": {
+    "cpu_ms": {
+      "Grid water visual field": {
+        "n": 118,
+        "median": 0.46228199999999997,
+        "p95": 0.471338,
+        "worst": 0.549025
+      },
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.073739,
+        "p95": 0.090961,
+        "worst": 0.105208
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 0.031118,
+        "p95": 0.038943,
+        "worst": 0.045215
+      },
+      "Grid water fine surface": {
+        "n": 5,
+        "median": 4.967469,
+        "p95": 5.743783,
+        "worst": 5.743783
+      }
+    },
+    "gpu_ms": {
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.6928,
+        "p95": 0.708096,
+        "worst": 0.850688
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 3.156048,
+        "p95": 3.317312,
+        "worst": 3.549984
+      }
+    },
+    "water_total_gpu_ms": {
+      "n": 118,
+      "median": 3.842032,
+      "p95": 4.021504,
+      "worst": 4.249344
+    },
+    "max_rss_bytes": 175726592,
+    "water_requested_texture_bytes": 9273344,
+    "diagnostics": {
+      "dropped_events": 2313,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  "rotated": {
+    "cpu_ms": {
+      "Grid water visual field": {
+        "n": 118,
+        "median": 0.46465599999999996,
+        "p95": 0.478182,
+        "worst": 0.532504
+      },
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.073889,
+        "p95": 0.081584,
+        "worst": 0.09016
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 0.0312285,
+        "p95": 0.034305,
+        "worst": 0.04253
+      },
+      "Grid water fine surface": {
+        "n": 6,
+        "median": 3.5274029999999996,
+        "p95": 3.723393,
+        "worst": 3.723393
+      }
+    },
+    "gpu_ms": {
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.699424,
+        "p95": 0.71376,
+        "worst": 0.859104
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 3.11944,
+        "p95": 3.201888,
+        "worst": 3.52032
+      }
+    },
+    "water_total_gpu_ms": {
+      "n": 118,
+      "median": 3.8128159999999998,
+      "p95": 3.911168,
+      "worst": 4.222784
+    },
+    "max_rss_bytes": 185511936,
+    "water_requested_texture_bytes": 9273344,
+    "diagnostics": {
+      "dropped_events": 4632,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  "radial": {
+    "cpu_ms": {
+      "Grid water visual field": {
+        "n": 118,
+        "median": 0.4435115,
+        "p95": 0.455649,
+        "worst": 0.49873
+      },
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.073909,
+        "p95": 0.082005,
+        "worst": 0.093737
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 0.031189,
+        "p95": 0.034725,
+        "worst": 0.038653
+      },
+      "Grid water fine surface": {
+        "n": 8,
+        "median": 3.62941,
+        "p95": 3.733752,
+        "worst": 3.733752
+      }
+    },
+    "gpu_ms": {
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.676416,
+        "p95": 0.712096,
+        "worst": 0.8688
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 3.114176,
+        "p95": 3.31056,
+        "worst": 3.489728
+      }
+    },
+    "water_total_gpu_ms": {
+      "n": 118,
+      "median": 3.791296,
+      "p95": 3.9852160000000003,
+      "worst": 4.174528
+    },
+    "max_rss_bytes": 185446400,
+    "water_requested_texture_bytes": 9273344,
+    "diagnostics": {
+      "dropped_events": 6951,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  "planet-basin": {
+    "cpu_ms": {
+      "Grid water visual field": {
+        "n": 118,
+        "median": 0.3532055,
+        "p95": 0.368585,
+        "worst": 0.521563
+      },
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.073098,
+        "p95": 0.081884,
+        "worst": 0.097814
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 0.031214,
+        "p95": 0.033543,
+        "worst": 0.039535
+      }
+    },
+    "gpu_ms": {
+      "Grid water presentation": {
+        "n": 119,
+        "median": 0.832064,
+        "p95": 0.840768,
+        "worst": 0.846496
+      },
+      "Grid water underwater": {
+        "n": 118,
+        "median": 3.2880320000000003,
+        "p95": 3.309312,
+        "worst": 3.721408
+      }
+    },
+    "water_total_gpu_ms": {
+      "n": 118,
+      "median": 4.121104,
+      "p95": 4.14736,
+      "worst": 4.558368
+    },
+    "max_rss_bytes": 185450496,
+    "water_requested_texture_bytes": 9273344,
+    "diagnostics": {
+      "dropped_events": 9270,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  }
+}

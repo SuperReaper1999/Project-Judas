@@ -43,10 +43,10 @@ BasicWaterSample RuntimeWorld::SampleWater(glm::vec3 center,glm::vec3 up,float h
     return result;
 }
 std::vector<glm::vec2> RuntimeWorld::WaterOpticalPaths(const glm::mat4& view,const glm::mat4& projection,
-                                                    unsigned columns,unsigned rows,float alpha) const {
+                                                    unsigned columns,unsigned rows,float alpha,bool includeGrid) const {
     const auto waters=BasicWaters(alpha);
     auto result=waters.empty()?std::vector<glm::vec2>{}:BasicWaterOpticalPaths(waters,view,projection,columns,rows);
-    if(m_gridWater){auto grid=m_gridWater->OpticalPaths(view,projection,columns,rows);
+    if(includeGrid&&m_gridWater){auto grid=m_gridWater->OpticalPaths(view,projection,columns,rows);
         if(result.empty())result=std::move(grid);
         else for(std::size_t i=0;i<result.size()&&i<grid.size();++i)
             if(grid[i].y>grid[i].x&&(result[i].y<=result[i].x||grid[i].x<result[i].x))result[i]=grid[i];}

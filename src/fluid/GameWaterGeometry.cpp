@@ -9,6 +9,14 @@
 #include <limits>
 
 namespace JudasWater {
+float Grid::StaticOpening(int a,int b) const {
+    if(a<0||b<0||a>=int(incident_.size())||b>=int(incident_.size()))return 0;
+    for(int index:incident_[a]){
+        const auto &face=faces_[index];
+        if((face.a==a&&face.b==b)||(face.a==b&&face.b==a))return staticFaces_[index];
+    }
+    return 0;
+}
 float SolidVolume(const SolidBox &solid) {
     constexpr float pi = 3.14159265358979323846f;
     if (solid.kind == SolidBox::Kind::Sphere)

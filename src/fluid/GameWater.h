@@ -86,6 +86,8 @@ class Grid {
     const Settings &Configuration() const { return settings_; }
     const std::vector<Cell> &Cells() const { return cells_; }
     const std::vector<Face> &Faces() const { return faces_; }
+    // Read-only static connectivity, independent of a moving body's exclusion.
+    float StaticOpening(int a,int b) const;
     const std::vector<AirPocket> &Air() const { return air_; }
     const Measurements &Stats() const { return stats_; }
     // Visual/query height only. Returns false for a column containing no water.

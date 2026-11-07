@@ -1,0 +1,16 @@
+.usage: python3 -m unittest [-h] [--build-dir BUILD_DIR] [--manifest MANIFEST]
+                           [--group GROUP] [--test TEST] [--output OUTPUT]
+                           [--timeout TIMEOUT] [--list] [--check-manifest]
+                           [--registration-plan]
+                           [--channel {Alpha,Beta,Experimental,Stable,Local}]
+                           [--expected-channel {Alpha,Beta,Experimental,Stable,Local}]
+python3 -m unittest: error: --channel is only valid with --registration-plan; execution uses embedded identity
+.....scratch passed
+........./tmp/tmpih1z07iv/results/RESULTS.json
+liquid-surface not-exercised
+.....s.s............................
+----------------------------------------------------------------------
+Ran 51 tests in 8.075s
+
+OK (skipped=2)
+/tmp/tmpw1d5csp7/results/RESULTS.json

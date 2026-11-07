@@ -2,6 +2,7 @@
 #include "GameWaterRuntime.h"
 #include "Narrowphase.h"
 #include "render/RenderTypes.h"
+#include "GameWaterSurface.h"
 
 namespace JudasWater {
 struct WorldSystem::Region {
@@ -23,7 +24,11 @@ struct WorldSystem::Region {
     std::vector<StaticGeometry> pendingStatics;
     bool PrepareGeometry(RuntimeWorld &, Grid &, std::vector<SolidBox> &, std::vector<BodyHandle> &,
                          std::string &);
-    mutable MeshHandle mesh;
-    mutable std::uint64_t meshRevision = 0;
+    mutable std::array<MeshHandle,3> meshes{};
+    mutable std::array<std::uint64_t,3> meshRevisions{};
+    mutable SurfaceField surface;
+    mutable SurfaceField surfaceReference;
+    mutable std::uint64_t surfaceRevision=0;
+    mutable std::uint64_t surfaceTopology=0;
 };
 } // namespace JudasWater

@@ -42,8 +42,7 @@ WorldSystem::~WorldSystem() {
     if (auto *resources = world_.Resources())
         if (auto *renderer = resources->GetRenderer())
             for (auto &[_, region] : regions_)
-                if (region->mesh.IsValid())
-                    renderer->DestroyMesh(region->mesh);
+                for(auto mesh:region->meshes)if(mesh.IsValid())renderer->DestroyMesh(mesh);
 }
 bool WorldSystem::Build(const Scene &scene, std::string &error) {
     std::map<std::uint64_t, std::unique_ptr<Region>> staged;
@@ -121,8 +120,7 @@ bool WorldSystem::Build(const Scene &scene, std::string &error) {
     if (auto *resources = world_.Resources())
         if (auto *renderer = resources->GetRenderer())
             for (auto &[_, region] : regions_)
-                if (region->mesh.IsValid())
-                    renderer->DestroyMesh(region->mesh);
+                for(auto mesh:region->meshes)if(mesh.IsValid())renderer->DestroyMesh(mesh);
     regions_ = std::move(staged);
     error_.clear();
     error.clear();

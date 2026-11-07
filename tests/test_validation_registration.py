@@ -83,6 +83,7 @@ class ValidationRegistrationTests(unittest.TestCase):
             unavailable = channel == 'Alpha' and entry['target'] in {
                 'judas_game_water_runtime_tests', 'judas_game_water_script_tests',
                 'judas_water_workshop_tests',
+                'judas_water_visual_tests',
                 'judas_origin_environment_tests', 'judas_liquid_surface_tests',
                 'judas_fluid_cadence_motion_tests', 'judas_material_application_tests'}
             labels = ['prealpha', *entry['groups']]

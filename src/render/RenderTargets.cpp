@@ -74,7 +74,7 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target, bool preserveContent
     if (m_activeTarget.IsValid() || m_shadowPassActive || !RenderTargetTexture(target).IsValid()) return false;
     // Pending transparent geometry belongs to the current camera and target.
     // Publish it before changing either; it must not spill into the child view.
-    FlushMaterialBlends();
+    FlushMaterialBlends();FinishGridWater();
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &m_savedDrawFramebuffer);
     glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &m_savedReadFramebuffer);
     glGetIntegerv(GL_VIEWPORT, m_savedViewport);
@@ -93,7 +93,7 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target, bool preserveContent
 
 void Renderer::EndRenderTarget(bool restoreCamera) {
     if (!m_activeTarget.IsValid()) return;
-    FlushMaterialBlends();const bool background=m_environmentBackground;
+    FlushMaterialBlends();FinishGridWater();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
     ResolveLinearPass(m_textures[m_targets[m_activeTarget.id].color.id].sceneLinear);m_environmentBackground=background;
     const auto parent = m_suspendedLinearPass;

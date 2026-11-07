@@ -1,0 +1,26 @@
+[Graphics] OpenGL 4.6 request unavailable: Could not create EGL context (call to eglCreateContext failed, reporting an error of EGL_BAD_MATCH)
+PASS initialize physical reference pool
+PASS continuous reconstruction reproduces a level pool
+PASS no height seam at a render patch boundary
+PASS visual refinement is independent of simulation resolution
+PASS quiet pool has smooth shared upward normals and finite outline faces
+PASS reconstruction leaves physical water quantity unchanged
+PASS moving-solid exclusion does not punch a render hole around a swimmer
+PASS optical continuation does not manufacture physical water
+PASS a dry swimmer behind a closed static wall does not acquire an optical water cavity
+PASS changing level across a cell boundary reuses surface topology
+PASS render intervals preserve an actual dry gap between separate layers
+[Graphics] created OpenGL 4.5 Core request (auto policy)
+[Graphics] API=OpenGL 4.5 requested=auto selected=modern vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits)
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=120 uniformBlockBytes=65536 storageBindings=80 storageBlockBytes=134217728 computeInvocations=1024 computeSharedBytes=32768
+[GPU] vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits) version=4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 context_flags=0x0
+[GPU] asynchronous KHR_debug enabled; max_messages=256 max_message_bytes=1024
+[GPU] reset_query=available notification_strategy=0x8261 (not a promise of crash detection)
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[GPU] context=1 source=0x8248 type=0x8251 severity=0x9146 id=1 message=0:64(43): warning: `shadowWorldDx' used uninitialized
+[GPU] context=1 source=0x8248 type=0x8251 severity=0x9146 id=2 message=0:65(43): warning: `shadowWorldDy' used uninitialized
+PASS production GPU height/normal vs CPU: 0 m / 0; old mesh y=1.6, current GPU y=1.70421; white/dry=255, near RGB=234,248,251, far RGB=186,231,242; clear-water red=255; later-object colour error=0; GL state restored=1
+12 checks, 0 failures

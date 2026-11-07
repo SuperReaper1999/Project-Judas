@@ -28,6 +28,7 @@
 
 namespace JudasRender {struct RendererInfrastructure;struct MeshInstance;}
 namespace JudasParticles {class GpuParticles;}
+namespace JudasWater {struct SurfaceField;}
 
 struct WeatherSample;
 struct WeatherShelterGrid;
@@ -248,6 +249,9 @@ public:
     // Physical surface geometry with the same inexpensive optical material as
     // Basic Water. This does not replace its vertices with a prescribed plane.
     void DrawWaterSurface(MeshHandle,const struct BasicWaterSettings&,glm::vec3 up);
+    void DrawGridWater(MeshHandle,const JudasWater::SurfaceField&,const BasicWaterSettings&,
+                       double seconds,std::uint64_t revision);
+    void FinishGridWater();
     void DrawTransientSurface(const MeshData&,const glm::vec3& tint,float alpha);
     void BeginTransparentPass();
     void EndTransparentPass();

@@ -462,6 +462,7 @@ void Renderer::Shutdown() {
     m_spriteDraws.clear();m_spriteQuad={};m_spriteMaterials={};m_spritePixelGrid=0;
     m_render->particlePass.Shutdown();
     m_render->gpuParticlePass.Shutdown();
+    m_render->waterPass.Shutdown();
     m_render->instanceArena.Shutdown();
     m_render->viewUniforms.Shutdown();
     m_shadowContentValid.fill(false);
@@ -744,6 +745,7 @@ Renderer::GpuMesh* Renderer::GetMesh(MeshHandle handle) {
 void Renderer::DestroyMesh(MeshHandle handle) {
     GpuMesh* mesh = GetMesh(handle);
     if (!mesh) return;
+    m_render->waterPass.Forget((std::uint64_t(handle.generation)<<32)|handle.id);
     if (mesh->ebo) glDeleteBuffers(1, &mesh->ebo);
     glDeleteBuffers(1, &mesh->vbo);
     for(auto material:mesh->materials)DestroyMaterial(material);
@@ -1066,7 +1068,7 @@ void Renderer::EndFrame() {
     JUDAS_PROFILE_COUNTER("Reused shadow passes",double(m_stats.reusedShadowPasses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Instance arena bytes",double(m_render->instanceArena.AllocatedBytes()),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Billboard arena bytes",double(m_render->particlePass.Stats().arenaBytes),ProfileCounterMode::Latest);
-    FlushMaterialBlends();const bool background=m_environmentBackground;
+    FlushMaterialBlends();FinishGridWater();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
     ResolveLinearPass();m_environmentBackground=background;
 }
@@ -1242,6 +1244,43 @@ void Renderer::DrawWaterSurface(MeshHandle mesh,const BasicWaterSettings& style,
  glUseProgram(m_shaderProgram);
  glUniform1i(glGetUniformLocation(m_shaderProgram,"uBasicWater"),0);
  glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterSurfaceMesh"),0);
+}
+
+void Renderer::DrawGridWater(MeshHandle handle,const JudasWater::SurfaceField& field,
+                             const BasicWaterSettings& style,double seconds,std::uint64_t revision){
+    if(m_shadowPassActive||!style.enabled||!AllowsLayer(m_renderLayer))return;
+    const auto* mesh=GetMesh(handle);if(!mesh||!mesh->vertexCount)return;
+    JUDAS_PROFILE_SCOPE("Grid water presentation");
+    RendererProfileScope gpu(*this,"Grid water presentation");
+    JudasRender::WaterPass::View camera;
+    camera.view=m_view;camera.projection=m_projection;camera.sun=m_weatherSun;camera.sunColour=m_weatherSunColour;
+    camera.colour=style.color;camera.opacity=style.opacity;camera.seconds=float(std::fmod(seconds,65536.));
+    camera.background=m_weatherBackground;camera.ambient=m_weatherAmbient;
+    camera.environmentInverse=glm::mat3_cast(glm::conjugate(m_environmentRotation));
+    camera.environmentIntensity=m_environmentIntensity;
+    if(m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive)
+        camera.environment=m_environments[m_environment.id].specular;
+    camera.linear=m_linearRendering;
+    std::string error;
+    const auto key=(std::uint64_t(handle.generation)<<32)|handle.id;
+    const auto before=m_render->waterPass.Draws(),underwater=m_render->waterPass.UnderwaterDraws();
+    if(!m_render->waterPass.Draw(key,revision,mesh->vao,mesh->vertexCount,field,camera,error))
+        std::fprintf(stderr,"Grid water rendering failed: %s\n",error.c_str());
+    const auto draws=m_render->waterPass.Draws()-before;
+    m_stats.drawCalls+=unsigned(draws);
+    if(draws)m_stats.triangles+=unsigned(mesh->vertexCount/3)+unsigned(m_render->waterPass.UnderwaterDraws()-underwater);
+    JUDAS_PROFILE_COUNTER("Grid water render GPU bytes",double(m_render->waterPass.Bytes()),ProfileCounterMode::Latest);
+}
+
+void Renderer::FinishGridWater(){
+    if(!m_render->waterPass.HasPending())return;
+    JUDAS_PROFILE_SCOPE("Grid water underwater");
+    RendererProfileScope gpu(*this,"Grid water underwater");
+    const auto before=m_render->waterPass.Draws();
+    std::string error;
+    if(!m_render->waterPass.Composite(error))std::fprintf(stderr,"Grid water optics failed: %s\n",error.c_str());
+    const auto draws=unsigned(m_render->waterPass.Draws()-before);
+    m_stats.drawCalls+=draws;m_stats.triangles+=draws;
 }
 
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)

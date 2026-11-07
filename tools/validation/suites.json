@@ -5,6 +5,7 @@
     {"name":"game-water-runtime","target":"judas_game_water_runtime_tests","groups":["water","game-water","lifecycle"]},
     {"name":"game-water-script","target":"judas_game_water_script_tests","groups":["water","game-water","scripting"]},
     {"name":"water-workshop-controls","target":"judas_water_workshop_tests","groups":["water","game-water","application"]},
+    {"name":"water-visuals","target":"judas_water_visual_tests","groups":["water","game-water","rendering"],"args":["{output}/water-visuals"]},
     {"name":"graphics-capabilities","target":"judas_graphics_capabilities_tests","groups":["rendering","platform"]},
     {"name":"renderer-shader-library","target":"judas_shader_library_tests","groups":["rendering","tooling"]},
     {"name":"renderer-v2-submission","target":"judas_renderer_v2_submission_tests","groups":["rendering"],"args":["{output}/renderer-v2-submission"]},

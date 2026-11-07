@@ -1,0 +1,446 @@
+{
+  "format": 1,
+  "startedUtc": "2026-11-07T15:42:05.666898+00:00",
+  "sourceRevision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M cmake/JudasGameWater.cmake\n M docs/GAME_WATER_PREVIEW.md\n M docs/evidence/prealpha-project-settings-water/application/basic-overview.png\n M docs/evidence/prealpha-project-settings-water/application/basic-underwater.png\n M docs/judasjs/water.md\n M projects/water_v2_workshop/README.md\n M scripts/prealpha_validate.py\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RuntimeWorld.h\n M src/WorldPresentation.cpp\n M src/WorldWater.cpp\n M src/fluid/GameWater.h\n M src/fluid/GameWaterGeometry.cpp\n M src/fluid/GameWaterRuntime.cpp\n M src/fluid/GameWaterRuntimeInternal.h\n M src/fluid/GameWaterRuntimePresentation.cpp\n M src/fluid/GameWaterSurface.cpp\n M src/fluid/GameWaterSurface.h\n M src/render/RenderTargets.cpp\n M src/render/RendererInfrastructure.h\n M tests/test_prealpha_validation.py\n M tests/test_validation_registration.py\n M tools/validation/suites.json",
+  "manifestSha256": "f972ef2dad8750fd4b9cb0f0b6b4ba8590940b5becc3ab6ed29ab11b2315734a",
+  "trackedDiffSha256": "a371031c9be8d00de5f2d5d6e6150a1fffe67688c58cdbde3d5529203b3731f2",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "1bfc659b577576bc633d56b7261655ddfc05d813ae031e45b9a40ffddd64e3e5",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "1bfc659b577576bc633d56b7261655ddfc05d813ae031e45b9a40ffddd64e3e5",
+      "seconds": 0.22557147500265273,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_runtime_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "8dfd9f20d3b5770e69f4a215ea2cdf61d426d7be59fde1721bdba31a644d0ea3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "8dfd9f20d3b5770e69f4a215ea2cdf61d426d7be59fde1721bdba31a644d0ea3",
+      "seconds": 11.69742087999839,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water-runtime"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_script_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "9f25430af3ec904f2ed0d747a2a90308ce065136cd311422b3304724b8537d0e",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9f25430af3ec904f2ed0d747a2a90308ce065136cd311422b3304724b8537d0e",
+      "seconds": 0.09423979499842972,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water-script"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_water_workshop_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "0ae410058f31525cab21a3d624ae419e12ac5609226bbb2697e1dcc6bea656b3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "0ae410058f31525cab21a3d624ae419e12ac5609226bbb2697e1dcc6bea656b3",
+      "seconds": 2.331506599999557,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "water-workshop-controls"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_shader_library_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "e8f0fe3fd46e950661810ecc9f332304275b96c7f382d8eb83196356ee172990",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "e8f0fe3fd46e950661810ecc9f332304275b96c7f382d8eb83196356ee172990",
+      "seconds": 0.008035634000407299,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "renderer-shader-library"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rendering_architecture_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions/rendering-architecture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "1c189f2011a0c5c1d0323fa4e71d2d150b8449ed4083aa6bd0bc56b32c659a3b",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "1c189f2011a0c5c1d0323fa4e71d2d150b8449ed4083aa6bd0bc56b32c659a3b",
+      "seconds": 0.37664439600121113,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "rendering-architecture"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions/render-cameras"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "d76de64511d83a1bd0340200d3b6f97d41960995abb14c3e2fdb349c9296fb76",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "d76de64511d83a1bd0340200d3b6f97d41960995abb14c3e2fdb349c9296fb76",
+      "seconds": 0.5256065970024792,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "render-cameras"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_preview_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions/water-preview"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "73cde00998d3b01417dd1436fcd66e44f3f297b8a8ea4a8fa3734ea719e17f62",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "73cde00998d3b01417dd1436fcd66e44f3f297b8a8ea4a8fa3734ea719e17f62",
+      "seconds": 0.27792782799951965,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "basic-water-preview"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_water_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "ad9b1774da55f180d5c09851c1b25a018dc817adff0a67a31e27f1e35efa2532",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "ad9b1774da55f180d5c09851c1b25a018dc817adff0a67a31e27f1e35efa2532",
+      "seconds": 0.07650335400103359,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "project-water-policy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_fluid_policy_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-visuals-20261107/regressions",
+      "timeoutSeconds": 120,
+      "binarySha256": "5e7553dbb01963bed909c1a8dabe3d1423cf0944ca9724b338676e561efeddbd",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "5e7553dbb01963bed909c1a8dabe3d1423cf0944ca9724b338676e561efeddbd",
+      "seconds": 0.32692518700059736,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-7e0692247894-u1400484becf3",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+        "source_origin": "git",
+        "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+        "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+        "source_untracked_count": 25,
+        "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "project-fluid-policy"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "FLU-ROOT-ADMISSION",
+      "status": "resolved-local-reconstruction",
+      "scheduled": true,
+      "reason": "Physical non-solid admission uses actual particle cubes and compact pair lenses, not nominal-bin occupancy. All original 34 controls pass unchanged, with neutral/swimming and existing vertical support preserved. New geometric/force controls cover compact support and numerical tangency. This is bounded sampling reconstruction, not exact multiphase topology or a conserved-volume solve. See docs/FLUID_LOCAL_WET_RECONSTRUCTION.txt.",
+      "evidence": "docs/evidence/fluid-local-wet-20261102"
+    },
+    {
+      "id": "FLU-KNOWN-GEOMETRY",
+      "status": "open-failing-diagnostic",
+      "scheduled": false,
+      "reason": "Analytic nonplanar geometry exposes error in both legacy PBF wet-volume reconstruction and the original remote-plane observer. Strict diagnostic stays failing; Advanced Fluids remain locked. See docs/FLUID_KNOWN_GEOMETRY_COMPARISON.md.",
+      "evidence": "docs/evidence/fluid-known-geometry-20261101"
+    },
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF remains locked in Alpha. The accumulated-motion epoch repair passes production acceptance windows and all five original four-second comparisons; original failed evidence is preserved. Two production and four player warm-up diagnostics still fail, and coarse impact/contact transients and geometric limitations remain. Active particle continuation/suspension/origin shifts are still unsupported. See docs/FLUID_MOTION_CLOCK_REPAIR.txt.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+    "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5"
+  },
+  "passed": true,
+  "finishedUtc": "2026-11-07T15:42:22.430607+00:00",
+  "sourceRevisionAfter": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M cmake/JudasGameWater.cmake\n M docs/GAME_WATER_PREVIEW.md\n M docs/evidence/prealpha-project-settings-water/application/basic-overview.png\n M docs/evidence/prealpha-project-settings-water/application/basic-underwater.png\n M docs/judasjs/water.md\n M projects/water_v2_workshop/README.md\n M scripts/prealpha_validate.py\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RuntimeWorld.h\n M src/WorldPresentation.cpp\n M src/WorldWater.cpp\n M src/fluid/GameWater.h\n M src/fluid/GameWaterGeometry.cpp\n M src/fluid/GameWaterRuntime.cpp\n M src/fluid/GameWaterRuntimeInternal.h\n M src/fluid/GameWaterRuntimePresentation.cpp\n M src/fluid/GameWaterSurface.cpp\n M src/fluid/GameWaterSurface.h\n M src/render/RenderTargets.cpp\n M src/render/RendererInfrastructure.h\n M tests/test_prealpha_validation.py\n M tests/test_validation_registration.py\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "a371031c9be8d00de5f2d5d6e6150a1fffe67688c58cdbde3d5529203b3731f2",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+    "source_fingerprint": "7e06922478946994e61f3bf4739248322a86501089a12e20684a4ffe02a45399",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5"
+  }
+}

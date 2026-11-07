@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "restored": {
+    "pump": true,
+    "water": {
+      "quantity": 181.5280084162945,
+      "initialQuantity": 181.52800841629505,
+      "addedQuantity": 0.15250000795349475,
+      "removedQuantity": 0.15250000795349475,
+      "storedDisplacement": 1.9064233872101433e-10,
+      "airMass": 226.8960107267001,
+      "density": 1000,
+      "cellSize": 0.4000000059604645,
+      "simulationMs": 0,
+      "solverMs": 0,
+      "preparationMs": 0,
+      "couplingMs": 0,
+      "geometryBakes": 1,
+      "pressureMs": 0,
+      "pressureResidual": 0,
+      "pressureIterations": 0,
+      "bytes": 0,
+      "cells": {
+        "x": 30,
+        "y": 10,
+        "z": 20
+      },
+      "paused": false,
+      "error": ""
+    }
+  },
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-110bba5-dirty-71fbcef0ba08-u1400484becf3",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "71fbcef0ba08fa7aff1b44efb4e14837edfa6631396e998ad2e626998415531d",
+    "source_origin": "git",
+    "source_revision": "110bba5181f5db9024b228a68d01cd59b4cbc3cb",
+    "source_tree": "b9d7ead6b05ce2253d0c3f84631d376fc4d74b1f",
+    "source_untracked_count": 25,
+    "source_untracked_fingerprint": "1400484becf36c212e8287e950efb09f221137a574516eef78aed41e4e738ea5",
+    "version": "2.0.0-alpha.1"
+  },
+  "source_preview": true,
+  "human_acceptance": false,
+  "started_or_finished_utc": "2026-11-07T15:45:44.204105+00:00",
+  "runs": [
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/water_v2_workshop/water_v2_workshop.judasproj",
+        "/tmp/judas-water-visuals-cold-20261107/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.26409949799926835
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/judas",
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-water-visuals-cold-20261107/foreign-working-directory",
+      "exit": 0,
+      "seconds": 2.2173903190014244
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/judas",
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-water-visuals-cold-20261107/foreign-working-directory",
+      "exit": 0,
+      "seconds": 2.9189745170006063
+    },
+    {
+      "name": "scene-controls",
+      "command": [
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/judas",
+        "/tmp/judas-water-visuals-cold-20261107/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/judas-water-visuals-cold-20261107/foreign-working-directory",
+      "exit": 0,
+      "seconds": 3.620297423000011
+    }
+  ],
+  "files": {
+    "export.log": "90dede4ff164ccb178d7705aac382f8c1ed62263d00af67c2c27ef4201af45f2",
+    "read.log": "60ad4bf733ae4b1cc0038a8798e6a85e7d64290b96cd72aa66bf73941a872206",
+    "scene-controls.log": "7db378e4b3bb7cb153dccef6c31fb1adfb796a570bab4f31fd19ab02a1e351f4",
+    "write.log": "d8e22cacd8147e64953bc21bb3456e92cdeb5986e57bf4fce1687837698ab822"
+  }
+}

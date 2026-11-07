@@ -1,0 +1,14 @@
+FRAMES 300
+ENTITY 64
+FRAME_SECONDS 0.016666667
+LOG_EVERY 20
+SCREENSHOT 35 /tmp/water-v2-above.png
+LOOK 0 150 45
+AXIS move_x -1 45 65
+AXIS move_y 1 45 165
+AXIS move_z -1 110 195
+SCREENSHOT 115 /tmp/water-v2-crossing.png
+SCREENSHOT 180 /tmp/water-v2-submerged.png
+LOOK 0 -310 195
+SCREENSHOT 220 /tmp/water-v2-below-surface.png
+SCREENSHOT 275 /tmp/water-v2-waterline.png

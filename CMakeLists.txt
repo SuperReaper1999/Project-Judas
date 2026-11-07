@@ -226,7 +226,8 @@ set(JUDAS_RENDERER_SOURCES
     src/render/SubmissionQueue.cpp src/render/StreamArena.cpp
     src/render/ViewUniforms.cpp src/render/ParticlePass.cpp
     src/render/ComputeDevice.cpp src/render/GpuParticlePass.cpp
-    src/render/ShadowPassCache.cpp src/render/RenderTargets.cpp)
+    src/render/ShadowPassCache.cpp src/render/RenderTargets.cpp
+    src/render/WaterPass.cpp src/render/WaterShaders.cpp)
 
 # Visual particle simulation/collision/publication is separate from MK2 and fluids.
 set(JUDAS_PARTICLE_SOURCES

@@ -286,7 +286,7 @@ public:
     const JudasWater::WorldSystem* GridWater()const{return m_gridWater.get();}
     bool BuildGridWater(const Scene&,std::string& error);
     void UpdateGridWater(float seconds);
-    std::vector<glm::vec2> WaterOpticalPaths(const glm::mat4&,const glm::mat4&,unsigned,unsigned,float) const;
+    std::vector<glm::vec2> WaterOpticalPaths(const glm::mat4&,const glm::mat4&,unsigned,unsigned,float,bool includeGrid=true) const;
     bool HasPlanets()const{return !m_planets.empty();}
     void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
     void PreparePlanets(Renderer&,const std::vector<PlanetView>&,double dt)const;

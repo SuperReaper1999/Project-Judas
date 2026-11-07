@@ -179,12 +179,16 @@ The preview retains catch-up backlog instead of silently dropping simulation tim
 - Features thinner than the fixed sampling resolution may close/disappear.
   Unresolved bubbles/foam use the documented coarse closure. Air waves, capillarity,
   cavitation and scientific force/torque fidelity remain outside the model.
-- Renderer V2 draws the physical surface mesh using Basic Water's Fresnel/sky/glint
-  material, and the existing underwater pass samples real wet cells. Vertically
-  separated resolved water layers have separate surfaces. No rendered particle owns
-  mass. Detailed spray/foam/refraction is not implemented. Underwater rays use a
-  bounded half-cell march and one nearest/farthest interval, approximating dry gaps
-  along the same ray. Mesh rebuilding is shared across cameras for each revision.
+- Grid Water has a separate [continuous presentation path](WATER_V2_PRESENTATION.md):
+  a fine render surface, GPU reconstruction of changing heights/normals, animated
+  detail, scene-depth refraction, Fresnel/environment/screen-space reflections,
+  shoreline fading and underwater spectral attenuation. Moving-solid exclusions
+  do not punch optical holes around an immersed camera. This render-only field
+  never supplies buoyancy, pressure, swimming or conserved quantity. Genuine dry
+  cells still separate vertically stacked water layers. No rendered particle owns
+  mass. Small unresolved voids and sub-2 mm films are presentation approximations;
+  detailed spray and a full foam solver are not implemented. Visible cameras share
+  field/topology caches; offscreen regions do not reconstruct or upload visual detail.
 - Regular saves retain the grid, water, gas and receipt ledgers alongside MK2 and
   script state. Missing/corrupt/incompatible water data reject instead of reseeding.
   Native grid state is versioned; derived geometry/gravity caches rebuild on load.

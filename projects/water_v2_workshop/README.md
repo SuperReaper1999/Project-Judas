@@ -28,6 +28,13 @@ by the grid, with no render particles. The HUD reports inclusive CPU cost,
 quantity, displaced storage and failures. External pump/drain receipts belong
 to game rules in `Assets/scripts/player.js`.
 
+The continuous render surface is finer than the physical grid. Inspect it from
+above, at the waterline and from below; swim while looking up as well as down.
+The water uses refraction/depth colour, animated normals, reflections, a subtle
+caustic cue and underwater fog. Moving props and actual water impulses disturb
+the physical levels that drive the surface. Small visual waves do not add mass
+or forces. See `docs/WATER_V2_PRESENTATION.md` for the rendering model and limits.
+
 `Scenes/planet-basin.judas` copies the actual original `fluid_demo` planet,
 basin, stairs and props. It replaces the old particle seed with a filled,
 0.4-metre grid and the legacy player/HUD with this game's CharacterMotor.
