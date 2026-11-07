@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/judas-game-water-relocated-jzfhn15r/workshop-current/play.sh",
+    "--mode",
+    "pool",
+    "--steps",
+    "360",
+    "--log",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/visual-final/pool.csv",
+    "--frame-log",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/visual-final/pool-frames.csv",
+    "--screenshot",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/visual-final/pool.png",
+    "--screenshot-step",
+    "359"
+  ],
+  "cwd": "/tmp",
+  "exit": 0,
+  "description": "Final surface-only cutoff and EngineHost resource/GPU-health pump; physical solver unchanged."
+}

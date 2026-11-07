@@ -1993,5 +1993,7 @@ add_executable(judas_particles_v2_benchmark tests/ParticlesV2Benchmark.cpp)
 target_link_libraries(judas_particles_v2_benchmark PRIVATE judas_engine)
 judas_warnings(judas_particles_v2_benchmark)
 
+include(cmake/JudasGameWater.cmake)
+
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

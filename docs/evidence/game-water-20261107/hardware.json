@@ -1,0 +1,24 @@
+{
+  "recorded_utc": "2026-11-07T03:02:26.702977+00:00",
+  "source_parent": "7180ad8a7dd12aa1fd0f50ef1da3febe4ff99a52",
+  "branch": "Experimental",
+  "main_unchanged": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "uname": "Linux conner-ms7850 7.0.0-43-generic #43-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:25:25 UTC 2026 x86_64 GNU/Linux",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "cpu": [
+    "CPU(s):                                  12",
+    "Model name:                              AMD Ryzen 5 5600 6-Core Processor",
+    "Thread(s) per core:                      2",
+    "NUMA node0 CPU(s):                       0-11"
+  ],
+  "memory": "               total        used        free      shared  buff/cache   available\nMem:      8238268416  2845970432   819306496    71942144  4957589504  5392297984\nSwap:    17179865088  2064060416 15115804672\n",
+  "cpu_load_snapshot": [
+    "COMMAND         %CPU %MEM",
+    "python3         25.0  0.1",
+    "codex           16.6  0.2",
+    "bash             0.0  0.0",
+    "ps               0.0  0.0"
+  ],
+  "graphics": "NVIDIA GeForce GTX 970, GL 4.6.0, driver 580.178.04; verified by actual native rendering log",
+  "timing_scope": "Headless CPU qualification and sequential desktop renders; no claim of an otherwise dedicated idle host."
+}

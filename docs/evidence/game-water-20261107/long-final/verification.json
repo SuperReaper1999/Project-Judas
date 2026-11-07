@@ -1,0 +1,65 @@
+[
+  {
+    "name": "pool",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+      "--headless",
+      "--steps",
+      "7200",
+      "--log",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/long-final/pool.csv",
+      "--mode",
+      "pool"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 43.303358367003966,
+    "steps": 7200,
+    "scene_ms": {
+      "median": 5.9300025000000005,
+      "p95": 6.283801,
+      "worst": 9.430334
+    },
+    "fluid_ms": {
+      "median": 5.8936045,
+      "p95": 6.248594,
+      "worst": 9.320177
+    },
+    "water_drift": 0.0,
+    "air_mass_drift": 0.0,
+    "tail_float_height": 1.9867394236722333,
+    "maximum_body_speed": 0.849225878716,
+    "passed": true
+  },
+  {
+    "name": "original-rotated",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+      "--headless",
+      "--steps",
+      "7200",
+      "--log",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/long-final/original-rotated.csv",
+      "--mode",
+      "original",
+      "--rotated"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 31.092358829999284,
+    "steps": 7200,
+    "scene_ms": {
+      "median": 4.258531,
+      "p95": 4.543418,
+      "worst": 8.167472
+    },
+    "fluid_ms": {
+      "median": 4.2004065,
+      "p95": 4.484276,
+      "worst": 8.113581
+    },
+    "water_drift": 0.0,
+    "air_mass_drift": 8.999982981094945e-10,
+    "tail_float_height": 2.5767072590190834,
+    "maximum_body_speed": 2.64312624931,
+    "passed": true
+  }
+]

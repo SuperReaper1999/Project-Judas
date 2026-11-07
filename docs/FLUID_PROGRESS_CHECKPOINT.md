@@ -1,7 +1,7 @@
 # Experimental fluid engineering checkpoint — 2026-11-01
 
-Current V2 development: [water and finite-air model](FLUID_WATER_AIR_MODEL.md)
-(6 November). This is separate from the locked production solver described
+Current V2 development: [game-resolution native water](GAME_WATER_PREVIEW.md)
+(7 November). This is separate from the locked production solver described
 below. Neither the new model nor these historical repairs constitute an unlock.
 
 Latest follow-up: [owned water boundaries](FLUID_BOUNDARY_OWNERSHIP.md) retains

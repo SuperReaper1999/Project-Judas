@@ -1,0 +1,39 @@
+{
+  "source_preview": true,
+  "relocated_to": "/tmp/judas-game-water-relocated-jzfhn15r/workshop-final",
+  "cold_processes": [
+    {
+      "command": [
+        "/tmp/judas-game-water-relocated-jzfhn15r/workshop-final/play.sh",
+        "--headless",
+        "--mode",
+        "flow",
+        "--steps",
+        "180",
+        "--save-at",
+        "180"
+      ],
+      "exit": 0,
+      "tail": [
+        "180,115.200005472,1.25625204683e-13,7.035007,0.139894,0.416085,1.882551,30,7.01911640846e-05,2.59368753433,1.38452160848,110413.450104,0.00291894373841,1.40228915215,0.435621768236,0.299997627735,50,0,61.3188080818,0,0.00622703036877,7.080643,414.720019698,0.00783477225659,0,1828992"
+      ]
+    },
+    {
+      "command": [
+        "/tmp/judas-game-water-relocated-jzfhn15r/workshop-final/play.sh",
+        "--headless",
+        "--steps",
+        "180",
+        "--load",
+        "/tmp/judas-game-water-relocated-jzfhn15r/workshop-final/Saves"
+      ],
+      "exit": 0,
+      "tail": [
+        "360,115.200005472,1.70852915149e-13,5.511213,0.174519,0.428107,1.716837,31,9.32322459835e-05,1.28335011005,0.616444757097,21888.2394203,0.00129667945662,1.18314421177,0.0716929361224,0.299990326166,12,0,48.6369142237,0,0.00162330160689,5.546229,414.720019698,1.84685455626e-08,0,1827648"
+      ]
+    }
+  ],
+  "checksums_exit": 0,
+  "checksums": "LICENSE: OK\nREADME.txt: OK\nassets/fonts/DejaVuSans-LICENSE.txt: OK\nassets/fonts/DejaVuSans.ttf: OK\nassets/fonts/DejaVuSans.ttf.judasmeta: OK\njudas_game_water_lab: OK\nplay.sh: OK\npreview-manifest.json: OK\n",
+  "identity_revision": "7180ad8a7dd12aa1fd0f50ef1da3febe4ff99a52"
+}

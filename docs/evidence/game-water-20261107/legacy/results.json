@@ -1,0 +1,30 @@
+[
+  {
+    "target": "judas_project_water_tests",
+    "exit": 0,
+    "seconds": 0.03180128399981186
+  },
+  {
+    "target": "judas_basic_water_application_tests",
+    "exit": 0,
+    "seconds": 1.1159518509957707
+  },
+  {
+    "target": "judas_basic_water_preview_tests",
+    "exit": 0,
+    "seconds": 0.5147283609985607
+  },
+  {
+    "target": "judas_mk2_physics_tests",
+    "exit": 0,
+    "seconds": 3.970230334001826
+  },
+  {
+    "target": "judas_mk2_rotation_cold_tests",
+    "exit": 0,
+    "seconds": 0.00774387399724219,
+    "mode": "fresh child write/read",
+    "evidence_directory": ".cache/game-water-20261107/legacy/mk2-cold-53488431695960",
+    "earlier_usage_only_invocation": "preserved separately; not a regression result"
+  }
+]

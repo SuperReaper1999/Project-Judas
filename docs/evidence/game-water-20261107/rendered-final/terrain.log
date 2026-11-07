@@ -1,0 +1,11 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+[GPU] vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2 version=4.6.0 NVIDIA 580.178.04 context_flags=0x0
+[GPU] asynchronous KHR_debug enabled; max_messages=256 max_message_bytes=1024
+[GPU] reset_query=available notification_strategy=0x8261 (not a promise of crash detection)
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Presentation: 601 frames, 361 fixed steps, 6.04103 wall seconds.

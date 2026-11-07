@@ -1,0 +1,8 @@
+{
+  "control": "Evaluate the new all-reservoir release gate against preserved pre-phase-slip native rows; not a fresh rerun.",
+  "closed_pressure_pa": 7061.37988281,
+  "tail_max_pressure_pa": 7036.50927734,
+  "gate": "tail_max < 0.5 * closed",
+  "passes_new_gate": false,
+  "expected_to_fail": true
+}

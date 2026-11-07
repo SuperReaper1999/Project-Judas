@@ -1,5 +1,9 @@
 # Bounded fluid storage and pressure prototype
 
+Subsequent product correction: [game-resolution native water preview](GAME_WATER_PREVIEW.md).
+The research failures below remain preserved; they are not immutable runtime
+requirements for that replacement.
+
 This is a **private numerical prototype**, not a completed Advanced Fluids V2
 runtime. It does not change native gameplay, Basic Water, the Alpha fluid lock,
 main, the SDK or independent research. The original sustained-basin gate remains

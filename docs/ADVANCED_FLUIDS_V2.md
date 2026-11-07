@@ -1,6 +1,13 @@
 # Advanced Fluids V2 — first integration gate
 
-Current follow-up: [incompressible water and finite air](FLUID_WATER_AIR_MODEL.md).
+**Current product direction:** [game-resolution native water](GAME_WATER_PREVIEW.md)
+replaces the microscopic runtime approach. A coarse C++ grid now drives a real
+MK2/Renderer lab; ordinary scene authoring and the Alpha unlock remain pending.
+The original basins are re-sampled at declared game resolution. Their old exact
+controls and the first-gate account below remain research evidence, rather than
+immutable requirements for the replacement.
+
+Historical follow-up: [incompressible water and finite air](FLUID_WATER_AIR_MODEL.md).
 The operator approved replacing dynamic air waves with finite isothermal air
 compartments. That implementation is still a prototype; the full authored-basin
 advance gate remains required. The first-gate account below is historical.
@@ -8,7 +15,7 @@ advance gate remains required. The first-gate account below is historical.
 Follow-up: [bounded connected-material ownership correction](FLUID_CONNECTED_MATERIAL_OWNERS.md).
 That report is the newer status; the first checkpoint below is retained as evidence.
 
-Status: **Stage 1 blocked; no runtime backend integrated.** This is an
+Historical first-gate status: **Stage 1 blocked; no runtime backend integrated.** This is an
 Experimental implementation/evidence checkpoint, not completion of the approved
 four-stage delivery. Main, Basic Water, the production particle solver, Alpha
 fluid lock, SDK selection and independent research were not changed.

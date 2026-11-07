@@ -1,0 +1,934 @@
+{
+  "schema": 1,
+  "source_only_preview": true,
+  "alpha_lock_changed": false,
+  "executable": "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+  "binary_sha256": "f9f997e965ed9aa56813e13d91fbf37985da40a898df2d6fcb4b19b5d19b22fc",
+  "results": {
+    "quiet": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/quiet.csv",
+        "--mode",
+        "pool",
+        "--no-bodies"
+      ],
+      "started_utc": "2026-11-07T03:11:58.804557+00:00",
+      "elapsed_seconds": 8.085546762005833,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 6.618527,
+        "p95": 6.805614,
+        "worst": 7.683881
+      },
+      "scene_ms": {
+        "median": 6.62033,
+        "p95": 6.807558,
+        "worst": 7.735217
+      },
+      "water": 192.00000912,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 1.0719504244e-07,
+      "maximum_body_speed": 0.0
+    },
+    "pool": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/pool.csv",
+        "--mode",
+        "pool"
+      ],
+      "started_utc": "2026-11-07T03:12:06.894089+00:00",
+      "elapsed_seconds": 7.081818747996294,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 5.7044825,
+        "p95": 6.234076,
+        "worst": 6.86689
+      },
+      "scene_ms": {
+        "median": 5.737846,
+        "p95": 6.268722,
+        "worst": 6.943043
+      },
+      "water": 192.00000912,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 1.42153197048e-06,
+      "maximum_body_speed": 0.849225878716
+    },
+    "flow": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/flow.csv",
+        "--mode",
+        "flow"
+      ],
+      "started_utc": "2026-11-07T03:12:13.979945+00:00",
+      "elapsed_seconds": 7.029171334004786,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 5.5362805,
+        "p95": 6.879343,
+        "worst": 7.915918
+      },
+      "scene_ms": {
+        "median": 5.569428,
+        "p95": 6.911083,
+        "worst": 7.978406
+      },
+      "water": 115.200005472,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 1.36441409656e-06,
+      "maximum_body_speed": 0.848662018776
+    },
+    "air": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/air.csv",
+        "--mode",
+        "air",
+        "--no-bodies"
+      ],
+      "started_utc": "2026-11-07T03:12:21.013408+00:00",
+      "elapsed_seconds": 7.883156677999068,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 6.418244,
+        "p95": 6.866579,
+        "worst": 8.408807
+      },
+      "scene_ms": {
+        "median": 6.420488000000001,
+        "p95": 6.868753,
+        "worst": 8.421492
+      },
+      "water": 184.896008775,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 0.00773857176567,
+      "maximum_body_speed": 0.0
+    },
+    "terrain": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/terrain.csv",
+        "--mode",
+        "terrain"
+      ],
+      "started_utc": "2026-11-07T03:12:28.900228+00:00",
+      "elapsed_seconds": 7.57961250399967,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 6.073002000000001,
+        "p95": 6.440285,
+        "worst": 6.680689
+      },
+      "scene_ms": {
+        "median": 6.1724250000000005,
+        "p95": 6.54859,
+        "worst": 6.753515
+      },
+      "water": 153.166006707,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 2.43016160603e-06,
+      "maximum_body_speed": 0.841850161552
+    },
+    "original": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/original.csv",
+        "--mode",
+        "original"
+      ],
+      "started_utc": "2026-11-07T03:12:36.483529+00:00",
+      "elapsed_seconds": 5.576854966995597,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 4.277787,
+        "p95": 6.064617,
+        "worst": 8.313248
+      },
+      "scene_ms": {
+        "median": 4.3333625,
+        "p95": 6.125171,
+        "worst": 8.409129
+      },
+      "water": 7.97150037863,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 0.00155800687954,
+      "maximum_body_speed": 2.43786025047
+    },
+    "original-rotated": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "1200",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/original-rotated.csv",
+        "--mode",
+        "original",
+        "--rotated"
+      ],
+      "started_utc": "2026-11-07T03:12:42.064538+00:00",
+      "elapsed_seconds": 5.480893861000368,
+      "exit": 0,
+      "rows": 1200,
+      "fluid_ms": {
+        "median": 4.2251525,
+        "p95": 6.271347,
+        "worst": 10.66919
+      },
+      "scene_ms": {
+        "median": 4.283042,
+        "p95": 6.332913,
+        "worst": 10.834252
+      },
+      "water": 7.97150037863,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 0.0020704160795,
+      "maximum_body_speed": 2.64312624931
+    },
+    "cold-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "180",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-write.csv",
+        "--mode",
+        "flow",
+        "--save-dir",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-save",
+        "--save-at",
+        "180"
+      ],
+      "started_utc": "2026-11-07T03:12:47.550231+00:00",
+      "elapsed_seconds": 1.3669963880020077,
+      "exit": 0,
+      "rows": 180,
+      "fluid_ms": {
+        "median": 6.863789000000001,
+        "p95": 7.881544,
+        "worst": 8.265648
+      },
+      "scene_ms": {
+        "median": 6.895529,
+        "p95": 7.913944,
+        "worst": 8.288851
+      },
+      "water": 115.200005472,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 1.36441409656e-06,
+      "maximum_body_speed": 0.848662018776
+    },
+    "cold-read": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+        "--headless",
+        "--steps",
+        "180",
+        "--log",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-read.csv",
+        "--load",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-save"
+      ],
+      "started_utc": "2026-11-07T03:12:48.917981+00:00",
+      "elapsed_seconds": 1.1666825270003756,
+      "exit": 0,
+      "rows": 180,
+      "fluid_ms": {
+        "median": 5.599264,
+        "p95": 6.887369,
+        "worst": 6.916974
+      },
+      "scene_ms": {
+        "median": 5.632531999999999,
+        "p95": 6.92538,
+        "worst": 7.003357
+      },
+      "water": 115.200005472,
+      "maximum_water_drift": 0.0,
+      "maximum_stored_displacement": 9.00307475238e-08,
+      "maximum_body_speed": 0.660600364208
+    }
+  },
+  "checks": [
+    {
+      "name": "quiet.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/quiet.csv",
+          "--mode",
+          "pool",
+          "--no-bodies"
+        ],
+        "started_utc": "2026-11-07T03:11:58.804557+00:00",
+        "elapsed_seconds": 8.085546762005833,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 6.618527,
+          "p95": 6.805614,
+          "worst": 7.683881
+        },
+        "scene_ms": {
+          "median": 6.62033,
+          "p95": 6.807558,
+          "worst": 7.735217
+        },
+        "water": 192.00000912,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 1.0719504244e-07,
+        "maximum_body_speed": 0.0
+      }
+    },
+    {
+      "name": "quiet.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "quiet.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "quiet.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 322.560015321,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "quiet.no-launch",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "quiet.bounded-displacement",
+      "passed": true,
+      "detail": 1.0719504244e-07
+    },
+    {
+      "name": "pool.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/pool.csv",
+          "--mode",
+          "pool"
+        ],
+        "started_utc": "2026-11-07T03:12:06.894089+00:00",
+        "elapsed_seconds": 7.081818747996294,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 5.7044825,
+          "p95": 6.234076,
+          "worst": 6.86689
+        },
+        "scene_ms": {
+          "median": 5.737846,
+          "p95": 6.268722,
+          "worst": 6.943043
+        },
+        "water": 192.00000912,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 1.42153197048e-06,
+        "maximum_body_speed": 0.849225878716
+      }
+    },
+    {
+      "name": "pool.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "pool.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "pool.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 322.560015321,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "pool.no-launch",
+      "passed": true,
+      "detail": 0.849225878716
+    },
+    {
+      "name": "pool.bounded-displacement",
+      "passed": true,
+      "detail": 1.42153197048e-06
+    },
+    {
+      "name": "flow.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/flow.csv",
+          "--mode",
+          "flow"
+        ],
+        "started_utc": "2026-11-07T03:12:13.979945+00:00",
+        "elapsed_seconds": 7.029171334004786,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 5.5362805,
+          "p95": 6.879343,
+          "worst": 7.915918
+        },
+        "scene_ms": {
+          "median": 5.569428,
+          "p95": 6.911083,
+          "worst": 7.978406
+        },
+        "water": 115.200005472,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 1.36441409656e-06,
+        "maximum_body_speed": 0.848662018776
+      }
+    },
+    {
+      "name": "flow.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "flow.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "flow.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 414.720019698,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "flow.no-launch",
+      "passed": true,
+      "detail": 0.848662018776
+    },
+    {
+      "name": "flow.bounded-displacement",
+      "passed": true,
+      "detail": 1.36441409656e-06
+    },
+    {
+      "name": "air.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/air.csv",
+          "--mode",
+          "air",
+          "--no-bodies"
+        ],
+        "started_utc": "2026-11-07T03:12:21.013408+00:00",
+        "elapsed_seconds": 7.883156677999068,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 6.418244,
+          "p95": 6.866579,
+          "worst": 8.408807
+        },
+        "scene_ms": {
+          "median": 6.420488000000001,
+          "p95": 6.868753,
+          "worst": 8.421492
+        },
+        "water": 184.896008775,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 0.00773857176567,
+        "maximum_body_speed": 0.0
+      }
+    },
+    {
+      "name": "air.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "air.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "air.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 320.851215184,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "air.no-launch",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "air.bounded-displacement",
+      "passed": true,
+      "detail": 0.00773857176567
+    },
+    {
+      "name": "terrain.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/terrain.csv",
+          "--mode",
+          "terrain"
+        ],
+        "started_utc": "2026-11-07T03:12:28.900228+00:00",
+        "elapsed_seconds": 7.57961250399967,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 6.073002000000001,
+          "p95": 6.440285,
+          "worst": 6.680689
+        },
+        "scene_ms": {
+          "median": 6.1724250000000005,
+          "p95": 6.54859,
+          "worst": 6.753515
+        },
+        "water": 153.166006707,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 2.43016160603e-06,
+        "maximum_body_speed": 0.841850161552
+      }
+    },
+    {
+      "name": "terrain.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "terrain.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "terrain.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 321.811215274,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "terrain.no-launch",
+      "passed": true,
+      "detail": 0.841850161552
+    },
+    {
+      "name": "terrain.bounded-displacement",
+      "passed": true,
+      "detail": 2.43016160603e-06
+    },
+    {
+      "name": "original.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/original.csv",
+          "--mode",
+          "original"
+        ],
+        "started_utc": "2026-11-07T03:12:36.483529+00:00",
+        "elapsed_seconds": 5.576854966995597,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 4.277787,
+          "p95": 6.064617,
+          "worst": 8.313248
+        },
+        "scene_ms": {
+          "median": 4.3333625,
+          "p95": 6.125171,
+          "worst": 8.409129
+        },
+        "water": 7.97150037863,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 0.00155800687954,
+        "maximum_body_speed": 2.43786025047
+      }
+    },
+    {
+      "name": "original.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "original.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "original.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 26.4246012065,
+        "max_drift_kg": 9.99982319171977e-11
+      }
+    },
+    {
+      "name": "original.no-launch",
+      "passed": true,
+      "detail": 2.43786025047
+    },
+    {
+      "name": "original.bounded-displacement",
+      "passed": true,
+      "detail": 0.00155800687954
+    },
+    {
+      "name": "original-rotated.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "1200",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/original-rotated.csv",
+          "--mode",
+          "original",
+          "--rotated"
+        ],
+        "started_utc": "2026-11-07T03:12:42.064538+00:00",
+        "elapsed_seconds": 5.480893861000368,
+        "exit": 0,
+        "rows": 1200,
+        "fluid_ms": {
+          "median": 4.2251525,
+          "p95": 6.271347,
+          "worst": 10.66919
+        },
+        "scene_ms": {
+          "median": 4.283042,
+          "p95": 6.332913,
+          "worst": 10.834252
+        },
+        "water": 7.97150037863,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 0.0020704160795,
+        "maximum_body_speed": 2.64312624931
+      }
+    },
+    {
+      "name": "original-rotated.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "original-rotated.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "original-rotated.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 26.4246012065,
+        "max_drift_kg": 9.99982319171977e-11
+      }
+    },
+    {
+      "name": "original-rotated.no-launch",
+      "passed": true,
+      "detail": 2.64312624931
+    },
+    {
+      "name": "original-rotated.bounded-displacement",
+      "passed": true,
+      "detail": 0.0020704160795
+    },
+    {
+      "name": "quiet.settling",
+      "passed": true,
+      "detail": {
+        "tail_median_water_rms_mps": 6.241145629515e-06
+      }
+    },
+    {
+      "name": "pool.float-height",
+      "passed": true,
+      "detail": {
+        "mean_height": 1.9826757530371333,
+        "expected_pool_level": 2,
+        "tolerance": 0.3
+      }
+    },
+    {
+      "name": "pool.dense-sinks",
+      "passed": true,
+      "detail": {
+        "mean_height": 0.2999890458581,
+        "floor_plus_half_extent": 0.3
+      }
+    },
+    {
+      "name": "flow.real-transfer",
+      "passed": true,
+      "detail": {
+        "left_before_gate": 92.8000044078,
+        "left_final": 56.33766112574666
+      }
+    },
+    {
+      "name": "air.compression",
+      "passed": true,
+      "detail": {
+        "closed_pressure_pa": 6941.05761719
+      }
+    },
+    {
+      "name": "air.finite-vent",
+      "passed": true,
+      "detail": {
+        "closed_pa": 6941.05761719,
+        "first_open_pa": 6031.32421875
+      }
+    },
+    {
+      "name": "air.pressure-releases",
+      "passed": true,
+      "detail": {
+        "closed_pa": 6941.05761719,
+        "tail_mean_pa": -329.4474177043
+      }
+    },
+    {
+      "name": "air.no-stranded-reservoir",
+      "passed": true,
+      "detail": {
+        "closed_pa": 6941.05761719,
+        "largest_pressure_in_any_tail_reservoir_pa": 376.492523193
+      }
+    },
+    {
+      "name": "cold-write.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "180",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-write.csv",
+          "--mode",
+          "flow",
+          "--save-dir",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-save",
+          "--save-at",
+          "180"
+        ],
+        "started_utc": "2026-11-07T03:12:47.550231+00:00",
+        "elapsed_seconds": 1.3669963880020077,
+        "exit": 0,
+        "rows": 180,
+        "fluid_ms": {
+          "median": 6.863789000000001,
+          "p95": 7.881544,
+          "worst": 8.265648
+        },
+        "scene_ms": {
+          "median": 6.895529,
+          "p95": 7.913944,
+          "worst": 8.288851
+        },
+        "water": 115.200005472,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 1.36441409656e-06,
+        "maximum_body_speed": 0.848662018776
+      }
+    },
+    {
+      "name": "cold-write.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "cold-write.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "cold-write.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 414.720019698,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "cold-write.no-launch",
+      "passed": true,
+      "detail": 0.848662018776
+    },
+    {
+      "name": "cold-write.bounded-displacement",
+      "passed": true,
+      "detail": 1.36441409656e-06
+    },
+    {
+      "name": "cold-read.completion",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_lab",
+          "--headless",
+          "--steps",
+          "180",
+          "--log",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-read.csv",
+          "--load",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-20261107/checkpoint-qualified/cold-save"
+        ],
+        "started_utc": "2026-11-07T03:12:48.917981+00:00",
+        "elapsed_seconds": 1.1666825270003756,
+        "exit": 0,
+        "rows": 180,
+        "fluid_ms": {
+          "median": 5.599264,
+          "p95": 6.887369,
+          "worst": 6.916974
+        },
+        "scene_ms": {
+          "median": 5.632531999999999,
+          "p95": 6.92538,
+          "worst": 7.003357
+        },
+        "water": 115.200005472,
+        "maximum_water_drift": 0.0,
+        "maximum_stored_displacement": 9.00307475238e-08,
+        "maximum_body_speed": 0.660600364208
+      }
+    },
+    {
+      "name": "cold-read.finite",
+      "passed": true,
+      "detail": "All recorded physical and timing values are finite."
+    },
+    {
+      "name": "cold-read.quantity",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "cold-read.air-ledger",
+      "passed": true,
+      "detail": {
+        "initial_kg": 414.720019698,
+        "max_drift_kg": 0.0
+      }
+    },
+    {
+      "name": "cold-read.no-launch",
+      "passed": true,
+      "detail": 0.660600364208
+    },
+    {
+      "name": "cold-read.bounded-displacement",
+      "passed": true,
+      "detail": 9.00307475238e-08
+    },
+    {
+      "name": "cold.true-process-continuation",
+      "passed": true,
+      "detail": {
+        "last_old_step": "180",
+        "first_new_step": "181"
+      }
+    },
+    {
+      "name": "cold.quantity",
+      "passed": true,
+      "detail": {
+        "before": "115.200005472",
+        "after": "115.200005472"
+      }
+    }
+  ],
+  "passed": true,
+  "scope": "Fixed-resolution native water + real MK2, Linux headless. Timing is CPU-only; not GPU or published-platform qualification."
+}

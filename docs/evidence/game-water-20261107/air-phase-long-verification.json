@@ -1,0 +1,9 @@
+{
+  "steps": 7200,
+  "tail_largest_reservoir_pressure_pa": 4.00573301315,
+  "water_drift": 0.0,
+  "air_mass_drift": 9.999894245993346e-10,
+  "final_primary_air_pressure_pa": -3.30943632126,
+  "timing_scope": "Late portion overlapped sanitizer compilation; this run is a sustained-correctness control, not the final timing sample.",
+  "passed": true
+}
