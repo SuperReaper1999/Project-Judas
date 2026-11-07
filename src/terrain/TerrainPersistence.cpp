@@ -5,7 +5,85 @@
 #include "TerrainAsset.h"
 #include "TerrainMetadata.h"
 #include "TerrainRuntime.h"
+#include <algorithm>
+#include <set>
 namespace TerrainV2 {
+namespace {
+bool SameLayout(const Source &a, const Source &b) {
+    return a.samplesX == b.samplesX && a.samplesZ == b.samplesZ && a.chunkCells == b.chunkCells &&
+           a.spacing == b.spacing && a.bottom == b.bottom && a.top == b.top;
+}
+bool ReferenceSamples(AssetPages &pages, const Source *cached, const RasterChanges &oldChanges,
+                      const RasterChanges &changes, Source &base, std::string &error) {
+    if (!cached)
+        return pages.ReadAll(base, error);
+    // A verified live base already owns every unchanged sample. An override in
+    // BOTH versions will be replaced by the new complete sample. Only reverted
+    // old overrides require reading original native pages again.
+    base.heights = cached->heights;
+    base.weights = cached->weights;
+    const auto &index = pages.Index();
+    const auto width = index.pages.front().width, height = index.pages.front().height;
+    const auto columns = (index.metadata.samplesX + width - 1) / width;
+    std::set<size_t> needed;
+    for (const auto &[sample, _] : oldChanges)
+        if (!changes.count(sample)) {
+            const auto x = sample % index.metadata.samplesX, z = sample / index.metadata.samplesX;
+            needed.insert(size_t(z / height) * columns + x / width);
+        }
+    for (auto page : needed) {
+        SamplePage original;
+        if (!pages.ReadPage(page, original, error))
+            return false;
+        for (unsigned z = 0; z < original.height; ++z) {
+            const auto to = size_t(original.z + z) * index.metadata.samplesX + original.x;
+            const auto from = size_t(z) * original.width;
+            std::copy_n(original.heights.begin() + from, original.width, base.heights.begin() + to);
+            std::copy_n(original.weights.begin() + from, original.width, base.weights.begin() + to);
+        }
+    }
+    return true;
+}
+std::vector<ChunkKey> RestoreChunks(const Source *before, const Source &after) {
+    std::set<ChunkKey> dirty;
+    if (!before || !SameLayout(*before, after)) {
+        for (unsigned z = 0; z < after.ChunksZ(); ++z)
+            for (unsigned x = 0; x < after.ChunksX(); ++x)
+                dirty.insert({x, z});
+    } else {
+        auto add = [&](const Edit &edit) {
+            const auto affected = Affected(after, edit);
+            dirty.insert(affected.begin(), affected.end());
+        };
+        // Height interpolation and normals affect the neighbouring samples too.
+        const float halfX = (after.samplesX - 1) * after.spacing * .5f,
+                    halfZ = (after.samplesZ - 1) * after.spacing * .5f;
+        for (size_t i = 0; i < after.heights.size(); ++i)
+            if (before->heights[i] != after.heights[i])
+                add({Edit::Kind::Remove,
+                     {float(i % after.samplesX) * after.spacing - halfX, 0,
+                      float(i / after.samplesX) * after.spacing - halfZ},
+                     after.spacing});
+        // Rebuild both the removed and newly affected volume bands. The journal
+        // order remains authoritative; this is only dependency invalidation.
+        auto sameEdit = [](const Edit &a, const Edit &b) {
+            return a.kind == b.kind && a.point == b.point && a.radius == b.radius;
+        };
+        size_t first = 0;
+        while (first < before->edits.size() && first < after.edits.size() &&
+               sameEdit(before->edits[first], after.edits[first]))
+            ++first;
+        for (size_t i = first; i < before->edits.size(); ++i)
+            add(before->edits[i]);
+        for (size_t i = first; i < after.edits.size(); ++i)
+            add(after.edits[i]);
+    }
+    std::vector<ChunkKey> keys(dirty.begin(), dirty.end());
+    std::sort(keys.begin(), keys.end(),
+              [](auto a, auto b) { return a.z == b.z ? a.x < b.x : a.z < b.z; });
+    return keys;
+}
+} // namespace
 void Runtime::BindAsset(std::string id, std::string fingerprint) {
     if (pending) {
         pending->baseAsset = std::move(id);
@@ -57,6 +135,10 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
     return true;
 }
 bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchronous) {
+    if (pending) {
+        error = "terrain restore while edit pending";
+        return false;
+    }
     Source next;
     std::string assetId, digest;
     RasterChanges changes;
@@ -78,13 +160,16 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
             if (!pages.Open(record->path, error) || pages.Index().fingerprint != digest)
                 throw std::runtime_error(
                     "saved terrain base has changed; an explicit content migration is required");
-            if (!pages.ReadAll(base, error) || !ParseMetadata(metadata, next, error))
+            if (!ParseMetadata(metadata, next, error))
                 throw std::runtime_error(error);
-            if (next.samplesX != base.samplesX || next.samplesZ != base.samplesZ ||
-                next.chunkCells != base.chunkCells || next.spacing != base.spacing ||
-                next.bottom != base.bottom || next.top != base.top)
+            if (!SameLayout(next, pages.Index().metadata))
                 throw std::runtime_error(
                     "saved terrain base lattice does not match its immutable asset");
+            const bool reusable = source && baseAsset == assetId && baseFingerprint == digest &&
+                                  SameLayout(*source, next);
+            if (!ReferenceSamples(pages, reusable ? source.get() : nullptr, raster, changes, base,
+                                  error))
+                throw std::runtime_error(error);
             next.heights = std::move(base.heights);
             next.weights = std::move(base.weights);
             for (const auto &[index, sample] : changes) {
@@ -101,15 +186,10 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
         }
     } else if (!(IsAsset(bytes) ? DecodeAsset(bytes, next, error) : Parse(bytes, next, error)))
         return false;
-    if (pending) {
-        error = "terrain restore while edit pending";
-        return false;
-    }
-    std::vector<ChunkKey> keys;
-    for (unsigned z = 0; z < next.ChunksZ(); ++z)
-        for (unsigned x = 0; x < next.ChunksX(); ++x)
-            keys.push_back({x, z});
-    if (!Submit(std::make_shared<const Source>(std::move(next)), std::move(keys), error, true))
+    const bool replaceAll = !source || !SameLayout(*source, next);
+    auto keys = RestoreChunks(source.get(), next);
+    if (!Submit(std::make_shared<const Source>(std::move(next)), std::move(keys), error,
+                replaceAll))
         return false;
     BindAsset(std::move(assetId), std::move(digest));
     pending->raster = std::move(changes);

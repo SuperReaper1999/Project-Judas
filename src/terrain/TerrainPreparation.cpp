@@ -65,27 +65,33 @@ bool PrepareGeometry(Preparation &work, const std::vector<ChunkKey> &keys,
         std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
     return true;
 }
+size_t SourcePayloadBytes(const Source &source, const HeightLod *lod) {
+    size_t bytes = sizeof(source) + source.heights.size() * sizeof(float) +
+                   source.weights.size() * sizeof(glm::vec4) + source.edits.size() * sizeof(Edit);
+    if (lod)
+        bytes += lod->Bytes();
+    return bytes;
+}
+size_t PreparedChunk::PayloadBytes() const {
+    size_t bytes = sizeof(*this) + chunk.mesh.vertices.size() * sizeof(MeshVertex) +
+                   chunk.mesh.indices.size() * sizeof(uint32_t);
+    if (collision) {
+        const auto &c = *collision;
+        bytes += sizeof(c) + c.vertices.size() * sizeof(glm::dvec3) +
+                 c.faces.size() * sizeof(CollisionFace) + c.edges.size() * sizeof(c.edges[0]) +
+                 c.satEdges.size() * sizeof(uint32_t) + c.nodes.size() * sizeof(CollisionNode) +
+                 c.order.size() * sizeof(uint32_t) + c.polygons.size() * sizeof(CollisionPolygon);
+        for (const auto &polygon : c.polygons)
+            bytes += polygon.vertices.size() * sizeof(uint32_t);
+    }
+    return bytes;
+}
 size_t Preparation::PayloadBytes() const {
     size_t bytes = sizeof(*this);
     if (source)
-        bytes += source->heights.size() * sizeof(float) +
-                 source->weights.size() * sizeof(glm::vec4) + source->edits.size() * sizeof(Edit);
-    if (lod)
-        bytes += lod->Bytes();
-    for (const auto &p : chunks) {
-        bytes += sizeof(p) + p.chunk.mesh.vertices.size() * sizeof(MeshVertex) +
-                 p.chunk.mesh.indices.size() * sizeof(uint32_t);
-        if (p.collision) {
-            const auto &c = *p.collision;
-            bytes += sizeof(c) + c.vertices.size() * sizeof(glm::dvec3) +
-                     c.faces.size() * sizeof(CollisionFace) + c.edges.size() * sizeof(c.edges[0]) +
-                     c.satEdges.size() * sizeof(uint32_t) + c.nodes.size() * sizeof(CollisionNode) +
-                     c.order.size() * sizeof(uint32_t) +
-                     c.polygons.size() * sizeof(CollisionPolygon);
-            for (const auto &polygon : c.polygons)
-                bytes += polygon.vertices.size() * sizeof(uint32_t);
-        }
-    }
+        bytes += SourcePayloadBytes(*source, lod.get());
+    for (const auto &chunk : chunks)
+        bytes += chunk.PayloadBytes();
     return bytes;
 }
 bool PrepareAsset(const std::string &path, const std::string &identity, PreparedAsset &output,

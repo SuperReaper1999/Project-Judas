@@ -131,8 +131,8 @@ render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
 multi-view streaming remain work. Planet
 precision and existing LOD remain intact, but planetary
-excavation is not implemented by this slice. Broader PBR material authoring, incremental navigation,
-fluid/particle integrations, representative consumer scenes and final SDK
+excavation is not implemented by this slice. Incremental navigation,
+large-region physical interest selection, representative consumer scenes and final SDK
 qualification remain. Source discovery currently covers up to 512 editable
 sources under Authoring; large-data demand paging remains separate work.
 
@@ -300,3 +300,46 @@ as well as handles, preventing another world's ID from aliasing a terrain.
 This does not change the Alpha fluid lock, default water policy, pressure/transport
 solver or liquid research. It does not yet complete native navigation publication,
 planetary excavation, physical residency or final Terrain V2 qualification.
+
+## Native regional streaming
+
+Native sources now use the existing region preparation worker to decode samples,
+extract chunks, cook collision BVHs and build height LOD before registration.
+The completed product is moved into one world-owned runtime; it contains no live
+world or graphics handles. Registration still creates native physics handles on
+the frame thread. A single source's registration is indivisible, so the 2 ms
+streaming budget is a scheduling target rather than a hard deadline.
+
+Saved revisions reuse verified base samples, check the current native header
+identity, and rebuild only changed-height and excavation dependencies. Reverting
+an override reads and verifies the required original native pages; paint-only
+restores preserve all collider identities. Cold initial source preparation still
+reads and verifies the whole native source. No permanent second base array or
+unbounded geometry cache is introduced.
+
+Region admission accounts for source samples, mesh, BVH and LOD payload, instead
+of only scene text. Committed runtime edits refresh this estimate. Excavation can
+increase occupancy beyond the original admission estimate; it does not silently
+unload occupied ground, and subsequent admission observes the increased total.
+These are payload/admission estimates, excluding allocator overhead, physics-world
+storage and GPU residency. Worker preparation's temporary allocations are not a
+hard-capped heap. Use suitably sized authored regions and sensible pending/live
+budgets; a kilometre source in the measured fixture needs about 77 MB of accounted
+resident payload (process RSS is substantially larger).
+
+The preserved five-visit 513×513 fixture keeps all 1,024 collision chunks, sculpts
+and excavates, unloads everything and reconstructs exact saved source state in a
+new process. The baseline's cumulative largest integration unit was 516.6 ms;
+the first corrected qualification measured 3.41 ms. Total load/revisit wall times
+were 478–516 ms for the first three visits and 471–479 ms for the last two,
+including background preparation. Five visits are not independent benchmark
+percentiles, and these unit times are not FPS. Raw scope and before/after results
+are under `docs/evidence/terrain-v2/regional-streaming`.
+
+This does not add per-chunk source paging or camera-driven physics eviction.
+Regional suspension remains the existing coordinator's responsibility, and native
+terrains retain all collision chunks while their region is resident. Current
+particle snapshot limits also remain: a very large resident landscape may exceed
+particle capture body/triangle budgets and must report that explicitly rather
+than silently omit collision coverage. Large-source particle capture is not yet
+qualified by the small native interaction controls.

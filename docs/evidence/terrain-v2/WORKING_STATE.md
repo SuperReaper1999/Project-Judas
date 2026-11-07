@@ -7,7 +7,7 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified branch checkpoints (verify live Git before changes)
 
-Experimental/origin last checked: a64c454a70189992603ade26525f24e2f57c9241.
+Experimental/origin last checked: 5a7cf7df (query full hash live).
 Main/origin unchanged:1094d64515604fe9d03fdab479efc7f880b112a8.
 Native asset checkpoint58e73071; authoring b63d707e; runtime sculpt/paint/save
 c5fde88d; source-owned solid/fluid/particle integration a64c454a are PUSHED.
@@ -26,41 +26,43 @@ Exporter/runtime provenance mismatch correctly rejects mixed intermediate binari
 
 ## Active continuation — actual regional streaming stalls
 
-Current DIRTY work: new TerrainV2StreamingTests.cpp + CMake target, and cohesive
-worker preparation extraction TerrainPreparation.*. Runtime::Work derives the
-plain Preparation product; geometry fingerprint/cook/order remain the same.
-Extraction build and93/44/85/67/cold13 controls now PASS.
-No build is running; no functional streaming correction is implemented yet.
-The raw baseline and extraction evidence are retained under regional-streaming/before/.
+Native regional handoff + selective reference restoration and payload accounting
+are now qualified and checkpoint-ready. Frozen build88111 has EXITED. No build
+or test is running. Evidence is regional-streaming/after/. Extraction/baseline
+is5a7cf7df; query live Git for the functional checkpoint after commit.
 
-The real streaming baseline is /tmp/terrain-v2-stream-baseline-02.log (67checks)
-and -02-cold.log (13checks), both pass. A one-kilometre513² landscape loads1024
-colliders, is sculpted+dug, unloaded/reloaded5times with exact source persistence,
-and restored in another process. All physical/source ownership retires on unload.
-World origin uses the supported±1e12 range. Initial failed fixture used2e12/3e12
-outside the documented archive range; preserve original failure, don't relax it.
-Cold filename must be Native_regional_terrain.judasproj (CreateNew uses underscores).
+PreparedWorldRegion owns move-consumed source/mesh/BVH/LOD products. Regional
+staging installs them without IO/extraction/cooking on the frame thread. Static
+staging rollback now retires identity seeds even if no EntityRecord was created.
+Preparation25 (including real pending/live budget failures), surface59, native
+streaming69/cold13, world93/300-step exact trajectory, component35, interactions85,
+existing streaming85, LivingWorldStreaming35 and planetary origin streaming20 PASS.
+Existing consumer streamed game cold write11/read19 PASS (copied project). A second
+LivingWorldStreaming run rejected its already-existing default fixture; rerun with
+its explicit fresh-path argument passed35 unchanged controls. Preserve that log.
 
-Confirmed defects: native component registration calls BuildAuthored->Wait on the
-frame thread. Largest streaming units486.9–516.6ms; source admission/live accounting
-only17688bytes despite28390676bytes source/mesh estimate (BVH additional). Reload
-also needlessly rebuilds authored collision and then prepares the saved revision.
+Frozen matched1km513²/1024collider run: first activation475ms, revisits471–516ms;
+cumulative largest streaming unit3.428ms vsbaseline516.636ms. Existing terrain,
+object counts, sculpt/journal data and cold state are preserved. Initial source
+still prepares in the background; no FPS or hard2ms guarantee is claimed. Resident
+payload77,006,492B now accountssource/mesh/BVH/LOD, updating after edits. PeakRSS
+is separate (see time logs), not a heap/GPU cap; no memory speedup claim.
 
-NEXT implement preparation handoff using the existing region WORKER. Proposed
-small coherent path: PreparedWorldRegion owns move-consumed PreparedAsset products,
-StageRegionObject/AppendSceneObjects accepts that optional product, and native
-Runtime installs complete prepared chunks without IO/extraction/cooking on frame
-thread. Keep existing global scene startup behavior. Retained restore can reuse
-an immutable validated base sample cache after checking the native header identity;
-never substitute already-modified heights as the base. Update actual regional
-payload accounting including native geometry/BVH/LOD rather than scene text only.
-Keep product ownership explicit and reject double consumption/mismatched sources.
-Measure same streaming driver before/after; preserve its physical/cold controls.
-No arbitrary reduced physics fidelity or object-count shortcuts.
+Selective restore checks native header identity, reuses verified live samples,
+rereads original pages only for reverted overrides, applies all saved overrides,
+and cooks only changed-height/journal dependencies. Paint-only restore preserves
+collider IDs. Corrupt required pages reject before publication. No second base
+array cache; initial cold source reads still verify every page.
 
-First independently validate the extraction using world93/seam300exact, surface44,
-interaction85, component35, and streaming67/cold13. It should be behavior-preserving.
-Then implement functional handoff/accounting as an attributable continuation.
+Desktop NVIDIA4.6 editor authoring, undo and PlayStop authored identity PASS.
+Real relocated Workshop sculpt/paint/tunnel/traversal+separate-processcold PASS,
+including inspected tunnel screenshot. InstalledSDKs/userprojects untouched.
+Native128MiB budget is enough for the measured1km source. Default pending32/live64
+MiB will correctly reject such a source; split regions or choose appropriate
+budgets. Values are payload admission estimates, not hard allocation caps.
+
+NEXT continue actual navigation integration (baker currently sees identityBox),
+physical-interest/residency limits and planetary excavation/provider masking.
 Further work still includes actual navigation (baker sees placeholderBox), physical
 interest/residency beyond whole regions, and actual planetary excavation/provider
 masking. Do not claim complete Terrain V2 from more isolated passes.

@@ -1,5 +1,5 @@
-#include "Project.h"
 #include "OriginLimits.h"
+#include "Project.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
@@ -89,8 +89,9 @@ int main(int argc, char **argv) {
         JobSystem jobs(2);
         ResourceManager resources(nullptr, &assets, &jobs);
         Scene bootstrap;
-        bootstrap.Settings().worldOrigin = {OriginLimits::MaximumComponent, OriginLimits::MaximumComponent,
-                                           -OriginLimits::MaximumComponent};
+        bootstrap.Settings().worldOrigin = {OriginLimits::MaximumComponent,
+                                            OriginLimits::MaximumComponent,
+                                            -OriginLimits::MaximumComponent};
         RuntimeWorld world;
         world.ConfigureProject(project.Settings());
         Check(world.Build(bootstrap, &resources, error), "build root world");
@@ -149,6 +150,9 @@ int main(int argc, char **argv) {
                   "cold region resolves exact base/raster/journal state");
             unload(token);
         } else {
+            const auto initialPayload = world.LiveTerrain().LandscapePayloadBytes(id);
+            Check(stream.Stats().liveBytes >= initialPayload && initialPayload > 32 * 1024 * 1024,
+                  "regional admission accounts for native source, mesh, LOD and BVH payload");
             Check(std::abs(height(0) - 3) < .001f, "first activation uses authored native samples");
             TerrainV2::SurfaceBrush sculpt;
             sculpt.radius = 6;
@@ -160,6 +164,10 @@ int main(int argc, char **argv) {
                 world.LiveTerrain().Brush(id, {0, 3, 0}, {VolumeBrushKind::Remove, 6, 1}, error) &&
                     world.LiveTerrain().Wait(id, error),
                 "excavate an actual streamed owner");
+            stream.Advance(false);
+            Check(world.LiveTerrain().LandscapePayloadBytes(id) != initialPayload &&
+                      stream.Stats().liveBytes >= world.LiveTerrain().LandscapePayloadBytes(id),
+                  "resident edit payload refreshes regional memory accounting");
             std::string before;
             Check(world.CaptureRuntimeTerrain(id, before, error),
                   "capture native regional changes");

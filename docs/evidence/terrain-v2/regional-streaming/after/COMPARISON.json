@@ -1,0 +1,143 @@
+{
+  "comparison": "one kilometre 513x513 source; 1024 collision chunks; sculpt/excavate/unload/five visits/cold restore",
+  "baseline_commit": "5a7cf7df",
+  "candidate_base": "5a7cf7df",
+  "candidate_state": "dirty functional changes; see final checkpoint and source hashes",
+  "baseline_rows": [
+    {
+      "case": "native-region",
+      "visit": 0,
+      "load_ms": 509.322,
+      "largest_unit_ms": 486.924,
+      "live_accounted_bytes": 17688,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 1,
+      "load_ms": 958.288,
+      "largest_unit_ms": 499.072,
+      "live_accounted_bytes": 17688,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 2,
+      "load_ms": 970.807,
+      "largest_unit_ms": 516.636,
+      "live_accounted_bytes": 17688,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 3,
+      "load_ms": 900.434,
+      "largest_unit_ms": 516.636,
+      "live_accounted_bytes": 17688,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 4,
+      "load_ms": 876.784,
+      "largest_unit_ms": 516.636,
+      "live_accounted_bytes": 17688,
+      "terrain_geometry_estimate_bytes": 28390676
+    }
+  ],
+  "after_rows": [
+    {
+      "case": "native-region",
+      "visit": 0,
+      "load_ms": 478.086,
+      "largest_unit_ms": 2.42117,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 1,
+      "load_ms": 511.904,
+      "largest_unit_ms": 3.41062,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 2,
+      "load_ms": 515.573,
+      "largest_unit_ms": 3.41062,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 3,
+      "load_ms": 470.727,
+      "largest_unit_ms": 3.41062,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 4,
+      "load_ms": 478.964,
+      "largest_unit_ms": 3.41062,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    }
+  ],
+  "notes": [
+    "largest_unit_ms is a cumulative lifetime maximum of streaming integration units, NOT frame cost or FPS",
+    "five visits are not independent benchmark distributions",
+    "both paths preserve collision counts, exact raster/journal snapshots and cold reconstruction",
+    "terrain_geometry_estimate_bytes excludes BVH; live accounting now includes source/mesh/BVH/LOD; neither is RSS",
+    "pending/live budgets are admission estimates, not allocation/allocator/GPU hard limits",
+    "living-streaming-05 default path correctly refused an existing fixture; fresh explicit path passed all 35 controls without altering checks",
+    "save-streaming-03 uses same semantic changes before two bookkeeping-only guards; its final frozen executable was built in frozen-build-05"
+  ],
+  "timestamp_utc": "2026-11-07T23:34:11Z",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "final_frozen_rows": [
+    {
+      "case": "native-region",
+      "visit": 0,
+      "load_ms": 475.135,
+      "largest_unit_ms": 2.45321,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 1,
+      "load_ms": 502.854,
+      "largest_unit_ms": 3.26033,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 2,
+      "load_ms": 516.372,
+      "largest_unit_ms": 3.26033,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 3,
+      "load_ms": 470.985,
+      "largest_unit_ms": 3.42817,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    },
+    {
+      "case": "native-region",
+      "visit": 4,
+      "load_ms": 478.115,
+      "largest_unit_ms": 3.42817,
+      "live_accounted_bytes": 77006492,
+      "terrain_geometry_estimate_bytes": 28390676
+    }
+  ]
+}

@@ -8,7 +8,9 @@ namespace TerrainV2 {
 struct PreparedChunk {
     Chunk chunk;
     std::shared_ptr<CollisionAsset> collision;
+    size_t PayloadBytes() const;
 };
+size_t SourcePayloadBytes(const Source &, const HeightLod *);
 // Worker-only construction. Completed products contain no world, renderer or
 // body handles. The coordinator moves them into a single runtime owner.
 struct Preparation {

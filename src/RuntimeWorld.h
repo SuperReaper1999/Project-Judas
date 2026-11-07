@@ -47,6 +47,7 @@ struct PhysicalMaterial;
 class ProductionFluidCoupling;
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {class WorldSystem;}
+namespace TerrainV2 {struct PreparedAsset;}
 
 // Milestone 28: the RUNTIME instance of a Scene.
 //
@@ -645,7 +646,7 @@ public:
     const std::vector<SceneObjectId>& LightSwitchIds() const { return m_lightSwitchIds; }
 
 // M59 registration seam uses the same component constructor as Build.
-    bool StageRegionObject(const SceneObject& worldObject,const SceneObject& localObject,std::string&,const std::string& stableIdentity="");
+    bool StageRegionObject(const SceneObject& worldObject,const SceneObject& localObject,std::string&,const std::string& stableIdentity="",TerrainV2::PreparedAsset* terrain=nullptr);
     void PublishRegion(const std::vector<EntityId>& ids);
     bool RestoreRegionObject(EntityId,const SceneTransform&,const EntityPhysicalState&,const std::vector<ScriptStateRecord>&,std::string&,bool);
     bool RegionVisualReady(const std::vector<EntityId>& ids) const;
@@ -699,7 +700,7 @@ private:
     std::map<EntityId,EntityCategories> m_entityCategories;
     bool m_built = false;
     PhysicsWorld m_physics;
-    bool AppendSceneObjects(const Scene& scene, bool authored, const FidelityPolicyContext& context, std::string& error);
+    bool AppendSceneObjects(const Scene& scene, bool authored, const FidelityPolicyContext& context, std::string& error, TerrainV2::PreparedAsset* terrain=nullptr);
     Scene m_hierarchy; // local authored transforms, allocated only for parented scenes/spawns
     bool m_hasPlanarPhysics=false;
     bool m_hasScripts=false,m_hasNavigation=false;

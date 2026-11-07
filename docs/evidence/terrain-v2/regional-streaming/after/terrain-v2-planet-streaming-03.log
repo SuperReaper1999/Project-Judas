@@ -1,0 +1,21 @@
+PASS ordinary project created
+PASS world manifest registered
+PASS script-owned physical world built
+PASS normal SceneSession owns streaming
+PASS origin transaction rejects in-flight region preparation
+PASS rejected origin does not partially mutate world
+PASS region activates asynchronously
+PASS motor query capsule and source retire on unload
+PASS retired support/query handle remains stale
+PASS empty physical chart translates through normal session owner
+PASS retained record selects origin-aware archive only when needed
+PASS retained origin metadata remains bounded
+PASS saved local region returns in translated chart
+PASS runtime motor location retains capture origin to submillimetre at trillion-metre offset
+PASS fresh region allocation cannot alias retired generation
+PASS second suspension retains translated state
+PASS fresh chart world built
+PASS origin-aware retained archive decodes in a fresh owner
+PASS cold retained region activates
+PASS cold retained motor endpoint uses the original absolute location
+SUMMARY 20 checks 0 failures

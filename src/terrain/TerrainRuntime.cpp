@@ -92,36 +92,9 @@ bool Runtime::Create(Source value, std::string &error) {
 }
 bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> keys,
                      std::string &error, bool replaceAll) {
-    // The same resident budget applies to creation, restoration and edits.
-    // A valid file is not permission to bypass the current runtime budget.
-    if (size_t(value->ChunksX()) * value->ChunksZ() > 1024) {
-        error = "terrain active chunk budget exceeds 1024";
+    if (!ValidateSubmission(*value, error))
         return false;
-    }
-    if (pending) {
-        error = "terrain edit pending; retry after publication";
-        return false;
-    }
-    auto *d = Definition();
     auto *resources = world.Resources();
-    if (!d || !d->body || d->body->motion != SceneBodyMotion::Static || d->parent || d->planet ||
-        d->deformable || d->navigationSurface || d->transform.scale != glm::vec3(1) ||
-        !Seed().IsValid()) {
-        error = "landscape requires a root unit-scale static owner with no other geometry owner";
-        return false;
-    }
-    if (!resources || !resources->Jobs()) {
-        error = "terrain requires the project job system";
-        return false;
-    }
-    if (auto *renderer = resources->GetRenderer()) {
-        const auto limit = unsigned(std::max(0, renderer->Capabilities().limits.textureSize));
-        if (value->samplesX > limit || value->samplesZ > limit) {
-            error = "landscape sample page exceeds this device's texture limit; split the "
-                    "source into smaller streamed regions";
-            return false;
-        }
-    }
     auto work = std::make_shared<Work>();
     work->baseAsset = baseAsset;
     work->baseFingerprint = baseFingerprint;
@@ -155,6 +128,68 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
     status.pendingChunks = pendingCount;
     status.error.clear();
     return true;
+}
+bool Runtime::ValidateSubmission(const Source &value, std::string &error) const {
+    // The same resident budget applies to creation, restoration and edits.
+    // A valid file is not permission to bypass the current runtime budget.
+    if (size_t(value.ChunksX()) * value.ChunksZ() > 1024) {
+        error = "terrain active chunk budget exceeds 1024";
+        return false;
+    }
+    if (pending) {
+        error = "terrain edit pending; retry after publication";
+        return false;
+    }
+    auto *d = Definition();
+    auto *resources = world.Resources();
+    if (!d || !d->body || d->body->motion != SceneBodyMotion::Static || d->parent || d->planet ||
+        d->deformable || d->navigationSurface || d->transform.scale != glm::vec3(1) ||
+        !Seed().IsValid()) {
+        error = "landscape requires a root unit-scale static owner with no other geometry owner";
+        return false;
+    }
+    if (!resources || !resources->Jobs()) {
+        error = "terrain requires the project job system";
+        return false;
+    }
+    if (auto *renderer = resources->GetRenderer()) {
+        const auto limit = unsigned(std::max(0, renderer->Capabilities().limits.textureSize));
+        if (value.samplesX > limit || value.samplesZ > limit) {
+            error = "landscape sample page exceeds this device's texture limit; split the "
+                    "source into smaller streamed regions";
+            return false;
+        }
+    }
+    return true;
+}
+bool Runtime::Install(PreparedAsset &asset, std::string &error) {
+    if (source || pending || asset.consumed || !asset.geometry.source || !asset.geometry.lod ||
+        !asset.geometry.error.empty() || asset.geometry.chunks.size() !=
+            size_t(asset.geometry.source->ChunksX()) * asset.geometry.source->ChunksZ()) {
+        error = "prepared terrain is incomplete, already consumed or owner is initialized";
+        return false;
+    }
+    if (!ValidateSubmission(*asset.geometry.source, error))
+        return false;
+    std::set<ChunkKey> keys;
+    for (const auto &part : asset.geometry.chunks)
+        if (part.chunk.key.x >= asset.geometry.source->ChunksX() ||
+            part.chunk.key.z >= asset.geometry.source->ChunksZ() || !keys.insert(part.chunk.key).second) {
+            error = "prepared terrain chunk coverage is invalid";
+            return false;
+        }
+    auto work = std::make_shared<Work>();
+    static_cast<Preparation &>(*work) = std::move(asset.geometry);
+    work->baseAsset = asset.asset;
+    work->baseFingerprint = asset.fingerprint;
+    asset.consumed = true;
+    pending = std::move(work);
+    const bool ok = Publish(error);
+    pending.reset();
+    if (ok)
+        error.clear();
+    status.error = error;
+    return ok;
 }
 bool Runtime::Brush(glm::vec3 point, const Edit &brush, std::string &error) {
     if (!source) {
@@ -268,12 +303,15 @@ bool Runtime::Publish(std::string &error) {
     status.triangles = 0;
     status.chunks = chunks.size();
     status.volumeChunks = 0;
+    residentPayloadBytes = SourcePayloadBytes(*source, lod.get()) +
+                           raster.size() * sizeof(RasterChanges::value_type);
     for (const auto &[_, r] : chunks) {
         const auto &c = r.geometry.chunk;
         status.triangles += c.mesh.indices.size() / 3;
         status.bytes +=
             c.mesh.vertices.size() * sizeof(MeshVertex) + c.mesh.indices.size() * sizeof(uint32_t);
         status.volumeChunks += c.volumetric;
+        residentPayloadBytes += r.geometry.PayloadBytes();
     }
     Synchronize();
     status.publishMs = Milliseconds(start);

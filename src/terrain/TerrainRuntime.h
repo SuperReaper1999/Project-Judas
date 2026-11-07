@@ -26,6 +26,7 @@ class Runtime {
     Runtime(RuntimeWorld &, uint64_t owner);
     ~Runtime();
     bool Create(Source, std::string &);
+    bool Install(PreparedAsset &, std::string &);
     bool Brush(glm::vec3 worldPoint, const Edit &, std::string &);
     bool Surface(glm::vec3 worldPoint, const SurfaceBrush &, std::string &);
     void Advance();
@@ -34,6 +35,7 @@ class Runtime {
     bool Capture(std::string &, std::string &) const;
     bool Restore(const std::string &, std::string &, bool asynchronous);
     const RuntimeTerrainStatus &State() const { return status; }
+    size_t PayloadBytes() const { return residentPayloadBytes; }
     bool Owns(BodyHandle) const;
     std::vector<BodyHandle> Bodies() const;
     SolidSnapshot Solid() const;
@@ -62,6 +64,7 @@ class Runtime {
     uint64_t geometryRevision = 0;
     std::shared_ptr<const void> geometryEpoch;
     RuntimeTerrainStatus status;
+    size_t residentPayloadBytes = 0;
     std::string baseAsset, baseFingerprint;
     RasterChanges raster;
     mutable TextureHandle weightTexture;
@@ -73,6 +76,7 @@ class Runtime {
     BodyHandle Seed() const;
     bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &,
                 bool replaceAll = false);
+    bool ValidateSubmission(const Source &, std::string &) const;
     bool Publish(std::string &);
     void ReleaseMesh(Resident &) const;
     void ReleaseGraphics();

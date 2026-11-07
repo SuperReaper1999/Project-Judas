@@ -21,6 +21,7 @@ RuntimeTerrain::~RuntimeTerrain(){while(!records.empty())Remove(records.begin()-
 bool RuntimeTerrain::Has(uint64_t id)const{auto i=records.find(id);return i!=records.end()&&(bool(i->second.committed)||(i->second.landscape&&i->second.landscape->State().ready));}
 bool RuntimeTerrain::Wait(uint64_t id,std::string& error){auto it=records.find(id);if(it==records.end()||!it->second.landscape){error="missing landscape preparation";return false;}it->second.landscape->Wait();error=it->second.landscape->State().error;return error.empty()&&it->second.landscape->State().ready;}
 const RuntimeTerrainStatus* RuntimeTerrain::Status(uint64_t id)const{auto i=records.find(id);return i==records.end()?nullptr:i->second.landscape?&i->second.landscape->State():&i->second.status;}
+size_t RuntimeTerrain::LandscapePayloadBytes(uint64_t id)const{auto i=records.find(id);return i==records.end()||!i->second.landscape?0:i->second.landscape->PayloadBytes();}
 bool RuntimeTerrain::ReadyToSave()const{for(auto& [id,r]:records)if(r.pending||(r.landscape&&r.landscape->State().busy))return false;return true;}
 std::vector<uint64_t> RuntimeTerrain::Owners()const{std::vector<uint64_t> out;for(auto& [id,r]:records)if(r.committed||r.landscape)out.push_back(id);return out;}
 uint64_t RuntimeTerrain::OwnerOf(BodyHandle h)const {
@@ -57,6 +58,15 @@ bool RuntimeTerrain::CreateAsset(uint64_t id,const std::string& assetId,std::str
  const auto fingerprint=pages.Index().fingerprint;
  if(!CreateLandscape(id,std::move(source),error))return false;
  records.at(id).landscape->BindAsset(assetId,fingerprint);return true;
+}
+bool RuntimeTerrain::InstallPrepared(uint64_t id,TerrainV2::PreparedAsset& prepared,std::string& error){
+ const auto definition=world.m_scriptDefinitions.find(id);
+ if(definition==world.m_scriptDefinitions.end()||!definition->second.landscape||definition->second.landscape->asset!=prepared.asset||records.count(id)){
+  error="prepared terrain source does not match its staged owner";return false;
+ }
+ auto runtime=std::make_unique<TerrainV2::Runtime>(world,id);
+ if(!runtime->Install(prepared,error))return false;
+ records[id].landscape=std::move(runtime);return true;
 }
 bool RuntimeTerrain::Prepare(Product& p,const ProjectNavigation& config,const JobContext* context){
  auto start=Clock::now();auto cancel=[&]{return context&&context->CancelRequested();};

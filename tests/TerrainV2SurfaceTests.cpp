@@ -238,6 +238,63 @@ export default class {
                       budgetWorld.CaptureRuntimeTerrain(1, unchanged, error) &&
                       unchanged.compare(0, 8, TerrainV2::ReferenceMagic) == 0,
                   "rejected wide edit retains the original saveable native base");
+            TerrainV2::SurfaceBrush local;
+            local.radius = 2;
+            local.strength = 1;
+            Check(budgetWorld.LiveTerrain().Surface(1, {-32, 0, -32}, local, error) &&
+                      budgetWorld.LiveTerrain().Wait(1, error),
+                  "sculpt across both native page boundaries");
+            local.kind = TerrainV2::SurfaceBrush::Kind::Paint;
+            local.layer = 2;
+            Check(budgetWorld.LiveTerrain().Surface(1, {32, 0, 32}, local, error) &&
+                      budgetWorld.LiveTerrain().Wait(1, error),
+                  "paint another native page group");
+            std::string mixed;
+            Check(budgetWorld.CaptureRuntimeTerrain(1, mixed, error), "capture multipage overrides");
+            Snapshot paintOnly(mixed);
+            for (auto it = paintOnly.raster.begin(); it != paintOnly.raster.end();)
+                if (it->second.height != 0)
+                    it = paintOnly.raster.erase(it);
+                else
+                    ++it;
+            TerrainV2::AssetPages index;
+            Check(index.Open((root / "Assets/large.judasterrain").string(), error),
+                  "read native page identity for corruption control");
+            const auto offset = index.Index().pages.at(6).offset;
+            // Close the reader before modifying our disposable file (Windows
+            // must not depend on POSIX unlink/open-file behaviour).
+            index = TerrainV2::AssetPages{};
+            const auto nativePath = root / "Assets/large.judasterrain";
+            auto originalBytes = Read(nativePath);
+            auto damaged = originalBytes;
+            damaged.at(size_t(offset)) ^= 1;
+            Write(nativePath, damaged);
+            Check(!budgetWorld.LiveTerrain().Restore(1, paintOnly.Encode(), error) &&
+                      !budgetWorld.LiveTerrain().Status(1)->busy,
+                  "selective base-page restoration still rejects a corrupt needed page");
+            Write(nativePath, originalBytes);
+            Check(budgetWorld.LiveTerrain().Restore(1, paintOnly.Encode(), error),
+                  "reverted overrides read original pages while retaining independent paint");
+            auto reverted = budgetWorld.Physics().Raycast({-32, 5, -32}, {0, -1, 0}, 10);
+            Check(reverted.hit && std::abs(reverted.point.y) < .001f,
+                  "restoring original height updates real collision at a page corner");
+            std::string retainedPaint;
+            Check(budgetWorld.CaptureRuntimeTerrain(1, retainedPaint, error), "capture retained paint");
+            Snapshot painted(retainedPaint);
+            Check(painted.raster.at(192 * 257 + 192).weights == glm::vec4(0, 0, 1, 0),
+                  "unrelated page overrides remain exact");
+            const auto beforePaintRestore = budgetWorld.OwnedCollisionBodies(1);
+            Check(budgetWorld.LiveTerrain().Restore(1, unchanged, error, true) &&
+                      budgetWorld.LiveTerrain().Status(1)->pendingChunks == 0,
+                  "material-only restoration queues no collision extraction");
+            Check(budgetWorld.LiveTerrain().Wait(1, error), "publish material-only restoration");
+            const auto afterPaintRestore = budgetWorld.OwnedCollisionBodies(1);
+            Check(beforePaintRestore.size() == afterPaintRestore.size() &&
+                      std::equal(beforePaintRestore.begin(), beforePaintRestore.end(),
+                                 afterPaintRestore.begin(), [](auto a, auto b) { return a.id == b.id; }),
+                  "material-only restore preserves all existing collider identities");
+            Check(budgetWorld.CaptureRuntimeTerrain(1, retainedPaint, error) && retainedPaint == unchanged,
+                  "all overrides can be removed without changing the immutable base");
         }
         world.Destroy();
         resources.Shutdown();

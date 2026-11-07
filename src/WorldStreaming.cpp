@@ -14,6 +14,8 @@
 #include "NavigationAsset.h"
 #include "PerformanceProfiler.h"
 #include "SaveArchive.h"
+#include "terrain/TerrainPreparation.h"
+#include "terrain/TerrainComponent.h"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -97,6 +99,15 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
             result.navigation[o.id]=data;
         }
         if(o.particleEmitter)result.bytes+=size_t(o.particleEmitter->maxParticles)*(sizeof(VisualParticle)+sizeof(ParticleBillboard));
+        if(o.landscape){
+            if(!TerrainV2::ValidateOwner(o,&assets,error))return false;
+            auto terrain=std::make_shared<TerrainV2::PreparedAsset>();
+            const auto* asset=assets.Find(o.landscape->asset);
+            if(!TerrainV2::PrepareAsset(asset->path,asset->id,*terrain,error,cancelled))return false;
+            const auto bytes=terrain->geometry.PayloadBytes();
+            result.terrainBytes+=bytes;result.bytes+=bytes;
+            result.terrains.emplace(o.id,std::move(terrain));
+        }
         if(o.ragdoll||o.animation){if(!o.render||o.render->meshAsset.empty()||!assets.Find(o.render->meshAsset)||assets.Find(o.render->meshAsset)->type!=AssetType::Mesh){error="ragdoll region requires an imported skeletal mesh";return false;}result.requiredGeometry.push_back(o.render->meshAsset);}
         if(o.body){if(!o.body->collisionAsset.empty())result.requiredGeometry.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())result.requiredGeometry.push_back(c.assetId);}
         if(o.deformable)result.requiredGeometry.push_back(o.deformable->asset);
@@ -130,6 +141,7 @@ struct WorldStreaming::Impl {
         std::map<EntityId,SceneObjectId> originals;std::map<EntityId,size_t> localIndices;std::map<EntityId,EntityId> savedReplacements;std::vector<EntityId> restoreKeys;
         std::map<SceneObjectId,Snapshot> saved;std::set<std::string> manualPins;
         std::vector<AssetId> handoffRefs;size_t next=0,navNext=0,resourceNext=0,retainedBytes=0;bool activate=false,interest=false,unload=false,scriptsEnded=false;
+        size_t nonTerrainBytes=0;
         std::string suspensionError;int interestPriority=0;Clock::time_point requested{};
     };
     struct Demand {std::string region;bool preload=false;EntityId owner=0;uint64_t slot=0;};
@@ -145,7 +157,18 @@ struct WorldStreaming::Impl {
     void clearPrepared(Region& r){if(r.relocationJob.IsValid()){resources.Jobs()->Cancel(r.relocationJob);resources.Jobs()->Forget(r.relocationJob);r.relocationJob={};}r.relocation.reset();r.relocationPhase=0;r.allocationNext=r.relocationNext=r.restoreNext=0;r.originals.clear();r.localIndices.clear();r.savedReplacements.clear();r.restoreKeys.clear();releaseHandoff(r);r.product.reset();r.local=Scene{};r.flat=Scene{};for(auto& [_,id]:r.mapping)if(!owners.count(id))gravityOrder.erase(id);r.mapping.clear();r.members.clear();r.next=r.navNext=r.resourceNext=0;}
     size_t savedBytes(const std::map<SceneObjectId,Snapshot>& saved)const {size_t bytes=0;for(auto& [_,snap]:saved){bytes+=sizeof(Snapshot)+sizeof(SceneObject)*2+snap.deformable.size()+snap.animation.size()+snap.kinematic.size()+snap.wheel.size()+snap.powertrain.size()+snap.weather.size()+snap.terrain.size()+snap.particleImpacts.size();for(auto& [key,value]:ObjectProperties(snap.definition))bytes+=key.size()+value.size();for(auto& js:snap.scripts)bytes+=js.json.size();}return bytes;}
     void recount(){stats.resourceResidentBytes=resources.Stats().bytesResident;stats.resourceCacheBudget=resources.BudgetBytes();stats.pendingBytes=stats.liveBytes=stats.retainedBytes=stats.active=stats.pending=0;for(auto& [id,r]:regions){auto& s=r.status;s.demands=0;for(auto& [_,q]:requests)if(q.region==id)++s.demands;s.retained=r.retainedBytes;stats.retainedBytes+=s.retained;
-        if(s.state=="active"||s.state=="unloading"){++stats.active;stats.liveBytes+=s.bytes;}else if(s.state=="preparing"||s.state=="prepared"||s.state=="installing"){++stats.pending;stats.pendingBytes+=s.bytes;if(s.state=="installing")stats.liveBytes+=s.bytes;}
+        if(s.state=="active"||s.state=="unloading"){
+            // Runtime excavation can change resident geometry after admission.
+            // Refresh cached payload totals, not every chunk's buffers each frame.
+            s.bytes=r.nonTerrainBytes;
+            for(auto owner:r.members)if(world.HasRuntimeTerrain(owner))
+                s.bytes+=world.LiveTerrain().LandscapePayloadBytes(owner);
+            // A cancelled/private region can still hold an unconsumed worker
+            // product until its retirement unit runs. Keep that payload visible.
+            if(r.product)for(const auto& [_,terrain]:r.product->data.terrains)
+                if(!terrain->consumed)s.bytes+=terrain->geometry.PayloadBytes();
+            ++stats.active;stats.liveBytes+=s.bytes;
+        }else if(s.state=="preparing"||s.state=="prepared"||s.state=="installing"){++stats.pending;stats.pendingBytes+=s.bytes;if(s.state=="installing")stats.liveBytes+=s.bytes;}
     }}
     bool wanted(const std::string& id)const{auto& r=regions.at(id);if(r.interest||!r.manualPins.empty())return true;for(auto& [_,q]:requests)if(q.region==id)return true;if(auto it=dependents.find(id);it!=dependents.end())for(auto& other:it->second)if(regions.at(other).status.state=="active"||wantsDirect(other))return true;return false;}
     bool wantsActivation(const std::string& id)const{auto& r=regions.at(id);if(r.interest)return true;for(auto& [_,q]:requests)if(q.region==id&&!q.preload)return true;for(auto& [other,data]:manifest.regions)if(other!=id&&std::find(data.dependencies.begin(),data.dependencies.end(),id)!=data.dependencies.end()&&wanted(other)&&wantsDirect(other))return true;return false;}
@@ -302,6 +325,7 @@ void WorldStreaming::Advance(bool paused){
             auto state=m->resources.Jobs()->StateOf(r.job);m->resources.Jobs()->Forget(r.job);r.job={};
             if(state!=JobState::Completed){s.state=state==JobState::Cancelled?"cancelled":"failed";s.error=r.product->error;m->clearPrepared(r);s.bytes=0;continue;}
             s.preparationMs=r.product->elapsed;s.bytes=r.product->data.bytes;
+            r.nonTerrainBytes=s.bytes-r.product->data.terrainBytes;
             m->recount();if(m->stats.pendingBytes>m->manifest.pendingBytes){s.state="failed";s.error="prepared region exceeds pending byte cap";m->clearPrepared(r);s.bytes=0;continue;}
             s.state="prepared";s.entities=r.product->data.source.Objects().size();
         }
@@ -374,7 +398,8 @@ void WorldStreaming::Advance(bool paused){
                         auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)-(m->world.Settings().worldOrigin-snap->second.origin));saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
                     }
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==original)reference(o,ref.field,Resolve(ref.target,ref.targetLocal));
-                    ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original));r.members.push_back(o.id);m->owners[o.id]=id;
+                    auto prepared=r.product->data.terrains.find(original);
+                    ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original),prepared==r.product->data.terrains.end()?nullptr:prepared->second.get());r.members.push_back(o.id);m->owners[o.id]=id;
                     // Adoption preserves identity across ownership changes. Retained
                     // reconstruction allocates a fresh runtime ID, not a new identity.
                     std::string persistent="region:"+id+":"+std::to_string(original);

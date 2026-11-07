@@ -9,7 +9,7 @@
 #include "SaveArchive.h"
 #include <algorithm>
 #include <limits>
-bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneObject& local,std::string& error,const std::string& stableIdentity) {
+bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneObject& local,std::string& error,const std::string& stableIdentity,TerrainV2::PreparedAsset* terrain) {
     if(FindEntity(definition.id)){error="duplicate staged identity";return false;}
     m_regionPending.insert(definition.id);
     if(definition.audioEmitter||definition.audioZone)m_audioIdentities[definition.id]=stableIdentity;
@@ -20,7 +20,7 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
     if(stage.body)stage.body->enabled=stage.body->motion==SceneBodyMotion::Kinematic;
     Scene batch;batch.Settings()=m_settings;batch.Objects().push_back(stage);
     const auto before=m_referencedAssets.size();FidelityPolicyContext context;
-    bool ok=AppendSceneObjects(batch,false,context,error);
+    bool ok=AppendSceneObjects(batch,false,context,error,terrain);
     if(ok&&definition.wheel){
         // Registration is bounded per object, so a managed chassis can have
         // entered a reduced representation before its first wheel was staged.
@@ -126,6 +126,12 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
             if(m_vehicle&&m_vehicle->dynamicIndex>slot)--m_vehicle->dynamicIndex;
             for(auto& c:m_combustibles)if(c.dynamicIndex>slot)--c.dynamicIndex;
         }else if(auto it=m_entityCategories.find(id);it!=m_entityCategories.end()){handle=it->second.body;if(handle.IsValid())m_physics.DestroyBody(handle);}
+    } else if(auto it=m_entityCategories.find(id);it!=m_entityCategories.end()) {
+        // Static registration can fail after its body was allocated but before
+        // the regional EntityRecord exists. The category entry already owns
+        // that handle; ordinary rollback must retire it too.
+        handle=it->second.body;
+        if(handle.IsValid())m_physics.DestroyBody(handle);
     }
     ReleaseEntityAudio(id);m_audioIdentities.erase(id);
     if(m_cameraRenderer)for(auto& c:m_renderCameras)if(c.id==id)m_cameraRenderer->DestroyRenderTarget(c.target);

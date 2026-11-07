@@ -7,6 +7,7 @@
 #include <set>
 class RuntimeWorld;
 class ResourceManager;
+namespace TerrainV2 {struct PreparedAsset;}
 struct WorldRegion {
     std::string id,scene,policy="snapshot";
     glm::dvec3 origin{0}; // absolute translation of source scene local origin
@@ -33,8 +34,9 @@ bool ValidateWorldManifest(const WorldManifest&,const Project&,std::string&);
 struct PreparedWorldRegion {
     Scene source;
     std::map<SceneObjectId,std::shared_ptr<const struct NavigationData>> navigation;
+    std::map<SceneObjectId,std::shared_ptr<TerrainV2::PreparedAsset>> terrains;
     std::vector<std::string> requiredGeometry;
-    std::string fingerprint;size_t bytes=0;
+    std::string fingerprint;size_t bytes=0,terrainBytes=0;
 };
 bool PrepareWorldRegion(const WorldRegion&,const Project&,const class AssetDatabase&,PreparedWorldRegion&,std::string&,const JobContext* =nullptr);
 bool ValidateWorldQualifiedReferences(const WorldManifest&,const std::map<std::string,PreparedWorldRegion>&,std::string&);

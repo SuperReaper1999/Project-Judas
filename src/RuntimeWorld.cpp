@@ -447,7 +447,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
 }
 
 bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
-    const FidelityPolicyContext& loadContext, std::string& outError) {
+    const FidelityPolicyContext& loadContext, std::string& outError, TerrainV2::PreparedAsset* preparedTerrain) {
     std::map<std::pair<PowertrainShaftKind,EntityId>,EntityId> claims;
     const auto claim=[&](const SceneObject& object){if(!object.powertrain)return true;for(const auto& shaft:object.powertrain->shafts)if(shaft.kind!=PowertrainShaftKind::Internal){const auto key=std::make_pair(shaft.kind,shaft.target);auto found=claims.find(key);if(found!=claims.end()&&found->second!=object.id){outError="powertrain terminal has competing assembly ownership";return false;}claims[key]=object.id;}return true;};
     // Private staged graphs already own their physical terminals. Public
@@ -579,7 +579,10 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             m_physics.SetBodySensor(bodyHandle,o.body->sensor);m_physics.SetBodyEnabled(bodyHandle,o.body->enabled);
             m_physics.SetBodyTags(bodyHandle,o.tags);m_entityCategories[o.id].body=bodyHandle;
         }
-        if(o.landscape&&!TerrainV2::BuildAuthored(*this,o,outError))return fail(o,outError);
+        if(o.landscape){
+            const bool ready=preparedTerrain?LiveTerrain().InstallPrepared(o.id,*preparedTerrain,outError):TerrainV2::BuildAuthored(*this,o,outError);
+            if(!ready)return fail(o,outError);
+        }
         if(o.navigationSurface && o.navigationSurface->enabled){
             if(!m_assets || !m_assets->Assets()){return fail(o,"navigation surface needs project assets");}
             auto* asset=m_assets->Assets()->Find(o.navigationSurface->asset);
