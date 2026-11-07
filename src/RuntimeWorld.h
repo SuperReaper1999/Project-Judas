@@ -46,6 +46,7 @@ class ResourceManager;
 struct PhysicalMaterial;
 class ProductionFluidCoupling;
 namespace JudasParticles {class GpuParticles;}
+namespace JudasWater {class WorldSystem;}
 
 // Milestone 28: the RUNTIME instance of a Scene.
 //
@@ -281,6 +282,10 @@ public:
     bool WaterSwimmingEnabled() const { return m_waterSwimming; }
     std::vector<BasicWaterInstance> BasicWaters(float alpha=1) const;
     BasicWaterSample SampleWater(glm::vec3 center,glm::vec3 up,float halfHeight,float radius) const;
+    JudasWater::WorldSystem* GridWater(){return m_gridWater.get();}
+    const JudasWater::WorldSystem* GridWater()const{return m_gridWater.get();}
+    bool BuildGridWater(const Scene&,std::string& error);
+    void UpdateGridWater(float seconds);
     std::vector<glm::vec2> WaterOpticalPaths(const glm::mat4&,const glm::mat4&,unsigned,unsigned,float) const;
     bool HasPlanets()const{return !m_planets.empty();}
     void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
@@ -680,6 +685,7 @@ private:
     std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
     std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>(false);
+    std::unique_ptr<JudasWater::WorldSystem> m_gridWater;
     bool m_hasLiquid=false;
     bool m_advancedFluidsRequested=false;
     bool m_advancedFluids=false, m_basicWaterEnabled=true, m_waterSwimming=true;

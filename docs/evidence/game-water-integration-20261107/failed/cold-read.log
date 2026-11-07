@@ -1,0 +1,4 @@
+FAIL read cold-process fixture: 
+FAIL read saved scene
+FAIL cold-process restoration: required entity participant missing/newer
+FAIL cold process retains changed quantity

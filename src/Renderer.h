@@ -245,6 +245,9 @@ public:
     // must follow opaque geometry and be followed by EndTransparentPass.
     // Generic transient CPU geometry; Renderer retains/reuses its GPU buffer.
     void DrawBasicWater(const struct BasicWaterSettings&,const glm::vec3&,const glm::quat&,double seconds);
+    // Physical surface geometry with the same inexpensive optical material as
+    // Basic Water. This does not replace its vertices with a prescribed plane.
+    void DrawWaterSurface(MeshHandle,const struct BasicWaterSettings&,glm::vec3 up);
     void DrawTransientSurface(const MeshData&,const glm::vec3& tint,float alpha);
     void BeginTransparentPass();
     void EndTransparentPass();

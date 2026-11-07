@@ -1,0 +1,22 @@
+{
+  "radial": {
+    "samples": 1740,
+    "meanMs": 2.5151595287356323,
+    "medianMs": 2.48626,
+    "p95Ms": 2.64721,
+    "worstMs": 3.155,
+    "ownedBufferBytes": 1266448,
+    "csvQuantityDrift": 0.0,
+    "quantityNote": "CSV uses six significant digits; native quantity/ledger acceptance is checked separately."
+  },
+  "rotated": {
+    "samples": 1740,
+    "meanMs": 2.4392936436781607,
+    "medianMs": 2.416545,
+    "p95Ms": 2.57225,
+    "worstMs": 2.84419,
+    "ownedBufferBytes": 1198864,
+    "csvQuantityDrift": 0.0,
+    "quantityNote": "CSV uses six significant digits; native quantity/ledger acceptance is checked separately."
+  }
+}

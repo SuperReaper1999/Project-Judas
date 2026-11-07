@@ -11,4 +11,6 @@ struct BodyLoad {
 // ordinary force interface. No body pose/velocity scripting or animation.
 BodyLoad ApplyBoxLoad(Grid &, PhysicsWorld &, BodyHandle, const glm::vec3 &half, float dt);
 SolidBox ReadBox(const PhysicsWorld &, BodyHandle, const glm::vec3 &half);
+std::vector<SolidBox> ReadBodySolids(const PhysicsWorld &, BodyHandle);
+BodyLoad ApplyBodyLoad(Grid &, PhysicsWorld &, BodyHandle, float seconds);
 } // namespace JudasWater

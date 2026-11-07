@@ -48,6 +48,7 @@ Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor t
 | world.origin, requestOrigin, Planet terrain, collision interest | [Planetary terrain and local origins](judasjs/planetary-terrain.md) |
 | Weather, profiles, spatial wind, transitions, storms | [Weather](judasjs/weather.md) |
 | Audio emitters, one-shots, groups, cursors, acoustics | [Audio](judasjs/audio.md) |
+| Basic water, Grid Water V2 handles, physical sources/drains | [Water](judasjs/water.md) |
 | Particles, cameras, world.setView / project / viewRay, world.fluidSample | [Effects and cameras](judasjs/effects-camera.md) |
 | Individual lights, multiple views, rendering selection | [Rendering](judasjs/rendering.md) |
 | Material, world.appearance, sun, ambient, environment | [Materials and scene appearance](judasjs/materials.md) |

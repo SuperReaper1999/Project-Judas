@@ -238,7 +238,10 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
                    return x.spacing == y.spacing && x.countX == y.countX && x.countY == y.countY &&
                           x.countZ == y.countZ && x.emitter == y.emitter &&
                           Eq(x.emitterLocalOffset, y.emitterLocalOffset) &&
-                          x.maxParticles == y.maxParticles;
+                          x.maxParticles == y.maxParticles && x.backend == y.backend &&
+                          (x.backend != SceneFluidBackend::Grid ||
+                           (x.fillHeight == y.fillHeight && x.density == y.density &&
+                            Eq(x.color, y.color) && x.opacity == y.opacity));
                })) {
         return false;
     }

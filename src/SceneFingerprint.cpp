@@ -219,6 +219,18 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         const auto& f = *o.fluidVolume;
         w.Number(f.spacing); w.Integer(f.countX); w.Integer(f.countY); w.Integer(f.countZ);
         w.Boolean(f.emitter); w.Vector(f.emitterLocalOffset); w.Integer(f.maxParticles);
+        if (f.backend != SceneFluidBackend::Particles) {
+            w.Enum(f.backend, 1, "fluid backend");
+            w.Number(f.fillHeight); w.Number(f.density); w.Vector(f.color); w.Number(f.opacity);
+            if (f.countX < 2 || f.countY < 2 || f.countZ < 2 ||
+                f.countX > 262144 || f.countY > 262144 || f.countZ > 262144 ||
+                std::int64_t(f.countX) * f.countY * f.countZ > 262144 || f.spacing <= .01f ||
+                f.fillHeight < 0 || f.fillHeight > f.countY * f.spacing ||
+                f.density <= 0 || f.density > 10000 || f.opacity < 0 || f.opacity > 1 ||
+                glm::any(glm::lessThan(f.color, glm::vec3(0))) ||
+                glm::any(glm::greaterThan(f.color, glm::vec3(1))) || f.emitter)
+                w.Fail("invalid grid water dimensions, fill, material or emitter");
+        }
     }
     w.Boolean(o.playerStart.has_value());
     if (o.playerStart) {

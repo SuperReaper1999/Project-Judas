@@ -1,6 +1,7 @@
 #include "RuntimeWorld.h"
 #include "Project.h"
 #include "ProjectFeaturePolicy.h"
+#include "fluid/GameWaterRuntime.h"
 #include <stdexcept>
 
 void RuntimeWorld::ConfigureProject(const ProjectSettings& project) {
@@ -35,13 +36,20 @@ std::vector<BasicWaterInstance> RuntimeWorld::BasicWaters(float alpha) const {
     return result;
 }
 BasicWaterSample RuntimeWorld::SampleWater(glm::vec3 center,glm::vec3 up,float halfHeight,float radius) const {
-    if (!m_waterSwimming || m_basicWaterOwners.empty()) return {};
-    return SampleBasicWater(BasicWaters(),center,up,halfHeight,radius);
+    if (!m_waterSwimming) return {};
+    auto result=SampleBasicWater(BasicWaters(),center,up,halfHeight,radius);
+    if(m_gridWater){auto grid=m_gridWater->Sample(center,up,halfHeight,radius);
+        if(grid.immersion>result.immersion)result=grid;}
+    return result;
 }
 std::vector<glm::vec2> RuntimeWorld::WaterOpticalPaths(const glm::mat4& view,const glm::mat4& projection,
                                                     unsigned columns,unsigned rows,float alpha) const {
     const auto waters=BasicWaters(alpha);
     auto result=waters.empty()?std::vector<glm::vec2>{}:BasicWaterOpticalPaths(waters,view,projection,columns,rows);
+    if(m_gridWater){auto grid=m_gridWater->OpticalPaths(view,projection,columns,rows);
+        if(result.empty())result=std::move(grid);
+        else for(std::size_t i=0;i<result.size()&&i<grid.size();++i)
+            if(grid[i].y>grid[i].x&&(result[i].y<=result[i].x||grid[i].x<result[i].x))result[i]=grid[i];}
     if (m_advancedFluids && !m_liquid->States().empty()) {
         auto advanced=m_liquid->OpticalPaths(view,projection,columns,rows,alpha);
         if (result.empty()) return advanced;

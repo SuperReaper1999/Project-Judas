@@ -1,0 +1,17 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+[GPU] vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2 version=4.6.0 NVIDIA 580.178.04 context_flags=0x0
+[GPU] asynchronous KHR_debug enabled; max_messages=256 max_message_bytes=1024
+[GPU] reset_query=available notification_strategy=0x8261 (not a promise of crash detection)
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/3c8d848658af01a88bf7e7a8b453fc9616f20c9141b845e968173c092829eece/Saves/pool.judasstate (none saved)
+Project: Water V2 Workshop — source preview (/tmp/Judas-Water-Workshop-Relocated-20261107/game.judasproj)
+Scene: Water V2 / pool (/tmp/Judas-Water-Workshop-Relocated-20261107/Scenes/pool.judas)
+World origin (m): 0.000, 0.000, 0.000
+[TestHarness] deformable participant does not match snapshot components
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ
+0,0.00000,0.000000,3.320063,6.166392,0.000000,0.971338,-0.237703,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0,-2.000000,2.397275,1.000000,0.000000,-0.163500,0.000000,2.000000,2.697275,2.000000,0.000000,-0.163500,0.000000,3.000000,2.997275,1.000000,0.000000,-0.163500,0.000000,-2.000000,2.797275,7.000000,0.000000,-0.163500,0.000000

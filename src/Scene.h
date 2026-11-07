@@ -242,10 +242,10 @@ struct SceneCombustibleComponent {
     float retainedCombustionHeatFraction = 0.75f;
 };
 
-// Authored liquid: a lattice of particles centred on the object. The
-// solver settings live in SceneSettings; particle mass follows rest
-// density and spacing. An emitter adds particles on demand at
-// `emitterLocalOffset` until `maxParticles` (M25's held-B water source).
+// Authored advanced water. Existing scenes retain their particle backend.
+// Grid Water reuses spacing/count as cell size/domain dimensions and owns
+// physical quantity independently of presentation. Both obey project policy.
+enum class SceneFluidBackend { Particles, Grid };
 struct SceneFluidVolumeComponent {
     float spacing = 0.05f;
     int countX = 5;
@@ -254,6 +254,15 @@ struct SceneFluidVolumeComponent {
     bool emitter = false;
     glm::vec3 emitterLocalOffset{0.0f};
     int maxParticles = 0;
+    SceneFluidBackend backend = SceneFluidBackend::Particles;
+    // Grid domain is centred on local X/Z and grows upward from the owner.
+    // spacing/count are reused as cell size/domain dimensions for this backend.
+    float fillHeight = 2.f;
+    float density = 1000.f;
+    glm::vec3 color{.035f, .30f, .38f};
+    float opacity = .82f;
+    glm::vec3 HalfExtents() const {return .5f*spacing*glm::vec3(countX,countY,countZ);}
+    glm::vec3 LocalCenter() const {return {0,HalfExtents().y-(backend==SceneFluidBackend::Particles?.5f*spacing:0),0};}
 };
 
 enum class ScenePlayerView { ThirdPerson, FirstPerson };

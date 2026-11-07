@@ -322,9 +322,9 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
         }
         if (object.fluidVolume) {
             const auto& fluid = *object.fluidVolume;
-            const glm::vec3 half = 0.5f * fluid.spacing * glm::vec3(fluid.countX, fluid.countY, fluid.countZ);
-            primitive(transform.position + glm::normalize(transform.rotation) * glm::vec3(0, half.y - 0.5f * fluid.spacing, 0),
-                      transform.rotation, glm::vec3(1), half, 0, false);
+            const auto scale=fluid.backend==SceneFluidBackend::Grid?transform.scale:glm::vec3(1);
+            primitive(transform.position + glm::normalize(transform.rotation) * (fluid.LocalCenter()*scale),
+                      transform.rotation, glm::vec3(1), fluid.HalfExtents()*scale, 0, false);
         }
     }
     const float opaqueDistance=best.distance;

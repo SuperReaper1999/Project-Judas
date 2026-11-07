@@ -171,6 +171,7 @@ void StepWorld(GameSession& session, const InputSystem& input, const Window* win
         auto sample=world.SampleWater(player.GetPosition(),player.GetOrientation()*glm::vec3(0,1,0),PlayerController::CapsuleHalfHeight(),PlayerController::CapsuleRadius());
         player.SetFluidSample({sample.immersion,sample.density,sample.velocity,{0,0,0}});
     }
+    world.UpdateGridWater(fixedDeltaTime);
     // Mechanical sources advance once; wheel contacts then feed their actual
     // axle load back into the same rotational network before rigid integration.
     if(world.MechanicalIterations()==0){

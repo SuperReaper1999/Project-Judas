@@ -17,6 +17,11 @@
       "registration": "RegisterEnvironmentBindings"
     },
     {
+      "name": "Water",
+      "source": "src/scripting/modules/Water.cpp",
+      "registration": "RegisterWaterBindings"
+    },
+    {
       "name": "Rendering",
       "source": "src/scripting/modules/Rendering.cpp",
       "registration": "RegisterRenderingBindings"
@@ -152,6 +157,11 @@
       "name": "Environment",
       "source": "src/scripting/library/Environment.h",
       "symbol": "LibraryParts::Environment"
+    },
+    {
+      "name": "Water",
+      "source": "src/scripting/library/Water.h",
+      "symbol": "LibraryParts::Water"
     },
     {
       "name": "InputPlayers",

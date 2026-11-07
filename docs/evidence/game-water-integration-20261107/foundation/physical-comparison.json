@@ -1,0 +1,44 @@
+{
+  "quiet": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "pool": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "flow": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "air": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "terrain": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "original": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  },
+  "original-rotated": {
+    "beforeRows": 1200,
+    "afterRows": 1200,
+    "differentPhysicalFields": 0,
+    "firstDifferences": []
+  }
+}

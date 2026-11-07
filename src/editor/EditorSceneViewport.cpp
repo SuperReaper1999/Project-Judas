@@ -587,10 +587,10 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
         regionPreview.clear();
         regionPreviewKey.clear();
     }
-    if (context.project.Settings().basicWater) {
-        DrawAuthoredWaterSurfaces(renderer, scene, context.host.Resources());
+    {
+        DrawAuthoredWaterSurfaces(renderer, scene, context.host.Resources(),context.project.Settings().basicWater);
         for (const auto &region : regionPreview)
-            DrawAuthoredWaterSurfaces(renderer, region, context.host.Resources());
+            DrawAuthoredWaterSurfaces(renderer, region, context.host.Resources(),context.project.Settings().basicWater);
     }
     renderer.DrawWeather();
     DrawEditOverlay(context, renderer, scene);

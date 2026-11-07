@@ -24,17 +24,20 @@ std::uint64_t Fingerprint(std::string_view source) {
 
 int main() {
     using namespace JudasRender::Shaders;
-    // Six shaders retain the original Renderer.cpp extraction identities.
+    // Five shaders retain the original Renderer.cpp extraction identities.
     // The fragment identity deliberately advances for the draw-uniform Legacy
     // lighting guard; the original was 0xbcfc7c527b10a7ba. Independent native
     // pixels and matched workloads qualify that functional change separately.
     // UI fragment advances from 0x32630b836494ebd9 for the shared HDR display
     // boundary; UIPreviewColorTests independently verifies colour and no double resolve.
+    // Mesh vertex advances from 0xa489fa0ee7ef5e6f for the explicit physical-water
+    // mesh flag. BasicWaterPreviewTests compares the 2-m physical surface with an
+    // independent prescribed plane and a wrong-height negative control.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0xa489fa0ee7ef5e6full, 0x61e1ebd9f7bdef94ull, 0x0ef81ea9763f020dull, 0xc7555650c92125ebull,
+        0x4b73bb5e4885e341ull, 0x61e1ebd9f7bdef94ull, 0x0ef81ea9763f020dull, 0xc7555650c92125ebull,
         0x83393b059e8364efull, 0x28a3c2a8126fe9e3ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);

@@ -78,6 +78,7 @@ float Grid::ImmersedBox(const SolidBox &box, glm::vec3 &center) const {
     }
     const float level = float(sum / weight);
     double fraction = 0;
+    unsigned insideSamples = 0;
     glm::vec3 moment(0);
     // Smooth finite-volume quadrature in the vertical direction, rather than
     // binary wet/dry point impulses. Force is bounded by displaced body volume.
@@ -86,6 +87,9 @@ float Grid::ImmersedBox(const SolidBox &box, glm::vec3 &center) const {
             for (int x = 0; x < 4; ++x) {
                 glm::vec3 p =
                     position + q * (2.f * box.half * ((glm::vec3(x, y, z) + .5f) / 4.f - .5f));
+                if (box.kind != SolidBox::Kind::Box && !Inside(ToWorld(p), box))
+                    continue;
+                ++insideSamples;
                 if (glm::any(glm::lessThan(p, glm::vec3(0))) ||
                     glm::any(glm::greaterThan(p, bounds)))
                     continue;
@@ -99,7 +103,9 @@ float Grid::ImmersedBox(const SolidBox &box, glm::vec3 &center) const {
                 moment += wet * p;
             }
     center = fraction > 0 ? ToWorld(moment / float(fraction)) : box.center;
-    return float(8. * box.half.x * box.half.y * box.half.z * fraction / 64.);
+    if (box.kind == SolidBox::Kind::Box)
+        return float(8. * box.half.x * box.half.y * box.half.z * fraction / 64.);
+    return insideSamples ? float(SolidVolume(box) * fraction / insideSamples) : 0;
 }
 SolidBox ReadBox(const PhysicsWorld &world, BodyHandle handle, const glm::vec3 &half) {
     const auto pose = world.GetTransform(handle);
@@ -128,13 +134,55 @@ BodyLoad ApplyBoxLoad(Grid &grid, PhysicsWorld &world, BodyHandle handle, const 
         -relative *
         (coefficient /
          (1 + dt * coefficient * (1 / std::max(mass, 1e-6f) + 1 / std::max(fluidMass, 1e-6f))));
-    load.force = -rho * load.immersedVolume * grid.Configuration().gravity + drag;
+    load.force = -rho * load.immersedVolume * grid.Gravity(load.center) + drag;
     world.ApplyForceAtPoint(handle, load.force, load.center);
     grid.AddImpulse(load.center, -drag * dt, radius);
     // Analytic implicit drag is dissipative, without an arbitrary speed cap.
     const auto omega = box.angularVelocity;
     load.torque = -omega * (rho * volume * area * .15f /
                             (1 + dt * rho * volume * area * .15f / std::max(mass, 1e-6f)));
+    world.ApplyTorque(handle, load.torque, false);
+    return load;
+}
+BodyLoad ApplyBodyLoad(Grid &grid, PhysicsWorld &world, BodyHandle handle, float dt) {
+    Shape shape;
+    BodyTransform pose;
+    if (!world.GetBodyShape(handle, shape, pose))
+        return {};
+    if (shape.type == ShapeType::Box)
+        return ApplyBoxLoad(grid, world, handle, shape.halfExtents, dt);
+    auto parts = ReadBodySolids(world, handle);
+    BodyLoad load;
+    float volume = 0, area = 0, radius = grid.Configuration().cellSize;
+    for (const auto &part : parts) {
+        glm::vec3 center;
+        const float immersed = grid.ImmersedBox(part, center), v = SolidVolume(part);
+        if (v <= 0)
+            continue;
+        volume += v;
+        load.immersedVolume += immersed;
+        load.center += center * immersed;
+        area += std::pow(v, 2.f / 3.f) * (immersed / v);
+        radius = std::max(radius, glm::length(part.center - pose.position) +
+                                      glm::length(part.half) + grid.Configuration().cellSize);
+    }
+    if (load.immersedVolume <= 0)
+        return {};
+    load.center /= load.immersedVolume;
+    const float rho = grid.Configuration().density, mass = world.GetMass(handle);
+    const auto relative = world.GetLinearVelocity(handle) - grid.Velocity(load.center);
+    const float fluidMass = grid.NearbyMass(load.center, radius);
+    const float coefficient = .5f * rho * area * glm::length(relative);
+    const auto drag =
+        -relative *
+        (coefficient /
+         (1 + dt * coefficient * (1 / std::max(mass, 1e-6f) + 1 / std::max(fluidMass, 1e-6f))));
+    load.force = -rho * load.immersedVolume * grid.Gravity(load.center) + drag;
+    world.ApplyForceAtPoint(handle, load.force, load.center);
+    grid.AddImpulse(load.center, -drag * dt, radius);
+    load.torque = -world.GetAngularVelocity(handle) *
+                  (rho * volume * area * .15f /
+                   (1 + dt * rho * volume * area * .15f / std::max(mass, 1e-6f)));
     world.ApplyTorque(handle, load.torque, false);
     return load;
 }

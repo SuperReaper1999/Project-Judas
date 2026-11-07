@@ -436,6 +436,13 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("fluid-volume.emitter", f.emitter ? "true" : "false");
         w.Line("fluid-volume.emitter-offset", V(f.emitterLocalOffset));
         w.Line("fluid-volume.max-particles", std::to_string(f.maxParticles));
+        if (f.backend == SceneFluidBackend::Grid) {
+            w.Line("fluid-volume.backend", "grid");
+            w.Line("fluid-volume.fill-height", F(f.fillHeight));
+            w.Line("fluid-volume.density", F(f.density));
+            w.Line("fluid-volume.color", V(f.color));
+            w.Line("fluid-volume.opacity", F(f.opacity));
+        }
     }
     if (o.playerStart) {
         const ScenePlayerStartComponent& p = *o.playerStart;
@@ -1260,12 +1267,20 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     if (p.Has("fluid-volume")) {
         SceneFluidVolumeComponent f;
         if (!p.Header("fluid-volume", 0, 0)) return false;
+        if (p.Has("fluid-volume.backend")) {
+            const auto* backend = p.Header("fluid-volume.backend", 1, 1);
+            if (!backend) return false;
+            if ((*backend)[0].text == "grid") f.backend = SceneFluidBackend::Grid;
+            else if ((*backend)[0].text != "particles")
+                return reader.Fail("fluid-volume.backend expects grid or particles");
+        }
         if (!p.Float("fluid-volume.spacing", f.spacing)) return false;
         const std::vector<Token>* count = p.Header("fluid-volume.count", 3, 3);
         if (!count) return false;
         long long cx = 0, cy = 0, cz = 0;
+        const long long maximumDimension = f.backend == SceneFluidBackend::Grid ? 262144 : 1000;
         if (!ParseInt((*count)[0], cx) || !ParseInt((*count)[1], cy) || !ParseInt((*count)[2], cz) ||
-            cx < 0 || cy < 0 || cz < 0 || cx > 1000 || cy > 1000 || cz > 1000) {
+            cx < 0 || cy < 0 || cz < 0 || cx > maximumDimension || cy > maximumDimension || cz > maximumDimension) {
             return reader.Fail("fluid-volume.count expects three non-negative integers");
         }
         f.countX = static_cast<int>(cx);
@@ -1274,7 +1289,18 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Bool("fluid-volume.emitter", f.emitter)) return false;
         if (!p.Vec3("fluid-volume.emitter-offset", f.emitterLocalOffset)) return false;
         if (!p.Int("fluid-volume.max-particles", f.maxParticles)) return false;
+        if (p.Has("fluid-volume.fill-height") && !p.Float("fluid-volume.fill-height", f.fillHeight)) return false;
+        if (p.Has("fluid-volume.density") && !p.Float("fluid-volume.density", f.density)) return false;
+        if (p.Has("fluid-volume.color") && !p.Vec3("fluid-volume.color", f.color)) return false;
+        if (p.Has("fluid-volume.opacity") && !p.Float("fluid-volume.opacity", f.opacity)) return false;
         if (!(f.spacing > 0.0f)) return reader.Fail("fluid-volume.spacing must be positive");
+        if (f.backend == SceneFluidBackend::Grid &&
+            (cx < 2 || cy < 2 || cz < 2 || cx * cy * cz > 262144 || f.spacing <= .01f ||
+             f.fillHeight < 0 || f.fillHeight > f.spacing * f.countY ||
+             f.density <= 0 || f.density > 10000 || f.opacity < 0 || f.opacity > 1 ||
+             glm::any(glm::lessThan(f.color, glm::vec3(0))) ||
+             glm::any(glm::greaterThan(f.color, glm::vec3(1))) || f.emitter))
+            return reader.Fail("grid water: invalid dimensions, fill, density, colour or opacity; use runtime volume sources instead of particle emitters");
         o.fluidVolume = f;
     }
     if (p.Has("player-start")) {

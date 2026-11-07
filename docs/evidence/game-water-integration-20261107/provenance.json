@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-11-07T13:02:54.806328+00:00",
+  "source_parent": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+  "branch": "Experimental",
+  "main_unchanged": "1094d64515604fe9d03fdab479efc7f880b112a8",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "memory": "               total        used        free      shared  buff/cache   available\nMem:      8238264320  3224129536   802037760   258912256  4783681536  5014134784\nSwap:    17179865088  1784205312 15395659776\n",
+  "graphics": "Actual native logs: GTX 970, OpenGL 4.6, NVIDIA 580.178.04. Restricted-tool runs used llvmpipe; those are not the hardware-render qualification.",
+  "human_acceptance": false,
+  "alpha_lock_changed": false,
+  "scope": "Source-preview Linux integration, not published SDK or other-platform qualification. Source hashes identify tested implementation independently of the eventual checkpoint."
+}

@@ -339,9 +339,8 @@ void BuildAuthoredDebugLines(const Scene& scene, const DebugViewOptions& options
         if(options.fluidParticles&&o.liquidConnection){out.Cross(position,.15f,kFluidColor);for(auto id:{o.liquidConnection->source,o.liquidConnection->destination})if(auto* basin=scene.Find(id))out.Line(position,basin->transform.position,kFluidColor);}
         if (options.fluidParticles && o.fluidVolume) {
             const SceneFluidVolumeComponent& f = *o.fluidVolume;
-            const glm::vec3 half(0.5f * f.spacing * static_cast<float>(f.countX), 0.5f * f.spacing * static_cast<float>(f.countY),
-                                 0.5f * f.spacing * static_cast<float>(f.countZ));
-            out.Box(position + rotation * glm::vec3(0.0f, half.y - 0.5f * f.spacing, 0.0f), rotation, half, kFluidColor);
+            const auto scale=f.backend==SceneFluidBackend::Grid?o.transform.scale:glm::vec3(1);
+            out.Box(position + rotation * (f.LocalCenter()*scale), rotation, f.HalfExtents()*scale, kFluidColor);
         }
     }
 }

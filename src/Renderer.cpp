@@ -1229,6 +1229,21 @@ void Renderer::DrawTransientSurface(const MeshData& data,const glm::vec3& tint,f
  if(cull)glEnable(GL_CULL_FACE);
 }
 
+void Renderer::DrawWaterSurface(MeshHandle mesh,const BasicWaterSettings& style,glm::vec3 up){
+ if(m_shadowPassActive||!mesh.IsValid()||!style.enabled||!AllowsLayer(m_renderLayer))return;
+ RendererProfileScope gpu(*this,"Physical water surface");
+ glUseProgram(m_shaderProgram);
+ glUniform1i(glGetUniformLocation(m_shaderProgram,"uBasicWater"),1);
+ glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterSurfaceMesh"),1);
+ glUniform3f(glGetUniformLocation(m_shaderProgram,"uBasicWaterUp"),up.x,up.y,up.z);
+ GLboolean cull=glIsEnabled(GL_CULL_FACE);glDisable(GL_CULL_FACE);
+ DrawMesh(mesh,{0,0,0},{1,0,0,0},{1,1,1},{},style.color,style.opacity);
+ if(cull)glEnable(GL_CULL_FACE);
+ glUseProgram(m_shaderProgram);
+ glUniform1i(glGetUniformLocation(m_shaderProgram,"uBasicWater"),0);
+ glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterSurfaceMesh"),0);
+}
+
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
 unsigned Renderer::BeginProfilePass(const char*,std::uint64_t){
     PerformanceProfiler::Get().GPUAvailability(false,"ES 3 timestamp queries not enabled");return 0;

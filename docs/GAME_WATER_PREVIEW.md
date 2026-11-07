@@ -1,43 +1,54 @@
 # Game-resolution water replacement
 
-**Experimental source preview, not an unlocked Alpha feature.** This is a working
-native Judas scene using a new optional C++ water module, the real MK2 world,
-Renderer V2 and normal engine save storage. Main, supported SDKs, Basic Water and
-the Alpha fluid lock are unchanged. The new module is not yet selected by ordinary
-scene components, JudasJS, the editor or normal game exports.
+**Experimental source preview, not an unlocked Alpha feature.** Grid Water V2 now
+uses normal Fluid Volume scene components, RuntimeWorld, JudasJS, CharacterMotor,
+editor authoring, Renderer V2 and the regular save/export workflow. Main,
+published SDKs, Basic Water and the Alpha fluid lock remain unchanged.
+
+The editable game is [Water V2 Workshop](../projects/water_v2_workshop/README.md).
+The [Water API](judasjs/water.md) lists exact scene keys, handles and receipts.
 
 The previous exact/cut-fragment solvers and their failed controls remain research
 references. They are not this solver's architecture or its microscopic acceptance
 specification. [Previous checkpoint](FLUID_BULK_STORAGE.md).
 
-## Build and play
-
-From the repository root with the normal Linux source-build prerequisites:
+## Build and play the editable project
 
 ```sh
-cmake -S . -B build -DJUDAS_BUILD_GAME_WATER_LAB=ON
-cmake --build build --target judas_game_water_lab judas_game_water_tests -j2
+cmake -S . -B build -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_BUILD_GAME_WATER_LAB=ON
+cmake --build build --target judas judas_editor judas_export judas_game_water_qualification -j2
+build/judas_editor projects/water_v2_workshop/water_v2_workshop.judasproj
+# Or launch directly:
+build/judas projects/water_v2_workshop/water_v2_workshop.judasproj
+```
+
+In the editor, add **Fluid volume**, select **Grid water V2**, configure its cell
+size, dimensions and fill height, and explicitly enable Advanced Fluid Dynamics
+in Project Settings. New editor-added volumes use the grid backend. Old scenes
+without `fluid-volume.backend` retain their particle backend and canonical identity.
+A domain's owner is its bottom centre; positive uniform scale and rotation work.
+
+WASD/mouse walk/look; Space jump/swim; Q dive; G grab/release; H throw; F pump/drain;
+B water impulse; 1 ordinary pool; 2 tilted gravity; 3 radial gravity; 4 original
+planet basin geometry; F6/F7 save/load; Escape pause; R restart. A held prop is
+released on load. All gameplay rules are in the project's JavaScript.
+
+Export with the normal exporter and this Experimental runtime:
+
+```sh
+build/judas_export projects/water_v2_workshop/water_v2_workshop.judasproj /tmp/water-workshop-export build/judas
+```
+
+The interactive native diagnostic remains available separately:
+
+```sh
+cmake --build build --target judas_game_water_lab -j2
 bash tools/diagnostics/run_game_water_lab.sh
 ```
 
-The preview target is off by default, adds no mobile dependencies and is not part
-of SDK/release packaging. It does not enable the locked production fluid path.
-
-| Control | Action |
-| --- | --- |
-| 1 | Filled rectangular pool; light and dense MK2 boxes |
-| 2 | Sluice; the gate opens after one second |
-| 3 | Air chamber; a small vent opens after ten seconds |
-| 4 | Actual M75 authored heightfield, mesh collision and water |
-| 5 | Original basin fixture, re-voxelized at game resolution |
-| X | Rebuild the scene under rotated uniform gravity |
-| R / P | Reset / pause simulation |
-| WASD + mouse | Fly the observer camera |
-| Space / Ctrl | Fly up / down |
-| B | Throw another real, low-density MK2 box; workshop limit 64 |
-| G | Operate the sluice gate or chamber vent |
-| F5 / F9 | Save / reload water, air, bodies and gate |
-| Tab / F12 | Release mouse / capture screenshot |
+Its controls remain 1 pool, 2 sluice, 3 trapped air, 4 authored terrain, 5 preserved
+basin fixture; X rotated gravity; G gate/vent; B throw; R reset; P pause; F5/F9 save/load.
+This diagnostic is off by default and is not an Alpha feature unlock.
 
 The observer is a flying camera, not a swimming character. Save slots default to
 `.cache/game-water-lab-saves`; `--save-dir` selects another owned directory.
@@ -67,7 +78,7 @@ growing geometric fragments or per-particle rigid-body queries.
   sealed and counted, rather than inventing a passage through a wall. No tiny
   pressure controls are created. Static geometry can be baked from existing
   engine terrain/collision queries through a callback.
-- Moving boxes change capacity. Displaced water is routed out through permitted
+- Moving boxes, spheres, capsules and convex compounds change capacity. Displaced water is routed out through permitted
   connections. If it cannot fit, it stays in explicit, measured displaced-volume
   storage and is released when space becomes available. It is never deleted.
 - Resolved connected air cavities own mass and compressible storage. A linearized
@@ -80,7 +91,7 @@ growing geometric fragments or per-particle rigid-body queries.
   approximation, rather than independent stiff pressure calculations. Tiny new
   closures of atmospheric regions use the declared atmospheric/foam approximation
   with an exterior mass receipt. Vacuum/cavitation dynamics are unsupported.
-- MK2 boxes receive bounded-volume hydrostatic buoyancy and implicit quadratic
+- Supported MK2 primitives receive bounded-volume hydrostatic buoyancy and implicit quadratic
   drag; drag reaction is sent back to nearby water. Displacement and this momentum
   exchange are approximations, not a monolithic added-mass rigid/fluid solve.
   Static geometry blocks buoyancy-field extrapolation through walls.
@@ -95,7 +106,12 @@ preserved fixture; its water seed and geometry are intentionally re-sampled.
 The rotated original uses the authored rotation. These are declared-resolution
 tests, not identical-geometry comparisons with the microscopic research solver.
 
-## Qualification
+## Preserved foundation qualification
+
+These measurements describe the previous native foundation checkpoint, not the
+new runtime integration. Current integration evidence is recorded separately in
+[evidence/game-water-integration-20261107](evidence/game-water-integration-20261107/README.md).
+
 
 [Exact source hashes, commands, raw runs and results](evidence/game-water-20261107/README.md).
 The integrated runner advances real fluid/MK2 scenes in separate processes:
@@ -127,39 +143,71 @@ bounded engine profiler also works with `JUDAS_PROFILE=1` and
 interval measures the water draw, not CPU mesh generation or the whole renderer.
 The preview retains catch-up backlog instead of silently dropping simulation time.
 
-## Current boundaries before any unlock
+## Current support and boundaries
 
-- C++ source-preview module and workshop only. Normal RuntimeWorld ownership,
-  editor/JudasJS authoring, automatic streaming, origin shifts and regular exports
-  still need integration/qualification. Ordinary project water remains Basic Water.
-- Uniform gravity in a rotated chart is tested. A spatially varying radial field,
-  cross-grid flow and planetary regional handoff are not implemented here.
-- The grid has closed sides/bottom and an atmospheric top. Runtime water sources,
-  drains and open liquid boundary ports are not yet APIs. `Fill` is initial authoring
-  only. Pressure/CFL budget failures report an error; they do not drop elapsed time
-  or silently reduce collision coverage. Extreme failures currently stop the lab.
-  A failed physical step is not yet a transactional runtime retry API.
-- Box coupling is implemented. Sphere/compound/deformable/character coupling and
-  swimming are not yet integrated. This does not change Basic Water swimming.
-- Features thinner than the sampling resolution can close or disappear from the
-  simulation geometry. Small bubbles, air-wave propagation, surface tension,
-  cavitation and scientific force/torque fidelity are outside this model.
-- Presentation currently extracts the highest water layer per column. It is
-  insufficient for stacked cave layers, detailed splashes, underwater optics or
-  final water-material quality. Sub-mobile traces remain in the quantity ledger
-  instead of being drawn as a full-cell water sheet. Physical quantity never
-  comes from this mesh.
-- The grid limit is 262,144 cells, not a real-time performance promise at that
-  size. The current save participant has the normal 8 MiB engine string bound;
-  oversized snapshots reject rather than truncate. No clean-machine distribution
-  or Windows/Android/browser qualification is claimed for the new module.
+- Water owns explicit binary64 quantities and source/drain receipts. The native
+  runtime stages an update and publishes only successful steps; pressure/CFL errors
+  freeze the affected region, report a diagnostic and prevent saves of that failed
+  state. It does not pretend the interval succeeded or silently cut collision coverage.
+- Water owners are stationary, resident root-scene domains. Static/moving colliders
+  can stream through them, and an origin shift moves all owned coordinates together.
+  The static geometry cache is invalidated by actual shape/pose changes, not each
+  CharacterMotor step. Water-owner regional suspension and independent-grid transfer
+  remain unsupported and give explicit diagnostics. Overlapping grids are rejected.
+- Rotated uniform and local planetary gravity charts use the same backend. Spatial
+  gravity is sampled per cell and cached; a chart must stay within 26 degrees of
+  local down. A chart cannot cover a whole tiny planet or an antipode. Hydrostatic
+  sub-cell reconstruction is chart-vertical, so below-resolution radial curvature is
+  approximate. No global planetary liquid ocean is claimed.
+- MK2 boxes, spheres, capsules and convex compounds displace water. Real CharacterMotor
+  capsules participate as moving query actors; project scripts drive swimming using
+  the existing `world.fluidSample`. Prescribed motion can inject energy, like moving
+  any other collider. Generic deformable coupling, exact added mass and watertight
+  moving-container/air-piston loads are not qualified. Buoyancy is displaced-volume
+  hydrostatic load, with implicit drag and its reaction; it is not exact traction
+  integration of every dynamic pressure on a solid.
+- Static boxes/spheres/capsules/convexes, terrain and triangle surfaces feed the
+  shared sampled geometry. Triangle surfaces are thin shells at this resolution,
+  not automatic watertight volumetric interiors. Moving triangle shells reject;
+  use solid primitives/convex compounds. The active budget is 8 regions, 262,144 total
+  cells and 512 nearby bodies per region; these are bounds, not a 60 Hz promise.
+- Each grid has closed sides/bottom and atmospheric gas at its top. It does not
+  automatically spill through its outer bounds. Explicit signed sources/drains
+  return actual accepted cubic metres and preserve the unaccepted amount for game
+  rules. A sealed/full positive receiver applies backpressure. Sources do not
+  represent portable pipes between independent grids.
+- Features thinner than the fixed sampling resolution may close/disappear.
+  Unresolved bubbles/foam use the documented coarse closure. Air waves, capillarity,
+  cavitation and scientific force/torque fidelity remain outside the model.
+- Renderer V2 draws the physical surface mesh using Basic Water's Fresnel/sky/glint
+  material, and the existing underwater pass samples real wet cells. Vertically
+  separated resolved water layers have separate surfaces. No rendered particle owns
+  mass. Detailed spray/foam/refraction is not implemented. Underwater rays use a
+  bounded half-cell march and one nearest/farthest interval, approximating dry gaps
+  along the same ray. Mesh rebuilding is shared across cameras for each revision.
+- Regular saves retain the grid, water, gas and receipt ledgers alongside MK2 and
+  script state. Missing/corrupt/incompatible water data reject instead of reseeding.
+  Native grid state is versioned; derived geometry/gravity caches rebuild on load.
+  Legacy world-delta saves explicitly reject advanced water. Save-size limits still
+  apply; oversized saves reject instead of truncating.
+- Network replication of advanced water is unsupported. The existing entity
+  admission check reports it; a background grid is not implicitly synchronized.
+- Linux source-build/relocated-export qualification is separate from release and
+  hardware acceptance. No new Windows, Android or browser qualification is claimed.
+  The runtime uses portable C++/existing rendering, with no new compute dependency.
 
 ## Human check
 
-1. Watch the green box float and the grey box sink; throw boxes from different
-   heights and move the camera near the surface.
-2. Open/close the sluice and watch water physically move between the two sides.
-3. Watch chamber pressure build while sealed, then release through the small vent.
-4. Inspect the real terrain shoreline and the original basin; use X to rotate.
-5. Save, disturb the pool, reload, then close/reopen with `--load` and verify the
-   stored state. Keep the normal Alpha fluid lock in place during this review.
+1. Open the Workshop project in the editor. Select the water owner, inspect grid
+   fields and the experimental warning. Play, Stop, then Play again; authoring must
+   remain unchanged and initial water should reset deliberately.
+2. Walk down the steps, swim and dive. Grab the green crate, drop/throw it into the
+   pool and watch it float. The grey sphere should sink without launching.
+3. Toggle the pump/drain and apply an impulse. Water should flow/settle while quantity
+   follows the explicit receipts. Inspect the chamber/roof and ordinary solid contacts.
+4. Switch to tilted/radial gravity and the original planet basin geometry. Check
+   stable bodies, swimming, surface alignment and camera controls.
+5. Save while disturbed, change the pool, reload, then quit/reopen and load again.
+   Water, inventory receipts, body poses and script state must survive.
+6. Run the normal exported project after moving the package. Keep the Alpha fluid
+   lock in place until review; automated checks do not establish human acceptance.

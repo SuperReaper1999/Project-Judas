@@ -371,7 +371,25 @@ declare module "judas" {
     enabled:boolean; halfExtents:Vec3; color:Vec3; flow:Vec3;
     waveAmplitude:number; wavelength:number; waveSpeed:number; opacity:number; density:number;
   }
+  /** Optional Experimental Grid Water V2. Quantities are cubic metres. */
+  export interface GridWaterState {
+    quantity:number; initialQuantity:number; addedQuantity:number; removedQuantity:number;
+    storedDisplacement:number; airMass:number; density:number; cellSize:number; cells:Vec3;
+    simulationMs:number; solverMs:number; preparationMs:number; couplingMs:number; geometryBakes:number;
+    pressureMs:number; pressureResidual:number; pressureIterations:number;
+    bytes:number; paused:boolean; error:string;
+  }
+  export class GridWater {
+    constructor(id:EntityId); id:EntityId;
+    readonly valid:boolean;
+    readonly state:GridWaterState|null;
+    /** fixedUpdate only. Radius 0 uses the local default; momentum is kg m/s. */
+    impulse(point:Vec3,momentum:Vec3,radius?:number):boolean;
+    /** fixedUpdate only. Signed m3; returns the actually accepted signed quantity. */
+    changeVolume(point:Vec3,cubicMetres:number,radius?:number):number;
+  }
   export class Entity {
+    readonly gridWater:GridWater|null;
     readonly basicWater:BasicWaterSettings|null;
     setBasicWater(settings:Partial<BasicWaterSettings>):boolean;
     readonly body2D:Body2DInfo|null;
@@ -513,7 +531,8 @@ declare module "judas" {
     unproject(point:Vec2):{origin:Vec3;direction:Vec3}|null;
     readonly viewport:{width:number;height:number};
     clearView(): boolean;
-    /** Basic prescribed-water swimming (default), or opted-in PBF. Greatest immersion wins; visual waves do not alter occupancy. */
+    readonly gridWaterRegions:Entity[];
+    /** Greatest immersion from Basic Water or an opted-in fluid backend. Visual waves do not alter occupancy. */
     fluidSample(point: Vec3, up: Vec3, halfHeight: number, radius: number, tangent: Vec3): FluidSample;
     readonly viewRay: Ray | null;
     queryTags(required?: string[], excluded?: string[]): Entity[];

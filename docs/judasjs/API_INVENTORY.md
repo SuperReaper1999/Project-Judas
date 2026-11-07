@@ -103,6 +103,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.destroy` | `destroy` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.fracture` | `fractureExists` | [declaration](../judas.d.ts) | [reference](fracture.md) |
 | `Entity.gravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `Entity.gridWater` | `gridWaterExists` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `Entity.hasTag` | `hasTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -190,6 +191,13 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Fracture.remove` | `fractureRemove` | [declaration](../judas.d.ts) | [reference](fracture.md) |
 | `Fracture.state` | `fractureState` | [declaration](../judas.d.ts) | [reference](fracture.md) |
 | `Fracture.valid` | `fractureValid` | [declaration](../judas.d.ts) | [reference](fracture.md) |
+| `GridWater` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.changeVolume` | `gridWaterChange` | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.impulse` | `gridWaterImpulse` | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.state` | `gridWaterState` | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.valid` | `gridWaterExists` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `Joint` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Joint.configure` | `jointConfigure` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Joint.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
@@ -521,6 +529,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.clearView` | `clearView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.fluidSample` | `fluidSample` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `world.gridWaterRegions` | `gridWaterOwners` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `world.origin` | `worldOrigin` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.originState` | `worldOriginState` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |

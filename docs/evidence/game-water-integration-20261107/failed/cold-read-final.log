@@ -1,0 +1,3 @@
+FAIL cold process retains changed quantity
+FAIL cold process advances the real solver without reseeding
+11 checks, 2 failures

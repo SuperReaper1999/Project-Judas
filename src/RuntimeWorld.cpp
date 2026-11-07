@@ -25,6 +25,7 @@
 #include "FaithfulGravity.h"
 #include "RadialTerrain.h"
 #include "ProductionFluidCoupling.h"
+#include "fluid/GameWaterRuntime.h"
 #include "RadicalGravity.h"
 #include "OrientedGravityVolume.h"
 #include "ResourceManager.h"
@@ -405,7 +406,9 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     m_fluidSettings.particleRadius *= m_settings.fluidScale;
     m_fluidSettings.smoothingRadius *= m_settings.fluidScale;
     m_fluidSettings.maxDensityCorrection *= m_settings.fluidScale;
-    if(m_advancedFluids)m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
+    if(m_advancedFluids&&std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& object){
+        return object.fluidVolume&&object.fluidVolume->backend==SceneFluidBackend::Particles;
+    }))m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
 
     if (m_settings.fidelityPolicy == SceneFidelityPolicy::Distance) {
         m_policy = std::make_unique<DistanceFidelityPolicy>(m_settings.fidelityFullRadius,
@@ -424,14 +427,16 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid)||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         // A validated cold snapshot contains scene-authored global owners too.
         // Runtime-spawn restrictions must not omit their saved state records.
-        if(!runtimeSnapshot&&o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
+        const bool gridOwner=m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid;
+        if(!runtimeSnapshot&&o.scripts.empty()&&!gridOwner&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
         e.state=StateFromDefinition(o);e.slot=std::numeric_limits<std::size_t>::max();m_extraEntities.push_back(e);
     }
+    if(!BuildGridWater(scene,outError)){Destroy();return false;}
     m_composed=m_sceneControl&&m_sceneControl->ComposedProject();
     m_baselineFingerprint = legacyGameplay ? std::move(fingerprint)
         : SceneFingerprintSha256("Judas.ScriptedRuntime.1:" + fingerprint);
@@ -461,7 +466,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         return false;
     };
 
-    const bool particleWater=m_advancedFluids&&(!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.fluidVolume);}));
+    const bool particleWater=m_advancedFluids&&(!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Particles;}));
     for (const SceneObject& o : scene.Objects()) {
         if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
@@ -737,7 +742,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         }
 
         // --- Fluid volume ---
-        if (m_advancedFluids && o.fluidVolume) {
+        if (m_advancedFluids && o.fluidVolume && o.fluidVolume->backend==SceneFluidBackend::Particles) {
             FluidVolume fv;
             fv.id = o.id;
             fv.component = *o.fluidVolume;
@@ -946,6 +951,8 @@ void RuntimeWorld::RestoreAuthoredState() {
     m_combustion.Reset();
     m_liquid=std::make_unique<LiquidSystem>(m_advancedFluids);
     PopulateFluid();
+    if(m_gridWater){Scene reset;for(const auto& object:ScriptObjects())reset.InsertObject(object);
+        std::string error;if(!BuildGridWater(reset,error))throw std::runtime_error(error);}
     // Weather is reconstructed after authored owner poses and hierarchy have
     // been restored, so immediate queries see the reset field.
     for(const auto& o:ScriptObjects()){std::string error;RegisterWeather(o,error);}
@@ -1109,6 +1116,10 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
         return false;
     }
     if (e->lifecycle == EntityLifecycle::Destroyed) return true;
+    if(m_gridWater && m_gridWater->Find(id)) {
+        error="grid-water owners are resident domains; drain/remove the authored component outside Play instead of destroying conserved live water";
+        return false;
+    }
     const bool ownedComponent = e->slot == std::numeric_limits<std::size_t>::max() &&
         (e->definition.door || e->definition.lightSwitch || e->definition.gravity || e->definition.atmosphere ||
          e->definition.fluidVolume || e->definition.playerStart || e->definition.audioListener);
@@ -1488,6 +1499,7 @@ void RuntimeWorld::Destroy() {
         m_assets->GetRenderer()->DestroyMesh(m_fluidMesh);
     }
     m_fluidMesh = MeshHandle{};
+    m_gridWater.reset();
     m_fluidSurfaceRevision = ~std::uint64_t{0};
     m_physics.Shutdown();
 

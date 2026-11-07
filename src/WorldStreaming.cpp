@@ -80,6 +80,7 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
     result.fingerprint=canonical;result.bytes=text.size()+result.source.Objects().size()*sizeof(SceneObject)*3;
     for(auto& o:flat.Objects()){
         if(cancelled())return false;
+        if(project.Settings().advancedFluidDynamics&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid){error="region "+region.id+": Grid Water V2 owners must remain in the root scene; colliders may stream through a resident water domain, but water-owner suspension is not yet supported";return false;}
         if(o.playerStart||o.audioListener||o.ui||o.vehicle||o.door||o.lightSwitch||o.combustible||o.atmosphere||(project.Settings().advancedFluidDynamics&&o.fluidVolume)||o.celestial||(o.body&&(o.body->managed||o.body->shape==SceneShape::Terrain))){error="region "+region.id+": session-owned/unsupported component on "+std::to_string(o.id);return false;}
         auto validate=o;validate.gravity.reset();RemoveDormantFluidComponents(validate,project.Settings().advancedFluidDynamics);if(!RuntimeWorld::ValidateEntityDefinition(validate,error))return false;
         for(auto& [name,value]:ObjectProperties(o)){

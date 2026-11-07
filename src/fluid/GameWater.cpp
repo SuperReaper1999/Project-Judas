@@ -15,6 +15,7 @@ bool Grid::Initialize(const Settings &settings, std::string &error) {
     const std::int64_t count = std::int64_t(n.x) * n.y * n.z;
     if (n.x < 2 || n.y < 2 || n.z < 2 || count > 262144 ||
         !(settings.cellSize > .01f && std::isfinite(settings.cellSize)) ||
+        !std::isfinite(settings.cellSize * settings.cellSize * settings.cellSize) ||
         !(settings.density > 0 && std::isfinite(settings.density)) ||
         settings.pressureIterations == 0 || settings.pressureIterations > 1000 ||
         !(settings.pressureTolerance > 0 && settings.pressureTolerance < .1f) ||
@@ -33,12 +34,15 @@ bool Grid::Initialize(const Settings &settings, std::string &error) {
     const float gravityTolerance = 1e-5f * std::max(1.f, glm::length(settings.gravity));
     if (std::abs(localGravity.x) > gravityTolerance ||
         std::abs(localGravity.z) > gravityTolerance || localGravity.y > gravityTolerance) {
-        error = "Game-water gravity must follow the chart's local -Y axis; rotate the chart "
-                "together with gravity. Spatially varying gravity is not yet supported.";
+        error = "Game-water gravity must follow the chart's local -Y axis; rotate "
+                "the chart "
+                "together with gravity. Spatially varying gravity is not yet "
+                "supported.";
         return false;
     }
     settings_ = settings;
     settings_.rotation = rotation;
+    gravity_.clear();
     cells_.assign(std::size_t(count), {});
     incident_.assign(std::size_t(count), {});
     velocity_.assign(std::size_t(count), {});
@@ -46,6 +50,7 @@ bool Grid::Initialize(const Settings &settings, std::string &error) {
     air_.clear();
     solids_.clear();
     exteriorAirMass_ = 0;
+    initialQuantity_ = addedQuantity_ = removedQuantity_ = 0;
     airInitialized_ = false;
     const float volume = std::pow(settings.cellSize, 3.f);
     for (auto &c : cells_) {
@@ -98,6 +103,34 @@ glm::vec3 Grid::ToLocal(glm::vec3 p) const {
     return glm::conjugate(settings_.rotation) * (p - settings_.origin);
 }
 void Grid::SetSolids(const std::vector<SolidBox> &solids) { solids_ = solids; }
+bool Grid::SetGravityField(const std::vector<glm::vec3> &field, std::string &error) {
+    if (!field.empty() && field.size() != cells_.size()) {
+        error = "Grid-water gravity field must have one sample per cell.";
+        return false;
+    }
+    for (auto g : field) {
+        g = glm::conjugate(settings_.rotation) * g;
+        if (!std::isfinite(glm::dot(g, g)) || g.y > 1e-6f ||
+            glm::length(glm::vec2(g.x, g.z)) > .5f * std::max(1e-6f, -g.y)) {
+            error = "Grid-water region spans too much gravity curvature; use a "
+                    "smaller tangent chart (less than 26 degrees).";
+            return false;
+        }
+    }
+    gravity_ = field;
+    error.clear();
+    return true;
+}
+glm::vec3 Grid::Gravity(glm::vec3 point) const {
+    if (gravity_.empty())
+        return settings_.gravity;
+    const auto local = ToLocal(point) / settings_.cellSize;
+    if (!std::isfinite(glm::dot(local, local)))
+        return settings_.gravity;
+    const auto at =
+        glm::ivec3(glm::clamp(glm::floor(local), glm::vec3(0), glm::vec3(settings_.cells - 1)));
+    return gravity_[Index(at.x, at.y, at.z)];
+}
 double Grid::FillBox(glm::vec3 lo, glm::vec3 hi) {
     return Fill([=](glm::vec3 p) {
         return glm::all(glm::greaterThanEqual(p, lo)) && glm::all(glm::lessThan(p, hi));
@@ -106,7 +139,7 @@ double Grid::FillBox(glm::vec3 lo, glm::vec3 hi) {
 double Grid::Fill(const std::function<bool(glm::vec3)> &volume) {
     if (airInitialized_)
         throw std::logic_error("Fill seeds initial game water; runtime sources are "
-                               "not available in this preview.");
+                               "available through ChangeWater instead.");
     double added = 0;
     const float h = settings_.cellSize;
     for (int i = 0; i < int(cells_.size()); ++i) {
@@ -123,6 +156,8 @@ double Grid::Fill(const std::function<bool(glm::vec3)> &volume) {
         c.water = next;
         c.airMass = 1.2 * (c.capacity - next);
     }
+    initialQuantity_ += added;
+    UpdateHeights();
     return added;
 }
 bool Grid::Step(float dt, std::string &error) {
@@ -146,8 +181,11 @@ bool Grid::Step(float dt, std::string &error) {
     for (auto f : faces_)
         speed = std::max(speed, double(std::abs(f.velocity)));
     // Resolve the requested interval, never silently drop simulation time.
+    float maximumGravity = glm::length(settings_.gravity);
+    for (auto g : gravity_)
+        maximumGravity = std::max(maximumGravity, glm::length(g));
     const double requested =
-        std::ceil((speed + glm::length(settings_.gravity) * dt) * dt / (.5f * settings_.cellSize));
+        std::ceil((speed + maximumGravity * dt) * dt / (.5f * settings_.cellSize));
     if (!std::isfinite(requested) || requested > 64) {
         error = "Game water CFL budget exceeded; reduce the step or inspect the "
                 "applied impulse.";
@@ -190,8 +228,8 @@ bool Grid::Step(float dt, std::string &error) {
     stats_.exteriorAirMass = exteriorAirMass_;
     stats_.bytes =
         cells_.capacity() * sizeof(Cell) + faces_.capacity() * sizeof(Face) +
-        velocity_.capacity() * sizeof(glm::vec3) + incident_.capacity() * sizeof(std::vector<int>) +
-        staticFaces_.capacity() * sizeof(float) +
+        (velocity_.capacity() + gravity_.capacity()) * sizeof(glm::vec3) +
+        incident_.capacity() * sizeof(std::vector<int>) + staticFaces_.capacity() * sizeof(float) +
         (staticSamples_.capacity() + samples_.capacity()) * sizeof(std::uint64_t) +
         (staticFaceSamples_.capacity() + faceSamples_.capacity()) * sizeof(std::uint16_t) +
         waterHeight_.capacity() * sizeof(float) + solidOwner_.capacity() * sizeof(int) +
@@ -199,31 +237,42 @@ bool Grid::Step(float dt, std::string &error) {
     for (const auto &links : incident_)
         stats_.bytes += links.capacity() * sizeof(int);
     stats_.sealedAmbiguousCells = sealedAmbiguousCells_;
+    const double expected = initialQuantity_ + addedQuantity_ - removedQuantity_;
+    if (std::abs(stats_.water - expected) > 1e-6 * std::max(1., std::abs(expected))) {
+        error = "Game-water quantity differs from its authored/source ledger.";
+        return false;
+    }
     stats_.milliseconds =
         std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
     error.clear();
     return true;
 }
+bool Grid::CellSurface(int i, float &height) const {
+    if (i < 0 || i >= int(cells_.size()))
+        return false;
+    const auto &c = cells_[i];
+    if (c.water <= std::max(1e-7 * std::pow(settings_.cellSize, 3),
+                            double(settings_.minimumMobileFraction) * c.capacity))
+        return false;
+    height = waterHeight_[i];
+    return true;
+}
 bool Grid::Surface(int x, int z, float &height) const {
     if (cells_.empty() || x < 0 || z < 0 || x >= settings_.cells.x || z >= settings_.cells.z)
         return false;
-    for (int y = settings_.cells.y - 1; y >= 0; --y) {
-        const auto &c = cells_[Index(x, y, z)];
-        if (c.water > std::max(1e-7 * std::pow(settings_.cellSize, 3),
-                               double(settings_.minimumMobileFraction) * c.capacity)) {
-            height = waterHeight_.empty()
-                         ? settings_.cellSize *
-                               (y + float(c.water / std::max(double(c.capacity), 1e-30)))
-                         : waterHeight_[Index(x, y, z)];
+    for (int y = settings_.cells.y - 1; y >= 0; --y)
+        if (CellSurface(Index(x, y, z), height))
             return true;
-        }
-    }
     return false;
 }
 glm::vec3 Grid::Velocity(glm::vec3 p) const {
-    if (cells_.empty())
+    if (cells_.empty() || !std::isfinite(glm::dot(p, p)))
         return glm::vec3(0);
-    const auto at = glm::ivec3(glm::floor(ToLocal(p) / settings_.cellSize));
+    const auto local = ToLocal(p) / settings_.cellSize;
+    if (glm::any(glm::lessThan(local, glm::vec3(-1))) ||
+        glm::any(glm::greaterThan(local, glm::vec3(settings_.cells))))
+        return glm::vec3(0);
+    const auto at = glm::ivec3(glm::floor(local));
     glm::dvec3 sum(0);
     double weight = 0;
     for (int z = -1; z <= 1; ++z)
@@ -238,13 +287,19 @@ glm::vec3 Grid::Velocity(glm::vec3 p) const {
     return weight > 0 ? settings_.rotation * glm::vec3(sum / weight) : glm::vec3(0);
 }
 float Grid::NearbyMass(glm::vec3 world, float radius) const {
-    if (cells_.empty() || radius <= 0)
+    if (cells_.empty() || radius <= 0 || !std::isfinite(radius) ||
+        !std::isfinite(glm::dot(world, world)))
         return 0;
     const auto p = ToLocal(world);
     const float h = settings_.cellSize;
-    const auto lo = glm::max(glm::ivec3(0), glm::ivec3(glm::floor((p - radius) / h)));
+    const auto limits = glm::vec3(settings_.cells);
+    if (glm::any(glm::lessThan(p + radius, glm::vec3(0))) ||
+        glm::any(glm::greaterThanEqual(p - radius, limits * h)))
+        return 0;
+    const auto lo =
+        glm::ivec3(glm::floor(glm::clamp((p - radius) / h, glm::vec3(0), limits - 1.f)));
     const auto hi =
-        glm::min(settings_.cells - glm::ivec3(1), glm::ivec3(glm::floor((p + radius) / h)));
+        glm::ivec3(glm::floor(glm::clamp((p + radius) / h, glm::vec3(0), limits - 1.f)));
     double volume = 0;
     for (int z = lo.z; z <= hi.z; ++z)
         for (int y = lo.y; y <= hi.y; ++y)
@@ -256,6 +311,8 @@ float Grid::NearbyMass(glm::vec3 world, float radius) const {
     return float(settings_.density * volume);
 }
 void Grid::AddImpulse(glm::vec3 world, glm::vec3 impulse, float radius) {
+    if (!std::isfinite(glm::dot(impulse, impulse)))
+        return;
     if (radius <= 0)
         radius = 2 * settings_.cellSize;
     const float mass = NearbyMass(world, radius);
@@ -263,9 +320,11 @@ void Grid::AddImpulse(glm::vec3 world, glm::vec3 impulse, float radius) {
         return;
     const auto p = ToLocal(world), delta = glm::conjugate(settings_.rotation) * impulse / mass;
     const float h = settings_.cellSize;
-    const auto lo = glm::max(glm::ivec3(0), glm::ivec3(glm::floor((p - radius) / h)));
+    const auto limits = glm::vec3(settings_.cells);
+    const auto lo =
+        glm::ivec3(glm::floor(glm::clamp((p - radius) / h, glm::vec3(0), limits - 1.f)));
     const auto hi =
-        glm::min(settings_.cells - glm::ivec3(1), glm::ivec3(glm::floor((p + radius) / h)));
+        glm::ivec3(glm::floor(glm::clamp((p + radius) / h, glm::vec3(0), limits - 1.f)));
     for (int z = lo.z; z <= hi.z; ++z)
         for (int y = lo.y; y <= hi.y; ++y)
             for (int x = lo.x; x <= hi.x; ++x) {

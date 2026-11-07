@@ -53,9 +53,9 @@ WASD/mouse fly; Space/Ctrl vertical; B throw a real box; G gate/vent.
 F5 save; F9 load; Tab cursor; F12 screenshot. Saves stay in this folder.
 
 The Alpha fluid lock remains unchanged. This separate native preview uses the
-new optional C++ grid, real Judas MK2 and Renderer V2. It is not yet a normal
-JudasJS/editor project backend. Uniform gravity, box coupling and pool-layer
-presentation are the currently qualified scope. Source and detailed limitations:
+new optional C++ grid, real Judas MK2 and Renderer V2. This package is the native diagnostic only. The normal editable project is
+projects/water_v2_workshop; use judas_export for that game. See current scene,
+JudasJS, shape, gravity and presentation support in the guide. Source and detailed limitations:
 docs/GAME_WATER_PREVIEW.md in Project-Judas.
 ''')
     files = {str(f.relative_to(stage)): hashlib.sha256(f.read_bytes()).hexdigest()

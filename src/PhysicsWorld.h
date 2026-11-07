@@ -356,6 +356,8 @@ public:
     // object" apart from "static world geometry" without needing to
     // remember which handles it created dynamic vs. static itself.
     bool IsDynamicBody(BodyHandle handle) const;
+    // Imposed character/query geometry, not an independently integrated actor.
+    bool IsQueryOnlyBody(BodyHandle handle) const;
     bool IsKinematicBody(BodyHandle handle) const;
     BodyMotionType GetMotionType(BodyHandle handle) const;
     bool SetMotionType(BodyHandle,BodyMotionType,float dynamicMass=1,bool preserveVelocity=false);

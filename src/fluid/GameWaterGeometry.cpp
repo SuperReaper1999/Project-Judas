@@ -1,3 +1,4 @@
+#include "CollisionGeometry.h"
 #include "GameWater.h"
 #include <algorithm>
 #include <array>
@@ -8,9 +9,56 @@
 #include <limits>
 
 namespace JudasWater {
+float SolidVolume(const SolidBox &solid) {
+    constexpr float pi = 3.14159265358979323846f;
+    if (solid.kind == SolidBox::Kind::Sphere)
+        return 4 * pi * solid.radius * solid.radius * solid.radius / 3;
+    if (solid.kind == SolidBox::Kind::Capsule)
+        return pi * solid.radius * solid.radius * 2 * solid.halfHeight +
+               4 * pi * solid.radius * solid.radius * solid.radius / 3;
+    if (solid.kind == SolidBox::Kind::Convex && solid.asset)
+        return float(ShapeMassProperties(Shape::Cooked(solid.asset, "")).volume);
+    return 8 * solid.half.x * solid.half.y * solid.half.z;
+}
 bool Grid::Inside(glm::vec3 p, const SolidBox &b) const {
-    const auto q = glm::abs(glm::conjugate(b.rotation) * (p - b.center));
+    auto local = glm::conjugate(b.rotation) * (p - b.center);
+    if (b.kind == SolidBox::Kind::Sphere)
+        return glm::dot(local, local) <= b.radius * b.radius;
+    if (b.kind == SolidBox::Kind::Capsule) {
+        local.y -= glm::clamp(local.y, -b.halfHeight, b.halfHeight);
+        return glm::dot(local, local) <= b.radius * b.radius;
+    }
+    if (b.kind == SolidBox::Kind::Convex) {
+        RigidBody body;
+        body.position = {};
+        body.orientation = {1, 0, 0, 0};
+        return b.asset &&
+               PointGeometry(glm::dvec3(local), PrimitiveAt(Shape::Cooked(b.asset, ""), body, 0))
+                   .contains;
+    }
+    const auto q = glm::abs(local);
     return glm::all(glm::lessThanEqual(q, b.half + glm::vec3(settings_.cellSize * 1e-5f)));
+}
+bool Grid::WetPoint(glm::vec3 world) const {
+    if (cells_.empty() || !std::isfinite(glm::dot(world, world)))
+        return false;
+    auto p = ToLocal(world);
+    const float h = settings_.cellSize;
+    if (glm::any(glm::lessThan(p, glm::vec3(0))) ||
+        glm::any(glm::greaterThanEqual(p, glm::vec3(settings_.cells) * h)))
+        return false;
+    const auto at = glm::ivec3(glm::floor(p / h));
+    const int i = Index(at.x, at.y, at.z);
+    if (cells_[i].water <= 0 || p.y >= waterHeight_[i])
+        return false;
+    auto sub =
+        glm::clamp(glm::ivec3(glm::floor(glm::fract(p / h) * 4.f)), glm::ivec3(0), glm::ivec3(3));
+    return !(samples_[i] & (std::uint64_t(1) << ((sub.z * 4 + sub.y) * 4 + sub.x)));
+}
+void Grid::ShiftOrigin(glm::dvec3 delta) {
+    settings_.origin = glm::vec3(glm::dvec3(settings_.origin) - delta);
+    for (auto &solid : solids_)
+        solid.center = glm::vec3(glm::dvec3(solid.center) - delta);
 }
 void Grid::BakeStatic(const std::function<bool(glm::vec3)> &occupied) {
     const float h = settings_.cellSize, volume = h * h * h;
@@ -112,9 +160,15 @@ bool Grid::Geometry(std::string &error) {
         if (!(box.half.x > 0 && box.half.y > 0 && box.half.z > 0) ||
             !std::isfinite(glm::dot(box.half, box.half)) ||
             !std::isfinite(glm::dot(box.center, box.center)) ||
+            !std::isfinite(glm::dot(box.velocity, box.velocity)) ||
+            !std::isfinite(glm::dot(box.angularVelocity, box.angularVelocity)) ||
+            ((box.kind == SolidBox::Kind::Sphere || box.kind == SolidBox::Kind::Capsule) &&
+             (!(box.radius > 0) || !std::isfinite(box.radius) || !(box.halfHeight >= 0) ||
+              !std::isfinite(box.halfHeight))) ||
+            (box.kind == SolidBox::Kind::Convex && !box.asset) ||
             !(glm::dot(box.rotation, box.rotation) > 1e-10f &&
               std::isfinite(glm::dot(box.rotation, box.rotation)))) {
-            error = "Invalid game-water solid box.";
+            error = "Invalid game-water solid shape or velocity.";
             return false;
         }
         box.center = ToLocal(box.center);

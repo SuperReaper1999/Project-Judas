@@ -1,0 +1,19 @@
+[Graphics] created OpenGL 3.3 Core request (portable policy)
+[Graphics] API=OpenGL 3.3 requested=portable selected=portable vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=0 SSBO=0 DSA=1 bufferStorage=1 textureViews=0 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=0 storageBlockBytes=0 computeInvocations=0 computeSharedBytes=0
+[GPU] vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2 version=3.3.0 NVIDIA 580.178.04 context_flags=0x0
+[GPU] asynchronous KHR_debug enabled; max_messages=256 max_message_bytes=1024
+[GPU] reset_query=available notification_strategy=0x8261 (not a promise of crash detection)
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/water_v2_workshop/Saves/pool.judasstate (none saved)
+Project: Water V2 Workshop — source preview (/home/conner/Documents/GitHub/Project-Judas/projects/water_v2_workshop/water_v2_workshop.judasproj)
+Scene: Water V2 / pool (/home/conner/Documents/GitHub/Project-Judas/projects/water_v2_workshop/Scenes/pool.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ
+0,0.00000,0.000000,3.320063,6.166392,0.000000,0.971338,-0.237703,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0,-2.000000,2.397275,1.000000,0.000000,-0.163500,0.000000,2.000000,2.697275,2.000000,0.000000,-0.163500,0.000000,3.000000,2.997275,1.000000,0.000000,-0.163500,0.000000,-2.000000,2.797275,7.000000,0.000000,-0.163500,0.000000
+30,0.50000,0.000000,3.287339,6.166392,0.000000,0.971338,-0.237703,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,30,1,0,-1.999688,1.901629,1.000340,0.001637,-0.079650,0.002104,2.000415,1.536101,2.000192,0.005310,-2.721842,0.002771,3.000209,1.698629,0.999839,0.004127,-4.069111,-0.003332,-2.000000,2.750000,7.000000,0.000000,0.000000,0.000000
+60,1.00000,0.000000,3.287339,6.166392,0.000000,0.971338,-0.237703,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,60,1,0,-1.999551,2.193238,1.001041,-0.000766,-0.133697,0.000807,2.005486,0.605978,2.002821,0.012484,-1.344249,0.006046,3.006284,0.300000,0.992659,0.012448,-0.000111,-0.016452,-2.000000,2.750000,7.000000,0.000000,0.000000,0.000000
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/portable.png

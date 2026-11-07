@@ -1,0 +1,11 @@
+JudasProject 1
+name "Water V2 Workshop — source preview"
+startup-scene "Scenes/pool.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+basic-water "true"
+water-swimming "true"
+advanced-fluid-dynamics "true"
+input-map "1 24 \"move_x\" 1 2 \"key:A\" -1 0 \"key:D\" 1 0 \"move_y\" 1 2 \"key:S\" -1 0 \"key:W\" 1 0 \"move_z\" 1 1 \"key:Q\" -1 0 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"look_stick_x\" 1 1 \"stick:RightX\" 1 0 \"look_stick_y\" 1 1 \"stick:RightY\" 1 0 \"reset\" 0 1 \"key:R\" 1 0 \"jump\" 0 1 \"key:Space\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"interact\" 0 1 \"key:G\" 1 0 \"throw\" 0 1 \"key:H\" 1 0 \"control_toggle\" 0 1 \"key:F\" 1 0 \"add_water\" 0 1 \"key:B\" 1 0 \"pool\" 0 1 \"key:1\" 1 0 \"rotated\" 0 1 \"key:2\" 1 0 \"radial\" 0 1 \"key:3\" 1 0 \"original\" 0 1 \"key:4\" 1 0 \"save\" 0 1 \"key:F6\" 1 0 \"load\" 0 1 \"key:F7\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_next\" 0 1 \"key:Tab\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_scroll\" 1 1 \"mouse:wheelY\" 1 0 "

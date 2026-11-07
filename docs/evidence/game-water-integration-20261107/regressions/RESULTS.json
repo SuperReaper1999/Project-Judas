@@ -1,0 +1,547 @@
+{
+  "format": 1,
+  "startedUtc": "2026-11-07T12:55:42.694704+00:00",
+  "sourceRevision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+  "trackedWorktreeStatus": "M cmake/JudasGameWater.cmake\n M docs/ADVANCED_FLUIDS_V2.md\n M docs/GAME_WATER_PREVIEW.md\n M docs/JUDASJS.md\n M docs/evidence/prealpha-project-settings-water/application/basic-overview.png\n M docs/evidence/prealpha-project-settings-water/application/basic-underwater.png\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/api-inventory.json\n M scripts/check_judasjs_api.mjs\n M scripts/prealpha_validate.py\n M src/NetworkSession.cpp\n M src/PhysicsWorld.h\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/SaveService.cpp\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneFingerprint.cpp\n M src/SceneSerialization.cpp\n M src/Simulation.cpp\n M src/WorldDebugView.cpp\n M src/WorldOrigin.cpp\n M src/WorldPersistence.cpp\n M src/WorldPresentation.cpp\n M src/WorldPresentation.h\n M src/WorldScripts.cpp\n M src/WorldState.cpp\n M src/WorldStreaming.cpp\n M src/WorldWater.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorPicking.cpp\n M src/editor/EditorSceneViewport.cpp\n M src/fluid/GameWater.cpp\n M src/fluid/GameWater.h\n M src/fluid/GameWaterCoupling.cpp\n M src/fluid/GameWaterCoupling.h\n M src/fluid/GameWaterGeometry.cpp\n M src/fluid/GameWaterPersistence.cpp\n M src/fluid/GameWaterPressure.cpp\n M src/fluid/GameWaterSurface.cpp\n M src/fluid/GameWaterTransport.cpp\n M src/physics/WorldBodies.cpp\n M src/render/ShaderLibrary.cpp\n M src/scripting/Modules.json\n M tests/GameWaterTests.cpp\n M tools/diagnostics/package_game_water_lab.py\n M tools/validation/suites.json",
+  "manifestSha256": "2284d851cffa765170d93f34fbf71a7a3b3a976aa196920a9d550ac8fb2d9dd6",
+  "trackedDiffSha256": "372de80162a0a681ad833926e2c4e5fa4d30253f932719e8f05df70c3a1e7170",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "7376760e499726ec5bb345b3a4b1b9dff17c1e7d91a63674aa530a58c6b91305",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "7376760e499726ec5bb345b3a4b1b9dff17c1e7d91a63674aa530a58c6b91305",
+      "seconds": 0.22488344800058258,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_runtime_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "5eb4987218367cf1b7734cc538c4b498ef47ca12413cffba9a26268d9e47c794",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "5eb4987218367cf1b7734cc538c4b498ef47ca12413cffba9a26268d9e47c794",
+      "seconds": 11.493403569999828,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water-runtime"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_game_water_script_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "6172d437e15e179065d56459d99360712da8ceef69a9cb7493e036caa4cba6fe",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "6172d437e15e179065d56459d99360712da8ceef69a9cb7493e036caa4cba6fe",
+      "seconds": 0.0923262349997458,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "game-water-script"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "163f6083cb5d3b9ab9fd5e987beea9e424313af3bf3713f6f753386f6080d8d8",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "163f6083cb5d3b9ab9fd5e987beea9e424313af3bf3713f6f753386f6080d8d8",
+      "seconds": 0.017868480999823078,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "origin-physics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "db24bfbaf369a3107ca58f1f9b76e883a3ea64e096cf9c517425c5818beb6bc9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "db24bfbaf369a3107ca58f1f9b76e883a3ea64e096cf9c517425c5818beb6bc9",
+      "seconds": 3.8219944949996716,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "mk2-physics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "de3a52f0a2bd7af0b14e17bb6695b5dd30ba7b8495d1a4139092b64fd675f1bc",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "de3a52f0a2bd7af0b14e17bb6695b5dd30ba7b8495d1a4139092b64fd675f1bc",
+      "seconds": 7.92898857199998,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "mk2-rotation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_cold_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final/rotation-cold"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "79e7fff5255d503ebdf2eb3002d20993d38fb6199403d0c9713dea6e45fcd530",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "79e7fff5255d503ebdf2eb3002d20993d38fb6199403d0c9713dea6e45fcd530",
+      "seconds": 0.2263628989994686,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "mk2-rotation-cold"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_preview_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final/water-preview"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "a70d00b754faf09da9cb86cd9527abaa504a6debcbeaade3ff68210e9c9c44f9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "a70d00b754faf09da9cb86cd9527abaa504a6debcbeaade3ff68210e9c9c44f9",
+      "seconds": 0.27517328900012217,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "basic-water-preview"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_water_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "eb70d00ec619d611e846c5aadd2f0ac6797af0f0227e864060eecda6ccafa931",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "eb70d00ec619d611e846c5aadd2f0ac6797af0f0227e864060eecda6ccafa931",
+      "seconds": 0.09352102899993042,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "project-water-policy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_fluid_policy_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "6e117fd83a8c6de5148c88fccac5afc34af00902ab0a1d48ad5fe575bdaa0e71",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "6e117fd83a8c6de5148c88fccac5afc34af00902ab0a1d48ad5fe575bdaa0e71",
+      "seconds": 0.3263579579997895,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "project-fluid-policy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_settings_editor_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "817acd4f39e17477615f6d6346904d4fd76df3c05553dcd4454511161b4b5109",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "817acd4f39e17477615f6d6346904d4fd76df3c05553dcd4454511161b4b5109",
+      "seconds": 0.1253151249993607,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "project-settings-editor"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_application_tests",
+        "--profile",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final/water"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "34823b0a7a94146d32059654b7149ed1d2c7287ac3b3d679588f6791228fbad9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "34823b0a7a94146d32059654b7149ed1d2c7287ac3b3d679588f6791228fbad9",
+      "seconds": 0.8253325949999635,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "basic-water-application"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_application_tests",
+        "--cold-cycle",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final/cold"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/game-water-integration-20261107/regressions-final",
+      "timeoutSeconds": 120,
+      "binarySha256": "34823b0a7a94146d32059654b7149ed1d2c7287ac3b3d679588f6791228fbad9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "34823b0a7a94146d32059654b7149ed1d2c7287ac3b3d679588f6791228fbad9",
+      "seconds": 0.8762691250003627,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-d777c4f-dirty-55a206ecae47-u4bb8401d9bf2",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+        "source_origin": "git",
+        "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+        "source_tree": "113df12d2c7f1376d43b5869d3651f27eafa083e",
+        "source_untracked_count": 32,
+        "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0",
+        "version": "2.0.0-alpha.1"
+      },
+      "name": "basic-water-cold"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "FLU-ROOT-ADMISSION",
+      "status": "resolved-local-reconstruction",
+      "scheduled": true,
+      "reason": "Physical non-solid admission uses actual particle cubes and compact pair lenses, not nominal-bin occupancy. All original 34 controls pass unchanged, with neutral/swimming and existing vertical support preserved. New geometric/force controls cover compact support and numerical tangency. This is bounded sampling reconstruction, not exact multiphase topology or a conserved-volume solve. See docs/FLUID_LOCAL_WET_RECONSTRUCTION.txt.",
+      "evidence": "docs/evidence/fluid-local-wet-20261102"
+    },
+    {
+      "id": "FLU-KNOWN-GEOMETRY",
+      "status": "open-failing-diagnostic",
+      "scheduled": false,
+      "reason": "Analytic nonplanar geometry exposes error in both legacy PBF wet-volume reconstruction and the original remote-plane observer. Strict diagnostic stays failing; Advanced Fluids remain locked. See docs/FLUID_KNOWN_GEOMETRY_COMPARISON.md.",
+      "evidence": "docs/evidence/fluid-known-geometry-20261101"
+    },
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF remains locked in Alpha. The accumulated-motion epoch repair passes production acceptance windows and all five original four-second comparisons; original failed evidence is preserved. Two production and four player warm-up diagnostics still fail, and coarse impact/contact transients and geometric limitations remain. Active particle continuation/suspension/origin shifts are still unsupported. See docs/FLUID_MOTION_CLOCK_REPAIR.txt.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+    "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0"
+  },
+  "passed": true,
+  "finishedUtc": "2026-11-07T12:56:09.945069+00:00",
+  "sourceRevisionAfter": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+  "trackedWorktreeStatusAfter": "M cmake/JudasGameWater.cmake\n M docs/ADVANCED_FLUIDS_V2.md\n M docs/GAME_WATER_PREVIEW.md\n M docs/JUDASJS.md\n M docs/evidence/prealpha-project-settings-water/application/basic-overview.png\n M docs/evidence/prealpha-project-settings-water/application/basic-underwater.png\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/api-inventory.json\n M scripts/check_judasjs_api.mjs\n M scripts/prealpha_validate.py\n M src/NetworkSession.cpp\n M src/PhysicsWorld.h\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/SaveService.cpp\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneFingerprint.cpp\n M src/SceneSerialization.cpp\n M src/Simulation.cpp\n M src/WorldDebugView.cpp\n M src/WorldOrigin.cpp\n M src/WorldPersistence.cpp\n M src/WorldPresentation.cpp\n M src/WorldPresentation.h\n M src/WorldScripts.cpp\n M src/WorldState.cpp\n M src/WorldStreaming.cpp\n M src/WorldWater.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorPicking.cpp\n M src/editor/EditorSceneViewport.cpp\n M src/fluid/GameWater.cpp\n M src/fluid/GameWater.h\n M src/fluid/GameWaterCoupling.cpp\n M src/fluid/GameWaterCoupling.h\n M src/fluid/GameWaterGeometry.cpp\n M src/fluid/GameWaterPersistence.cpp\n M src/fluid/GameWaterPressure.cpp\n M src/fluid/GameWaterSurface.cpp\n M src/fluid/GameWaterTransport.cpp\n M src/physics/WorldBodies.cpp\n M src/render/ShaderLibrary.cpp\n M src/scripting/Modules.json\n M tests/GameWaterTests.cpp\n M tools/diagnostics/package_game_water_lab.py\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "372de80162a0a681ad833926e2c4e5fa4d30253f932719e8f05df70c3a1e7170",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "d777c4f92f8c2dd8647c8d9115ea150ceff8c21b",
+    "source_fingerprint": "55a206ecae47b95fb37361fa0d28e08c36ab1b7fd82c17424204bee4774da261",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4bb8401d9bf2b050a6c4e95d313885ff73d6ff21560807f927dc5db0a97ef6a0"
+  }
+}

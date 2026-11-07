@@ -2,7 +2,7 @@
 
 **Current product direction:** [game-resolution native water](GAME_WATER_PREVIEW.md)
 replaces the microscopic runtime approach. A coarse C++ grid now drives a real
-MK2/Renderer lab; ordinary scene authoring and the Alpha unlock remain pending.
+MK2/Renderer lab and normal scene/editor/JudasJS integration; the Alpha unlock remains pending.
 The original basins are re-sampled at declared game resolution. Their old exact
 controls and the first-gate account below remain research evidence, rather than
 immutable requirements for the replacement.

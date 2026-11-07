@@ -1,0 +1,38 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS authored object order cannot hide water behind submerged ground
+orientation=0 order_difference=0.000000 water_difference=267.016846
+PASS water is visible over real submerged geometry
+PASS nearer above-water geometry still occludes water
+PASS neighbouring-region opaque geometry is complete before local water
+PASS preview restores ordinary depth-write and blend state
+PASS hidden water does not draw
+PASS disabled water does not draw
+PASS water still respects authored camera layer masks
+PASS save actual preview reproduction
+PASS own physical-water test meshes
+PASS physical water retains its actual 3D height and existing water material
+PASS height negative control detects a flattened physical surface
+PASS physical draw restores the prescribed-water shader path
+physical_surface orientation=0 correct_diff=0.000000 wrong_height_diff=9.453722
+PASS authored object order cannot hide water behind submerged ground
+orientation=1 order_difference=0.000000 water_difference=267.016846
+PASS water is visible over real submerged geometry
+PASS nearer above-water geometry still occludes water
+PASS neighbouring-region opaque geometry is complete before local water
+PASS preview restores ordinary depth-write and blend state
+PASS hidden water does not draw
+PASS disabled water does not draw
+PASS water still respects authored camera layer masks
+PASS save actual preview reproduction
+PASS own physical-water test meshes
+PASS physical water retains its actual 3D height and existing water material
+PASS height negative control detects a flattened physical surface
+PASS physical draw restores the prescribed-water shader path
+physical_surface orientation=1 correct_diff=0.000000 wrong_height_diff=9.453722
+BasicWaterPreviewTests: 26 checks, 0 failures

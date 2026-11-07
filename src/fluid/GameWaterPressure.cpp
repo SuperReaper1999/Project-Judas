@@ -28,8 +28,11 @@ bool Grid::Project(float dt, std::string &error) {
     };
     for (int i = 0; i < n; ++i)
         if (node[i] < 0 && cells_[i].capacity > 0)
-            offset[i] = .5 * rho * std::abs(gravity.y) * h *
-                        std::min(1., cells_[i].water / cells_[i].capacity);
+            offset[i] =
+                .5 * rho *
+                std::abs(gravity_.empty() ? gravity.y
+                                          : (glm::conjugate(settings_.rotation) * gravity_[i]).y) *
+                h * std::min(1., cells_[i].water / cells_[i].capacity);
     for (int k = 0; k < int(air_.size()); ++k)
         if (airNode[k] >= 0) {
             auto pocket = air_[k];

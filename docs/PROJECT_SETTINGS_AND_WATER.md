@@ -22,7 +22,11 @@ The restriction is compiled build-channel policy, not a project/environment togg
 The opt-in workflow below describes **Experimental/local builds only**, retained
 for investigation. It does not imply Alpha support. Re-enabling Alpha is deferred
 to a validated patch; no date or completed repair is promised. See
-[contact-stability investigation](M100_FLUID_CONTACT_STABILITY.md).
+[contact-stability investigation](M100_FLUID_CONTACT_STABILITY.md). The current
+[Grid Water V2 source preview](GAME_WATER_PREVIEW.md) adds a game-resolution
+backend to the existing Fluid Volume component in Experimental builds, with
+normal editor, script, save and export integration. It does not alter Alpha's
+lock or the independent Basic Water path.
 
 ## Configure a project
 

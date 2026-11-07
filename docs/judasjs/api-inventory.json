@@ -3,6 +3,56 @@
   "authority": "src/scripting/Modules.json: compiled native modules, library fragments and shared value sources",
   "resultShapes": [
     {
+      "binding": "GridWater.state",
+      "declaration": "GridWaterState",
+      "fields": [
+        "quantity",
+        "initialQuantity",
+        "addedQuantity",
+        "removedQuantity",
+        "storedDisplacement",
+        "airMass",
+        "density",
+        "cellSize",
+        "cells",
+        "simulationMs",
+        "solverMs",
+        "preparationMs",
+        "couplingMs",
+        "geometryBakes",
+        "pressureMs",
+        "pressureResidual",
+        "pressureIterations",
+        "bytes",
+        "paused",
+        "error"
+      ],
+      "nativeFile": "src/scripting/modules/Water.cpp",
+      "needles": [
+        "\"quantity\"",
+        "\"initialQuantity\"",
+        "\"addedQuantity\"",
+        "\"removedQuantity\"",
+        "\"storedDisplacement\"",
+        "\"airMass\"",
+        "\"density\"",
+        "\"cellSize\"",
+        "\"cells\"",
+        "\"simulationMs\"",
+        "\"solverMs\"",
+        "\"preparationMs\"",
+        "\"couplingMs\"",
+        "\"geometryBakes\"",
+        "\"pressureMs\"",
+        "\"pressureResidual\"",
+        "\"pressureIterations\"",
+        "\"bytes\"",
+        "\"paused\"",
+        "\"error\""
+      ],
+      "reference": "docs/judasjs/water.md"
+    },
+    {
       "binding": "Entity.particleStats",
       "declaration": "ParticleRuntimeStats",
       "fields": [
@@ -1095,6 +1145,21 @@
       "symbol": "Fracture.remove",
       "minimum": 2,
       "maximum": 2
+    },
+    {
+      "symbol": "GridWater.changeVolume",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "GridWater.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "GridWater.impulse",
+      "minimum": 2,
+      "maximum": 3
     },
     {
       "symbol": "Joint.configure",
@@ -3039,6 +3104,17 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "Entity.gridWater",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "gridWaterExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.gridWater",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
       "symbol": "Entity.hasTag",
       "kinds": [
         "call"
@@ -3979,6 +4055,77 @@
       ],
       "type": "docs/judas.d.ts:Fracture.valid",
       "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "GridWater",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:GridWater",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.changeVolume",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "gridWaterChange"
+      ],
+      "type": "docs/judas.d.ts:GridWater.changeVolume",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:GridWater.constructor",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:GridWater.id",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.impulse",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "gridWaterImpulse"
+      ],
+      "type": "docs/judas.d.ts:GridWater.impulse",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "gridWaterState"
+      ],
+      "type": "docs/judas.d.ts:GridWater.state",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "gridWaterExists"
+      ],
+      "type": "docs/judas.d.ts:GridWater.valid",
+      "reference": "docs/judasjs/water.md"
     },
     {
       "symbol": "Joint",
@@ -7525,6 +7672,17 @@
       "reference": "docs/judasjs/effects-camera.md"
     },
     {
+      "symbol": "world.gridWaterRegions",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "gridWaterOwners"
+      ],
+      "type": "docs/judas.d.ts:world.gridWaterRegions",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
       "symbol": "world.origin",
       "kinds": [
         "get"
@@ -7805,6 +7963,11 @@
     "fractureState",
     "fractureValid",
     "gravitySample",
+    "gridWaterChange",
+    "gridWaterExists",
+    "gridWaterImpulse",
+    "gridWaterOwners",
+    "gridWaterState",
     "hasTag",
     "held",
     "impulse",

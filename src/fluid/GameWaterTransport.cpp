@@ -48,7 +48,10 @@ void Grid::AdvectVelocity(float dt) {
         }
         const auto p = .5f * (Center(f.a) + Center(f.b));
         const auto velocity = sample(p);
-        f.velocity = sample(p - dt * velocity)[f.axis] + dt * gravity[f.axis];
+        f.velocity = sample(p - dt * velocity)[f.axis] +
+                     dt * (gravity_.empty() ? gravity[f.axis]
+                                            : (glm::conjugate(settings_.rotation) *
+                                               (.5f * (gravity_[f.a] + gravity_[f.b])))[f.axis]);
     }
 }
 void Grid::Transport(float dt) {
@@ -120,10 +123,15 @@ void Grid::Transport(float dt) {
         const double upperGas = std::max(0., double(upper.capacity) - upper.water);
         if (lowerGas <= 0 || upperGas <= 0 || lower.capacity <= 0 || upper.capacity <= 0)
             continue;
-        const double quantity =
-            std::min({lowerGas, upper.water,
-                      drift * face.open *
-                          std::min(lowerGas / lower.capacity, upper.water / upper.capacity)});
+        const double quantity = std::min(
+            {lowerGas, upper.water,
+             (gravity_.empty() ? drift
+                               : std::sqrt(std::abs((glm::conjugate(settings_.rotation) *
+                                                     (.5f * (gravity_[face.a] + gravity_[face.b])))
+                                                        .y) *
+                                           settings_.cellSize) *
+                                     dt * area) *
+                 face.open * std::min(lowerGas / lower.capacity, upper.water / upper.capacity)});
         const double gasMass = lower.airMass * quantity / lowerGas;
         lower.water += quantity;
         upper.water -= quantity;

@@ -1023,6 +1023,28 @@ void DrawCombustible(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
 
 void DrawFluidVolume(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     SceneFluidVolumeComponent& f = *o.fluidVolume;
+    int backend=int(f.backend);
+    if(ImGui::Combo("Simulation backend",&backend,"Legacy particle research\0Grid water V2\0")){
+        doc.BeginEdit();f.backend=SceneFluidBackend(backend);
+        if(f.backend==SceneFluidBackend::Grid){f.spacing=.4f;f.countX=30;f.countY=12;f.countZ=20;f.emitter=false;}
+        doc.CommitEdit();
+    }
+    if(f.backend==SceneFluidBackend::Grid){
+        ImGui::TextWrapped("Experimental: conserved game-resolution water. Requires Project Settings > Experimental > Advanced Fluid Dynamics; Alpha remains locked.");
+        DragScalar(doc,"Cell size (m)",f.spacing,.01f,.02f,10);
+        int dimensions[3]={f.countX,f.countY,f.countZ};
+        if(ImGui::DragInt3("Domain cells",dimensions,1,2,256)){f.countX=dimensions[0];f.countY=dimensions[1];f.countZ=dimensions[2];}
+        TrackEdit(doc);
+        const auto cells=std::int64_t(f.countX)*f.countY*f.countZ;
+        ImGui::Text("Domain: %.2f x %.2f x %.2f m | %lld cells",f.countX*f.spacing,f.countY*f.spacing,f.countZ*f.spacing,(long long)cells);
+        if(cells>262144)ImGui::TextWrapped("Too many cells. Reduce the domain dimensions or increase cell size before Play.");
+        DragScalar(doc,"Initial fill height (m)",f.fillHeight,.05f,0,f.countY*f.spacing);
+        DragScalar(doc,"Density (kg/m3)",f.density,1,1,10000);
+        ImGui::ColorEdit3("Water colour",&f.color.x);TrackEdit(doc);
+        DragScalar(doc,"Opacity",f.opacity,.01f,0,1);
+        ImGui::TextWrapped("The owner is the bottom centre of a stationary domain. Rotate local +Y away from gravity. Cells below your resolution are approximate; use larger domains sparingly.");
+        return;
+    }
     DragScalar(doc, "Particle spacing (m)", f.spacing, 0.001f, 0.001f, 100.0f);
     int count[3] = {f.countX, f.countY, f.countZ};
     if (ImGui::DragInt3("Lattice count", count, 1.0f, 0, 1000)) {
@@ -1198,6 +1220,12 @@ ComponentEditor Make(const char* name, char indicator, std::optional<T> SceneObj
     editor.draw = draw;
     return editor;
 }
+ComponentEditor GridWaterEditor(){
+    auto editor=Make<SceneFluidVolumeComponent>("Fluid volume",'W',&SceneObject::fluidVolume,DrawFluidVolume);
+    editor.add=[](SceneObject& object){SceneFluidVolumeComponent component;component.backend=SceneFluidBackend::Grid;
+        component.spacing=.4f;component.countX=30;component.countY=12;component.countZ=20;object.fluidVolume=component;};
+    return editor;
+}
 }  // namespace
 
 namespace {
@@ -1364,7 +1392,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<SceneCelestialComponent>("Celestial", 'C', &SceneObject::celestial, DrawCelestial),
         Make<SceneAtmosphereComponent>("Atmosphere", 'A', &SceneObject::atmosphere, DrawAtmosphere),
         Make<SceneCombustibleComponent>("Combustible", 'F', &SceneObject::combustible, DrawCombustible),
-        Make<SceneFluidVolumeComponent>("Fluid volume", 'W', &SceneObject::fluidVolume, DrawFluidVolume),
+        GridWaterEditor(),
         Make<ScenePlayerStartComponent>("Player start", 'P', &SceneObject::playerStart, DrawPlayerStart),
     };
     return registry;

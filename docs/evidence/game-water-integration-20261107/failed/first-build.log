@@ -1,0 +1,187 @@
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntime.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntime.h
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeGeometry.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeInternal.h
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimePersistence.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimePresentation.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeQueries.cpp
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (2.2s)
+-- Generating done (4.6s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  0%] Built target judas_app_icon
+[  7%] Built target freetype
+[  7%] Built target judas_meshoptimizer
+[  7%] Built target judas_icu_build
+[  7%] Built target judas_jobs
+[  7%] Built target judas_audio_backend
+[  7%] Built target judas_quickjs
+[  7%] Built target judas_glad
+[  7%] Built target judas_navigation_backend
+[  7%] Built target judas_profiler
+[  7%] Built target judas_graphics_caps
+[  7%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  7%] Built target harfbuzz
+[  7%] Building CXX object CMakeFiles/judas_navigation_cook.dir/src/NavigationGeometryBake.cpp.o
+[  7%] Linking CXX static library libjudas_navigation_cook.a
+[ 15%] Built target judas_navigation_cook
+[ 15%] Built target judas_materials
+[ 15%] Linking CXX static library libjudas_build_identity.a
+[ 23%] Built target judas_build_identity
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/World.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Terrain.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Environment.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Rendering.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Navigation.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Input.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Network.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Mechanics.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Characters.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/PhysicsQueries.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/PhysicsBodies.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Animation.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Audio.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Particles.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/AI.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/BindingValues.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/CameraValues.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/SpriteValues.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/PlanarValues.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIDrag.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptAIReservations.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/AISensing.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptAISensing.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptUtilityAI.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/ScriptMetadata.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/render/ShaderLibrary.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/render/RenderTargets.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/particles/WorldParticles.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/particles/ParticlePersistence.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/authoring/Tilemap.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldTilemap.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldSpriteAnimation.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanarAuthoring.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectStarter.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWater.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptFaultNotice.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWater.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterAir.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterGeometry.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterPressure.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterTransport.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterCoupling.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterPersistence.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterSurface.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntime.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimeGeometry.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeGeometry.cpp: In member function ‘bool JudasWater::WorldSystem::Region::PrepareGeometry(RuntimeWorld&, JudasWater::Grid&, std::vector<JudasWater::SolidBox>&, std::vector<BodyHandle>&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeGeometry.cpp:124:34: error: no match for ‘operator==’ (operand types are ‘BodyHandle’ and ‘BodyHandle’)
+  124 |         same = current[i].handle == statics[i].handle &&
+      |                                  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeGeometry.cpp:124:34: note: there are 2 candidates
+  124 |         same = current[i].handle == statics[i].handle &&
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Scene.h:8,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntime.h:6,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeInternal.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/fluid/GameWaterRuntimeGeometry.cpp:3:
+/home/conner/Documents/GitHub/Project-Judas/src/Sprite.h:18:13: note: candidate 1: ‘bool operator==(const SpriteSettings&, const SpriteSettings&)’
+   18 | inline bool operator==(const SpriteSettings& a,const SpriteSettings& b) {
+      |             ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/Sprite.h:18:46: note: no known conversion for argument 1 from ‘BodyHandle’ to ‘const SpriteSettings&’
+   18 | inline bool operator==(const SpriteSettings& a,const SpriteSettings& b) {
+      |                        ~~~~~~~~~~~~~~~~~~~~~~^
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Scene.h:11:
+/home/conner/Documents/GitHub/Project-Judas/src/CameraLens.h:21:13: note: candidate 2: ‘bool operator==(const CameraLens&, const CameraLens&)’
+   21 | inline bool operator==(const CameraLens& a, const CameraLens& b) {
+      |             ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/CameraLens.h:21:42: note: no known conversion for argument 1 from ‘BodyHandle’ to ‘const CameraLens&’
+   21 | inline bool operator==(const CameraLens& a, const CameraLens& b) {
+      |                        ~~~~~~~~~~~~~~~~~~^
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:3523: CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimeGeometry.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:2200: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:24386: CMakeFiles/judas_game_water_tests.dir/rule] Error 2
+gmake: *** [Makefile:6674: judas_game_water_tests] Error 2

@@ -34,6 +34,7 @@ uniform mat4 uProjection;
 uniform mat3 uNormalMatrix;
 uniform vec4 uColor;
 uniform bool uBasicWater;
+uniform bool uWaterSurfaceMesh;
 uniform vec4 uBasicWaterWave; // amplitude, wavelength, speed, time
 uniform vec2 uBasicWaterSize;
 out vec4 vTint;
@@ -60,7 +61,7 @@ void main() {
     vec4 localPosition=skin*vec4(aLocalPos,1.0);
     mat3 linear=mat3(skin);
     vec3 normal=abs(determinant(linear))>1e-8?transpose(inverse(linear))*aLocalNormal:linear*aLocalNormal;
-    if(uBasicWater){
+    if(uBasicWater&&!uWaterSurfaceMesh){
         vec2 p=aLocalPos.xz*uBasicWaterSize;
         float k=6.2831853/uBasicWaterWave.y;
         float a=k*(p.x*.8+p.y*.6)+uBasicWaterWave.z*uBasicWaterWave.w;

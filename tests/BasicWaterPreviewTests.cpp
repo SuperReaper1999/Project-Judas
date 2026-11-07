@@ -66,6 +66,32 @@ int main(int argc,char** argv){
         for(auto& o:masked.Objects())if(o.basicWater)o.renderLayer=1;
         Check(Difference(frame(masked,true),dry)<.1f,"water still respects authored camera layer masks");
         Check(WriteRgbPng((out/(std::string("water-first-")+std::to_string(orientation)+".png")).string(),Width,Height,a),"save actual preview reproduction");
+        // Independent height oracle: a real physical mesh at y=2 must render
+        // like a prescribed plane at y=2, not a flattened mesh at y=0.
+        BasicWaterSettings style;style.halfExtents={2,2,1};style.waveAmplitude=0;
+        auto surface=[&](float height){MeshData data;
+            for(auto p:{glm::vec3(-2,height,-1),glm::vec3(-2,height,1),glm::vec3(2,height,1),
+                        glm::vec3(-2,height,-1),glm::vec3(2,height,1),glm::vec3(2,height,-1)})
+                data.vertices.push_back({shift+q*p,q*glm::vec3(0,1,0),{p.x,p.z}});
+            return r.CreateMesh(data);
+        };
+        const auto physicalMesh=surface(2),wrongHeightMesh=surface(0);
+        const auto angled=glm::lookAt(shift+q*glm::vec3(0,6,8),shift+q*glm::vec3(0,1,0),q*glm::vec3(0,1,0));
+        auto waterFrame=[&](MeshHandle mesh){
+            r.BeginFrame(Width,Height);r.SetCamera(angled,projection);r.BeginTransparentPass();
+            if(mesh.IsValid())r.DrawWaterSurface(mesh,style,q*glm::vec3(0,1,0));
+            else r.DrawBasicWater(style,shift+q*glm::vec3(0,2,0),q,0);
+            r.EndTransparentPass();r.EndFrame();Pixels pixels;r.CaptureFrame(Width,Height,pixels);return pixels;
+        };
+        const auto reference=waterFrame({}),physical=waterFrame(physicalMesh),wrong=waterFrame(wrongHeightMesh);
+        Check(physicalMesh.IsValid()&&wrongHeightMesh.IsValid(),"own physical-water test meshes");
+        Check(Difference(physical,reference)<.1f,"physical water retains its actual 3D height and existing water material");
+        Check(Difference(wrong,reference)>1.f,"height negative control detects a flattened physical surface");
+        Check(Difference(waterFrame({}),reference)<.1f,"physical draw restores the prescribed-water shader path");
+        std::printf("physical_surface orientation=%u correct_diff=%.6f wrong_height_diff=%.6f\n",orientation,Difference(physical,reference),Difference(wrong,reference));
+        WriteRgbPng((out/(std::string("physical-water-")+std::to_string(orientation)+".png")).string(),Width,Height,physical);
+        r.DestroyMesh(physicalMesh);r.DestroyMesh(wrongHeightMesh);
+
     }
     std::printf("BasicWaterPreviewTests: %u checks, %u failures\n",checks,failures);return failures?1:0;
 }

@@ -882,6 +882,9 @@ std::vector<BodyBox> PhysicsWorld::GetBodyBoxes(BodyHandle handle) const {
         return {};
     return BoxesAt(body->shape, body->rigidBody.position, body->rigidBody.orientation);
 }
+bool PhysicsWorld::IsQueryOnlyBody(BodyHandle handle) const {
+    const auto* body=m_impl->Get(handle);return body&&body->queryOnly;
+}
 
 std::vector<BodyBox> PhysicsWorld::GetPreviousBodyBoxes(BodyHandle handle) const {
     const Impl::Body *body = m_impl->Get(handle);

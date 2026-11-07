@@ -1,13 +1,15 @@
 #include "GameWater.h"
 #include "SaveStorage.h"
 #include "SceneFingerprint.h"
+#include <algorithm>
+#include <cmath>
 #include <filesystem>
 
 namespace JudasWater {
 void Grid::Persist(SaveArchive &a) {
-    std::uint32_t version = 1;
+    std::uint32_t version = 2;
     a(version);
-    a.Require(version == 1, "Unsupported game-water state version.");
+    a.Require(version == 1 || version == 2, "Unsupported game-water state version.");
     Settings settings = settings_;
     a(settings.cells, settings.cellSize, settings.origin, settings.rotation, settings.gravity,
       settings.density, settings.pressureIterations, settings.pressureTolerance,
@@ -61,7 +63,18 @@ void Grid::Persist(SaveArchive &a) {
     a(exteriorAirMass_, airInitialized_, sealed);
     a.Require(sealed <= cells_.size(), "Invalid saved static-cell diagnostics.");
     sealedAmbiguousCells_ = std::size_t(sealed);
+    if (version >= 2)
+        a(initialQuantity_, addedQuantity_, removedQuantity_);
+    else if (a.reading) {
+        initialQuantity_ = Quantity();
+        addedQuantity_ = removedQuantity_ = 0;
+    }
+    a.Require(initialQuantity_ >= 0 && addedQuantity_ >= 0 && removedQuantity_ >= 0,
+              "Invalid saved water source ledger.");
     if (a.reading) {
+        a.Require(std::abs(Quantity() - (initialQuantity_ + addedQuantity_ - removedQuantity_)) <=
+                      1e-6 * std::max(1., Quantity()),
+                  "Saved water quantity disagrees with its source ledger.");
         UpdateVelocity();
         UpdateHeights();
     }

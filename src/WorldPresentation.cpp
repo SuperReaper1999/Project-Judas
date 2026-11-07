@@ -14,6 +14,7 @@
 #include "CelestialGravity.h"
 #include "FirePresentation.h"
 #include "FluidSurface.h"
+#include "fluid/GameWaterRuntime.h"
 #include "GameSession.h"
 #include "LightTransforms.h"
 #include "PilotAttachment.h"
@@ -307,6 +308,9 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
         MeshData mesh=s.dynamicSurface?s.dynamicSurface->Mesh(alpha):s.surface;for(auto& v:mesh.vertices){v.position=pose.position+pose.rotation*v.position;v.normal=pose.rotation*v.normal;}r.SetRenderLayer(world.RenderLayerOf(s.entity));r.DrawTransientSurface(mesh,{.035f,.34f,.72f},.76f);}
       r.SetRenderLayer(0);for(const auto& [id,p]:world.Liquids().Parcels())r.DrawSphere(p.position,float(std::cbrt(3*p.volume/(4*3.141592653589793))),{.05f,.5f,.9f},.85f);
       r.EndTransparentPass();
+    }
+    if(const auto* grid=world.GridWater()){
+        r.BeginTransparentPass();grid->Draw(r);r.EndTransparentPass();
     }
 
     bool anyCompound = false;
@@ -775,10 +779,12 @@ void SetAuthoredSceneAppearance(Renderer& r, const Scene& scene, ResourceManager
 }
 }
 
-void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager& assets) {
+void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager& assets,bool basicWater) {
     if (r.IsShadowPass()) return;
     const bool hasWater = std::any_of(scene.Objects().begin(), scene.Objects().end(),
-        [](const SceneObject& o) { return o.renderVisible && o.basicWater && o.basicWater->enabled; });
+        [basicWater](const SceneObject& o) { return o.renderVisible &&
+            ((basicWater&&o.basicWater&&o.basicWater->enabled)||
+             (o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid&&o.fluidVolume->fillHeight>0)); });
     if (!hasWater) return;
     // All opaque geometry, including neighbouring regions, must be submitted
     // before this pass. Transparent water deliberately does not write depth.
@@ -788,10 +794,16 @@ void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager&
     r.SetMaterialBindings({});
     r.BeginTransparentPass();
     for (const auto& o : scene.Objects()) {
-        if (!o.renderVisible || !o.basicWater) continue;
+        if (!o.renderVisible) continue;
         r.SetRenderLayer(o.renderLayer);
-        r.DrawBasicWater(*o.basicWater, o.transform.position,
+        if(basicWater&&o.basicWater)r.DrawBasicWater(*o.basicWater, o.transform.position,
                         glm::normalize(o.transform.rotation), 0);
+        if(o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid&&o.fluidVolume->fillHeight>0){
+            const auto& f=*o.fluidVolume;BasicWaterSettings style;style.color=f.color;style.opacity=f.opacity;
+            style.halfExtents={f.HalfExtents().x*o.transform.scale.x,f.fillHeight*o.transform.scale.y,f.HalfExtents().z*o.transform.scale.z};
+            style.waveAmplitude=0;
+            r.DrawBasicWater(style,o.transform.position+o.transform.rotation*glm::vec3(0,f.fillHeight*o.transform.scale.y,0),o.transform.rotation,0);
+        }
     }
     r.SetRenderLayer(0);
     r.EndTransparentPass();
@@ -846,7 +858,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
             }
         }
         // Authored liquid is shown as its particle lattice bounds.
-        if (o.fluidVolume && !r.IsShadowPass()) {
+        if (o.fluidVolume && o.fluidVolume->backend==SceneFluidBackend::Particles && !r.IsShadowPass()) {
             r.SetMaterialBindings({});
             const SceneFluidVolumeComponent& f = *o.fluidVolume;
             const glm::vec3 half(0.5f * f.spacing * static_cast<float>(f.countX),
@@ -860,7 +872,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
     r.SetMaterialBindings({});
     r.EndMeshBatch();
     r.FlushSprites();
-    if (basicWater) DrawAuthoredWaterSurfaces(r, scene, assets);
+    if(basicWater)DrawAuthoredWaterSurfaces(r, scene, assets);
 }
 
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene) {

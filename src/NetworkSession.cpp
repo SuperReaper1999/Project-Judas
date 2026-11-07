@@ -30,7 +30,7 @@ const char* RepresentationIssue(const SceneObject* d) {
         {bool(d->planet), "planet state is not replicated"},
         {bool(d->liquidBasin), "liquid reservoir state is not replicated"},
         {bool(d->liquidContainer), "liquid container state is not replicated"},
-        {bool(d->fluidVolume), "legacy fluid state is not replicated"},
+        {bool(d->fluidVolume), "advanced fluid state is not replicated (including Grid Water V2)"},
         {d->body && d->body->shape == SceneShape::Terrain, "terrain body state is not replicated"},
     };
     for (const auto& restriction : restrictions)

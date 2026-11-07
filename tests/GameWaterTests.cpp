@@ -151,6 +151,32 @@ int main() {
     const auto beforeInvalidStep = State(full);
     Check(!full.Step(0, error) && State(full) == beforeInvalidStep,
           "invalid intervals reject before mutating physical state");
+    Grid sources;
+    sources.Initialize(settings, error);
+    sources.BakeStatic({});
+    const auto initialSources = sources.FillBox({0, 0, 0}, {2, .75f, 2});
+    const auto added = sources.ChangeWater({1, 1, 1}, .5f, .02);
+    const auto removed = sources.ChangeWater({1, 1, 1}, .5f, -.01);
+    Check(std::abs(added - .02) < 1e-10 && std::abs(removed + .01) < 1e-10 &&
+              std::abs(sources.Quantity() - (initialSources + added + removed)) < 1e-10,
+          "volume sources return accepted signed receipts and preserve their "
+          "ledger");
+    const auto sourceBytes = State(sources);
+    Grid sourceRead;
+    SaveArchive readSources(sourceBytes);
+    sourceRead.Persist(readSources);
+    readSources.Finish();
+    Check(State(sourceRead) == sourceBytes && sourceRead.AddedQuantity() == added &&
+              sourceRead.RemovedQuantity() == -removed,
+          "cold state retains source and drain accounting");
+    Check(full.ChangeWater({1, 1, 1}, 1, .1) == 0 &&
+              std::abs(full.Quantity() - fullQuantity) < 1e-8,
+          "a full receiver applies source backpressure without inventing or "
+          "losing water");
+    Check(sources.NearbyMass({1e12f, 0, 0}, .5f) == 0 &&
+              sources.Velocity({1e12f, 0, 0}) == glm::vec3(0),
+          "distant finite queries reject before narrowing coordinates to integer "
+          "cells");
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
 }

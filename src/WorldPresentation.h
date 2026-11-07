@@ -73,7 +73,7 @@ void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& 
 void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources, bool basicWater);
 // For composed editor views: submit all scenes with basicWater=false, then draw
 // their water surfaces after all opaque terrain/region geometry is complete.
-void DrawAuthoredWaterSurfaces(Renderer& renderer, const Scene& scene, ResourceManager& resources);
+void DrawAuthoredWaterSurfaces(Renderer& renderer, const Scene& scene, ResourceManager& resources,bool basicWater=true);
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);
 
 struct WeatherSample;

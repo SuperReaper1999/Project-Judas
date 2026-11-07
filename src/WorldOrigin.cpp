@@ -8,6 +8,7 @@
 #include "OrientedGravityVolume.h"
 #include "OriginTranslation.h"
 #include "OriginLimits.h"
+#include "fluid/GameWaterRuntime.h"
 #include <cmath>
 namespace {
 bool finite(glm::dvec3 p) {
@@ -150,6 +151,7 @@ bool RuntimeWorld::CommitOrigin() {
     }
     m_pendingOrigin.reset();
     m_physics.ShiftOrigin(delta);
+    if(m_gridWater)m_gridWater->ShiftOrigin(delta);
     if (m_liquid)
         m_liquid->ShiftOrigin(delta);
     if (m_atmosphere)

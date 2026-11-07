@@ -190,8 +190,8 @@ bool ValidateStructure(const WorldState& state, std::string& error) {
 }  // namespace
 
 bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
-    if (world.HasFluid()) {
-        error = "Active particle fluids cannot be saved by legacy world-state deltas; "
+    if (world.HasFluid() || world.GridWater()) {
+        error = "Active fluids cannot be saved by legacy world-state deltas; "
                 "particle continuation is not recorded";
         return false;
     }
@@ -212,8 +212,8 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
 }
 
 WorldState CaptureWorldState(const RuntimeWorld& world) {
-    if (world.HasFluid()) {
-        throw std::logic_error("Active particle fluids cannot be saved by legacy world-state deltas; "
+    if (world.HasFluid() || world.GridWater()) {
+        throw std::logic_error("Active fluids cannot be saved by legacy world-state deltas; "
                                "particle continuation is not recorded");
     }
     for(const auto& o:world.ScriptObjects())if(o.body&&o.body->shape==SceneShape::Planar){throw std::logic_error("Native 2D requires modern save slots");}

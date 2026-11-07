@@ -1,0 +1,4 @@
+FAIL overlapping independent domains reject before double coupling
+rotated runtime median/p95/worst ms 2.42288 2.57805 3.62359
+radial runtime median/p95/worst ms 2.49206 2.66294 3.82792
+39 checks, 1 failures
