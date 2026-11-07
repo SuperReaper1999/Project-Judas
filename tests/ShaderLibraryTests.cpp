@@ -33,28 +33,39 @@ int main() {
     // Mesh vertex advances from 0xa489fa0ee7ef5e6f for the explicit physical-water
     // mesh flag. BasicWaterPreviewTests compares the 2-m physical surface with an
     // independent prescribed plane and a wrong-height negative control.
+    // Terrain V2 deliberately advances mesh vertex/fragment and shadow vertex
+    // from 4b73bb5e4885e341 / 61e1ebd9f7bdef94 / 0ef81ea9763f020d.
+    // The shared lossless height/seam deformation is tested against actual GPU
+    // colour-pass depth and an independent CPU-height shadow reference; ordinary
+    // geometry/state restoration and existing runtime render controls remain.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0x4b73bb5e4885e341ull, 0x61e1ebd9f7bdef94ull, 0x0ef81ea9763f020dull, 0xc7555650c92125ebull,
+        0xb1f08758c8089b60ull, 0xe02de1398961fd82ull, 0xa707161edcfa99daull, 0xc7555650c92125ebull,
         0x83393b059e8364efull, 0x28a3c2a8126fe9e3ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);
+        if (source && Fingerprint(source) != approved[i])
+            std::fprintf(stderr, "Shader identity %s: expected %016llx, actual %016llx\n",
+                         Identity(builtins[i]), static_cast<unsigned long long>(approved[i]),
+                         static_cast<unsigned long long>(Fingerprint(source)));
         Check(source && Fingerprint(source) == approved[i],
               "canonical built-in matches its reviewed portable shader identity");
         std::string prepared, error;
         Check(PrepareSource(source, Profile::Desktop330, prepared, error) && prepared == source &&
                   error.empty(),
               "desktop 330 preparation preserves all canonical source bytes");
-        Check(PrepareSource(source, Profile::Desktop450, prepared, error) &&
-                  prepared == std::string("#version 450 core") + std::string(source).substr(17),
-              "desktop 450 profile changes only the declared version before view-block preparation");
-        Check(PrepareSource(source, Profile::ES300, prepared, error) &&
-                  prepared.find("#version 300 es\nprecision highp float;") == 0 &&
-                  prepared.find("samplerBuffer uBones") == std::string::npos &&
-                  std::strcmp(Identity(builtins[i]), "unknown built-in shader") != 0,
-              "ES source has explicit precision, portable palette representation and named identity");
+        Check(
+            PrepareSource(source, Profile::Desktop450, prepared, error) &&
+                prepared == std::string("#version 450 core") + std::string(source).substr(17),
+            "desktop 450 profile changes only the declared version before view-block preparation");
+        Check(
+            PrepareSource(source, Profile::ES300, prepared, error) &&
+                prepared.find("#version 300 es\nprecision highp float;") == 0 &&
+                prepared.find("samplerBuffer uBones") == std::string::npos &&
+                std::strcmp(Identity(builtins[i]), "unknown built-in shader") != 0,
+            "ES source has explicit precision, portable palette representation and named identity");
     }
 
     const std::string palette =
@@ -83,17 +94,18 @@ int main() {
     const auto previous = prepared;
     for (const auto source : {std::string_view{}, std::string_view("void main(){}"),
                               std::string_view(native450), std::string_view(expectedES)}) {
-        Check(
-            !PrepareSource(source, Profile::Desktop330, prepared, error) && prepared == previous &&
-                !error.empty(),
-            "invalid or newer/native input is rejected without changing the published portable source");
+        Check(!PrepareSource(source, Profile::Desktop330, prepared, error) &&
+                  prepared == previous && !error.empty(),
+              "invalid or newer/native input is rejected without changing the published portable "
+              "source");
     }
     std::string embeddedNul = "#version 330 core\n";
     embeddedNul.push_back('\0');
     embeddedNul += "void main(){}";
     Check(!PrepareSource(embeddedNul, Profile::Desktop450, prepared, error) && prepared == previous,
           "embedded NUL cannot silently truncate the driver input");
-    Check(!PrepareSource(palette, static_cast<Profile>(255), prepared, error) && prepared == previous,
+    Check(!PrepareSource(palette, static_cast<Profile>(255), prepared, error) &&
+              prepared == previous,
           "unknown profile is rejected transactionally");
     Check(!Source(static_cast<Builtin>(255)) &&
               std::strcmp(Identity(static_cast<Builtin>(255)), "unknown built-in shader") == 0,

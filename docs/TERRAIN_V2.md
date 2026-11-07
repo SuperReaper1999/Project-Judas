@@ -72,9 +72,10 @@ gameplay acceptance of the new terrain remains pending.
 
 ## Remaining approved work
 
-The initial flat runtime keeps all chunks resident (maximum 1024); native paged
-sources, shared render grids, LOD, budgets and multi-view residency are not yet
-implemented. Planet precision and existing LOD remain intact, but planetary
+The flat runtime still keeps all physical chunks resident (maximum 1024). Shared
+render grids and camera-union LOD now exist; native paged sources, independent
+physical residency and budgeted multi-view streaming remain work. Planet
+precision and existing LOD remain intact, but planetary
 excavation is not implemented by this slice. Fresh-source creation/import UI,
 high-bit-depth heightmaps, broader material authoring, incremental navigation,
 fluid/particle integrations, representative consumer scenes and final SDK
@@ -89,3 +90,51 @@ to an ordinary model remains unsupported. Source bounds, journal and extraction
 budgets fail explicitly, keeping the previous complete revision.
 
 Main, supported releases and the Advanced Fluid lock remain unchanged.
+
+## Shared-grid rendering checkpoint
+
+Ordinary terrain renders from one reusable grid per cell resolution and a
+lossless binary32 height image. It no longer allocates a separate GPU vertex
+buffer for every ordinary chunk. Excavated chunks retain their actual volume
+meshes. Camera interests are collected before shadow and colour passes, including
+split-screen, secondary and orthographic cameras. Collision remains at its
+authored resolution and does not depend on camera visibility or visual LOD.
+
+`TerrainLod.*` owns a worker-built geometric-error hierarchy. Selection uses a
+two-pixel projected-error target; this is a distance-based error estimator, not
+a universal pixel-difference guarantee for arbitrary projections or materials.
+Fine edges interpolate against coarse neighbours. The excavation seam and its
+neighbour ring remain full detail. No skirts cover tunnel openings. Colour and
+shadow shaders share the same portable height/edge code. Runtime batch extraction
+validates immutable source arrays once, and collision identities hash dirty
+geometry rather than serializing the complete landscape after each local edit.
+
+The desktop geometry tests compare actual framebuffer depth against CPU source
+reconstruction and actual shadow depth against independently built CPU-height
+geometry, in ordinary and rotated/translated frames. Maximum height error is
+0.0000072 m; shadow depths match exactly at tested samples. Both OpenGL 4.6 and
+portable 3.3 pass. A real motor traversing 20 metres across chunk seams/corners
+matches the monolithic-collider trajectory exactly across 300 supported steps.
+
+The one-kilometre landscape benchmark renders two independent cameras from the
+same 513×513 source, alternating paths over 30 pairs:
+
+| Camera case | Full-mesh CPU median / p95 | Shared-grid CPU median / p95 | Submitted triangles before → after |
+| --- | --- | --- | --- |
+| Distant | 11.632 / 11.702 ms | 0.063 / 0.067 ms | 1,048,576 → 4,096 |
+| Closer | 5.858 / 6.347 ms | 0.364 / 0.370 ms | 526,848 → 28,672 |
+
+Mesh/height payload is 22,863,872 → 1,075,004 bytes. Common material images are
+excluded on both paths. These are terrain submission/rendering measurements,
+not total game FPS, simulation performance, or a RAM reduction. GPU elapsed
+queries also include bubbles while the CPU submits work, so their large
+reduction must not be described as a pure GPU-arithmetic speedup. The small
+completed-tunnel scene remains approximately 0.70 ms for its main-camera GPU
+scope; its cost is essentially unchanged. Raw paired results and controls are
+under `docs/evidence/terrain-v2/stage2`.
+
+Still pending: temporal LOD transitions, physical streaming/native pages and
+larger integrated consumer scenes. A source page exceeding the device's texture
+size fails before allocation with an actionable request to split its regions.
+This checkpoint does not certify Android/browser terrain rendering or qualify
+the complete five-stage Terrain V2 delivery.

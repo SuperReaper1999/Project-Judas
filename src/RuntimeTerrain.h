@@ -8,6 +8,7 @@ class RuntimeWorld;
 struct CollisionAsset;
 #include "terrain/TerrainStatus.h"
 namespace TerrainV2 { struct Source; class Runtime; }
+struct PlanetView;
 // Optional world-owned mutable instances. Workers own immutable copies only.
 // Pending work never replaces the last committed collision/navigation/mesh.
 class RuntimeTerrain {
@@ -19,6 +20,8 @@ public:
  bool OwnsGenerated(BodyHandle)const;
  bool IsLandscape(uint64_t id)const;
  void Synchronize();
+ bool HasLandscapes()const;
+ void PrepareViews(const std::vector<PlanetView>&,glm::dvec3 origin);
  std::vector<BodyHandle> Bodies(uint64_t id)const;
  bool Brush(uint64_t,glm::vec3 worldPoint,const VolumeBrush&,std::string&);
  const RuntimeTerrainStatus* Status(uint64_t)const;

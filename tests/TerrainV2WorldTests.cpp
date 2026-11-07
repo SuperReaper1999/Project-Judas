@@ -2,7 +2,9 @@
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "ScriptSystem.h"
+#include "UniformGravity.h"
 #include "WorldPersistence.h"
+#include "terrain/TerrainMesher.h"
 #include "terrain/TerrainSource.h"
 #include <chrono>
 #include <filesystem>
@@ -110,6 +112,67 @@ export default class {
     resources.Shutdown();
     fs::remove_all(root);
 }
+void SeamTravel(JobSystem &jobs) {
+    AssetDatabase assets;
+    ResourceManager resources(nullptr, &assets, &jobs);
+    RuntimeWorld world;
+    world.legacyGameplay = false;
+    std::string error;
+    auto scene = SceneSource();
+    Check(world.Build(scene, &resources, error, nullptr, nullptr, true), "build seam-travel world");
+    auto source = TerrainV2::Create(65, 65, .5f, 8);
+    Check(world.LiveTerrain().CreateLandscape(1, source, error),
+          "prepare many adjacent collision chunks");
+    Wait(world, 1);
+    std::vector<TerrainV2::ChunkKey> keys;
+    for (unsigned z = 0; z < 8; ++z)
+        for (unsigned x = 0; x < 8; ++x)
+            keys.push_back({x, z});
+    std::vector<TerrainV2::Chunk> chunks;
+    Check(TerrainV2::BuildChunks(source, keys, chunks, error),
+          "prepare matched monolithic reference");
+    MeshData mesh;
+    for (const auto &chunk : chunks) {
+        auto base = unsigned(mesh.vertices.size());
+        for (auto v : chunk.mesh.vertices) {
+            v.position += chunk.anchor;
+            mesh.vertices.push_back(v);
+        }
+        for (auto i : chunk.mesh.indices)
+            mesh.indices.push_back(base + i);
+    }
+    auto collision = std::make_shared<CollisionAsset>();
+    Check(CookCollision(mesh, {}, *collision, error), "cook matched monolithic terrain");
+    PhysicsWorld reference;
+    reference.Init();
+    reference.CreateShape(Shape::Cooked(collision, ""), {{0, 0, 0}, {1, 0, 0, 0}}, false, 0, .7f,
+                          0);
+    CharacterMotor chunkMotor, referenceMotor;
+    chunkMotor.Reset({-10, .94f, 0}, {1, 0, 0, 0});
+    referenceMotor.Reset({-10, .94f, 0}, {1, 0, 0, 0});
+    UniformGravity gravity({0, -9.81f, 0});
+    unsigned supported = 0;
+    float maximumDifference = 0, maximumHeightError = 0;
+    for (unsigned step = 0; step < 300; ++step) {
+        chunkMotor.velocity.x = referenceMotor.velocity.x = 4;
+        world.Physics().Step(1.f / 60);
+        reference.Step(1.f / 60);
+        chunkMotor.Step(world.Physics(), gravity, 1.f / 60);
+        referenceMotor.Step(reference, gravity, 1.f / 60);
+        supported += chunkMotor.result.supported;
+        maximumDifference =
+            std::max(maximumDifference, glm::length(chunkMotor.position - referenceMotor.position));
+        maximumHeightError = std::max(maximumHeightError, std::abs(chunkMotor.position.y - .92f));
+    }
+    Check(supported > 294 && maximumHeightError < .1f,
+          "real motor crosses multiple seams and corner contacts without falling or spikes");
+    Check(maximumDifference < .001f,
+          "chunked support matches the monolithic physical trajectory within one millimetre");
+    Check(chunkMotor.position.x > 9.8f,
+          "motor genuinely traverses twenty metres rather than sticking at a seam");
+    std::cout << "METRIC seam_supported_steps=" << supported
+              << " maximum_monolithic_trajectory_difference_m=" << maximumDifference << '\n';
+}
 } // namespace
 int main(int argc, char **argv) {
     try {
@@ -130,6 +193,7 @@ int main(int argc, char **argv) {
             Check(!w.Physics().Raycast({-.3f, 1.6f, -7}, {0, 0, 1}, 14).hit,
                   "cold restored tunnel is physically open");
         } else {
+            SeamTravel(jobs);
             IndependentScriptOwners(jobs);
             Check(w.LiveTerrain().CreateLandscape(1, Hillside(), error),
                   "create landscape without navigation dependency: " + error);

@@ -3,6 +3,7 @@
   "tests": [
     {"name":"terrain-v2-geometry","target":"judas_terrain_v2_tests","groups":["terrain","physics"]},
     {"name":"terrain-v2-world","target":"judas_terrain_v2_world_tests","groups":["terrain","physics","lifecycle"]},
+    {"name":"terrain-v2-lod","target":"judas_terrain_v2_lod_tests","groups":["terrain","render"]},
     {"name":"game-water","target":"judas_game_water_tests","groups":["water","game-water"]},
     {"name":"game-water-runtime","target":"judas_game_water_runtime_tests","groups":["water","game-water","lifecycle"]},
     {"name":"game-water-script","target":"judas_game_water_script_tests","groups":["water","game-water","scripting"]},

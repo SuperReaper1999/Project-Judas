@@ -1,4 +1,5 @@
 #include "ShaderLibrary.h"
+#include "TerrainShader.h"
 
 #include <cstdint>
 #include <cstdio>
@@ -47,6 +48,7 @@ out vec2 vUV1;
 
 
 
+)" JUDAS_TERRAIN_VERTEX_GLSL R"(
 
 void main() {
     mat4 model=uInstanced?aInstanceModel:uModel;
@@ -70,6 +72,7 @@ void main() {
         vec2 d=uBasicWaterWave.x*k*(.7*cos(a)*vec2(.8,.6)+.513*cos(b)*vec2(-.6,.8));
         normal=vec3(-d.x*uBasicWaterSize.x,1,-d.y*uBasicWaterSize.y);
     }
+    if(uTerrainGrid){localPosition.y=terrainGridHeight(aUV);normal=terrainGridNormal(aUV);}
     vWorldNormal = normalMatrix * normal;
     vec3 tangent=mat3(model)*linear*aTangent.xyz;
     vWorldTangent=vec4(tangent,aTangent.w*(determinant(mat3(model)*linear)<0.0?-1.0:1.0));
@@ -79,7 +82,7 @@ void main() {
     // Milestone 9 directional light never needed this, since a directional
     // light's contribution doesn't depend on fragment position at all.
     vWorldPos = vec3(model * localPosition);
-    vUV = aUV;vUV1=aUV1;
+    vUV = aUV;vUV1=uTerrainGrid?terrainSamplePoint(aUV)/(uTerrainDimensions-vec2(1.0)):aUV1;
     gl_Position = uProjection * uView * model * localPosition;
 }
 )";
@@ -184,13 +187,14 @@ vec3 terrainSample(sampler2D layer,vec3 p,vec3 blend) {
     return texture(layer,p.yz*.25).rgb*blend.x+texture(layer,p.xz*.25).rgb*blend.y+texture(layer,p.xy*.25).rgb*blend.z;
 }
 vec3 terrainBase(vec3 n) {
-    vec3 blend=pow(abs(n),vec3(4.0));blend/=max(dot(blend,vec3(1.0)),0.0001);
-    vec4 w=texture(uTexture,vUV1);w/=max(dot(w,vec4(1.0)),0.0001);
+    vec3 localNormal=normalize(mat3(uTerrainFromWorld)*n);
+    vec3 blend=pow(abs(localNormal),vec3(4.0));blend/=max(dot(blend,vec3(1.0)),0.0001);
+    vec2 weightSize=vec2(textureSize(uTexture,0));
+    vec4 w=texture(uTexture,(clamp(vUV1,vec2(0),vec2(1))*(weightSize-vec2(1))+.5)/weightSize);w/=max(dot(w,vec4(1.0)),0.0001);
     // Texture phase lives in source-local coordinates, so shifting the world
     // origin never makes landscape texture detail swim.
     vec3 p=(uTerrainFromWorld*vec4(vWorldPos,1.0)).xyz;
-    vec3 localNormal=normalize(mat3(uTerrainFromWorld)*n);
-    float exposed=smoothstep(.12,.6,1.0-abs(localNormal.y));
+    float exposed=max(smoothstep(.12,.6,1.0-abs(localNormal.y)),1.0-smoothstep(-.1,.25,localNormal.y));
     w=mix(w,vec4(0.0,.12,.88,0.0),exposed);
     return terrainSample(uMR,p,blend)*uTerrainColours[0]*w.x+
            terrainSample(uNormal,p,blend)*uTerrainColours[1]*w.y+
@@ -352,11 +356,12 @@ uniform bool uInstanced;
 layout(location=9) in mat4 aInstanceModel;
 layout(location=13) in vec4 aInstanceTint;
 uniform mat4 uLightViewProj;
+)" JUDAS_TERRAIN_VERTEX_GLSL R"(
 
 void main() {
     mat4 skin=mat4(1.0);
     if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
-    mat4 model=uInstanced?aInstanceModel:uModel;shadowUV=aUV;shadowUV1=aUV1;gl_Position = uLightViewProj * model * skin * vec4(aLocalPos, 1.0);
+    mat4 model=uInstanced?aInstanceModel:uModel;shadowUV=aUV;shadowUV1=aUV1;vec4 local=skin*vec4(aLocalPos,1.0);if(uTerrainGrid)local.y=terrainGridHeight(aUV);gl_Position = uLightViewProj * model * local;
 }
 )";
 

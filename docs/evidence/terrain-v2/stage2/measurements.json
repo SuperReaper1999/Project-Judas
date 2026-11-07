@@ -1,0 +1,110 @@
+{
+  "recordedUtc": "2026-11-07T19:34:57.272160+00:00",
+  "baseCommit": "6932fe0b744b3ca16c44384ef0fa10e0cf282185",
+  "hardware": "Ryzen5 5600 / GTX970 / NVIDIA580.178.04",
+  "resolution": [
+    1280,
+    800
+  ],
+  "samples": 30,
+  "order": "alternating paired paths; no compiler work overlapped measurements",
+  "scope": "same-engine unique full-resolution mesh submission versus shared grid and geometric LOD, same source, two cameras. Not total-game FPS. Material images excluded from both buffer estimates. GPU elapsed includes CPU submission bubbles.",
+  "runs": {
+    "near": [
+      {
+        "camera_distance_case": "near"
+      },
+      {
+        "workload": "1024m-square landscape; two independent cameras; identical source; 2px geometric-error target",
+        "source_samples": 263169,
+        "reference_meshes": 1024,
+        "selected_patches": 43,
+        "reference_geometry_bytes": 22863872,
+        "shared_grid_and_height_bytes": 1075004,
+        "metadata_prepare_ms": 14.4173,
+        "reference_prepare_and_upload_ms": 1474.56,
+        "height_upload_ms": 1.30852
+      },
+      {
+        "path": "unique_full_resolution_meshes",
+        "samples": 30,
+        "cpu_submission_ms": {
+          "median": 5.85796,
+          "p95": 6.34679,
+          "worst": 6.45752
+        },
+        "gpu_ms": {
+          "median": 5.68173,
+          "p95": 6.14435,
+          "worst": 6.32189
+        },
+        "draws": 1029,
+        "triangles": 526848
+      },
+      {
+        "path": "shared_grid_with_camera_union_LOD",
+        "samples": 30,
+        "cpu_submission_ms": {
+          "median": 0.363556,
+          "p95": 0.370469,
+          "worst": 0.374086
+        },
+        "gpu_ms": {
+          "median": 0.58896,
+          "p95": 0.598688,
+          "worst": 0.604448
+        },
+        "draws": 56,
+        "triangles": 28672
+      }
+    ],
+    "far": [
+      {
+        "camera_distance_case": "far"
+      },
+      {
+        "workload": "1024m-square landscape; two independent cameras; identical source; 2px geometric-error target",
+        "source_samples": 263169,
+        "reference_meshes": 1024,
+        "selected_patches": 4,
+        "reference_geometry_bytes": 22863872,
+        "shared_grid_and_height_bytes": 1075004,
+        "metadata_prepare_ms": 14.5761,
+        "reference_prepare_and_upload_ms": 1465.41,
+        "height_upload_ms": 1.44346
+      },
+      {
+        "path": "unique_full_resolution_meshes",
+        "samples": 30,
+        "cpu_submission_ms": {
+          "median": 11.6318,
+          "p95": 11.7018,
+          "worst": 12.1371
+        },
+        "gpu_ms": {
+          "median": 11.5051,
+          "p95": 11.5524,
+          "worst": 11.9225
+        },
+        "draws": 2048,
+        "triangles": 1048576
+      },
+      {
+        "path": "shared_grid_with_camera_union_LOD",
+        "samples": 30,
+        "cpu_submission_ms": {
+          "median": 0.063309,
+          "p95": 0.067457,
+          "worst": 0.06925
+        },
+        "gpu_ms": {
+          "median": 0.122816,
+          "p95": 0.125568,
+          "worst": 0.133472
+        },
+        "draws": 8,
+        "triangles": 4096
+      }
+    ]
+  }
+}

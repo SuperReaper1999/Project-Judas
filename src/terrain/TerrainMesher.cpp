@@ -1,4 +1,4 @@
-#include "TerrainSource.h"
+#include "TerrainMesher.h"
 #include "TerrainTopology.h"
 #include <algorithm>
 #include <cmath>
@@ -45,11 +45,9 @@ MeshVertex Vertex(const Field &field, glm::vec3 p, glm::vec3 anchor) {
     return v;
 }
 } // namespace
-bool BuildChunk(const Source &input, ChunkKey key, Chunk &output, std::string &error,
-                const std::function<bool()> &cancelled) {
+static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::string &error,
+                         const std::function<bool()> &cancelled) {
     try {
-        if (!Validate(input, error))
-            return false;
         if (key.x >= input.ChunksX() || key.z >= input.ChunksZ())
             throw std::invalid_argument("terrain chunk outside source");
         const Source &s = input;
@@ -266,5 +264,30 @@ bool BuildChunk(const Source &input, ChunkKey key, Chunk &output, std::string &e
         error = e.what();
         return false;
     }
+}
+bool BuildChunk(const Source &source, ChunkKey key, Chunk &output, std::string &error,
+                const std::function<bool()> &cancelled) {
+    return Validate(source, error) && ExtractChunk(source, key, output, error, cancelled);
+}
+bool BuildChunks(const Source &source, const std::vector<ChunkKey> &keys,
+                 std::vector<Chunk> &output, std::string &error,
+                 const std::function<bool()> &cancelled) {
+    if (!Validate(source, error))
+        return false;
+    std::vector<Chunk> prepared;
+    prepared.reserve(keys.size());
+    for (auto key : keys) {
+        if (cancelled && cancelled()) {
+            error = "terrain preparation cancelled";
+            return false;
+        }
+        Chunk chunk;
+        if (!ExtractChunk(source, key, chunk, error, cancelled))
+            return false;
+        prepared.push_back(std::move(chunk));
+    }
+    output = std::move(prepared);
+    error.clear();
+    return true;
 }
 } // namespace TerrainV2

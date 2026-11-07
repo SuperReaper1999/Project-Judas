@@ -1,0 +1,11 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+{"camera_distance_case":"far"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":4,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":14.5761,"reference_prepare_and_upload_ms":1465.41,"height_upload_ms":1.44346}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":11.6318,"p95":11.7018,"worst":12.1371},"gpu_ms":{"median":11.5051,"p95":11.5524,"worst":11.9225},"draws":2048,"triangles":1048576}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.063309,"p95":0.067457,"worst":0.06925},"gpu_ms":{"median":0.122816,"p95":0.125568,"worst":0.133472},"draws":8,"triangles":4096}

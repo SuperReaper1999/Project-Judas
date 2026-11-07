@@ -3,6 +3,7 @@
 #include "ModelArchive.h"
 #include "Project.h"
 #include "SceneFingerprint.h"
+#include "TerrainMesher.h"
 #include "TerrainPreview.h"
 #include "TerrainSource.h"
 #include "TerrainTopology.h"
@@ -96,20 +97,23 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                 {path.string(), {}, exists ? Read(path.string()) : std::string{}, exists});
         }
         MeshData mesh;
+        std::vector<TerrainV2::ChunkKey> keys;
         for (unsigned z = 0; z < source.ChunksZ(); ++z)
-            for (unsigned x = 0; x < source.ChunksX(); ++x) {
-                TerrainV2::Chunk c;
-                if (!TerrainV2::BuildChunk(source, {x, z}, c, error))
-                    throw std::runtime_error(error);
-                const auto offset = unsigned(mesh.vertices.size());
-                for (auto v : c.mesh.vertices) {
-                    v.position += c.anchor;
-                    v.uv = v.uv1; // Ordinary preview atlas; native terrain uses tiled layers.
-                    mesh.vertices.push_back(v);
-                }
-                for (auto i : c.mesh.indices)
-                    mesh.indices.push_back(offset + i);
+            for (unsigned x = 0; x < source.ChunksX(); ++x)
+                keys.push_back({x, z});
+        std::vector<TerrainV2::Chunk> prepared;
+        if (!TerrainV2::BuildChunks(source, keys, prepared, error))
+            throw std::runtime_error(error);
+        for (auto &c : prepared) {
+            const auto offset = unsigned(mesh.vertices.size());
+            for (auto v : c.mesh.vertices) {
+                v.position += c.anchor;
+                v.uv = v.uv1; // Ordinary preview atlas; native terrain uses tiled layers.
+                mesh.vertices.push_back(v);
             }
+            for (auto i : c.mesh.indices)
+                mesh.indices.push_back(offset + i);
+        }
         if (!source.edits.empty())
             TerrainV2::ConformChunkTopology(mesh, source.spacing);
         mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1, "terrain");

@@ -28,6 +28,8 @@ bool RuntimeTerrain::OwnsGenerated(BodyHandle h)const {return OwnerOf(h)!=0;}
 bool RuntimeTerrain::IsLandscape(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&bool(it->second.landscape);}
 std::vector<BodyHandle> RuntimeTerrain::Bodies(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&it->second.landscape?it->second.landscape->Bodies():std::vector<BodyHandle>{};}
 void RuntimeTerrain::Synchronize(){for(auto& [_,r]:records)if(r.landscape)r.landscape->Synchronize();}
+bool RuntimeTerrain::HasLandscapes()const{for(const auto& [_,r]:records)if(r.landscape)return true;return false;}
+void RuntimeTerrain::PrepareViews(const std::vector<PlanetView>& views,glm::dvec3 origin){for(auto& [_,r]:records)if(r.landscape)r.landscape->PrepareViews(views,origin);}
 bool RuntimeTerrain::CreateLandscape(uint64_t id,TerrainV2::Source source,std::string& error){
  if(auto it=records.find(id);it!=records.end()){
   if(!it->second.landscape||it->second.landscape->State().ready||it->second.landscape->State().busy){error="terrain owner already initialized";return false;}

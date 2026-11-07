@@ -2,6 +2,7 @@
 #include "JobSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
+#include "TerrainLod.h"
 #include "TerrainSource.h"
 #include "TerrainStatus.h"
 #include <map>
@@ -10,6 +11,7 @@
 class RuntimeWorld;
 struct CollisionAsset;
 struct SceneObject;
+struct PlanetView;
 namespace TerrainV2 {
 // World-thread owner. Jobs capture immutable source/results, never this object
 // or a live world. The existing RuntimeTerrain participant owns its lifetime,
@@ -29,6 +31,7 @@ class Runtime {
     bool Owns(BodyHandle) const;
     std::vector<BodyHandle> Bodies() const;
     void Synchronize();
+    void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin);
 
   private:
     struct Prepared {
@@ -40,6 +43,7 @@ class Runtime {
         std::vector<Prepared> chunks;
         double milliseconds = 0;
         std::string error;
+        std::shared_ptr<const HeightLod> lod;
     };
     struct Resident {
         Prepared geometry;
@@ -54,6 +58,9 @@ class Runtime {
     std::map<ChunkKey, Resident> chunks;
     RuntimeTerrainStatus status;
     mutable TextureHandle weightTexture;
+    mutable TextureHandle heightTexture;
+    std::shared_ptr<const HeightLod> lod;
+    std::vector<HeightPatch> drawPatches;
     mutable uint64_t appearanceRevision = 0;
     const SceneObject *Definition() const;
     BodyHandle Seed() const;

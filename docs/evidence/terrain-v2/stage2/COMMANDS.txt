@@ -1,0 +1,17 @@
+From repository root, Release build (j2 on this8GB host):
+cmake -S . -B build
+cmake --build build -j2 --target judas_terrain_v2_tests judas_terrain_v2_world_tests judas_terrain_v2_lod_tests judas_terrain_v2_render_tests judas_terrain_v2_render_benchmark judas_terrain_v2_editor_tests judas_shader_library_tests judas_particle_collision_tests judas_runtime_render_tests judas
+python3 scripts/prealpha_validate.py --build-dir build --test terrain-v2-geometry --test terrain-v2-world --test terrain-v2-lod --output /tmp/terrain-v2-qualification-NEW
+build/judas_terrain_v2_render_tests
+JUDAS_GL_PROFILE=portable build/judas_terrain_v2_render_tests
+build/judas_runtime_render_tests
+build/judas_shader_library_tests
+build/judas_particle_collision_tests
+build/judas_terrain_v2_editor_tests /tmp/judas-terrain-v2-editor-NEW
+build/judas_terrain_v2_world_tests --write /tmp/terrain-v2-cold-NEW.json
+build/judas_terrain_v2_world_tests --read /tmp/terrain-v2-cold-NEW.json
+# Run isolated, on native desktop GPU; no concurrent builds:
+build/judas_terrain_v2_render_benchmark
+build/judas_terrain_v2_render_benchmark near
+# Actual game save/quit/reload commands use the Stage1 game-cold scripts,
+# on a fresh disposable project copy; inspect screenshots and real service status.

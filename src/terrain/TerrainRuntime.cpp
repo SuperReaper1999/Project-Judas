@@ -4,8 +4,11 @@
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "SceneFingerprint.h"
+#include "TerrainMesher.h"
 #include "WorldPresentation.h"
+#include <algorithm>
 #include <chrono>
+#include <cstring>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace TerrainV2 {
@@ -14,9 +17,40 @@ using Clock = std::chrono::steady_clock;
 double Milliseconds(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
 }
+std::string GeometryFingerprint(const Chunk &chunk) {
+    // Collision identity depends on this chunk's actual local geometry, not
+    // unrelated heights/materials elsewhere in the landscape. Canonical bits
+    // keep cold restoration portable and avoid serializing the entire source
+    // for every local edit.
+    std::string bytes = "Judas.Terrain.ChunkGeometry.1";
+    bytes.reserve(bytes.size() + chunk.mesh.vertices.size() * 12 + chunk.mesh.indices.size() * 4 +
+                  16);
+    auto integer = [&](uint32_t v) {
+        for (unsigned b = 0; b < 4; ++b)
+            bytes.push_back(char(v >> (8 * b)));
+    };
+    integer(chunk.key.x);
+    integer(chunk.key.z);
+    integer(uint32_t(chunk.mesh.vertices.size()));
+    integer(uint32_t(chunk.mesh.indices.size()));
+    for (const auto &vertex : chunk.mesh.vertices)
+        for (unsigned axis = 0; axis < 3; ++axis) {
+            float value = vertex.position[axis];
+            if (value == 0)
+                value = 0;
+            uint32_t bits;
+            std::memcpy(&bits, &value, 4);
+            integer(bits);
+        }
+    for (auto index : chunk.mesh.indices)
+        integer(index);
+    return SceneFingerprintSha256(bytes);
+}
 } // namespace
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
 Runtime::~Runtime() {
+    if (heightTexture.IsValid() && world.Resources() && world.Resources()->GetRenderer())
+        world.Resources()->GetRenderer()->DestroyTexture(heightTexture);
     if (weightTexture.IsValid() && world.Resources() && world.Resources()->GetRenderer())
         world.Resources()->GetRenderer()->DestroyTexture(weightTexture);
     if (job.IsValid() && world.Resources() && world.Resources()->Jobs()) {
@@ -110,35 +144,50 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
         error = "terrain requires the project job system";
         return false;
     }
+    if (auto *renderer = resources->GetRenderer()) {
+        const auto limit = unsigned(std::max(0, renderer->Capabilities().limits.textureSize));
+        if (value->samplesX > limit || value->samplesZ > limit) {
+            error = "landscape sample page exceeds this device's texture limit; split the "
+                    "source into smaller streamed regions";
+            return false;
+        }
+    }
     auto work = std::make_shared<Work>();
     work->source = std::move(value);
+    if (source && source->samplesX == work->source->samplesX &&
+        source->samplesZ == work->source->samplesZ &&
+        source->chunkCells == work->source->chunkCells &&
+        source->spacing == work->source->spacing && source->heights == work->source->heights)
+        work->lod = lod;
     const auto pendingCount = keys.size();
     auto handle = resources->Jobs()->Submit(
         [work, keys = std::move(keys)](JobContext &context) {
             const auto start = Clock::now();
-            const auto sourceHash = SceneFingerprintSha256(Serialize(*work->source));
-            for (auto key : keys) {
+            if (!work->lod)
+                work->lod = std::make_shared<const HeightLod>(*work->source);
+            std::vector<Chunk> prepared;
+            if (!BuildChunks(*work->source, keys, prepared, work->error,
+                             [&] { return context.CancelRequested(); })) {
+                if (context.CancelRequested())
+                    context.ReportCancelled();
+                else
+                    context.SetError(work->error);
+                return;
+            }
+            for (auto &chunk : prepared) {
                 if (context.CancelRequested()) {
                     context.ReportCancelled();
                     return;
                 }
                 Prepared p;
-                if (!BuildChunk(*work->source, key, p.chunk, work->error,
-                                [&] { return context.CancelRequested(); })) {
-                    if (context.CancelRequested())
-                        context.ReportCancelled();
-                    else
-                        context.SetError(work->error);
-                    return;
-                }
+                p.chunk = std::move(chunk);
                 if (!p.chunk.mesh.indices.empty()) {
                     p.collision = std::make_shared<CollisionAsset>();
                     if (!CookCollision(p.chunk.mesh, {}, *p.collision, work->error)) {
                         context.SetError(work->error);
                         return;
                     }
-                    p.collision->sourceFingerprint = SceneFingerprintSha256(
-                        sourceHash + "/" + std::to_string(key.x) + "/" + std::to_string(key.z));
+                    p.collision->sourceFingerprint = GeometryFingerprint(p.chunk);
                 }
                 work->chunks.push_back(std::move(p));
             }
@@ -231,7 +280,19 @@ bool Runtime::Publish(std::string &error) {
     // The ordinary owner is only an identity/placement anchor once the first
     // terrain revision exists. Never leave an uncut heightfield underneath it.
     physics.SetBodyEnabled(seed, false);
+    auto *renderer = world.Resources() ? world.Resources()->GetRenderer() : nullptr;
+    if (renderer && lod != pending->lod && heightTexture.IsValid()) {
+        renderer->DestroyTexture(heightTexture);
+        heightTexture = {};
+    }
+    if (renderer && source && source->weights != pending->source->weights &&
+        weightTexture.IsValid()) {
+        renderer->DestroyTexture(weightTexture);
+        weightTexture = {};
+    }
     source = pending->source;
+    lod = pending->lod;
+    drawPatches.clear();
     status.ready = true;
     ++status.revision;
     status.prepareMs = pending->milliseconds;
@@ -250,6 +311,29 @@ bool Runtime::Publish(std::string &error) {
     Synchronize();
     status.publishMs = Milliseconds(start);
     return true;
+}
+void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin) {
+    if (!source || !lod)
+        return;
+    const auto *d = Definition();
+    if (!d)
+        return;
+    std::vector<View> localViews;
+    localViews.reserve(views.size());
+    for (const auto &v : views) {
+        View local;
+        local.position = glm::vec3(glm::conjugate(glm::dquat(d->transform.rotation)) *
+                                   (v.eye - origin - glm::dvec3(d->transform.position)));
+        local.pixelsPerRadian = v.pixels / (2 * std::tan(v.fov * .5));
+        if (v.orthographicHeight > 0)
+            local.orthographicPixelsPerMetre = v.pixels / v.orthographicHeight;
+        localViews.push_back(local);
+    }
+    std::set<ChunkKey> volume;
+    for (const auto &[k, r] : chunks)
+        if (r.geometry.chunk.volumetric)
+            volume.insert(k);
+    drawPatches = lod->Select(localViews, volume);
 }
 void Runtime::Advance() {
     if (!pending)
@@ -297,6 +381,8 @@ void Runtime::Draw(Renderer &renderer) const {
         weightTexture = renderer.CreateTexture(image);
         appearanceRevision = status.revision;
     }
+    if (!heightTexture.IsValid())
+        heightTexture = renderer.CreateTexture(HeightImage(*source));
     std::array<TextureHandle, 4> layers;
     for (unsigned i = 0; i < 4; ++i)
         if (!source->layerTextures[i].empty()) {
@@ -307,9 +393,38 @@ void Runtime::Draw(Renderer &renderer) const {
                                   glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
                                                glm::mat4_cast(d->transform.rotation)));
     RendererProfileScope gpu(renderer, "Terrain V2 geometry");
+    std::vector<HeightPatch> fallback;
+    if (drawPatches.empty() && lod) {
+        std::set<ChunkKey> volume;
+        for (const auto &[k, r] : chunks)
+            if (r.geometry.chunk.volumetric)
+                volume.insert(k);
+        fallback = lod->Select({}, volume);
+    }
+    const auto &patches = drawPatches.empty() ? fallback : drawPatches;
+    for (const auto &patch : patches) {
+        const auto k = patch.key;
+        auto it = chunks.find({k.x, k.z});
+        if (k.level == 0 && it != chunks.end() && it->second.geometry.chunk.volumetric)
+            continue;
+        const float stride = float(1u << k.level),
+                    width = source->chunkCells * source->spacing * stride;
+        glm::vec3 anchor(k.x * source->chunkCells * source->spacing -
+                             (source->samplesX - 1) * source->spacing * .5f,
+                         0,
+                         k.z * source->chunkCells * source->spacing -
+                             (source->samplesZ - 1) * source->spacing * .5f);
+        renderer.DrawTerrainGrid(
+            heightTexture, source->chunkCells,
+            {float(k.x * source->chunkCells), float(k.z * source->chunkCells), stride,
+             float(source->chunkCells)},
+            patch.edgeStrides, {float(source->samplesX), float(source->samplesZ)}, source->spacing,
+            d->transform.position + d->transform.rotation * anchor, d->transform.rotation, width,
+            patch.minimum, patch.maximum, d->render->color, d->render->alpha);
+    }
     for (const auto &[_, r] : chunks) {
         auto &c = r.geometry.chunk;
-        if (c.mesh.indices.empty())
+        if (c.mesh.indices.empty() || !c.volumetric)
             continue;
         if (!r.mesh.IsValid())
             r.mesh = renderer.CreateMesh(c.mesh);
