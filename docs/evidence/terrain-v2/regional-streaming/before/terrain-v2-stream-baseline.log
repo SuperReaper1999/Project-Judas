@@ -1,0 +1,5 @@
+{"case":"native-region","visit":0,"load_ms":496.888,"largest_unit_ms":474.55,"live_accounted_bytes":17688,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":1,"load_ms":939.906,"largest_unit_ms":480.525,"live_accounted_bytes":17688,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":2,"load_ms":922.361,"largest_unit_ms":480.525,"live_accounted_bytes":17688,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":3,"load_ms":874.353,"largest_unit_ms":480.525,"live_accounted_bytes":17688,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":4,"load_ms":882.762,"largest_unit_ms":480.525,"live_accounted_bytes":17688,"terrain_geometry_estimate_bytes":28390676}

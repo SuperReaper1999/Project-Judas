@@ -1,0 +1,31 @@
+{
+  "source_parent": "a64c454a70189992603ade26525f24e2f57c9241",
+  "samples": [
+    513,
+    513
+  ],
+  "spacing_m": 2,
+  "chunks": 1024,
+  "full_triangle_count": 524288,
+  "world_origin": [
+    1000000000000.0,
+    1000000000000.0,
+    -1000000000000.0
+  ],
+  "visits": 5,
+  "human_acceptance": false,
+  "initial_largest_unit_ms": 486.924,
+  "lifetime_largest_unit_ms": 516.636,
+  "live_reported_bytes": 17688,
+  "geometry_source_estimate_bytes": 28390676,
+  "qualification": {
+    "write": 67,
+    "separate_process_read": 13,
+    "post_extraction_world": 93,
+    "post_extraction_surface": 44,
+    "post_extraction_interactions": 85,
+    "post_extraction_stream": 67,
+    "post_extraction_cold": 13
+  },
+  "notes": "Largest-unit status is cumulative across visits, not an independent per-visit sample. First fixture used an unsupported capture origin and is retained as a fixture failure. Performance correction not yet implemented."
+}

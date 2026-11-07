@@ -5,6 +5,7 @@
 #include "TerrainBrush.h"
 #include "TerrainLod.h"
 #include "TerrainPersistence.h"
+#include "TerrainPreparation.h"
 #include "TerrainSolid.h"
 #include "TerrainSource.h"
 #include "TerrainStatus.h"
@@ -41,22 +42,13 @@ class Runtime {
     void BindAsset(std::string id, std::string fingerprint);
 
   private:
-    struct Prepared {
-        Chunk chunk;
-        std::shared_ptr<CollisionAsset> collision;
-    };
-    struct Work {
-        std::shared_ptr<const Source> source;
-        std::vector<Prepared> chunks;
-        double milliseconds = 0;
-        std::string error;
-        std::shared_ptr<const HeightLod> lod;
+    struct Work : Preparation {
         bool replaceAll = false;
         std::string baseAsset, baseFingerprint;
         RasterChanges raster;
     };
     struct Resident {
-        Prepared geometry;
+        PreparedChunk geometry;
         BodyHandle body;
         mutable MeshHandle mesh;
     };

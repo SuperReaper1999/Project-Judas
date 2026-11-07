@@ -3,48 +3,17 @@
 #include "PerformanceProfiler.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
-#include "SceneFingerprint.h"
 #include "TerrainAsset.h"
 #include "TerrainMesher.h"
 #include "WorldPresentation.h"
 #include <algorithm>
 #include <chrono>
-#include <cstring>
 
 namespace TerrainV2 {
 namespace {
 using Clock = std::chrono::steady_clock;
 double Milliseconds(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
-}
-std::string GeometryFingerprint(const Chunk &chunk) {
-    // Collision identity depends on this chunk's actual local geometry, not
-    // unrelated heights/materials elsewhere in the landscape. Canonical bits
-    // keep cold restoration portable and avoid serializing the entire source
-    // for every local edit.
-    std::string bytes = "Judas.Terrain.ChunkGeometry.1";
-    bytes.reserve(bytes.size() + chunk.mesh.vertices.size() * 12 + chunk.mesh.indices.size() * 4 +
-                  16);
-    auto integer = [&](uint32_t v) {
-        for (unsigned b = 0; b < 4; ++b)
-            bytes.push_back(char(v >> (8 * b)));
-    };
-    integer(chunk.key.x);
-    integer(chunk.key.z);
-    integer(uint32_t(chunk.mesh.vertices.size()));
-    integer(uint32_t(chunk.mesh.indices.size()));
-    for (const auto &vertex : chunk.mesh.vertices)
-        for (unsigned axis = 0; axis < 3; ++axis) {
-            float value = vertex.position[axis];
-            if (value == 0)
-                value = 0;
-            uint32_t bits;
-            std::memcpy(&bits, &value, 4);
-            integer(bits);
-        }
-    for (auto index : chunk.mesh.indices)
-        integer(index);
-    return SceneFingerprintSha256(bytes);
 }
 } // namespace
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
@@ -168,36 +137,12 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
     const auto pendingCount = keys.size();
     auto handle = resources->Jobs()->Submit(
         [work, keys = std::move(keys)](JobContext &context) {
-            const auto start = Clock::now();
-            if (!work->lod)
-                work->lod = std::make_shared<const HeightLod>(*work->source);
-            std::vector<Chunk> prepared;
-            if (!BuildChunks(*work->source, keys, prepared, work->error,
-                             [&] { return context.CancelRequested(); })) {
+            if (!PrepareGeometry(*work, keys, [&] { return context.CancelRequested(); })) {
                 if (context.CancelRequested())
                     context.ReportCancelled();
                 else
                     context.SetError(work->error);
-                return;
             }
-            for (auto &chunk : prepared) {
-                if (context.CancelRequested()) {
-                    context.ReportCancelled();
-                    return;
-                }
-                Prepared p;
-                p.chunk = std::move(chunk);
-                if (!p.chunk.mesh.indices.empty()) {
-                    p.collision = std::make_shared<CollisionAsset>();
-                    if (!CookCollision(p.chunk.mesh, {}, *p.collision, work->error)) {
-                        context.SetError(work->error);
-                        return;
-                    }
-                    p.collision->sourceFingerprint = GeometryFingerprint(p.chunk);
-                }
-                work->chunks.push_back(std::move(p));
-            }
-            work->milliseconds = Milliseconds(start);
         },
         JobPriority::High, "terrain V2 dirty chunks");
     if (!handle.IsValid()) {
