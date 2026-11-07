@@ -275,3 +275,28 @@ versioned native references. Paint leaves real collision handles intact; sculpt
 replaces affected support atomically. See the scripting reference for defaults,
 coordinate frames and the explicit changed-sample save budget. This does not yet
 qualify navigation/fluid publication or planetary surface sculpting.
+
+## Source-owned solid integration
+
+`TerrainSolid` provides immutable, current-frame solid snapshots from committed
+heights and the excavation journal. Grid water uses those to distinguish earth
+from air; generated triangle meshes remain collision boundaries and are not
+misinterpreted as closed volumes. Paint preserves the geometry epoch, while
+sculpting, excavation, replacement and placement changes invalidate occupancy.
+Region visibility, origin changes and cold restoration use the same ownership.
+The query follows the source field at the water backend's voxel resolution; it
+is not a promise of microscopic equivalence to every extracted triangle.
+Source queries currently scan the bounded edit journal, so heavily edited large
+water regions still need representative cost qualification.
+
+The integrated native control passes85checks, including real Particles V2 sweeps
+through the newly excavated opening, coordinated terrain/water saving, origin
+shifts and a rotated radial-gravity chart. The old triangle-shell interpretation
+reported240m³ free capacity in an independent192m³ layout; source occupancy now
+reports192m³ and retains64m³ of water during excavation and flow. Existing water
+and particle suites pass unchanged. The new body index checks world ownership
+as well as handles, preventing another world's ID from aliasing a terrain.
+
+This does not change the Alpha fluid lock, default water policy, pressure/transport
+solver or liquid research. It does not yet complete native navigation publication,
+planetary excavation, physical residency or final Terrain V2 qualification.

@@ -1,0 +1,2 @@
+DIAGNOSTIC old_boundary_capacity_m3=240 source_capacity_m3=192
+FAIL preserved old boundary-only interpretation exposes false underground fluid capacity after 27 checks

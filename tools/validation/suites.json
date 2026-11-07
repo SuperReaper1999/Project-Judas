@@ -7,6 +7,7 @@
     {"name":"terrain-v2-assets","target":"judas_terrain_v2_asset_tests","groups":["terrain","assets"]},
     {"name":"terrain-v2-components","target":"judas_terrain_v2_component_tests","groups":["terrain","lifecycle","persistence"]},
     {"name":"terrain-v2-surface","target":"judas_terrain_v2_surface_tests","groups":["terrain","physics","persistence","scripting"]},
+    {"name":"terrain-v2-interactions","target":"judas_terrain_v2_interaction_tests","groups":["terrain","physics","lifecycle","fluids"]},
     {"name":"terrain-v2-generation","target":"judas_terrain_v2_generation_tests","groups":["terrain","tooling"]},
     {"name":"terrain-v2-creation","target":"judas_terrain_v2_creation_tests","groups":["terrain","editor"],"args":["{output}/terrain-v2-creation"]},
     {"name":"game-water","target":"judas_game_water_tests","groups":["water","game-water"]},

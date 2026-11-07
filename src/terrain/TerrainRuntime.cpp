@@ -67,10 +67,13 @@ std::vector<BodyHandle> Runtime::Bodies() const {
     return out;
 }
 bool Runtime::Owns(BodyHandle body) const {
-    for (const auto &[_, r] : chunks)
-        if (r.body.IsValid() && r.body.id == body.id)
-            return true;
-    return false;
+    return body.IsValid() && body.world == Seed().world && bodyIds.count(body.id);
+}
+SolidSnapshot Runtime::Solid() const {
+    const auto *d = Definition();
+    if (!source || !d || !d->body || !d->body->enabled || d->body->sensor || !world.IsPublished(owner))
+        return {};
+    return {owner, geometryRevision, source, d->transform.position, d->transform.rotation, geometryEpoch};
 }
 const SceneObject *Runtime::Definition() const {
     auto it = world.m_scriptDefinitions.find(owner);
@@ -275,9 +278,13 @@ bool Runtime::Publish(std::string &error) {
         auto &p = pending->chunks[i];
         auto &r = chunks[p.chunk.key];
         ReleaseMesh(r);
-        if (r.body.IsValid())
+        if (r.body.IsValid()) {
+            bodyIds.erase(r.body.id);
             physics.DestroyBody(r.body);
+        }
         r.body = staged[i];
+        if (r.body.IsValid())
+            bodyIds.insert(r.body.id);
         r.geometry = std::move(p);
     }
     if (pending->replaceAll) {
@@ -287,8 +294,10 @@ bool Runtime::Publish(std::string &error) {
         for (auto it = chunks.begin(); it != chunks.end();)
             if (!retained.count(it->first)) {
                 ReleaseMesh(it->second);
-                if (it->second.body.IsValid())
+                if (it->second.body.IsValid()) {
+                    bodyIds.erase(it->second.body.id);
                     physics.DestroyBody(it->second.body);
+                }
                 it = chunks.erase(it);
             } else
                 ++it;
@@ -296,6 +305,10 @@ bool Runtime::Publish(std::string &error) {
     // The ordinary owner is only an identity/placement anchor once the first
     // terrain revision exists. Never leave an uncut heightfield underneath it.
     physics.SetBodyEnabled(seed, false);
+    if (!pending->chunks.empty() || !source) {
+        ++geometryRevision;
+        geometryEpoch = std::make_shared<const unsigned char>(0);
+    }
     CommitPresentation();
     source = pending->source;
     baseAsset = pending->baseAsset;

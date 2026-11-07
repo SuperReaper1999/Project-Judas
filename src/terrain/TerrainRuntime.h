@@ -5,10 +5,12 @@
 #include "TerrainBrush.h"
 #include "TerrainLod.h"
 #include "TerrainPersistence.h"
+#include "TerrainSolid.h"
 #include "TerrainSource.h"
 #include "TerrainStatus.h"
 #include <map>
 #include <memory>
+#include <unordered_set>
 
 class RuntimeWorld;
 struct CollisionAsset;
@@ -33,6 +35,7 @@ class Runtime {
     const RuntimeTerrainStatus &State() const { return status; }
     bool Owns(BodyHandle) const;
     std::vector<BodyHandle> Bodies() const;
+    SolidSnapshot Solid() const;
     void Synchronize();
     void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin);
     void BindAsset(std::string id, std::string fingerprint);
@@ -63,6 +66,9 @@ class Runtime {
     std::shared_ptr<Work> pending;
     JobHandle job;
     std::map<ChunkKey, Resident> chunks;
+    std::unordered_set<unsigned> bodyIds;
+    uint64_t geometryRevision = 0;
+    std::shared_ptr<const void> geometryEpoch;
     RuntimeTerrainStatus status;
     std::string baseAsset, baseFingerprint;
     RasterChanges raster;

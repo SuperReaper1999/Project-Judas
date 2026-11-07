@@ -1,0 +1,38 @@
+PASS sphere/box impact matches independent plane time, normal and surface witness
+PASS initial containment reports actual sphere/box penetration
+PASS finite box side negative control has no infinite response plane
+PASS rounded finite corner uses sphere distance rather than an expanded-box false contact
+PASS bounce plus Coulomb friction matches independent one-way impulse
+PASS slide removes only closing normal speed
+PASS separating particle receives no collision impulse
+PASS query outside the captured region is explicit, never a false miss
+PASS exhausted collision policy is explicit, never a false miss
+PASS radius-zero swept particle retains analytic ray timing
+PASS repeat collision is deterministic and cannot mutate the authoritative rigid world
+PASS long sweep detects a two-millimetre wall without endpoint sampling tunnelling
+PASS cooked terrain triangle reports native front-face feature and known impact time
+PASS finite terrain triangle negative control cannot collide beyond its edge
+PASS one-sided cooked triangle rejects back-to-front traversal
+PASS recapture publishes a fresh sharing token while immutable copies retain the same sample identity
+PASS unchanged immutable geometry retains anchor identity across captures
+PASS native terrain collision replacement succeeds
+PASS same-body geometry replacement invalidates old particle attachment
+PASS published replacement changes actual physical collision and geometry revision
+PASS retained snapshot owns its old geometry after native publication replaces it
+PASS reused native body slot cannot inherit an old generation's particle attachment
+PASS two-sided geometry independently accepts the reverse side with the opposite normal
+PASS failed capture is transactional and retains the previous accepted collision sample
+PASS failed capture cannot replace the published sharing identity
+PASS moving collider uses real native prescribed motion
+PASS departed collider's recorded path hits a stationary particle inside a small domain
+PASS moving-boundary bounce uses relative velocity rather than a static wall
+PASS body-local attachment follows the captured center-of-mass trajectory
+PASS rotating thin bar hits between equivalent endpoint geometries with actual angular surface motion
+PASS insufficient moving-sweep budget is diagnosed instead of skipping an interior impact
+PASS native concave owner rejects unsupported motion atomically before snapshot publication
+PASS rejected motion leaves the original finite static collision usable
+PASS snapshot honors the actual native layer and tag query policy
+PASS excluded-tag control removes geometry before particle work
+PASS origin translation preserves actual collision time, normal and local geometry
+PASS static radial CPU fallback follows actual terrain normal without a universal Y-up plane
+Particle collision: 37 checks, 0 failures

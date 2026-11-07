@@ -112,6 +112,7 @@ bool WorldSystem::Build(const Scene &scene, std::string &error) {
         if (!region->PrepareGeometry(world_, region->grid, solids, moving, error))
             return false;
         region->statics.swap(region->pendingStatics);
+        region->terrains.swap(region->pendingTerrains);
         region->grid.Fill([&](glm::vec3 p) {
             return region->grid.ToLocal(p).y < component.fillHeight * scale.x;
         });
@@ -158,6 +159,7 @@ bool WorldSystem::Step(float seconds, std::string &error) {
         }
         std::swap(region.grid, region.staging);
         region.statics.swap(region.pendingStatics);
+        region.terrains.swap(region.pendingTerrains);
         ++region.revision;
         const auto coupling = std::chrono::steady_clock::now();
         for (auto body : moving)
@@ -175,6 +177,8 @@ void WorldSystem::ShiftOrigin(glm::dvec3 delta) {
         region->gravitySignature.clear();
         region->statics.clear();
         region->pendingStatics.clear();
+        region->terrains.clear();
+        region->pendingTerrains.clear();
         ++region->revision;
     }
 }

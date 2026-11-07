@@ -7,7 +7,7 @@
 class RuntimeWorld;
 struct CollisionAsset;
 #include "terrain/TerrainStatus.h"
-namespace TerrainV2 { struct Source; struct SurfaceBrush; class Runtime; }
+namespace TerrainV2 { struct Source; struct SurfaceBrush; struct SolidSnapshot; class Runtime; }
 struct PlanetView;
 // Optional world-owned mutable instances. Workers own immutable copies only.
 // Pending work never replaces the last committed collision/navigation/mesh.
@@ -24,6 +24,7 @@ public:
  bool HasLandscapes()const;
  void PrepareViews(const std::vector<PlanetView>&,glm::dvec3 origin);
  std::vector<BodyHandle> Bodies(uint64_t id)const;
+ std::vector<TerrainV2::SolidSnapshot> Solids(glm::vec3 minimum,glm::vec3 maximum)const;
  bool Brush(uint64_t,glm::vec3 worldPoint,const VolumeBrush&,std::string&);
  bool Surface(uint64_t,glm::vec3 worldPoint,const TerrainV2::SurfaceBrush&,std::string&);
  const RuntimeTerrainStatus* Status(uint64_t)const;

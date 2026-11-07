@@ -1,0 +1,25 @@
+{
+  "timestamp_utc": "2026-11-07T22:48:58.874773+00:00",
+  "source_parent": "c5fde88d706af95a107dba326c8875bec7c9faa5",
+  "human_acceptance": false,
+  "controls": {
+    "integrated_native_terrain": 85,
+    "terrain_world": 93,
+    "terrain_surface": 44,
+    "terrain_component": 35,
+    "water_math": 28,
+    "water_runtime": 41,
+    "water_script": 5,
+    "particle_world": 113,
+    "particle_collision": 37
+  },
+  "known_answer": {
+    "domain_m3": 256,
+    "solid_m3": 64,
+    "correct_free_capacity_m3": 192,
+    "old_boundary_only_free_capacity_m3": 240,
+    "initial_water_m3": 64,
+    "excavated_free_capacity_m3": 194.906
+  },
+  "scope": "Native source occupancy, actual generated collision, fluids, particle sweeps, saves, origin shift, regional visibility and rotated radial gravity. Voxel quadrature remains the water backend contract; source density is not an exact distance to extracted triangles. No platform/human certification or universal navigation/residency claim."
+}

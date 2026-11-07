@@ -50,6 +50,8 @@ void WorldSystem::Persist(SaveArchive &archive) {
             region.gravitySignature.clear();
             region.error.clear();
             region.pendingStatics.clear();
+            region.terrains.clear();
+            region.pendingTerrains.clear();
             region.paused = saved.paused;
             ++region.revision;
         }

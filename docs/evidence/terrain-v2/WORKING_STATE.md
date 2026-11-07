@@ -21,35 +21,31 @@ Restricted default commands see llvmpipe. Use require_escalated for native deskt
 GPU tests/profiles. User explicitly corrected the unavailable-driver assumption.
 Use j2 on the8GB host, one build at a time, no timing during compiler activity.
 
-## Active continuation — runtime surface qualification
+## Active continuation — solid integration qualified
 
-Authoring is committed and pushed at b63d707e (native predecessor58e73071).
-Runtime surface sculpt/paint is implemented and qualified, not yet committed.
-TerrainSurface.cpp reuses ApplySurfaceBrush and the existing async publication.
-Paint schedules no geometry and preserves collider handles. JTRREF3 references
-retain exact sparse changed samples plus original base identity and edit journal;
-JTRREF2 remains readable. Changed-index/weights and native budget failures retain
-old state. Current persistent sample override limit65536 is explicit and tested.
+Authoring b63d707e and runtime surface persistence c5fde88d are pushed.
+Source-owned solid integration is qualified, not yet committed. TerrainSolid.*
+retains immutable source/rigid pose and a geometry incarnation token. Grid water
+samples actual source interior/excavation, bypassing open triangle-shell geometry.
+Paint does not trigger occupancy rebakes; replacement, placement/origin/restore
+invalidate correctly. Generated-body ownership now uses a bounded ID index and
+checks the world token (previous linear lookup accepted another world's sameID).
 
-Actual new surface tests44 + separate-process read10 pass, including actual JS,
-rotated owner and real collision, alongside geometry416/world93/component35,
-render978 each modern/portable, editor15 and API/type consistency542symbols.
-Relocated Workshop now uses ordinary project tools1..5 for dig/raise/lower/paint/
-layer; it sculpts/paints, traverses, saves/quits/restores with two saved dabs.
-Evidence stage4-runtime-surface preserves initial fixture failures and a rejected
-mismatched-build export. Frozen matching products pass. No human acceptance.
-Five native1km instances measure complete sculpt23.04ms median, paint3.72ms,
-volume edit24.28ms, snapshot capture.027ms/1198bytes. Full source/1024physical
-chunks remain resident. These are warm-file calls, not renderFPS or streaming.
+Integrated85, world93, surface44, component35, unchanged water28/runtime41/script5
+and particle world113/collision37 pass. Actual particle snapshots hit intact terrain
+and pass through its excavated opening. Water/native saving and origin shifts plus
+rotated radial gravity preserve quantity. Existing negative source192m3 capacity
+oracle is unchanged; old boundary-only replay reports240m3. Failed fixture/default
+radial-gravity and new shell-threshold assumptions are preserved and explained.
+Evidence is stage5-solid-integration/. Tiny2048cell edit occupancy prep14.35ms,
+steady median.0158ms, pressure/transport excluded; not a generalFPS claim.
 
-NEXT: scoped commit/push this qualified continuation. Then investigate actual
-terrain solid occupancy/navigation and physical residency/planetary excavation.
-Native fluid geometry currently sees open generated triangle surfaces rather than
-Source.Density interior; verify and correct using one source-owned query snapshot,
-without introducing a second terrain representation. Particle snapshots already
-see real chunk triangles/owner IDs; body-COM local impact coordinates are documented
-and must not be misrepresented as source-root coordinates. Main and fluid lock
-remain unchanged. Do not stop at this intermediate checkpoint.
+NEXT: scoped checkpoint/push this verified integration. Continue native navigation
+publication (existing scene baker currently sees the identity Box), physics-interest
+residency and real planetary excavation. Source queries still scan bounded edit
+journals; profile larger edited regions before claiming universal fluid scaling.
+All physical chunks/source arrays remain resident. Main and Alpha fluid lock stay
+unchanged. No full Terrain V2 completion/human acceptance is claimed.
 
 ## Completed committed foundations
 

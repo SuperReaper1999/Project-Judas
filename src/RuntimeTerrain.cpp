@@ -30,6 +30,11 @@ uint64_t RuntimeTerrain::OwnerOf(BodyHandle h)const {
 bool RuntimeTerrain::OwnsGenerated(BodyHandle h)const {return OwnerOf(h)!=0;}
 bool RuntimeTerrain::IsLandscape(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&bool(it->second.landscape);}
 std::vector<BodyHandle> RuntimeTerrain::Bodies(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&it->second.landscape?it->second.landscape->Bodies():std::vector<BodyHandle>{};}
+std::vector<TerrainV2::SolidSnapshot> RuntimeTerrain::Solids(glm::vec3 minimum,glm::vec3 maximum)const{
+ std::vector<TerrainV2::SolidSnapshot> result;
+ for(const auto& [_,record]:records)if(record.landscape){auto sample=record.landscape->Solid();if(sample.Intersects(minimum,maximum))result.push_back(std::move(sample));}
+ return result;
+}
 void RuntimeTerrain::Synchronize(){for(auto& [_,r]:records)if(r.landscape)r.landscape->Synchronize();}
 bool RuntimeTerrain::HasLandscapes()const{for(const auto& [_,r]:records)if(r.landscape)return true;return false;}
 void RuntimeTerrain::PrepareViews(const std::vector<PlanetView>& views,glm::dvec3 origin){for(auto& [_,r]:records)if(r.landscape)r.landscape->PrepareViews(views,origin);}

@@ -1,0 +1,122 @@
+[Graphics] OpenGL 4.6 request unavailable: Could not create EGL context (call to eglCreateContext failed, reporting an error of EGL_BAD_MATCH)
+PASS compatible live CPU emitters build and emit
+PASS compatible emitters share one captured snapshot, not two measured captures
+PASS next boundary refreshes the shared snapshot and preserves geometry history
+PASS shared stick receiver starts native prescribed movement
+PASS shared fresh motion preserves actual stick anchors on a moving native body
+PASS divergent capture histories do not share or reassign stick-anchor revisions
+PASS different-filter control builds
+PASS different layers never borrow a more permissive or restrictive snapshot
+PASS own-body exclusion control builds
+PASS different emitting body exclusions do not share even with matching layers
+PASS 65 incompatible capture groups build
+PASS all 65 overflow controls emit
+PASS cache overflow captures independently with full collision coverage
+PASS overflow retains its own geometry history across fixed boundaries
+PASS CPU collision lifecycle builds without graphics: 
+PASS idle CPU emitter performs no collision capture
+PASS idle colliding CPU emitter accepts immediate burst
+PASS first live step captures geometry and bounces against the actual floor
+PASS clear retires the live CPU population
+PASS return to idle retains geometry history but reports no current capture work
+PASS enable ordinary rate emission on idle CPU emitter
+PASS empty tick advances emission credit and creates a birth without moving it
+PASS automatic birth receives fresh collision before its first movement
+PASS authored initial-burst fixture builds
+PASS authored initial burst is not lost when its initial empty step skips capture
+PASS authored initial birth captures on the next step before movement
+PASS Auto queues an explicit burst before headless fallback
+PASS queued Auto fallback burst captures before moving and collides on that tick
+PASS over-limit collision fixture builds
+PASS idle emitter does not need geometry even in an over-limit world
+PASS first live step still refuses over-limit geometry without silently disabling collision
+[Graphics] created OpenGL 4.5 Core request (auto policy)
+[Graphics] API=OpenGL 4.5 requested=auto selected=modern vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits)
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=120 uniformBlockBytes=65536 storageBindings=80 storageBlockBytes=134217728 computeInvocations=1024 computeSharedBytes=32768
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual renderer/compute context: 
+PASS ordinary world construction selects authored required GPU backend
+PASS start-time burst queues without creating CPU particles before backend initialization
+PASS first actual world tick initializes GPU and consumes queued burst exactly once
+PASS explicit diagnostic GPU readback: 
+PASS resident first-tick particle count matches requested burst
+PASS explicit diagnostic GPU readback: 
+PASS subsequent ordinary world tick advances resident positions and ages
+PASS disabled required-GPU emitter rejects explicit bursts like CPU
+PASS explicit diagnostic GPU readback: 
+PASS disabled visual particles age without hidden emission
+PASS runtime settings and pause act on the existing world-owned emitter
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS pause freezes actual resident state, not just diagnostics
+PASS play resumes the same emitter
+PASS ordinary origin request remains inside the native absolute range: 
+PASS ordinary live-origin transaction includes resident particles
+PASS explicit diagnostic GPU readback: 
+PASS origin shift preserves absolute resident pose, age and birth identity
+PASS stop blocks new emission while retaining existing particles
+PASS explicit diagnostic GPU readback: 
+PASS stopped emitter continues existing live visuals
+PASS explicit restart clears and resets resident effect
+PASS explicit diagnostic GPU readback: 
+PASS restarted effect accepts a fresh bounded burst
+PASS explicit diagnostic GPU readback: 
+PASS restarted effect remains GPU-backed and usable
+PASS explicit backend switch retains live particles
+PASS immediate backend readback reports the actual CPU owner and released GPU memory before another tick
+PASS world teardown retires emitter owners before graphics context shutdown
+PASS ordinary Auto collision effect queues start-time burst
+PASS explicit diagnostic GPU readback: 
+PASS supported stationary scene initially uses resident GPU state
+PASS restart before backend transfer accepts a fresh generation
+PASS restart resets birth continuation metadata before a later CPU transfer
+PASS change real collidable owner to prescribed motion
+PASS unsupported moving collision transfers live state once to explicit CPU fallback
+PASS fallback emitter continues accepting new effects
+PASS CPU fallback remains active and does not repeatedly transfer or lose particles
+PASS actual world publishes an explicitly selected radial particle source
+PASS explicit diagnostic GPU readback: 
+PASS radial descriptor follows the independent constant-magnitude inward oracle
+PASS selected radial source and GPU particles share the origin transaction
+PASS explicit diagnostic GPU readback: 
+PASS rebasing preserves the actual radial acceleration, not merely the cached source label
+PASS runtime gravity selection can rotate particle acceleration
+PASS explicit diagnostic GPU readback: 
+PASS rotated uniform gravity changes the real resident velocity without resetting prior motion
+PASS shared and independent GPU worlds build from identical authored geometry
+PASS both GPU fixtures queue identical births
+PASS both GPU fixtures queue identical births
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS explicit diagnostic GPU readback: 
+PASS explicit diagnostic GPU readback: 
+PASS shared collision buffers preserve exact resident particle trajectories
+PASS compatible GPU emitter aliases actual immutable storage; independent control uploads
+PASS retire the original GPU geometry owner into CPU
+PASS explicit diagnostic GPU readback: 
+PASS remaining GPU consumer survives source-owner teardown with real live particle state
+PASS edit collision geometry placement after sharing
+PASS changed geometry invalidates the retained shared upload and publishes a new allocation
+Particle world: 113 checks PASS

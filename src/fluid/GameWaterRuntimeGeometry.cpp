@@ -118,13 +118,20 @@ bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
                 hi = glm::max(hi, p);
             }
     std::vector<StaticGeometry> current;
+    auto terrain = world.HasRuntimeLandscapes() ? world.LiveTerrain().Solids(lo, hi)
+                                               : std::vector<TerrainV2::SolidSnapshot>{};
     const auto handles = world.Physics().QueryBodiesInAabb(lo, hi);
-    if (handles.size() > 512) {
-        error = "grid water collision region exceeds 512 bodies; split the active "
-                "region";
-        return false;
-    }
+    size_t physicalSources = terrain.size();
     for (auto handle : handles) {
+        // Native heightfield/volume meshes are collision boundaries, not a
+        // closed solid. Their source supplies both below-surface occupancy and
+        // excavation air. Never also treat them as isolated thin shells.
+        if (world.HasRuntimeLandscapes() && world.LiveTerrain().OwnsGenerated(handle))
+            continue;
+        if (++physicalSources > 512) {
+            error = "grid water collision region exceeds 512 sources; split the active region";
+            return false;
+        }
         Shape shape;
         BodyTransform pose;
         if (!world.Physics().GetBodyShape(handle, shape, pose))
@@ -150,6 +157,9 @@ bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
                current[i].pose.position == statics[i].pose.position &&
                current[i].pose.rotation == statics[i].pose.rotation &&
                SameShape(current[i].shape, statics[i].shape);
+    same &= terrain.size() == terrains.size();
+    for (size_t i = 0; same && i < terrain.size(); ++i)
+        same = terrain[i].SameGeometry(terrains[i]);
     if (!same) {
         ++geometryBakes;
         std::vector<PrimitivePose> primitives;
@@ -161,6 +171,9 @@ bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
                 primitives.push_back(PrimitiveAt(entry.shape, body, k));
         }
         target.BakeStatic([&](glm::vec3 p) {
+            for (const auto &source : terrain)
+                if (source.Contains(p))
+                    return true;
             for (const auto &primitive : primitives)
                 if (Occupied(primitive, p, c.cellSize * .125f))
                     return true;
@@ -168,6 +181,7 @@ bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
         });
     }
     pendingStatics = std::move(current);
+    pendingTerrains = std::move(terrain);
     target.SetSolids(solids);
     return true;
 }

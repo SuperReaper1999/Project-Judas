@@ -3,6 +3,7 @@
 #include "Narrowphase.h"
 #include "render/RenderTypes.h"
 #include "GameWaterSurface.h"
+#include "terrain/TerrainSolid.h"
 
 namespace JudasWater {
 struct WorldSystem::Region {
@@ -22,6 +23,7 @@ struct WorldSystem::Region {
     };
     std::vector<StaticGeometry> statics;
     std::vector<StaticGeometry> pendingStatics;
+    std::vector<TerrainV2::SolidSnapshot> terrains, pendingTerrains;
     bool PrepareGeometry(RuntimeWorld &, Grid &, std::vector<SolidBox> &, std::vector<BodyHandle> &,
                          std::string &);
     mutable std::array<MeshHandle,3> meshes{};
