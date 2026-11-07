@@ -5,7 +5,7 @@ import json, math, shutil, struct, subprocess
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/'projects/terrain_v2_workshop'
 SEED=ROOT/'projects/water_v2_workshop'
-IDS={k:f'8a2200000000000000000000000000{v:02x}' for v,k in enumerate(('script','model','collision','grass','earth','rock','sand','data','natural_grass','natural_earth','natural_rock','natural_sand','preview'),1)}
+IDS={k:f'8a2200000000000000000000000000{v:02x}' for v,k in enumerate(('script','model','collision','grass','earth','rock','sand','data','natural_grass','natural_earth','natural_rock','natural_sand','preview','native'),1)}
 def meta(path,key,kind):
     Path(str(path)+'.judasmeta').write_text(f'JudasAssetMeta 1\nid "{IDS[key]}"\ntype {kind}\nsource ""\n')
 def texture(path,kind):
@@ -51,10 +51,11 @@ def main():
     # Start intact. T opens an actual cross-chunk tunnel through this hill.
     (DEST/'Authoring/highlands.judasterrain2').write_text(json.dumps(source,separators=(',',':'))+'\n')
     model=DEST/'Assets/terrain/highlands.judasmodel'
-    subprocess.run([str(ROOT/'build/judas_terrain_author'),'v2-cook',str(DEST/'Authoring/highlands.judasterrain2'),str(model)],check=True)
-    meta(model,'model','mesh');meta(model.with_suffix('.judascollision'),'collision','collision')
+    subprocess.run([str(ROOT/'build/judas_terrain_author'),'v2-native',str(DEST/'Authoring/highlands.judasterrain2'),str(model)],check=True)
+    meta(model,'model','mesh')
     meta(model.parent/'terrain-source.js','data','script')
     meta(model.with_suffix('.preview.tga'),'preview','texture')
+    meta(model.with_suffix('.judasterrain'),'native','terrain')
     controls=[('move_x',[('key:A',-1),('key:D',1)],1),('move_y',[('key:S',-1),('key:W',1)],1),
               ('look_x',[('mouse:dx',1)],1),('look_y',[('mouse:dy',1)],1)]
     for key,physical in [('jump','Space'),('pause','Escape'),('save','F6'),('load','F7'),('reset','R'),('tunnel','T'),('dig','mouse:Left'),('build','mouse:Right')]:
@@ -76,6 +77,7 @@ settings
  next-id 100
 end
 object 1 "Editable Highlands — heightfield and caves"
+ terrain.asset "NATIVE"
  position 0 0 0
  rotation 1 0 0 0
  scale 1 1 1
@@ -88,7 +90,7 @@ object 1 "Editable Highlands — heightfield and caves"
  render.texture-asset "PREVIEW"
  render.mesh-asset "MODEL"
  render.color 1 1 1
- body static triangle-mesh
+ body static box
  body.half-extents 24 8 24
  body.radius 1
  body.terrain ""
@@ -97,7 +99,7 @@ object 1 "Editable Highlands — heightfield and caves"
  body.pickable false
  body.managed false
  body.compound-count 0
- body.collision-asset "COLLISION"
+ body.collision-asset ""
  body.friction 0.75
  body.restitution 0
 end
@@ -108,7 +110,7 @@ object 2 "Gravity"
  gravity uniform 9.81
  gravity.region sphere 10000
 end
-'''.replace('MODEL',IDS['model']).replace('COLLISION',IDS['collision']).replace('PREVIEW',IDS['preview'])
+'''.replace('NATIVE',IDS['native']).replace('MODEL',IDS['model']).replace('COLLISION',IDS['collision']).replace('PREVIEW',IDS['preview'])
     old=(SEED/'Scenes/pool.judas').read_text();player=old[old.index('object 64 "Swimmer"'):]
     player=player.replace('"Swimmer"','"Explorer"').replace('position 0 3.35 6','position 0 1.9 13').replace('c28ff4911a81df1950aa5391a138ca7c',IDS['script'])
     (DEST/'Scenes/highlands.judas').write_text(header+player)

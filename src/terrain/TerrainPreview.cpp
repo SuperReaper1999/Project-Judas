@@ -1,5 +1,7 @@
 #include "TerrainPreview.h"
 #include "AssetDatabase.h"
+#include "TerrainLod.h"
+#include "TerrainMesher.h"
 #include "TextureLoader.h"
 #include <algorithm>
 #include <cmath>
@@ -79,5 +81,76 @@ std::string EncodePreviewTga(const TextureData &t) {
         out += char(t.pixels[i + 3]);
     }
     return out;
+}
+bool BuildPreviewMesh(const Source &source, MeshData &output, std::string &error) {
+    if (!Validate(source, error))
+        return false;
+    std::set<ChunkKey> volume;
+    for (const auto &edit : source.edits)
+        for (auto key : Affected(source, edit))
+            volume.insert(key);
+    HeightLod lod(source);
+    const float extent = std::max(source.samplesX - 1, source.samplesZ - 1) * source.spacing;
+    const auto patches = source.heights.size() <= 32768
+                             ? lod.Select({}, volume)
+                             : lod.Select({{{0, extent * 4, extent * 4}, 600, 0}}, volume);
+    std::vector<ChunkKey> keys(volume.begin(), volume.end());
+    std::vector<Chunk> chunks;
+    if (!BuildChunks(source, keys, chunks, error))
+        return false;
+    MeshData mesh;
+    auto append = [&](const MeshData &data, glm::vec3 anchor) {
+        const auto base = unsigned(mesh.vertices.size());
+        for (auto v : data.vertices) {
+            v.position += anchor;
+            v.uv = v.uv1;
+            mesh.vertices.push_back(v);
+        }
+        for (auto i : data.indices)
+            mesh.indices.push_back(base + i);
+    };
+    const auto baseGrid = HeightGrid(source.chunkCells);
+    const glm::vec2 half((source.samplesX - 1) * source.spacing * .5f,
+                         (source.samplesZ - 1) * source.spacing * .5f);
+    for (const auto &patch : patches) {
+        const auto k = patch.key;
+        if (k.level == 0 && volume.count({k.x, k.z}))
+            continue;
+        const unsigned stride = 1u << k.level;
+        auto grid = baseGrid;
+        for (auto &v : grid.vertices) {
+            const auto uv = v.uv;
+            glm::vec2 sample(float(k.x * source.chunkCells), float(k.z * source.chunkCells));
+            sample += uv * float(stride * source.chunkCells);
+            float h = LodHeight(source, sample, stride);
+            if (uv.x == 0)
+                h = LodHeight(source, sample, unsigned(patch.edgeStrides.x));
+            if (uv.x == 1)
+                h = LodHeight(source, sample, unsigned(patch.edgeStrides.y));
+            if (uv.y == 0)
+                h = LodHeight(source, sample, unsigned(patch.edgeStrides.z));
+            if (uv.y == 1)
+                h = LodHeight(source, sample, unsigned(patch.edgeStrides.w));
+            auto p = sample * source.spacing - half;
+            v.position = {p.x, h, p.y};
+            const float d = source.spacing;
+            v.normal = glm::normalize(
+                glm::vec3(Height(source, p.x - d, p.y) - Height(source, p.x + d, p.y), 2 * d,
+                          Height(source, p.x, p.y - d) - Height(source, p.x, p.y + d)));
+            v.uv1 = sample / glm::vec2(source.samplesX - 1, source.samplesZ - 1);
+        }
+        append(grid, {});
+    }
+    for (const auto &c : chunks)
+        append(c.mesh, c.anchor);
+    if (mesh.indices.size() / 3 > 1048576) {
+        error =
+            "terrain editor preview exceeds one million triangles; use smaller editable regions";
+        return false;
+    }
+    mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1, "terrain preview");
+    output = std::move(mesh);
+    error.clear();
+    return true;
 }
 } // namespace TerrainV2

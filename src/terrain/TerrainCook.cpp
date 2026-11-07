@@ -3,6 +3,7 @@
 #include "ModelArchive.h"
 #include "Project.h"
 #include "SceneFingerprint.h"
+#include "TerrainAsset.h"
 #include "TerrainMesher.h"
 #include "TerrainPreview.h"
 #include "TerrainSource.h"
@@ -19,7 +20,7 @@
 namespace {
 std::string Read(const std::string &path) {
     std::ifstream f(path, std::ios::binary | std::ios::ate);
-    if (!f || f.tellg() < 0 || f.tellg() > 64 * 1024 * 1024)
+    if (!f || f.tellg() < 0 || f.tellg() > 96 * 1024 * 1024)
         throw std::runtime_error("missing/bounded terrain source: " + path);
     std::string bytes(size_t(f.tellg()), '\0');
     f.seekg(0);
@@ -32,8 +33,10 @@ std::string Read(const std::string &path) {
 int TerrainV2AuthorCommand(int argc, char **argv) {
     try {
         if (argc < 3)
-            throw std::runtime_error("v2-validate SOURCE | v2-cook SOURCE OUTPUT.judasmodel | "
-                                     "v2-import V1_SOURCE NEW_V2_SOURCE");
+            throw std::runtime_error(
+                "v2-validate SOURCE | v2-native SOURCE OUTPUT.judasmodel | "
+                "v2-pack SOURCE OUTPUT.judasterrain | v2-cook SOURCE OUTPUT.judasmodel | "
+                "v2-import V1_SOURCE NEW_V2_SOURCE");
         std::string error;
         const std::string command = argv[1];
         TerrainV2::Source source;
@@ -78,8 +81,30 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                       << " chunks\n";
             return 0;
         }
-        if (command != "v2-cook" || argc != 4)
-            throw std::runtime_error("v2-cook SOURCE OUTPUT.judasmodel");
+        if (command == "v2-pack") {
+            if (argc != 4)
+                throw std::runtime_error("v2-pack SOURCE OUTPUT.judasterrain");
+            std::vector<uint8_t> native;
+            if (!TerrainV2::EncodeAsset(source, native, error))
+                throw std::runtime_error(error);
+            auto destination = std::filesystem::absolute(argv[3]);
+            const bool existed = std::filesystem::exists(destination);
+            if (!PublishAuthoringOutputs(
+                    destination.parent_path().string(),
+                    {{destination.string(),
+                      std::string(reinterpret_cast<const char *>(native.data()), native.size()),
+                      existed ? Read(destination.string()) : std::string{}, existed},
+                     {std::filesystem::absolute(argv[2]).string(), capturedSourceBytes,
+                      capturedSourceBytes, true}},
+                    error))
+                throw std::runtime_error(error);
+            std::cout << "native terrain packed " << native.size() << " bytes\n";
+            return 0;
+        }
+        const bool nativeMode = command == "v2-native";
+        if ((command != "v2-cook" && !nativeMode) || argc != 4)
+            throw std::runtime_error(
+                "v2-native SOURCE OUTPUT.judasmodel | v2-cook SOURCE OUTPUT.judasmodel");
         auto modelPath = std::filesystem::absolute(argv[3]);
         auto collisionPath = modelPath;
         collisionPath.replace_extension(".judascollision");
@@ -97,50 +122,56 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                 {path.string(), {}, exists ? Read(path.string()) : std::string{}, exists});
         }
         MeshData mesh;
-        std::vector<TerrainV2::ChunkKey> keys;
-        for (unsigned z = 0; z < source.ChunksZ(); ++z)
-            for (unsigned x = 0; x < source.ChunksX(); ++x)
-                keys.push_back({x, z});
-        std::vector<TerrainV2::Chunk> prepared;
-        if (!TerrainV2::BuildChunks(source, keys, prepared, error))
-            throw std::runtime_error(error);
-        for (auto &c : prepared) {
-            const auto offset = unsigned(mesh.vertices.size());
-            for (auto v : c.mesh.vertices) {
-                v.position += c.anchor;
-                v.uv = v.uv1; // Ordinary preview atlas; native terrain uses tiled layers.
-                mesh.vertices.push_back(v);
+        if (nativeMode) {
+            if (!TerrainV2::BuildPreviewMesh(source, mesh, error))
+                throw std::runtime_error(error);
+        } else {
+            std::vector<TerrainV2::ChunkKey> keys;
+            for (unsigned z = 0; z < source.ChunksZ(); ++z)
+                for (unsigned x = 0; x < source.ChunksX(); ++x)
+                    keys.push_back({x, z});
+            std::vector<TerrainV2::Chunk> prepared;
+            if (!TerrainV2::BuildChunks(source, keys, prepared, error))
+                throw std::runtime_error(error);
+            for (auto &c : prepared) {
+                const auto offset = unsigned(mesh.vertices.size());
+                for (auto v : c.mesh.vertices) {
+                    v.position += c.anchor;
+                    v.uv = v.uv1; // Ordinary preview atlas; native terrain uses tiled layers.
+                    mesh.vertices.push_back(v);
+                }
+                for (auto i : c.mesh.indices)
+                    mesh.indices.push_back(offset + i);
             }
-            for (auto i : c.mesh.indices)
-                mesh.indices.push_back(offset + i);
+            if (!source.edits.empty())
+                TerrainV2::ConformChunkTopology(mesh, source.spacing);
+            mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1, "terrain");
         }
-        if (!source.edits.empty())
-            TerrainV2::ConformChunkTopology(mesh, source.spacing);
-        mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1, "terrain");
         std::vector<uint8_t> bytes;
         if (!EncodeModelArchive(mesh, bytes, error))
             throw std::runtime_error(error);
         outputs[0].bytes.assign(bytes.begin(), bytes.end());
-        CollisionAsset collision;
-        if (!CookCollision(mesh, {}, collision, error))
-            throw std::runtime_error(error);
-        struct Temporary {
-            std::filesystem::path path =
-                std::filesystem::temp_directory_path() /
-                ("judas-terrain-cook-" + MintAssetId() + ".judascollision");
-            ~Temporary() {
-                std::error_code ec;
-                std::filesystem::remove(path, ec);
-            }
-        } temporary;
-        if (!SaveCollisionAsset(temporary.path.string(), collision, error))
-            throw std::runtime_error(error);
-        outputs[1].bytes = Read(temporary.path.string());
-        outputs[2].bytes = "export default " + TerrainV2::Serialize(source) + ";\n";
-        outputs[3].bytes = "{\"format\":\"JudasTerrainV2Cook\",\"version\":1,\"source\":\"" +
-                           SceneFingerprintSha256(sourceBytes) + "\",\"model\":\"" +
-                           SceneFingerprintSha256(outputs[0].bytes) + "\",\"collision\":\"" +
-                           SceneFingerprintSha256(outputs[1].bytes) + "\"}\n";
+        if (!nativeMode) {
+            CollisionAsset collision;
+            if (!CookCollision(mesh, {}, collision, error))
+                throw std::runtime_error(error);
+            struct Temporary {
+                std::filesystem::path path =
+                    std::filesystem::temp_directory_path() /
+                    ("judas-terrain-cook-" + MintAssetId() + ".judascollision");
+                ~Temporary() {
+                    std::error_code ec;
+                    std::filesystem::remove(path, ec);
+                }
+            } temporary;
+            if (!SaveCollisionAsset(temporary.path.string(), collision, error))
+                throw std::runtime_error(error);
+            outputs[1].bytes = Read(temporary.path.string());
+        }
+        outputs[2].bytes =
+            nativeMode
+                ? "// Native terrain is initialized by terrain.asset.\nexport default null;\n"
+                : "export default " + TerrainV2::Serialize(source) + ";\n";
         AssetDatabase assets;
         Project project;
         const auto projectFile = Project::FindProjectFileFor(argv[2]);
@@ -154,11 +185,31 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
                                             preview, error))
             throw std::runtime_error(error);
         outputs[4].bytes = TerrainV2::EncodePreviewTga(preview);
+        auto nativePath = modelPath;
+        nativePath.replace_extension(".judasterrain");
+        std::vector<uint8_t> nativeData;
+        if (!TerrainV2::EncodeAsset(source, nativeData, error))
+            throw std::runtime_error(error);
+        const bool hadNative = std::filesystem::exists(nativePath);
+        outputs.push_back(
+            {nativePath.string(),
+             std::string(reinterpret_cast<const char *>(nativeData.data()), nativeData.size()),
+             hadNative ? Read(nativePath.string()) : std::string{}, hadNative});
+        outputs[3].bytes =
+            "{\"format\":\"JudasTerrainV2Cook\",\"version\":2,\"representation\":\"" +
+            std::string(nativeMode ? "native" : "full-mesh") + "\",\"source\":\"" +
+            SceneFingerprintSha256(sourceBytes) + "\",\"model\":\"" +
+            SceneFingerprintSha256(outputs[0].bytes) + "\",\"preview\":\"" +
+            SceneFingerprintSha256(outputs[4].bytes) + "\",\"native\":\"" +
+            SceneFingerprintSha256(outputs.back().bytes) + "\",\"collision\":" +
+            (nativeMode ? "null" : "\"" + SceneFingerprintSha256(outputs[1].bytes) + "\"") + "}\n";
         // Guard source and every prior product before publishing the set. The
         // standard authoring journal rolls back failures; no half-new preview
         // or gameplay module can silently replace the last good products.
         outputs.push_back(
             {std::filesystem::absolute(argv[2]).string(), sourceBytes, sourceBytes, true});
+        if (nativeMode)
+            outputs.erase(outputs.begin() + 1);
         if (!PublishAuthoringOutputs(modelPath.parent_path().string(), outputs, error))
             throw std::runtime_error(error);
         std::cout << "terrain V2 cooked " << mesh.vertices.size() << " vertices "

@@ -4,6 +4,7 @@
 #include "ScriptSystem.h"
 #include "UniformGravity.h"
 #include "WorldPersistence.h"
+#include "terrain/TerrainAsset.h"
 #include "terrain/TerrainMesher.h"
 #include "terrain/TerrainSource.h"
 #include <chrono>
@@ -173,6 +174,48 @@ void SeamTravel(JobSystem &jobs) {
     std::cout << "METRIC seam_supported_steps=" << supported
               << " maximum_monolithic_trajectory_difference_m=" << maximumDifference << '\n';
 }
+void ReplacingOwner(JobSystem &jobs) {
+    AssetDatabase assets;
+    ResourceManager resources(nullptr, &assets, &jobs);
+    RuntimeWorld world;
+    world.legacyGameplay = false;
+    std::string error;
+    Check(world.Build(SceneSource(), &resources, error, nullptr, nullptr, true),
+          "build replacement world");
+    Check(world.LiveTerrain().CreateLandscape(1, TerrainV2::Create(65, 65, .5f), error),
+          "create larger terrain");
+    Wait(world, 1);
+    Check(world.Physics().Raycast({12, 8, 0}, {0, -1, 0}, 10).hit,
+          "old outer chunks provide actual support");
+    auto smaller = TerrainV2::Create(17, 17, .5f);
+    std::fill(smaller.heights.begin(), smaller.heights.end(), 2);
+    std::vector<uint8_t> native;
+    Check(TerrainV2::EncodeAsset(smaller, native, error), "encode replacement source");
+    std::string bytes(reinterpret_cast<const char *>(native.data()), native.size());
+    Check(world.LiveTerrain().Restore(1, bytes, error, true), "queue native terrain restoration");
+    Check(world.Physics().Raycast({12, 8, 0}, {0, -1, 0}, 10).hit,
+          "asynchronous restore retains previous complete support");
+    Check(world.LiveTerrain().Status(1)->busy && world.LiveTerrain().Status(1)->ready,
+          "replacement preserves ready revision while reporting backpressure");
+    Wait(world, 1);
+    Check(!world.Physics().Raycast({12, 8, 0}, {0, -1, 0}, 10).hit,
+          "successful smaller source retires obsolete outer chunks");
+    auto hit = world.Physics().Raycast({0, 8, 0}, {0, -1, 0}, 10);
+    Check(hit.hit && std::abs(hit.point.y - 2) < .001f,
+          "new source replaces the actual physical surface");
+    auto bad = bytes;
+    bad.back() ^= 1;
+    Check(!world.LiveTerrain().Restore(1, bad, error, true),
+          "corrupt snapshot is rejected before replacing live state");
+    hit = world.Physics().Raycast({0, 8, 0}, {0, -1, 0}, 10);
+    Check(hit.hit && std::abs(hit.point.y - 2) < .001f,
+          "failed snapshot retains last good physical surface");
+    Check(
+        world.LiveTerrain().Restore(1, TerrainV2::Serialize(TerrainV2::Create(33, 33, .5f)), error),
+        "first-checkpoint JSON snapshots remain readable");
+    Check(world.LiveTerrain().Status(1)->chunks == 4 && world.Physics().AliveBodyCount() == 5,
+          "representation restore has exactly four derived chunks and its disabled seed");
+}
 } // namespace
 int main(int argc, char **argv) {
     try {
@@ -194,6 +237,7 @@ int main(int argc, char **argv) {
                   "cold restored tunnel is physically open");
         } else {
             SeamTravel(jobs);
+            ReplacingOwner(jobs);
             IndependentScriptOwners(jobs);
             Check(w.LiveTerrain().CreateLandscape(1, Hillside(), error),
                   "create landscape without navigation dependency: " + error);

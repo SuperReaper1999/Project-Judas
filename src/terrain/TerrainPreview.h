@@ -8,4 +8,5 @@ namespace TerrainV2 {
 // not become the physical or high-detail terrain representation.
 bool BuildPreviewTexture(const Source &, const AssetDatabase *, TextureData &, std::string &);
 std::string EncodePreviewTga(const TextureData &);
+bool BuildPreviewMesh(const Source &, MeshData &, std::string &);
 } // namespace TerrainV2

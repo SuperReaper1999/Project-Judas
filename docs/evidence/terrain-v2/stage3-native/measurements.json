@@ -1,0 +1,95 @@
+{
+  "timestamp_utc": "2026-11-07T20:44:54.230739+00:00",
+  "parent": "84ae3332b8555f6f05defa4b1896727d1923d6b7",
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-84ae333-dirty-7d7e28db6219-u3dd592870b8e",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "7d7e28db62195edea7c55b8e50aa46d3e2fe66fd669f48bec5444295572d1092",
+    "source_origin": "git",
+    "source_revision": "84ae3332b8555f6f05defa4b1896727d1923d6b7",
+    "source_tree": "b69665643e9c3fd47f06976fdf3b7ee3052c7028",
+    "source_untracked_count": 30,
+    "source_untracked_fingerprint": "3dd592870b8e8ecdcf374eeeb39952a8443022dfcc3bfe3de7db23642d097928",
+    "version": "2.0.0-alpha.1"
+  },
+  "fixture": {
+    "case": "fixture",
+    "samples": 263169,
+    "extent_m": 1024,
+    "native_bytes": 5271331,
+    "encode_ms": 23.8224
+  },
+  "measurements": {
+    "index_open_ms": {
+      "median": 0.09574,
+      "p95": 0.156485,
+      "worst": 0.156485,
+      "samples": 5
+    },
+    "sample_read_ms": {
+      "median": 21.1012,
+      "p95": 23.7748,
+      "worst": 23.7748,
+      "samples": 5
+    },
+    "scene_build_ms": {
+      "median": 502.038,
+      "p95": 561.287,
+      "worst": 561.287,
+      "samples": 5
+    },
+    "initial_prepare_ms": {
+      "median": 473.963,
+      "p95": 533.241,
+      "worst": 533.241,
+      "samples": 5
+    },
+    "initial_publish_ms": {
+      "median": 4.02677,
+      "p95": 4.50787,
+      "worst": 4.50787,
+      "samples": 5
+    },
+    "edit_complete_ms": {
+      "median": 26.9926,
+      "p95": 30.2151,
+      "worst": 30.2151,
+      "samples": 5
+    },
+    "edit_prepare_ms": {
+      "median": 23.9275,
+      "p95": 26.5399,
+      "worst": 26.5399,
+      "samples": 5
+    },
+    "edit_publish_ms": {
+      "median": 0.182795,
+      "p95": 0.285408,
+      "worst": 0.285408,
+      "samples": 5
+    },
+    "capture_ms": {
+      "median": 0.02625,
+      "p95": 0.030357,
+      "worst": 0.030357,
+      "samples": 5
+    }
+  },
+  "scope": "warm native file IO; complete scene build; complete dirty edit including actual collision; five independent world builds, no concurrent compiler jobs",
+  "human_acceptance": false,
+  "limitations": [
+    "All 1024 physical chunks resident; not demand paging",
+    "Source and collision estimated bytes exclude BVH/allocator/GPU",
+    "Five samples make nearest-rank p95 equal worst",
+    "Separate large runtime profiler has no resolved GPU timestamps; no GPU timing claim from that capture"
+  ]
+}

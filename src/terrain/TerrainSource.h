@@ -48,6 +48,7 @@ float Height(const Source &, float x, float z);
 float Density(const Source &, glm::vec3 point);
 glm::vec4 Weights(const Source &, float x, float z);
 std::vector<ChunkKey> Affected(const Source &, const Edit &);
+bool Touches(const Source &, ChunkKey, const Edit &);
 bool BuildChunk(const Source &, ChunkKey, Chunk &, std::string &,
                 const std::function<bool()> &cancelled = {});
 std::string Serialize(const Source &);

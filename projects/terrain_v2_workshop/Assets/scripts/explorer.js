@@ -1,5 +1,4 @@
 import {input,ui,world,scenes,saves,physics} from 'judas';
-import landscape from '../terrain/terrain-source.js';
 const add=(a,b)=>({x:a.x+b.x,y:a.y+b.y,z:a.z+b.z});
 const mul=(a,s)=>({x:a.x*s,y:a.y*s,z:a.z*s});
 const size=a=>Math.hypot(a.x,a.y,a.z);
@@ -12,9 +11,9 @@ export default class {
   if(this.hud){this.hud.modal=false;for(const id of ['main','options','pause','image'])this.hud.get(id).visible=false;
    this.hud.get('hud').visible=true;this.hud.get('hud_title').text='TERRAIN V2 / HIGHLANDS WORKSHOP';
    this.hud.get('hud_help').text='WASD + mouse: explore | Space: jump\nT: excavate a real tunnel through the hill\nLeft click: dig | Right click: add material\nF6/F7: save/load | R: reset | Esc: pause';}
-  if(!this.owner.terrain.state)this.owner.terrain.createLandscape(JSON.stringify(landscape));
+  if(!this.owner.terrain.state?.ready)throw new Error('Native terrain was not initialized; check terrain.asset on the landscape.');
  }
- restore(){this.start();}
+ restore(){this.start();console.log('TERRAIN_V2_RESTORED '+JSON.stringify({position:this.entity.transform.position,terrain:this.owner.terrain.state}));}
  view(){const p=this.entity.presentedTransform.position;world.setView({position:add(p,{x:0,y:.65,z:0}),rotation:rotation(this.state.yaw,this.state.pitch)},70);}
  presentationUpdate(){this.view();}
  update(dt){if(this.hud?.modal)return;

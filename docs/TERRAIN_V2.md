@@ -1,7 +1,8 @@
 # Terrain V2 — Experimental implementation
 
-This is active source-build development on Experimental. The first integrated
-checkpoint provides editable sampled landscapes with genuine local excavation.
+This is active source-build development on Experimental. The integrated
+checkpoints provide editable sampled landscapes with genuine local excavation,
+shared-grid rendering and native terrain assets.
 It does not complete the approved Terrain V2 programme or replace existing
 project assets automatically.
 
@@ -28,7 +29,9 @@ runtime state and do not rewrite the authored source.
   chunks to local volumetric surfaces. Sparse vertical bands keep excavation
   cost independent of mountain elevation. Canonical edge construction and
   `TerrainTopology.*` join the two representations before strict native cooking.
-- `TerrainRuntime.*` owns immutable preparation jobs and derived bodies. Complete
+- `TerrainRuntime.*` coordinates immutable preparation jobs and derived bodies.
+  `TerrainPresentation.cpp` owns views/GPU products; `TerrainPersistence.cpp`
+  owns asset-reference and complete-source snapshots. Complete
   dirty products replace old support between steps. The uncut seed collider is
   disabled after publication; it cannot secretly block the tunnel.
 - Existing `RuntimeTerrain` persistence and regional publication own the lifetime.
@@ -38,11 +41,15 @@ runtime state and do not rewrite the authored source.
   slots. Source-local triplanar detail remains anchored through origin changes.
 - `editor/TerrainV2Editor.*` owns the workspace and viewport workflow. Existing
   terrain tools route to it without adding terrain-specific frame-loop logic.
-- `TerrainCook.*` uses the shared guarded authoring transaction. The first slice
-  generates an ordinary model, collision, preview texture, registered JavaScript
-  data module and receipt. Large-data native paging remains subsequent work.
+- `TerrainAsset.*` owns bounded, indexed native sample pages with per-page
+  checksums. `TerrainComponent.*` connects authored sources to ordinary scenes.
+- `TerrainCook.*` uses the shared guarded authoring transaction. Native mode
+  publishes a source asset, adaptive editor preview, texture and receipt. Runtime
+  collision comes from that source, independently of the preview mesh. The older
+  full-model/full-collision cook remains available for the first-slice workflow.
 
 Source commands in `judas_terrain_author` are `v2-validate SOURCE`,
+`v2-native SOURCE OUTPUT.judasmodel`, `v2-pack SOURCE OUTPUT.judasterrain`,
 `v2-cook SOURCE OUTPUT.judasmodel`, and `v2-import V1_SOURCE NEW_SOURCE`.
 Import preserves the original and rejects unsupported resampling or material
 tiling explicitly. Do not overwrite an old project to try V2.
@@ -73,8 +80,9 @@ gameplay acceptance of the new terrain remains pending.
 ## Remaining approved work
 
 The flat runtime still keeps all physical chunks resident (maximum 1024). Shared
-render grids and camera-union LOD now exist; native paged sources, independent
-physical residency and budgeted multi-view streaming remain work. Planet
+render grids, camera-union LOD and indexed native files now exist. Runtime still
+loads complete source arrays; independent physical residency and budgeted
+multi-view streaming remain work. Planet
 precision and existing LOD remain intact, but planetary
 excavation is not implemented by this slice. Fresh-source creation/import UI,
 high-bit-depth heightmaps, broader material authoring, incremental navigation,
@@ -90,6 +98,59 @@ to an ordinary model remains unsupported. Source bounds, journal and extraction
 budgets fail explicitly, keeping the previous complete revision.
 
 Main, supported releases and the Advanced Fluid lock remain unchanged.
+
+## Native scene assets and persistence
+
+The owned Workshop uses `Assets/terrain/highlands.judasterrain`, registered with
+normal `.judasmeta` type `terrain`, and this scene key:
+
+```text
+object 1 "Landscape"
+ terrain.asset "8a22000000000000000000000000000e"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ body static box
+end
+```
+
+Use an actual registered ID for your asset. A root unit-scale static Box seed is
+required; competing geometry, motion, navigation-surface and fluid owners are
+rejected explicitly. The seed supplies identity/material/filter settings. It is
+disabled once the real chunk colliders publish. Initial collision is ready before
+scene gameplay starts, without a JavaScript bootstrap. Render components may refer
+to the cooked preview for ordinary editor display; Play draws the actual source.
+
+The version-1 native file stores exact binary32 heights and four normalized
+material weights in indexed 64×64-sample pages, with smaller rectangular edge
+pages. Opening the header/index does not read sample payloads. Requested pages
+are checked before publication; a failed read leaves the previous result intact.
+This is corruption detection, not asset authentication. Native source size is
+bounded to 96 MiB and the existing source sample budget still applies.
+
+Asset-backed saves keep the immutable base ID/fingerprint plus the actual edit
+journal; they do not copy unchanged sample arrays. A changed/missing base fails
+with an explicit migration diagnostic. Runtime-created sources use complete
+native snapshots within the existing 8 MiB save-string budget. Earlier JSON
+snapshots remain readable. Restore preserves old support until the entire new
+collision revision succeeds, including when the replacement source is smaller.
+Regional staging, private placement, publication and removal use that same owner.
+The exporter follows native terrain and all material texture dependencies through
+ordinary asset IDs, so relocation does not depend on authoring paths.
+
+Current native integration checks cover 32 asset-format cases, 35 component/
+regional cases, 416 geometry cases, 93 world cases and genuine separate-process
+restoration. The real exported Workshop excavates, traverses, saves, quits and
+restores after relocation. These remain automated checks, not human acceptance.
+
+The one-kilometre native benchmark (513×513 samples, 2 m spacing, five runs)
+loads all 1,024 physical chunks. Complete scene setup is about 0.50 s median;
+a local four-chunk excavation completes in about 29 ms, with 0.15–0.28 ms
+publication. Its asset is 5,271,331 bytes and the edited-terrain snapshot is 594
+bytes. Peak benchmark-process RSS is 148,420 KiB, including input/output arrays,
+physics, repeated construction and allocator retention. These are warm-file
+measurements, not cold-disk timings or a total-game memory budget. Actual source,
+collision and visual residency streaming remains the next engineering work.
 
 ## Shared-grid rendering checkpoint
 
@@ -133,7 +194,7 @@ completed-tunnel scene remains approximately 0.70 ms for its main-camera GPU
 scope; its cost is essentially unchanged. Raw paired results and controls are
 under `docs/evidence/terrain-v2/stage2`.
 
-Still pending: temporal LOD transitions, physical streaming/native pages and
+Still pending: temporal LOD transitions, physical streaming/demand paging and
 larger integrated consumer scenes. A source page exceeding the device's texture
 size fails before allocation with an actionable request to split its regions.
 This checkpoint does not certify Android/browser terrain rendering or qualify

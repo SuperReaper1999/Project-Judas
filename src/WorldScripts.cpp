@@ -47,7 +47,12 @@ std::vector<EntityId> RuntimeWorld::DefinitionIds() const {
     return ids;
 }
 bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
-    const auto* authored=RuntimeDefinition(id);if(!authored)return false;
+    return SetRuntimePlacement(id,t,false);
+}
+bool RuntimeWorld::SetRuntimePlacement(EntityId id,const SceneTransform& t,bool includePrivate){
+    const auto* authored=RuntimeDefinition(id);
+    if(!authored&&includePrivate&&m_regionPending.count(id)){auto it=m_scriptDefinitions.find(id);if(it!=m_scriptDefinitions.end())authored=&it->second;}
+    if(!authored)return false;
     if(m_runtimeTerrain && m_runtimeTerrain->Status(id) && t.scale!=glm::vec3(1))return false;
     if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{t.position,t.rotation}))return false;
     SceneObject placement;placement.body=authored->body;placement.transform=t;std::string placementError;if(!ValidateCollisionPlacement(placement,placementError))return false;
@@ -70,7 +75,7 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     auto transform=t;transform.rotation=glm::normalize(t.rotation);
     auto& definition=m_scriptDefinitions.at(id);definition.transform=transform;
     // Explicit transform writes are teleports, not continuous kinematic motion.
-    auto body=RuntimeBody(id);if(body.IsValid()){
+    auto body=RuntimeBody(id);if(!body.IsValid()&&includePrivate&&m_regionPending.count(id)){auto it=m_entityCategories.find(id);if(it!=m_entityCategories.end())body=it->second.body;}if(body.IsValid()){
         auto position=transform.position;
         if(auto motor=m_characters.find(id);motor!=m_characters.end())position+=transform.rotation*motor->second.motor.settings.offset;
         m_physics.ResetBody(body,position,transform.rotation);
@@ -283,7 +288,9 @@ bool RuntimeWorld::SetBodyMaterial(EntityId id,const std::string& asset,const Ph
  if(!ValidPhysicalMaterial(material,error))return false;
  if(!m_physics.SetPhysicalMaterial(body,asset,material.friction,material.restitution)){error="physical material mutation failed";return false;}
  auto settings=*d->body;settings.physicalMaterial=asset;settings.physicalMaterialOverride=factors!=nullptr;settings.friction=material.friction;settings.restitution=material.restitution;m_scriptDefinitions.at(id).body=settings;if(auto* e=FindEntity(id))e->definition.body=settings;
- if(!asset.empty()){m_assets->AddRef(asset);m_referencedAssets.push_back(asset);}return true;
+ if(!asset.empty()){m_assets->AddRef(asset);m_referencedAssets.push_back(asset);}
+ if(m_runtimeTerrain&&m_runtimeTerrain->IsLandscape(id))m_runtimeTerrain->Synchronize();
+ return true;
 }
 
 ScriptSystem& RuntimeWorld::PrepareScriptTools(){

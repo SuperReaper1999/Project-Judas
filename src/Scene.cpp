@@ -123,6 +123,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         a.prefabSource != b.prefabSource || a.prefabIds != b.prefabIds ||
         a.prefabOverrides != b.prefabOverrides) return false;
     if(!OptEq(a.particleEmitter,b.particleEmitter,ParticleSettingsEqual))return false;
+    if(!OptEq(a.landscape,b.landscape,[](const auto& x,const auto& y){return x.asset==y.asset;}))return false;
     if (!Eq(a.transform.position, b.transform.position) ||
         !Eq(a.transform.rotation, b.transform.rotation) ||
         !Eq(a.transform.scale, b.transform.scale)) {

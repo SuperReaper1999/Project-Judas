@@ -21,6 +21,11 @@ Wait for the tunnel queue to finish, walk through, save, quit and relaunch/load.
 
 Source: `Authoring/highlands.judasterrain2`. Preview/gameplay assets live in
 `Assets/terrain`; the explorer is ordinary project JavaScript in `Assets/scripts`.
+The scene's `terrain.asset` selects the native `.judasterrain` source. The engine
+initializes its actual chunk collision before gameplay; the preview model is not
+an intact collision mesh hiding underneath the excavation. Saves retain the base
+asset identity and edit journal. If you change the authored base after saving,
+start fresh or provide an explicit content migration.
 `tools/create_terrain_v2_workshop.py` regenerates only this owned example and its
 original procedural material textures. It requires `build/judas_terrain_author`.
 

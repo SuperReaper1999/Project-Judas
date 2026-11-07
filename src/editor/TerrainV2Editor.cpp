@@ -216,9 +216,15 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
             if (asset) {
                 auto work = std::make_shared<Cook>();
                 const auto sourcePath = path, output = asset->path;
+                const bool native =
+                    std::any_of(doc.GetScene().Objects().begin(), doc.GetScene().Objects().end(),
+                                [&](const auto &o) {
+                                    return o.landscape && o.render && o.render->meshAsset == meshId;
+                                });
                 work->job = state.importJobs->Submit(
-                    [work, sourcePath, output](JobContext &context) {
-                        std::string a = "terrain", b = "v2-cook", c = sourcePath, d = output;
+                    [work, sourcePath, output, native](JobContext &context) {
+                        std::string a = "terrain", b = native ? "v2-native" : "v2-cook",
+                                    c = sourcePath, d = output;
                         char *argv[] = {a.data(), b.data(), c.data(), d.data()};
                         if (TerrainV2AuthorCommand(4, argv) != 0) {
                             work->error =

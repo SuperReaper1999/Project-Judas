@@ -81,13 +81,18 @@ edit. Translation and rotation update all derived colliders; live scaling and
 motion-authority changes are rejected explicitly.
 
 The ordinary runtime-terrain save/streaming participant captures the landscape
-source and excavation journal. Derived chunk body handles are transient. Query
+source and excavation journal. An authored `terrain.asset` component initializes
+native landscape data before scripts start; it does not require
+`createLandscape`. Do not initialize that owner a second time. Asset-backed saves
+store the base asset identity/fingerprint and journal; procedural sources store
+a complete native snapshot (8 MiB save-string limit). A changed base requires an
+explicit content migration. Derived chunk body handles are transient. Query
 results resolve to the owning terrain entity, and ignored-terrain query filters
 include its generated chunk bodies. Save/load restores native geometry before
 publication. Graphics material state does not own physical terrain quantity.
 
 Editable example: `projects/terrain_v2_workshop`. These APIs are Experimental
 source-build work, not a published supported-release update. Planetary
-excavation, large-world residency/LOD and full cross-system qualification are
+excavation, large-world physical residency and full cross-system qualification are
 still being developed; the initial flat landscape slice must not be treated as
 completion of those capabilities.

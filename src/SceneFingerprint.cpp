@@ -448,6 +448,17 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(waters){w.Text("Judas.BasicWater.1");w.U64(waters);for(const auto& o:scene.Objects())if(o.basicWater){std::string error;if(!ValidateBasicWater(*o.basicWater,error))w.Fail(error);w.U64(o.id);w.Text(EncodeBasicWater(*o.basicWater));}}
     size_t liquid=0;for(const auto& o:scene.Objects())liquid+=!LiquidProperties(o).empty();
     if(liquid){w.Text("Judas.ConservedLiquid.1");w.U64(liquid);for(const auto& o:scene.Objects()){auto properties=LiquidProperties(o);if(properties.empty())continue;std::string error;if(!ValidateLiquidComponents(o,error))w.Fail(error);w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
+    size_t landscapes = 0;
+    for (const auto& o : scene.Objects()) landscapes += o.landscape.has_value();
+    if (landscapes) {
+        w.Text("Judas.Landscape.1");
+        w.U64(landscapes);
+        for (const auto& o : scene.Objects()) if (o.landscape) {
+            if (!IsValidAssetId(o.landscape->asset)) w.Fail("invalid landscape asset");
+            w.U64(o.id);
+            w.Text(o.landscape->asset);
+        }
+    }
     size_t navigation=0;for(const auto& o:scene.Objects())navigation+=!NavigationProperties(o).empty();
     if(navigation){w.Text("Judas.Navigation.1");w.U64(navigation);for(const auto& o:scene.Objects()){auto properties=NavigationProperties(o);if(properties.empty())continue;w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t selectedGravity=0;for(const auto& o:scene.Objects())selectedGravity+=o.gravitySelection.has_value();

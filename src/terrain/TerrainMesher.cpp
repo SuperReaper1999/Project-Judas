@@ -57,8 +57,7 @@ static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::
         const glm::vec3 anchor(key.x * width - (s.samplesX - 1) * s.spacing * .5f, 0,
                                key.z * width - (s.samplesZ - 1) * s.spacing * .5f);
         for (const auto &e : input.edits) {
-            const auto keys = Affected(input, e);
-            if (std::find(keys.begin(), keys.end(), key) != keys.end())
+            if (Touches(input, key, e))
                 field.edits.push_back(&e);
         }
         Chunk chunk;

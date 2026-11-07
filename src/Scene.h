@@ -1,6 +1,7 @@
 #pragma once
 #include "Deformable.h"
 #include "PlanetTerrain.h"
+#include "terrain/TerrainComponent.h"
 #include "Weather.h"
 #include "BasicWater.h"
 #include "Classification.h"
@@ -329,6 +330,7 @@ struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTrans
 struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings;};
 
 struct SceneObject {
+    std::optional<SceneLandscapeSettings> landscape;
     std::optional<BasicWaterSettings> basicWater;
     std::optional<PlanetSettings> planet;
     // M86 profiles are ordinary authored components. Runtime interpolation,

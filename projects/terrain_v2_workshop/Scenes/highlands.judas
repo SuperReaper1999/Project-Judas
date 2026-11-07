@@ -11,6 +11,7 @@ settings
  next-id 100
 end
 object 1 "Editable Highlands — heightfield and caves"
+ terrain.asset "8a22000000000000000000000000000e"
  position 0 0 0
  rotation 1 0 0 0
  scale 1 1 1
@@ -23,7 +24,7 @@ object 1 "Editable Highlands — heightfield and caves"
  render.texture-asset "8a22000000000000000000000000000d"
  render.mesh-asset "8a220000000000000000000000000002"
  render.color 1 1 1
- body static triangle-mesh
+ body static box
  body.half-extents 24 8 24
  body.radius 1
  body.terrain ""
@@ -32,7 +33,7 @@ object 1 "Editable Highlands — heightfield and caves"
  body.pickable false
  body.managed false
  body.compound-count 0
- body.collision-asset "8a220000000000000000000000000003"
+ body.collision-asset ""
  body.friction 0.75
  body.restitution 0
 end

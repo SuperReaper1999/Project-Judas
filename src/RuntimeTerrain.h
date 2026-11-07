@@ -16,6 +16,7 @@ public:
  explicit RuntimeTerrain(RuntimeWorld&);~RuntimeTerrain();
  bool Create(uint64_t,VolumeTerrainSource,bool navigation,unsigned profile,std::string&);
  bool CreateLandscape(uint64_t,TerrainV2::Source,std::string&);
+ bool CreateAsset(uint64_t,const std::string&,std::string&);
  uint64_t OwnerOf(BodyHandle)const;
  bool OwnsGenerated(BodyHandle)const;
  bool IsLandscape(uint64_t id)const;
@@ -27,6 +28,7 @@ public:
  const RuntimeTerrainStatus* Status(uint64_t)const;
  bool Has(uint64_t)const;bool ReadyToSave()const;
  void Advance();void Remove(uint64_t);void Draw(Renderer&)const;
+ bool Wait(uint64_t,std::string&);
  bool Capture(uint64_t,std::string&,std::string&)const;
  bool Restore(uint64_t,const std::string&,std::string&,bool asynchronous=false);
  std::vector<uint64_t> Owners()const;

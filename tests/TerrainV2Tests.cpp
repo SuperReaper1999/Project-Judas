@@ -48,6 +48,28 @@ int main() {
     try {
         auto s = Hillside();
         std::string error;
+        auto rectangular = TerrainV2::Create(129, 97, .5f);
+        for (unsigned seed = 0; seed < 200; ++seed) {
+            TerrainV2::Edit edit;
+            edit.point = {float(int(seed % 31) - 15) * 2.3f, 0, float(int(seed % 29) - 14) * 1.9f};
+            edit.radius = .5f + float(seed % 17) * .4f;
+            std::vector<TerrainV2::ChunkKey> exhaustive;
+            const float width = rectangular.chunkCells * rectangular.spacing;
+            for (unsigned z = 0; z < rectangular.ChunksZ(); ++z)
+                for (unsigned x = 0; x < rectangular.ChunksX(); ++x) {
+                    glm::vec2 lo(x * width - 32, z * width - 24), hi = lo + glm::vec2(width),
+                                                                  p(edit.point.x, edit.point.z);
+                    auto delta = glm::max(glm::max(lo - p, p - hi), glm::vec2(0));
+                    if (glm::length(delta) <= edit.radius + rectangular.spacing)
+                        exhaustive.push_back({x, z});
+                }
+            Check(TerrainV2::Affected(rectangular, edit) == exhaustive,
+                  "sparse invalidation preserves exhaustive footprint, halo and iteration order");
+        }
+        Check(
+            TerrainV2::Affected(rectangular, {TerrainV2::Edit::Kind::Remove, {3e38f, 0, -3e38f}, 1})
+                .empty(),
+            "finite extreme brush coordinates cannot overflow chunk indices");
         TerrainV2::Chunk a, b;
         Check(TerrainV2::BuildChunk(s, {0, 0}, a, error), "first heightfield chunk");
         Check(TerrainV2::BuildChunk(s, {1, 0}, b, error), "second heightfield chunk");

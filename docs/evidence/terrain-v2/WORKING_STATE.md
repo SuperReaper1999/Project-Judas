@@ -1,129 +1,116 @@
-# Terrain V2 — live implementation state
+# Terrain V2 — current engineering handoff
 
-## Authority and protected work
+Authority: the complete five-stage Terrain V2 implementation is approved on
+Experimental. Continue through ordinary implementation problems. Main, supported
+releases, the Alpha fluid lock, existing consumer games/SDKs and independent
+research remain untouched. No delegation is authorized. No release is authorized.
 
-Operator approved all five Terrain V2 stages on Experimental. Continue routine
-engineering independently; stop only for a genuine major blocker/product decision.
-Main, supported releases, Advanced Fluid lock, existing projects and independent
-research remain unchanged. No subagent delegation is authorized by this task.
-Current accepted starting source was fc4b9a0a301d8988d135badcb08a51f4635df7a7.
-Unrelated dirty water screenshots and many untracked historical experiments were
-present initially; preserve them and stage only explicit terrain-owned paths.
+## Verified live branch state
 
-## Committed checkpoint
+Experimental/origin: 84ae3332b8555f6f05defa4b1896727d1923d6b7.
+Earlier terrain foundation: 6932fe0b744b3ca16c44384ef0fa10e0cf282185.
+Main/origin: 1094d64515604fe9d03fdab479efc7f880b112a8.
+The native-source integration described below is UNCOMMITTED until a later
+explicit entry records its new hash. These checkpoints are not full completion.
+Unrelated water screenshots and untracked structural/physics/research files were
+present initially; never stage/clean/reset them. Stage terrain paths explicitly.
 
-6932fe0b744b3ca16c44384ef0fa10e0cf282185 is committed and pushed to Experimental.
-It is the FIRST integrated slice, not completed Terrain V2. Main/origin main stay
-1094d64515604fe9d03fdab479efc7f880b112a8. No release/unlock is authorized.
+The desktop NVIDIA GTX970 works: 4096MiB, driver580.178.04, OpenGL4.6.
+Restricted default commands see llvmpipe. Use require_escalated for native desktop
+GPU tests/profiles. User explicitly corrected the unavailable-driver assumption.
+Use j2 on the8GB host, one build at a time, no timing during compiler activity.
 
-Stage1 includes sampled heightfields + sparse edit bands, genuine tunnel across
-chunks, native collision cooking/publication, actual world persistence and
-origin/region handling, module-owned editor brushes/undo/save, four material layers,
-transactional authoring tools and owned projects/terrain_v2_workshop. Its evidence
-is under stage1/.215 geometry checks,70 world/script checks,15 native editor,
-220 original planet-world,10074 planet-terrain,58 legacy LivingWorld,35 Python,
-API consistency, genuine desktop gameplay/save/quit/load and relocated standalone
-passed. Raw failure experiments remain in attempts/.
+## Completed committed foundations
 
-IMPORTANT: default restricted commands see llvmpipe, but the DESKTOP HAS NVIDIA.
-Use require_escalated for native GPU checks/benchmarks. Verified GTX970/4096MiB,
-driver580.178.04, OpenGL4.6. User corrected the mistaken unavailable-driver claim.
-Do not repeat that mistake. Build j2 on8GB RAM; one build at a time; no compiler
-jobs during performance timing. Avoid ps args (it can expose large proxy text).
+Sampled heightfields plus sparse edit bands share one source; a real tunnel
+crosses8chunks. Binary64 construction and consistent face diagonals fix preserved
+T-junction/nonmanifold attempts. Native collision cooking remains strict.
 
-## Current uncommitted continuation
+Reusable render grids, byte-exact height textures, camera-union/orthographic LOD,
+coarse-neighbour edge stitching and native-resolution excavation seams work.
+Modern4.6 and portable3.3 framebuffer/shadow tests pass978checks each: maximum
+height difference7.19726e-6m; shadow depths match independent CPU geometry.
+Motor seam travel matches monolithic collision exactly over300supported steps.
+Matched two-camera1km render results/evidence remain in stage2/. GPU timestamp
+scope includes submission bubbles; do not call it pure GPU arithmetic speedup.
 
-Stage2 rendering foundation implemented:
-- terrain/TerrainLod.* immutable geometric-error hierarchy; multi-view/orthographic
-  selection, rectangular exact coverage, finest-resolution volume seam ring,
-  edge interpolation against coarser neighbours; no skirts closing cave openings.
-- Renderer shared grid per resolution + lossless binary32 height samples in
-  portable RGBA8 storage; identical shared GLSL deformation in colour/shadow.
-  Ordinary draws reset terrain state; existing material slots/renderer reused.
-- WorldPresentation prepares one camera-interest union before any pass. Physical
-  collision is NOT retired by visual LOD.
-- Batch extraction validates an immutable source once. Runtime preparation and
-  author cooking consume the batch. Single-chunk API retains full validation.
-- Collision fingerprints now hash the actual dirty chunk positions/topology;
-  local edits no longer stringify/hash the entire source. Counts and signed-zero
-  normalization are explicit. Cold-save qualification must be rerun after this.
-- Source pages exceeding actual device texture limits are explicitly rejected
-  before GPU allocation. Native paging is still remaining work, not implemented.
+## Current native integration (uncommitted)
 
-New tests: TerrainV2LodTests339 passed before final tiny changes, native GPU
-TerrainV2RenderTests653 passed on modern4.6 and portable3.3. Actual GPU depths
-agree with CPU reconstruction within7.2e-6m in identity/rotated/translated frames.
-Initial ordinary-draw test failed because it read before normal batch flush;
-corrected oracle flushes batch, production code unchanged for that correction.
+TerrainAsset.*: deterministic indexed64x64 sample pages with checksums, exact
+binary32 heights/fourweights, bounded header/index-only and independent page
+reads. Runtime still materializes ALL source arrays. Not demand paging yet.
+AssetType::Terrain/.judasterrain is integrated with importer, dependency graph,
+scene key terrain.asset, source fingerprints and exporter. No game JS bootstrap.
+Root unit-scale static Box seed provides identity/filter/material; actual chunks
+replace support. Competing body/cavity/geometry owners explicitly rejected.
 
-Matched native benchmark (same1km terrain,2cameras,30 alternating pairs):
-Far full-mesh CPU median11.632ms/p9511.702 vs shared-grid.0633/.0675ms;
-near full5.858/6.347 vs shared.3636/.3705ms. Far selected4 patches, near43.
-Geometry+height payload22,863,872 ->1,075,004 bytes (common material images excluded).
-GPU elapsed scopes include CPU submission bubbles; do NOT present them as pure
-GPU arithmetic timings. The small tunnel scene is GPU-neutral (~.70ms camera),
-not a speedup. No RAM/physics speedup claimed from render-grid changes.
-Raw logs /tmp/terrain-v2-render-{far,near}-prequal.log. No builds overlapped them.
+Asset-backed saves use JTRREF2 base-ID/fingerprint plus metadata/editjournal.
+Changed base requires explicit migration. Procedural sources save complete native
+snapshots within8MiB existing string budget. OldJSON snapshots remain readable.
+Restore retains old support until publication and retires obsolete chunks on a
+smaller replacement. The1024resident-chunk budget now also applies to Restore.
 
-## Current next actions
+TerrainRuntime.cpp coordinates physical jobs/publication; TerrainPresentation.cpp
+owns GPU/views; TerrainPersistence.cpp owns snapshots. Same class/lifetime/order,
+cohesive implementations, no duplicate subsystem. Logical material controls now
+propagate to all derived colliders and replacement chunks. Regional stage/private
+placement/publication/remove uses common owner placement and cleanup.
 
-Build session48374 /tmp/terrain-v2-stage2-exact-build.log may still be running.
-A final tiny GeometryFingerprint count edit occurred after its engine compile;
-RECONFIGURE and incremental rebuild once before exact qualification.
-New SeamTravel regression in TerrainV2WorldTests compares native motor crossing
-20m of chunk seams/corners to one monolithic collider. Not run yet. Do NOT
-weaken it if it reveals a real defect; investigate.
+Source.Affected now bounded-range scans with exact original halo predicate;
+mesher uses direct Touches. An exhaustive control caught tangent rounding at
+seed161; preserved failure and unchanged oracle. Conservative extra candidate
+then exact predicate fixed all416geometry checks.
 
-Next finish Stage2 rendering checkpoint qualification: new geometry/world/LOD
-focused gates with fresh source provenance, genuine cold process again, native
-render tests modern/portable, editor tests, author cook, actual desktop tunnel.
-Preserve failed test-harness log /tmp/terrain-v2-render-native.log as an oracle
-failure (normal draw was queued), not an engine defect. Record exact code/binary
-hashes. Then scoped commit/push Experimental and CONTINUE approved remaining work.
-No final task-completion claim after this checkpoint.
+v2-native publishes source/adaptive editor preview/texture/receipt; preview is NOT
+physicalLOD. v2-pack writes native only. Legacy v2-cook remains available. Receipts
+now distinguish native collision ownership from preview and checksum products.
+Owned Workshop generator/scene use native asset. Existing Saves never deleted.
 
-## Major remaining approved work (do not forget)
+## Qualification state and immediate actions
 
-Current source is bounded flat terrain with <=1024 ALL-RESIDENT collision chunks.
-Shared visual grids/LOD now exist, but there is NO native paged terrain asset,
-separate physics/residency budgets or physical interest streaming yet. Runtime
-source still arrives as JSON through a generated JS data module. This is the
-next storage/residency issue; do not call it production large-world support.
+Before the latest budget/material/receipt changes: asset32, component29 (then
+extended to35), geometry416, world93, separate-process cold3, LOD339,
+modern/portable render978each, native editor15, original PlanetWorld220,
+PlanetTerrain10074, LivingWorld58, scene fingerprint140 and export18passed.
+The actual relocated game excavated, traversed, saved, quit and restored in a
+separate process. tools/validation/qualify_terrain_v2.py reproduces that path,
+checks actual script restore state and native cook receipts; no private injection.
+It also captures mid-tunnel and restored screenshots; inspect them.
 
-PlanetTiles precision/LOD remains V1 and unchanged except generated-body queries.
-Planetary excavation is NOT integrated (CreateLandscape rejects planet owners).
-Need coherent patch/provider ownership, actual planetary tunnel/collision tests,
-not a cave prop hiding an intact planet collider.
+A1km native fixture (513x513,2m spacing) cooked successfully without a monolithic
+collision bake and exported/ran after genuine relocation from a foreign cwd.
+The warm-file benchmark initially measured ~503ms median scene setup,27–30ms
+complete local excavation,594-byte edit snapshot and148420KiB peakprocessRSS.
+Rerun latest binary once to include material propagation; do not claim a speedup.
+Raw /tmp/terrain-v2-native-km.jsonl and /tmp/terrain-v2-native-km-time.txt.
+Large cook/export/play logs /tmp/terrain-v2-native-large-*.log. Profile has no
+resolved GPU timestamps: DO NOT derive GPU timings from that particular capture.
+No false passing GPU measurement. Existing stage2 native GPU benchmark remains.
 
-Fresh V2 source/project creation and high-bit-depth import UI, procedural landscape
-presets, multi-source authoring, practical terrain PBR, runtime sculpt/paint APIs,
-painting-only cook optimization and smooth LOD transitions remain. Current editor
-discovers first source under Authoring, and picks with a merged preview mesh.
+NEXT: final reconfigure/build all changed native targets; component35 and focused
+native geometry/world/LOD/assets/components provenance runner; cold3;
+modern/portableGPU+editor15; relocated game qualification with latest receipt;
+original planet/lifecycle controls. No new functional edits unless failure reveals
+real defect. Preserve failure logs. Collect evidence under stage3-native/, scoped
+commit and push Experimental. Then CONTINUE remaining approved work below.
 
-Navigation dirty publication, particle/fluid source-coordinate/solid-occupancy
-integration, real regional unload/reload, native asset dependency/export receipts,
-consumer-game copies and fresh SDK/export qualification remain. Do not overwrite
-RPG installed SDK or existing game sources during this task.
+## Remaining approved work — not completed by native storage
 
-Open known first-slice bounds: whole-empty ordinary model cook unsupported;
-legacy V1 import only square pitch/16-cell alignment/4m tiling; runtime landscape
-smooth brush unsupported (editor surface smoothing exists); volume sampling
-currently follows height spacing. Undo snapshot memory currently count-bounded16.
-These need correction or honest final boundaries, not hidden compatibility claims.
+1. Physics-interest residency/budgets: all collision chunks still resident,1024
+perterrain. Native files are paged but runtime arrays/GPUimages still whole-source.
+Separate physical interest from camera visibility, preserve support/publication.
+2. Fresh source/project creation, highbitdepth heightmaps/presets, multisource
+selection, bytebounded undo, runtime surface sculpt/paint+persistence. Base-ref
+saves must gain raster deltas or clear base markers when samples change.
+3. Planetary excavation/provider override: preserve PlanetTiles precision/LOD and
+actually remove base render+collision. A cave prop over intact planet is invalid.
+4. Navigation actual terrain geometry/dirty publication, fluid solid occupancy,
+particle interactions/stable receiving coordinates, real regional travel cases.
+5. Broader materials/visual quality, temporalLOD transition, final consumer copies,
+freshSDK/export and platform coverage. Do NOT replace installedRPG SDK or assets.
 
-## Stage2 rendering foundation now qualified
-
-Latest authoritative runner /tmp/terrain-v2-stage2-qualified passes geometry215,
-world78, LOD339 with fresh provenance. Native GPU colour+shadow test978 per
-modern4.6 and portable3.3 profile passes (shadow vs independent CPU mesh exact).
-Existing runtime-render54, shader47, particle-collision37 and native editor15
-pass. Genuine game save/quit/load ran on fresh stage2 copy and succeeds.
-Shader test initially failed only its3 old canonical hashes; source-reviewed pins
-updated with independent native controls, negative controls unchanged; failures
-preserved under stage2/. The original unflushed-normal-draw oracle failure is
-also preserved there. No production workaround for that test mistake.
-
-Scope stage2 checkpoint now, then continue native terrain asset/residency work.
-Do not call rendering benchmark total-game performance or claim all five stages.
-Last build sessions completed. No currently running benchmark. Source identity
-pins are in tests/ShaderLibraryTests.cpp and must be included in scoped commit.
+Known bounds: V1 import squarepitch/16cell/4mtiling; whole-empty ordinary editor
+model unsupported (runtime emptychunks valid); runtime V2 smoothvolume unsupported;
+volume spacing follows source heightspacing; editor currently first source under
+Authoring and merged picker; undo16snapshots countonly. Fix where practical or
+document honestly. Never hide deferred work behind another green demonstration.

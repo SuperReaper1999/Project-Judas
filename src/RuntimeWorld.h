@@ -658,6 +658,7 @@ public:
     void SetCompositionFingerprint(const std::string& hash) { m_baselineFingerprint=hash;m_composed=true; }
     bool IsComposed() const { return m_composed; }
 private:
+    bool SetRuntimePlacement(EntityId,const SceneTransform&,bool includePrivate);
     friend class WorldPersistence;
     friend class RuntimeTerrain;
     friend class TerrainV2::Runtime;

@@ -1,4 +1,5 @@
 #include "AssetDependencies.h"
+#include "terrain/TerrainAsset.h"
 #include "RuntimeUI.h"
 #include "CollisionAsset.h"
 #include "Deformable.h"
@@ -17,6 +18,7 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
  add(ids,scene.Settings().environmentAsset);
  if(!scene.Settings().appearanceResetState.empty()){auto baseline=scene.Settings();std::string error;if(DecodeAppearanceState(baseline.appearanceResetState,baseline,error))add(ids,baseline.environmentAsset);}
  for(const auto& o:scene.Objects()){
+  if(o.landscape)add(ids,o.landscape->asset);
   add(ids,o.prefabAsset);
  if(o.render){
    if(o.render->spritePlayback)add(ids,o.render->spritePlayback->sheet);
@@ -40,7 +42,8 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
 }
 bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,std::set<std::string>& auxiliary,std::string& error,bool advancedFluids){
  std::set<AssetId> ids;
- if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids,advancedFluids);}
+ if(record.type==AssetType::Terrain){TerrainV2::AssetPages source;if(!source.Open(record.path,error))return false;for(const auto& id:source.Index().metadata.layerTextures)add(ids,id);}
+ else if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids,advancedFluids);}
  else if(record.type==AssetType::SpriteSheet){SpriteSheet sheet;if(!LoadSpriteSheet(record.path,sheet,error))return false;add(ids,sheet.texture);}
  else if(record.type==AssetType::UI){UIDocument d;if(!LoadUIDocument(record.path,d,error))return false;for(auto& e:d.elements){add(ids,e.texture);add(ids,e.font);}}
  else if(record.type==AssetType::Material){MaterialDefinition m;if(!LoadMaterial(record.path,m,error))return false;for(auto& map:m.maps)add(ids,map.asset);}

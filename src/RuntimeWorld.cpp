@@ -1,6 +1,7 @@
 #include "ProjectFeaturePolicy.h"
 #include "NetworkSession.h"
 #include "PlanetTiles.h"
+#include "terrain/TerrainComponent.h"
 #include "PowertrainAuthoring.h"
 #include "SceneSession.h"
 #include "PerformanceProfiler.h"
@@ -64,6 +65,7 @@ bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
 }
 
 bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error) const {
+    if(!TerrainV2::ValidateOwner(o,m_assets?m_assets->Assets():nullptr,error))return false;
     if(!ValidatePlanarDefinition(o,error))return false;
     const bool planar=o.body&&o.body->shape==SceneShape::Planar;
     if(planar&&legacyGameplay){error="Native 2D bodies require project-owned controls; disable legacy-gameplay in the project settings";return false;}
@@ -352,6 +354,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
         for(const auto& p:resources->Assets()->Records())if(p.second.type==AssetType::UI){std::ifstream file(p.second.path);std::ostringstream contents;contents<<file.rdbuf();bytes+=p.first+SceneFingerprintSha256(contents.str());}
         fingerprint=SceneFingerprintSha256(fingerprint+SceneFingerprintSha256(bytes));
     }
+    {std::string terrainSources;if(!TerrainV2::SourceFingerprint(scene,resources?resources->Assets():nullptr,terrainSources,outError))return false;if(!terrainSources.empty())fingerprint=SceneFingerprintSha256(fingerprint+terrainSources);}
     if(resources&&resources->Assets()){std::string navBytes="Judas.NavSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.navigationSurface){has=true;auto* asset=resources->Assets()->Find(o.navigationSurface->asset);if(asset){std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();navBytes+=asset->id+SceneFingerprintSha256(contents.str());}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+navBytes);}
     if(resources&&resources->Assets()){bool localized=std::any_of(resources->Assets()->Records().begin(),resources->Assets()->Records().end(),[](const auto& p){return p.second.type==AssetType::Catalog;});if(auto control=SceneControl())localized|=!control->Localization(resources).Configuration().fonts.empty();if(localized){std::string bytes="Judas.LocalizationSources.1";for(auto& p:resources->Assets()->Records())if(p.second.type==AssetType::Catalog||p.second.type==AssetType::Font){std::ifstream f(p.second.path,std::ios::binary);if(!f){outError="cannot fingerprint localization dependency "+p.first;return false;}std::string content(std::istreambuf_iterator<char>(f),{});bytes+=p.first+SceneFingerprintSha256(content);}if(auto control=SceneControl())bytes+=control->Localization(resources).Configuration().Encode();fingerprint=SceneFingerprintSha256(fingerprint+bytes);}}
     if(m_advancedFluids&&resources&&resources->Assets()){std::string liquidBytes="Judas.LiquidSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.liquidBasin||o.liquidContainer){has=true;std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){auto* asset=resources->Assets()->Find(id);if(!asset||asset->missing||asset->type!=AssetType::Liquid){outError="missing/wrong-type liquid asset";return false;}std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();liquidBytes+=id+SceneFingerprintSha256(contents.str());}if(o.liquidBasin&&!runtimeSnapshot){LiquidBasinData data;auto* asset=resources->Assets()->Find(o.liquidBasin->asset);if(!LoadLiquidBasin(asset->path,data,outError)||LiquidSourceFingerprint(scene,o,*resources->Assets(),outError)!=data.fingerprint){outError="stale/invalid liquid bake: "+outError;return false;}}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+liquidBytes);}
@@ -427,12 +430,12 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid)||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.landscape||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid)||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         // A validated cold snapshot contains scene-authored global owners too.
         // Runtime-spawn restrictions must not omit their saved state records.
         const bool gridOwner=m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid;
-        if(!runtimeSnapshot&&o.scripts.empty()&&!gridOwner&&!ValidateEntityDefinition(o,unsupported))continue;
+        if(!runtimeSnapshot&&o.scripts.empty()&&!gridOwner&&!o.landscape&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
         e.state=StateFromDefinition(o);e.slot=std::numeric_limits<std::size_t>::max();m_extraEntities.push_back(e);
     }
@@ -576,6 +579,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             m_physics.SetBodySensor(bodyHandle,o.body->sensor);m_physics.SetBodyEnabled(bodyHandle,o.body->enabled);
             m_physics.SetBodyTags(bodyHandle,o.tags);m_entityCategories[o.id].body=bodyHandle;
         }
+        if(o.landscape&&!TerrainV2::BuildAuthored(*this,o,outError))return fail(o,outError);
         if(o.navigationSurface && o.navigationSurface->enabled){
             if(!m_assets || !m_assets->Assets()){return fail(o,"navigation surface needs project assets");}
             auto* asset=m_assets->Assets()->Find(o.navigationSurface->asset);
@@ -1028,6 +1032,11 @@ bool RuntimeWorld::SetEntityState(EntityId id, const EntityPhysicalState& state)
     if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{state.position,state.rotation},&state.linearVelocity,&state.angularVelocity))return false;
     EntityRecord* e = FindEntity(id);
     if (!e || e->lifecycle == EntityLifecycle::Destroyed) return false;
+    if(m_runtimeTerrain&&m_runtimeTerrain->IsLandscape(id)){
+        auto definition=m_scriptDefinitions.find(id);if(definition==m_scriptDefinitions.end())return false;
+        auto transform=definition->second.transform;transform.position=state.position;transform.rotation=state.rotation;
+        return SetRuntimePlacement(id,transform,true);
+    }
     e->state = state;
     if(e->definition.characterMotor){auto t=RuntimeDefinition(id)->transform;t.position=state.position;t.rotation=state.rotation;
         SetRuntimeTransform(id,t);if(auto* motor=RuntimeCharacter(id))motor->velocity=state.linearVelocity;

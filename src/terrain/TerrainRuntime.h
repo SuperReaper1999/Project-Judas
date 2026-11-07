@@ -32,6 +32,7 @@ class Runtime {
     std::vector<BodyHandle> Bodies() const;
     void Synchronize();
     void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin);
+    void BindAsset(std::string id, std::string fingerprint);
 
   private:
     struct Prepared {
@@ -44,6 +45,8 @@ class Runtime {
         double milliseconds = 0;
         std::string error;
         std::shared_ptr<const HeightLod> lod;
+        bool replaceAll = false;
+        std::string baseAsset, baseFingerprint;
     };
     struct Resident {
         Prepared geometry;
@@ -57,6 +60,7 @@ class Runtime {
     JobHandle job;
     std::map<ChunkKey, Resident> chunks;
     RuntimeTerrainStatus status;
+    std::string baseAsset, baseFingerprint;
     mutable TextureHandle weightTexture;
     mutable TextureHandle heightTexture;
     std::shared_ptr<const HeightLod> lod;
@@ -64,8 +68,11 @@ class Runtime {
     mutable uint64_t appearanceRevision = 0;
     const SceneObject *Definition() const;
     BodyHandle Seed() const;
-    bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &);
+    bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &,
+                bool replaceAll = false);
     bool Publish(std::string &);
     void ReleaseMesh(Resident &) const;
+    void ReleaseGraphics();
+    void CommitPresentation();
 };
 } // namespace TerrainV2

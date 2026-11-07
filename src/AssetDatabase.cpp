@@ -4,6 +4,7 @@
 #include "NavigationAsset.h"
 #include "LiquidTypes.h"
 #include "AssetDatabase.h"
+#include "terrain/TerrainAsset.h"
 #include "CollisionAsset.h"
 #include "PhysicalMaterial.h"
 #include "SpriteAnimation.h"
@@ -94,6 +95,7 @@ bool CanCreateMetadata(const std::string& metaPath, std::string& outError) {
 
 const char* AssetTypeName(AssetType type) {
     switch (type) {
+        case AssetType::Terrain:return "terrain";
         case AssetType::Collision:return "collision";
         case AssetType::SpriteSheet:return "spriteSheet";
         case AssetType::PhysicalMaterial:return "physicalMaterial";
@@ -118,6 +120,7 @@ const char* AssetTypeName(AssetType type) {
 
 bool AssetTypeForExtension(const std::string& extension, AssetType& outType) {
     const std::string e = Lower(extension);
+    if(e==".judasterrain"){outType=AssetType::Terrain;return true;}
     if(e==".judassprite"){outType=AssetType::SpriteSheet;return true;}
     if(e==".judasphysmat"){outType=AssetType::PhysicalMaterial;return true;}
     if(e==".judascollision"){outType=AssetType::Collision;return true;}
@@ -164,6 +167,7 @@ AssetId MintAssetId() {
 
 bool AssetDatabase::ValidateAssetFile(const std::string& path, AssetType type, std::string& outError) {
     switch (type) {
+        case AssetType::Terrain:{TerrainV2::Source source;return TerrainV2::LoadAsset(path,source,outError);}
         case AssetType::Material:{MaterialDefinition m;return LoadMaterial(path,m,outError);}
         case AssetType::World:{WorldManifest m;return LoadWorldManifest(path,m,outError);}
         case AssetType::Catalog:{Catalog d;return LoadCatalog(path,d,outError);}
@@ -232,7 +236,8 @@ bool AssetDatabase::ReadMeta(const std::string& metaPath, AssetId& outId, AssetT
             idSeen = true;
         } else if (key == "type") {
             if (typeSeen) return fail("duplicate type");
-            if(tokens[1].first=="audio-effect")outType=AssetType::AudioEffect;
+            if(tokens[1].first=="terrain")outType=AssetType::Terrain;
+            else if(tokens[1].first=="audio-effect")outType=AssetType::AudioEffect;
             else if(tokens[1].first=="material")outType=AssetType::Material;
             else if(tokens[1].first=="world")outType=AssetType::World;
             else if(tokens[1].first=="catalog")outType=AssetType::Catalog;

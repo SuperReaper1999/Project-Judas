@@ -1,5 +1,7 @@
 #include "RuntimeTerrain.h"
 #include "terrain/TerrainRuntime.h"
+#include "terrain/TerrainAsset.h"
+#include "terrain/TerrainPersistence.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "CollisionAsset.h"
@@ -17,6 +19,7 @@ constexpr size_t MaxSamples=32768,MaxVolumes=8,TotalSamples=262144;
 RuntimeTerrain::RuntimeTerrain(RuntimeWorld& w):world(w){}
 RuntimeTerrain::~RuntimeTerrain(){while(!records.empty())Remove(records.begin()->first);}
 bool RuntimeTerrain::Has(uint64_t id)const{auto i=records.find(id);return i!=records.end()&&(bool(i->second.committed)||(i->second.landscape&&i->second.landscape->State().ready));}
+bool RuntimeTerrain::Wait(uint64_t id,std::string& error){auto it=records.find(id);if(it==records.end()||!it->second.landscape){error="missing landscape preparation";return false;}it->second.landscape->Wait();error=it->second.landscape->State().error;return error.empty()&&it->second.landscape->State().ready;}
 const RuntimeTerrainStatus* RuntimeTerrain::Status(uint64_t id)const{auto i=records.find(id);return i==records.end()?nullptr:i->second.landscape?&i->second.landscape->State():&i->second.status;}
 bool RuntimeTerrain::ReadyToSave()const{for(auto& [id,r]:records)if(r.pending||(r.landscape&&r.landscape->State().busy))return false;return true;}
 std::vector<uint64_t> RuntimeTerrain::Owners()const{std::vector<uint64_t> out;for(auto& [id,r]:records)if(r.committed||r.landscape)out.push_back(id);return out;}
@@ -39,6 +42,16 @@ bool RuntimeTerrain::CreateLandscape(uint64_t id,TerrainV2::Source source,std::s
  auto runtime=std::make_unique<TerrainV2::Runtime>(world,id);
  if(!runtime->Create(std::move(source),error))return false;
  records[id].landscape=std::move(runtime);return true;
+}
+bool RuntimeTerrain::CreateAsset(uint64_t id,const std::string& assetId,std::string& error){
+ const auto* assets=world.Resources()?world.Resources()->Assets():nullptr;
+ const auto* record=assets?assets->Find(assetId):nullptr;
+ if(!record||record->missing||record->type!=AssetType::Terrain){error="registered native terrain asset required";return false;}
+ TerrainV2::AssetPages pages;TerrainV2::Source source;
+ if(!pages.Open(record->path,error)||!pages.ReadAll(source,error))return false;
+ const auto fingerprint=pages.Index().fingerprint;
+ if(!CreateLandscape(id,std::move(source),error))return false;
+ records.at(id).landscape->BindAsset(assetId,fingerprint);return true;
 }
 bool RuntimeTerrain::Prepare(Product& p,const ProjectNavigation& config,const JobContext* context){
  auto start=Clock::now();auto cancel=[&]{return context&&context->CancelRequested();};
@@ -139,10 +152,10 @@ bool RuntimeTerrain::Capture(uint64_t id,std::string& out,std::string& error)con
 }
 bool RuntimeTerrain::Restore(uint64_t id,const std::string& bytes,std::string& error,bool asynchronous){
  if(bytes.empty())return true;
- if(bytes.front()=='{'){
-  TerrainV2::Source source;if(!TerrainV2::Parse(bytes,source,error))return false;
+ if(bytes.front()=='{'||TerrainV2::IsAsset(bytes)||TerrainV2::IsReferenceSnapshot(bytes)){
   auto i=records.find(id);
   if(i!=records.end()&&!i->second.landscape){error="terrain save representation mismatch";return false;}
+  if(i!=records.end())return i->second.landscape->Restore(bytes,error,asynchronous);
   auto runtime=std::make_unique<TerrainV2::Runtime>(world,id);
   if(!runtime->Restore(bytes,error,asynchronous))return false;
   records[id].landscape=std::move(runtime);return true;

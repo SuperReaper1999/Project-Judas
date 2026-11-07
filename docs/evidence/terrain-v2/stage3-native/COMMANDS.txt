@@ -1,0 +1,15 @@
+From repository root; Release/Experimental; build -j2 once before testing.
+python3 scripts/prealpha_validate.py --build-dir build --test terrain-v2-geometry --test terrain-v2-world --test terrain-v2-lod --test terrain-v2-assets --test terrain-v2-components --output /tmp/terrain-v2-native-focused-NEW
+build/judas_terrain_v2_world_tests --write /tmp/terrain-native-cold-NEW.bin
+build/judas_terrain_v2_world_tests --read /tmp/terrain-native-cold-NEW.bin
+build/judas_terrain_v2_render_tests
+JUDAS_GL_PROFILE=portable build/judas_terrain_v2_render_tests
+build/judas_terrain_v2_editor_tests /tmp/judas-terrain-native-editor-NEW
+python3 tools/validation/qualify_terrain_v2.py --build build --output /tmp/judas-terrain-native-package-NEW
+# No builds during benchmark:
+/usr/bin/time -v build/judas_terrain_v2_native_benchmark /tmp/judas-terrain-native-km-NEW
+build/judas_planet_world_tests
+build/judas_planet_terrain_tests
+build/judas_living_world_tests /tmp/judas-terrain-living-NEW
+Native desktop GPU tests require access to the real desktop NVIDIA driver.
+The executable hashes below identify the dirty-source candidate, not a release.

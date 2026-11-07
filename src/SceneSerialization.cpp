@@ -142,6 +142,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("prefab.ids", Quote(EncodePrefabOverrides(ids)));
         w.Line("prefab.overrides", Quote(EncodePrefabOverrides(o.prefabOverrides)));
     }
+    if(o.landscape)w.Line("terrain.asset",Quote(o.landscape->asset));
     if(o.planet)w.Line("planet.surface",Quote(EncodePlanetSettings(*o.planet)));
     if(o.basicWater)w.Line("water.basic",Quote(EncodeBasicWater(*o.basicWater)));
     if(o.weather)w.Line("weather.region",Quote(EncodeWeatherSettings(*o.weather)));
@@ -826,6 +827,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     std::map<std::string,std::string> navFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
     std::string navError;if(!ApplyNavigationProperties(navFields,o,navError))return reader.Fail(navError);
+    if(p.Has("terrain.asset")){std::string asset;if(!p.String("terrain.asset",asset)||!IsValidAssetId(asset))return reader.Fail("terrain.asset requires a registered 32-hex asset identity");o.landscape=SceneLandscapeSettings{asset};}
     if(p.Has("planet.surface")){std::string value,error;PlanetSettings settings;if(!p.String("planet.surface",value)||!DecodePlanetSettings(value,settings,error))return reader.Fail(error);o.planet=std::move(settings);}
     if(p.Has("water.basic")){std::string value,error;BasicWaterSettings water;if(!p.String("water.basic",value)||!DecodeBasicWater(value,water,error))return reader.Fail(error);o.basicWater=water;}
     if(p.Has("weather.region")){std::string value,error;WeatherSettings settings;if(!p.String("weather.region",value)||!DecodeWeatherSettings(value,settings,error))return reader.Fail(error);o.weather=std::move(settings);}

@@ -1,15 +1,21 @@
 # Terrain data, extraction and runtime publication have separate ownership.
 target_sources(judas_engine PRIVATE
     src/terrain/TerrainSource.cpp
+    src/terrain/TerrainAsset.cpp
+    src/terrain/TerrainComponent.cpp
     src/terrain/TerrainLod.cpp
     src/terrain/TerrainBrush.cpp
     src/terrain/TerrainMesher.cpp
     src/terrain/TerrainTopology.cpp
     src/terrain/TerrainRuntime.cpp
+    src/terrain/TerrainPresentation.cpp
+    src/terrain/TerrainPersistence.cpp
     src/WorldTerrainQueries.cpp)
 judas_add_engine_test(judas_terrain_v2_tests tests/TerrainV2Tests.cpp)
 judas_add_engine_test(judas_terrain_v2_world_tests tests/TerrainV2WorldTests.cpp)
 judas_add_engine_test(judas_terrain_v2_lod_tests tests/TerrainV2LodTests.cpp)
+judas_add_engine_test(judas_terrain_v2_asset_tests tests/TerrainV2AssetTests.cpp)
+judas_add_engine_test(judas_terrain_v2_component_tests tests/TerrainV2ComponentTests.cpp)
 judas_add_engine_test(judas_terrain_v2_render_tests tests/TerrainV2RenderTests.cpp)
 # Matched geometry preparation benchmark, intentionally not a timing gate.
 add_executable(judas_terrain_v2_benchmark tests/TerrainV2Benchmark.cpp)
@@ -18,6 +24,9 @@ judas_warnings(judas_terrain_v2_benchmark)
 add_executable(judas_terrain_v2_render_benchmark tests/TerrainV2RenderBenchmark.cpp)
 target_link_libraries(judas_terrain_v2_render_benchmark PRIVATE judas_engine)
 judas_warnings(judas_terrain_v2_render_benchmark)
+add_executable(judas_terrain_v2_native_benchmark tests/TerrainV2NativeBenchmark.cpp)
+target_link_libraries(judas_terrain_v2_native_benchmark PRIVATE judas_engine)
+judas_warnings(judas_terrain_v2_native_benchmark)
 
 judas_add_engine_test(judas_terrain_v2_editor_tests tests/TerrainV2EditorTests.cpp)
 target_link_libraries(judas_terrain_v2_editor_tests PRIVATE judas_editor_core)

@@ -13,6 +13,7 @@
 #include "ToolProcess.h"
 #include "modding/ModRuntime.h"
 #include "AssetDependencies.h"
+#include "terrain/TerrainAsset.h"
 #include "../third_party/nlohmann/json.hpp"
 #include "CollisionAsset.h"
 #include "PhysicalMaterial.h"
@@ -92,6 +93,13 @@ void References(const Scene& scene, const AssetDatabase& assets, const ProjectCl
     // Overrides/source content must be validated too, not just placeholders.
     Scene flattened;Require(FlattenHierarchy(resolved,flattened,error),error);
     for (const auto& object : flattened.Objects()) {
+        if (object.landscape) {
+            check(object.landscape->asset, AssetType::Terrain);
+            TerrainV2::Source source;
+            const auto* record = assets.Find(object.landscape->asset);
+            Require(TerrainV2::ValidateOwner(object, &assets, error) && record &&
+                    TerrainV2::LoadAsset(record->path, source, error), "Landscape: " + error);
+        }
         if(object.body){if(!object.body->physicalMaterial.empty()){check(object.body->physicalMaterial,AssetType::PhysicalMaterial);PhysicalMaterial material;auto* record=assets.Find(object.body->physicalMaterial);Require(record&&LoadPhysicalMaterial(record->path,material,error),"Physical material: "+error);}std::vector<std::string> ids;if(!object.body->collisionAsset.empty())ids.push_back(object.body->collisionAsset);for(auto& c:object.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){check(id,AssetType::Collision);auto* record=assets.Find(id);CollisionAsset cooked;Require(record&&LoadCollisionAsset(record->path,cooked,error),"Collision: "+error);if(!cooked.sourceAsset.empty()){check(cooked.sourceAsset,AssetType::Mesh);auto* source=assets.Find(cooked.sourceAsset);Require(source&&!CollisionAssetStale(cooked,source->path,error),"Stale collision source/settings; recook "+cooked.sourceAsset+": "+error);}}}
         if(object.deformable){check(object.deformable->asset,AssetType::Deformable);auto* record=assets.Find(object.deformable->asset);std::vector<uint8_t> bytes;DeformableAsset deform;Require(record&&ReadWholeFile(record->path,bytes,error)&&DecodeDeformableAsset(bytes,deform,error),"Deformable: "+error);Require(!deform.fracture||(!object.liquidBasin&&!object.liquidContainer&&!object.liquidConnection),"Liquid-bearing fracture owner is unsupported; conserved owner retained");if(!deform.sourceAsset.empty()){auto* source=assets.Find(deform.sourceAsset);std::string fingerprint;Require(source&&SceneFingerprintSha256File(source->path,fingerprint,error)&&fingerprint==deform.sourceFingerprint,"Stale deformable source: "+deform.sourceAsset+"; rebake");}}
         if(advancedFluids&&object.liquidBasin){check(object.liquidBasin->geometry,AssetType::Liquid);check(object.liquidBasin->asset,AssetType::Liquid);auto* r=assets.Find(object.liquidBasin->asset);LiquidBasinData b;Require(r&&LoadLiquidBasin(r->path,b,error),"Liquid basin: "+error);Require(LiquidSourceFingerprint(flattened,object,assets,error)==b.fingerprint,"Stale liquid basin: "+error);}
