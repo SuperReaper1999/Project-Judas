@@ -34,7 +34,30 @@ try:
     working=out/'foreign-working-directory';working.mkdir()
     commands={
       'write':'FRAMES 180\nLOG_EVERY 30\nFRAME_SECONDS 0.016666667\nACTION control_toggle 1 20 21\nACTION save 1 80 81\nWAIT_SERVICES save 10000 100\n',
-      'read':'FRAMES 180\nLOG_EVERY 30\nFRAME_SECONDS 0.016666667\nACTION load 1 20 21\nWAIT_SERVICES save 10000 40\nWAIT_SERVICES scene 10000 45\nEXPECT_SCENE Scenes/pool.judas 60\n'}
+      'read':'FRAMES 180\nLOG_EVERY 30\nFRAME_SECONDS 0.016666667\nACTION load 1 20 21\nWAIT_SERVICES save 10000 40\nWAIT_SERVICES scene 10000 45\nEXPECT_SCENE Scenes/pool.judas 60\n',
+      'scene-controls':'''FRAMES 200
+LOG_EVERY 30
+FRAME_SECONDS 0.016666667
+ACTION rotated 1 10 11
+WAIT_SERVICES scene 10000 15
+EXPECT_SCENE Scenes/rotated.judas 20
+ACTION radial 1 40 41
+WAIT_SERVICES scene 10000 45
+EXPECT_SCENE Scenes/radial.judas 50
+ACTION original 1 70 71
+WAIT_SERVICES scene 10000 75
+EXPECT_SCENE Scenes/planet-basin.judas 80
+ACTION pool 1 100 101
+WAIT_SERVICES scene 10000 105
+EXPECT_SCENE Scenes/pool.judas 110
+ACTION reset 1 130 131
+WAIT_SERVICES scene 10000 135
+EXPECT_SCENE Scenes/pool.judas 140
+ACTION pause 1 150 151
+EXPECT_PAUSED 1 155
+ACTION pause 1 170 171
+EXPECT_PAUSED 0 175
+'''}
     for name,script in commands.items():
         path=out/(name+'.harness');path.write_text(script+f'SCREENSHOT 160 {out/(name+".png")}\n')
         env=dict(os.environ,JUDAS_TEST_SCRIPT=str(path),JUDAS_GPU_DIAGNOSTICS='1',JUDAS_WINDOW_SIZE='1280x720',

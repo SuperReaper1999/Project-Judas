@@ -1,0 +1,23 @@
+[Graphics] OpenGL 4.6 request unavailable: Could not create EGL context (call to eglCreateContext failed, reporting an error of EGL_BAD_MATCH)
+[Graphics] created OpenGL 4.5 Core request (auto policy)
+[Graphics] API=OpenGL 4.5 requested=auto selected=modern vendor=Mesa renderer=llvmpipe (LLVM 21.1.8, 256 bits)
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=120 uniformBlockBytes=65536 storageBindings=80 storageBlockBytes=134217728 computeInvocations=1024 computeSharedBytes=32768
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS use project input bindings
+PASS actual authored motor and carryable crate exist
+PASS position on real deck facing the real crate
+GRAB displacement=0 deltaY=0
+FAIL G lifts the aimed crate using the shipped controller and real forces
+THROW velocity=0,0,0
+FAIL H actually launches the held body in the view direction
+FAIL thrown body leaves the grip instead of snapping back
+PASS F supplies actual water through the pump
+PASS F stops the pump again
+PASS Escape opens the pause menu
+PASS pause stops physics
+PASS Escape resumes play
+PASS gameplay has no script errors
+12 checks, 3 failures

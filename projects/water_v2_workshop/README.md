@@ -11,8 +11,13 @@ Advanced Fluids must be explicitly enabled in Project Settings. Alpha's fluid
 lock is unchanged; published Alpha SDKs cannot run this preview.
 
 - WASD/mouse: walk/look. Space: jump or swim up. Q: dive.
-- G: grab/release a nearby dynamic prop. H: throw it. Grip releases on load.
-- F: toggle an external water pump and drain. B: apply a water impulse.
+- Aim the centre crosshair at a loose prop within 5 metres; G picks it up or
+  releases it. H throws a held prop. Fixed scenery cannot be picked up. The HUD
+  confirms the target, held state and failed interactions. Grip releases on load.
+- F: toggle water circulation (an external pump and drain adding/removing equal
+  quantities). It changes local flow rather than continuously raising the pool.
+- B: aim down at nearby water to splash it, up to 12 metres away. Solid walls
+  and props block the splash ray. This applies a real local water impulse.
 - 1: ordinary pool. 2: tilted pool and gravity. 3: genuinely radial gravity.
 - 4: original radial planet/basin geometry, with the new water backend.
 - F6/F7: cold-save/load slot. Escape: pause menu. R: restart this scene.
@@ -31,7 +36,8 @@ The original project is unchanged. Its open bucket is a compound collider;
 watertight moving-container pressure/added-mass behaviour is not qualified.
 
 Source assets and regeneration: `tools/create_water_v2_workshop.py`. Regeneration
-overwrites only this project's scenes, controller, UI and font assets; it never
+overwrites only this project's scenes, UI and font assets; the controller is
+authored directly in `Assets/scripts/player.js` and is preserved. It never
 deletes saves. All assets are original scene geometry or reused Judas example
 assets; the included DejaVu font retains its licence.
 

@@ -245,6 +245,15 @@ class GateTests(unittest.TestCase):
         self.assertEqual(selected, [entry])
         self.assertFalse(unavailable)
 
+    def test_workshop_controls_require_unlocked_experimental_water(self):
+        entry = dict(name='water-workshop-controls', target='judas_water_workshop_tests')
+        selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
+        self.assertFalse(selected)
+        self.assertEqual(unavailable[0]['status'], 'not-exercised')
+        selected, unavailable = gate.partition_channel_tests([entry], 'Experimental')
+        self.assertEqual(selected, [entry])
+        self.assertFalse(unavailable)
+
     def test_material_optics_requires_advanced_runtime_without_hiding_ordinary_water(self):
         # The combined material/application fixture renders the actual M55
         # optical boundary. It must exercise that system on Experimental, not

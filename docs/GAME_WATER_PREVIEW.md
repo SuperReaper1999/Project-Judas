@@ -201,9 +201,12 @@ The preview retains catch-up backlog instead of silently dropping simulation tim
 1. Open the Workshop project in the editor. Select the water owner, inspect grid
    fields and the experimental warning. Play, Stop, then Play again; authoring must
    remain unchanged and initial water should reset deliberately.
-2. Walk down the steps, swim and dive. Grab the green crate, drop/throw it into the
-   pool and watch it float. The grey sphere should sink without launching.
-3. Toggle the pump/drain and apply an impulse. Water should flow/settle while quantity
+2. Walk down the steps, swim and dive. Aim the centre crosshair at a loose prop
+   within 5 metres and press G; the HUD must confirm it is held. G releases it;
+   H throws it. Watch the green crate float and the grey sphere sink without launching.
+3. F toggles circulation (equal pump/drain receipts, rather than a rising pool).
+   Aim down at water and press B to splash there; solids block the splash ray.
+   Water should flow/settle while quantity
    follows the explicit receipts. Inspect the chamber/roof and ordinary solid contacts.
 4. Switch to tilted/radial gravity and the original planet basin geometry. Check
    stable bodies, swimming, surface alignment and camera controls.

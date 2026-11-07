@@ -17,55 +17,18 @@ def main():
         for file in (SOURCE / 'Assets' / folder).iterdir():
             if file.is_file():
                 shutil.copyfile(file, DEST / 'Assets' / folder / file.name)
-    script = (SOURCE / 'Assets/scripts/player.js').read_text()
-    script = script.replace('input,ui,world,scenes', 'input,ui,world,scenes,saves,physics')
-    script = script.replace('this.state={yaw:0,pitch:-.2}', 'this.state={yaw:0,pitch:-.24,pump:false}')
-    script = script.replace("'STILLWATER / BASIC WATER'", "'WATER V2 / SOURCE PREVIEW'")
-    script = script.replace("'WASD + mouse: explore | Space: jump / swim up | Q: dive\\nWalk down the steps or jump into the pool. Escape: pause | R: restart'", "'WASD + mouse | Space: jump / swim | Q: dive\\nG: grab / release | H: throw | F: pump | B: splash\\n1: pool | 2: rotated | 3: radial | 4: original planet | F6/F7: save/load | Esc: pause'")
-    script = script.replace('restore(){this.start();}', '''restore(){this.start();console.log('WATER_WORKSHOP_RESTORED '+JSON.stringify({pump:this.state.pump,water:world.gridWaterRegions[0]?.gridWater?.state}));}''')
-    script = script.replace('  if(input.pressed(\'reset\'))scenes.reload();', '''  if(input.pressed('reset'))scenes.reload();
-  for(const [key,path] of [['pool','pool'],['rotated','rotated'],['radial','radial'],['original','planet-basin']])
-   if(input.pressed(key))scenes.load('Scenes/'+path+'.judas');
-  if(input.pressed('save'))this.request=saves.save('water-workshop');
-  if(input.pressed('load'))this.request=saves.load('water-workshop');
-  if(input.pressed('control_toggle'))this.state.pump=!this.state.pump;
-  if(input.pressed('interact')){
-   if(this.held){this.held=null;this.entity.character.ignore([]);}
-   else{const p=this.entity.transform,rotation=qm(qm(p.rotation,axis({x:0,y:1,z:0},this.state.yaw)),axis({x:1,y:0,z:0},this.state.pitch));
-    const eye=add(p.position,rotate(p.rotation,{x:0,y:.65,z:0}));
-    const hit=physics.raycast(eye,rotate(rotation,{x:0,y:0,z:-1}),5);
-    if(hit?.entity?.motionType==='dynamic'){this.held=hit.entity;this.entity.character.ignore([this.held]);}}
-  }
-  if(input.pressed('throw')&&this.held?.valid){
-   const p=this.entity.transform,r=qm(qm(p.rotation,axis({x:0,y:1,z:0},this.state.yaw)),axis({x:1,y:0,z:0},this.state.pitch));
-   this.held.applyImpulseAtPoint(mul(rotate(r,{x:0,y:0,z:-1}),this.held.mass*6),this.held.transform.position);
-   this.held=null;this.entity.character.ignore([]);
-  }''')
-    script = script.replace(' start(){', ' start(){this.held=null;this.entity.character?.ignore([]);')
-    script = script.replace('  motor.velocity=velocity;', '''  motor.velocity=velocity;
-  const owner=world.gridWaterRegions[0],waterHandle=owner?.gridWater;
-  if(waterHandle){const frame=owner.transform;
-   const point=v=>add(frame.position,rotate(frame.rotation,v));
-   if(this.state.pump){waterHandle.changeVolume(point({x:-3,y:2.6,z:-1}),.15*dt,.8);
-    waterHandle.changeVolume(point({x:3,y:.8,z:0}),-.15*dt,.8);}
-   if(input.pressed('add_water'))waterHandle.impulse(point({x:0,y:1.9,z:2}),rotate(frame.rotation,{x:0,y:65,z:0}),1.2);
-  }
-  if(this.held?.valid){
-   const rotation=qm(heading,axis({x:1,y:0,z:0},this.state.pitch));
-   const target=add(add(pose.position,mul(up,.45)),rotate(rotation,{x:0,y:0,z:-2.2}));
-   const change=add(mul(add(target,mul(this.held.transform.position,-1)),45),mul(this.held.velocity,-11));
-   this.held.applyForce(mul(add(change,mul(this.held.gravity.acceleration,-1)),this.held.mass));
-  }''')
-    script = script.replace('  this.hud.get(\'counter\').text=`Swimming immersion: ${Math.round(this.immersion*100)}%\\nBasic water / no particle or flow components authored`;', '''  const s=world.gridWaterRegions[0]?.gridWater?.state;
-  let text=s?`Water ${s.quantity.toFixed(3)} m³ | stored ${s.storedDisplacement.toFixed(3)} m³ | swim ${Math.round(this.immersion*100)}%\\n${s.simulationMs.toFixed(2)} ms incl. geometry/body loads | pump ${this.state.pump?'ON':'OFF'}\\n${s.error||'Grid owns quantity; mesh is presentation only.'}`:'Advanced Fluids locked or disabled; use an Experimental source build.';
-  if(this.request){const r=saves.status(this.request);text+='\\nSave/load: '+r?.state+' '+(r?.error||'');}
-  this.hud.get('counter').text=text;''')
-    script = script.replace('destroy(){input.pointerCapture=false;', 'destroy(){if(this.entity.valid)this.entity.character.ignore([]);input.pointerCapture=false;')
-    (DEST / 'Assets/scripts/player.js').write_text(script)
+    # The gameplay controller is authored directly in the project. Regenerating
+    # scenes must not recreate an obsolete controller through string substitutions.
     shutil.copyfile(SOURCE / 'Assets/scripts/player.js.judasmeta', DEST / 'Assets/scripts/player.js.judasmeta')
     ui = (DEST / 'Assets/ui/menu.judasui').read_text()
-    ui = ui.replace('24 24 500 220', '24 24 640 270').replace('470 70', '610 92').replace('470 60', '610 82')
-    (DEST / 'Assets/ui/menu.judasui').write_text(ui)
+    ui = ui.replace('24 24 500 220', '24 24 600 330').replace('470 70', '570 146').replace('470 60', '570 96')
+    # A noninteractive reticle gives the pickup ray a visible, exact aim point.
+    ui = ui.replace('1280 720 1 1 1 25', '1280 720 1 1 1 26')
+    reticle = ('"crosshair" "canvas" 2 0 1 1 0 0 1 '
+               '0.5 0.5 0.5 0.5 0 0 24 24 0 0 0.5 0.5 0.5 0.5 '
+               '0 0 0 0 0 0 0 0 0 0 0 0 0.95 0.98 1 1 '
+               '0 24 0 0 1 "+" "" "41414141414141414141414141414103"\n')
+    (DEST / 'Assets/ui/menu.judasui').write_text(ui + reticle)
     # A readable standard input map, with only the logical actions used here.
     entries=[]
     for name,keys,axis in [

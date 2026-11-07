@@ -14,6 +14,7 @@ target_link_libraries(judas_game_water INTERFACE judas_engine)
 judas_add_engine_test(judas_game_water_tests tests/GameWaterTests.cpp)
 judas_add_engine_test(judas_game_water_runtime_tests tests/GameWaterRuntimeTests.cpp)
 judas_add_engine_test(judas_game_water_script_tests tests/GameWaterScriptTests.cpp)
+judas_add_engine_test(judas_water_workshop_tests tests/WaterWorkshopApplicationTests.cpp)
 add_custom_target(judas_game_water_qualification DEPENDS judas_game_water_tests
     judas_game_water_runtime_tests judas_game_water_script_tests)
 

@@ -1,0 +1,36 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS use project input bindings
+PASS actual authored motor and carryable crate exist
+PASS position on real deck facing the real crate
+GRAB displacement=0.798744 deltaY=0.140805
+PASS G lifts the aimed crate using the shipped controller and real forces
+PASS HUD confirms a prop is actually held
+THROW velocity=0,-2.71905,-5.50057
+PASS H actually launches the held body in the view direction
+PASS thrown body leaves the grip instead of snapping back
+PASS empty-handed throw explains its prerequisite
+PASS G explicitly releases a carried object
+PASS released crate falls under real gravity
+PASS F supplies actual water through the pump
+PASS F stops the pump again
+PASS short tap survives zero-step frames and is not repeated during catch-up
+PASS Escape opens the pause menu
+PASS pause stops physics
+PASS Escape resumes play
+PASS D moves the motor across the real deck
+PASS Space jumps from supported ground
+PASS B reaches actual water along the view ray
+PASS splash produces a real water disturbance without pausing the solver
+DIVE y=1.2604 vy=-0.967179
+PASS Q dives while actually immersed
+PASS Space swims upward while immersed
+PASS splashing and swimming preserve water quantity
+PASS reticle is centred on the actual camera ray
+PASS gameplay has no script errors
+25 checks, 0 failures
