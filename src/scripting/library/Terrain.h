@@ -12,6 +12,9 @@ export class Terrain {
     create(options) {
         return call("terrainCreate", this.id, options);
     }
+    createLandscape(source) {
+        return call("terrainLandscape", this.id, source);
+    }
     brush(point, options) {
         return call("terrainBrush", this.id, point, options);
     }

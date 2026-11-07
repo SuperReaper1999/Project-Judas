@@ -420,6 +420,8 @@ public:
     void ReconcileRenderResources(EntityId);
     void ReleaseRenderResources(EntityId);
     BodyHandle RuntimeBody(EntityId id) const;
+    std::vector<BodyHandle> OwnedCollisionBodies(EntityId id) const;
+    BodyHandle CollisionBodyNear(EntityId id,glm::vec3 point) const;
     JointHandle RuntimeJoint(EntityId owner);
     bool SetRuntimeJoint(EntityId owner,const SceneJointComponent&,bool remove,std::string& error);
     bool SetBodyMaterial(EntityId,const std::string&,const PhysicalMaterial*,std::string& error);
@@ -656,6 +658,7 @@ public:
 private:
     friend class WorldPersistence;
     friend class RuntimeTerrain;
+    friend class TerrainV2::Runtime;
     bool m_restoreConstruction=false;
     bool m_composed=false;
     std::set<EntityId> m_regionPending;

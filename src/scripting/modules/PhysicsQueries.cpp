@@ -130,9 +130,9 @@ JSValue HandlePhysicsQueries(BindingContext &context, const std::string &op, int
                 auto v = JS_GetPropertyUint32(c, ignored, i);
                 auto idv = JS_GetPropertyStr(c, v, "id");
                 try {
-                    auto body = world.RuntimeBody(std::stoull(String(c, idv)));
-                    if (body.IsValid())
-                        filter.ignoredBodies.push_back(body);
+                    const auto ignoredId = std::stoull(String(c, idv));
+                    const auto owned=world.OwnedCollisionBodies(ignoredId);
+                    filter.ignoredBodies.insert(filter.ignoredBodies.end(),owned.begin(),owned.end());
                 } catch (...) {
                     tagsOk = false;
                 }

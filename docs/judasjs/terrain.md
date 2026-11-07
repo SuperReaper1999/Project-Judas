@@ -57,3 +57,37 @@ retain them. Source authoring files are never changed by gameplay.
 
 See [scenes/streaming](scenes-state.md), [queries](physics.md),
 [Living World Lab](../M97_LIVING_WORLD.md).
+
+## Terrain V2 landscape preview (Experimental)
+
+`entity.terrain.createLandscape(sourceJson)` initializes an opt-in sampled
+landscape on a root, unit-scale static owner. `sourceJson` is a serialized
+`JudasTerrainV2` source, not a model asset ID. Its regular heightfield and local
+excavations share one source and one collision publication boundary. Use
+`terrain.brush(point, {kind:"remove"|"add", radius, strength:1})` to excavate or
+add material. Points use the current simulation frame, including after an origin
+shift. The V2 landscape path does not currently implement the legacy volumetric
+`smooth` brush; it rejects it explicitly. Existing bounded volume `create` and
+`smooth` behaviour is unchanged.
+
+`terrain.state` additionally reports `chunks`, `volumeChunks`, and
+`pendingChunks`. `bytes` is a CPU geometry/source estimate, **not** total process,
+BVH or GPU memory. `prepareMs` is worker preparation elapsed time;
+`publishMs` is owner-thread publication time. Do not interpret either as FPS.
+A pending edit is explicit backpressure; check `busy` before another edit.
+Unlike the older bounded-volume preparation lane, independent V2 owners can
+prepare concurrently. A busy owner returns false without submitting another
+edit. Translation and rotation update all derived colliders; live scaling and
+motion-authority changes are rejected explicitly.
+
+The ordinary runtime-terrain save/streaming participant captures the landscape
+source and excavation journal. Derived chunk body handles are transient. Query
+results resolve to the owning terrain entity, and ignored-terrain query filters
+include its generated chunk bodies. Save/load restores native geometry before
+publication. Graphics material state does not own physical terrain quantity.
+
+Editable example: `projects/terrain_v2_workshop`. These APIs are Experimental
+source-build work, not a published supported-release update. Planetary
+excavation, large-world residency/LOD and full cross-system qualification are
+still being developed; the initial flat landscape slice must not be treated as
+completion of those capabilities.

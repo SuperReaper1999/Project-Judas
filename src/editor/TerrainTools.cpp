@@ -1,4 +1,5 @@
 #include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "ModAuthoring.h"
 #include "Project.h"
 #include "Prefab.h"
@@ -11,10 +12,12 @@
 #include <cstdio>
 #include <algorithm>
 namespace fs=std::filesystem;
-bool TerrainEditor::Busy(const EditorPanelState& s)const{if(!s.importJobs)return false;auto active=[&](JobHandle job){auto state=s.importJobs->StateOf(job);return state==JobState::Running||state==JobState::Queued;};return (task&&active(task->job))||(navigationTask&&active(navigationTask->job));}
-bool TerrainEditor::Guard(EditorPanelState& s){if(Busy(s)||draft.Active()||(loaded&&draft.Dirty())){s.showTerrain=true;error="Terrain draft is separate from the scene. Save or discard it and finish/cancel the cook before changing project, entering Play or closing.";return false;}return true;}
-void TerrainEditor::Shutdown(Renderer& r,JobSystem* jobs){draft.Cancel();if(task&&jobs){jobs->Cancel(task->job);jobs->Wait(task->job);}if(navigationTask&&jobs){jobs->Cancel(navigationTask->job);jobs->Wait(navigationTask->job);}r.DestroyMesh(mesh);r.DestroyTexture(texture);mesh={};texture={};}
+bool TerrainEditor::Busy(const EditorPanelState& s)const{if(v2&&v2->Active())return v2->Publishing();if(!s.importJobs)return false;auto active=[&](JobHandle job){auto state=s.importJobs->StateOf(job);return state==JobState::Running||state==JobState::Queued;};return (task&&active(task->job))||(navigationTask&&active(navigationTask->job));}
+bool TerrainEditor::Guard(EditorPanelState& s){if(v2&&v2->Active()){bool ok=v2->Guard(s);if(!ok)error=s.status;return ok;}if(Busy(s)||draft.Active()||(loaded&&draft.Dirty())){s.showTerrain=true;error="Terrain draft is separate from the scene. Save or discard it and finish/cancel the cook before changing project, entering Play or closing.";return false;}return true;}
+void TerrainEditor::Shutdown(Renderer& r,JobSystem* jobs){if(v2)v2->Shutdown(r,jobs);draft.Cancel();if(task&&jobs){jobs->Cancel(task->job);jobs->Wait(task->job);}if(navigationTask&&jobs){jobs->Cancel(navigationTask->job);jobs->Wait(navigationTask->job);}r.DestroyMesh(mesh);r.DestroyTexture(texture);mesh={};texture={};}
 void TerrainEditor::Panel(EditorDocument& doc,EditorPanelState& s,EditorRequests& requests){
+ if(!v2)v2=std::make_shared<TerrainV2Editor>();
+ if(v2->Panel(doc,s,requests)){loaded=v2->Loaded();editing=v2->Editing();return;}
  if(!s.showTerrain)return;
  ImGui::SetNextWindowSize({440,650},ImGuiCond_FirstUseEver);
  if(!ImGui::Begin("Terrain - sculpt / paint",&s.showTerrain)){ImGui::End();return;}
@@ -78,8 +81,9 @@ void TerrainEditor::Panel(EditorDocument& doc,EditorPanelState& s,EditorRequests
  ImGui::EndDisabled();ImGui::EndDisabled();
  if(navigationTask){auto state=s.importJobs->StateOf(navigationTask->job);if(state==JobState::Completed){requests.rescanAssets=true;if(!doc.IsDirty()&&!doc.Path().empty())doc.Load(doc.Path(),error);if(JudasMods::OpenAuthorAssets(*s.project,*s.assets,error))InspectNavigationDependencies(*s.project,*s.assets,loaded?draft.source.meshId:AssetId{},navigationDependencies,error);s.status="Dependent navigation rebuilt from saved scenes; published kit inputs retained";s.importJobs->Forget(navigationTask->job);navigationTask.reset();}else if(state==JobState::Failed||state==JobState::Cancelled){error=state==JobState::Cancelled?"Cancelled; last good navigation retained":s.importJobs->ErrorOf(navigationTask->job);s.importJobs->Forget(navigationTask->job);navigationTask.reset();}else if(ImGui::Button("Cancel navigation rebuild"))s.importJobs->Cancel(navigationTask->job);}
  ImGui::End();if(!s.showTerrain){draft.End();editing=false;}}
-void TerrainEditor::Prepare(Renderer& r,const EditorPanelState& s){if(!loaded)return;if(!preview||previewRevision!=draft.GeometryRevision()){preview=std::make_shared<MeshData>(BuildTerrainMesh(draft.source));r.DestroyMesh(mesh);mesh=r.CreateMesh(*preview);previewRevision=draft.GeometryRevision();appearanceDirty=true;}if(appearanceDirty||appearanceRevision!=draft.Revision()){TextureData data;auto previewSource=draft.source;previewSource.textureSize=std::min(previewSource.textureSize,256u);if(PaintTerrainTexture(previewSource,*s.assets,data,error)){r.DestroyTexture(texture);texture=r.CreateTexture(data);appearanceDirty=false;appearanceRevision=draft.Revision();}}}
+void TerrainEditor::Prepare(Renderer& r,const EditorPanelState& s){if(v2&&v2->Active()){v2->Prepare(r,s);preview=v2->Preview();draft.source.meshId=v2->MeshId();return;}if(!loaded)return;if(!preview||previewRevision!=draft.GeometryRevision()){preview=std::make_shared<MeshData>(BuildTerrainMesh(draft.source));r.DestroyMesh(mesh);mesh=r.CreateMesh(*preview);previewRevision=draft.GeometryRevision();appearanceDirty=true;}if(appearanceDirty||appearanceRevision!=draft.Revision()){TextureData data;auto previewSource=draft.source;previewSource.textureSize=std::min(previewSource.textureSize,256u);if(PaintTerrainTexture(previewSource,*s.assets,data,error)){r.DestroyTexture(texture);texture=r.CreateTexture(data);appearanceDirty=false;appearanceRevision=draft.Revision();}}}
 bool TerrainEditor::Stroke(const Scene& scene,SceneObjectId id,glm::vec3 origin,glm::vec3 direction,bool pressed,bool down,bool cancel,bool focused,std::string& status){
+ if(v2&&v2->Active()){bool used=v2->Stroke(scene,id,origin,direction,pressed,down,cancel,focused,status);footprint=v2->Footprint();return used;}
  footprint.Clear();
  if(cancel){draft.Cancel();editing=false;return true;}
  if(!focused||!down){if(draft.Active()){draft.End();appearanceDirty=true;}}
@@ -97,4 +101,4 @@ bool TerrainEditor::Stroke(const Scene& scene,SceneObjectId id,glm::vec3 origin,
  if(revision!=draft.Revision())appearanceDirty=true;
  return true;
 }
-void TerrainEditor::Draw(Renderer& r,Scene& scene,ResourceManager& assets){if(!loaded||!preview)return;r.SetRenderMask(scene.Settings().mainCameraRenderMask);for(auto& o:scene.Objects())if(o.render&&o.renderVisible&&o.render->meshAsset==draft.source.meshId&&o.render->visible){r.SetRenderLayer(o.renderLayer);r.SetMaterialBindings(BuildRenderMaterialBindings(&assets,*o.render));r.DrawMesh(mesh,o.transform.position,o.transform.rotation,o.transform.scale,texture,o.render->color,o.render->alpha);o.render->visible=false;}}
+void TerrainEditor::Draw(Renderer& r,Scene& scene,ResourceManager& assets){if(v2&&v2->Active()){v2->Draw(r,scene,assets);return;}if(!loaded||!preview)return;r.SetRenderMask(scene.Settings().mainCameraRenderMask);for(auto& o:scene.Objects())if(o.render&&o.renderVisible&&o.render->meshAsset==draft.source.meshId&&o.render->visible){r.SetRenderLayer(o.renderLayer);r.SetMaterialBindings(BuildRenderMaterialBindings(&assets,*o.render));r.DrawMesh(mesh,o.transform.position,o.transform.rotation,o.transform.scale,texture,o.render->color,o.render->alpha);o.render->visible=false;}}

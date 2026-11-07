@@ -227,7 +227,7 @@ set(JUDAS_RENDERER_SOURCES
     src/render/ViewUniforms.cpp src/render/ParticlePass.cpp
     src/render/ComputeDevice.cpp src/render/GpuParticlePass.cpp
     src/render/ShadowPassCache.cpp src/render/RenderTargets.cpp
-    src/render/WaterPass.cpp src/render/WaterShaders.cpp)
+    src/render/WaterPass.cpp src/render/WaterShaders.cpp src/render/TerrainPass.cpp)
 
 # Visual particle simulation/collision/publication is separate from MK2 and fluids.
 set(JUDAS_PARTICLE_SOURCES
@@ -556,7 +556,7 @@ add_library(judas_editor_core STATIC
     src/editor/SpriteSheetEditor.cpp
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
-    src/editor/TerrainTools.cpp
+    src/editor/TerrainTools.cpp src/editor/TerrainV2Editor.cpp
     src/editor/VolumeTerrainTools.cpp
     src/editor/ModTools.cpp
     src/editor/ProfilerView.cpp
@@ -1521,7 +1521,7 @@ judas_add_engine_test(judas_model_application_tests tests/ModelApplicationTests.
 
 judas_add_engine_test(judas_world_building_tests tests/WorldBuildingTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
-add_library(judas_world_authoring STATIC src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
+add_library(judas_world_authoring STATIC src/terrain/TerrainCook.cpp src/terrain/TerrainPreview.cpp src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation_baker)
 judas_warnings(judas_world_authoring)
@@ -1995,6 +1995,7 @@ target_link_libraries(judas_particles_v2_benchmark PRIVATE judas_engine)
 judas_warnings(judas_particles_v2_benchmark)
 
 include(cmake/JudasGameWater.cmake)
+include(cmake/JudasTerrain.cmake)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

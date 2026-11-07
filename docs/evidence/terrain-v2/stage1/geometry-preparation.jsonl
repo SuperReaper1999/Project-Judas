@@ -1,0 +1,6 @@
+{"grid":65,"path":"V1_full_geometry_and_BVH","samples":30,"mean_ms":7.00867,"median_ms":6.80279,"p95_ms":7.47092,"worst_ms":10.7168,"prepared_vertices":4225,"prepared_triangles":8192}
+{"grid":65,"path":"V2_dirty_geometry_and_BVH","samples":30,"mean_ms":1.27647,"median_ms":1.33453,"p95_ms":1.46763,"worst_ms":1.48252,"prepared_vertices":867,"prepared_triangles":1536}
+{"grid":129,"path":"V1_full_geometry_and_BVH","samples":30,"mean_ms":37.9454,"median_ms":37.3419,"p95_ms":40.8643,"worst_ms":40.9126,"prepared_vertices":16641,"prepared_triangles":32768}
+{"grid":129,"path":"V2_dirty_geometry_and_BVH","samples":30,"mean_ms":1.67195,"median_ms":1.56412,"p95_ms":2.1497,"worst_ms":2.17299,"prepared_vertices":867,"prepared_triangles":1536}
+{"grid":181,"path":"V1_full_geometry_and_BVH","samples":30,"mean_ms":88.7967,"median_ms":90.6003,"p95_ms":92.4907,"worst_ms":92.7066,"prepared_vertices":32761,"prepared_triangles":64800}
+{"grid":181,"path":"V2_dirty_geometry_and_BVH","samples":30,"mean_ms":2.04702,"median_ms":1.83197,"p95_ms":2.68774,"worst_ms":2.692,"prepared_vertices":768,"prepared_triangles":1350}

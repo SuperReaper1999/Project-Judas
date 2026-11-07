@@ -83,6 +83,11 @@ public:
     void DestroyMaterial(MaterialHandle);
     EnvironmentHandle CreateEnvironment(const EnvironmentData&);
     void DestroyEnvironment(EnvironmentHandle);
+    // The terrain pass reuses the ordinary lighting/HDR/shadow shaders. A
+    // bounded four-layer blend owns no collision or world state.
+    void BeginTerrainMaterial(TextureHandle weights,const std::array<TextureHandle,4>& layers,
+                              const std::array<glm::vec3,4>& colours,const glm::mat4& worldToTerrain);
+    void EndTerrainMaterial();
     void SetMaterialBindings(const std::vector<MaterialBinding>& slots){m_materialBindings=slots;}
     void SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour={.08f,.09f,.11f});
     void FlushMaterialBlends();
@@ -488,6 +493,12 @@ private:
     std::map<std::string,GLint> m_materialUniforms;
     GLint MaterialUniform(const char* name);
     TextureHandle ColourTexture(TextureHandle);
+    bool m_terrainMaterial=false;
+    TextureHandle m_terrainWeights;
+    std::array<TextureHandle,4> m_terrainLayers;
+    std::array<glm::vec3,4> m_terrainColours;
+    glm::mat4 m_terrainFromWorld{1};
+    void BindTerrainMaterial();
     void BindMaterial(const GpuMaterial*,const MaterialBinding&,TextureHandle,const glm::vec3&,float,bool shadow);
     void BeginLinearPass(int width,int height);
     void ResolveLinearPass(bool sceneLinear=false);

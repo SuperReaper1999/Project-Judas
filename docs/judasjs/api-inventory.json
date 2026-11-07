@@ -1417,6 +1417,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Terrain.createLandscape",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "UIDocument.beginDrag",
       "minimum": 1,
       "maximum": 1
@@ -5247,6 +5252,17 @@
       "reference": "docs/judasjs/terrain.md"
     },
     {
+      "symbol": "Terrain.createLandscape",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainLandscape"
+      ],
+      "type": "docs/judas.d.ts:Terrain.createLandscape",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
       "symbol": "Terrain.id",
       "kinds": [
         "field"
@@ -8184,6 +8200,7 @@
     "sweep",
     "terrainBrush",
     "terrainCreate",
+    "terrainLandscape",
     "terrainState",
     "tileSet",
     "tilt",

@@ -236,7 +236,9 @@ JSValue HandlePhysicsBodies(BindingContext &context, const std::string &op, int 
         auto result = metadata(shape, {0, 0, 0}, {1, 0, 0, 0}, 0);
         JS_SetPropertyStr(c, result, "centerOfMassOffset", Vec(c, shape.pivotOffset));
         JS_SetPropertyStr(c, result, "enabled",
-                          JS_NewBool(c, world.Physics().IsBodyEnabled(handle)));
+                          JS_NewBool(c, world.HasRuntimeTerrain(id) && world.LiveTerrain().IsLandscape(id)
+                              ? world.RuntimeDefinition(id)->body->enabled
+                              : world.Physics().IsBodyEnabled(handle)));
         JS_SetPropertyStr(c, result, "sensor", JS_NewBool(c, world.Physics().IsBodySensor(handle)));
         auto children = JS_NewArray(c);
         for (unsigned i = 0; i < shape.boxes.size(); ++i) {

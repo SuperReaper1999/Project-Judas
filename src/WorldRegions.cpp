@@ -64,6 +64,7 @@ void RuntimeWorld::BindRegionCameraReference(EntityId id,EntityId target) {
 void RuntimeWorld::HideRegion(const std::vector<EntityId>& ids) {
     auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
     for(auto id:all){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_physics.SetBodySimulationSuspended(body,true);m_regionPending.insert(id);}
+    if(m_runtimeTerrain)m_runtimeTerrain->Synchronize();
 }
 void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
     auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
@@ -85,6 +86,7 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
     // Mechanical observations become usable at the same atomic publication
     // boundary as their bodies and wheel endpoints; no simulation is advanced.
     PublishPowertrains(0);
+    if(m_runtimeTerrain)m_runtimeTerrain->Synchronize();
     for(auto& e:m_audioEmitters)if(std::find(ids.begin(),ids.end(),e.id)!=ids.end())e.wantPlay=e.settings.playOnStart;
     ++m_entityVersion;
 }

@@ -1,4 +1,5 @@
 #include "RuntimeTerrain.h"
+#include "terrain/TerrainRuntime.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "CollisionAsset.h"
@@ -15,10 +16,28 @@ constexpr size_t MaxSamples=32768,MaxVolumes=8,TotalSamples=262144;
 }
 RuntimeTerrain::RuntimeTerrain(RuntimeWorld& w):world(w){}
 RuntimeTerrain::~RuntimeTerrain(){while(!records.empty())Remove(records.begin()->first);}
-bool RuntimeTerrain::Has(uint64_t id)const{auto i=records.find(id);return i!=records.end()&&bool(i->second.committed);}
-const RuntimeTerrainStatus* RuntimeTerrain::Status(uint64_t id)const{auto i=records.find(id);return i==records.end()?nullptr:&i->second.status;}
-bool RuntimeTerrain::ReadyToSave()const{for(auto& [_,r]:records)if(r.pending)return false;return true;}
-std::vector<uint64_t> RuntimeTerrain::Owners()const{std::vector<uint64_t> out;for(auto& [id,r]:records)if(r.committed)out.push_back(id);return out;}
+bool RuntimeTerrain::Has(uint64_t id)const{auto i=records.find(id);return i!=records.end()&&(bool(i->second.committed)||(i->second.landscape&&i->second.landscape->State().ready));}
+const RuntimeTerrainStatus* RuntimeTerrain::Status(uint64_t id)const{auto i=records.find(id);return i==records.end()?nullptr:i->second.landscape?&i->second.landscape->State():&i->second.status;}
+bool RuntimeTerrain::ReadyToSave()const{for(auto& [id,r]:records)if(r.pending||(r.landscape&&r.landscape->State().busy))return false;return true;}
+std::vector<uint64_t> RuntimeTerrain::Owners()const{std::vector<uint64_t> out;for(auto& [id,r]:records)if(r.committed||r.landscape)out.push_back(id);return out;}
+uint64_t RuntimeTerrain::OwnerOf(BodyHandle h)const {
+ for(const auto& [id,r]:records)if(r.landscape&&r.landscape->Owns(h))return id;
+ return 0;
+}
+bool RuntimeTerrain::OwnsGenerated(BodyHandle h)const {return OwnerOf(h)!=0;}
+bool RuntimeTerrain::IsLandscape(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&bool(it->second.landscape);}
+std::vector<BodyHandle> RuntimeTerrain::Bodies(uint64_t id)const {auto it=records.find(id);return it!=records.end()&&it->second.landscape?it->second.landscape->Bodies():std::vector<BodyHandle>{};}
+void RuntimeTerrain::Synchronize(){for(auto& [_,r]:records)if(r.landscape)r.landscape->Synchronize();}
+bool RuntimeTerrain::CreateLandscape(uint64_t id,TerrainV2::Source source,std::string& error){
+ if(auto it=records.find(id);it!=records.end()){
+  if(!it->second.landscape||it->second.landscape->State().ready||it->second.landscape->State().busy){error="terrain owner already initialized";return false;}
+  records.erase(it); // A failed first preparation owns no published support; permit a corrected retry.
+ }
+ if(records.size()>=MaxVolumes){error="terrain owner budget exceeded";return false;}
+ auto runtime=std::make_unique<TerrainV2::Runtime>(world,id);
+ if(!runtime->Create(std::move(source),error))return false;
+ records[id].landscape=std::move(runtime);return true;
+}
 bool RuntimeTerrain::Prepare(Product& p,const ProjectNavigation& config,const JobContext* context){
  auto start=Clock::now();auto cancel=[&]{return context&&context->CancelRequested();};
  if(!BuildVolumeTerrainMesh(p.source,p.mesh,p.error,cancel))return false;
@@ -60,7 +79,15 @@ bool RuntimeTerrain::Create(uint64_t id,VolumeTerrainSource source,bool navigati
  return Submit(id,std::move(source),navigation,profile,error);
 }
 bool RuntimeTerrain::Brush(uint64_t id,glm::vec3 point,const VolumeBrush& brush,std::string& error){
- auto i=records.find(id);auto* d=world.RuntimeDefinition(id);
+ auto i=records.find(id);
+ if(i!=records.end()&&i->second.landscape){
+  if(brush.kind==VolumeBrushKind::Smooth){error="landscape volume smoothing is not implemented; use add/remove";return false;}
+  if(brush.strength!=1){error="landscape excavation requires strength 1";return false;}
+  TerrainV2::Edit edit;edit.radius=brush.radius;
+  edit.kind=brush.kind==VolumeBrushKind::Add?TerrainV2::Edit::Kind::Add:TerrainV2::Edit::Kind::Remove;
+  return i->second.landscape->Brush(point,edit,error);
+ }
+ auto* d=world.RuntimeDefinition(id);
  if(i==records.end()||!i->second.committed||!d){error="terrain not ready";return false;}
  auto source=i->second.committed->source;
  auto local=glm::inverse(d->transform.rotation)*(point-d->transform.position);
@@ -80,6 +107,7 @@ bool RuntimeTerrain::Publish(uint64_t id,Record& record,std::shared_ptr<Product>
 }
 void RuntimeTerrain::Advance(){
  auto* resources=world.Resources();if(!resources||!resources->Jobs())return;
+ for(auto& [_,r]:records)if(r.landscape)r.landscape->Advance();
  for(auto& [id,r]:records)if(r.pending&&resources->Jobs()->IsFinished(r.job)){
   auto state=resources->Jobs()->StateOf(r.job);std::string error;
   if(state!=JobState::Completed)error=resources->Jobs()->ErrorOf(r.job);
@@ -94,6 +122,7 @@ void RuntimeTerrain::Remove(uint64_t id){auto it=records.find(id);if(it==records
  records.erase(it);
 }
 void RuntimeTerrain::Draw(Renderer& renderer)const{
+ for(auto& [_,r]:records)if(r.landscape)r.landscape->Draw(renderer);
  for(auto& [id,r]:records)if(r.committed&&world.IsPublished(id)&&world.RenderVisible(id)){
   auto* d=world.RuntimeDefinition(id);if(!d||!d->render)continue;
   if(r.drawnRevision!=r.status.revision){if(r.mesh.IsValid())renderer.DestroyMesh(r.mesh);r.mesh=renderer.CreateMesh(r.committed->mesh);r.drawnRevision=r.status.revision;}
@@ -103,11 +132,19 @@ void RuntimeTerrain::Draw(Renderer& renderer)const{
  }
 }
 bool RuntimeTerrain::Capture(uint64_t id,std::string& out,std::string& error)const{
- out.clear();auto i=records.find(id);if(i==records.end())return true;if(i->second.pending){error="terrain edit pending";return false;}if(!i->second.committed)return true;
+ out.clear();auto i=records.find(id);if(i==records.end())return true;if(i->second.landscape)return i->second.landscape->Capture(out,error);if(i->second.pending){error="terrain edit pending";return false;}if(!i->second.committed)return true;
  auto& p=*i->second.committed;SaveArchive archive;auto source=SerializeVolumeTerrain(p.source);bool nav=p.navigated;unsigned profile=p.profile;archive(source,nav,profile);out.assign(archive.bytes.begin(),archive.bytes.end());return true;
 }
 bool RuntimeTerrain::Restore(uint64_t id,const std::string& bytes,std::string& error,bool asynchronous){
  if(bytes.empty())return true;
+ if(bytes.front()=='{'){
+  TerrainV2::Source source;if(!TerrainV2::Parse(bytes,source,error))return false;
+  auto i=records.find(id);
+  if(i!=records.end()&&!i->second.landscape){error="terrain save representation mismatch";return false;}
+  auto runtime=std::make_unique<TerrainV2::Runtime>(world,id);
+  if(!runtime->Restore(bytes,error,asynchronous))return false;
+  records[id].landscape=std::move(runtime);return true;
+ }
  try{SaveArchive archive(bytes);std::string source;bool nav=false;unsigned profile=0;archive(source,nav,profile);archive.Finish();
   VolumeTerrainSource parsed;if(!ParseVolumeTerrain(source,parsed,error))return false;
   const bool privateOwner=world.m_regionPending.count(id)!=0;

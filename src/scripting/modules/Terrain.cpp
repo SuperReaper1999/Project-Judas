@@ -14,6 +14,7 @@
 #include <tuple>
 
 #include "../../PlanetTiles.h"
+#include "../../terrain/TerrainSource.h"
 
 using namespace ScriptBindingValues;
 namespace ScriptBindings {
@@ -43,7 +44,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
         return o;
     };
 
-    if (op == "terrainState" || op == "terrainCreate" || op == "terrainBrush") {
+    if (op == "terrainState" || op == "terrainCreate" || op == "terrainBrush" || op == "terrainLandscape") {
         EntityId owner = 0;
         try {
             auto identity = String(c, arg(1));
@@ -69,6 +70,9 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
                   {"samples", double(state->samples)},
                   {"triangles", double(state->triangles)},
                   {"bytes", double(state->bytes)},
+                  {"chunks", double(state->chunks)},
+                  {"volumeChunks", double(state->volumeChunks)},
+                  {"pendingChunks", double(state->pendingChunks)},
                   {"prepareMs", state->prepareMs},
                   {"publishMs", state->publishMs}})
                 JS_SetPropertyStr(c, result, key, JS_NewFloat64(c, value));
@@ -76,6 +80,14 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
             return result;
         }
         std::string error;
+        if (op == "terrainLandscape") {
+            TerrainV2::Source source;
+            if (!JS_IsString(arg(2)) || !TerrainV2::Parse(String(c, arg(2)), source, error))
+                return JS_ThrowTypeError(c, "invalid landscape source: %s", error.c_str());
+            if (!world.LiveTerrain().CreateLandscape(owner, std::move(source), error))
+                return JS_ThrowTypeError(c, "%s", error.c_str());
+            return JS_TRUE;
+        }
         if (op == "terrainCreate") {
             auto options = arg(2);
             auto source = JS_GetPropertyStr(c, options, "source");
@@ -149,7 +161,9 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
             return JS_ThrowTypeError(c, "finite terrain brush point/radius/strength required");
         brush.radius = radius;
         brush.strength = strength;
-        if (!world.LiveTerrain().ReadyToSave())
+        const auto *state = world.LiveTerrain().Status(owner);
+        if (world.LiveTerrain().IsLandscape(owner) ? (state && state->busy)
+                                                  : !world.LiveTerrain().ReadyToSave())
             return JS_FALSE;
         if (!world.LiveTerrain().Brush(owner, point, brush, error))
             return JS_ThrowTypeError(c, "%s", error.c_str());
@@ -214,7 +228,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
 } // namespace
 void RegisterTerrainBindings(BindingRegistry &registry) {
     registry.Add("Terrain",
-                 {"terrainState", "terrainCreate", "terrainBrush", "planetInfo", "planetSample",
+                 {"terrainState", "terrainCreate", "terrainLandscape", "terrainBrush", "planetInfo", "planetSample",
                   "planetCollision", "planetClear"},
                  HandleTerrain);
 }

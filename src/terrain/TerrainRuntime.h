@@ -1,0 +1,64 @@
+#pragma once
+#include "JobSystem.h"
+#include "PhysicsWorld.h"
+#include "Renderer.h"
+#include "TerrainSource.h"
+#include "TerrainStatus.h"
+#include <map>
+#include <memory>
+
+class RuntimeWorld;
+struct CollisionAsset;
+struct SceneObject;
+namespace TerrainV2 {
+// World-thread owner. Jobs capture immutable source/results, never this object
+// or a live world. The existing RuntimeTerrain participant owns its lifetime,
+// regional suspension, native-before-publication restore and save boundary.
+class Runtime {
+  public:
+    Runtime(RuntimeWorld &, uint64_t owner);
+    ~Runtime();
+    bool Create(Source, std::string &);
+    bool Brush(glm::vec3 worldPoint, const Edit &, std::string &);
+    void Advance();
+    void Wait();
+    void Draw(Renderer &) const;
+    bool Capture(std::string &, std::string &) const;
+    bool Restore(const std::string &, std::string &, bool asynchronous);
+    const RuntimeTerrainStatus &State() const { return status; }
+    bool Owns(BodyHandle) const;
+    std::vector<BodyHandle> Bodies() const;
+    void Synchronize();
+
+  private:
+    struct Prepared {
+        Chunk chunk;
+        std::shared_ptr<CollisionAsset> collision;
+    };
+    struct Work {
+        std::shared_ptr<const Source> source;
+        std::vector<Prepared> chunks;
+        double milliseconds = 0;
+        std::string error;
+    };
+    struct Resident {
+        Prepared geometry;
+        BodyHandle body;
+        mutable MeshHandle mesh;
+    };
+    RuntimeWorld &world;
+    uint64_t owner;
+    std::shared_ptr<const Source> source;
+    std::shared_ptr<Work> pending;
+    JobHandle job;
+    std::map<ChunkKey, Resident> chunks;
+    RuntimeTerrainStatus status;
+    mutable TextureHandle weightTexture;
+    mutable uint64_t appearanceRevision = 0;
+    const SceneObject *Definition() const;
+    BodyHandle Seed() const;
+    bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &);
+    bool Publish(std::string &);
+    void ReleaseMesh(Resident &) const;
+};
+} // namespace TerrainV2

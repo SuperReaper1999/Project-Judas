@@ -4,7 +4,9 @@
 #include "EditorPanels.h"
 #include "Renderer.h"
 #include <memory>
+class TerrainV2Editor;
 struct TerrainEditor {
+ std::shared_ptr<TerrainV2Editor> v2;
  TerrainDraft draft;TerrainBrush brush;
  std::string projectKey,error;bool loaded=false,editing=false,replaceRequested=false;
  // Editor smoke tests click the real primary control through SDL/ImGui.

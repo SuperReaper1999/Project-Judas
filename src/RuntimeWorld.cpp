@@ -985,6 +985,8 @@ EntityRecord* RuntimeWorld::FindEntity(EntityId id) {
 }
 
 EntityId RuntimeWorld::EntityIdOfBody(BodyHandle handle) const {
+    if(m_runtimeTerrain)if(auto owner=m_runtimeTerrain->OwnerOf(handle))return owner;
+    for(const auto& [id,p]:m_planets)if(p->Owns(handle))return id;
     for(const auto& [id,c]:m_characters)if(c.motor.observationBody.id==handle.id&&RuntimeDefinition(id))return id;
     unsigned layer=0;CategoryMask mask=0;
     if (!handle.IsValid() || !m_physics.GetCollisionFilter(handle,layer,mask)) return kInvalidSceneObjectId;

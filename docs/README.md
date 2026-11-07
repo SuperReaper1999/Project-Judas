@@ -68,6 +68,7 @@ Start with the [editor guide](EDITOR_GUIDE.md), [JudasJS reference](JUDASJS.md),
 | Conserved liquid quantities/surfaces | [Reservoirs](LIQUID_RESERVOIRS.md), [dynamic surfaces](LIQUID_SURFACES.md) |
 | Advanced-fluid qualification (Alpha locked) | [Local wet reconstruction](FLUID_LOCAL_WET_RECONSTRUCTION.txt), [contact and query-cost corrections](FLUID_CONTACT_AND_QUERY_REPAIR.txt), [finite-support corrections](FLUID_FINITE_SUPPORT_REPAIR.md), [measurement audit](FLUID_MEASUREMENT_AUDIT.md) — retained failures, force accounting and geometric uncertainty |
 | Editable volumes and planets | [Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md), [planetary terrain](M85_PLANETARY_TERRAIN.md) |
+| Terrain V2 development | [Current implementation and remaining work](TERRAIN_V2.md) |
 | Continuous travel and persistent regions | [Assembly travel](M90_ASSEMBLY_TRAVEL.md), [living worlds](M97_LIVING_WORLD.md) |
 | Collision policy and practical dense limits | [Collision continuity](M91_COLLISION_CONTINUITY.md), [support ownership and measured costs](PREALPHA_SUPPORT_CONTINUITY.txt) |
 

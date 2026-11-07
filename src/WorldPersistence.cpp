@@ -66,7 +66,7 @@ void WorldPersistence::EntitiesExtended(RuntimeWorld& w,SaveArchive& a,unsigned 
    if(!IncludesEntity(w,o.id))continue;
    if(o.deformable){std::string error;auto* deform=w.RuntimeDeformable(o.id,error);if(!deform)throw std::runtime_error(error);*o.deformable=deform->settings;}
    auto t=w.PresentedTransform(o.id,o.transform,1);o.transform=t;o.tags=w.TagsOf(o.id);o.renderLayer=w.RenderLayerOf(o.id);
-   auto body=w.RuntimeBody(o.id);if(o.body&&body.IsValid()){w.Physics().GetCollisionFilter(body,o.body->collisionLayer,o.body->collisionMask);o.body->enabled=w.Physics().IsBodyEnabled(body);o.body->sensor=w.Physics().IsBodySensor(body);}
+   auto body=w.RuntimeBody(o.id);if(o.body&&body.IsValid()){w.Physics().GetCollisionFilter(body,o.body->collisionLayer,o.body->collisionMask);if(!w.m_runtimeTerrain||!w.m_runtimeTerrain->IsLandscape(o.id))o.body->enabled=w.Physics().IsBodyEnabled(body);o.body->sensor=w.Physics().IsBodySensor(body);}
    if(o.particleEmitter)for(auto& source:w.m_particleEmitters)if(source.id==o.id)*o.particleEmitter=source.pool.settings;
    if(o.renderCamera)for(auto& camera:w.m_renderCameras)if(camera.id==o.id)*o.renderCamera=camera.settings;
    if(o.audioEmitter)for(auto& source:w.m_audioEmitters)if(source.id==o.id)*o.audioEmitter=source.settings;
@@ -101,7 +101,7 @@ void WorldPersistence::EntitiesExtended(RuntimeWorld& w,SaveArchive& a,unsigned 
 void WorldPersistence::Motors(RuntimeWorld& w,SaveArchive& a){
  auto n=count(a,w.m_characters.size());a.Require(n==w.m_characters.size(),"incomplete motor records");std::set<EntityId> seen;
  for(uint32_t i=0;i<n;++i){EntityId id=0,support=0;std::vector<EntityId> ignored;CharacterMotor* motor=nullptr;
-  if(!a.reading){auto it=w.m_characters.begin();std::advance(it,i);id=it->first;motor=&it->second.motor;support=w.EntityIdOfBody(motor->result.support);for(auto b:motor->filter.ignoredBodies){auto entity=w.EntityIdOfBody(b);a.Require(entity!=0,"motor has unowned ignored body");ignored.push_back(entity);}}
+  if(!a.reading){auto it=w.m_characters.begin();std::advance(it,i);id=it->first;motor=&it->second.motor;support=w.EntityIdOfBody(motor->result.support);for(auto b:motor->filter.ignoredBodies){auto entity=w.EntityIdOfBody(b);a.Require(entity!=0,"motor has unowned ignored body");if(std::find(ignored.begin(),ignored.end(),entity)==ignored.end())ignored.push_back(entity);}}
   a(id,support,ignored);if(a.reading)motor=w.RuntimeCharacter(id);a.Require(motor&&seen.insert(id).second,"unknown/duplicate motor");motor->Persist(a);
   if(a.reading){
    // Reconstruct the derived query capsule before resumed scripts can query it;
@@ -109,7 +109,7 @@ void WorldPersistence::Motors(RuntimeWorld& w,SaveArchive& a){
    auto body=motor->observationBody;a.Require(body.IsValid(),"missing restored motor observation body");
    w.Physics().ResetBody(body,motor->position+motor->orientation*motor->settings.offset,motor->orientation);
    a.Require(w.Physics().SetBodyEnabled(body,motor->settings.enabled)&&w.Physics().SetCollisionFilter(body,motor->settings.collisionLayer,motor->settings.collisionMask)&&w.Physics().SetBodyTags(body,w.TagsOf(id)),"invalid restored motor observation settings");
-   motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto ignoredBody=w.RuntimeBody(e);a.Require(ignoredBody.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(ignoredBody);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
+   motor->result.support=support?w.CollisionBodyNear(support,motor->position):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto bodies=w.OwnedCollisionBodies(e);a.Require(!bodies.empty(),"missing ignored body reference");motor->filter.ignoredBodies.insert(motor->filter.ignoredBodies.end(),bodies.begin(),bodies.end());}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
  }
 }
 void WorldPersistence::Wheels(RuntimeWorld& w,SaveArchive& a){
@@ -307,7 +307,7 @@ bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,Save
  // Contacts and sleep must retain the same physical owners as the entity
  // participant. Mapped articulation bodies are engine-transient but remain
  // required by their durable owner; ordinary explicitly excluded actors do not.
- const auto includeBody=[&](BodyHandle h){for(const auto& [_,planet]:w.m_planets)if(planet->Owns(h))return false;return IncludesEntity(w,w.EntityIdOfBody(h));};
+ const auto includeBody=[&](BodyHandle h){if(w.m_runtimeTerrain&&w.m_runtimeTerrain->OwnsGenerated(h))return false;for(const auto& [_,planet]:w.m_planets)if(planet->Owns(h))return false;return IncludesEntity(w,w.EntityIdOfBody(h));};
  SaveArchive contacts;w.Physics().PersistTouches(contacts,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);},includeBody);
  if(chunks.at("articulation").version>=4)w.Physics().PersistCompletedContactObservations(contacts,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);},includeBody);
  chunks["contacts"]={chunks.at("articulation").version>=4?2u:1u,std::move(contacts.bytes)};

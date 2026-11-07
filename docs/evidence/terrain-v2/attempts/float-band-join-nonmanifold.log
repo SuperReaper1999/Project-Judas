@@ -1,0 +1,5 @@
+NONMANIFOLD 1.8991,3.5,7.1009 -> 1.8991,3.5,7.1009 uses 3
+ face 11 [1.63303,3.56923,7.23393] [1.8991,3.5,7.1009] [1.8991,3.5,7.1009]
+ face 17 [1.96637,3.56923,7.23393] [1.8991,3.5,7.1009] [1.8991,3.5,7.1009]
+ face 1932 [1.96637,3.4825,7.06727] [1.8991,3.5,7.1009] [1.8991,3.5,7.1009]
+FAIL terrain publication: nonmanifold collision edge; split/correct source topology [node=, original face=11, location=(1.8991, 3.5, 7.1009)] after 6 checks

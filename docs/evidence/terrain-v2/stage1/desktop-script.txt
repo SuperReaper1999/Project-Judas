@@ -1,0 +1,6 @@
+REALTIME 720
+LOG_EVERY 120
+ACTION tunnel 1 60 61
+LOOK 140 0 120
+SCREENSHOT 300 /tmp/terrain-v2-final-entrance.png
+SCREENSHOT 690 /tmp/terrain-v2-final-overview.png

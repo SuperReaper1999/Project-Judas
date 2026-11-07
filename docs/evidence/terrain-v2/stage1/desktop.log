@@ -1,0 +1,20 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-terrain-v2-final-play-04/Saves/highlands.judasstate (none saved)
+Project: Terrain V2 — Highlands Workshop (/tmp/judas-terrain-v2-final-play-04/terrain_v2_workshop.judasproj)
+Scene: Terrain V2 — Highlands (/tmp/judas-terrain-v2-final-play-04/Scenes/highlands.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,0,0
+120,2.00000,0.000851,1.587117,13.036407,0.000000,0.998750,-0.049979,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,120,0,0
+240,4.00000,-0.008720,1.582600,13.035852,0.014483,0.998750,-0.047835,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,240,0,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-final-entrance.png
+360,6.00000,-0.007565,1.582457,13.037775,0.014483,0.998750,-0.047835,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,360,0,0
+480,8.00000,-0.007034,1.582392,13.038658,0.014483,0.998750,-0.047835,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,480,0,0
+600,10.00000,-0.006588,1.582337,13.039401,0.014483,0.998750,-0.047835,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,600,0,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-final-overview.png

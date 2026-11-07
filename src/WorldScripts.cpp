@@ -48,6 +48,7 @@ std::vector<EntityId> RuntimeWorld::DefinitionIds() const {
 }
 bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     const auto* authored=RuntimeDefinition(id);if(!authored)return false;
+    if(m_runtimeTerrain && m_runtimeTerrain->Status(id) && t.scale!=glm::vec3(1))return false;
     if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{t.position,t.rotation}))return false;
     SceneObject placement;placement.body=authored->body;placement.transform=t;std::string placementError;if(!ValidateCollisionPlacement(placement,placementError))return false;
     // Baked static capacity data cannot silently follow a runtime teleport.
@@ -87,6 +88,7 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     for(auto& e:m_audioEmitters)if(e.id==id)e.transform=transform;
     for(auto& e:m_particleEmitters)if(e.id==id)e.transform=transform;
     for(auto& c:m_renderCameras)if(c.id==id)c.transform=transform;
+    if(m_runtimeTerrain && m_runtimeTerrain->IsLandscape(id))m_runtimeTerrain->Synchronize();
     return true;
 }
 bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool preserveVelocity,std::string& error){
@@ -95,6 +97,9 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
         error="authority change requires a live ordinary rigid body";return false;
     }
     if(motion!=SceneBodyMotion::Static&&motion!=SceneBodyMotion::Dynamic&&motion!=SceneBodyMotion::Kinematic){error="invalid body motion type";return false;}
+    if(m_runtimeTerrain && m_runtimeTerrain->Status(id)){
+        error="live terrain owns static collision chunks; body authority changes are unsupported";return false;
+    }
     if((record&&record->fidelity!=SimulationFidelity::Full)||definition->body->managed||definition->characterMotor||definition->animation||definition->ragdoll||
        definition->vehicle||definition->combustible||definition->celestial||definition->door||definition->lightSwitch||definition->gravity||
        definition->atmosphere||definition->fluidVolume||definition->liquidBasin||definition->liquidContainer||definition->deformable||
@@ -213,7 +218,7 @@ void RuntimeWorld::DispatchPhysicsEvents(const InputSystem* input,float dt){
 bool RuntimeWorld::SetColliderEnabled(EntityId id,bool enabled){
     if(const auto* d=RuntimeDefinition(id);d&&d->characterMotor){auto settings=*d->characterMotor;settings.enabled=enabled;SetCharacterSettings(id,settings);return true;}
     auto h=RuntimeBody(id);if(!h.IsValid()||!m_physics.SetBodyEnabled(h,enabled))return false;
-    auto& d=m_scriptDefinitions.at(id);if(d.body)d.body->enabled=enabled;return true;
+    auto& d=m_scriptDefinitions.at(id);if(d.body)d.body->enabled=enabled;if(m_runtimeTerrain)m_runtimeTerrain->Synchronize();return true;
 }
 
 bool RuntimeWorld::SetRuntimeCollisionFilter(EntityId id,unsigned layer,CategoryMask mask){
@@ -225,6 +230,7 @@ bool RuntimeWorld::SetRuntimeCollisionFilter(EntityId id,unsigned layer,Category
     auto& settings=*m_scriptDefinitions.at(id).body;
     settings.collisionLayer=layer;
     settings.collisionMask=mask;
+    if(m_runtimeTerrain)m_runtimeTerrain->Synchronize();
     if(auto* entity=FindEntity(id);entity&&entity->definition.body){
         entity->definition.body->collisionLayer=layer;
         entity->definition.body->collisionMask=mask;

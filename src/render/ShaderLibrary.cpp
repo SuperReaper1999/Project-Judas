@@ -176,13 +176,34 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
 
 
 uniform int uMaterialModel,uAlphaMode;
+uniform bool uTerrain;
+uniform sampler2D uMR,uNormal,uOcclusion,uEmissive,uEnvDiffuse,uEnvSpecular,uBRDF;
+uniform vec3 uTerrainColours[4];
+uniform mat4 uTerrainFromWorld;
+vec3 terrainSample(sampler2D layer,vec3 p,vec3 blend) {
+    return texture(layer,p.yz*.25).rgb*blend.x+texture(layer,p.xz*.25).rgb*blend.y+texture(layer,p.xy*.25).rgb*blend.z;
+}
+vec3 terrainBase(vec3 n) {
+    vec3 blend=pow(abs(n),vec3(4.0));blend/=max(dot(blend,vec3(1.0)),0.0001);
+    vec4 w=texture(uTexture,vUV1);w/=max(dot(w,vec4(1.0)),0.0001);
+    // Texture phase lives in source-local coordinates, so shifting the world
+    // origin never makes landscape texture detail swim.
+    vec3 p=(uTerrainFromWorld*vec4(vWorldPos,1.0)).xyz;
+    vec3 localNormal=normalize(mat3(uTerrainFromWorld)*n);
+    float exposed=smoothstep(.12,.6,1.0-abs(localNormal.y));
+    w=mix(w,vec4(0.0,.12,.88,0.0),exposed);
+    return terrainSample(uMR,p,blend)*uTerrainColours[0]*w.x+
+           terrainSample(uNormal,p,blend)*uTerrainColours[1]*w.y+
+           terrainSample(uOcclusion,p,blend)*uTerrainColours[2]*w.z+
+           terrainSample(uEmissive,p,blend)*uTerrainColours[3]*w.w;
+}
 uniform float uAlphaCutoff,uMetallic,uRoughness,uNormalStrength,uOcclusionStrength,uEmissionIntensity;
 uniform bool uFlipV,uModern,uEnvironmentEnabled,uBaseLinear;
 uniform vec4 uBaseFactor,uUVTransform;
 uniform int uMapUVSet[5];uniform vec4 uMapUVTransform[5];uniform float uMapUVRotation[5];
 vec2 mapUV(int i){vec2 p=(uMapUVSet[i]==1?vUV1:vUV)*uMapUVTransform[i].xy;float c=cos(uMapUVRotation[i]),s=sin(uMapUVRotation[i]);p=mat2(c,s,-s,c)*p+uMapUVTransform[i].zw;p=p*uUVTransform.xy+uUVTransform.zw;if(uFlipV)p.y=1.0-p.y;return p;}
 uniform vec3 uEmission,uCameraPosition;
-uniform sampler2D uMR,uNormal,uOcclusion,uEmissive,uEnvDiffuse,uEnvSpecular,uBRDF;
+
 uniform bool uHasMR,uHasNormal,uHasOcclusion,uHasEmissive,uEmissiveLinear;
 uniform float uEnvironmentIntensity,uEnvLevels;
 uniform mat3 uEnvironmentInverse;
@@ -205,7 +226,7 @@ vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
  vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
  vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
  float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;float shadow=1.0;shadow=ComputeShadowFactor(shadowSlot,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
- float ao=uHasOcclusion?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
+ float ao=(uHasOcclusion&&!uTerrain)?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
  }else result+=uAmbientColor*base*(1.0-metal)*ao;
@@ -217,7 +238,7 @@ void main() {
     shadowWorldDy=dFdy(vWorldPos);
     vec2 materialUV=mapUV(0);
     vec3 normal = normalize(vWorldNormal);if(uMaterialModel!=0&&!gl_FrontFacing)normal=-normal;
-    if(uMaterialModel!=0&&uHasNormal){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,mapUV(2)).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}
+    if(uMaterialModel!=0&&uHasNormal&&!uTerrain){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,mapUV(2)).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}
 
 
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
@@ -264,11 +285,12 @@ void main() {
     }
     }
 
-    vec4 texColor = texture(uTexture,materialUV);
+    vec4 texColor = uTerrain ? vec4(1.0) : texture(uTexture,materialUV);
     vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*vTint;
     if(uAlphaMode==1&&base.a<uAlphaCutoff)discard;
+    if(uTerrain)base.rgb*=terrainBase(normal);
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
-    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
+    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR&&!uTerrain){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
 
     if(uBasicWater){
         vec3 n=normalize(gl_FrontFacing?normal:-normal);

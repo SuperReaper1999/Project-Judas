@@ -6,16 +6,20 @@
 #include <map>
 class RuntimeWorld;
 struct CollisionAsset;
-struct RuntimeTerrainStatus {
- bool ready=false,busy=false,navigation=false;uint64_t revision=0;
- size_t samples=0,triangles=0,bytes=0;double prepareMs=0,publishMs=0;std::string error;
-};
+#include "terrain/TerrainStatus.h"
+namespace TerrainV2 { struct Source; class Runtime; }
 // Optional world-owned mutable instances. Workers own immutable copies only.
 // Pending work never replaces the last committed collision/navigation/mesh.
 class RuntimeTerrain {
 public:
  explicit RuntimeTerrain(RuntimeWorld&);~RuntimeTerrain();
  bool Create(uint64_t,VolumeTerrainSource,bool navigation,unsigned profile,std::string&);
+ bool CreateLandscape(uint64_t,TerrainV2::Source,std::string&);
+ uint64_t OwnerOf(BodyHandle)const;
+ bool OwnsGenerated(BodyHandle)const;
+ bool IsLandscape(uint64_t id)const;
+ void Synchronize();
+ std::vector<BodyHandle> Bodies(uint64_t id)const;
  bool Brush(uint64_t,glm::vec3 worldPoint,const VolumeBrush&,std::string&);
  const RuntimeTerrainStatus* Status(uint64_t)const;
  bool Has(uint64_t)const;bool ReadyToSave()const;
@@ -25,7 +29,7 @@ public:
  std::vector<uint64_t> Owners()const;
 private:
  struct Product {VolumeTerrainSource source;MeshData mesh;std::shared_ptr<CollisionAsset> collision;std::shared_ptr<NavigationData> navigation;bool navigated=false;unsigned profile=0;double ms=0;std::string error;};
- struct Record {bool privateOwner=false;RuntimeTerrainStatus status;std::shared_ptr<Product> committed,pending;JobHandle job;mutable MeshHandle mesh;mutable uint64_t drawnRevision=0;};
+ struct Record {std::unique_ptr<TerrainV2::Runtime> landscape;bool privateOwner=false;RuntimeTerrainStatus status;std::shared_ptr<Product> committed,pending;JobHandle job;mutable MeshHandle mesh;mutable uint64_t drawnRevision=0;};
  RuntimeWorld& world;std::map<uint64_t,Record> records;
  bool Submit(uint64_t,VolumeTerrainSource,bool,unsigned,std::string&,bool privateOwner=false);
  bool Publish(uint64_t,Record&,std::shared_ptr<Product>,std::string&,bool privateOwner=false);

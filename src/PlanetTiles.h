@@ -23,6 +23,7 @@ public:
  // body into a new chart. Visual selection never removes physical support.
  bool Collision(glm::dvec3 absoluteFocus,glm::dvec3 origin,unsigned buildBudget=UINT32_MAX);
  bool Owns(BodyHandle h)const{for(const auto& entry:m_contacts)if(entry.second.body.id==h.id)return true;return false;}
+ std::vector<BodyHandle> Bodies()const{std::vector<BodyHandle> out;for(const auto& [_,c]:m_contacts)out.push_back(c.body);return out;}
  void ClearCollision();
  void SetTags(CategoryMask);
  std::optional<glm::dvec3> CollisionFocus()const{return m_focus;}

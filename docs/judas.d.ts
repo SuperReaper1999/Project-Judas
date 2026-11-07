@@ -759,6 +759,7 @@ declare module "judas" {
     /** Geometry estimate, excluding allocator, cooked BVH and native navigation overhead. */
     readonly bytes:number;
     readonly prepareMs:number; readonly publishMs:number; readonly error:string;
+    readonly chunks:number; readonly volumeChunks:number; readonly pendingChunks:number;
   }
   export interface TerrainBrushOptions {kind:"remove"|"add"|"smooth";radius:number;strength?:number;}
   export class Terrain {
@@ -766,6 +767,8 @@ declare module "judas" {
     id:string;
     readonly state:TerrainStatus|null;
     create(options:TerrainCreateOptions):boolean;
+    /** V2 sampled landscape source JSON; physical chunks share the source with excavation. */
+    createLandscape(source:string):boolean;
     /** Point is in the current simulation frame; radius is in metres. */
     brush(point:Vec3,options:TerrainBrushOptions):boolean;
   }
