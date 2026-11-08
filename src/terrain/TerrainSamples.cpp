@@ -16,9 +16,11 @@ std::atomic<uint64_t> sequence{1};
 } // namespace
 struct SampleStorage::Backing {
     uint64_t identity = sequence.fetch_add(1);
+    // Members are destroyed in reverse order. Close the native file before
+    // deleting its private directory (Windows cannot unlink an open reader).
+    std::shared_ptr<TemporaryDirectory> temporary;
     AssetPages file;
     std::shared_ptr<PageCache<SamplePage>> cache;
-    std::shared_ptr<TemporaryDirectory> temporary;
     std::unique_ptr<SaveStorage> journal;
     mutable std::mutex journalMutex;
 };

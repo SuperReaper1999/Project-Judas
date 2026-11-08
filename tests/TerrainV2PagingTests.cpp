@@ -2,7 +2,9 @@
 #include "terrain/TerrainBrush.h"
 #include "terrain/TerrainRenderPages.h"
 #include "terrain/TerrainSamples.h"
+#include "terrain/TerrainTemporary.h"
 #include <chrono>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <future>
@@ -20,6 +22,7 @@ void Check(bool ok, const std::string &message) {
 int main() {
     try {
         using namespace TerrainV2;
+        namespace fs = std::filesystem;
         for (unsigned cells = 4; cells <= 64; ++cells)
             for (unsigned level = 0; level <= 5; ++level) {
                 Source layout;
@@ -151,6 +154,40 @@ int main() {
         Check(EncodeAsset(reference, original, error) && EncodeAsset(edited, encoded, error) &&
                   original == encoded && changedA == changedB,
               "paged sculpting is byte-identical to authoring vectors");
+        // Isolate the process's temporary root, so unrelated engine processes
+        // cannot make this lifetime control depend on directory-list timing.
+        TemporaryDirectory lifetimeRoot("judas-page-lifetime-test");
+        const char *names[] = {"TMPDIR", "TMP", "TEMP"};
+        std::optional<std::string> previous[3];
+        auto environment = [](const char *name, const char *value) {
+#ifdef _WIN32
+            return _putenv_s(name, value ? value : "");
+#else
+            return value ? setenv(name, value, 1) : unsetenv(name);
+#endif
+        };
+        for (unsigned i = 0; i < 3; ++i) {
+            if (const char *value = std::getenv(names[i]))
+                previous[i] = value;
+            Check(environment(names[i], lifetimeRoot.path.string().c_str()) == 0,
+                  "isolate private-source lifetime fixture");
+        }
+        {
+            Source small;
+            Check(SampleStorage::Spill(Create(5, 5, 1, 4), 128 * 1024, small, error),
+                  "open an actual private native source");
+            const auto directory = fs::directory_iterator(lifetimeRoot.path)->path();
+            auto lease = small.storage;
+            small = {};
+            Check(fs::exists(directory) && lease->Read(0).height == 0,
+                  "borrowed source retains readable backing after owner retirement");
+            lease.reset();
+            Check(!fs::exists(directory),
+                  "last backing release closes its reader before deleting private files");
+        }
+        for (unsigned i = 0; i < 3; ++i)
+            Check(environment(names[i], previous[i] ? previous[i]->c_str() : nullptr) == 0,
+                  "restore temporary-root environment");
         std::cout << "SUMMARY " << checks << " checks 0 failures\n";
         return 0;
     } catch (const std::exception &e) {
