@@ -1,5 +1,6 @@
 #pragma once
 #include "TerrainLod.h"
+#include "TerrainGeometryPages.h"
 #include "TerrainSource.h"
 #include <memory>
 
@@ -11,6 +12,8 @@ struct NavigationInput;
 struct PreparedChunk {
     Chunk chunk;
     std::shared_ptr<CollisionAsset> collision;
+    std::shared_ptr<GeometryRecipe> recipe;
+    size_t triangles = 0;
     size_t PayloadBytes() const;
 };
 size_t SourcePayloadBytes(const Source &, const HeightLod *);
@@ -18,6 +21,7 @@ size_t SourcePayloadBytes(const Source &, const HeightLod *);
 // body handles. The coordinator moves them into a single runtime owner.
 struct Preparation {
     std::shared_ptr<const Source> source;
+    std::shared_ptr<GeometryCache> cache;
     std::vector<PreparedChunk> chunks;
     double milliseconds = 0;
     std::string error;

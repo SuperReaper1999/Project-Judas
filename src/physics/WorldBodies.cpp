@@ -783,11 +783,12 @@ std::vector<BodyHandle> PhysicsWorld::AliveBodies() const {
     return result;
 }
 
-bool PhysicsWorld::GetBodyShape(BodyHandle handle, Shape &outShape, BodyTransform &outPose) const {
+bool PhysicsWorld::GetBodyShape(BodyHandle handle, Shape &outShape, BodyTransform &outPose, bool acquireGeometry) const {
     const Impl::Body *body = m_impl->Get(handle);
     if (!body)
         return false;
     outShape = body->shape;
+    if (acquireGeometry) outShape.asset = AcquireCollision(outShape.asset);
     outPose.position = body->rigidBody.position;
     outPose.rotation = body->rigidBody.orientation;
     return true;

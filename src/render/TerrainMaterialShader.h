@@ -3,6 +3,7 @@
 // their existing pipeline. No geometry or physical state is owned here.
 #define JUDAS_TERRAIN_MATERIAL_GLSL R"(
 uniform vec3 uTerrainColours[4];
+uniform vec4 uTerrainWeightRect;
 uniform mat4 uTerrainFromWorld;
 uniform vec4 uTerrainTileMetres,uTerrainRoughness;
 uniform sampler2D uTerrainDetailNormal;
@@ -14,7 +15,7 @@ vec3 terrainBlend(vec3 n) {
 }
 vec4 terrainWeights(vec3 localNormal) {
     vec2 weightSize=vec2(textureSize(uTexture,0));
-    vec4 w=texture(uTexture,(clamp(vUV1,vec2(0),vec2(1))*(weightSize-vec2(1))+.5)/weightSize);
+    vec4 w=texture(uTexture,(clamp((vUV1-uTerrainWeightRect.xy)/uTerrainWeightRect.zw,vec2(0),vec2(1))*(weightSize-vec2(1))+.5)/weightSize);
     w/=max(dot(w,vec4(1.0)),0.0001);
     float exposed=max(smoothstep(.12,.6,1.0-abs(localNormal.y)),1.0-smoothstep(-.1,.25,localNormal.y));
     return mix(w,vec4(0.0,.12,.88,0.0),exposed);

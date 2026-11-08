@@ -1,6 +1,7 @@
 #include "TerrainSource.h"
 #include "../../third_party/nlohmann/json.hpp"
 #include "TerrainMetadata.h"
+#include "TerrainSamples.h"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
@@ -117,6 +118,27 @@ bool Validate(const Source &s, std::string &error) {
         error = text;
         return false;
     };
+    if (s.storage) {
+        if (!s.heights.empty() || !s.weights.empty() ||
+            !s.storage->Matches(s.samplesX, s.samplesZ)) {
+            error = "terrain paged source has inconsistent sample ownership";
+            return false;
+        }
+        for (const auto &[index, sample] : s.storage->Changes()) {
+            if (index >= SampleCount(s) || !std::isfinite(sample.height) ||
+                sample.height <= s.bottom || sample.height >= s.top ||
+                !std::isfinite(sample.weights.x + sample.weights.y + sample.weights.z +
+                               sample.weights.w) ||
+                glm::any(glm::lessThan(sample.weights, glm::vec4(0))) ||
+                std::abs(sample.weights.x + sample.weights.y + sample.weights.z + sample.weights.w -
+                         1) > 1e-4f)
+                return fail("invalid paged terrain sample override");
+        }
+        if (s.chart && PlanetSourceRim(s) != s.chart->rim)
+            return fail("planet source boundary heights changed");
+        error.clear();
+        return true;
+    }
     if (s.heights.size() != size_t(s.samplesX) * s.samplesZ || s.weights.size() != s.heights.size())
         return fail("terrain height/material sample count mismatch");
     for (size_t i = 0; i < s.heights.size(); ++i) {
@@ -135,7 +157,7 @@ bool Validate(const Source &s, std::string &error) {
 float Height(const Source &s, float x, float z) {
     const auto c = Locate(s, x, z);
     auto at = [&](unsigned dx, unsigned dz) {
-        return s.heights[size_t(c.z + dz) * s.samplesX + c.x + dx];
+        return HeightSample(s, size_t(c.z + dz) * s.samplesX + c.x + dx);
     };
     // Keep the authored V1 10--01 diagonal. The chunk tetrahedra use
     // the same face topology, so conversion does not change the surface.
@@ -146,7 +168,7 @@ float Height(const Source &s, float x, float z) {
 glm::vec4 Weights(const Source &s, float x, float z) {
     const auto c = Locate(s, x, z);
     auto at = [&](unsigned dx, unsigned dz) {
-        return s.weights[size_t(c.z + dz) * s.samplesX + c.x + dx];
+        return WeightSample(s, size_t(c.z + dz) * s.samplesX + c.x + dx);
     };
     return glm::mix(glm::mix(at(0, 0), at(1, 0), c.u), glm::mix(at(0, 1), at(1, 1), c.u), c.v);
 }
@@ -397,10 +419,14 @@ std::string Serialize(const Source &s) {
     if (!Validate(s, error))
         throw std::invalid_argument(error);
     auto j = MetadataJson(s);
-    j["heights"] = s.heights;
+    j["heights"] = Json::array();
+    for (size_t i = 0; i < SampleCount(s); ++i)
+        j["heights"].push_back(HeightSample(s, i));
     j["weights"] = Json::array();
-    for (auto w : s.weights)
+    for (size_t i = 0; i < SampleCount(s); ++i) {
+        auto w = WeightSample(s, i);
         j["weights"].push_back({w.x, w.y, w.z, w.w});
+    }
     return j.dump();
 }
 bool Parse(const std::string &bytes, Source &output, std::string &error) {

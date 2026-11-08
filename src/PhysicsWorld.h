@@ -349,7 +349,10 @@ public:
     };
     std::vector<CollidingPair> FindCollidingPairs() const;
     std::vector<BodyHandle> AliveBodies() const;
-    bool GetBodyShape(BodyHandle handle, Shape& outShape, BodyTransform& outPose) const;
+    // Default returns complete geometry with a shared lifetime lease. Internal
+    // broadphase may request bounds-only metadata and resolve through
+    // PrimitiveAt before accessing collision arrays.
+    bool GetBodyShape(BodyHandle handle, Shape& outShape, BodyTransform& outPose, bool acquireGeometry = true) const;
 
     // True only for a body created via CreateDynamic*. Added in Milestone
     // 7-A so a caller holding a ShapeSweepHit::hitBody can tell "pushable

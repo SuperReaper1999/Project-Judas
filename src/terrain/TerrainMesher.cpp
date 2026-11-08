@@ -277,6 +277,10 @@ static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::
         return false;
     }
 }
+bool ExtractValidatedChunk(const Source &source, ChunkKey key, Chunk &output, std::string &error,
+                           const std::function<bool()> &cancelled) {
+    return ExtractChunk(source, key, output, error, cancelled);
+}
 bool BuildChunk(const Source &source, ChunkKey key, Chunk &output, std::string &error,
                 const std::function<bool()> &cancelled) {
     return Validate(source, error) && ExtractChunk(source, key, output, error, cancelled);

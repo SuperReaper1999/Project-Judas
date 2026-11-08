@@ -144,3 +144,20 @@ bounded-volume `create({navigation,profile})` contract. See [navigation](navigat
 for coverage, actor steering and publication details. Geometric changes update
 both support and routes; material painting preserves both collider and navigation
 identities. Native navigation remains optional.
+
+## Native Terrain V2 residency counters
+
+Native landscapes page source samples and exact collision separately from visual
+LOD. Camera visibility never removes physics support. The state object exposes
+`sourcePageBytes`, `sourcePageBudget`, `sourcePages`, `sourceEvictions`,
+`collisionPageBytes`, `collisionPageBudget`, `collisionPages`, `collisionEvictions`,
+`gpuPageBytes`, `gpuPageBudget`, `gpuPages` and `gpuEvictions`. `pagePrepareMs` is
+the last GPU page preparation/upload; `worstPagePrepareMs` is its high-water mark,
+not a sum for the current frame. `bytes` is a current CPU payload estimate for
+native landscapes; the legacy bounded volume component retains its grid estimate.
+
+Caches allocate on demand. A pending edit retains old collision until complete.
+Resource pressure or damaged pages report errors rather than becoming empty
+terrain. The existing native save identities, sparse override limits and project
+save workflow are unchanged. See [terrain residency](../TERRAIN_V2_RESIDENCY.md)
+for cache budgets, working allowances and ownership.

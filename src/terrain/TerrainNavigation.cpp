@@ -72,11 +72,13 @@ bool PrepareNavigation(const NavigationInput &input, std::shared_ptr<const Navig
         }
         if (!chunk.collision)
             continue;
-        const auto &collision = *chunk.collision;
+        const auto &header = *chunk.collision;
         const auto anchor = glm::dvec3(chunk.anchor);
-        if (glm::any(glm::lessThan(collision.maximum + anchor, -extent)) ||
-            glm::any(glm::greaterThan(collision.minimum + anchor, extent)))
+        if (glm::any(glm::lessThan(header.maximum + anchor, -extent)) ||
+            glm::any(glm::greaterThan(header.minimum + anchor, extent)))
             continue;
+        auto lease = AcquireCollision(chunk.collision);
+        const auto &collision = *lease;
         identity += collision.sourceFingerprint;
         const auto offset = int(geometry.vertices.size() / 3);
         for (auto point : collision.vertices) {

@@ -46,11 +46,16 @@ int main() {
     // TerrainV2MaterialTests compares all six signed tangent projections with
     // independent analytic normals, metre tiling with ordinary UV geometry and
     // blended roughness with an ordinary PBR material on modern/portable GL.
+    // Native terrain paging advances mesh/shadow vertices for lossless prepared
+    // rectangular grids and mesh fragment for native material rectangles. The
+    // independent CPU-height/shadow gate and paged/full-source colour, depth,
+    // shadow, odd-grid and single-sample-paint controls qualify these changes.
+    // All other canonical sources and the portability/negative controls remain.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0xb1f08758c8089b60ull, 0x02a51d3314b70acdull, 0xa707161edcfa99daull, 0x925b7b5dc8ab7d48ull,
+        0x8134986a969be145ull, 0x0da2fab3d1825949ull, 0xdb7eb37985b3a1bfull, 0x925b7b5dc8ab7d48ull,
         0x83393b059e8364efull, 0x28a3c2a8126fe9e3ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);

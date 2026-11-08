@@ -4,6 +4,9 @@ target_sources(judas_world_authoring PRIVATE
     src/authoring/TerrainEditorPreview.cpp)
 target_sources(judas_engine PRIVATE
     src/terrain/TerrainSource.cpp
+    src/terrain/TerrainSamples.cpp
+    src/terrain/TerrainGeometryPages.cpp
+    src/terrain/TerrainGeometrySpill.cpp
     src/terrain/TerrainPlanetChart.cpp
     src/planet/PlanetCoverage.cpp
     src/terrain/TerrainPlanetBinding.cpp
@@ -21,6 +24,7 @@ target_sources(judas_engine PRIVATE
     src/terrain/TerrainCollision.cpp
     src/terrain/TerrainNavigation.cpp
     src/terrain/TerrainPresentation.cpp
+    src/terrain/TerrainRenderPages.cpp
     src/terrain/TerrainPersistence.cpp
     src/WorldTerrainQueries.cpp)
 judas_add_engine_test(judas_terrain_v2_collision_tests tests/TerrainV2CollisionTests.cpp)
@@ -77,3 +81,6 @@ judas_add_engine_test(judas_terrain_v2_creation_tests tests/TerrainV2CreationTes
 target_link_libraries(judas_terrain_v2_creation_tests PRIVATE judas_editor_core)
 judas_add_engine_test(judas_terrain_v2_planet_editor_tests tests/TerrainV2PlanetEditorTests.cpp)
 target_link_libraries(judas_terrain_v2_planet_editor_tests PRIVATE judas_editor_core)
+judas_add_engine_test(judas_terrain_v2_paging_tests tests/TerrainV2PagingTests.cpp)
+judas_add_engine_test(judas_terrain_v2_geometry_paging_tests tests/TerrainV2GeometryPagingTests.cpp)
+judas_add_engine_test(judas_terrain_v2_render_paging_tests tests/TerrainV2RenderPagingTests.cpp)

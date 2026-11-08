@@ -47,6 +47,6 @@ class HeightLod {
 };
 // CPU mirror of the edge interpolation contract, used by geometric seam tests.
 float LodHeight(const Source &, glm::vec2 sample, unsigned stride);
-MeshData HeightGrid(unsigned cells);
+MeshData HeightGrid(unsigned cells, unsigned cellsZ = 0);
 TextureData HeightImage(const Source &);
 } // namespace TerrainV2

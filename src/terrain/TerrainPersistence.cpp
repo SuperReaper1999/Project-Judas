@@ -5,6 +5,7 @@
 #include "TerrainAsset.h"
 #include "TerrainMetadata.h"
 #include "TerrainRuntime.h"
+#include "TerrainSamples.h"
 #include <algorithm>
 #include <set>
 namespace TerrainV2 {
@@ -12,37 +13,6 @@ namespace {
 bool SameLayout(const Source &a, const Source &b) {
     return a.samplesX == b.samplesX && a.samplesZ == b.samplesZ && a.chunkCells == b.chunkCells &&
            a.spacing == b.spacing && a.bottom == b.bottom && a.top == b.top && a.chart == b.chart;
-}
-bool ReferenceSamples(AssetPages &pages, const Source *cached, const RasterChanges &oldChanges,
-                      const RasterChanges &changes, Source &base, std::string &error) {
-    if (!cached)
-        return pages.ReadAll(base, error);
-    // A verified live base already owns every unchanged sample. An override in
-    // BOTH versions will be replaced by the new complete sample. Only reverted
-    // old overrides require reading original native pages again.
-    base.heights = cached->heights;
-    base.weights = cached->weights;
-    const auto &index = pages.Index();
-    const auto width = index.pages.front().width, height = index.pages.front().height;
-    const auto columns = (index.metadata.samplesX + width - 1) / width;
-    std::set<size_t> needed;
-    for (const auto &[sample, _] : oldChanges)
-        if (!changes.count(sample)) {
-            const auto x = sample % index.metadata.samplesX, z = sample / index.metadata.samplesX;
-            needed.insert(size_t(z / height) * columns + x / width);
-        }
-    for (auto page : needed) {
-        SamplePage original;
-        if (!pages.ReadPage(page, original, error))
-            return false;
-        for (unsigned z = 0; z < original.height; ++z) {
-            const auto to = size_t(original.z + z) * index.metadata.samplesX + original.x;
-            const auto from = size_t(z) * original.width;
-            std::copy_n(original.heights.begin() + from, original.width, base.heights.begin() + to);
-            std::copy_n(original.weights.begin() + from, original.width, base.weights.begin() + to);
-        }
-    }
-    return true;
 }
 std::vector<ChunkKey> RestoreChunks(const Source *before, const Source &after) {
     std::set<ChunkKey> dirty;
@@ -58,12 +28,11 @@ std::vector<ChunkKey> RestoreChunks(const Source *before, const Source &after) {
         // Height interpolation and normals affect the neighbouring samples too.
         const float halfX = (after.samplesX - 1) * after.spacing * .5f,
                     halfZ = (after.samplesZ - 1) * after.spacing * .5f;
-        for (size_t i = 0; i < after.heights.size(); ++i)
-            if (before->heights[i] != after.heights[i])
-                add({Edit::Kind::Remove,
-                     {float(i % after.samplesX) * after.spacing - halfX, 0,
-                      float(i / after.samplesX) * after.spacing - halfZ},
-                     after.spacing});
+        for (auto i : ChangedHeights(*before, after))
+            add({Edit::Kind::Remove,
+                 {float(i % after.samplesX) * after.spacing - halfX, 0,
+                  float(i / after.samplesX) * after.spacing - halfZ},
+                 after.spacing});
         // Rebuild both the removed and newly affected volume bands. The journal
         // order remains authoritative; this is only dependency invalidation.
         auto sameEdit = [](const Edit &a, const Edit &b) {
@@ -134,7 +103,7 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
     bytes.assign(reinterpret_cast<const char *>(encoded.data()), encoded.size());
     return true;
 }
-bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchronous) {
+bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchronous) try {
     if (bytes.size() > MaximumSnapshotBytes) {
         error = "terrain snapshot exceeds the 8 MiB continuation budget";
         return false;
@@ -169,19 +138,11 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
             if (!SameLayout(next, pages.Index().metadata))
                 throw std::runtime_error(
                     "saved terrain base lattice does not match its immutable asset");
-            const bool reusable = source && baseAsset == assetId && baseFingerprint == digest &&
-                                  SameLayout(*source, next);
-            if (!ReferenceSamples(pages, reusable ? source.get() : nullptr, raster, changes, base,
-                                  error))
+            // Restore verifies a fresh native file snapshot. A warm cache must
+            // not conceal a changed/corrupted source on disk.
+            if (!SampleStorage::Open(record->path, 8 * 1024 * 1024, base, error))
                 throw std::runtime_error(error);
-            next.heights = std::move(base.heights);
-            next.weights = std::move(base.weights);
-            for (const auto &[index, sample] : changes) {
-                if (index >= next.heights.size())
-                    throw std::runtime_error("saved terrain sample index is outside its base");
-                next.heights[index] = sample.height;
-                next.weights[index] = sample.weights;
-            }
+            next.storage = base.storage->WithChanges(changes);
             if (!Validate(next, error))
                 throw std::runtime_error(error);
         } catch (const std::exception &e) {
@@ -190,6 +151,12 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
         }
     } else if (!(IsAsset(bytes) ? DecodeAsset(bytes, next, error) : Parse(bytes, next, error)))
         return false;
+    if (!next.storage) {
+        Source paged;
+        if (!SampleStorage::Spill(next, 8 * 1024 * 1024, paged, error))
+            return false;
+        next = std::move(paged);
+    }
     const bool replaceAll = !source || !SameLayout(*source, next);
     auto keys = RestoreChunks(source.get(), next);
     if (!Submit(std::make_shared<const Source>(std::move(next)), std::move(keys), error,
@@ -203,5 +170,8 @@ bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchr
         return error.empty() && status.ready;
     }
     return true;
+} catch (const std::exception &e) {
+    error = e.what();
+    return false;
 }
 } // namespace TerrainV2

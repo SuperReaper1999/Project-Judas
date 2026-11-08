@@ -6,6 +6,7 @@
 #include "WorldStreaming.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainPreparation.h"
+#include "terrain/TerrainSamples.h"
 #include <algorithm>
 #include <chrono>
 #include <filesystem>
@@ -56,7 +57,8 @@ int main() {
         Check(jobs.StateOf(job) == JobState::Completed,
               "one real worker prepares source, mesh, BVH and LOD");
         jobs.Forget(job);
-        Check(prepared.geometry.source->heights == source.heights &&
+        Check(prepared.geometry.source->storage && prepared.geometry.source->heights.empty() &&
+                  TerrainV2::Serialize(*prepared.geometry.source) == TerrainV2::Serialize(source) &&
                   prepared.geometry.chunks.size() == 1 && prepared.geometry.chunks[0].collision &&
                   prepared.geometry.lod,
               "prepared product has complete immutable source and derived geometry");
@@ -95,12 +97,12 @@ int main() {
                   !wrong.consumed && world.Physics().AliveBodyCount() == 0,
               "mismatched source identity cannot publish or consume the product");
         const auto fingerprint = prepared.geometry.chunks[0].collision->sourceFingerprint;
-        const auto &preparedMesh = prepared.geometry.chunks[0].chunk.mesh;
-        const auto triangles = preparedMesh.indices.size() / 3;
-        const auto meshBytes = preparedMesh.vertices.size() * sizeof(MeshVertex) +
-                               preparedMesh.indices.size() * sizeof(uint32_t);
+        const auto triangles = prepared.geometry.chunks[0].triangles;
+        Check(triangles == source.chunkCells * source.chunkCells * 2 &&
+                  prepared.geometry.chunks[0].chunk.mesh.vertices.empty(),
+              "prepared descriptor retains exact triangle metrics without a complete mesh");
         const auto expectedLivePayload =
-            prepared.geometry.PayloadBytes() - sizeof(TerrainV2::Preparation) - meshBytes;
+            prepared.geometry.PayloadBytes() - sizeof(TerrainV2::Preparation);
         auto owner = object();
         Check(world.StageRegionObject(owner, owner, error, "prepared terrain", &prepared),
               "ordinary regional staging consumes complete worker output: " + error);
@@ -108,7 +110,7 @@ int main() {
               "handoff moves owned data instead of copying or retaining another terrain");
         Check(world.LiveTerrain().LandscapePayloadBytes(owner.id) == expectedLivePayload &&
                   world.LiveTerrain().Status(owner.id)->triangles == triangles,
-              "shared-grid landscape releases unused CPU draw streams, retaining triangle metrics");
+              "shared-grid landscape retains bounded pages and exact triangle metrics");
         Check(world.LiveTerrain().Status(owner.id)->ready &&
                   !world.Physics().Raycast({0, 5, 0}, {0, -1, 0}, 10).hit,
               "complete staged collision remains private until ordinary publication");

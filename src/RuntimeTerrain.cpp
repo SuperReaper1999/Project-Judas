@@ -1,6 +1,7 @@
 #include "RuntimeTerrain.h"
 #include "terrain/TerrainRuntime.h"
 #include "terrain/TerrainAsset.h"
+#include "terrain/TerrainSamples.h"
 #include "terrain/TerrainPersistence.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
@@ -54,7 +55,7 @@ bool RuntimeTerrain::CreateAsset(uint64_t id,const std::string& assetId,std::str
  const auto* record=assets?assets->Find(assetId):nullptr;
  if(!record||record->missing||record->type!=AssetType::Terrain){error="registered native terrain asset required";return false;}
  TerrainV2::AssetPages pages;TerrainV2::Source source;
- if(!pages.Open(record->path,error)||!pages.ReadAll(source,error))return false;
+ if(!pages.Open(record->path,error)||!TerrainV2::SampleStorage::Open(record->path,8*1024*1024,source,error))return false;
  const auto fingerprint=pages.Index().fingerprint;
  if(!CreateLandscape(id,std::move(source),error))return false;
  records.at(id).landscape->BindAsset(assetId,fingerprint);return true;

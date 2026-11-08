@@ -1,3 +1,4 @@
+#include "TerrainSamples.h"
 #include "TerrainPlanetChart.h"
 #include "SceneFingerprint.h"
 #include "TerrainSource.h"
@@ -70,16 +71,16 @@ std::string PlanetGeometryFingerprint(const PlanetSettings &settings) {
 }
 std::vector<float> PlanetSourceRim(const Source &source) {
     std::vector<float> rim;
-    if (source.heights.size() != size_t(source.samplesX) * source.samplesZ)
+    if (SampleCount(source) != size_t(source.samplesX) * source.samplesZ)
         return rim;
     for (unsigned x = 0; x < source.samplesX; ++x)
-        rim.push_back(source.heights[x]);
+        rim.push_back(HeightSample(source, x));
     for (unsigned z = 0; z < source.samplesZ; ++z)
-        rim.push_back(source.heights[size_t(z) * source.samplesX + source.samplesX - 1]);
+        rim.push_back(HeightSample(source, size_t(z) * source.samplesX + source.samplesX - 1));
     for (unsigned x = 0; x < source.samplesX; ++x)
-        rim.push_back(source.heights[size_t(source.samplesZ - 1) * source.samplesX + x]);
+        rim.push_back(HeightSample(source, size_t(source.samplesZ - 1) * source.samplesX + x));
     for (unsigned z = 0; z < source.samplesZ; ++z)
-        rim.push_back(source.heights[size_t(z) * source.samplesX]);
+        rim.push_back(HeightSample(source, size_t(z) * source.samplesX));
     return rim;
 }
 bool ValidatePlanetChart(const PlanetChart &chart, std::string &error) {

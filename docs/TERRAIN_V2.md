@@ -1,19 +1,19 @@
 # Terrain V2 — Experimental implementation
 
-This is active source-build development on Experimental. The integrated
-checkpoints provide editable sampled landscapes with genuine local excavation,
-shared-grid rendering, native terrain assets, regional streaming and source-owned
-navigation. Later sections supersede limitations of earlier named checkpoints.
-It does not complete the approved Terrain V2 programme or replace existing
-project assets automatically.
+This is source-build development on Experimental. One source owns ordinary
+heightfields, local excavation, materials, collision, navigation and persistence.
+Fine-grained source/collision paging and independent GPU residency are now
+implemented; final automated qualification is in progress. Human terrain
+acceptance is pending. Existing project assets are not replaced automatically.
 
-## Try the current slice
+The current architecture and budgets are described in
+[Terrain V2 residency](TERRAIN_V2_RESIDENCY.md). The consolidated checkpoint,
+SDK, measured results and human checklist belong in
+[the qualification record](TERRAIN_V2_QUALIFICATION.md). Named measurements later
+in this document describe their original checkpoints; they are not automatically
+measurements of the latest build.
 
-This is ready for hands-on review of the integrated workflows below, not a claim
-that every item of the five-stage programme is complete. Physical residency is
-still at source/region granularity; finer chunk interest and demand paging remain
-open. Native heightfields now have bounded LOD cross-fades, described below;
-broader terrain materials remain open.
+## Try the current implementation
 
 Build `judas`, `judas_editor` and `judas_terrain_author`, then open
 `projects/terrain_v2_workshop/terrain_v2_workshop.judasproj` in the editor or
@@ -152,19 +152,21 @@ geometry estimates, process memory and profiler overhead.
 Automated input and screenshots are engineering qualification. Human visual and
 gameplay acceptance of the new terrain remains pending.
 
-## Remaining approved work
+## Residency and support boundaries
 
-The flat runtime still keeps all physical chunks resident (maximum 1024). Shared
-render grids, camera-union LOD and indexed native files now exist. Runtime still
-loads complete source arrays; independent physical residency and budgeted
-multi-view streaming remain work. Planetary excavation is now integrated through
-projected native patches; see the geographic section below for its bounded scope.
-Incremental navigation-tile preparation is now qualified below. Large-region
-per-chunk physical interest selection remains. Editable flat/planetary consumer scenes, relocated gameplay and a fresh
-17-tool host-native SDK are now qualified; see the evidence links below. This is
-not older-distribution or new Windows/Android/browser certification.
-Source discovery currently covers up to 512 editable
-sources under Authoring; large-data demand paging remains separate work.
+Runtime native samples use bounded pages rather than complete source arrays.
+Heavy collision data is loaded independently of rendering; small body descriptions
+and exact bounds remain resident so arbitrary off-camera queries remain correct.
+A leased product cannot be evicted while a consumer uses it. Independent GPU
+pages retain native painted detail without coupling it to geometric LOD.
+
+Planetary excavation uses bounded projected native patches, described below.
+Source discovery covers up to512editable sources under Authoring. The current
+native source limit remains1,024chunks per owner and8owners; paging does not make
+an unlimited terrain owner or remove existing regional/save limits. See the
+residency reference for cache quotas, transient preparation memory and failure
+policy. Final SDK/export/platform claims are recorded with their exact revisions
+in the qualification report, not inferred from these capabilities.
 
 Runtime landscapes require a unit-scale root static owner. Translation and
 rotation move derived support; live scaling and authority changes are rejected.
@@ -271,12 +273,11 @@ completed-tunnel scene remains approximately 0.70 ms for its main-camera GPU
 scope; its cost is essentially unchanged. Raw paired results and controls are
 under `docs/evidence/terrain-v2/stage2`.
 
-At that checkpoint, temporal LOD transitions and per-chunk physical interest/demand
-paging. Regional physical streaming and both integrated consumer scenes are now
-qualified below. A source page exceeding the device's texture
-size fails before allocation with an actionable request to split its regions.
-This checkpoint does not certify Android/browser terrain rendering or qualify
-the complete five-stage Terrain V2 delivery.
+At that checkpoint, temporal transitions and fine-grained source/collision paging
+were still outstanding. Both are implemented in the current source. The old
+full-source GPU image restriction has been replaced with checks on bounded
+render pages. Historical desktop measurements do not certify Android/browser
+terrain rendering or constitute human acceptance.
 
 ## Native authoring checkpoint
 
@@ -373,9 +374,12 @@ including background preparation. Five visits are not independent benchmark
 percentiles, and these unit times are not FPS. Raw scope and before/after results
 are under `docs/evidence/terrain-v2/regional-streaming`.
 
-This does not add per-chunk source paging or camera-driven physics eviction.
+At this earlier checkpoint, per-chunk source paging was still absent. Current
+paging is described in the residency reference; camera-driven physics eviction
+remains deliberately avoided.
 Regional suspension remains the existing coordinator's responsibility, and native
-terrains retain all collision chunks while their region is resident. Particle
+terrain collision products then remained resident with the region. Current
+products are leased and paged independently of visual LOD. Particle
 snapshot limits also remain: default whole-chart capture can exceed the body or
 triangle budget on a large landscape and reports that explicitly. An authored
 local effect can now opt into the Particle Emitter's **Collision response → Use
@@ -522,10 +526,11 @@ Boundaries: geographic patches are bounded interior cube-face footprints, with
 not movable prefab instances. Overlapping patches and cross-face excavation are
 not supported. Changing parent source geometry or incompatible collision/visual
 sampling requires regeneration; custom callback providers cannot be serialized
-as native projected assets. Each active patch retains all collision chunks and
-renders mapped geometry at native detail, while the surrounding planet retains
-its existing view-union LOD. This is not planet-wide volumetric paging or a claim
-that all remaining Terrain V2 work is complete.
+as native projected assets. Each active patch retains its physical descriptions;
+heavy collision and mapped render products use the current independent caches.
+Mapped geometry renders at native detail, while the surrounding planet retains
+its existing view-union LOD. This is not planet-wide volumetric excavation. See
+the residency reference for current runtime ownership.
 
 ## Continuation size policy
 
@@ -578,8 +583,8 @@ See [raw comparisons and scope](https://github.com/SuperReaper1999/Project-Judas
 The shared native baker's final optional update argument is source-compatible
 for existing callers; C++ consumers must rebuild with the matching preview SDK.
 Its rebuilt/reused tile counters are preparation diagnostics only, not serialized
-gameplay state. JudasJS APIs are unchanged. This does not add physical chunk
-eviction or data demand paging.
+gameplay state. JudasJS APIs were unchanged by that checkpoint. It preceded
+the current independently paged source/collision products.
 
 ## Bounded native-heightfield LOD transitions
 
@@ -614,8 +619,9 @@ bubbles and are not whole-game FPS or an optimization claim. See
 [commands, raw results and visual scope](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/temporal-lod/REVIEW.md).
 
 This remains a source-build preview. Native consumers must relink with matching
-headers/libraries; JudasJS APIs and terrain save formats do not change. Per-chunk
-physical interest, data demand paging and broader material support remain open.
+headers/libraries; JudasJS APIs and terrain save formats did not change.
+That checkpoint preceded the current data/collision paging and source material
+detail work; see the current residency reference and material section.
 
 ## Responsive large-landscape brush previews
 
@@ -720,10 +726,10 @@ not solver performance or the unrelated dense-body physics pile. Full results,
 unchanged physical controls and method limitations are in
 `docs/evidence/terrain-v2/structured-collision/REVIEW.md`.
 
-All physical chunks still remain resident while their terrain region is active.
-This optimization and the native file's page index are **not** independent
-per-chunk physics residency or sample demand paging. Use bounded streamed terrain
-regions and their existing memory budgets for larger worlds.
+This structured-cook checkpoint preceded demand paging. The current runtime
+retains small physical descriptions but pages heavy collision/source products;
+see [the residency architecture](TERRAIN_V2_RESIDENCY.md). Its startup/memory
+measurements above remain historical evidence for the cooker itself.
 
 A native landscape is a physical triangle surface and cannot also be a volume
 sensor. Authoring and runtime creation reject that combination before publishing

@@ -760,10 +760,16 @@ declare module "judas" {
   export interface TerrainStatus {
     readonly ready:boolean; readonly busy:boolean; readonly navigation:boolean;
     readonly revision:number; readonly samples:number; readonly triangles:number;
-    /** Geometry estimate, excluding allocator, cooked BVH and native navigation overhead. */
+    /** Native Terrain V2 CPU payload estimate (paged samples/collision/navigation); legacy bounded volumes retain their grid estimate. Excludes allocator/driver overhead. */
     readonly bytes:number;
     readonly prepareMs:number; readonly publishMs:number; readonly error:string;
     readonly chunks:number; readonly volumeChunks:number; readonly pendingChunks:number;
+    /** Independent native sample, exact collision and visual GPU caches. Byte budgets exclude bounded construction scratch and shared renderer materials. */
+    readonly sourcePageBytes:number; readonly sourcePageBudget:number; readonly sourcePages:number;
+    readonly collisionPageBytes:number; readonly collisionPageBudget:number; readonly collisionPages:number;
+    readonly gpuPageBytes:number; readonly gpuPageBudget:number; readonly gpuPages:number;
+    readonly sourceEvictions:number; readonly collisionEvictions:number; readonly gpuEvictions:number;
+    readonly pagePrepareMs:number; readonly worstPagePrepareMs:number;
   }
   export interface TerrainBrushOptions {kind:"remove"|"add"|"smooth";radius:number;strength?:number;}
   export interface TerrainSurfaceBrushOptions {

@@ -16,7 +16,11 @@ int PrimitiveCount(const Shape& shape) {
 PrimitivePose PrimitiveAt(const Shape& shape, const RigidBody& parent, int index,
                           const ContactPreparedOrientation* prepared) {
     if(shape.type==ShapeType::Planar&&shape.planar&&shape.planar->kind==PlanarKind::Chain){auto view=shape;view.planarSegment=index;return {view,parent,parent.position,parent.orientation,-shape.pivotOffset,{1,0,0,0},uint32_t(index+1)};}
-    if (shape.type != ShapeType::CompoundBoxes) return {shape, parent, parent.position, parent.orientation, -shape.pivotOffset};
+    if (shape.type != ShapeType::CompoundBoxes) {
+        Shape resolved = shape;
+        resolved.asset = AcquireCollision(shape.asset);
+        return {resolved, parent, parent.position, parent.orientation, -shape.pivotOffset};
+    }
     const CompoundBox& child = shape.boxes[static_cast<std::size_t>(index)];
     RigidBody childPose = parent;
     const glm::dmat3 rotation = prepared && prepared->Matches(parent.orientation)
@@ -357,7 +361,11 @@ float ShapeBoundingRadius(const Shape& shape) {
         }
 
         case ShapeType::ConvexHull:
-        case ShapeType::TriangleMesh:{double r=0;for(auto p:shape.asset->vertices)r=std::max(r,glm::length(p-glm::dvec3(shape.pivotOffset)));return UpperFloat(r);}
+        case ShapeType::TriangleMesh:{
+            if(shape.asset->acquirePage && shape.pivotOffset==glm::vec3(0))
+                return UpperFloat(shape.asset->pageRadius);
+            auto asset=AcquireCollision(shape.asset);
+            double r=0;for(auto p:asset->vertices)r=std::max(r,glm::length(p-glm::dvec3(shape.pivotOffset)));return UpperFloat(r);}
         case ShapeType::Terrain: return shape.terrain ? shape.terrain->BoundRadius() : 0.0f;
         case ShapeType::Capsule: return UpperFloat((Iv(double(shape.radius)) + Iv(double(shape.halfHeight))).hi);
     }

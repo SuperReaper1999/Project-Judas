@@ -91,6 +91,7 @@ public:
     void BeginTerrainMaterial(TextureHandle weights,const std::array<TextureHandle,4>& layers,
                               const std::array<glm::vec3,4>& colours,const glm::mat4& worldToTerrain,
                               const TerrainV2::MaterialDetail& detail,TextureHandle normal);
+    void SetTerrainWeightPage(TextureHandle weights, glm::vec4 sourceRect);
     void EndTerrainMaterial();
     // One reusable grid per resolution, with lossless source height samples.
     // Bounds and source sample coordinates are independent of the render LOD.
@@ -98,7 +99,7 @@ public:
                          glm::vec4 edgeStrides,glm::vec2 dimensions,float spacing,
                          const glm::vec3& position,const glm::quat& rotation,float width,
                          float minimum,float maximum,const glm::vec3& colour,float alpha,
-                         glm::vec2 coverage={0,1});
+                         glm::vec2 coverage={0,1}, bool preparedPage=false, unsigned cellsZ=0, float depth=0);
     void SetMaterialBindings(const std::vector<MaterialBinding>& slots){m_materialBindings=slots;}
     void SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour={.08f,.09f,.11f});
     void FlushMaterialBlends();
@@ -506,6 +507,7 @@ private:
     TextureHandle ColourTexture(TextureHandle);
     bool m_terrainMaterial=false;
     TextureHandle m_terrainWeights;
+    glm::vec4 m_terrainWeightRect{0,0,1,1};
     std::array<TextureHandle,4> m_terrainLayers;
     std::array<glm::vec3,4> m_terrainColours;
     glm::mat4 m_terrainFromWorld{1};
@@ -513,13 +515,13 @@ private:
     TextureHandle m_terrainNormal;
     void BindTerrainMaterial();
     void BindTerrainGeometry(bool shadow);
-    bool m_terrainGrid=false;
+    bool m_terrainGrid=false, m_terrainPreparedPage=false;
     TextureHandle m_terrainHeights;
     glm::vec4 m_terrainSampleRect{},m_terrainEdgeStrides{};
-    glm::vec2 m_terrainDimensions{};
+    glm::vec2 m_terrainDimensions{}, m_terrainGridCells{};
     glm::vec2 m_terrainCoverage{0,1};
     float m_terrainSpacing=1;
-    std::map<unsigned,MeshHandle> m_terrainGrids;
+    std::map<std::pair<unsigned,unsigned>,MeshHandle> m_terrainGrids;
     void BindMaterial(const GpuMaterial*,const MaterialBinding&,TextureHandle,const glm::vec3&,float,bool shadow);
     void BeginLinearPass(int width,int height);
     void ResolveLinearPass(bool sceneLinear=false);

@@ -19,10 +19,16 @@ void terrainCoverage() {
 #define JUDAS_TERRAIN_VERTEX_GLSL R"(
 uniform bool uTerrainGrid;
 uniform sampler2D uTerrainHeights;
+uniform bool uTerrainPreparedPage;
 uniform vec4 uTerrainSamples; // first X/Z sample, stride, cells per patch
 uniform vec4 uTerrainEdges;
 uniform vec2 uTerrainDimensions;
+uniform vec2 uTerrainGridCells;
 uniform float uTerrainSpacing;
+float terrainPageFloat(ivec2 p) {
+    uvec4 b=uvec4(round(texelFetch(uTerrainHeights,p,0)*255.0));
+    return uintBitsToFloat(b.x|(b.y<<8u)|(b.z<<16u)|(b.w<<24u));
+}
 float terrainRaw(ivec2 p) {
     p=clamp(p,ivec2(0),ivec2(uTerrainDimensions)-ivec2(1));
     uvec4 b=uvec4(round(texelFetch(uTerrainHeights,p,0)*255.0));
@@ -34,8 +40,9 @@ float terrainLinear(vec2 p,float stepSize) {
     float h00=terrainRaw(q),h10=terrainRaw(q+ivec2(s,0)),h01=terrainRaw(q+ivec2(0,s)),h11=terrainRaw(q+ivec2(s));
     return t.x+t.y<=1.0 ? h00+(h10-h00)*t.x+(h01-h00)*t.y : h11+(h01-h11)*(1.0-t.x)+(h10-h11)*(1.0-t.y);
 }
-vec2 terrainSamplePoint(vec2 uv){return uTerrainSamples.xy+uv*uTerrainSamples.z*uTerrainSamples.w;}
+vec2 terrainSamplePoint(vec2 uv){return uTerrainSamples.xy+uv*uTerrainSamples.z*uTerrainGridCells;}
 float terrainGridHeight(vec2 uv) {
+    if(uTerrainPreparedPage)return terrainPageFloat(ivec2(round(uv*uTerrainGridCells)));
     vec2 p=terrainSamplePoint(uv);float h=terrainRaw(ivec2(round(p)));
     if(uv.x<0.00001)h=terrainLinear(p,uTerrainEdges.x);
     if(uv.x>0.99999)h=terrainLinear(p,uTerrainEdges.y);
@@ -44,10 +51,16 @@ float terrainGridHeight(vec2 uv) {
     return h;
 }
 vec3 terrainGridNormal(vec2 uv) {
+    if(uTerrainPreparedPage) {
+        ivec2 q=ivec2(round(uv*uTerrainGridCells));int n=int(uTerrainGridCells.x)+1;
+        vec2 width=uTerrainSamples.z*uTerrainGridCells*uTerrainSpacing;
+        return vec3(-terrainPageFloat(q+ivec2(n,0))*width.x,1.0,
+                    -terrainPageFloat(q+ivec2(2*n,0))*width.y);
+    }
     ivec2 p=ivec2(round(terrainSamplePoint(uv)));
     float dx=(terrainRaw(p+ivec2(1,0))-terrainRaw(p-ivec2(1,0)))/(2.0*uTerrainSpacing);
     float dz=(terrainRaw(p+ivec2(0,1))-terrainRaw(p-ivec2(0,1)))/(2.0*uTerrainSpacing);
-    float width=uTerrainSamples.z*uTerrainSamples.w*uTerrainSpacing;
-    return vec3(-dx*width,1.0,-dz*width);
+    vec2 width=uTerrainSamples.z*uTerrainGridCells*uTerrainSpacing;
+    return vec3(-dx*width.x,1.0,-dz*width.y);
 }
 )"

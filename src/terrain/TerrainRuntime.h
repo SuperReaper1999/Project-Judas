@@ -7,6 +7,7 @@
 #include "TerrainLodTransition.h"
 #include "TerrainPersistence.h"
 #include "TerrainPreparation.h"
+#include "TerrainRenderPages.h"
 #include "TerrainSolid.h"
 #include "TerrainSource.h"
 #include "TerrainStatus.h"
@@ -35,8 +36,8 @@ class Runtime {
     void Draw(Renderer &) const;
     bool Capture(std::string &, std::string &) const;
     bool Restore(const std::string &, std::string &, bool asynchronous);
-    const RuntimeTerrainStatus &State() const { return status; }
-    size_t PayloadBytes() const { return residentPayloadBytes; }
+    const RuntimeTerrainStatus &State() const;
+    size_t PayloadBytes() const;
     bool Owns(BodyHandle) const;
     std::vector<BodyHandle> Bodies() const;
     SolidSnapshot Solid() const;
@@ -54,11 +55,11 @@ class Runtime {
         PreparedChunk geometry;
         size_t triangles = 0;
         BodyHandle body;
-        mutable MeshHandle mesh;
     };
     RuntimeWorld &world;
     uint64_t owner;
     std::shared_ptr<const Source> source;
+    std::shared_ptr<GeometryCache> geometryCache;
     std::shared_ptr<Work> pending;
     JobHandle job;
     std::map<ChunkKey, Resident> chunks;
@@ -67,24 +68,21 @@ class Runtime {
     uint64_t boundPlanet = 0;
     bool bindingPublished = false;
     std::shared_ptr<const void> geometryEpoch;
-    RuntimeTerrainStatus status;
+    mutable RuntimeTerrainStatus status;
     size_t residentPayloadBytes = 0;
     std::string baseAsset, baseFingerprint;
     RasterChanges raster;
-    mutable TextureHandle weightTexture;
-    mutable TextureHandle heightTexture;
+    mutable RenderPages renderPages;
     std::shared_ptr<const HeightLod> lod;
     std::shared_ptr<const NavigationData> navigation;
     bool navigationInstalled = false;
     LodTransition drawPatches;
-    mutable uint64_t appearanceRevision = 0;
     const SceneObject *Definition() const;
     BodyHandle Seed() const;
     bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &,
                 bool replaceAll = false);
     bool ValidateSubmission(const Source &, std::string &) const;
     bool Publish(std::string &);
-    void ReleaseMesh(Resident &) const;
     void ReleaseGraphics();
     void CommitPresentation();
 };

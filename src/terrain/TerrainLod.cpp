@@ -1,4 +1,5 @@
 #include "TerrainLod.h"
+#include "TerrainSamples.h"
 #include "TextureData.h"
 #include <algorithm>
 #include <cmath>
@@ -10,8 +11,8 @@ namespace TerrainV2 {
 float LodHeight(const Source &s, glm::vec2 p, unsigned step) {
     auto a = glm::floor(p / float(step)) * float(step), t = (p - a) / float(step);
     auto height = [&](glm::vec2 v) {
-        return s.heights[size_t(std::min(unsigned(v.y), s.samplesZ - 1)) * s.samplesX +
-                         std::min(unsigned(v.x), s.samplesX - 1)];
+        return HeightSample(s, size_t(std::min(unsigned(v.y), s.samplesZ - 1)) * s.samplesX +
+                                   std::min(unsigned(v.x), s.samplesX - 1));
     };
     float h00 = height(a), h10 = height(a + glm::vec2(step, 0)),
           h01 = height(a + glm::vec2(0, step)), h11 = height(a + glm::vec2(step));
@@ -25,7 +26,18 @@ HeightLod::HeightLod(const Source &s)
         side *= 2;
         ++rootLevel;
     }
-    Build(s, {0, 0, rootLevel});
+    if (s.storage) {
+        // Bounded worker scratch, released before publication. The hierarchy
+        // revisits heights at every level; repeatedly acquiring native pages
+        // here is unnecessary. Materials and collision are never expanded.
+        Source heights = s;
+        heights.heights.resize(SampleCount(s));
+        for (size_t i = 0; i < heights.heights.size(); ++i)
+            heights.heights[i] = HeightSample(s, i);
+        heights.storage.reset();
+        Build(heights, {0, 0, rootLevel});
+    } else
+        Build(s, {0, 0, rootLevel});
 }
 HeightLod::Node HeightLod::Build(const Source &s, PatchKey key) {
     if (key.x >= nx || key.z >= nz)
@@ -51,7 +63,7 @@ HeightLod::Node HeightLod::Build(const Source &s, PatchKey key) {
                    z1 = std::min((key.z + side) * cells, s.samplesZ - 1);
     for (unsigned z = z0; z <= z1; ++z)
         for (unsigned x = x0; x <= x1; ++x) {
-            float h = s.heights[size_t(z) * s.samplesX + x];
+            float h = HeightSample(s, size_t(z) * s.samplesX + x);
             result.minimum = std::min(result.minimum, h);
             result.maximum = std::max(result.maximum, h);
             if (result.complete)
@@ -142,20 +154,22 @@ std::vector<HeightPatch> HeightLod::Select(const std::vector<View> &views,
 size_t HeightLod::Bytes() const {
     return nodes.size() * (sizeof(PatchKey) + sizeof(Node) + 4 * sizeof(void *));
 }
-MeshData HeightGrid(unsigned cells) {
-    if (cells < 4 || cells > 64)
-        throw std::invalid_argument("terrain grid cells outside4..64");
+MeshData HeightGrid(unsigned cells, unsigned cellsZ) {
+    if (!cellsZ)
+        cellsZ = cells;
+    if (cells < 1 || cells > 64 || cellsZ < 1 || cellsZ > 64)
+        throw std::invalid_argument("terrain render grid cells outside1..64");
     MeshData m;
-    for (unsigned z = 0; z <= cells; ++z)
+    for (unsigned z = 0; z <= cellsZ; ++z)
         for (unsigned x = 0; x <= cells; ++x) {
             MeshVertex v;
-            v.position = {float(x) / cells, 0, float(z) / cells};
+            v.position = {float(x) / cells, 0, float(z) / cellsZ};
             v.normal = {0, 1, 0};
-            v.uv = {float(x) / cells, float(z) / cells};
+            v.uv = {float(x) / cells, float(z) / cellsZ};
             v.tangent = {1, 0, 0, 1};
             m.vertices.push_back(v);
         }
-    for (unsigned z = 0; z < cells; ++z)
+    for (unsigned z = 0; z < cellsZ; ++z)
         for (unsigned x = 0; x < cells; ++x) {
             unsigned a = z * (cells + 1) + x, b = a + 1, c = a + cells + 1, d = c + 1;
             m.indices.insert(m.indices.end(), {a, c, b, b, c, d});
@@ -171,8 +185,9 @@ TextureData HeightImage(const Source &s) {
     TextureMip level;
     level.width = image.width;
     level.height = image.height;
-    level.bytes.reserve(s.heights.size() * 4);
-    for (float h : s.heights) {
+    level.bytes.reserve(SampleCount(s) * 4);
+    for (size_t i = 0; i < SampleCount(s); ++i) {
+        float h = HeightSample(s, i);
         uint32_t bits;
         std::memcpy(&bits, &h, 4);
         for (unsigned b = 0; b < 4; ++b)

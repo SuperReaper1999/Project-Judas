@@ -1,3 +1,4 @@
+#include "TerrainSamples.h"
 #include "RuntimeWorld.h"
 #include "TerrainRuntime.h"
 #include <algorithm>
@@ -29,9 +30,10 @@ bool Runtime::Surface(glm::vec3 point, const SurfaceBrush &brush, std::string &e
     // save all their native samples. Never accept an edit that cannot be saved.
     auto changes = raster;
     if (!baseAsset.empty()) {
-        for (size_t i = 0; i < next->heights.size(); ++i)
-            if (next->heights[i] != source->heights[i] || next->weights[i] != source->weights[i])
-                changes[uint32_t(i)] = {next->heights[i], next->weights[i]};
+        if (next->storage) changes = next->storage->Changes();
+        else for (size_t i = 0; i < SampleCount(*next); ++i)
+            if (HeightSample(*next, i) != HeightSample(*source, i) || WeightSample(*next, i) != WeightSample(*source, i))
+                changes[uint32_t(i)] = {HeightSample(*next, i), WeightSample(*next, i)};
         if (changes.size() > MaximumRasterChanges) {
             error = "landscape exceeds 65536 persistent changed samples; split editable regions";
             return false;

@@ -152,7 +152,7 @@ bool CollisionSnapshot::Capture(const PhysicsWorld& physics, const Aabb& domain,
             Shape shape;
             CollisionBody body;
             body.handle = handle;
-            if (!physics.GetBodyShape(handle, shape, body.pose))
+            if (!physics.GetBodyShape(handle, shape, body.pose, false))
                 continue;
             body.boundingRadius = ShapeBoundingRadius(shape);
             body.linearVelocity = physics.GetLinearVelocity(handle);

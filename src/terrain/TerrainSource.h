@@ -5,11 +5,13 @@
 #include "TerrainPlanetChart.h"
 #include <array>
 #include <functional>
+#include <memory>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace TerrainV2 {
+class SampleStorage;
 // One sampled landscape owns both ordinary surface patches and excavated
 // patches. Positions in the source are local metres; world placement remains
 // the world's double-precision origin plus its ordinary rigid transform.
@@ -34,6 +36,9 @@ struct Source {
     std::vector<Edit> edits;
     // Four normalized material weights. These are data, not baked colours.
     std::vector<glm::vec4> weights;
+    // Runtime native sources use bounded pages; authoring retains ordinary
+    // vectors. Immutable sparse overrides are separate from evictable base pages.
+    std::shared_ptr<const SampleStorage> storage;
     unsigned ChunksX() const { return (samplesX - 1) / chunkCells; }
     unsigned ChunksZ() const { return (samplesZ - 1) / chunkCells; }
 };

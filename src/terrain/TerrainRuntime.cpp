@@ -6,6 +6,7 @@
 #include "TerrainAsset.h"
 #include "TerrainMesher.h"
 #include "TerrainNavigation.h"
+#include "TerrainSamples.h"
 #include "WorldPresentation.h"
 #include <algorithm>
 #include <chrono>
@@ -17,6 +18,36 @@ double Milliseconds(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
 }
 } // namespace
+size_t Runtime::PayloadBytes() const {
+    return residentPayloadBytes +
+           (source && source->storage ? source->storage->Statistics().bytes : 0) +
+           (geometryCache ? geometryCache->Statistics().bytes : 0);
+}
+const RuntimeTerrainStatus &Runtime::State() const {
+    if (source && source->storage) {
+        const auto s = source->storage->Statistics();
+        status.sourcePageBytes = s.bytes;
+        status.sourcePageBudget = s.budget;
+        status.sourcePages = s.entries;
+        status.sourceEvictions = s.evictions;
+    }
+    if (geometryCache) {
+        const auto s = geometryCache->Statistics();
+        status.collisionPageBytes = s.bytes;
+        status.collisionPageBudget = s.budget;
+        status.collisionPages = s.entries;
+        status.collisionEvictions = s.evictions;
+    }
+    const auto gpu = renderPages.Statistics();
+    status.gpuPageBytes = gpu.bytes;
+    status.gpuPageBudget = gpu.budget;
+    status.gpuPages = gpu.entries;
+    status.gpuEvictions = gpu.evictions;
+    status.pagePrepareMs = renderPages.prepareMs;
+    status.worstPagePrepareMs = renderPages.worstPrepareMs;
+    status.bytes = PayloadBytes();
+    return status;
+}
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
 Runtime::~Runtime() {
     if (boundPlanet)
@@ -147,10 +178,11 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
     if (!replaceAll)
         work->raster = raster;
     work->source = std::move(value);
+    work->cache = geometryCache;
     if (source && source->samplesX == work->source->samplesX &&
         source->samplesZ == work->source->samplesZ &&
         source->chunkCells == work->source->chunkCells &&
-        source->spacing == work->source->spacing && source->heights == work->source->heights)
+        source->spacing == work->source->spacing && SameHeights(*source, *work->source))
         work->lod = lod;
     std::optional<NavigationInput> nav;
     const auto *definition = Definition();
@@ -255,9 +287,10 @@ bool Runtime::ValidateSubmission(const Source &value, std::string &error) const 
     }
     if (auto *renderer = resources->GetRenderer()) {
         const auto limit = unsigned(std::max(0, renderer->Capabilities().limits.textureSize));
-        if (value.samplesX > limit || value.samplesZ > limit) {
-            error = "landscape sample page exceeds this device's texture limit; split the "
-                    "source into smaller streamed regions";
+        // Source dimensions no longer describe a GPU allocation. Native
+        // material pages are at most257square; packed vertex pages <=195wide.
+        if (limit < 257) {
+            error = "landscape render page requires a texture limit of at least257";
             return false;
         }
     }
@@ -397,7 +430,6 @@ bool Runtime::Publish(std::string &error) {
     for (size_t i = 0; i < pending->chunks.size(); ++i) {
         auto &p = pending->chunks[i];
         auto &r = chunks[p.chunk.key];
-        ReleaseMesh(r);
         if (r.body.IsValid()) {
             bodyIds.erase(r.body.id);
             physics.DestroyBody(r.body);
@@ -405,7 +437,7 @@ bool Runtime::Publish(std::string &error) {
         r.body = staged[i];
         if (r.body.IsValid())
             bodyIds.insert(r.body.id);
-        r.triangles = p.chunk.mesh.indices.size() / 3;
+        r.triangles = p.triangles;
         // Ordinary landscapes draw from a shared grid and the source height
         // image. Collision owns its immutable cook; navigation consumes that
         // cook too. Keep unique draw streams only for excavations and curved
@@ -420,7 +452,6 @@ bool Runtime::Publish(std::string &error) {
             retained.insert(p.chunk.key);
         for (auto it = chunks.begin(); it != chunks.end();)
             if (!retained.count(it->first)) {
-                ReleaseMesh(it->second);
                 if (it->second.body.IsValid()) {
                     bodyIds.erase(it->second.body.id);
                     physics.DestroyBody(it->second.body);
@@ -438,6 +469,7 @@ bool Runtime::Publish(std::string &error) {
     }
     CommitPresentation();
     source = pending->source;
+    geometryCache = pending->cache;
     baseAsset = pending->baseAsset;
     baseFingerprint = pending->baseFingerprint;
     raster = std::move(pending->raster);
@@ -455,7 +487,7 @@ bool Runtime::Publish(std::string &error) {
     status.navigation = bool(navigation);
     ++status.revision;
     status.prepareMs = pending->milliseconds;
-    status.samples = source->heights.size();
+    status.samples = SampleCount(*source);
     status.bytes = status.samples * (sizeof(float) + sizeof(glm::vec4));
     status.triangles = 0;
     status.chunks = chunks.size();

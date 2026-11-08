@@ -1,3 +1,4 @@
+#include "TerrainSamples.h"
 #include "TerrainAsset.h"
 #include "SceneFingerprint.h"
 #include "TerrainMetadata.h"
@@ -160,7 +161,7 @@ bool EncodeAsset(const Source &source, std::vector<uint8_t> &output, std::string
         const unsigned nx = (source.samplesX + PageSide - 1) / PageSide,
                        nz = (source.samplesZ + PageSide - 1) / PageSide;
         uint64_t offset = Header + meta.size() + uint64_t(nx) * nz * Entry,
-                 total = offset + source.heights.size() * 20;
+                 total = offset + SampleCount(source) * 20;
         if (meta.size() > 2 * 1024 * 1024 || total > MaximumBytes)
             throw std::runtime_error("terrain asset byte budget");
         std::vector<uint8_t> bytes(size_t(total), 0);
@@ -186,9 +187,9 @@ bool EncodeAsset(const Source &source, std::vector<uint8_t> &output, std::string
                 for (unsigned j = 0; j < h; ++j)
                     for (unsigned i = 0; i < w; ++i) {
                         size_t at = size_t(sz + j) * source.samplesX + sx + i;
-                        PutFloat(bytes, data, source.heights[at]);
+                        PutFloat(bytes, data, HeightSample(source, at));
                         for (unsigned k = 0; k < 4; ++k)
-                            PutFloat(bytes, data, source.weights[at][k]);
+                            PutFloat(bytes, data, WeightSample(source, at)[k]);
                     }
                 Put(bytes, header, sx, 4);
                 Put(bytes, header, sz, 4);

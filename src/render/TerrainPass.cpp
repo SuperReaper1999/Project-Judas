@@ -18,11 +18,17 @@ void Renderer::BeginTerrainMaterial(TextureHandle weights,
     EndMeshBatch();
     m_terrainMaterial = true;
     m_terrainWeights = weights;
+    m_terrainWeightRect = {0, 0, 1, 1};
     m_terrainLayers = layers;
     m_terrainColours = colours;
     m_terrainFromWorld = worldToTerrain;
     m_terrainDetail = detail;
     m_terrainNormal = normal;
+}
+void Renderer::SetTerrainWeightPage(TextureHandle weights, glm::vec4 sourceRect) {
+    EndMeshBatch();
+    m_terrainWeights = weights;
+    m_terrainWeightRect = sourceRect;
 }
 void Renderer::BindTerrainMaterial() {
     if (!m_terrainMaterial)
@@ -46,6 +52,7 @@ void Renderer::BindTerrainMaterial() {
         glBindSampler(5 + i, 0);
         glUniform1i(MaterialUniform(names[i]), 5 + i);
     }
+    glUniform4fv(MaterialUniform("uTerrainWeightRect"), 1, glm::value_ptr(m_terrainWeightRect));
     glUniform3fv(MaterialUniform("uTerrainColours[0]"), 4, glm::value_ptr(m_terrainColours[0]));
     glUniform4fv(MaterialUniform("uTerrainTileMetres"), 1,
                  glm::value_ptr(m_terrainDetail.tileMetres));
@@ -78,9 +85,11 @@ void Renderer::BindTerrainGeometry(bool shadow) {
     const auto program = shadow ? m_shadowShaderProgram : m_shaderProgram;
     auto uniform = [&](const char *name) { return glGetUniformLocation(program, name); };
     glUniform1i(uniform("uTerrainGrid"), true);
+    glUniform1i(uniform("uTerrainPreparedPage"), m_terrainPreparedPage);
     glUniform1i(uniform("uTerrainHeights"), 2);
     glUniform4fv(uniform("uTerrainSamples"), 1, glm::value_ptr(m_terrainSampleRect));
     glUniform4fv(uniform("uTerrainEdges"), 1, glm::value_ptr(m_terrainEdgeStrides));
+    glUniform2fv(uniform("uTerrainGridCells"), 1, glm::value_ptr(m_terrainGridCells));
     glUniform2fv(uniform("uTerrainDimensions"), 1, glm::value_ptr(m_terrainDimensions));
     glUniform2fv(uniform("uTerrainCoverage"), 1, glm::value_ptr(m_terrainCoverage));
     glUniform1f(uniform("uTerrainSpacing"), m_terrainSpacing);
@@ -93,28 +102,35 @@ void Renderer::DrawTerrainGrid(TextureHandle heights, unsigned cells, glm::vec4 
                                glm::vec4 edges, glm::vec2 dimensions, float spacing,
                                const glm::vec3 &position, const glm::quat &rotation, float width,
                                float minimum, float maximum, const glm::vec3 &colour, float alpha,
-                               glm::vec2 coverage) {
+                               glm::vec2 coverage, bool preparedPage, unsigned cellsZ,
+                               float depth) {
     if (!AcceptsCurrentLayer())
         return;
+    if (!cellsZ)
+        cellsZ = cells;
+    if (depth == 0)
+        depth = width;
     VisualBounds bounds;
     bounds.Include({0, minimum, 0});
-    bounds.Include({width, maximum, width});
+    bounds.Include({width, maximum, depth});
     auto frame = glm::translate(glm::mat4(1), position) * glm::mat4_cast(rotation);
     if (!IsVisible(TransformBounds(bounds, frame)))
         return;
-    auto &grid = m_terrainGrids[cells];
+    auto &grid = m_terrainGrids[{cells, cellsZ}];
     if (!grid.IsValid())
-        grid = CreateMesh(TerrainV2::HeightGrid(cells));
+        grid = CreateMesh(TerrainV2::HeightGrid(cells, cellsZ));
     m_terrainGrid = true;
+    m_terrainPreparedPage = preparedPage;
     m_terrainHeights = heights;
     m_terrainSampleRect = samples;
     m_terrainEdgeStrides = edges;
     m_terrainDimensions = dimensions;
+    m_terrainGridCells = {float(cells), float(cellsZ)};
     m_terrainCoverage = coverage;
     m_terrainSpacing = spacing;
     const auto culling = m_cullingEnabled;
     m_cullingEnabled = false; // already tested displaced bounds
-    DrawMesh(grid, position, rotation, {width, 1, width}, {}, colour, alpha);
+    DrawMesh(grid, position, rotation, {width, 1, depth}, {}, colour, alpha);
     m_cullingEnabled = culling;
     m_terrainGrid = false;
     const auto program = m_shadowPassActive ? m_shadowShaderProgram : m_shaderProgram;

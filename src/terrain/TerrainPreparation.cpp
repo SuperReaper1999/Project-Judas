@@ -6,76 +6,65 @@
 #include "TerrainCollision.h"
 #include "TerrainMesher.h"
 #include "TerrainNavigation.h"
+#include "TerrainSamples.h"
 #include <chrono>
 #include <cstring>
 
 namespace TerrainV2 {
-namespace {
-std::string GeometryFingerprint(const Chunk &chunk) {
-    std::string bytes = "Judas.Terrain.ChunkGeometry.1";
-    bytes.reserve(bytes.size() + chunk.mesh.vertices.size() * 12 + chunk.mesh.indices.size() * 4 +
-                  16);
-    auto integer = [&](uint32_t v) {
-        for (unsigned b = 0; b < 4; ++b)
-            bytes.push_back(char(v >> (8 * b)));
-    };
-    integer(chunk.key.x);
-    integer(chunk.key.z);
-    integer(uint32_t(chunk.mesh.vertices.size()));
-    integer(uint32_t(chunk.mesh.indices.size()));
-    for (const auto &vertex : chunk.mesh.vertices)
-        for (unsigned axis = 0; axis < 3; ++axis) {
-            float value = vertex.position[axis];
-            if (value == 0)
-                value = 0;
-            uint32_t bits;
-            std::memcpy(&bits, &value, 4);
-            integer(bits);
-        }
-    for (auto index : chunk.mesh.indices)
-        integer(index);
-    return SceneFingerprintSha256(bytes);
-}
-} // namespace
 bool PrepareGeometry(Preparation &work, const std::vector<ChunkKey> &keys,
-                     const std::function<bool()> &cancelled) {
+                     const std::function<bool()> &cancelled) try {
     const auto start = std::chrono::steady_clock::now();
     if (!work.source) {
         work.error = "missing immutable terrain source";
         return false;
     }
+    if (!work.source->storage || work.source->storage->Changes().size() > MaximumRasterChanges) {
+        Source paged;
+        if (!SampleStorage::Spill(*work.source, 8 * 1024 * 1024, paged, work.error))
+            return false;
+        work.source = std::make_shared<const Source>(std::move(paged));
+    }
+    // The published revision is recoverable before any cache entry can leave
+    // memory. Failure leaves the previous world and its journal untouched.
+    if (!work.source->storage->Persist(*work.source, work.error))
+        return false;
+    if (!Validate(*work.source, work.error))
+        return false;
     if (!work.lod)
         work.lod = std::make_shared<const HeightLod>(*work.source);
-    std::vector<Chunk> prepared;
-    if (!BuildChunks(*work.source, keys, prepared, work.error, cancelled))
-        return false;
-    for (auto &chunk : prepared) {
+    if (!work.cache)
+        work.cache = std::make_shared<GeometryCache>(64 * 1024 * 1024);
+    for (auto key : keys) {
         if (cancelled && cancelled()) {
             work.error = "cancelled";
             return false;
         }
+        auto recipe = PrepareRecipe(*work.source, key, work.cache, work.error);
+        if (!recipe)
+            return false;
+        auto page = recipe->Acquire();
         PreparedChunk p;
-        p.chunk = std::move(chunk);
-        if (!p.chunk.mesh.indices.empty()) {
-            p.collision = std::make_shared<CollisionAsset>();
-            const bool structured = !p.chunk.volumetric && !work.source->chart &&
-                                    CookHeightfieldCollision(p.chunk.mesh, work.source->chunkCells,
-                                                             *p.collision, work.error);
-            // Never infer grid topology for a cave or a curved planetary patch.
-            // A failed proof also retains the original strict cook and diagnostics.
-            if (!structured && !CookCollision(p.chunk.mesh, {}, *p.collision, work.error))
-                return false;
-            p.collision->sourceFingerprint = GeometryFingerprint(p.chunk);
-        }
+        p.chunk.key = key;
+        p.chunk.anchor = page->chunk.anchor;
+        p.chunk.volumetric = page->chunk.volumetric;
+        p.triangles = page->triangles;
+        p.collision = CollisionPage(recipe, *page);
+        p.recipe = std::move(recipe);
         work.chunks.push_back(std::move(p));
     }
     work.milliseconds =
         std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
     return true;
+} catch (const std::exception &e) {
+    work.error = e.what();
+    return false;
 }
 size_t SourcePayloadBytes(const Source &source, const HeightLod *lod) {
     size_t bytes = sizeof(source) + source.heights.size() * sizeof(float) +
                    source.weights.size() * sizeof(glm::vec4) + source.edits.size() * sizeof(Edit);
+    if (source.storage)
+        bytes += source.storage->Changes().size() *
+                 (sizeof(RasterSample) + sizeof(uint32_t) + 4 * sizeof(void *));
     for (const auto &id : source.layerTextures)
         bytes += id.size();
     bytes += source.materialDetail.normalTexture.size();
@@ -86,18 +75,8 @@ size_t SourcePayloadBytes(const Source &source, const HeightLod *lod) {
     return bytes;
 }
 size_t PreparedChunk::PayloadBytes() const {
-    size_t bytes = sizeof(*this) + chunk.mesh.vertices.size() * sizeof(MeshVertex) +
-                   chunk.mesh.indices.size() * sizeof(uint32_t);
-    if (collision) {
-        const auto &c = *collision;
-        bytes += sizeof(c) + c.vertices.size() * sizeof(glm::dvec3) +
-                 c.faces.size() * sizeof(CollisionFace) + c.edges.size() * sizeof(c.edges[0]) +
-                 c.satEdges.size() * sizeof(uint32_t) + c.nodes.size() * sizeof(CollisionNode) +
-                 c.order.size() * sizeof(uint32_t) + c.polygons.size() * sizeof(CollisionPolygon);
-        for (const auto &polygon : c.polygons)
-            bytes += polygon.vertices.size() * sizeof(uint32_t);
-    }
-    return bytes;
+    return sizeof(*this) + (recipe ? recipe->Bytes() : 0) +
+           (collision ? sizeof(CollisionAsset) : 0);
 }
 size_t Preparation::PayloadBytes() const {
     size_t bytes = sizeof(*this);
@@ -105,15 +84,19 @@ size_t Preparation::PayloadBytes() const {
         bytes += SourcePayloadBytes(*source, lod.get());
     for (const auto &chunk : chunks)
         bytes += chunk.PayloadBytes();
+    if (source && source->storage)
+        bytes += source->storage->Statistics().bytes;
+    if (cache)
+        bytes += cache->Statistics().bytes;
     bytes += NavigationPayloadBytes(navigation.get());
     return bytes;
 }
 bool PrepareAsset(const std::string &path, const std::string &identity, PreparedAsset &output,
                   std::string &error, const std::function<bool()> &cancelled,
-                  const NavigationInput *navigation) {
+                  const NavigationInput *navigation) try {
     AssetPages pages;
     Source source;
-    if (!pages.Open(path, error) || !pages.ReadAll(source, error))
+    if (!pages.Open(path, error) || !SampleStorage::Open(path, 8 * 1024 * 1024, source, error))
         return false;
     if (size_t(source.ChunksX()) * source.ChunksZ() > 1024) {
         error = "terrain active chunk budget exceeds 1024";
@@ -149,5 +132,8 @@ bool PrepareAsset(const std::string &path, const std::string &identity, Prepared
     output = std::move(next);
     error.clear();
     return true;
+} catch (const std::exception &e) {
+    error = e.what();
+    return false;
 }
 } // namespace TerrainV2

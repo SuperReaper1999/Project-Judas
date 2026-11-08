@@ -1,4 +1,5 @@
 #include "TerrainBrush.h"
+#include "TerrainSamples.h"
 #include <algorithm>
 #include <cmath>
 
@@ -35,16 +36,18 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
     const int x1 = std::min(int(source.samplesX) - 1, upper(point.x, halfX)),
               z1 = std::min(int(source.samplesZ) - 1, upper(point.z, halfZ));
     bool changed = false;
+    RasterChanges changes;
     for (int z = z0; z <= z1; ++z)
         for (int x = x0; x <= x1; ++x) {
             const auto i = size_t(z) * source.samplesX + x;
             const float distance =
-                source.chart ? float(glm::length(source.chart->LocalPoint(
-                                                     {x * source.spacing - halfX, source.heights[i],
-                                                      z * source.spacing - halfZ}) -
-                                                 source.chart->LocalPoint(point)))
-                             : glm::length(glm::vec2(x * source.spacing - halfX - point.x,
-                                                     z * source.spacing - halfZ - point.z));
+                source.chart
+                    ? float(glm::length(source.chart->LocalPoint({x * source.spacing - halfX,
+                                                                  HeightSample(source, i),
+                                                                  z * source.spacing - halfZ}) -
+                                        source.chart->LocalPoint(point)))
+                    : glm::length(glm::vec2(x * source.spacing - halfX - point.x,
+                                            z * source.spacing - halfZ - point.z));
             if (distance >= brush.radius)
                 continue;
             const float t = 1 - distance / brush.radius, falloff = t * t * (3 - 2 * t);
@@ -52,11 +55,12 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
                 const float blend = std::clamp(brush.strength * falloff, 0.f, 1.f);
                 glm::vec4 target(0);
                 target[brush.layer] = 1;
-                next.weights[i] = glm::mix(source.weights[i], target, blend);
-                changed |= next.weights[i] != source.weights[i];
+                const auto weights = glm::mix(WeightSample(source, i), target, blend);
+                changes[uint32_t(i)] = {HeightSample(source, i), weights};
+                changed |= weights != WeightSample(source, i);
                 continue;
             }
-            float value = source.heights[i];
+            float value = HeightSample(source, i);
             switch (brush.kind) {
             case SurfaceBrush::Kind::Raise:
                 value += brush.strength * falloff;
@@ -76,7 +80,7 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
                         int xx = x + dx, zz = z + dz;
                         if (xx >= 0 && zz >= 0 && xx < int(source.samplesX) &&
                             zz < int(source.samplesZ)) {
-                            sum += source.heights[size_t(zz) * source.samplesX + xx];
+                            sum += HeightSample(source, size_t(zz) * source.samplesX + xx);
                             ++count;
                         }
                     }
@@ -91,15 +95,15 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
                 error = "brush exceeds terrain vertical bounds; source unchanged";
                 return false;
             }
-            if (source.chart && value != source.heights[i] &&
+            if (source.chart && value != HeightSample(source, i) &&
                 (x == 0 || z == 0 || x == int(source.samplesX) - 1 ||
                  z == int(source.samplesZ) - 1)) {
                 error =
                     "planet surface brush reaches its protected rim; use a larger editable patch";
                 return false;
             }
-            next.heights[i] = value;
-            changed |= value != source.heights[i];
+            changes[uint32_t(i)] = {value, WeightSample(source, i)};
+            changed |= value != HeightSample(source, i);
         }
     if (!changed) {
         error = "brush does not change terrain";
@@ -108,6 +112,7 @@ bool ApplySurfaceBrush(Source &source, glm::vec3 point, const SurfaceBrush &brus
     dirty = brush.kind == SurfaceBrush::Kind::Paint
                 ? std::vector<ChunkKey>{}
                 : Affected(source, {Edit::Kind::Remove, point, brush.radius});
+    SetSamples(next, changes);
     source = std::move(next);
     error.clear();
     return true;

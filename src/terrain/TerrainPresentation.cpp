@@ -1,39 +1,21 @@
+#include "CollisionAsset.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "TerrainRuntime.h"
+#include "TerrainSamples.h"
 #include "WorldPresentation.h"
 #include <glm/gtc/matrix_transform.hpp>
 namespace TerrainV2 {
 void Runtime::ReleaseGraphics() {
     auto *renderer = world.Resources() ? world.Resources()->GetRenderer() : nullptr;
-    if (renderer) {
-        if (heightTexture.IsValid())
-            renderer->DestroyTexture(heightTexture);
-        if (weightTexture.IsValid())
-            renderer->DestroyTexture(weightTexture);
-    }
-    heightTexture = {};
-    weightTexture = {};
-    for (auto &[_, r] : chunks)
-        ReleaseMesh(r);
+    if (renderer)
+        renderPages.Clear(*renderer);
 }
 void Runtime::CommitPresentation() {
     auto *renderer = world.Resources() ? world.Resources()->GetRenderer() : nullptr;
-    if (renderer && lod != pending->lod && heightTexture.IsValid()) {
-        renderer->DestroyTexture(heightTexture);
-        heightTexture = {};
-    }
-    if (renderer && source && source->weights != pending->source->weights &&
-        weightTexture.IsValid()) {
-        renderer->DestroyTexture(weightTexture);
-        weightTexture = {};
-    }
+    if (renderer)
+        renderPages.Clear(*renderer);
     drawPatches.Reset();
-}
-void Runtime::ReleaseMesh(Resident &r) const {
-    if (r.mesh.IsValid() && world.Resources() && world.Resources()->GetRenderer())
-        world.Resources()->GetRenderer()->DestroyMesh(r.mesh);
-    r.mesh = {};
 }
 void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds) {
     if (!source || !lod)
@@ -73,20 +55,6 @@ void Runtime::Draw(Renderer &renderer) const {
     renderer.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(), *d->render));
     auto texture = world.Resources() ? world.Resources()->TryGetTexture(d->render->textureAsset)
                                      : TextureHandle{};
-    if (!weightTexture.IsValid()) {
-        TextureData image;
-        image.width = int(source->samplesX);
-        image.height = int(source->samplesZ);
-        for (auto w : source->weights)
-            for (unsigned k = 0; k < 4; ++k)
-                image.pixels.push_back(uint8_t(std::lround(w[k] * 255)));
-        if (weightTexture.IsValid())
-            renderer.DestroyTexture(weightTexture);
-        weightTexture = renderer.CreateTexture(image);
-        appearanceRevision = status.revision;
-    }
-    if (!source->chart && !heightTexture.IsValid())
-        heightTexture = renderer.CreateTexture(HeightImage(*source));
     std::array<TextureHandle, 4> layers;
     for (unsigned i = 0; i < 4; ++i)
         if (!source->layerTextures[i].empty()) {
@@ -98,7 +66,7 @@ void Runtime::Draw(Renderer &renderer) const {
         world.Resources()->RequestTexture(source->materialDetail.normalTexture);
         normal = world.Resources()->TryGetTexture(source->materialDetail.normalTexture);
     }
-    renderer.BeginTerrainMaterial(weightTexture, layers, source->layerColours,
+    renderer.BeginTerrainMaterial({}, layers, source->layerColours,
                                   glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
                                                glm::mat4_cast(d->transform.rotation)),
                                   source->materialDetail, normal);
@@ -120,21 +88,38 @@ void Runtime::Draw(Renderer &renderer) const {
             auto it = chunks.find({k.x, k.z});
             if (k.level == 0 && it != chunks.end() && it->second.geometry.chunk.volumetric)
                 continue;
-            const float stride = float(1u << k.level),
-                        width = source->chunkCells * source->spacing * stride;
-            glm::vec3 anchor(k.x * source->chunkCells * source->spacing -
-                                 (source->samplesX - 1) * source->spacing * .5f,
-                             0,
-                             k.z * source->chunkCells * source->spacing -
-                                 (source->samplesZ - 1) * source->spacing * .5f);
-            renderer.DrawTerrainGrid(
-                heightTexture, source->chunkCells,
-                {float(k.x * source->chunkCells), float(k.z * source->chunkCells), stride,
-                 float(source->chunkCells)},
-                patch.edgeStrides, {float(source->samplesX), float(source->samplesZ)},
-                source->spacing, d->transform.position + d->transform.rotation * anchor,
-                d->transform.rotation, width, patch.minimum, patch.maximum, d->render->color,
-                d->render->alpha, shared ? glm::vec2(0, 1) : coverage);
+            for (const auto &key : PartitionRenderPatch(*source, patch)) {
+                const auto tile = key.patch;
+                const unsigned cells = key.cells ? key.cells : source->chunkCells,
+                               cellsZ = key.cellsZ ? key.cellsZ : cells,
+                               firstX = key.firstX == UINT32_MAX ? tile.x * source->chunkCells
+                                                                 : key.firstX,
+                               firstZ = key.firstZ == UINT32_MAX ? tile.z * source->chunkCells
+                                                                 : key.firstZ;
+                const float stride = float(key.stride ? key.stride : 1u << tile.level),
+                            width = cells * source->spacing * stride,
+                            depth = cellsZ * source->spacing * stride;
+                const glm::vec3 anchor(
+                    firstX * source->spacing - (source->samplesX - 1) * source->spacing * .5f, 0,
+                    firstZ * source->spacing - (source->samplesZ - 1) * source->spacing * .5f);
+                VisualBounds bounds;
+                bounds.Include({0, patch.minimum, 0});
+                bounds.Include({width, patch.maximum, depth});
+                const auto frame =
+                    glm::translate(glm::mat4(1),
+                                   d->transform.position + d->transform.rotation * anchor) *
+                    glm::mat4_cast(d->transform.rotation);
+                if (!renderer.IsVisible(TransformBounds(bounds, frame)))
+                    continue;
+                const auto &page = renderPages.Acquire(renderer, *source, key);
+                renderer.SetTerrainWeightPage(page.weights, page.weightRect);
+                renderer.DrawTerrainGrid(
+                    page.heights, cells, {float(firstX), float(firstZ), stride, float(cells)},
+                    key.edges, {float(source->samplesX), float(source->samplesZ)}, source->spacing,
+                    d->transform.position + d->transform.rotation * anchor, d->transform.rotation,
+                    width, patch.minimum, patch.maximum, d->render->color, d->render->alpha,
+                    shared ? glm::vec2(0, 1) : coverage, true, cellsZ, depth);
+            }
         }
     };
     draw(drawPatches.Current().empty() ? fallback : drawPatches.Current(),
@@ -142,12 +127,26 @@ void Runtime::Draw(Renderer &renderer) const {
     if (drawPatches.Active() && drawPatches.Fraction() > 0)
         draw(drawPatches.Incoming(), {0, drawPatches.Fraction()}, true);
     for (const auto &[_, r] : chunks) {
-        auto &c = r.geometry.chunk;
-        if (c.mesh.indices.empty() || (!c.volumetric && !source->chart))
+        const auto &c = r.geometry.chunk;
+        if (!r.triangles || (!c.volumetric && !source->chart))
             continue;
-        if (!r.mesh.IsValid())
-            r.mesh = renderer.CreateMesh(c.mesh);
-        renderer.DrawMesh(r.mesh, d->transform.position + d->transform.rotation * c.anchor,
+        if (r.geometry.collision) {
+            VisualBounds bounds;
+            bounds.Include(glm::vec3(r.geometry.collision->minimum));
+            bounds.Include(glm::vec3(r.geometry.collision->maximum));
+            const auto frame = glm::translate(glm::mat4(1), d->transform.position +
+                                                                d->transform.rotation * c.anchor) *
+                               glm::mat4_cast(d->transform.rotation);
+            if (!renderer.IsVisible(TransformBounds(bounds, frame)))
+                continue;
+        }
+        const auto &page = renderPages.Acquire(
+            renderer, *source, {{c.key.x, c.key.z, 0}, glm::vec4(1), false}, [&] {
+                auto product = r.geometry.recipe->Acquire();
+                return std::shared_ptr<const Chunk>(product, &product->chunk);
+            });
+        renderer.SetTerrainWeightPage(page.weights, page.weightRect);
+        renderer.DrawMesh(page.mesh, d->transform.position + d->transform.rotation * c.anchor,
                           d->transform.rotation, glm::vec3(1), texture, d->render->color,
                           d->render->alpha);
     }

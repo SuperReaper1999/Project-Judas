@@ -1,9 +1,13 @@
+#include "CharacterMotor.h"
 #include "OriginLimits.h"
+#include "PlanetTerrain.h"
 #include "Project.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
 #include "SceneSerialization.h"
+#include "UniformGravity.h"
+#include "Wheel.h"
 #include "WorldStreaming.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainBrush.h"
@@ -47,6 +51,7 @@ template <class Done> void Pump(WorldStreaming &stream, Done done) {
 int main(int argc, char **argv) {
     try {
         namespace fs = std::filesystem;
+        const bool residency = argc == 3 && std::string(argv[1]) == "--residency";
         const bool read = argc == 3 && std::string(argv[1]) == "--read";
         const fs::path root =
             argc == 3
@@ -62,7 +67,8 @@ int main(int argc, char **argv) {
                   "create ordinary project");
             project.Settings().legacyGameplay = false;
             Check(project.Save(error), "persist scripted project policy");
-            auto source = TerrainV2::Create(513, 513, 2);
+            auto source =
+                residency ? TerrainV2::Create(1025, 1025, 1, 32) : TerrainV2::Create(513, 513, 2);
             std::fill(source.heights.begin(), source.heights.end(), 3);
             std::vector<uint8_t> bytes;
             Check(TerrainV2::EncodeAsset(source, bytes, error),
@@ -141,6 +147,97 @@ int main(int argc, char **argv) {
                   "world residency accounting returns to zero");
         };
         auto [token, id] = load();
+        if (residency) {
+            auto &physics = world.Physics();
+            const auto sleeper =
+                physics.CreateDynamicBox({-400, 3.5f, -400}, glm::vec3(.5f), 1, .65f, 0);
+            const auto chassis =
+                physics.CreateDynamicBox({-400, 3.8f, 400}, {.7f, .15f, 1.1f}, 400, .5f, 0);
+            std::vector<WheelInstance> wheels(4);
+            for (unsigned i = 0; i < 4; ++i) {
+                auto &wheel = wheels[i];
+                wheel.settings.chassis = 1;
+                wheel.settings.mount = {(i % 2 ? 1.f : -1.f) * .7f, -.1f,
+                                        float(i / 2) * 1.8f - .9f};
+                wheel.settings.radius = .35f;
+                wheel.settings.restLength = .4f;
+                wheel.settings.maxLength = .7f;
+                wheel.settings.springStiffness = 14000;
+                wheel.settings.damping = 1500;
+                wheel.settings.rollingResistance = 0;
+                wheel.state.length = .4f;
+            }
+            CharacterMotor motor;
+            motor.Reset({-400, 3.94f, 0}, {1, 0, 0, 0});
+            UniformGravity gravity({0, -9.81f, 0});
+            PhysicsQueryFilter filter;
+            filter.ignoredBodies = {sleeper, chassis};
+            size_t cycleBytes = 0;
+            unsigned supported = 0;
+            const float initialVehicleZ = physics.GetTransform(chassis).position.z;
+            for (unsigned pass = 0; pass < 3; ++pass) {
+                if (pass == 2) {
+                    Check(physics.IsSleeping(sleeper),
+                          "support body sleeps before its terrain pages are revisited");
+                    physics.SetLinearVelocity(sleeper, {0, .5f, 0});
+                    Check(!physics.IsSleeping(sleeper),
+                          "ordinary velocity command wakes the body after page churn");
+                }
+                for (unsigned z = 0; z < 32; ++z)
+                    for (unsigned x = 0; x < 32; ++x) {
+                        const auto hit = physics.Raycast({-496 + 32.f * x, 12, -496 + 32.f * z},
+                                                         {0, -1, 0}, 24, filter);
+                        Check(hit.hit && world.EntityIdOfBody(hit.body) == id &&
+                                  std::abs(hit.point.y - 3) < 1e-4,
+                              "independent remote query retains exact support through eviction");
+                        const unsigned step = pass * 1024 + z * 32 + x;
+                        physics.ApplyLinearAcceleration(sleeper, {0, -9.81f, 0}, 1.f / 60);
+                        physics.ApplyLinearAcceleration(chassis, {0, -9.81f, 0}, 1.f / 60);
+                        for (auto &wheel : wheels) {
+                            wheel.command.driveTorque = step < 180 ? 80 : 0;
+                            wheel.command.brakeTorque = step < 180 ? 0 : 180;
+                            wheel.Step(physics, chassis, 1.f / 60);
+                        }
+                        physics.Step(1.f / 60);
+                        for (auto &wheel : wheels)
+                            wheel.Publish(physics, chassis);
+                        motor.velocity.x = pass % 2 ? -1 : 1;
+                        motor.Step(physics, gravity, 1.f / 60);
+                        supported += motor.result.supported;
+                        const auto *state = world.LiveTerrain().Status(id);
+                        Check(state->sourcePageBytes <= state->sourcePageBudget &&
+                                  state->collisionPageBytes <= state->collisionPageBudget,
+                              "source and exact collision budgets hold throughout live physics");
+                        Check(physics.GetTransform(sleeper).position.y > 3.45f &&
+                                  physics.GetTransform(chassis).position.y > 3.4f &&
+                                  motor.position.y > 3.9f,
+                              "off-camera rigid body, vehicle and character stay physically "
+                              "supported");
+                    }
+                const auto *state = world.LiveTerrain().Status(id);
+                if (pass)
+                    Check(state->bytes <= cycleBytes + 1024 * 1024,
+                          "repeated traversal does not accumulate source/geometry revisions");
+                cycleBytes = state->bytes;
+                std::cout << "RESIDENCY cycle=" << pass << " bytes=" << state->bytes
+                          << " source=" << state->sourcePageBytes
+                          << " collision=" << state->collisionPageBytes
+                          << " evictions=" << state->collisionEvictions << "\n";
+            }
+            Check(physics.IsSleeping(sleeper),
+                  "off-camera physical body genuinely sleeps while terrain pages churn");
+            Check(supported > 3000,
+                  "character remains supported while crossing page/chunk boundaries");
+            Check(physics.GetTransform(chassis).position.z < initialVehicleZ - 2,
+                  "real wheel drive moves the vehicle on paged native collision");
+            float load = 0;
+            for (const auto &wheel : wheels)
+                load += wheel.state.normalForce;
+            Check(std::abs(load - 400 * 9.81f) < 80,
+                  "paged terrain preserves independent wheel support mg load");
+            physics.DestroyBody(sleeper);
+            physics.DestroyBody(chassis);
+        }
         if (read) {
             Check(height(0) < -1 && std::abs(height(-300) - 4) < .001f,
                   "cold regional reconstruction retains both excavation and sculpt");

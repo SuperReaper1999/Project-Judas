@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <functional>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -18,6 +19,10 @@ struct CollisionFace {
 struct CollisionPolygon {std::vector<uint32_t> vertices;glm::dvec3 normal{0};};
 struct CollisionNode {glm::dvec3 minimum{0},maximum{0};uint32_t first=0,count=0,left=0,right=0;};
 struct CollisionAsset {
+    // Optional immutable geometry page. Bounds/identity remain resident; callers
+    // retain the acquired shared_ptr throughout all array access.
+    std::function<std::shared_ptr<const CollisionAsset>()> acquirePage;
+    double pageRadius = 0;
     bool convex=false,twoSided=false;
     double weldTolerance=0; // Exact-position welding within source identity only.
     std::string sourceAsset,sourceFingerprint,settingsFingerprint;
@@ -58,3 +63,8 @@ bool CookCollisionFile(const std::string& source,const std::string& sourceId,
                        const CollisionCookSettings&,const std::string& destination,
                        CollisionAsset&,std::string& error);
 bool CollisionAssetStale(const CollisionAsset&,const std::string& source,std::string& reason);
+
+inline std::shared_ptr<const CollisionAsset> AcquireCollision(
+    const std::shared_ptr<const CollisionAsset>& asset) {
+    return asset && asset->acquirePage ? asset->acquirePage() : asset;
+}

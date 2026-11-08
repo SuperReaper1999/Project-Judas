@@ -1,7 +1,12 @@
 {
   "format": 1,
   "tests": [
+    {"name":"terrain-v2-sustained-residency","target":"judas_terrain_v2_streaming_tests","groups":["terrain","streaming","physics","lifecycle","persistence"],"args":["--residency","{output}/terrain-v2-residency"]},
+    {"name":"terrain-v2-source-paging","target":"judas_terrain_v2_paging_tests","groups":["terrain","streaming","persistence"]},
+    {"name":"terrain-v2-collision-paging","target":"judas_terrain_v2_geometry_paging_tests","groups":["terrain","streaming","physics"]},
+    {"name":"terrain-v2-render-paging","target":"judas_terrain_v2_render_paging_tests","groups":["terrain","streaming","rendering"]},
     {"name":"terrain-v2-collision-cook","target":"judas_terrain_v2_collision_tests","groups":["terrain","physics","assets"]},
+    {"name":"terrain-v2-height-shadow","target":"judas_terrain_v2_render_tests","groups":["terrain","rendering"]},
     {"name":"terrain-v2-materials","target":"judas_terrain_v2_material_tests","groups":["terrain","rendering","assets"]},
     {"name":"terrain-v2-geometry","target":"judas_terrain_v2_tests","groups":["terrain","physics"]},
     {"name":"terrain-v2-planet-chart","target":"judas_terrain_v2_planet_chart_tests","groups":["terrain","physics"]},
