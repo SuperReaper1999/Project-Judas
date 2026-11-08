@@ -1,0 +1,22 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/terrain-v2-tile-reuse-game-planet/user-data/judas/games/57b6d514e7257e26dc3129e7c1cfb9d2342e7dc86eb91bb14f636ea83ae28a42/Saves/highlands.judasstate (none saved)
+Project: Terrain V2 — Planetary Workshop (/tmp/terrain-v2-tile-reuse-game-planet/relocated game/game.judasproj)
+Scene: Terrain V2 — Planetary Highlands (/tmp/terrain-v2-tile-reuse-game-planet/relocated game/Scenes/highlands.judas)
+World origin (m): 92.937, 991.325, 92.937
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,-0.911709,-9.724900,-0.911709,0,0,1,0
+[TestHarness] service save ready after 14 wait frames at frame 30
+30,0.50000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,-0.911709,-9.724900,-0.911709,0,30,0,1
+JS: TERRAIN_V2_RESTORED {"position":{"x":0.2731000781059265,"y":2.5945844650268555,"z":-10.380640029907227},"terrain":{"ready":true,"busy":false,"navigation":true,"revision":2,"samples":16641,"triangles":48405,"bytes":2407704,"chunks":64,"volumeChunks":8,"pendingChunks":0,"prepareMs":84.417329,"publishMs":0.088777,"error":""},"surfaceDabs":2,"remainingBrushes":0,"origin":{"x":92.93673162131846,"y":991.3251372940636,"z":92.93673162131846}}
+[TestHarness] service scene ready after 0 wait frames at frame 35
+60,1.00000,0.259914,2.530300,-10.323583,0.093121,0.995123,0.032533,0,0.000000,0.000000,0.000000,-0.912773,-9.733873,-0.809118,0,60,1,0
+90,1.50000,0.246988,2.518431,-10.297402,0.093109,0.995123,0.032561,0,0.000000,0.000000,0.000000,-0.912656,-9.733862,-0.809383,0,90,1,0
+120,2.00000,0.241492,2.499537,-10.263268,0.093105,0.995123,0.032596,0,0.000000,0.000000,0.000000,-0.912617,-9.733837,-0.809730,0,120,1,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-tile-reuse-game-planet/read.png
+150,2.50000,0.241501,2.479219,-10.227419,0.093108,0.995121,0.032634,0,0.000000,0.000000,0.000000,-0.912633,-9.733805,-0.810095,0,150,1,0

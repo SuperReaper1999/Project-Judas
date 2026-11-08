@@ -124,9 +124,19 @@ cave/planetary meshes. Matched1km initial payload76.13->53.27MB, excavated
 77.02->54.25MB; full-nav80.10->57.32MB. No peak-RSS or speedup claim. Original
 negative12checks becomes26pass; 300physical seam steps still exact; ordinary and
 planetary/regional/large-cold/realGPU/relocated-game controls pass. Evidence
-runtime-memory/. Full-coverage nav prep still costs~296ms per local edit; dirty
-tile preparation is the next directly measured integration target. Verify live
-Git for this checkpoint's actual commit state.
+runtime-memory/. Pushed asd22512b8. Verify live Git rather than assuming HEAD.
+
+Incremental navigation is now implemented and qualified: native ownership derives
+BOTH old/new changed bounds; the small NavigationTileReuse module includes full
+filter borders, retains unchanged/empty layers and falls back when bake settings
+or profile changes. SAME kilometre source compares byte-identically with a full
+bake:16tiles rebuilt/1008reused.67new controls plus frozen raster59/navigation92,
+native nav73, preparation26, terrain/world/source/streaming/water/particle and
+cold-save controls pass. Actual editor23eachGL4.6/3.3 and both relocated games
+pass; API contract/registration pass. All17tools build.10matched runs per side:
+complete excavation median295.345->75.691ms, sampled worst303.981->82.351ms.
+No FPS/startup/memory claim; full geometry bins and private Detour cache still
+prepare. Evidence navigation-tile-reuse/. Verify Git for checkpoint state.
 
 ## Completed native navigation cache handoff
 

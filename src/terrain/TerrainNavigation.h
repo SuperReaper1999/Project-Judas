@@ -15,6 +15,8 @@ struct NavigationInput {
     NavigationSurfaceSettings settings;
     NavigationProfile profile;
     std::map<ChunkKey, NavigationChunk> chunks;
+    std::shared_ptr<const NavigationData> previous;
+    std::map<ChunkKey, NavigationChunk> previousChunks;
 };
 bool ValidateNavigationInput(const NavigationInput &, std::string &);
 bool PrepareNavigation(const NavigationInput &, std::shared_ptr<const NavigationData> &,

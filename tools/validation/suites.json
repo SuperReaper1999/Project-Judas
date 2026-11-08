@@ -16,6 +16,7 @@
     {"name":"terrain-v2-interactions","target":"judas_terrain_v2_interaction_tests","groups":["terrain","physics","lifecycle","fluids"]},
     {"name":"terrain-v2-preparation","target":"judas_terrain_v2_preparation_tests","groups":["terrain","streaming","lifecycle"]},
     {"name":"terrain-v2-navigation","target":"judas_terrain_v2_navigation_tests","groups":["terrain","navigation","lifecycle","persistence"]},
+    {"name":"terrain-v2-navigation-reuse","target":"judas_terrain_v2_navigation_reuse_tests","groups":["terrain","navigation","lifecycle"]},
     {"name":"navigation-raster","target":"judas_navigation_raster_tests","groups":["terrain","navigation"]},
     {"name":"terrain-v2-streaming","target":"judas_terrain_v2_streaming_tests","groups":["terrain","streaming","persistence"]},
     {"name":"terrain-v2-generation","target":"judas_terrain_v2_generation_tests","groups":["terrain","tooling"]},

@@ -132,8 +132,8 @@ render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
 multi-view streaming remain work. Planetary excavation is now integrated through
 projected native patches; see the geographic section below for its bounded scope.
-Incremental navigation-tile preparation and large-region physical interest selection
-remain. Editable flat/planetary consumer scenes, relocated gameplay and a fresh
+Incremental navigation-tile preparation is now qualified below. Large-region
+per-chunk physical interest selection remains. Editable flat/planetary consumer scenes, relocated gameplay and a fresh
 17-tool host-native SDK are now qualified; see the evidence links below. This is
 not older-distribution or new Windows/Android/browser certification.
 Source discovery currently covers up to 512 editable
@@ -371,7 +371,7 @@ landscape's local +Y defines traversal up; gravity remains independently owned.
 Navigation coverage is a declared local box, not a promise of planet-wide routing.
 
 Collision and navigation preparation share immutable chunk geometry. Dirty terrain
-rebuilds its navigation coverage in the worker; both publish at the same boundary.
+rebuilds affected navigation tiles in the worker; both publish at the same boundary.
 Old complete support/routes remain while work is pending. Paint-only changes
 reuse navigation. A fully excavated coverage can publish an empty navmesh rather
 than preventing the excavation. Rigid placement, regional publication/removal,
@@ -411,7 +411,9 @@ of five, used the same 1 km source, 1,024 collision chunks and full 1,024 m
 navigation bounds at 1 m cells. Median dirty publication fell from 26.38 ms to
 0.495 ms; sampled worst fell from 28.12 ms to 0.616 ms. Complete edits remained
 297.43 versus 298.04 ms: this removes a frame-thread pause, not total work.
-Whole-coverage navigation still rebuilds rather than preparing incremental tiles.
+At that checkpoint, whole-coverage navigation still rebuilt. The subsequent
+incremental preparation below removes that rasterization work while preserving
+the private cache handoff.
 Peak process RSS was 230,880–231,276 KiB before and 231,512–231,980 KiB after;
 there is no memory-reduction claim. These ten-sample grouped diagnostics do not
 establish general percentile distributions or FPS. Raw output and commands are
@@ -522,3 +524,27 @@ memory changes much less because extraction still constructs those meshes.
 The 300-step physical seam trajectory remains exactly equal to the monolithic
 reference. No load-time or FPS speedup is claimed by this memory correction.
 See [raw measurements and controls](evidence/terrain-v2/runtime-memory/REVIEW.md).
+
+## Incremental navigation tiles
+
+Native source edits now invalidate navigation through BOTH old and replacement
+collision bounds, including each tile's complete erosion/filter border. Untouched
+compressed layers are reused exactly, including empty tiles. Removed geometry
+cannot lose its old dependency extent. Changes to bake settings/profile fall back
+to a complete bake. The normal full operator, collision precision, atomic support
+publication, path refresh and native navigation save format remain unchanged.
+
+The 67-check reuse target compares results byte for byte with full bakes, including
+the measured kilometre fixture. Its local excavation rebuilds16dependent tiles
+and reuses1008. Matched10runs per side reduce complete edit/publication median
+295.345 to75.691ms and sampled worst303.981 to82.351ms. This is asynchronous
+worker completion latency, not frame cost or FPS. Full initial setup remains
+about0.7seconds; geometry enumeration/binning and private Detour-cache construction
+still run. Existing terrain/navigation/world/cold/editor/export controls pass.
+See [raw comparisons and scope](evidence/terrain-v2/navigation-tile-reuse/REVIEW.md).
+
+The shared native baker's final optional update argument is source-compatible
+for existing callers; C++ consumers must rebuild with the matching preview SDK.
+Its rebuilt/reused tile counters are preparation diagnostics only, not serialized
+gameplay state. JudasJS APIs are unchanged. This does not add physical chunk
+eviction or data demand paging.

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "editor-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/terrain-v2-tile-reuse-editor-modern"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-tile-reuse-editor-modern.log"
+  },
+  {
+    "name": "editor-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/terrain-v2-tile-reuse-editor-portable"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-tile-reuse-editor-portable.log"
+  },
+  {
+    "name": "game-flat",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-tile-reuse-game-flat"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-tile-reuse-game-flat.log"
+  },
+  {
+    "name": "game-planet",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-tile-reuse-game-planet",
+      "--planet"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-tile-reuse-game-planet.log"
+  }
+]

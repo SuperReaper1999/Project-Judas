@@ -88,13 +88,39 @@ bool PrepareNavigation(const NavigationInput &input, std::shared_ptr<const Navig
                 geometry.triangles.push_back(offset + int(index));
     }
     geometry.fingerprint = SceneFingerprintSha256(identity);
+    NavigationBakeUpdate update;
+    update.previous = input.previous.get();
+    auto changed = [&](const NavigationChunk &chunk) {
+        if (chunk.collision) {
+            const auto anchor = glm::dvec3(chunk.anchor);
+            update.changed.push_back({glm::vec3(chunk.collision->minimum + anchor),
+                                      glm::vec3(chunk.collision->maximum + anchor)});
+        }
+    };
+    if (input.previous) {
+        // Pointer equality is a proof for these immutable prepared cooks. Any
+        // replacement covers BOTH old and new extents, including removed/empty
+        // chunks and radial mappings. Unchanged draw LOD is irrelevant here.
+        for (const auto &[key, old] : input.previousChunks) {
+            auto current = input.chunks.find(key);
+            if (current == input.chunks.end() || old.anchor != current->second.anchor ||
+                old.collision != current->second.collision) {
+                changed(old);
+                if (current != input.chunks.end())
+                    changed(current->second);
+            }
+        }
+        for (const auto &[key, current] : input.chunks)
+            if (!input.previousChunks.count(key))
+                changed(current);
+    }
     auto data = std::make_shared<NavigationData>();
     if (geometry.triangles.empty()) {
         data->settings = input.settings;
         data->profile = input.profile;
         data->fingerprint = geometry.fingerprint;
     } else if (!BakeNavigationGeometry(geometry, input.settings, input.profile, *data, error, true,
-                                       cancelled))
+                                       cancelled, input.previous ? &update : nullptr))
         return false;
     if (cancelled && cancelled()) {
         error = "cancelled";

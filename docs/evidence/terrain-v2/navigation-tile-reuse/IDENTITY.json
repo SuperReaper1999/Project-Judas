@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-08T04:19:13.590653+00:00",
+  "base": "d22512b8a2f251e3765b1b92dbf4b4c219fca461",
+  "hardware": "Ryzen5 5600 / GTX970 4GiB",
+  "configuration": "Release / GNU15.2",
+  "source_changes": "Source hashes accompany this candidate. Pre-commit build identities remain in the workflow reports.",
+  "sampling_order": [
+    "before01:5",
+    "after01:5",
+    "after02:5",
+    "before02:5"
+  ],
+  "compiler_jobs_during_timing": false,
+  "hardware_acceptance": false,
+  "baseline_binary_sha256": "dd0f34dd522ea0914236b8356801f90f71def672776141a7805d6f6e36607b69",
+  "candidate_binary_sha256": "d385305c84974333af5547329621a2139cc0e5a458a0b75c2b7a086d05c5005d"
+}

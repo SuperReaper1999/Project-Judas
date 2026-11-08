@@ -164,6 +164,10 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
             if (!replaceAll)
                 for (const auto &[key, part] : chunks)
                     nav->chunks[key] = {part.geometry.chunk.anchor, part.geometry.collision};
+            if (!replaceAll) {
+                nav->previous = navigation;
+                nav->previousChunks = nav->chunks;
+            }
         }
     }
     const auto pendingCount = keys.size();

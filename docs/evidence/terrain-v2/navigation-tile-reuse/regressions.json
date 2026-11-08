@@ -1,0 +1,103 @@
+[
+  {
+    "target": "judas_terrain_v2_navigation_reuse_tests",
+    "returncode": 0,
+    "summary": [
+      "METRIC rebuilt_tiles=36 reused_tiles=220",
+      "METRIC rebuilt_tiles=24 reused_tiles=232",
+      "METRIC rebuilt_tiles=36 reused_tiles=220",
+      "SUMMARY 55 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_navigation_reuse_tests.log"
+  },
+  {
+    "target": "judas_navigation_raster_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 59 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_navigation_raster_tests.log"
+  },
+  {
+    "target": "judas_navigation_tests",
+    "returncode": 0,
+    "summary": [],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_navigation_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_navigation_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 73 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_navigation_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_preparation_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 26 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_preparation_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_world_tests",
+    "returncode": 0,
+    "summary": [
+      "METRIC seam_supported_steps=300 maximum_monolithic_trajectory_difference_m=0",
+      "METRIC base_triangles=2048 edited_triangles=10420 bytes=455492 final_prepare_ms=14.224 final_publish_ms=0.012424",
+      "SUMMARY 93 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_world_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_component_tests",
+    "returncode": 0,
+    "summary": [
+      "METRIC asset_backed_snapshot_bytes=579 raw_source_samples=1089",
+      "SUMMARY 35 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_component_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_surface_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 59 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_surface_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_streaming_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 69 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_streaming_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_planet_component_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 40 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_planet_component_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_planet_streaming_tests",
+    "returncode": 0,
+    "summary": [
+      "SUMMARY 37 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_planet_streaming_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_interaction_tests",
+    "returncode": 0,
+    "summary": [
+      "METRIC native_terrain_water_quantity_m3=64 initial_free_capacity_m3=192 old_boundary_capacity_m3=240 excavation_free_capacity_m3=194.906 edit_geometry_preparation_ms=12.3004 steady_geometry_median_ms=0.015384 steady_geometry_p95_ms=0.01612 steady_geometry_worst_ms=0.01624",
+      "SUMMARY 85 checks 0 failures"
+    ],
+    "log": "/tmp/terrain-v2-tile-reuse-judas_terrain_v2_interaction_tests.log"
+  }
+]
