@@ -7,6 +7,7 @@ target_sources(judas_engine PRIVATE
     src/terrain/TerrainAsset.cpp
     src/terrain/TerrainComponent.cpp
     src/terrain/TerrainLod.cpp
+    src/terrain/TerrainLodTransition.cpp
     src/terrain/TerrainBrush.cpp
     src/terrain/TerrainSurface.cpp
     src/terrain/TerrainSolid.cpp
@@ -39,6 +40,7 @@ target_include_directories(judas_navigation_raster_tests SYSTEM PRIVATE third_pa
 judas_add_engine_test(judas_terrain_v2_generation_tests tests/TerrainV2GenerationTests.cpp)
 target_link_libraries(judas_terrain_v2_generation_tests PRIVATE judas_world_authoring)
 judas_add_engine_test(judas_terrain_v2_render_tests tests/TerrainV2RenderTests.cpp)
+judas_add_engine_test(judas_terrain_v2_transition_tests tests/TerrainV2TransitionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_planet_render_tests tests/TerrainV2PlanetRenderTests.cpp)
 # Matched geometry preparation benchmark, intentionally not a timing gate.
 add_executable(judas_terrain_v2_benchmark tests/TerrainV2Benchmark.cpp)

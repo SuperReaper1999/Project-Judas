@@ -1,4 +1,19 @@
 #pragma once
+// Complementary, stable screen-door coverage for two complete LOD selections.
+// The same rule is used in colour and shadow passes; ordinary meshes bypass it.
+#define JUDAS_TERRAIN_FRAGMENT_GLSL R"(
+uniform bool uTerrainGrid;
+uniform vec2 uTerrainCoverage;
+void terrainCoverage() {
+    if (!uTerrainGrid || (uTerrainCoverage.x<=0.0 && uTerrainCoverage.y>=1.0)) return;
+    uvec2 p=uvec2(gl_FragCoord.xy);
+    uint h=p.x*1664525u+p.y*1013904223u;
+    h^=h>>16u;h*=2246822519u;h^=h>>13u;
+    float sampleValue=(float(h&1023u)+0.5)/1024.0;
+    if(sampleValue<uTerrainCoverage.x||sampleValue>=uTerrainCoverage.y)discard;
+}
+)"
+
 // Shared portable vertex deformation for colour and shadow programs. Literal
 // concatenation keeps their canonical source and height/seam rules identical.
 #define JUDAS_TERRAIN_VERTEX_GLSL R"(

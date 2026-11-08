@@ -88,6 +88,7 @@ void main() {
 )";
 
 const char *const kFragmentShaderSource = R"(#version 330 core
+)" JUDAS_TERRAIN_FRAGMENT_GLSL R"(
 in vec3 vWorldNormal;
 in vec4 vWorldTangent;
 in vec3 vWorldPos;
@@ -333,6 +334,8 @@ void main() {
         FragColor.rgb=mix(FragColor.rgb,vec3(.78,.84,.9)*(.4+.6*diffuseFactor),snow*.88);
         FragColor.rgb+=vec3(.38,.43,.52)*uWeatherFlash*(.2+.8*facing);
     }
+    // All implicit texture derivatives are evaluated before nonuniform coverage.
+    terrainCoverage();
     if(uModern||uMaterialModel!=0)FragColor.rgb=clamp(FragColor.rgb,vec3(0.0),vec3(60000.0));
     if(!uModern&&uMaterialModel!=0){vec3 c=max(FragColor.rgb,vec3(0.0));if(uMaterialModel==1)c/=1.0+dot(c,vec3(.2126,.7152,.0722));FragColor.rgb=mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(.0031308),c));}
 }
@@ -366,10 +369,12 @@ void main() {
 )";
 
 const char *const kShadowFragmentShaderSource = R"(#version 330 core
+)" JUDAS_TERRAIN_FRAGMENT_GLSL R"(
 in vec2 shadowUV;in vec2 shadowUV1;uniform sampler2D uTexture;uniform int uAlphaMode;uniform float uAlphaCutoff,uAlphaFactor;uniform bool uFlipV;uniform vec4 uUVTransform;uniform int uMapUVSet[5];uniform vec4 uMapUVTransform[5];uniform float uMapUVRotation[5];
 void main() {
     vec2 uv=(uMapUVSet[0]==1?shadowUV1:shadowUV)*uMapUVTransform[0].xy;float c=cos(uMapUVRotation[0]),s=sin(uMapUVRotation[0]);uv=mat2(c,s,-s,c)*uv+uMapUVTransform[0].zw;uv=uv*uUVTransform.xy+uUVTransform.zw;if(uFlipV)uv.y=1.0-uv.y;
     if(uAlphaMode==1&&texture(uTexture,uv).a*uAlphaFactor<uAlphaCutoff)discard;
+    terrainCoverage();
     // This FBO has no color attachment (see
     // Renderer::Init's glDrawBuffer(GL_NONE)) — only gl_FragDepth's
     // implicit default (gl_FragCoord.z) is ever written, by the ordinary

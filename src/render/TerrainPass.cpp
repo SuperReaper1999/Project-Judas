@@ -60,6 +60,7 @@ void Renderer::BindTerrainGeometry(bool shadow) {
     glUniform4fv(uniform("uTerrainSamples"), 1, glm::value_ptr(m_terrainSampleRect));
     glUniform4fv(uniform("uTerrainEdges"), 1, glm::value_ptr(m_terrainEdgeStrides));
     glUniform2fv(uniform("uTerrainDimensions"), 1, glm::value_ptr(m_terrainDimensions));
+    glUniform2fv(uniform("uTerrainCoverage"), 1, glm::value_ptr(m_terrainCoverage));
     glUniform1f(uniform("uTerrainSpacing"), m_terrainSpacing);
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, ResolveTexture(m_terrainHeights));
@@ -69,7 +70,8 @@ void Renderer::BindTerrainGeometry(bool shadow) {
 void Renderer::DrawTerrainGrid(TextureHandle heights, unsigned cells, glm::vec4 samples,
                                glm::vec4 edges, glm::vec2 dimensions, float spacing,
                                const glm::vec3 &position, const glm::quat &rotation, float width,
-                               float minimum, float maximum, const glm::vec3 &colour, float alpha) {
+                               float minimum, float maximum, const glm::vec3 &colour, float alpha,
+                               glm::vec2 coverage) {
     if (!AcceptsCurrentLayer())
         return;
     VisualBounds bounds;
@@ -86,6 +88,7 @@ void Renderer::DrawTerrainGrid(TextureHandle heights, unsigned cells, glm::vec4 
     m_terrainSampleRect = samples;
     m_terrainEdgeStrides = edges;
     m_terrainDimensions = dimensions;
+    m_terrainCoverage = coverage;
     m_terrainSpacing = spacing;
     const auto culling = m_cullingEnabled;
     m_cullingEnabled = false; // already tested displaced bounds

@@ -1,0 +1,39 @@
+[  0%] Built target judas_app_icon
+[  7%] Built target freetype
+[  7%] Built target judas_meshoptimizer
+[  7%] Built target judas_icu_build
+[  7%] Built target judas_jobs
+[  7%] Built target judas_build_identity
+[  7%] Built target judas_audio_backend
+[  7%] Built target judas_quickjs
+[ 15%] Built target judas_navigation_backend
+[ 15%] Built target judas_glad
+[ 15%] Built target judas_profiler
+[ 15%] Built target harfbuzz
+[ 15%] Built target judas_materials
+[ 23%] Built target judas_navigation_cook
+[ 23%] Built target judas_graphics_caps
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_basic_water_preview_tests.dir/tests/BasicWaterPreviewTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_basic_water_preview_tests.dir/tests/ValidationMain.cpp.o
+[100%] Linking CXX executable judas_basic_water_preview_tests
+[100%] Built target judas_basic_water_preview_tests
+[  0%] Built target judas_app_icon
+[  7%] Built target freetype
+[  7%] Built target judas_meshoptimizer
+[  7%] Built target judas_icu_build
+[  7%] Built target judas_build_identity
+[  7%] Built target judas_jobs
+[  7%] Built target judas_audio_backend
+[  7%] Built target judas_quickjs
+[ 15%] Built target judas_navigation_backend
+[ 15%] Built target judas_glad
+[ 15%] Built target judas_profiler
+[ 15%] Built target harfbuzz
+[ 15%] Built target judas_materials
+[ 23%] Built target judas_navigation_cook
+[ 23%] Built target judas_graphics_caps
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_terrain_v2_interaction_tests.dir/tests/TerrainV2InteractionTests.cpp.o
+[100%] Linking CXX executable judas_terrain_v2_interaction_tests
+[100%] Built target judas_terrain_v2_interaction_tests

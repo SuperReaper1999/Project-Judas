@@ -38,11 +38,15 @@ int main() {
     // The shared lossless height/seam deformation is tested against actual GPU
     // colour-pass depth and an independent CPU-height shadow reference; ordinary
     // geometry/state restoration and existing runtime render controls remain.
+    // Terrain V2 complementary LOD coverage advances only mesh/shadow fragments
+    // from e02de1398961fd82 / c7555650c92125eb. Native modern/portable tests compare
+    // every covered colour/shadow depth sample with both endpoint geometries;
+    // unchanged terrain and ordinary-draw state restoration retain their gates.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0xb1f08758c8089b60ull, 0xe02de1398961fd82ull, 0xa707161edcfa99daull, 0xc7555650c92125ebull,
+        0xb1f08758c8089b60ull, 0xa07894508176164full, 0xa707161edcfa99daull, 0x925b7b5dc8ab7d48ull,
         0x83393b059e8364efull, 0x28a3c2a8126fe9e3ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);

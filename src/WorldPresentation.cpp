@@ -536,7 +536,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height),camera.settings.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(camera.settings.lens):0});
     }
     world.PreparePlanets(renderer,planetViews,observer?0:frameSeconds);
-    world.PrepareRuntimeTerrain(planetViews);
+    world.PrepareRuntimeTerrain(planetViews,observer?0:frameSeconds);
     }
     if(auto* assets=world.Resources();assets&&assets->VisualStreaming()){
         struct Interest {Frustum frustum;CategoryMask mask;};std::vector<Interest> interests;

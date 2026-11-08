@@ -455,7 +455,7 @@ public:
     bool HasRuntimeTerrain(EntityId id)const{return m_runtimeTerrain&&m_runtimeTerrain->Has(id);}
     void DrawRuntimeTerrain(Renderer& renderer)const{if(m_runtimeTerrain)m_runtimeTerrain->Draw(renderer);}
     bool HasRuntimeLandscapes()const{return m_runtimeTerrain&&m_runtimeTerrain->HasLandscapes();}
-    void PrepareRuntimeTerrain(const std::vector<PlanetView>& views)const{if(m_runtimeTerrain)m_runtimeTerrain->PrepareViews(views,m_settings.worldOrigin);}
+    void PrepareRuntimeTerrain(const std::vector<PlanetView>& views,float seconds=0)const{if(m_runtimeTerrain)m_runtimeTerrain->PrepareViews(views,m_settings.worldOrigin,seconds);}
     void AdvanceRuntimeTerrain(){if(m_runtimeTerrain)m_runtimeTerrain->Advance();}
     bool CaptureRuntimeTerrain(EntityId id,std::string& data,std::string& error)const{data.clear();return !m_runtimeTerrain||m_runtimeTerrain->Capture(id,data,error);}
     NavigationSystem& Navigation(){return *m_navigation;}

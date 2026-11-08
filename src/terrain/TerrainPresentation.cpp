@@ -28,18 +28,18 @@ void Runtime::CommitPresentation() {
         renderer->DestroyTexture(weightTexture);
         weightTexture = {};
     }
-    drawPatches.clear();
+    drawPatches.Reset();
 }
 void Runtime::ReleaseMesh(Resident &r) const {
     if (r.mesh.IsValid() && world.Resources() && world.Resources()->GetRenderer())
         world.Resources()->GetRenderer()->DestroyMesh(r.mesh);
     r.mesh = {};
 }
-void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin) {
+void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds) {
     if (!source || !lod)
         return;
     if (source->chart) {
-        drawPatches.clear();
+        drawPatches.Reset();
         return;
     }
     const auto *d = Definition();
@@ -60,7 +60,7 @@ void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 orig
     for (const auto &[k, r] : chunks)
         if (r.geometry.chunk.volumetric)
             volume.insert(k);
-    drawPatches = lod->Select(localViews, volume);
+    drawPatches.Update(lod->Select(localViews, volume), seconds);
 }
 void Runtime::Draw(Renderer &renderer) const {
     if (!source || !world.IsPublished(owner) || !world.RenderVisible(owner) ||
@@ -98,34 +98,43 @@ void Runtime::Draw(Renderer &renderer) const {
                                                glm::mat4_cast(d->transform.rotation)));
     RendererProfileScope gpu(renderer, "Terrain V2 geometry");
     std::vector<HeightPatch> fallback;
-    if (!source->chart && drawPatches.empty() && lod) {
+    if (!source->chart && drawPatches.Current().empty() && lod) {
         std::set<ChunkKey> volume;
         for (const auto &[k, r] : chunks)
             if (r.geometry.chunk.volumetric)
                 volume.insert(k);
         fallback = lod->Select({}, volume);
     }
-    const auto &patches = drawPatches.empty() ? fallback : drawPatches;
-    for (const auto &patch : patches) {
-        const auto k = patch.key;
-        auto it = chunks.find({k.x, k.z});
-        if (k.level == 0 && it != chunks.end() && it->second.geometry.chunk.volumetric)
-            continue;
-        const float stride = float(1u << k.level),
-                    width = source->chunkCells * source->spacing * stride;
-        glm::vec3 anchor(k.x * source->chunkCells * source->spacing -
-                             (source->samplesX - 1) * source->spacing * .5f,
-                         0,
-                         k.z * source->chunkCells * source->spacing -
-                             (source->samplesZ - 1) * source->spacing * .5f);
-        renderer.DrawTerrainGrid(
-            heightTexture, source->chunkCells,
-            {float(k.x * source->chunkCells), float(k.z * source->chunkCells), stride,
-             float(source->chunkCells)},
-            patch.edgeStrides, {float(source->samplesX), float(source->samplesZ)}, source->spacing,
-            d->transform.position + d->transform.rotation * anchor, d->transform.rotation, width,
-            patch.minimum, patch.maximum, d->render->color, d->render->alpha);
-    }
+    auto draw = [&](const std::vector<HeightPatch> &patches, glm::vec2 coverage, bool incoming) {
+        for (const auto &patch : patches) {
+            const auto k = patch.key;
+            const bool shared = drawPatches.Shared(k);
+            if (incoming && shared)
+                continue;
+            auto it = chunks.find({k.x, k.z});
+            if (k.level == 0 && it != chunks.end() && it->second.geometry.chunk.volumetric)
+                continue;
+            const float stride = float(1u << k.level),
+                        width = source->chunkCells * source->spacing * stride;
+            glm::vec3 anchor(k.x * source->chunkCells * source->spacing -
+                                 (source->samplesX - 1) * source->spacing * .5f,
+                             0,
+                             k.z * source->chunkCells * source->spacing -
+                                 (source->samplesZ - 1) * source->spacing * .5f);
+            renderer.DrawTerrainGrid(
+                heightTexture, source->chunkCells,
+                {float(k.x * source->chunkCells), float(k.z * source->chunkCells), stride,
+                 float(source->chunkCells)},
+                patch.edgeStrides, {float(source->samplesX), float(source->samplesZ)},
+                source->spacing, d->transform.position + d->transform.rotation * anchor,
+                d->transform.rotation, width, patch.minimum, patch.maximum, d->render->color,
+                d->render->alpha, shared ? glm::vec2(0, 1) : coverage);
+        }
+    };
+    draw(drawPatches.Current().empty() ? fallback : drawPatches.Current(),
+         {drawPatches.Active() ? drawPatches.Fraction() : 0, 1}, false);
+    if (drawPatches.Active() && drawPatches.Fraction() > 0)
+        draw(drawPatches.Incoming(), {0, drawPatches.Fraction()}, true);
     for (const auto &[_, r] : chunks) {
         auto &c = r.geometry.chunk;
         if (c.mesh.indices.empty() || (!c.volumetric && !source->chart))

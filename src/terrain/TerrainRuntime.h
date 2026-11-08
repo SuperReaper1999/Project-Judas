@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "TerrainBrush.h"
 #include "TerrainLod.h"
+#include "TerrainLodTransition.h"
 #include "TerrainPersistence.h"
 #include "TerrainPreparation.h"
 #include "TerrainSolid.h"
@@ -40,7 +41,7 @@ class Runtime {
     std::vector<BodyHandle> Bodies() const;
     SolidSnapshot Solid() const;
     void Synchronize();
-    void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin);
+    void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin, float seconds = 0);
     void BindAsset(std::string id, std::string fingerprint);
 
   private:
@@ -75,7 +76,7 @@ class Runtime {
     std::shared_ptr<const HeightLod> lod;
     std::shared_ptr<const NavigationData> navigation;
     bool navigationInstalled = false;
-    std::vector<HeightPatch> drawPatches;
+    LodTransition drawPatches;
     mutable uint64_t appearanceRevision = 0;
     const SceneObject *Definition() const;
     BodyHandle Seed() const;

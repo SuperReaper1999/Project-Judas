@@ -1,5 +1,6 @@
 #include "EngineHost.h"
 #include "terrain/TerrainLod.h"
+#include "terrain/TerrainLodTransition.h"
 #include <algorithm>
 #include <chrono>
 #include <glm/gtc/matrix_transform.hpp>
@@ -53,6 +54,17 @@ int main(int argc, char **) {
         if (argc > 1)
             interests = {{{0, 35, 80}, 570, 0}, {{-300, 65, -200}, 570, 0}};
         auto patches = lod.Select(interests, {});
+        const auto distantPatches = lod.Select({{{0, 10000, 0}, 570, 0}}, {});
+        TerrainV2::LodTransition arrival, walking;
+        arrival.Update(distantPatches, 0);
+        arrival.Update(patches, 1.f / 60);
+        arrival.Update(patches, TerrainV2::LodTransition::Duration / 2);
+        auto movedViews = interests;
+        movedViews.front().position.x += 60;
+        auto movedPatches = lod.Select(movedViews, {});
+        walking.Update(patches, 0);
+        walking.Update(movedPatches, 1.f / 60);
+        walking.Update(movedPatches, TerrainV2::LodTransition::Duration / 2);
         std::cout << "{\"camera_distance_case\":\"" << (argc > 1 ? "near" : "far") << "\"}\n";
         std::vector<std::pair<MeshHandle, glm::vec3>> ordinary;
         size_t uniqueBytes = 0;
@@ -84,7 +96,9 @@ int main(int argc, char **) {
             << ",\"height_upload_ms\":" << heightUploadMs << "}\n";
         GLuint query;
         glGenQueries(1, &query);
-        auto render = [&](bool shared) {
+        auto render = [&](bool shared, const TerrainV2::LodTransition *transition = nullptr) {
+            if (transition && !transition->Active())
+                transition = nullptr;
             Row row;
             r.ResetStats();
             glFinish();
@@ -100,15 +114,26 @@ int main(int argc, char **) {
                     {glm::vec3(.35f, .5f, .24f), glm::vec3(.5f), glm::vec3(.5f), glm::vec3(.5f)},
                     glm::mat4(1));
                 if (shared) {
-                    for (const auto &p : patches) {
-                        const auto k = p.key;
-                        float stride = float(1u << k.level), width = 16 * 2 * stride;
-                        r.DrawTerrainGrid(heights, 16,
-                                          {float(k.x * 16), float(k.z * 16), stride, 16},
-                                          p.edgeStrides, {513, 513}, 2,
-                                          {float(k.x * 32) - 512, 0, float(k.z * 32) - 512},
-                                          {1, 0, 0, 0}, width, p.minimum, p.maximum, {1, 1, 1}, 1);
-                    }
+                    auto drawPatches = [&](const auto &selected, glm::vec2 coverage,
+                                           bool incoming) {
+                        for (const auto &p : selected) {
+                            const auto k = p.key;
+                            const bool common = transition && transition->Shared(k);
+                            if (common && incoming)
+                                continue;
+                            float stride = float(1u << k.level), width = 16 * 2 * stride;
+                            r.DrawTerrainGrid(heights, 16,
+                                              {float(k.x * 16), float(k.z * 16), stride, 16},
+                                              p.edgeStrides, {513, 513}, 2,
+                                              {float(k.x * 32) - 512, 0, float(k.z * 32) - 512},
+                                              {1, 0, 0, 0}, width, p.minimum, p.maximum, {1, 1, 1},
+                                              1, common ? glm::vec2(0, 1) : coverage);
+                        }
+                    };
+                    drawPatches(transition ? transition->Current() : patches,
+                                {transition ? .5f : 0, 1}, false);
+                    if (transition && transition->Active())
+                        drawPatches(transition->Incoming(), {0, .5f}, true);
                 } else
                     for (const auto &[mesh, anchor] : ordinary)
                         r.DrawMesh(mesh, anchor, {1, 0, 0, 0}, {1, 1, 1}, {}, {1, 1, 1}, 1);
@@ -140,6 +165,24 @@ int main(int argc, char **) {
         }
         Report("unique_full_resolution_meshes", before);
         Report("shared_grid_with_camera_union_LOD", after);
+        for (unsigned i = 0; i < 4; ++i)
+            render(true, &arrival);
+        std::vector<Row> transitioning;
+        for (unsigned i = 0; i < 30; ++i)
+            transitioning.push_back(render(true, &arrival));
+        Report("shared_grid_mid_transition", transitioning);
+        for (unsigned i = 0; i < 4; ++i)
+            render(true, &walking);
+        transitioning.clear();
+        for (unsigned i = 0; i < 30; ++i)
+            transitioning.push_back(render(true, &walking));
+        Report("shared_grid_mid_walking_transition", transitioning);
+        unsigned common = 0;
+        for (const auto &p : walking.Current())
+            common += walking.Shared(p.key);
+        std::cout << "{\"walking_old_patches\":" << walking.Current().size()
+                  << ",\"walking_new_patches\":" << walking.Incoming().size()
+                  << ",\"walking_shared_patches\":" << common << "}\n";
         for (auto [mesh, _] : ordinary)
             r.DestroyMesh(mesh);
         r.DestroyTexture(heights);

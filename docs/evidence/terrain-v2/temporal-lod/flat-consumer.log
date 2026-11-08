@@ -1,0 +1,3 @@
+usage: qualify_terrain_v2.py [-h] --build BUILD --output OUTPUT [--planet]
+                             [--particle-region]
+qualify_terrain_v2.py: error: Use a fresh directory outside the checkout; evidence is never overwritten.

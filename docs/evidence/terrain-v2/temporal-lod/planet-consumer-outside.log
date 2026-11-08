@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.27310124039649963,
+      "y": 2.5945844650268555,
+      "z": -10.380640029907227
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 84.604728,
+      "publishMs": 0.112733,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T11:39:12.616399+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16422174300009829
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-v2-temporal-planet-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.3141724599997815
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.967471261000128
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.6166654950000066
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3158223550001367
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8155466079999769
+    }
+  ]
+}

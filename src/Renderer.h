@@ -93,7 +93,8 @@ public:
     void DrawTerrainGrid(TextureHandle heights,unsigned cells,glm::vec4 sampleRect,
                          glm::vec4 edgeStrides,glm::vec2 dimensions,float spacing,
                          const glm::vec3& position,const glm::quat& rotation,float width,
-                         float minimum,float maximum,const glm::vec3& colour,float alpha);
+                         float minimum,float maximum,const glm::vec3& colour,float alpha,
+                         glm::vec2 coverage={0,1});
     void SetMaterialBindings(const std::vector<MaterialBinding>& slots){m_materialBindings=slots;}
     void SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour={.08f,.09f,.11f});
     void FlushMaterialBlends();
@@ -510,6 +511,7 @@ private:
     TextureHandle m_terrainHeights;
     glm::vec4 m_terrainSampleRect{},m_terrainEdgeStrides{};
     glm::vec2 m_terrainDimensions{};
+    glm::vec2 m_terrainCoverage{0,1};
     float m_terrainSpacing=1;
     std::map<unsigned,MeshHandle> m_terrainGrids;
     void BindMaterial(const GpuMaterial*,const MaterialBinding&,TextureHandle,const glm::vec3&,float,bool shadow);

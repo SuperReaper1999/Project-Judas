@@ -1,0 +1,17 @@
+[
+  {
+    "name": "flat-consumer",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      ".cache/terrain-v2/temporal-lod/flat-consumer",
+      "--particle-region"
+    ],
+    "returncode": 2,
+    "started_utc": "2026-11-08T11:38:30.971371+00:00",
+    "seconds": 0.052328496000200175
+  }
+]

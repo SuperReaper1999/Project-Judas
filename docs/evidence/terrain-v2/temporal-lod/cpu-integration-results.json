@@ -1,0 +1,84 @@
+[
+  {
+    "name": "shader",
+    "command": [
+      "build/judas_shader_library_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "lod",
+    "command": [
+      "build/judas_terrain_v2_lod_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "world",
+    "command": [
+      "build/judas_terrain_v2_world_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "components",
+    "command": [
+      "build/judas_terrain_v2_component_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "streaming-write",
+    "command": [
+      "build/judas_terrain_v2_streaming_tests",
+      "--write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-streaming"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "streaming-read",
+    "command": [
+      "build/judas_terrain_v2_streaming_tests",
+      "--read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-streaming"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-components-write",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-planet-components"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-components-read",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-planet-components"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-streaming-write",
+    "command": [
+      "build/judas_terrain_v2_planet_streaming_tests",
+      "--write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-planet-streaming"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-streaming-read",
+    "command": [
+      "build/judas_terrain_v2_planet_streaming_tests",
+      "--read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/temporal-lod/cold-planet-streaming"
+    ],
+    "returncode": 0
+  }
+]

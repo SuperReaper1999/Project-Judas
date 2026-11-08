@@ -1,0 +1,4 @@
+{"camera_distance_case":"near"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":43,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":15.0685,"reference_prepare_and_upload_ms":1519.92,"height_upload_ms":1.43194}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":6.40185,"p95":7.12304,"worst":7.32443},"gpu_ms":{"median":6.04067,"p95":6.87232,"worst":7.02358},"draws":1029,"triangles":526848}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.374265,"p95":0.486988,"worst":0.518067},"gpu_ms":{"median":0.57856,"p95":0.594624,"worst":0.597792},"draws":56,"triangles":28672}

@@ -1,0 +1,90 @@
+[
+  {
+    "name": "transition-modern",
+    "command": [
+      "build/judas_terrain_v2_transition_tests",
+      ".cache/terrain-v2/temporal-lod/visual-final-modern"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  },
+  {
+    "name": "render-modern",
+    "command": [
+      "build/judas_terrain_v2_render_tests"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  },
+  {
+    "name": "planet-render-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_render_tests",
+      ".cache/terrain-v2/temporal-lod/planet-visual-modern"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      ".cache/terrain-v2/temporal-lod/planet-editor-modern"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  },
+  {
+    "name": "transition-portable",
+    "command": [
+      "build/judas_terrain_v2_transition_tests",
+      ".cache/terrain-v2/temporal-lod/visual-final-portable"
+    ],
+    "profile": "portable",
+    "returncode": 0
+  },
+  {
+    "name": "render-portable",
+    "command": [
+      "build/judas_terrain_v2_render_tests"
+    ],
+    "profile": "portable",
+    "returncode": 0
+  },
+  {
+    "name": "planet-render-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_render_tests",
+      ".cache/terrain-v2/temporal-lod/planet-visual-portable"
+    ],
+    "profile": "portable",
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      ".cache/terrain-v2/temporal-lod/planet-editor-portable"
+    ],
+    "profile": "portable",
+    "returncode": 0
+  },
+  {
+    "name": "runtime-render",
+    "command": [
+      "build/judas_runtime_render_tests",
+      ".cache/terrain-v2/temporal-lod/runtime-render"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  },
+  {
+    "name": "editor-creation",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      ".cache/terrain-v2/temporal-lod/created-project"
+    ],
+    "profile": "modern",
+    "returncode": 0
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "flat": {
+    "intact": {
+      "samples": 180,
+      "simulation_scripts_publication_ms": {
+        "median": 0.4612,
+        "p95": 0.540299,
+        "worst": 0.723114
+      },
+      "render_submission_ms": {
+        "median": 0.23288399999999998,
+        "p95": 0.307329,
+        "worst": 0.420453
+      },
+      "gpu_elapsed_ms": {
+        "median": 0.757104,
+        "p95": 0.80176,
+        "worst": 0.91488
+      }
+    },
+    "excavated": {
+      "samples": 180,
+      "simulation_scripts_publication_ms": {
+        "median": 0.3752485,
+        "p95": 0.436403,
+        "worst": 0.736088
+      },
+      "render_submission_ms": {
+        "median": 0.336916,
+        "p95": 0.402189,
+        "worst": 0.63605
+      },
+      "gpu_elapsed_ms": {
+        "median": 0.733792,
+        "p95": 0.738848,
+        "worst": 0.746368
+      }
+    }
+  },
+  "planet": {
+    "intact": {
+      "samples": 180,
+      "simulation_scripts_publication_ms": {
+        "median": 0.406627,
+        "p95": 0.418209,
+        "worst": 0.526464
+      },
+      "render_submission_ms": {
+        "median": 2.296565,
+        "p95": 2.32218,
+        "worst": 2.65638
+      },
+      "gpu_elapsed_ms": {
+        "median": 1.176445,
+        "p95": 1.19357,
+        "worst": 1.49021
+      }
+    },
+    "excavated": {
+      "samples": 180,
+      "simulation_scripts_publication_ms": {
+        "median": 0.8932355,
+        "p95": 0.969369,
+        "worst": 1.18107
+      },
+      "render_submission_ms": {
+        "median": 2.32131,
+        "p95": 2.46039,
+        "worst": 2.81364
+      },
+      "gpu_elapsed_ms": {
+        "median": 1.2359,
+        "p95": 1.2992,
+        "worst": 1.50787
+      }
+    }
+  }
+}

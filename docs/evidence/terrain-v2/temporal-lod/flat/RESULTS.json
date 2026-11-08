@@ -1,0 +1,197 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-9c21b8d-dirty-68b4c52e7968-u9e6357be0e79",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "68b4c52e7968df493c45b80759fb264c324011a10e1296ec43e8bf52bbcb4645",
+    "source_origin": "git",
+    "source_revision": "9c21b8def097709c6bd977fc467b55c340d2dce5",
+    "source_tree": "effa03618a287857ef5666b2ab1943ffe1027c95",
+    "source_untracked_count": 21,
+    "source_untracked_fingerprint": "9e6357be0e79216b0deabfc6a8964379ba0cd56352719313e102423f4c13bef8",
+    "version": "2.0.0-alpha.1"
+  },
+  "settlement_cold_processes": 1,
+  "particle_region": {
+    "contacts": 1,
+    "settings": {
+      "enabled": true,
+      "loop": false,
+      "localSpace": false,
+      "useGravity": false,
+      "collision": true,
+      "collisionRegion": true,
+      "useWind": false,
+      "rate": 0,
+      "lifetime": 4,
+      "size": 0.05000000074505806,
+      "endSize": 0.05000000074505806,
+      "burst": 0,
+      "maxParticles": 16,
+      "seed": 1,
+      "collisionRadius": 0.02500000037252903,
+      "restitution": 0.3499999940395355,
+      "friction": 0.20000000298023224,
+      "maxContacts": 8,
+      "impactCellSize": 0.5,
+      "impactWeight": 1,
+      "maxImpactCells": 1024,
+      "velocity": {
+        "x": 0,
+        "y": -12,
+        "z": 0
+      },
+      "velocityVariation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "spread": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "acceleration": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "collisionRegionOffset": {
+        "x": 0,
+        "y": -4,
+        "z": 0
+      },
+      "collisionRegionHalfExtents": {
+        "x": 12,
+        "y": 16,
+        "z": 12
+      },
+      "color": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "endColor": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "textureAsset": null,
+      "backend": "cpu",
+      "response": "remove",
+      "impacts": "reliable",
+      "collisionLayers": "18446744073709551615"
+    }
+  },
+  "restored": {
+    "position": {
+      "x": 0.08357886970043182,
+      "y": 1.720919132232666,
+      "z": -10.608722686767578
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 9409,
+      "triangles": 33939,
+      "bytes": 1007048,
+      "chunks": 36,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 65.237124,
+      "publishMs": 0.054563,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0
+  },
+  "finished_utc": "2026-11-08T11:39:06.328371+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-temporal-flat-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-temporal-flat-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.11391370499995901
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-temporal-flat-20261108/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-temporal-flat-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.4143187790000411
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-flat-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3659782459999406
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-flat-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9151802100000168
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-flat-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9654924160001883
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-flat-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-flat-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.614728729000035
+    }
+  ],
+  "log_sha256": {
+    "export.log": "4eaa604a1e555efb733279e13614e259d604aff21e7b67be220b4d4e7a663f7a",
+    "native-cook.log": "4b5bf0a720132fce53eafb3b18e0bfb91310ed2d6db80092006b662338be2344",
+    "read.log": "89dfbfe17d752dd78d676efed6e4eee7b9ede0cbbc7ccf7f7505555bfe858af1",
+    "settle-0.log": "0202414bbb9627c3c24c4008c227ab8d6e272303c39e11ffcb6708763f4e19a0",
+    "traverse.log": "d134c37ace2187df5f6a957581e000cf2d98aefad5f45c85d1131504509f79fc",
+    "write.log": "76a20f3d729a5e1b96e24de766696e2959b17b0dd3e3fd840bb82ec8bda8500f"
+  }
+}

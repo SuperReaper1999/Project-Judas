@@ -1,0 +1,129 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-9c21b8d-dirty-68b4c52e7968-u9e6357be0e79",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "68b4c52e7968df493c45b80759fb264c324011a10e1296ec43e8bf52bbcb4645",
+    "source_origin": "git",
+    "source_revision": "9c21b8def097709c6bd977fc467b55c340d2dce5",
+    "source_tree": "effa03618a287857ef5666b2ab1943ffe1027c95",
+    "source_untracked_count": 21,
+    "source_untracked_fingerprint": "9e6357be0e79216b0deabfc6a8964379ba0cd56352719313e102423f4c13bef8",
+    "version": "2.0.0-alpha.1"
+  },
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.27310124039649963,
+      "y": 2.5945844650268555,
+      "z": -10.380640029907227
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 84.604728,
+      "publishMs": 0.112733,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T11:39:12.616399+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16422174300009829
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-temporal-planet-20261108/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-v2-temporal-planet-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.3141724599997815
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.967471261000128
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.6166654950000066
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3158223550001367
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/judas",
+        "/tmp/terrain-v2-temporal-planet-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-temporal-planet-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8155466079999769
+    }
+  ],
+  "log_sha256": {
+    "export.log": "8d20da13e43d19da5fd5fbac7b603bb5b32e7feac60a1410f2c0df2b8d3c4e18",
+    "native-cook.log": "48ee162d85a003380e0c489750e43fe1e3bc67ee905d6f43eaf40294ddeb2a2b",
+    "read.log": "fac3dfa7df65cdadcb936666f6962f50c600d9029aeb8ebc659487fec912ad69",
+    "settle-0.log": "e19bae59ac4e765371812ec8c6f12e485d524323b727f5f60165a68c44a58c78",
+    "traverse.log": "d1bb4ba3d6c03fe5c1050754cfa4b46e6469231fc385596a193d06077d748b07",
+    "write.log": "e94fefe03e0a9623191c085af48309eab8b752d51271b7e9d73a265d90ad5c06"
+  }
+}

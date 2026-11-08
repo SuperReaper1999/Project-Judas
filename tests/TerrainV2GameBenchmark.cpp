@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
             glBeginQuery(GL_TIME_ELAPSED, query);
             start = Clock::now();
             RenderWorldFrame(renderer, 1280, 800, world, &game, matrix, projection,
-                             view.pose.position, 1);
+                             view.pose.position, 1, 1.f / 60);
             const auto submission = milliseconds(start);
             glEndQuery(GL_TIME_ELAPSED);
             GLuint64 ns;

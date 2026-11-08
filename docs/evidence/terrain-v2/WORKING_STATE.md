@@ -2,6 +2,33 @@
 
 ## Latest verified state (supersedes historical next-action notes below)
 
+Live GitHub verification after the operator's usage reset: documentation run
+42451149211 and engine-focused run42451149210 both SUCCESS for exact
+9c21b8def097709c6bd977fc467b55c340d2dce5. Main remains1094d645. The fixture
+repair is remotely qualified, not merely a local pass.
+
+Latest presentation work is now QUALIFIED, not yet checkpointed at this note:
+180ms complementary LOD fade, two bounded complete selections, shared patches
+render once, changed seams never reused. Native modern/portable98834each plus
+oldheight/shadow978each and planetary343each pass. Only mesh/shadow fragment
+pins advance after actual pixels/source review;47shader checks nowpass.
+Original world93/300supportedsteps/zero trajectory difference, components35,
+ordinarystream69/13cold, planet40/9 and37/14cold, editor23each/creation46,
+basicWater and terrainInteractions pass. Both actual relocated games and
+their cold saves pass; original in-checkout output rejection is preserved.
+Evidence temporal-lod/. No human acceptance or programme-completion claim.
+
+Persistent logs .cache/terrain-v2/temporal-lod/; actual outside-checkout consumer
+results copied back immediately. Frozen baseline .cache/terrain-v2/lod-transition-before/.
+All current builds/tests have EXITED. Final no-compiler timing: settledCPU.370ms,
+GPUelapsed.598ms; walkingfade.485/.615; wholeviewfade.456/.956. Small settledGPU
+overhead.02-.10ms vs frozenrepeats is explicit, not hidden as noise. Actual
+excavated flat game simulation.375ms/CPUrender.337/GPUelapsed.734; planet.893/
+2.321/1.236. These scopes overlap, not FPS. No installedSDK change. Next:
+record hashes/docs, scoped checkpoint/push, observe its CI; then investigate
+verified linear editor preview picking (TerrainV2Editor::Stroke -> PickTerrain)
+against large source. Read live Git/process state before resuming.
+
 Pushed engine checkpoint148c5fce257b02c97b33511af4f0f75ac6741772 includes the
 bounded authored particle collision regions. Its exact host-native SDK passes
 17tool probes,8standard consumer operations and SDK-contained actual terrain

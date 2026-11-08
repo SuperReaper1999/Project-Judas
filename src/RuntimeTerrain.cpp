@@ -38,7 +38,7 @@ std::vector<TerrainV2::SolidSnapshot> RuntimeTerrain::Solids(glm::vec3 minimum,g
 }
 void RuntimeTerrain::Synchronize(){for(auto& [_,r]:records)if(r.landscape)r.landscape->Synchronize();}
 bool RuntimeTerrain::HasLandscapes()const{for(const auto& [_,r]:records)if(r.landscape)return true;return false;}
-void RuntimeTerrain::PrepareViews(const std::vector<PlanetView>& views,glm::dvec3 origin){for(auto& [_,r]:records)if(r.landscape)r.landscape->PrepareViews(views,origin);}
+void RuntimeTerrain::PrepareViews(const std::vector<PlanetView>& views,glm::dvec3 origin,float seconds){for(auto& [_,r]:records)if(r.landscape)r.landscape->PrepareViews(views,origin,seconds);}
 bool RuntimeTerrain::CreateLandscape(uint64_t id,TerrainV2::Source source,std::string& error){
  if(auto it=records.find(id);it!=records.end()){
   if(!it->second.landscape||it->second.landscape->State().ready||it->second.landscape->State().busy){error="terrain owner already initialized";return false;}

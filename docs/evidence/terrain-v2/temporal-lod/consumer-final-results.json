@@ -1,0 +1,30 @@
+[
+  {
+    "name": "flat",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-temporal-flat-20261108",
+      "--particle-region"
+    ],
+    "returncode": 0,
+    "seconds": 4.4923836640000445
+  },
+  {
+    "name": "planet",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-temporal-planet-20261108",
+      "--planet"
+    ],
+    "returncode": 0,
+    "seconds": 6.284181711999963
+  }
+]

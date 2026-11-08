@@ -12,7 +12,8 @@ project assets automatically.
 This is ready for hands-on review of the integrated workflows below, not a claim
 that every item of the five-stage programme is complete. Physical residency is
 still at source/region granularity; finer chunk interest and demand paging remain
-open. Temporal LOD transitions and broader terrain materials also remain open.
+open. Native heightfields now have bounded LOD cross-fades, described below;
+broader terrain materials remain open.
 
 Build `judas`, `judas_editor` and `judas_terrain_author`, then open
 `projects/terrain_v2_workshop/terrain_v2_workshop.judasproj` in the editor or
@@ -270,7 +271,7 @@ completed-tunnel scene remains approximately 0.70 ms for its main-camera GPU
 scope; its cost is essentially unchanged. Raw paired results and controls are
 under `docs/evidence/terrain-v2/stage2`.
 
-Still pending: temporal LOD transitions and per-chunk physical interest/demand
+At that checkpoint, temporal LOD transitions and per-chunk physical interest/demand
 paging. Regional physical streaming and both integrated consumer scenes are now
 qualified below. A source page exceeding the device's texture
 size fails before allocation with an actionable request to split its regions.
@@ -579,3 +580,36 @@ for existing callers; C++ consumers must rebuild with the matching preview SDK.
 Its rebuilt/reused tile counters are preparation diagnostics only, not serialized
 gameplay state. JudasJS APIs are unchanged. This does not add physical chunk
 eviction or data demand paging.
+
+## Bounded native-heightfield LOD transitions
+
+Flat native heightfields now cross-fade between complete, independently stitched
+detail selections over 180 ms. `TerrainLodTransition.*` owns presentation history;
+the terrain pass supplies complementary screen coverage to the ordinary colour
+and shadow shaders. Unchanged patches render once. Changed seam rules count as
+changed geometry even if the patch key is unchanged. No extra height textures,
+mesh uploads or physical collision changes are involved.
+
+The selected detail still uses all relevant cameras. During rapid changes the
+latest request waits for the current fade boundary; a large camera teleport can
+therefore take roughly 360 ms to settle. The 2-pixel error target describes the
+newly selected endpoint, not every outgoing pixel during such a teleport.
+Source publication resets history immediately, so an old intact surface cannot
+fade over a newly excavated cave. Zero-time observer calls select their own union
+immediately. Mapped planetary patches still render full detail; this does not
+replace the surrounding planet's existing LOD system.
+
+Native modern/portable tests verify actual intermediate colour/shadow depth,
+draw-order independence, unchanged terrain heights/shadows and normal renderer
+state restoration. Cold saves, origin/streaming controls, editor creation and
+both relocated consumer games pass. Cross-fades have a measurable cost: on the
+two-camera kilometre colour-render benchmark, settled GPU elapsed was about
+0.60 ms versus 0.50–0.58 ms in the preserved renderer; an exaggerated whole-view
+transition measured about 0.96 ms. Ordinary camera movement reused 39 of 43
+previous patches and measured about 0.62 ms. These scopes include submission
+bubbles and are not whole-game FPS or an optimization claim. See
+[commands, raw results and visual scope](evidence/terrain-v2/temporal-lod/REVIEW.md).
+
+This remains a source-build preview. Native consumers must relink with matching
+headers/libraries; JudasJS APIs and terrain save formats do not change. Per-chunk
+physical interest, data demand paging and broader material support remain open.
