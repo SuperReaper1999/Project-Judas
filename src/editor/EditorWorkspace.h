@@ -8,9 +8,8 @@ struct EditorPanelState;
 class EditorPreferences;
 
 // Every panel calls End even when Begin returns false, matching Dear ImGui.
-// The compatibility rectangle is only used by non-docking test/legacy hosts.
 bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &,
-                      const EditorWorkspaceRect *legacy = nullptr, ImGuiWindowFlags flags = 0);
+                      ImGuiWindowFlags flags = 0);
 
 // One native dock host. Scene/Game content windows publish their own actual
 // content bounds to the presenter; dock geometry never edits authored content.

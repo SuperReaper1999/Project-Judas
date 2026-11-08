@@ -1,7 +1,7 @@
 #include "ScriptAISensing.h"
 #include "AISensing.h"
 #include "RuntimeWorld.h"
-#include "ScriptBindingValues.h"
+#include "scripting/BindingValues.h"
 #include "AuthoringJSON.h"
 #include <cmath>
 #include <map>

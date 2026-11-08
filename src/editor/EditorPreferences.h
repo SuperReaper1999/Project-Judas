@@ -18,7 +18,6 @@ struct EditorLayoutPreset {
     std::string name, windows;
     std::string workspace = "Scene";
     unsigned dockVersion = 1;
-    float hierarchy = 250, inspector = 340, assets = 200;
     // Stable preference names, independent of scene/component serialization.
     std::vector<std::string> panels;
 };

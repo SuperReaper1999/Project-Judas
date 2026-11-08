@@ -98,7 +98,7 @@ int main() {
           "registration during drawing cannot invalidate the active registry pass");
 
     EditorPreferences preferences;
-    state.dockingEnabled = true;
+
     state.showInspector = true;
     EditorWorkspace workspace;
     auto frame = [&] {
@@ -152,7 +152,7 @@ int main() {
     preferences.appearance.secondaryAccent = {.7f, .2f, .6f};
     EditorPreferences loaded;
     EditorPanelState loadedState;
-    loadedState.dockingEnabled = true;
+
     Check(loaded.Load(preferences.Serialize(state), loadedState, error) && loaded.layouts.size() == 1 &&
               loaded.appearance.secondaryAccent == preferences.appearance.secondaryAccent,
           "fresh owner restores named layout and editable secondary accent");

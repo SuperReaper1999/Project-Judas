@@ -302,8 +302,6 @@ add_library(judas_engine STATIC
     src/ScriptUtilityAI.cpp
     src/ScriptSystem.cpp
     src/scripting/ScriptMetadata.cpp
-    src/ScriptBindingsUI.cpp
-    src/ScriptBindingsJoint.cpp
     src/Classification.cpp
     src/GamePackage.cpp
     src/ProjectExporter.cpp
@@ -1587,7 +1585,6 @@ judas_add_engine_test(judas_editor_navigation_tests tests/EditorNavigationTests.
 
 judas_add_engine_test(judas_editor_picking_tests tests/EditorPickingTests.cpp SOURCES src/editor/EditorPicking.cpp)
 
-judas_add_engine_test(judas_editor_workspace_tests tests/EditorWorkspaceLayoutTests.cpp)
 
 add_executable(judas_editor_widget_tests tests/EditorWidgetTests.cpp
     src/editor/EditorWidgets.cpp src/editor/EditorHistory.cpp)

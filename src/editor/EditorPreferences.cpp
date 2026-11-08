@@ -90,15 +90,12 @@ EditorLayoutPreset ReadLayout(const Json &j) {
     if (l.name.empty() || l.name.find_first_not_of(" \t") == std::string::npos || l.name.size() > 128 ||
         l.name.find_first_of("\r\n") != std::string::npos)
         throw std::runtime_error("Layout names need 1–128 characters, without line breaks");
-    l.hierarchy = Number(j, "hierarchyWidth", 250, 150, 800);
-    l.inspector = Number(j, "inspectorWidth", 340, 220, 900);
-    l.assets = Number(j, "assetBrowserHeight", 200, 80, 700);
     l.workspace = j.value("workspace", std::string("Scene"));
     const auto workspaces = EditorPreferences::WorkspaceNames();
     if (std::find(workspaces.begin(), workspaces.end(), l.workspace) == workspaces.end())
         throw std::runtime_error("Unknown editor workspace: " + l.workspace);
-    l.dockVersion = j.value("dockVersion", 0u);
-    if (l.dockVersion > 1)
+    l.dockVersion = j.value("dockVersion", 1u);
+    if (l.dockVersion != 1)
         throw std::runtime_error("Unknown docking layout version");
     l.windows = j.value("windows", std::string{});
     if (l.windows.size() > maxWindows || l.windows.find('\0') != std::string::npos)
@@ -113,18 +110,12 @@ EditorLayoutPreset ReadLayout(const Json &j) {
 }
 Json LayoutJson(const EditorLayoutPreset &l) {
     return {{"name", l.name},
-            {"hierarchyWidth", l.hierarchy},
-            {"inspectorWidth", l.inspector},
-            {"assetBrowserHeight", l.assets},
             {"panels", l.panels},
             {"windows", l.windows},
             {"workspace", l.workspace},
             {"dockVersion", l.dockVersion}};
 }
 void ApplyLayout(const EditorLayoutPreset &l, EditorPanelState &state) {
-    state.hierarchyWidth = l.hierarchy;
-    state.inspectorWidth = l.inspector;
-    state.assetBrowserHeight = l.assets;
     for (auto p : panels)
         state.*(p.flag) = std::find(l.panels.begin(), l.panels.end(), p.name) != l.panels.end();
 }
@@ -196,11 +187,8 @@ void ApplyAppearance(const EditorAppearance &a) {
 EditorLayoutPreset EditorPreferences::Capture(const std::string &name, const EditorPanelState &state) const {
     EditorLayoutPreset l;
     l.name = name;
-    l.hierarchy = state.hierarchyWidth;
     l.workspace = m_workspace;
-    l.dockVersion = state.dockingEnabled ? 1u : 0u;
-    l.inspector = state.inspectorWidth;
-    l.assets = state.assetBrowserHeight;
+    l.dockVersion = 1u;
     for (auto p : panels)
         if (state.*(p.flag))
             l.panels.emplace_back(p.name);
@@ -220,8 +208,8 @@ bool EditorPreferences::Load(const std::string &text, EditorPanelState &state, s
         auto j = Json::parse(text);
         if (!j.is_object())
             throw std::runtime_error("Invalid editor preferences");
-        const auto version = j.value("version", 1);
-        if (version != 1 && version != 2 && version != 3)
+        const auto version = j.value("version", 0);
+        if (version != 3)
             throw std::runtime_error("Unsupported editor preferences version");
         EditorPreferences next;
         // Storage identity belongs to this preferences owner, not to the
@@ -229,12 +217,6 @@ bool EditorPreferences::Load(const std::string &text, EditorPanelState &state, s
         next.m_storagePath = m_storagePath;
         next.m_iniPath = m_iniPath;
         EditorLayoutPreset current;
-        if (version == 1) {
-            j["name"] = "Current";
-            current = ReadLayout(j);
-            if (j.value("showAssets", true))
-                current.panels.emplace_back("assets");
-        } else {
             current = ReadLayout(j.at("current"));
             const auto &a = j.at("appearance");
             const auto mode = a.value("mode", std::string("dark"));
@@ -254,13 +236,8 @@ bool EditorPreferences::Load(const std::string &text, EditorPanelState &state, s
                 if (std::any_of(next.layouts.begin(), next.layouts.end(),
                                 [&](const auto &existing) { return l.name == existing.name; }))
                     throw std::runtime_error("Duplicate saved layout name");
-                if (version < 3)
-                    for (const char *id : {"hierarchy", "inspector", "scene-view", "game-view", "console"})
-                        if (std::find(l.panels.begin(), l.panels.end(), id) == l.panels.end())
-                            l.panels.emplace_back(id);
                 next.layouts.push_back(std::move(l));
             }
-        }
         if (j.contains("updates")) {
             const auto &updates = j.at("updates");
             next.automaticUpdates = updates.at("automaticAtStartup").get<bool>();
@@ -270,10 +247,6 @@ bool EditorPreferences::Load(const std::string &text, EditorPanelState &state, s
                 next.updateChannel != "Experimental")
                 throw std::runtime_error("Unknown update channel");
         }
-        if (version < 3)
-            for (const char *id : {"hierarchy", "inspector", "scene-view", "game-view", "console"})
-                if (std::find(current.panels.begin(), current.panels.end(), id) == current.panels.end())
-                    current.panels.emplace_back(id);
         ApplyLayout(current, state);
         // Current windows.ini remains the normal window store. Named layouts
         // carry their own snapshots and are restored only when explicitly chosen.
@@ -281,11 +254,8 @@ bool EditorPreferences::Load(const std::string &text, EditorPanelState &state, s
         if (ImGui::GetCurrentContext() && !m_iniPath.empty())
             ImGui::GetIO().IniFilename = m_iniPath.c_str();
         m_workspace = current.workspace;
-        if (version >= 2) {
-            m_pendingLayout = std::move(current);
-            m_layoutPending = true;
-        } else if (state.dockingEnabled)
-            m_dockRebuildRequested = true;
+        m_pendingLayout = std::move(current);
+        m_layoutPending = true;
         return true;
     } catch (const std::exception &e) {
         error = e.what();
@@ -406,7 +376,7 @@ void EditorPreferences::ApplyPending(EditorPanelState &state) {
         m_workspace = m_pendingLayout.workspace;
         if (m_workspace == "Audio")
             state.projectSettingsPage = 4;
-        if (state.dockingEnabled && (m_pendingLayout.dockVersion == 0 || m_pendingLayout.windows.empty()))
+        if (m_pendingLayout.windows.empty())
             m_dockRebuildRequested = true;
         else if (!m_pendingLayout.windows.empty())
             ImGui::LoadIniSettingsFromMemory(m_pendingLayout.windows.data(), m_pendingLayout.windows.size());
@@ -475,11 +445,6 @@ void EditorPreferences::Draw(EditorPanelState &state) {
                         if (ImGui::Selectable(name.c_str(), name == m_workspace))
                             QueueWorkspace(name);
                     ImGui::EndCombo();
-                }
-                if (!state.dockingEnabled) {
-                    ImGui::SliderFloat("Hierarchy width", &state.hierarchyWidth, 150, 800, "%.0f px");
-                    ImGui::SliderFloat("Inspector width", &state.inspectorWidth, 220, 900, "%.0f px");
-                    ImGui::SliderFloat("Assets height", &state.assetBrowserHeight, 80, 700, "%.0f px");
                 }
                 ImGui::TextUnformatted("Visible panels");
                 if (ImGui::BeginTable("visibleTools", 2)) {

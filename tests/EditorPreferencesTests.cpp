@@ -7,6 +7,7 @@
 #include "EngineHost.h"
 #include "ScreenshotWriter.h"
 #include "../third_party/nlohmann/json.hpp"
+#include <algorithm>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -29,11 +30,9 @@ int main(int argc, char** argv) {
         EditorPanelState state;
         EditorPreferences prefs;
         std::string error;
-        check(prefs.Load(R"({"version":1,"hierarchyWidth":310,"inspectorWidth":420,"assetBrowserHeight":100,"showAssets":false})", state, error), "legacy workspace preferences load");
-        prefs.ApplyPending(state);
-        check(state.hierarchyWidth == 310 && state.inspectorWidth == 420 && state.assetBrowserHeight == 100 && !state.showAssetBrowser,
-              "legacy custom dimensions including small asset rail survive migration");
-        check(!prefs.ConsumeSaveRequest(), "loading preferences does not request a disk rewrite");
+        check(!prefs.Load(R"({"version":1})", state, error), "retired fixed-layout preferences reject explicitly");
+        check(!prefs.Load(R"({"version":2})", state, error), "retired pre-docking preferences reject explicitly");
+        check(!prefs.ConsumeSaveRequest(), "rejected preferences never request a disk rewrite");
         const auto windowFrame = [] {
             ImGui::NewFrame();
             ImGui::SetNextWindowPos({45, 75}, ImGuiCond_Always);
@@ -46,14 +45,14 @@ int main(int argc, char** argv) {
         check(prefs.SaveLayout("Scripting", state, false, error), "save named layout from real ImGui window settings");
         check(prefs.layouts[0].windows.find("Saved tool") != std::string::npos, "layout stores tool-window positions and sizes");
         check(!prefs.SaveLayout("Scripting", state, false, error) && prefs.layouts.size() == 1, "new save cannot silently overwrite a name");
-        state.inspectorWidth = 500;
-        check(prefs.SaveLayout("Scripting", state, true, error) && prefs.layouts[0].inspector == 500, "explicit update modifies selected layout");
+        state.showProfiler = true;
+        check(prefs.SaveLayout("Scripting", state, true, error) && std::find(prefs.layouts[0].panels.begin(), prefs.layouts[0].panels.end(), "profiler") != prefs.layouts[0].panels.end(), "explicit update modifies selected layout");
         check(!prefs.SaveLayout("  ", state, false, error), "empty-looking layout names reject");
-        state.inspectorWidth = 260; state.showScriptTools = false; state.showRuntimeInspector = false;
-        check(prefs.QueueLayout("Scripting") && state.inspectorWidth == 260, "apply is queued rather than changing an active frame");
+        state.showProfiler = false; state.showScriptTools = false; state.showRuntimeInspector = false;
+        check(prefs.QueueLayout("Scripting") && !state.showProfiler, "apply is queued rather than changing an active frame");
         ImGui::SetWindowPos("Saved tool", {600, 500});
         prefs.ApplyPending(state);
-        check(state.inspectorWidth == 500 && state.showScriptTools && state.showRuntimeInspector, "named layout restores panel dimensions and visibility");
+        check(state.showProfiler && state.showScriptTools && state.showRuntimeInspector, "named layout restores docked panel visibility; dimensions belong to saved ImGui settings");
         ImGui::NewFrame(); ImGui::Begin("Saved tool");
         check(ImGui::GetWindowPos().x == 45 && ImGui::GetWindowPos().y == 75, "named layout actually restores an existing tool's position");
         ImGui::End(); ImGui::Render();
@@ -86,8 +85,8 @@ int main(int argc, char** argv) {
             if (std::string(field) == "scale") broken["appearance"][field] = 1000;
             else if (std::string(field) == "accent") broken["appearance"][field] = {1, 2, 3};
             else broken["appearance"][field] = "neon-unknown";
-            const auto oldWidth = restored.inspectorWidth;
-            check(!fresh.Load(broken.dump(), restored, error) && restored.inspectorWidth == oldWidth && fresh.appearance.light,
+            const auto oldProfiler = restored.showProfiler;
+            check(!fresh.Load(broken.dump(), restored, error) && restored.showProfiler == oldProfiler && fresh.appearance.light,
                   "invalid theme rejects transactionally");
         }
         for (auto broken : {nlohmann::json{{"version", 99}}, nlohmann::json::array(), current}) {
@@ -95,8 +94,8 @@ int main(int argc, char** argv) {
             check(!fresh.Load(broken.dump(), restored, error), "unknown schema or duplicate layouts reject");
         }
         check(!fresh.Load("{broken", restored, error), "malformed preference JSON is reported without throwing");
-        auto badWidth = current; badWidth["current"]["inspectorWidth"] = -1;
-        check(!fresh.Load(badWidth.dump(), restored, error), "invalid layout geometry rejects without publication");
+        auto badWidth = current; badWidth["current"]["dockVersion"] = 0;
+        check(!fresh.Load(badWidth.dump(), restored, error), "retired non-docking layout rejects without publication");
         auto partialLight = current; partialLight["appearance"] = {{"mode", "light"}};
         EditorPreferences partial; EditorPanelState partialState;
         check(partial.Load(partialLight.dump(), partialState, error) && partial.appearance.background[0] > .9f,
@@ -117,8 +116,8 @@ int main(int argc, char** argv) {
         check(!prefs.SaveFile((root / "workspace.json" / "prefs.json").string(), state, error), "invalid file-as-directory destination reports failure");
         check(prefs.DeleteLayout("Scripting") && !prefs.DeleteLayout("Scripting"), "explicit deletion removes only the requested layout");
         prefs.ResetLayout(); prefs.ApplyPending(state);
-        check(state.hierarchyWidth == 250 && state.inspectorWidth == 340 && state.showAssetBrowser && !state.showScriptTools,
-              "reset restores default workspace dimensions and panels");
+        check(state.showAssetBrowser && !state.showScriptTools,
+              "reset restores the default dock workspace and panels");
         state.showEditorPreferences = true;
         ImGui::NewFrame(); prefs.Draw(state); ImGui::Render();
         check(state.showEditorPreferences, "actual preference UI draws without changing scene/editor mode");

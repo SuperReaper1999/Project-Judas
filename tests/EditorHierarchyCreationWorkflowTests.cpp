@@ -35,7 +35,7 @@ class HierarchyFrames {
         unsigned char *pixels;
         int width, height;
         io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
-        panels.dockingEnabled = true;
+
         panels.showHierarchy = true;
         panels.cameraFocus = {3, 4, 5};
         parent = doc.GetScene().CreateObject("Rotated parent").id;

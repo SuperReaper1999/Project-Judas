@@ -170,8 +170,6 @@ void EditorAutomation::RunWorkspaceChecks() {
             screenshot(prefix + ".resized.png");
         if (autotestFrame == 16) {
             SDL_SetWindowSize(window.NativeWindow(), initialWindowWidth, initialWindowHeight);
-            if (std::getenv("JUDAS_EDITOR_AUTOTEST_PREFS"))
-                app.m_panels.assetBrowserHeight = 200;
         }
         if (autotestFrame == 143) {
             SDL_Event event{};

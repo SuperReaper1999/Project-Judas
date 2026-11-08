@@ -45,6 +45,7 @@ struct EditorRequests {
     bool undo = false;
     bool redo = false;
     bool focusSelection = false;
+    bool resetWorkspace = false;
     bool quit = false;
     bool saveWorldState = false;
     bool deleteWorldState = false;
@@ -115,7 +116,6 @@ struct EditorPanelState {
     bool showBrowserExport = false;
     bool experimentalBrowserSupport = false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
-    bool dockingEnabled = false; // Enabled by Editor V2 shell; isolated legacy panel tests retain fallback.
     bool showHierarchy = true, showInspector = true, showConsole = false;
     bool showSceneView = true, showGameView = true;
     bool showJudasTools = false;
@@ -124,9 +124,6 @@ struct EditorPanelState {
     std::shared_ptr<EditorAssetBrowserState> assetBrowser;
     std::shared_ptr<EditorConsoleState> console;
     std::shared_ptr<EditorUIAssetState> uiAuthoring;
-    float hierarchyWidth = 250.0f;
-    float inspectorWidth = 340.0f;
-    float assetBrowserHeight = 200.0f;
     bool showSceneSettings = false;
     bool view2D = false;
     bool showEditorPreferences = false;
@@ -264,7 +261,6 @@ struct EditorPanelState {
 void DrawEditorNavigationHelp(EditorPanelState &state, EditorRequests &requests);
 void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                         const std::function<void()> &windowMenu = {});
-void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize);
 void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                                const std::function<void()> &workspaceSelector = {},
                                const std::function<void()> &workflowSelector = {});

@@ -166,11 +166,11 @@ void PumpEditorAssetThumbnails(EditorPanelState &state) {
 }
 
 void DrawAssetBrowserPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests) {
-    if (state.dockingEnabled ? !state.showAssetBrowser : !state.workspace.showAssets)
+    if (!state.showAssetBrowser)
         return;
     if (state.selectAssetDetails || state.selectModelImportTools)
         ImGui::SetNextWindowFocus();
-    if (!BeginEditorPanel("Asset Browser", &state.showAssetBrowser, state, &state.workspace.assets)) {
+    if (!BeginEditorPanel("Asset Browser", &state.showAssetBrowser, state)) {
         ResetEditorAssetThumbnails(state);
         ImGui::End();
         return;

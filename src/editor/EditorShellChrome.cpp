@@ -27,42 +27,7 @@ using namespace EditorPanelWidgets;
 #include "WorldStreaming.h"
 
 namespace {
-void WorkspaceSplitter(const char *id, const EditorWorkspaceRect &rectangle, bool vertical, float &dimension,
-                       float direction, float minimum, float maximum) {
-    if (rectangle.size.x <= 0 || rectangle.size.y <= 0)
-        return;
-    PlaceWorkspacePanel(rectangle);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(0, 0));
-    ImGui::Begin(id, nullptr,
-                 kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar |
-                     ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoNavInputs |
-                     ImGuiWindowFlags_NoNavFocus);
-    ImGui::InvisibleButton("##resize", {rectangle.size.x, rectangle.size.y});
-    const bool active = ImGui::IsItemActive();
-    if (active || ImGui::IsItemHovered()) {
-        ImGui::SetMouseCursor(vertical ? ImGuiMouseCursor_ResizeEW : ImGuiMouseCursor_ResizeNS);
-        const auto color = ImGui::GetColorU32(active ? ImGuiCol_SeparatorActive : ImGuiCol_SeparatorHovered);
-        ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), color);
-    }
-    if (active) {
-        const auto delta = ImGui::GetIO().MouseDelta;
-        dimension = std::clamp(dimension + direction * (vertical ? delta.x : delta.y), minimum, maximum);
-    }
-    ImGui::End();
-    ImGui::PopStyleVar(3);
-}
 } // namespace
-
-void UpdateEditorWorkspaceLayout(EditorPanelState &state, glm::vec2 displaySize) {
-    if (state.dockingEnabled)
-        return; // Dock host and content panels publish actual rectangles.
-    const bool rails = state.mode == EditorMode::Edit || state.playPaused;
-    state.workspace = CalculateEditorWorkspaceLayout(
-        displaySize, state.hierarchyWidth, state.inspectorWidth, state.assetBrowserHeight,
-        state.showAssetBrowser && state.mode == EditorMode::Edit, rails, ImGui::GetIO().FontGlobalScale);
-}
 
 void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests,
                                const std::function<void()> &workspaceSelector,
@@ -205,16 +170,7 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
     ImGui::End();
     ImGui::PopStyleVar();
 
-    if (!state.dockingEnabled && state.workspace.showRails) {
-        WorkspaceSplitter("##hierarchySplitter", state.workspace.leftSplitter, true, state.hierarchyWidth,
-                          1.0f, 150.0f, std::max(150.0f, display.x * 0.40f));
-        WorkspaceSplitter("##inspectorSplitter", state.workspace.rightSplitter, true, state.inspectorWidth,
-                          -1.0f, 220.0f, std::max(220.0f, display.x * 0.46f));
-        WorkspaceSplitter("##assetsSplitter", state.workspace.bottomSplitter, false, state.assetBrowserHeight,
-                          -1.0f, 80.0f, std::max(80.0f, display.y * 0.55f));
-    }
-    if (!state.dockingEnabled)
-        DrawEditorNavigationHelp(state, requests);
+
 }
 
 void DrawEditorNavigationHelp(EditorPanelState &state, EditorRequests &requests) {
@@ -389,12 +345,8 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
             requests.openQuickStart = true;
         if (ImGui::MenuItem("Ownership, readiness and saves guide"))
             requests.openWorkflowGuide = true;
-        if (ImGui::MenuItem("Reset workspace layout")) {
-            state.hierarchyWidth = 250;
-            state.inspectorWidth = 340;
-            state.assetBrowserHeight = 200;
-            state.showAssetBrowser = true;
-        }
+        if (ImGui::MenuItem("Reset workspace layout"))
+            requests.resetWorkspace = true;
         ImGui::Separator();
         ImGui::TextDisabled("Scene navigation (press in the viewport)");
         ImGui::TextUnformatted("Mouse wheel: zoom toward / away from focus");

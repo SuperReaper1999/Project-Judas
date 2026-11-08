@@ -192,8 +192,8 @@
   "valueSources": [
     "src/ScriptSystem.cpp",
     "src/scripting/ScriptMetadata.cpp",
-    "src/ScriptBindingsUI.cpp",
-    "src/ScriptBindingsJoint.cpp",
+    "src/scripting/modules/UI.cpp",
+    "src/scripting/modules/Joints.cpp",
     "src/ScriptUtilityAI.cpp",
     "src/ScriptAISensing.cpp",
     "src/ScriptAIReservations.cpp",

@@ -144,7 +144,7 @@ int main(int argc, char **argv) try {
     EditorDocument document;
     Project project;
     EditorPanelState panels;
-    panels.dockingEnabled = true;
+
     EditorRequests requests;
     EditorSceneViewport scene;
     EditorPlaySession session;

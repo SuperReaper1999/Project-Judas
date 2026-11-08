@@ -299,10 +299,9 @@ void DrawAddComponentMenu(EditorDocument &doc, SceneObject &o, EditorPanelState 
 } // namespace
 
 void DrawInspectorPanel(EditorDocument &doc, EditorPanelState &state) {
-    if (state.dockingEnabled ? !state.showInspector : !state.workspace.showRails)
+    if (!state.showInspector)
         return;
-    if (!BeginEditorPanel("Inspector", state.dockingEnabled ? &state.showInspector : nullptr, state,
-                          &state.workspace.inspector)) {
+    if (!BeginEditorPanel("Inspector", &state.showInspector, state)) {
         ImGui::End();
         return;
     }

@@ -182,11 +182,11 @@ void TilemapEditor::Autotest(int frameNumber,EditorDocument& doc,EditorPanelStat
     }
     if(frameNumber==12){const auto& v=state.workspace.viewport;ImGui::SetWindowFocus(nullptr);
         testPointer={int(v.position.x+v.size.x*.5f),int(v.position.y+v.size.y*.5f)};
-        SDL_GetGlobalMouseState(&previousPointer.x,&previousPointer.y);const auto native=EditorAutomationPointInWindow(glm::vec2(testPointer),window.NativeWindow(),state.dockingEnabled,"Scene###Judas.Scene");SDL_WarpMouseInWindow(native.window,native.position.x,native.position.y);
+        SDL_GetGlobalMouseState(&previousPointer.x,&previousPointer.y);const auto native=EditorAutomationPointInWindow(glm::vec2(testPointer),window.NativeWindow(),true,"Scene###Judas.Scene");SDL_WarpMouseInWindow(native.window,native.position.x,native.position.y);
         glm::vec3 origin,direction;camera.PixelRay(int(v.size.x*.5f),int(v.size.y*.5f),int(v.size.x),int(v.size.y),origin,direction);std::string error;
         check(CellAt(doc.GetScene(),origin,direction,testCell,error),"native viewport ray reaches the intended cell");
     }
-    if(frameNumber==13||frameNumber==15){const auto native=EditorAutomationPointInWindow(glm::vec2(testPointer),window.NativeWindow(),state.dockingEnabled,"Scene###Judas.Scene");SDL_Event event{};event.type=frameNumber==13?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;event.button.windowID=SDL_GetWindowID(native.window);event.button.button=SDL_BUTTON_LEFT;event.button.x=native.position.x;event.button.y=native.position.y;SDL_PushEvent(&event);}
+    if(frameNumber==13||frameNumber==15){const auto native=EditorAutomationPointInWindow(glm::vec2(testPointer),window.NativeWindow(),true,"Scene###Judas.Scene");SDL_Event event{};event.type=frameNumber==13?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;event.button.windowID=SDL_GetWindowID(native.window);event.button.button=SDL_BUTTON_LEFT;event.button.x=native.position.x;event.button.y=native.position.y;SDL_PushEvent(&event);}
     if(frameNumber==17){check(recipe.cells.size()==testCells+1&&doc.IsDirty()&&std::any_of(recipe.cells.begin(),recipe.cells.end(),[&](const auto& c){return c.layer==recipe.layers[layer].id&&c.x==testCell.x&&c.y==testCell.y;}),"real SDL/ImGui pointer paints the intended snapped viewport cell");ImGui::SetWindowFocus("Tilemap painter");}
     if(frameNumber==18){capture();SDL_WarpMouseGlobal(previousPointer.x,previousPointer.y);if(recipe.cells.size()==testCells+1)doc.Undo();Sync(doc);painting=false;
         std::string text;SaveSceneToString(doc.GetScene(),text);check(text==testSource,"viewport stroke Undo restores exact authored source before Play");}

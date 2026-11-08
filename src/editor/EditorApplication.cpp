@@ -260,7 +260,7 @@ int EditorApplication::Run(int argc, char **argv) {
     const char *driver = SDL_GetCurrentVideoDriver();
     if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows"))
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-    m_panels.dockingEnabled = true;
+
     m_shell.RegisterPanels(m_sceneViewport, m_playSession,
                            {m_scriptTools, m_terrain, m_volumeTerrain, m_modTools, m_animationTimeline,
                             m_utilityAIEditor, m_spriteSheetEditor, m_tilemapEditor});
@@ -395,7 +395,6 @@ int EditorApplication::Run(int argc, char **argv) {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
-        UpdateEditorWorkspaceLayout(m_panels, {io.DisplaySize.x, io.DisplaySize.y});
 
         PollBrowserExportWorkflow(m_panels);
         EditorRequests requests;

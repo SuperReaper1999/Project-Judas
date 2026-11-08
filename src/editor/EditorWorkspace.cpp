@@ -6,14 +6,8 @@
 #include <algorithm>
 #include <cmath>
 
-bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &state,
-                      const EditorWorkspaceRect *legacy, ImGuiWindowFlags flags) {
-    if (!state.dockingEnabled && legacy) {
-        ImGui::SetNextWindowPos({legacy->position.x, legacy->position.y}, ImGuiCond_Always);
-        ImGui::SetNextWindowSize({legacy->size.x, legacy->size.y}, ImGuiCond_Always);
-        flags |= ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse |
-                 ImGuiWindowFlags_NoSavedSettings;
-    }
+bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &,
+                      ImGuiWindowFlags flags) {
     ImGui::PushFont(EditorVisuals::HeadingFont());
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {12, 7});
     const bool visible = ImGui::Begin(name, open, flags);
@@ -23,8 +17,6 @@ bool BeginEditorPanel(const char *name, bool *open, EditorPanelState &state,
 }
 
 void EditorWorkspace::BeginFrame(EditorPanelState &state, EditorPreferences &preferences) {
-    if (!state.dockingEnabled)
-        return;
     // New dock windows can focus themselves on their creation frame. Apply
     // the chosen preset once they exist; never override a loaded/user layout.
     const auto selectTab = [](const std::string &name) {

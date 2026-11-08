@@ -65,7 +65,7 @@ void ResetEditorHierarchyView(EditorPanelState &state) {
 }
 
 void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequests &requests) {
-    if (state.dockingEnabled ? !state.showHierarchy : !state.workspace.showRails)
+    if (!state.showHierarchy)
         return;
     JUDAS_PROFILE_SCOPE("Editor hierarchy");
     if (state.hierarchyObservedSelection != doc.Selected()) {
@@ -93,8 +93,8 @@ void DrawHierarchyPanel(EditorDocument &doc, EditorPanelState &state, EditorRequ
                          [reveal](const auto &row) { return row.id == reveal; }))
             state.hierarchySearch.clear();
     }
-    if (!BeginEditorPanel("Hierarchy", state.dockingEnabled ? &state.showHierarchy : nullptr, state,
-                          &state.workspace.hierarchy, reveal ? ImGuiWindowFlags_NoFocusOnAppearing : 0)) {
+    if (!BeginEditorPanel("Hierarchy", &state.showHierarchy, state,
+                          reveal ? ImGuiWindowFlags_NoFocusOnAppearing : 0)) {
         ImGui::End();
         return;
     }

@@ -57,6 +57,8 @@ constexpr const char *kProjectFileHint =
 }
 void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProjectServices &services,
                                            EditorRequests &r) {
+    if (r.resetWorkspace)
+        services.preferences.ResetLayout();
     if (r.checkMilestones) {
         services.updates.Check(true, services.preferences.updateChannel);
         context.panels.status = "Checking this build channel for updates...";

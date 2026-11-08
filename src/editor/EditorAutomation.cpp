@@ -62,9 +62,9 @@ EditorAutomation::EditorAutomation(EditorApplication &application, EngineHost &e
 EditorAutomationNativePoint EditorAutomation::NativePoint(glm::vec2 point, const char *panelName) const {
     // The presenter supplies the current Scene native owner once it has drawn.
     auto result =
-        EditorAutomationPointInWindow(point, window.NativeWindow(), app.m_panels.dockingEnabled, panelName);
+        EditorAutomationPointInWindow(point, window.NativeWindow(), true, panelName);
     const auto &surface = app.m_shell.views.Scene();
-    if (app.m_panels.dockingEnabled && panelName && std::string(panelName) == "Scene###Judas.Scene")
+    if (panelName && std::string(panelName) == "Scene###Judas.Scene")
         if (auto *owner = SDL_GetWindowFromID(surface.windowId)) {
             result.window = owner;
             result.position = {int(point.x - surface.nativeOrigin.x), int(point.y - surface.nativeOrigin.y)};
@@ -150,9 +150,6 @@ bool EditorAutomation::Initialize() {
         app.m_panels.showSceneView = true;
         app.m_shell.views.RequestSceneFocus();
     }
-    if (polishAutotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PREFS"))
-        navigationCheck(app.m_panels.assetBrowserHeight == 100.0f,
-                        "saved asset height below 120 pixels survives preference loading");
     if (autotest) {
         if (const char *directory = std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_PROJECT")) {
             std::string error;

@@ -47,7 +47,7 @@ class InspectorFrames {
         unsigned char *pixels = nullptr;
         int width = 0, height = 0;
         io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
-        state.dockingEnabled = true;
+
         state.showInspector = true;
         doc.NewScene();
         id = doc.GetScene().CreateObject("Inspector workflow fixture").id;

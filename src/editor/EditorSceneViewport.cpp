@@ -344,9 +344,9 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     const ImGuiIO &io = ImGui::GetIO();
     const bool insideViewport = context.panels.workspace.viewport.Contains({io.MousePos.x, io.MousePos.y});
     const bool pointerAvailable =
-        context.panels.dockingEnabled ? context.panels.sceneViewHovered : !io.WantCaptureMouse;
+        context.panels.sceneViewHovered;
     const bool keyboardAvailable =
-        context.panels.dockingEnabled ? !io.WantTextInput : !io.WantCaptureKeyboard;
+        !io.WantTextInput;
 
     if (camera.Is2D() != context.panels.view2D) {
         CancelCameraNavigation(context);

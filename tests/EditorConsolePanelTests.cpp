@@ -147,7 +147,7 @@ int main() try {
     state.assets = &assets;
     state.runtime = &world;
     state.mode = EditorMode::Play;
-    state.dockingEnabled = true;
+
     state.showScriptTools = false;
     EditorRequests requests;
     EditorContext context{document, project, state, requests, host, assets, &world,

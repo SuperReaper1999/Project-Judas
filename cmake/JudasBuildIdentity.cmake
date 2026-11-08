@@ -89,19 +89,28 @@ function(judas_build_identity source_root output_directory)
             # Tracked provenance and observed untracked files are separate. An
             # unrelated research source must not make every clean release dirty.
             # Candidate files become canonical tracked inputs when checkpointed.
-            execute_process(COMMAND "${judas_git}" -C "${source_root}" diff HEAD --binary --no-ext-diff
-                --full-index --no-color --no-renames --no-textconv --diff-algorithm=myers
-                RESULT_VARIABLE diff_result OUTPUT_VARIABLE source_diff ERROR_QUIET)
+            # A purge can remove gigabytes of tracked evidence. Stream the
+            # identical hash input instead of copying the full diff through
+            # several CMake strings and exhausting the developer's memory.
+            find_package(Python3 REQUIRED COMPONENTS Interpreter)
+            execute_process(COMMAND "${Python3_EXECUTABLE}"
+                "${source_root}/tools/source_fingerprint.py" "${judas_git}" "${source_root}" "${tree}"
+                RESULT_VARIABLE diff_result OUTPUT_VARIABLE source_identity ERROR_VARIABLE identity_error)
+            if(NOT diff_result EQUAL 0)
+                message(FATAL_ERROR "Cannot fingerprint source changes: ${identity_error}")
+            endif()
+            string(JSON source_fingerprint GET "${source_identity}" source_fingerprint)
+            string(JSON source_dirty GET "${source_identity}" source_dirty)
+            if(source_dirty)
+                set(source_dirty true)
+            else()
+                set(source_dirty false)
+            endif()
             execute_process(COMMAND "${judas_git}" -C "${source_root}" -c core.quotepath=false ls-files --others --exclude-standard --
                 CMakeLists.txt engine-version.json cmake src tools scripts tests platform packaging third_party assets
                 RESULT_VARIABLE untracked_result OUTPUT_VARIABLE untracked ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
             if(NOT diff_result EQUAL 0 OR NOT untracked_result EQUAL 0)
                 message(FATAL_ERROR "Cannot fingerprint source changes")
-            endif()
-            set(source_dirty false)
-            set(fingerprint_input "${tree}\n${source_diff}")
-            if(NOT source_diff STREQUAL "")
-                set(source_dirty true)
             endif()
             set(untracked_fingerprint_input "")
             string(REPLACE "\n" ";" untracked_paths "${untracked}")
@@ -115,7 +124,6 @@ function(judas_build_identity source_root output_directory)
                     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${source_root}/${path}")
                 endif()
             endforeach()
-            string(SHA256 source_fingerprint "${fingerprint_input}")
             string(SHA256 source_untracked_fingerprint "${untracked_fingerprint_input}")
             set(origin git)
             # --git-path handles linked worktrees, packed refs and branch changes.

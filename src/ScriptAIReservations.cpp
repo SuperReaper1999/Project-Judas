@@ -1,7 +1,7 @@
 #include "ScriptAIReservations.h"
 #include "AIReservations.h"
 #include "RuntimeWorld.h"
-#include "ScriptBindingValues.h"
+#include "scripting/BindingValues.h"
 #include <map>
 #include <cmath>
 #include <stdexcept>

@@ -49,7 +49,7 @@ int main() {
     EditorDocument doc;
     EditorPanelState state;
     EditorRequests requests;
-    state.dockingEnabled = true;
+
     for (int i = 0; i < 1200; ++i) {
         auto &o = doc.GetScene().CreateObject("Unrelated " + std::to_string(i));
         o.transform.position = {10000.f + i, 10000, 10000};

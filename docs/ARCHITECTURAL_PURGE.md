@@ -32,7 +32,7 @@ The RPG project, its SDK and existing HDD archives are outside this operation.
 | B: engine-owned gameplay and legacy delta saves | Pending | Pending |
 | C: PBF and retired reservoir/container liquids | Pending | Pending |
 | D: Terrain V2 consolidation | Pending | Pending |
-| E: obsolete infrastructure | In progress: unused ASCII rasterizer and empty editor compatibility source removed | Architecture checks: 5 passed; editor build passed; dock/workspace 24 checks, Unicode text 49 checks, native text rendering passed |
+| E: obsolete infrastructure | Font/empty source, fixed-panel fallback and old preference migrations removed; UI/joint implementations owned by their binding modules. Simple particle branch review remains. | Editor build; workspace 24/24, preferences 37/37, binding registry 20/20, module acceptance 8/8; menu cold write 53/53, read 38/38, application 10/10; editor architecture 5/5 and scripting tooling 8/8 |
 
 No compatibility shim or conversion path is required for deliberately retired
 systems. Current contracts and their unique regression coverage must survive.
@@ -43,3 +43,23 @@ The Advanced Fluids Alpha lock remains a required current contract.
 Builds and automated tests do not establish human acceptance. Final SDK,
 integration, platform and CI results will be recorded after the corresponding
 work has actually completed. Main remains unchanged throughout the purge.
+
+## Build provenance correction found during the purge
+
+The old configure step retained the complete binary Git diff in CMake strings.
+With the historical evidence deletions, the CMake process reached 3,469,700 KiB
+RSS and stalled waiting on memory-backed file reads. That build was interrupted;
+it is not a passing qualification run.
+
+`tools/source_fingerprint.py` now hashes the identical tracked input as a stream,
+including CMake's CRLF normalization. Untracked identity remains independent,
+and archive identity is unchanged. Four tests compare against the actual former
+CMake calculation, including clean/untracked state, Unicode/binary changes,
+staged deletion, carriage returns and failed Git. All pass. Git itself can still
+buffer large changed blobs; streaming removes the additional whole-diff CMake
+copies rather than claiming Git has constant memory consumption.
+
+The first menu application qualification could not write the host's user-data
+folder under restricted execution. The complete successful rerun set
+`XDG_DATA_HOME` to an owned qualification directory inside the checkout, without
+modifying any personal saves or game project.

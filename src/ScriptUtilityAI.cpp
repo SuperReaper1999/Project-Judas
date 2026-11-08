@@ -1,5 +1,5 @@
 #include "ScriptUtilityAI.h"
-#include "ScriptBindingValues.h"
+#include "scripting/BindingValues.h"
 #include "UtilityAI.h"
 #include "PerformanceProfiler.h"
 #include <map>
