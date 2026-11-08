@@ -21,7 +21,9 @@ One build at a time, `-j2`,8GB RAM. No performance timings while compiling/testi
 
 ## Current committed checkpoints
 
-Latest committed/pushed engine is **b5c1bc0dc5126aa2ecc3129a702efdabe8d7466c**:
+Latest committed/pushed engine is **4c71ad6ee7eb0b24a24c8194ba1bf358823945a8**,
+including structured collision397b2467 and sensor preflight4c71ad6e below.
+Material checkpoint **b5c1bc0dc5126aa2ecc3129a702efdabe8d7466c** added:
 per-layer metre tiling and PBR roughness, optional shared triplanar normal detail,
 real editor authoring, native/reference persistence and normal export dependency.
 Defaults preserve old source encoding. Material shader/descriptor own cohesive
@@ -47,12 +49,12 @@ CPU~.39–.40ms. Normal texture87380B, not per-chunk textures. GPUelapsed includ
 submission bubbles and is not whole-game FPS. First striped demo normal was
 replaced by subtler noise in disposable consumer copies only.
 
-Remote b5c1bc0d docs passed; engine run42486287820 was building both configurations
-at last observation. Verify live before claiming success. Earlier28984's
-Experimental job passed; its Alpha job may have been superseded, so do not invent
-an all-green result. Docs-only0c0502b4 passed docs. Main still protected.
+Remote4c71ad6e docs run42488850106SUCCESS; engine run42488850234INPROGRESS
+at last observation. Verify live before claiming both configurations passed.
+Earlier runs may have been superseded by new pushes; cancellation is not a failed
+engine check. Main/origin1094d645 unchanged. No operator terrain acceptance.
 
-## Structured collision checkpoint397b246759027cf14a71afccbb50241e18dbf603 (local)
+## Structured collision checkpoint397b246759027cf14a71afccbb50241e18dbf603 (pushed)
 
 Implemented **TerrainCollision.h/.cpp**, small internal collision/CollisionBuild.h
 interface and an exact specialized grid cooker. TerrainPreparation uses it only
@@ -86,29 +88,33 @@ The first large fixture rounded weights independently and correctly failed the
 unchanged1e-4 sum check. Corrected integer weight units sum to10000. Failed generator,
 input hash and log remain. Do not relax that validator or repeat the failed setup.
 
-All native build/test/benchmark processes have EXITED. Collision optimization and evidence are committed locally; push with the sensor
-correction after its validation. Do not stage
+All native build/test/benchmark/SDK processes have EXITED. Collision optimization
+and its evidence are committed/pushed. Sensor correction4c71ad6e is also pushed. Do not stage
 the unrelated water screenshots or untracked research. A genuine terrain sensor defect was reproduced and corrected separately: native
 placement and runtime creation accepted a sensor seed but generated blocking
 triangle surfaces that MK2 cannot mark as sensors. New tests FAIL on397b2467 and
 pass with explicit preflight rejection. Ordinary sensor seeds remain intact.
 Native component39/world96 (all old controls retained), planet40/9, creation46
 EACH modern/portable and a real relocated/cold material+particle game pass.
-Evidence sensor-contract/. These four source/test files and evidence are ready
-for their separate checkpoint. No unsupported sensor implementation was invented.
-After checkpoint: build/stage/qualify final matching17-tool SDK; do not replace RPG.
+Evidence sensor-contract/. Those four source/test files and evidence are checkpointed separately at4c71ad6e. No unsupported sensor implementation was invented.
+Final matching17-tool SDK4c71ad6e is QUALIFIED below. No RPG SDK replacement.
 
 
 ## Packaged SDKs and editable projects
 
-Exact **b5c1bc0d** SDK .cache/terrain-v2/sdk-native-preview-b5c1bc0d QUALIFIED:
+Final exact **4c71ad6e** SDK .cache/terrain-v2/sdk-native-preview-4c71ad6e QUALIFIED:
 17tool probes/842files,8standard operations, both SDK-only material-enabled games
-with relocated exports/cold saves and particle interaction. Evidence
-sdk-material-qualification/. This package PREDATES the current collision cook;
-do not claim that optimization is in it. Previous exact28984 SDK remains too.
-Both are hostGNU15.2/GLIBC2.43 local builds, not Ubuntu24.04 distribution or fresh
+with relocated exports/cold saves and particle interaction. It includes the
+structured cook and sensor correction. Evidence sdk-final-qualification/.
+Previous exactb5c1bc0d/28984 SDKs remain, but do not include later source changes.
+All are hostGNU15.2/GLIBC2.43 local builds, not Ubuntu24.04 distribution or fresh
 Windows/Android/browser certification. SourceDirty=true and18preexisting untracked
 source inputs are recorded honestly. The RPG still selects local9f022cf1.
+
+The consolidated implementation/benchmarks/support bounds/human checklist are in
+**docs/TERRAIN_V2_QUALIFICATION.md**. This handoff and final SDK evidence accompany a docs-only descendant checkpoint;
+verify its enclosing HEAD live. All functional work is committed/pushed. Main, fluid lock,
+installed games and unrelated modified/untracked work remain untouched.
 
 Editable owned projects:
 - projects/terrain_v2_workshop/terrain_v2_workshop.judasproj
