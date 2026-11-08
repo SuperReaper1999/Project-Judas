@@ -2,7 +2,8 @@
 
 This is active source-build development on Experimental. The integrated
 checkpoints provide editable sampled landscapes with genuine local excavation,
-shared-grid rendering and native terrain assets.
+shared-grid rendering, native terrain assets, regional streaming and source-owned
+navigation. Later sections supersede limitations of earlier named checkpoints.
 It does not complete the approved Terrain V2 programme or replace existing
 project assets automatically.
 
@@ -273,8 +274,8 @@ Runtime `terrain.surfaceBrush` now shares the editor's raise/lower/flatten/smoot
 paint implementation. Surface changes coexist with excavation and persist through
 versioned native references. Paint leaves real collision handles intact; sculpt
 replaces affected support atomically. See the scripting reference for defaults,
-coordinate frames and the explicit changed-sample save budget. This does not yet
-qualify navigation/fluid publication or planetary surface sculpting.
+coordinate frames and the explicit changed-sample save budget. Source-owned navigation and water occupancy are qualified below. This does not
+qualify planetary surface sculpting.
 
 ## Source-owned solid integration
 
@@ -298,8 +299,8 @@ and particle suites pass unchanged. The new body index checks world ownership
 as well as handles, preventing another world's ID from aliasing a terrain.
 
 This does not change the Alpha fluid lock, default water policy, pressure/transport
-solver or liquid research. It does not yet complete native navigation publication,
-planetary excavation, physical residency or final Terrain V2 qualification.
+solver or liquid research. It does not complete planetary excavation, physical residency or final Terrain V2
+qualification. Source-owned navigation publication is described below.
 
 ## Native regional streaming
 
@@ -321,8 +322,8 @@ Region admission accounts for source samples, mesh, BVH and LOD payload, instead
 of only scene text. Committed runtime edits refresh this estimate. Excavation can
 increase occupancy beyond the original admission estimate; it does not silently
 unload occupied ground, and subsequent admission observes the increased total.
-These are payload/admission estimates, excluding allocator overhead, physics-world
-storage and GPU residency. Worker preparation's temporary allocations are not a
+These are payload/admission estimates, excluding mutable Detour caches, allocator
+overhead, physics-world storage and GPU residency. Worker preparation's temporary allocations are not a
 hard-capped heap. Use suitably sized authored regions and sensible pending/live
 budgets; a kilometre source in the measured fixture needs about 77 MB of accounted
 resident payload (process RSS is substantially larger).
@@ -383,3 +384,26 @@ cannot follow its runtime edits automatically: geometric edits are explicitly
 rejected until that dependency is removed/excluded or replaced by source-owned
 navigation. Painting remains available. Existing V1 bakes and projects without
 native landscapes retain their usual workflow.
+
+
+## Navigation cache handoff
+
+Native terrain preparation builds both compressed Recast layers and a private
+Detour cache in the existing worker job. Publication moves that cache into the
+existing NavigationSystem; it does not reconstruct tiles on the frame thread.
+The cache has no world/entity/graphics handles before installation, is consumed
+once, and is validated against its immutable source identity. Cancellation or a
+failed replacement retains the previous complete collision and routes. Explicitly
+re-enabling an already disabled surface still reconstructs its cache synchronously;
+ordinary native construction, regional staging and edits use worker preparation.
+
+Ten warm-file runs per variant, ordered before/after then after/before in groups
+of five, used the same 1 km source, 1,024 collision chunks and full 1,024 m
+navigation bounds at 1 m cells. Median dirty publication fell from 26.38 ms to
+0.495 ms; sampled worst fell from 28.12 ms to 0.616 ms. Complete edits remained
+297.43 versus 298.04 ms: this removes a frame-thread pause, not total work.
+Whole-coverage navigation still rebuilds rather than preparing incremental tiles.
+Peak process RSS was 230,880–231,276 KiB before and 231,512–231,980 KiB after;
+there is no memory-reduction claim. These ten-sample grouped diagnostics do not
+establish general percentile distributions or FPS. Raw output and commands are
+in `docs/evidence/terrain-v2/navigation-cache`.

@@ -1,5 +1,6 @@
 #include "TerrainPreparation.h"
 #include "CollisionAsset.h"
+#include "NavigationSystem.h"
 #include "SceneFingerprint.h"
 #include "TerrainAsset.h"
 #include "TerrainMesher.h"
@@ -125,6 +126,10 @@ bool PrepareAsset(const std::string &path, const std::string &identity, Prepared
         for (const auto &part : next.geometry.chunks)
             input.chunks[part.chunk.key] = {part.chunk.anchor, part.collision};
         if (!PrepareNavigation(input, next.geometry.navigation, error, cancelled))
+            return false;
+        next.geometry.navigationCache =
+            NavigationSystem::PrepareSurface(next.geometry.navigation, error, cancelled);
+        if (!next.geometry.navigationCache)
             return false;
         next.geometry.milliseconds +=
             std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start)

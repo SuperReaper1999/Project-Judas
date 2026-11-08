@@ -14,6 +14,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <thread>
 
 namespace {
 unsigned checks = 0;
@@ -193,6 +194,51 @@ int main(int argc, char **argv) {
             Check(TerrainV2::PrepareAsset((root / "Assets/ground.judasterrain").string(), asset.id,
                                           product, error, {}, &nav),
                   "worker product contains complete source-owned navigation");
+            Check(bool(product.geometry.navigationCache),
+                  "native worker product includes its complete private Detour cache");
+            NavigationSystem isolated;
+            std::shared_ptr<PreparedNavigationSurface> cache;
+            const auto coordinator = std::this_thread::get_id();
+            std::thread::id preparationThread;
+            auto cacheJob = jobs.Submit([&](JobContext &) {
+                preparationThread = std::this_thread::get_id();
+                cache = NavigationSystem::PrepareSurface(product.geometry.navigation, error);
+            });
+            jobs.Wait(cacheJob);
+            jobs.Forget(cacheJob);
+            Check(cache && preparationThread != coordinator && isolated.Statistics().surfaces == 0,
+                  "actual worker constructs a private cache without world publication");
+            auto sameBytes = std::make_shared<NavigationData>(*product.geometry.navigation);
+            const auto beforeCacheRevision = isolated.Revision();
+            Check(!isolated.LoadSurface(90, {}, sameBytes, error, true, cache.get()) &&
+                      isolated.Revision() == beforeCacheRevision,
+                  "cache from a different source identity rejects without changing live state");
+            auto placed = SceneTransform{};
+            placed.position = {50, 0, 0};
+            Check(isolated.LoadSurface(90, placed, product.geometry.navigation, error, false,
+                                       cache.get()) &&
+                      !isolated.Sample({54, 2, 0}, .3f),
+                  "single-consumed worker cache remains invisible while staged");
+            isolated.PublishSurfaces({90});
+            Check(isolated.Sample({54, 2, 0}, .3f) && !isolated.Sample({4, 2, 0}, .3f),
+                  "cache installs in its final owner frame without rebuilding geometry");
+            const auto publishedRevision = isolated.Revision();
+            Check(!isolated.LoadSurface(90, {}, product.geometry.navigation, error, true,
+                                        cache.get()) &&
+                      isolated.Revision() == publishedRevision && isolated.Sample({54, 2, 0}, .3f),
+                  "double consumption rejects and preserves the previous live routes");
+            unsigned cancellationPoints = 0;
+            Check(!NavigationSystem::PrepareSurface(product.geometry.navigation, error,
+                                                    [&] { return ++cancellationPoints > 2; }) &&
+                      cancellationPoints == 3 && isolated.Sample({54, 2, 0}, .3f),
+                  "mid-cache cancellation cleans private ownership and leaves live routes intact");
+            auto invalidCache = std::make_shared<NavigationData>(*product.geometry.navigation);
+            invalidCache->layers.front()[0] ^= 1;
+            Check(!NavigationSystem::PrepareSurface(invalidCache, error) &&
+                      isolated.Sample({54, 2, 0}, .3f),
+                  "invalid prepared layer rejects without replacing live routes");
+            Check(!NavigationSystem::PrepareSurface({}, error),
+                  "missing cache input rejects explicitly");
             auto regional = owner;
             auto mismatched = regional;
             mismatched.id = staged.AllocateRuntimeEntityId();

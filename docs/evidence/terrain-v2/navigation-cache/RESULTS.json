@@ -1,0 +1,104 @@
+{
+  "base": "1b593d8f13a8a73e772ffdb014c3ddcde923421f",
+  "timestamp_utc": "2026-11-08T01:04:57.415497+00:00",
+  "configuration": "Release GCC15.2",
+  "hardware": "Ryzen5 5600, 8GB; no builds or other qualification during timings",
+  "scope": "two groups of five warm-file runs per variant, order before/after then after/before; full1km513x513source1024colliders and full1024m1mcell navigation; async work is moved, not eliminated",
+  "measurements": {
+    "before": {
+      "samples": 10,
+      "timing_ms": {
+        "scene_build_ms": {
+          "median": 710.2265,
+          "p95": 775.72,
+          "worst": 775.72
+        },
+        "initial_publish_ms": {
+          "median": 28.18895,
+          "p95": 31.2885,
+          "worst": 31.2885
+        },
+        "sculpt_complete_ms": {
+          "median": 292.2505,
+          "p95": 326.016,
+          "worst": 326.016
+        },
+        "edit_complete_ms": {
+          "median": 297.42949999999996,
+          "p95": 317.702,
+          "worst": 317.702
+        },
+        "edit_prepare_ms": {
+          "median": 269.6065,
+          "p95": 289.381,
+          "worst": 289.381
+        },
+        "edit_publish_ms": {
+          "median": 26.3803,
+          "p95": 28.1212,
+          "worst": 28.1212
+        },
+        "paint_complete_ms": {
+          "median": 3.8014,
+          "p95": 4.99424,
+          "worst": 4.99424
+        }
+      },
+      "peak_process_RSS_KiB": [
+        230880,
+        231276
+      ]
+    },
+    "after": {
+      "samples": 10,
+      "timing_ms": {
+        "scene_build_ms": {
+          "median": 718.685,
+          "p95": 777.234,
+          "worst": 777.234
+        },
+        "initial_publish_ms": {
+          "median": 2.23339,
+          "p95": 3.74651,
+          "worst": 3.74651
+        },
+        "sculpt_complete_ms": {
+          "median": 293.74649999999997,
+          "p95": 310.874,
+          "worst": 310.874
+        },
+        "edit_complete_ms": {
+          "median": 298.039,
+          "p95": 309.253,
+          "worst": 309.253
+        },
+        "edit_prepare_ms": {
+          "median": 296.38300000000004,
+          "p95": 307.472,
+          "worst": 307.472
+        },
+        "edit_publish_ms": {
+          "median": 0.4948035,
+          "p95": 0.615662,
+          "worst": 0.615662
+        },
+        "paint_complete_ms": {
+          "median": 3.523975,
+          "p95": 4.3892,
+          "worst": 4.3892
+        }
+      },
+      "peak_process_RSS_KiB": [
+        231980,
+        231512
+      ]
+    }
+  },
+  "limitations": [
+    "10 grouped samples are engineering diagnostics, not broad independent percentile distributions or FPS evidence",
+    "complete edits still about298ms; whole navigation coverage is rebuilt off-thread",
+    "payload/admission estimates exclude mutable Detour heap, allocator/physics-world/GPU storage; process RSS recorded separately",
+    "explicit reenable of an already disabled surface can still synchronously reconstruct its cache",
+    "no planetary excavation or per-chunk physical residency is supplied by this checkpoint"
+  ]
+}

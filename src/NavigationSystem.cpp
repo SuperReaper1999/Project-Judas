@@ -67,8 +67,98 @@ struct Surface {
 struct NavigationSystem::Impl {ProjectNavigation config;std::map<SceneObjectId,std::unique_ptr<Surface>> surfaces,staged;std::map<SceneObjectId,std::string> errors;std::map<SceneObjectId,NavigationAgentState> agents;std::map<SceneObjectId,SceneObject> links;std::set<SceneObjectId> pending;bool refreshLinks=false,refreshObstacles=false;unsigned revision=1;dtObstacleAvoidanceQuery* avoidance=dtAllocObstacleAvoidanceQuery();Impl(ProjectNavigation p):config(std::move(p)){if(avoidance)avoidance->init(32,32);}~Impl(){dtFreeObstacleAvoidanceQuery(avoidance);}};
 NavigationSystem::NavigationSystem(ProjectNavigation p):m(std::make_unique<Impl>(std::move(p))){}NavigationSystem::~NavigationSystem()=default;
 const ProjectNavigation& NavigationSystem::Configuration()const{return m->config;}unsigned NavigationSystem::Revision()const{return m->revision;}const std::map<SceneObjectId,std::string>& NavigationSystem::Errors()const{return m->errors;}
-bool NavigationSystem::LoadSurface(SceneObjectId id,const SceneTransform& pose,std::shared_ptr<const NavigationData> data,std::string& error,bool publish){auto s=std::make_unique<Surface>();s->frame=pose;s->data=data;if(!data||!s->mesh||!s->query||!s->cache){error="navigation allocation failed";return false;}const auto& a=data->settings;dtNavMeshParams np{};glm::vec3 origin=-a.halfExtents;std::memcpy(np.orig,&origin.x,12);np.tileWidth=np.tileHeight=a.tileSize*a.cellSize;np.maxTiles=std::max(32,static_cast<int>(data->layers.size())*4);np.maxPolys=2048;dtTileCacheParams cp{};std::memcpy(cp.orig,np.orig,12);cp.cs=a.cellSize;cp.ch=a.cellHeight;cp.width=cp.height=a.tileSize;cp.walkableHeight=data->profile.height;cp.walkableRadius=data->profile.radius;cp.walkableClimb=data->profile.climb;cp.maxSimplificationError=a.simplification;cp.maxTiles=np.maxTiles;cp.maxObstacles=256;
- if(dtStatusFailed(s->mesh->init(&np))||dtStatusFailed(s->query->init(s->mesh,4096))||dtStatusFailed(s->cache->init(&cp,&s->alloc,&s->compressor,&s->process))){error="invalid navigation cache parameters";return false;}for(auto& layer:data->layers){auto* bytes=static_cast<unsigned char*>(dtAlloc(layer.size(),DT_ALLOC_PERM));if(!bytes){error="navigation layer allocation failed";return false;}std::memcpy(bytes,layer.data(),layer.size());dtCompressedTileRef ref;if(dtStatusFailed(s->cache->addTile(bytes,layer.size(),DT_COMPRESSEDTILE_FREE_DATA,&ref))){dtFree(bytes);error="invalid navigation tile layer";return false;}if(dtStatusFailed(s->cache->buildNavMeshTile(ref,s->mesh))){error="cannot build runtime navigation tile";return false;}}if(publish){m->surfaces[id]=std::move(s);m->errors.erase(id);++m->revision;}else m->staged[id]=std::move(s);return true;}
+// The opaque product contains the same runtime cache used by ordinary surfaces.
+// It remains private to the preparation job until the coordinator consumes it.
+struct PreparedNavigationSurface {
+    std::unique_ptr<Surface> surface;
+};
+std::shared_ptr<PreparedNavigationSurface> NavigationSystem::PrepareSurface(
+    std::shared_ptr<const NavigationData> data, std::string& error,
+    const std::function<bool()>& cancelled) {
+    JUDAS_PROFILE_SCOPE("Navigation cache preparation");
+    if (cancelled && cancelled()) {
+        error = "navigation cache preparation cancelled";
+        return {};
+    }
+    auto s = std::make_unique<Surface>();
+    s->data = std::move(data);
+    if (!s->data || !s->mesh || !s->query || !s->cache) {
+        error = "navigation allocation failed";
+        return {};
+    }
+    const auto& a = s->data->settings;
+    dtNavMeshParams np{};
+    glm::vec3 origin = -a.halfExtents;
+    std::memcpy(np.orig, &origin.x, 12);
+    np.tileWidth = np.tileHeight = a.tileSize * a.cellSize;
+    np.maxTiles = std::max(32, static_cast<int>(s->data->layers.size()) * 4);
+    np.maxPolys = 2048;
+    dtTileCacheParams cp{};
+    std::memcpy(cp.orig, np.orig, 12);
+    cp.cs = a.cellSize;
+    cp.ch = a.cellHeight;
+    cp.width = cp.height = a.tileSize;
+    cp.walkableHeight = s->data->profile.height;
+    cp.walkableRadius = s->data->profile.radius;
+    cp.walkableClimb = s->data->profile.climb;
+    cp.maxSimplificationError = a.simplification;
+    cp.maxTiles = np.maxTiles;
+    cp.maxObstacles = 256;
+    if (dtStatusFailed(s->mesh->init(&np)) ||
+        dtStatusFailed(s->query->init(s->mesh, 4096)) ||
+        dtStatusFailed(s->cache->init(&cp, &s->alloc, &s->compressor, &s->process))) {
+        error = "invalid navigation cache parameters";
+        return {};
+    }
+    for (const auto& layer : s->data->layers) {
+        if (cancelled && cancelled()) {
+            error = "navigation cache preparation cancelled";
+            return {};
+        }
+        auto* bytes = static_cast<unsigned char*>(dtAlloc(layer.size(), DT_ALLOC_PERM));
+        if (!bytes) {
+            error = "navigation layer allocation failed";
+            return {};
+        }
+        std::memcpy(bytes, layer.data(), layer.size());
+        dtCompressedTileRef ref;
+        if (dtStatusFailed(s->cache->addTile(bytes, layer.size(), DT_COMPRESSEDTILE_FREE_DATA, &ref))) {
+            dtFree(bytes);
+            error = "invalid navigation tile layer";
+            return {};
+        }
+        if (dtStatusFailed(s->cache->buildNavMeshTile(ref, s->mesh))) {
+            error = "cannot build runtime navigation tile";
+            return {};
+        }
+    }
+    auto prepared = std::make_shared<PreparedNavigationSurface>();
+    prepared->surface = std::move(s);
+    error.clear();
+    return prepared;
+}
+bool NavigationSystem::LoadSurface(SceneObjectId id, const SceneTransform& pose,
+                                   std::shared_ptr<const NavigationData> data, std::string& error,
+                                   bool publish, PreparedNavigationSurface* prepared) {
+    auto local = prepared ? std::shared_ptr<PreparedNavigationSurface>{}
+                          : PrepareSurface(data, error);
+    if (!prepared) prepared = local.get();
+    if (!prepared) return false;
+    if (!prepared->surface || prepared->surface->data != data) {
+        error = "prepared navigation cache is consumed or does not match its source";
+        return false;
+    }
+    JUDAS_PROFILE_SCOPE("Navigation surface publication");
+    auto surface = std::move(prepared->surface);
+    surface->frame = pose;
+    if (publish) {
+        m->surfaces[id] = std::move(surface);
+        m->errors.erase(id);
+        ++m->revision;
+    } else m->staged[id] = std::move(surface);
+    error.clear();
+    return true;
+}
 void NavigationSystem::PublishSurfaces(const std::vector<SceneObjectId>& ids){for(auto id:ids)if(auto it=m->staged.find(id);it!=m->staged.end()){m->surfaces[id]=std::move(it->second);m->staged.erase(it);m->errors.erase(id);++m->revision;}}
 void NavigationSystem::DiscardStagedSurface(SceneObjectId id){m->staged.erase(id);}
 void NavigationSystem::RemoveSurface(SceneObjectId id){m->staged.erase(id);bool removed=m->surfaces.erase(id)!=0;if(removed)++m->revision;m->errors.erase(id);if(removed)for(auto& [_,agent]:m->agents){agent.path={};agent.onLink=false;agent.steering={};agent.elapsed=1e10f;}}

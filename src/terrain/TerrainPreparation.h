@@ -5,6 +5,7 @@
 
 struct CollisionAsset;
 struct NavigationData;
+struct PreparedNavigationSurface;
 namespace TerrainV2 {
 struct NavigationInput;
 struct PreparedChunk {
@@ -22,6 +23,7 @@ struct Preparation {
     std::string error;
     std::shared_ptr<const HeightLod> lod;
     std::shared_ptr<const NavigationData> navigation;
+    std::shared_ptr<PreparedNavigationSurface> navigationCache;
     size_t PayloadBytes() const;
 };
 bool PrepareGeometry(Preparation &, const std::vector<ChunkKey> &,

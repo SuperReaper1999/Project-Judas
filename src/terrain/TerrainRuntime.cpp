@@ -169,8 +169,11 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
                 const auto start = Clock::now();
                 for (const auto &part : work->chunks)
                     nav->chunks[part.chunk.key] = {part.chunk.anchor, part.collision};
-                if (!PrepareNavigation(*nav, work->navigation, work->error,
-                                       [&] { return context.CancelRequested(); })) {
+                const auto cancelled = [&] { return context.CancelRequested(); };
+                if (PrepareNavigation(*nav, work->navigation, work->error, cancelled))
+                    work->navigationCache =
+                        NavigationSystem::PrepareSurface(work->navigation, work->error, cancelled);
+                if (!work->navigationCache) {
                     if (context.CancelRequested())
                         context.ReportCancelled();
                     else
@@ -321,9 +324,15 @@ bool Runtime::Publish(std::string &error) {
         return false;
     }
     const bool navigationChanged = pending->navigation != navigation;
-    if (navigationChanged && pending->navigation &&
-        !world.Navigation().LoadSurface(owner, d->transform, pending->navigation, error, false))
-        return false;
+    if (navigationChanged && pending->navigation) {
+        if (!pending->navigationCache) {
+            error = "terrain navigation preparation has no complete runtime cache";
+            return false;
+        }
+        if (!world.Navigation().LoadSurface(owner, d->transform, pending->navigation, error, false,
+                                            pending->navigationCache.get()))
+            return false;
+    }
     std::vector<BodyHandle> staged;
     try {
         // Allocate every replacement before retiring any old support. No step

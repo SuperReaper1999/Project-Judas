@@ -1,7 +1,9 @@
 #pragma once
 #include "NavigationAsset.h"
 #include "DebugDraw.h"
+#include <functional>
 #include <memory>
+struct PreparedNavigationSurface;
 class RuntimeWorld;
 struct NavigationFilter {unsigned profile=0;CategoryMask include=kAllCategories,exclude=0;std::map<unsigned,float> costs;};
 struct NavigationLocation {glm::vec3 position{0};SceneObjectId surface=0;unsigned area=0;};
@@ -15,7 +17,13 @@ public:
  explicit NavigationSystem(ProjectNavigation config={});~NavigationSystem();
  NavigationSystem(const NavigationSystem&)=delete;NavigationSystem& operator=(const NavigationSystem&)=delete;
  const ProjectNavigation& Configuration()const;
- bool LoadSurface(SceneObjectId,const SceneTransform&,std::shared_ptr<const NavigationData>,std::string&,bool publish=true);
+ // Builds private Detour geometry on any preparation thread. No World or entity
+ // handles are captured; the completed product transfers exactly once.
+ static std::shared_ptr<PreparedNavigationSurface> PrepareSurface(
+     std::shared_ptr<const NavigationData>,std::string&,
+     const std::function<bool()>& cancelled={});
+ bool LoadSurface(SceneObjectId,const SceneTransform&,std::shared_ptr<const NavigationData>,
+                  std::string&,bool publish=true,PreparedNavigationSurface* prepared=nullptr);
  void PublishSurfaces(const std::vector<SceneObjectId>&);
  void DiscardStagedSurface(SceneObjectId);
  void RemoveSurface(SceneObjectId);

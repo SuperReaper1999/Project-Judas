@@ -7,7 +7,8 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified branch checkpoints (verify live Git before changes)
 
-Experimental/origin last checked: 5a7cf7df (query full hash live).
+Experimental/origin last checked: 1b593d8f13a8a73e772ffdb014c3ddcde923421f.
+Navigation cache handoff changes are currently uncommitted on top; verify live Git.
 Main/origin unchanged:1094d64515604fe9d03fdab479efc7f880b112a8.
 Native asset checkpoint58e73071; authoring b63d707e; runtime sculpt/paint/save
 c5fde88d; source-owned solid/fluid/particle integration a64c454a are PUSHED.
@@ -24,7 +25,31 @@ Never start a second build before the first session actually exits. If source
 changes during a multi-target build, freeze and do a final incremental build.
 Exporter/runtime provenance mismatch correctly rejects mixed intermediate binaries.
 
-## Active continuation — actual regional streaming stalls
+## Current continuation — native navigation cache handoff
+
+Functional cache handoff is implemented on top of1b593d8f. The SAME Detour
+Surface builds privately through NavigationSystem::PrepareSurface on the existing
+preparation worker, then move-consumes once at normal publication. No second
+navigation system or public JS change. Native navigation73/world93/handoff25/nav92
+PASS, including actual worker thread, identity mismatch, double consume, partial
+cancellation, invalid layer, private staging and live state retention.
+
+Matched warm-file full1km source1024colliders/full1024m nav1m cells:10runs each,
+order before/after then after/before in5-run groups. Publication median26.3803ms
+→.4948035ms, sampled worst28.1212→.615662ms. Complete edit297.43→298.04ms:
+work moved off owner thread, NOT eliminated. Initial publication28.19→2.23ms.
+PeakRSS230880–231276KiB before,231512–231980after; no memory reduction claim.
+Evidence navigation-cache/. Frozen build83156 EXITED; no build/test running.
+Cold73write/7read, components35,surface59,interactions85,streaming69,raster59,
+saveExclusions77,export18,existing actual navgame26 PASS. Desktop NVIDIA editor
+authoring/undo/PlayStop authoredIDENTICAL and relocatedWorkshop PASS; restored
+navready,8volumechunks,2surfacedabs,queue0,z=-10.6087. Screenshots inspected.
+Ready for scoped checkpoint after final source/diff review.
+
+Then continue physical residency/planetary work; fullTerrainV2 is incomplete.
+Current bounded native solid/nav pipeline does NOT make planetary excavation.
+
+## Completed regional streaming and navigation foundations
 
 Native regional handoff + selective reference restoration and payload accounting
 are now qualified and checkpoint-ready. Frozen build88111 has EXITED. No build
@@ -115,12 +140,9 @@ above aren't full-km routing claims. Coverage is configured, not a guarantee tha
 all physical points pass Recast slope/climb/voxel constraints. Five samples are
 engineering diagnostics, not broad percentile distributions.
 
-NEXT address measured26ms native cache construction/publication, likely by
-worker-owned prepared Detour caches transferred into the existing NavigationSystem
-at publication. Preserve current source bytes, old resources, previous complete
-revision and body/route ownership. Do not implement a second navigation system.
-No giant unmeasured redesign. Independent raster/64-bit checkpoint remains
-attributable; query live Git after commit. Physical interest/planetary work remains.
+That26ms cache construction is addressed by the current handoff above. The
+independent raster/64bit checkpoint is committed/pushed at1b593d8f; its measured
+cost remains historical baseline evidence. Physical interest/planetary work remains.
 
 Physical-interest/residency limits, planetary excavation/provider masking and
 final game/SDK/visual qualification remain; TerrainV2 is NOT complete. Main,
@@ -214,13 +236,14 @@ commit and push Experimental. Then CONTINUE remaining approved work below.
 1. Physics-interest residency/budgets: all collision chunks still resident,1024
 perterrain. Native files are paged but runtime arrays/GPUimages still whole-source.
 Separate physical interest from camera visibility, preserve support/publication.
-2. Fresh source/project creation, highbitdepth heightmaps/presets, multisource
-selection, bytebounded undo, runtime surface sculpt/paint+persistence. Base-ref
-saves must gain raster deltas or clear base markers when samples change.
+2. COMPLETED: fresh source/project creation,16bitheightmaps/presets,multisource
+selection,bytebounded undo,runtime surface sculpt/paint and sparse raster saves.
 3. Planetary excavation/provider override: preserve PlanetTiles precision/LOD and
 actually remove base render+collision. A cave prop over intact planet is invalid.
-4. Navigation actual terrain geometry/dirty publication, fluid solid occupancy,
-particle interactions/stable receiving coordinates, real regional travel cases.
+4. COMPLETED bounded controls: source-owned navigation+atomic dirty publication,
+source-solid water occupancy,particle interactions/logical source IDs,real regional
+travel and cold persistence. Remaining large-source particle capture budgets and
+whole-coverage navigation rebuild limits are explicit above.
 5. Broader materials/visual quality, temporalLOD transition, final consumer copies,
 freshSDK/export and platform coverage. Do NOT replace installedRPG SDK or assets.
 

@@ -1,0 +1,7 @@
+{"cave":0,"cell":0.2,"reference_ms":6.93068,"indexed_ms":5.96132,"layers":36}
+{"cave":0,"cell":0.37,"reference_ms":1.90253,"indexed_ms":1.85488,"layers":9}
+{"cave":0,"cell":0.5,"reference_ms":1.35888,"indexed_ms":1.32455,"layers":9}
+{"cave":1,"cell":0.2,"reference_ms":9.98908,"indexed_ms":8.91224,"layers":36}
+{"cave":1,"cell":0.37,"reference_ms":3.6997,"indexed_ms":3.55243,"layers":9}
+{"cave":1,"cell":0.5,"reference_ms":2.9444,"indexed_ms":2.79349,"layers":9}
+SUMMARY 59 checks 0 failures

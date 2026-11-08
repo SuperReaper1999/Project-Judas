@@ -1,0 +1,44 @@
+[
+  {
+    "name": "components",
+    "returncode": 0,
+    "elapsed_s": 0.04874682426452637,
+    "log": "/tmp/terrain-v2-nav-cache-components-02.log"
+  },
+  {
+    "name": "surface",
+    "returncode": 0,
+    "elapsed_s": 0.21103811264038086,
+    "log": "/tmp/terrain-v2-nav-cache-surface-02.log"
+  },
+  {
+    "name": "interactions",
+    "returncode": 0,
+    "elapsed_s": 0.29888057708740234,
+    "log": "/tmp/terrain-v2-nav-cache-interactions-02.log"
+  },
+  {
+    "name": "streaming",
+    "returncode": 0,
+    "elapsed_s": 2.598925828933716,
+    "log": "/tmp/terrain-v2-nav-cache-streaming-02.log"
+  },
+  {
+    "name": "raster",
+    "returncode": 0,
+    "elapsed_s": 0.07024717330932617,
+    "log": "/tmp/terrain-v2-nav-cache-raster-02.log"
+  },
+  {
+    "name": "saves",
+    "returncode": 0,
+    "elapsed_s": 0.018849611282348633,
+    "log": "/tmp/terrain-v2-nav-cache-saves-02.log"
+  },
+  {
+    "name": "export",
+    "returncode": 0,
+    "elapsed_s": 0.47773194313049316,
+    "log": "/tmp/terrain-v2-nav-cache-export-02.log"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "native",
+    "returncode": 0,
+    "elapsed_s": 0.38688182830810547,
+    "log": "/tmp/terrain-v2-nav-cache-native-01.log"
+  },
+  {
+    "name": "world",
+    "returncode": 0,
+    "elapsed_s": 0.3896913528442383,
+    "log": "/tmp/terrain-v2-nav-cache-world-01.log"
+  },
+  {
+    "name": "handoff",
+    "returncode": 0,
+    "elapsed_s": 0.019299745559692383,
+    "log": "/tmp/terrain-v2-nav-cache-handoff-01.log"
+  },
+  {
+    "name": "navigation",
+    "returncode": 0,
+    "elapsed_s": 0.25162744522094727,
+    "log": "/tmp/terrain-v2-nav-cache-navigation-01.log"
+  }
+]
