@@ -1,0 +1,1454 @@
+{
+  "binaries": {
+    "judas": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x0000776edac65000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x0000776ed741a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x0000776ed7000000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x0000776edab17000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x0000776ed73ec000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x0000776ed6c00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x0000776edac67000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x0000776ed72cd000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x0000776ed6faf000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x0000776ed6e40000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x0000776ed6abe000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x0000776ed72b9000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x0000776ed72ac000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x0000776ed6e2c000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x0000776ed72a4000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x0000776ed6ab1000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x0000776ed6e27000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x0000776ed6a9a000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x0000776ed6a93000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x0000776ed6e22000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x0000776ed6a80000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x0000776ed6a76000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x0000776ed6a17000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x0000776ed6a0c000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x0000776ed698e000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x0000776ed693e000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x0000776ed6913000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x0000776ed6907000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x0000776ed68d9000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x0000776ed68c8000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x0000776ed6838000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x0000776ed6833000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x0000776ed671f000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x0000776ed6717000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x0000776ed6700000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x0000776ed66fa000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x0000776ed66f2000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x0000776ed668e000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x0000776ed665f000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x0000776ed65b2000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x0000776ed6000000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x0000776ed65a8000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x0000776ed6549000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x0000776ed64fa000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x0000776ed5f05000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_collision_cook": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x000070a5b0952000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000070a5ad21a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000070a5ace00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000070a5ad0f4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000070a5b08fc000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000070a5aca00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000070a5b0954000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000070a5acce1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000070a5b08a9000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000070a5ac891000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000070a5ac74f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000070a5b0895000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000070a5b0888000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000070a5b0872000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000070a5b086a000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000070a5b085d000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000070a5b0858000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000070a5ad0dd000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000070a5b0851000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000070a5b084a000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000070a5ad0ca000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000070a5ad0c0000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000070a5acc82000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000070a5ad0b5000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000070a5ac6d1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000070a5acc32000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000070a5ac6a6000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000070a5ad0a9000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000070a5ac678000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000070a5acc21000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000070a5ac5e8000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000070a5ad0a4000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000070a5ac4d4000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000070a5ac4cc000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000070a5ac4b5000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000070a5ac4af000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000070a5ac4a7000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000070a5ac443000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000070a5ac414000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000070a5ac369000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000070a5abe00000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000070a5ac35f000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000070a5ac300000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000070a5ac2b1000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000070a5abd05000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_cook": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x000071aed514f000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000071aed1a1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000071aed1600000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000071aed18f4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000071aed50f9000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000071aed1200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000071aed5151000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000071aed14e1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000071aed50a6000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000071aed1091000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000071aed0f4f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000071aed5092000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000071aed5085000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000071aed506f000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000071aed5067000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000071aed505a000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000071aed5055000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000071aed18dd000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000071aed504e000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000071aed5047000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000071aed18ca000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000071aed18c0000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000071aed1482000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000071aed18b5000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000071aed0ed1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000071aed1432000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000071aed0ea6000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000071aed18a9000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000071aed0e78000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000071aed1421000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000071aed0de8000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000071aed18a2000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000071aed0cd4000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000071aed0ccc000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000071aed0cb5000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000071aed0caf000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000071aed0ca7000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000071aed0c43000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000071aed0c14000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000071aed0b67000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000071aed0600000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000071aed0b5d000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000071aed0afe000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000071aed0aaf000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000071aed0505000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_deformable_bake": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007317fb352000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007317f7c1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007317f7800000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007317f7af4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007317fb2fc000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007317f7400000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007317fb354000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007317f76e1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007317fb2a9000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007317f7291000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007317f714f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007317fb295000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007317fb288000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007317fb272000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007317fb26a000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007317fb25d000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007317fb258000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007317f7add000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007317fb251000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007317fb24a000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007317f7aca000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007317f7ac0000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007317f7682000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007317f7ab5000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007317f70d1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007317f7632000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007317f70a6000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007317f7aa9000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007317f7078000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007317f7621000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007317f6fe8000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007317f7aa2000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007317f6ed4000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007317f6ecc000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007317f6eb5000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007317f6eaf000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007317f6ea7000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007317f6e43000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007317f6e14000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007317f6d67000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007317f6800000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007317f6d5d000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007317f6cfe000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007317f6caf000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007317f6705000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_editor": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007a7b84345000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007a7b8041a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007a7b80000000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007a7b841f7000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007a7b841c9000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007a7b7fc00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007a7b84347000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007a7b802fb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007a7b802aa000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007a7b7fe91000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007a7b7fabe000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007a7b841b3000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007a7b841a6000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007a7b7fe7d000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007a7b802a2000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007a7b7fe70000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007a7b7fe6b000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007a7b7fe54000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007a7b7fe4d000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007a7b7fe48000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007a7b7fe35000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007a7b7fe2b000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007a7b7fa5f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007a7b7fa54000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007a7b7f9d6000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007a7b7f986000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007a7b7f95b000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007a7b7f94f000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007a7b7f921000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007a7b7f910000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007a7b7f880000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007a7b7fe24000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007a7b7f76c000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007a7b7f764000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007a7b7f74d000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007a7b7f747000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007a7b7f73f000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007a7b7f6db000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007a7b7f6ac000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007a7b7f5ff000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007a7b7f000000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007a7b7f5f5000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007a7b7f596000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007a7b7f547000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007a7b7f44a000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.11",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.2",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.5",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_environment_bake": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007861c11a1000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007861bda1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007861bd600000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007861c1053000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007861bd9ec000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007861bd200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007861c11a3000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007861bd8cd000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007861bd5af000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007861bd440000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007861bd0be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007861bd8b9000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007861bd8ac000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007861bd42c000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007861c1047000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007861bd0b1000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007861bd8a7000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007861bd09a000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007861bd8a0000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007861bd425000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007861bd087000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007861bd07d000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007861bd01e000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007861bd013000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007861bcf95000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007861bcf45000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007861bcf1a000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007861bcf0e000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007861bcee0000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007861bcecf000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007861bce3f000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007861bce3a000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007861bcd26000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007861bcd1e000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007861bcd05000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007861bccff000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007861bccf7000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007861bcc93000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007861bcc64000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007861bcbb7000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007861bc600000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007861bcbad000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007861bcb4e000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007861bcaff000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007861bc505000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_export": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x000076d6ceefe000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000076d6cb7f8000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000076d6cb400000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000076d6cb6d2000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000076d6cb6a4000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000076d6cb000000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000076d6cef00000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000076d6cb2e1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000076d6cb290000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000076d6cae91000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000076d6cad4f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000076d6cb27c000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000076d6cb26f000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000076d6cb25b000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000076d6cb253000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000076d6cb246000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000076d6cb241000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000076d6cb22a000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000076d6cb223000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000076d6cad4a000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000076d6cad37000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000076d6cad2d000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000076d6cacce000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000076d6cacc3000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000076d6cac43000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000076d6cabf3000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000076d6cabc8000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000076d6cabbc000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000076d6cab8e000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000076d6cab7b000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000076d6caaeb000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000076d6caae6000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000076d6ca9d2000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000076d6ca9ca000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000076d6ca9b1000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000076d6ca9ab000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000076d6ca9a3000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000076d6ca93f000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000076d6ca910000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000076d6ca863000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000076d6ca400000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000076d6ca859000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000076d6ca3a1000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000076d6ca352000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000076d6ca257000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_liquid_bake": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007f3a8a3b9000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007f3a86c1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f3a86800000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007f3a8a26b000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f3a86bec000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007f3a86400000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f3a8a3bb000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007f3a86acd000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007f3a867af000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007f3a86640000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007f3a862be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007f3a8a255000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007f3a86ac0000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007f3a86aac000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007f3a86aa4000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007f3a86633000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007f3a8a24e000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007f3a862a7000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007f3a8662c000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007f3a86627000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007f3a86294000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007f3a8628a000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007f3a8622b000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007f3a86220000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007f3a861a2000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007f3a86152000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007f3a86127000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007f3a8611b000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007f3a860ed000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007f3a860dc000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007f3a8604c000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007f3a86047000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007f3a85f33000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007f3a85f2b000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007f3a85f14000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007f3a85f0e000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007f3a85f06000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007f3a85ea2000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007f3a85e73000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007f3a85dc8000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007f3a85800000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007f3a85dbe000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007f3a85d5f000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007f3a85d10000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007f3a85705000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_mod": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x000078b014b48000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000078b01121a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000078b010e00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000078b0149fa000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000078b0149cc000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000078b010a00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000078b014b4a000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000078b0110fb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000078b014979000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000078b010c91000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000078b0108be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000078b014965000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000078b0110ee000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000078b0110da000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000078b0110d2000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000078b0110c5000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000078b0110c0000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000078b0110a9000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000078b0110a2000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000078b010c8c000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000078b010c79000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000078b010c6f000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000078b01085f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000078b010c64000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000078b0107e1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000078b010791000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000078b010c37000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000078b010c2b000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000078b010763000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000078b010752000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000078b0106c2000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000078b010c24000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000078b0105ae000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000078b0105a6000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000078b01058f000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000078b010589000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000078b010581000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000078b01051d000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000078b0104ee000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000078b010441000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000078b010000000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000078b010437000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000078b00ffa1000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000078b00ff52000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000078b00fe57000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_model_import_cli": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007863ce2df000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007863caa1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007863ca600000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007863ca8f4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007863ce289000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007863ca200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007863ce2e1000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007863ca4e1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007863ca8a3000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007863ca091000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007863c9f4f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007863ce273000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007863ce266000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007863ce250000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007863ce248000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007863ca4d4000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007863ce243000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007863ca4bd000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007863ca4b6000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007863ca4b1000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007863ca49e000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007863ca494000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007863ca435000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007863ca42a000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007863c9ed1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007863c9e81000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007863c9e56000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007863c9e4a000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007863c9e1c000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007863c9e0b000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007863c9d7b000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007863ca423000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007863c9c67000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007863c9c5f000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007863c9c48000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007863c9c42000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007863c9c3a000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007863c9bd6000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007863c9ba7000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007863c9afa000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007863c9600000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007863c9af0000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007863c9a91000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007863c9a42000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007863c9505000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.5",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_navigation_bake": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007604422e8000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000076043ea1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000076043e600000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000076044219a000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000076044216c000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000076043e200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007604422ea000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000076043e8f9000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000076043e8a8000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000076043e491000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000076043e0be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000076043e47d000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000076043e470000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000076043e45c000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000076043e454000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000076043e447000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000076043e8a1000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000076043e430000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000076043e429000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000076043e422000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000076043e0ab000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000076043e0a1000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000076043e042000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000076043e037000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000076043dfb7000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000076043df67000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000076043df3c000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000076043df30000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000076043df02000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000076043deef000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000076043de5f000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000076043de5a000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000076043dd46000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000076043dd3e000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000076043dd25000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000076043dd1f000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000076043dd17000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000076043dcb3000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000076043dc84000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000076043dbd7000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000076043d600000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000076043dbcd000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000076043db6e000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000076043db1f000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000076043da22000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_save": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007825fe806000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007825fb01a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007825fac00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007825fe6b8000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007825fe68a000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007825fa800000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007825fe808000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007825faefb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007825faeaa000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007825faa91000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007825fa6be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007825fe674000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007825fe667000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007825faa7d000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007825fe65d000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007825faa70000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007825fe658000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007825faa59000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007825faea3000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007825faa54000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007825faa41000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007825faa37000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007825fa65f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007825faa2c000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007825fa5e1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007825fa591000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007825fa566000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007825fa55a000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007825fa52c000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007825fa51b000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007825fa48b000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007825faa25000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007825fa377000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007825fa36f000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007825fa358000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007825fa352000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007825fa34a000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007825fa2e6000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007825fa2b7000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007825fa20c000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007825f9c00000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007825fa202000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007825fa1a3000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007825fa154000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007825fa057000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_scene_author": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x000079ba6a47c000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000079ba66a1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x000079ba66600000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000079ba6a32e000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000079ba6a300000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000079ba66200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000079ba6a47e000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x000079ba668fb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x000079ba668aa000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x000079ba66491000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000079ba660be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x000079ba6a2ea000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x000079ba6a2dd000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x000079ba6647d000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000079ba6a2d3000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x000079ba66470000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x000079ba6a2ce000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x000079ba66459000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x000079ba668a3000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x000079ba66454000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x000079ba66441000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x000079ba66437000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x000079ba6605f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x000079ba6642c000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x000079ba65fe1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x000079ba65f91000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x000079ba65f66000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x000079ba65f5a000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x000079ba65f2c000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x000079ba65f1b000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x000079ba65e8b000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x000079ba66427000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x000079ba65d77000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000079ba65d6f000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x000079ba65d58000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x000079ba65d52000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000079ba65d4a000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x000079ba65ce6000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x000079ba65cb7000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x000079ba65c0c000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x000079ba65600000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000079ba65c02000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000079ba65ba3000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x000079ba65b54000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x000079ba65a59000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.5",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_script_check": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x0000704719895000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x000070471621a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x0000704715e00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007047160f4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007047160c6000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x0000704715a00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x0000704719897000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x0000704715ce1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x0000704715c90000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x0000704715891000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x000070471574f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x0000704719857000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007047160b9000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007047160a5000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x000070471984d000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x0000704715c83000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007047160a0000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x0000704715c6c000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x0000704715c65000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x0000704715c5e000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x0000704715c4b000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x0000704715c41000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007047156f0000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x0000704715c36000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x0000704715672000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x0000704715622000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007047155f7000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x0000704715c28000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007047155c9000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007047155b8000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x0000704715528000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x0000704715c21000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x0000704715414000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x000070471540c000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007047153f3000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007047153ed000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007047153e5000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x0000704715381000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x0000704715352000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007047152a5000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x0000704714e00000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x000070471529b000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x000070471523c000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x0000704714db1000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x0000704714cb6000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_server": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x0000776f42e3f000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x0000776f3f61a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x0000776f3f200000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x0000776f42cf1000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x0000776f42cc3000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x0000776f3ee00000)\n\t/lib64/ld-linux-x86-64.so.2 (0x0000776f42e41000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x0000776f3f4fb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x0000776f42c70000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x0000776f3f091000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x0000776f3ecbe000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x0000776f42c5c000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x0000776f42c4f000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x0000776f3f4e5000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x0000776f3f4dd000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x0000776f3f4d0000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x0000776f3f4cb000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x0000776f3f4b4000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x0000776f3f4ad000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x0000776f3f4a6000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x0000776f3f07e000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x0000776f3f074000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x0000776f3ec5f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x0000776f3f069000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x0000776f3ebe1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x0000776f3eb91000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x0000776f3f03e000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x0000776f3f032000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x0000776f3eb63000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x0000776f3f021000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x0000776f3ead3000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x0000776f3eace000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x0000776f3e9ba000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x0000776f3e9b2000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x0000776f3e99b000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x0000776f3e995000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x0000776f3e98d000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x0000776f3e929000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x0000776f3e8fa000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x0000776f3e84d000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x0000776f3e400000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x0000776f3e843000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x0000776f3e3a1000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x0000776f3e352000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x0000776f3e257000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_terrain_author": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007b35ed837000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007b35ea01a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007b35e9c00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007b35e9ef4000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007b35ed7e1000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007b35e9800000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007b35ed839000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007b35e9ae1000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007b35e9ea3000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007b35e9691000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007b35e954f000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007b35ed7cb000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007b35ed7be000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007b35ed7a8000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007b35e9ad9000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007b35e9acc000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007b35ed7a3000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007b35e9ab5000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007b35e9aae000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007b35e9aa9000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007b35e9a96000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007b35e9a8c000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007b35e9a2d000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007b35e9a22000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007b35e94cf000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007b35e947f000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007b35e9454000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007b35e9448000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007b35e941a000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007b35e9407000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007b35e9377000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007b35e9372000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007b35e925e000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007b35e9256000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007b35e923d000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007b35e9237000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007b35e922f000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007b35e91cb000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007b35e919c000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007b35e90ef000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007b35e8c00000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007b35e90e5000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007b35e9086000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007b35e9037000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007b35e8b05000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    },
+    "judas_volume_author": {
+      "format": "ELF64",
+      "host_ldd": "\tlinux-vdso.so.1 (0x00007ebcfa72b000)\n\tlibSDL2-2.0.so.0 => /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 (0x00007ebcf6e1a000)\n\tlibstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007ebcf6a00000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007ebcfa5dd000)\n\tlibgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007ebcfa5af000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007ebcf6600000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007ebcfa72d000)\n\tlibasound.so.2 => /usr/lib/x86_64-linux-gnu/libasound.so.2 (0x00007ebcf6cfb000)\n\tlibpulse.so.0 => /usr/lib/x86_64-linux-gnu/libpulse.so.0 (0x00007ebcf6caa000)\n\tlibsamplerate.so.0 => /usr/lib/x86_64-linux-gnu/libsamplerate.so.0 (0x00007ebcf6891000)\n\tlibX11.so.6 => /usr/lib/x86_64-linux-gnu/libX11.so.6 (0x00007ebcf64be000)\n\tlibXext.so.6 => /usr/lib/x86_64-linux-gnu/libXext.so.6 (0x00007ebcfa599000)\n\tlibXcursor.so.1 => /usr/lib/x86_64-linux-gnu/libXcursor.so.1 (0x00007ebcfa58c000)\n\tlibXi.so.6 => /usr/lib/x86_64-linux-gnu/libXi.so.6 (0x00007ebcfa576000)\n\tlibXfixes.so.3 => /usr/lib/x86_64-linux-gnu/libXfixes.so.3 (0x00007ebcf6ca2000)\n\tlibXrandr.so.2 => /usr/lib/x86_64-linux-gnu/libXrandr.so.2 (0x00007ebcf6884000)\n\tlibXss.so.1 => /usr/lib/x86_64-linux-gnu/libXss.so.1 (0x00007ebcf687f000)\n\tlibdrm.so.2 => /usr/lib/x86_64-linux-gnu/libdrm.so.2 (0x00007ebcf6868000)\n\tlibgbm.so.1 => /usr/lib/x86_64-linux-gnu/libgbm.so.1 (0x00007ebcf6861000)\n\tlibwayland-egl.so.1 => /usr/lib/x86_64-linux-gnu/libwayland-egl.so.1 (0x00007ebcf685c000)\n\tlibwayland-client.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-client.so.0 (0x00007ebcf6849000)\n\tlibwayland-cursor.so.0 => /usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0 (0x00007ebcf683f000)\n\tlibxkbcommon.so.0 => /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007ebcf645f000)\n\tlibdecor-0.so.0 => /usr/lib/x86_64-linux-gnu/libdecor-0.so.0 (0x00007ebcf6834000)\n\tlibpulsecommon-17.0.so => /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so (0x00007ebcf63e1000)\n\tlibdbus-1.so.3 => /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007ebcf6391000)\n\tlibxcb.so.1 => /usr/lib/x86_64-linux-gnu/libxcb.so.1 (0x00007ebcf6366000)\n\tlibXrender.so.1 => /usr/lib/x86_64-linux-gnu/libXrender.so.1 (0x00007ebcf6828000)\n\tlibexpat.so.1 => /usr/lib/x86_64-linux-gnu/libexpat.so.1 (0x00007ebcf6338000)\n\tlibffi.so.8 => /usr/lib/x86_64-linux-gnu/libffi.so.8 (0x00007ebcf6327000)\n\tlibsndfile.so.1 => /usr/lib/x86_64-linux-gnu/libsndfile.so.1 (0x00007ebcf6297000)\n\tlibX11-xcb.so.1 => /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007ebcf6823000)\n\tlibsystemd.so.0 => /usr/lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007ebcf6183000)\n\tlibasyncns.so.0 => /usr/lib/x86_64-linux-gnu/libasyncns.so.0 (0x00007ebcf617b000)\n\tlibapparmor.so.1 => /usr/lib/x86_64-linux-gnu/libapparmor.so.1 (0x00007ebcf6164000)\n\tlibXau.so.6 => /usr/lib/x86_64-linux-gnu/libXau.so.6 (0x00007ebcf615e000)\n\tlibXdmcp.so.6 => /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007ebcf6156000)\n\tlibFLAC.so.14 => /usr/lib/x86_64-linux-gnu/libFLAC.so.14 (0x00007ebcf60f2000)\n\tlibvorbis.so.0 => /usr/lib/x86_64-linux-gnu/libvorbis.so.0 (0x00007ebcf60c3000)\n\tlibvorbisenc.so.2 => /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 (0x00007ebcf6016000)\n\tlibopus.so.0 => /usr/lib/x86_64-linux-gnu/libopus.so.0 (0x00007ebcf5c00000)\n\tlibogg.so.0 => /usr/lib/x86_64-linux-gnu/libogg.so.0 (0x00007ebcf5bf6000)\n\tlibmpg123.so.0 => /usr/lib/x86_64-linux-gnu/libmpg123.so.0 (0x00007ebcf5b97000)\n\tlibmp3lame.so.0 => /usr/lib/x86_64-linux-gnu/libmp3lame.so.0 (0x00007ebcf5b48000)\n\tlibmvec.so.1 => /usr/lib/x86_64-linux-gnu/libmvec.so.1 (0x00007ebcf5a4b000)\n",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "machine": 62,
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libstdc++.so.6"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "ld-linux-x86-64.so.2": [
+          "GLIBC_2.3"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.11",
+          "GLIBC_2.14",
+          "GLIBC_2.15",
+          "GLIBC_2.17",
+          "GLIBC_2.2.5",
+          "GLIBC_2.3",
+          "GLIBC_2.3.2",
+          "GLIBC_2.3.4",
+          "GLIBC_2.32",
+          "GLIBC_2.33",
+          "GLIBC_2.34",
+          "GLIBC_2.38",
+          "GLIBC_2.4",
+          "GLIBC_2.7"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.4"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.2.5",
+          "GLIBC_2.27",
+          "GLIBC_2.29",
+          "GLIBC_2.35",
+          "GLIBC_2.38",
+          "GLIBC_2.43"
+        ],
+        "libstdc++.so.6": [
+          "CXXABI_1.3",
+          "CXXABI_1.3.13",
+          "CXXABI_1.3.15",
+          "CXXABI_1.3.3",
+          "CXXABI_1.3.7",
+          "CXXABI_1.3.8",
+          "CXXABI_1.3.9",
+          "GLIBCXX_3.4",
+          "GLIBCXX_3.4.11",
+          "GLIBCXX_3.4.14",
+          "GLIBCXX_3.4.15",
+          "GLIBCXX_3.4.17",
+          "GLIBCXX_3.4.18",
+          "GLIBCXX_3.4.19",
+          "GLIBCXX_3.4.20",
+          "GLIBCXX_3.4.21",
+          "GLIBCXX_3.4.22",
+          "GLIBCXX_3.4.26",
+          "GLIBCXX_3.4.28",
+          "GLIBCXX_3.4.29",
+          "GLIBCXX_3.4.30",
+          "GLIBCXX_3.4.32",
+          "GLIBCXX_3.4.9"
+        ]
+      }
+    }
+  },
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-23dbefd-dirty-b294e04ea1d9-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "b294e04ea1d92fb9294a4badb341ef2e0642eeac0a3503b2644bb43937c3d2a4",
+    "source_origin": "git",
+    "source_revision": "23dbefdec8aa5f5ac5a466af85032186357db700",
+    "source_tree": "b985a0f876e4af755c401a1350fb5dc14f14be99",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "2.0.0-alpha.1"
+  },
+  "errors": [],
+  "highest_required_abi": {
+    "CXXABI": "1.3.15",
+    "GLIBC": "2.43",
+    "GLIBCXX": "3.4.32"
+  },
+  "host": {
+    "machine": "x86_64",
+    "os_release": {
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "ID": "ubuntu",
+      "ID_LIKE": "debian",
+      "LOGO": "ubuntu-logo",
+      "NAME": "Ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "UBUNTU_CODENAME": "resolute",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "VERSION_ID": "26.04"
+    },
+    "system": "Linux"
+  },
+  "kind": "judas-sdk-qualification",
+  "passed": true,
+  "policy": {
+    "host_check": true,
+    "max_glibc": null,
+    "require_os": null,
+    "windows_system_directory": null
+  },
+  "resolved_dependencies": {
+    "libFLAC.so.14": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14",
+    "libSDL2-2.0.so.0": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0",
+    "libX11-xcb.so.1": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1",
+    "libX11.so.6": "/usr/lib/x86_64-linux-gnu/libX11.so.6",
+    "libXau.so.6": "/usr/lib/x86_64-linux-gnu/libXau.so.6",
+    "libXcursor.so.1": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1",
+    "libXdmcp.so.6": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6",
+    "libXext.so.6": "/usr/lib/x86_64-linux-gnu/libXext.so.6",
+    "libXfixes.so.3": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3",
+    "libXi.so.6": "/usr/lib/x86_64-linux-gnu/libXi.so.6",
+    "libXrandr.so.2": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2",
+    "libXrender.so.1": "/usr/lib/x86_64-linux-gnu/libXrender.so.1",
+    "libXss.so.1": "/usr/lib/x86_64-linux-gnu/libXss.so.1",
+    "libapparmor.so.1": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1",
+    "libasound.so.2": "/usr/lib/x86_64-linux-gnu/libasound.so.2",
+    "libasyncns.so.0": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0",
+    "libc.so.6": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+    "libdbus-1.so.3": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3",
+    "libdecor-0.so.0": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0",
+    "libdrm.so.2": "/usr/lib/x86_64-linux-gnu/libdrm.so.2",
+    "libexpat.so.1": "/usr/lib/x86_64-linux-gnu/libexpat.so.1",
+    "libffi.so.8": "/usr/lib/x86_64-linux-gnu/libffi.so.8",
+    "libgbm.so.1": "/usr/lib/x86_64-linux-gnu/libgbm.so.1",
+    "libgcc_s.so.1": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "libm.so.6": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+    "libmp3lame.so.0": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0",
+    "libmpg123.so.0": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0",
+    "libmvec.so.1": "/usr/lib/x86_64-linux-gnu/libmvec.so.1",
+    "libogg.so.0": "/usr/lib/x86_64-linux-gnu/libogg.so.0",
+    "libopus.so.0": "/usr/lib/x86_64-linux-gnu/libopus.so.0",
+    "libpulse.so.0": "/usr/lib/x86_64-linux-gnu/libpulse.so.0",
+    "libpulsecommon-17.0.so": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so",
+    "libsamplerate.so.0": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0",
+    "libsndfile.so.1": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1",
+    "libstdc++.so.6": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "libsystemd.so.0": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0",
+    "libvorbis.so.0": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0",
+    "libvorbisenc.so.2": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2",
+    "libwayland-client.so.0": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0",
+    "libwayland-cursor.so.0": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0",
+    "libwayland-egl.so.1": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1",
+    "libxcb.so.1": "/usr/lib/x86_64-linux-gnu/libxcb.so.1",
+    "libxkbcommon.so.0": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+  },
+  "schema": 1,
+  "scope": "ABI/import metadata and requested native loader checks; no graphics, application or hardware acceptance",
+  "sdk_manifest_sha256": "9a5daccc3ae2fd5bdd502029bd2a498c9680db0ddbccad631b2fdec54d8b713b",
+  "tool_count": 17
+}

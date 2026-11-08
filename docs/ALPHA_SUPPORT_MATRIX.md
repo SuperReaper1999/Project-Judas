@@ -114,11 +114,14 @@ regional suspension, cold saves and geographic planet patches have focused Linux
 qualification. See [implementation and bounds](TERRAIN_V2.md) and
 [evidence](evidence/terrain-v2/planetary-integration/REVIEW.md).
 
-Desktop GTX970 OpenGL4.6 and portable3.3 paths are exercised. This does not certify
-new Windows, Android/GLES or browser terrain workflows. All active native source
-collision chunks remain resident (maximum1024); geographic patches use native
-render meshes, while the surrounding planet retains its existing LOD. Native
-files are indexed but runtime arrays are resident. Cross-face excavation,
+Desktop GTX970 OpenGL4.6 and portable3.3 paths are exercised with explicitly
+verified graphics profiles. This does not certify new Windows, Android/GLES or
+browser terrain workflows. Native samples, exact collision products and GPU
+resources now have independent bounded caches. Physical leases and body bounds
+preserve off-camera support; active runtime sources no longer retain all arrays
+and cooks. Geographic patches use native render meshes, while the surrounding
+planet retains its existing LOD. See [residency and budgets](TERRAIN_V2_RESIDENCY.md)
+and [final qualification/human checklist](TERRAIN_V2_QUALIFICATION.md). Cross-face excavation,
 overlapping/movable planetary patches and automatic replication of terrain edits
 are not provided by this checkpoint. Existing representations remain available;
 assets are not automatically converted.
@@ -126,5 +129,6 @@ assets are not automatically converted.
 The locally staged Terrain V2 SDK verifies17tools, fresh-project/editor/CLI work,
 SDK-only terrain cold saves and moved exports on this host. It is a native preview
 requiring GLIBC2.43, not a refreshed Ubuntu24.04 distribution. Dirty/untracked
-build provenance is retained. Published packages, release channels, the Alpha
+build provenance is retained. Source paging and local-edit upload costs have
+measured evidence; initial loading is not claimed faster. Published packages, release channels, the Alpha
 fluid lock and the user's installed game SDK are unchanged.

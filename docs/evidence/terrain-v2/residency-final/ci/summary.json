@@ -1,0 +1,32 @@
+{
+  "run": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/42507574497",
+  "source": "23dbefdec8aa5f5ac5a466af85032186357db700",
+  "completed_success": true,
+  "channels": {
+    "Alpha": {
+      "registered": 199,
+      "passed": 187,
+      "skipped": [
+        "prealpha.game-water-runtime",
+        "prealpha.game-water-script",
+        "prealpha.water-workshop-controls",
+        "prealpha.water-visuals",
+        "prealpha.material-application",
+        "prealpha.liquid-bake-normalization-only",
+        "prealpha.liquid-bake-knots-only",
+        "prealpha.liquid-surface",
+        "prealpha.liquid-origin-total-identity",
+        "prealpha.origin-environment",
+        "prealpha.liquid-origin-query-controls",
+        "prealpha.fluid-cadence-motion"
+      ],
+      "failed": 0
+    },
+    "Experimental": {
+      "registered": 199,
+      "passed": 199,
+      "skipped": [],
+      "failed": 0
+    }
+  }
+}

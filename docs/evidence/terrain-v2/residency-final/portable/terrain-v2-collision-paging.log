@@ -1,0 +1,2 @@
+METRIC collision_bytes=515856 peak=515856 budget=524288 evictions=1011 entries=11 worst_prepare_ms=0.774441
+SUMMARY 400803 checks 0 failures

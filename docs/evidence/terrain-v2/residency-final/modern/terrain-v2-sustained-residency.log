@@ -1,0 +1,9 @@
+RESIDENCY cycle=0 bytes=77164264 source=8311380 collision=67099344 evictions=1682
+RESIDENCY cycle=1 bytes=77164264 source=8311380 collision=67099344 evictions=2703
+RESIDENCY cycle=2 bytes=77164264 source=8311380 collision=67099344 evictions=3726
+{"case":"native-region","visit":0,"load_ms":1316.12,"largest_unit_ms":3.8803,"live_accounted_bytes":77180692,"terrain_geometry_estimate_bytes":77162908}
+{"case":"native-region","visit":1,"load_ms":1511.57,"largest_unit_ms":3.8803,"live_accounted_bytes":77180692,"terrain_geometry_estimate_bytes":77162908}
+{"case":"native-region","visit":2,"load_ms":1535.92,"largest_unit_ms":3.8803,"live_accounted_bytes":77180692,"terrain_geometry_estimate_bytes":77162908}
+{"case":"native-region","visit":3,"load_ms":1502.61,"largest_unit_ms":3.8803,"live_accounted_bytes":77180692,"terrain_geometry_estimate_bytes":77162908}
+{"case":"native-region","visit":4,"load_ms":1504.08,"largest_unit_ms":3.8803,"live_accounted_bytes":77180692,"terrain_geometry_estimate_bytes":77162908}
+SUMMARY 9293 checks 0 failures

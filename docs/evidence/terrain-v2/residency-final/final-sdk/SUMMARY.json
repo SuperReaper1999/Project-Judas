@@ -1,0 +1,15 @@
+{
+  "engine_revision": "23dbefdec8aa5f5ac5a466af85032186357db700",
+  "branch": "Experimental",
+  "sdk": ".cache/terrain-v2/sdk-native-preview-23dbefde",
+  "sdk_manifest_sha256": "879a686657f6dfe407f7e4b4ff0dabe0d6b7b0d152763fbeac0eab615e78c11d",
+  "binaries_identical_to_qualified_candidate": true,
+  "documents_identical_to_checkout": true,
+  "human_acceptance": false,
+  "ci": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/42507574497",
+  "scope": "Local glibc2.43 preview; clean Ubuntu24.04 CI SDK inspected separately. No new Windows/Android/browser certification.",
+  "source_ci_completed_success": true,
+  "experimental_gates_passed": 199,
+  "alpha_gates_passed": 187,
+  "alpha_locked_cases_not_exercised": 12
+}

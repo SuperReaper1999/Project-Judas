@@ -1,0 +1,8 @@
+FRAMES 180
+FRAME_SECONDS 0.016666667
+LOG_EVERY 30
+ACTION load 1 20 21
+WAIT_SERVICES save 10000 30
+WAIT_SERVICES scene 10000 35
+EXPECT_SCENE Scenes/highlands.judas 45
+SCREENSHOT 150 /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat-portable/read.png

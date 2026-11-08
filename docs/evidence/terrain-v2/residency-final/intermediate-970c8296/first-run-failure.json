@@ -1,0 +1,19 @@
+[
+  {
+    "name": "qualification-modern",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_validate.py",
+      "--build-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--group",
+      "terrain",
+      "--test",
+      "renderer-shader-library",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-970c8296/qualification-modern"
+    ],
+    "exit": 1,
+    "seconds": 33.380657114001224
+  }
+]

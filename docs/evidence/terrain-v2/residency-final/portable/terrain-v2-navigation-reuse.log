@@ -1,0 +1,5 @@
+METRIC rebuilt_tiles=36 reused_tiles=220
+METRIC rebuilt_tiles=24 reused_tiles=232
+METRIC rebuilt_tiles=36 reused_tiles=220
+METRIC kilometre_full_bake_layers=975 rebuilt_tiles=16 reused_tiles=1008
+SUMMARY 67 checks 0 failures

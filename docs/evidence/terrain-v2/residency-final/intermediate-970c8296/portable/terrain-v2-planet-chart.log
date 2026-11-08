@@ -1,0 +1,2 @@
+CHART max_inverse_m=1.02204e-12 max_boundary_excess_m=1.02925e-12 max_jacobian_error=3.28295e-10 seam_m=3.82214e-06 triangles=41908 volume_chunks=4 fixture_work_ms=154.804
+SUMMARY 1926 checks 0 failures

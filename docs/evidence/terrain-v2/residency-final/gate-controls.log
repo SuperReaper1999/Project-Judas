@@ -1,0 +1,36 @@
+test_archive_added_input_cannot_certify_an_old_binary (test_prealpha_validation.GateTests.test_archive_added_input_cannot_certify_an_old_binary) ... ok
+test_channel_override_cannot_hide_real_execution (test_prealpha_validation.GateTests.test_channel_override_cannot_hide_real_execution) ... usage: python3 -m unittest [-h] [--build-dir BUILD_DIR] [--manifest MANIFEST]
+                           [--group GROUP] [--test TEST] [--output OUTPUT]
+                           [--timeout TIMEOUT]
+                           [--graphics-profile {auto,portable,modern}]
+                           [--list] [--check-manifest] [--registration-plan]
+                           [--channel {Alpha,Beta,Experimental,Stable,Local}]
+                           [--expected-channel {Alpha,Beta,Experimental,Stable,Local}]
+python3 -m unittest: error: --channel is only valid with --registration-plan; execution uses embedded identity
+ok
+test_channel_policy_uses_verified_binary_and_never_hides_failure (test_prealpha_validation.GateTests.test_channel_policy_uses_verified_binary_and_never_hides_failure) ... ok
+test_deferred_findings_are_not_tests (test_prealpha_validation.GateTests.test_deferred_findings_are_not_tests) ... ok
+test_exit_and_timeout_controls (test_prealpha_validation.GateTests.test_exit_and_timeout_controls) ... ok
+test_explicit_graphics_policy_reaches_child_without_gameplay_overrides (test_prealpha_validation.GateTests.test_explicit_graphics_policy_reaches_child_without_gameplay_overrides) ... ok
+test_finding_status_annotation_preserves_observed_results (test_prealpha_validation.GateTests.test_finding_status_annotation_preserves_observed_results) ... ok
+test_gate_uses_writable_output_and_explicit_engine_assets (test_prealpha_validation.GateTests.test_gate_uses_writable_output_and_explicit_engine_assets) ... scratch passed
+ok
+test_identity_probe_is_bound_to_test_bytes (test_prealpha_validation.GateTests.test_identity_probe_is_bound_to_test_bytes) ... ok
+test_manifest_only_cli_never_needs_a_native_build (test_prealpha_validation.GateTests.test_manifest_only_cli_never_needs_a_native_build) ... ok
+test_manifest_rejects_duplicates_and_bad_targets (test_prealpha_validation.GateTests.test_manifest_rejects_duplicates_and_bad_targets) ... ok
+test_manifest_rejects_malformed_or_duplicate_invocations (test_prealpha_validation.GateTests.test_manifest_rejects_malformed_or_duplicate_invocations) ... ok
+test_material_optics_requires_advanced_runtime_without_hiding_ordinary_water (test_prealpha_validation.GateTests.test_material_optics_requires_advanced_runtime_without_hiding_ordinary_water) ... ok
+test_particle_cadence_requires_the_existing_advanced_runtime_opt_in (test_prealpha_validation.GateTests.test_particle_cadence_requires_the_existing_advanced_runtime_opt_in) ... ok
+test_same_binary_different_modes_and_explicit_manual_case_remain_valid (test_prealpha_validation.GateTests.test_same_binary_different_modes_and_explicit_manual_case_remain_valid) ... ok
+test_stale_or_absent_embedded_identity_cannot_pass (test_prealpha_validation.GateTests.test_stale_or_absent_embedded_identity_cannot_pass) ... ok
+test_unavailable_main_receipt_is_not_a_pass (test_prealpha_validation.GateTests.test_unavailable_main_receipt_is_not_a_pass) ... /tmp/tmpm38pc07p/results/RESULTS.json
+liquid-surface not-exercised
+ok
+test_water_visuals_require_actual_unlocked_water (test_prealpha_validation.GateTests.test_water_visuals_require_actual_unlocked_water) ... ok
+test_workshop_controls_require_unlocked_experimental_water (test_prealpha_validation.GateTests.test_workshop_controls_require_unlocked_experimental_water) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.544s
+
+OK
+/tmp/tmp84so0d67/results/RESULTS.json

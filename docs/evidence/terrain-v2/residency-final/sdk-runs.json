@@ -1,0 +1,66 @@
+[
+  {
+    "name": "sdk",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/qualify_sdk.py",
+      "--sdk",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde",
+      "--work",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk"
+    ],
+    "exit": 0,
+    "seconds": 9.830621840999811,
+    "environment": {}
+  },
+  {
+    "name": "flat",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "exit": 0,
+    "seconds": 4.5859031149993825,
+    "environment": {}
+  },
+  {
+    "name": "planet",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/planet",
+      "--material-detail",
+      "--planet"
+    ],
+    "exit": 0,
+    "seconds": 6.953707240998483,
+    "environment": {}
+  },
+  {
+    "name": "flat-portable",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-candidate-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat-portable",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "exit": 0,
+    "seconds": 4.7940974200027995,
+    "environment": {
+      "JUDAS_GL_PROFILE": "portable"
+    }
+  }
+]

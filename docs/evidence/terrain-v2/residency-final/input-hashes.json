@@ -1,0 +1,27 @@
+[
+  {
+    "path": "terrain_v2_workshop.judasproj",
+    "bytes": 930,
+    "sha256": "c78b22d634845bcb1813b03d7b9771351b780700a84c36d8fa7071aadd6ea3e1"
+  },
+  {
+    "path": "Authoring/highlands.judasterrain2",
+    "bytes": 30037747,
+    "sha256": "6c9ff8a9ed796084e9849e2e6721e239a91e143b2ee51d7f80b36bc8f65806d3"
+  },
+  {
+    "path": "Assets/terrain/highlands.judasterrain",
+    "bytes": 21039544,
+    "sha256": "15ee2b605939328828924abfbdf96ae0881f91be1077f037f60c7c8c157aee30"
+  },
+  {
+    "path": "Scenes/highlands.judas",
+    "bytes": 2042,
+    "sha256": "28f33c3e4ddfe0fc9f88c18d13adc956ebea11dbd32c5ca3a0f2d2549189ed27"
+  },
+  {
+    "path": "Assets/scripts/explorer.js",
+    "bytes": 5712,
+    "sha256": "41844eae2a739d2bcc3c942a5c1a82cb09f880cc2c7c3689233c8d05cb44010a"
+  }
+]

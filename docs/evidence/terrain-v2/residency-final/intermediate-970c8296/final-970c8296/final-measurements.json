@@ -1,0 +1,1280 @@
+{
+  "source_revision": "970c8296426305b610b879a405e6792f905caad8",
+  "binary_sha256": "89eee27df368de5825fa0460ba2229cb6ff429e92f51b4efd48c7e5c462509e7",
+  "measurements": [
+    {
+      "case": "short-0",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_game_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+      ],
+      "exit": 0,
+      "peak_process_rss_kib": 308056,
+      "scene_build_ms": 1338,
+      "phases": {
+        "excavated": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.395301,
+            "p95": 0.428208,
+            "p99": 0.448286,
+            "worst": 0.491657
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.79109,
+            "p95": 1.90756,
+            "p99": 2.03155,
+            "worst": 2.10396
+          },
+          "render_submission_ms": {
+            "median": 0.355506,
+            "p95": 0.432345,
+            "p99": 0.477961,
+            "worst": 0.537474
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.835552,
+            "p95": 0.841696,
+            "p99": 0.845856,
+            "worst": 0.846624
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77051648,
+            "maximum": 77051648,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 66761224,
+            "maximum": 66761224,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 35,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 1041,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 4003888,
+            "maximum": 4003888,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 36,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.060173,
+            "p95": 0.060173,
+            "p99": 0.060173,
+            "worst": 0.060173
+          }
+        },
+        "excavating": {
+          "samples": 501,
+          "simulation_scripts_publication_ms": {
+            "median": 0.562931,
+            "p95": 0.870261,
+            "p99": 1.38193,
+            "worst": 1.70497
+          },
+          "collision_query_ms": {
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 2.06046,
+            "p95": 2.54067,
+            "p99": 3.33993,
+            "worst": 3.74276
+          },
+          "render_submission_ms": {
+            "median": 0.440862,
+            "p95": 0.543886,
+            "p99": 0.833462,
+            "worst": 1.10422
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.838496,
+            "p95": 0.850272,
+            "p99": 0.895936,
+            "worst": 1.00694
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 75448004,
+            "maximum": 77397848,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 65157760,
+            "maximum": 67108584,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 367,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 4004640,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.06339,
+            "p95": 0.388422,
+            "p99": 7.32564,
+            "worst": 7.32564
+          }
+        },
+        "intact": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.41403599999999996,
+            "p95": 0.462182,
+            "p99": 0.481558,
+            "worst": 0.571649
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.8250950000000001,
+            "p95": 2.00621,
+            "p99": 2.10109,
+            "worst": 2.16279
+          },
+          "render_submission_ms": {
+            "median": 0.372317,
+            "p95": 0.4613,
+            "p99": 0.495765,
+            "worst": 0.497148
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.852128,
+            "p95": 0.938944,
+            "p99": 0.94496,
+            "worst": 1.00109
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77382124,
+            "maximum": 77382124,
+            "end": 77382124
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 67099344,
+            "maximum": 67099344,
+            "end": 67099344
+          },
+          "collision_pages": {
+            "minimum": 367,
+            "maximum": 367,
+            "end": 367
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 661,
+            "end": 661
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 2565120,
+            "end": 2565120
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 32,
+            "end": 32
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 7.32564,
+            "p95": 7.32564,
+            "p99": 7.32564,
+            "worst": 7.32564
+          }
+        }
+      }
+    },
+    {
+      "case": "short-1",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_game_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+      ],
+      "exit": 0,
+      "peak_process_rss_kib": 309208,
+      "scene_build_ms": 1318.47,
+      "phases": {
+        "excavated": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.479965,
+            "p95": 0.626262,
+            "p99": 0.776485,
+            "worst": 0.86427
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.957945,
+            "p95": 2.28191,
+            "p99": 2.39601,
+            "worst": 2.4186
+          },
+          "render_submission_ms": {
+            "median": 0.42019799999999996,
+            "p95": 0.605793,
+            "p99": 0.670846,
+            "worst": 0.68386
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.836192,
+            "p95": 0.841952,
+            "p99": 0.845024,
+            "worst": 0.846464
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77051648,
+            "maximum": 77051648,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 66761224,
+            "maximum": 66761224,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 35,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 1041,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 4003888,
+            "maximum": 4003888,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 36,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.055715,
+            "p95": 0.055715,
+            "p99": 0.055715,
+            "worst": 0.055715
+          }
+        },
+        "excavating": {
+          "samples": 503,
+          "simulation_scripts_publication_ms": {
+            "median": 0.555568,
+            "p95": 0.758832,
+            "p99": 1.33271,
+            "worst": 1.57342
+          },
+          "collision_query_ms": {
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 2.04096,
+            "p95": 2.32699,
+            "p99": 3.02425,
+            "worst": 3.53558
+          },
+          "render_submission_ms": {
+            "median": 0.435291,
+            "p95": 0.500544,
+            "p99": 0.772828,
+            "worst": 1.12519
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.838656,
+            "p95": 0.850336,
+            "p99": 0.8984,
+            "worst": 1.00346
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 75448004,
+            "maximum": 77397848,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 65157760,
+            "maximum": 67108584,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 367,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 4004640,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.06379,
+            "p95": 0.407269,
+            "p99": 7.3735,
+            "worst": 7.3735
+          }
+        },
+        "intact": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.42213100000000003,
+            "p95": 0.515793,
+            "p99": 0.923913,
+            "worst": 0.998954
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.8431199999999999,
+            "p95": 2.0868,
+            "p99": 2.44773,
+            "worst": 2.56176
+          },
+          "render_submission_ms": {
+            "median": 0.382812,
+            "p95": 0.478983,
+            "p99": 0.511656,
+            "worst": 0.512427
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.760352,
+            "p95": 0.768384,
+            "p99": 0.773216,
+            "worst": 0.774016
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77382124,
+            "maximum": 77382124,
+            "end": 77382124
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 67099344,
+            "maximum": 67099344,
+            "end": 67099344
+          },
+          "collision_pages": {
+            "minimum": 367,
+            "maximum": 367,
+            "end": 367
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 661,
+            "end": 661
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 2565120,
+            "end": 2565120
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 32,
+            "end": 32
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 7.3735,
+            "p95": 7.3735,
+            "p99": 7.3735,
+            "worst": 7.3735
+          }
+        }
+      }
+    },
+    {
+      "case": "short-2",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_game_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+      ],
+      "exit": 0,
+      "peak_process_rss_kib": 309536,
+      "scene_build_ms": 1357.78,
+      "phases": {
+        "excavated": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.39505,
+            "p95": 0.444749,
+            "p99": 0.535811,
+            "worst": 0.877385
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.7960099999999999,
+            "p95": 1.92529,
+            "p99": 2.09746,
+            "worst": 2.35312
+          },
+          "render_submission_ms": {
+            "median": 0.359538,
+            "p95": 0.427547,
+            "p99": 0.442885,
+            "worst": 0.446142
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.840064,
+            "p95": 0.846688,
+            "p99": 0.84848,
+            "worst": 0.85264
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77051648,
+            "maximum": 77051648,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 66761224,
+            "maximum": 66761224,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 35,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 1041,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 4003888,
+            "maximum": 4003888,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 36,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.062808,
+            "p95": 0.062808,
+            "p99": 0.062808,
+            "worst": 0.062808
+          }
+        },
+        "excavating": {
+          "samples": 503,
+          "simulation_scripts_publication_ms": {
+            "median": 0.563954,
+            "p95": 0.855855,
+            "p99": 1.62258,
+            "worst": 1.78766
+          },
+          "collision_query_ms": {
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 2.07221,
+            "p95": 2.71175,
+            "p99": 3.40101,
+            "worst": 4.32609
+          },
+          "render_submission_ms": {
+            "median": 0.442675,
+            "p95": 0.704538,
+            "p99": 0.846807,
+            "worst": 1.12138
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.842432,
+            "p95": 0.853952,
+            "p99": 0.90144,
+            "worst": 1.00544
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 75448004,
+            "maximum": 77397848,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 65157760,
+            "maximum": 67108584,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 367,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 4004640,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.071165,
+            "p95": 0.387912,
+            "p99": 7.34358,
+            "worst": 7.34358
+          }
+        },
+        "intact": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.41283400000000003,
+            "p95": 0.457012,
+            "p99": 0.474245,
+            "worst": 0.481258
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.82721,
+            "p95": 1.9715,
+            "p99": 2.08216,
+            "worst": 2.10763
+          },
+          "render_submission_ms": {
+            "median": 0.3758285,
+            "p95": 0.457213,
+            "p99": 0.492419,
+            "worst": 0.502538
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.763632,
+            "p95": 0.769216,
+            "p99": 0.774944,
+            "worst": 0.77808
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77382124,
+            "maximum": 77382124,
+            "end": 77382124
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 67099344,
+            "maximum": 67099344,
+            "end": 67099344
+          },
+          "collision_pages": {
+            "minimum": 367,
+            "maximum": 367,
+            "end": 367
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 661,
+            "end": 661
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 2565120,
+            "end": 2565120
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 32,
+            "end": 32
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 7.34358,
+            "p95": 7.34358,
+            "p99": 7.34358,
+            "worst": 7.34358
+          }
+        }
+      }
+    },
+    {
+      "case": "traversal",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_game_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj",
+        "--traverse"
+      ],
+      "exit": 0,
+      "peak_process_rss_kib": 378164,
+      "scene_build_ms": 1310.87,
+      "phases": {
+        "excavated": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.4160655,
+            "p95": 0.481729,
+            "p99": 0.56206,
+            "worst": 0.65252
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.855595,
+            "p95": 1.98151,
+            "p99": 2.21825,
+            "worst": 2.22946
+          },
+          "render_submission_ms": {
+            "median": 0.379987,
+            "p95": 0.465288,
+            "p99": 0.57234,
+            "worst": 0.716482
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.840144,
+            "p95": 0.847552,
+            "p99": 0.852736,
+            "worst": 0.853568
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77051648,
+            "maximum": 77051648,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 66761224,
+            "maximum": 66761224,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 35,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 1041,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 4003888,
+            "maximum": 4003888,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 36,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.063129,
+            "p95": 0.063129,
+            "p99": 0.063129,
+            "worst": 0.063129
+          }
+        },
+        "excavating": {
+          "samples": 506,
+          "simulation_scripts_publication_ms": {
+            "median": 0.5606025,
+            "p95": 0.881373,
+            "p99": 1.44348,
+            "worst": 1.68227
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 2.0657550000000002,
+            "p95": 2.62523,
+            "p99": 3.13671,
+            "worst": 3.63594
+          },
+          "render_submission_ms": {
+            "median": 0.442104,
+            "p95": 0.61454,
+            "p99": 0.789559,
+            "worst": 1.11165
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.843904,
+            "p95": 0.85568,
+            "p99": 0.89904,
+            "worst": 1.00717
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 75448004,
+            "maximum": 77397848,
+            "end": 77051648
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 65157760,
+            "maximum": 67108584,
+            "end": 66761224
+          },
+          "collision_pages": {
+            "minimum": 35,
+            "maximum": 367,
+            "end": 35
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 1041,
+            "end": 1041
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 4004640,
+            "end": 4003888
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 36,
+            "end": 36
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 0.063129,
+            "p95": 0.386018,
+            "p99": 7.33812,
+            "worst": 7.33812
+          }
+        },
+        "intact": {
+          "samples": 180,
+          "simulation_scripts_publication_ms": {
+            "median": 0.4153785,
+            "p95": 0.463865,
+            "p99": 0.548484,
+            "worst": 0.549356
+          },
+          "collision_query_ms": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "worst": 0
+          },
+          "frame_wall_ms": {
+            "median": 1.829735,
+            "p95": 1.98082,
+            "p99": 2.11583,
+            "worst": 2.32979
+          },
+          "render_submission_ms": {
+            "median": 0.37485199999999996,
+            "p95": 0.459867,
+            "p99": 0.522595,
+            "worst": 0.711302
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.7641439999999999,
+            "p95": 0.770656,
+            "p99": 0.779136,
+            "worst": 0.779264
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 77382124,
+            "maximum": 77382124,
+            "end": 77382124
+          },
+          "source_page_bytes": {
+            "minimum": 8374464,
+            "maximum": 8374464,
+            "end": 8374464
+          },
+          "source_pages": {
+            "minimum": 111,
+            "maximum": 111,
+            "end": 111
+          },
+          "source_evictions": {
+            "minimum": 625,
+            "maximum": 625,
+            "end": 625
+          },
+          "collision_page_bytes": {
+            "minimum": 67099344,
+            "maximum": 67099344,
+            "end": 67099344
+          },
+          "collision_pages": {
+            "minimum": 367,
+            "maximum": 367,
+            "end": 367
+          },
+          "collision_evictions": {
+            "minimum": 661,
+            "maximum": 661,
+            "end": 661
+          },
+          "gpu_page_bytes": {
+            "minimum": 2565120,
+            "maximum": 2565120,
+            "end": 2565120
+          },
+          "gpu_pages": {
+            "minimum": 32,
+            "maximum": 32,
+            "end": 32
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 7.33812,
+            "p95": 7.33812,
+            "p99": 7.33812,
+            "worst": 7.33812
+          }
+        },
+        "traversal": {
+          "samples": 24576,
+          "simulation_scripts_publication_ms": {
+            "median": 0.39398299999999997,
+            "p95": 0.521093,
+            "p99": 0.602237,
+            "worst": 1.08573
+          },
+          "collision_query_ms": {
+            "median": 0.002925,
+            "p95": 1.02391,
+            "p99": 1.28753,
+            "worst": 2.98988
+          },
+          "frame_wall_ms": {
+            "median": 1.343115,
+            "p95": 2.43032,
+            "p99": 2.77187,
+            "worst": 14.522
+          },
+          "render_submission_ms": {
+            "median": 0.2066945,
+            "p95": 0.484574,
+            "p99": 0.587328,
+            "worst": 12.4694
+          },
+          "gpu_elapsed_ms": {
+            "median": 0.413696,
+            "p95": 0.626592,
+            "p99": 0.694016,
+            "worst": 1.08528
+          },
+          "cpu_terrain_bytes": {
+            "minimum": 75437048,
+            "maximum": 77399240,
+            "end": 77291844
+          },
+          "source_page_bytes": {
+            "minimum": 8307264,
+            "maximum": 8387988,
+            "end": 8311380
+          },
+          "source_pages": {
+            "minimum": 107,
+            "maximum": 126,
+            "end": 125
+          },
+          "source_evictions": {
+            "minimum": 626,
+            "maximum": 1489,
+            "end": 1489
+          },
+          "collision_page_bytes": {
+            "minimum": 65146624,
+            "maximum": 67108816,
+            "end": 67064504
+          },
+          "collision_pages": {
+            "minimum": 36,
+            "maximum": 357,
+            "end": 357
+          },
+          "collision_evictions": {
+            "minimum": 1041,
+            "maximum": 3787,
+            "end": 3787
+          },
+          "gpu_page_bytes": {
+            "minimum": 4003888,
+            "maximum": 6359920,
+            "end": 6359920
+          },
+          "gpu_pages": {
+            "minimum": 36,
+            "maximum": 56,
+            "end": 56
+          },
+          "gpu_evictions": {
+            "minimum": 0,
+            "maximum": 0,
+            "end": 0
+          },
+          "page_prepare_ms": {
+            "median": 10.0287,
+            "p95": 10.0287,
+            "p99": 11.986,
+            "worst": 12.2697
+          },
+          "lap_ends": [
+            {
+              "phase": "traversal",
+              "index": 8191,
+              "simulation_scripts_publication_ms": 0.425112,
+              "collision_query_ms": 0.002826,
+              "frame_wall_ms": 1.15578,
+              "render_submission_ms": 0.297051,
+              "gpu_elapsed_ms": 0.308128,
+              "draws": 24,
+              "triangles": 69416,
+              "cpu_terrain_bytes": 77291844,
+              "source_page_bytes": 8311380,
+              "source_pages": 125,
+              "source_evictions": 911,
+              "collision_page_bytes": 67064504,
+              "collision_pages": 357,
+              "collision_evictions": 1741,
+              "gpu_page_bytes": 6359920,
+              "gpu_pages": 56,
+              "gpu_evictions": 0,
+              "page_prepare_ms": 10.0287
+            },
+            {
+              "phase": "traversal",
+              "index": 16383,
+              "simulation_scripts_publication_ms": 0.323841,
+              "collision_query_ms": 0.002786,
+              "frame_wall_ms": 1.05167,
+              "render_submission_ms": 0.293474,
+              "gpu_elapsed_ms": 0.304896,
+              "draws": 24,
+              "triangles": 69416,
+              "cpu_terrain_bytes": 77291844,
+              "source_page_bytes": 8311380,
+              "source_pages": 125,
+              "source_evictions": 1200,
+              "collision_page_bytes": 67064504,
+              "collision_pages": 357,
+              "collision_evictions": 2764,
+              "gpu_page_bytes": 6359920,
+              "gpu_pages": 56,
+              "gpu_evictions": 0,
+              "page_prepare_ms": 10.0287
+            },
+            {
+              "phase": "traversal",
+              "index": 24575,
+              "simulation_scripts_publication_ms": 0.450409,
+              "collision_query_ms": 0.002735,
+              "frame_wall_ms": 1.18814,
+              "render_submission_ms": 0.303372,
+              "gpu_elapsed_ms": 0.335168,
+              "draws": 24,
+              "triangles": 69416,
+              "cpu_terrain_bytes": 77291844,
+              "source_page_bytes": 8311380,
+              "source_pages": 125,
+              "source_evictions": 1489,
+              "collision_page_bytes": 67064504,
+              "collision_pages": 357,
+              "collision_evictions": 3787,
+              "gpu_page_bytes": 6359920,
+              "gpu_pages": 56,
+              "gpu_evictions": 0,
+              "page_prepare_ms": 10.0287
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

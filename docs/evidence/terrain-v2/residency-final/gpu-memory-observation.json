@@ -1,0 +1,108 @@
+{
+  "scope": "Separate memory-only run with NVIDIA telemetry polling; not used for performance timings",
+  "baseline": {
+    "total_mib": 4096,
+    "device_used_mib": 284,
+    "process_memory": null
+  },
+  "exit": 0,
+  "pid": 1215965,
+  "samples": [
+    {
+      "seconds": 0.0004817489971173927,
+      "total_mib": 4096,
+      "device_used_mib": 284,
+      "process_memory": null
+    },
+    {
+      "seconds": 0.2754078469988599,
+      "total_mib": 4096,
+      "device_used_mib": 308,
+      "process_memory": "24 MiB"
+    },
+    {
+      "seconds": 0.5510839199996553,
+      "total_mib": 4096,
+      "device_used_mib": 308,
+      "process_memory": "24 MiB"
+    },
+    {
+      "seconds": 0.8272621399992204,
+      "total_mib": 4096,
+      "device_used_mib": 308,
+      "process_memory": "24 MiB"
+    },
+    {
+      "seconds": 1.1020584129983035,
+      "total_mib": 4096,
+      "device_used_mib": 308,
+      "process_memory": "24 MiB"
+    },
+    {
+      "seconds": 1.3781957459978003,
+      "total_mib": 4096,
+      "device_used_mib": 307,
+      "process_memory": "24 MiB"
+    },
+    {
+      "seconds": 1.6541305259997898,
+      "total_mib": 4096,
+      "device_used_mib": 320,
+      "process_memory": "35 MiB"
+    },
+    {
+      "seconds": 1.9298585469987302,
+      "total_mib": 4096,
+      "device_used_mib": 320,
+      "process_memory": "35 MiB"
+    },
+    {
+      "seconds": 2.205557292996673,
+      "total_mib": 4096,
+      "device_used_mib": 320,
+      "process_memory": "35 MiB"
+    },
+    {
+      "seconds": 2.4814904300001217,
+      "total_mib": 4096,
+      "device_used_mib": 320,
+      "process_memory": "35 MiB"
+    },
+    {
+      "seconds": 2.7584891879996576,
+      "total_mib": 4096,
+      "device_used_mib": 322,
+      "process_memory": "37 MiB"
+    },
+    {
+      "seconds": 3.035746432997257,
+      "total_mib": 4096,
+      "device_used_mib": 322,
+      "process_memory": "37 MiB"
+    },
+    {
+      "seconds": 3.3123429819970625,
+      "total_mib": 4096,
+      "device_used_mib": 322,
+      "process_memory": "37 MiB"
+    },
+    {
+      "seconds": 3.587901773997146,
+      "total_mib": 4096,
+      "device_used_mib": 322,
+      "process_memory": "37 MiB"
+    },
+    {
+      "seconds": 3.8639855649998935,
+      "total_mib": 4096,
+      "device_used_mib": 322,
+      "process_memory": "37 MiB"
+    },
+    {
+      "seconds": 4.138418292997812,
+      "total_mib": 4096,
+      "device_used_mib": 284,
+      "process_memory": null
+    }
+  ]
+}

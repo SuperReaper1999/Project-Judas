@@ -1,0 +1,2 @@
+METRIC far_patches=2 near_patches=26 split_patches=44 shared_grid_bytes=22328 height_bytes=132612 hierarchy_bytes_estimate=10260
+SUMMARY 339 checks 0 failures

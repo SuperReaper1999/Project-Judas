@@ -77,6 +77,14 @@ Use its matching profile IDs, collision source masks and bake workflow. A visibl
 terrain mesh alone is not a baked navigation surface. Rebuild navigation after
 changing relevant collision or terrain geometry.
 
+For [native Terrain V2 landscapes](TERRAIN_V2.md), use source-owned navigation:
+the terrain worker prepares changed collision and affected navigation tiles
+together, then publishes the complete revision. A separate static bake that
+includes the editable landscape is rejected rather than left stale. See the
+[current qualification and limits](TERRAIN_V2_QUALIFICATION.md) and
+[independent residency budgets](TERRAIN_V2_RESIDENCY.md). Runtime collision,
+particle coverage and fluid solid queries remain independent of visual LOD.
+
 [Navigation](judasjs/navigation.md), [CharacterMotor](judasjs/character.md) and
 [Game AI](GAME_AI.md) cover movement and decisions. Utility AI chooses project
 actions; it does not automatically create movement, combat, jobs or inventory.

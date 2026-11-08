@@ -1,0 +1,12 @@
+FRAMES 1800
+FRAME_SECONDS 0.016666667
+LOG_EVERY 120
+ACTION mode_raise 1 100 101
+ACTION dig 1 120 121
+ACTION mode_paint 1 160 161
+ACTION dig 1 180 181
+ACTION mode_dig 1 220 221
+ACTION tunnel 1 250 251
+ACTION save 1 1450 1451
+WAIT_SERVICES save 10000 1453
+SCREENSHOT 1750 /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat-portable-final/write.png

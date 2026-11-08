@@ -1,0 +1,27 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor onboarding] packaged visible starter: PASS 
+[editor autotest] duplicate created id 5: scene CHANGED; undo restores: IDENTICAL
+[editor navigation] new-scene request preserves unsaved document until a choice: PASS
+[editor autotest] wrote: /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final/editor-create.unsaved.png
+[editor navigation] unsaved-document confirmation remains open across frames: PASS
+[editor navigation] Escape cancels unsaved-document action: PASS
+[editor autotest] wrote: /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final/editor-create.resized.png
+[editor navigation] resized scene target follows workspace dimensions: PASS
+[editor navigation] scene picking uses the central viewport projection after resize: PASS
+[editor autotest] export project: 
+[editor autotest] wrote: /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final/editor-create.edit.png
+[editor autotest] edit frame: 0 draw calls, 0 triangles, 0 debug lines
+[editor navigation] explicit export choice produces the requested package: PASS
+[editor navigation] exported scene and project match the explicit saved-content choice: PASS
+[editor navigation] use-saved preserves live edits; save-all clears both dirty baselines: PASS
+[editor export choice] Exported /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final/editor-export (1 assets)
+[editor autotest] wrote: /home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final/editor-create.play.png
+[editor autotest] play frame: 0 steps, step 0.000 ms, 0 bodies, 0 contacts, 0 draw calls, 0 triangles, 0 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 11 workers, 0 completed, 0 failed, 0 cancelled

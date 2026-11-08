@@ -1,0 +1,68 @@
+[
+  {
+    "name": "qualification-modern-confirmed",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_validate.py",
+      "--build-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--group",
+      "terrain",
+      "--test",
+      "renderer-shader-library",
+      "--graphics-profile",
+      "modern",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-23dbefde/qualification-modern-confirmed"
+    ],
+    "exit": 0,
+    "seconds": 33.49962749599945
+  },
+  {
+    "name": "qualification-portable-confirmed",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_validate.py",
+      "--build-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--group",
+      "terrain",
+      "--test",
+      "renderer-shader-library",
+      "--graphics-profile",
+      "portable",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-23dbefde/qualification-portable-confirmed"
+    ],
+    "exit": 0,
+    "seconds": 32.74556955699882
+  },
+  {
+    "name": "editor-modern",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/editor-modern"
+    ],
+    "exit": 0,
+    "seconds": 0.4120094909994805
+  },
+  {
+    "name": "editor-portable",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/editor-portable"
+    ],
+    "exit": 0,
+    "seconds": 0.350796676997561
+  },
+  {
+    "name": "residency-cold-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_streaming_tests",
+      "--read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-23dbefde/qualification-modern-confirmed/terrain-v2-residency"
+    ],
+    "exit": 0,
+    "seconds": 1.5680110059984145
+  }
+]

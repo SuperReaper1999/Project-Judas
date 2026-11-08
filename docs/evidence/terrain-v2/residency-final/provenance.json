@@ -1,0 +1,29 @@
+{
+  "engine_revision": "23dbefdec8aa5f5ac5a466af85032186357db700",
+  "compiled_inputs_match_commit": true,
+  "build": {
+    "schema": 1,
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "version": "2.0.0-alpha.1",
+    "maturity": "alpha",
+    "channel": "Experimental",
+    "build_id": "2.0.0-alpha.1-Experimental-23dbefd-dirty-b294e04ea1d9-u159529a78ae7",
+    "source_revision": "23dbefdec8aa5f5ac5a466af85032186357db700",
+    "source_tree": "b985a0f876e4af755c401a1350fb5dc14f14be99",
+    "source_dirty": true,
+    "source_fingerprint": "b294e04ea1d92fb9294a4badb341ef2e0642eeac0a3503b2644bb43937c3d2a4",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "preserved_unrelated_tracked_changes": [
+    "docs/evidence/prealpha-project-settings-water/application/basic-overview.png",
+    "docs/evidence/prealpha-project-settings-water/application/basic-underwater.png"
+  ],
+  "rpg_sdk_unchanged": "JudasEngine-2.0.0-alpha.1-Experimental-Linux-x86_64-local-9f022cf1"
+}

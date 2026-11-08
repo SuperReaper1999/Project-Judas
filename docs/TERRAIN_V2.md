@@ -3,7 +3,9 @@
 This is source-build development on Experimental. One source owns ordinary
 heightfields, local excavation, materials, collision, navigation and persistence.
 Fine-grained source/collision paging and independent GPU residency are now
-implemented; final automated qualification is in progress. Human terrain
+implemented and automatically qualified, including the matching SDK, relocated
+exports and completed Experimental/Alpha CI. Exact scopes and exclusions are in
+the qualification record. Human terrain
 acceptance is pending. Existing project assets are not replaced automatically.
 
 The current architecture and budgets are described in
@@ -332,10 +334,15 @@ as well as handles, preventing another world's ID from aliasing a terrain.
 
 This does not change the Alpha fluid lock, default water policy, pressure/transport
 solver or liquid research. Planetary excavation and native SDK qualification have
-subsequently been exercised below. Per-chunk physical residency remains open.
+subsequently been exercised below. The per-chunk physical residency restriction
+recorded at this checkpoint has since been removed; see the residency reference.
 Source-owned navigation publication is described below.
 
-## Native regional streaming
+## Native regional streaming checkpoint
+
+The following measurements describe the earlier region-granular implementation.
+Current sample/collision/GPU paging and final costs are in the residency and
+qualification references above; whole-region retention below is historical.
 
 Native sources now use the existing region preparation worker to decode samples,
 extract chunks, cook collision BVHs and build height LOD before registration.
@@ -543,7 +550,11 @@ state. Source/geometry, resident-chunk, whole-save and regional memory bounds
 still apply. Asset-backed terrain remains preferable for large authored worlds
 because saves retain references and edits rather than duplicating base arrays.
 
-## Current native SDK and retained-memory qualification
+## Native SDK and retained-memory checkpoint (28984e7a)
+
+This section preserves the earlier SDK/memory result. Its retention description
+and package are superseded by the current paged implementation and final matching
+SDK identified in [the qualification record](TERRAIN_V2_QUALIFICATION.md).
 
 The fresh17-tool local SDK includes both editable Workshops and its own
 `tools/validation/qualify_terrain_v2.py`. Standard editor/project/tool operations,

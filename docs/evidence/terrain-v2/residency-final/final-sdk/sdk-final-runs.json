@@ -1,0 +1,66 @@
+[
+  {
+    "name": "sdk",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/qualify_sdk.py",
+      "--sdk",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde",
+      "--work",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/sdk-final"
+    ],
+    "exit": 0,
+    "seconds": 11.459406546000537,
+    "environment": {}
+  },
+  {
+    "name": "flat",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat-final",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "exit": 0,
+    "seconds": 4.642510429999675,
+    "environment": {}
+  },
+  {
+    "name": "planet",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/planet-final",
+      "--material-detail",
+      "--planet"
+    ],
+    "exit": 0,
+    "seconds": 7.009491312001046,
+    "environment": {}
+  },
+  {
+    "name": "flat-portable",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-23dbefde",
+      "--output",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-23dbefde/flat-portable-final",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "exit": 0,
+    "seconds": 4.683862850000878,
+    "environment": {
+      "JUDAS_GL_PROFILE": "portable"
+    }
+  }
+]

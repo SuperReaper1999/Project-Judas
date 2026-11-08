@@ -1,0 +1,64 @@
+[
+  {
+    "name": "qualification-modern-confirmed",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_validate.py",
+      "--build-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--group",
+      "terrain",
+      "--test",
+      "renderer-shader-library",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-970c8296/qualification-modern-confirmed"
+    ],
+    "exit": 0,
+    "seconds": 33.489349875999324
+  },
+  {
+    "name": "qualification-portable-confirmed",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_validate.py",
+      "--build-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--group",
+      "terrain",
+      "--test",
+      "renderer-shader-library",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-970c8296/qualification-portable-confirmed"
+    ],
+    "exit": 0,
+    "seconds": 33.48284296199927
+  },
+  {
+    "name": "editor-modern",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-970c8296/editor-modern"
+    ],
+    "exit": 0,
+    "seconds": 0.4934427100015455
+  },
+  {
+    "name": "editor-portable",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/JudasTerrainV2Acceptance-970c8296/editor-portable"
+    ],
+    "exit": 0,
+    "seconds": 0.349865840998973
+  },
+  {
+    "name": "residency-cold-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_v2_streaming_tests",
+      "--read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/paging/final-970c8296/qualification-modern-confirmed/terrain-v2-residency"
+    ],
+    "exit": 0,
+    "seconds": 1.5771902710002905
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "log": "terrain-v2-planet-editor.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-transition.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-height-shadow.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-creation.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-planet-render.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-materials.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  },
+  {
+    "log": "terrain-v2-render-paging.log",
+    "graphics": "[Graphics] API=OpenGL 4.6 requested=modern selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2"
+  }
+]
