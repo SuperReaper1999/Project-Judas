@@ -28,23 +28,27 @@ bool ValidParticleSettings(const ParticleEmitterSettings &s) {
             s.backend == ParticleBackend::Gpu) &&
            (s.response == ParticleResponse::Bounce || s.response == ParticleResponse::Slide ||
             s.response == ParticleResponse::Stick || s.response == ParticleResponse::Remove) &&
-           (s.impacts == ParticleImpactDelivery::Off || s.impacts == ParticleImpactDelivery::Cosmetic ||
+           (s.impacts == ParticleImpactDelivery::Off ||
+            s.impacts == ParticleImpactDelivery::Cosmetic ||
             s.impacts == ParticleImpactDelivery::Reliable) &&
            Range(s.collisionRadius, 0, 1000) && s.collisionRadius > 0 &&
-           Range(s.restitution, 0, 1) && Range(s.friction, 0, 1) &&
-           s.maxContacts >= 1 && s.maxContacts <= 32 &&
-           Range(s.impactCellSize, .000001f, 10000) &&
+           Finite(s.collisionRegionOffset) && Finite(s.collisionRegionHalfExtents) &&
+           glm::all(glm::greaterThan(s.collisionRegionHalfExtents, glm::vec3(0))) &&
+           glm::all(glm::lessThanEqual(s.collisionRegionHalfExtents, glm::vec3(8192))) &&
+           Range(s.restitution, 0, 1) && Range(s.friction, 0, 1) && s.maxContacts >= 1 &&
+           s.maxContacts <= 32 && Range(s.impactCellSize, .000001f, 10000) &&
            Range(s.impactWeight, 0, 1000000) && s.maxImpactCells >= 1 && s.maxImpactCells <= 65536;
 }
 
 bool ParticleSettingsEqual(const ParticleEmitterSettings &a, const ParticleEmitterSettings &b) {
     const auto fields = [](const ParticleEmitterSettings &s) {
         return std::tie(s.enabled, s.loop, s.localSpace, s.useGravity, s.rate, s.lifetime, s.size,
-                        s.endSize, s.burst, s.maxParticles, s.spread, s.velocity, s.velocityVariation,
-                        s.acceleration, s.color, s.endColor, s.textureAsset, s.seed, s.backend,
-                        s.collision, s.useWind, s.collisionRadius, s.restitution, s.friction,
-                        s.response, s.collisionLayers, s.maxContacts, s.impacts, s.impactCellSize,
-                        s.impactWeight, s.maxImpactCells);
+                        s.endSize, s.burst, s.maxParticles, s.spread, s.velocity,
+                        s.velocityVariation, s.acceleration, s.color, s.endColor, s.textureAsset,
+                        s.seed, s.backend, s.collision, s.useWind, s.collisionRadius, s.restitution,
+                        s.friction, s.response, s.collisionLayers, s.collisionRegion,
+                        s.collisionRegionOffset, s.collisionRegionHalfExtents, s.maxContacts,
+                        s.impacts, s.impactCellSize, s.impactWeight, s.maxImpactCells);
     };
     return fields(a) == fields(b);
 }

@@ -209,6 +209,7 @@ JSValue HandleParticles(BindingContext &context, const std::string &op, int argc
                                           {"localSpace", p.localSpace},
                                           {"useGravity", p.useGravity},
                                           {"collision", p.collision},
+                                          {"collisionRegion", p.collisionRegion},
                                           {"useWind", p.useWind}})
                     JS_SetPropertyStr(c, out, key, JS_NewBool(c, value));
                 for (auto [key, value] : {std::pair<const char *, double>{"rate", p.rate},
@@ -230,7 +231,9 @@ JSValue HandleParticles(BindingContext &context, const std::string &op, int argc
                      {std::pair<const char *, glm::vec3>{"velocity", p.velocity},
                       {"velocityVariation", p.velocityVariation},
                       {"spread", p.spread},
-                      {"acceleration", p.acceleration}})
+                      {"acceleration", p.acceleration},
+                      {"collisionRegionOffset", p.collisionRegionOffset},
+                      {"collisionRegionHalfExtents", p.collisionRegionHalfExtents}})
                     JS_SetPropertyStr(c, out, key, Vec(c, value));
                 for (auto [key, value] : {std::pair<const char *, glm::vec4>{"color", p.color},
                                           {"endColor", p.endColor}}) {
@@ -261,7 +264,8 @@ JSValue HandleParticles(BindingContext &context, const std::string &op, int argc
                            "acceleration", "color", "endColor", "burst", "maxParticles", "seed",
                            "textureAsset", "backend", "collision", "useWind", "collisionRadius",
                            "restitution", "friction", "response", "collisionLayers", "maxContacts",
-                           "impacts", "impactCellSize", "impactWeight", "maxImpactCells"}))
+                           "impacts", "impactCellSize", "impactWeight", "maxImpactCells",
+                           "collisionRegion", "collisionRegionOffset", "collisionRegionHalfExtents"}))
             return JS_ThrowTypeError(c, "unknown particle setting");
         for (auto &emitter : world.VisualEmitters())
             if (emitter.id == id) {
@@ -272,6 +276,7 @@ JSValue HandleParticles(BindingContext &context, const std::string &op, int argc
                       {"localSpace", &settings.localSpace},
                       {"useGravity", &settings.useGravity},
                       {"collision", &settings.collision},
+                      {"collisionRegion", &settings.collisionRegion},
                       {"useWind", &settings.useWind}}) {
                     auto property = JS_GetPropertyStr(c, options, key);
                     const bool valid = JS_IsUndefined(property) || JS_IsBool(property) ||
@@ -301,7 +306,9 @@ JSValue HandleParticles(BindingContext &context, const std::string &op, int argc
                      {std::pair<const char *, glm::vec3 *>{"velocity", &settings.velocity},
                       {"velocityVariation", &settings.velocityVariation},
                       {"spread", &settings.spread},
-                      {"acceleration", &settings.acceleration}}) {
+                      {"acceleration", &settings.acceleration},
+                      {"collisionRegionOffset", &settings.collisionRegionOffset},
+                      {"collisionRegionHalfExtents", &settings.collisionRegionHalfExtents}}) {
                     auto property = JS_GetPropertyStr(c, options, key);
                     const bool valid = JS_IsUndefined(property) || ReadVec(c, property, *value);
                     JS_FreeValue(c, property);

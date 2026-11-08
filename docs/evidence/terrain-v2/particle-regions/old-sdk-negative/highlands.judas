@@ -1,0 +1,123 @@
+JudasScene 3
+settings
+ name "Terrain V2 — Highlands"
+ world-origin 0 0 0
+ sun-direction -0.4 0.8 0.35
+ sun-color 1 0.94 0.82
+ ambient 0.34 0.39 0.45
+ background-color 0.48 0.67 0.81
+ fluid-scale 1
+ fidelity-policy none
+ next-id 100
+end
+object 1 "Editable Highlands — heightfield and caves"
+ terrain.asset "8a22000000000000000000000000000e"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 24 8 24
+ render.radius 1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.texture-asset "8a22000000000000000000000000000d"
+ render.mesh-asset "8a220000000000000000000000000002"
+ render.color 1 1 1
+ body static box
+ body.half-extents 24 8 24
+ body.radius 1
+ body.terrain ""
+ body.mass 1
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+ body.collision-asset ""
+ body.friction 0.75
+ body.restitution 0
+ nav.surface.enabled "1"
+ nav.surface.includeDynamic "0"
+ nav.surface.profile "0"
+ nav.surface.sources "18446744073709551615"
+ nav.surface.halfExtents "25 12 25"
+ nav.surface.cellSize "0.25"
+ nav.surface.cellHeight "0.1"
+ nav.surface.simplification "1.3"
+ nav.surface.tileSize "32"
+ nav.surface.minRegion "0"
+ nav.surface.asset ""
+end
+object 2 "Gravity"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ gravity uniform 9.81
+ gravity.region sphere 10000
+end
+object 64 "Explorer"
+ position 0 1.9 13
+ rotation 1 0 0 0
+ scale 1 1 1
+ motor.enabled true
+ motor.radius 0.3
+ motor.halfHeight 0.6
+ motor.offset 0 0 0
+ motor.stepHeight 0.55
+ motor.supportDistance 0.15
+ motor.skin 0.02
+ motor.maxSlopeDegrees 50
+ motor.gravityScale 1
+ motor.reorientationDegreesPerSecond 120
+ motor.interactionMass 80
+ motor.maxPushImpulse 20
+ motor.collisionLayer 0
+ motor.collisionMask 18446744073709551615
+ motor.requiredTags 0
+ motor.excludedTags 0
+ scripts 1
+ script.0.id 1
+ script.0.asset "8a220000000000000000000000000001"
+ script.0.enabled true
+ script.0.properties "{}"
+ ui.asset "bd7a9cddb5b85ee03930a88f173acc8b"
+ ui.name "game_ui"
+ ui.enabled true
+end
+object 65 "SDK local collision consumer"
+ position 0 12 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ particle-emitter
+ particle.enabled true
+ particle.loop false
+ particle.local-space false
+ particle.gravity false
+ particle.rate 0
+ particle.lifetime 4
+ particle.size 0.05
+ particle.end-size 0.05
+ particle.burst 0
+ particle.capacity 16
+ particle.spread 0 0 0
+ particle.velocity 0 -12 0
+ particle.variation 0 0 0
+ particle.acceleration 0 0 0
+ particle.texture ""
+ particle.color 0.6 0.5 0.3
+ particle.alpha 1
+ particle.end-color 0.6 0.5 0.3
+ particle.end-alpha 1
+ particle.seed 1
+ particle.collision true
+ particle.response "remove"
+ particle.impacts "reliable"
+ particle.collision-region true
+ particle.collision-region-offset 1 0 0
+ particle.collision-region-half-extents 8 8 8
+ scripts 1
+ script.0.id 1
+ script.0.asset "8a2200000000000000000000000000af"
+ script.0.enabled true
+ script.0.properties "{}"
+end

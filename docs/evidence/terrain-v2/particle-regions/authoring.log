@@ -1,0 +1,52 @@
+PASS legacy emitter remains serializable and fingerprintable
+PASS default emitters add no V2 canonical properties
+PASS old scene input retains portable CPU visual-only defaults
+PASS default scene preserves canonical text and fingerprint on roundtrip
+PASS coherent collision and event authoring passes validation
+PASS every V2 property and high-bit collision mask roundtrips exactly
+PASS named authoring codec retains collision and event properties
+PASS ordinary prefab extraction retains the complete emitter definition
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS each V2 option affects equality and authored compatibility identity
+PASS document edit owns the complete new definition
+PASS undo restores all legacy defaults
+PASS redo restores collision and impact authoring
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS invalid enum or unsafe budget is rejected without coercion
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+PASS malformed authored particle options fail transactionally
+SUMMARY 51 checks 0 failures

@@ -106,22 +106,27 @@ int main() {
   assert(e.setParticles({backend:'auto',collision:true,useWind:true,response:'slide',
     collisionRadius:0.125,restitution:0.75,friction:0.5,maxContacts:4,
     collisionLayers:'9223372036854775809',impacts:'reliable',impactCellSize:0.25,
-    impactWeight:2.5,maxImpactCells:7,rate:0,burst:0,maxParticles:16}),'patch');
+    impactWeight:2.5,maxImpactCells:7,rate:0,burst:0,maxParticles:16,
+    collisionRegion:true,collisionRegionOffset:{x:2,y:3,z:-4},
+    collisionRegionHalfExtents:{x:7,y:11,z:13}}),'patch');
   const p=e.particles;
   assert(p.backend==='auto'&&p.response==='slide'&&p.impacts==='reliable','enums');
   assert(p.collisionLayers==='9223372036854775809'&&p.maxContacts===4&&p.maxImpactCells===7,'exact mask and budgets');
   assert(p.collision&&p.useWind&&p.collisionRadius===0.125&&p.restitution===0.75&&p.friction===0.5,'collision values');
+  assert(p.collisionRegion&&p.collisionRegionOffset.z===-4&&p.collisionRegionHalfExtents.y===11,'coverage readback');
   const before=JSON.stringify(p);
   let rejected=0;
   for(const patch of [{rate:8,backend:'unknown'},{rate:8,maxContacts:2.5},
      {rate:8,maxContacts:0},{rate:8,collisionLayers:1},
      {rate:8,collisionLayers:'18446744073709551616'},
      {rate:8,collisionLayers:['unregistered']},{rate:8,impactCellSize:0},
-     {rate:8,maxImpactCells:0},{rate:8,collision:1},{rate:8,unknown:true}]){
+     {rate:8,maxImpactCells:0},{rate:8,collision:1},{rate:8,unknown:true},
+     {rate:8,collisionRegion:1},{rate:8,collisionRegionOffset:{x:NaN,y:0,z:0}},
+     {rate:8,collisionRegionHalfExtents:{x:0,y:8,z:8}}]){
    try{e.setParticles(patch);}catch(_){rejected++;}
    assert(JSON.stringify(e.particles)===before,'invalid patch mutated emitter');
   }
-  assert(rejected===10,'patch validation');
+  assert(rejected===13,'patch validation');
   rejected=0;
   for(const count of [-1,0.5,100001,NaN,Infinity,'2',4294967296]){
    try{e.burst(count);}catch(_){rejected++;}

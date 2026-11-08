@@ -11,13 +11,93 @@ import subprocess
 import time
 
 
+def install_particle_probe(project):
+    """An ordinary project script/scene exercises authored and runtime API state."""
+    asset = '8a2200000000000000000000000000af'
+    script = project / 'Assets/scripts/region_consumer.js'
+    script.write_text('''export default class {
+ constructor({entity}) { this.entity=entity; this.state={contacts:0,reported:false}; }
+ require(value,message) { if(!value)throw new Error(message); }
+ start() {
+  const p=this.entity.particles;
+  this.require(p.collisionRegion&&p.collisionRegionOffset.x===1&&p.collisionRegionHalfExtents.x===8,'authored region');
+  this.require(this.entity.setParticles({collisionRegionOffset:{x:0,y:-4,z:0},
+    collisionRegionHalfExtents:{x:12,y:16,z:12}}),'region patch');
+  this.require(this.entity.particles.collisionRegionHalfExtents.y===16,'region readback');
+  this.require(this.entity.burst(1),'burst');
+ }
+ fixedUpdate() {
+  for(const hit of this.entity.takeParticleImpacts()) {
+   this.require(hit.receiver==='1','logical terrain receiver');
+   this.state.contacts+=hit.count;
+  }
+  if(this.state.contacts&&!this.state.reported&&this.entity.particleStats.live===0) {
+   this.state.reported=true;
+   console.log('REGION_CONSUMER_CONTACT '+JSON.stringify({contacts:this.state.contacts,stats:this.entity.particleStats}));
+  }
+ }
+ restore() {
+  const p=this.entity.particles;
+  this.require(p.collisionRegion&&p.collisionRegionOffset.y===-4&&p.collisionRegionHalfExtents.y===16,'restored region');
+  this.require(this.state.contacts===1,'restored game-owned contact counter');
+  console.log('REGION_CONSUMER_RESTORED '+JSON.stringify({contacts:this.state.contacts,settings:p}));
+ }
+}''')
+    script.with_suffix('.js.judasmeta').write_text(
+        f'JudasAssetMeta 1\nid "{asset}"\ntype script\nsource ""\n')
+    scene = project / 'Scenes/highlands.judas'
+    with scene.open('a') as stream:
+        stream.write(f'''object 65 "SDK local collision consumer"
+ position 0 12 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ particle-emitter
+ particle.enabled true
+ particle.loop false
+ particle.local-space false
+ particle.gravity false
+ particle.rate 0
+ particle.lifetime 4
+ particle.size 0.05
+ particle.end-size 0.05
+ particle.burst 0
+ particle.capacity 16
+ particle.spread 0 0 0
+ particle.velocity 0 -12 0
+ particle.variation 0 0 0
+ particle.acceleration 0 0 0
+ particle.texture ""
+ particle.color 0.6 0.5 0.3
+ particle.alpha 1
+ particle.end-color 0.6 0.5 0.3
+ particle.end-alpha 1
+ particle.seed 1
+ particle.collision true
+ particle.response "remove"
+ particle.impacts "reliable"
+ particle.collision-region true
+ particle.collision-region-offset 1 0 0
+ particle.collision-region-half-extents 8 8 8
+ scripts 1
+ script.0.id 1
+ script.0.asset "{asset}"
+ script.0.enabled true
+ script.0.properties "{{}}"
+end
+''')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--planet', action='store_true',
                         help='Exercise the geographic Workshop with the same gameplay gates.')
+    parser.add_argument('--particle-region', action='store_true',
+                        help='Add a normal script/scene consumer of local particle coverage (flat only).')
     args = parser.parse_args()
+    if args.planet and args.particle_region:
+        parser.error('The particle-region consumer fixture uses the flat Workshop.')
     repo = Path(__file__).resolve().parents[2]
     build = args.build.resolve()
     out = args.output.resolve()
@@ -44,6 +124,8 @@ def main():
         project_name = 'terrain_v2_planet_workshop' if args.planet else 'terrain_v2_workshop'
         shutil.copytree(repo / 'projects' / project_name, project,
                         ignore=shutil.ignore_patterns('Saves', '*.lock'))
+        if args.particle_region:
+            install_particle_probe(project)
         run('native-cook', [build / 'judas_terrain_author', 'v2-native',
                            project / 'Authoring/highlands.judasterrain2',
                            project / 'Assets/terrain/highlands.judasmodel'], repo)
@@ -147,6 +229,15 @@ EXPECT_SCENE Scenes/highlands.judas 45
                 terrain['volumeChunks'] < 8 or state['position']['z'] > -8 or state['surfaceDabs'] < 2 or
                 state['remainingBrushes'] != 0):
             raise RuntimeError('Cold restore lost the edited terrain or real tunnel traversal.')
+        if args.particle_region:
+            if 'REGION_CONSUMER_CONTACT ' not in write_log:
+                raise RuntimeError('Ordinary authored particle did not deliver/consume its terrain impact.')
+            regions = [json.loads(line.split('REGION_CONSUMER_RESTORED ', 1)[1])
+                       for line in (out / 'read.log').read_text().splitlines()
+                       if 'REGION_CONSUMER_RESTORED ' in line]
+            if len(regions) != 1 or regions[0]['contacts'] != 1:
+                raise RuntimeError('Cold load lost project-owned particle progress/settings.')
+            record['particle_region'] = regions[0]
         record.update(passed=True, restored=state)
     except Exception as error:
         record['error'] = str(error)

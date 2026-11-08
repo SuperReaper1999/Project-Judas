@@ -1,0 +1,44 @@
+[Graphics] created OpenGL 3.3 Core request (portable policy)
+[Graphics] API=OpenGL 3.3 requested=portable selected=portable vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=0 SSBO=0 DSA=1 bufferStorage=1 textureViews=0 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=0 storageBlockBytes=0 computeInvocations=0 computeSharedBytes=0
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS compatible live CPU emitters build and emit
+PASS compatible emitters share one captured snapshot, not two measured captures
+PASS next boundary refreshes the shared snapshot and preserves geometry history
+PASS shared stick receiver starts native prescribed movement
+PASS shared fresh motion preserves actual stick anchors on a moving native body
+PASS divergent capture histories do not share or reassign stick-anchor revisions
+PASS different-filter control builds
+PASS different layers never borrow a more permissive or restrictive snapshot
+PASS own-body exclusion control builds
+PASS different emitting body exclusions do not share even with matching layers
+PASS 65 incompatible capture groups build
+PASS all 65 overflow controls emit
+PASS cache overflow captures independently with full collision coverage
+PASS overflow retains its own geometry history across fixed boundaries
+PASS CPU collision lifecycle builds without graphics: 
+PASS idle CPU emitter performs no collision capture
+PASS idle colliding CPU emitter accepts immediate burst
+PASS first live step captures geometry and bounces against the actual floor
+PASS clear retires the live CPU population
+PASS return to idle retains geometry history but reports no current capture work
+PASS enable ordinary rate emission on idle CPU emitter
+PASS empty tick advances emission credit and creates a birth without moving it
+PASS automatic birth receives fresh collision before its first movement
+PASS authored initial-burst fixture builds
+PASS authored initial burst is not lost when its initial empty step skips capture
+PASS authored initial birth captures on the next step before movement
+PASS Auto queues an explicit burst before headless fallback
+PASS queued Auto fallback burst captures before moving and collides on that tick
+PASS over-limit collision fixture builds
+PASS idle emitter does not need geometry even in an over-limit world
+PASS first live step still refuses over-limit geometry without silently disabling collision
+PASS actual renderer/compute context: 
+PASS portable Auto emitter queues its pre-init burst
+PASS portable Auto fallback consumes queued burst through real CPU simulation
+PASS portable required-GPU authoring remains inspectable
+PASS unsupported required GPU reports refusal instead of silently substituting CPU
+Particle world: 36 checks PASS

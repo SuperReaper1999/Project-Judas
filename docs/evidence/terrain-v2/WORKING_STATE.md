@@ -138,6 +138,34 @@ complete excavation median295.345->75.691ms, sampled worst303.981->82.351ms.
 No FPS/startup/memory claim; full geometry bins and private Detour cache still
 prepare. Evidence navigation-tile-reuse/. Verify Git for checkpoint state.
 
+Navigation functional7cf4193d and separate format-only9a3e2a75 are PUSHED.
+Refreshed native SDK .cache/terrain-v2/sdk-native-preview-9a3e2a75 passes17tool
+probes, standard8operations and SDK-contained flat/planetary relocated/cold games.
+Evidence sdk-navigation/ is collected, not yet checkpointed. HostGLIBC2.43 and
+preexisting dirty/untracked provenance are explicit; RPG SDK unchanged.
+
+Terrain integration correction: authored runtime particle emitters previously
+capture the whole8192m chart, so1km native sources exceed their512body budget.
+Library-only local snapshots were not an authored workflow. An opt-in emitter-
+local collisionRegion/Offset/HalfExtents is implemented across settings, scene,
+fingerprint, editor and subsystem-owned JS APIs. Default coverage and budgets stay
+unchanged. Batch identity includes actual transformed domain. Outside-domain
+queries retain the existing explicit failure contract; no guessed GPU bounds or
+silent collision omission. New large-terrain runtime/cold/independent-full-reference
+and authoring/script/GPU-sharing controls are now qualified: real kilometre
+runtime35write/9coldread, particle authoring51/script13, old scene fingerprint140,
+nativeSource/world/water/particle controls, NVIDIA GPU146/portable36 pass. Local
+9body/4608triangle contact matches full524288triangle reference, with all1024
+physical source bodies intact. Active CPUcapture/update180samples median.719ms,
+p95.900/worst.999ms; no render/physics-step/FPS claim. Capture still enumeratesall
+world bodies. Actual project-owned JS/scene/export/relocation/cold workflow passes
+--particle-region, preserving one reliable contact and runtime settings. The
+older9aSDK rejects its new scene keys as an expected negative control. Evidence
+particle-regions/. All17tools rebuild; final refreshed SDK qualification follows
+the implementation checkpoint. No build/test was running when this note was
+updated. Verify live Git for commit status. Stay on Terrain V2; do not resume fluid
+research, change main or the lock. Fine physical interest/paging is still OPEN.
+
 ## Completed native navigation cache handoff
 
 Functional cache handoff is implemented on top of1b593d8f. The SAME Detour

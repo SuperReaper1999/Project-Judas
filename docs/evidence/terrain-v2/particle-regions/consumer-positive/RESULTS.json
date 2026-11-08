@@ -1,0 +1,197 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-9a3e2a7-dirty-a5949d81ca97-u199002761700",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "a5949d81ca97de5b921cf3a4a3dde8e10f93fd3d6179aaeb97fe560c8088977d",
+    "source_origin": "git",
+    "source_revision": "9a3e2a752c61d91618dd2e3d6f05ab152fa91b91",
+    "source_tree": "a94e920b5f8a676a55aed69409639a615a0b74c1",
+    "source_untracked_count": 19,
+    "source_untracked_fingerprint": "1990027617009efd7c19289be9dc16d7d5d80117f86c7a58760d49c02d96b0d5",
+    "version": "2.0.0-alpha.1"
+  },
+  "settlement_cold_processes": 1,
+  "particle_region": {
+    "contacts": 1,
+    "settings": {
+      "enabled": true,
+      "loop": false,
+      "localSpace": false,
+      "useGravity": false,
+      "collision": true,
+      "collisionRegion": true,
+      "useWind": false,
+      "rate": 0,
+      "lifetime": 4,
+      "size": 0.05000000074505806,
+      "endSize": 0.05000000074505806,
+      "burst": 0,
+      "maxParticles": 16,
+      "seed": 1,
+      "collisionRadius": 0.02500000037252903,
+      "restitution": 0.3499999940395355,
+      "friction": 0.20000000298023224,
+      "maxContacts": 8,
+      "impactCellSize": 0.5,
+      "impactWeight": 1,
+      "maxImpactCells": 1024,
+      "velocity": {
+        "x": 0,
+        "y": -12,
+        "z": 0
+      },
+      "velocityVariation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "spread": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "acceleration": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "collisionRegionOffset": {
+        "x": 0,
+        "y": -4,
+        "z": 0
+      },
+      "collisionRegionHalfExtents": {
+        "x": 12,
+        "y": 16,
+        "z": 12
+      },
+      "color": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "endColor": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "textureAsset": null,
+      "backend": "cpu",
+      "response": "remove",
+      "impacts": "reliable",
+      "collisionLayers": "18446744073709551615"
+    }
+  },
+  "restored": {
+    "position": {
+      "x": 0.08357886970043182,
+      "y": 1.720919132232666,
+      "z": -10.608722686767578
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 9409,
+      "triangles": 33939,
+      "bytes": 1007048,
+      "chunks": 36,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 65.176722,
+      "publishMs": 0.06885,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0
+  },
+  "finished_utc": "2026-11-08T05:07:56.496978+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-particle-region-consumer-positive/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-particle-region-consumer-positive/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16430314299941529
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-particle-region-consumer-positive/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-particle-region-consumer-positive/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.3642823390036938
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/judas",
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-particle-region-consumer-positive/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.1154606330019305
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/judas",
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-particle-region-consumer-positive/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9151652809960069
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/judas",
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-particle-region-consumer-positive/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9652083910041256
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/judas",
+        "/tmp/terrain-v2-particle-region-consumer-positive/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-particle-region-consumer-positive/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.6147114730047178
+    }
+  ],
+  "log_sha256": {
+    "export.log": "81838181c724470bbf969844ce2d2cc20b03197ac5838a1a1ecd19ff07023829",
+    "native-cook.log": "4b5bf0a720132fce53eafb3b18e0bfb91310ed2d6db80092006b662338be2344",
+    "read.log": "6c598cc8ece4d060936e4477cfb69e84115ee63ab4868c38f80a1cec4c570b1f",
+    "settle-0.log": "f6c6a62001a888ed457d97ef16eaeecf79cc00b4b2b44eed11d2e47a117b6e97",
+    "traverse.log": "3e6dc7b4900d671e929df9dfa7bcc89daef5a22d0939a32b91c0454d34064997",
+    "write.log": "f7c3281fa3ef6a2fc3052b4fb60200015dbbfa0df1d2aa765a47d34b0ffa8950"
+  }
+}

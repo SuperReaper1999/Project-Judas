@@ -280,6 +280,9 @@ void WriteObject(Writer& w, const SceneObject& o) {
         if(e.friction!=.2f)w.Line("particle.friction",F(e.friction));
         if(e.response!=ParticleResponse::Bounce)w.Line("particle.response",Quote(e.response==ParticleResponse::Slide?"slide":e.response==ParticleResponse::Stick?"stick":e.response==ParticleResponse::Remove?"remove":"invalid"));
         if(e.collisionLayers!=kAllCategories)w.Line("particle.collision-layers",std::to_string(e.collisionLayers));
+        if(e.collisionRegion)w.Line("particle.collision-region",B(e.collisionRegion));
+        if(e.collisionRegionOffset!=glm::vec3(0))w.Line("particle.collision-region-offset",V(e.collisionRegionOffset));
+        if(e.collisionRegionHalfExtents!=glm::vec3(16))w.Line("particle.collision-region-half-extents",V(e.collisionRegionHalfExtents));
         if(e.maxContacts!=8)w.Line("particle.max-contacts",std::to_string(e.maxContacts));
         if(e.impacts!=ParticleImpactDelivery::Off)w.Line("particle.impacts",Quote(e.impacts==ParticleImpactDelivery::Cosmetic?"cosmetic":e.impacts==ParticleImpactDelivery::Reliable?"reliable":"invalid"));
         if(e.impactCellSize!=.5f)w.Line("particle.impact-cell-size",F(e.impactCellSize));
@@ -989,6 +992,9 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         for(auto [key,value]:{std::pair<const char*,float*>{"particle.collision-radius",&e.collisionRadius},{"particle.restitution",&e.restitution},{"particle.friction",&e.friction},{"particle.impact-cell-size",&e.impactCellSize},{"particle.impact-weight",&e.impactWeight}})
             if(p.Has(key)&&!p.Float(key,*value))return false;
         if(p.Has("particle.collision-layers")&&!p.Mask("particle.collision-layers",e.collisionLayers))return false;
+        if(p.Has("particle.collision-region")&&!p.Bool("particle.collision-region",e.collisionRegion))return false;
+        if(p.Has("particle.collision-region-offset")&&!p.Vec3("particle.collision-region-offset",e.collisionRegionOffset))return false;
+        if(p.Has("particle.collision-region-half-extents")&&!p.Vec3("particle.collision-region-half-extents",e.collisionRegionHalfExtents))return false;
         for(auto [key,value]:{std::pair<const char*,unsigned*>{"particle.max-contacts",&e.maxContacts},{"particle.max-impact-cells",&e.maxImpactCells}}){
             if(!p.Has(key))continue;
             int number=0;if(!p.Int(key,number))return false;

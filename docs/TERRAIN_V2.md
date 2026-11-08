@@ -348,11 +348,16 @@ are under `docs/evidence/terrain-v2/regional-streaming`.
 
 This does not add per-chunk source paging or camera-driven physics eviction.
 Regional suspension remains the existing coordinator's responsibility, and native
-terrains retain all collision chunks while their region is resident. Current
-particle snapshot limits also remain: a very large resident landscape may exceed
-particle capture body/triangle budgets and must report that explicitly rather
-than silently omit collision coverage. Large-source particle capture is not yet
-qualified by the small native interaction controls.
+terrains retain all collision chunks while their region is resident. Particle
+snapshot limits also remain: default whole-chart capture can exceed the body or
+triangle budget on a large landscape and reports that explicitly. An authored
+local effect can now opt into the Particle Emitter's **Collision response → Use
+local collision coverage**, or the equivalent JudasJS settings described in
+[effects and cameras](judasjs/effects-camera.md). The declared box follows the
+emitter; include every required path and collision radius, including older live
+particles. Leaving its coverage remains an explicit failed query, not empty space.
+The large-source integration controls compare bounded contacts with a complete
+kilometre reference while retaining all1,024physical terrain chunks.
 
 ## Source-owned navigation
 

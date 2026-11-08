@@ -1,0 +1,42 @@
+[
+  {
+    "target": "judas_particle_authoring_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_particle_authoring_tests.log"
+  },
+  {
+    "target": "judas_particle_script_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_particle_script_tests.log"
+  },
+  {
+    "target": "judas_scene_fingerprint_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_scene_fingerprint_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_component_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_terrain_v2_component_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_planet_component_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_terrain_v2_planet_component_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_world_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_terrain_v2_world_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_interaction_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_terrain_v2_interaction_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_navigation_reuse_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-judas_terrain_v2_navigation_reuse_tests.log"
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "passed": false,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-9a3e2a7-dirty-b4ba5a1e437e-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "b4ba5a1e437ea620af4e09fabd82767fa4d82b84838df9dbf5ea8c846324cefa",
+    "source_origin": "git",
+    "source_revision": "9a3e2a752c61d91618dd2e3d6f05ab152fa91b91",
+    "source_tree": "a94e920b5f8a676a55aed69409639a615a0b74c1",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "2.0.0-alpha.1"
+  },
+  "error": "export failed; see /tmp/terrain-v2-particle-region-sdk-negative/export.log",
+  "finished_utc": "2026-11-08T05:04:59.606744+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-9a3e2a75/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-particle-region-sdk-negative/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-particle-region-sdk-negative/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16408536300150445
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-9a3e2a75/judas_export",
+        "/tmp/terrain-v2-particle-region-sdk-negative/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-particle-region-sdk-negative/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-9a3e2a75/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 1,
+      "seconds": 0.015691685002821032
+    }
+  ],
+  "log_sha256": {
+    "export.log": "517db663e875d15af6ce1a60d951522e1411789bfb788abcd1ba2e980918630a",
+    "native-cook.log": "4b5bf0a720132fce53eafb3b18e0bfb91310ed2d6db80092006b662338be2344"
+  }
+}

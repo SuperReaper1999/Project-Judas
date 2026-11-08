@@ -24,6 +24,11 @@ struct ParticleEmitterSettings {
     float collisionRadius=.025f, restitution=.35f, friction=.2f;
     ParticleResponse response=ParticleResponse::Bounce;
     std::uint64_t collisionLayers=~std::uint64_t(0);
+    // Explicit local coverage, transformed with the emitter. Off retains the
+    // original whole-chart capture. Sweeps outside coverage report a failure;
+    // never silently treat missing geometry as empty space.
+    bool collisionRegion=false;
+    glm::vec3 collisionRegionOffset{0}, collisionRegionHalfExtents{16};
     unsigned maxContacts=8;
     ParticleImpactDelivery impacts=ParticleImpactDelivery::Off;
     float impactCellSize=.5f, impactWeight=1;

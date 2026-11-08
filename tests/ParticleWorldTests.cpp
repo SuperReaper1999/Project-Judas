@@ -403,10 +403,11 @@ void SelectedGravity(EngineHost &host) {
             "rotated uniform gravity changes the real resident velocity without resetting prior motion");
     world.Destroy();
 }
-void SharedGpu(EngineHost &host) {
+void SharedGpu(EngineHost &host, bool localRegion = false) {
     auto scene = Fixture(ParticleBackend::Auto, true);
     scene.Objects()[0].particleEmitter->velocity = {0,-40,0};
     scene.Objects()[0].particleEmitter->useGravity = false;
+    scene.Objects()[0].particleEmitter->collisionRegion = localRegion;
     auto settings = *scene.Objects()[0].particleEmitter;
     auto &second = scene.CreateObject("Shared GPU emitter");
     second.transform = scene.Objects()[0].transform; second.particleEmitter = settings;
@@ -487,7 +488,7 @@ int main(int argc, char **argv) {
         EngineHost host;
         std::string error;
         Require(host.Init("Particle world lifecycle", 128, 128, false, error), "actual renderer/compute context: " + error);
-        if (host.GraphicsCaps().modernTier) { Lifecycle(host); Fallback(host); SelectedGravity(host); SharedGpu(host); }
+        if (host.GraphicsCaps().modernTier) { Lifecycle(host); Fallback(host); SelectedGravity(host); SharedGpu(host); SharedGpu(host, true); }
         else Portable(host);
         host.Shutdown();
         std::printf("Particle world: %u checks PASS\n", checks);

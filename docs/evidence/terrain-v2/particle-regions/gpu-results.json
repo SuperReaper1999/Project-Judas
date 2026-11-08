@@ -1,0 +1,12 @@
+[
+  {
+    "profile": "modern",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-world-modern.log"
+  },
+  {
+    "profile": "portable",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-particle-region-world-portable.log"
+  }
+]

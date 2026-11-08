@@ -223,6 +223,10 @@ declare module "judas" {
     collisionRadius?:number; restitution?:number; friction?:number; response?:ParticleResponse;
     /** Registered names, an exact unsigned decimal 64-bit mask, or null for all layers. */
     collisionLayers?:string[]|string|null; maxContacts?:number;
+    /** Opt-in emitter-local capture box; its world AABB follows position/rotation/scale.
+     * Cover every required particle sweep. Leaving coverage reports a query failure,
+     * retaining motion at the last safe point; it never implies empty space. */
+    collisionRegion?:boolean; collisionRegionOffset?:Vec3; collisionRegionHalfExtents?:Vec3;
     impacts?:ParticleImpactDelivery; impactCellSize?:number; impactWeight?:number; maxImpactCells?:number;
   }
   export type ParticleSettings = Omit<Required<ParticleSettingsPatch>, "collisionLayers"> & {collisionLayers:string};

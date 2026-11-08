@@ -1,0 +1,14 @@
+PASS register actual JudasJS particle script
+PASS build hostless world with ordinary shared scripting runtime
+PASS hostless required GPU refuses the step without silently running CPU
+PASS new bindings execute through their local module without script faults
+PASS settings readback, transactional rejection, exact masks, controls and stats pass in VM
+PASS real shared VM reports null active backend for unavailable required GPU
+PASS script-edited emitter definition retains exact mask for ordinary saves
+PASS queue actual reliable observation for binding publication
+PASS independent binding allocation-failure control owns its VM
+PASS VM allocation failure leaves reliable native observations queued
+PASS successful detached array publication acknowledges native queue exactly once
+PASS contact identities above JavaScript's integer range retain all bits
+PASS absolute historical position remains binary64 rather than narrowed float32
+SUMMARY 13 checks 0 failures

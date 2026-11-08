@@ -32,6 +32,12 @@ fields are:
   `maxContacts`; `response`: `"bounce"`, `"slide"`, `"stick"` or `"remove"`.
 - `collisionLayers`: registered collision-layer names, an exact unsigned decimal
   64-bit mask string, or `null` for all layers. Readback is always a decimal string.
+- `collisionRegion` (default `false`), `collisionRegionOffset` (default zero) and
+  `collisionRegionHalfExtents` (default `{x:16,y:16,z:16}`) declare optional local
+  collision coverage. Half extents must be positive and no greater than 8192m.
+  The box follows the emitter's position, rotation and scale; its enclosing world
+  AABB is used for capture. This makes local effects practical on large native
+  landscapes without removing distant physical terrain or increasing budgets.
 - `impacts`: `"off"` (default), `"cosmetic"` or `"reliable"`; `impactCellSize`,
   `impactWeight` and `maxImpactCells` bound spatially aggregated contact records.
 
@@ -39,6 +45,32 @@ Unknown or invalid fields throw before changing the emitter; no emitter returns
 false. Use a registered texture AssetId or `null` to clear it. Colours are RGBA.
 `entity.particles` is a detached complete settings snapshot, or null; an
 untextured emitter reports `textureAsset: null`.
+
+For a bounded local effect, for example:
+
+```js
+entity.setParticles({
+  collision: true,
+  collisionRegion: true,
+  collisionRegionOffset: {x: 0, y: 0, z: 0},
+  collisionRegionHalfExtents: {x: 32, y: 16, z: 32}
+});
+```
+
+Cover every required sweep, including old live particles and their collision
+radius. The engine does not guess GPU positions or silently omit collisions
+outside the declared box. Leaving coverage increments query failures and retains
+the last safe position for that step; ordinary age/lifetime semantics continue.
+This is not an automatic particle-culling volume. Use larger coverage for fast
+particles or moving emitters. Compatible captures share only when their actual
+world domains, filters and predecessor ownership match. Pending reliable work
+retains its captured step and prevents incompatible settings changes.
+
+Native scene keys are `particle.collision-region`,
+`particle.collision-region-offset` and `particle.collision-region-half-extents`.
+All are optional; old projects retain their whole-chart capture and canonical
+identity unless they use the new settings. The editor exposes them under the
+Particle Emitter's **Collision response → Use local collision coverage**.
 
 Velocity, variation and spread affect future spawns. Acceleration, gravity, size,
 colour and texture affect live particles. Reducing capacity trims the pool and

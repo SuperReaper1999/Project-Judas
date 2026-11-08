@@ -55,6 +55,7 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
         std::shared_ptr<JudasParticles::CollisionSnapshot> previous, snapshot;
         CategoryMask layers;
         BodyHandle ignored;
+        Aabb domain;
         std::shared_ptr<JudasParticles::GpuParticles> gpu;
     };
     std::vector<Batch> batches;
@@ -79,9 +80,20 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
         }
         std::size_t batch=batches.size();
         if(settings.collision&&!emptyCpu&&!e.pool.PendingStep()){
+            Aabb domain{{-8192, -8192, -8192}, {8192, 8192, 8192}};
+            if (settings.collisionRegion) {
+                const auto center = pose.position +
+                    pose.rotation * (pose.scale * settings.collisionRegionOffset);
+                const auto rotation = glm::mat3_cast(pose.rotation);
+                const auto half = glm::abs(pose.scale) * settings.collisionRegionHalfExtents;
+                const auto extent = glm::abs(rotation[0]) * half.x +
+                    glm::abs(rotation[1]) * half.y + glm::abs(rotation[2]) * half.z;
+                domain = {center - extent, center + extent};
+            }
             const auto own=RuntimeBody(e.id);
             for(std::size_t i=0;i<batches.size();++i)
                 if(batches[i].previous==e.collision&&batches[i].layers==settings.collisionLayers&&
+                   batches[i].domain.min==domain.min&&batches[i].domain.max==domain.max&&
                    batches[i].ignored.id==own.id&&batches[i].ignored.world==own.world){batch=i;break;}
             if(batch<batches.size()){
                 e.collision=batches[batch].snapshot;
@@ -97,17 +109,17 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
                     return EntityIdOfBody(body);
                 };
                 std::string error;
-                // The whole supported local physics chart is conservative even for
-                // old GPU positions and movers crossing/departing an emitter. No
-                // per-particle world queries or guessed render-LOD collision field.
-                if(!next->Capture(m_physics,{{-8192,-8192,-8192},{8192,8192,8192}},dt,error,filter,identity)){
+                // Coverage is the whole chart unless the author explicitly
+                // declares a local region. Capture still includes swept movers;
+                // no current-pose culling or guessed GPU particle bounds.
+                if(!next->Capture(m_physics,domain,dt,error,filter,identity)){
                     e.runtime.diagnostic="particle collision snapshot unavailable: "+error;
                     ++e.runtime.queryFailures;continue;
                 }
                 if(batches.size()<64){
                     if(batches.empty())batches.reserve(std::min<std::size_t>(64,m_particleEmitters.size()));
                     batch=batches.size();
-                    batches.push_back({e.collision,next,settings.collisionLayers,own,{}});
+                    batches.push_back({e.collision,next,settings.collisionLayers,own,domain,{}});
                 }
                 e.collision=std::move(next);
                 JUDAS_PROFILE_COUNTER("Particle snapshot captures",1,ProfileCounterMode::Sum);

@@ -92,6 +92,20 @@ void DrawParticleEmitter(EditorDocument &document, SceneObject &object, EditorPa
         if (state.project)
             DrawCategoryMask(document, "Collision layers", settings.collisionLayers,
                              state.project->Settings().classification.collision);
+        Checkbox(document, "Use local collision coverage", settings.collisionRegion);
+        if (settings.collisionRegion) {
+            DragVec3(document, "Coverage offset (local m)", settings.collisionRegionOffset, .1f);
+            auto half = settings.collisionRegionHalfExtents;
+            if (ImGui::DragFloat3("Coverage half size (local m)", &half.x, .1f, .001f, 8192)) {
+                document.BeginEdit();
+                settings.collisionRegionHalfExtents = glm::clamp(half, glm::vec3(.001f), glm::vec3(8192));
+                document.CommitEdit();
+            }
+            ImGui::TextWrapped("This box follows the emitter's position, rotation and scale. "
+                              "Include every required particle path, including old live particles. "
+                              "Leaving coverage reports a collision-query failure; geometry is never silently ignored. "
+                              "Use a larger box for fast particles or moving emitters.");
+        }
         ImGui::TextWrapped("Particle response is optional and bounded. It does not apply a rigid-body impulse or change the Advanced Fluid setting.");
     }
     if (InspectorDisclosure("Aggregated impact events", false)) {

@@ -51,6 +51,9 @@ int main() {
     settings.friction = .6f;
     settings.response = ParticleResponse::Stick;
     settings.collisionLayers = 0x8000000000000001ull;
+    settings.collisionRegion = true;
+    settings.collisionRegionOffset = {2, 3, -4};
+    settings.collisionRegionHalfExtents = {7, 11, 13};
     settings.maxContacts = 13;
     settings.impacts = ParticleImpactDelivery::Reliable;
     settings.impactCellSize = .25f;
@@ -79,6 +82,9 @@ int main() {
         [](auto &s) { s.friction = .8f; },
         [](auto &s) { s.response = ParticleResponse::Remove; },
         [](auto &s) { s.collisionLayers = 0x8000000000000001ull; },
+        [](auto &s) { s.collisionRegion = true; },
+        [](auto &s) { s.collisionRegionOffset = {1, 2, 3}; },
+        [](auto &s) { s.collisionRegionHalfExtents = {7, 8, 9}; },
         [](auto &s) { s.maxContacts = 3; },
         [](auto &s) { s.impacts = ParticleImpactDelivery::Cosmetic; },
         [](auto &s) { s.impactCellSize = .125f; }, [](auto &s) { s.impactWeight = 3; },
@@ -109,6 +115,9 @@ int main() {
         [](auto &s) { s.impacts = ParticleImpactDelivery(99); },
         [](auto &s) { s.collisionRadius = 0; }, [](auto &s) { s.restitution = 1.1f; },
         [](auto &s) { s.friction = -.1f; }, [](auto &s) { s.maxContacts = 0; },
+        [](auto &s) { s.collisionRegionHalfExtents.x = 0; },
+        [](auto &s) { s.collisionRegionHalfExtents.y = 8193; },
+        [](auto &s) { s.collisionRegionOffset.z = std::numeric_limits<float>::infinity(); },
         [](auto &s) { s.maxContacts = 33; }, [](auto &s) { s.impactCellSize = 0; },
         [](auto &s) { s.impactCellSize = 1e-7f; },
         [](auto &s) { s.impactWeight = std::numeric_limits<float>::infinity(); },
@@ -120,7 +129,10 @@ int main() {
     }
     for (const auto &badLine : {"particle.backend \"unknown\"", "particle.response \"ghost\"",
                                 "particle.impacts \"every-particle\"",
-                                "particle.max-contacts -1", "particle.collision-layers -1"}) {
+                                "particle.max-contacts -1", "particle.collision-layers -1",
+                                "particle.collision-region unknown",
+                                "particle.collision-region-half-extents 0 8 8",
+                                "particle.collision-region-offset nan 0 0"}) {
         auto bad = text;
         bad.insert(bad.rfind("end"), std::string(badLine) + '\n');
         const auto before = round;
