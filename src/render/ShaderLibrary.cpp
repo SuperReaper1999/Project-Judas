@@ -387,7 +387,7 @@ void main() {
     // Pixel space is top-down (y grows downward, matching uPosition's own
     // "top-left corner" convention); NDC y grows upward, so it's flipped
     // here rather than by pre-flipping any texture data — see
-    // src/FontLoader.h's own header comment for why the glyph atlas needs
+    // the runtime text shader contract for why the glyph atlas needs
     // no separate flip convention as a result.
     vec2 ndc = vec2(pixelPos.x / uScreenSize.x * 2.0 - 1.0,
                      1.0 - pixelPos.y / uScreenSize.y * 2.0);

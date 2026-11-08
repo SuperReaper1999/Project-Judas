@@ -44,9 +44,7 @@ class EditorV2ArchitectureTests(unittest.TestCase):
                 self.assertNotIn('"EditorApplication.h"', source,
                                  "a panel must not depend on private application implementation")
         old = EDITOR / "EditorPanels.cpp"
-        if old.exists():
-            self.assertNotRegex(code(old.read_text(encoding="utf-8")),
-                                r'\bvoid\s+Draw(?:Hierarchy|Inspector|AssetBrowser)Panel\s*\(')
+        self.assertFalse(old.exists(), "retired monolithic compatibility source must stay removed")
 
     def test_console_extension_has_no_main_loop_special_case(self):
         frame = code((EDITOR / "EditorApplication.cpp").read_text(encoding="utf-8"))

@@ -8,7 +8,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "FontLoader.h"
 #include "TextLayout.h"
 #include "Light.h"
 #include "RenderLightGrid.h"
@@ -338,10 +337,8 @@ public:
     // Call BeginUIFrame once after EndFrame, issue any number of
     // DrawUIRect/DrawUIText calls, then EndUIFrame before SwapBuffers.
 
-    // Loads and uploads the one font this engine's UI text needs (see
-    // src/FontLoader.h) — same load-CPU-data-then-upload split as
-    // CreateMesh/CreateTexture. Call once, near Init; DrawUIText silently
-    // draws nothing if no font has been loaded yet.
+    // Selects a font through the shared Unicode text system. DrawUIText
+    // draws nothing until a font has been loaded.
     bool LoadFont(const char* path, float pixelHeight, std::string& outError);
 
     // Sets the screen-space pixel dimensions used to convert every
@@ -361,8 +358,7 @@ public:
     void DrawUIRect(const glm::vec2& position, const glm::vec2& size, const glm::vec4& colorRgba);
 
     // Draws `text` with its top-left corner at `position` (pixels), scaled
-    // relative to the font's own baked pixel size (see FontAtlasData::
-    // pixelHeight — `scale = 1.0` draws at exactly that baked size).
+    // relative to the selected font pixel height (`scale = 1.0` is native size).
     // Single-line only: a caller that needs multiple lines (see src/HUD.cpp,
     // src/UIWidgets.cpp) calls this once per line at its own computed Y
     // offset, using GetUITextLineHeight below — kept this simple

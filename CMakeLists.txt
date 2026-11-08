@@ -334,7 +334,6 @@ add_library(judas_engine STATIC
     src/ModelLoader.cpp
     src/ModelArchive.cpp
     src/AssetCook.cpp
-    src/FontLoader.cpp
     src/UIWidgets.cpp
     src/PauseMenu.cpp
     src/HUD.cpp
@@ -799,7 +798,7 @@ judas_warnings(judas_reference_frame_tests)
 # (src/UIWidgets.*, src/UIStack.h, src/PauseMenu.*, src/HUD.*) — pure CPU
 # state (screen stack, focus, button hit-testing, pause menu flow, HUD
 # view-data formatting), never a GL context or window. Links Renderer.cpp/
-# GLAD/FontLoader.cpp only because UIMenuScreen::Draw/HUD::Draw
+# GLAD only because UIMenuScreen::Draw/HUD::Draw
 # reference Renderer's UI drawing methods at compile time (same reasoning
 # judas_spacecraft_control_tests already applies to Window.cpp: the code
 # must link, but this suite never actually calls Draw or touches a real GL
@@ -841,7 +840,7 @@ judas_warnings(judas_shadow_tests)
 # and the interact key's input-ownership gating (src/PauseMenu.*,
 # mirroring judas_lighting_tests' own Section F pattern). Door needs a
 # real PhysicsWorld (no window/GL — PhysicsWorld has never needed either,
-# see tests/StepClimbTests.cpp); Renderer.cpp/FontLoader.cpp/GLAD
+# see tests/StepClimbTests.cpp); Renderer.cpp/GLAD
 # are linked only because Door::Draw/LightSwitch::Draw/PauseMenu::Draw
 # reference Renderer's drawing methods at compile time — this suite never
 # calls any of them (same reasoning judas_lighting_tests/judas_shadow_tests
@@ -1067,16 +1066,6 @@ judas_warnings(judas_combustion_tests)
 # docs/ARCHITECTURE.md, "Milestone 9, Model loading," for why OBJ/
 # tinyobjloader was chosen over a more complex format/importer.
 #
-# stb_truetype (Milestone 13, public domain, see third_party/stb_truetype.h)
-# — the engine's own runtime font rasterizer (src/FontLoader.cpp), same
-# vendoring reasoning as stb_image/stb_image_write/tiny_obj_loader: text
-# rasterization is a solved commodity problem, not something Judas needs to
-# own. The one font baked with it, assets/fonts/DejaVuSans.ttf, is
-# DejaVu Sans under the Bitstream Vera License (a permissive,
-# redistribution-friendly license — see assets/fonts/DejaVuSans-LICENSE.txt
-# for the full text) — see docs/ARCHITECTURE.md, "Milestone 13, Text
-# rendering," for why it was chosen.
-
 # FTFT1: canonical authored-baseline identity and atomic delta validation.
 judas_add_engine_test(judas_scene_fingerprint_tests tests/SceneFingerprintTests.cpp)
 judas_add_engine_test(judas_world_state_tests tests/WorldStateTests.cpp)
