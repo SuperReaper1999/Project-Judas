@@ -1895,6 +1895,11 @@ add_executable(judas_beacon_grove tools/demos/BeaconGrove.cpp)
 target_link_libraries(judas_beacon_grove PRIVATE judas_engine)
 judas_warnings(judas_beacon_grove)
 
+judas_add_engine_test(judas_sprout_patch_application_tests tests/SproutPatchApplicationTests.cpp APPLICATION)
+add_executable(judas_sprout_patch tools/demos/SproutPatch.cpp)
+target_link_libraries(judas_sprout_patch PRIVATE judas_engine)
+judas_warnings(judas_sprout_patch)
+
 add_executable(judas_tilemap_benchmark tools/benchmarks/TilemapBenchmark.cpp)
 target_link_libraries(judas_tilemap_benchmark PRIVATE judas_engine)
 judas_warnings(judas_tilemap_benchmark)
