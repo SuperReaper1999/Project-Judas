@@ -1,9 +1,0 @@
-[
-  "src/CollisionShapes.h",
-  "src/ContactGeometryInternal.h",
-  "src/ContactPreparedGeometry.h",
-  "src/Contacts.cpp",
-  "src/Contacts.h",
-  "src/OriginLimits.h",
-  "tests/PrimitiveContactBooleanTests.cpp"
-]

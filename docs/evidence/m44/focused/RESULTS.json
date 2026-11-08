@@ -1,7 +1,0 @@
-{
-  "initial_build": {"exit_code": 2, "cause": "Test used GetBodyTransform instead of existing GetTransform API"},
-  "geometry": {"exit_code": 0, "checks": 26, "failures": 0},
-  "initial_application": {"exit_code": 1, "checks": 4, "failures": 3, "cause": "Disposable test imported demo.js without registered asset metadata"},
-  "application_followup": {"exit_code": 0, "checks": 4, "failures": 0},
-  "scope": "Real production geometry and normal Application/JS bridge; no perceptual acceptance"
-}

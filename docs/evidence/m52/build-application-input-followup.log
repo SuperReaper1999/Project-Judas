@@ -1,7 +1,0 @@
-[  0%] Built target judas_glad
-[  7%] Built target judas_quickjs
-[  7%] Built target judas_audio_backend
-[ 92%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/tests/ShooterApplicationTests.cpp.o
-[100%] Linking CXX executable judas_shooter_application_tests
-[100%] Built target judas_shooter_application_tests

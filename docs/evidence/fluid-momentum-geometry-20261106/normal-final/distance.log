@@ -1,4 +1,0 @@
-AFFINE_DISTANCE error=5.5511151231257827e-17
-THIN_GAP actual=0.00049999999999994493 sampled=-0.049500000000000044 closed=1
-SDF rotated=0 samples=20625 bytes=165000 points=55828 build_ms=0.633525 analytic_query_ms=1.018381 sampled_query_ms=0.69218599999999997 maxDistanceError=0.061877078304982236 freePoints=55828 freeClassifiedSolid=0 minimumPositiveDistance=1.1175870895385742e-08
-SDF rotated=1 samples=39401 bytes=315208 points=98601 build_ms=0.83499500000000004 analytic_query_ms=1.8005960000000001 sampled_query_ms=1.2182679999999999 maxDistanceError=0.050000003617813649 freePoints=98601 freeClassifiedSolid=366 minimumPositiveDistance=3.3387603792789378e-10

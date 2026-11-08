@@ -1,7 +1,0 @@
-Final native desktop: NVIDIA GeForce GTX 970, 4096 MiB, NVIDIA OpenGL driver.
-1024x768, swap interval zero, controlled simulation input 1/60 s; 45 bodies, 12 hinges, 6 agents, 7 motors.
-Final native checks ran concurrently with a Java operator workload and M57 software/offscreen validation. No operator applications were terminated. Earlier native evidence also included six compiler processes; retain that older environment note as historical measurement context.
-150 frames per mode, retained M56 history 120 frames. Warmed summary excludes startup/resource/shader creation, final pending timestamps, screenshot and adjacent local frames 89-92. 91 comparable intervals remain. Screenshot stalls and startup durations are reported separately in SUMMARY.json.
-GPU pass intervals are inclusive: Display resolve is nested inside Main camera; do not add twice. Real frame clock is independent of controlled simulation delta. This is an uncapped controlled application check, not a claim about operator FPS under arbitrary loads.
-Mode 0 is the final compatibility-path reference with material slots cleared, HDR/environment disabled. It still loads registered assets and retains new authored light/vertex factors; it is not the pixel-identical pre-edit game. Original pre-edit baseline and captures remain under development/baseline*.
-32 fragment texture units available; 12 used by the complete material path. No dropped GPU/events or exhausted profiler labels/nodes/threads in the retained profiles. Seven scopes remain open at in-callback snapshot time, not after teardown.

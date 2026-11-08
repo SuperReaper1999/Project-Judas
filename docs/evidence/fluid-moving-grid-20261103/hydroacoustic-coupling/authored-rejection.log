@@ -1,2 +1,0 @@
-AUTHORED rotated=0 regions=20344 water_m3=9.2500000000000036 opposed_cross_face_traces=428 wet_above_dry=108 smaller_than_cell_section=0 admitted=0 output_unchanged=1 ms=6.3274749999999997 reason=hydroacoustic phase interface lies on a shared face
-AUTHORED rotated=1 regions=35840 water_m3=9.2160004119874568 opposed_cross_face_traces=1083 wet_above_dry=1054 smaller_than_cell_section=3 admitted=0 output_unchanged=1 ms=11.769961 reason=hydroacoustic phase interface lies on a shared face

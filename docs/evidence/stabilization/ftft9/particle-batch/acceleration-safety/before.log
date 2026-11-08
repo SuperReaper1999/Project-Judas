@@ -1,6 +1,0 @@
-tilt=0 vx=0 vy=-0.99999821186065674 KE=3.9999856948980437 residual=0.99999821186065674 iterations=64 acceleration=0 breakdowns=6 cap=1
-tilt=9.9999999747524271e-07 vx=1000000 vy=0 KE=4000000000000 residual=0 iterations=20 acceleration=1 breakdowns=0 cap=0
-tilt=9.9999997473787516e-06 vx=100000 vy=0 KE=40000000000 residual=0 iterations=20 acceleration=1 breakdowns=0 cap=0
-tilt=9.9999997473787516e-05 vx=10000.0009765625 vy=0 KE=400000078.12500381 residual=0 iterations=20 acceleration=1 breakdowns=0 cap=0
-tilt=0.0010000000474974513 vx=999.99993896484375 vy=0 KE=3999999.5117187649 residual=0 iterations=20 acceleration=1 breakdowns=0 cap=0
-tilt=0.0099999997764825821 vx=99.999992370605469 vy=0 KE=39999.993896484608 residual=5.9604644775390625e-08 iterations=20 acceleration=1 breakdowns=0 cap=0

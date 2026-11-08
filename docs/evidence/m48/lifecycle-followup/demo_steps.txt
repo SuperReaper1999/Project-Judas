@@ -1,3 +1,0 @@
-STEPS 3
-LOG_EVERY 1
-SCREENSHOT 2 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m48/lifecycle-followup/demo.png

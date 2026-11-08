@@ -1,8 +1,0 @@
-configure-contract: exit=0, 0.165s
-gravity-explicit: exit=0, 0.115s
-independent-player: exit=0, 0.004s
-classic_near: exit=0, 2.569s
-classic_far: exit=0, 2.569s
-terrain_near: exit=0, 3.621s
-terrain_far: exit=0, 3.622s
-{"overall_pass": true, "seconds": 150.79133657800048}

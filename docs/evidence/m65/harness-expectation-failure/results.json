@@ -1,6 +1,0 @@
-{
-  "actual_exit": 0,
-  "required_exit": "nonzero",
-  "defect": "Unknown expectation name is accepted when zero matches InputSystem default.",
-  "status": "preserved genuine late negative-check failure; correction pending after broad run"
-}

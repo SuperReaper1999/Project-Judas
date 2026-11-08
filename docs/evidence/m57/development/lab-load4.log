@@ -1,5 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Material lab (/home/conner/Documents/GitHub/Project-Judas/projects/material_lab/material_lab.judasproj)
-Scene: M57 Material lab (/home/conner/Documents/GitHub/Project-Judas/projects/material_lab/Scenes/lab.judas)
-World origin (m): 0.000, 0.000, 0.000
-Mouse capture failed: No relative mode implementation available

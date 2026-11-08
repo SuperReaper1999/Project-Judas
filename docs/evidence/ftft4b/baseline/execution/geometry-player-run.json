@@ -1,9 +1,0 @@
-{
-  "command": [
-    "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_geometry_tests",
-    "--player"
-  ],
-  "exit_code": 0,
-  "seconds": 0.002119883999966987,
-  "log": "geometry-player.log"
-}

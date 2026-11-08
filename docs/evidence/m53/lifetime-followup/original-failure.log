@@ -1,7 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-script asset=280a91035e80c372fb413f5ba555eee2 entity=10 slot=1 fixedUpdate: TypeError: No project scene session is active
-    at __judas (native)
-    at call (judas:2:51)
-    at get (judas:133:50)
-    at fixedUpdate (Assets/scripts/player.js:31:27)
-

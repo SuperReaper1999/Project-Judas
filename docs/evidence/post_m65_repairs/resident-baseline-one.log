@@ -1,6 +1,0 @@
-baseline-resident-one 1
-Traceback (most recent call last):
-  File "/home/conner/Documents/GitHub/Project-Judas/scripts/post_m65_repair_application.py", line 30, in <module>
-    (out/'run.log').write_text(result.stdout+result.stderr);(out/'result.json').write_text(json.dumps({'exit':result.returncode,'mode':mode,'runtime':str(binary)},indent=2)+'\n');print(name,result.returncode,flush=True);assert result.returncode==0
-                                                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^
-AssertionError

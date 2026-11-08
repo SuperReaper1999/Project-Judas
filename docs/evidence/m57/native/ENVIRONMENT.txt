@@ -1,7 +1,0 @@
-Native desktop: NVIDIA GeForce GTX 970, 4096 MiB, NVIDIA OpenGL driver.
-1024x768, swap interval zero, unchanged 60 Hz fixed workload, 45 bodies/12 hinges/6 agents/7 motors.
-Concurrent M57 clean build (six compiler processes) and one Java process observed. No operator applications stopped.
-GPU snapshot: 1120 MiB used, 12% utilization (snapshot is not a benchmark average).
-150 frames each mode; initial resource/shader setup excluded from warmed statistics. History retains 120 frames. Warm sample excludes capture and adjacent intervals (local frames 89-92) and final pending GPU timestamps.
-GPU pass intervals are inclusive: Display resolve is nested in Main camera. Do not add those two as independent costs.
-Frame clock uses real elapsed intervals; controlled simulation input uses 1/60 s. Screenshot stalls are separately reported rather than hidden.

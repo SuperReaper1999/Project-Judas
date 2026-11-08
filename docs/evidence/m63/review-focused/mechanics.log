@@ -1,3 +1,0 @@
-FAIL ordinary startup and clean shutdown
-SUMMARY mode=mechanics checks=1 failures=1
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Scenes/flat.judas: scene line 487: missing required key 'render.radius'

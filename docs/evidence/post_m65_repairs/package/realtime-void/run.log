@@ -1,7 +1,0 @@
-JS: stage 1 t=0.3
-Consumer observation frames=600 scriptErrors=0
-Renderer fragment texture units: 32 (material path uses 12)
-World state: disk saves disabled for additive compositions
-Project: Judas Three Games (/tmp/judas-consumers-final-h9xzkcyr/project/post_m65_consumers.judasproj)
-Scene: Void Courier (/tmp/judas-consumers-final-h9xzkcyr/project/Scenes/void/system.judas)
-World origin (m): 0.000, 0.000, 0.000

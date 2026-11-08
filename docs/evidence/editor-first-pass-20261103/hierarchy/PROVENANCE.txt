@@ -1,8 +1,0 @@
-84b94833df172c9962c61bff6e5a9d8597c95cec
-Linux 7.0.0-42-generic x86_64 GNU/Linux
-c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
-Model name:                              AMD Ryzen 5 5600 6-Core Processor
-da9de704efe67566fa77d3cdc9bbd3f4eb3505ca4aad492f8844306fc3a1cd92  src/editor/EditorDocument.h
-c541246863888011a30170a1913c85300f45c3b562b85e96bf1b31551097ac90  src/editor/EditorHistory.cpp
-cd39b9f586eae49bfbd8eb1559d84f8d27efecbe84cd651907e1f085c6659efb  src/editor/EditorPanels.cpp
-73ad688c6f35e111e50b0bd8b78497d799b980b045a2194315bca485a16512a7  src/editor/EditorPanels.h

@@ -1,3 +1,0 @@
-PRECONDITION half_020 warmup_steps=240 mean_particle_speed=0.0230295
-CASE half_020 failures=0 mass=108.0000076 particles=752 y=1.12160778 vy=-0.2800221145 fraction=0.5075053573 observed_fraction=0.5282806396 max_speed=1.692776442 particle_ms=18.675192 executed_ms=22.182605 amortized_ms=12.9759092
-SUMMARY checks=729 failures=0 steps=480

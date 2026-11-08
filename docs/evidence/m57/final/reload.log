@@ -1,6 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Renderer fragment texture units: 32 (material path uses 12)
-Project: Material lab (/home/conner/Documents/GitHub/Project-Judas/build/m57-reload-lab/material_lab.judasproj)
-Scene: M57 Material lab (/home/conner/Documents/GitHub/Project-Judas/build/m57-reload-lab/Scenes/lab.judas)
-World origin (m): 0.000, 0.000, 0.000
-JS: M57_RELOAD_PASS

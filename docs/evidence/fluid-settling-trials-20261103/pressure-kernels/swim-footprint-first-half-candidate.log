@@ -1,6 +1,0 @@
-spacing=0.200000 steps=0 centres_min_z=-0.900000036 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0
-spacing=0.200000 steps=1 centres_min_z=-0.900042892 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.00168285696
-spacing=0.200000 steps=61 centres_min_z=-0.90406096 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.00100071725
-spacing=0.250000 steps=0 centres_min_z=-0.875 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0
-spacing=0.250000 steps=1 centres_min_z=-0.87505126 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.00181551598
-spacing=0.250000 steps=61 centres_min_z=-0.878723741 count_outside_authored_footprint=0 count_beyond_candidate_player=0 mean_speed=0.000878029854

@@ -1,1 +1,0 @@
-The first isolated reproduction omitted PhysicsWorld::Init(), causing SIGSEGV in Impl::AddBody. A heap allocation alone did not fix the fixture. The corrected reproduction initializes the normal PhysicsWorld first. No engine changes were made. capsule-repro-final.log records the genuine geometric defect.

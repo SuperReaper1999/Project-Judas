@@ -1,6 +1,0 @@
-In file included from build/_deps/judas_harfbuzz-src/util/batch.hh:28,
-                 from build/_deps/judas_harfbuzz-src/util/hb-shape.cc:28:
-build/_deps/judas_harfbuzz-src/util/options.hh:49:10: fatal error: hb-features.h: No such file or directory
-   49 | #include <hb-features.h>
-      |          ^~~~~~~~~~~~~~~
-compilation terminated.

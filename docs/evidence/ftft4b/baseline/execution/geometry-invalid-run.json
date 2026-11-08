@@ -1,9 +1,0 @@
-{
-  "command": [
-    "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_geometry_tests",
-    "--invalid"
-  ],
-  "exit_code": 0,
-  "seconds": 0.0013920020001023659,
-  "log": "geometry-invalid.log"
-}

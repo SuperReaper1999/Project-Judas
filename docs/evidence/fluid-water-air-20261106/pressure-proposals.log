@@ -1,2 +1,0 @@
-WATER_BASIN mode=pressure rotated=0 repeat=0 accepted=1 elapsedMs=2372.488679 pressureMs=2285.131386 linear=198 fallbacks=0 stateHash=9311385029632017164 strictMinority=3.6870378174953129 partition=0 momentum=0 water=0 gas=0 speed=0 reason=
-WATER_BASIN mode=pressure rotated=1 repeat=0 accepted=1 elapsedMs=6039.4106400000001 pressureMs=5890.7789339999999 linear=285 fallbacks=0 stateHash=5546867201863624338 strictMinority=5.7712193566701158e+18 partition=0 momentum=0 water=0 gas=0 speed=0 reason=

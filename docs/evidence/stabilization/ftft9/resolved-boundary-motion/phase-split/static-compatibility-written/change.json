@@ -1,9 +1,0 @@
-{
-  "timestamp_utc": "2026-09-30T01:50:14.996355+00:00",
-  "changed_source": "src/ProductionFluidCoupling.cpp",
-  "before_sha256": "505de3a2e42dca8cf61d008d31107b4fb2db4dd9f7c84f09140c3a407d5fbef9",
-  "after_sha256": "821584603a9a9ff8f5580f568bc4d2783992d0edd030a82f900ce7825b6fca5e",
-  "mechanism": "Attach copied resolved path only when genuine GetBodyMotionSegments is nonempty; absent ledger retains begin=end=now and original constant-pose interpolation.",
-  "tests_run_by_agent": 0,
-  "validation_owner": "Parent unchanged bounded three-case gate"
-}

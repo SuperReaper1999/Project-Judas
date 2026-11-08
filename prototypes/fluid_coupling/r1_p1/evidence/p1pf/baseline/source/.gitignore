@@ -1,7 +1,0 @@
-# Local compiled output and caches; source/evidence archives remain tracked.
-/.build-jsgt/
-/build/
-__pycache__/
-*.pyc
-*.pyo
-/evidence/p1cm/current/build_output.txt

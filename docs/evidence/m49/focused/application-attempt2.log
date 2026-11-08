@@ -1,6 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-PASS real EngineHost
-PASS ordinary current registered project
-PASS current scene load
-PASS ordinary world / game lifecycle
-PASS JS project starts motor and separate camera

@@ -1,0 +1,453 @@
+JudasScene 3
+settings
+  name "Water V2 / original planet basin"
+  world-origin 0 0 0
+  sun-color 1 0.98 0.92
+  sun-direction -0.3 0.8 0.5
+  ambient 0.3 0.32 0.35
+  fluid-scale 13
+  fluid-update-rate-hz 20
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 100
+end
+
+object 1 "Spherical world"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.radius 30
+  render.color 0.25 0.42 0.27
+  body static sphere
+  body.radius 30
+  body.friction 0.8
+  gravity radial 9.81
+  gravity.region sphere 100
+  render.half-extents 0.5 0.5 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.half-extents 0.5 0.5 0.5
+  body.terrain ""
+  body.mass 1
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Basin wall"
+  position 19.5868578 24.5366053 0
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.6 3.65
+  render.color 0.36 0.44 0.5
+  body static box
+  body.half-extents 0.15 1.6 3.65
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3 "Basin wall"
+  position 24.5366053 19.5868578 0
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.6 3.65
+  render.color 0.36 0.44 0.5
+  body static box
+  body.half-extents 0.15 1.6 3.65
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 4 "Basin wall"
+  position 22.0617316 22.0617316 -3.5
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 3.35 1.6 0.15
+  render.color 0.36 0.44 0.5
+  body static box
+  body.half-extents 3.35 1.6 0.15
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 5 "Basin wall"
+  position 22.0617316 22.0617316 3.5
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 3.35 1.6 0.15
+  render.color 0.36 0.44 0.5
+  body static box
+  body.half-extents 3.35 1.6 0.15
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 6 "Entry deck"
+  position 22.0970869 22.0970869 5.4
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 4.5 1.55 1.75
+  render.color 0.65 0.62 0.48
+  body static box
+  body.half-extents 4.5 1.55 1.75
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 7 "Exit step"
+  position 21.3546248 21.3546248 0.9
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.2 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 0.2 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 8 "Exit step"
+  position 21.4960461 21.4960461 1.3
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 0.4 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 9 "Exit step"
+  position 21.6374675 21.6374675 1.7
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.6 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 0.6 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 10 "Exit step"
+  position 21.7788889 21.7788889 2.1
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.8 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 0.8 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 11 "Exit step"
+  position 21.9203102 21.9203102 2.5
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 1 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 1 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 12 "Exit step"
+  position 22.0617316 22.0617316 2.9
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 1.2 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 1.2 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 13 "Exit step"
+  position 22.2031529 22.2031529 3.3
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 1.4 0.3
+  render.color 0.7 0.7 0.65
+  body static box
+  body.half-extents 0.7 1.4 0.3
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.pickable false
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 14 "Open carrying bucket"
+  position 25.3851334 22.5567063 4.7
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render compound
+  render.color 0.7 0.75 0.8
+  render.secondary-color 0.6 0.85 0.9
+  render.secondary-alpha 0.25
+  body dynamic compound
+  body.mass 1500
+  body.friction 0.8
+  body.restitution 0
+  body.pickable true
+  body.compound-count 5
+  body.compound-box 0 -0.86 0 0.97 0.12 0.97
+  body.compound-box -0.85 0.06 0 0.12 0.8 0.97
+  body.compound-box 0.85 0.06 0 0.12 0.8 0.97
+  body.compound-box 0 0.06 -0.85 0.73 0.8 0.12
+  body.compound-box 0 0.06 0.85 0.73 0.8 0.12
+  body.fluid-cavity-count 1
+  body.fluid-cavity 0 0.06 0 0.73 0.8 0.73
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+end
+
+object 15 "Low density block"
+  position 21.9910209 25.2437121 4.5
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 1 0.45 0.1
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 256
+  body.friction 0.8
+  body.restitution 0
+  body.pickable true
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 16 "High density block"
+  position 22.7688384 24.4658946 4.5
+  rotation 0.923879533 0 0 -0.382683432
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.65 0.3 0.8
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 1024
+  body.friction 0.8
+  body.restitution 0
+  body.pickable true
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

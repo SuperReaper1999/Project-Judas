@@ -1,2 +1,0 @@
-#!/bin/sh
-printf '%s' '[{"title":"Add M78 audit","sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},{"title":"noise M999","sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}]'

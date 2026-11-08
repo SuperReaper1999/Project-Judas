@@ -1,7 +1,0 @@
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Assets/deformables/panel.judasdeform: 72 nodes 108 triangles 54 tetrahedra 324 render vertices
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Assets/deformables/beam.judasdeform: 24 nodes 36 triangles 18 tetrahedra 108 render vertices
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Assets/deformables/frame.judasdeform: 48 nodes 72 triangles 36 tetrahedra 216 render vertices
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Assets/deformables/barrier.judasdeform: 48 nodes 72 triangles 36 tetrahedra 216 render vertices
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Assets/deformables/imported-L.judasdeform: 24 nodes 36 triangles 18 tetrahedra 108 render vertices
-/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab
-usage: judas_navigation_bake project.judasproj scene-relative-path

@@ -1,5 +1,0 @@
-FAIL reload releases old native claims rather than reviving stored ownership
-script asset=f9dd6dd476ce7c79e6e0d720e460bec7 entity=2 slot=1 fixedUpdate: Error: intentional reservation owner fault
-    at fixedUpdate (Assets/npc.js:28:50)
-
-AI reservation scripts: 26 checks, 1 failures

@@ -1,7 +1,0 @@
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/post_m65_repairs/package/harness-scene-boundary/queued.png
-Renderer fragment texture units: 32 (material path uses 12)
-World state: disk saves disabled for additive compositions
-Project: Judas Three Games (/tmp/judas-consumers-final-h9xzkcyr/project/post_m65_consumers.judasproj)
-Scene: Three Games (/tmp/judas-consumers-final-h9xzkcyr/project/Scenes/launcher.judas)
-World origin (m): 0.000, 0.000, 0.000

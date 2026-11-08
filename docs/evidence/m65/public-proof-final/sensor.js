@@ -1,1 +1,0 @@
-import {session} from 'judas';export default class {onTriggerEnter(e){if(e.other?.id==='10'){session.set('m65.callback','destroy');e.other.destroy();}}onTriggerExit(){session.set('m65.exit',(session.get('m65.exit')??0)+1);}}

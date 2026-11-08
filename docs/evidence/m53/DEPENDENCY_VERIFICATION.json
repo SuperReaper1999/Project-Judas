@@ -1,7 +1,0 @@
-{
-  "archive_sha256": "d48ca0121962fa0639502c0f56c4e3ae72f98e55d88727225444f500775c0074",
-  "upstream_files_compared": 47,
-  "mismatches": [],
-  "export_contains_full_license": true,
-  "pin": "v1.6.0"
-}

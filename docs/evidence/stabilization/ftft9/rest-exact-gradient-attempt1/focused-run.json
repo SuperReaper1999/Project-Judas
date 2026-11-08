@@ -1,8 +1,0 @@
-{
-  "command": [
-    "build/judas_fluid_smoothing_budget_tests"
-  ],
-  "exit": 0,
-  "seconds": 0.0017731019997881958,
-  "binary_sha256": "70fd611e56fca4d331d82583ed53dcb3003ac1df287a440a2acbe3f679680878"
-}

@@ -1,7 +1,0 @@
-{
-  "scope": "Source edit only; NOT test execution or acceptance evidence.",
-  "sha256": {
-    "tests/ProductionFluidTests.cpp": "f8cb588439c884c8709a4c3ac333dbd727d390f22b35ad9a51ae0756428fb3ae",
-    "tests/PlayerFluidIntegrationTests.cpp": "ba7278ff63a29a417b17cb127837015ff6c8560b5f2e90412e0d175d5929e9ee"
-  }
-}

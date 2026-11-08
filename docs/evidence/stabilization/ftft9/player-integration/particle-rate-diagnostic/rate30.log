@@ -1,5 +1,0 @@
-FAIL density-20-1000 fixed reference-pool warmup is quiescent
-STRICT_MICROREST_FAILURE density-20-1000 unchanged mean-particle-speed <0.05 m/s prerequisite
-FAIL density-20-1000 neutral player has no rapid systematic drift
-CASE density-20-1000 failures=2 height_change=-0.722114563 final_immersion=0.911805928 max_speed=0.495009184 relative_drift=0.721593142 synchronized_relative_drift=0.721593976 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.083356522 warmup_bulk_speed=0.00850171223 warmup_centroid_travel=0.000741184514 final_mean_particle_speed=0.0842395574 jump_immersion=0 jump_delta_speed=0 particle_steps=120 seconds=20.9769995 particle_reference_equal=0
-SUMMARY checks=492 failures=2 strict_microrest_checks=1 strict_microrest_failures=1 ordinary_steps=480

@@ -1,9 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Runtime geometric queries (/home/conner/Documents/GitHub/Project-Judas/build/m44-application/project/query_demo.judasproj)
-Scene: M44 geometric queries — G ray/sphere / P spawn (/home/conner/Documents/GitHub/Project-Judas/build/m44-application/project/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-PASS actual JS cast callbacks have no faults
-PASS JS checks ray/shape hits, filtering, prefab, read-only and safe destroyed wrapper
-PASS normal active-camera snapshot drives authored query HUD
-PASS normal Application startup, rendering and shutdown
-SUMMARY 4 checks 0 failures

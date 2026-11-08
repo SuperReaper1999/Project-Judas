@@ -1,8 +1,0 @@
-{
-  "head": "d2246cd19ad70065d121ffc5d4a4445ebca5d82b",
-  "scope": "Pre-edit snapshot for explicit FTFT9 acceptance versus optional strict diagnostics; no physical condition/fixture changes.",
-  "sha256": {
-    "tests/ProductionFluidTests.cpp": "4452c355dc75589e7c051390d231c7f8b462ff05ca6886a322bc18ceb834b307",
-    "tests/PlayerFluidIntegrationTests.cpp": "947493bc4945aa0089b00f3fa82970d83165eb63a54685de38eb45687a4735bb"
-  }
-}

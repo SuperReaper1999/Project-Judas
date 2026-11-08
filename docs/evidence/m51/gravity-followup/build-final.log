@@ -1,7 +1,0 @@
-[  7%] Built target judas_glad
-[  7%] Built target judas_audio_backend
-[  7%] Built target judas_quickjs
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_boundary_migration_tests.dir/tests/BoundaryMigrationTests.cpp.o
-[100%] Linking CXX executable judas_boundary_migration_tests
-[100%] Built target judas_boundary_migration_tests

@@ -1,8 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Dynamic Liquid Surface Lab (/tmp/Judas_Dynamic_Surface_M55_Final/game.judasproj)
-Scene: Dynamic Surface / Flat Pool (/tmp/Judas_Dynamic_Surface_M55_Final/Scenes/lab.judas)
-World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ
-0,0.0000,0.0000,-0.0027,0.0000,0.0000,1.0000,0.0000,0,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-1.0000,2.9973,-1.0000,0.0000,-0.1635,0.0000,-3.0000,3.8973,-3.0000,0.0000,-0.1635,0.0000,1.0000,2.9973,-12.0000,0.0000,-0.1635,0.0000
-60,1.0000,0.0000,-5.1530,0.0000,0.0000,1.0000,0.0000,0,0.0000,-9.9735,0.0000,0.000000,-9.810000,0.000000,0,-1.0000,2.6000,-1.0000,0.0000,0.0000,0.0000,-3.0000,3.0156,-3.0000,-0.0000,-0.1733,0.0000,1.0000,2.2314,-11.9994,0.0000,0.6671,0.0021
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m55/followup/package-world.png

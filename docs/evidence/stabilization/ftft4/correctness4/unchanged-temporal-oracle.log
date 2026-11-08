@@ -1,7 +1,0 @@
-{
-  "mode": "full",
-  "checks": 45,
-  "failures": [],
-  "result": "PASS",
-  "scope": "Selected central impact/chain witnesses only; not full-engine certification"
-}

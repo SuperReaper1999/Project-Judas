@@ -1,8 +1,0 @@
-[  0%] Built target judas_glad
-[  7%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
-[  7%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
-[  7%] Linking CXX static library libjudas_engine.a
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_coarse_celestial_tests.dir/tests/CoarseCelestialTests.cpp.o
-[100%] Linking CXX executable judas_coarse_celestial_tests
-[100%] Built target judas_coarse_celestial_tests

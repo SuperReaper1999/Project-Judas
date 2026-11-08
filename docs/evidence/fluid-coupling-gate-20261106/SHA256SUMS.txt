@@ -1,5 +1,0 @@
-44d7bc7f3b70874649234157ccbd2174a8150e6f80cfd57ee074a1f543624fe3  docs/evidence/fluid-coupling-gate-20261106/CoupledCarrierGate.cpp
-6af3ab150704a0af621f0a8924604bb7846573d987f1c704f09157855cfe8fda  docs/evidence/fluid-coupling-gate-20261106/README.md
-00fe02a33a9bcb282bbdb6f1dfa40f066e46689b03c3131854445ec949e357e3  docs/evidence/fluid-coupling-gate-20261106/normal.log
-5657feefc79f72d62a82d99c4ee0df77b463a66cc08fa95a2b5ba7551baa9067  docs/evidence/fluid-coupling-gate-20261106/qualification.json
-00fe02a33a9bcb282bbdb6f1dfa40f066e46689b03c3131854445ec949e357e3  docs/evidence/fluid-coupling-gate-20261106/sanitized.log

@@ -28,12 +28,15 @@ def main():
             if f.is_file():shutil.copyfile(f,DEST/'Assets'/folder/f.name)
     for i,key in enumerate(('grass','earth','rock','sand')):
         path=DEST/f'Assets/terrain/{key}.tga';texture(path,i);meta(path,key,'texture')
-    # Reuse the locally catalogued CC0 materials, keeping their provenance.
+    # These CC0 source materials and their notices are owned by this workshop.
+    # Never depend on a consumer game being installed in the engine checkout.
     for key in ('grass','earth','rock','sand'):
         path=DEST/f'Assets/terrain/{key}-natural.png'
-        shutil.copyfile(ROOT/f'projects/lunar_island/Assets/textures/{key}.png',path)
+        if not path.is_file():
+            raise FileNotFoundError(f"Restore the workshop's tracked material: {path}")
         meta(path,'natural_'+key,'texture')
-    shutil.copyfile(ROOT/'projects/lunar_island/Assets/textures/LICENSE.txt',DEST/'Assets/terrain/REUSED_MATERIAL_NOTICES.txt')
+    if not (DEST/'Assets/terrain/REUSED_MATERIAL_NOTICES.txt').is_file():
+        raise FileNotFoundError('Restore the tracked workshop material licence notices')
     n=97;spacing=.5;heights=[];weights=[]
     for z in range(n):
         for x in range(n):

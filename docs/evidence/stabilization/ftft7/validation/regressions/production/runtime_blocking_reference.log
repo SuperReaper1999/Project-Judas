@@ -1,8 +1,0 @@
-World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/Saves/main.judasstate (none saved; F6 saves, F7 deletes)
-Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/main.judasproj)
-Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
-0,0.0000,0.0000,2.0000,6.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-1.9958,1.0000,0.0000,0.2500,0.0000,0.0000
-1,0.0167,0.0000,2.0000,6.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-1.9917,1.0000,0.0000,0.2500,0.0000,0.0000
-2,0.0333,0.0000,2.0000,6.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-1.9875,1.0000,0.0000,0.2500,0.0000,0.0000

@@ -1,7 +1,0 @@
-JudasProject 1
-name "Entity scaling repro"
-startup-scene "Scenes/main.judas"
-assets-dir "Assets"
-scenes-dir "Scenes"
-saves-dir "Saves"
-legacy-gameplay "false"

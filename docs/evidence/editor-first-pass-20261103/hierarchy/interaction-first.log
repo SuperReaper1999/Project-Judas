@@ -1,9 +1,0 @@
-FAIL F2 begins inline rename on the scrolled row
-SCALE 1.00
-PASS large hierarchy has real scrolling extent
-PASS last rows reached at bottom
-PASS last row click lies inside the clipped list
-PASS mouse Shift selection spans the full authored list across hidden rows
-PASS right-click reaches the correct clipped bottom row
-PASS row opens the real Create child submenu
-PASS submenu targets the exact bottom-row parent

@@ -1,8 +1,0 @@
-{
-  "status": "PASS_EXACT_REFERENCE_ONLY",
-  "exact_distance_checks": 27,
-  "exact_box_translation_toi_checks": 18,
-  "sat_lower_bound_checks": 28,
-  "compound_opening_sweep": true,
-  "seconds": 0.5084755359999917
-}

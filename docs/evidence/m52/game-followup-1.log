@@ -1,6 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-PASS ordinary registered shooter project
-PASS production engine host
-PASS project logical controls load
-FAIL actual project scene and scripts build
-/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas: scene line 90: unknown or misplaced key 'audio.asset'

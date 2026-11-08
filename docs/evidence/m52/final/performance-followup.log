@@ -1,8 +1,0 @@
-Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
-Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
-World origin (m): 0.000, 0.000, 0.000
-PASS normal asynchronous resources
-PASS no script faults in actual application
-M52_PERF frames=210 mean_frame_ms=17.120624 fps=58.409 mean_fixed_ms=0.563480 bodies=30
-PASS normal standalone shutdown
-SUMMARY 3 checks 0 failures

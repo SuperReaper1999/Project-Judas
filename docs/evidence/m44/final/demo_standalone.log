@@ -1,9 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Runtime geometric queries (/home/conner/Documents/GitHub/Project-Judas/projects/query_demo/query_demo.judasproj)
-Scene: M44 geometric queries — G ray/sphere / P spawn (/home/conner/Documents/GitHub/Project-Judas/projects/query_demo/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled
-0,0.0000,0.0000,1.5000,8.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-0.9942,1.5000,-4.0000,0.3500,0.0000,0.0000
-1,0.0167,0.0000,1.5000,8.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-0.9883,1.5000,-4.0000,0.3500,0.0000,0.0000
-2,0.0333,0.0000,1.5000,8.0000,0.0000,1.0000,0.0000,0,0.0000,0.0000,0.0000,0.000000,0.000000,0.000000,0,-0.9825,1.5000,-4.0000,0.3498,0.0000,0.0000
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m44/final/demo.png

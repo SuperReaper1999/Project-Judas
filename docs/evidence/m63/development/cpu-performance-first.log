@@ -1,3 +1,0 @@
-deformable element inversion; outside supported deformation envelope; instance stopped
-CPU mode=intact parts=30 nodes=240 tets=180 interfaces=29 broken=0 median_ms=0.919956 p95_ms=1.050175 max_ms=1.089197 allocations=0 allocated_bytes=0 retained_numeric_bytes=41555 selfContact=false
-CPU mode=failing parts=30 nodes=240 tets=180 interfaces=29 broken=8 median_ms=0.000183 p95_ms=0.000400 max_ms=0.463733 allocations=5 allocated_bytes=147 retained_numeric_bytes=41555 selfContact=false

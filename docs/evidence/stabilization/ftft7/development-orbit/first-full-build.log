@@ -1,5 +1,0 @@
-[  6%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_orbital_integrity_tests.dir/tests/OrbitalIntegrityTests.cpp.o
-[100%] Linking CXX executable judas_orbital_integrity_tests
-[100%] Built target judas_orbital_integrity_tests

@@ -1,2 +1,0 @@
-properties {} calls 200 refs 0 total-ms 0.068562 per-call-ms 0.00034281 parser-constructions 0
-properties {"target":{"entity":"12"}} calls 200 refs 200 total-ms 0.155549 per-call-ms 0.000777745 parser-constructions 0

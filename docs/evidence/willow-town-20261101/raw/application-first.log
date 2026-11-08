@@ -1,4 +1,0 @@
-PASS isolated editable town project loads: 
-/home/conner/Documents/GitHub/Project-Judas/.cache/willow-town/qualification/first/project/Scenes/main.judas: scene line 12: missing required key 'fluid-scale'
-FAIL ordinary town application completes and shuts down
-WILLOW_TOWN mode=write checks=2 failures=1 worst_fixed_ms=0.000000

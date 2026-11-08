@@ -1,8 +1,0 @@
-{
-  "rows": 720,
-  "all_physical_fields_exact": true,
-  "default_case_failures": 1,
-  "strict_case_failures": 2,
-  "additional_failure_due_to_original_legacy_comparison": true,
-  "note": "Both runs still exit nonzero because the candidate also fails the new independent-immersion check."
-}

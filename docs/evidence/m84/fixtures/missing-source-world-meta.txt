@@ -1,3 +1,0 @@
-JudasAssetMeta 1
-id "5f6dfaef098ddbb0dcebc07bf34e3d82"
-type world

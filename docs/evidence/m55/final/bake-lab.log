@@ -1,8 +1,0 @@
-basin 20: 3392.000000 L capacity, 1025 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 54.230 ms; e50908015a7e6361218d475c316c2296873a0c26fdc006f5f6996afc116ac0fa
-basin 21: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.240 ms; 03877214b7756a4c5fafd82a6f26d9095b1fef8b377406c7e1c36bebf21584e5
-basin 22: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.279 ms; 5b92da27388ecbdcdd8a3a5f07a8e982be953d19793323a47a5784fb20ab7862
-basin 30: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 8.930 ms; 28bc431f46993206c91f408a16c8986bd8185c3469520b0cbea3510369d6c88b
-basin 31: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 9.064 ms; dbfb613435f3f4673c7329164acb98ea372599052b8beeb97b20ac3338de2ad4
-basin 32: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.246 ms; 95d67765d4b9cce290c08856c8980985f56f67969bd503d27023c4f3cd2234e7
-basin 4000: 307200.000000 L capacity, 2050 curve samples, 6 integration cells, interpolation <=0.1 L, curved height bound 0 m; 143.205 ms; 041931452364455f9a6172bd977db72e158fc21a9af0b7b2745ca744879da93b
-basin 4001: 307200.000000 L capacity, 2050 curve samples, 6 integration cells, interpolation <=0.1 L, curved height bound 0 m; 86.981 ms; 9fd2c20460c79d88e3ba85f9e792da98704f960aa5a6b5a9f784a59944780e5e

@@ -1,9 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/build/m55-transition-project/liquid_surface_demo.judasproj)
-Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/build/m55-transition-project/Scenes/lab.judas)
-World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
-Mouse capture failed: No relative mode implementation available
-Mouse capture failed: No relative mode implementation available
-script asset=54545454545454545454545454540006 entity=11 slot=1 properties: TypeError: properties: undeclared property radial
-
-Mouse capture failed: No relative mode implementation available

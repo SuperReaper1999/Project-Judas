@@ -1,8 +1,0 @@
-CASE unequal_mass_pair initial_P=0 final_P=0.016862750053405762 delta_P=0.016862750053405762 initial_KE=0.75 final_KE=0.58640314213118483 momentum=0 dissipative=1
- particle=0 mass=1 final_vx=0.88981980085372925
- particle=1 mass=2 final_vx=-0.43647852540016174
-CASE equal_mass_asymmetric_neighbourhood initial_P=0 final_P=0.010063022375106812 delta_P=0.010063022375106812 initial_KE=0.75 final_KE=0.602176868703586 momentum=0 dissipative=1
- particle=0 mass=1 final_vx=0.89814084768295288
- particle=1 mass=1 final_vx=-0.40307769179344177
- particle=2 mass=1 final_vx=-0.4850001335144043
-SUMMARY cases=2 failures=2

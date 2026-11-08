@@ -1,5 +1,0 @@
-[  6%] Built target judas_glad
-[ 93%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_thermal_accounting_tests.dir/tests/ThermalAccountingTests.cpp.o
-[100%] Linking CXX executable judas_thermal_accounting_tests
-[100%] Built target judas_thermal_accounting_tests

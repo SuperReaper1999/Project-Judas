@@ -1,4 +1,0 @@
-FAIL local_vehicle_with_explicit_celestial exactly one registration per physical body
-FAIL local_vehicle_with_explicit_celestial first-step acceleration agrees with independent Newton force
-CASE local_vehicle_with_explicit_celestial FAIL participants=3 expected_dva=(0.0047776502864559992,0,0) observed_dva=(0.009555300697684288,0,0) expected_dvb=(-0.014332950859367999,-0,-0) observed_dvb=(-0.028665902093052864,0,0) normalized_impulse_residual=0
-Orbital integrity: 1 cases, 1 ordinary fixed steps, 13 checks, 2 failures

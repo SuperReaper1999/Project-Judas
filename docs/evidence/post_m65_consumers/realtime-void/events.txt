@@ -1,8 +1,0 @@
-1 key:W 1
-40 key:W 0
-50 key:F 1
-51 key:F 0
-80 key:Space 1
-130 key:Space 0
-150 mouse:left 1
-200 mouse:left 0

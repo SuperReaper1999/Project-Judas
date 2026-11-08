@@ -1,2 +1,0 @@
-basin 120: 120000.000000 L capacity, 1448 curve samples, 9156 integration cells, interpolation <=0.1 L, curved height bound 0.0172028 m; 10133.359 ms; 836dec5309b1b51146e9dc6e59c620a0900cec267c9b35f680ebbe6f1c832a31
-basin 121: 120000.000000 L capacity, 2367 curve samples, 8242 integration cells, interpolation <=0.1 L, curved height bound 0.0199996 m; 12328.339 ms; ec212875270160460dd338f1abba1406edbf93567bcc77e91666a7d2d462360e

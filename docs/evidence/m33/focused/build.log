@@ -1,8 +1,0 @@
-[  0%] Built target judas_glad
-[ 92%] Built target judas_engine
-[ 92%] Building CXX object CMakeFiles/judas_render_camera_tests.dir/tests/RenderCameraTests.cpp.o
-[100%] Linking CXX executable judas_render_camera_tests
-[100%] Built target judas_render_camera_tests
-[  0%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Built target judas_scene_fingerprint_tests

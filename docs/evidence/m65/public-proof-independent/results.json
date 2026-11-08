@@ -1,9 +1,0 @@
-{
-  "exit_code": 0,
-  "seconds": 0.31478710699957446,
-  "command": [
-    "/home/conner/Documents/GitHub/Project-Judas/.cache/m65-before-clean-release/judas",
-    "/tmp/judas-m65-public-proof-project/m65_integration.judasproj"
-  ],
-  "script_sha256": "ad6179442f19cd8dedbea48cbb2d3f28fd9874d1326a36080d7e995e851767c4"
-}

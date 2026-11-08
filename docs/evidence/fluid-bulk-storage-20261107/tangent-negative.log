@@ -1,9 +1,0 @@
-128 checks 8 failures maximumRelative=0.019589003125425452
-BAD capacity=1 modes=00 row=0 col=0 FD=3.83856e-06 analytic=3.91333e-06 relative=0.0191068
-BAD capacity=1 modes=01 row=0 col=0 FD=3.83856e-06 analytic=3.91333e-06 relative=0.0191068
-BAD capacity=1 modes=10 row=0 col=0 FD=0.000102037 analytic=0.000104076 relative=0.019589
-BAD capacity=1 modes=11 row=0 col=0 FD=0.000102037 analytic=0.000104076 relative=0.019589
-BAD capacity=1e-12 modes=00 row=0 col=0 FD=3.83856e-06 analytic=3.91333e-06 relative=0.0191068
-BAD capacity=1e-12 modes=01 row=0 col=0 FD=3.83856e-06 analytic=3.91333e-06 relative=0.0191068
-BAD capacity=1e-12 modes=10 row=0 col=0 FD=0.000102037 analytic=0.000104076 relative=0.019589
-BAD capacity=1e-12 modes=11 row=0 col=0 FD=0.000102037 analytic=0.000104076 relative=0.019589

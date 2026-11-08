@@ -1,6 +1,0 @@
-basin 20: 3392.000000 L capacity, 1025 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 42.484 ms; 72dc7ea2a91c833305fd49717f0ee20e7743d52335b8b53797adf23b728d7673
-basin 21: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.883 ms; e9514a941445e6053227bfdbe431a30ff4f0909b4230626a18137a2a168c6bfc
-basin 22: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.224 ms; 9c51210219fcd32682417417397c021f715cdd9535274ca36cc7e58817eceab0
-basin 30: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.221 ms; 584bc22f75d153656c425471ac15054ad0e1e3208bc9f0f071421dac252fe763
-basin 31: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.246 ms; fe9dbbd4bd2894f892de20d56d9d17bc1e0e156046e70c9458e9fbaa58b61f0a
-basin 32: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.232 ms; 76fc6285e5ab309fb3c698aed7779c0517b75c6396a6a7cced5f30450be16eb9

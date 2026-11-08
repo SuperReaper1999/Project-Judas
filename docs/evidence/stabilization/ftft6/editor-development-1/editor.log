@@ -1,5 +1,0 @@
-FTFT6 CHECK normal_async_mode PASS
-FTFT6 CHECK fresh_generated_project PASS
-FTFT6 CHECK create_project PASS
-FTFT6 CHECK starter_scene_and_project_startup PASS
-FTFT6 CHECK non_planetary_project PASS

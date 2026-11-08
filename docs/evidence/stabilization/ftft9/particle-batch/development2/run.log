@@ -1,4 +1,0 @@
-SUPPORTED dynamic_platform=0 particle_normal_max=2.38419e-07 support_y=100 body_vy=8.37277e-08
-SUPPORTED dynamic_platform=1 particle_normal_max=0.00263166 support_y=98.8412 body_vy=-0.0019923
-FTFT9 PARTICLE BATCH checks=33 failures=1
-FAIL supported finite-mass batch converges to near-stationary normal particle velocity

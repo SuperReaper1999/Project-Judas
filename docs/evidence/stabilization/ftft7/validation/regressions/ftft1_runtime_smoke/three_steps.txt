@@ -1,2 +1,0 @@
-STEPS 3
-LOG_EVERY 1

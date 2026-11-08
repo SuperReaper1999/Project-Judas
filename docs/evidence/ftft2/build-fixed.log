@@ -1,8 +1,0 @@
-[  6%] Built target judas_glad
-[  6%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
-[  6%] Linking CXX static library libjudas_engine.a
-[ 93%] Built target judas_engine
-[ 93%] Building CXX object CMakeFiles/judas_async_application_tests.dir/tests/AsyncApplicationTests.cpp.o
-[ 93%] Building CXX object CMakeFiles/judas_async_application_tests.dir/src/Application.cpp.o
-[ 93%] Linking CXX executable judas_async_application_tests
-[100%] Built target judas_async_application_tests

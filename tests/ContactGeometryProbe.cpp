@@ -145,5 +145,5 @@ int main(int argc,char** argv) {
     std::cout<<std::setprecision(17)<<std::boolalpha;
     if(argc>1&&std::string(argv[1])=="--player")return Player();
     if(argc>1&&std::string(argv[1])=="--invalid")return Invalid();
-    return Pairs(argc>1?argv[1]:"docs/evidence/ftft4/geometry/fixtures.txt");
+    return Pairs(argc>1?argv[1]:"tests/fixtures/contact/pairs.txt");
 }

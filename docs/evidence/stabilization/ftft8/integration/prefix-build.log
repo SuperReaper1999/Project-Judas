@@ -1,5 +1,0 @@
-[  7%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_combustion_integration_tests.dir/tests/CombustionIntegrationTests.cpp.o
-[100%] Linking CXX executable judas_combustion_integration_tests
-[100%] Built target judas_combustion_integration_tests

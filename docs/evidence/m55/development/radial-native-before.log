@@ -1,8 +1,0 @@
-Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
-Scene: Dynamic Surface / Radial Lake (projects/liquid_surface_demo/Scenes/radial.judas)
-World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
-M55 loop frame samples 61 median 75.37923 p95 125.58594 max 146.96010 ms
-M55 loop fixed samples 310 median 0.00000 p95 0.00000 max 0.00000 ms
-M55 loop render samples 61 median 25.48342 p95 27.52108 max 28.72409 ms
-M55 loop surface samples 61 median 0.00019 p95 0.00035 max 0.00040 ms
-M55 loop catchup 61 capped 4 frames 76 failures 0

@@ -1,9 +1,0 @@
- M CMakeLists.txt
- M docs/ARCHITECTURE.md
- M docs/FTFT.md
- M src/PhysicsWorld.cpp
-?? docs/evidence/ftft4b/implementation/
-?? scripts/ftft4b_policy_validation.py
-?? src/RigidMotion.h
-?? tests/PoissonPolicyWitness.cpp
-?? tests/RigidMotionTests.cpp

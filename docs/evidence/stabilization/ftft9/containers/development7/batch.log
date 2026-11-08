@@ -1,6 +1,0 @@
-SUPPORTED dynamic_platform=0 particle_normal_max=2.38419e-07 support_y=100 body_vy=8.37277e-08 iterations=10 closing_residual=1.64467e-07 scale=1 cap=0
-SUPPORTED dynamic_platform=1 particle_normal_max=9.83477e-06 support_y=99.9957 body_vy=-7.44215e-06 iterations=20 closing_residual=9.95865e-06 scale=1 cap=0
-GAP cached=0 gap=0.000999987 vy=-1.9802 rows=0 residual=0
-FAIL persistent support permits physical gap closing without pinning velocity
-GAP cached=1 gap=0.000999987 vy=-1.10535 rows=4 residual=1.26903
-FTFT9 PARTICLE BATCH checks=43 failures=1

@@ -1,2 +1,0 @@
-FRAMES 3
-EXPECT_HELD nonexistent_action 0 1

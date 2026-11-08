@@ -1,5 +1,0 @@
-[  5%] Built target judas_glad
-[ 94%] Built target judas_engine
-[ 94%] Building CXX object CMakeFiles/judas_poisson_policy_witness.dir/tests/PoissonPolicyWitness.cpp.o
-[100%] Linking CXX executable judas_poisson_policy_witness
-[100%] Built target judas_poisson_policy_witness

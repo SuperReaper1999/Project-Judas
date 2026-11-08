@@ -1,1 +1,0 @@
-241 output rows identical after removing elapsed time; final state, velocities, energies and ledgers match the preceding checkpoint.

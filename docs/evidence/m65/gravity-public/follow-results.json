@@ -1,7 +1,0 @@
-{
-  "exit_code": 0,
-  "checks": 6,
-  "same_module": true,
-  "no_character_motor": true,
-  "initial_failure": "test fixture used JudasAsset instead of existing JudasAssetMeta header; fixed metadata only"
-}

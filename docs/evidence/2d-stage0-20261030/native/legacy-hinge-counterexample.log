@@ -1,2 +1,0 @@
-legacy_hinge spin_before=5.17241382599 spin_after=0
-FAIL after 3 checks: approximate 3D hinge must preserve planar free spin (expected failure)

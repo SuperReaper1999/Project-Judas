@@ -1,7 +1,0 @@
-Build Release targets judas_ui_preview_color_tests judas_shader_library_tests judas_render_camera_tests judas_runtime_ui_tests judas_ui_menu_tests.
-Run judas_ui_preview_color_tests with default and JUDAS_GL_PROFILE=portable.
-Run judas_ui_menu_tests roundtrip projects/menu_workshop/Satchel_Menu_Workshop.judasproj FRESH_OUTPUT with writable XDG_DATA_HOME.
-For the sample, copy projects/menu_workshop; add linear-rendering true immediately after fidelity-policy none in Scenes/main.judas. Capture frame140 with the test harness. Baseline uses the installed local SDK at57661268; the fixed run uses the current build/judas.
-Expected: only the240x300 preview rectangle changes in HDR mode; the legacy screenshot is byte-identical. See SAMPLE_COMPARISON.json.
-Source report and repro.sh remain unchanged in the RPG EngineReports/hdr-ui-preview-camera directory.
-No game assets, project settings, main or release metadata were changed.

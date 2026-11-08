@@ -144,14 +144,10 @@ end
         else:p=player
         blocks.append(p)
         (DEST/'Scenes'/f'{mode}.judas').write_text('\n'.join(blocks))
-    # Preserve the original radial scene's actual planet, basin walls, stairs
-    # and three props. Only its old particle seed and legacy player/HUD are
-    # replaced in this owned copy. The source project is never edited.
-    original=(ROOT/'projects/fluid_demo/Scenes/planet.judas').read_text()
-    objects=[b for b in re.findall(r'^object .*?^end',original,re.M|re.S)
-             if 'fluid-volume' not in b and not re.match(r'object (67|68) ',b)]
-    header=original[:original.index('object 1')].replace('next-id 69','next-id 100')
-    header=re.sub(r'name ".*?"','name "Water V2 / original planet basin"',header,count=1)
+    # The workshop owns its static basin geometry; no retired demo is required.
+    original=(DEST/'Authoring/planet-basin-geometry.judas').read_text()
+    objects=re.findall(r'^object .*?^end',original,re.M|re.S)
+    header=original[:original.index('object 1')]
     q='0.923879533 0 0 -0.382683432'
     bottom=(30-.8)/math.sqrt(2)
     objects.append(f'''object 99 "Planet basin — grid-water replacement"

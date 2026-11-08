@@ -1,0 +1,4 @@
+These independently authored M66 fixtures and their generator are dedicated to
+CC0 1.0 Universal (public domain). They are numerical test content, unrelated to
+or derived from the external Skate/Mixamo character artwork.
+https://creativecommons.org/publicdomain/zero/1.0/

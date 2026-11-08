@@ -1,2 +1,0 @@
-CASE half_020 failures=0 mass=108.0000076 particles=736 y=1.239177108 vy=0.4797194004 fraction=0.5117357969 max_speed=3.55738759 particle_ms=37.578746 executed_ms=39.799347 amortized_ms=21.83090528
-SUMMARY checks=724 failures=0 steps=240

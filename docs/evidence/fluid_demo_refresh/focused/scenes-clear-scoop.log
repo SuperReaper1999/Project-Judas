@@ -1,7 +1,0 @@
-pool entry immersion=0.0717259 position=0.867206
-pool exit immersion=0 z=5.72657
-pool prop heights float=1.48544 sink=0.399999
-pool acquired=5
-pool carried=5 same=5
-pool remaining=0
-SUMMARY checks=19 failures=0

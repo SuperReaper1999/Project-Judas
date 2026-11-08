@@ -1,9 +1,0 @@
-{
-  "command": [
-    "python3",
-    "build/ftft4-independent-reference/code/run_all.py"
-  ],
-  "returncode": 1,
-  "seconds": 0.1318107669994788,
-  "supplied_reference_unchanged": true
-}

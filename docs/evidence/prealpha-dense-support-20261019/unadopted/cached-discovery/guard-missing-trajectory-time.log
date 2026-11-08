@@ -1,3 +1,0 @@
-FAIL outside cached time interval retains original contact path
-FAIL ChangeVelocity trajectory invalidation defeats cached proof
-cached_discovery checks=12 failures=2

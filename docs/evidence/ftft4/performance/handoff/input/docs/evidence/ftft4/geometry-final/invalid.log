@@ -1,8 +1,0 @@
-{"case":"invalid_orientation","kind":0,"side":0,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"invalid_orientation","kind":0,"side":1,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"invalid_orientation","kind":1,"side":0,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"invalid_orientation","kind":1,"side":1,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"invalid_orientation","kind":2,"side":0,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"invalid_orientation","kind":2,"side":1,"uncertain":true,"contacts":0,"invalid_inputs":1,"unresolved":1,"pass":true}
-{"case":"finite_quaternion_arithmetic_range","magnitude":3.4028234663852886e+38,"analytical_overlap":true,"uncertain":true,"contacts":0,"exact_fallbacks":1,"unresolved":1,"explicit_outcome_pass":true}
-{"case":"finite_quaternion_arithmetic_range","magnitude":1.1754943508222875e-38,"analytical_overlap":true,"uncertain":false,"contacts":4,"exact_fallbacks":0,"unresolved":0,"explicit_outcome_pass":true}

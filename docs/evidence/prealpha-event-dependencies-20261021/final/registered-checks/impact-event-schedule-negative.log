@@ -1,3 +1,0 @@
-FAIL retired impact is removed without losing unrelated earlier event
-FAIL retirement removes both endpoint dependencies
-negative control: 2 expected failures

@@ -1,8 +1,0 @@
-180 key:W 1
-270 key:W 0
-280 key:Space 1
-300 key:Space 0
-310 key:J 1
-311 key:J 0
-400 key:X 1
-401 key:X 0

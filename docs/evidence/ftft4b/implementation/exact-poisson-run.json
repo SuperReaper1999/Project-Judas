@@ -1,8 +1,0 @@
-{
-  "command": [
-    "python3",
-    "docs/evidence/ftft4b/implementation/exact_poisson_check.py"
-  ],
-  "exit_code": 1,
-  "seconds": 0.03935220499988645
-}

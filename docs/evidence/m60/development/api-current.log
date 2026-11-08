@@ -1,5 +1,0 @@
-[96mdocs/judasjs/examples/audio.js[0m:[93m5[0m:[93m23[0m - [91merror[0m[90m TS2339: [0mProperty 'group' does not exist on type '{ requested: boolean; stopped: boolean; settings: boolean; seek: boolean; oneShot: boolean; }'.
-
-[7m5[0m   start() {this.state.group=audio.group("master")!==null&&audio.setGroup("master",{gain:.8},.1)&&audio.diagnostics!==null;this.state.settings=this.entity.setAudio({volume:.15,loop:true,doppler:0,send:0});this.state.requested=this.entity.playAudio();}
-[7m [0m [91m                      ~~~~~[0m
-

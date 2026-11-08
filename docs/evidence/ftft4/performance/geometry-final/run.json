@@ -1,8 +1,0 @@
-{
-  "command": [
-    "build/judas_contact_geometry_tests",
-    "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft4/geometry/fixtures.txt"
-  ],
-  "returncode": 0,
-  "seconds": 0.0820879730017623
-}

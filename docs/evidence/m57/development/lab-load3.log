@@ -1,2 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Scene '/home/conner/Documents/GitHub/Project-Judas/projects/material_lab/Scenes/lab.judas' could not be instantiated: object 90 "Lab UI and script": missing/wrong-type UI asset be36a149b9918581ce406f3632b79cab

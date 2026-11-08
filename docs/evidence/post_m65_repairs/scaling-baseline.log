@@ -1,6 +1,0 @@
-{'entities': 0, 'scripted': False, 'steps': 1, 'elapsed': 0.1862946120018023, 'exit': 1}
-Traceback (most recent call last):
-  File "/home/conner/Documents/GitHub/Project-Judas/scripts/post_m65_repair_scaling.py", line 25, in <module>
-    assert r.returncode==0
-           ^^^^^^^^^^^^^^^
-AssertionError

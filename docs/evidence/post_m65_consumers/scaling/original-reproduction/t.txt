@@ -1,6 +1,0 @@
-Renderer fragment texture units: 32 (material path uses 12)
-World state: /home/conner/Documents/GitHub/ClaudesEdge/notes/repro_entity_scaling/Saves/main.judasstate (none saved; F6 saves, F7 deletes)
-Project: Entity scaling repro (/home/conner/Documents/GitHub/ClaudesEdge/notes/repro_entity_scaling/repro.judasproj)
-Scene: repro (/home/conner/Documents/GitHub/ClaudesEdge/notes/repro_entity_scaling/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-scripted=1 render-only boxes=800: 18.68 s

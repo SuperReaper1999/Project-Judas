@@ -1,9 +1,0 @@
-{
-  "tests/ContactLifecycleTests.cpp": "cce028e849cd241d6bcc7bf445ff54cf8c5ca5ca3ccea2719f3553c67567f520",
-  "src/ContactSolver.cpp": "4fab5dd94d554c15980d007d77d0a2eacb5d0fe8b1fc6980ce8b6e5c46ead5c5",
-  "src/ContactSolver.h": "8402eb53e9dc5bedb72eaff67a82b0d722f8f75f7b4e4650a069e4e16f83a928",
-  "src/Contacts.cpp": "bb7f33983706e12ac0e1292c75687ddb08a7c9ec9ddb0266d39ac76bc11ea509",
-  "src/Contacts.h": "38e0b8a45d24952e8772e1bbcbbd29a526c9a4a1641d0543047f190a4cd1145a",
-  "build/judas_contact_lifecycle_tests": "c6282259867b1411590879319e4a3318ccb430bc5478ab20c518e3ca5bd9c7af",
-  "build/libjudas_engine.a": "85520127bb851a2b9e219d5f1d4463ce742ebbaab2c3e7d3ddeea5cedeb28ff1"
-}

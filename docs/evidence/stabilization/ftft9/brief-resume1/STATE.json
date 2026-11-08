@@ -1,8 +1,0 @@
-{
-  "head": "d2246cd19ad70065d121ffc5d4a4445ebca5d82b",
-  "engine_test_script_changes_since_restored_snapshot": [],
-  "protected_diff": "",
-  "staged": "",
-  "status": " M CMakeLists.txt\n M README.md\n M assets/scenes/classic.judas\n M assets/scenes/classic_fluid_rotated.judas\n M assets/scenes/classic_fluid_zero.judas\n M docs/ARCHITECTURE.md\n M docs/FTFT.md\n M src/FluidWorld.cpp\n M src/FluidWorld.h\n M src/GameSession.cpp\n M src/PhysicsWorld.cpp\n M src/PhysicsWorld.h\n M src/PlayerController.cpp\n M src/PlayerController.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneFingerprint.cpp\n M src/SceneFingerprint.h\n M src/SceneSerialization.cpp\n M src/Simulation.cpp\n M src/Simulation.h\n M src/WorldPresentation.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorPanels.cpp\n M tests/ProjectTests.cpp\n M tests/SceneFingerprintTests.cpp\n M tests/WorldStateTests.cpp\n?? docs/STABILIZATION_STATUS.md\n?? docs/evidence/stabilization/ftft9/\n?? scripts/ftft9_validation.py\n?? src/FluidHydrostatics.cpp\n?? src/FluidHydrostatics.h\n?? src/ProductionFluidCoupling.cpp\n?? src/ProductionFluidCoupling.h\n?? tests/FluidBoundaryContactTests.cpp\n?? tests/FluidCavityImpactTests.cpp\n?? tests/FluidContainerIntegrationTests.cpp\n?? tests/FluidHydrostaticsTests.cpp\n?? tests/FluidMetadataTests.cpp\n?? tests/FluidSmoothingBudgetTests.cpp\n?? tests/ParticleContactBatchTests.cpp\n?? tests/PlayerDryTrace.cpp\n?? tests/PlayerFluidIntegrationTests.cpp\n?? tests/PlayerSwimmingTests.cpp\n?? tests/ProductionFluidPerformance.cpp\n?? tests/ProductionFluidTests.cpp\n",
-  "disposition": "STOP awaiting boundary approximation review; no numerical source repair/commit/push"
-}

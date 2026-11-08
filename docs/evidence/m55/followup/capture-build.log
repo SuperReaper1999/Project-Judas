@@ -1,8 +1,0 @@
-[  0%] Built target judas_glad
-[  5%] Built target judas_quickjs
-[ 16%] Built target judas_navigation_backend
-[ 22%] Built target judas_audio_backend
-[ 94%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/tests/LiquidSurfaceLoopTests.cpp.o
-[100%] Linking CXX executable judas_liquid_surface_loop_tests
-[100%] Built target judas_liquid_surface_loop_tests

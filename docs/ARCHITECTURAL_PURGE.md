@@ -28,7 +28,7 @@ The RPG project, its SDK and existing HDD archives are outside this operation.
 
 | Bundle | Status | Validation |
 | --- | --- | --- |
-| A: projects, examples, historical repository content | Pending | Pending |
+| A: projects, examples, historical repository content | Consumer preservation complete; historical evidence/research removed; focused fixtures extracted. Project retirement remains in progress. | Current gravity/contact/animation/IK/import/material/streaming/text checks pass; generated water scenes remain byte-identical; scalability/export/history 275 checks pass |
 | B: engine-owned gameplay and legacy delta saves | Pending | Pending |
 | C: PBF and retired reservoir/container liquids | Pending | Pending |
 | D: Terrain V2 consolidation | Pending | Pending |
@@ -63,3 +63,52 @@ The first menu application qualification could not write the host's user-data
 folder under restricted execution. The complete successful rerun set
 `XDG_DATA_HOME` to an owned qualification directory inside the checkout, without
 modifying any personal saves or game project.
+
+## Retired test contracts versus retained coverage
+
+- The old contact-cache test required a positive MK1 `ContactSolver` frame count.
+  Current MK2 never fills that solver instance: only its stale diagnostic reads
+  remained. That implementation-specific assertion is retired, not weakened to
+  accept a smaller physical accuracy. The same suite retains independent contact
+  inputs, exact bound comparisons, invalidation and previous/current sweep checks.
+- Import cancellation no longer requires an ignored historical Skateboarder FBX
+  from `.cache/m66`. It uses the committed 256-joint source fixture and verifies
+  cancellation prevents publication, including work already staged. A timing race
+  is not presented as proof that a particular parser instruction was interrupted.
+- The optional original-character resource handoff mode is retired. The normal
+  self-contained generated 109-joint/material workload remains unchanged.
+- Model runtime rendering uses the existing synthetic multipart and 256-joint
+  sources instead of an ignored 142 MB consumer character. It retains actual GPU
+  high-index/eight-influence skinning, material/UV/normal mapping, primitive hiding,
+  independent animation ownership, secondary-camera and teardown checks.
+- Project tests create an ordinary minimal authored physics scene instead of
+  asserting the layout, built-in player and doors of the retired tiny/technology
+  games. Project validation, asset identities, resources, undo and Play isolation
+  remain current contracts.
+
+The first focused CI run after the streaming helper failed because its miniature
+source fixture did not copy the new helper. The fixture now includes that real
+configure dependency; all 27 provenance positive/negative controls pass locally.
+The failed run is retained as evidence, not reported as a passing gate.
+
+## Historical-content checkpoint
+
+Removed 62,482 historical evidence files (3,002,691,028 apparent bytes) while
+retaining current V2 qualification packages. The independent gravity manifest
+and 136 scenes and the contact-pair input remain as current test fixtures.
+Removed 581 abandoned research files from the two prototype trees; retained
+and relocated the active 3D trajectory control used by planar-physics tests.
+
+Focused current validation passed: planar 52, uniform gravity 12,095, contact
+cache 13,326, skeletal animation 34, pose composition 16, multi-target IK 38,
+fracture 33, structures 32, materials 40, streaming 85, Unicode text 49, native
+text rendering 48, reimport 40, native model rendering 16, world authoring 494,
+resource handoff 14, and scalability/export/history 275 checks. Project contracts
+also pass. These results qualify this content/fixture checkpoint, not completion
+of the remaining runtime-removal batches or platform qualification.
+
+The four water-workshop generated scenes are byte-identical before/after removal
+of the old-demo generator dependency. The four borrowed terrain source textures
+and their licence notice are also byte-identical to the workshop-owned copies.
+Consumer projects, legacy runtime implementations and their dedicated targets
+are removed in subsequent dependency-aware batches.

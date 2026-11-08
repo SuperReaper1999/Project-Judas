@@ -1,2 +1,0 @@
-FRAMES 3
-EXPECT_AXIS pause 0 1

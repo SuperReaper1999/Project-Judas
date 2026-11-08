@@ -1,3 +1,0 @@
-PRECONDITION dense_020 warmup_steps=240 mean_particle_speed=0.0230295
-CASE dense_020 failures=0 mass=432.0000305 particles=752 y=0.2999998331 vy=-1.24784405e-10 fraction=0.9968705177 observed_fraction=1 max_speed=1.492953062 particle_ms=19.344171 executed_ms=22.905852 amortized_ms=13.53215554
-SUMMARY checks=727 failures=0 steps=480

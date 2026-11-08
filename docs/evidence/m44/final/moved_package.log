@@ -1,5 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Runtime geometric queries (/tmp/Judas_M44_Moved_Package/game.judasproj)
-Scene: M44 geometric queries — G ray/sphere / P spawn (/tmp/Judas_M44_Moved_Package/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-JS: M44_PACKAGE_CAST entity=4 distance=8.199999809265137

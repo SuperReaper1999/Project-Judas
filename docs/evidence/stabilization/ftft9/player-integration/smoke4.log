@@ -1,3 +1,0 @@
-FAIL density-20-1000 fixed reference-pool warmup is quiescent
-CASE density-20-1000 failures=1 height_change=0.00385928154 final_immersion=1 max_speed=0.0171938296 relative_drift=0.00409525027 synchronized_relative_drift=0.0041597751 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.0871706977 final_mean_particle_speed=0.0757952332 jump_immersion=0 jump_delta_speed=0 particle_steps=120 seconds=16.7435006 particle_reference_equal=0
-SUMMARY checks=490 failures=1 ordinary_steps=480

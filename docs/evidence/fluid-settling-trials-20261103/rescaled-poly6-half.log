@@ -1,8 +1,0 @@
-PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.185967
-DIAGNOSTIC_FAIL half_025 reference pool is quiescent before body release
-PRECONDITION half_025 observed_release_surface=1.57474 body_top=1 clearance=0.574735
-FAIL half_025 independent measured box/surface immersion within 10 percentage points
-LEGACY_SETTLING half_025 status=PASS observational_scale=0 time=4 limit=0.5 y=1.4167028665542603 vy=0.15190798044204712
-SETTLING_WINDOW half_025 tau=2 early_begin=2.0000001043081284 early_end=4.0000002086162567 late_begin=8.0000004172325134 late_end=12.00000062584877 early_rms=0.63253015019613834 late_rms=0.10726515278664626 late_peak=0.24854832887649536 early_range=0.43692302703857422 late_range=0.071218967437744141 sampled_fraction=0.49851334405442077 observed_fraction=0.54938290913899734
-CASE half_025 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=108.0000076 particles=592 y=1.463392138 vy=-0.1017068326 fraction=0.4833808243 observed_fraction=0.6570765177 max_speed=2.978670359 particle_ms=10.55179 executed_ms=34.069936 amortized_ms=29.16525781
-SUMMARY checks=2176 failures=2 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=0 legacy_mandatory_failures=0

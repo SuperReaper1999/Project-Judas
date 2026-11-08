@@ -1,4 +1,0 @@
-FLOW axis=1 finalLeft=0.534058 energy=2464.03 medianMs=0.028854 p95Ms=0.030788 worstMs=0.077727
-FLOW axis=0 finalLeft=0.534058 energy=2464.03 medianMs=0.028664 p95Ms=0.029416 worstMs=0.038001
-FLOW axis=2 finalLeft=0.534058 energy=2464.03 medianMs=0.029105 p95Ms=0.029706 worstMs=0.037391
-50 checks, 0 failures

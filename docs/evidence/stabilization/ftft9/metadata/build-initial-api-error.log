@@ -1,4 +1,0 @@
-tests/FluidMetadataTests.cpp: In function ‘int main()’:
-tests/FluidMetadataTests.cpp:147:33: error: ‘class Scene’ has no member named ‘FindObject’
-  147 |         const auto* o = classic.FindObject(id);
-      |                                 ^~~~~~~~~~

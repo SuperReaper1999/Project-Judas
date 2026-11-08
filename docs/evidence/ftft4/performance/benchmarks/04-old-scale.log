@@ -1,7 +1,0 @@
-G: 1,500-crate floor: candidate pairs versus all pairs
-    1501 bodies, 1125750 possible pairs, 1500 candidates, 1500 colliding pairs, 6000 points, tree height 11, 4.304 ms/step (broadphase 0.430, narrowphase 1.343, solver 2.433)
-  OK   possible-pair count is the all-pairs count
-  OK   broadphase hands the narrowphase < 1% of all pairs
-  OK   every crate touches the floor and nothing is missed
-scale fixture wall 235.667944000 ms (creation + 30 steps + original exhaustive assertion + destruction)
-Scale fixture: PASS (0 failures)

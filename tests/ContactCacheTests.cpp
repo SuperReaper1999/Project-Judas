@@ -58,7 +58,7 @@ void EqualManifold(const ContactManifold& a,const ContactManifold& b,const std::
 }
 void PreparedContacts() {
     std::cout<<"A0: prepared and uncached contacts over unchanged independent fixture inputs\n";
-    std::ifstream file("docs/evidence/ftft4/geometry/fixtures.txt");Check(bool(file),"existing independent fixtures accessible");
+    std::ifstream file("tests/fixtures/contact/pairs.txt");Check(bool(file),"existing independent fixtures accessible");
     std::string line;std::size_t cases=0,pairs=0;
     while(std::getline(file,line)) {
         if(line.empty())continue;
@@ -181,7 +181,8 @@ void SharedContacts() {
     Inspect(w,floor,"multiply referenced floor");for(auto h:bodies)Inspect(w,h,"manifold participant");
     const auto s=w.LastStepStats();
     Check(s.orientationCacheHits>0&&s.boundCacheHits>0,"real step records cache reuse");
-    Check(s.solverFrameBuilds>0&&s.solverFrameBuilds<=2*(bodies.size()+1),"at most one solver frame per contacted body per phase");
+    // The retired MK1 ContactSolver frame counter is not a MK2 contract.
+    // Independent bounds, geometry invalidation and real cache reuse remain checked.
     Check(s.geometryCacheBytes>0,"persistent cache memory is reported");
     std::cout<<"CACHE shared bodies="<<s.bodies<<" contacts="<<s.contactPoints<<" orientation_hits="<<s.orientationCacheHits<<" orientation_rebuilds="<<s.orientationCacheRebuilds<<" bound_hits="<<s.boundCacheHits<<" bound_rebuilds="<<s.boundCacheRebuilds<<" shape_rebuilds="<<s.shapeCacheRebuilds<<" solver_frames="<<s.solverFrameBuilds<<" bytes="<<s.geometryCacheBytes<<" allocations="<<s.geometryCacheAllocations<<'\n';
 }

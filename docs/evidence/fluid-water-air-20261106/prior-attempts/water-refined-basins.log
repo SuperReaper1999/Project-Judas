@@ -1,2 +1,0 @@
-WATER_BASIN mode=advance rotated=0 repeat=0 accepted=0 elapsedMs=2156.6676499999999 pressureMs=0 strictMinority=0 partition=0 momentum=0 water=0 gas=0 speed=0 reason=disconnected receding gas fronts require separate geometric fragments cell=5770 oldGas=0 firstOwner=5409 otherOwner=5418 newVolume=3.6969902390808912e-05
-WATER_BASIN mode=advance rotated=1 repeat=0 accepted=0 elapsedMs=5742.9077289999996 pressureMs=0 strictMinority=0 partition=0 momentum=0 water=0 gas=0 speed=0 reason=water departure crosses its represented phase front; a geometry event is required

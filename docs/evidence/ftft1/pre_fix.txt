@@ -1,8 +1,0 @@
-PASS build source: 
-PASS build different authored content with same name: 
-OBSERVED baseline_mismatch applied=1 position_x=44 error=''
-FAIL same-name changed baseline must reject without overwriting live state
-PASS build atomicity world: 
-OBSERVED partial_apply result=0 first_entity_lifecycle=2 error='entity 3 (body 2) cannot be destroyed at runtime'
-FAIL later non-destroyable vehicle must be rejected before earlier entity destruction
-FTFT1 checks: 2 failures

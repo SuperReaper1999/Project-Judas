@@ -1,7 +1,0 @@
-[  0%] Built target judas_glad
-[  0%] Built target judas_audio_backend
-[  0%] Built target judas_quickjs
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_ragdoll_tests.dir/tests/RagdollTests.cpp.o
-[100%] Linking CXX executable judas_ragdoll_tests
-[100%] Built target judas_ragdoll_tests

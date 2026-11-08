@@ -1,2 +1,0 @@
-Sealed 6x6 grid; first left-wall row RHS changed from 0 to 0.1.
-Incompatible prescribed volume/constraint flux: 0.096225044864937617

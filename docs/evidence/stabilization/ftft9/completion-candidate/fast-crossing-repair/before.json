@@ -1,7 +1,0 @@
-{
-  "source": "src/FluidWorld.cpp",
-  "sha256": "58144efcfbe78640ad884a39dc55395f8f0f88eab8a68b24d2bcf107b34bd57a",
-  "witness": "../final-validation/regressions/production/judas_fluid_boundary_contact_tests.log",
-  "exit_code": 1,
-  "failures": 2
-}

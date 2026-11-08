@@ -1,5 +1,0 @@
-PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.0519179
-FAIL half_025 reference pool is quiescent before body release
-PRECONDITION half_025 observed_release_surface=1.71185 body_top=1 clearance=0.711849
-CASE half_025 failures=1 mass=108.0000076 particles=592 y=1.700228572 vy=0.07737976313 fraction=0.4920379221 observed_fraction=0.5302790324 max_speed=2.495155811 particle_ms=18.713854 executed_ms=21.225893 amortized_ms=11.93207345
-SUMMARY checks=731 failures=1 steps=480

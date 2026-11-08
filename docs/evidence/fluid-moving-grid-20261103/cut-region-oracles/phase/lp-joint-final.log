@@ -1,8 +1,0 @@
-mutablePhysicalVariables=36734 octants=11875 transverse=10303 directionalMidpoints=14556 cellsTouchingMutable=1492 mutableEqNonzeros=153449
-mode joint cells=1500 witness=545 tolerance=8.4546209009467316e-15 columns=58214 equality=19500 donor=4380 nonzeros=186854
-status=0 elapsed_ms=506.571 iterations=21200 Optimization terminated successfully. (HiGHS Status 7: Optimal)
-verified equation=8.4075541667560927e-15 solverEquation=1.0408340855860843e-17 donorExcess=0 boundExcess=0 rawBoundExcess=9.1072982488782372e-18 largestMarginalChange=0.0010192548880810365
-witness octants [0.0009926207854572403, 0.0009926367929322013, 0.0009895220468482246, 0.0009895220498337808, 0.00029726567757972454, 0.00029726645469857976, 0.0, 0.0]
-witness independent lows [0.00227941690367488, 0.0025798064952615623, 0.003964309678800531] joint lows [0.0022794085098851898, 0.002579789710667746, 0.003964301675071447]
-physical witness SHA-256 643c39ff712b1b81a126a2eb49b35e853d8257947564daa4be96aa01e436189b
-maximum source-unreachable transfer 8.4070779848843819e-15

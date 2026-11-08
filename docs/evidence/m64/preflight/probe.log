@@ -1,4 +1,0 @@
-FAIL ordinary application clean shutdown
-SUMMARY 1 checks 1 failures
-SDL_Init failed: x11 not available
-Window initialization failed.

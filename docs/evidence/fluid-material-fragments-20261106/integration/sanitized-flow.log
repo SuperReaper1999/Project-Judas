@@ -1,4 +1,0 @@
-sustained step=1 240 spatial-fragment flow intervals: liquid cell original momentum/work audit failed volume=0.59938505984582158 workResidual=-0.00025241835541531358 workScale=0.031259969858629666 momentumResidual=0.046913415482416954 momentumBudget=5.993850598458216e-08 maximumPatchSpeed=0.013633657249631524
-adjacent-interval cold total energy cannot grow
-cold water and finite air ledgers survive sustained flow
-14 checks, 3 failures

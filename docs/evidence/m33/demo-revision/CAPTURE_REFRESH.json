@@ -1,8 +1,0 @@
-{
-  "file": "demo-revision/interactive-fixed.png",
-  "previous_manifest_sha256": "030173e77910b5e7771c654d72acf08c262ed7d2f18da6869be6303b3c090dc4",
-  "checkpoint_file_sha256": "e673c948165a1f000639d9ea4bb957eeb7b8d28a64fe06479db3444f78648cc1",
-  "observation": "The existing runtime automatic screenshot refreshed this PNG after the manifest was written. All tested source fingerprints and all other manifested evidence still match. The prior hash is retained here; prior pixel bytes were overwritten by automatic capture.",
-  "scope": "Screenshot evidence bookkeeping only; no implementation changes or test reruns.",
-  "human_visual_validation": "Accepted by operator in this conversation before checkpoint authorization."
-}

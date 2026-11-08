@@ -1,2 +1,0 @@
-FRAMES 3
-EXPECT_HELD move_y 0 1

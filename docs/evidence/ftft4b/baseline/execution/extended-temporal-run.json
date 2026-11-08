@@ -1,9 +1,0 @@
-{
-  "command": [
-    "/home/conner/Documents/GitHub/Project-Judas/build/judas_timing_defect_probe",
-    "extended"
-  ],
-  "exit_code": 0,
-  "seconds": 0.003064444000074218,
-  "log": "extended-temporal.log"
-}

@@ -1,6 +1,0 @@
-JudasProject 1
-name "FTFT6 Tiny"
-startup-scene "Scenes/main.judas"
-assets-dir "Assets"
-scenes-dir "Scenes"
-saves-dir "Saves"

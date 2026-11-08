@@ -1,2 +1,0 @@
-Scenes/cave.judas | surface 84 | owned | fresh
-Scenes/rotated.judas | surface 85 | owned | Geometry/settings fingerprint changed; explicit navigation rebuild required

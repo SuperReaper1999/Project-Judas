@@ -1,5 +1,0 @@
-[  5%] Built target judas_glad
-[ 94%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_contact_geometry_tests.dir/tests/ContactGeometryProbe.cpp.o
-[100%] Linking CXX executable judas_contact_geometry_tests
-[100%] Built target judas_contact_geometry_tests

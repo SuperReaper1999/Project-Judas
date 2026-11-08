@@ -1,8 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Mouse capture failed: No relative mode implementation available
-Project: Pose and articulated physics (/tmp/Judas_M48_Followup_Package/game.judasproj)
-Scene: M47 + M48 pose composition and ragdolls (/tmp/Judas_M48_Followup_Package/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-Mouse capture failed: No relative mode implementation available
-Mouse capture failed: No relative mode implementation available
-JS: M48_PACKAGE_POSE_RAGDOLL clips=2 transition=true retired=true

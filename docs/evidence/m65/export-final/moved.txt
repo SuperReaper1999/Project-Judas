@@ -1,9 +1,0 @@
-FRAMES 180
-LOG_EVERY 0
-ACTION parkour 1 5 6
-LOOK 90 0 40
-SCREENSHOT 70 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m65/export-final/rooftops.png
-ACTION lab 1 100 101
-ACTION pause 1 130 131
-EXPECT_PAUSED 1 133
-SCREENSHOT 150 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m65/export-final/paused.png

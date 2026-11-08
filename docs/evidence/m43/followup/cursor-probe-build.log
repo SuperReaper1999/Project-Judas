@@ -1,7 +1,0 @@
-[  0%] Built target judas_audio_backend
-[  5%] Built target judas_glad
-[ 11%] Built target judas_quickjs
-[ 94%] Built target judas_engine
-[ 94%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/tests/SceneTransitionTests.cpp.o
-[ 94%] Linking CXX executable judas_scene_transition_tests
-[100%] Built target judas_scene_transition_tests

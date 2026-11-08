@@ -1,1 +1,0 @@
-export default class {constructor({entity}){this.entity=entity;this.state={enter:0,stay:0,exit:0};}onTriggerEnter(e){this.state.enter++;this.state.safe=e.other.valid;this.state.impulse=e.normalImpulse;}onTriggerStay(){this.state.stay++;}onTriggerExit(){this.state.exit++;}}

@@ -1,3 +1,0 @@
-PERFORMANCE mode=active nodes=1585 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=384.055328 p95_ms=405.645668 max_ms=411.505578 hot_allocations=0 hot_bytes=0 contacts=0 sleeping=0/1 slowest=Deformable fixed step 374.710319ms
-PERFORMANCE mode=settling/sleeping nodes=1585 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=0.019246 p95_ms=0.019421 max_ms=0.030632 hot_allocations=0 hot_bytes=0 contacts=0 sleeping=1/1 slowest=Deformable fixed step 0.017270ms
-PERFORMANCE mode=no-deformable nodes=0 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=0.000676 p95_ms=0.001176 max_ms=0.001365 hot_allocations=0 hot_bytes=0 contacts=0 sleeping=1/1 slowest= 0.000000ms

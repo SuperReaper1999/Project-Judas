@@ -1,4 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-driver=llvmpipe (LLVM 21.1.8, 256 bits)
-vendor=Mesa
-version=4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3

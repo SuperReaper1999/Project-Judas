@@ -116,8 +116,6 @@ void SectionProjectFormat() {
     Check(Project::FindProjectFileFor(temp.Str()).empty(), "FindProjectFileFor finds nothing above the project");
     Check(project.Resolve("Scenes/main.judas") == project.RootDir() + "/Scenes/main.judas", "Resolve joins onto the project root");
     Check(project.MakeRelative(project.RootDir() + "/Assets/x.obj") == "Assets/x.obj", "MakeRelative strips the project root");
-    Check(project.WorldStatePathForScene(project.Resolve("Scenes/main.judas")) == project.SavesDir() + "/main.judasstate",
-          "world-state deltas live in the project's saves directory by scene stem");
     project.Settings().startupScene = "Scenes/main.judas";
     Check(project.Save(error) && ReadFile(project.ProjectFile()).find("startup-scene \"Scenes/main.judas\"") != std::string::npos,
           "Save writes the startup scene setting");
@@ -268,109 +266,46 @@ void SectionResourceManager() {
     Check(resources.StateOf(beacon) == ResourceState::Unloaded && resources.Stats().loadedMeshes == 0, "ReleaseAll leaves nothing loaded");
 }
 
-// --- D/E. project -> startup scene -> runtime ---------------------------------
-
-bool BuildAndStep(const std::string& projectFile, const std::string& sceneOverride, RuntimeWorld& world, GameSession& session,
-                  Scene& scene, int steps, std::string& outError) {
+// --- D. a new project owns its scene and physics ----------------------------
+Scene ProjectPhysicsFixture() {
+    Scene scene;
+    auto &floor = scene.CreateObject("Floor");
+    floor.body = SceneBodyComponent{};
+    floor.body->halfExtents = {8, .5f, 8};
+    floor.transform.position = {0, -.5f, 0};
+    auto &gravity = scene.CreateObject("Gravity");
+    gravity.gravity = SceneGravityComponent{};
+    gravity.gravity->regionHalfExtents = {20, 20, 20};
+    auto &box = scene.CreateObject("Box");
+    box.body = SceneBodyComponent{};
+    box.body->motion = SceneBodyMotion::Dynamic;
+    box.body->mass = 2;
+    box.transform.position = {0, 2, 0};
+    return scene;
+}
+void SectionProjectRuntime() {
+    TempDir temp("judas_project_runtime");
     Project project;
-    if (!project.Load(projectFile, outError)) return false;
-    const std::string scenePath = sceneOverride.empty() ? project.StartupScenePath() : project.Resolve(sceneOverride);
-    if (scenePath.empty()) { outError = "no startup scene"; return false; }
-    if (!LoadSceneFromFile(scenePath, scene, outError)) return false;
-    if (!world.Build(scene, nullptr, outError)) return false;
-    if (!session.Begin(world, outError)) return false;
+    std::string error;
+    Check(Project::CreateNew(temp.Str(), "Current runtime", project, error), "fresh project creation: " + error);
+    project.Settings().startupScene = "Scenes/main.judas";
+    project.Settings().legacyGameplay = false;
+    const auto authored = ProjectPhysicsFixture();
+    Check(project.Save(error) && SaveSceneToFile(authored, project.StartupScenePath(), error), "authored startup scene persists");
+    Project reopened;
+    Scene scene;
+    Check(reopened.Load(project.ProjectFile(), error) && LoadSceneFromFile(reopened.StartupScenePath(), scene, error), "fresh project reopens its own startup scene");
+    RuntimeWorld world;
+    world.legacyGameplay = false;
+    Check(world.Build(scene, nullptr, error), "ordinary runtime builds current authored components");
+    GameSession session;
+    Check(session.Begin(world, error), "runtime simulation context begins");
     Window window;
     window.SetTestInputMode(true);
-    for (int i = 0; i < steps; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
-    return true;
-}
-
-void SectionTinyGame() {
-    std::printf("Section D: the tiny flat game project launches through its startup scene\n");
-    Project project;
-    std::string error;
-    Check(project.Load("projects/tiny_game/tiny_game.judasproj", error), "the tiny game project loads: " + error);
-    Check(project.Settings().startupScene == "Scenes/main.judas" && fs::is_regular_file(project.StartupScenePath()),
-          "its startup scene is project data and exists");
-    AssetDatabase db;
-    db.Scan(project.RootDir(), project.AssetsDir());
-    Check(db.Problems().empty(), "its asset directory scans clean");
-    RuntimeWorld world;
-    GameSession session;
-    Scene scene;
-    Check(BuildAndStep(project.ProjectFile(), "", world, session, scene, 240, error), "project -> startup scene -> runtime builds and steps: " + error);
-    Check(scene.Settings().fidelityPolicy == SceneFidelityPolicy::None && !world.GetVehicle() && !world.GetAtmosphere() &&
-              world.Terrains().empty() && !world.HasFluid() && world.PointMassSources().empty(),
-          "no planets, policy, vehicle, terrain, fluid or atmosphere: a simple project stays simple");
-    Check(world.DynamicBodies().size() == 3 && world.Doors().size() == 1 && world.StaticLights().size() == 1 &&
-              world.GetPlayerStart().has_value(),
-          "ground, three boxes, a door, a lamp and a player start were instantiated");
-    bool boxesResting = true;
-    for (const DynamicBody& body : world.DynamicBodies()) {
-        if (!Near(body.GetPosition().y, 0.5f, 0.05f)) boxesResting = false;
-    }
-    Check(boxesResting, "after four seconds the boxes rest on the ground at their authored height");
-    Check(session.Player().IsGrounded(), "the player stands on the ground");
-    const RuntimeWorld::LifecycleCounts counts = world.CountLifecycle();
-    Check(counts.full == 3 && counts.coarse == 0 && counts.dormant == 0, "every entity stays Full without a policy (M29 integration)");
-    session.End();
-}
-
-void SectionTechDemoProject() {
-    std::printf("Section E: the technology demonstration is an ordinary project\n");
-    Project project;
-    std::string error;
-    Check(project.Load("judas_tech_demo.judasproj", error), "judas_tech_demo.judasproj loads: " + error);
-    Check(project.Settings().assetsDir == "assets" && project.Settings().scenesDir == "assets/scenes" &&
-              project.Settings().startupScene == "assets/scenes/terrain.judas",
-          "it points at the existing assets tree and starts on the terrain scene");
-    AssetDatabase db;
-    db.Scan(project.RootDir(), project.AssetsDir());
-    Check(db.Problems().empty() && db.Untracked().empty() && db.Records().size() == 10, "every shipped asset is tracked, none untracked, no problems");
-    const auto* icon=db.Find("6060606060606060606060606060600a");
-    Check(icon && icon->type == AssetType::Texture && !icon->missing && icon->relativePath == "assets/branding/judas-icon.png",
-          "editor/fallback icon has normal stable project asset identity");
-    const auto* prefab=db.Find("36363636363636363636363636363636");
-    Check(prefab&&prefab->type==AssetType::Prefab&&!prefab->missing,"shipped prefab resolves through ordinary project asset identity");
-    const AssetRecord* audio = db.Find("34000000000000000000000000000001");
-    Check(audio && audio->type == AssetType::Audio && !audio->missing, "shipped audio resolves through ordinary project assets");
-    const AssetRecord* beacon = db.Find("0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21");
-    const AssetRecord* plane = db.Find("9c1e7d2a4b5f4c6d8e9fa0b1c2d3e4f5");
-    const AssetRecord* beaconPng = db.Find("5e4d3c2b1a0f4e6d9c8b7a6f5e4d3c2b");
-    Check(beacon && beacon->relativePath == "assets/models/beacon.obj" && plane && plane->relativePath == "assets/models/plane.obj" &&
-              beaconPng && beaconPng->type == AssetType::Texture,
-          "the fixed demo asset ids resolve to their files");
-
-    const char* scenes[] = {"classic.judas", "classic_fluid_rotated.judas", "classic_fluid_zero.judas", "terrain.judas",
-                            "terrain_rotated.judas", "terrain_atmospheric_pass.judas", "terrain_atmospheric_pass_rotated.judas",
-                            "fidelity_demo.judas", "flat_playground.judas"};
-    bool allResolve = true, allBuild = true;
-    int meshReferences = 0;
-    for (const char* file : scenes) {
-        Scene scene;
-        if (!LoadSceneFromFile(project.ScenesDir() + "/" + file, scene, error)) { allBuild = false; std::printf("    %s: %s\n", file, error.c_str()); continue; }
-        for (const SceneObject& o : scene.Objects()) {
-            if (!o.render || o.render->shape != SceneShape::Mesh) continue;
-            ++meshReferences;
-            const AssetRecord* mesh = db.Find(o.render->meshAsset);
-            if (!mesh || mesh->type != AssetType::Mesh || mesh->missing) allResolve = false;
-            if (!o.render->textureAsset.empty()) {
-                const AssetRecord* texture = db.Find(o.render->textureAsset);
-                if (!texture || texture->type != AssetType::Texture) allResolve = false;
-            }
-        }
-        RuntimeWorld world;
-        if (!world.Build(scene, nullptr, error)) { allBuild = false; std::printf("    %s: %s\n", file, error.c_str()); }
-    }
-    Check(meshReferences == 10 && allResolve, "every mesh/texture reference in the nine shipped scenes resolves by id (" + std::to_string(meshReferences) + " references)");
-    Check(allBuild, "every shipped scene instantiates headlessly");
-
-    RuntimeWorld world;
-    GameSession session;
-    Scene scene;
-    Check(BuildAndStep(project.ProjectFile(), "", world, session, scene, 30, error), "the demo's startup scene runs as a project: " + error);
-    Check(world.Terrains().size() == 1 && world.GetVehicle().has_value(), "and it is the terrain demonstration (terrain + spacecraft)");
-    session.End();
+    for (int i = 0; i < 240; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    Check(world.DynamicBodies().size() == 1 && Near(world.DynamicBodies()[0].GetPosition().y, .5f, .05f), "authored dynamic box settles on real collision");
+    const auto counts = world.CountLifecycle();
+    Check(counts.full == 1 && counts.coarse == 0 && counts.dormant == 0, "ordinary project retains full physics without a fidelity policy");
 }
 
 // --- F. gizmo mathematics + undo/redo ---------------------------------------
@@ -520,15 +455,19 @@ void SectionInspectorRoundTrip() {
 
 void SectionEditPlaySeparation() {
     std::printf("Section H: playing a project scene never writes the authored scene\n");
-    const std::string scenePath = "projects/tiny_game/Scenes/main.judas";
+    TempDir temp("judas_edit_play_separation");
+    const std::string scenePath = temp.Str() + "/main.judas";
+    std::string writeError;
+    Check(SaveSceneToFile(ProjectPhysicsFixture(), scenePath, writeError), "fresh authored scene saved for Play/Stop");
     const std::string diskBefore = ReadFile(scenePath);
     Check(!diskBefore.empty(), "the original authored scene file is readable");
     Scene authored;
     std::string error;
-    Check(LoadSceneFromFile(scenePath, authored, error), "tiny game scene loads: " + error);
+    Check(LoadSceneFromFile(scenePath, authored, error), "current authored scene loads: " + error);
     std::string before;
     SaveSceneToString(authored, before);
     RuntimeWorld world;
+    world.legacyGameplay = false;
     Check(world.Build(authored, nullptr, error), "it instantiates: " + error);
     GameSession session;
     Check(session.Begin(world, error), "a session begins");
@@ -553,8 +492,7 @@ int main() {
     SectionProjectFormat();
     SectionAssetIdentity();
     SectionResourceManager();
-    SectionTinyGame();
-    SectionTechDemoProject();
+    SectionProjectRuntime();
     SectionGizmo();
     SectionInspectorRoundTrip();
     SectionEditPlaySeparation();

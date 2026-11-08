@@ -1,5 +1,0 @@
-PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.0727231
-FAIL neutral_025 reference pool is quiescent before body release
-PRECONDITION neutral_025 observed_release_surface=1.70232 body_top=1 clearance=0.702324
-CASE neutral_025 failures=1 mass=216.0000153 particles=592 y=0.6901912093 vy=-0.005357280374 fraction=1 observed_fraction=1 max_speed=0.01860642619 particle_ms=16.506967 executed_ms=19.471896 amortized_ms=11.46299411
-SUMMARY checks=729 failures=1 steps=480

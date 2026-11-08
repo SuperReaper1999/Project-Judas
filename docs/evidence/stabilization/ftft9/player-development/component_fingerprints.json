@@ -1,7 +1,0 @@
-{
-  "src/PlayerController.cpp": "70475191523dc2c4ded4fc147dd4c9cd5fa242c44eaca2b4ab73d9b7a8862206",
-  "src/PlayerController.h": "358b2353f7443ae0b7f7557f3d84eef8562358d5c35b8642febbdc465d7713b3",
-  "tests/PlayerSwimmingTests.cpp": "74d71944c9364877294518b6e0d4322445e6e14a9400b9d543b8af4ef189a0b3",
-  "tests/PlayerDryTrace.cpp": "eded566ac951fd14680979008d88bad0ca7dbcbc476b0c0196544d2095a02bf7",
-  "src/PhysicsWorld.cpp": "a2577f4ff0f1db4f102c922ab053cfc29773b186603c77b8a255ccc3b3e44dca"
-}

@@ -1,7 +1,0 @@
-before-mixed: exit=0, 0.966s
-before-mixed_allocations: exit=0, 1.116s
-after-mixed: exit=0, 0.917s
-after-mixed_allocations: exit=0, 1.066s
-slow-mixed: exit=0, 0.916s
-slow-mixed_allocations: exit=0, 1.166s
-{"overall_pass": true, "seconds": 6.94173684999987}

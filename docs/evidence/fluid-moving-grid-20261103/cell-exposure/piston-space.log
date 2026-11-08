@@ -1,5 +1,0 @@
-width 4 dx 0.25 original impulse -389.444645713 residual 5.42101086243e-20 group impulse -320.280187701 residual 1.08420217249e-19
-width 8 dx 0.125 original rejected moving-volume transport exceeds donor capacity; substep or merge required group impulse -278.478663692 residual 2.47519967847e-17
-width 16 dx 0.0625 original rejected moving-volume transport exceeds donor capacity; substep or merge required group impulse -265.73795514 residual 1.49958712982e-17
-width 24 dx 0.0416666666667 original rejected moving-volume transport exceeds donor capacity; substep or merge required group impulse -265.259536511 residual 4.55754018204e-18
-width 32 dx 0.03125 original rejected moving-volume transport exceeds donor capacity; substep or merge required group impulse -265.863193158 residual 3.39762451373e-18

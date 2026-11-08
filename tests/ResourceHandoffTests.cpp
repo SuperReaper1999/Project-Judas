@@ -123,24 +123,6 @@ Fixture GenerateFixture(const fs::path& output, std::string& error) {
     return fixture;
 }
 
-Fixture OriginalFixture(std::string& error) {
-    Project project;
-    if (!project.Load("projects/import_lab/import_lab.judasproj", error)) throw std::runtime_error(error);
-    Scene scene;
-    if (!LoadSceneFromFile(project.StartupScenePath(), scene, error)) throw std::runtime_error(error);
-    const auto* object = scene.Find(10);
-    if (!object || !object->render) throw std::runtime_error("original fixture entity 10 has no render model");
-    Fixture fixture{project.RootDir(), project.AssetsDir(), {}, object->render->meshAsset, "original"};
-    AssetDatabase assets;
-    assets.Scan(fixture.root.string(), fixture.assets.string());
-    const auto* record = assets.Find(fixture.id);
-    if (!record || record->missing)
-        throw std::runtime_error("optional original import-lab model " + fixture.id +
-            " is unavailable; restore the author's local imported assets, or omit --original for the self-contained gate");
-    fixture.model = record->path;
-    return fixture;
-}
-
 struct UploadTrace {
     std::atomic<unsigned> meshesCreated{0}, meshesDestroyed{0}, texturesCreated{0}, texturesDestroyed{0};
     std::atomic<bool> ownerContext{true};
@@ -174,8 +156,8 @@ struct UploadTrace {
 } // namespace
 
 int main(int argc, char** argv) {
-    if ((argc != 2 && argc != 3) || (argc == 3 && std::string(argv[2]) != "--original")) {
-        std::cerr << "usage: judas_resource_handoff_tests NEW-owned-output [--original]\n";
+    if (argc != 2) {
+        std::cerr << "usage: judas_resource_handoff_tests NEW-owned-output\n";
         return 2;
     }
     unsigned checks = 0;
@@ -189,7 +171,7 @@ int main(int argc, char** argv) {
         check(!fs::exists(output), "fresh owned output required");
         fs::create_directories(output);
         std::string error;
-        const auto fixture = argc == 3 ? OriginalFixture(error) : GenerateFixture(output, error);
+        const auto fixture = GenerateFixture(output, error);
         check(fs::is_regular_file(fixture.model), "real self-contained model archive is available");
         auto& profiler = PerformanceProfiler::Get();
         profiler.Enable(true);

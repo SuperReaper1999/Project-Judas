@@ -1,8 +1,0 @@
-../fluid-zero-settling-kernel/clean/player-baseline-strict/density-20-1000-warmup-particles.csv
-lateral_samples=40 in_basin_mass=16632.4681762 out_of_basin_kernel_mass=3367.53182383 in_basin_centroid=1.6825633488 max_field_density=1262.96145347 in_basin_mass_above_nominal_local_density=521.612082796
-lateral_samples=70 in_basin_mass=16622.0981688 out_of_basin_kernel_mass=3377.90183118 in_basin_centroid=1.68268741278 max_field_density=1277.29315403 in_basin_mass_above_nominal_local_density=519.79579064
-lateral_samples=110 in_basin_mass=16619.1191676 out_of_basin_kernel_mass=3380.88083239 in_basin_centroid=1.68272286836 max_field_density=1278.75856296 in_basin_mass_above_nominal_local_density=518.953885227
-../fluid-static-balanced-20261103/player-discover-0.20/density-20-1000-warmup-particles.csv
-lateral_samples=40 in_basin_mass=16554.8362182 out_of_basin_kernel_mass=3445.16378182 in_basin_centroid=1.56682472927 max_field_density=1378.70879662 in_basin_mass_above_nominal_local_density=1434.39347661
-lateral_samples=70 in_basin_mass=16545.6661962 out_of_basin_kernel_mass=3454.3338038 in_basin_centroid=1.56692488674 max_field_density=1390.82342451 in_basin_mass_above_nominal_local_density=1436.0606652
-lateral_samples=110 in_basin_mass=16543.0231462 out_of_basin_kernel_mass=3456.97685377 in_basin_centroid=1.56695357726 max_field_density=1390.82849704 in_basin_mass_above_nominal_local_density=1435.92547278

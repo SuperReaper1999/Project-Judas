@@ -1,7 +1,0 @@
---- MovingVolumeGrid.cpp
-+++ MovingVolumeGrid.cpp
-@@ -261,0 +262,4 @@
-+                    // An explicit donor cannot supply a link when neither
-+                    // neighboring cell owns material at the start of the interval.
-+                    if (metric == PressureMetric::OwnedDual && metricMass == 0)
-+                        continue;

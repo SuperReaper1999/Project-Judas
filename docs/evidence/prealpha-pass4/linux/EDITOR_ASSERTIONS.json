@@ -1,7 +1,0 @@
-{
-  "sharedBatchUndo": true,
-  "duplicateUndo": true,
-  "playStopRestoresAuthored": true,
-  "save": true,
-  "noFailureToken": true
-}

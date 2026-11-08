@@ -1,9 +1,0 @@
-COFACE_ERROR h=1e-08 full=5.0000000000000001e-09 halves=2.5000000000000001e-09 centralErrorOverH=0.25 ownerErrorOverH=0.49999999499999997
-COFACE_ERROR h=1e-10 full=5.0000000000000002e-11 halves=2.5000000000000001e-11 centralErrorOverH=0.25 ownerErrorOverH=0.49999999995
-COFACE_ERROR h=9.9999999999999998e-13 full=4.9999999999999999e-13 halves=2.4999999999999999e-13 centralErrorOverH=0.25 ownerErrorOverH=0.49999999999950007
-COFACE_ERROR h=1e-14 full=5e-15 halves=2.5e-15 centralErrorOverH=0.25 ownerErrorOverH=0.499999999999995
-COFACE admitted=0 unchanged=1 reason=phase-front temporal budget exhausted at fraction=0 h=5.4210108624275219e-26 steps=0 rejected=64 last=embedded temporal error exceeds tolerance
-The first Euler stage adds h water to the initially dry thin region.
-Its single upper-facing plane then wets both disjoint top-face patches.
-The endpoint rate is zero; Heun gives h/2 but two half steps give h/4.
-The central defect/h is 1/4; the owner L1 defect/h is 1/2, independent of h.

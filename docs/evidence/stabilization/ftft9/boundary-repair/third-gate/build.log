@@ -1,9 +1,0 @@
-[  0%] Built target judas_glad
-[  7%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
-[  7%] Linking CXX static library libjudas_engine.a
-[100%] Built target judas_engine
-[100%] Linking CXX executable judas_production_fluid_tests
-[100%] Built target judas_production_fluid_tests
-[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/FluidWorld.cpp.o
-[ 33%] Linking CXX executable judas_fluid_rigid_coupling_tests
-[100%] Built target judas_fluid_rigid_coupling_tests

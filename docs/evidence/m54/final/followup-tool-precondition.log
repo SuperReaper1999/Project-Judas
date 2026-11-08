@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m54_validation.py", line 78, in <module>
-    if __name__=='__main__':raise SystemExit(main())
-                                             ~~~~^^
-  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m54_validation.py", line 48, in main
-    package=ROOT/'.cache/m54-package';moved=Path('/tmp/Judas_Liquid_Reservoir_M54');assert not package.exists() and not moved.exists()
-                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError

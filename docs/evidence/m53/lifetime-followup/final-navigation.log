@@ -1,6 +1,0 @@
-FAIL motor shape offset contributes to physical capsule foot
-NAV 1 agents: mean 0.0040 ms p95 0.0123 ms max 0.0222 ms
-NAV 10 agents: mean 0.0369 ms p95 0.0389 ms max 0.0640 ms
-NAV 100 agents: mean 1.6182 ms p95 1.8864 ms max 2.3052 ms
-1000 paths: 1.179 ms
-M53 focused 77 checks, 1 failures

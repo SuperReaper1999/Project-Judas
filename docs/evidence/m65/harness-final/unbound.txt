@@ -1,2 +1,0 @@
-FRAMES 2
-ACTION definitely_not_bound 1 0 1

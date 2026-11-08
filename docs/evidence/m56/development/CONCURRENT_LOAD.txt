@@ -1,6 +1,0 @@
-Current native desktop process-load sample during clean compilation (not a benchmark acceptance bound):
-Six compiler workers each approximately 71-93% of one CPU core.
-Operator's java process: 61.3% CPU, 32.9% system memory.
-ChatGPT processes: 12.8-17.4% CPU; desktop compositor 8.6%; other desktop apps running.
-No operator applications were stopped. Offscreen timing runs use software GL and are noise-annotated;
-clean compilation finishes before production/paired benchmark execution.

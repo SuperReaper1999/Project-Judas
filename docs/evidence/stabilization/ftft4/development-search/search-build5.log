@@ -1,9 +1,0 @@
-[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsWorld.cpp.o
-[ 33%] Linking CXX executable judas_rigid_contact_tests
-[100%] Built target judas_rigid_contact_tests
-[  0%] Built target judas_glad
-[  0%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
-[  0%] Linking CXX static library libjudas_engine.a
-[100%] Built target judas_engine
-[100%] Linking CXX executable judas_impact_timing_tests
-[100%] Built target judas_impact_timing_tests

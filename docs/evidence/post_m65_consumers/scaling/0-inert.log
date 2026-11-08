@@ -1,7 +1,0 @@
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
-0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0
-Renderer fragment texture units: 32 (material path uses 12)
-World state: /tmp/judas-consumer-scaling-jtebkvbg/Saves/main.judasstate (none saved)
-Project: Entity scaling repro (/tmp/judas-consumer-scaling-jtebkvbg/repro.judasproj)
-Scene: repro (/tmp/judas-consumer-scaling-jtebkvbg/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000

@@ -1,6 +1,0 @@
-FAIL density-25-1000 fixed four-second reference-pool warmup is quiescent
-FAIL density-25-1000 no explosive player response beyond ordinary gravity/input budget
-FAIL density-25-1000 player starts substantially inside actual coarse fluid
-FAIL density-25-1000 neutral player has no rapid systematic drift
-CASE density-25-1000 failures=4 height_change=-83.8742523 final_immersion=0 max_speed=40.7533264 relative_drift=41.3706093 synchronized_relative_drift=40.6916122 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=11.7089252 particle_steps=120 seconds=15.9214296 particle_reference_equal=0
-SUMMARY checks=490 failures=4 ordinary_steps=480

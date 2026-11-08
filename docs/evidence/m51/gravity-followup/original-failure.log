@@ -1,5 +1,0 @@
-PASS actual project registry loads
-PASS actual radial demo parses
-PASS actual gravity content builds without a special simulation path
-DEMO_FLAT_SAMPLE -1.81365454 -9.52168655 -1.51137877
-PASS reproduced original flat-area radial gravity defect

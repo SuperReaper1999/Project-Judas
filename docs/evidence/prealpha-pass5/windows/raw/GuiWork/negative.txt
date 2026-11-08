@@ -1,3 +1,0 @@
-FRAMES 3
-LOG_EVERY 0
-EXPECT_SCENE deliberately-absent-scene 1

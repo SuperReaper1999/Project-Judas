@@ -1,5 +1,0 @@
-FRAMES 180
-LOG_EVERY 0
-ACTION void_pause 1 90 91
-EXPECT_PAUSED 1 100
-SCREENSHOT 150 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/post_m65_repairs/package/package-final/void.png

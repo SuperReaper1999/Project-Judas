@@ -1,2 +1,0 @@
-BEGIN rotated_half seed_mode=0 wall_mode=0 regions=35840 faces=101292 water_m3=9.2160004119873111 seed_shifted_m3=7.9018930539788619e-08 seed_shifted_parcels=244 seed_maximum_hops=8 warmup_requested=0 native_steps_requested=1
-END final_vy=-0.04087500274181366 warmup_steps=0 material_attempts=1 material_commits=0 proposals=1 impulses_published=0 native_accepted=0 native_steps=0 water_drift_m3=0 impulse_roundoff_Ns=0 reason=geometric phase bounds cannot satisfy the water and air inventory ledger

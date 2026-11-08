@@ -1,9 +1,0 @@
-radius=None explicitPatch=[544, 545] patchCells=2 mandatoryCells=2 donorBudgetFailures=0 outsideInvalid=0 furthestMandatory=1
-mutablePhysicalVariables=32 octants=12 transverse=2 directionalMidpoints=18 cellsTouchingMutable=2 mutableEqNonzeros=128
-mode joint cells=1500 witness=545 tolerance=8.4546209009467316e-15 columns=58 equality=26 donor=0 nonzeros=154
-status=0 elapsed_ms=2.288 iterations=19 Optimization terminated successfully. (HiGHS Status 7: Optimal)
-verified equation=8.3986637089417115e-15 solverEquation=8.6736173798840355e-19 donorExcess=0 boundExcess=0 rawBoundExcess=0 largestMarginalChange=1.6784577022092156e-08
-witness octants [0.0009926287892115153, 0.0009926367929322013, 0.0009895220468314292, 0.0009895220498337808, 0.0002972576738422439, 0.00029726645469857976, 0.0, 0.0]
-witness independent lows [0.00227941690367488, 0.0025798064952615623, 0.003964309678800531] joint lows [0.002279408509885188, 0.00257978971068454, 0.003964309678808927]
-physical witness SHA-256 cdb90860b0b189a26d93f20036aa6695bb3f0a7f599b46cbd9168c4b62d07005
-maximum source-unreachable transfer 6.9864071582922743e-18

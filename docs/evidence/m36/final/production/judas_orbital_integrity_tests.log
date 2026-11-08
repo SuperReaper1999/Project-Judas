@@ -1,6 +1,0 @@
-CASE local_vehicle_with_explicit_celestial PASS participants=2 expected_dva=(0.0047776502864559992,0,0) observed_dva=(0.004777650348842144,0,0) expected_dvb=(-0.014332950859367999,-0,-0) observed_dvb=(-0.014332951046526432,0,0) normalized_impulse_residual=0
-CASE thrust_fresh PASS expected_external_impulse=(-83333336245.905273,0,0) measured_external_impulse=(-83333342208,0,0) normalized_residual=7.1545134218185794e-08
-CASE thrust_after_reconstruct PASS expected_external_impulse=(-83333336245.905273,0,0) measured_external_impulse=(-83333342208,0,0) normalized_residual=7.1545134218185794e-08
-FAIL create runtime celestial with operator force: scene line 20: object id must be a positive integer
-FAIL create runtime celestial with operator force: scene line 20: object id must be a positive integer
-Orbital integrity: 4 cases, 3 ordinary fixed steps, 50 checks, 2 failures

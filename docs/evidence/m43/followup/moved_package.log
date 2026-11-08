@@ -1,6 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: M43 scene transitions (/tmp/Judas_M43_Moved_ed6e8fc/game.judasproj)
-Scene: M43 Scene A — E send courier / P spawn / R reload (/tmp/Judas_M43_Moved_ed6e8fc/Scenes/a.judas)
-World origin (m): 0.000, 0.000, 0.000
-JS: M43_PACKAGE_B key=true
-JS: M43_PACKAGE_A session=true

@@ -1,8 +1,0 @@
-CPU mode=intact parts=30 nodes=240 tets=180 interfaces=29 broken=0 median_ms=0.868935 p95_ms=1.007563 max_ms=1.381292 allocations=0 allocated_bytes=0 retained_numeric_bytes=41555 selfContact=false
-CPU mode=failing parts=30 nodes=240 tets=180 interfaces=29 broken=9 median_ms=0.938978 p95_ms=1.138347 max_ms=1.450088 allocations=4 allocated_bytes=60 retained_numeric_bytes=41555 selfContact=false
-CPU mode=settled parts=30 nodes=240 tets=180 interfaces=29 broken=9 median_ms=0.912345 p95_ms=1.059394 max_ms=1.090965 allocations=0 allocated_bytes=0 retained_numeric_bytes=41555 selfContact=false
-CPU mode=no-fracture parts=30 nodes=240 tets=180 interfaces=29 broken=9 median_ms=0.000231 p95_ms=0.000395 max_ms=0.018303 allocations=0 allocated_bytes=0 retained_numeric_bytes=41555 selfContact=false
-CPU mode=intact parts=90 nodes=720 tets=540 interfaces=89 broken=0 median_ms=2.664406 p95_ms=2.946203 max_ms=3.037360 allocations=0 allocated_bytes=0 retained_numeric_bytes=125435 selfContact=false
-CPU mode=failing parts=90 nodes=720 tets=540 interfaces=89 broken=6 median_ms=2.920744 p95_ms=3.238100 max_ms=3.487665 allocations=4 allocated_bytes=60 retained_numeric_bytes=125435 selfContact=false
-CPU mode=settled parts=90 nodes=720 tets=540 interfaces=89 broken=6 median_ms=3.018981 p95_ms=3.970064 max_ms=4.291000 allocations=0 allocated_bytes=0 retained_numeric_bytes=125435 selfContact=false
-CPU mode=no-fracture parts=90 nodes=720 tets=540 interfaces=89 broken=6 median_ms=0.000431 p95_ms=0.000521 max_ms=0.006203 allocations=0 allocated_bytes=0 retained_numeric_bytes=125435 selfContact=false

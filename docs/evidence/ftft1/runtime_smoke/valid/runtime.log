@@ -1,8 +1,0 @@
-World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft1/runtime_smoke/valid/Saves/main.judasstate (loaded)
-Project: FTFT1 smoke (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft1/runtime_smoke/valid/smoke.judasproj)
-Scene: Tiny game (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft1/runtime_smoke/valid/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ
-0,0.0000,0.0000,0.9173,6.0000,0.0000,1.0000,0.0000,1,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-2.0000,0.5000,0.0000,-0.0000,0.0000,0.0000,-0.0000,0.5000,-1.0000,-0.0000,0.0000,0.0000,2.0000,0.5000,0.5000,-0.0000,0.0000,0.0000
-1,0.0167,0.0000,0.9173,6.0000,0.0000,1.0000,0.0000,1,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-2.0000,0.5000,0.0000,0.0000,-0.0000,0.0000,-0.0000,0.5000,-1.0000,0.0000,0.0000,0.0000,2.0000,0.5000,0.5000,0.0000,-0.0000,0.0000
-2,0.0333,0.0000,0.9173,6.0000,0.0000,1.0000,0.0000,1,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-2.0000,0.5000,0.0000,-0.0000,0.0000,-0.0000,-0.0000,0.5000,-1.0000,-0.0000,-0.0000,-0.0000,2.0000,0.5000,0.5000,-0.0000,-0.0000,-0.0000

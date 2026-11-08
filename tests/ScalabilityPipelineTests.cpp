@@ -107,7 +107,7 @@ int main(int argc,char** argv){
   resources.ReleaseRef(burst[8]);resources.Invalidate(burst[10]);resources.RequestTexture(burst[10]);resources.WaitForAll();
   bool ready=true;for(size_t i=0;i<burst.size();++i)ready &= i==8?resources.StateOf(burst[i])!=ResourceState::Ready:resources.StateOf(burst[i])==ResourceState::Ready;Check(ready,"deferred cancellation and generation replacement make progress safely");
   resources.ReleaseAll();Check(resources.Stats().loading==0&&resources.Stats().bytesResident==0,"resource shutdown clears admitted and deferred work");
-  Scene workshop;Check(LoadSceneFromFile("projects/world_workshop/Scenes/workshop.judas",workshop,error),error);EditorDocument doc;doc.GetScene()=workshop;doc.Select(workshop.Objects().back().id);auto initial=doc.GetScene().Find(doc.Selected())->transform.position;
+  Scene workshop;for(int i=0;i<512;++i){auto& object=workshop.CreateObject("Undo workload");object.render=SceneRenderComponent{};object.transform.position={float(i%32),0,float(i/32)};}EditorDocument doc;doc.GetScene()=workshop;doc.Select(workshop.Objects().back().id);auto initial=doc.GetScene().Find(doc.Selected())->transform.position;
   auto historyStart=std::chrono::steady_clock::now();
   for(int i=0;i<200;++i)Check(doc.BatchTransform({.01f,0,0},{1,0,0,0},{1,1,1},error,true,true),"one action retains one undo");
   for(int i=0;i<200;++i)doc.Undo();

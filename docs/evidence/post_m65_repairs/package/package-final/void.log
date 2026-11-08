@@ -1,7 +1,0 @@
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/post_m65_repairs/package/package-final/void.png
-Renderer fragment texture units: 32 (material path uses 12)
-World state: disk saves disabled for additive compositions
-Project: Judas Three Games (/tmp/JudasThreeGames-post-M65-repairs/game.judasproj)
-Scene: Void Courier (/tmp/JudasThreeGames-post-M65-repairs/Scenes/void/system.judas)
-World origin (m): 0.000, 0.000, 0.000

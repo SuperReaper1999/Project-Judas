@@ -1,4 +1,0 @@
-FRAMES 180
-LOG_EVERY 0
-ACTION collection_rooftop 1 5 6
-SCREENSHOT 150 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/post_m65_consumers/harness-scene-boundary/queued.png

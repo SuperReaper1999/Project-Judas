@@ -1,9 +1,0 @@
-[editor autotest] duplicate created id 5: scene CHANGED; undo restores: IDENTICAL
-[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft4/final/production/editor.edit.png
-[editor autotest] edit frame: 5 draw calls, 14 triangles, 206 debug lines
-[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft4/final/production/editor.play.png
-[editor autotest] play frame: 0 steps, step 0.013 ms, 1 bodies, 0 contacts, 9 draw calls, 52 triangles, 1 shadow passes, 0 lights, 159 debug lines, 0 particles
-[editor autotest] resources: 1 meshes, 0 textures, 0 terrain meshes, hits 527, misses 1, failed 0, uploads 1, resident 108 bytes
-[editor autotest] jobs: 7 workers, 1 completed, 0 failed, 0 cancelled
-[editor autotest] authored scene after play/stop is IDENTICAL
-[editor autotest] save ok

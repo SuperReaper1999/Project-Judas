@@ -1,9 +1,0 @@
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ,obj4PosX,obj4PosY,obj4PosZ,obj4VelX,obj4VelY,obj4VelZ,obj5PosX,obj5PosY,obj5PosZ,obj5VelX,obj5VelY,obj5VelZ,obj6PosX,obj6PosY,obj6PosZ,obj6VelX,obj6VelY,obj6VelZ,obj7PosX,obj7PosY,obj7PosZ,obj7VelX,obj7VelY,obj7VelZ,obj8PosX,obj8PosY,obj8PosZ,obj8VelX,obj8VelY,obj8VelZ,obj9PosX,obj9PosY,obj9PosZ,obj9VelX,obj9VelY,obj9VelZ,obj10PosX,obj10PosY,obj10PosZ,obj10VelX,obj10VelY,obj10VelZ,obj11PosX,obj11PosY,obj11PosZ,obj11VelX,obj11VelY,obj11VelZ,obj12PosX,obj12PosY,obj12PosZ,obj12VelX,obj12VelY,obj12VelZ
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m65/harness-followup/rooftops.png
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m65/harness-followup/returned.png
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Renderer fragment texture units: 32 (material path uses 12)
-World state: disk saves disabled for additive compositions
-Project: Judas Developer Integration (/home/conner/Documents/GitHub/Project-Judas/projects/m65_integration/m65_integration.judasproj)
-Scene: M65 developer integration (/home/conner/Documents/GitHub/Project-Judas/projects/m65_integration/Scenes/integration.judas)
-World origin (m): 0.000, 0.000, 0.000

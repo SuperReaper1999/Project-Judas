@@ -1,5 +1,0 @@
-pool spacing=0.125 particles=23808 half_fraction=0.5 half_force=4905 neutral_net_force=0
-pool spacing=0.25 particles=2976 half_fraction=0.5 half_force=4905 neutral_net_force=0
-scale body_volume=0.00800000035763 neutral_mass=8.00000035763 force=39.2400016785
-scale body_volume=0.800000047933 neutral_mass=800.000047933 force=3924.00048828
-SUMMARY checks=73 failures=0 seconds=0.079016261

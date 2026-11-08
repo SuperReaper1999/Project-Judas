@@ -1,4 +1,0 @@
-PASS actual radial demo parses
-FAIL actual gravity content builds without a special simulation path
-DEMO_FLAT_SAMPLE 0.00000000 0.00000000 0.00000000
-PASS reproduced original flat-area radial gravity defect

@@ -1,8 +1,0 @@
-{
-  "reference_test": "69 assertions passed; three native/refinement cases plus six missing-mechanism negative controls",
-  "original_gates": "Unchanged and still fail in the current candidate; no original comparison reclassified",
-  "trace_equivalence": "1440 non-timing original release rows match; supplemental first 240 rows match in all six 12-second runs",
-  "gravity_force_residual_max_mps": 1.8921161903939776e-07,
-  "relative_drag_work_positive_steps": 0,
-  "status": "Contract review needed. No justified production-force correction or gate modification made. Coarse-pool late jitter remains real."
-}

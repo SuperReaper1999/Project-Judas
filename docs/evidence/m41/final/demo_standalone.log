@@ -1,9 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Authored runtime UI (/home/conner/Documents/GitHub/Project-Judas/projects/ui_demo/ui_demo.judasproj)
-Scene: M41 authored runtime UI — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/projects/ui_demo/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled
-0,0.0000,0.0000,1.4992,8.0000,0.0000,1.0000,0.0000,0,0.0000,-0.0500,0.0000,0.000000,-3.000000,0.000000,0
-1,0.0167,0.0000,1.4975,8.0000,0.0000,1.0000,0.0000,0,0.0000,-0.1000,0.0000,0.000000,-3.000000,0.000000,0
-2,0.0333,0.0000,1.4950,8.0000,0.0000,1.0000,0.0000,0,0.0000,-0.1500,0.0000,0.000000,-3.000000,0.000000,0
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m41/final/demo.png

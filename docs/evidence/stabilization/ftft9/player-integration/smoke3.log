@@ -1,2 +1,0 @@
-CASE density-25-1000 failures=0 height_change=0.00233149529 final_immersion=1 max_speed=0.00704566063 relative_drift=0.00208921172 synchronized_relative_drift=0.00207442651 independent_fall_error=0 warmup_steps=240 warmup_mean_speed=0.0495024808 particle_steps=120 seconds=8.66974753 particle_reference_equal=0
-SUMMARY checks=490 failures=0 ordinary_steps=480

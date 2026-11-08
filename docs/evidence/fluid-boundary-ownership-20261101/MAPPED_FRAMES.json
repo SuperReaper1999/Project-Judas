@@ -1,7 +1,0 @@
-{
-  "cases": 48,
-  "accuracy_failures": 0,
-  "frame_failures": 0,
-  "worst_frame_difference": 0.0007222294807434082,
-  "physical_trace": "physical_max_difference=0.3\n"
-}

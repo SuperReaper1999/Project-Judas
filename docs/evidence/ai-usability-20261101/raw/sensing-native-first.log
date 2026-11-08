@@ -1,4 +1,0 @@
-FAIL destroyed retained identity never survives cache
-FAIL destroyed requester cannot query through old sensor
-FAIL 2D removed blocker no longer occludes
-AISensing: 35 checks, 3 failures

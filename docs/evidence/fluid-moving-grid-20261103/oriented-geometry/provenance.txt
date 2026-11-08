@@ -1,7 +1,0 @@
-g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
-AMD Ryzen 5 5600 6-Core Processor
-40607cd1d23bfc827f6b9225ba364bc759c708db
-288d574d9abbb7be6bdfb96c7cbf02e8220976e7abe7b6e769fce04828f9ca2b  tools/prototypes/fluid_volume_grid/GridOrientedGeometry.cpp
-8a163841dea7f531e4f96ff589c577a338492fe481aecba1e80404fdf36e1b7f  tools/prototypes/fluid_volume_grid/GridOrientedSweep.cpp
-5901a7c4f6ab2fcbe7994045a3267cbddc3e070843471143c3ea8cd6a2821b72  .cache/moving-grid-geometry/sweep_benchmark
-ed9219e2b2537e26143527a9ec9e4d4cf6d3df4d0230018ce73458b95b89760a  .cache/moving-grid-geometry/sweep_benchmark_final

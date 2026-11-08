@@ -1,8 +1,0 @@
-100 key:W 1
-170 key:Space 1
-175 key:Space 0
-350 key:W 0
-360 key:Escape 1
-361 key:Escape 0
-440 key:Escape 1
-441 key:Escape 0

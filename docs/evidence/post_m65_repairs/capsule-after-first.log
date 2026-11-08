@@ -1,4 +1,0 @@
-origin -2 0 0 expected-distance 1.7 actual-hit 1 distance 1.7 body 0 capsule 0
-origin -2 0.4 0 expected-distance 1.7 actual-hit 1 distance 1.7 body 0 capsule 0
-origin 0 2 0 expected-distance 1.1 actual-hit 1 distance 1.1 body 0 capsule 0
-interior expected-initial-overlap 1 actual-hit 1 initial-overlap 1

@@ -1,4 +1,0 @@
-[  0%] Building CXX object CMakeFiles/judas_broadphase_tests.dir/src/PhysicsWorld.cpp.o
-[ 33%] Building CXX object CMakeFiles/judas_broadphase_tests.dir/tests/BroadphaseTests.cpp.o
-[ 66%] Linking CXX executable judas_broadphase_tests
-[100%] Built target judas_broadphase_tests

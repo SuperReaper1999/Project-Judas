@@ -1,2 +1,0 @@
-FRAMES 3
-ACTION nonexistent_action 1 0 1

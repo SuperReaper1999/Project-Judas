@@ -1,7 +1,0 @@
-[  6%] Built target judas_audio_backend
-[  6%] Built target judas_glad
-[ 13%] Built target judas_quickjs
-[ 93%] Built target judas_engine
-[ 93%] Building CXX object CMakeFiles/judasjs_examples_tests.dir/tests/JudasJSExamplesTests.cpp.o
-[100%] Linking CXX executable judasjs_examples_tests
-[100%] Built target judasjs_examples_tests

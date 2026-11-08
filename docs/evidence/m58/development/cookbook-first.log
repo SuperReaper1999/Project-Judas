@@ -1,8 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Renderer fragment texture units: 32 (material path uses 12)
-PASS real EngineHost
-PASS localization normal registered script
-PASS localization normal project
-FAIL localization ordinary scene
-FAIL localization fixture owner
-SUMMARY 5 checks 2 failures

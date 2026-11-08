@@ -1,6 +1,0 @@
-[  0%] Built target judas_glad
-[  0%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
-[  0%] Linking CXX static library libjudas_engine.a
-[100%] Built target judas_engine
-[100%] Linking CXX executable judas_uniform_gravity_scene_tests
-[100%] Built target judas_uniform_gravity_scene_tests

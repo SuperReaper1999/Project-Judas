@@ -1,8 +1,0 @@
-{
-  "changes_during_build": [],
-  "binary_sha256": {
-    "build/judas_player_fluid_integration_tests": "4df9a2f7935e51b1d1dec7edf12f1d76ce48ea4b54c64424027b986b7882eb78",
-    "build/judas_player_swimming_tests": "14d7c990f9bd97b8ccfaad18d2faf13fe57893c5be7011d1b95504ec50484c83",
-    "build/libjudas_engine.a": "25c87cd02203e5c34df41143c582fe8009b43f9588c931e21b3be72ff08b85ad"
-  }
-}

@@ -1,2 +1,0 @@
-properties {} calls 200 refs 0 total-ms 0.05861 per-call-ms 0.00029305
-properties {"target":{"entity":"12"}} calls 200 refs 200 total-ms 0.160413 per-call-ms 0.000802065

@@ -1,5 +1,0 @@
-{
-  "exit_code": 134,
-  "physical_result": false,
-  "error": "Fixture did not generate exactly one contact per sphere: decimal foot/sphere coordinates did not represent exact touching. Use exactly representable binary geometry; no physics assertion was reached."
-}

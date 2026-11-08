@@ -1,2 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-World state '/home/conner/Documents/GitHub/Project-Judas/docs/evidence/stabilization/final-gate/validation/regressions/ftft1-current-schema/mismatch/Saves/main.judasstate' could not be applied: authored baseline fingerprint mismatch for 'Tiny game': saved deltas require exactly compatible authored scene content

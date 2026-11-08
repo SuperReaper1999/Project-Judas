@@ -1,8 +1,0 @@
-{
-  "input_sha256": "3b118ebedf906ab51e9693f24eafebd67e0df8be3f6f2dac7ea601b0ba2a89f6",
-  "transforms": [
-    "replace exponent query only",
-    "hoist identical quaternion products",
-    "add prepared-rotation constructor (research only)"
-  ]
-}

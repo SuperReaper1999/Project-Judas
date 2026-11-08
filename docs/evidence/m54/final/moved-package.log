@@ -1,8 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Conserved Liquid Lab (/tmp/Judas_Liquid_Reservoir_M54/game.judasproj)
-Scene: Reservoir Lab (/tmp/Judas_Liquid_Reservoir_M54/Scenes/lab.judas)
-World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
-step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ
-0,0.0000,0.0000,0.0400,0.0000,0.0000,1.0000,0.0000,1,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-1.0000,0.5973,-1.0000,0.0000,-0.1635,0.0000,-3.0000,1.4973,-3.0000,0.0000,-0.1635,0.0000
-60,1.0000,0.0000,0.9173,0.0000,0.0000,1.0000,0.0000,1,0.0000,-0.1635,0.0000,0.000000,-9.810000,0.000000,0,-1.0000,0.2000,-1.0000,0.0000,0.0000,0.0000,-3.0000,0.7551,-3.0000,0.0000,-0.4289,0.0000
-[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m54/final/package-world.png

@@ -1,7 +1,0 @@
-{
-  "python": "3.13.5",
-  "numpy": "2.3.5",
-  "shapely": "2.1.2",
-  "command": "python compatibility_checks.py",
-  "scope": "Independent Python transport/accounting checks only, not Judas solver validation."
-}

@@ -1,9 +1,0 @@
-{
-  "pid": 389613,
-  "alive": true,
-  "scene": "projects/m65_integration/Scenes/rooftops.judas",
-  "log": "/tmp/judas-m65-rooftop-human-fix.log",
-  "desktop_backend": "x11",
-  "audio": "normal desktop device",
-  "human_validation": "pending"
-}

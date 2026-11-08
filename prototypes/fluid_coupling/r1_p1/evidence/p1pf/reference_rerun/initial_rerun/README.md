@@ -1,1 +1,0 @@
-Historical first successful rerun before the preparation utility stopped copying inherited metadata. Its execution/ contains supplied old metadata/logs alongside rerun result JSON; use this directory's RUN_METADATA.json for that first rerun. Current acceptance reference evidence is in the parent directory. No numerical reference source changed.

@@ -1,8 +1,0 @@
-[  0%] Built target judas_glad
-[ 93%] Built target judas_engine
-[ 93%] Building CXX object CMakeFiles/judas_contact_cache_tests.dir/tests/ContactCacheTests.cpp.o
-[100%] Linking CXX executable judas_contact_cache_tests
-[100%] Built target judas_contact_cache_tests
-[  0%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Built target judas_contact_geometry_tests

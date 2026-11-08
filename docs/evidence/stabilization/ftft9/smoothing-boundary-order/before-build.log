@@ -1,5 +1,0 @@
-[  0%] Built target judas_glad
-[ 92%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_fluid_boundary_contact_tests.dir/tests/FluidBoundaryContactTests.cpp.o
-[100%] Linking CXX executable judas_fluid_boundary_contact_tests
-[100%] Built target judas_fluid_boundary_contact_tests

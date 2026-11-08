@@ -1,8 +1,0 @@
-Human report: demo frozen; function-key controls did not work.
-Desktop process output captured during investigation:
-script asset=280a91035e80c372fb413f5ba555eee2 entity=10 slot=1 update: TypeError: not a function
-    at update (Assets/scripts/residency.js:14:20)
-    at update (Assets/scripts/player.js:13:57)
-
-Source diagnosis: residency carry branch invokes world.viewRay(), but QuickJS exposes world.viewRay as a getter. ScriptSystem::Error marks the player instance faulted; later callbacks skip that instance.
-Independent authoring issue: manual gallery index started at zero although start already requested gallery-0; the first F9 was a redundant request.

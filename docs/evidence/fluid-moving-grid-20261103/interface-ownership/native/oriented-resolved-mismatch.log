@@ -1,3 +1,0 @@
-WORK sweep_m3=1.5263533709522492e-18 native_cut_m3=0 independent_wall_residual_J=1.5210055437364645e-14 code_wall_residual_J=4.3576253716537394e-15 fluid_delta_J=0.089168856510749447 rigid_delta_J=-0.18061327261387344 total_J=-0.091444416103123996 discrete_energy_residual_J=-1.6756517984273245e-07 rigid_roundoff_bound_J=6.5344308584288574e-07
-PROPOSAL substep=0 angular_impulse_N_m_s=-0.52253958030759085 torque_N_m=-125.40949273320707 angle_rad=0.0014220431734053398 native_old_rad_s=0.34999999403953552 native_expected_rad_s=0.34129101037979126
-END wet=1 mismatch=1 ticks=0 published=1 verified=0 reason=native orientation or momentum differed from the swept pressure proposal

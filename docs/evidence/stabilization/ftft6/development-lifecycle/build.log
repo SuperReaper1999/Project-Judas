@@ -1,5 +1,0 @@
-[  0%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_lifecycle_integration_tests.dir/tests/LifecycleIntegrationTests.cpp.o
-[ 94%] Linking CXX executable judas_lifecycle_integration_tests
-[ 94%] Built target judas_lifecycle_integration_tests

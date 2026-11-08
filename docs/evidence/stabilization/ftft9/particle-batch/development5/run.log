@@ -1,5 +1,0 @@
-SUPPORTED dynamic_platform=0 particle_normal_max=2.38419e-07 support_y=100 body_vy=8.37277e-08 iterations=10 closing_residual=1.64467e-07 scale=1 cap=0
-SUPPORTED dynamic_platform=1 particle_normal_max=0 support_y=100 body_vy=-1.54972e-08 iterations=20 closing_residual=2.16812e-08 scale=1 cap=0
-GAP cached=0 gap=0.000999987 vy=-1.9802 rows=0 residual=0
-GAP cached=1 gap=0.000999987 vy=-0.0599976 rows=4 residual=1.54972e-06
-FTFT9 PARTICLE BATCH checks=43 failures=0

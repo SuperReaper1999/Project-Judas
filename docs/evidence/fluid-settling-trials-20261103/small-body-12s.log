@@ -1,6 +1,0 @@
-PRECONDITION small_mass_125x warmup_steps=240 mean_particle_speed=0.0374537
-PRECONDITION small_mass_125x observed_release_surface=1.84994 body_top=0.76 clearance=1.08994
-LEGACY_SETTLING small_mass_125x status=FAIL observational_scale=1 time=4 limit=0.5 y=1.8958407640457153 vy=0.72690248489379883
-DIAGNOSTIC_FAIL small_mass_125x settles rather than passing through desired immersion
-CASE small_mass_125x failures=1 acceptance_failures=0 diagnostic_checks=4 diagnostic_failures=1 observational_scale=1 mass=0.864000082 particles=1196 y=1.825383544 vy=-0.09213994443 fraction=0.5141464472 observed_fraction=0.593006897 max_speed=3.49944067 particle_ms=19.53366 executed_ms=22.946477 amortized_ms=13.27204985
-SUMMARY checks=2171 failures=1 acceptance_failures=0 diagnostic_checks=4 diagnostic_failures=1 strict_diagnostics=1 steps=960 settling_mode=window_decay legacy_comparisons=1 legacy_failures=1 legacy_mandatory_failures=0

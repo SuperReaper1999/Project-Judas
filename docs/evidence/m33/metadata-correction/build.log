@@ -1,5 +1,0 @@
-[  0%] Built target judas_glad
-[100%] Built target judas_engine
-[100%] Building CXX object CMakeFiles/judas_fluid_metadata_tests.dir/tests/FluidMetadataTests.cpp.o
-[100%] Linking CXX executable judas_fluid_metadata_tests
-[100%] Built target judas_fluid_metadata_tests

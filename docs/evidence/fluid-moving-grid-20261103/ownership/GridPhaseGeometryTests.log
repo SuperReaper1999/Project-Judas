@@ -1,3 +1,0 @@
-128 samples across all chart axes, maximum errors: cell 2.1684043449710089e-18 m^3, face 1.3877787807814457e-17 m^2, volume 6.2172489379008766e-15 m^3, height 4.4408920985006262e-16 m
-Maximum moving aperture errors: reversal 2.7755575615628914e-17 m^2, refined quadrature 3.2966994924221726e-07 m^2, independent dry complement 3.2966994924221726e-07 m^2
-28 flat phase geometry checks, 0 failures

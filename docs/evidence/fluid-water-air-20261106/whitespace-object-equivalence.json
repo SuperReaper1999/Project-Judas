@@ -1,8 +1,0 @@
-{
-  "change": "remove spaces from an otherwise empty source line after qualification",
-  "testedSourceSHA256": "308f076e73d13909a094aca03fc7c568bd25f817926b11abacdf4d59438bf864",
-  "finalSourceSHA256": "cf19ee5ab9ceba95b40383dcb6e66117961004b4a0750cd2cf01e43e3ba98c9b",
-  "originalAndRecompiledObjectSHA256": "31bfbc0f6638cf31eeeef45acbcf8eeaad00eedfc31e4e1bf7ecc0f1fdd7fab3",
-  "byteIdentical": true,
-  "flags": "-std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror; same absolute source path"
-}

@@ -1,2 +1,0 @@
-M55 convex failure tets=1906 area=3.53920620204e-12 covered=1.60488186602e-20 normal=(-0.298274993187 0.954479978019 0) offset=2.38619994505 ahead=0.167755556343 eps=2.68824908395e-08
-disconnected/nonconvex subregions within surface cell 7,1; refine or partition the physical basin

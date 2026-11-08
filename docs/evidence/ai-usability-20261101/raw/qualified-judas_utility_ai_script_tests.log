@@ -1,4 +1,0 @@
-STATE {"chosen":{"action":"eat","target":"meal"},"coercions":0,"completed":true,"disposed":true,"rejected":2,"saved":{"activeAge":0.09999999776482582,"cooldowns":{"eat":0,"hide":0},"definition":{"actions":[{"considerations":[{"curve":"linear","exponent":2,"fact":"hunger","max":1,"min":0,"weight":1}],"cooldown":0,"id":"eat","interruptible":true,"minCommitment":0,"mode":"product","requiredFacts":[],"weight":1},{"considerations":[{"curve":"linear","exponent":2,"fact":"danger","max":1,"min":0,"weight":1}],"cooldown":0,"id":"hide","interruptible":true,"minCommitment":0,"mode":"product","requiredFacts":[],"weight":1}],"initialDelay":0,"interval":0.1,"name":"script-test","switchAdvantage":0.05,"version":1},"elapsed":0.11999999731779099,"selected":{"action":"eat","target":"meal"},"status":"running","untilEvaluation":0.08000000268220903,"version":1},"sensors":2,"starts":1,"stops":0,"updates":6}
-JS: AI_STOP_EAT
-JS: AI_STOP_EAT
-Utility AI script: 21 checks, 0 failures

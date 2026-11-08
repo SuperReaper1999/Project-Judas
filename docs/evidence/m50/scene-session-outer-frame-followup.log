@@ -1,9 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Mouse capture failed: No relative mode implementation available
-Project: Scriptable Character Motor (/home/conner/Documents/GitHub/Project-Judas/build/m50-application-smoke/scene-project/character_demo.judasproj)
-Scene: M49 / flat (/home/conner/Documents/GitHub/Project-Judas/build/m50-application-smoke/scene-project/Scenes/flat.judas)
-World origin (m): 0.000, 0.000, 0.000
-Mouse capture failed: No relative mode implementation available
-JS: M50_VISITS 1
-JS: M50_VISITS 2
-JS: M50_SCENE_RELOAD_SESSION_PASS

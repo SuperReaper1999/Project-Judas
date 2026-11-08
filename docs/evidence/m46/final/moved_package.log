@@ -1,8 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Mouse capture failed: No relative mode implementation available
-Project: Skeletal animation (/tmp/Judas_M46_Moved_Package/game.judasproj)
-Scene: M46 skeletal animation — G clip / J pause / K seek / C speed / P spawn (/tmp/Judas_M46_Moved_Package/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-Mouse capture failed: No relative mode implementation available
-Mouse capture failed: No relative mode implementation available
-JS: M46_PACKAGE_ANIMATION clips=2 time=0.5 prefab=true

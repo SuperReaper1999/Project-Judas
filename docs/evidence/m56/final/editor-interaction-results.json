@@ -1,9 +1,0 @@
-{
-  "exit_code": 0,
-  "seconds": 5.2160342860006494,
-  "checks": {
-    "live cursor + frozen capture while simulation continues: PASS": true,
-    "closing profiler restores capture: PASS": true,
-    "authored scene after play/stop is IDENTICAL": true
-  }
-}

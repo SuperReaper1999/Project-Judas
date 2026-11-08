@@ -4,7 +4,7 @@
 #include <memory>
 #include <cmath>
 #include <algorithm>
-int main(int argc,char** argv){CollisionAsset asset;std::string error;if(!LoadCollisionAsset(argc>1?argv[1]:"projects/tuppence/Assets/collision/coin.judascollision",asset,error)){printf("FAIL %s\n",error.c_str());return 1;}const auto hull=Shape::Cooked(std::make_shared<CollisionAsset>(asset),"coin");unsigned checks=0,failures=0;{
+int main(int argc,char** argv){CollisionAsset asset;std::string error;if(!LoadCollisionAsset(argc>1?argv[1]:"tests/fixtures/collision/coin.judascollision",asset,error)){printf("FAIL %s\n",error.c_str());return 1;}const auto hull=Shape::Cooked(std::make_shared<CollisionAsset>(asset),"coin");unsigned checks=0,failures=0;{
  PrimitivePose coin,floor;coin.shape=hull;coin.parentPosition={0,.015f,0};coin.parentOrientation=glm::angleAxis(.1f,glm::vec3(1,0,0));floor.shape=Shape::Box({1,.1f,1});floor.parentPosition={0,-.1f,0};
  auto forward=CookedContacts(coin,floor,0),reverse=CookedContacts(floor,coin,0);
  printf("REFERENCE FACE forward=%d reversed=%d\n",forward.count,reverse.count);

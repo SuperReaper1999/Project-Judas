@@ -1,4 +1,0 @@
-FAIL ordinary application clean shutdown
-SUMMARY 1 checks 1 failures
-Renderer fragment texture units: 32 (material path uses 12)
-Scene '/home/conner/Documents/GitHub/Project-Judas/projects/collision_lab/Scenes/flat.judas' could not be instantiated: object 402 "Ordinary fracture fragment contact": missing/wrong-type deformable asset

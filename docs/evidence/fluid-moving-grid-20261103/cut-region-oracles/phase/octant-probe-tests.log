@@ -1,4 +1,0 @@
-PASS analytic solid removes only the low-low-low octant
-PASS all three targets separately fit their low half
-PASS shared allocation rejects the blocked intersection
-PASS moving one axis target puts water in the actual adjacent corner

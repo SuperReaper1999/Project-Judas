@@ -1,5 +1,0 @@
-NAV 1 agents: mean 0.0035 ms p95 0.0067 ms max 0.0168 ms
-NAV 10 agents: mean 0.0405 ms p95 0.0549 ms max 0.0786 ms
-NAV 100 agents: mean 1.9054 ms p95 2.6820 ms max 2.7991 ms
-1000 paths: 1.182 ms
-M53 focused 77 checks, 0 failures

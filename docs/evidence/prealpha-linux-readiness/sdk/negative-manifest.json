@@ -1,6 +1,0 @@
-{
-  "exit": 1,
-  "stdout": "",
-  "stderr": "SDK packaging failed: Unsupported SDK manifest\n",
-  "expected": "reject incomplete/corrupt manifest before trusting SDK"
-}

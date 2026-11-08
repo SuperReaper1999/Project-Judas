@@ -1,7 +1,0 @@
-Renderer fragment texture units: 32 (material path uses 12)
-World state: disk saves disabled for additive compositions
-Project: Deformable Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m62-endurance/deformable_lab.judasproj)
-Scene: Deformable Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/.cache/m62-endurance/Scenes/flat.judas)
-World origin (m): 0.000, 0.000, 0.000
-Mouse capture failed: No relative mode implementation available
-JS: ENDURANCE_PASS 1056 nodes 60 contacts, 20 simulated seconds of loads/air/moving cape

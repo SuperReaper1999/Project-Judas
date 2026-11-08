@@ -3,7 +3,7 @@
 #include "Narrowphase.h"
 #include "CollisionGeometry.h"
 #include "SaveArchive.h"
-#include "../tools/prototypes/planar2d_3d_control.h"
+#include "fixtures/PlanarTrajectoryControl.h"
 #include <glm/gtc/quaternion.hpp>
 #include <cstdio>
 #include <stdexcept>

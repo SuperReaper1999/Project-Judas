@@ -1,5 +1,0 @@
-('0',): rejected interval count must be a positive integer
-('-1',): rejected interval count must be a positive integer
-('3garbage',): rejected interval count must be a positive integer
-('not-a-number',): rejected interval count must be a positive integer
-('3', '--unknown'): rejected momentum backend must be --fast or --reference

@@ -1,3 +1,0 @@
-FAIL density-25-1000 neutral player has no rapid systematic drift
-CASE density-25-1000 failures=1 height_change=-0.580007493 final_immersion=0.998279333 max_speed=2.03162313 relative_drift=0.0385543145 particle_steps=120 seconds=4.69770143 particle_reference_equal=0
-SUMMARY checks=489 failures=1 ordinary_steps=240

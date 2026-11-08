@@ -1,7 +1,0 @@
-From repository root:
-flock build/ftft9-build.lock cmake --build build --target judas_fluid_hydrostatics_tests judas_production_fluid_tests -j4
-build/judas_fluid_hydrostatics_tests
-build/judas_production_fluid_tests --case dense_020 --output docs/evidence/stabilization/ftft9/sol-continuation/run1/dense_020
-build/judas_production_fluid_tests --case half_020 --output docs/evidence/stabilization/ftft9/sol-continuation/run1/half_020
-
-These are recorded executed commands; do not overwrite this evidence on reproduction. Use a fresh output directory. Auxiliary target commands and before/after exits are stored in particle-batch/acceleration-safety/.

@@ -1,5 +1,0 @@
-classic_near: exit=0, 2.670s
-classic_far: exit=0, 2.820s
-terrain_near: exit=0, 2.672s
-terrain_far: exit=0, 2.720s
-{"overall_pass": false, "checks": {"all_production_and_async": false, "ftft1": true, "near_far": true, "source_unchanged_during_run": true, "protected_unchanged_during_run": true}, "seconds": 366.9930603070002}

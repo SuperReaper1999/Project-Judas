@@ -1,2 +1,0 @@
-step,x,y,z,temperature_before,temperature_after,fuel_before,fuel_after,burn_rate,chemical_W,gas_W,heater_W,pair_W,environment_W,oxygen_supply,oxidizer_density,storage_residual_J,chemical_residual_J
-0,0,0,0,300,300,0.0099999997764825821,0.0099999997764825821,0,0,0,0,0,0,0,0,0,0

@@ -1,7 +1,0 @@
-[  0%] Built target judas_glad
-[  0%] Built target judas_audio_backend
-[  6%] Built target judas_imgui
-[ 93%] Built target judas_engine
-[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
-[ 93%] Linking CXX executable judas_editor
-[100%] Built target judas_editor

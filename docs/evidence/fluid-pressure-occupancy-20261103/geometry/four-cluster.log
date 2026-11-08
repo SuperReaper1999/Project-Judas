@@ -1,7 +1,0 @@
-cluster_center_spacing=0.317029291310 m
-sampled_density=1000.000000000000 kg/m^3
-bulk_mass_density=1004.273050670751 kg/m^3
-raw_volume_coverage=0.251068262668
-Each site has 4 coincident particles and 6 neighboring sites in kernel reach.
-At any site, all kernel gradients vanish or cancel by reflection symmetry.
-At zero velocity and gravity, the one-sided density QP has zero minimum change.

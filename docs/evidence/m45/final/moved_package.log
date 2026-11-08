@@ -1,5 +1,0 @@
-libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
-Project: Rigid-body joints (/tmp/Judas_M45_Moved_Package/game.judasproj)
-Scene: M45 rigid-body joints — G motor / P assembly (/tmp/Judas_M45_Moved_Package/Scenes/main.judas)
-World origin (m): 0.000, 0.000, 0.000
-JS: M45_PACKAGE_JOINT active=true

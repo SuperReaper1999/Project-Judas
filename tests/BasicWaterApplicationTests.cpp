@@ -40,7 +40,7 @@ int main(int argc,char** argv){
     std::cout<<"GL "<<glGetString(GL_RENDERER)<<" | "<<glGetString(GL_VERSION)<<'\n';
     host.OpenProjectAssets(project.RootDir(),project.AssetsDir());host.Resources().SetBlockingMode(true);
     auto& window=host.GetWindow();window.SetTestInputMode(true);Check(window.Input().SetMap(project.Settings().input,error),"project logical input map");
-    const std::filesystem::path out=argc>2?argv[2]:"docs/evidence/prealpha-project-settings-water/application";std::filesystem::create_directories(out);
+    const std::filesystem::path out=argc>2?argv[2]:".cache/qualification/basic-water";std::filesystem::create_directories(out);
     const bool writing=argc>1&&std::string(argv[1])=="--cold-write",reading=argc>1&&std::string(argv[1])=="--cold-read";
     const bool profiling=argc>1&&std::string(argv[1])=="--profile";
     auto& profiler=PerformanceProfiler::Get();if(profiling)profiler.Enable(true);
