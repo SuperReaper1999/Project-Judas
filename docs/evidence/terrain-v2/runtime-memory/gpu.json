@@ -1,0 +1,18 @@
+[
+  {
+    "profile": "modern",
+    "command": [
+      "build/judas_terrain_v2_planet_render_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-planet-render-modern.log"
+  },
+  {
+    "profile": "portable",
+    "command": [
+      "build/judas_terrain_v2_planet_render_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-planet-render-portable.log"
+  }
+]

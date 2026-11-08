@@ -95,11 +95,20 @@ int main() {
                   !wrong.consumed && world.Physics().AliveBodyCount() == 0,
               "mismatched source identity cannot publish or consume the product");
         const auto fingerprint = prepared.geometry.chunks[0].collision->sourceFingerprint;
+        const auto &preparedMesh = prepared.geometry.chunks[0].chunk.mesh;
+        const auto triangles = preparedMesh.indices.size() / 3;
+        const auto meshBytes = preparedMesh.vertices.size() * sizeof(MeshVertex) +
+                               preparedMesh.indices.size() * sizeof(uint32_t);
+        const auto expectedLivePayload =
+            prepared.geometry.PayloadBytes() - sizeof(TerrainV2::Preparation) - meshBytes;
         auto owner = object();
         Check(world.StageRegionObject(owner, owner, error, "prepared terrain", &prepared),
               "ordinary regional staging consumes complete worker output: " + error);
         Check(prepared.consumed && !prepared.geometry.source && prepared.geometry.chunks.empty(),
               "handoff moves owned data instead of copying or retaining another terrain");
+        Check(world.LiveTerrain().LandscapePayloadBytes(owner.id) == expectedLivePayload &&
+                  world.LiveTerrain().Status(owner.id)->triangles == triangles,
+              "shared-grid landscape releases unused CPU draw streams, retaining triangle metrics");
         Check(world.LiveTerrain().Status(owner.id)->ready &&
                   !world.Physics().Raycast({0, 5, 0}, {0, -1, 0}, 10).hit,
               "complete staged collision remains private until ordinary publication");

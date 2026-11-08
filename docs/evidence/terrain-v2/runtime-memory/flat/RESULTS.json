@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-8ca4ee1-dirty-9a126498275c-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "9a126498275c45898f7e477607b15f82b7678a094d7ad1116a6e5fafeb217ca9",
+    "source_origin": "git",
+    "source_revision": "8ca4ee17be77044c108149246cafd2dd7dfc1d11",
+    "source_tree": "a309ee084e7e01d41e455cd8f13bcb76059b74fd",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "2.0.0-alpha.1"
+  },
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.08357886970043182,
+      "y": 1.720919132232666,
+      "z": -10.608722686767578
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 9409,
+      "triangles": 33939,
+      "bytes": 1007048,
+      "chunks": 36,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 67.71955799999999,
+      "publishMs": 0.10616,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0
+  },
+  "finished_utc": "2026-11-08T03:55:58.631058+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-memory-game-flat/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-memory-game-flat/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.11384729799465276
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-memory-game-flat/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-memory-game-flat/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.3643276639995747
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-memory-game-flat/relocated game/judas",
+        "/tmp/terrain-v2-memory-game-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-memory-game-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.0659724959987216
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-memory-game-flat/relocated game/judas",
+        "/tmp/terrain-v2-memory-game-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-memory-game-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9152386330024456
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-memory-game-flat/relocated game/judas",
+        "/tmp/terrain-v2-memory-game-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-memory-game-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.0164455080011976
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-memory-game-flat/relocated game/judas",
+        "/tmp/terrain-v2-memory-game-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-memory-game-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.614772504006396
+    }
+  ],
+  "log_sha256": {
+    "export.log": "f67fdd6416316687ee71e899e756517832f012c19e0c690d09f8f001789ed740",
+    "native-cook.log": "4b5bf0a720132fce53eafb3b18e0bfb91310ed2d6db80092006b662338be2344",
+    "read.log": "97dcb003370c4f328ece1ee11d49221d905fc5d70607de2da69d898e45e16171",
+    "settle-0.log": "a424836d1aa12fe92e723d3264db097f185658ba98f079b98056efbf89a380e4",
+    "traverse.log": "d9d27cae2015f3145081b3e4d5c67bad97bc1fc407e6e332d2292c9a1951e06b",
+    "write.log": "7831f46b04e46f5183a2dfe9162def7609f696c294b0220f46e4ae366b28f33a"
+  }
+}

@@ -1,0 +1,96 @@
+[
+  {
+    "command": [
+      "build/judas_terrain_v2_preparation_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-preparation.log",
+    "summary": [
+      "SUMMARY 26 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_world_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-world.log",
+    "summary": [
+      "METRIC seam_supported_steps=300 maximum_monolithic_trajectory_difference_m=0",
+      "METRIC base_triangles=2048 edited_triangles=10420 bytes=455492 final_prepare_ms=14.1558 final_publish_ms=0.017834",
+      "SUMMARY 93 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_component_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-component.log",
+    "summary": [
+      "METRIC asset_backed_snapshot_bytes=579 raw_source_samples=1089",
+      "SUMMARY 35 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_surface_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-surface.log",
+    "summary": [
+      "SUMMARY 59 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_navigation_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-navigation.log",
+    "summary": [
+      "SUMMARY 73 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_interaction_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-interaction.log",
+    "summary": [
+      "METRIC native_terrain_water_quantity_m3=64 initial_free_capacity_m3=192 old_boundary_capacity_m3=240 excavation_free_capacity_m3=194.906 edit_geometry_preparation_ms=12.2891 steady_geometry_median_ms=0.0154945 steady_geometry_p95_ms=0.019707 steady_geometry_worst_ms=0.02121",
+      "SUMMARY 85 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_streaming_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-streaming.log",
+    "summary": [
+      "SUMMARY 69 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-planet_component.log",
+    "summary": [
+      "SUMMARY 40 checks 0 failures"
+    ]
+  },
+  {
+    "command": [
+      "build/judas_terrain_v2_planet_streaming_tests"
+    ],
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-memory-planet_streaming.log",
+    "summary": [
+      "SUMMARY 37 checks 0 failures"
+    ]
+  }
+]

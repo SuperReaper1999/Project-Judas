@@ -1,5 +1,7 @@
+#include "CollisionAsset.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
+#include "SceneFingerprint.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainBrush.h"
 #include <chrono>
@@ -86,6 +88,7 @@ int main(int argc, char **argv) {
             Require(world.Build(scene, &resources, error), error);
             const auto buildMs = Ms(start);
             const auto initial = *world.LiveTerrain().Status(1);
+            const auto initialPayload = world.LiveTerrain().LandscapePayloadBytes(1);
             Require(initial.ready && initial.chunks == 1024, "initial native collision incomplete");
             const auto hit = world.Physics().Raycast({0, 100, 0}, {0, -1, 0}, 200);
             Require(hit.hit, "native terrain has no real collision");
@@ -119,6 +122,14 @@ int main(int argc, char **argv) {
             start = Clock::now();
             Require(world.CaptureRuntimeTerrain(1, snapshot, error), error);
             const auto saveMs = Ms(start);
+            std::string geometry;
+            for (auto body : world.LiveTerrain().Bodies(1)) {
+                Shape shape;
+                BodyTransform pose;
+                Require(world.Physics().GetBodyShape(body, shape, pose) && shape.asset,
+                        "native collider ownership lost");
+                geometry += shape.asset->sourceFingerprint;
+            }
             std::cout << "{\"case\":\"native-scene\",\"run\":" << run
                       << ",\"navigation_enabled\":" << (navigation ? "true" : "false")
                       << ",\"navigation_coverage_m\":"
@@ -138,6 +149,13 @@ int main(int argc, char **argv) {
                       << ",\"snapshot_bytes\":" << snapshot.size()
                       << ",\"resident_chunks\":" << edited.chunks
                       << ",\"resident_volume_chunks\":" << edited.volumeChunks
+                      << ",\"initial_payload_bytes\":" << initialPayload
+                      << ",\"edited_payload_bytes\":"
+                      << world.LiveTerrain().LandscapePayloadBytes(1)
+                      << ",\"initial_triangles\":" << initial.triangles
+                      << ",\"edited_triangles\":" << edited.triangles << ",\"geometry_sha256\":\""
+                      << SceneFingerprintSha256(geometry) << "\""
+                      << ",\"snapshot_sha256\":\"" << SceneFingerprintSha256(snapshot) << "\""
                       << ",\"estimated_geometry_sample_bytes\":" << edited.bytes << "}\n";
         }
         resources.Shutdown();

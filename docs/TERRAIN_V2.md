@@ -132,9 +132,11 @@ render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
 multi-view streaming remain work. Planetary excavation is now integrated through
 projected native patches; see the geographic section below for its bounded scope.
-Incremental navigation-tile preparation,
-large-region physical interest selection, representative consumer scenes and final SDK
-qualification remain. Source discovery currently covers up to 512 editable
+Incremental navigation-tile preparation and large-region physical interest selection
+remain. Editable flat/planetary consumer scenes, relocated gameplay and a fresh
+17-tool host-native SDK are now qualified; see the evidence links below. This is
+not older-distribution or new Windows/Android/browser certification.
+Source discovery currently covers up to 512 editable
 sources under Authoring; large-data demand paging remains separate work.
 
 Runtime landscapes require a unit-scale root static owner. Translation and
@@ -197,7 +199,8 @@ publication. Its asset is 5,271,331 bytes and the edited-terrain snapshot is 594
 bytes. Peak benchmark-process RSS is 148,420 KiB, including input/output arrays,
 physics, repeated construction and allocator retention. These are warm-file
 measurements, not cold-disk timings or a total-game memory budget. Actual source,
-collision and visual residency streaming remains the next engineering work.
+collision and visual residency were still open at that checkpoint. Regional
+streaming and subsequent memory results below supersede that historical scope.
 
 ## Shared-grid rendering checkpoint
 
@@ -241,8 +244,9 @@ completed-tunnel scene remains approximately 0.70 ms for its main-camera GPU
 scope; its cost is essentially unchanged. Raw paired results and controls are
 under `docs/evidence/terrain-v2/stage2`.
 
-Still pending: temporal LOD transitions, physical streaming/demand paging and
-larger integrated consumer scenes. A source page exceeding the device's texture
+Still pending: temporal LOD transitions and per-chunk physical interest/demand
+paging. Regional physical streaming and both integrated consumer scenes are now
+qualified below. A source page exceeding the device's texture
 size fails before allocation with an actionable request to split its regions.
 This checkpoint does not certify Android/browser terrain rendering or qualify
 the complete five-stage Terrain V2 delivery.
@@ -299,8 +303,9 @@ and particle suites pass unchanged. The new body index checks world ownership
 as well as handles, preventing another world's ID from aliasing a terrain.
 
 This does not change the Alpha fluid lock, default water policy, pressure/transport
-solver or liquid research. It does not complete planetary excavation, physical residency or final Terrain V2
-qualification. Source-owned navigation publication is described below.
+solver or liquid research. Planetary excavation and native SDK qualification have
+subsequently been exercised below. Per-chunk physical residency remains open.
+Source-owned navigation publication is described below.
 
 ## Native regional streaming
 
@@ -325,8 +330,12 @@ unload occupied ground, and subsequent admission observes the increased total.
 These are payload/admission estimates, excluding mutable Detour caches, allocator
 overhead, physics-world storage and GPU residency. Worker preparation's temporary allocations are not a
 hard-capped heap. Use suitably sized authored regions and sensible pending/live
-budgets; a kilometre source in the measured fixture needs about 77 MB of accounted
-resident payload (process RSS is substantially larger).
+budgets; the original kilometre fixture retained about77MB of accounted payload.
+The unused ordinary CPU draw streams have since been released: the same excavated
+fixture retains54.25MB without navigation or57.32MB with full-kilometre navigation.
+All1,024collision chunks and their original cooks remain. Preparation still needs
+the extracted streams temporarily. These are owned payload estimates; process RSS
+and peak memory are substantially larger. See runtime-memory evidence below.
 
 The preserved five-visit 513×513 fixture keeps all 1,024 collision chunks, sculpts
 and excavates, unloads everything and reconstructs exact saved source state in a
@@ -494,3 +503,22 @@ reader no longer applies the older2MiB limit to successfully captured native
 state. Source/geometry, resident-chunk, whole-save and regional memory bounds
 still apply. Asset-backed terrain remains preferable for large authored worlds
 because saves retain references and edits rather than duplicating base arrays.
+
+## Current native SDK and retained-memory qualification
+
+The fresh17-tool local SDK includes both editable Workshops and its own
+`tools/validation/qualify_terrain_v2.py`. Standard editor/project/tool operations,
+native terrain cooking, relocated exports and independent cold continuation pass
+using that packaged content. This host-native preview requires GLIBC2.43; it is
+not a published package or an Ubuntu24.04-qualified SDK. Existing installed game
+SDK selections remain unchanged. See [SDK qualification](evidence/terrain-v2/sdk-qualification/REVIEW.md).
+
+Ordinary live chunks now discard unused CPU draw meshes after preparation;
+collision owns its unchanged immutable cooks and rendering uses the shared grid.
+Excavations and curved planetary patches retain their unique render meshes.
+Matched kilometre-scale fixtures retain22.86MB less payload, with identical
+collision certificates, collider counts and generated triangle counts. Peak
+memory changes much less because extraction still constructs those meshes.
+The 300-step physical seam trajectory remains exactly equal to the monolithic
+reference. No load-time or FPS speedup is claimed by this memory correction.
+See [raw measurements and controls](evidence/terrain-v2/runtime-memory/REVIEW.md).

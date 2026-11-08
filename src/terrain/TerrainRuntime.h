@@ -51,6 +51,7 @@ class Runtime {
     };
     struct Resident {
         PreparedChunk geometry;
+        size_t triangles = 0;
         BodyHandle body;
         mutable MeshHandle mesh;
     };

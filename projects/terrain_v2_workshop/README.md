@@ -31,10 +31,12 @@ start fresh or provide an explicit content migration.
 `tools/create_terrain_v2_workshop.py` regenerates only this owned example and its
 original procedural material textures. It requires `build/judas_terrain_author`.
 
-This first slice is not yet the completed Terrain V2 delivery. Visual review,
-scalable residency, planetary integration, broader authoring and final SDK/export
-qualification remain explicit work. Advanced Fluids and release policy are not
-changed by this project.
+This remains an Experimental preview requiring human review. Native authoring,
+regional streaming, source-owned navigation, planetary integration in the separate
+Planetary Workshop, and packaged-SDK/relocated exports are now exercised. Runtime
+sources still load all samples and collision chunks while resident; per-chunk
+physical interest and demand paging remain open. Advanced Fluids and release
+policy are not changed by this project.
 
 The detailed grass, earth, rock and sand textures reuse the existing Lunar Island
 CC0 material catalogue. Sources and notices are preserved in

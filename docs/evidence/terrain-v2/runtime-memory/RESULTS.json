@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "base": "8ca4ee17be77044c108149246cafd2dd7dfc1d11",
+  "recorded_utc": "2026-11-08T03:59:07.948595+00:00",
+  "samples_per_case": 5,
+  "hardware": "Ryzen 5 5600, GTX 970 4GiB",
+  "compiler": "GNU15.2 Release",
+  "timing_claim": false,
+  "cases": {
+    "before-01": {
+      "samples": 5,
+      "initial_payload_bytes": 76132736,
+      "edited_payload_bytes": 77022588,
+      "geometry_sha256": "b671f9896aaa452097bfc7d5076dee5b0e46df2e39300774974cd20588103530",
+      "initial_triangles": 524288,
+      "edited_triangles": 530810,
+      "median_edit_ms": 24.0061,
+      "worst_edit_ms": 25.4393
+    },
+    "after-01": {
+      "samples": 5,
+      "initial_payload_bytes": 53268864,
+      "edited_payload_bytes": 54248028,
+      "geometry_sha256": "b671f9896aaa452097bfc7d5076dee5b0e46df2e39300774974cd20588103530",
+      "initial_triangles": 524288,
+      "edited_triangles": 530810,
+      "median_edit_ms": 24.0817,
+      "worst_edit_ms": 24.9587
+    },
+    "before-nav-01": {
+      "samples": 5,
+      "initial_payload_bytes": 79206120,
+      "edited_payload_bytes": 80095972,
+      "geometry_sha256": "b671f9896aaa452097bfc7d5076dee5b0e46df2e39300774974cd20588103530",
+      "initial_triangles": 524288,
+      "edited_triangles": 530810,
+      "median_edit_ms": 296.156,
+      "worst_edit_ms": 300.866
+    },
+    "after-nav-01": {
+      "samples": 5,
+      "initial_payload_bytes": 56342248,
+      "edited_payload_bytes": 57321412,
+      "geometry_sha256": "b671f9896aaa452097bfc7d5076dee5b0e46df2e39300774974cd20588103530",
+      "initial_triangles": 524288,
+      "edited_triangles": 530810,
+      "median_edit_ms": 295.579,
+      "worst_edit_ms": 305.508
+    }
+  },
+  "baseline_binary_sha256": "773f8ddb2d8afcc967aac0716198eddefd8421fedff5662fc6cc902bf1bbc23a",
+  "candidate_binary_sha256": "dd0f34dd522ea0914236b8356801f90f71def672776141a7805d6f6e36607b69",
+  "human_acceptance": false
+}

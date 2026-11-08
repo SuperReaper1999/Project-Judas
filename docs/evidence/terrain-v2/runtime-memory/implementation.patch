@@ -1,0 +1,39 @@
+diff --git a/src/terrain/TerrainRuntime.cpp b/src/terrain/TerrainRuntime.cpp
+index 1fa2740b..9937e9da 100644
+--- a/src/terrain/TerrainRuntime.cpp
++++ b/src/terrain/TerrainRuntime.cpp
+@@ -396,6 +396,13 @@ bool Runtime::Publish(std::string &error) {
+         r.body = staged[i];
+         if (r.body.IsValid())
+             bodyIds.insert(r.body.id);
++        r.triangles = p.chunk.mesh.indices.size() / 3;
++        // Ordinary landscapes draw from a shared grid and the source height
++        // image. Collision owns its immutable cook; navigation consumes that
++        // cook too. Keep unique draw streams only for excavations and curved
++        // patches, whose geometry cannot be reconstructed by the shared grid.
++        if (!p.chunk.volumetric && !pending->source->chart)
++            p.chunk.mesh = {};
+         r.geometry = std::move(p);
+     }
+     if (pending->replaceAll) {
+@@ -449,7 +456,7 @@ bool Runtime::Publish(std::string &error) {
+                            NavigationPayloadBytes(navigation.get());
+     for (const auto &[_, r] : chunks) {
+         const auto &c = r.geometry.chunk;
+-        status.triangles += c.mesh.indices.size() / 3;
++        status.triangles += r.triangles;
+         status.bytes +=
+             c.mesh.vertices.size() * sizeof(MeshVertex) + c.mesh.indices.size() * sizeof(uint32_t);
+         status.volumeChunks += c.volumetric;
+diff --git a/src/terrain/TerrainRuntime.h b/src/terrain/TerrainRuntime.h
+index 0c7ed50d..699c4f20 100644
+--- a/src/terrain/TerrainRuntime.h
++++ b/src/terrain/TerrainRuntime.h
+@@ -51,6 +51,7 @@ class Runtime {
+     };
+     struct Resident {
+         PreparedChunk geometry;
++        size_t triangles = 0;
+         BodyHandle body;
+         mutable MeshHandle mesh;
+     };

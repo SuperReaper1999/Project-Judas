@@ -117,6 +117,17 @@ source/region, max1024colliders per source; no demand-paging or whole-programme
 completion claim. Retain query correctness rather than evicting unseen support.
 Do not replace installed RPG SDK or existing game assets.
 
+Runtime memory correction qualified after8ca4ee17: ordinary published chunks now
+release CPU draw streams unused by shared-grid rendering, while retaining the
+exact cooked collision, navigation inputs, generated triangle metric and unique
+cave/planetary meshes. Matched1km initial payload76.13->53.27MB, excavated
+77.02->54.25MB; full-nav80.10->57.32MB. No peak-RSS or speedup claim. Original
+negative12checks becomes26pass; 300physical seam steps still exact; ordinary and
+planetary/regional/large-cold/realGPU/relocated-game controls pass. Evidence
+runtime-memory/. Full-coverage nav prep still costs~296ms per local edit; dirty
+tile preparation is the next directly measured integration target. Verify live
+Git for this checkpoint's actual commit state.
+
 ## Completed native navigation cache handoff
 
 Functional cache handoff is implemented on top of1b593d8f. The SAME Detour
