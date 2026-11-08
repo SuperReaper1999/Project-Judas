@@ -1,0 +1,28 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/terrain-v2-sdk-material-b5c1bc0d-planet/user-data/judas/games/57b6d514e7257e26dc3129e7c1cfb9d2342e7dc86eb91bb14f636ea83ae28a42/Saves/highlands.judasstate (none saved)
+Project: Terrain V2 — Planetary Workshop (/tmp/terrain-v2-sdk-material-b5c1bc0d-planet/relocated game/game.judasproj)
+Scene: Terrain V2 — Planetary Highlands (/tmp/terrain-v2-sdk-material-b5c1bc0d-planet/relocated game/Scenes/highlands.judas)
+World origin (m): 92.937, 991.325, 92.937
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,-0.911709,-9.724900,-0.911709,0,0,1,0
+[TestHarness] service save ready after 14 wait frames at frame 30
+JS: TERRAIN_V2_RESTORED {"position":{"x":0.23770321905612946,"y":0.2663452625274658,"z":13.346698760986328},"terrain":{"ready":true,"busy":false,"navigation":true,"revision":2,"samples":16641,"triangles":48405,"bytes":2407704,"chunks":64,"volumeChunks":8,"pendingChunks":0,"prepareMs":87.470974,"publishMs":0.168247,"error":""},"surfaceDabs":2,"remainingBrushes":0,"origin":{"x":92.93673162131846,"y":991.3251372940636,"z":92.93673162131846}}
+[TestHarness] service scene ready after 0 wait frames at frame 35
+60,1.00000,0.240390,0.264876,13.040651,0.093161,0.994082,0.055879,0,0.000000,0.000000,0.000000,-0.912625,-9.712146,-1.037997,0,60,1,0
+120,2.00000,0.239744,0.566004,9.057847,0.093162,0.994298,0.051898,0,0.000000,0.000000,0.000000,-0.912724,-9.716215,-0.999103,0,120,1,0
+180,3.00000,0.236393,0.972128,5.091621,0.093148,0.994498,0.047922,0,0.000000,0.000000,0.000000,-0.912686,-9.720136,-0.960245,0,180,1,0
+240,4.00000,0.230224,1.338337,1.121277,0.093134,0.994683,0.043945,0,0.000000,0.000000,0.000000,-0.912642,-9.723902,-0.921371,0,240,1,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-sdk-material-b5c1bc0d-planet/tunnel.png
+300,5.00000,0.225498,1.709004,-2.848346,0.093120,0.994852,0.039967,0,0.000000,0.000000,0.000000,-0.912594,-9.727512,-0.882483,0,300,1,0
+360,6.00000,0.218802,2.062391,-6.819374,0.093104,0.995006,0.035990,0,0.000000,0.000000,0.000000,-0.912528,-9.730969,-0.843584,0,360,1,0
+420,7.00000,0.258251,2.581606,-10.399514,0.093115,0.995126,0.032453,0,0.000000,0.000000,0.000000,-0.912716,-9.733943,-0.808338,0,420,1,0
+JS: TERRAIN_V2_SAVE_REQUEST {"remainingBrushes":0,"busy":false}
+[TestHarness] service save ready after 11 wait frames at frame 460
+480,8.00000,0.264186,2.533721,-10.331654,0.093125,0.995123,0.032525,0,0.000000,0.000000,0.000000,-0.912812,-9.733875,-0.809036,0,480,1,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-sdk-material-b5c1bc0d-planet/traverse.png

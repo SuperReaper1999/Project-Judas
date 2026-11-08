@@ -700,3 +700,27 @@ Add `--planet` to exercise the same settings on the geographic Workshop. Use a
 fresh output directory each time. The driver authors an original periodic normal
 texture, checks that export includes it, then excavates, traverses and cold-loads
 the game from a genuinely relocated package.
+
+## Exact heightfield collision preparation
+
+Unedited ordinary heightfields now use a structured collision cook after proving
+that the vertices form a strictly monotone X/Z lattice and that the entire triangle
+index pattern matches. Their first-use vertex order, source feature numbers,
+normals, adjacency, crease activity and shared deterministic BVH are identical to
+the generic cook. The proof replaces repeated position-welding maps, edge maps
+and boundary T-junction searches; it does not simplify the collision surface.
+Caves, projected planetary patches and any mesh failing the proof retain the
+strict generic cooker. Failed preparation never replaces previous support.
+
+A matched native game with 1,024 terrain chunks, 1,025² samples and one-metre
+spacing loads its scene in roughly 1.03 seconds versus 2.14 seconds before this
+change on the Ryzen 5 5600. Warm peak process memory falls by about 24 MiB.
+Steady simulation remains about 0.37–0.39 ms; this improves initial preparation,
+not solver performance or the unrelated dense-body physics pile. Full results,
+unchanged physical controls and method limitations are in
+`docs/evidence/terrain-v2/structured-collision/REVIEW.md`.
+
+All physical chunks still remain resident while their terrain region is active.
+This optimization and the native file's page index are **not** independent
+per-chunk physics residency or sample demand paging. Use bounded streamed terrain
+regions and their existing memory budgets for larger worlds.

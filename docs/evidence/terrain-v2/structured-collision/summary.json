@@ -1,0 +1,296 @@
+[
+  {
+    "log": "game-0-kilometre.jsonl",
+    "scene_build_ms": 2145.78,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.391869,
+          "p95": 0.428047,
+          "worst": 0.631491
+        },
+        "render_submission_ms": {
+          "median": 0.336986,
+          "p95": 0.402418,
+          "worst": 0.501997
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.773616,
+          "p95": 0.78176,
+          "worst": 0.79312
+        }
+      },
+      "draws": 37,
+      "triangles": 75776
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.3841645,
+          "p95": 0.497869,
+          "worst": 0.661688
+        },
+        "render_submission_ms": {
+          "median": 0.3353175,
+          "p95": 0.439239,
+          "worst": 0.509831
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.851712,
+          "p95": 0.85936,
+          "worst": 0.866624
+        }
+      },
+      "draws": 37,
+      "triangles": 129740
+    },
+    "peak_process_rss_kib": 529936
+  },
+  {
+    "log": "game-0-small.jsonl",
+    "scene_build_ms": 31.3847,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.4635345,
+          "p95": 0.50374,
+          "worst": 0.59937
+        },
+        "render_submission_ms": {
+          "median": 0.24720599999999998,
+          "p95": 0.287442,
+          "worst": 0.315425
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.841952,
+          "p95": 0.889728,
+          "worst": 1.1815
+        }
+      },
+      "draws": 36,
+      "triangles": 18432
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.37078449999999996,
+          "p95": 0.426344,
+          "worst": 0.82687
+        },
+        "render_submission_ms": {
+          "median": 0.344044,
+          "p95": 0.444358,
+          "worst": 0.705371
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.81968,
+          "p95": 0.826336,
+          "worst": 0.833472
+        }
+      },
+      "draws": 57,
+      "triangles": 60198
+    },
+    "peak_process_rss_kib": 214804
+  },
+  {
+    "log": "game-1-kilometre.jsonl",
+    "scene_build_ms": 2158.2,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.3954915,
+          "p95": 0.425523,
+          "worst": 0.449257
+        },
+        "render_submission_ms": {
+          "median": 0.3373965,
+          "p95": 0.407098,
+          "worst": 0.456611
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.767312,
+          "p95": 0.774688,
+          "worst": 0.781952
+        }
+      },
+      "draws": 37,
+      "triangles": 75776
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.3724425,
+          "p95": 0.411957,
+          "worst": 0.827681
+        },
+        "render_submission_ms": {
+          "median": 0.3341955,
+          "p95": 0.411456,
+          "worst": 0.699549
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.848176,
+          "p95": 0.853664,
+          "worst": 0.864672
+        }
+      },
+      "draws": 37,
+      "triangles": 129740
+    },
+    "peak_process_rss_kib": 530188
+  },
+  {
+    "log": "game-1-small.jsonl",
+    "scene_build_ms": 30.015,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.466349,
+          "p95": 0.52463,
+          "worst": 0.771405
+        },
+        "render_submission_ms": {
+          "median": 0.25580800000000004,
+          "p95": 0.292131,
+          "worst": 0.570626
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.725712,
+          "p95": 0.732416,
+          "worst": 0.741184
+        }
+      },
+      "draws": 36,
+      "triangles": 18432
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.38689450000000003,
+          "p95": 0.432947,
+          "worst": 0.581026
+        },
+        "render_submission_ms": {
+          "median": 0.3653645,
+          "p95": 0.48217,
+          "worst": 0.789519
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.81704,
+          "p95": 0.823744,
+          "worst": 0.830432
+        }
+      },
+      "draws": 57,
+      "triangles": 60198
+    },
+    "peak_process_rss_kib": 152688
+  },
+  {
+    "log": "game-2-kilometre.jsonl",
+    "scene_build_ms": 2131.57,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.409151,
+          "p95": 0.49813,
+          "worst": 0.777467
+        },
+        "render_submission_ms": {
+          "median": 0.3567125,
+          "p95": 0.454848,
+          "worst": 0.901721
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.763808,
+          "p95": 0.771264,
+          "worst": 0.775744
+        }
+      },
+      "draws": 37,
+      "triangles": 75776
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.391784,
+          "p95": 0.450059,
+          "worst": 0.53059
+        },
+        "render_submission_ms": {
+          "median": 0.3574695,
+          "p95": 0.411486,
+          "worst": 0.483622
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.8425279999999999,
+          "p95": 0.848032,
+          "worst": 0.858368
+        }
+      },
+      "draws": 37,
+      "triangles": 129740
+    },
+    "peak_process_rss_kib": 531312
+  },
+  {
+    "log": "game-2-small.jsonl",
+    "scene_build_ms": 30.7559,
+    "intact": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.4741695,
+          "p95": 0.540189,
+          "worst": 0.623977
+        },
+        "render_submission_ms": {
+          "median": 0.252286,
+          "p95": 0.315876,
+          "worst": 0.356242
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.724368,
+          "p95": 0.729504,
+          "worst": 0.738752
+        }
+      },
+      "draws": 36,
+      "triangles": 18432
+    },
+    "excavated": {
+      "samples": 180,
+      "metrics": {
+        "simulation_scripts_publication_ms": {
+          "median": 0.36874549999999995,
+          "p95": 0.405444,
+          "worst": 0.493151
+        },
+        "render_submission_ms": {
+          "median": 0.33887,
+          "p95": 0.406297,
+          "worst": 0.507206
+        },
+        "gpu_elapsed_ms": {
+          "median": 0.817488,
+          "p95": 0.824192,
+          "worst": 0.831232
+        }
+      },
+      "draws": 57,
+      "triangles": 60198
+    },
+    "peak_process_rss_kib": 153348
+  }
+]

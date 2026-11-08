@@ -18,10 +18,12 @@ target_sources(judas_engine PRIVATE
     src/terrain/TerrainTopology.cpp
     src/terrain/TerrainRuntime.cpp
     src/terrain/TerrainPreparation.cpp
+    src/terrain/TerrainCollision.cpp
     src/terrain/TerrainNavigation.cpp
     src/terrain/TerrainPresentation.cpp
     src/terrain/TerrainPersistence.cpp
     src/WorldTerrainQueries.cpp)
+judas_add_engine_test(judas_terrain_v2_collision_tests tests/TerrainV2CollisionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_tests tests/TerrainV2Tests.cpp)
 judas_add_engine_test(judas_terrain_v2_planet_chart_tests tests/TerrainV2PlanetChartTests.cpp SOURCES tests/TerrainV2PlanetSelectionReference.cpp)
 judas_add_engine_test(judas_terrain_v2_world_tests tests/TerrainV2WorldTests.cpp)

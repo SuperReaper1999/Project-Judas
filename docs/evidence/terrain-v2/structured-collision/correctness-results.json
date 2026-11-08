@@ -1,0 +1,102 @@
+[
+  {
+    "name": "collision-final",
+    "command": [
+      "build/judas_terrain_v2_collision_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.4159128470000724
+  },
+  {
+    "name": "world",
+    "command": [
+      "build/judas_terrain_v2_world_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.414459817999159
+  },
+  {
+    "name": "preparation",
+    "command": [
+      "build/judas_terrain_v2_preparation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031933570999171934
+  },
+  {
+    "name": "components",
+    "command": [
+      "build/judas_terrain_v2_component_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06396091999886266
+  },
+  {
+    "name": "planet-components-write",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--write",
+      "/tmp/terrain-grid-planet-components-20261108"
+    ],
+    "exit": 0,
+    "seconds": 0.21414919500057294
+  },
+  {
+    "name": "planet-components-read",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--read",
+      "/tmp/terrain-grid-planet-components-20261108"
+    ],
+    "exit": 0,
+    "seconds": 0.1640534870002739
+  },
+  {
+    "name": "stream-write",
+    "command": [
+      "build/judas_terrain_v2_streaming_tests",
+      "--write",
+      "/tmp/terrain-grid-stream-20261108"
+    ],
+    "exit": 0,
+    "seconds": 1.4664625700006582
+  },
+  {
+    "name": "stream-read",
+    "command": [
+      "build/judas_terrain_v2_streaming_tests",
+      "--read",
+      "/tmp/terrain-grid-stream-20261108"
+    ],
+    "exit": 0,
+    "seconds": 0.31431588399937027
+  },
+  {
+    "name": "planet-stream-write",
+    "command": [
+      "build/judas_terrain_v2_planet_streaming_tests",
+      "--write",
+      "/tmp/terrain-grid-planet-stream-20261108"
+    ],
+    "exit": 0,
+    "seconds": 0.2141924770003243
+  },
+  {
+    "name": "planet-stream-read",
+    "command": [
+      "build/judas_terrain_v2_planet_streaming_tests",
+      "--read",
+      "/tmp/terrain-grid-planet-stream-20261108"
+    ],
+    "exit": 0,
+    "seconds": 0.11396871100077988
+  },
+  {
+    "name": "navigation-reuse",
+    "command": [
+      "build/judas_terrain_v2_navigation_reuse_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.4661139130002994
+  }
+]

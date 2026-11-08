@@ -1,0 +1,74 @@
+[
+  {
+    "name": "before",
+    "run": 0,
+    "exit": 0,
+    "seconds": 5.422283485000662,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      ".cache/terrain-v2/residency/before-game-benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  },
+  {
+    "name": "after",
+    "run": 0,
+    "exit": 0,
+    "seconds": 3.8698474560005707,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "build/judas_terrain_v2_game_benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  },
+  {
+    "name": "after",
+    "run": 1,
+    "exit": 0,
+    "seconds": 3.819678740999734,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "build/judas_terrain_v2_game_benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  },
+  {
+    "name": "before",
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.921268309999505,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      ".cache/terrain-v2/residency/before-game-benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  },
+  {
+    "name": "before",
+    "run": 2,
+    "exit": 0,
+    "seconds": 4.921366676000616,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      ".cache/terrain-v2/residency/before-game-benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  },
+  {
+    "name": "after",
+    "run": 2,
+    "exit": 0,
+    "seconds": 3.8201948149999225,
+    "command": [
+      "/usr/bin/time",
+      "-v",
+      "build/judas_terrain_v2_game_benchmark",
+      ".cache/terrain-v2/residency/kilometre-editable/terrain_v2_workshop.judasproj"
+    ]
+  }
+]

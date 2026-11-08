@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-b5c1bc0-dirty-663f5a6df188-uc6127383d02a",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "663f5a6df18834462e4193f63a7a4ee2014968ee552220f6e518368a2989883b",
+    "source_origin": "git",
+    "source_revision": "b5c1bc0dc5126aa2ecc3129a702efdabe8d7466c",
+    "source_tree": "aa994ed9f460fea118cfcaf157951d79d400f9b4",
+    "source_untracked_count": 22,
+    "source_untracked_fingerprint": "c6127383d02a605e0417f4173c42914f8a751eb32eed9d178290cf5d40c00e00",
+    "version": "2.0.0-alpha.1"
+  },
+  "normal_detail_exported": [
+    "Assets/terrain/detail-normal.tga"
+  ],
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.27309975028038025,
+      "y": 2.5945844650268555,
+      "z": -10.380640029907227
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 85.58540500000001,
+      "publishMs": 0.097224,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T14:04:12.151464+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-cook-planet-game-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-cook-planet-game-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16392041699873516
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-cook-planet-game-20261108/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-cook-planet-game-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.31418543600011617
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 2.017407789999197
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.616225484000097
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3169466130002547
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8650286739994044
+    }
+  ],
+  "log_sha256": {
+    "export.log": "3e5ff3fc553e42a0d96fad81791a78d5ff063fbb9a2e31bcb36b295bbcdabec2",
+    "native-cook.log": "48ee162d85a003380e0c489750e43fe1e3bc67ee905d6f43eaf40294ddeb2a2b",
+    "read.log": "b4629813b341e1797ec6fbbf814940122305aaf8dadb3d551a05d9689c349bc9",
+    "settle-0.log": "2dc2b1aba8e054b55ada07c5fd253ddc698428deb0bb543a47d6cdb37e5c61b2",
+    "traverse.log": "3bd7099a0b835f78568974ada935e0310167c765d9afa698581ddc1b1f7420cd",
+    "write.log": "7b5954d0892c8e99779d2e2f5455db11fd0de9c4102349089d6bdb4c03fd01b6"
+  }
+}

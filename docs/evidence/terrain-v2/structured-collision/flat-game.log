@@ -1,0 +1,172 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "normal_detail_exported": [
+    "Assets/terrain/detail-normal.tga"
+  ],
+  "settlement_cold_processes": 1,
+  "particle_region": {
+    "contacts": 1,
+    "settings": {
+      "enabled": true,
+      "loop": false,
+      "localSpace": false,
+      "useGravity": false,
+      "collision": true,
+      "collisionRegion": true,
+      "useWind": false,
+      "rate": 0,
+      "lifetime": 4,
+      "size": 0.05000000074505806,
+      "endSize": 0.05000000074505806,
+      "burst": 0,
+      "maxParticles": 16,
+      "seed": 1,
+      "collisionRadius": 0.02500000037252903,
+      "restitution": 0.3499999940395355,
+      "friction": 0.20000000298023224,
+      "maxContacts": 8,
+      "impactCellSize": 0.5,
+      "impactWeight": 1,
+      "maxImpactCells": 1024,
+      "velocity": {
+        "x": 0,
+        "y": -12,
+        "z": 0
+      },
+      "velocityVariation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "spread": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "acceleration": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "collisionRegionOffset": {
+        "x": 0,
+        "y": -4,
+        "z": 0
+      },
+      "collisionRegionHalfExtents": {
+        "x": 12,
+        "y": 16,
+        "z": 12
+      },
+      "color": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "endColor": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "textureAsset": null,
+      "backend": "cpu",
+      "response": "remove",
+      "impacts": "reliable",
+      "collisionLayers": "18446744073709551615"
+    }
+  },
+  "restored": {
+    "position": {
+      "x": 0.08357886970043182,
+      "y": 1.720919132232666,
+      "z": -10.608722686767578
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 9409,
+      "triangles": 33939,
+      "bytes": 1007048,
+      "chunks": 36,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 65.766295,
+      "publishMs": 0.061296,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0
+  },
+  "finished_utc": "2026-11-08T14:04:05.428027+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-cook-flat-game-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-cook-flat-game-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16402711799855751
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-cook-flat-game-20261108/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-cook-flat-game-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.41461370899924077
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-flat-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.1160769449998043
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-flat-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9150088030000916
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-flat-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.9654704210006457
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-flat-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-flat-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.6146485220015165
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+source text bytes 27937143
+invalid terrain material weights
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/prepare_case.py", line 18, in <module>
+    subprocess.run([str(root/'build/judas_terrain_author'),'v2-native',str(file),str(out/'Assets/terrain/highlands.judasmodel')],check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author', 'v2-native', '/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/Authoring/highlands.judasterrain2', '/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/residency/kilometre-editable/Assets/terrain/highlands.judasmodel']' returned non-zero exit status 1.

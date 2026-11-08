@@ -1,4 +1,5 @@
 #include "CollisionAsset.h"
+#include "collision/CollisionBuild.h"
 #include "ModelLoader.h"
 #include "QuickHull.hpp"
 #include <algorithm>
@@ -112,6 +113,9 @@ bool CookCollision(const MeshData& mesh,const CollisionCookSettings& settings,Co
   }
   topology(a,&mesh,diagnostic,settings.transform);if(a.convex){for(auto& f:a.faces)for(auto n:f.adjacent)if(n<0)throw std::runtime_error("convex cook not closed");mass(a);convexFaces(a);edgeAxes(a);}build(a);out=std::move(a);error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}
+}
+void JudasCollisionDetail::BuildTree(CollisionAsset &asset) {
+    build(asset);
 }
 // Versioned cooked file stores acceleration/adjacency, never rebuilds it at runtime.
 bool SaveCollisionAsset(const std::string& path,const CollisionAsset& a,std::string& error){

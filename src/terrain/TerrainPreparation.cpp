@@ -3,6 +3,7 @@
 #include "NavigationSystem.h"
 #include "SceneFingerprint.h"
 #include "TerrainAsset.h"
+#include "TerrainCollision.h"
 #include "TerrainMesher.h"
 #include "TerrainNavigation.h"
 #include <chrono>
@@ -57,7 +58,12 @@ bool PrepareGeometry(Preparation &work, const std::vector<ChunkKey> &keys,
         p.chunk = std::move(chunk);
         if (!p.chunk.mesh.indices.empty()) {
             p.collision = std::make_shared<CollisionAsset>();
-            if (!CookCollision(p.chunk.mesh, {}, *p.collision, work.error))
+            const bool structured = !p.chunk.volumetric && !work.source->chart &&
+                                    CookHeightfieldCollision(p.chunk.mesh, work.source->chunkCells,
+                                                             *p.collision, work.error);
+            // Never infer grid topology for a cave or a curved planetary patch.
+            // A failed proof also retains the original strict cook and diagnostics.
+            if (!structured && !CookCollision(p.chunk.mesh, {}, *p.collision, work.error))
                 return false;
             p.collision->sourceFingerprint = GeometryFingerprint(p.chunk);
         }

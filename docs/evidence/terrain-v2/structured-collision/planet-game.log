@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "normal_detail_exported": [
+    "Assets/terrain/detail-normal.tga"
+  ],
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.27309975028038025,
+      "y": 2.5945844650268555,
+      "z": -10.380640029907227
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 85.58540500000001,
+      "publishMs": 0.097224,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T14:04:12.151464+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-cook-planet-game-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-cook-planet-game-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16392041699873516
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-cook-planet-game-20261108/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-cook-planet-game-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.31418543600011617
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 2.017407789999197
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.616225484000097
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3169466130002547
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/judas",
+        "/tmp/terrain-cook-planet-game-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-cook-planet-game-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8650286739994044
+    }
+  ]
+}

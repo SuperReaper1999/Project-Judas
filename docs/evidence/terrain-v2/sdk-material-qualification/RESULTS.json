@@ -1,0 +1,67 @@
+[
+  {
+    "name": "verify",
+    "command": [
+      "python3",
+      "tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d"
+    ],
+    "exit": 0,
+    "seconds": 0.6648277700005565
+  },
+  {
+    "name": "standard",
+    "command": [
+      "python3",
+      "scripts/qualify_sdk.py",
+      "--sdk",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d",
+      "--work",
+      "/tmp/terrain-v2-sdk-material-b5c1bc0d-standard"
+    ],
+    "exit": 0,
+    "seconds": 9.779872388000513
+  },
+  {
+    "name": "flat",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d",
+      "--output",
+      "/tmp/terrain-v2-sdk-material-b5c1bc0d-flat",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "exit": 0,
+    "seconds": 4.520462362999751
+  },
+  {
+    "name": "planet",
+    "command": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d/tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d",
+      "--output",
+      "/tmp/terrain-v2-sdk-material-b5c1bc0d-planet",
+      "--material-detail",
+      "--planet"
+    ],
+    "exit": 0,
+    "seconds": 6.6742809240004135
+  },
+  {
+    "name": "verify-after",
+    "command": [
+      "python3",
+      "tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-b5c1bc0d"
+    ],
+    "exit": 0,
+    "seconds": 0.6648674940006458
+  }
+]

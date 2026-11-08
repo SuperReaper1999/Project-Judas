@@ -1,0 +1,118 @@
+[
+  {
+    "name": "generic-collision",
+    "command": [
+      "build/judas_collision_geometry_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.4144938919998822
+  },
+  {
+    "name": "terrain-water-particles",
+    "command": [
+      "build/judas_terrain_v2_interaction_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.3143902440006059
+  },
+  {
+    "name": "editor",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/tmp/terrain-cook-editor-20261108"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.3644100180008536
+  },
+  {
+    "name": "editor-portable",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/tmp/terrain-cook-editor-portable-20261108"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.3645635579996451
+  },
+  {
+    "name": "creation",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/terrain-cook-creation-20261108"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.9655436880002526
+  },
+  {
+    "name": "creation-portable",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/terrain-cook-creation-portable-20261108"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.9656095029986318
+  },
+  {
+    "name": "planet-editor",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/terrain-cook-planet-editor-20261108"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.6150424549996387
+  },
+  {
+    "name": "planet-editor-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/terrain-cook-planet-editor-portable-20261108"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.6148968500001502
+  },
+  {
+    "name": "flat-game",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-cook-flat-game-20261108",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 4.5718467040005635
+  },
+  {
+    "name": "planet-game",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-cook-planet-game-20261108",
+      "--material-detail",
+      "--planet"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 6.725148056000762
+  }
+]
