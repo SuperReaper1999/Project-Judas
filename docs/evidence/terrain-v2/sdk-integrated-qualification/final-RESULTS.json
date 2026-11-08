@@ -1,0 +1,93 @@
+[
+  {
+    "name": "sdk-verify",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.8165569310003775
+  },
+  {
+    "name": "sdk-inspect",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified/tools/inspect_sdk.py",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified",
+      "--host-check",
+      "--output",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/SDK_QUALIFICATION.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.4163065610000558
+  },
+  {
+    "name": "editor-create",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified/judas_editor"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 2.717673628999364
+  },
+  {
+    "name": "editor-play",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified/judas_editor",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.820376134000071
+  },
+  {
+    "name": "tool-operations",
+    "command": [
+      "/usr/bin/python3",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/tool-workflows.py",
+      "--sdk",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified",
+      "--work",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 2.5175981129996217
+  },
+  {
+    "name": "sdk-verify-after",
+    "command": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a-qualified"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 3.770646644000408
+  },
+  {
+    "name": "relocated-editor-export",
+    "command": [
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/moved-editor-export/judas",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/moved-editor-export/game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.31439886699990893
+  },
+  {
+    "name": "relocated-cli-export",
+    "command": [
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/moved-cli-export/judas",
+      "/tmp/terrain-v2-sdk-28984-qualified-consumer/moved-cli-export/game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2641897240000617
+  }
+]

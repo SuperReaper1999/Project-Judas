@@ -545,7 +545,7 @@ The fresh17-tool local SDK includes both editable Workshops and its own
 native terrain cooking, relocated exports and independent cold continuation pass
 using that packaged content. This host-native preview requires GLIBC2.43; it is
 not a published package or an Ubuntu24.04-qualified SDK. Existing installed game
-SDK selections remain unchanged. See [SDK qualification](evidence/terrain-v2/sdk-qualification/REVIEW.md).
+SDK selections remain unchanged. See [SDK qualification](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/sdk-qualification/REVIEW.md).
 
 Ordinary live chunks now discard unused CPU draw meshes after preparation;
 collision owns its unchanged immutable cooks and rendering uses the shared grid.
@@ -555,7 +555,7 @@ collision certificates, collider counts and generated triangle counts. Peak
 memory changes much less because extraction still constructs those meshes.
 The 300-step physical seam trajectory remains exactly equal to the monolithic
 reference. No load-time or FPS speedup is claimed by this memory correction.
-See [raw measurements and controls](evidence/terrain-v2/runtime-memory/REVIEW.md).
+See [raw measurements and controls](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/runtime-memory/REVIEW.md).
 
 ## Incremental navigation tiles
 
@@ -573,7 +573,7 @@ and reuses1008. Matched10runs per side reduce complete edit/publication median
 worker completion latency, not frame cost or FPS. Full initial setup remains
 about0.7seconds; geometry enumeration/binning and private Detour-cache construction
 still run. Existing terrain/navigation/world/cold/editor/export controls pass.
-See [raw comparisons and scope](evidence/terrain-v2/navigation-tile-reuse/REVIEW.md).
+See [raw comparisons and scope](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/navigation-tile-reuse/REVIEW.md).
 
 The shared native baker's final optional update argument is source-compatible
 for existing callers; C++ consumers must rebuild with the matching preview SDK.
@@ -611,7 +611,7 @@ two-camera kilometre colour-render benchmark, settled GPU elapsed was about
 transition measured about 0.96 ms. Ordinary camera movement reused 39 of 43
 previous patches and measured about 0.62 ms. These scopes include submission
 bubbles and are not whole-game FPS or an optimization claim. See
-[commands, raw results and visual scope](evidence/terrain-v2/temporal-lod/REVIEW.md).
+[commands, raw results and visual scope](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/temporal-lod/REVIEW.md).
 
 This remains a source-build preview. Native consumers must relink with matching
 headers/libraries; JudasJS APIs and terrain save formats do not change. Per-chunk
@@ -640,4 +640,4 @@ publication. Exact reservation also saves 14.1 MiB of retained mesh capacity,
 including the new 64 KiB query bounds. These are query/buffer measurements, not
 whole-editor FPS, a measured peak-RAM reduction or a hard publication deadline.
 Generic scene selection and legacy terrain/volume brush paths are not claimed
-to have this acceleration. See [controls and raw evidence](evidence/terrain-v2/editor-picking/REVIEW.md).
+to have this acceleration. See [controls and raw evidence](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/editor-picking/REVIEW.md).

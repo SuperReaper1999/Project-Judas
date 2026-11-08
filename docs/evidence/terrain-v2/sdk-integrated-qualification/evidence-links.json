@@ -1,0 +1,11 @@
+{
+  "engine_revision": "28984e7a04db2ae1bcb07dbca2f25b598263c850",
+  "targets_verified_in_git": [
+    "docs/evidence/terrain-v2/sdk-qualification/REVIEW.md",
+    "docs/evidence/terrain-v2/runtime-memory/REVIEW.md",
+    "docs/evidence/terrain-v2/navigation-tile-reuse/REVIEW.md",
+    "docs/evidence/terrain-v2/temporal-lod/REVIEW.md",
+    "docs/evidence/terrain-v2/editor-picking/REVIEW.md"
+  ],
+  "count": 5
+}

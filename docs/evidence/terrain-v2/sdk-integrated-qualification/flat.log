@@ -1,0 +1,169 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "settlement_cold_processes": 1,
+  "particle_region": {
+    "contacts": 1,
+    "settings": {
+      "enabled": true,
+      "loop": false,
+      "localSpace": false,
+      "useGravity": false,
+      "collision": true,
+      "collisionRegion": true,
+      "useWind": false,
+      "rate": 0,
+      "lifetime": 4,
+      "size": 0.05000000074505806,
+      "endSize": 0.05000000074505806,
+      "burst": 0,
+      "maxParticles": 16,
+      "seed": 1,
+      "collisionRadius": 0.02500000037252903,
+      "restitution": 0.3499999940395355,
+      "friction": 0.20000000298023224,
+      "maxContacts": 8,
+      "impactCellSize": 0.5,
+      "impactWeight": 1,
+      "maxImpactCells": 1024,
+      "velocity": {
+        "x": 0,
+        "y": -12,
+        "z": 0
+      },
+      "velocityVariation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "spread": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "acceleration": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "collisionRegionOffset": {
+        "x": 0,
+        "y": -4,
+        "z": 0
+      },
+      "collisionRegionHalfExtents": {
+        "x": 12,
+        "y": 16,
+        "z": 12
+      },
+      "color": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "endColor": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.30000001192092896,
+        "a": 1
+      },
+      "textureAsset": null,
+      "backend": "cpu",
+      "response": "remove",
+      "impacts": "reliable",
+      "collisionLayers": "18446744073709551615"
+    }
+  },
+  "restored": {
+    "position": {
+      "x": 0.08357886970043182,
+      "y": 1.720919132232666,
+      "z": -10.608722686767578
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 9409,
+      "triangles": 33939,
+      "bytes": 1007048,
+      "chunks": 36,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 64.827774,
+      "publishMs": 0.06878,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0
+  },
+  "finished_utc": "2026-11-08T13:03:54.040068+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-sdk-28984-flat/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-sdk-28984-flat/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a",
+      "exit": 0,
+      "seconds": 0.16418263400009891
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a/judas_export",
+        "/tmp/terrain-v2-sdk-28984-flat/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-sdk-28984-flat/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-28984e7a",
+      "exit": 0,
+      "seconds": 0.41457098800037784
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/judas",
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-28984-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.1656340610006737
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/judas",
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-28984-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.965239742000449
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/judas",
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-28984-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.965384696000001
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/judas",
+        "/tmp/terrain-v2-sdk-28984-flat/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-28984-flat/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.6149062739996225
+    }
+  ]
+}

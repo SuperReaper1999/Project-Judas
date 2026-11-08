@@ -2,6 +2,33 @@
 
 ## Latest verified state (supersedes historical next-action notes below)
 
+LATEST ENGINE28984e7a04db2ae1bcb07dbca2f25b598263c850 is PUSHED. The matching
+final local SDK .cache/terrain-v2/sdk-native-preview-28984e7a-qualified is now
+QUALIFIED:17tool probes/842payloadfiles,8standard operations,SDK-contained flat
+andplanetary relocated/cold games restoring8volumechunks/2surfacedabs/navready/
+emptyqueue; flat also restores1actual reliableparticlecontact. Final standard
+consumer rerunpasses8operations after5TerrainV2 evidence links were pinned to
+GitHub source because history is intentionally not bundled. Manifest proof:
+ONLYdocs/TERRAIN_V2.md differs from first verified package; binaries/projects
+identical. Evidence sdk-integrated-qualification/ is collected for docs checkpoint.
+HostGNU15.2/GLIBC2.43,sourceDirty and18preexistinguntracked are explicit, NOT an
+Ubuntu24.04 distribution/newplatform certification. RPG SDK unchangedlocal9f.
+
+All local builds/tests have EXITED. Current uncommitted changes are the5pinned
+TerrainV2doc links plus this handoff/evidence. Main/origin1094d645 unchanged.
+Observe exact28984 CI before claiming remote qualification; latestengine run
+42482903014 was still running, docs42482903019SUCCESS. 4838engine runcancelled
+bynewpush, not a failed gate;03927fullengine/docsSUCCESS. No human acceptance.
+
+The WHOLE approved Terrain V2 programme is still not complete: native physical
+residency remains source/region-granular; fine chunk interest/data demand paging
+and broader material support remain open. Runtime volumetric smooth unsupported;
+surface smooth works. Planet patches bounded to interiorface/nooverlap/staticroot
+and fullmappedrenderdetail. Large editor hover/merge is now corrected, not still
+an unexamined future task. Source/tunnel/terrain APIs, both workshops, memory,
+navigation, native streaming, chart precision and current SDK are integrated.
+Do not resume fluids, promote main, replace RPG SDK or erase unrelated work.
+
 PICKING checkpoint4838c503 is PUSHED; read live Git for full hash. All17tools
 built from it, but SDK staging was deliberately held after a final review found
 an introduced observer-history defect in the LOD feature. Source reproduction:
