@@ -583,7 +583,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             const bool ready=preparedTerrain?LiveTerrain().InstallPrepared(o.id,*preparedTerrain,outError):TerrainV2::BuildAuthored(*this,o,outError);
             if(!ready)return fail(o,outError);
         }
-        if(o.navigationSurface && o.navigationSurface->enabled){
+        if(o.navigationSurface && o.navigationSurface->enabled && !o.landscape){
             if(!m_assets || !m_assets->Assets()){return fail(o,"navigation surface needs project assets");}
             auto* asset=m_assets->Assets()->Find(o.navigationSurface->asset);
             if(!asset||asset->missing||asset->type!=AssetType::Navigation)return fail(o,"missing/wrong-type navigation asset");
@@ -1266,7 +1266,7 @@ bool RuntimeWorld::ValidateEntityCreation(const SceneObject& definition, std::st
     classified.InsertObject(classifiedDefinition);
     if(!ValidateSceneClassification(classified,m_categories,error))return false;
     if (!ValidateEntityDefinition(definition, error) || !ValidateVisualAssets(definition, error)) return false;
-    if(definition.navigationSurface&&definition.navigationSurface->enabled){auto* asset=m_assets&&m_assets->Assets()?m_assets->Assets()->Find(definition.navigationSurface->asset):nullptr;if(!asset||asset->missing||asset->type!=AssetType::Navigation){error="missing/wrong-type navigation asset";return false;}}
+    if(definition.navigationSurface&&definition.navigationSurface->enabled&&!definition.landscape){auto* asset=m_assets&&m_assets->Assets()?m_assets->Assets()->Find(definition.navigationSurface->asset):nullptr;if(!asset||asset->missing||asset->type!=AssetType::Navigation){error="missing/wrong-type navigation asset";return false;}}
     if((definition.navigationAgent&&!m_navigation->Configuration().profiles.count(definition.navigationAgent->profile))||(definition.navigationLink&&!m_navigation->Configuration().areas.names.count(definition.navigationLink->area))){error="unknown navigation profile/area";return false;}
 
     if (definition.render && definition.render->textureCamera) {

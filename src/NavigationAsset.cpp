@@ -5,6 +5,9 @@
 #include "SceneFingerprint.h"
 #include "TerrainLibrary.h"
 #include "RadialTerrain.h"
+#include "terrain/TerrainAsset.h"
+#include "terrain/TerrainComponent.h"
+#include "terrain/TerrainNavigation.h"
 #include <glm/gtc/quaternion.hpp>
 #include <fstream>
 #include <sstream>
@@ -28,12 +31,21 @@ bool CollectNavigationGeometry(const Scene& scene,const SceneObject& surface,con
  NavigationGeometry g;
  auto ordered=scene.Objects();std::sort(ordered.begin(),ordered.end(),[](const auto& a,const auto& b){return a.id<b.id;});
  for(const auto& o:ordered){
+  // Native source-owned surfaces deliberately include only their own geometry.
+  // Other props use normal runtime obstacles; this is not a hidden scene bake.
+  if(surface.landscape&&o.id!=surface.id)continue;
   if(o.navigationModifier&&o.navigationModifier->enabled){auto m=*o.navigationModifier;if(!project.areas.names.count(m.area)){error="unknown navigation modifier area";return false;}NavigationGeometry::Volume v;v.area=m.area;v.blocked=m.blocked;v.bottom=1e30f;v.top=-1e30f;glm::vec3 corners[8];for(int i=0;i<8;++i){auto h=m.halfExtents;corners[i]=glm::inverse(surface.transform.rotation)*(o.transform.position+o.transform.rotation*glm::vec3((i&1)?h.x:-h.x,(i&2)?h.y:-h.y,(i&4)?h.z:-h.z)-surface.transform.position);v.bottom=std::min(v.bottom,corners[i].y);v.top=std::max(v.top,corners[i].y);} // Conservative projected box hull.
    float x0=1e30f,z0=x0,x1=-x0,z1=-x0;for(auto c:corners){x0=std::min(x0,c.x);x1=std::max(x1,c.x);z0=std::min(z0,c.z);z1=std::max(z1,c.z);}v.polygon={x0,0,z0,x0,0,z1,x1,0,z1,x1,0,z0};g.modifiers.push_back(v);
   }
   if(!o.body||!o.body->enabled||o.body->sensor||o.navigationObstacle||(o.navigationModifier&&o.navigationModifier->enabled&&o.navigationModifier->excludeSource))continue;
   const auto& b=*o.body;if(!(settings.sources&CategoryBit(b.collisionLayer))||(!settings.includeDynamic&&b.motion==SceneBodyMotion::Dynamic))continue;
-  if(b.shape==SceneShape::Box)box(g,b.halfExtents,o.transform,glm::vec3(0),surface.transform);
+  if(o.landscape){
+   if(!TerrainV2::ValidateOwner(o,assets,error))return false;
+   TerrainV2::AssetPages pages;TerrainV2::Source source;
+   if(!pages.Open(assets->Find(o.landscape->asset)->path,error)||!pages.ReadAll(source,error)||
+      !TerrainV2::AppendNavigationSource(source,o.transform,surface.transform,g,error))return false;
+  }
+  else if(b.shape==SceneShape::Box)box(g,b.halfExtents,o.transform,glm::vec3(0),surface.transform);
   else if(b.shape==SceneShape::Compound){for(auto part:b.compoundBoxes){SceneTransform pose=o.transform;pose.position+=pose.rotation*part.localCenter;pose.rotation=glm::normalize(pose.rotation*part.rotation);
     if(part.type==ShapeType::Box)box(g,part.halfExtents,pose,glm::vec3(0),surface.transform);
     else if(part.type==ShapeType::ConvexHull){const auto* record=assets?assets->Find(part.assetId):nullptr;CollisionAsset cooked;if(!record||record->type!=AssetType::Collision||!LoadCollisionAsset(record->path,cooked,error)||!cooked.convex||staleCollision(cooked,*assets,error)){error="navigation requires valid cooked child collision asset: "+error;return false;}for(auto& f:cooked.faces){glm::vec3 v[3];for(int k=0;k<3;++k)v[k]=glm::inverse(surface.transform.rotation)*(pose.position+pose.rotation*glm::vec3(cooked.vertices[f.vertices[k]])-surface.transform.position);triangle(g,v[0],v[1],v[2]);}}

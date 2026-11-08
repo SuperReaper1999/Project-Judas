@@ -4,7 +4,9 @@
 #include <memory>
 
 struct CollisionAsset;
+struct NavigationData;
 namespace TerrainV2 {
+struct NavigationInput;
 struct PreparedChunk {
     Chunk chunk;
     std::shared_ptr<CollisionAsset> collision;
@@ -19,6 +21,7 @@ struct Preparation {
     double milliseconds = 0;
     std::string error;
     std::shared_ptr<const HeightLod> lod;
+    std::shared_ptr<const NavigationData> navigation;
     size_t PayloadBytes() const;
 };
 bool PrepareGeometry(Preparation &, const std::vector<ChunkKey> &,
@@ -29,5 +32,6 @@ struct PreparedAsset {
     bool consumed = false;
 };
 bool PrepareAsset(const std::string &path, const std::string &identity, PreparedAsset &,
-                  std::string &error, const std::function<bool()> &cancelled = {});
+                  std::string &error, const std::function<bool()> &cancelled = {},
+                  const NavigationInput *navigation = nullptr);
 } // namespace TerrainV2

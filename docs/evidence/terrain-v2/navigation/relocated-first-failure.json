@@ -1,0 +1,78 @@
+{
+  "passed": false,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-4905918-dirty-07024fa5bfb1-u50a725afe15f",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "07024fa5bfb15d61502cc88d994a11a19ec65b1cb95762afc30dbf1066500126",
+    "source_origin": "git",
+    "source_revision": "4905918adf852ee39b3745d46e774b171deda0f6",
+    "source_tree": "6ad92f26ac89e3a6ea92a25db9f41f6ded1ca947",
+    "source_untracked_count": 21,
+    "source_untracked_fingerprint": "50a725afe15f99c8e9f677968d22f8d90a0e06cb9def4ebdf1f3c73ce7786504",
+    "version": "2.0.0-alpha.1"
+  },
+  "error": "Cold restore lost the edited terrain or real tunnel traversal.",
+  "finished_utc": "2026-11-08T00:15:29.162752+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-navigation-relocated-09/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-navigation-relocated-09/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.16397304899874143
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-navigation-relocated-09/editable/terrain_v2_workshop.judasproj",
+        "/tmp/terrain-v2-navigation-relocated-09/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.46468695200019283
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-navigation-relocated-09/relocated game/judas",
+        "/tmp/terrain-v2-navigation-relocated-09/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-navigation-relocated-09/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.4670152379985666
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-navigation-relocated-09/relocated game/judas",
+        "/tmp/terrain-v2-navigation-relocated-09/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-navigation-relocated-09/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.6149147750038537
+    }
+  ],
+  "log_sha256": {
+    "export.log": "d8be1683cf444b695ea866d06b4f4d7b818729bc53cfe076bb1036dff74cbee9",
+    "native-cook.log": "4b5bf0a720132fce53eafb3b18e0bfb91310ed2d6db80092006b662338be2344",
+    "read.log": "eccfb75f80f5863917d08e3a1a4b3aba3f0fcfa273b39e7042b62b4caaba559b",
+    "write.log": "e128f52be15ab94dc681c40b924a715ed5283731240ed0344af6992263240b13"
+  }
+}

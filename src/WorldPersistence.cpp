@@ -344,7 +344,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
   if(o.deformable){auto* deform=w.RuntimeDeformable(o.id,error);if(!deform||!deform->error.empty()){if(deform)error="required deformable solve failed: "+deform->error;return false;}if(!w.m_restoreConstruction&&deform->asset->fracture&&deform->asset->fracture->rigid&&!w.PrepareRigidFracture(o.id,error))return false;}
   if(o.navigationAgent&&o.navigationAgent->enabled&&!w.Navigation().Agent(o.id))w.Navigation().RegisterAgent(o.id);
  }
- for(auto& o:w.ScriptObjects())if(w.m_restoreConstruction&&o.navigationSurface&&o.navigationSurface->enabled&&w.Resources()){
+ for(auto& o:w.ScriptObjects())if(w.m_restoreConstruction&&o.navigationSurface&&o.navigationSurface->enabled&&!o.landscape&&w.Resources()){
   auto data=w.Resources()->GetNavigation(o.navigationSurface->asset,error);if(!data){if(error.empty())error="loading";return false;}
   if(!w.Navigation().LoadSurface(o.id,o.transform,data,error))return false;
  }

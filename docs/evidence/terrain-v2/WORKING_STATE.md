@@ -61,11 +61,42 @@ Native128MiB budget is enough for the measured1km source. Default pending32/live
 MiB will correctly reject such a source; split regions or choose appropriate
 budgets. Values are payload admission estimates, not hard allocation caps.
 
-NEXT continue actual navigation integration (baker currently sees identityBox),
-physical-interest/residency limits and planetary excavation/provider masking.
-Further work still includes actual navigation (baker sees placeholderBox), physical
-interest/residency beyond whole regions, and actual planetary excavation/provider
-masking. Do not claim complete Terrain V2 from more isolated passes.
+Source-owned native navigation is qualified and checkpoint-ready after4905918a.
+No build/test is running. Evidence: navigation/. Query actual Git for checkpoint.
+Native TerrainNavigation.* prepares from shared cooked chunks; existing NavSurface
+settings (empty asset) configure an optional live source-owned surface. Scene,
+region worker, cold prepare, exporter, CLI/dependency tooling and Inspector support
+it. Generic bakes now collect native geometry rather than identityBox.
+
+Native64/cold7, world93/300exactseam, components35/surface59/handoff25/interactions85,
+nav92/actualgame26, saveExclusions77/export18, authoring46, GPU978modern+978portable
+PASS. Real relocated Workshop with navigation also passes. A genuine project bug
+found by it is repaired: queued brushes now persist, dequeue only after acceptance,
+and resume after cold save. Saved8pending/busy, restored7after accepted in-flight
+dab, completed0, traversed and cold-restoredz=-10.61. Original geometry/position
+acceptance is retained, with explicit observed queue completion before traversal.
+
+Workload1km513²/1024colliders, OPTIONAL128m navcoverage0.5m (NOTfullkm routing):
+5warm-file off/on diagnostic medians: complete sculpt22.90/40.74ms, excavation
+24.60/46.39ms, paint3.57/3.64ms, edited publication.196/.952ms. No compilers during
+measurement; grouped5samples aren't percentile/speedup/FPS evidence. Full-region
+nav rasterization still scans geometry per tile and needs profiling before
+claiming scalable kilometre navigation. Don't confuse128m coverage with1km source.
+
+Whole-source removal publishes empty nav. Agent replans, paint reuse, rigid pose,
+origin, disable/reenable, prepared settings mismatch and physical/cave-floor
+layering are tested. Static independent navbakes explicitly block native runtime
+geometry changes unless source layer excluded; props use obstacles. Native
+preparation16Mcolumns/existing4096tiles/Recast13bit height limits reject rather
+than dropping coverage. Height samples should be landscape-relative, with
+placement via transform. Current native coverage rebuilds whole; no incremental
+tile preparation yet. Generic inspector static bake freshness also recollects
+geometry per frame; avoid claiming that rare path optimized without profiling.
+
+NEXT profile full-coverage navigation and address justified rasterization work;
+physical-interest/residency limits, planetary excavation/provider masking, and
+final game/SDK/visual qualification remain. TerrainV2 is NOT complete. No release,
+main, fluid policy, existing projects/installed SDK or independent research changes.
 
 Last solid integration qualification:85 actual source/water/particle controls,
 world93, surface44, component35; unchanged water28/runtime41/script5 and particles

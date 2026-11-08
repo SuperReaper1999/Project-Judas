@@ -131,7 +131,7 @@ render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
 multi-view streaming remain work. Planet
 precision and existing LOD remain intact, but planetary
-excavation is not implemented by this slice. Incremental navigation,
+excavation is not implemented by this slice. Incremental navigation-tile preparation,
 large-region physical interest selection, representative consumer scenes and final SDK
 qualification remain. Source discovery currently covers up to 512 editable
 sources under Authoring; large-data demand paging remains separate work.
@@ -161,8 +161,8 @@ end
 ```
 
 Use an actual registered ID for your asset. A root unit-scale static Box seed is
-required; competing geometry, motion, navigation-surface and fluid owners are
-rejected explicitly. The seed supplies identity/material/filter settings. It is
+required; competing geometry, motion and fluid owners are rejected explicitly. An optional
+source-owned Navigation Surface is supported as described below. The seed supplies identity/material/filter settings. It is
 disabled once the real chunk colliders publish. Initial collision is ready before
 scene gameplay starts, without a JavaScript bootstrap. Render components may refer
 to the cooked preview for ordinary editor display; Play draws the actual source.
@@ -343,3 +343,43 @@ particle snapshot limits also remain: a very large resident landscape may exceed
 particle capture body/triangle budgets and must report that explicitly rather
 than silently omit collision coverage. Large-source particle capture is not yet
 qualified by the small native interaction controls.
+
+## Source-owned navigation
+
+A landscape can own a live Navigation Surface using the existing component and
+project agent profiles. Its baked-asset field must be empty, dynamic source
+collection must be disabled, and its physical layer must remain included. The
+landscape Inspector offers **Live terrain navigation**, configuring initial
+coverage from the source. The Navigation Surface card exposes the profile,
+coverage, resolution and advanced tile controls. **Preview live terrain
+navigation** shows source geometry without writing a stale static bake asset.
+
+This mode includes this landscape's actual collision surface and cave floors,
+not its identity Box, render LOD or unrelated scene props. Use normal navigation
+obstacles for props, and existing links/separate surfaces where needed. The
+landscape's local +Y defines traversal up; gravity remains independently owned.
+Navigation coverage is a declared local box, not a promise of planet-wide routing.
+
+Collision and navigation preparation share immutable chunk geometry. Dirty terrain
+rebuilds its navigation coverage in the worker; both publish at the same boundary.
+Old complete support/routes remain while work is pending. Paint-only changes
+reuse navigation. A fully excavated coverage can publish an empty navmesh rather
+than preventing the excavation. Rigid placement, regional publication/removal,
+body enable/disable, origin changes and native save restoration use the same
+world-owned lifetime. Navigation itself never moves characters; ordinary JudasJS
+agent steering and CharacterMotor still control gameplay.
+
+Coverage remains bounded by the existing 4,096-tile limit, the pinned Recast
+height-span range, and a native-runtime preparation budget of 16 million raster
+columns including tile borders. Oversized requests reject with a useful error;
+coverage or collision quality is never silently reduced. Navigation rebakes its
+configured coverage, not yet individual changed Recast tiles. Choose regional
+coverage and cell sizes appropriate to gameplay.
+
+Ordinary offline bakes now collect native terrain triangles too. Existing bakes
+created against a native landscape's placeholder Box become correctly stale and
+need an explicit rebuild. A separate static bake that includes a native terrain
+cannot follow its runtime edits automatically: geometric edits are explicitly
+rejected until that dependency is removed/excluded or replaced by source-owned
+navigation. Painting remains available. Existing V1 bakes and projects without
+native landscapes retain their usual workflow.

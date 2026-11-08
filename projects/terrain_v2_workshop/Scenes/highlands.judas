@@ -36,6 +36,17 @@ object 1 "Editable Highlands — heightfield and caves"
  body.collision-asset ""
  body.friction 0.75
  body.restitution 0
+ nav.surface.enabled "1"
+ nav.surface.includeDynamic "0"
+ nav.surface.profile "0"
+ nav.surface.sources "18446744073709551615"
+ nav.surface.halfExtents "25 12 25"
+ nav.surface.cellSize "0.25"
+ nav.surface.cellHeight "0.1"
+ nav.surface.simplification "1.3"
+ nav.surface.tileSize "32"
+ nav.surface.minRegion "0"
+ nav.surface.asset ""
 end
 object 2 "Gravity"
  position 0 0 0

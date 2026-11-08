@@ -42,3 +42,16 @@ CC0 material catalogue. Sources and notices are preserved in
 textures remain as independent assets. A small ordinary preview atlas makes
 terrain readable before its editing tools are opened; runtime and brush previews
 use the full tiled layers rather than that atlas.
+
+The landscape now opts into source-owned live navigation using its existing
+Navigation Surface component. The local 50×24×50 m coverage uses 0.25 m cells.
+Navigation follows terrain edits and saves with the actual collision; the HUD
+reports readiness. Other scene props would need navigation obstacles or separate
+surfaces. This scene's changed configuration changes its save compatibility
+identity; older Workshop saves are retained, not silently migrated or deleted.
+
+Brushes queued by T are ordinary persistent project state. Saving midway through
+excavation preserves completed terrain and the remaining queue; a cold load
+resumes accepted work without losing or repeating a dab. The qualification driver
+verifies this before walking through the completed tunnel, rather than assuming
+a fixed number of render frames is enough time for asynchronous workers.

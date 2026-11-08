@@ -29,7 +29,7 @@ bool InspectNavigationDependencies(const Project& p,const AssetDatabase& assets,
  std::vector<NavigationDependency> next;
  for(auto& [path,readOnly]:scenes){Scene scene,resolved,flat;if(!LoadSceneFromFile(p.Resolve(path),scene,error))return false;std::string dependencyError;if(!Uses(scene,assets,changed,dependencyError)){if(!dependencyError.empty())next.push_back({path,dependencyError,0,true,readOnly});continue;}
  if(!ResolvePrefabs(scene,&assets,resolved,error)||!FlattenHierarchy(resolved,flat,error)){next.push_back({path,error,0,true,readOnly});continue;}
- for(auto& surface:flat.Objects())if(surface.navigationSurface&&surface.navigationSurface->enabled){NavigationDependency row;row.scene=path;row.surface=surface.id;row.readOnly=readOnly;NavigationGeometry geometry;NavigationData baked;auto* record=assets.Find(surface.navigationSurface->asset);std::string why;
+ for(auto& surface:flat.Objects())if(surface.navigationSurface&&surface.navigationSurface->enabled&&!surface.landscape){NavigationDependency row;row.scene=path;row.surface=surface.id;row.readOnly=readOnly;NavigationGeometry geometry;NavigationData baked;auto* record=assets.Find(surface.navigationSurface->asset);std::string why;
  if(!CollectNavigationGeometry(flat,surface,p.Settings().navigation,geometry,why,&assets))row.reason="Cannot collect current geometry: "+why;
  else if(!record||!LoadNavigation(record->path,baked,why))row.reason="Missing/invalid bake: "+why;
  else if(geometry.fingerprint!=baked.fingerprint)row.reason="Geometry/settings fingerprint changed; explicit navigation rebuild required";

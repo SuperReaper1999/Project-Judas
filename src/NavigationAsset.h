@@ -2,6 +2,7 @@
 #include "NavigationTypes.h"
 #include "Scene.h"
 #include <memory>
+#include <functional>
 // Immutable CPU resource. Runtime worlds build independent mutable Detour caches.
 class AssetDatabase;
 struct NavigationData {
@@ -18,6 +19,7 @@ bool DecodeNavigation(const std::vector<unsigned char>&,NavigationData&,std::str
 bool LoadNavigation(const std::string&,NavigationData&,std::string&);
 bool SaveNavigation(const std::string&,const NavigationData&,std::string&);
 // Shared bounded geometry baker, used by tools and opt-in live terrain.
-bool BakeNavigationGeometry(const NavigationGeometry&,const NavigationSurfaceSettings&,const NavigationProfile&,NavigationData&,std::string&);
+bool ValidateNavigationBakeSettings(const NavigationSurfaceSettings&,const NavigationProfile&,std::string&);
+bool BakeNavigationGeometry(const NavigationGeometry&,const NavigationSurfaceSettings&,const NavigationProfile&,NavigationData&,std::string&,bool allowEmpty=false,const std::function<bool()>& cancelled={});
 // Scene collection and authoring wrapper.
 bool BakeNavigation(const Scene&,const SceneObject&,const ProjectNavigation&,NavigationData&,std::string&,const AssetDatabase* assets=nullptr);

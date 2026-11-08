@@ -9,13 +9,20 @@ bool ValidateOwnerPlacement(const SceneObject &o, std::string &error) {
     if (!o.landscape)
         return true;
     if (!o.body || o.body->motion != SceneBodyMotion::Static || o.body->shape != SceneShape::Box ||
-        o.body->managed || o.parent || o.planet || o.deformable || o.navigationSurface ||
-        o.characterMotor || o.ragdoll || o.wheel || o.liquidBasin || o.liquidContainer ||
-        o.fluidVolume || !o.body->fluidCavities.empty() || !o.body->compoundBoxes.empty() ||
-        o.vehicle || o.door || o.lightSwitch || o.powertrain || o.transform.scale != glm::vec3(1) ||
+        o.body->managed || o.parent || o.planet || o.deformable || o.characterMotor || o.ragdoll ||
+        o.wheel || o.liquidBasin || o.liquidContainer || o.fluidVolume ||
+        !o.body->fluidCavities.empty() || !o.body->compoundBoxes.empty() || o.vehicle || o.door ||
+        o.lightSwitch || o.powertrain || o.transform.scale != glm::vec3(1) ||
         !o.body->collisionAsset.empty()) {
         error = "landscape owns root unit-scale static chunk collision; remove competing "
                 "geometry/motion owners";
+        return false;
+    }
+    if (o.navigationSurface &&
+        (!o.navigationSurface->asset.empty() || o.navigationSurface->includeDynamic ||
+         !(o.navigationSurface->sources & CategoryBit(o.body->collisionLayer)))) {
+        error = "landscape navigation is source-owned: clear its baked asset, disable dynamic "
+                "sources and include the landscape's physical layer";
         return false;
     }
     error.clear();

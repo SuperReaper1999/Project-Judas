@@ -5,6 +5,7 @@
 #include "AssetCook.h"
 #include "Environment.h"
 #include "NavigationAsset.h"
+#include "terrain/TerrainNavigation.h"
 #include "LiquidTypes.h"
 #include "Deformable.h"
 #include "AsyncFile.h"
@@ -99,12 +100,21 @@ void References(const Scene& scene, const AssetDatabase& assets, const ProjectCl
             const auto* record = assets.Find(object.landscape->asset);
             Require(TerrainV2::ValidateOwner(object, &assets, error) && record &&
                     TerrainV2::LoadAsset(record->path, source, error), "Landscape: " + error);
+            if (object.navigationSurface && object.navigationSurface->enabled) {
+                TerrainV2::NavigationInput input;
+                input.settings = *object.navigationSurface;
+                Require(navigation.profiles.count(input.settings.profile),
+                        "Landscape navigation: unknown project agent profile");
+                input.profile = navigation.profiles.at(input.settings.profile);
+                const bool valid = TerrainV2::ValidateNavigationInput(input, error);
+                Require(valid, "Landscape navigation: " + error);
+            }
         }
         if(object.body){if(!object.body->physicalMaterial.empty()){check(object.body->physicalMaterial,AssetType::PhysicalMaterial);PhysicalMaterial material;auto* record=assets.Find(object.body->physicalMaterial);Require(record&&LoadPhysicalMaterial(record->path,material,error),"Physical material: "+error);}std::vector<std::string> ids;if(!object.body->collisionAsset.empty())ids.push_back(object.body->collisionAsset);for(auto& c:object.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){check(id,AssetType::Collision);auto* record=assets.Find(id);CollisionAsset cooked;Require(record&&LoadCollisionAsset(record->path,cooked,error),"Collision: "+error);if(!cooked.sourceAsset.empty()){check(cooked.sourceAsset,AssetType::Mesh);auto* source=assets.Find(cooked.sourceAsset);Require(source&&!CollisionAssetStale(cooked,source->path,error),"Stale collision source/settings; recook "+cooked.sourceAsset+": "+error);}}}
         if(object.deformable){check(object.deformable->asset,AssetType::Deformable);auto* record=assets.Find(object.deformable->asset);std::vector<uint8_t> bytes;DeformableAsset deform;Require(record&&ReadWholeFile(record->path,bytes,error)&&DecodeDeformableAsset(bytes,deform,error),"Deformable: "+error);Require(!deform.fracture||(!object.liquidBasin&&!object.liquidContainer&&!object.liquidConnection),"Liquid-bearing fracture owner is unsupported; conserved owner retained");if(!deform.sourceAsset.empty()){auto* source=assets.Find(deform.sourceAsset);std::string fingerprint;Require(source&&SceneFingerprintSha256File(source->path,fingerprint,error)&&fingerprint==deform.sourceFingerprint,"Stale deformable source: "+deform.sourceAsset+"; rebake");}}
         if(advancedFluids&&object.liquidBasin){check(object.liquidBasin->geometry,AssetType::Liquid);check(object.liquidBasin->asset,AssetType::Liquid);auto* r=assets.Find(object.liquidBasin->asset);LiquidBasinData b;Require(r&&LoadLiquidBasin(r->path,b,error),"Liquid basin: "+error);Require(LiquidSourceFingerprint(flattened,object,assets,error)==b.fingerprint,"Stale liquid basin: "+error);}
         if(advancedFluids&&object.liquidContainer){check(object.liquidContainer->geometry,AssetType::Liquid);auto* r=assets.Find(object.liquidContainer->geometry);LiquidGeometry g;Require(r&&LoadLiquidGeometry(r->path,g,error),"Container cavity: "+error);double capacity=0;for(auto& t:g.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;Require(object.liquidContainer->initialVolume<=capacity,"Container initial volume exceeds capacity");}
-        if(object.navigationSurface && object.navigationSurface->enabled){check(object.navigationSurface->asset,AssetType::Navigation);const auto* record=assets.Find(object.navigationSurface->asset);NavigationData data;NavigationGeometry geometry;Require(record&&LoadNavigation(record->path,data,error),"Navigation: "+error);Require(CollectNavigationGeometry(flattened,object,navigation,geometry,error,&assets)&&geometry.fingerprint==data.fingerprint,"Stale navigation bake: "+error);}
+        if(object.navigationSurface && object.navigationSurface->enabled && !object.landscape){check(object.navigationSurface->asset,AssetType::Navigation);const auto* record=assets.Find(object.navigationSurface->asset);NavigationData data;NavigationGeometry geometry;Require(record&&LoadNavigation(record->path,data,error),"Navigation: "+error);Require(CollectNavigationGeometry(flattened,object,navigation,geometry,error,&assets)&&geometry.fingerprint==data.fingerprint,"Stale navigation bake: "+error);}
         checkUI(object);
         if(object.audioZone)check(object.audioZone->asset,AssetType::AudioEffect);
         if (object.render) {

@@ -11,6 +11,7 @@ target_sources(judas_engine PRIVATE
     src/terrain/TerrainTopology.cpp
     src/terrain/TerrainRuntime.cpp
     src/terrain/TerrainPreparation.cpp
+    src/terrain/TerrainNavigation.cpp
     src/terrain/TerrainPresentation.cpp
     src/terrain/TerrainPersistence.cpp
     src/WorldTerrainQueries.cpp)
@@ -23,6 +24,7 @@ judas_add_engine_test(judas_terrain_v2_surface_tests tests/TerrainV2SurfaceTests
 judas_add_engine_test(judas_terrain_v2_interaction_tests tests/TerrainV2InteractionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_streaming_tests tests/TerrainV2StreamingTests.cpp)
 judas_add_engine_test(judas_terrain_v2_preparation_tests tests/TerrainV2PreparationTests.cpp)
+judas_add_engine_test(judas_terrain_v2_navigation_tests tests/TerrainV2NavigationTests.cpp)
 judas_add_engine_test(judas_terrain_v2_generation_tests tests/TerrainV2GenerationTests.cpp)
 target_link_libraries(judas_terrain_v2_generation_tests PRIVATE judas_world_authoring)
 judas_add_engine_test(judas_terrain_v2_render_tests tests/TerrainV2RenderTests.cpp)

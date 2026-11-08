@@ -1,0 +1,19 @@
+PASS create ordinary project
+PASS linked prefab authored
+PASS write prefab source
+PASS asset IDs registered
+PASS startup scene and input configuration saved
+PASS Release export succeeds
+PASS package runtime/font and transitive registered assets
+PASS unregistered development junk excluded
+PASS explicit package launch record
+PASS startup and project input map retained
+PASS effective authored fingerprint independent of package path
+PASS normal stable ID and relative provenance
+PASS re-export replaces stale package files
+PASS missing asset fails without damaging last complete export
+PASS moved package resolves unchanged relative scene
+PASS runtime saves outside installation
+PASS source-tree export refused
+PASS arbitrary destination not replaced
+SUMMARY 18 checks 0 failures

@@ -19,6 +19,8 @@ public:
  void PublishSurfaces(const std::vector<SceneObjectId>&);
  void DiscardStagedSurface(SceneObjectId);
  void RemoveSurface(SceneObjectId);
+ // Move an enclosing rigid frame without rebuilding its local Detour geometry.
+ void SetSurfaceTransform(SceneObjectId,const SceneTransform&);
  std::optional<NavigationLocation> Sample(glm::vec3,float,const NavigationFilter& = {})const;
  NavigationPath FindPath(glm::vec3,glm::vec3,const NavigationFilter& = {})const;
  std::optional<NavigationLocation> Raycast(glm::vec3,glm::vec3,const NavigationFilter& = {})const;

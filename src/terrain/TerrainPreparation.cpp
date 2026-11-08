@@ -3,6 +3,7 @@
 #include "SceneFingerprint.h"
 #include "TerrainAsset.h"
 #include "TerrainMesher.h"
+#include "TerrainNavigation.h"
 #include <chrono>
 #include <cstring>
 
@@ -92,10 +93,12 @@ size_t Preparation::PayloadBytes() const {
         bytes += SourcePayloadBytes(*source, lod.get());
     for (const auto &chunk : chunks)
         bytes += chunk.PayloadBytes();
+    bytes += NavigationPayloadBytes(navigation.get());
     return bytes;
 }
 bool PrepareAsset(const std::string &path, const std::string &identity, PreparedAsset &output,
-                  std::string &error, const std::function<bool()> &cancelled) {
+                  std::string &error, const std::function<bool()> &cancelled,
+                  const NavigationInput *navigation) {
     AssetPages pages;
     Source source;
     if (!pages.Open(path, error) || !pages.ReadAll(source, error))
@@ -115,6 +118,17 @@ bool PrepareAsset(const std::string &path, const std::string &identity, Prepared
     if (!PrepareGeometry(next.geometry, keys, cancelled)) {
         error = next.geometry.error;
         return false;
+    }
+    if (navigation) {
+        const auto start = std::chrono::steady_clock::now();
+        auto input = *navigation;
+        for (const auto &part : next.geometry.chunks)
+            input.chunks[part.chunk.key] = {part.chunk.anchor, part.collision};
+        if (!PrepareNavigation(input, next.geometry.navigation, error, cancelled))
+            return false;
+        next.geometry.milliseconds +=
+            std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start)
+                .count();
     }
     output = std::move(next);
     error.clear();

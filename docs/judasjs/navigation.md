@@ -182,3 +182,31 @@ for their normal repath interval.
 Both setters preserve omitted fields, return false if the component is absent,
 and reject invalid patches atomically. Call from authoritative gameplay.
 Neither setter creates components or changes the authored scene on disk.
+
+## Native Terrain V2 surfaces (Experimental)
+
+A native landscape can own a Navigation Surface with an empty `nav.surface.asset`.
+Use the landscape Inspector's **Live terrain navigation** option and configure
+coverage/profile in its Navigation Surface card. This is explicit source-owned
+navigation, not a missing bake: it reads actual terrain/cave collision, prepares
+in the worker and publishes with geometry. Ordinary `navigation.sample/path`
+and `entity.navigation` agents use it through the same APIs above. Scripts still
+own movement and must apply steering through CharacterMotor or another mover.
+
+Painting reuses navigation. Geometric edits invalidate routes; agents replan
+against the published revision. Disabled terrain removes its navigation, while
+reenabling restores the matching local data. Empty terrain may have an empty
+walkable coverage. Region publication/removal, rigid placement, world-origin
+changes and cold terrain restoration preserve the common ownership boundary.
+
+Only the source's own geometry is included. Add navigation obstacles for other
+props and use links or separate surfaces to connect authored regions. Local +Y
+is traversal up. Whole configured coverage is currently rebuilt after a geometry
+edit; incremental Recast tile preparation remains an optimization opportunity.
+The native preparation budget is 16M raster columns including tile borders,
+subject to the existing 4,096 tiles and Recast height-span limits. Invalid or
+oversized configurations reject explicitly rather than dropping coverage.
+
+Offline bakes also collect native terrain correctly. A separate static bake that
+includes a landscape cannot silently follow its runtime edits; use source-owned
+navigation or exclude that terrain's physical layer before changing geometry.

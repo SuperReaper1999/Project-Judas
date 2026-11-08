@@ -1,0 +1,36 @@
+{
+  "base_commit": "4905918a",
+  "branch": "Experimental",
+  "configuration": "Release",
+  "compiler": "GCC 15.2.0",
+  "hardware": "Ryzen 5 5600 / 8 GB RAM; GTX 970 desktop for application and graphics checks",
+  "timestamp_utc": "2026-11-08T00:23:27Z",
+  "performance_scope": "five warm-file complete source scenes per mode; identical kilometre 513x513 source / 1024 colliders; on-mode uses explicitly configured 128 m navigation coverage at 0.5 m cells, NOT entire kilometre routing",
+  "median_ms": {
+    "off": {
+      "scene_build_ms": 446.934,
+      "sculpt_complete_ms": 22.8968,
+      "paint_complete_ms": 3.57394,
+      "edit_complete_ms": 24.5988,
+      "edit_publish_ms": 0.195639
+    },
+    "on": {
+      "scene_build_ms": 473.219,
+      "sculpt_complete_ms": 40.7398,
+      "paint_complete_ms": 3.64401,
+      "edit_complete_ms": 46.3926,
+      "edit_publish_ms": 0.952466
+    }
+  },
+  "limitations": [
+    "five samples per mode, grouped off/on; diagnostic added cost, not isolated benchmark percentiles or speedup evidence",
+    "coverage is regenerated as a whole; no incremental Recast tile bake yet",
+    "separate static bakes cannot automatically follow runtime native edits; explicit rejection retained",
+    "planetary excavation and large-source physical-interest residency remain incomplete",
+    "human acceptance pending; main/releases/fluid lock/RPG SDK unchanged"
+  ],
+  "rejected_oracles": [
+    "cold-03 omitted normal WorldPersistence::Prepare after saved-scene construction; corrected harness uses normal build/prepare/restore and passes seven controls",
+    "relocated-first-failure started traversal and saved before the project brush queue finished; found real nonpersistent project queue; queue now persists and full traversal gate retained after verified completion"
+  ]
+}

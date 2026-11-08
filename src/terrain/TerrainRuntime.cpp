@@ -5,6 +5,7 @@
 #include "RuntimeWorld.h"
 #include "TerrainAsset.h"
 #include "TerrainMesher.h"
+#include "TerrainNavigation.h"
 #include "WorldPresentation.h"
 #include <algorithm>
 #include <chrono>
@@ -18,6 +19,8 @@ double Milliseconds(Clock::time_point start) {
 } // namespace
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
 Runtime::~Runtime() {
+    if (navigation)
+        world.Navigation().RemoveSurface(owner);
     ReleaseGraphics();
     if (job.IsValid() && world.Resources() && world.Resources()->Jobs()) {
         world.Resources()->Jobs()->Cancel(job);
@@ -40,9 +43,11 @@ bool Runtime::Owns(BodyHandle body) const {
 }
 SolidSnapshot Runtime::Solid() const {
     const auto *d = Definition();
-    if (!source || !d || !d->body || !d->body->enabled || d->body->sensor || !world.IsPublished(owner))
+    if (!source || !d || !d->body || !d->body->enabled || d->body->sensor ||
+        !world.IsPublished(owner))
         return {};
-    return {owner, geometryRevision, source, d->transform.position, d->transform.rotation, geometryEpoch};
+    return {owner,        geometryRevision, source, d->transform.position, d->transform.rotation,
+            geometryEpoch};
 }
 const SceneObject *Runtime::Definition() const {
     auto it = world.m_scriptDefinitions.find(owner);
@@ -58,6 +63,25 @@ void Runtime::Synchronize() {
     const auto *d = Definition();
     if (!d || !d->body)
         return;
+    if (navigation) {
+        world.Navigation().SetSurfaceTransform(owner, d->transform);
+        if (world.IsPublished(owner)) {
+            if (!d->body->enabled || d->body->sensor) {
+                world.Navigation().RemoveSurface(owner);
+                navigationInstalled = false;
+            } else {
+                if (!navigationInstalled) {
+                    std::string error;
+                    navigationInstalled = world.Navigation().LoadSurface(owner, d->transform,
+                                                                         navigation, error, false);
+                    if (!navigationInstalled)
+                        status.error = error;
+                }
+                world.Navigation().PublishSurfaces({owner});
+            }
+            status.navigation = navigationInstalled;
+        }
+    }
     auto &physics = world.Physics();
     std::string material;
     float friction = d->body->friction, restitution = d->body->restitution;
@@ -94,6 +118,16 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
                      std::string &error, bool replaceAll) {
     if (!ValidateSubmission(*value, error))
         return false;
+    if (source && !keys.empty())
+        for (const auto &[id, other] : world.m_scriptDefinitions)
+            if (id != owner && (!world.IsPublished(id) || world.RuntimeDefinition(id)) &&
+                !other.landscape && other.navigationSurface && other.navigationSurface->enabled &&
+                (other.navigationSurface->sources &
+                 CategoryBit(Definition()->body->collisionLayer))) {
+                error = "terrain editing cannot update a separate static navigation bake; "
+                        "use source-owned landscape navigation or exclude its physical layer";
+                return false;
+            }
     auto *resources = world.Resources();
     auto work = std::make_shared<Work>();
     work->baseAsset = baseAsset;
@@ -107,14 +141,42 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
         source->chunkCells == work->source->chunkCells &&
         source->spacing == work->source->spacing && source->heights == work->source->heights)
         work->lod = lod;
+    std::optional<NavigationInput> nav;
+    const auto *definition = Definition();
+    if (definition->navigationSurface && definition->navigationSurface->enabled) {
+        if (source && keys.empty())
+            work->navigation = navigation;
+        else {
+            nav.emplace();
+            nav->settings = *definition->navigationSurface;
+            nav->profile = world.Navigation().Configuration().profiles.at(nav->settings.profile);
+            if (!replaceAll)
+                for (const auto &[key, part] : chunks)
+                    nav->chunks[key] = {part.geometry.chunk.anchor, part.geometry.collision};
+        }
+    }
     const auto pendingCount = keys.size();
     auto handle = resources->Jobs()->Submit(
-        [work, keys = std::move(keys)](JobContext &context) {
+        [work, keys = std::move(keys), nav = std::move(nav)](JobContext &context) mutable {
             if (!PrepareGeometry(*work, keys, [&] { return context.CancelRequested(); })) {
                 if (context.CancelRequested())
                     context.ReportCancelled();
                 else
                     context.SetError(work->error);
+                return;
+            }
+            if (nav) {
+                const auto start = Clock::now();
+                for (const auto &part : work->chunks)
+                    nav->chunks[part.chunk.key] = {part.chunk.anchor, part.collision};
+                if (!PrepareNavigation(*nav, work->navigation, work->error,
+                                       [&] { return context.CancelRequested(); })) {
+                    if (context.CancelRequested())
+                        context.ReportCancelled();
+                    else
+                        context.SetError(work->error);
+                }
+                work->milliseconds += Milliseconds(start);
             }
         },
         JobPriority::High, "terrain V2 dirty chunks");
@@ -143,10 +205,24 @@ bool Runtime::ValidateSubmission(const Source &value, std::string &error) const 
     auto *d = Definition();
     auto *resources = world.Resources();
     if (!d || !d->body || d->body->motion != SceneBodyMotion::Static || d->parent || d->planet ||
-        d->deformable || d->navigationSurface || d->transform.scale != glm::vec3(1) ||
-        !Seed().IsValid()) {
+        d->deformable || d->transform.scale != glm::vec3(1) || !Seed().IsValid()) {
         error = "landscape requires a root unit-scale static owner with no other geometry owner";
         return false;
+    }
+    if (d->navigationSurface &&
+        (!d->navigationSurface->asset.empty() || d->navigationSurface->includeDynamic ||
+         !(d->navigationSurface->sources & CategoryBit(d->body->collisionLayer)) ||
+         !world.Navigation().Configuration().profiles.count(d->navigationSurface->profile) ||
+         !ValidateNavigationComponents(*d, error))) {
+        error = "terrain requires valid source-owned navigation settings and a registered profile";
+        return false;
+    }
+    if (d->navigationSurface && d->navigationSurface->enabled) {
+        NavigationInput input;
+        input.settings = *d->navigationSurface;
+        input.profile = world.Navigation().Configuration().profiles.at(input.settings.profile);
+        if (!ValidateNavigationInput(input, error))
+            return false;
     }
     if (!resources || !resources->Jobs()) {
         error = "terrain requires the project job system";
@@ -164,17 +240,31 @@ bool Runtime::ValidateSubmission(const Source &value, std::string &error) const 
 }
 bool Runtime::Install(PreparedAsset &asset, std::string &error) {
     if (source || pending || asset.consumed || !asset.geometry.source || !asset.geometry.lod ||
-        !asset.geometry.error.empty() || asset.geometry.chunks.size() !=
+        !asset.geometry.error.empty() ||
+        asset.geometry.chunks.size() !=
             size_t(asset.geometry.source->ChunksX()) * asset.geometry.source->ChunksZ()) {
         error = "prepared terrain is incomplete, already consumed or owner is initialized";
         return false;
     }
     if (!ValidateSubmission(*asset.geometry.source, error))
         return false;
+    const auto *definition = Definition();
+    const bool navigationRequired =
+        definition->navigationSurface && definition->navigationSurface->enabled;
+    auto preparedDefinition = *definition;
+    if (asset.geometry.navigation)
+        preparedDefinition.navigationSurface = asset.geometry.navigation->settings;
+    if (navigationRequired != bool(asset.geometry.navigation) ||
+        (asset.geometry.navigation &&
+         NavigationProperties(preparedDefinition) != NavigationProperties(*definition))) {
+        error = "prepared terrain navigation does not match its staged owner";
+        return false;
+    }
     std::set<ChunkKey> keys;
     for (const auto &part : asset.geometry.chunks)
         if (part.chunk.key.x >= asset.geometry.source->ChunksX() ||
-            part.chunk.key.z >= asset.geometry.source->ChunksZ() || !keys.insert(part.chunk.key).second) {
+            part.chunk.key.z >= asset.geometry.source->ChunksZ() ||
+            !keys.insert(part.chunk.key).second) {
             error = "prepared terrain chunk coverage is invalid";
             return false;
         }
@@ -230,6 +320,10 @@ bool Runtime::Publish(std::string &error) {
         error = "terrain seed body disappeared";
         return false;
     }
+    const bool navigationChanged = pending->navigation != navigation;
+    if (navigationChanged && pending->navigation &&
+        !world.Navigation().LoadSurface(owner, d->transform, pending->navigation, error, false))
+        return false;
     std::vector<BodyHandle> staged;
     try {
         // Allocate every replacement before retiring any old support. No step
@@ -248,6 +342,8 @@ bool Runtime::Publish(std::string &error) {
             staged.push_back(body);
         }
     } catch (const std::exception &e) {
+        if (navigationChanged)
+            world.Navigation().DiscardStagedSurface(owner);
         for (auto h : staged)
             if (h.IsValid())
                 physics.DestroyBody(h);
@@ -295,7 +391,17 @@ bool Runtime::Publish(std::string &error) {
     baseFingerprint = pending->baseFingerprint;
     raster = std::move(pending->raster);
     lod = pending->lod;
+    navigation = pending->navigation;
+    if (navigationChanged) {
+        navigationInstalled = bool(navigation);
+        if (!navigation)
+            world.Navigation().RemoveSurface(owner);
+        else if (world.IsPublished(owner))
+            world.Navigation().PublishSurfaces({owner});
+        world.Navigation().RequestEditedRouteRefresh(false);
+    }
     status.ready = true;
+    status.navigation = bool(navigation);
     ++status.revision;
     status.prepareMs = pending->milliseconds;
     status.samples = source->heights.size();
@@ -304,7 +410,8 @@ bool Runtime::Publish(std::string &error) {
     status.chunks = chunks.size();
     status.volumeChunks = 0;
     residentPayloadBytes = SourcePayloadBytes(*source, lod.get()) +
-                           raster.size() * sizeof(RasterChanges::value_type);
+                           raster.size() * sizeof(RasterChanges::value_type) +
+                           NavigationPayloadBytes(navigation.get());
     for (const auto &[_, r] : chunks) {
         const auto &c = r.geometry.chunk;
         status.triangles += c.mesh.indices.size() / 3;

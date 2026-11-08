@@ -136,3 +136,11 @@ Invalid sample indices, weights and changed base assets are rejected.
 This API does not yet rebuild independent authored navigation surfaces or update
 a fluid solid-volume bake. Those integrations remain explicit Terrain V2 work;
 do not infer a successful terrain publication also rebuilt those systems.
+
+Native landscapes can opt into source-owned navigation through the existing
+Navigation Surface component, using an empty baked-asset reference. The editor's
+**Live terrain navigation** option configures it. This does not change the legacy
+bounded-volume `create({navigation,profile})` contract. See [navigation](navigation.md)
+for coverage, actor steering and publication details. Geometric changes update
+both support and routes; material painting preserves both collider and navigation
+identities. Native navigation remains optional.

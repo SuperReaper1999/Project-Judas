@@ -412,9 +412,10 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
                                    EditorDesign::Tone::Primary)) {
         ApplyPalette();
         const auto bytes = TerrainV2::Serialize(source);
+        const auto journal = fs::path(path).parent_path().string();
+        const std::vector<AuthoringOutput> outputs{{path, bytes, disk, true}};
         if (ValidateTerrainWritePath(path, error) &&
-            PublishAuthoringOutputs(fs::path(path).parent_path().string(),
-                                    {{path, bytes, disk, true}}, error)) {
+            PublishAuthoringOutputs(journal, outputs, error)) {
             disk = bytes;
             dirty = false;
             const auto *asset = state.assets->Find(meshId);

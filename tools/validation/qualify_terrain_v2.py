@@ -70,10 +70,28 @@ ACTION mode_paint 1 160 161
 ACTION dig 1 180 181
 ACTION mode_dig 1 220 221
 ACTION tunnel 1 250 251
-AXIS move_y 1 950 1310
-SCREENSHOT 1150 TUNNEL_SCREENSHOT
 ACTION save 1 1450 1451
 WAIT_SERVICES save 10000 1453
+''',
+            'settle': '''FRAMES 1000
+FRAME_SECONDS 0.016666667
+LOG_EVERY 120
+ACTION load 1 20 21
+WAIT_SERVICES save 10000 30
+WAIT_SERVICES scene 10000 35
+ACTION save 1 900 901
+WAIT_SERVICES save 10000 910
+''',
+            'traverse': '''FRAMES 520
+FRAME_SECONDS 0.016666667
+LOG_EVERY 60
+ACTION load 1 20 21
+WAIT_SERVICES save 10000 30
+WAIT_SERVICES scene 10000 35
+AXIS move_y 1 50 410
+SCREENSHOT 250 TUNNEL_SCREENSHOT
+ACTION save 1 450 451
+WAIT_SERVICES save 10000 460
 ''',
             'read': '''FRAMES 180
 FRAME_SECONDS 0.016666667
@@ -84,8 +102,7 @@ WAIT_SERVICES scene 10000 35
 EXPECT_SCENE Scenes/highlands.judas 45
 ''',
         }
-        for name, text in scripts.items():
-            frame = 1750 if name == 'write' else 150
+        def play(name, text, frame):
             harness = out / (name + '.harness')
             text = text.replace('TUNNEL_SCREENSHOT', str(out / 'tunnel.png'))
             harness.write_text(text + f'SCREENSHOT {frame} {out / (name + ".png")}\n')
@@ -93,6 +110,23 @@ EXPECT_SCENE Scenes/highlands.judas 45
                        JUDAS_ENGINE_ROOT=str(package / 'engine'),
                        JUDAS_WINDOW_SIZE='1280x800', XDG_DATA_HOME=str(out / 'user-data'))
             run(name, [package / 'judas', package / 'game.judasproj'], work, env)
+            return (out / (name + '.log')).read_text()
+
+        play('write', scripts['write'], 1750)
+        # A scripted frame is not a worker deadline. Persisted project queues
+        # resume in genuine cold processes; inspect actual queue completion
+        # before walking, keeping the original full-traversal acceptance gate.
+        for attempt in range(8):
+            log = play('settle-' + str(attempt), scripts['settle'], 980)
+            saves = [json.loads(line.split('TERRAIN_V2_SAVE_REQUEST ', 1)[1])
+                     for line in log.splitlines() if 'TERRAIN_V2_SAVE_REQUEST ' in line]
+            if len(saves) == 1 and saves[0]['remainingBrushes'] == 0:
+                record['settlement_cold_processes'] = attempt + 1
+                break
+        else:
+            raise RuntimeError('Project brush queue did not finish within eight bounded cold runs.')
+        play('traverse', scripts['traverse'], 500)
+        play('read', scripts['read'], 150)
         restored = []
         write_log = (out / 'write.log').read_text()
         for kind in ('raise', 'paint'):
@@ -106,8 +140,9 @@ EXPECT_SCENE Scenes/highlands.judas 45
             raise RuntimeError('Expected exactly one actual terrain/game restore callback.')
         state = restored[0]
         terrain = state['terrain']
-        if (not terrain['ready'] or terrain['busy'] or terrain['error'] or
-                terrain['volumeChunks'] < 8 or state['position']['z'] > -8 or state['surfaceDabs'] < 2):
+        if (not terrain['ready'] or terrain['busy'] or terrain['error'] or not terrain['navigation'] or
+                terrain['volumeChunks'] < 8 or state['position']['z'] > -8 or state['surfaceDabs'] < 2 or
+                state['remainingBrushes'] != 0):
             raise RuntimeError('Cold restore lost the edited terrain or real tunnel traversal.')
         record.update(passed=True, restored=state)
     except Exception as error:

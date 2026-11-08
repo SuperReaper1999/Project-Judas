@@ -16,6 +16,7 @@
 #include "SaveArchive.h"
 #include "terrain/TerrainPreparation.h"
 #include "terrain/TerrainComponent.h"
+#include "terrain/TerrainNavigation.h"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -92,7 +93,7 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
             if(a){if(a->missing){error="missing region asset "+value;return false;}}else if(expected&&value.size()==32){error="unregistered region asset "+value;return false;}
         }
         for(auto& slot:o.scripts){const auto* a=assets.Find(slot.asset);if(!a||a->missing||a->type!=AssetType::Script){error="missing region script "+slot.asset;return false;}}
-        if(o.navigationSurface&&o.navigationSurface->enabled){const auto* a=assets.Find(o.navigationSurface->asset);auto data=std::make_shared<NavigationData>();NavigationGeometry geometry;
+        if(o.navigationSurface&&o.navigationSurface->enabled&&!o.landscape){const auto* a=assets.Find(o.navigationSurface->asset);auto data=std::make_shared<NavigationData>();NavigationGeometry geometry;
             if(!a||a->type!=AssetType::Navigation||!LoadNavigation(a->path,*data,error)||!CollectNavigationGeometry(flat,o,project.Settings().navigation,geometry,error,&assets)||geometry.fingerprint!=data->fingerprint){error="stale/missing region navigation bake: "+error;return false;}
             if(data->layers.size()>128){error="region surface exceeds 128 indivisible native tiles; split it";return false;}
             for(auto& l:data->layers)result.bytes+=l.size()*4;
@@ -103,7 +104,13 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
             if(!TerrainV2::ValidateOwner(o,&assets,error))return false;
             auto terrain=std::make_shared<TerrainV2::PreparedAsset>();
             const auto* asset=assets.Find(o.landscape->asset);
-            if(!TerrainV2::PrepareAsset(asset->path,asset->id,*terrain,error,cancelled))return false;
+            std::optional<TerrainV2::NavigationInput> navigation;
+            if(o.navigationSurface&&o.navigationSurface->enabled){
+                if(!project.Settings().navigation.profiles.count(o.navigationSurface->profile)){error="unknown landscape navigation profile";return false;}
+                navigation.emplace();navigation->settings=*o.navigationSurface;
+                navigation->profile=project.Settings().navigation.profiles.at(navigation->settings.profile);
+            }
+            if(!TerrainV2::PrepareAsset(asset->path,asset->id,*terrain,error,cancelled,navigation?&*navigation:nullptr))return false;
             const auto bytes=terrain->geometry.PayloadBytes();
             result.terrainBytes+=bytes;result.bytes+=bytes;
             result.terrains.emplace(o.id,std::move(terrain));

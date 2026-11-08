@@ -1,0 +1,22 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/terrain-v2-navigation-relocated-10/user-data/judas/games/3729570954b648f95700ba2aa9c90e45ca79653037ad4480ff9d59c241ffd364/Saves/highlands.judasstate (none saved)
+Project: Terrain V2 — Highlands Workshop (/tmp/terrain-v2-navigation-relocated-10/relocated game/game.judasproj)
+Scene: Terrain V2 — Highlands (/tmp/terrain-v2-navigation-relocated-10/relocated game/Scenes/highlands.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0
+[TestHarness] service save ready after 21 wait frames at frame 30
+30,0.50000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,30,0,1
+JS: TERRAIN_V2_RESTORED {"position":{"x":0.08357886970043182,"y":1.720919132232666,"z":-10.608722686767578},"terrain":{"ready":true,"busy":false,"navigation":true,"revision":2,"samples":9409,"triangles":33939,"bytes":1632232,"chunks":36,"volumeChunks":8,"pendingChunks":0,"prepareMs":74.526069,"publishMs":0.733413,"error":""},"surfaceDabs":2,"remainingBrushes":0}
+[TestHarness] service scene ready after 0 wait frames at frame 35
+60,1.00000,0.083367,1.658249,-10.541587,0.000000,0.998750,-0.049979,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,60,1,0
+90,1.50000,0.083132,1.639327,-10.502574,0.000000,0.998750,-0.049979,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,90,1,0
+120,2.00000,0.082886,1.615522,-10.458457,0.000000,0.998750,-0.049979,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,120,1,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-navigation-relocated-10/read.png
+150,2.50000,0.075450,1.597453,-10.421361,0.000000,0.998750,-0.049979,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,150,1,0

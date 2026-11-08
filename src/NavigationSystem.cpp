@@ -23,7 +23,7 @@ struct MeshProcess:dtTileCacheMeshProcess {void process(dtNavMeshCreateParams* p
 struct Surface {
  SceneTransform frame;std::shared_ptr<const NavigationData> data;dtTileCacheAlloc alloc;NavigationCompressor compressor;MeshProcess process;
  dtNavMesh* mesh=dtAllocNavMesh();dtNavMeshQuery* query=dtAllocNavMeshQuery();dtTileCache* cache=dtAllocTileCache();
- struct Obstacle{dtObstacleRef ref=0;SceneTransform pose;NavigationObstacleSettings settings;};std::map<SceneObjectId,Obstacle> obstacles;
+ struct Obstacle{dtObstacleRef ref=0;SceneTransform pose;NavigationObstacleSettings settings;SceneTransform frame;};std::map<SceneObjectId,Obstacle> obstacles;
  ~Surface(){dtFreeTileCache(cache);dtFreeNavMeshQuery(query);dtFreeNavMesh(mesh);}
  glm::vec3 local(glm::vec3 p)const{return glm::inverse(frame.rotation)*(p-frame.position);}glm::vec3 world(glm::vec3 p)const{return frame.position+frame.rotation*p;}
  struct CarveBounds {glm::vec3 min,max;};
@@ -72,6 +72,18 @@ bool NavigationSystem::LoadSurface(SceneObjectId id,const SceneTransform& pose,s
 void NavigationSystem::PublishSurfaces(const std::vector<SceneObjectId>& ids){for(auto id:ids)if(auto it=m->staged.find(id);it!=m->staged.end()){m->surfaces[id]=std::move(it->second);m->staged.erase(it);m->errors.erase(id);++m->revision;}}
 void NavigationSystem::DiscardStagedSurface(SceneObjectId id){m->staged.erase(id);}
 void NavigationSystem::RemoveSurface(SceneObjectId id){m->staged.erase(id);bool removed=m->surfaces.erase(id)!=0;if(removed)++m->revision;m->errors.erase(id);if(removed)for(auto& [_,agent]:m->agents){agent.path={};agent.onLink=false;agent.steering={};agent.elapsed=1e10f;}}
+void NavigationSystem::SetSurfaceTransform(SceneObjectId id,const SceneTransform& pose){
+    bool changed=false;
+    for(auto* collection:{&m->surfaces,&m->staged}){
+        auto found=collection->find(id);
+        if(found==collection->end())continue;
+        auto& surface=*found->second;
+        if(surface.frame.position==pose.position&&surface.frame.rotation==pose.rotation)continue;
+        surface.frame=pose;
+        changed|=collection==&m->surfaces;
+    }
+    if(changed){++m->revision;m->refreshLinks=true;}
+}
 std::optional<NavigationLocation> NavigationSystem::Sample(glm::vec3 p,float range,const NavigationFilter& f)const{
     JUDAS_PROFILE_SCOPE("Navigation position query");if(!(range>0)||!std::isfinite(range)||!std::isfinite(glm::dot(p,p)))return {};Filter filter(f);std::optional<NavigationLocation> best;float distance=range*range;for(auto& [id,s]:m->surfaces)if(s->data->settings.profile==f.profile){dtPolyRef ref;glm::vec3 result;if(s->nearest(p,range,filter,ref,result)){auto world=s->world(result);float d=glm::dot(p-world,p-world);if(d<=distance){const dtMeshTile* t;const dtPoly* poly;s->mesh->getTileAndPolyByRef(ref,&t,&poly);best=NavigationLocation{world,id,static_cast<unsigned>(poly->getArea()-1)};distance=d;}}}return best;}
 NavigationPath NavigationSystem::FindPath(glm::vec3 start,glm::vec3 end,const NavigationFilter& f)const{
@@ -104,14 +116,14 @@ void NavigationSystem::RequestEditedRouteRefresh(bool waitForCarving){
 }
 void NavigationSystem::Update(RuntimeWorld& world,float dt){
     JUDAS_PROFILE_SCOPE("Navigation update");auto objects=world.ScriptObjects();std::set<SceneObjectId> liveSurfaces,liveAgents,liveLinks;Scene geometry;geometry.Objects()=objects;
- for(auto& o:objects){if(o.navigationLink&&o.navigationLink->enabled){auto existing=m->links.find(o.id);if(existing==m->links.end()||NavigationProperties(existing->second)!=NavigationProperties(o)||existing->second.transform.position!=o.transform.position||existing->second.transform.rotation!=o.transform.rotation)++m->revision;m->links[o.id]=o;liveLinks.insert(o.id);}if(o.navigationAgent&&o.navigationAgent->enabled){m->agents.try_emplace(o.id);liveAgents.insert(o.id);}if(o.navigationSurface&&o.navigationSurface->enabled){liveSurfaces.insert(o.id);if(!m->surfaces.count(o.id)&&!m->errors.count(o.id)&&world.Resources()){
+ for(auto& o:objects){if(o.navigationLink&&o.navigationLink->enabled){auto existing=m->links.find(o.id);if(existing==m->links.end()||NavigationProperties(existing->second)!=NavigationProperties(o)||existing->second.transform.position!=o.transform.position||existing->second.transform.rotation!=o.transform.rotation)++m->revision;m->links[o.id]=o;liveLinks.insert(o.id);}if(o.navigationAgent&&o.navigationAgent->enabled){m->agents.try_emplace(o.id);liveAgents.insert(o.id);}if(o.navigationSurface&&o.navigationSurface->enabled){liveSurfaces.insert(o.id);if(!o.landscape&&!m->surfaces.count(o.id)&&!m->errors.count(o.id)&&world.Resources()){
   std::string error;auto data=world.Resources()->GetNavigation(o.navigationSurface->asset,error);if(data){NavigationGeometry source;if(!CollectNavigationGeometry(geometry,o,m->config,source,error,world.Resources()->Assets())||source.fingerprint!=data->fingerprint){m->errors[o.id]="stale navigation bake: "+error;continue;}if(!LoadSurface(o.id,o.transform,data,error))m->errors[o.id]=error;}else if(error!="loading")m->errors[o.id]=error;
  }}}
  for(auto it=m->surfaces.begin();it!=m->surfaces.end();)if(!liveSurfaces.count(it->first)&&!world.HasRuntimeTerrain(it->first)){it=m->surfaces.erase(it);++m->revision;}else ++it;
  for(auto it=m->agents.begin();it!=m->agents.end();)if(!liveAgents.count(it->first))it=m->agents.erase(it);else ++it;
  for(auto it=m->links.begin();it!=m->links.end();)if(!liveLinks.count(it->first)){it=m->links.erase(it);++m->revision;}else ++it;
  JUDAS_PROFILE_COUNTER("Navigation agents",double(m->agents.size()),ProfileCounterMode::Latest);
- for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(auto& o:objects)if(o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
+ for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(auto& o:objects)if(o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&it->second.frame.position==s->frame.position&&it->second.frame.rotation==s->frame.rotation&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
    if(!s->accepts(bounds)){
        m->errors[o.id]="navigation obstacle exceeds Detour's eight tile layers";
        continue;
@@ -127,7 +139,7 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
        base.y=bounds.min.y;
        status=s->cache->addObstacle(&base.x,settings.radius,settings.height,&ref);
    }else status=s->cache->addBoxObstacle(&bounds.min.x,&bounds.max.x,&ref);
-   if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings};++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
+   if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings,s->frame};++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
   for(auto it=s->obstacles.begin();it!=s->obstacles.end();)if(!present.count(it->first)&&dtStatusSucceed(s->cache->removeObstacle(it->second.ref))){it=s->obstacles.erase(it);++m->revision;}else ++it;
   bool ready=false;auto status=s->cache->update(dt,s->mesh,&ready);if(dtStatusFailed(status))m->errors[id]="tile cache update failed";if(!ready)m->pending.insert(id);else if(m->pending.erase(id))++m->revision;
  }
@@ -158,7 +170,7 @@ void NavigationSystem::RegisterAgent(SceneObjectId id){m->agents.try_emplace(id)
 void NavigationSystem::ShiftOrigin(glm::dvec3 delta){
  for(auto* surfaces:{&m->surfaces,&m->staged})for(auto& [_,s]:*surfaces){
   TranslateOriginPoint(s->frame.position,delta);
-  for(auto& [id,obstacle]:s->obstacles)TranslateOriginPoint(obstacle.pose.position,delta);
+  for(auto& [id,obstacle]:s->obstacles){TranslateOriginPoint(obstacle.pose.position,delta);TranslateOriginPoint(obstacle.frame.position,delta);}
  }
  for(auto& [_,link]:m->links)TranslateOriginPoint(link.transform.position,delta);
  for(auto& [_,agent]:m->agents){

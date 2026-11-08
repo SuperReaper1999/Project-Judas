@@ -70,6 +70,8 @@ class Runtime {
     mutable TextureHandle weightTexture;
     mutable TextureHandle heightTexture;
     std::shared_ptr<const HeightLod> lod;
+    std::shared_ptr<const NavigationData> navigation;
+    bool navigationInstalled = false;
     std::vector<HeightPatch> drawPatches;
     mutable uint64_t appearanceRevision = 0;
     const SceneObject *Definition() const;
