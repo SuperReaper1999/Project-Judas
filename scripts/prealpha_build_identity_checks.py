@@ -47,6 +47,8 @@ def main():
         (fixture / "cmake").mkdir()
         for name in ("JudasBuildIdentity.cmake", "JudasBuildIdentity.h.in", "JudasBuildIdentity.json.in", "JudasSourceInfo.json.in"):
             shutil.copy2(source / "cmake" / name, fixture / "cmake" / name)
+        (fixture / "tools").mkdir()
+        shutil.copy2(source / "tools/source_fingerprint.py", fixture / "tools/source_fingerprint.py")
         (fixture / "CMakeLists.txt").write_text(
             "cmake_minimum_required(VERSION 3.20)\nproject(IdentityFixture LANGUAGES NONE)\n"
             'include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/JudasBuildIdentity.cmake")\n'
