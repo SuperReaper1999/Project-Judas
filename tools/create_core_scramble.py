@@ -6,9 +6,9 @@ R=Path(__file__).resolve().parents[1];P=R/'projects/core_scramble'
 def write(p,v):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,indent=2)+'\n')
 def asset(path,kind):
  f=P/'Assets'/path;f.parent.mkdir(parents=True,exist_ok=True);i=hashlib.sha256(('M89 Core Scramble '+path).encode()).hexdigest()[:32];f.with_name(f.name+'.judasmeta').write_text(f'JudasAssetMeta 1\nid "{i}"\ntype {kind}\nsource "Original M89 Core Scramble"\n');return i
-ids={name:asset('scripts/'+name+'.js','script')for name in ['game','math','controls']};ids['hud']=asset('ui/hud.judasui','ui');ids['local']=asset('ui/player.judasui','ui');font=asset('fonts/DejaVuSans.ttf','font');shutil.copyfile(R/'assets/fonts/DejaVuSans.ttf',P/'Assets/fonts/DejaVuSans.ttf');shutil.copyfile(R/'projects/breakwater/Assets/fonts/LICENSE.txt',P/'Assets/fonts/LICENSE.txt')
-base=json.loads((R/'projects/breakwater/Scenes/arcade.judas').read_text())['data'];settings=copy.deepcopy(base['settings']);settings.update(name='CORE SCRAMBLE',ambient=[.40,.44,.51],**{'sun-direction':[.4,1,.6],'sun-color':[1,.94,.84]})
-template=next(o['fields']for o in base['objects']if o['id']==100)
+ids={name:asset('scripts/'+name+'.js','script')for name in ['game','math','controls']};ids['hud']=asset('ui/hud.judasui','ui');ids['local']=asset('ui/player.judasui','ui');font=asset('fonts/DejaVuSans.ttf','font');shutil.copyfile(R/'assets/fonts/DejaVuSans.ttf',P/'Assets/fonts/DejaVuSans.ttf');shutil.copyfile(R/'assets/fonts/DejaVuSans-LICENSE.txt',P/'Assets/fonts/LICENSE.txt')
+base=json.loads((P/'Scenes/arena.judas').read_text())['data'];settings=copy.deepcopy(base['settings']);settings.update(name='CORE SCRAMBLE',ambient=[.40,.44,.51],**{'sun-direction':[.4,1,.6],'sun-color':[1,.94,.84]})
+template=next(o['fields']for o in base['objects']if 'body' in o['fields'])
 seq=1
 colors=[[.16,.85,.77],[1,.39,.35],[1,.72,.16],[.65,.41,1]]
 def obj(name,p,h,col,motion=None,shape='box',radius=.5,tag=0,mass=1):
@@ -38,11 +38,11 @@ write(P/'Scenes/arena.judas',scene(objects))
 for i,col in enumerate(colors):
  name='bot'+str(i);ids[name]=asset('prefabs/'+name+'.judasprefab','prefab');bot=obj('Bumper bot',[0,1,0],[.7,.7,.7],col,'dynamic','sphere',.7,1,8);bot['id']=1;bot['fields']['body.restitution']=.3;bot['fields']['body.friction']=.25;write(P/'Assets/prefabs'/(name+'.judasprefab'),scene([bot],'prefab'))
 ids['core']=asset('prefabs/core.judasprefab','prefab');core=obj('Energy core',[0,1,0],[.42,.42,.42],[.9,.96,1],'dynamic','sphere',.42,2,1);core['id']=1;core['fields']['body.restitution']=.65;write(P/'Assets/prefabs/core.judasprefab',scene([core],'prefab'))
-project=json.loads((R/'projects/breakwater/breakwater.judasproj').read_text());d=project['data'];d.update(name='Core Scramble',saveIdentity=hashlib.sha256(b'M89 Core Scramble').hexdigest(),startupScene='Scenes/arena.judas',exportScenes=['Scenes/arena.judas'],input=[]);d['classification']['tags']={'nextId':3,'entries':[{'id':0,'name':'bot'},{'id':1,'name':'core'},{'id':2,'name':'cargo'}]}
+project=json.loads((P/'core_scramble.judasproj').read_text());d=project['data'];d.update(name='Core Scramble',saveIdentity=hashlib.sha256(b'M89 Core Scramble').hexdigest(),startupScene='Scenes/arena.judas',exportScenes=['Scenes/arena.judas'],input=[]);d['classification']['tags']={'nextId':3,'entries':[{'id':0,'name':'bot'},{'id':1,'name':'core'},{'id':2,'name':'cargo'}]}
 def action(n,keys):d['input'].append({'name':n,'axis':False,'bindings':[{'control':k,'scale':1,'deadzone':0}for k in keys]})
 for n,keys in {'pause':['key:Escape','key:AC Back','pad:Back'],'split':['key:V','pad:RightShoulder'],'restart':['key:Backspace'],'two':['key:F2'],'three':['key:F3'],'four':['key:F4'],'ui_click':['mouse:Left'],'ui_activate':['key:Return','pad:South'],'ui_up':['key:Up','pad:DpadUp'],'ui_down':['key:Down','pad:DpadDown']}.items():action(n,keys)
 write(P/'core_scramble.judasproj',project)
-baseUI=json.loads((R/'projects/breakwater/Assets/ui/hud.judasui').read_text())['data']['elements'][0]
+baseUI=json.loads((P/'Assets/ui/hud.judasui').read_text())['data']['elements'][0]
 def document(ref):
  root=copy.deepcopy(baseUI);root.update(id='canvas',font=font);return {'reference':ref,'visible':True,'enabled':True,'modal':False,'elements':[root]}
 def element(doc,id,text,off,size,kind=2,bg=[0,0,0,0],fontSize=24,parent='canvas',anchor=[0,0],align=[0,0],color=[.92,.96,1,1]):

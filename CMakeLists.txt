@@ -580,9 +580,6 @@ judas_warnings(judas_scene_author)
 
 # Milestone 31: the resource stress demonstration (real GL context, real
 # asset decode on workers, a scene playing meanwhile) — tools/ResourceStress.cpp.
-add_executable(judas_resource_stress tools/ResourceStress.cpp)
-target_link_libraries(judas_resource_stress PRIVATE judas_engine)
-judas_warnings(judas_resource_stress)
 
 # Milestone 28: scene data, serialization and runtime instantiation —
 # headless (RuntimeWorld built with no ResourceManager creates no GPU state).
@@ -619,7 +616,6 @@ add_executable(judas_job_tests
 )
 target_link_libraries(judas_job_tests PRIVATE judas_engine)
 judas_warnings(judas_job_tests)
-
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,
 # no window/GL at all. Two separate executables (each its own `main`)
@@ -1132,11 +1128,6 @@ judas_add_engine_test(judas_impact_mesh_cost_tests tests/ImpactMeshCostTests.cpp
 judas_add_engine_test(judas_impact_robustness_tests tests/ImpactRobustnessTests.cpp)
 
 # FTFT6: ordinary standalone application on a tiny authored project.
-add_executable(judas_project_application_tests
-    tests/ProjectApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp
-    src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_project_application_tests PRIVATE judas_engine)
-judas_warnings(judas_project_application_tests)
 
 # FTFT6: mixed fidelity/persistence and asset identity integrity.
 judas_add_engine_test(judas_lifecycle_integration_tests tests/LifecycleIntegrationTests.cpp)
@@ -1216,14 +1207,12 @@ add_executable(judas_export src/ExportMain.cpp)
 target_link_libraries(judas_export PRIVATE judas_engine)
 judas_warnings(judas_export)
 judas_add_engine_test(judas_export_tests tests/ExportTests.cpp)
-judas_add_engine_test(judas_package_application_tests tests/PackageApplicationTests.cpp APPLICATION)
 
 # M39: normal project/runtime/physics/GL classification consumers.
 judas_add_engine_test(judas_classification_tests tests/ClassificationTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
 target_link_libraries(judas_engine PUBLIC judas_quickjs)
 judas_add_engine_test(judas_script_tests tests/ScriptTests.cpp)
-judas_add_engine_test(judas_script_application_tests tests/ScriptApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_runtime_ui_tests tests/RuntimeUITests.cpp)
 judas_add_engine_test(judas_ui_drag_tests tests/UIDragTests.cpp)
@@ -1231,38 +1220,26 @@ judas_add_engine_test(judas_ui_menu_tests tests/UIMenuIntegrationTests.cpp APPLI
 add_executable(judas_menu_workshop tools/demos/MenuWorkshop.cpp)
 target_link_libraries(judas_menu_workshop PRIVATE judas_engine)
 judas_warnings(judas_menu_workshop)
-judas_add_engine_test(judas_runtime_ui_application_tests tests/RuntimeUIApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_touch_event_tests tests/TouchEventTests.cpp)
-judas_add_engine_test(judas_touch_application_tests tests/TouchApplicationTests.cpp APPLICATION)
 
 # M43: normal Application loop, actual M42 callbacks and fresh world lifetimes.
 judas_add_engine_test(judas_scene_transition_tests tests/SceneTransitionTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_physics_cast_tests tests/PhysicsCastTests.cpp)
-judas_add_engine_test(judas_physics_cast_application_tests tests/PhysicsCastApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_joint_tests tests/JointTests.cpp)
 
 judas_add_engine_test(judas_joint_authoring_tests tests/JointAuthoringTests.cpp)
 
-judas_add_engine_test(judas_joint_application_tests tests/JointApplicationTests.cpp APPLICATION)
-
 target_include_directories(judas_engine SYSTEM PRIVATE third_party/cgltf)
 
 judas_add_engine_test(judas_skeletal_animation_tests tests/SkeletalAnimationTests.cpp)
-judas_add_engine_test(judas_animation_application_tests tests/AnimationApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_pose_composition_tests tests/PoseCompositionTests.cpp)
 
-add_executable(judas_pose_composition_application_tests tests/PoseCompositionApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_pose_composition_application_tests PRIVATE judas_engine)
-
 add_executable(judas_ragdoll_tests tests/RagdollTests.cpp)
 target_link_libraries(judas_ragdoll_tests PRIVATE judas_engine)
-
-add_executable(judas_ragdoll_application_tests tests/RagdollApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_ragdoll_application_tests PRIVATE judas_engine)
 
 # Focused fluid-demo performance observation of the ordinary application.
 add_executable(judas_fluid_demo_probe tools/FluidDemoProbe.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
@@ -1276,22 +1253,16 @@ judas_warnings(judas_fluid_render_probe)
 judas_add_engine_test(judas_fluid_demo_integration_tests tests/FluidDemoIntegrationTests.cpp)
 
 judas_add_engine_test(judas_character_motor_tests tests/CharacterMotorTests.cpp)
-judas_add_engine_test(judas_character_motor_application_tests tests/CharacterMotorApplicationTests.cpp)
 
 # M50 developer documentation examples; uses the normal engine/QuickJS runtime.
 judas_add_engine_test(judasjs_examples_tests tests/JudasJSExamplesTests.cpp)
 
 # M51 ordinary project behaviour composition and explicit compatibility boundary.
-judas_add_engine_test(judas_boundary_migration_tests tests/BoundaryMigrationTests.cpp)
 
 # M52 executes the ordinary JS game against production physics and runtime systems.
-judas_add_engine_test(judas_shooter_game_tests tests/ShooterGameTests.cpp)
-
-judas_add_engine_test(judas_shooter_application_tests tests/ShooterApplicationTests.cpp APPLICATION)
 
 # Consumer survival game: actual tool interactions, physical construction,
 # excavated collision and cold-process persistence through Application.
-judas_add_engine_test(judas_hearthworld_application_tests tests/HearthworldApplicationTests.cpp APPLICATION)
 
 judas_add_engine_test(judas_script_presentation_tests tests/ScriptPresentationTests.cpp)
 
@@ -1299,8 +1270,6 @@ add_executable(judas_navigation_bake tools/NavigationBake.cpp)
 target_link_libraries(judas_navigation_bake PRIVATE judas_navigation_baker)
 add_executable(judas_navigation_tests tests/NavigationTests.cpp)
 target_link_libraries(judas_navigation_tests PRIVATE judas_navigation_baker)
-add_executable(judas_navigation_game_tests tests/NavigationGameTests.cpp)
-target_link_libraries(judas_navigation_game_tests PRIVATE judas_engine)
 
 add_executable(judas_liquid_tests tests/LiquidTests.cpp)
 target_link_libraries(judas_liquid_tests PRIVATE judas_engine)
@@ -1346,8 +1315,6 @@ add_executable(judas_environment_bake tools/EnvironmentBake.cpp)
 target_link_libraries(judas_environment_bake PRIVATE judas_engine)
 add_executable(judas_material_tests tests/MaterialTests.cpp)
 target_link_libraries(judas_material_tests PRIVATE judas_engine)
-add_executable(judas_material_application_tests tests/MaterialApplicationTests.cpp src/Application.cpp src/TestHarness.cpp src/RuntimeDiagnostics.cpp src/RuntimeOptions.cpp)
-target_link_libraries(judas_material_application_tests PRIVATE judas_engine)
 
 # Legacy direct-Renderer test targets need the reusable M57 material implementation.
 foreach(target judas_ui_tests judas_lighting_tests judas_interactable_tests)
@@ -1358,22 +1325,10 @@ target_link_libraries(judas_engine PUBLIC judas_unicode)
 
 judas_add_engine_test(judas_text_localization_tests tests/TextLocalizationTests.cpp)
 judas_add_engine_test(judas_text_render_tests tests/TextRenderTests.cpp)
-add_executable(judas_localization_application_tests tests/LocalizationApplicationTests.cpp src/Application.cpp src/TestHarness.cpp src/RuntimeDiagnostics.cpp src/RuntimeOptions.cpp)
-target_link_libraries(judas_localization_application_tests PRIVATE judas_engine)
-judas_warnings(judas_localization_application_tests)
 
 judas_add_engine_test(judas_streaming_tests tests/WorldStreamingTests.cpp)
-add_executable(judas_streaming_demo_builder tools/StreamingDemo.cpp)
-target_link_libraries(judas_streaming_demo_builder PRIVATE judas_navigation_baker)
-judas_add_engine_test(judas_streaming_application_tests tests/StreamingApplicationTests.cpp APPLICATION)
-
-add_executable(judas_streaming_performance_tests tests/StreamingPerformanceTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_streaming_performance_tests PRIVATE judas_engine)
-target_include_directories(judas_streaming_performance_tests PRIVATE src)
-judas_warnings(judas_streaming_performance_tests -Wpedantic)
 
 # M59 focused real-project spatial-interest suspension/revisit regression.
-judas_add_engine_test(judas_streaming_revisit_tests tests/StreamingRevisitTests.cpp APPLICATION)
 
 # Historical targets compile Window.cpp directly instead of linking the engine.
 # Keep their window/icon dependency identical to the editor and standalone game,
@@ -1391,8 +1346,6 @@ endforeach()
 
 # M60 production PCM streaming/acoustics checks (no device required).
 judas_add_engine_test(judas_audio_acoustics_tests tests/AudioAcousticsTests.cpp)
-add_executable(judas_audio_demo tools/AudioDemo.cpp)
-target_link_libraries(judas_audio_demo PRIVATE judas_engine)
 
 judas_add_engine_test(judas_audio_world_tests tests/AudioWorldTests.cpp)
 
@@ -1406,7 +1359,6 @@ target_link_libraries(judas_world_persistence_tests PRIVATE judas_engine)
 judas_add_engine_test(judas_physics_continuation_tests tests/PhysicsContinuationTests.cpp)
 judas_warnings(judas_world_persistence_tests -Wpedantic)
 
-judas_add_engine_test(judas_save_application_tests tests/SaveApplicationTests.cpp APPLICATION WARNINGS -Wpedantic)
 judas_add_engine_test(judas_character_publication_tests tests/CharacterPublicationTests.cpp WARNINGS -Wpedantic)
 judas_add_engine_test(judas_save_exclusion_tests tests/SaveExclusionTests.cpp WARNINGS -Wpedantic)
 judas_add_engine_test(judas_consumer_lifecycle_audit_tests tests/ConsumerLifecycleAuditTests.cpp APPLICATION WARNINGS -Wpedantic)
@@ -1421,23 +1373,18 @@ add_executable(judas_deformable_bake tools/DeformableBake.cpp)
 target_link_libraries(judas_deformable_bake PRIVATE judas_engine)
 add_executable(judas_deformable_performance_tests tests/DeformablePerformanceTests.cpp)
 target_link_libraries(judas_deformable_performance_tests PRIVATE judas_engine)
-add_executable(judas_deformable_application_tests tests/DeformableApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_deformable_application_tests PRIVATE judas_engine)
 
-foreach(target judas_deformable_tests judas_deformable_bake judas_deformable_application_tests judas_deformable_performance_tests)
+foreach(target judas_deformable_tests judas_deformable_bake judas_deformable_performance_tests)
   judas_warnings(${target} -Wpedantic)
 endforeach()
 
 add_executable(judas_fracture_tests tests/FractureTests.cpp)
 target_link_libraries(judas_fracture_tests PRIVATE judas_engine)
 
-add_executable(judas_fracture_application_tests tests/FractureApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_fracture_application_tests PRIVATE judas_engine)
-
 add_executable(judas_fracture_performance_tests tests/FracturePerformanceTests.cpp)
 target_link_libraries(judas_fracture_performance_tests PRIVATE judas_engine)
 
-foreach(target judas_fracture_tests judas_fracture_application_tests judas_fracture_performance_tests)
+foreach(target judas_fracture_tests judas_fracture_performance_tests)
   judas_warnings(${target} -Wpedantic)
 endforeach()
 
@@ -1450,35 +1397,17 @@ target_link_libraries(judas_collision_cook PRIVATE judas_engine)
 add_executable(judas_collision_application_tests tests/CollisionApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_collision_application_tests PRIVATE judas_engine)
 
-judas_add_engine_test(judas_developer_integration_tests tests/DeveloperIntegrationTests.cpp WARNINGS -Wpedantic)
-add_executable(judas_developer_author tools/DeveloperIntegrationAuthor.cpp)
-target_link_libraries(judas_developer_author PRIVATE judas_engine)
-judas_warnings(judas_developer_author -Wpedantic)
-target_sources(judas_developer_integration_tests PRIVATE src/editor/EditorHistory.cpp)
-judas_add_engine_test(judas_developer_application_tests tests/DeveloperApplicationTests.cpp APPLICATION WARNINGS -Wpedantic)
 add_executable(judas_developer_authoring_tests tests/DeveloperAuthoringTests.cpp tools/StructuredAuthor.cpp)
 target_include_directories(judas_developer_authoring_tests PRIVATE tools)
 target_link_libraries(judas_developer_authoring_tests PRIVATE judas_engine)
 judas_warnings(judas_developer_authoring_tests -Wpedantic)
 
 # Ordinary application-loop observation for the post-M65 consumer review.
-add_executable(judas_consumer_review tools/ConsumerReview.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_consumer_review PRIVATE judas_engine)
-judas_warnings(judas_consumer_review -Wpedantic)
-judas_add_engine_test(judas_consumer_authoring_tests tests/ConsumerAuthoringTests.cpp SOURCES src/editor/EditorHistory.cpp WARNINGS -Wpedantic)
-add_executable(judas_consumer_capsule_repro tools/ConsumerCapsuleRepro.cpp)
-target_link_libraries(judas_consumer_capsule_repro PRIVATE judas_engine)
-judas_warnings(judas_consumer_capsule_repro -Wpedantic)
-add_executable(judas_consumer_reference_repro tools/ConsumerReferenceRepro.cpp)
-target_link_libraries(judas_consumer_reference_repro PRIVATE judas_engine)
-judas_warnings(judas_consumer_reference_repro -Wpedantic)
 
 judas_add_engine_test(judas_post_consumer_query_tests tests/PostConsumerQueryTests.cpp WARNINGS -Wpedantic)
 
 add_executable(judas_post_consumer_metadata_tests tests/PostConsumerMetadataTests.cpp)
 target_link_libraries(judas_post_consumer_metadata_tests PRIVATE judas_engine)
-add_executable(judas_post_consumer_ragdoll_tests tests/PostConsumerRagdollTests.cpp)
-target_link_libraries(judas_post_consumer_ragdoll_tests PRIVATE judas_engine)
 
 # M66 source import is authoring-only; shipped runtime reads normalized models.
 add_library(judas_ufbx STATIC third_party/ufbx/ufbx.c)
@@ -1507,8 +1436,6 @@ judas_warnings(judas_rig_normalization_tests)
 add_executable(judas_model_runtime_tests tests/ModelRuntimeTests.cpp)
 target_link_libraries(judas_model_runtime_tests PRIVATE judas_engine)
 
-judas_add_engine_test(judas_model_application_tests tests/ModelApplicationTests.cpp APPLICATION)
-
 judas_add_engine_test(judas_world_building_tests tests/WorldBuildingTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
 add_library(judas_world_authoring STATIC src/terrain/TerrainCook.cpp src/terrain/TerrainPreview.cpp
@@ -1523,13 +1450,6 @@ target_link_libraries(judas_editor_core PUBLIC judas_world_authoring)
 target_link_libraries(judas_world_building_tests PRIVATE judas_world_authoring)
 
 target_link_libraries(judas_scene_author PRIVATE judas_model_import)
-
-judas_add_engine_test(judas_world_authoring_runtime_tests tests/WorldAuthoringRuntimeTests.cpp)
-
-judas_add_engine_test(judas_world_authoring_application_tests tests/WorldAuthoringApplicationTests.cpp APPLICATION)
-add_executable(judas_world_authoring_performance tests/WorldAuthoringPerformance.cpp src/editor/EditorHistory.cpp)
-target_link_libraries(judas_world_authoring_performance PRIVATE judas_world_authoring)
-judas_warnings(judas_world_authoring_performance)
 
 # M68 structural work counts and comparable residency captures, with owned output.
 judas_add_engine_test(judas_scalability_tests tests/ScalabilityTests.cpp)
@@ -1571,20 +1491,17 @@ judas_add_engine_test(judas_physical_animation_tests tests/PhysicalAnimationTest
 # M77 opt-in actuation/contact foundations. Controller acceptance is separate.
 judas_add_engine_test(judas_physical_balance_foundation_tests tests/PhysicalBalanceFoundationTests.cpp)
 judas_add_engine_test(judas_physical_balance_controller_tests tests/PhysicalBalanceControllerTests.cpp)
-judas_add_engine_test(judas_balance_lab_tests tests/BalanceLabTests.cpp)
+
 # Development instrument for balance stepping; not an acceptance suite.
 judas_add_engine_test(judas_balance_step_harness tests/BalanceStepHarness.cpp)
-judas_add_engine_test(judas_character_lab_tests tests/CharacterLabTests.cpp)
-judas_add_engine_test(judas_character_lab_performance tests/CharacterLabPerformance.cpp)
 
 # M71 prescribed-body timeline, lifecycle, bounded workload and scene-view pan.
 judas_add_engine_test(judas_kinematic_tests tests/KinematicTests.cpp)
-judas_add_engine_test(judas_kinematic_lab_tests tests/KinematicLabTests.cpp)
+
 judas_add_engine_test(judas_kinematic_performance tests/KinematicPerformance.cpp)
 judas_add_engine_test(judas_editor_navigation_tests tests/EditorNavigationTests.cpp SOURCES src/editor/EditorCamera.cpp)
 
 judas_add_engine_test(judas_editor_picking_tests tests/EditorPickingTests.cpp SOURCES src/editor/EditorPicking.cpp)
-
 
 add_executable(judas_editor_widget_tests tests/EditorWidgetTests.cpp
     src/editor/EditorWidgets.cpp src/editor/EditorHistory.cpp)
@@ -1594,20 +1511,11 @@ judas_warnings(judas_editor_widget_tests)
 # M72 actual pixel/depth/shadow and immutable resource-control observations.
 judas_add_engine_test(judas_runtime_render_tests tests/RuntimeRenderTests.cpp)
 
-add_executable(judas_runtime_render_application_tests tests/RuntimeRenderApplicationTests.cpp src/editor/EditorHistory.cpp
-    src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_runtime_render_application_tests PRIVATE judas_engine)
-judas_warnings(judas_runtime_render_application_tests)
-
 # M72 named/prefab durability, ordinary editor history and default compatibility.
 judas_add_engine_test(judas_runtime_render_authoring_tests tests/RuntimeRenderAuthoringTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
-judas_add_engine_test(judas_runtime_render_retained_region_tests tests/RuntimeRenderRetainedRegionTests.cpp)
-
 # M73: actual QuickJS slot ownership, transient signals, lanes and limits.
 judas_add_engine_test(judas_signal_tests tests/SignalTests.cpp)
-
-judas_add_engine_test(judas_signal_application_tests tests/SignalApplicationTests.cpp APPLICATION)
 
 # M74 CPU retarget/cook checks link authoring services, never a runtime evaluator.
 add_executable(judas_animation_retarget_tests tests/AnimationRetargetTests.cpp)
@@ -1621,9 +1529,6 @@ add_executable(judas_retarget_editor_tests tests/RetargetEditorTests.cpp)
 target_link_libraries(judas_retarget_editor_tests PRIVATE judas_model_import)
 judas_warnings(judas_retarget_editor_tests)
 judas_add_engine_test(judas_retarget_application_tests tests/RetargetApplicationTests.cpp APPLICATION)
-add_executable(judas_retarget_lab_tests tests/RetargetLabTests.cpp)
-target_link_libraries(judas_retarget_lab_tests PRIVATE judas_model_import)
-judas_warnings(judas_retarget_lab_tests)
 
 judas_add_engine_test(judas_mod_content_tests tests/ModContentTests.cpp)
 
@@ -1633,10 +1538,6 @@ judas_warnings(judas_mod)
 
 # M76 navigation authoring shares kit registries and owner-qualified IDs.
 target_link_libraries(judas_navigation_bake PRIVATE judas_world_authoring)
-add_executable(judas_mod_lab_builder tools/ModLabBuilder.cpp)
-target_link_libraries(judas_mod_lab_builder PRIVATE judas_world_authoring judas_navigation_baker)
-judas_warnings(judas_mod_lab_builder)
-judas_add_engine_test(judas_mod_application_tests tests/ModApplicationTests.cpp APPLICATION)
 
 # M78 correction: saved-scene dependent-bake workflow, no runtime subsystem.
 add_executable(judas_navigation_dependency_tests tests/NavigationDependencyTests.cpp)
@@ -1661,10 +1562,9 @@ target_link_libraries(judas_volume_performance_tests PRIVATE judas_world_authori
 judas_warnings(judas_volume_performance_tests)
 
 # Ordinary consumer-game integration; no Planetfall policy links into the engine.
-judas_add_engine_test(judas_planetfall_application_tests tests/PlanetfallApplicationTests.cpp APPLICATION)
 
 # Ordinary ball-pusher consumer: no arcade policy in runtime C++.
-judas_add_engine_test(judas_ball_pusher_application_tests tests/BallPusherApplicationTests.cpp APPLICATION)
+
 judas_add_engine_test(judas_contact_interval_tests tests/ContactIntervalTests.cpp)
 
 judas_add_engine_test(judas_collision_continuity_tests tests/CollisionContinuityTests.cpp)
@@ -1682,9 +1582,7 @@ judas_add_engine_test(judas_origin_physics_tests tests/OriginPhysicsTests.cpp)
 add_executable(judas_origin_assembly_tests tests/OriginAssemblyTests.cpp)
 target_link_libraries(judas_origin_assembly_tests PRIVATE judas_engine judas_navigation_baker)
 judas_warnings(judas_origin_assembly_tests)
-add_executable(judas_create_travel_lab tools/CreateTravelLab.cpp)
-target_link_libraries(judas_create_travel_lab PRIVATE judas_engine judas_navigation_baker)
-judas_warnings(judas_create_travel_lab)
+
 judas_add_engine_test(judas_origin_participant_tests tests/OriginParticipantTests.cpp)
 judas_add_engine_test(judas_origin_travel_application_tests tests/OriginTravelApplicationTests.cpp APPLICATION)
 add_executable(judas_origin_audio_tests tests/OriginAudioTests.cpp)
@@ -1826,7 +1724,6 @@ judas_add_engine_test(judas_velocity_coupling_substep_tests tests/VelocityCoupli
 judas_add_engine_test(judas_physical_constraint_batch_tests tests/PhysicalConstraintBatchTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_tests tests/Mk2RotationTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_cold_tests tests/Mk2RotationColdTests.cpp)
-
 
 # Read-only runtime diagnostics and the shipped public-API learning project.
 judas_add_engine_test(judas_workflow_application_tests tests/DeveloperWorkflowApplicationTests.cpp APPLICATION)

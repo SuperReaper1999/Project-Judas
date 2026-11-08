@@ -1,1 +1,0 @@
-Original Judas demonstration tones, authored for M34. Dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). No third-party recording is used. generate_demo.py is offline asset authoring, not an engine synthesis capability.

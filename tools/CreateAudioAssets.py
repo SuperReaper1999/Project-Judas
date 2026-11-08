@@ -11,4 +11,3 @@ signals={
  'pulse.wav':('aevalsrc=if(between(t\\,0.02\\,0.03)\\,0.25*sin(2*PI*2200*t)\\,0):s=48000:d=1',1)}
 for name,(source,channels) in signals.items():
  subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i',source,'-ac',str(channels),'-y',str(audio/name)],check=True)
- shutil.copyfile(audio/name,root/'projects/streamed_range/Assets/audio'/name)

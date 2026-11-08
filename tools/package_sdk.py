@@ -123,8 +123,11 @@ def inventory(path):
     tools = value["tools"] + value["windows_tools"]
     if len(tools) != len(set(tools)) or any(not t.startswith("judas") or not t.replace("_", "").isalnum() for t in tools):
         raise ValueError("Invalid or duplicate SDK tool name")
-    for name in value["files"] + value["directories"] + [value["current_markdown"]] + value.get("excluded_markdown", []):
+    for name in value["files"] + value["directories"] + [value["current_markdown"]] + value.get("excluded_markdown", []) + value.get("source_only_projects", []):
         relative_path(name)
+    for name in value.get("source_only_projects", []):
+        if len(Path(name).parts) != 2 or Path(name).parts[0] != "projects" or name in value["directories"]:
+            raise ValueError("Source-only projects must be distinct explicit projects/NAME roots")
     return value
 
 

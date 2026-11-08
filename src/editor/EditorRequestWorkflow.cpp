@@ -53,7 +53,7 @@ using EditorSceneGeometry::PickRadius;
 namespace fs = std::filesystem;
 namespace {
 constexpr const char *kProjectFileHint =
-    "Relative to the working directory or absolute, e.g. projects/tiny_game/tiny_game.judasproj";
+    "Choose a project .judasproj file, relative to the working directory or absolute";
 }
 void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProjectServices &services,
                                            EditorRequests &r) {

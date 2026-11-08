@@ -1,14 +1,6 @@
 #include "RuntimeUI.h"
-#include "RuntimeWorld.h"
 #include "InputSystem.h"
-#include "AssetDatabase.h"
-#include "ResourceManager.h"
 #include "EngineHost.h"
-#include "InteractivePlay.h"
-#include "SceneSerialization.h"
-#include "SceneFingerprint.h"
-#include "Project.h"
-#include "ProjectExporter.h"
 #include "ScreenshotWriter.h"
 #include <filesystem>
 #include <fstream>
@@ -19,14 +11,14 @@ namespace fs=std::filesystem;
 int checks=0,failures=0;
 void Check(bool ok,const char* text){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",text);}
 int main(int argc,char** argv){
- fs::path out="build/m41-ui-tests", projectPath="projects/ui_demo/ui_demo.judasproj";
+ fs::path out="build/runtime-ui-tests";
  for (int i=1;i<argc;++i) {
      const std::string option=argv[i];
-     if (i+1==argc||(option!="--output"&&option!="--project")) {
-         std::fprintf(stderr,"usage: judas_runtime_ui_tests [--project PROJECT] [--output DIRECTORY]\n");
+     if (i+1==argc||option!="--output") {
+         std::fprintf(stderr,"usage: judas_runtime_ui_tests [--output DIRECTORY]\n");
          return 2;
      }
-     (option=="--project"?projectPath:out)=argv[++i];
+     out=argv[++i];
  }
  fs::create_directories(out);
  std::string error;UIDocument d;UIElement root;root.id="canvas";root.kind=UIKind::Canvas;d.elements.push_back(root);d.modal=true;
@@ -39,27 +31,17 @@ int main(int argc,char** argv){
  input.Reset();input.SetPhysical("pad:DpadDown",1);ui.Input(input,{-1,-1},false,1280,720);input.BeginFrame();input.SetPhysical("pad:South",1);ui.Input(input,{-1,-1},false,1280,720);events=ui.TakeEvents();Check(ui.Element(handle,"toggle")->value==1&&std::any_of(events.begin(),events.end(),[](const auto& e){return e.type=="change";}),"controller focus and toggle activation");input.BeginFixedStep();Check(!input.Action("jump").pressed&&!input.FixedAction("jump").pressed&&!input.Action("jump").held,"shared-binding consumption blocks gameplay and fixed input");
  ui.Element(handle,"button")->enabled=false;ui.Element(handle,"toggle")->visible=false;input.Reset();input.SetPhysical("key:Return",1);ui.Input(input,point,true,1280,720);events=ui.TakeEvents();Check(std::none_of(events.begin(),events.end(),[](const auto& e){return e.type=="click";}),"hidden/disabled controls do not activate");
  Check(ui.Unload(handle)&&!ui.Document(handle),"unload invalidates handles");auto next=ui.Add(d,"menu",0,error);Check(next!=handle,"unloaded handle never revives");
- // Real GL rendering and ordinary world/JS/editor-compatible session.
- Project project;const bool loaded=project.Load(projectPath.string(),error);
- Check(loaded,"UI demo project loads");
- if(!loaded){std::fprintf(stderr,"UI fixture %s: %s\n",projectPath.string().c_str(),error.c_str());return 1;}
- EngineHost host;Check(host.Init("M41 tests",640,360,false,error),"real engine host and GL context");if(failures){std::printf("INIT %s\n",error.c_str());return 1;}
- AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"normal UI asset registry");
- ResourceManager resources(&host.GetRenderer(),&assets);resources.SetBlockingMode(true);Scene scene;Check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"scene UI/script component load");
- RuntimeWorld world;Check(world.Build(scene,&resources,error,&project.Settings().classification),"normal world constructs UI document");if(!world.IsBuilt()){std::printf("ERROR %s\n",error.c_str());return 1;}
- input.SetMap(project.Settings().input,error);world.UpdateUIScripts(&input,1.f/60);auto h=world.UI().Find("game_ui");Check(h&&world.UI().Paused(),"authored main menu modal");
- auto& r=host.GetRenderer();r.BeginFrame(640,360);r.EndFrame();std::vector<unsigned char> beforePixels;r.CaptureFrame(640,360,beforePixels);r.BeginUIFrame(640,360);world.UI().Draw(r,640,360);r.EndUIFrame();std::vector<unsigned char> pixels;r.CaptureFrame(640,360,pixels); // screenshot readback uses normal renderer API below
- Check(pixels!=beforePixels,"UI draws modify actual GL framebuffer pixels");
- Check(WriteRgbPng((out/"menu.png").string(),640,360,pixels),"actual GL UI pixels captured");
- world.UI().Layout(640,360);point=world.UI().LayoutOf(h,"start")->rect.position+world.UI().LayoutOf(h,"start")->rect.size*.5f;
- input.Reset();input.SetPhysical("mouse:Left",1);world.UI().Input(input,point,true,640,360);input.BeginFrame();input.SetPhysical("mouse:Left",0);world.UI().Input(input,point,true,640,360);world.DispatchUIEvents(&input,.016f);Check(!world.UI().Paused()&&world.UI().Element(h,"hud")->visible,"JS receives click and starts HUD");
- auto* spawner=world.RuntimeDefinition(8);(void)spawner;world.UpdateScripts(&input,.016f);Check(world.UI().Element(h,"counter")->text.find("Spawned props:")==0,"JS modifies HUD text");
- input.BeginFrame();input.SetPhysical("key:Escape",1);world.UpdateUIScripts(&input,.016f);Check(world.UI().Paused()&&world.UI().Element(h,"pause")->visible,"JS migrates pause menu to authored panel");
- world.UI().Input(input,{-1,-1},false,640,360);world.DispatchUIEvents(&input,.016f); // same opening edge should not close again (script checks below)
- // Preserve the authored scene through runtime mutation and Stop.
- std::string source;SaveSceneToString(scene,source);world.EndScripts();Check(!world.UIIfLoaded()&&([&](){std::string after;SaveSceneToString(scene,after);return after==source;})(),"Stop releases UI/VM and leaves authored scene unchanged");
+ // Core document rendering is independent of a historical game's controller.
+ // Native script ownership, menu clicks and cold publication are exercised by
+ // UIMenuIntegrationTests against the current Satchel menu project.
+ EngineHost host;Check(host.Init("Runtime UI document",640,360,false,error),"real engine host and GL context");if(failures)return 1;
+ auto& r=host.GetRenderer();r.BeginFrame(640,360);r.EndFrame();std::vector<unsigned char> beforePixels;r.CaptureFrame(640,360,beforePixels);
+ ui.Layout(640,360);r.BeginUIFrame(640,360);ui.Draw(r,640,360);r.EndUIFrame();std::vector<unsigned char> pixels;r.CaptureFrame(640,360,pixels);
+ Check(pixels!=beforePixels,"normal clipped UI document changes actual framebuffer pixels");
+ Check(WriteRgbPng((out/"document.png").string(),640,360,pixels),"UI framebuffer capture succeeds");
+ Check(ui.Unload(next)&&ui.Empty(),"document retirement releases the final UI owner");
  RuntimeUI perf;auto hud=d;hud.modal=false;while(hud.elements.size()<100){UIElement e;e.id="text"+std::to_string(hud.elements.size());e.parent="canvas";e.kind=UIKind::Text;e.text="HUD";hud.elements.push_back(e);}perf.Add(hud,"perf",0,error);
  auto start=std::chrono::steady_clock::now();for(int i=0;i<100;++i)perf.Layout(1280,720);auto us=std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-start).count()/100;
  r.BeginUIFrame(640,360);perf.Draw(r,640,360);r.EndUIFrame();std::printf("PERFORMANCE elements=100 layout_us=%.3f render_us=%.3f submissions=%u\n",us,perf.Stats().renderUs,perf.Stats().draws);
- world.Destroy();resources.Shutdown();host.Shutdown();std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
+ host.Shutdown();std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
 }

@@ -112,3 +112,16 @@ of the old-demo generator dependency. The four borrowed terrain source textures
 and their licence notice are also byte-identical to the workshop-owned copies.
 Consumer projects, legacy runtime implementations and their dedicated targets
 are removed in subsequent dependency-aware batches.
+
+## Curated project retirement
+
+All six preserved games pass project configuration validation at their external
+locations. The 61 retired project trees have been removed; 23 examples remain.
+Dedicated historical application tests and generators were retired with their
+consumers. Current runtime UI coverage uses a focused document and retains real
+input, layout, focus, GL output and teardown checks: 14 checks pass. The editor
+and runtime UI suite build, and all 15 release-packaging tests pass against the
+curated inventory. Source-only examples are explicitly classified in the same
+packaging inventory rather than duplicated in source-package code.
+
+This is the project-retirement checkpoint, not final runtime qualification.

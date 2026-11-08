@@ -22,12 +22,12 @@ ROOT = Path(__file__).resolve().parents[1]
 METADATA = {"JUDAS_SOURCE_INFO.json", "JUDAS_SOURCE_FILES.json"}
 ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packaging", "third_party", "assets", "releases", ".github"}
 ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig.cmake", "README.md", "LICENSE", "engine-version.json", ".gitignore", ".gitattributes"}
-# Editable SDK examples and the original runtime-UI qualification fixture.
+# Curated current examples, including explicitly source-only qualification projects.
 # No other consumer games, saves or untracked experiments are selected.
 def learning_projects(spec):
-    """Share the SDK's explicit project roots; never broaden a nested path."""
+    """Read explicit current project roots from the shared SDK/source inventory."""
     projects = set()
-    for directory in spec["directories"]:
+    for directory in spec["directories"] + spec.get("source_only_projects", []):
         path = PurePosixPath(directory)
         if path.parts and path.parts[0] == "projects":
             if len(path.parts) != 2 or path.parts[1] in (".", "..") or "\\" in directory:
@@ -37,7 +37,6 @@ def learning_projects(spec):
 
 
 LEARNING_PROJECTS = learning_projects(json.loads((ROOT / "packaging/sdk-inventory.json").read_text()))
-QUALIFICATION_PROJECTS = {"ui_demo", "material_lab", "liquid_surface_demo"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 
 
@@ -58,7 +57,7 @@ def selected(name, profile, learning=None):
     path = PurePosixPath(name)
     projects = LEARNING_PROJECTS if learning is None else learning
     return (name in ENGINE_FILES or path.parts[0] in ENGINE_ROOTS or
-            len(path.parts)>2 and path.parts[0]=="projects" and path.parts[1] in (projects | QUALIFICATION_PROJECTS) and
+            len(path.parts)>2 and path.parts[0]=="projects" and path.parts[1] in projects and
             not ({"Saves", ".cache", "__pycache__"} & set(path.parts)) and path.suffix not in {".lock", ".judasstate"} or
             name.startswith("docs/judasjs/") or name == "docs/judas.d.ts" or
             len(path.parts) == 2 and path.parts[0] == "docs" and

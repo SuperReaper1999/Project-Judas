@@ -1,3 +1,0 @@
-Original Judas M60 generated music, tone, pink-noise ambience and impulse signal.
-Dedicated to the public domain under CC0 1.0. No third-party recordings or melodies.
-See tools/CreateAudioAssets.py for reproducible synthesis.

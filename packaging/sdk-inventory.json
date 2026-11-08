@@ -51,16 +51,28 @@
     "projects/ai_workshop",
     "projects/willow_town",
     "projects/menu_workshop",
-    "projects/terrain_navigation_workshop",
     "projects/renderer_v2_lab",
     "projects/particle_v2_lab",
     "projects/graffiti_workshop",
     "projects/terrain_v2_workshop",
-    "projects/terrain_v2_planet_workshop"
+    "projects/terrain_v2_planet_workshop",
+    "projects/basic_water_lab",
+    "projects/connected_workshop"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [
     "docs/DontReadMe_Final.md",
     "docs/FTFT.md"
+  ],
+  "source_only_projects": [
+    "projects/animation_studio",
+    "projects/audio_lab",
+    "projects/browser_player_lab",
+    "projects/core_scramble",
+    "projects/developer_lab",
+    "projects/physics_stress_lab",
+    "projects/save_evolution_lab",
+    "projects/ui_showcase",
+    "projects/water_v2_workshop"
   ]
 }

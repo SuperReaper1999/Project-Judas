@@ -14,7 +14,6 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'projects/physics_stress_lab'
-SOURCE = ROOT / 'projects/weather_lab'
 
 
 def identity(path):
@@ -55,7 +54,7 @@ def box(number, name, position, half, color, dynamic=False, mass=8, tags=0, sphe
     return obj(number, name, position, **fields)
 
 
-SETTINGS = copy.deepcopy(json.loads((SOURCE / 'Scenes/flat.judas').read_text())['data']['settings'])
+SETTINGS = copy.deepcopy(json.loads((OUT / 'Scenes/room128.judas').read_text())['data']['settings'])
 SETTINGS.update({'name': 'Physics Stress Lab', 'world-origin': [0, 0, 0], 'next-id': 20000,
                  'sun-direction': [-.4, .8, .5], 'ambient': [.29, .32, .39]})
 
@@ -77,15 +76,15 @@ def joint(number, name, body_a, body_b, anchor_a, anchor_b, kind, frame=(1, 0, 0
 
 font_path = 'Assets/fonts/DejaVuSans.ttf'
 (OUT / 'Assets/fonts').mkdir(parents=True, exist_ok=True)
-shutil.copy2(SOURCE / font_path, OUT / font_path)
-shutil.copy2(SOURCE / 'Assets/fonts/LICENSE.txt', OUT / 'Assets/fonts/LICENSE.txt')
+shutil.copy2(ROOT / 'assets/fonts/DejaVuSans.ttf', OUT / font_path)
+shutil.copy2(ROOT / 'assets/fonts/DejaVuSans-LICENSE.txt', OUT / 'Assets/fonts/LICENSE.txt')
 metadata(font_path, 'font')
 (OUT / 'Assets/scripts').mkdir(parents=True, exist_ok=True)
-shutil.copy2(SOURCE / 'Assets/scripts/math.js', OUT / 'Assets/scripts/math.js')
+# The lab's tracked, hand-written math.js is its source; never copy a retired controller.
 metadata('Assets/scripts/math.js', 'script')
 metadata('Assets/scripts/lab.js', 'script')
 
-ui = json.loads((SOURCE / 'Assets/ui/weather.judasui').read_text())
+ui = json.loads((OUT / 'Assets/ui/stress.judasui').read_text())
 for element in ui['data']['elements']:
     if element.get('font'):
         element['font'] = identity(font_path)
@@ -175,7 +174,7 @@ for count in [128, 512, 1024]:
     write('Scenes/room' + str(count) + '.judas', room(count))
 write('Scenes/rotated.judas', room(128, True))
 
-project = copy.deepcopy(json.loads((SOURCE / 'weather_lab.judasproj').read_text()))
+project = copy.deepcopy(json.loads((OUT / 'physics_stress_lab.judasproj').read_text()))
 data = project['data']
 data.update(name='Judas Physics Stress Lab', startupScene='Scenes/room128.judas', worldManifest='',
             saveIdentity=hashlib.sha256(b'Judas Physics Stress Lab M87').hexdigest(), runtimeAssets=prefabs,

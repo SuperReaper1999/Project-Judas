@@ -1,1 +1,0 @@
-import {physics} from 'judas';export default class {constructor({entity}){this.entity=entity;this.sign=1;}fixedUpdate(){const j=physics.joint(this.entity);if(!j)return;const x=j.state.coordinate;if(x>1.8)this.sign=-1;if(x< -1.8)this.sign=1;j.setMotor(this.sign,10000);}}

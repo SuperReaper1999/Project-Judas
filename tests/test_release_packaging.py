@@ -91,12 +91,12 @@ class QualificationScope(unittest.TestCase):
         inventory=json.loads((ROOT/'packaging/sdk-inventory.json').read_text())
         manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
         projects=[]
-        for directory in inventory['directories']:
+        for directory in inventory['directories']+inventory.get('source_only_projects',[]):
             if directory.startswith('projects/'):
-                fixtures=list((ROOT/directory).glob('*.judasproj'))
+                fixtures=list((ROOT/directory).rglob('*.judasproj'))
                 self.assertTrue(fixtures,directory)
                 projects.extend(path.relative_to(ROOT).as_posix() for path in fixtures)
-        for name in ('runtime-ui','ui-menu-workflow'):
+        for name in ('ui-menu-workflow',):
             entry=next(case for case in manifest['tests'] if case['name']==name)
             project,=[argument for argument in entry['args'] if argument.endswith('.judasproj')]
             self.assertTrue(project.startswith('{root}/'),name)
@@ -128,7 +128,7 @@ class QualificationScope(unittest.TestCase):
         self.assertIn('2d',qualify_m100.GROUPS)
         spec=package_sdk.inventory(ROOT/'packaging/sdk-inventory.json')
         for name in package_source.LEARNING_PROJECTS:
-            self.assertIn('projects/'+name,spec['directories'])
+            self.assertIn('projects/'+name,spec['directories']+spec.get('source_only_projects',[]))
             self.assertTrue(package_source.selected('projects/'+name+'/Scenes/main.judas','engine'))
         self.assertFalse(package_source.selected('projects/lunar_island/private.js','engine'))
         self.assertFalse(package_source.selected('projects/beacon_grove/Saves/private.judasstate','engine'))
