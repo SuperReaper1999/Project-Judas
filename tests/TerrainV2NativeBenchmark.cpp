@@ -24,9 +24,12 @@ void Require(bool ok, const std::string &error) {
 int main(int argc, char **argv) {
     try {
         namespace fs = std::filesystem;
-        const bool navigation = argc == 3 && std::string(argv[2]) == "--navigation";
+        const bool fullNavigation = argc == 3 && std::string(argv[2]) == "--navigation-full";
+        const bool navigation =
+            fullNavigation || (argc == 3 && std::string(argv[2]) == "--navigation");
         if ((argc != 2 && !navigation) || fs::exists(argv[1]))
-            throw std::runtime_error("provide a fresh benchmark output directory [--navigation]");
+            throw std::runtime_error(
+                "provide a fresh benchmark output directory [--navigation|--navigation-full]");
         const fs::path root(argv[1]);
         fs::create_directories(root / "Assets");
         auto source = TerrainV2::Create(513, 513, 2);
@@ -59,8 +62,9 @@ int main(int argc, char **argv) {
         owner.landscape = SceneLandscapeSettings{asset.id};
         if (navigation) {
             owner.navigationSurface = NavigationSurfaceSettings{};
-            owner.navigationSurface->halfExtents = {64, 64, 64};
-            owner.navigationSurface->cellSize = .5f;
+            owner.navigationSurface->halfExtents =
+                fullNavigation ? glm::vec3(512, 64, 512) : glm::vec3(64);
+            owner.navigationSurface->cellSize = fullNavigation ? 1.f : .5f;
             owner.navigationSurface->minRegion = 0;
         }
         std::cout << "{\"case\":\"fixture\",\"samples\":263169,\"extent_m\":1024,"
@@ -117,7 +121,10 @@ int main(int argc, char **argv) {
             const auto saveMs = Ms(start);
             std::cout << "{\"case\":\"native-scene\",\"run\":" << run
                       << ",\"navigation_enabled\":" << (navigation ? "true" : "false")
-                      << ",\"navigation_coverage_m\":" << (navigation ? 128 : 0)
+                      << ",\"navigation_coverage_m\":"
+                      << (fullNavigation ? 1024
+                          : navigation   ? 128
+                                         : 0)
                       << ",\"navigation_tiles\":" << world.Navigation().Statistics().tiles
                       << ",\"index_open_ms\":" << openMs << ",\"sample_read_ms\":" << readMs
                       << ",\"scene_build_ms\":" << buildMs

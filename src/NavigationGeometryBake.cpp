@@ -1,5 +1,6 @@
 #include "NavigationAsset.h"
 #include "NavigationBackend.h"
+#include "navigation/NavigationRasterBins.h"
 #include <Recast.h>
 #include <DetourAlloc.h>
 #include <memory>
@@ -32,10 +33,13 @@ bool ValidateNavigationBakeSettings(const NavigationSurfaceSettings& settings,
 bool BakeNavigationGeometry(const NavigationGeometry& geometry,const NavigationSurfaceSettings& settings,const NavigationProfile& profile,NavigationData& out,std::string& error,bool allowEmpty,const std::function<bool()>& cancelled){if(!ValidateNavigationBakeSettings(settings,profile,error))return false;rcContext context(false);NavigationData data;data.settings=settings;data.profile=profile;data.fingerprint=geometry.fingerprint;NavigationCompressor compressor;
  rcConfig cfg{};cfg.cs=settings.cellSize;cfg.ch=settings.cellHeight;cfg.walkableSlopeAngle=profile.slope;cfg.walkableHeight=static_cast<int>(std::ceil(profile.height/cfg.ch));cfg.walkableClimb=static_cast<int>(std::floor(profile.climb/cfg.ch));cfg.walkableRadius=static_cast<int>(std::ceil(profile.radius/cfg.cs));cfg.maxSimplificationError=settings.simplification;cfg.minRegionArea=settings.minRegion*settings.minRegion;cfg.tileSize=settings.tileSize;cfg.borderSize=cfg.walkableRadius+3;cfg.width=cfg.height=cfg.tileSize+cfg.borderSize*2;
  glm::vec3 bmin=-settings.halfExtents,bmax=settings.halfExtents;int width,height;rcCalcGridSize(&bmin.x,&bmax.x,cfg.cs,&width,&height);int tx=(width+cfg.tileSize-1)/cfg.tileSize,tz=(height+cfg.tileSize-1)/cfg.tileSize;if(tx*tz>4096||cfg.walkableHeight<3){error="navigation bake exceeds 4096 tiles or insufficient vertical resolution";return false;}int count=geometry.triangles.size()/3;std::vector<unsigned char> areas(count);rcMarkWalkableTriangles(&context,cfg.walkableSlopeAngle,geometry.vertices.data(),geometry.vertices.size()/3,geometry.triangles.data(),count,areas.data());
+ NavigationRasterBins bins;
+ if(!bins.Build(geometry,areas,bmin,cfg.cs,cfg.tileSize,cfg.borderSize,tx,tz,error,4*1024*1024,cancelled))return false;
  for(int z=0;z<tz;++z)for(int x=0;x<tx;++x){if(cancelled&&cancelled()){error="cancelled";return false;}cfg.bmin[0]=bmin.x+(x*cfg.tileSize-cfg.borderSize)*cfg.cs;cfg.bmin[1]=bmin.y;cfg.bmin[2]=bmin.z+(z*cfg.tileSize-cfg.borderSize)*cfg.cs;cfg.bmax[0]=bmin.x+((x+1)*cfg.tileSize+cfg.borderSize)*cfg.cs;cfg.bmax[1]=bmax.y;cfg.bmax[2]=bmin.z+((z+1)*cfg.tileSize+cfg.borderSize)*cfg.cs;
   std::unique_ptr<rcHeightfield,decltype(&rcFreeHeightField)> hf(rcAllocHeightfield(),rcFreeHeightField);std::unique_ptr<rcCompactHeightfield,decltype(&rcFreeCompactHeightfield)> chf(rcAllocCompactHeightfield(),rcFreeCompactHeightfield);std::unique_ptr<rcHeightfieldLayerSet,decltype(&rcFreeHeightfieldLayerSet)> layers(rcAllocHeightfieldLayerSet(),rcFreeHeightfieldLayerSet);
   auto fail=[&](){error="Recast failed building tile "+std::to_string(x)+","+std::to_string(z);return false;};
-  if(!hf||!chf||!layers||!rcCreateHeightfield(&context,*hf,cfg.width,cfg.height,cfg.bmin,cfg.bmax,cfg.cs,cfg.ch)||!rcRasterizeTriangles(&context,geometry.vertices.data(),geometry.vertices.size()/3,geometry.triangles.data(),areas.data(),count,*hf,cfg.walkableClimb))return fail();
+  if(!hf||!chf||!layers||!rcCreateHeightfield(&context,*hf,cfg.width,cfg.height,cfg.bmin,cfg.bmax,cfg.cs,cfg.ch)||!(bins.FullScan()?rcRasterizeTriangles(&context,geometry.vertices.data(),geometry.vertices.size()/3,geometry.triangles.data(),areas.data(),count,*hf,cfg.walkableClimb):
+     (bins.At(x,z).indices.empty()||rcRasterizeTriangles(&context,geometry.vertices.data(),geometry.vertices.size()/3,bins.At(x,z).indices.data(),bins.At(x,z).areas.data(),int(bins.At(x,z).areas.size()),*hf,cfg.walkableClimb))))return fail();
   rcFilterLowHangingWalkableObstacles(&context,cfg.walkableClimb,*hf);rcFilterLedgeSpans(&context,cfg.walkableHeight,cfg.walkableClimb,*hf);rcFilterWalkableLowHeightSpans(&context,cfg.walkableHeight,*hf);
   if(!rcBuildCompactHeightfield(&context,cfg.walkableHeight,cfg.walkableClimb,*hf,*chf)||!rcErodeWalkableArea(&context,cfg.walkableRadius,*chf))return fail();
   for(auto& v:geometry.modifiers)rcMarkConvexPolyArea(&context,v.polygon.data(),v.polygon.size()/3,v.bottom,v.top,v.blocked?RC_NULL_AREA:static_cast<unsigned char>(v.area+1),*chf);

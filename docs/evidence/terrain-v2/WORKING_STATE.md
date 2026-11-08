@@ -93,10 +93,38 @@ placement via transform. Current native coverage rebuilds whole; no incremental
 tile preparation yet. Generic inspector static bake freshness also recollects
 geometry per frame; avoid claiming that rare path optimized without profiling.
 
-NEXT profile full-coverage navigation and address justified rasterization work;
-physical-interest/residency limits, planetary excavation/provider masking, and
-final game/SDK/visual qualification remain. TerrainV2 is NOT complete. No release,
-main, fluid policy, existing projects/installed SDK or independent research changes.
+Navigation scaling after34b6ab5b is qualified and checkpoint-ready. No build/test
+running. Evidence navigation-raster/. DT_POLYREF64 and exact triangle bins fix
+full-km startup capacity and repeated tile raster rejection. Existing compressed
+nav resources remain readable (actual SpringRange26). All native consumers must
+rebuild together: internal Detour ABI changed, not save/resource formats.
+
+Index59/full-reference17/native64+cold7/world93+exact300steps/components35/surface59/
+handoff25/interactions85/nav92/actualgame26/saveExclusions77/export18 and genuinely
+relocatedWorkshop PASS. Five alternating full-km524288triangle bake pairs: median
+2277.29→239.448ms, every975compressed layer bytes EXACT. Before runtime with same
+full bounds failed native cache init (975layers*4reserves,2048polys,only9saltbits).
+Before executable/source retained at .cache/terrain-v2/navigation-raster-reference.
+No speedup from the failed runtime is claimed. First large oracle fixture wrongly
+kept small vertical bounds; corrected to the kilometre -256..256, failure preserved.
+
+Full1km navigation/1m cells now actually runs1,024physical chunks: median startup
+704.7ms, complete sculpt292.79ms, excavation296.74ms, publication26.23ms. That last
+owner-thread cache construction is a real remaining hitch. Partial128m numbers
+above aren't full-km routing claims. Coverage is configured, not a guarantee that
+all physical points pass Recast slope/climb/voxel constraints. Five samples are
+engineering diagnostics, not broad percentile distributions.
+
+NEXT address measured26ms native cache construction/publication, likely by
+worker-owned prepared Detour caches transferred into the existing NavigationSystem
+at publication. Preserve current source bytes, old resources, previous complete
+revision and body/route ownership. Do not implement a second navigation system.
+No giant unmeasured redesign. Independent raster/64-bit checkpoint remains
+attributable; query live Git after commit. Physical interest/planetary work remains.
+
+Physical-interest/residency limits, planetary excavation/provider masking and
+final game/SDK/visual qualification remain; TerrainV2 is NOT complete. Main,
+fluid lock and existing installedSDKs/projects/research untouched.
 
 Last solid integration qualification:85 actual source/water/particle controls,
 world93, surface44, component35; unchanged water28/runtime41/script5 and particles

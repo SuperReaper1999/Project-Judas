@@ -1,0 +1,70 @@
+{
+  "base": "34b6ab5b",
+  "channel": "Experimental",
+  "configuration": "Release",
+  "compiler": "GCC15.2",
+  "hardware": "Ryzen5 5600,8GB; desktop GTX970 for actual game/export",
+  "timestamp_utc": "2026-11-08T00:54:35Z",
+  "matched_operator": {
+    "pairs": [
+      {
+        "pair": 0,
+        "reference_ms": 2280.08,
+        "indexed_ms": 246.361,
+        "triangles": 524288,
+        "layers": 975
+      },
+      {
+        "pair": 1,
+        "reference_ms": 2271.81,
+        "indexed_ms": 239.192,
+        "triangles": 524288,
+        "layers": 975
+      },
+      {
+        "pair": 2,
+        "reference_ms": 2283.07,
+        "indexed_ms": 239.18,
+        "triangles": 524288,
+        "layers": 975
+      },
+      {
+        "pair": 3,
+        "reference_ms": 2277.29,
+        "indexed_ms": 239.538,
+        "triangles": 524288,
+        "layers": 975
+      },
+      {
+        "pair": 4,
+        "reference_ms": 2269.82,
+        "indexed_ms": 239.448,
+        "triangles": 524288,
+        "layers": 975
+      }
+    ],
+    "medians_ms": {
+      "reference_ms": 2277.29,
+      "indexed_ms": 239.448
+    },
+    "scope": "524288 actual terrain triangles; entire 1024m box; 1m nav cells, alternating order; native layer bytes exactly identical"
+  },
+  "integrated_full_coverage_medians_ms": {
+    "scene_build_ms": 704.695,
+    "sculpt_complete_ms": 292.791,
+    "paint_complete_ms": 3.65322,
+    "edit_complete_ms": 296.742,
+    "edit_publish_ms": 26.2346
+  },
+  "remaining": [
+    "26ms owner-thread publication remains; do not call full-region edit hitch eliminated",
+    "whole configured coverage rebaked after edits; no incremental tile updates",
+    "coarse navigation settings can mark areas nonwalkable; bounds do not guarantee every physical point is routable",
+    "DT_POLYREF64 changes internal native ABI; all consumers rebuild together; .judasnav compressed layers contain no refs and existing resources pass real consumer test",
+    "planetary excavation and physical-interest residency remain incomplete"
+  ],
+  "failures": [
+    "original full1km runtime rejected valid baked data because layers*4 tile reserve plus2048 polygons exhausted32-bit ref salt bits",
+    "first large reference fixture used small-test vertical bounds; corrected to exact kilometre fixture -256..256; failure preserved"
+  ]
+}
