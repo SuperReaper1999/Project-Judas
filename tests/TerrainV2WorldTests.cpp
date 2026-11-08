@@ -113,6 +113,24 @@ export default class {
     resources.Shutdown();
     fs::remove_all(root);
 }
+void RejectSensor(JobSystem &jobs) {
+    AssetDatabase assets;
+    ResourceManager resources(nullptr, &assets, &jobs);
+    RuntimeWorld world;
+    world.legacyGameplay = false;
+    std::string error;
+    auto scene = SceneSource();
+    scene.Find(1)->body->sensor = true;
+    Check(world.Build(scene, &resources, error, nullptr, nullptr, true),
+          "a separate ordinary box sensor remains supported");
+    const auto before = world.Physics().AliveBodies();
+    Check(!world.LiveTerrain().CreateLandscape(1, TerrainV2::Create(17, 17, .5f), error) &&
+              error.find("sensor") != std::string::npos,
+          "runtime terrain explicitly rejects sensor ownership");
+    Check(!world.HasRuntimeTerrain(1) && world.Physics().AliveBodies().size() == before.size() &&
+              world.Physics().IsBodySensor(world.RuntimeBody(1)),
+          "rejected terrain leaves the original sensor and world intact");
+}
 void SeamTravel(JobSystem &jobs) {
     AssetDatabase assets;
     ResourceManager resources(nullptr, &assets, &jobs);
@@ -236,6 +254,7 @@ int main(int argc, char **argv) {
             Check(!w.Physics().Raycast({-.3f, 1.6f, -7}, {0, 0, 1}, 14).hit,
                   "cold restored tunnel is physically open");
         } else {
+            RejectSensor(jobs);
             SeamTravel(jobs);
             ReplacingOwner(jobs);
             IndependentScriptOwners(jobs);

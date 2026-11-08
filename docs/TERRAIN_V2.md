@@ -724,3 +724,9 @@ All physical chunks still remain resident while their terrain region is active.
 This optimization and the native file's page index are **not** independent
 per-chunk physics residency or sample demand paging. Use bounded streamed terrain
 regions and their existing memory budgets for larger worlds.
+
+A native landscape is a physical triangle surface and cannot also be a volume
+sensor. Authoring and runtime creation reject that combination before publishing
+any terrain. Use a separate box, sphere or capsule trigger for region events;
+rejection leaves an existing ordinary sensor unchanged. This avoids the previous
+mismatch where a sensor seed could produce blocking terrain triangles.

@@ -224,6 +224,11 @@ bool Runtime::ValidateSubmission(const Source &value, std::string &error) const 
     }
     auto *d = Definition();
     auto *resources = world.Resources();
+    if (d && d->body && d->body->sensor) {
+        error = "landscape triangle collision cannot be a volume sensor; use a separate "
+                "box, sphere or capsule trigger";
+        return false;
+    }
     if (!d || !d->body || d->body->motion != SceneBodyMotion::Static || d->parent || d->planet ||
         d->deformable || d->transform.scale != glm::vec3(1) || !Seed().IsValid()) {
         error = "landscape requires a root unit-scale static owner with no other geometry owner";

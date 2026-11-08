@@ -52,7 +52,7 @@ at last observation. Verify live before claiming success. Earlier28984's
 Experimental job passed; its Alpha job may have been superseded, so do not invent
 an all-green result. Docs-only0c0502b4 passed docs. Main still protected.
 
-## Current uncommitted structured collision optimization
+## Structured collision checkpoint397b246759027cf14a71afccbb50241e18dbf603 (local)
 
 Implemented **TerrainCollision.h/.cpp**, small internal collision/CollisionBuild.h
 interface and an exact specialized grid cooker. TerrainPreparation uses it only
@@ -86,12 +86,18 @@ The first large fixture rounded weights independently and correctly failed the
 unchanged1e-4 sum check. Corrected integer weight units sum to10000. Failed generator,
 input hash and log remain. Do not relax that validator or repeat the failed setup.
 
-All native build/test/benchmark processes have EXITED. Current source optimization
-and its evidence need scoped commit/push after doc/index verification. Do not stage
-the unrelated water screenshots or untracked research. A possible existing terrain
-sensor inconsistency was found in source (seedBox sensor accepted but generated
-triangle sensors unsupported); reproduce/fix separately from optimization before
-claiming a verified defect. No sensor source fix has been made yet.
+All native build/test/benchmark processes have EXITED. Collision optimization and evidence are committed locally; push with the sensor
+correction after its validation. Do not stage
+the unrelated water screenshots or untracked research. A genuine terrain sensor defect was reproduced and corrected separately: native
+placement and runtime creation accepted a sensor seed but generated blocking
+triangle surfaces that MK2 cannot mark as sensors. New tests FAIL on397b2467 and
+pass with explicit preflight rejection. Ordinary sensor seeds remain intact.
+Native component39/world96 (all old controls retained), planet40/9, creation46
+EACH modern/portable and a real relocated/cold material+particle game pass.
+Evidence sensor-contract/. These four source/test files and evidence are ready
+for their separate checkpoint. No unsupported sensor implementation was invented.
+After checkpoint: build/stage/qualify final matching17-tool SDK; do not replace RPG.
+
 
 ## Packaged SDKs and editable projects
 

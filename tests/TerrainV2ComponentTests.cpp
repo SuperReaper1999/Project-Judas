@@ -100,6 +100,12 @@ int main() {
             incompatible.body->fluidCavities.emplace_back();
             Check(!TerrainV2::ValidateOwner(incompatible, &assets, error),
                   "native terrain rejects competing body cavity ownership explicitly");
+            incompatible = owner;
+            incompatible.body->sensor = true;
+            Check(
+                !TerrainV2::ValidateOwnerPlacement(incompatible, error) &&
+                    error.find("sensor") != std::string::npos,
+                "native terrain rejects a volume sensor instead of publishing blocking triangles");
             std::string text;
             Scene roundtrip;
             Check(SaveSceneToString(scene, text) && LoadSceneFromString(text, roundtrip, error) &&

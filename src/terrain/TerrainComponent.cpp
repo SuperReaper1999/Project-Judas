@@ -9,6 +9,11 @@ namespace TerrainV2 {
 bool ValidateOwnerPlacement(const SceneObject &o, std::string &error) {
     if (!o.landscape)
         return true;
+    if (o.body && o.body->sensor) {
+        error = "landscape triangle collision cannot be a volume sensor; use a separate "
+                "box, sphere or capsule trigger";
+        return false;
+    }
     if (!o.body || o.body->motion != SceneBodyMotion::Static || o.body->shape != SceneShape::Box ||
         o.body->managed || o.parent || o.planet || o.deformable || o.characterMotor || o.ragdoll ||
         o.wheel || o.liquidBasin || o.liquidContainer || o.fluidVolume ||

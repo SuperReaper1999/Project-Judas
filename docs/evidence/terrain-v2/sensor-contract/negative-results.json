@@ -1,0 +1,10 @@
+[
+  {
+    "name": "native",
+    "exit": 1
+  },
+  {
+    "name": "runtime",
+    "exit": 1
+  }
+]

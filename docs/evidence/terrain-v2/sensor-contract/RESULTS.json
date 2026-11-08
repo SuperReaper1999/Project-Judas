@@ -1,0 +1,73 @@
+[
+  {
+    "name": "native",
+    "command": [
+      "build/judas_terrain_v2_component_tests"
+    ],
+    "env": {},
+    "exit": 0
+  },
+  {
+    "name": "runtime",
+    "command": [
+      "build/judas_terrain_v2_world_tests"
+    ],
+    "env": {},
+    "exit": 0
+  },
+  {
+    "name": "planet-write",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--write",
+      "/tmp/terrain-sensor-planet-20261108"
+    ],
+    "env": {},
+    "exit": 0
+  },
+  {
+    "name": "planet-read",
+    "command": [
+      "build/judas_terrain_v2_planet_component_tests",
+      "--read",
+      "/tmp/terrain-sensor-planet-20261108"
+    ],
+    "env": {},
+    "exit": 0
+  },
+  {
+    "name": "creation-modern",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/terrain-sensor-creation-20261108"
+    ],
+    "env": {},
+    "exit": 0
+  },
+  {
+    "name": "creation-portable",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/terrain-sensor-creation-portable-20261108"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0
+  },
+  {
+    "name": "relocated",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-sensor-game-20261108",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "env": {},
+    "exit": 0
+  }
+]
