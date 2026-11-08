@@ -254,6 +254,15 @@ def annotate_finding(result, entry, manifest):
                                 '; observed result remains authoritative')
 
 
+def execution_environment(output, graphics_profile):
+    # Gameplay/test overrides must not leak in from an editor session. Graphics
+    # policy is an explicit gate input and must reach the actual child process.
+    environment = {k: v for k, v in os.environ.items() if not k.startswith('JUDAS_')}
+    environment.update(SDL_AUDIODRIVER='dummy', JUDAS_WORLD_STATE='none', JUDAS_ENGINE_ROOT=str(ROOT),
+                       JUDAS_GL_PROFILE=graphics_profile, XDG_DATA_HOME=str(output / 'user-data'))
+    return environment
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-dir', type=Path, default=ROOT / 'build')
@@ -262,6 +271,8 @@ def main():
     parser.add_argument('--test', action='append', default=[], help='Select exact manifest names; no implicit core group')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--timeout', type=float, default=120)
+    parser.add_argument('--graphics-profile', choices=['auto', 'portable', 'modern'], default='auto',
+                        help='Explicit child graphics policy, recorded in the qualification receipt')
     parser.add_argument('--list', action='store_true')
     parser.add_argument('--check-manifest', action='store_true',
                         help='Validate gate declarations without configuring or executing native tests')
@@ -308,9 +319,7 @@ def main():
     output = (args.output or ROOT / '.cache/prealpha/validation' /
               (now.strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])).resolve()
     output.mkdir(parents=True, exist_ok=False)
-    environment = {k: v for k, v in os.environ.items() if not k.startswith('JUDAS_')}
-    environment.update(SDL_AUDIODRIVER='dummy', JUDAS_WORLD_STATE='none', JUDAS_ENGINE_ROOT=str(ROOT),
-                       XDG_DATA_HOME=str(output / 'user-data'))
+    environment = execution_environment(output, args.graphics_profile)
     revision = git('rev-parse', 'HEAD')
     tracked = git('status', '--porcelain', '--untracked-files=no')
     source_diff = git('diff', 'HEAD', '--binary', '--no-ext-diff')
@@ -320,6 +329,7 @@ def main():
               'trackedDiffSha256': diff_hash,
               'platform': platform.platform(), 'machine': platform.machine(),
               'cpuCount': os.cpu_count(), 'groups': sorted(groups), 'tests': [],
+              'graphicsProfile': args.graphics_profile,
               'knownFindings': manifest.get('known_findings', []),
               'humanAcceptance': 'not-established', 'scope': 'explicit manifest subset'}
     result_path = output / 'RESULTS.json'

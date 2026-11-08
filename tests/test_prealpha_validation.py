@@ -15,6 +15,22 @@ spec.loader.exec_module(gate)
 
 
 class GateTests(unittest.TestCase):
+    def test_explicit_graphics_policy_reaches_child_without_gameplay_overrides(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with mock.patch.dict(os.environ, {'JUDAS_GL_PROFILE': 'invalid-inherited-profile',
+                                              'JUDAS_TEST_SCRIPT': '/unrelated/game-input',
+                                              'JUDAS_WORLD_STATE': '/unrelated/save'}):
+                for profile in ['auto', 'portable', 'modern']:
+                    environment = gate.execution_environment(root, profile)
+                    command = [sys.executable, '-c',
+                               'import os,sys; assert os.environ["JUDAS_GL_PROFILE"] == sys.argv[1]; '
+                               'assert "JUDAS_TEST_SCRIPT" not in os.environ; '
+                               'assert os.environ["JUDAS_WORLD_STATE"] == "none"', profile]
+                    result = gate.run_case(command, root / (profile + '.log'), root,
+                                           environment, 5)
+                    self.assertEqual(result['status'], 'passed')
+
     def test_exit_and_timeout_controls(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

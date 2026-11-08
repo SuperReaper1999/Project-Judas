@@ -100,6 +100,11 @@ int main(int argc, char **argv) {
         Check(host.Init("Terrain V2 complementary colour/shadow coverage", 960, 600, false, error),
               error.c_str());
         auto &renderer = host.GetRenderer();
+        // A hidden window's default framebuffer is subject to window-system
+        // pixel ownership. Test shader/coverage invariants on owned attachments,
+        // independent of desktop occlusion, mapping and drawable preparation.
+        const auto target = renderer.CreateRenderTarget(128, 128, error);
+        Check(target.IsValid(), "create complete offscreen colour/depth test target");
         auto heights = renderer.CreateTexture(TerrainV2::HeightImage(source));
         auto view = glm::lookAt(glm::vec3(0, 10, 0), glm::vec3(0), glm::vec3(0, 0, -1));
         auto projection = glm::ortho(-7.f, 7.f, -7.f, 7.f, .1f, 30.f);
@@ -118,7 +123,7 @@ int main(int argc, char **argv) {
             unsigned width = 0, height = 0, stepX = 1, stepY = 1;
         };
         auto capture = [&](bool shadow, float alpha, bool reverse) {
-            renderer.BeginFrame(128, 128);
+            Check(renderer.BeginRenderTarget(target), "begin owned coverage target");
             renderer.SetCamera(view, projection);
             renderer.SetLighting({0, 1, 0}, {1, 1, 1}, {.2f, .2f, .2f});
             if (shadow) {
@@ -154,7 +159,7 @@ int main(int argc, char **argv) {
                 }
             if (shadow)
                 renderer.EndShadowPass();
-            renderer.EndFrame();
+            renderer.EndRenderTarget();
             return image;
         };
         size_t changed = 0;
@@ -175,6 +180,16 @@ int main(int argc, char **argv) {
                             CoverageSample(x, y) < alpha ? after.depth[index] : before.depth[index];
                         largestError =
                             std::max(largestError, std::abs(image.depth[index] - expected));
+                        if (!(image.depth[index] < 1 &&
+                              std::abs(image.depth[index] - expected) < 2e-6f &&
+                              image.depth[index] == reverse.depth[index]))
+                            std::cerr << "COVERAGE_FAILURE shadow=" << shadow << " alpha=" << alpha
+                                      << " x=" << x << " y=" << y << " width=" << image.width
+                                      << " height=" << image.height
+                                      << " before=" << before.depth[index]
+                                      << " after=" << after.depth[index] << " expected=" << expected
+                                      << " got=" << image.depth[index]
+                                      << " reverse=" << reverse.depth[index] << '\n';
                         Check(image.depth[index] < 1 &&
                                   std::abs(image.depth[index] - expected) < 2e-6f &&
                                   image.depth[index] == reverse.depth[index],
@@ -185,6 +200,7 @@ int main(int argc, char **argv) {
         }
         Check(changed > 1000, "negative control: compared detail levels are actually different");
         Check(glGetError() == GL_NO_ERROR, "transition draws produce no OpenGL error");
+        renderer.DestroyRenderTarget(target);
         renderer.DestroyTexture(heights);
         if (argc > 1) {
             const std::filesystem::path output(argv[1]);
