@@ -1,0 +1,138 @@
+[  0%] Built target judas_quickjs
+[  8%] Built target freetype
+[ 16%] Built target judas_navigation_backend
+[ 16%] Built target judas_glad
+[ 16%] Built target judas_profiler
+[ 16%] Built target judas_jobs
+[ 16%] Built target judas_audio_backend
+[ 16%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 16%] Built target judas_app_icon
+[ 16%] Built target judas_meshoptimizer
+[ 16%] Built target judas_icu_build
+[ 16%] Built target harfbuzz
+[ 16%] Built target judas_navigation_cook
+[ 16%] Built target judas_materials
+[ 16%] Built target judas_graphics_caps
+[ 16%] Linking CXX static library libjudas_build_identity.a
+[ 16%] Built target judas_build_identity
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/World.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Terrain.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Environment.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Water.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Rendering.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Navigation.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Input.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Network.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Mechanics.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Characters.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/PhysicsQueries.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/PhysicsBodies.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Animation.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Audio.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/Particles.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/modules/AI.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/CameraValues.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/SpriteValues.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/PlanarValues.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIDrag.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptAIReservations.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/AISensing.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptAISensing.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/scripting/ScriptMetadata.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/render/ShaderLibrary.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/render/RenderTargets.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/render/TerrainPass.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/particles/WorldParticles.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/particles/ParticlePersistence.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldTilemap.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldSpriteAnimation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWater.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptFaultNotice.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntime.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimeGeometry.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimeQueries.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimePersistence.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/fluid/GameWaterRuntimePresentation.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainSource.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPlanetChart.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPlanetBinding.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainAsset.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainComponent.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainLod.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainLodTransition.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainBrush.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainSurface.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainSolid.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainMesher.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainRuntime.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPreparation.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainNavigation.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPresentation.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldTerrainQueries.cpp.o
+[ 66%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_terrain_v2_material_tests.dir/tests/TerrainV2MaterialTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_terrain_v2_material_tests.dir/tests/ValidationMain.cpp.o
+[100%] Linking CXX executable judas_terrain_v2_material_tests
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_terrain_v2_material_tests.dir/tests/TerrainV2MaterialTests.cpp.o: in function `auto JudasValidationMain(int, char**)::{lambda(char const*, auto:1 const&)#1}::operator()<std::vector<unsigned char, std::allocator<unsigned char> > >(char const*, std::vector<unsigned char, std::allocator<unsigned char> > const&) const':
+TerrainV2MaterialTests.cpp:(.text+0x3cd4): undefined reference to `TerrainV2::EncodePreviewTga[abi:cxx11](TextureData const&)'
+collect2: error: ld returned 1 exit status
+gmake[3]: *** [CMakeFiles/judas_terrain_v2_material_tests.dir/build.make:136: judas_terrain_v2_material_tests] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:25656: CMakeFiles/judas_terrain_v2_material_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:25663: CMakeFiles/judas_terrain_v2_material_tests.dir/rule] Error 2
+gmake: *** [Makefile:6986: judas_terrain_v2_material_tests] Error 2

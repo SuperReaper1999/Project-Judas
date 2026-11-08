@@ -16,6 +16,7 @@
 #include "DebugDraw.h"
 #include "TextureData.h"
 #include "Material.h"
+#include "terrain/TerrainMaterial.h"
 #include "Sprite.h"
 #include "CameraLens.h"
 #include "Environment.h"
@@ -87,6 +88,9 @@ public:
     // bounded four-layer blend owns no collision or world state.
     void BeginTerrainMaterial(TextureHandle weights,const std::array<TextureHandle,4>& layers,
                               const std::array<glm::vec3,4>& colours,const glm::mat4& worldToTerrain);
+    void BeginTerrainMaterial(TextureHandle weights,const std::array<TextureHandle,4>& layers,
+                              const std::array<glm::vec3,4>& colours,const glm::mat4& worldToTerrain,
+                              const TerrainV2::MaterialDetail& detail,TextureHandle normal);
     void EndTerrainMaterial();
     // One reusable grid per resolution, with lossless source height samples.
     // Bounds and source sample coordinates are independent of the render LOD.
@@ -505,6 +509,8 @@ private:
     std::array<TextureHandle,4> m_terrainLayers;
     std::array<glm::vec3,4> m_terrainColours;
     glm::mat4 m_terrainFromWorld{1};
+    TerrainV2::MaterialDetail m_terrainDetail;
+    TextureHandle m_terrainNormal;
     void BindTerrainMaterial();
     void BindTerrainGeometry(bool shadow);
     bool m_terrainGrid=false;

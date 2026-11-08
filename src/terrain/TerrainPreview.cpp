@@ -44,7 +44,8 @@ bool BuildPreviewTexture(const Source &source, const AssetDatabase *assets, Text
                 glm::vec3 sample(1);
                 const auto &t = textures[k];
                 if (!t.pixels.empty()) {
-                    float tx = (u - .5f) * width * .25f, tz = (v - .5f) * depth * .25f;
+                    float tx = (u - .5f) * width / source.materialDetail.tileMetres[k],
+                          tz = (v - .5f) * depth / source.materialDetail.tileMetres[k];
                     unsigned ix = std::min(unsigned((tx - std::floor(tx)) * t.width),
                                            unsigned(t.width - 1)),
                              iz = std::min(unsigned((tz - std::floor(tz)) * t.height),

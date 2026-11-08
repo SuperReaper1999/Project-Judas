@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"terrain-v2-materials","target":"judas_terrain_v2_material_tests","groups":["terrain","rendering","assets"]},
     {"name":"terrain-v2-geometry","target":"judas_terrain_v2_tests","groups":["terrain","physics"]},
     {"name":"terrain-v2-planet-chart","target":"judas_terrain_v2_planet_chart_tests","groups":["terrain","physics"]},
     {"name":"terrain-v2-planet-render","target":"judas_terrain_v2_planet_render_tests","groups":["terrain","rendering"],"args":["{output}/terrain-v2-planet-render"]},

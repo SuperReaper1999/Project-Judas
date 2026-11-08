@@ -44,6 +44,13 @@ int main() {
             }
         source.edits.push_back({TerrainV2::Edit::Kind::Remove, {0, 1, 0}, 2});
         source.layerTextures[0] = "12345678123456781234567812345678";
+        Check(TerrainV2::Serialize(source).find("materialDetail") == std::string::npos,
+              "default source retains its original metadata encoding");
+        source.materialDetail.tileMetres = {1, 2, 8, 16};
+        source.materialDetail.roughness = {.3f, .5f, .8f, 1};
+        source.materialDetail.normalTexture = "normal-detail-asset";
+        source.materialDetail.normalMetres = .5f;
+        source.materialDetail.normalStrength = .7f;
         const auto original = TerrainV2::Serialize(source);
         std::string error;
         std::vector<uint8_t> bytes, again;

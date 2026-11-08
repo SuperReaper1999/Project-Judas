@@ -47,7 +47,10 @@ bool ValidateOwner(const SceneObject &o, const AssetDatabase *assets, std::strin
             "projected terrain requires terrain.planet; ordinary landscapes must leave it unset";
         return false;
     }
-    for (const auto &id : pages.Index().metadata.layerTextures)
+    auto textures = std::vector<std::string>(pages.Index().metadata.layerTextures.begin(),
+                                             pages.Index().metadata.layerTextures.end());
+    textures.push_back(pages.Index().metadata.materialDetail.normalTexture);
+    for (const auto &id : textures)
         if (!id.empty()) {
             const auto *texture = assets->Find(id);
             if (!texture || texture->missing || texture->type != AssetType::Texture) {

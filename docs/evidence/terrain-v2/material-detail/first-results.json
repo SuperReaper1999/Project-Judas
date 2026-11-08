@@ -1,0 +1,83 @@
+[
+  {
+    "name": "render-modern",
+    "command": [
+      "build/judas_terrain_v2_render_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 1.0154188819997216
+  },
+  {
+    "name": "render-portable",
+    "command": [
+      "build/judas_terrain_v2_render_tests"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.36453649000031874
+  },
+  {
+    "name": "material-modern",
+    "command": [
+      "build/judas_terrain_v2_material_tests",
+      ".cache/terrain-v2/material-detail/analytic-captures"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.2647306380004011
+  },
+  {
+    "name": "material-portable",
+    "command": [
+      "build/judas_terrain_v2_material_tests"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.21429269200052659
+  },
+  {
+    "name": "creation-modern",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/judas-material-authoring-20261108-modern"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 1.2161876589998428
+  },
+  {
+    "name": "creation-portable",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/tmp/judas-material-authoring-20261108-portable"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 1.1157789289991342
+  },
+  {
+    "name": "world",
+    "command": [
+      "build/judas_terrain_v2_world_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.4144014049998077
+  },
+  {
+    "name": "shader-original-pin",
+    "command": [
+      "build/judas_shader_library_tests"
+    ],
+    "env": {},
+    "exit": 1,
+    "seconds": 0.007739286000287393
+  }
+]

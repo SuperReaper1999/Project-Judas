@@ -154,6 +154,28 @@ int main(int argc, char **argv) {
         frame();
         click(texture.relativePath.c_str());
         Check(!tools.Guard(state), "unapplied palette choice cannot silently start Play");
+        auto scalar = [&](const char *label, const char *value) {
+            ImGui::ActivateItemByID(ImHashStr(label, 0, layer));
+            context->NavNextActivateFlags = ImGuiActivateFlags_PreferInput;
+            frame();
+            io.AddKeyEvent(ImGuiMod_Ctrl, true);
+            io.AddKeyEvent(ImGuiKey_A, true);
+            frame();
+            io.AddKeyEvent(ImGuiKey_A, false);
+            io.AddKeyEvent(ImGuiMod_Ctrl, false);
+            frame();
+            io.AddInputCharactersUTF8(value);
+            frame();
+            io.AddKeyEvent(ImGuiKey_Enter, true);
+            frame();
+            io.AddKeyEvent(ImGuiKey_Enter, false);
+            frame();
+        };
+        scalar("Tile size (metres)", "2");
+        scalar("PBR roughness multiplier", "0.4");
+        click("Shared normal detail");
+        click("Normal texture");
+        click(texture.relativePath.c_str());
         click("Apply surface materials");
         click("Surface materials");
         click("Undo");
@@ -164,7 +186,10 @@ int main(int argc, char **argv) {
         wait();
         const auto nativePath = host.Assets().Find(sourceId)->path;
         Check(TerrainV2::LoadAsset(nativePath, source, error) &&
-                  source.layerTextures[0] == texture.id,
+                  source.layerTextures[0] == texture.id &&
+                  source.materialDetail.normalTexture == texture.id &&
+                  source.materialDetail.tileMetres.x == 2.f &&
+                  source.materialDetail.roughness.x == .4f,
               "palette texture survives source undo/redo and native asset publication");
         Check(tools.Guard(state), "published material changes permit Play again");
         Check(document.Save(error), "ordinary scene Save persists terrain ownership: " + error);

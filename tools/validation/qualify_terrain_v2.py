@@ -4,6 +4,8 @@ import argparse
 import datetime
 import hashlib
 import json
+import math
+import struct
 import os
 from pathlib import Path
 import shutil
@@ -87,6 +89,50 @@ end
 ''')
 
 
+def install_material_detail(project):
+    """Author only the disposable consumer copy; never update existing assets/saves."""
+    asset = '8a2200000000000000000000000000b0'
+    texture = project / 'Assets/terrain/detail-normal.tga'
+    side = 128
+    header = bytearray(18)
+    header[2] = 2
+    header[12:16] = struct.pack('<HH', side, side)
+    header[16] = 32
+    header[17] = 8
+    pixels = bytearray()
+    # An original periodic normal source, not downloaded artwork. Its source
+    # settings are retained here so the visual test is reproducible.
+    def noise(x, y, cells):
+        u, v = (x % side) * cells / side, (y % side) * cells / side
+        ix, iy = math.floor(u), math.floor(v)
+        tx, ty = u - ix, v - iy
+        tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+        def value(a, b):
+            h = (((a % cells) * 73856093) ^ ((b % cells) * 19349663) ^ 83492791) & 0xffffffff
+            h = ((h ^ (h >> 13)) * 1274126177) & 0xffffffff
+            return (h & 65535) / 65535
+        return ((1 - tx) * value(ix, iy) + tx * value(ix + 1, iy)) * (1 - ty) + \
+               ((1 - tx) * value(ix, iy + 1) + tx * value(ix + 1, iy + 1)) * ty
+    def height(x, y):
+        return .6 * noise(x, y, 8) + .3 * noise(x, y, 16) + .1 * noise(x, y, 32)
+    for y in range(side):
+        for x in range(side):
+            nx = (height(x - 1, y) - height(x + 1, y)) * 1.5
+            ny = (height(x, y - 1) - height(x, y + 1)) * 1.5
+            nz = math.sqrt(1 - nx * nx - ny * ny)
+            pixels.extend((round((nz * .5 + .5) * 255),
+                           round((ny * .5 + .5) * 255),
+                           round((nx * .5 + .5) * 255), 255))
+    texture.write_bytes(header + pixels)
+    texture.with_suffix('.tga.judasmeta').write_text(
+        f'JudasAssetMeta 1\nid "{asset}"\ntype texture\nsource ""\n')
+    source = project / 'Authoring/highlands.judasterrain2'
+    data = json.loads(source.read_text())
+    data['materialDetail'] = dict(tileMetres=[2, 3, 6, 4], roughness=[1, .9, .8, 1],
+                                  normalTexture=asset, normalMetres=.8, normalStrength=.7)
+    source.write_text(json.dumps(data, separators=(',', ':')) + '\n')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build', type=Path, required=True)
@@ -95,6 +141,8 @@ def main():
                         help='Exercise the geographic Workshop with the same gameplay gates.')
     parser.add_argument('--particle-region', action='store_true',
                         help='Add a normal script/scene consumer of local particle coverage (flat only).')
+    parser.add_argument('--material-detail', action='store_true',
+                        help='Author optional material controls in the disposable consumer copy.')
     args = parser.parse_args()
     if args.planet and args.particle_region:
         parser.error('The particle-region consumer fixture uses the flat Workshop.')
@@ -126,6 +174,8 @@ def main():
                         ignore=shutil.ignore_patterns('Saves', '*.lock'))
         if args.particle_region:
             install_particle_probe(project)
+        if args.material_detail:
+            install_material_detail(project)
         run('native-cook', [build / 'judas_terrain_author', 'v2-native',
                            project / 'Authoring/highlands.judasterrain2',
                            project / 'Assets/terrain/highlands.judasmodel'], repo)
@@ -141,6 +191,13 @@ def main():
                        out / 'original-package', build / 'judas'], repo)
         package = out / 'relocated game'
         (out / 'original-package').rename(package)
+        if args.material_detail:
+            expected = hashlib.sha256((project / 'Assets/terrain/detail-normal.tga').read_bytes()).digest()
+            matches = [p for p in package.rglob('*') if p.is_file() and p.suffix == '.tga'
+                       and hashlib.sha256(p.read_bytes()).digest() == expected]
+            if not matches:
+                raise RuntimeError('Relocated export omitted the terrain normal-detail dependency.')
+            record['normal_detail_exported'] = [str(p.relative_to(package)) for p in matches]
         work = out / 'unrelated working directory'
         work.mkdir()
         # No source files can accidentally satisfy a package dependency at play time.

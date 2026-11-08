@@ -78,7 +78,18 @@ bool ValidateMetadata(const Source &s, std::string &error) {
             glm::any(glm::lessThan(s.layerColours[i], glm::vec3(0))) ||
             glm::any(glm::greaterThan(s.layerColours[i], glm::vec3(1))))
             return fail("invalid terrain material layer");
+        if (!std::isfinite(s.materialDetail.tileMetres[i]) ||
+            s.materialDetail.tileMetres[i] < .125f || s.materialDetail.tileMetres[i] > 1024 ||
+            !std::isfinite(s.materialDetail.roughness[i]) || s.materialDetail.roughness[i] < 0 ||
+            s.materialDetail.roughness[i] > 1)
+            return fail("terrain layers require finite 0.125..1024 metre tiles and 0..1 roughness");
     }
+    const auto &detail = s.materialDetail;
+    if (detail.normalTexture.size() > 128 || !std::isfinite(detail.normalMetres) ||
+        detail.normalMetres < .125f || detail.normalMetres > 1024 ||
+        !std::isfinite(detail.normalStrength) || detail.normalStrength < 0 ||
+        detail.normalStrength > 2)
+        return fail("terrain normal detail requires 0.125..1024 metre tiles and 0..2 strength");
     if (s.edits.size() > 4096)
         return fail("terrain edit journal budget exceeded");
     for (const auto &e : s.edits)
@@ -244,6 +255,16 @@ Json MetadataJson(const Source &s) {
     j["layerColours"] = Json::array();
     for (auto c : s.layerColours)
         j["layerColours"].push_back({c.x, c.y, c.z});
+    // Omit defaults to retain existing source identities and native receipts.
+    if (s.materialDetail != MaterialDetail{}) {
+        const auto &d = s.materialDetail;
+        j["materialDetail"] = {
+            {"tileMetres", {d.tileMetres.x, d.tileMetres.y, d.tileMetres.z, d.tileMetres.w}},
+            {"roughness", {d.roughness.x, d.roughness.y, d.roughness.z, d.roughness.w}},
+            {"normalTexture", d.normalTexture},
+            {"normalMetres", d.normalMetres},
+            {"normalStrength", d.normalStrength}};
+    }
     return j;
 }
 Json ReadJson(const std::string &bytes) {
@@ -312,6 +333,31 @@ Source ReadMetadata(const Json &j) {
         if (j["layerTextures"].size() != 4)
             throw std::invalid_argument("terrain layers");
         s.layerTextures = j["layerTextures"].get<std::array<std::string, 4>>();
+    }
+    if (j.contains("materialDetail")) {
+        const auto &value = j.at("materialDetail");
+        if (!value.is_object())
+            throw std::invalid_argument("terrain material detail must be an object");
+        for (const auto &entry : value.items())
+            if (entry.key() != "tileMetres" && entry.key() != "roughness" &&
+                entry.key() != "normalTexture" && entry.key() != "normalMetres" &&
+                entry.key() != "normalStrength")
+                throw std::invalid_argument("unknown terrain material detail field: " +
+                                            entry.key());
+        auto vector = [&](const char *key, glm::vec4 &target) {
+            if (!value.contains(key))
+                return;
+            if (!value.at(key).is_array() || value.at(key).size() != 4)
+                throw std::invalid_argument("terrain material vectors require exactly four values");
+            const auto values = value.at(key).get<std::array<float, 4>>();
+            target = {values[0], values[1], values[2], values[3]};
+        };
+        auto &detail = s.materialDetail;
+        vector("tileMetres", detail.tileMetres);
+        vector("roughness", detail.roughness);
+        detail.normalTexture = value.value("normalTexture", std::string{});
+        detail.normalMetres = value.value("normalMetres", 1.f);
+        detail.normalStrength = value.value("normalStrength", 1.f);
     }
     if (j.contains("layerColours")) {
         if (j["layerColours"].size() != 4)

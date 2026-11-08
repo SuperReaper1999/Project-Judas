@@ -1,0 +1,8 @@
+{
+  "parent_commit": "0c0502b40c456619c9f246b290bd1a625c29ca89",
+  "utc": "2026-11-08T13:40:25.675306+00:00",
+  "host": "Ryzen 5 5600; NVIDIA GTX970 4GB; NVIDIA580.178.04; nativeX11",
+  "build": "GNU15.2 Release; -j2",
+  "human_acceptance": false,
+  "platforms": "Linux desktop4.6 and portable3.3; no new Windows/Android/browser run"
+}

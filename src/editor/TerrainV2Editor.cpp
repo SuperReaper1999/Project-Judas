@@ -148,10 +148,12 @@ void TerrainV2Editor::TrimHistory() {
 void TerrainV2Editor::ReadPalette() {
     paletteTextures = source.layerTextures;
     paletteColours = source.layerColours;
+    paletteDetail = source.materialDetail;
 }
 bool TerrainV2Editor::PaletteDirty() const {
     return loaded &&
-           (paletteTextures != source.layerTextures || paletteColours != source.layerColours);
+           (paletteTextures != source.layerTextures || paletteColours != source.layerColours ||
+            paletteDetail != source.materialDetail);
 }
 void TerrainV2Editor::ApplyPalette() {
     if (!PaletteDirty())
@@ -160,6 +162,7 @@ void TerrainV2Editor::ApplyPalette() {
     redo.clear();
     source.layerTextures = paletteTextures;
     source.layerColours = paletteColours;
+    source.materialDetail = paletteDetail;
     TrimHistory();
     dirty = productsDirty = appearanceDirty = true;
     ++revision;
@@ -171,7 +174,11 @@ void TerrainV2Editor::PalettePanel(const EditorPanelState &state) {
                        "and update also applies pending material choices.");
     for (unsigned i = 0; i < 4; ++i) {
         ImGui::PushID(int(i));
-        ImGui::Text("Layer %u", i + 1);
+        const auto title = "Layer " + std::to_string(i + 1);
+        if (!ImGui::CollapsingHeader(title.c_str(), i == 0 ? ImGuiTreeNodeFlags_DefaultOpen : 0)) {
+            ImGui::PopID();
+            continue;
+        }
         const auto *current = state.assets->Find(paletteTextures[i]);
         if (ImGui::BeginCombo("Texture", current ? current->relativePath.c_str() : "Colour only")) {
             if (ImGui::Selectable("Colour only", paletteTextures[i].empty()))
@@ -192,7 +199,38 @@ void TerrainV2Editor::PalettePanel(const EditorPanelState &state) {
             ImGui::EndDragDropTarget();
         }
         ImGui::ColorEdit3("Tint", &paletteColours[i].x);
+        ImGui::SliderFloat("Tile size (metres)", &paletteDetail.tileMetres[i], .125f, 1024.f,
+                           "%.3f", ImGuiSliderFlags_Logarithmic);
+        ImGui::SliderFloat("PBR roughness multiplier", &paletteDetail.roughness[i], 0.f, 1.f);
         ImGui::PopID();
+    }
+    if (ImGui::CollapsingHeader("Shared normal detail")) {
+        ImGui::TextWrapped("Optional linear tangent-space normal texture. Adds surface detail to "
+                           "every layer and cave wall without changing collision. PBR roughness "
+                           "applies when the landscape owner uses a PBR material.");
+        const auto *normal = state.assets->Find(paletteDetail.normalTexture);
+        if (ImGui::BeginCombo("Normal texture", normal ? normal->relativePath.c_str() : "None")) {
+            if (ImGui::Selectable("None", paletteDetail.normalTexture.empty()))
+                paletteDetail.normalTexture.clear();
+            for (const auto &[id, asset] : state.assets->Records())
+                if (asset.type == AssetType::Texture && !asset.missing &&
+                    ImGui::Selectable(asset.relativePath.c_str(),
+                                      paletteDetail.normalTexture == id))
+                    paletteDetail.normalTexture = id;
+            ImGui::EndCombo();
+        }
+        if (ImGui::BeginDragDropTarget()) {
+            if (const auto *payload = ImGui::AcceptDragDropPayload(kAssetDragPayload)) {
+                std::string id(static_cast<const char *>(payload->Data), payload->DataSize);
+                const auto *asset = state.assets->Find(id);
+                if (asset && asset->type == AssetType::Texture && !asset->missing)
+                    paletteDetail.normalTexture = id;
+            }
+            ImGui::EndDragDropTarget();
+        }
+        ImGui::SliderFloat("Normal tile size (metres)", &paletteDetail.normalMetres, .125f, 1024.f,
+                           "%.3f", ImGuiSliderFlags_Logarithmic);
+        ImGui::SliderFloat("Normal strength", &paletteDetail.normalStrength, 0.f, 2.f);
     }
     if (ImGui::Button("Apply surface materials"))
         ApplyPalette();
@@ -628,6 +666,11 @@ void TerrainV2Editor::Draw(Renderer &renderer, Scene &scene, ResourceManager &re
             resources.RequestTexture(source.layerTextures[i]);
             layers[i] = resources.TryGetTexture(source.layerTextures[i]);
         }
+    TextureHandle normal;
+    if (!source.materialDetail.normalTexture.empty()) {
+        resources.RequestTexture(source.materialDetail.normalTexture);
+        normal = resources.TryGetTexture(source.materialDetail.normalTexture);
+    }
     for (auto &object : scene.Objects())
         if (object.render && object.render->visible && object.render->meshAsset == meshId) {
             renderer.SetRenderLayer(object.renderLayer);
@@ -635,7 +678,8 @@ void TerrainV2Editor::Draw(Renderer &renderer, Scene &scene, ResourceManager &re
             renderer.BeginTerrainMaterial(
                 weights, layers, source.layerColours,
                 glm::inverse(glm::translate(glm::mat4(1), object.transform.position) *
-                             glm::mat4_cast(object.transform.rotation)));
+                             glm::mat4_cast(object.transform.rotation)),
+                source.materialDetail, normal);
             for (auto &[_, r] : chunks) {
                 if (!r.chunk || r.chunk->mesh.indices.empty())
                     continue;

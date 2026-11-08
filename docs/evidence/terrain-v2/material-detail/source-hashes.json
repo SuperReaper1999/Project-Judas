@@ -1,0 +1,8 @@
+{
+  "src/terrain/TerrainMaterial.h": "8d52d53c57c12107c5319477804c66b586af033810931a1e75d0e81f6763dff6",
+  "src/render/TerrainMaterialShader.h": "41a7b70b27733fd0dc0dcbcf8d36bd5454cbc702ebb25a5b347713452aadee2c",
+  "src/render/TerrainPass.cpp": "4e036f5cd80b8831f270dc849be6adb7b8a29c734551dd3bc889570ff065f590",
+  "src/terrain/TerrainSource.cpp": "e247751e9586738c26b3cd4a51163e2dfe0c6302b3584e19652ffde3166ad1bc",
+  "tests/TerrainV2MaterialTests.cpp": "1717610241c3289a5d02f0e78133f6fa34fca63f86c9b1a1041ae80eccab7956",
+  "tools/validation/qualify_terrain_v2.py": "87d3996cc5188f7dcab3e5cc309cd0bb7882eafdeae69b4375c6e85772fde81a"
+}

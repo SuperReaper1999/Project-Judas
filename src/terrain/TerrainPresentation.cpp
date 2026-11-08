@@ -93,9 +93,15 @@ void Runtime::Draw(Renderer &renderer) const {
             world.Resources()->RequestTexture(source->layerTextures[i]);
             layers[i] = world.Resources()->TryGetTexture(source->layerTextures[i]);
         }
+    TextureHandle normal;
+    if (!source->materialDetail.normalTexture.empty()) {
+        world.Resources()->RequestTexture(source->materialDetail.normalTexture);
+        normal = world.Resources()->TryGetTexture(source->materialDetail.normalTexture);
+    }
     renderer.BeginTerrainMaterial(weightTexture, layers, source->layerColours,
                                   glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
-                                               glm::mat4_cast(d->transform.rotation)));
+                                               glm::mat4_cast(d->transform.rotation)),
+                                  source->materialDetail, normal);
     RendererProfileScope gpu(renderer, "Terrain V2 geometry");
     std::vector<HeightPatch> fallback;
     if (!source->chart && drawPatches.Current().empty() && lod) {

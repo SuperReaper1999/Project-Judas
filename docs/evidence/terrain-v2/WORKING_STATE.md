@@ -1,5 +1,38 @@
 # Terrain V2 — current engineering handoff
 
+## Latest live continuation — material detail (2026-11-08)
+
+Branch Experimental, parent0c0502b40c456619c9f246b290bd1a625c29ca89 is pushed.
+Current OWN functional changes add per-layer metre tiling/PBR roughness and one
+optional shared normal texture. Material descriptor/shader own coherent headers;
+source validation, native/reference persistence, dependencies/export and real
+editor apply/undo/redo/publish use it. Defaults preserve existing metadata bytes.
+No game source assets, RPG SDK, main or fluid lock changed.
+
+Local qualification COMPLETE:86material checks/978oldGPU/98822transition each
+modern/portable; editor15/creation46/planetEditor23each; asset33/component38;
+world93/300exact supportedsteps, shader47, runtimeRender54. Python22build and36
+docs/packaging pass. Actual relocated flat/planet consumers with --material-detail
+pass excavation/traversal/cold saves,8volumechunks,2dabs/navready/emptyqueue; flat
+also real reliableparticlecontact. First visual noise looked striped; final
+consumer normal is subtler multiscale noise. Evidence material-detail/REVIEW.md.
+Final benchmark: same56draws/28672triangles; defaultCPU.388–.398/GPU.570–.575ms,
+normalCPU.389–.403/GPU.651–.653ms. WarmoldGPU.493–.495, so default shader cost
+~.08ms is explicit, plus~.08ms for detail. Texture87380B, no physicalchange.
+
+All build/test/benchmark processes EXITED. Last full17-tool build is dirty-parent
+0c0502b4; checkpoint source then rebuild identity/stage SDK if qualifying a new
+package. Previous exact28984 qualified SDK remains available/unchanged.
+Remote28984engine run42482903014: ExperimentalSUCCESS, Alpha stillrunning at
+last observation. Check live before claiming both green. No human acceptance.
+
+Next: scoped source/evidence checkpoint/push; continue physical residency/data
+paging investigation. Whole-source/region residency remains a known bound; no
+camera-driven collider eviction, no hidden support loss. No source-wide feature
+completion claim. Unrelated modified water PNGs/untracked research still preserved.
+
+## Historical continuation notes (superseded where explicitly updated above)
+
 ## Latest verified state (supersedes historical next-action notes below)
 
 LATEST ENGINE28984e7a04db2ae1bcb07dbca2f25b598263c850 is PUSHED. The matching

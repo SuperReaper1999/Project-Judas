@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-0c0502b-dirty-534ede3e1f47-ufc880d036c7b",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "534ede3e1f4759dd0ecd4eeb01997c7e60d78e550b27940b41b6cecdf48bbeeb",
+    "source_origin": "git",
+    "source_revision": "0c0502b40c456619c9f246b290bd1a625c29ca89",
+    "source_tree": "d081537d7db8ddc6cbebdfa6b7b8fcc33856742b",
+    "source_untracked_count": 21,
+    "source_untracked_fingerprint": "fc880d036c7b83ecf799de1ad5ac57ef6b912aeac28f0ccaf660a334f71d3de0",
+    "version": "2.0.0-alpha.1"
+  },
+  "normal_detail_exported": [
+    "Assets/terrain/detail-normal.tga"
+  ],
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.27310195565223694,
+      "y": 2.5945849418640137,
+      "z": -10.380640029907227
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 84.423772,
+      "publishMs": 0.112572,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T13:37:44.744804+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.2144035420005821
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.31432490100087307
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/judas",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-material-planet-game-final-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.9668956919995253
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/judas",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-material-planet-game-final-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.6163788619996922
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/judas",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-material-planet-game-final-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3157864309996512
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/judas",
+        "/tmp/terrain-v2-material-planet-game-final-20261108/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-material-planet-game-final-20261108/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8652307760003168
+    }
+  ],
+  "log_sha256": {
+    "export.log": "67147001e72cdabcfd57b62697e009fae7acd72599a8c56fc3c11ca40e56f9fd",
+    "native-cook.log": "48ee162d85a003380e0c489750e43fe1e3bc67ee905d6f43eaf40294ddeb2a2b",
+    "read.log": "038ec42c9ac50bb0a747e4a70b822d11627476fd309c39cad9abc3e605dbd06d",
+    "settle-0.log": "714aaf8aa4e0e572dcb840c5f57e055ca828c3de37c4aad9c87ce9f07528bf7e",
+    "traverse.log": "d14d589a17b97169515698aed011600ee59834cfc783d61cad049c125b14a349",
+    "write.log": "fbca860b285f679d39000777064c68661b0dfca4524e695234295fe0b3a4468f"
+  }
+}

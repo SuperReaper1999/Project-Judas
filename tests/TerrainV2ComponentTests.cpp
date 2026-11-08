@@ -51,6 +51,21 @@ int main() {
         const auto path = root / "Assets/terrain.judasterrain";
         auto source = TerrainV2::Create(33, 33, .5f);
         std::fill(source.heights.begin(), source.heights.end(), 3);
+        // An independent registered texture verifies the native export dependency,
+        // including the material-only continuation and genuine world restore.
+        const auto normalPath = root / "Assets/detail-normal.tga";
+        {
+            std::string image(22, '\0');
+            image[2] = 2;
+            image[12] = image[14] = 1;
+            image[16] = 32;
+            image[17] = 8;
+            image[18] = char(255);
+            image[19] = image[20] = char(128);
+            image[21] = char(255);
+            std::ofstream f(normalPath, std::ios::binary);
+            f.write(image.data(), image.size());
+        }
         Write(path, source);
         AssetDatabase assets;
         assets.Scan(root.string(), (root / "Assets").string());
@@ -58,6 +73,17 @@ int main() {
         std::string error;
         Check(assets.Track(path.string(), asset, error) && asset.type == AssetType::Terrain,
               "normal importer registers the native terrain kind: " + error);
+        AssetRecord normal;
+        Check(assets.Track(normalPath.string(), normal, error), "register normal detail texture");
+        source.materialDetail.normalTexture = normal.id;
+        source.materialDetail.tileMetres = {1, 2, 8, 16};
+        source.materialDetail.roughness = {.3f, .5f, .8f, 1};
+        Write(path, source);
+        std::set<AssetId> dependencyIds;
+        std::set<std::string> auxiliary;
+        Check(CollectAssetDependencies(asset, dependencyIds, auxiliary, error) &&
+                  dependencyIds.count(normal.id),
+              "native terrain exports its normal detail dependency");
         JobSystem jobs(2);
         ResourceManager resources(nullptr, &assets, &jobs);
         {
@@ -145,6 +171,10 @@ int main() {
                   "ordinary cold world restore resolves base and journal: " + error);
             hit = cold.Physics().Raycast({0, 5, 0}, {0, -1, 0}, 6);
             Check(hit.hit && hit.point.y < 1.3f, "cold restore preserves native-source excavation");
+            std::string restoredSnapshot;
+            Check(cold.CaptureRuntimeTerrain(1, restoredSnapshot, error) &&
+                      restoredSnapshot == snapshot,
+                  "world restore preserves exact terrain appearance and journal metadata");
             auto changed = source;
             changed.heights[0] += .25f;
             Write(path, changed);

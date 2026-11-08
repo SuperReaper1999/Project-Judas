@@ -1,0 +1,15 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+{"camera_distance_case":"near"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":43,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":14.6521,"reference_prepare_and_upload_ms":734.686,"height_upload_ms":1.38315}
+{"normal_detail":true,"normal_texture_resident_bytes":87380}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":6.35908,"p95":7.15439,"worst":9.5067},"gpu_ms":{"median":6.19965,"p95":6.86381,"worst":8.90448},"draws":1029,"triangles":526848}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.388834,"p95":0.475958,"worst":0.517447},"gpu_ms":{"median":0.652608,"p95":0.66272,"worst":0.66288},"draws":56,"triangles":28672}
+{"path":"shared_grid_mid_transition","samples":30,"cpu_submission_ms":{"median":0.456711,"p95":0.502808,"worst":0.537744},"gpu_ms":{"median":1.11949,"p95":1.13328,"worst":1.13341},"draws":58,"triangles":29696}
+{"path":"shared_grid_mid_walking_transition","samples":30,"cpu_submission_ms":{"median":0.447855,"p95":0.475748,"worst":0.617505},"gpu_ms":{"median":0.7216,"p95":0.731424,"worst":0.732224},"draws":58,"triangles":29696}
+{"walking_old_patches":43,"walking_new_patches":40,"walking_shared_patches":39}

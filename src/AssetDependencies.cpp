@@ -42,7 +42,7 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
 }
 bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,std::set<std::string>& auxiliary,std::string& error,bool advancedFluids){
  std::set<AssetId> ids;
- if(record.type==AssetType::Terrain){TerrainV2::AssetPages source;if(!source.Open(record.path,error))return false;for(const auto& id:source.Index().metadata.layerTextures)add(ids,id);}
+ if(record.type==AssetType::Terrain){TerrainV2::AssetPages source;if(!source.Open(record.path,error))return false;for(const auto& id:source.Index().metadata.layerTextures)add(ids,id);add(ids,source.Index().metadata.materialDetail.normalTexture);}
  else if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids,advancedFluids);}
  else if(record.type==AssetType::SpriteSheet){SpriteSheet sheet;if(!LoadSpriteSheet(record.path,sheet,error))return false;add(ids,sheet.texture);}
  else if(record.type==AssetType::UI){UIDocument d;if(!LoadUIDocument(record.path,d,error))return false;for(auto& e:d.elements){add(ids,e.texture);add(ids,e.font);}}

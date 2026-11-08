@@ -1,0 +1,95 @@
+[
+  {
+    "name": "before",
+    "sample": 0,
+    "exit": 0,
+    "command": [
+      ".cache/terrain-v2/material-detail/before-render-benchmark",
+      "near"
+    ],
+    "seconds": 1.5169543640004122
+  },
+  {
+    "name": "after-default",
+    "sample": 0,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near"
+    ],
+    "seconds": 1.617315540999698
+  },
+  {
+    "name": "after-detail",
+    "sample": 0,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near",
+      "detail"
+    ],
+    "seconds": 1.3660095590003039
+  },
+  {
+    "name": "after-detail",
+    "sample": 1,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near",
+      "detail"
+    ],
+    "seconds": 1.3156478479995712
+  },
+  {
+    "name": "after-default",
+    "sample": 1,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near"
+    ],
+    "seconds": 1.31598269099959
+  },
+  {
+    "name": "before",
+    "sample": 1,
+    "exit": 0,
+    "command": [
+      ".cache/terrain-v2/material-detail/before-render-benchmark",
+      "near"
+    ],
+    "seconds": 1.3169521589989017
+  },
+  {
+    "name": "before",
+    "sample": 2,
+    "exit": 0,
+    "command": [
+      ".cache/terrain-v2/material-detail/before-render-benchmark",
+      "near"
+    ],
+    "seconds": 1.3660518790002243
+  },
+  {
+    "name": "after-default",
+    "sample": 2,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near"
+    ],
+    "seconds": 1.3158257340001
+  },
+  {
+    "name": "after-detail",
+    "sample": 2,
+    "exit": 0,
+    "command": [
+      "build/judas_terrain_v2_render_benchmark",
+      "near",
+      "detail"
+    ],
+    "seconds": 1.3659557470000436
+  }
+]

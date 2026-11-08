@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "modern_gl": "4.6 NVIDIA GTX970",
+  "portable_gl": "3.3 NVIDIA GTX970",
+  "checks": {
+    "material_each_profile": 86,
+    "original_height_shadow_each_profile": 978,
+    "lod_history_each_profile": 98822,
+    "editor_each_profile": 15,
+    "creation_each_profile": 46,
+    "planet_editor_each_profile": 23,
+    "world": 93,
+    "supported_seam_steps": 300,
+    "maximum_trajectory_difference_m": 0,
+    "asset": 33,
+    "components": 38,
+    "shader": 47,
+    "runtime_renderer": 54,
+    "python_build_organization": 22,
+    "python_docs_packaging": 36
+  },
+  "actual_relocated_cold_games": [
+    "flat-game-final/RESULTS.json",
+    "planet-game-final/RESULTS.json"
+  ],
+  "retained_failures": [
+    "shader-original-pin.log",
+    "editor-portable.log",
+    "build-final.log",
+    "build-tools.log"
+  ],
+  "resolved_retests": [
+    "shader-final.log",
+    "editor-portable-final.log",
+    "build-qualified.log",
+    "build-tools-corrected.log"
+  ],
+  "existing_sources_and_saves_untouched": true,
+  "main_and_fluid_lock_untouched": true,
+  "programme_complete": false
+}

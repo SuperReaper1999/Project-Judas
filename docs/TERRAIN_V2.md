@@ -641,3 +641,62 @@ including the new 64 KiB query bounds. These are query/buffer measurements, not
 whole-editor FPS, a measured peak-RAM reduction or a hard publication deadline.
 Generic scene selection and legacy terrain/volume brush paths are not claimed
 to have this acceleration. See [controls and raw evidence](https://github.com/SuperReaper1999/Project-Judas/blob/28984e7a04db2ae1bcb07dbca2f25b598263c850/docs/evidence/terrain-v2/editor-picking/REVIEW.md).
+
+## Material detail authoring
+
+**World → Terrain tools → Surface materials** exposes four collapsible layers.
+Each has a colour texture, tint, tile size in metres and PBR roughness multiplier.
+The first layer is expanded initially. **Shared normal detail** optionally adds
+one linear RGB tangent-space normal texture, its metre scale and strength.
+Textures can be selected or dragged from Assets. Apply, undo/redo and **Save and
+update playable terrain** cover these settings together; ordinary scene Save
+alone does not publish a modified terrain source.
+
+Albedo and normal projections use the rigid source frame, including cave walls
+and ceilings. Origin shifts do not reset their phase. The normal detail is visual:
+it changes lighting, not the collision surface, water ownership or navigation.
+RG8 neutral is `(128,128)`; use OpenGL-style tangent-space normal maps with positive
+green. It is one shared detail texture, not four independent layered normal maps.
+Roughness multiplies the landscape owner's PBR material roughness using the same
+layer weights as albedo. It has no effect on Legacy or Unlit material lighting.
+
+The optional source metadata is:
+
+```json
+"materialDetail": {
+  "tileMetres": [2, 3, 6, 4],
+  "roughness": [1, 0.9, 0.8, 1],
+  "normalTexture": "registered-texture-asset-id",
+  "normalMetres": 0.8,
+  "normalStrength": 0.7
+}
+```
+
+Tile sizes are 0.125–1024 metres, roughness multipliers 0–1 and normal strength
+0–2. Unknown detail keys, malformed vectors and non-finite values are rejected.
+Defaults remain four-metre albedo tiles, multiplier 1 and no normal texture;
+default metadata is omitted to preserve existing source/asset identities.
+Nondefault detail survives native cooking, reference saves, regional restoration
+and export. New-source features require a matching Experimental runtime; older
+runtimes do not implement these optional visuals. Existing assets are not upgraded
+automatically. The ordinary compatibility preview atlas contains albedo only.
+
+The portable shader adds three normal-texture samples when enabled and uses
+texture unit 12, retaining the existing height, shadow, weather, lighting and
+skinning bindings. No compute, array-texture extension or virtual-texturing system
+is required. With no normal texture, its sampling branch is skipped. The new
+`TerrainMaterialShader.h` owns terrain material GLSL; ordinary mesh materials keep
+their existing path.
+
+For an independent, disposable consumer test (never updates the authored Workshop
+or its saves):
+
+```sh
+python3 tools/validation/qualify_terrain_v2.py --build build \
+  --output /tmp/judas-terrain-material-consumer --material-detail
+```
+
+Add `--planet` to exercise the same settings on the geographic Workshop. Use a
+fresh output directory each time. The driver authors an original periodic normal
+texture, checks that export includes it, then excavates, traverses and cold-loads
+the game from a genuinely relocated package.

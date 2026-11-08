@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MeshData.h"
+#include "TerrainMaterial.h"
 #include "TerrainPlanetChart.h"
 #include <array>
 #include <functional>
@@ -27,6 +28,7 @@ struct Source {
     float spacing = .5f, bottom = -4096, top = 4096;
     std::vector<float> heights;
     std::array<std::string, 4> layerTextures;
+    MaterialDetail materialDetail;
     std::array<glm::vec3, 4> layerColours{
         {{.25f, .36f, .12f}, {.38f, .30f, .19f}, {.42f, .43f, .40f}, {.7f, .65f, .48f}}};
     std::vector<Edit> edits;

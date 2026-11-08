@@ -94,6 +94,26 @@ int main(int argc, char **) {
             << ",\"metadata_prepare_ms\":" << metadataMs
             << ",\"reference_prepare_and_upload_ms\":" << referencePrepareAndUploadMs
             << ",\"height_upload_ms\":" << heightUploadMs << "}\n";
+        const bool detailEnabled = argc > 2;
+        TextureHandle normal;
+        TerrainV2::MaterialDetail materialDetail;
+        if (detailEnabled) {
+            TextureData image;
+            image.width = image.height = 128;
+            for (unsigned y = 0; y < 128; ++y)
+                for (unsigned x = 0; x < 128; ++x) {
+                    image.pixels.push_back(uint8_t(128 + 32 * std::sin(x * .4)));
+                    image.pixels.push_back(uint8_t(128 + 32 * std::cos(y * .4)));
+                    image.pixels.push_back(250);
+                    image.pixels.push_back(255);
+                }
+            normal = r.CreateTexture(image);
+            materialDetail.normalMetres = .8f;
+            materialDetail.normalStrength = .7f;
+        }
+        std::cout << "{\"normal_detail\":" << (detailEnabled ? "true" : "false")
+                  << ",\"normal_texture_resident_bytes\":" << r.TextureResidentBytes(normal)
+                  << "}\n";
         GLuint query;
         glGenQueries(1, &query);
         auto render = [&](bool shared, const TerrainV2::LodTransition *transition = nullptr) {
@@ -112,7 +132,7 @@ int main(int argc, char **) {
                 r.BeginTerrainMaterial(
                     {}, {},
                     {glm::vec3(.35f, .5f, .24f), glm::vec3(.5f), glm::vec3(.5f), glm::vec3(.5f)},
-                    glm::mat4(1));
+                    glm::mat4(1), materialDetail, normal);
                 if (shared) {
                     auto drawPatches = [&](const auto &selected, glm::vec2 coverage,
                                            bool incoming) {
@@ -187,6 +207,8 @@ int main(int argc, char **) {
             r.DestroyMesh(mesh);
         r.DestroyTexture(heights);
         glDeleteQueries(1, &query);
+        if (normal.IsValid())
+            r.DestroyTexture(normal);
         if (glGetError() != GL_NO_ERROR)
             throw std::runtime_error("OpenGL error during terrain measurement");
         return 0;

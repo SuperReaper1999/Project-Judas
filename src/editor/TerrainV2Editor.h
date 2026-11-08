@@ -55,6 +55,7 @@ class TerrainV2Editor {
     TerrainV2::Source source, before;
     std::array<std::string, 4> paletteTextures;
     std::array<glm::vec3, 4> paletteColours;
+    TerrainV2::MaterialDetail paletteDetail;
     std::vector<TerrainV2::Source> undo, redo;
     TerrainV2::SurfaceBrush brush;
     std::map<TerrainV2::ChunkKey, Resident> chunks;

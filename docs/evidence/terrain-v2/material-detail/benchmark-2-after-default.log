@@ -1,0 +1,15 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+{"camera_distance_case":"near"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":43,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":14.3874,"reference_prepare_and_upload_ms":735.318,"height_upload_ms":1.33624}
+{"normal_detail":false,"normal_texture_resident_bytes":0}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":6.22647,"p95":6.28368,"worst":6.29648},"gpu_ms":{"median":6.03136,"p95":6.10998,"worst":6.12323},"draws":1029,"triangles":526848}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.387501,"p95":0.394314,"worst":0.395065},"gpu_ms":{"median":0.570816,"p95":0.58064,"worst":0.582368},"draws":56,"triangles":28672}
+{"path":"shared_grid_mid_transition","samples":30,"cpu_submission_ms":{"median":0.445932,"p95":0.501105,"worst":0.505063},"gpu_ms":{"median":0.97568,"p95":0.986304,"worst":0.987648},"draws":58,"triangles":29696}
+{"path":"shared_grid_mid_walking_transition","samples":30,"cpu_submission_ms":{"median":0.44555,"p95":0.454337,"worst":0.454367},"gpu_ms":{"median":0.63312,"p95":0.6392,"worst":0.640352},"draws":58,"triangles":29696}
+{"walking_old_patches":43,"walking_new_patches":40,"walking_shared_patches":39}

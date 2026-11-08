@@ -1,0 +1,114 @@
+[
+  {
+    "name": "shader-final",
+    "command": [
+      "build/judas_shader_library_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.01576053400094679
+  },
+  {
+    "name": "runtime-render",
+    "command": [
+      "build/judas_runtime_render_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.6148572309994051
+  },
+  {
+    "name": "transition-modern",
+    "command": [
+      "build/judas_terrain_v2_transition_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.5148949430003995
+  },
+  {
+    "name": "transition-portable",
+    "command": [
+      "build/judas_terrain_v2_transition_tests"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.36458121400028176
+  },
+  {
+    "name": "editor-modern",
+    "command": [
+      "build/judas_terrain_v2_editor_tests"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 0.7150188340001478
+  },
+  {
+    "name": "editor-portable",
+    "command": [
+      "build/judas_terrain_v2_editor_tests"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 1,
+    "seconds": 0.007752821000394761
+  },
+  {
+    "name": "planet-editor-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/judas-material-planet-editor-20261108-modern"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 1.0153109499988204
+  },
+  {
+    "name": "planet-editor-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/tmp/judas-material-planet-editor-20261108-portable"
+    ],
+    "env": {
+      "JUDAS_GL_PROFILE": "portable"
+    },
+    "exit": 0,
+    "seconds": 0.7651679539994802
+  },
+  {
+    "name": "flat-game",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-material-flat-20261108",
+      "--material-detail",
+      "--particle-region"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 5.273622152000826
+  },
+  {
+    "name": "planet-game",
+    "command": [
+      "python3",
+      "tools/validation/qualify_terrain_v2.py",
+      "--build",
+      "build",
+      "--output",
+      "/tmp/terrain-v2-material-planet-20261108",
+      "--material-detail",
+      "--planet"
+    ],
+    "env": {},
+    "exit": 0,
+    "seconds": 6.825313143999665
+  }
+]

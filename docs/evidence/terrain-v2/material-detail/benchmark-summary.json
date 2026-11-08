@@ -1,0 +1,644 @@
+[
+  {
+    "log": "benchmark-0-after-default.log",
+    "normal_detail": false,
+    "normal_texture_resident_bytes": 0
+  },
+  {
+    "log": "benchmark-0-after-default.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.27732,
+      "p95": 6.45686,
+      "worst": 6.48487
+    },
+    "gpu_ms": {
+      "median": 6.02858,
+      "p95": 6.25395,
+      "worst": 6.26061
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-0-after-default.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.393863,
+      "p95": 0.399603,
+      "worst": 0.399704
+    },
+    "gpu_ms": {
+      "median": 0.57488,
+      "p95": 0.589088,
+      "worst": 0.59072
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-0-after-default.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.507387,
+      "p95": 0.510774,
+      "worst": 0.554886
+    },
+    "gpu_ms": {
+      "median": 0.970944,
+      "p95": 0.98304,
+      "worst": 0.985056
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-0-after-default.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.510913,
+      "p95": 0.513589,
+      "worst": 0.514029
+    },
+    "gpu_ms": {
+      "median": 0.633344,
+      "p95": 0.641728,
+      "worst": 0.966464
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-0-after-detail.log",
+    "normal_detail": true,
+    "normal_texture_resident_bytes": 87380
+  },
+  {
+    "log": "benchmark-0-after-detail.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.29509,
+      "p95": 6.64119,
+      "worst": 6.66474
+    },
+    "gpu_ms": {
+      "median": 6.10022,
+      "p95": 6.37594,
+      "worst": 6.44227
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-0-after-detail.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.397049,
+      "p95": 0.462262,
+      "worst": 0.474556
+    },
+    "gpu_ms": {
+      "median": 0.652512,
+      "p95": 0.664992,
+      "worst": 0.838784
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-0-after-detail.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.507076,
+      "p95": 0.520271,
+      "worst": 0.709569
+    },
+    "gpu_ms": {
+      "median": 1.1215,
+      "p95": 1.13098,
+      "worst": 1.1391
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-0-after-detail.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.510593,
+      "p95": 0.515862,
+      "worst": 0.707014
+    },
+    "gpu_ms": {
+      "median": 0.721888,
+      "p95": 0.726656,
+      "worst": 0.73264
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-0-before.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 7.21769,
+      "p95": 10.498,
+      "worst": 12.8389
+    },
+    "gpu_ms": {
+      "median": 6.9417,
+      "p95": 10.3279,
+      "worst": 12.6015
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-0-before.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.410415,
+      "p95": 0.831248,
+      "worst": 0.960031
+    },
+    "gpu_ms": {
+      "median": 0.605184,
+      "p95": 0.619456,
+      "worst": 0.620544
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-0-before.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.481709,
+      "p95": 0.623376,
+      "worst": 0.627714
+    },
+    "gpu_ms": {
+      "median": 1.0431,
+      "p95": 1.05722,
+      "worst": 1.0624
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-0-before.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.479113,
+      "p95": 0.536331,
+      "worst": 0.693929
+    },
+    "gpu_ms": {
+      "median": 0.549664,
+      "p95": 0.676,
+      "worst": 0.711168
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-after-default.log",
+    "normal_detail": false,
+    "normal_texture_resident_bytes": 0
+  },
+  {
+    "log": "benchmark-1-after-default.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.35804,
+      "p95": 6.57474,
+      "worst": 6.74937
+    },
+    "gpu_ms": {
+      "median": 6.14976,
+      "p95": 6.44864,
+      "worst": 6.46042
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-1-after-default.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.398301,
+      "p95": 0.414241,
+      "worst": 0.467001
+    },
+    "gpu_ms": {
+      "median": 0.570176,
+      "p95": 0.581248,
+      "worst": 0.581824
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-1-after-default.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.505984,
+      "p95": 0.524559,
+      "worst": 0.525742
+    },
+    "gpu_ms": {
+      "median": 0.974048,
+      "p95": 0.990304,
+      "worst": 0.990432
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-after-default.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.508379,
+      "p95": 0.526163,
+      "worst": 0.54103
+    },
+    "gpu_ms": {
+      "median": 0.632608,
+      "p95": 0.641632,
+      "worst": 0.82608
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-after-detail.log",
+    "normal_detail": true,
+    "normal_texture_resident_bytes": 87380
+  },
+  {
+    "log": "benchmark-1-after-detail.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.32856,
+      "p95": 6.58946,
+      "worst": 6.6549
+    },
+    "gpu_ms": {
+      "median": 6.14102,
+      "p95": 6.3673,
+      "worst": 6.36992
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-1-after-detail.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.40281,
+      "p95": 0.408711,
+      "worst": 0.456471
+    },
+    "gpu_ms": {
+      "median": 0.651328,
+      "p95": 0.660512,
+      "worst": 0.667648
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-1-after-detail.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.514701,
+      "p95": 0.518067,
+      "worst": 0.518618
+    },
+    "gpu_ms": {
+      "median": 1.11818,
+      "p95": 1.13056,
+      "worst": 1.13645
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-after-detail.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.51937,
+      "p95": 0.523838,
+      "worst": 0.533336
+    },
+    "gpu_ms": {
+      "median": 0.722112,
+      "p95": 0.730144,
+      "worst": 0.732768
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-before.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 5.98989,
+      "p95": 6.69216,
+      "worst": 7.03365
+    },
+    "gpu_ms": {
+      "median": 5.83728,
+      "p95": 6.42272,
+      "worst": 6.77898
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-1-before.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.375027,
+      "p95": 0.4402,
+      "worst": 0.650637
+    },
+    "gpu_ms": {
+      "median": 0.492736,
+      "p95": 0.500736,
+      "worst": 0.501952
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-1-before.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.474304,
+      "p95": 0.569805,
+      "worst": 0.752729
+    },
+    "gpu_ms": {
+      "median": 0.844768,
+      "p95": 0.857664,
+      "worst": 0.857888
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-1-before.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.484394,
+      "p95": 0.541161,
+      "worst": 0.814897
+    },
+    "gpu_ms": {
+      "median": 0.544608,
+      "p95": 0.552608,
+      "worst": 0.557088
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-after-default.log",
+    "normal_detail": false,
+    "normal_texture_resident_bytes": 0
+  },
+  {
+    "log": "benchmark-2-after-default.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.22647,
+      "p95": 6.28368,
+      "worst": 6.29648
+    },
+    "gpu_ms": {
+      "median": 6.03136,
+      "p95": 6.10998,
+      "worst": 6.12323
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-2-after-default.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.387501,
+      "p95": 0.394314,
+      "worst": 0.395065
+    },
+    "gpu_ms": {
+      "median": 0.570816,
+      "p95": 0.58064,
+      "worst": 0.582368
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-2-after-default.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.445932,
+      "p95": 0.501105,
+      "worst": 0.505063
+    },
+    "gpu_ms": {
+      "median": 0.97568,
+      "p95": 0.986304,
+      "worst": 0.987648
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-after-default.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.44555,
+      "p95": 0.454337,
+      "worst": 0.454367
+    },
+    "gpu_ms": {
+      "median": 0.63312,
+      "p95": 0.6392,
+      "worst": 0.640352
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-after-detail.log",
+    "normal_detail": true,
+    "normal_texture_resident_bytes": 87380
+  },
+  {
+    "log": "benchmark-2-after-detail.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 6.35908,
+      "p95": 7.15439,
+      "worst": 9.5067
+    },
+    "gpu_ms": {
+      "median": 6.19965,
+      "p95": 6.86381,
+      "worst": 8.90448
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-2-after-detail.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.388834,
+      "p95": 0.475958,
+      "worst": 0.517447
+    },
+    "gpu_ms": {
+      "median": 0.652608,
+      "p95": 0.66272,
+      "worst": 0.66288
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-2-after-detail.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.456711,
+      "p95": 0.502808,
+      "worst": 0.537744
+    },
+    "gpu_ms": {
+      "median": 1.11949,
+      "p95": 1.13328,
+      "worst": 1.13341
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-after-detail.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.447855,
+      "p95": 0.475748,
+      "worst": 0.617505
+    },
+    "gpu_ms": {
+      "median": 0.7216,
+      "p95": 0.731424,
+      "worst": 0.732224
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-before.log",
+    "path": "unique_full_resolution_meshes",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 5.90021,
+      "p95": 5.93676,
+      "worst": 5.94845
+    },
+    "gpu_ms": {
+      "median": 5.74778,
+      "p95": 5.90976,
+      "worst": 5.91408
+    },
+    "draws": 1029,
+    "triangles": 526848
+  },
+  {
+    "log": "benchmark-2-before.log",
+    "path": "shared_grid_with_camera_union_LOD",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.365299,
+      "p95": 0.373314,
+      "worst": 0.373675
+    },
+    "gpu_ms": {
+      "median": 0.494528,
+      "p95": 0.502528,
+      "worst": 0.505248
+    },
+    "draws": 56,
+    "triangles": 28672
+  },
+  {
+    "log": "benchmark-2-before.log",
+    "path": "shared_grid_mid_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.417367,
+      "p95": 0.506044,
+      "worst": 0.555027
+    },
+    "gpu_ms": {
+      "median": 0.845792,
+      "p95": 0.857376,
+      "worst": 0.860576
+    },
+    "draws": 58,
+    "triangles": 29696
+  },
+  {
+    "log": "benchmark-2-before.log",
+    "path": "shared_grid_mid_walking_transition",
+    "samples": 30,
+    "cpu_submission_ms": {
+      "median": 0.417307,
+      "p95": 0.553024,
+      "worst": 0.600933
+    },
+    "gpu_ms": {
+      "median": 0.544544,
+      "p95": 0.553024,
+      "worst": 0.553184
+    },
+    "draws": 58,
+    "triangles": 29696
+  }
+]

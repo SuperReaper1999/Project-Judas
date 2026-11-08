@@ -1,5 +1,6 @@
 #include "ShaderLibrary.h"
 #include "TerrainShader.h"
+#include "TerrainMaterialShader.h"
 
 #include <cstdint>
 #include <cstdio>
@@ -182,26 +183,7 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
 uniform int uMaterialModel,uAlphaMode;
 uniform bool uTerrain;
 uniform sampler2D uMR,uNormal,uOcclusion,uEmissive,uEnvDiffuse,uEnvSpecular,uBRDF;
-uniform vec3 uTerrainColours[4];
-uniform mat4 uTerrainFromWorld;
-vec3 terrainSample(sampler2D layer,vec3 p,vec3 blend) {
-    return texture(layer,p.yz*.25).rgb*blend.x+texture(layer,p.xz*.25).rgb*blend.y+texture(layer,p.xy*.25).rgb*blend.z;
-}
-vec3 terrainBase(vec3 n) {
-    vec3 localNormal=normalize(mat3(uTerrainFromWorld)*n);
-    vec3 blend=pow(abs(localNormal),vec3(4.0));blend/=max(dot(blend,vec3(1.0)),0.0001);
-    vec2 weightSize=vec2(textureSize(uTexture,0));
-    vec4 w=texture(uTexture,(clamp(vUV1,vec2(0),vec2(1))*(weightSize-vec2(1))+.5)/weightSize);w/=max(dot(w,vec4(1.0)),0.0001);
-    // Texture phase lives in source-local coordinates, so shifting the world
-    // origin never makes landscape texture detail swim.
-    vec3 p=(uTerrainFromWorld*vec4(vWorldPos,1.0)).xyz;
-    float exposed=max(smoothstep(.12,.6,1.0-abs(localNormal.y)),1.0-smoothstep(-.1,.25,localNormal.y));
-    w=mix(w,vec4(0.0,.12,.88,0.0),exposed);
-    return terrainSample(uMR,p,blend)*uTerrainColours[0]*w.x+
-           terrainSample(uNormal,p,blend)*uTerrainColours[1]*w.y+
-           terrainSample(uOcclusion,p,blend)*uTerrainColours[2]*w.z+
-           terrainSample(uEmissive,p,blend)*uTerrainColours[3]*w.w;
-}
+)" JUDAS_TERRAIN_MATERIAL_GLSL R"(
 uniform float uAlphaCutoff,uMetallic,uRoughness,uNormalStrength,uOcclusionStrength,uEmissionIntensity;
 uniform bool uFlipV,uModern,uEnvironmentEnabled,uBaseLinear;
 uniform vec4 uBaseFactor,uUVTransform;
@@ -246,6 +228,12 @@ void main() {
     if(uMaterialModel!=0&&uHasNormal&&!uTerrain){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,mapUV(2)).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}
 
 
+    vec3 terrainGeometricNormal=normal;
+    vec4 terrainLayerWeights=vec4(1.0,0.0,0.0,0.0);
+    if(uTerrain){
+        terrainLayerWeights=terrainWeights(normalize(mat3(uTerrainFromWorld)*normal));
+        normal=terrainNormal(normal);
+    }
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
     vec3 lighting = vec3(0.0);
     // Material model is uniform for the draw. PBR evaluates its own BRDF/light
@@ -293,9 +281,9 @@ void main() {
     vec4 texColor = uTerrain ? vec4(1.0) : texture(uTexture,materialUV);
     vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*vTint;
     if(uAlphaMode==1&&base.a<uAlphaCutoff)discard;
-    if(uTerrain)base.rgb*=terrainBase(normal);
+    if(uTerrain)base.rgb*=terrainBase(terrainGeometricNormal,terrainLayerWeights);
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
-    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR&&!uTerrain){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
+    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uTerrain)rough*=dot(terrainLayerWeights,uTerrainRoughness);if(uHasMR&&!uTerrain){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
 
     if(uBasicWater){
         vec3 n=normalize(gl_FrontFacing?normal:-normal);

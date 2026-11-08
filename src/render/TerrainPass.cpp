@@ -7,6 +7,13 @@ void Renderer::BeginTerrainMaterial(TextureHandle weights,
                                     const std::array<TextureHandle, 4> &layers,
                                     const std::array<glm::vec3, 4> &colours,
                                     const glm::mat4 &worldToTerrain) {
+    BeginTerrainMaterial(weights, layers, colours, worldToTerrain, {}, {});
+}
+void Renderer::BeginTerrainMaterial(TextureHandle weights,
+                                    const std::array<TextureHandle, 4> &layers,
+                                    const std::array<glm::vec3, 4> &colours,
+                                    const glm::mat4 &worldToTerrain,
+                                    const TerrainV2::MaterialDetail &detail, TextureHandle normal) {
     // Flush unrelated queued materials before changing terrain-only state.
     EndMeshBatch();
     m_terrainMaterial = true;
@@ -14,6 +21,8 @@ void Renderer::BeginTerrainMaterial(TextureHandle weights,
     m_terrainLayers = layers;
     m_terrainColours = colours;
     m_terrainFromWorld = worldToTerrain;
+    m_terrainDetail = detail;
+    m_terrainNormal = normal;
 }
 void Renderer::BindTerrainMaterial() {
     if (!m_terrainMaterial)
@@ -38,6 +47,19 @@ void Renderer::BindTerrainMaterial() {
         glUniform1i(MaterialUniform(names[i]), 5 + i);
     }
     glUniform3fv(MaterialUniform("uTerrainColours[0]"), 4, glm::value_ptr(m_terrainColours[0]));
+    glUniform4fv(MaterialUniform("uTerrainTileMetres"), 1,
+                 glm::value_ptr(m_terrainDetail.tileMetres));
+    glUniform4fv(MaterialUniform("uTerrainRoughness"), 1,
+                 glm::value_ptr(m_terrainDetail.roughness));
+    glUniform1f(MaterialUniform("uTerrainNormalMetres"), m_terrainDetail.normalMetres);
+    glUniform1f(MaterialUniform("uTerrainNormalStrength"), m_terrainDetail.normalStrength);
+    glUniform1i(MaterialUniform("uTerrainHasNormal"), m_terrainNormal.IsValid());
+    // Unit12 is unused by the ordinary material pass. Height, light-grid,
+    // environment, weather and pose bindings retain their own units.
+    glActiveTexture(GL_TEXTURE12);
+    glBindTexture(GL_TEXTURE_2D, ResolveTexture(m_terrainNormal));
+    glBindSampler(12, 0);
+    glUniform1i(MaterialUniform("uTerrainDetailNormal"), 12);
     glUniformMatrix4fv(MaterialUniform("uTerrainFromWorld"), 1, GL_FALSE,
                        glm::value_ptr(m_terrainFromWorld));
     glActiveTexture(GL_TEXTURE0);

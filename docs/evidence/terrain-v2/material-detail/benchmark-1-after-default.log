@@ -1,0 +1,15 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+{"camera_distance_case":"near"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":43,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":14.4113,"reference_prepare_and_upload_ms":739.977,"height_upload_ms":1.50314}
+{"normal_detail":false,"normal_texture_resident_bytes":0}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":6.35804,"p95":6.57474,"worst":6.74937},"gpu_ms":{"median":6.14976,"p95":6.44864,"worst":6.46042},"draws":1029,"triangles":526848}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.398301,"p95":0.414241,"worst":0.467001},"gpu_ms":{"median":0.570176,"p95":0.581248,"worst":0.581824},"draws":56,"triangles":28672}
+{"path":"shared_grid_mid_transition","samples":30,"cpu_submission_ms":{"median":0.505984,"p95":0.524559,"worst":0.525742},"gpu_ms":{"median":0.974048,"p95":0.990304,"worst":0.990432},"draws":58,"triangles":29696}
+{"path":"shared_grid_mid_walking_transition","samples":30,"cpu_submission_ms":{"median":0.508379,"p95":0.526163,"worst":0.54103},"gpu_ms":{"median":0.632608,"p95":0.641632,"worst":0.82608},"draws":58,"triangles":29696}
+{"walking_old_patches":43,"walking_new_patches":40,"walking_shared_patches":39}
