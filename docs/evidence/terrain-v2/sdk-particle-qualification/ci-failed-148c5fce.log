@@ -1,0 +1,252 @@
+linux (Alpha)	Tooling positive and negative controls	﻿2026-11-08T05:16:53.9972692Z ##[group]Run python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9973326Z [36;1mpython3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json[0m
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9974038Z [36;1mpython3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/ci/packaging.json[0m
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9974566Z [36;1mpython3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/ci/distribution.json[0m
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9974961Z [36;1mnode tests/TypeScriptToolingTests.mjs[0m
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9975222Z [36;1mnode scripts/check_judasjs_api.mjs[0m
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9994103Z shell: /usr/bin/bash -e {0}
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9994319Z env:
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9994484Z   SDL_AUDIODRIVER: dummy
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9994679Z   LIBGL_ALWAYS_SOFTWARE: 1
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9994876Z   PYTHONDONTWRITEBYTECODE: 1
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:53.9995079Z ##[endgroup]
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:56.8846081Z Build provenance configuration: 27 controls passed
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.1488673Z test_android_bad_options_fail_before_build (__main__.PackagingChecks.test_android_bad_options_fail_before_build) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.1498884Z test_android_cross_abi_identity_excludes_architecture_but_not_source (__main__.PackagingChecks.test_android_cross_abi_identity_excludes_architecture_but_not_source) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.1513807Z test_android_development_defaults_are_project_owned (__main__.PackagingChecks.test_android_development_defaults_are_project_owned) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.1549037Z test_android_release_requires_explicit_version_and_signing (__main__.PackagingChecks.test_android_release_requires_explicit_version_and_signing) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.1762337Z test_checksum_file_is_verified (__main__.PackagingChecks.test_checksum_file_is_verified) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.2349480Z test_corrupt_missing_and_extra_payloads_detected (__main__.PackagingChecks.test_corrupt_missing_and_extra_payloads_detected) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.2790210Z test_editable_workflow_project_and_metadata_survive_sdk_staging (__main__.PackagingChecks.test_editable_workflow_project_and_metadata_survive_sdk_staging) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3133783Z test_failed_replacement_preserves_previous_sdk (__main__.PackagingChecks.test_failed_replacement_preserves_previous_sdk) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3403118Z test_full_source_profile_is_explicit (__main__.PackagingChecks.test_full_source_profile_is_explicit) ... ERROR
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3509203Z test_generated_zip_entries_have_stable_bytes_and_epoch (__main__.PackagingChecks.test_generated_zip_entries_have_stable_bytes_and_epoch) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3524037Z test_inventory_and_manifest_paths_reject_traversal (__main__.PackagingChecks.test_inventory_and_manifest_paths_reject_traversal) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3764875Z test_inventory_detects_removed_helper_target_and_unreachable_module (__main__.PackagingChecks.test_inventory_detects_removed_helper_target_and_unreachable_module) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3782553Z test_inventory_follows_includes_without_accepting_inert_text (__main__.PackagingChecks.test_inventory_follows_includes_without_accepting_inert_text) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3794787Z test_missing_required_tool_rejected (__main__.PackagingChecks.test_missing_required_tool_rejected) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.3810838Z test_mixed_tool_identity_rejected (__main__.PackagingChecks.test_mixed_tool_identity_rejected) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.4960811Z test_native_probe_output_and_time_are_bounded (__main__.PackagingChecks.test_native_probe_output_and_time_are_bounded) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.4973072Z test_refuse_replacing_binary_directory_ancestor (__main__.PackagingChecks.test_refuse_replacing_binary_directory_ancestor) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.4985922Z test_refuse_unowned_destination (__main__.PackagingChecks.test_refuse_unowned_destination) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.5216378Z test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources (__main__.PackagingChecks.test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.5580784Z test_sdk_current_finding_data_survives_relocation_and_missing_data_fails (__main__.PackagingChecks.test_sdk_current_finding_data_survives_relocation_and_missing_data_fails) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.5709890Z test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.5969168Z test_source_archive_exact_bytes_provenance_and_determinism (__main__.PackagingChecks.test_source_archive_exact_bytes_provenance_and_determinism) ... ERROR
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.6252134Z test_source_archive_keeps_current_machine_docs_and_excludes_history (__main__.PackagingChecks.test_source_archive_keeps_current_machine_docs_and_excludes_history) ... ERROR
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.6426110Z test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite (__main__.PackagingChecks.test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.6816945Z test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs (__main__.PackagingChecks.test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs) ... ERROR
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7225272Z test_stage_verify_relocate_and_deterministic_manifest (__main__.PackagingChecks.test_stage_verify_relocate_and_deterministic_manifest) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7249378Z test_untracked_observations_require_complete_typed_identity (__main__.PackagingChecks.test_untracked_observations_require_complete_typed_identity) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7641134Z test_windows_dependency_inventory_and_missing_dll_negative_control (__main__.PackagingChecks.test_windows_dependency_inventory_and_missing_dll_negative_control) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7652027Z test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts (__main__.PackagingChecks.test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts) ... ok
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7652863Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7653146Z ======================================================================
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7653978Z ERROR: test_full_source_profile_is_explicit (__main__.PackagingChecks.test_full_source_profile_is_explicit)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7654757Z ----------------------------------------------------------------------
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7655250Z Traceback (most recent call last):
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7656084Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 479, in test_full_source_profile_is_explicit
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7656855Z     package_source.archive(args)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7657652Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7658484Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7659128Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7659634Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7660068Z     return _default_decoder.decode(s)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7660398Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7660809Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7661277Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7661655Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7662095Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7662633Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7663275Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7663618Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7663837Z ======================================================================
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7664802Z ERROR: test_source_archive_exact_bytes_provenance_and_determinism (__main__.PackagingChecks.test_source_archive_exact_bytes_provenance_and_determinism)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7665959Z ----------------------------------------------------------------------
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7666536Z Traceback (most recent call last):
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7667553Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 418, in test_source_archive_exact_bytes_provenance_and_determinism
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7668374Z     first = package_source.archive(args)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7668701Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7669250Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7670016Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7670656Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7671147Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7671568Z     return _default_decoder.decode(s)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7671884Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7672266Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7672696Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7673063Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7673491Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7674012Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7674601Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7674919Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7675145Z ======================================================================
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7676150Z ERROR: test_source_archive_keeps_current_machine_docs_and_excludes_history (__main__.PackagingChecks.test_source_archive_keeps_current_machine_docs_and_excludes_history)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7677077Z ----------------------------------------------------------------------
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7677749Z Traceback (most recent call last):
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7678630Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 443, in test_source_archive_keeps_current_machine_docs_and_excludes_history
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7679569Z     package_source.archive(args)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7680257Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7681018Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7681623Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7682096Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7682516Z     return _default_decoder.decode(s)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7682826Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7683199Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7683685Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7684112Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7684576Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7685142Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7685785Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7686130Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7686350Z ======================================================================
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7687619Z ERROR: test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs (__main__.PackagingChecks.test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7688738Z ----------------------------------------------------------------------
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7689368Z Traceback (most recent call last):
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7690302Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 471, in test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7691465Z     result = package_source.archive(args)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7691830Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7692455Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7693283Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7693955Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7694489Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7694948Z     return _default_decoder.decode(s)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7695301Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7695730Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7696199Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7696591Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7697063Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7697806Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7698475Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7698833Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7699103Z ----------------------------------------------------------------------
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7699540Z Ran 29 tests in 0.621s
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7699717Z 
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7699844Z FAILED (errors=4)
+linux (Alpha)	Tooling positive and negative controls	2026-11-08T05:16:57.7813642Z ##[error]Process completed with exit code 1.
+linux (Experimental)	Tooling positive and negative controls	﻿2026-11-08T05:17:04.2510276Z ##[group]Run python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2511045Z [36;1mpython3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json[0m
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2511584Z [36;1mpython3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/ci/packaging.json[0m
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2512091Z [36;1mpython3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/ci/distribution.json[0m
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2512483Z [36;1mnode tests/TypeScriptToolingTests.mjs[0m
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2512739Z [36;1mnode scripts/check_judasjs_api.mjs[0m
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2531616Z shell: /usr/bin/bash -e {0}
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2531822Z env:
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2531990Z   SDL_AUDIODRIVER: dummy
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2532185Z   LIBGL_ALWAYS_SOFTWARE: 1
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2532379Z   PYTHONDONTWRITEBYTECODE: 1
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:04.2532572Z ##[endgroup]
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.4431691Z Build provenance configuration: 27 controls passed
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.5564063Z test_android_bad_options_fail_before_build (__main__.PackagingChecks.test_android_bad_options_fail_before_build) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.5574225Z test_android_cross_abi_identity_excludes_architecture_but_not_source (__main__.PackagingChecks.test_android_cross_abi_identity_excludes_architecture_but_not_source) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.5588974Z test_android_development_defaults_are_project_owned (__main__.PackagingChecks.test_android_development_defaults_are_project_owned) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.5623709Z test_android_release_requires_explicit_version_and_signing (__main__.PackagingChecks.test_android_release_requires_explicit_version_and_signing) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.5843306Z test_checksum_file_is_verified (__main__.PackagingChecks.test_checksum_file_is_verified) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.6454049Z test_corrupt_missing_and_extra_payloads_detected (__main__.PackagingChecks.test_corrupt_missing_and_extra_payloads_detected) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.6913510Z test_editable_workflow_project_and_metadata_survive_sdk_staging (__main__.PackagingChecks.test_editable_workflow_project_and_metadata_survive_sdk_staging) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7281141Z test_failed_replacement_preserves_previous_sdk (__main__.PackagingChecks.test_failed_replacement_preserves_previous_sdk) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7555385Z test_full_source_profile_is_explicit (__main__.PackagingChecks.test_full_source_profile_is_explicit) ... ERROR
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7607851Z test_generated_zip_entries_have_stable_bytes_and_epoch (__main__.PackagingChecks.test_generated_zip_entries_have_stable_bytes_and_epoch) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7623508Z test_inventory_and_manifest_paths_reject_traversal (__main__.PackagingChecks.test_inventory_and_manifest_paths_reject_traversal) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7867253Z test_inventory_detects_removed_helper_target_and_unreachable_module (__main__.PackagingChecks.test_inventory_detects_removed_helper_target_and_unreachable_module) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7885499Z test_inventory_follows_includes_without_accepting_inert_text (__main__.PackagingChecks.test_inventory_follows_includes_without_accepting_inert_text) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7898450Z test_missing_required_tool_rejected (__main__.PackagingChecks.test_missing_required_tool_rejected) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.7915167Z test_mixed_tool_identity_rejected (__main__.PackagingChecks.test_mixed_tool_identity_rejected) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9086801Z test_native_probe_output_and_time_are_bounded (__main__.PackagingChecks.test_native_probe_output_and_time_are_bounded) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9099604Z test_refuse_replacing_binary_directory_ancestor (__main__.PackagingChecks.test_refuse_replacing_binary_directory_ancestor) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9113036Z test_refuse_unowned_destination (__main__.PackagingChecks.test_refuse_unowned_destination) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9349435Z test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources (__main__.PackagingChecks.test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9731037Z test_sdk_current_finding_data_survives_relocation_and_missing_data_fails (__main__.PackagingChecks.test_sdk_current_finding_data_survives_relocation_and_missing_data_fails) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:05.9861644Z test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.0132178Z test_source_archive_exact_bytes_provenance_and_determinism (__main__.PackagingChecks.test_source_archive_exact_bytes_provenance_and_determinism) ... ERROR
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.0419702Z test_source_archive_keeps_current_machine_docs_and_excludes_history (__main__.PackagingChecks.test_source_archive_keeps_current_machine_docs_and_excludes_history) ... ERROR
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.0602376Z test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite (__main__.PackagingChecks.test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1038903Z test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs (__main__.PackagingChecks.test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs) ... ERROR
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1465198Z test_stage_verify_relocate_and_deterministic_manifest (__main__.PackagingChecks.test_stage_verify_relocate_and_deterministic_manifest) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1487996Z test_untracked_observations_require_complete_typed_identity (__main__.PackagingChecks.test_untracked_observations_require_complete_typed_identity) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1891544Z test_windows_dependency_inventory_and_missing_dll_negative_control (__main__.PackagingChecks.test_windows_dependency_inventory_and_missing_dll_negative_control) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1902905Z test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts (__main__.PackagingChecks.test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts) ... ok
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1903748Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1904031Z ======================================================================
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1904872Z ERROR: test_full_source_profile_is_explicit (__main__.PackagingChecks.test_full_source_profile_is_explicit)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1905846Z ----------------------------------------------------------------------
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1906372Z Traceback (most recent call last):
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1907200Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 479, in test_full_source_profile_is_explicit
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1907957Z     package_source.archive(args)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1908541Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1909352Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1909984Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1910483Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1910925Z     return _default_decoder.decode(s)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1911252Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1911651Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1912093Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1912478Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1912925Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1913464Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1914097Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1914425Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1914652Z ======================================================================
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1915758Z ERROR: test_source_archive_exact_bytes_provenance_and_determinism (__main__.PackagingChecks.test_source_archive_exact_bytes_provenance_and_determinism)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1916914Z ----------------------------------------------------------------------
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1917509Z Traceback (most recent call last):
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1918376Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 418, in test_source_archive_exact_bytes_provenance_and_determinism
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1919178Z     first = package_source.archive(args)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1919496Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1920038Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1920790Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1921408Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1921885Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1922303Z     return _default_decoder.decode(s)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1922625Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1923017Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1923478Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1923836Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1924254Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1924761Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1925794Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1926119Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1926337Z ======================================================================
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1927336Z ERROR: test_source_archive_keeps_current_machine_docs_and_excludes_history (__main__.PackagingChecks.test_source_archive_keeps_current_machine_docs_and_excludes_history)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1928239Z ----------------------------------------------------------------------
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1928656Z Traceback (most recent call last):
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1929563Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 443, in test_source_archive_keeps_current_machine_docs_and_excludes_history
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1930398Z     package_source.archive(args)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1930944Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1931710Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1932351Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1932827Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1933227Z     return _default_decoder.decode(s)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1933534Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1933915Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1934346Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1934711Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1935295Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1935813Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1936387Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1936733Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1936972Z ======================================================================
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1938111Z ERROR: test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs (__main__.PackagingChecks.test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1939155Z ----------------------------------------------------------------------
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1939825Z Traceback (most recent call last):
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1940961Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 471, in test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1942026Z     result = package_source.archive(args)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1942401Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1943006Z   File "/home/runner/work/Project-Judas/Project-Judas/tools/package_source.py", line 104, in archive
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1943863Z     learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1944548Z                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1945207Z   File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1945666Z     return _default_decoder.decode(s)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1946011Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1946435Z   File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1946939Z     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1947335Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1947790Z   File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1948350Z     raise JSONDecodeError("Expecting value", s, err.value) from None
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1949144Z json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1949504Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1949804Z ----------------------------------------------------------------------
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1950233Z Ran 29 tests in 0.639s
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1950394Z 
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.1950523Z FAILED (errors=4)
+linux (Experimental)	Tooling positive and negative controls	2026-11-08T05:17:06.2070245Z ##[error]Process completed with exit code 1.

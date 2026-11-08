@@ -9,6 +9,11 @@ project assets automatically.
 
 ## Try the current slice
 
+This is ready for hands-on review of the integrated workflows below, not a claim
+that every item of the five-stage programme is complete. Physical residency is
+still at source/region granularity; finer chunk interest and demand paging remain
+open. Temporal LOD transitions and broader terrain materials also remain open.
+
 Build `judas`, `judas_editor` and `judas_terrain_author`, then open
 `projects/terrain_v2_workshop/terrain_v2_workshop.judasproj` in the editor or
 runtime. In Play, press T to excavate a tunnel, wait for the queue, then walk
@@ -40,6 +45,27 @@ scene owners. The Inspector's Landscape card and double-clicking a native terrai
 asset open the corresponding source. Project-relative provenance connects assets
 to sources; the older unique-filename fallback remains, but ambiguous matches are
 rejected. Legacy terrain tools remain available without discarding a dirty draft.
+
+For human review, use copies or save your authored changes deliberately:
+
+1. Open the Highlands Workshop, press T in Play, wait for the queue to finish,
+   then walk through both ends of the actual cross-chunk tunnel. Try manual dig,
+   add, raise and paint; save, quit and load to check both edits and progress.
+2. In Edit mode, create a landscape, sculpt a gesture, undo/redo, change a surface
+   material, then **Save and update playable terrain** and save the scene. Play,
+   Stop and reopen it. Check the source picker and Landscape Inspector selection.
+3. Open the separate Planetary Workshop. Try T and O, walk through the excavation,
+   save and cold-load. Check that the base planet does not block the cave and that
+   the source remains attached through the origin change.
+4. Add a Particle Emitter in a throwaway project. Under **Collision response**,
+   enable world collision and optional **Use local collision coverage**. Confirm
+   that its offset/half size persist and remain accessible through JudasJS.
+   Cover all required paths; a box that is too small reports failed queries.
+
+Automated controls and screenshots do not substitute for this visual/gameplay
+acceptance. Existing games, installed SDK selections and the fluid lock remain
+untouched. Linux desktop qualification does not certify this new terrain work on
+Windows, Android, browsers or older Linux distributions.
 
 Surface materials offers four texture/tint layers, including asset drag/drop.
 Apply previews material changes; Save and update also applies pending choices.

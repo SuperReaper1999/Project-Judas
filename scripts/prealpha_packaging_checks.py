@@ -100,6 +100,9 @@ class PackagingChecks(unittest.TestCase):
             path = self.source / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("fixture\n")
+        # Source archives read the requested checkout's committed inventory.
+        # Keep this fixture structurally valid rather than a placeholder blob.
+        (self.source / "packaging/sdk-inventory.json").write_text(json.dumps(self.spec))
         self.inventory = self.root / "inventory.json"
         self.inventory.write_text(json.dumps(self.spec))
         self.build_info = self.root / "identity.json"
@@ -451,8 +454,8 @@ add_executable(${target} ${sources})
         # Removing machine-readable documentation must break this exact archive
         # contract, even though the remaining source/build payload is still valid.
         selected = package_source.selected
-        with patch.object(package_source, "selected", side_effect=lambda name, profile:
-                          selected(name, profile) and name not in required):
+        with patch.object(package_source, "selected", side_effect=lambda name, profile, learning=None:
+                          selected(name, profile, learning) and name not in required):
             package_source.archive(args)
         with tarfile.open(args.output, "r:gz") as archive:
             with self.assertRaises(AssertionError):
@@ -480,6 +483,20 @@ add_executable(${target} ${sources})
         with tarfile.open(args.output, "r:gz") as archive:
             self.assertIn("docs/evidence/preserved.txt", archive.getnames())
             self.assertIn("projects/game/game.js", archive.getnames())
+
+    def test_malformed_committed_inventory_preserves_existing_archive(self):
+        args = self.source_checkout()
+        package_source.archive(args)
+        original = args.output.read_bytes()
+        inventory = self.source / "packaging/sdk-inventory.json"
+        inventory.write_text("fixture\n")
+        subprocess.run(["git", "-C", str(self.source), "add", "packaging/sdk-inventory.json"], check=True)
+        subprocess.run(["git", "-C", str(self.source), "-c", "user.name=Fixture",
+                        "-c", "user.email=fixture@example.invalid", "-c", "commit.gpgsign=false",
+                        "commit", "-qm", "Invalid inventory negative control"], check=True)
+        with self.assertRaises(json.JSONDecodeError):
+            package_source.archive(args)
+        self.assertEqual(args.output.read_bytes(), original)
 
     def test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite(self):
         args = self.source_checkout()

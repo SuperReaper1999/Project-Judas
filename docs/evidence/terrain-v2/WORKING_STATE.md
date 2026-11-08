@@ -1,5 +1,27 @@
 # Terrain V2 — current engineering handoff
 
+## Latest verified state (supersedes historical next-action notes below)
+
+Pushed engine checkpoint148c5fce257b02c97b33511af4f0f75ac6741772 includes the
+bounded authored particle collision regions. Its exact host-native SDK passes
+17tool probes,8standard consumer operations and SDK-contained actual terrain
+particle/export/relocation/cold-save controls. Current streaming69/planet37 and
+large-source30write/18coldread pass. Evidence sdk-particle-qualification/.
+
+Remote focused CI at148c failed in older packaging fixtures (invalid committed
+inventory JSON), reproduced locally as4errors/29tests. Fixture-only correction
+and malformed-inventory/archive-preservation negative control pass30tests;
+coordinated packaging/workflow/registration36pass,2existing skips. The next
+remote run must be checked; local success is not remote qualification. Do not
+repeat the completed native SDK build for Python-fixture/documentation changes.
+
+Remain on Terrain V2. The complete five-stage programme is NOT finished.
+Independent chunk physical interest/data paging, temporal LOD transitions and
+broader terrain materials remain open. Current supported physical residency is
+source/region-granular, max1024colliders; don't evict support by camera visibility.
+InstalledRPG SDK still local9f022cf1. Main1094d645 and fluid lock unchanged.
+No active build remains; all current streaming subprocesses completed0.
+
 Authority: the complete five-stage Terrain V2 implementation is approved on
 Experimental. Continue through ordinary implementation problems. Main, supported
 releases, the Alpha fluid lock, existing consumer games/SDKs and independent
