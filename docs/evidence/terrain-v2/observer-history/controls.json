@@ -1,0 +1,48 @@
+[
+  {
+    "profile": "modern",
+    "command": [
+      "build/judas_terrain_v2_transition_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "profile": "modern",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/observer-history/editor-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "profile": "modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/observer-history/planet-editor-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "profile": "portable",
+    "command": [
+      "build/judas_terrain_v2_transition_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "profile": "portable",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/observer-history/editor-portable-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "profile": "portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/observer-history/planet-editor-portable-project"
+    ],
+    "returncode": 0
+  }
+]

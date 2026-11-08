@@ -37,6 +37,12 @@ void History(const Selection &coarse, const Selection &fine) {
     history.Update(coarse, TerrainV2::LodTransition::Duration / 2);
     Check(std::abs(history.Fraction() - .5f) < 1e-6f && history.Incoming().size() == fine.size(),
           "reversing the requested camera does not restart or grow transition history");
+    history.Update(coarse, 0);
+    Check(!history.Active() && history.Current().size() == coarse.size(),
+          "editor observer draws its own immediate camera union");
+    history.Update(fine, TerrainV2::LodTransition::Duration / 4);
+    Check(history.Active() && std::abs(history.Fraction() - .75f) < 1e-6f,
+          "an observer frame cannot reset or restart the game-view transition");
     history.Update(fine, TerrainV2::LodTransition::Duration);
     Check(!history.Active() && history.Current().size() == fine.size(),
           "completed transition releases the outgoing selection");
@@ -68,6 +74,11 @@ void History(const Selection &coarse, const Selection &fine) {
     history.Update({}, .01f);
     Check(history.Current().empty() && !history.Active(),
           "an empty published selection cannot retain obsolete terrain");
+    TerrainV2::LodTransition observedFirst;
+    observedFirst.Update(coarse, 0);
+    observedFirst.Update(fine, 1.f / 60);
+    Check(!observedFirst.Active() && observedFirst.Current().size() == fine.size(),
+          "the first game view does not inherit an unrelated observer's starting detail");
 }
 } // namespace
 

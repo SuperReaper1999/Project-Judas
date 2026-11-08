@@ -2,6 +2,26 @@
 
 ## Latest verified state (supersedes historical next-action notes below)
 
+PICKING checkpoint4838c503 is PUSHED; read live Git for full hash. All17tools
+built from it, but SDK staging was deliberately held after a final review found
+an introduced observer-history defect in the LOD feature. Source reproduction:
+WorldPresentation calls PrepareRuntimeTerrain(seconds=0) for Scene observers;
+the original LodTransition::Update cleared the game's running fade. New regression
+fails after6checks on the old binary. Raw/binary .cache/terrain-v2/observer-history/.
+
+CURRENT UNCOMMITTED correction isolates one immediate observer selection from
+the two runtime transition selections inside TerrainLodTransition.*. Positive
+game frames resume the exact old fraction; an observer rendered first cannot
+seed the game's first detail. Renderer/physics/SDK code is unchanged. The direct
+render benchmark now seeds runtime history with a positive timestep. New controls
+are in TerrainV2TransitionTests.cpp. Corrected builds and ALL controls EXITED0:
+98822GPU/history eachmodern/portable, editor15each, planetEditor23each, world93
+with300exact supportedsteps; currentdocs21pass. Preserved old binary/replay exits1
+as expected. Final benchmark still has real active transitions and39shared
+walkingpatches. Evidence observer-history/. No SDK is ready from this correction
+yet. Scoped checkpoint then rebuild/stage/verify matching17-tool SDK.
+Main1094d645, RPG SDKlocal9f022cf1 and fluid lock stay untouched.
+
 Terrain LOD checkpoint03927f7187161d48b38705e9c3605ca848f42390 is PUSHED.
 Its docs CI passed; engine gate42477623102 now SUCCESS in BOTH Alpha and
 Experimental build configurations (promotion job skipped as expected).

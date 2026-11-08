@@ -56,13 +56,13 @@ int main(int argc, char **) {
         auto patches = lod.Select(interests, {});
         const auto distantPatches = lod.Select({{{0, 10000, 0}, 570, 0}}, {});
         TerrainV2::LodTransition arrival, walking;
-        arrival.Update(distantPatches, 0);
+        arrival.Update(distantPatches, 1.f / 60);
         arrival.Update(patches, 1.f / 60);
         arrival.Update(patches, TerrainV2::LodTransition::Duration / 2);
         auto movedViews = interests;
         movedViews.front().position.x += 60;
         auto movedPatches = lod.Select(movedViews, {});
-        walking.Update(patches, 0);
+        walking.Update(patches, 1.f / 60);
         walking.Update(movedPatches, 1.f / 60);
         walking.Update(movedPatches, TerrainV2::LodTransition::Duration / 2);
         std::cout << "{\"camera_distance_case\":\"" << (argc > 1 ? "near" : "far") << "\"}\n";

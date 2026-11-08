@@ -15,8 +15,10 @@ bool SameSelection(const std::vector<HeightPatch> &a, const std::vector<HeightPa
 void LodTransition::Reset() {
     current.clear();
     incoming.clear();
+    observed.clear();
     unchanged.clear();
     fraction = 0;
+    observing = false;
 }
 
 void LodTransition::Update(std::vector<HeightPatch> selected, float seconds) {
@@ -24,9 +26,16 @@ void LodTransition::Update(std::vector<HeightPatch> selected, float seconds) {
         Reset();
         return;
     }
-    // Zero-time observers select their own complete camera union immediately.
-    // Source publication resets history before any changed geometry is drawn.
-    if (current.empty() || !std::isfinite(seconds) || seconds <= 0) {
+    // Observers draw an immediate selection, but cannot alter or advance the
+    // game's history. Scene and Game views may render the same world in turn.
+    if (seconds == 0) {
+        observed = std::move(selected);
+        observing = true;
+        return;
+    }
+    observing = false;
+    // Source publication resets history before changed geometry is drawn.
+    if (current.empty() || !std::isfinite(seconds) || seconds < 0) {
         current = std::move(selected);
         incoming.clear();
         unchanged.clear();

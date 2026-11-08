@@ -596,7 +596,10 @@ therefore take roughly 360 ms to settle. The 2-pixel error target describes the
 newly selected endpoint, not every outgoing pixel during such a teleport.
 Source publication resets history immediately, so an old intact surface cannot
 fade over a newly excavated cave. Zero-time observer calls select their own union
-immediately. Mapped planetary patches still render full detail; this does not
+immediately in a separate selection, preserving the game view's running fade.
+History is bounded to two runtime selections plus one immediate observer list;
+opening the editor Scene and Game views together cannot restart the fade every
+frame. Mapped planetary patches still render full detail; this does not
 replace the surrounding planet's existing LOD system.
 
 Native modern/portable tests verify actual intermediate colour/shadow depth,

@@ -1,0 +1,14 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+{"camera_distance_case":"near"}
+{"workload":"1024m-square landscape; two independent cameras; identical source; 2px geometric-error target","source_samples":263169,"reference_meshes":1024,"selected_patches":43,"reference_geometry_bytes":22863872,"shared_grid_and_height_bytes":1075004,"metadata_prepare_ms":16.6186,"reference_prepare_and_upload_ms":814.035,"height_upload_ms":1.39858}
+{"path":"unique_full_resolution_meshes","samples":30,"cpu_submission_ms":{"median":6.76715,"p95":8.97583,"worst":9.44886},"gpu_ms":{"median":6.63971,"p95":8.5913,"worst":9.29235},"draws":1029,"triangles":526848}
+{"path":"shared_grid_with_camera_union_LOD","samples":30,"cpu_submission_ms":{"median":0.374045,"p95":0.742841,"worst":0.889387},"gpu_ms":{"median":0.605696,"p95":0.618496,"worst":0.620352},"draws":56,"triangles":28672}
+{"path":"shared_grid_mid_transition","samples":30,"cpu_submission_ms":{"median":0.477621,"p95":0.595593,"worst":0.953578},"gpu_ms":{"median":1.04138,"p95":1.05162,"worst":1.05379},"draws":58,"triangles":29696}
+{"path":"shared_grid_mid_walking_transition","samples":30,"cpu_submission_ms":{"median":0.479915,"p95":0.501716,"worst":0.515943},"gpu_ms":{"median":0.669728,"p95":0.681472,"worst":0.68304},"draws":58,"triangles":29696}
+{"walking_old_patches":43,"walking_new_patches":40,"walking_shared_patches":39}
