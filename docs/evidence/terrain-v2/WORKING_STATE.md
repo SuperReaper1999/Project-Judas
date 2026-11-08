@@ -7,9 +7,10 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified branch checkpoints (verify live Git before changes)
 
-Experimental/origin last checked:6315daadfc2de8e35c8f8d92b0e625b2df97633a.
-Navigation cache handoff is committed/pushed. Planet chart/cutout work below is
-currently UNCOMMITTED; verify live Git before staging anything.
+Planetary core739805be and navigation handoff6315daad are pushed. The following
+normal-project integration is qualified for the next checkpoint; verify live
+Git for its commit/push status. This handoff deliberately does not guess its
+own enclosing commit hash. Main remains at the hash below.
 Main/origin unchanged:1094d64515604fe9d03fdab479efc7f880b112a8.
 Native asset checkpoint58e73071; authoring b63d707e; runtime sculpt/paint/save
 c5fde88d; source-owned solid/fluid/particle integration a64c454a are PUSHED.
@@ -26,46 +27,66 @@ Never start a second build before the first session actually exits. If source
 changes during a multi-target build, freeze and do a final incremental build.
 Exporter/runtime provenance mismatch correctly rejects mixed intermediate binaries.
 
-## Active continuation — planetary patch core (qualified, normal workflow NOT finished)
+## Current planetary integration (qualified; whole Terrain V2 NOT complete)
 
-On top of6315daad, TerrainPlanetChart.*, PlanetTiles cutouts, protected-rim
-selection and tests are ready for an independent core checkpoint. No build/test
-running after final63357 exits (verify session). Source/asset/runtime/editor
-binding is NOT implemented. Normal projects still have no planetary excavation.
-Do not confuse core fixture success with a completed five-stage TerrainV2.
+Source3 stores chart/rim/provider identity; native-envelope2 rejects old flat-only
+readers explicitly. Ordinary Source2/native1 behavior is preserved. Meshing,
+solid occupancy and world-metre brushes use the same radial map. terrain.planet
+binds a root native owner to its absolute planet. Protected rims match base render
+and collision grids. Regional reservations prevent overlaps while private, retain
+old planetary ground before publication and restore it on hide/remove. Source
+owners cannot be moved through public OR private restoration paths.
 
-Chart/composition1926, existingPlanetTerrain10074, existingPlanetWorld220,
-modernNVIDIA4.6 GPU343 and portable3.3 GPU343 PASS. Native chart follows existing
-PlanetSurface rays in binary64 and transforms both rendering/collision geometry.
-Normal transforms use analytic Jacobian. Patch origin includes base elevation;
-actual chunk anchors use their local elevation, preserving local float geometry
-at12km altitude instead of cancelling large floats.1e12absoluteorigin control.
-All6faces/geographic offsets checked for mapping; actual excavation composition
-is an interior-face patch. Native hill tunnel crosses chunks; uncut hill blocks
-samepath. Actual PlanetTiles base initially blocks native pit, then cutout exposes
-native floor; invalid cutouts preserve old support; moving physical interest/rim
-queries work; unmask re-enables retained base support without recooking.
+Real component40/cold9 and streaming37/cold14 pass. During integration the isolated
+component validator renumbered a real external planet reference into a self-ID;
+fixed without dropping endpoint validation. Cold streaming exposed an actual
+absolute-descriptor translation in retained restoration; fixed. Negative control
+proved private state restoration could detach a patch; now rejects. Failed runs
+and setup mistakes are preserved separately from these genuine integration fixes.
 
-Rendering protects native-resolution rim leaves, leaves other LOD greedy/camera-
-union/budgeted, and suppresses base triangles in main AND shadow pass. Two-plane
-rim framebuffer depth vs actual MK2 error8um. No-cutout selection equals frozen
-6315daad source EXACTLY over20multi-camera/ortho/altitude cases. Triangle counters
-exclude suppressed base draws. Allocated collider stats include disabled backing;
-this is bounded restoration memory, not a claimed memory saving.
+Normal editor creation: choose Planetary patch in the existing landscape creator.
+The existing terrain CLI gains v2-planet; v2-native handles projected previews.
+Source preview and PlanetTiles mask share editor scene coverage through the small
+TerrainPlanetPreview module. Source-owned navigation uses local mapped bounds.
+Editor creation/excavate/publish/navigation/Play/cutout23 checks pass on actual
+GTX970 OpenGL4.6 and portable3.3. Existing ordinary creation46 also passes.
 
-Evidence planetary-core/. First harness crash was missing PhysicsWorld::Init;
-native gdb confirms AddBody. Harness corrected; expectations unchanged. First new
-target build needed CMake regeneration. New indentation warning fixed; final frozen
-builds clean. Fixture timer includes controls/world/selection, NOT runtime perf.
+Actual new projects/terrain_v2_planet_workshop is separate from existing games.
+The normal relocated export sculpts/paints, excavates8chunks, walks through the
+hill and cold-restores ready/navready,queue0,2surfaceDabs,z=-10.380639. Separate
+live origin control and another cold process restore origin(0,1024,0), with edits
+intact. This is automated engineering evidence, NOT human acceptance.
 
-NEXT normal workflow: chart metadata in Source/native files; auto-project source
-extraction/cooking/preview; world-metric brush conversion and solid containment;
-planet owner reference + safe source lifecycle/publication/streaming; editor creation
-and actual playable planet patch; cold save/relocated export and performance.
-Existing Source2/nativeformat1 must retain behavior. Proposed Source3/projected
-asset envelope2 would reject old readers, but NONE of that is implemented yet.
-Cube-face-border/cross-face excavation is outside first bounded cutout support.
-Keep main, fluid lock, existing projects/installedSDKs and research untouched.
+Actual-frame benchmark (180 samples each, 1280x800, GTX970, Ryzen5600, Release):
+intact simulation/scripts/publication .4093ms median/.5187p95/.5944worst;
+CPU render submission2.315/2.525/3.251ms; GPU elapsed1.289/1.406/1.586ms.
+Excavated .8970/1.0473/1.1708ms; CPU2.327/2.620/3.014ms;
+GPU1.363/1.453/1.728ms. This is one bounded game/camera workload, not a
+before/after optimization claim or generic FPS. GPU elapsed includes CPU bubbles;
+synchronous query timing does not represent a normally overlapping frame.
+The ordinary script harness renders screenshots only; its GPU timestamps never
+resolved, so it is NOT used for rendering/FPS claims. The first actual-frame
+benchmark omitted AdvanceRuntimeTerrain and correctly timed out; preserved and
+corrected by calling the normal outer-boundary API, not changing terrain policy.
+
+Broader current checks: world93/300 exact seam steps, flat component35, surface59,
+interaction85, preparation25, streaming69, PlanetWorld220, PlanetTerrain10074,
+scene fingerprint140, generation23, export18, registration11(2existing skips),
+JudasJS API contract PASS. Earlier core chart1926/GPU343each/no-cutout exact and
+flat geometry416/assets32 remain relevant; no physics solver changes. Final editor
+session and fresh current export runs are recorded in planetary-integration/.
+
+Bounds: interior cube-face patches only; no overlaps or movable prefabs. Current
+patch size32..512cells must satisfy existing visual/physical rim budgets. Provider
+changes reject stale patches. All active native collision chunks remain resident,
+max1024; mapped planet patches render full detail, surrounding planet retainsLOD.
+This does not implement independent chunk physical interest or demand paging.
+
+NEXT: inspect large procedural-source cold-save budget discrepancy (capture8MiB,
+world/regional restore2MiB) with an actual failing fixture before corrections.
+Then complete remaining approved residency/material/consumer-copy/freshSDK
+qualification, retaining explicit bounded support rather than claiming universal
+planet-wide excavation. Do not replace installed RPG SDK or existing game assets.
 
 ## Completed native navigation cache handoff
 

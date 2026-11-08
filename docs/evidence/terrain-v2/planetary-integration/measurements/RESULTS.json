@@ -1,0 +1,51 @@
+{
+  "parent_commit": "739805bebb047159ae8aeda5119db71f9b0498b2",
+  "finished_utc": "2026-11-08T03:07:08.229728+00:00",
+  "human_acceptance": false,
+  "hardware": "Ryzen 5 5600, 8 GB RAM, GTX 970 4 GB, NVIDIA580.178.04, desktop OpenGL4.6",
+  "configuration": "Release, GNU15.2.0, -j2",
+  "scope": "180 measured ordinary fully rendered frames each, 1280x800. GPU elapsed includes submission bubbles. Synchronous query measurement; not FPS, not an optimization comparison.",
+  "phases": {
+    "intact": {
+      "samples": 180,
+      "draws": 184,
+      "triangles": 94208,
+      "simulation_scripts_publication_ms": {
+        "median": 0.40928149999999996,
+        "p95": 0.518688,
+        "worst": 0.594371
+      },
+      "render_submission_ms": {
+        "median": 2.3149699999999998,
+        "p95": 2.52512,
+        "worst": 3.25104
+      },
+      "gpu_elapsed_ms": {
+        "median": 1.2891050000000002,
+        "p95": 1.40586,
+        "worst": 1.58589
+      }
+    },
+    "excavated": {
+      "samples": 180,
+      "draws": 184,
+      "triangles": 125482,
+      "simulation_scripts_publication_ms": {
+        "median": 0.8970469999999999,
+        "p95": 1.04726,
+        "worst": 1.17084
+      },
+      "render_submission_ms": {
+        "median": 2.3269599999999997,
+        "p95": 2.62034,
+        "worst": 3.01419
+      },
+      "gpu_elapsed_ms": {
+        "median": 1.362915,
+        "p95": 1.45302,
+        "worst": 1.7279
+      }
+    }
+  },
+  "peak_process_rss_kib": 214768
+}

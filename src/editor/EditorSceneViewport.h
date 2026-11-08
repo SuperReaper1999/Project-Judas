@@ -4,6 +4,7 @@
 #include "EditorPicking.h"
 #include "GizmoMath.h"
 #include "PlanetTiles.h"
+#include "TerrainPlanetPreview.h"
 #include "ResourceManager.h"
 #include <map>
 #include <memory>
@@ -43,7 +44,7 @@ struct EditorSceneViewport {
     bool pendingDropDelivered = false;
     glm::vec2 pendingDropPosition{0};
     DebugLineList debugLines, gizmoLines;
-    std::map<SceneObjectId, std::pair<std::string, std::unique_ptr<PlanetTiles>>> planetPreview;
+    TerrainPlanetPreview planetPreview;
     std::vector<Scene> regionPreview;
     std::string regionPreviewKey;
 

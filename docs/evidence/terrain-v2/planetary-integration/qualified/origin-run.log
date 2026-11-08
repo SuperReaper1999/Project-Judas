@@ -1,0 +1,52 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/terrain-v2-planet-game-final-02/user-data/judas/games/57b6d514e7257e26dc3129e7c1cfb9d2342e7dc86eb91bb14f636ea83ae28a42/Saves/highlands.judasstate (none saved)
+Project: Terrain V2 — Planetary Workshop (/tmp/terrain-v2-planet-game-final-02/relocated game/game.judasproj)
+Scene: Terrain V2 — Planetary Highlands (/tmp/terrain-v2-planet-game-final-02/relocated game/Scenes/highlands.judas)
+World origin (m): 92.937, 991.325, 92.937
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,-0.911709,-9.724900,-0.911709,0,0,1,0
+[TestHarness] service save ready after 14 wait frames at frame 30
+JS: TERRAIN_V2_RESTORED {"position":{"x":0.27311065793037415,"y":2.5945825576782227,"z":-10.38063907623291},"terrain":{"ready":true,"busy":false,"navigation":true,"revision":2,"samples":16641,"triangles":48405,"bytes":2407704,"chunks":64,"volumeChunks":8,"pendingChunks":0,"prepareMs":102.041275,"publishMs":0.106862,"error":""},"surfaceDabs":2,"remainingBrushes":0,"origin":{"x":92.93673162131846,"y":991.3251372940636,"z":92.93673162131846}}
+[TestHarness] service scene ready after 0 wait frames at frame 35
+60,1.00000,0.259925,2.530300,-10.323582,0.093121,0.995123,0.032533,0,0.000000,0.000000,0.000000,-0.912773,-9.733873,-0.809118,0,60,1,0
+JS: TERRAIN_V2_ORIGIN_REQUEST {"pending":true,"revision":0,"error":""}
+120,2.00000,93.178238,-30.175331,82.673462,0.093105,0.995123,0.032596,0,0.000000,0.000000,0.000000,-0.912618,-9.733837,-0.809730,0,120,1,0
+180,3.00000,93.176888,-30.216721,82.745995,0.093107,0.995120,0.032672,0,0.000000,0.000000,0.000000,-0.912636,-9.733773,-0.810469,0,180,1,0
+240,4.00000,95.492371,-30.130894,82.843719,0.095458,0.994895,0.032742,0,0.000000,0.000000,0.000000,-0.935025,-9.731589,-0.811174,0,240,1,0
+300,5.00000,99.468842,-30.593342,82.798370,0.099438,0.994506,0.032703,0,0.000000,0.000000,0.000000,-0.974035,-9.727795,-0.810791,0,300,1,0
+360,6.00000,99.790657,-30.631475,82.769112,0.099694,0.994482,0.032675,0,0.000000,0.000000,0.000000,-0.977194,-9.727500,-0.810511,0,360,1,0
+420,7.00000,99.792946,-30.632702,82.747719,0.099697,0.994482,0.032653,0,0.000000,0.000000,0.000000,-0.977219,-9.727515,-0.810304,0,420,1,0
+480,8.00000,99.795235,-30.633940,82.726204,0.099699,0.994482,0.032632,0,0.000000,0.000000,0.000000,-0.977244,-9.727530,-0.810096,0,480,1,0
+JS: TERRAIN_V2_SAVE_REQUEST {"remainingBrushes":0,"busy":false}
+[TestHarness] service save ready after 9 wait frames at frame 510
+540,9.00000,99.797516,-30.635172,82.704712,0.099702,0.994483,0.032611,0,0.000000,0.000000,0.000000,-0.977269,-9.727546,-0.809888,0,540,1,0
+[TestHarness] Wrote screenshot: /tmp/terrain-v2-planet-origin.png
+	Command being timed: "/tmp/terrain-v2-planet-game-final-02/relocated game/judas /tmp/terrain-v2-planet-game-final-02/relocated game/game.judasproj"
+	User time (seconds): 1.12
+	System time (seconds): 0.18
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 203400
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 38587
+	Voluntary context switches: 266
+	Involuntary context switches: 38
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

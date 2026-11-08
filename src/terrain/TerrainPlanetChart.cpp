@@ -1,4 +1,6 @@
 #include "TerrainPlanetChart.h"
+#include "SceneFingerprint.h"
+#include "TerrainSource.h"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
@@ -59,6 +61,27 @@ glm::dmat3 PlanetChart::Jacobian(glm::dvec3 p) const {
         (f.v - direction * glm::dot(direction, f.v)) * (-(radius + p.y) * scale / length);
     return glm::transpose(Rotation(f)) * glm::dmat3(dx, direction, dz);
 }
+std::string PlanetGeometryFingerprint(const PlanetSettings &settings) {
+    PlanetSettings geometry;
+    geometry.radius = settings.radius;
+    geometry.bands = settings.bands;
+    geometry.patches = settings.patches;
+    return SceneFingerprintSha256(EncodePlanetSettings(geometry));
+}
+std::vector<float> PlanetSourceRim(const Source &source) {
+    std::vector<float> rim;
+    if (source.heights.size() != size_t(source.samplesX) * source.samplesZ)
+        return rim;
+    for (unsigned x = 0; x < source.samplesX; ++x)
+        rim.push_back(source.heights[x]);
+    for (unsigned z = 0; z < source.samplesZ; ++z)
+        rim.push_back(source.heights[size_t(z) * source.samplesX + source.samplesX - 1]);
+    for (unsigned x = 0; x < source.samplesX; ++x)
+        rim.push_back(source.heights[size_t(source.samplesZ - 1) * source.samplesX + x]);
+    for (unsigned z = 0; z < source.samplesZ; ++z)
+        rim.push_back(source.heights[size_t(z) * source.samplesX]);
+    return rim;
+}
 bool ValidatePlanetChart(const PlanetChart &chart, std::string &error) {
     if (!std::isfinite(chart.radius) || chart.radius < 1 || chart.radius > 1e10 ||
         !std::isfinite(chart.span) || chart.span < .5 || chart.span > 8192 ||
@@ -104,6 +127,9 @@ bool CreatePlanetChart(const PlanetSurface &planet, PlanetTileKey key, unsigned 
                     2 * (key.y + 1 - double(z) / cells) / f.count - 1);
                 source.heights[size_t(z) * (cells + 1) + x] = float(planet.HeightAt(direction));
             }
+        if (!planet.HasCustomProvider())
+            chart.surfaceFingerprint = PlanetGeometryFingerprint(planet.settings);
+        chart.rim = PlanetSourceRim(source);
         if (!Validate(source, error))
             return false;
         output = std::move(source);

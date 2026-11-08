@@ -29,6 +29,7 @@ struct PlanetSettings {
  std::vector<PlanetHeightPatch> patches;
 };
 bool ValidatePlanetSettings(const PlanetSettings&,std::string&);
+unsigned PlanetCollisionLevel(const PlanetSettings&);
 std::string EncodePlanetSettings(const PlanetSettings&);
 bool DecodePlanetSettings(const std::string&,PlanetSettings&,std::string&);
 struct PlanetSample {glm::dvec3 point{0},normal{0,1,0};double height=0,distance=0;};
@@ -40,6 +41,7 @@ public:
  using Height=std::function<double(glm::dvec3)>;
  PlanetSurface(PlanetSettings,Height,double maximumHeight,double curvatureBound);
  const PlanetSettings settings;
+ bool HasCustomProvider()const{return bool(m_source);}
  double HeightAt(glm::dvec3 modelDirection)const;
  glm::dvec3 Point(glm::dvec3 modelDirection)const;
  PlanetSample Sample(glm::dvec3 absolutePoint,double normalStep=0)const;

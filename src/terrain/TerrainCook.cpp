@@ -6,6 +6,7 @@
 #include "TerrainAsset.h"
 #include "TerrainGeneration.h"
 #include "TerrainMesher.h"
+#include "TerrainPlanetBinding.h"
 #include "TerrainPreview.h"
 #include "TerrainSource.h"
 #include "TerrainTopology.h"
@@ -67,6 +68,29 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
         std::string error;
         const std::string command = argv[1];
         TerrainV2::Source source;
+        if (command == "v2-planet") {
+            if (argc != 8)
+                throw std::runtime_error("v2-planet PLANET.json OUTPUT DIRECTION_X DIRECTION_Y "
+                                         "DIRECTION_Z CELLS");
+            PlanetSettings planet;
+            if (!DecodePlanetSettings(Read(argv[2]), planet, error) ||
+                !TerrainV2::CreatePlanetPatch(planet,
+                    {Number<double>(argv[4]), Number<double>(argv[5]), Number<double>(argv[6])},
+                    Number<unsigned>(argv[7]), source, error))
+                throw std::runtime_error(error);
+            const auto destination = std::filesystem::absolute(argv[3]);
+            if (!ValidateTerrainWritePath(destination.string(), error))
+                throw std::runtime_error(error);
+            if (std::filesystem::exists(destination))
+                throw std::runtime_error("Choose a new source path; existing data is preserved.");
+            if (!PublishAuthoringOutputs(destination.parent_path().string(),
+                    {{destination.string(), TerrainV2::Serialize(source), {}, false}}, error))
+                throw std::runtime_error(error);
+            std::cout << "created geographic terrain source " << destination
+                      << " span_m=" << source.chart->span << "; use terrain.planet and the "
+                         "derived geographic placement, not a flat mesh overlay\n";
+            return 0;
+        }
         if (command == "v2-new" || command == "v2-heightmap") {
             if (argc != 8)
                 throw std::runtime_error(
@@ -182,6 +206,9 @@ int TerrainV2AuthorCommand(int argc, char **argv) {
         if ((command != "v2-cook" && !nativeMode) || argc != 4)
             throw std::runtime_error(
                 "v2-native SOURCE OUTPUT.judasmodel | v2-cook SOURCE OUTPUT.judasmodel");
+        if (source.chart && !nativeMode)
+            throw std::runtime_error("Projected terrain requires v2-native; the older full-mesh "
+                                     "script bootstrap cannot own planetary replacement.");
         auto modelPath = std::filesystem::absolute(argv[3]);
         auto collisionPath = modelPath;
         collisionPath.replace_extension(".judascollision");

@@ -7,6 +7,7 @@
 #include "imgui.h"
 #include "terrain/TerrainComponent.h"
 #include "terrain/TerrainCook.h"
+#include "terrain/TerrainPlanetBinding.h"
 #include <algorithm>
 #include <cctype>
 #include <cstdio>
@@ -57,7 +58,20 @@ void TerrainV2Creation::Start(const EditorDocument &document, const EditorPanelS
     pending->meshId = MintAssetId();
     pending->terrainId = MintAssetId();
     pending->previewId = MintAssetId();
-    if (replaceGround) {
+    glm::dvec3 direction(0);
+    const unsigned planetCells[] = {32, 64, 128, 256, 512};
+    const auto cells = planetCells[planetResolution];
+    if (landscapeType == 1) {
+        const auto *planet = document.GetScene().Find(planetId);
+        if (!planet || !planet->planet) {
+            error = "Add a planet to this scene, then select its surface here.";
+            return;
+        }
+        pending->planetSource = *planet;
+        direction = glm::inverse(planet->planet->rotation) *
+                    (document.GetScene().Settings().worldOrigin + glm::dvec3(state.cameraFocus) -
+                     planet->planet->center);
+    } else if (replaceGround) {
         const auto *selected = document.GetScene().Find(document.Selected());
         if (!CanReplaceGround(selected)) {
             error = "Select a root static ground object before replacing it.";
@@ -74,16 +88,22 @@ void TerrainV2Creation::Start(const EditorDocument &document, const EditorPanelS
     const auto directory = fs::path(state.project->AssetsDir()) / "Terrain" / pending->terrainId;
     const auto output = directory / (stem + ".judasmodel");
     pending->path = source.string();
-    const bool imported = preset == 3;
+    const bool imported = landscapeType == 0 && preset == 3;
     const auto inputPath = fs::path(heightmap);
     const std::string input =
         (inputPath.is_absolute() ? inputPath : projectRoot / inputPath).string();
     pending->job = state.importJobs->Submit(
-        [pending, recipe, source, output, imported, input, projectRoot](JobContext &context) {
+        [pending, recipe, source, output, imported, input, projectRoot, direction,
+         cells](JobContext &context) {
             try {
                 TerrainV2::Source generated;
                 std::string why, original;
-                if (imported) {
+                if (pending->planetSource) {
+                    Require(TerrainV2::CreatePlanetPatch(*pending->planetSource->planet, direction,
+                                                         cells, generated, why),
+                            why);
+                    pending->chart = generated.chart;
+                } else if (imported) {
                     original = ReadHeightmap(input);
                     Require(TerrainV2::ImportHeightmap(original, recipe, generated, why), why);
                 } else
@@ -109,6 +129,13 @@ void TerrainV2Creation::Start(const EditorDocument &document, const EditorPanelS
                                              {"height", recipe.height},
                                              {"seed", recipe.seed},
                                              {"heightmap", imported}};
+                if (pending->planetSource) {
+                    provenance["preset"] = "planetary";
+                    provenance["planet"] =
+                        nlohmann::json::parse(EncodePlanetSettings(*pending->planetSource->planet));
+                    provenance["direction"] = {direction.x, direction.y, direction.z};
+                    provenance["cells"] = cells;
+                }
                 std::vector<AuthoringOutput> files = {
                     {source.string(), TerrainV2::Serialize(generated), {}, false}};
                 if (imported) {
@@ -156,6 +183,17 @@ void TerrainV2Creation::Panel(EditorDocument &doc, EditorPanelState &state,
                               EditorRequests &requests) {
     if (work && state.importJobs->IsFinished(work->job)) {
         if (state.importJobs->StateOf(work->job) == JobState::Completed) {
+            if (work->planetSource) {
+                const auto *planet = doc.GetScene().Find(work->planetSource->id);
+                if (!planet || !SceneObjectsEqual(*planet, *work->planetSource)) {
+                    error = "The planet changed during cooking. Its existing content is preserved; "
+                            "the generated source remains at " +
+                            work->path;
+                    state.importJobs->Forget(work->job);
+                    work.reset();
+                    return;
+                }
+            }
             const auto *ground =
                 work->replacedGround ? doc.GetScene().Find(work->replacedGround->id) : nullptr;
             if (work->replacedGround &&
@@ -168,6 +206,19 @@ void TerrainV2Creation::Panel(EditorDocument &doc, EditorPanelState &state,
                 return;
             }
             state.assets->Scan(state.project->RootDir(), state.project->AssetsDir());
+            if (work->planetSource) {
+                Scene candidate = doc.GetScene();
+                auto &check = candidate.CreateObject(work->name);
+                check.body = SceneBodyComponent{};
+                check.landscape = SceneLandscapeSettings{work->terrainId, work->planetSource->id};
+                check.transform = TerrainV2::PlanetTerrainPlacement(
+                    *work->planetSource->planet, *work->chart, candidate.Settings().worldOrigin);
+                if (!TerrainV2::ValidatePlanetTerrains(candidate, state.assets, error)) {
+                    state.importJobs->Forget(work->job);
+                    work.reset();
+                    return;
+                }
+            }
             doc.BeginEdit();
             auto &object = doc.GetScene().CreateObject(work->name);
             object.landscape = SceneLandscapeSettings{work->terrainId};
@@ -181,7 +232,12 @@ void TerrainV2Creation::Panel(EditorDocument &doc, EditorPanelState &state,
             object.render->meshAsset = work->meshId;
             object.render->textureAsset = work->previewId;
             object.render->halfExtents = object.body->halfExtents;
-            if (work->replacedGround) {
+            if (work->planetSource) {
+                object.landscape->planet = work->planetSource->id;
+                object.transform =
+                    TerrainV2::PlanetTerrainPlacement(*work->planetSource->planet, *work->chart,
+                                                      doc.GetScene().Settings().worldOrigin);
+            } else if (work->replacedGround) {
                 const auto &old = *work->replacedGround;
                 object.transform = old.transform;
                 object.transform.position +=
@@ -216,42 +272,75 @@ void TerrainV2Creation::Panel(EditorDocument &doc, EditorPanelState &state,
     ImGui::SeparatorText("New landscape");
     ImGui::BeginDisabled(Busy());
     ImGui::InputText("Name", name, sizeof(name));
-    const auto *selected = doc.GetScene().Find(doc.Selected());
-    if (CanReplaceGround(selected)) {
-        ImGui::Checkbox("Replace selected ground", &replaceGround);
+    ImGui::Combo("Landscape type", &landscapeType, "Local landscape\0Planetary patch\0");
+    if (landscapeType == 1) {
+        const auto *selectedPlanet = doc.GetScene().Find(planetId);
+        if (!selectedPlanet || !selectedPlanet->planet) {
+            planetId = 0;
+            for (const auto &object : doc.GetScene().Objects())
+                if (object.planet) {
+                    planetId = object.id;
+                    break;
+                }
+            selectedPlanet = doc.GetScene().Find(planetId);
+        }
+        if (ImGui::BeginCombo("Planet", selectedPlanet ? selectedPlanet->name.c_str()
+                                                       : "No planet in this scene")) {
+            for (const auto &object : doc.GetScene().Objects())
+                if (object.planet && ImGui::Selectable(object.name.c_str(), planetId == object.id))
+                    planetId = object.id;
+            ImGui::EndCombo();
+        }
+        ImGui::Combo("Patch samples", &planetResolution,
+                     "33\0"
+                     "65\0"
+                     "129\0"
+                     "257\0"
+                     "513\0");
         ImGui::TextWrapped(
-            "%s: replaces its visible ground and collision in one undoable edit. Other components, "
-            "including gravity, stay intact with their existing bounds.",
-            selected->name.c_str());
-    } else
-        replaceGround = false;
-    const char *presets[] = {"Flat — start sculpting", "Highlands — ridges and valleys",
-                             "Island — low coast", "Import heightmap"};
-    ImGui::Combo("Start from", &preset, presets, 4);
-    if (preset == 3) {
-        ImGui::InputText("Grayscale image", heightmap, sizeof(heightmap));
-        if (ImGui::Button("Browse heightmap"))
-            browser.Open(EditorFileBrowser::Target::Import, EditorFileBrowser::Mode::OpenFile,
-                         state.project->RootDir(), ".png");
-        ImGui::TextWrapped("16-bit grayscale detail is retained. Image top maps to negative Z; the "
-                           "image is resampled to the chosen grid.");
+            "Centre the scene view on the area to excavate. This replaces a geographic "
+            "patch with editable terrain, using the planet's physical detail. The outer "
+            "rim stays joined to the planet. Patches cannot overlap or cross cube-face "
+            "edges yet. Changing collision spacing later requires regenerating patches.");
+    } else {
+        const auto *selected = doc.GetScene().Find(doc.Selected());
+        if (CanReplaceGround(selected)) {
+            ImGui::Checkbox("Replace selected ground", &replaceGround);
+            ImGui::TextWrapped("%s: replaces its visible ground and collision in one undoable "
+                               "edit. Other components, "
+                               "including gravity, stay intact with their existing bounds.",
+                               selected->name.c_str());
+        } else
+            replaceGround = false;
+        const char *presets[] = {"Flat — start sculpting", "Highlands — ridges and valleys",
+                                 "Island — low coast", "Import heightmap"};
+        ImGui::Combo("Start from", &preset, presets, 4);
+        if (preset == 3) {
+            ImGui::InputText("Grayscale image", heightmap, sizeof(heightmap));
+            if (ImGui::Button("Browse heightmap"))
+                browser.Open(EditorFileBrowser::Target::Import, EditorFileBrowser::Mode::OpenFile,
+                             state.project->RootDir(), ".png");
+            ImGui::TextWrapped(
+                "16-bit grayscale detail is retained. Image top maps to negative Z; the "
+                "image is resampled to the chosen grid.");
+        }
+        ImGui::Combo("Samples per side", &resolution,
+                     "65\0"
+                     "129\0"
+                     "257\0"
+                     "513\0");
+        ImGui::DragFloat("Sample spacing (m)", &spacing, .1f, .125f, 128, "%.3f",
+                         ImGuiSliderFlags_AlwaysClamp);
+        ImGui::DragFloat("Base / minimum height (m)", &base, .1f, -1000, 1000);
+        if (preset != 0)
+            ImGui::DragFloat("Height range (m)", &height, .5f, 0, 4096);
+        if (preset == 1 || preset == 2)
+            ImGui::InputInt("Seed", &seed);
+        const unsigned sizes[] = {65, 129, 257, 513};
+        ImGui::Text("Footprint: %.0f x %.0f m | %u chunks", (sizes[resolution] - 1) * spacing,
+                    (sizes[resolution] - 1) * spacing,
+                    ((sizes[resolution] - 1) / 16) * ((sizes[resolution] - 1) / 16));
     }
-    ImGui::Combo("Samples per side", &resolution,
-                 "65\0"
-                 "129\0"
-                 "257\0"
-                 "513\0");
-    ImGui::DragFloat("Sample spacing (m)", &spacing, .1f, .125f, 128, "%.3f",
-                     ImGuiSliderFlags_AlwaysClamp);
-    ImGui::DragFloat("Base / minimum height (m)", &base, .1f, -1000, 1000);
-    if (preset != 0)
-        ImGui::DragFloat("Height range (m)", &height, .5f, 0, 4096);
-    if (preset == 1 || preset == 2)
-        ImGui::InputInt("Seed", &seed);
-    const unsigned sizes[] = {65, 129, 257, 513};
-    ImGui::Text("Footprint: %.0f x %.0f m | %u chunks", (sizes[resolution] - 1) * spacing,
-                (sizes[resolution] - 1) * spacing,
-                ((sizes[resolution] - 1) / 16) * ((sizes[resolution] - 1) / 16));
     ImGui::TextWrapped("Creates editable source, native terrain and preview assets, then adds one "
                        "selected landscape. Existing files are preserved.");
     if (EditorDesign::ActionButton("Create landscape", EditorDesign::Tone::Primary))

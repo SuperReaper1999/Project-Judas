@@ -1,0 +1,18 @@
+All from repository root unless an explicit foreign cwd is stated.
+cmake -S . -B build
+cmake --build build -j2 --target judas_terrain_v2_planet_component_tests judas_terrain_v2_planet_streaming_tests judas_terrain_v2_planet_editor_tests judas_terrain_v2_creation_tests judas_terrain_v2_game_benchmark judas_editor judas judas_export judas_terrain_author
+build/judas_terrain_v2_planet_component_tests
+build/judas_terrain_v2_planet_component_tests --write /tmp/FRESH-component
+build/judas_terrain_v2_planet_component_tests --read /tmp/FRESH-component
+build/judas_terrain_v2_planet_streaming_tests --write /tmp/FRESH-stream
+build/judas_terrain_v2_planet_streaming_tests --read /tmp/FRESH-stream
+JUDAS_GL_PROFILE=modern build/judas_terrain_v2_planet_editor_tests /tmp/FRESH-modern
+JUDAS_GL_PROFILE=portable build/judas_terrain_v2_planet_editor_tests /tmp/FRESH-portable
+build/judas_terrain_v2_creation_tests /tmp/FRESH-ordinary
+python3 tools/validation/qualify_terrain_v2.py --build build --output /tmp/FRESH-planet --planet
+python3 tools/validation/qualify_terrain_v2.py --build build --output /tmp/FRESH-flat
+/usr/bin/time -v build/judas_terrain_v2_game_benchmark projects/terrain_v2_planet_workshop/terrain_v2_planet_workshop.judasproj
+python3 -m unittest tests.test_validation_registration
+node scripts/check_judasjs_api.mjs
+Native GPU calls require desktop access; restricted calls can select llvmpipe.
+Only one j2 build runs at a time. No compiler jobs overlap final rendering timing.

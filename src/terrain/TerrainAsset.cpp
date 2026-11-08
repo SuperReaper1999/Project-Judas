@@ -50,7 +50,10 @@ bool Digest(std::string_view s) {
 }
 uint64_t HeaderLength(std::string_view bytes) {
     Cursor c{bytes};
-    if (c.Take(8) != Magic || c.Integer(4) != Format)
+    if (c.Take(8) != Magic)
+        throw std::runtime_error("terrain asset format/version");
+    const auto format = c.Integer(4);
+    if (format != Format && format != 2)
         throw std::runtime_error("terrain asset format/version");
     uint64_t meta = c.Integer(4), side = c.Integer(4), pages = c.Integer(4);
     if (side != PageSide || meta > 2 * 1024 * 1024 || !pages || pages > 4225)
@@ -74,6 +77,10 @@ AssetIndex ReadIndex(std::string_view bytes, uint64_t total) {
     if (!ParseMetadata(std::string(metadata), index.metadata, error))
         throw std::runtime_error(error);
     const auto &s = index.metadata;
+    Cursor envelope{bytes};
+    envelope.Take(8);
+    if ((envelope.Integer(4) == 2) != bool(s.chart))
+        throw std::runtime_error("terrain asset envelope does not match its coordinate format");
     const unsigned px = (s.samplesX + PageSide - 1) / PageSide,
                    pz = (s.samplesZ + PageSide - 1) / PageSide;
     if (count != uint64_t(px) * pz)
@@ -160,7 +167,7 @@ bool EncodeAsset(const Source &source, std::vector<uint8_t> &output, std::string
         size_t header = 0;
         for (char c : Magic)
             bytes.at(header++) = uint8_t(c);
-        Put(bytes, header, Format, 4);
+        Put(bytes, header, source.chart ? 2 : Format, 4);
         Put(bytes, header, meta.size(), 4);
         Put(bytes, header, PageSide, 4);
         Put(bytes, header, uint64_t(nx) * nz, 4);

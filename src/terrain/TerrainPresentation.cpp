@@ -38,6 +38,10 @@ void Runtime::ReleaseMesh(Resident &r) const {
 void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin) {
     if (!source || !lod)
         return;
+    if (source->chart) {
+        drawPatches.clear();
+        return;
+    }
     const auto *d = Definition();
     if (!d)
         return;
@@ -59,7 +63,8 @@ void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 orig
     drawPatches = lod->Select(localViews, volume);
 }
 void Runtime::Draw(Renderer &renderer) const {
-    if (!source || !world.IsPublished(owner) || !world.RenderVisible(owner))
+    if (!source || !world.IsPublished(owner) || !world.RenderVisible(owner) ||
+        (source->chart && !bindingPublished))
         return;
     auto *d = Definition();
     if (!d || !d->render)
@@ -80,7 +85,7 @@ void Runtime::Draw(Renderer &renderer) const {
         weightTexture = renderer.CreateTexture(image);
         appearanceRevision = status.revision;
     }
-    if (!heightTexture.IsValid())
+    if (!source->chart && !heightTexture.IsValid())
         heightTexture = renderer.CreateTexture(HeightImage(*source));
     std::array<TextureHandle, 4> layers;
     for (unsigned i = 0; i < 4; ++i)
@@ -93,7 +98,7 @@ void Runtime::Draw(Renderer &renderer) const {
                                                glm::mat4_cast(d->transform.rotation)));
     RendererProfileScope gpu(renderer, "Terrain V2 geometry");
     std::vector<HeightPatch> fallback;
-    if (drawPatches.empty() && lod) {
+    if (!source->chart && drawPatches.empty() && lod) {
         std::set<ChunkKey> volume;
         for (const auto &[k, r] : chunks)
             if (r.geometry.chunk.volumetric)
@@ -123,7 +128,7 @@ void Runtime::Draw(Renderer &renderer) const {
     }
     for (const auto &[_, r] : chunks) {
         auto &c = r.geometry.chunk;
-        if (c.mesh.indices.empty() || !c.volumetric)
+        if (c.mesh.indices.empty() || (!c.volumetric && !source->chart))
             continue;
         if (!r.mesh.IsValid())
             r.mesh = renderer.CreateMesh(c.mesh);

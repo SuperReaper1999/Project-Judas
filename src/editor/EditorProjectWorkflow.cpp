@@ -88,7 +88,7 @@ bool EditorProjectWorkflow::OpenProject(EditorContext &context, EditorProjectSer
     Project project;
     if (!project.Load(projectFile, outError))
         return false;
-    services.viewport.planetPreview.clear();
+    services.viewport.planetPreview.Clear();
     if (services.terrain) {
         services.terrain->Shutdown(context.host.GetRenderer(), context.panels.importJobs);
         services.terrain.reset();

@@ -50,6 +50,16 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     return SetRuntimePlacement(id,t,false);
 }
 bool RuntimeWorld::SetRuntimePlacement(EntityId id,const SceneTransform& t,bool includePrivate){
+    if(auto def=m_scriptDefinitions.find(id);def!=m_scriptDefinitions.end())
+        if(def->second.landscape&&def->second.landscape->planet){
+            // Private restoration is not permission to detach geographic
+            // support from its reserved planet footprint. Origin transactions
+            // translate both owners directly; valid restores retain this pose.
+            const auto& old=def->second.transform;
+            const auto rotation=std::min(glm::length(old.rotation-t.rotation),glm::length(old.rotation+t.rotation));
+            if(glm::distance(old.position,t.position)>.0001f||rotation>1e-6f||t.scale!=glm::vec3(1))return false;
+        }
+
     const auto* authored=RuntimeDefinition(id);
     if(!authored&&includePrivate&&m_regionPending.count(id)){auto it=m_scriptDefinitions.find(id);if(it!=m_scriptDefinitions.end())authored=&it->second;}
     if(!authored)return false;

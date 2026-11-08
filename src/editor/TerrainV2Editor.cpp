@@ -522,11 +522,13 @@ void TerrainV2Editor::Prepare(Renderer &renderer, const EditorPanelState &state)
     }
 }
 bool TerrainV2Editor::Dab(glm::vec3 point, EditorPanelState &state) {
+    glm::vec3 samplePoint;
+    if (!TerrainV2::SourcePoint(source,point,samplePoint,error)) return false;
     std::vector<TerrainV2::ChunkKey> changed;
     if (mode >= 5) {
         TerrainV2::Edit e;
         e.kind = mode == 5 ? TerrainV2::Edit::Kind::Remove : TerrainV2::Edit::Kind::Add;
-        e.point = point;
+        e.point = samplePoint;
         e.radius = brush.radius;
         auto next = source;
         next.edits.push_back(e);
@@ -536,7 +538,9 @@ bool TerrainV2Editor::Dab(glm::vec3 point, EditorPanelState &state) {
         source = std::move(next);
     } else {
         brush.kind = TerrainV2::SurfaceBrush::Kind(mode);
-        if (!TerrainV2::ApplySurfaceBrush(source, point, brush, changed, error))
+        auto applied=brush;
+        if(source.chart)applied.height+=float(source.chart->originHeight);
+        if (!TerrainV2::ApplySurfaceBrush(source, samplePoint, applied, changed, error))
             return false;
         appearanceDirty |= mode == 4;
     }
@@ -598,7 +602,9 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
     if (pressed) {
         before = source;
         gesture = true;
-        brush.height = hit.y;
+        glm::vec3 chartHit;
+        if(!TerrainV2::SourcePoint(source,hit,chartHit,error))return down;
+        brush.height = chartHit.y - (source.chart ? float(source.chart->originHeight) : 0.f);
         Dab(hit, *frameState);
     } else if (gesture && glm::length(hit - lastDab) > brush.radius * .2f)
         Dab(hit, *frameState);

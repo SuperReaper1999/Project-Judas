@@ -1,5 +1,6 @@
 #pragma once
 #include "PlanetTerrain.h"
+#include "planet/PlanetCoverage.h"
 #include "Renderer.h"
 #include "PhysicsWorld.h"
 #include <set>
@@ -8,11 +9,6 @@
 #include <chrono>
 // Runtime residency is owned by the world (or the editor preview). No global
 // cache, renderer-owned simulation state, or second terrain contact solver.
-struct PlanetTerrainCutout {
- PlanetTileKey tile;
- unsigned boundaryLevel=0;
- bool operator==(const PlanetTerrainCutout& b)const{return tile==b.tile&&boundaryLevel==b.boundaryLevel;}
-};
 class PlanetTiles {
 public:
  explicit PlanetTiles(PlanetSettings,PhysicsWorld* physics=nullptr,unsigned layer=0,CategoryMask mask=kAllCategories,CategoryMask tags=0);
@@ -31,6 +27,7 @@ public:
  std::vector<BodyHandle> Bodies()const{std::vector<BodyHandle> out;for(const auto& [k,c]:m_contacts)if(!Masked(k))out.push_back(c.body);return out;}
  // Install only after replacement support is complete; removing an override
  // re-enables retained base support without cooking on the publication thread.
+ bool SetTerrainPatch(uint64_t owner,std::optional<PlanetTerrainCutout>,bool active,std::string&);
  bool SetTerrainCutouts(const std::vector<PlanetTerrainCutout>&,std::string&);
  const std::vector<PlanetTerrainCutout>& TerrainCutouts()const{return m_cutouts;}
  void ClearCollision();
@@ -52,6 +49,7 @@ private:
  Stats m_stats;
  std::optional<glm::dvec3> m_focus;
  std::vector<PlanetTerrainCutout> m_cutouts;
+ std::map<uint64_t,std::pair<PlanetTerrainCutout,bool>> m_ownedCutouts;
  std::vector<PlanetTileKey> m_fixedRims;
  bool m_coverageDirty=false;
  bool Masked(PlanetTileKey)const;

@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainComponent.h"
+#include "terrain/TerrainPlanetBinding.h"
 #include <algorithm>
 
 namespace {
@@ -15,6 +16,13 @@ void Draw(EditorDocument &document, SceneObject &object, EditorPanelState &state
     ImGui::TextWrapped("%s", asset ? asset->relativePath.c_str() : "Missing terrain source");
     ImGui::TextWrapped("This source owns the landscape, painted surfaces, caves and generated "
                        "collision. Use Terrain tools to edit it.");
+    if (object.landscape->planet) {
+        const auto *planet = document.GetScene().Find(object.landscape->planet);
+        ImGui::TextWrapped("Planet: %s — fixed geographic placement",
+                           planet ? planet->name.c_str() : "Missing planetary owner");
+        ImGui::TextWrapped("Use the brushes to change this patch. Moving or scaling its object "
+                           "would detach it from the planet and is rejected at Play.");
+    }
     if (EditorDesign::ActionButton("Edit landscape source", EditorDesign::Tone::Primary)) {
         state.terrainEditAsset = id;
         state.showTerrain = true;
@@ -33,6 +41,20 @@ void Draw(EditorDocument &document, SceneObject &object, EditorPanelState &state
                                         (source.samplesZ - 1) * source.spacing * .5f + 1};
                 for (float height : source.heights)
                     settings.halfExtents.y = std::max(settings.halfExtents.y, std::abs(height) + 2);
+                if (source.chart) {
+                    // Navigation is in the patch's local frame, not the
+                    // absolute radial elevation stored in its height samples.
+                    glm::vec3 extent(0);
+                    for (unsigned z = 0; z < source.samplesZ; ++z)
+                        for (unsigned x = 0; x < source.samplesX; ++x) {
+                            const auto p = source.chart->LocalPoint(
+                                {(double(x) - (source.samplesX - 1) * .5) * source.spacing,
+                                 source.heights[size_t(z) * source.samplesX + x],
+                                 (double(z) - (source.samplesZ - 1) * .5) * source.spacing});
+                            extent = glm::max(extent, glm::abs(glm::vec3(p)));
+                        }
+                    settings.halfExtents = extent + glm::vec3(2);
+                }
                 settings.cellSize = std::max(.2f, source.spacing * .5f);
                 settings.minRegion = 0;
             }
@@ -48,9 +70,11 @@ void Draw(EditorDocument &document, SceneObject &object, EditorPanelState &state
     if (!TerrainV2::ValidateOwnerPlacement(object, error))
         ImGui::TextWrapped("Landscape needs attention: %s", error.c_str());
     if (ImGui::Button("Validate terrain source"))
-        state.status = TerrainV2::ValidateOwner(object, state.assets, error)
-                           ? "Terrain setup is valid; Play also validates the stored heights."
-                           : error;
+        state.status =
+            TerrainV2::ValidateOwner(object, state.assets, error) &&
+                    TerrainV2::ValidatePlanetTerrains(document.GetScene(), state.assets, error)
+                ? "Terrain setup is valid; Play also validates the stored heights."
+                : error;
     if (ImGui::TreeNode("Source identity")) {
         ImGui::TextWrapped("%s", id.c_str());
         if (ImGui::SmallButton("Copy terrain ID"))

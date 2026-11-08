@@ -558,6 +558,7 @@ add_library(judas_editor_core STATIC
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp src/editor/TerrainV2Editor.cpp
     src/editor/TerrainV2Creation.cpp
+    src/editor/TerrainPlanetPreview.cpp
     src/editor/TerrainV2Inspector.cpp
     src/editor/VolumeTerrainTools.cpp
     src/editor/ModTools.cpp

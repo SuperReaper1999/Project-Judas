@@ -62,6 +62,8 @@ class Runtime {
     std::map<ChunkKey, Resident> chunks;
     std::unordered_set<unsigned> bodyIds;
     uint64_t geometryRevision = 0;
+    uint64_t boundPlanet = 0;
+    bool bindingPublished = false;
     std::shared_ptr<const void> geometryEpoch;
     RuntimeTerrainStatus status;
     size_t residentPayloadBytes = 0;

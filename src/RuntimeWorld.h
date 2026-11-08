@@ -47,7 +47,7 @@ struct PhysicalMaterial;
 class ProductionFluidCoupling;
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {class WorldSystem;}
-namespace TerrainV2 {struct PreparedAsset;}
+namespace TerrainV2 {struct PreparedAsset;struct Source;}
 
 // Milestone 28: the RUNTIME instance of a Scene.
 //
@@ -309,6 +309,9 @@ public:
     WeatherWork WeatherStats()const{return m_weatherWork;}
 
     const PlanetTiles* Planet(EntityId)const;
+    bool ValidatePlanetTerrain(EntityId,const TerrainV2::Source&,std::string&)const;
+    bool BindPlanetTerrain(EntityId,const TerrainV2::Source&,std::string&);
+    void UnbindPlanetTerrain(EntityId,EntityId planet);
     bool PlanetCollision(EntityId,glm::dvec3 focus,std::string& error);
     void ClearPlanetCollision(EntityId);
     ResourceManager* Resources() const { return m_assets; }

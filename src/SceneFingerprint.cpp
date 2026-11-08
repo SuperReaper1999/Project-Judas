@@ -459,6 +459,9 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
             w.Text(o.landscape->asset);
         }
     }
+    size_t planetTerrains=0;for(const auto& o:scene.Objects())if(o.landscape&&o.landscape->planet)++planetTerrains;
+    if(planetTerrains){w.Text("Judas.PlanetTerrainBinding.1");w.U64(planetTerrains);
+        for(const auto& o:scene.Objects())if(o.landscape&&o.landscape->planet){w.U64(o.id);w.U64(o.landscape->planet);}}
     size_t navigation=0;for(const auto& o:scene.Objects())navigation+=!NavigationProperties(o).empty();
     if(navigation){w.Text("Judas.Navigation.1");w.U64(navigation);for(const auto& o:scene.Objects()){auto properties=NavigationProperties(o);if(properties.empty())continue;w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t selectedGravity=0;for(const auto& o:scene.Objects())selectedGravity+=o.gravitySelection.has_value();

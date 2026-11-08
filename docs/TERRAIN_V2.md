@@ -130,9 +130,9 @@ gameplay acceptance of the new terrain remains pending.
 The flat runtime still keeps all physical chunks resident (maximum 1024). Shared
 render grids, camera-union LOD and indexed native files now exist. Runtime still
 loads complete source arrays; independent physical residency and budgeted
-multi-view streaming remain work. Planet
-precision and existing LOD remain intact, but planetary
-excavation is not implemented by this slice. Incremental navigation-tile preparation,
+multi-view streaming remain work. Planetary excavation is now integrated through
+projected native patches; see the geographic section below for its bounded scope.
+Incremental navigation-tile preparation,
 large-region physical interest selection, representative consumer scenes and final SDK
 qualification remain. Source discovery currently covers up to 512 editable
 sources under Authoring; large-data demand paging remains separate work.
@@ -426,9 +426,60 @@ Modern/portable desktop framebuffer and shadow checks pass; ordinary no-cutout
 selection matches a frozen pre-change implementation exactly. This is core
 geometry qualification, not final visual or human gameplay acceptance.
 
-**This is not yet an authorable project feature.** Native projected source
-metadata, scene/planet ownership, ordinary brushes, saves, streaming and the
-editable planetary Workshop remain integration work. First cutouts require
-interior cube-face footprints and compatible visual/physical rim budgets;
-cross-face excavation is not supported. Do not put a normal flat native source
-over a planet and claim the underlying ground was removed.
+## Geographic native terrain in ordinary projects
+
+The current integration adds Source3 chart metadata and native envelope2. Ordinary
+Source2/native1 files retain their layout and remain readable. Older readers
+explicitly reject envelope2 instead of treating curved terrain as flat geometry.
+The stored chart includes geographic footprint, base elevation, immutable parent
+geometry identity and the protected edge samples. Binary64 absolute placement is
+separate from source metres and local float32 chunk vertices.
+
+In World → Terrain tools → Create Terrain V2 landscape, choose **Planetary patch**,
+select a planet and centre the scene view on the desired surface area. Sample
+pitch is derived from the parent's physical rim. The workflow generates editable
+source, recipe, native data and previews, inserts/selects the root object in an
+undoable transaction, and opens the existing sculpt/paint/excavation tools.
+Scene view and Play both suppress the underlying planet footprint. The outer
+rim cannot be sculpted/excavated away from its parent; painting is allowed.
+
+A CLI counterpart uses the serialized PlanetSettings descriptor and a direction
+in the planet's model frame:
+
+```sh
+build/judas_terrain_author v2-planet planet.json Authoring/cave.judasterrain2 0.09375 1 0.09375 128
+build/judas_terrain_author v2-native Authoring/cave.judasterrain2 Assets/Terrain/cave.judasmodel
+```
+
+Register native/preview assets normally. Scene key `terrain.planet 3` references
+the existing planet object3, alongside `terrain.asset`. The root's pose is derived
+from its chart and the scene's world origin, with unit scale. The editor computes
+this placement; native tools may use `TerrainV2::PlanetTerrainPlacement`. Do not
+manually move the geographic object or overlay a flat source over intact ground.
+The older full-mesh/bootstrap cook is rejected for projected sources.
+
+Source preparation projects both render and collision meshes. Brushes retain
+world-metre radii and solid occupancy maps through the same chart. Runtime and
+cold saves preserve chart, surface paint and the excavation journal. Regional
+`terrainPlanet` qualified references remap the parent identity; the manifest must
+keep that producer resident as a dependency. Private staging reserves coverage
+without removing live ground. Publication activates it; hiding/removing a patch
+restores retained planetary support. Overlaps and invalid provider/pose/rim
+combinations reject explicitly. Absolute planetary descriptors keep their frame
+through regional placement, origin transactions and cold restoration.
+
+Try `projects/terrain_v2_planet_workshop/terrain_v2_planet_workshop.judasproj`.
+Its ordinary scripts support radial-gravity walking, world-space sculpt/paint,
+a cross-chunk tunnel, origin changes and cold saves. The automated relocated
+export walks through the real tunnel and restores its progress in a separate
+process. This is engineering verification, not human visual/gameplay acceptance.
+
+Boundaries: geographic patches are bounded interior cube-face footprints, with
+32..512 cells per side matching the parent's physical grid. They are scene-owned,
+not movable prefab instances. Overlapping patches and cross-face excavation are
+not supported. Changing parent source geometry or incompatible collision/visual
+sampling requires regeneration; custom callback providers cannot be serialized
+as native projected assets. Each active patch retains all collision chunks and
+renders mapped geometry at native detail, while the surrounding planet retains
+its existing view-union LOD. This is not planet-wide volumetric paging or a claim
+that all remaining Terrain V2 work is complete.

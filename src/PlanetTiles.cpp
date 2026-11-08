@@ -29,42 +29,8 @@ bool PlanetTiles::SetTerrainCutouts(const std::vector<PlanetTerrainCutout> &cuts
             error.clear();
             return true;
         }
-        if (cuts.size() > 64)
-            throw std::invalid_argument("planet terrain cutout count exceeds64");
-        std::set<PlanetTileKey> fixed;
-        unsigned collisionLevel = 0;
-        while (collisionLevel < 26 &&
-               surface.settings.radius * 2 / std::ldexp(32., int(collisionLevel)) >
-                   surface.settings.collisionSpacing)
-            ++collisionLevel;
-        for (size_t i = 0; i < cuts.size(); ++i) {
-            const auto &c = cuts[i];
-            if (c.tile.face >= 6 || c.tile.level < 3 || c.tile.level > collisionLevel ||
-                c.boundaryLevel < c.tile.level || c.boundaryLevel > surface.settings.maxLevel ||
-                c.boundaryLevel - c.tile.level > 7 || c.tile.x == 0 || c.tile.y == 0 ||
-                uint64_t(c.tile.x) + 1 >= (uint64_t(1) << c.tile.level) ||
-                uint64_t(c.tile.y) + 1 >= (uint64_t(1) << c.tile.level))
-                throw std::invalid_argument("planet excavation requires an interior cube-face "
-                                            "patch within collision/visual depth");
-            for (size_t j = 0; j < i; ++j)
-                if (descendant(c.tile, cuts[j].tile) || descendant(cuts[j].tile, c.tile))
-                    throw std::invalid_argument("planet terrain replacement footprints overlap");
-            const int scale = 1 << int(c.boundaryLevel - c.tile.level);
-            const int x0 = int(c.tile.x) * scale, y0 = int(c.tile.y) * scale;
-            auto add = [&](int x, int y) {
-                fixed.insert({c.tile.face, c.boundaryLevel, unsigned(x0 + x), unsigned(y0 + y)});
-            };
-            for (int x = -1; x <= scale; ++x)
-                for (int y : {-1, 0, scale - 1, scale})
-                    add(x, y);
-            for (int y = 1; y < scale - 1; ++y)
-                for (int x : {-1, 0, scale - 1, scale})
-                    add(x, y);
-        }
-        std::vector<PlanetTileKey> pins(fixed.begin(), fixed.end());
-        // Validate the entire protected topology before changing either rendering or
-        // physical support. No budget limit may leave a partial unprepared hole.
-        SelectPlanetTiles(surface, {{surface.settings.center, 1., 1}}, pins);
+        std::vector<PlanetTileKey> pins;
+        if(!PreparePlanetCoverage(surface,cuts,pins,error))return false;
         m_cutouts = cuts;
         m_fixedRims = std::move(pins);
         m_coverageDirty = true;
@@ -77,6 +43,21 @@ bool PlanetTiles::SetTerrainCutouts(const std::vector<PlanetTerrainCutout> &cuts
         error = e.what();
         return false;
     }
+}
+bool PlanetTiles::SetTerrainPatch(uint64_t owner,std::optional<PlanetTerrainCutout> cut,
+                                  bool active,std::string &error) {
+    if(!owner){error="planet terrain reservation requires an owner";return false;}
+    auto next=m_ownedCutouts;
+    if(cut)next[owner]={*cut,active};
+    else if(!next.erase(owner)){error.clear();return true;}
+    if(m_ownedCutouts.empty()&&!m_cutouts.empty()){
+        error="manual planet coverage is already installed";return false;
+    }
+    std::vector<PlanetTerrainCutout> all,visible;
+    for(const auto &[_,entry]:next){all.push_back(entry.first);if(entry.second)visible.push_back(entry.first);}
+    std::vector<PlanetTileKey> pins;
+    if(!PreparePlanetCoverage(surface,all,pins,error)||!SetTerrainCutouts(visible,error))return false;
+    m_ownedCutouts=std::move(next);return true;
 }
 void PlanetTiles::SetTags(CategoryMask tags) {
     m_tags = tags;
@@ -209,8 +190,7 @@ void PlanetTiles::Prepare(Renderer& renderer,const std::vector<PlanetView>& view
 void PlanetTiles::Draw(Renderer& renderer,V origin)const{for(auto k:m_leaves){if(Masked(k))continue;auto it=m_tiles.find(k);if(it!=m_tiles.end()&&it->second.mesh.IsValid())renderer.DrawMesh(it->second.mesh,glm::vec3(it->second.data.origin-origin),{1,0,0,0},glm::vec3(1),{},glm::vec3(.24f,.43f,.31f));}}
 bool PlanetTiles::Collision(V focus,V origin,unsigned buildBudget){auto start=std::chrono::steady_clock::now();m_stats.collisionReady=false;if(!m_physics){m_stats.error="no physics owner";return false;}
  try{if(!std::isfinite(glm::length(focus))||glm::length(focus-origin)>8192)throw std::runtime_error("planet collision focus outside local physics chart");auto model=glm::conjugate(glm::normalize(surface.settings.rotation))*glm::normalize(focus-surface.settings.center);const unsigned n=32;
- unsigned level=0;while(level<26&&surface.settings.radius*2/std::ldexp(double(n),int(level))>surface.settings.collisionSpacing)++level;
- if(surface.settings.radius*2/std::ldexp(double(n),int(level))>surface.settings.collisionSpacing*(1+1e-12))throw std::runtime_error("planet collision depth cannot meet authored spacing");
+ const auto level=PlanetCollisionLevel(surface.settings);
  auto central=PlanetSurface::Locate(model,level);const double tileWidth=2./std::ldexp(1.,int(level));auto uv=PlanetSurface::FaceCoordinates(central.face,model);
  // Neighbours are selected in cube coordinates, including outside a face.
  // Locate maps those rays back to their correct canonical adjacent face.

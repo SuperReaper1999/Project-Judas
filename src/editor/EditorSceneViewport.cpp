@@ -518,31 +518,9 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
         terrain->Draw(renderer, scene, context.host.Resources());
     if (volumeTerrain)
         volumeTerrain->Draw(renderer, scene, context.host.Resources());
-    {
-        std::set<SceneObjectId> keep;
-        for (const auto &object : scene.Objects())
-            if (object.planet) {
-                keep.insert(object.id);
-                auto descriptor = EncodePlanetSettings(*object.planet);
-                auto &p = planetPreview[object.id];
-                if (p.first != descriptor) {
-                    p.second.reset();
-                    p.first = descriptor;
-                    p.second = std::make_unique<PlanetTiles>(*object.planet);
-                }
-                const auto eye =
-                    glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]) + scene.Settings().worldOrigin;
-                p.second->Prepare(renderer, eye, scene.Settings().worldOrigin,
-                                  2 * std::atan(1. / double(renderer.ProjectionMatrix()[1][1])), 900,
-                                  1. / 60);
-                p.second->Draw(renderer, scene.Settings().worldOrigin);
-            }
-        for (auto it = planetPreview.begin(); it != planetPreview.end();)
-            if (!keep.count(it->first))
-                it = planetPreview.erase(it);
-            else
-                ++it;
-    }
+    std::string planetError;
+    planetPreview.Draw(renderer, scene, context.host.Resources(), planetError);
+    if (!planetError.empty()) context.panels.status = planetError;
     DrawAuthoredScene(renderer, scene, context.host.Resources(), false);
     if (context.panels.worldPreview && !context.project.Settings().worldManifest.empty()) {
         auto key = context.project.ProjectFile() + context.document.Path() +
@@ -687,6 +665,6 @@ void EditorSceneViewport::Destroy(Renderer &renderer) {
     if (target.IsValid())
         renderer.DestroyRenderTarget(target);
     target = {};
-    planetPreview.clear();
+    planetPreview.Clear();
     regionPreview.clear();
 }

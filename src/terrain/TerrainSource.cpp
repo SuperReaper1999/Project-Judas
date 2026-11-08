@@ -42,14 +42,37 @@ bool ValidateMetadata(const Source &s, std::string &error) {
         error = text;
         return false;
     };
-    if (s.version != 2 || s.samplesX < 3 || s.samplesZ < 3 || s.samplesX > 4097 ||
-        s.samplesZ > 4097 || uint64_t(s.samplesX) * s.samplesZ > 4194304 || s.chunkCells < 4 ||
-        s.chunkCells > 64 || (s.samplesX - 1) % s.chunkCells || (s.samplesZ - 1) % s.chunkCells)
+    if (s.version != 2 && s.version != 3)
+        return fail(
+            "unsupported terrain source format; use2 for ordinary or3 for planetary sources");
+    if (bool(s.chart) != (s.version == 3))
+        return fail("terrain source3 requires planetChart; source2 must not carry one");
+    if (s.samplesX < 3 || s.samplesZ < 3 || s.samplesX > 4097 || s.samplesZ > 4097 ||
+        uint64_t(s.samplesX) * s.samplesZ > 4194304 || s.chunkCells < 4 || s.chunkCells > 64 ||
+        (s.samplesX - 1) % s.chunkCells || (s.samplesZ - 1) % s.chunkCells)
         return fail("terrain V2 requires aligned 4..64-cell chunks and <=4194304 samples");
     if (!std::isfinite(s.spacing) || s.spacing < .125f || s.spacing > 128 ||
         !std::isfinite(s.bottom) || !std::isfinite(s.top) || s.top <= s.bottom ||
         std::max(std::abs(s.top), std::abs(s.bottom)) > 100000)
         return fail("terrain spacing/vertical excavation budget exceeded");
+    if (s.chart) {
+        if (!ValidatePlanetChart(*s.chart, error))
+            return false;
+        if (s.chart->surfaceFingerprint.size() != 64 ||
+            s.chart->surfaceFingerprint.find_first_not_of("0123456789abcdef") !=
+                std::string::npos ||
+            s.chart->rim.size() != 4 * s.samplesX)
+            return fail(
+                "projected terrain requires a serialized planet source identity and protected rim");
+        for (float height : s.chart->rim)
+            if (!std::isfinite(height) || height <= s.bottom || height >= s.top)
+                return fail("projected terrain rim height is outside source bounds");
+        if (s.samplesX != s.samplesZ || s.chart->span != double(s.samplesX - 1) * s.spacing ||
+            s.chart->radius + s.bottom <= s.chart->radius * .5 ||
+            s.chart->originHeight <= s.bottom || s.chart->originHeight >= s.top)
+            return fail("planet terrain metadata requires a square geographic grid and local "
+                        "radial bounds");
+    }
     for (unsigned i = 0; i < 4; ++i) {
         if (s.layerTextures[i].size() > 128 || !Finite(s.layerColours[i]) ||
             glm::any(glm::lessThan(s.layerColours[i], glm::vec3(0))) ||
@@ -63,6 +86,16 @@ bool ValidateMetadata(const Source &s, std::string &error) {
             (e.kind != Edit::Kind::Add && e.kind != Edit::Kind::Remove))
             return fail(
                 "terrain brush requires finite point and radius between spacing and 64 metres");
+    if (s.chart) {
+        const double half = s.chart->span * .5 - 2 * s.spacing;
+        for (const auto &edit : s.edits) {
+            const auto reach = BrushReach(s, edit.radius);
+            if (std::abs(double(edit.point.x)) + reach >= half ||
+                std::abs(double(edit.point.z)) + reach >= half)
+                return fail(
+                    "planet excavation touches its protected rim; create a larger editable patch");
+        }
+    }
     error.clear();
     return true;
 }
@@ -83,6 +116,8 @@ bool Validate(const Source &s, std::string &error) {
             std::abs(w.x + w.y + w.z + w.w - 1) > 1e-4f)
             return fail("invalid terrain material weights");
     }
+    if (s.chart && PlanetSourceRim(s) != s.chart->rim)
+        return fail("planet source boundary heights changed; regenerate its geographic patch");
     error.clear();
     return true;
 }
@@ -104,10 +139,47 @@ glm::vec4 Weights(const Source &s, float x, float z) {
     };
     return glm::mix(glm::mix(at(0, 0), at(1, 0), c.u), glm::mix(at(0, 1), at(1, 1), c.u), c.v);
 }
+double EditDistance(const Source &source, glm::vec3 point, const Edit &edit) {
+    if (!source.chart)
+        return glm::length(glm::dvec3(point) - glm::dvec3(edit.point)) - double(edit.radius);
+    return glm::length(source.chart->LocalPoint(point) - source.chart->LocalPoint(edit.point)) -
+           double(edit.radius);
+}
+double BrushReach(const Source &source, double radius) {
+    if (!source.chart)
+        return radius;
+    const auto &c = *source.chart;
+    const double count = double(uint64_t(1) << c.tile.level);
+    const double padding = 4 * source.spacing / (c.span * count);
+    const double u =
+        std::max(std::abs(2 * c.tile.x / count - 1), std::abs(2 * (c.tile.x + 1) / count - 1)) +
+        padding;
+    const double v =
+        std::max(std::abs(2 * c.tile.y / count - 1), std::abs(2 * (c.tile.y + 1) / count - 1)) +
+        padding;
+    const double scale = c.span * count / (2 * (c.radius + source.bottom));
+    // Frobenius upper bound of the inverse radial/cube-face Jacobian across
+    // this source. This expands candidates; it never reduces collision coverage.
+    return radius * std::sqrt(1 + scale * scale * (1 + u * u + v * v) * (2 + u * u + v * v));
+}
+bool SourcePoint(const Source &source, glm::vec3 local, glm::vec3 &out, std::string &error) {
+    try {
+        const auto point = source.chart ? source.chart->ChartPoint(local) : glm::dvec3(local);
+        if (!std::isfinite(glm::dot(point, point)))
+            throw std::invalid_argument("terrain point must be finite in its source frame");
+        out = glm::vec3(point);
+        error.clear();
+        return true;
+    } catch (const std::exception &exception) {
+        error = exception.what();
+        return false;
+    }
+}
 float Density(const Source &s, glm::vec3 p) {
     float d = p.y - Height(s, p.x, p.z);
     for (const auto &e : s.edits) {
-        const float sphere = glm::length(p - e.point) - e.radius;
+        const float sphere =
+            s.chart ? float(EditDistance(s, p, e)) : glm::length(p - e.point) - e.radius;
         d = e.kind == Edit::Kind::Remove ? std::max(d, -sphere) : std::min(d, sphere);
     }
     return d;
@@ -119,16 +191,20 @@ bool Touches(const Source &s, ChunkKey key, const Edit &e) {
         hi = lo + glm::vec2(width);
     const auto point = glm::vec2(e.point.x, e.point.z);
     const auto delta = glm::max(glm::max(lo - point, point - hi), glm::vec2(0));
-    return glm::length(delta) <= e.radius + s.spacing;
+    return s.chart ? double(glm::length(delta)) <= BrushReach(s, e.radius) + s.spacing
+                   : glm::length(delta) <= e.radius + s.spacing;
 }
 std::vector<ChunkKey> Affected(const Source &s, const Edit &e) {
     std::vector<ChunkKey> out;
-    const double width = double(s.chunkCells) * s.spacing, radius = e.radius + s.spacing;
+    const double width = double(s.chunkCells) * s.spacing;
+    const double radius =
+        s.chart ? BrushReach(s, e.radius) + s.spacing : double(e.radius + s.spacing);
     auto range = [&](double point, unsigned samples, unsigned count) {
         const double half = (samples - 1) * double(s.spacing) * .5;
         return std::pair<int, int>{
             int(std::clamp(std::floor((point - radius + half) / width) - 1, 0., double(count))),
-            int(std::clamp(std::floor((point + radius + half) / width)+1, -1., double(count) - 1))};
+            int(std::clamp(std::floor((point + radius + half) / width) + 1, -1.,
+                           double(count) - 1))};
     };
     auto xr = range(e.point.x, s.samplesX, s.ChunksX()),
          zr = range(e.point.z, s.samplesZ, s.ChunksZ());
@@ -145,13 +221,25 @@ std::vector<ChunkKey> Affected(const Source &s, const Edit &e) {
 namespace {
 using Json = nlohmann::json;
 Json MetadataJson(const Source &s) {
-    Json j = {{"format", "JudasTerrainV2"}, {"version", 2},         {"samplesX", s.samplesX},
+    Json j = {{"format", "JudasTerrainV2"}, {"version", s.version}, {"samplesX", s.samplesX},
               {"samplesZ", s.samplesZ},     {"spacing", s.spacing}, {"chunkCells", s.chunkCells},
               {"bottom", s.bottom},         {"top", s.top},         {"edits", Json::array()}};
     for (auto e : s.edits)
         j["edits"].push_back({{"kind", e.kind == Edit::Kind::Remove ? "remove" : "add"},
                               {"point", {e.point.x, e.point.y, e.point.z}},
                               {"radius", e.radius}});
+    if (s.chart) {
+        const auto &c = *s.chart;
+        j["planetChart"] = {{"radius", c.radius},
+                            {"face", c.tile.face},
+                            {"level", c.tile.level},
+                            {"x", c.tile.x},
+                            {"y", c.tile.y},
+                            {"span", c.span},
+                            {"originHeight", c.originHeight},
+                            {"surfaceFingerprint", c.surfaceFingerprint},
+                            {"rim", c.rim}};
+    }
     j["layerTextures"] = s.layerTextures;
     j["layerColours"] = Json::array();
     for (auto c : s.layerColours)
@@ -168,13 +256,37 @@ Json ReadJson(const std::string &bytes) {
     });
 }
 Source ReadMetadata(const Json &j) {
-    if (j.at("format") != "JudasTerrainV2" || j.at("version") != 2)
+    if (j.at("format") != "JudasTerrainV2" || (j.at("version") != 2 && j.at("version") != 3))
         throw std::invalid_argument("terrain format/version");
     for (const auto *key : {"version", "samplesX", "samplesZ", "chunkCells"})
         if (!j.at(key).is_number_integer() || j.at(key).get<int64_t>() < 0 ||
             j.at(key).get<uint64_t>() > 4097)
             throw std::invalid_argument("terrain integer field");
     Source s;
+    s.version = j.at("version");
+    if (j.contains("planetChart")) {
+        const auto &p = j.at("planetChart");
+        if (!p.is_object() || p.size() != 9)
+            throw std::invalid_argument(
+                "planet chart requires exactly nine coordinate/ownership fields");
+        if (!p.at("rim").is_array() || p.at("rim").size() != 4 * j.at("samplesX").get<uint64_t>() ||
+            !p.at("surfaceFingerprint").is_string() ||
+            p.at("surfaceFingerprint").get_ref<const std::string &>().size() != 64)
+            throw std::invalid_argument("planet chart ownership metadata exceeds its grid budget");
+        for (const auto *key : {"face", "level", "x", "y"})
+            if (!p.at(key).is_number_integer() || p.at(key).get<int64_t>() < 0 ||
+                p.at(key).get<uint64_t>() > UINT32_MAX)
+                throw std::invalid_argument("planet chart identity requires unsigned integers");
+        for (const auto *key : {"radius", "span", "originHeight"})
+            if (!p.at(key).is_number())
+                throw std::invalid_argument("planet chart coordinate requires a number");
+        s.chart = PlanetChart{p.at("radius"),
+                              {p.at("face"), p.at("level"), p.at("x"), p.at("y")},
+                              p.at("span"),
+                              p.at("originHeight"),
+                              p.at("surfaceFingerprint").get<std::string>(),
+                              p.at("rim").get<std::vector<float>>()};
+    }
     s.samplesX = j.at("samplesX");
     s.samplesZ = j.at("samplesZ");
     s.chunkCells = j.at("chunkCells");

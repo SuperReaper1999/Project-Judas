@@ -2,6 +2,8 @@
 target_sources(judas_engine PRIVATE
     src/terrain/TerrainSource.cpp
     src/terrain/TerrainPlanetChart.cpp
+    src/planet/PlanetCoverage.cpp
+    src/terrain/TerrainPlanetBinding.cpp
     src/terrain/TerrainAsset.cpp
     src/terrain/TerrainComponent.cpp
     src/terrain/TerrainLod.cpp
@@ -22,6 +24,8 @@ judas_add_engine_test(judas_terrain_v2_world_tests tests/TerrainV2WorldTests.cpp
 judas_add_engine_test(judas_terrain_v2_lod_tests tests/TerrainV2LodTests.cpp)
 judas_add_engine_test(judas_terrain_v2_asset_tests tests/TerrainV2AssetTests.cpp)
 judas_add_engine_test(judas_terrain_v2_component_tests tests/TerrainV2ComponentTests.cpp)
+judas_add_engine_test(judas_terrain_v2_planet_component_tests tests/TerrainV2PlanetComponentTests.cpp)
+judas_add_engine_test(judas_terrain_v2_planet_streaming_tests tests/TerrainV2PlanetStreamingTests.cpp)
 judas_add_engine_test(judas_terrain_v2_surface_tests tests/TerrainV2SurfaceTests.cpp)
 judas_add_engine_test(judas_terrain_v2_interaction_tests tests/TerrainV2InteractionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_streaming_tests tests/TerrainV2StreamingTests.cpp)
@@ -46,8 +50,13 @@ judas_warnings(judas_terrain_v2_native_benchmark)
 add_executable(judas_terrain_v2_authoring_benchmark tests/TerrainV2AuthoringBenchmark.cpp)
 target_link_libraries(judas_terrain_v2_authoring_benchmark PRIVATE judas_engine)
 judas_warnings(judas_terrain_v2_authoring_benchmark)
+add_executable(judas_terrain_v2_game_benchmark tests/TerrainV2GameBenchmark.cpp)
+target_link_libraries(judas_terrain_v2_game_benchmark PRIVATE judas_engine)
+judas_warnings(judas_terrain_v2_game_benchmark)
 
 judas_add_engine_test(judas_terrain_v2_editor_tests tests/TerrainV2EditorTests.cpp)
 target_link_libraries(judas_terrain_v2_editor_tests PRIVATE judas_editor_core)
 judas_add_engine_test(judas_terrain_v2_creation_tests tests/TerrainV2CreationTests.cpp)
 target_link_libraries(judas_terrain_v2_creation_tests PRIVATE judas_editor_core)
+judas_add_engine_test(judas_terrain_v2_planet_editor_tests tests/TerrainV2PlanetEditorTests.cpp)
+target_link_libraries(judas_terrain_v2_planet_editor_tests PRIVATE judas_editor_core)

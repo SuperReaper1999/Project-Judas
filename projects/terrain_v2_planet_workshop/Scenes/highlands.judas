@@ -1,0 +1,94 @@
+JudasScene 3
+settings
+ name "Terrain V2 — Planetary Highlands"
+ world-origin 92.93673162131846 991.3251372940636 92.93673162131846
+ sun-direction -0.4 0.8 0.35
+ sun-color 1 0.94 0.82
+ ambient 0.34 0.39 0.45
+ background-color 0.48 0.67 0.81
+ fluid-scale 1
+ fidelity-policy none
+ next-id 100
+end
+object 1 "Editable Highlands — heightfield and caves"
+ terrain.planet 3
+ terrain.asset "8a230000000000000000000000000003"
+ position 0 0 0
+ rotation 0.9978265605291076 0.04667079622925682 0.0021734188926957744 -0.04646792584455848
+ scale 1 1 1
+ render mesh
+ render.half-extents 24 8 24
+ render.radius 1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.texture-asset "8a230000000000000000000000000004"
+ render.mesh-asset "8a230000000000000000000000000002"
+ render.color 1 1 1
+ body static box
+ body.half-extents 24 8 24
+ body.radius 1
+ body.terrain ""
+ body.mass 1
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+ body.collision-asset ""
+ body.friction 0.75
+ body.restitution 0
+ nav.surface.enabled "1"
+ nav.surface.includeDynamic "0"
+ nav.surface.profile "0"
+ nav.surface.sources "18446744073709551615"
+ nav.surface.halfExtents "35 24 35"
+ nav.surface.cellSize "0.25"
+ nav.surface.cellHeight "0.1"
+ nav.surface.simplification "1.3"
+ nav.surface.tileSize "32"
+ nav.surface.minRegion "0"
+ nav.surface.asset ""
+end
+object 2 "Radial gravity"
+ position -92.93673162131846 -991.3251372940636 -92.93673162131846
+ rotation 1 0 0 0
+ scale 1 1 1
+ gravity radial 9.81
+ gravity.region sphere 10000
+end
+object 64 "Explorer"
+ position 0.05589179779742892 0.5961791765059843 13.120252688640704
+ rotation 1 0 0 0
+ scale 1 1 1
+ motor.enabled true
+ motor.radius 0.3
+ motor.halfHeight 0.6
+ motor.offset 0 0 0
+ motor.stepHeight 0.55
+ motor.supportDistance 0.15
+ motor.skin 0.02
+ motor.maxSlopeDegrees 50
+ motor.gravityScale 1
+ motor.reorientationDegreesPerSecond 120
+ motor.interactionMass 80
+ motor.maxPushImpulse 20
+ motor.collisionLayer 0
+ motor.collisionMask 18446744073709551615
+ motor.requiredTags 0
+ motor.excludedTags 0
+ scripts 1
+ script.0.id 1
+ script.0.asset "8a230000000000000000000000000001"
+ script.0.enabled true
+ script.0.properties "{}"
+ ui.asset "bd7a9cddb5b85ee03930a88f173acc8b"
+ ui.name "game_ui"
+ ui.enabled true
+end
+
+object 3 "Planetary source"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ planet.surface "{\"version\":1,\"radius\":1000,\"collisionSpacing\":0.5,\"collisionRadius\":12}"
+end

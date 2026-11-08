@@ -6,6 +6,15 @@ M75-1, JudasScene 3 text authoring, and the navigation bake used by this SDK.
 The baker may rewrite the scene in the structured format. Keep the authored
 source under version control and let the SDK tools write generated assets.
 
+## Experimental Terrain V2 preview
+
+The source-build Alpha V2 preview additionally supports native sampled/volumetric
+landscapes. Use the current [Terrain V2 guide](TERRAIN_V2.md), including its
+geographic native-patch workflow and `terrain.planet` scene reference. It reuses
+this navigation system through source-owned live surfaces; the V1 baked-mesh
+recipe below remains valid for existing projects. Do not assume these preview
+formats exist in older published SDKs or replace a project's assets automatically.
+
 ## Terrain → navmesh → NPC
 
 Start with the [Terrain Navigation Workshop](../projects/terrain_navigation_workshop/README.md).

@@ -1,0 +1,70 @@
+[  0%] Built target judas_navigation_backend
+[  5%] Built target freetype
+[  5%] Built target judas_glad
+[  5%] Built target judas_profiler
+[  5%] Built target judas_jobs
+[  5%] Built target judas_audio_backend
+[  5%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_meshoptimizer
+[ 17%] Built target judas_icu_build
+[ 17%] Built target judas_quickjs
+[ 17%] Built target harfbuzz
+[ 17%] Built target judas_imgui
+[ 17%] Built target judas_ufbx
+[ 23%] Built target judas_navigation_cook
+[ 23%] Built target judas_materials
+[ 23%] Built target judas_graphics_caps
+[ 29%] Built target judas_editor_design
+[ 29%] Linking CXX static library libjudas_build_identity.a
+[ 29%] Built target judas_build_identity
+[ 29%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainPlanetBinding.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_engine.dir/src/terrain/TerrainComponent.cpp.o
+[ 29%] Linking CXX static library libjudas_engine.a
+[ 88%] Built target judas_engine
+[ 88%] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+[ 88%] Built target judas_model_import
+[ 88%] Linking CXX static library libjudas_navigation_baker.a
+[ 88%] Built target judas_navigation_baker
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/terrain/TerrainCook.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/terrain/TerrainPreview.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/terrain/TerrainGeneration.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/NavigationDependencies.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ModAuthoring.cpp.o
+[ 88%] Linking CXX static library libjudas_world_authoring.a
+[ 88%] Built target judas_world_authoring
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAIWorkflow.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/UtilityAIEditor.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorApplication.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/ScriptTools.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorPicking.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorHistory.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorConsolePanel.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorCorePanels.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/JudasToolsPanel.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorToolPanels.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorShell.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorViewportPresenter.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorPanelRegistry.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorWorkspace.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAutomation.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAutomationTerrainAndAsync.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAutomationAssets.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAutomationWorkspace.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorAutomationSimulation.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorStabilization.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_editor_core.dir/src/editor/EditorProjectWorkflow.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorProjectWorkflow.cpp: In member function ‘bool EditorProjectWorkflow::OpenProject(EditorContext&, EditorProjectServices&, const std::string&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorProjectWorkflow.cpp:91:37: error: ‘class TerrainPlanetPreview’ has no member named ‘clear’; did you mean ‘Clear’?
+   91 |     services.viewport.planetPreview.clear();
+      |                                     ^~~~~
+      |                                     Clear
+gmake[3]: *** [CMakeFiles/judas_editor_core.dir/build.make:401: CMakeFiles/judas_editor_core.dir/src/editor/EditorProjectWorkflow.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:2513: CMakeFiles/judas_editor_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:25848: CMakeFiles/judas_terrain_v2_planet_editor_tests.dir/rule] Error 2
+gmake: *** [Makefile:7038: judas_terrain_v2_planet_editor_tests] Error 2

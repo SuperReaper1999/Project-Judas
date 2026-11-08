@@ -470,12 +470,17 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     };
 
     const bool particleWater=m_advancedFluids&&(!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Particles;}));
+    // Geographic terrain references do not depend on authored object order.
+    // Planet construction creates no collision bodies; ordinary body ordering
+    // remains unchanged until explicit physical-interest preparation.
+    for(const auto& o:scene.Objects()) {
+if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o,e);
+            if(o.body||o.characterMotor||o.deformable||o.ragdoll||o.wheel||o.parent||o.transform.position!=glm::vec3(0)||o.transform.rotation!=glm::quat(1,0,0,0)||o.transform.scale!=glm::vec3(1))return fail(o,"planet uses an absolute descriptor frame; owner must be an unparented identity transform without another physical producer");
+            m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
+    }
     for (const SceneObject& o : scene.Objects()) {
         if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
-        if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o,e);
-            if(o.body||o.characterMotor||o.deformable||o.ragdoll||o.wheel||o.parent||o.transform.position!=glm::vec3(0)||o.transform.rotation!=glm::quat(1,0,0,0)||o.transform.scale!=glm::vec3(1))return fail(o,"planet uses an absolute descriptor frame; owner must be an unparented identity transform without another physical producer");
-            m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
         m_hasScripts|=!o.scripts.empty();
         if(o.deformable){if(o.body||o.animation||o.ragdoll||o.characterMotor||o.transform.scale!=glm::vec3(1))return fail(o,"deformable owns node motion; owner cannot have another motion producer or nonunit scale");std::string error;if(!ValidDeformableSettings(*o.deformable,error)||!ValidateVisualAssets(o,error))return fail(o,error);if(m_assets){m_assets->AddRef(o.deformable->asset);m_referencedAssets.push_back(o.deformable->asset);m_assets->RequestDeformable(o.deformable->asset);}}
         m_hasLiquid|=m_advancedFluids&&!LiquidProperties(o).empty();
@@ -1130,6 +1135,14 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
         return false;
     }
     if (e->lifecycle == EntityLifecycle::Destroyed) return true;
+    for(const auto& [other,definition]:m_scriptDefinitions)
+        if(other!=id&&definition.landscape&&definition.landscape->planet==id){
+            const auto* dependent=FindEntity(other);
+            if(!dependent||dependent->lifecycle!=EntityLifecycle::Destroyed){
+                error="remove the planet's geographic terrain patches before destroying its owner";
+                return false;
+            }
+        }
     if(m_gridWater && m_gridWater->Find(id)) {
         error="grid-water owners are resident domains; drain/remove the authored component outside Play instead of destroying conserved live water";
         return false;
@@ -1216,6 +1229,13 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     copy.wheel.reset();
     if(definition.powertrain&&!ValidatePowertrainSettings(*definition.powertrain,error))return false;
     copy.powertrain.reset();
+    if(copy.landscape&&copy.landscape->planet){
+        if(copy.landscape->planet==definition.id){error="planet terrain cannot replace its own producer";return false;}
+        // The isolated schema uses identity 1. Preserve the reference kind,
+        // without turning a legitimate external planet 1 into a self-reference.
+        // Its actual endpoint is checked when the terrain is bound to the world.
+        copy.landscape->planet=2;
+    }
     copy.id = 1;
     validation.InsertObject(copy);
     std::string fingerprint;

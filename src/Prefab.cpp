@@ -109,6 +109,7 @@ bool FlattenHierarchy(const Scene& scene,Scene& flattened,std::string& error) {
 bool ValidatePrefab(const Scene& prefab,std::string& error) {
     if(!ValidateScenePowertrains(prefab,error))return false;
     if(prefab.Objects().empty()||!ValidateHierarchy(prefab,error)){if(error.empty())error="empty prefab";return false;}
+    for(const auto& o:prefab.Objects())if(o.landscape&&o.landscape->planet){error="planetary terrain patches are scene-owned geographic sources, not prefab instances";return false;}
     for(const auto& o:prefab.Objects())if(o.gravitySelection&&o.gravitySelection->mode==GravitySelection::Mode::Field){
         auto* source=prefab.Find(o.gravitySelection->source);if(!source||!source->gravity){error="prefab gravity selection source must be an internal gravity field";return false;}}
     for(const auto& o:prefab.Objects())if(o.wheel){auto* chassis=prefab.Find(o.wheel->chassis);if(!chassis||(o.wheel->part.empty()?!chassis->body:!chassis->deformable)){error="prefab wheel requires an internal chassis body or partition owner";return false;}}

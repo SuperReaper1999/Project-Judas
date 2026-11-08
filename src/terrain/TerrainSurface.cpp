@@ -14,10 +14,16 @@ bool Runtime::Surface(glm::vec3 point, const SurfaceBrush &brush, std::string &e
         return false;
     }
     const auto &pose = Definition()->transform;
-    const auto local = glm::conjugate(pose.rotation) * (point - pose.position);
+    glm::vec3 local;
+    if (!SourcePoint(*source, glm::conjugate(pose.rotation) * (point - pose.position), local,
+                     error))
+        return false;
+    auto applied = brush;
+    if (source->chart)
+        applied.height += float(source->chart->originHeight);
     auto next = std::make_shared<Source>(*source);
     std::vector<ChunkKey> dirty;
-    if (!ApplySurfaceBrush(*next, local, brush, dirty, error))
+    if (!ApplySurfaceBrush(*next, local, applied, dirty, error))
         return false;
     // Only asset-backed saves need sparse overrides. Procedural sources already
     // save all their native samples. Never accept an edit that cannot be saved.

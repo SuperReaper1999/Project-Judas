@@ -30,9 +30,11 @@ double ms(Clock::time_point t){return std::chrono::duration<double,std::milli>(C
 bool finite(glm::dvec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);}
 bool read(const std::string& path,std::string& text,std::string& error,size_t cap=8*1024*1024){std::ifstream f(path,std::ios::binary|std::ios::ate);auto size=f.tellg();if(!f||size<0||size>std::streamoff(cap)){error="missing/oversized world content: "+path;return false;}text.resize(size_t(size));f.seekg(0);if(!f.read(text.data(),size)){error="cannot read world content: "+path;return false;}return true;}
 std::string orderKey(const WorldRegion& r,SceneObjectId local){std::ostringstream s;s<<"0:"<<std::setw(10)<<std::setfill('0')<<(1000000-r.priority)<<":"<<r.id<<":"<<std::setw(20)<<local;return s.str();}
-void remap(SceneObject& o,const std::map<SceneObjectId,SceneObjectId>& ids){auto map=[&](SceneObjectId& id){if(id&&ids.count(id))id=ids.at(id);};for(auto& slot:o.scripts)slot.properties=ScriptSystem::RemapPropertyEntities(slot.properties,ids);map(o.id);map(o.parent);if(o.gravitySelection)map(o.gravitySelection->source);if(o.socket)map(o.socket->target);if(o.wheel)map(o.wheel->chassis);if(o.powertrain)RemapPowertrainReferences(*o.powertrain,[&](uint64_t id){return ids.count(id)?ids.at(id):id;});map(o.prefabRoot);if(o.render)map(o.render->textureCamera);if(o.joint){map(o.joint->bodyA);map(o.joint->bodyB);}if(o.deformable)for(auto& a:o.deformable->attachments)map(a.target);if(o.liquidConnection){map(o.liquidConnection->source);map(o.liquidConnection->destination);}for(auto& [source,id]:o.prefabIds){(void)source;map(id);}}
-bool reference(SceneObject& o,const std::string& field,SceneObjectId id){if(field.rfind("script:",0)==0){auto split=field.find(':',7);if(split==std::string::npos)return false;uint64_t slot=0;try{slot=std::stoull(field.substr(7,split-7));}catch(...){return false;}for(auto& s:o.scripts)if(s.id==slot)return ScriptSystem::SetPropertyEntity(s.properties,field.substr(split+1),id);return false;}if(field.rfind("deformable:",0)==0&&o.deformable){for(auto& a:o.deformable->attachments)if(a.group==field.substr(11)){a.target=id;return true;}return false;}if(field=="gravitySelection"&&o.gravitySelection){o.gravitySelection->mode=GravitySelection::Mode::Field;o.gravitySelection->source=id;o.gravitySelection->acceleration={0,0,0};return true;}if(field.rfind("powertrain-link:",0)==0&&o.powertrain){const auto split=field.rfind(':');if(split==std::string::npos||split<=16||field.substr(split+1)!="connection")return false;const auto name=field.substr(16,split-16);for(auto& link:o.powertrain->links)if(link.name==name){link.connection.owner=id;return true;}return false;}if(field.rfind("powertrain:",0)==0&&o.powertrain){const auto split=field.rfind(':');if(split==std::string::npos||split<=11)return false;const auto name=field.substr(11,split-11);for(auto& shaft:o.powertrain->shafts)if(shaft.name==name){if(field.substr(split+1)=="target")shaft.target=id;else if(field.substr(split+1)=="bearing")shaft.bearing=id;else return false;return true;}return false;}if(field=="wheel.chassis"&&o.wheel){o.wheel->chassis=id;return true;}if(field=="socket"&&o.socket){o.socket->target=id;return true;}if(field=="parent"){o.parent=id;return true;}if(field=="textureCamera"&&o.render){o.render->textureCamera=id;return true;}if(field=="bodyA"&&o.joint){o.joint->bodyA=id;return true;}if(field=="bodyB"&&o.joint){o.joint->bodyB=id;return true;}if(field=="source"&&o.liquidConnection){o.liquidConnection->source=id;return true;}if(field=="destination"&&o.liquidConnection){o.liquidConnection->destination=id;return true;}return false;}
+void remap(SceneObject& o,const std::map<SceneObjectId,SceneObjectId>& ids){auto map=[&](SceneObjectId& id){if(id&&ids.count(id))id=ids.at(id);};for(auto& slot:o.scripts)slot.properties=ScriptSystem::RemapPropertyEntities(slot.properties,ids);map(o.id);map(o.parent);if(o.landscape)map(o.landscape->planet);if(o.gravitySelection)map(o.gravitySelection->source);if(o.socket)map(o.socket->target);if(o.wheel)map(o.wheel->chassis);if(o.powertrain)RemapPowertrainReferences(*o.powertrain,[&](uint64_t id){return ids.count(id)?ids.at(id):id;});map(o.prefabRoot);if(o.render)map(o.render->textureCamera);if(o.joint){map(o.joint->bodyA);map(o.joint->bodyB);}if(o.deformable)for(auto& a:o.deformable->attachments)map(a.target);if(o.liquidConnection){map(o.liquidConnection->source);map(o.liquidConnection->destination);}for(auto& [source,id]:o.prefabIds){(void)source;map(id);}}
+bool reference(SceneObject& o,const std::string& field,SceneObjectId id){if(field.rfind("script:",0)==0){auto split=field.find(':',7);if(split==std::string::npos)return false;uint64_t slot=0;try{slot=std::stoull(field.substr(7,split-7));}catch(...){return false;}for(auto& s:o.scripts)if(s.id==slot)return ScriptSystem::SetPropertyEntity(s.properties,field.substr(split+1),id);return false;}if(field.rfind("deformable:",0)==0&&o.deformable){for(auto& a:o.deformable->attachments)if(a.group==field.substr(11)){a.target=id;return true;}return false;}if(field=="terrainPlanet"&&o.landscape){o.landscape->planet=id;return true;}if(field=="gravitySelection"&&o.gravitySelection){o.gravitySelection->mode=GravitySelection::Mode::Field;o.gravitySelection->source=id;o.gravitySelection->acceleration={0,0,0};return true;}if(field.rfind("powertrain-link:",0)==0&&o.powertrain){const auto split=field.rfind(':');if(split==std::string::npos||split<=16||field.substr(split+1)!="connection")return false;const auto name=field.substr(16,split-16);for(auto& link:o.powertrain->links)if(link.name==name){link.connection.owner=id;return true;}return false;}if(field.rfind("powertrain:",0)==0&&o.powertrain){const auto split=field.rfind(':');if(split==std::string::npos||split<=11)return false;const auto name=field.substr(11,split-11);for(auto& shaft:o.powertrain->shafts)if(shaft.name==name){if(field.substr(split+1)=="target")shaft.target=id;else if(field.substr(split+1)=="bearing")shaft.bearing=id;else return false;return true;}return false;}if(field=="wheel.chassis"&&o.wheel){o.wheel->chassis=id;return true;}if(field=="socket"&&o.socket){o.socket->target=id;return true;}if(field=="parent"){o.parent=id;return true;}if(field=="textureCamera"&&o.render){o.render->textureCamera=id;return true;}if(field=="bodyA"&&o.joint){o.joint->bodyA=id;return true;}if(field=="bodyB"&&o.joint){o.joint->bodyB=id;return true;}if(field=="source"&&o.liquidConnection){o.liquidConnection->source=id;return true;}if(field=="destination"&&o.liquidConnection){o.liquidConnection->destination=id;return true;}return false;}
 bool connectionTarget(const SceneObject& object,const std::string& field,const SceneObject* material,std::string& error){
+    if(field=="terrainPlanet"&&(!material||!material->planet)){error="terrainPlanet reference requires a planetary owner";return false;}
+
     if(field.rfind("powertrain-link:",0)!=0)return true;
     if(!material||!material->deformable){error="qualified powertrain connection needs a material owner";return false;}
     const auto split=field.rfind(':');const auto name=field.substr(16,split-16);
@@ -211,6 +213,7 @@ struct WorldStreaming::Impl {
             if(here&&world.RuntimeTerrainBusy(o.id))add("runtime terrain publication pending");
             if(here&&world.HasPendingParticleImpacts(o.id))add("reliable particle observations/captured step pending");
             if(world.AdvancedFluidsEnabled()&&here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");
+            if(!here&&o.landscape&&o.landscape->planet&&Owner(o.landscape->planet)==id)add("external geographic terrain patch");
             if(!here&&o.parent&&Owner(o.parent)==id)add("external hierarchy parent");
             if(!here&&o.gravitySelection&&o.gravitySelection->source&&Owner(o.gravitySelection->source)==id)add("external selected gravity field");
             if(!here&&o.socket&&Owner(o.socket->target)==id)add("external visual socket");
@@ -351,8 +354,8 @@ void WorldStreaming::Advance(bool paused){
             unit([&]{JUDAS_PROFILE_SCOPE("Streaming relocation begin");r.local=std::move(r.product->data.source);
                 for(const auto& [local,snapshot]:r.saved)if(!snapshot.destroyed&&!r.local.Find(local)){
                     auto object=snapshot.definition;object.id=local;object.parent=0;
-                    object.transform.position=glm::inverse(def.rotation)*glm::vec3(glm::dvec3(snapshot.state.position)-(def.origin-snapshot.origin));
-                    object.transform.rotation=glm::inverse(def.rotation)*snapshot.state.rotation;
+                    object.transform.position=object.planet?glm::vec3(0):glm::inverse(def.rotation)*glm::vec3(glm::dvec3(snapshot.state.position)-(def.origin-snapshot.origin));
+                    object.transform.rotation=object.planet?snapshot.state.rotation:glm::inverse(def.rotation)*snapshot.state.rotation;
                     r.local.Objects().push_back(std::move(object));
                 }
                 r.relocationPhase=1;s.state="installing";s.error.clear();},r,"Streaming relocation begin");
@@ -364,7 +367,7 @@ void WorldStreaming::Advance(bool paused){
         if(s.state=="installing"&&!paused&&r.relocationPhase==2){
             while(budget()&&r.relocationNext<r.local.Objects().size()){
                 bool ok=true;unit([&]{JUDAS_PROFILE_SCOPE("Streaming object relocation");auto& o=r.local.Objects()[r.relocationNext];auto source=o.id;remap(o,r.mapping);r.localIndices[o.id]=r.relocationNext;
-                    if(!o.parent){o.transform.position=glm::vec3(def.origin-m->world.Settings().worldOrigin)+def.rotation*o.transform.position;o.transform.rotation=glm::normalize(def.rotation*o.transform.rotation);}
+                    if(!o.parent&&!o.planet){o.transform.position=glm::vec3(def.origin-m->world.Settings().worldOrigin)+def.rotation*o.transform.position;o.transform.rotation=glm::normalize(def.rotation*o.transform.rotation);}
                     if(o.body){o.body->initialLinearVelocity=def.rotation*o.body->initialLinearVelocity;o.body->initialAngularVelocity=def.rotation*o.body->initialAngularVelocity;}
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==source){auto target=Resolve(ref.target,ref.targetLocal);if((!target&&ref.hard)||!reference(o,ref.field,target)){ok=false;s.error="unresolved/invalid qualified reference";}
                         if(ok&&!connectionTarget(o,ref.field,m->world.RuntimeDefinition(target),s.error))ok=false;
@@ -402,7 +405,7 @@ void WorldStreaming::Advance(bool paused){
                     auto o=r.flat.Objects()[r.next];auto local=r.local.Objects()[r.localIndices.at(o.id)];auto original=r.originals.at(o.id);
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()&&snap->second.destroyed)return;
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()){
-                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)-(m->world.Settings().worldOrigin-snap->second.origin));saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
+                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=saved.planet?glm::vec3(0):glm::vec3(glm::dvec3(snap->second.state.position)-(m->world.Settings().worldOrigin-snap->second.origin));saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
                     }
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==original)reference(o,ref.field,Resolve(ref.target,ref.targetLocal));
                     auto prepared=r.product->data.terrains.find(original);
@@ -433,7 +436,12 @@ void WorldStreaming::Advance(bool paused){
                         for(auto& attachment:deform->settings.attachments)if(auto it=r.savedReplacements.find(attachment.target);it!=r.savedReplacements.end())attachment.target=it->second;
                         for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==source&&ref.field.rfind("deformable:",0)==0)for(auto& attachment:deform->settings.attachments)if(attachment.group==ref.field.substr(11))attachment.target=Resolve(ref.target,ref.targetLocal);
                     }
-                    auto restored=snap.state;restored.position=glm::vec3(glm::dvec3(restored.position)-(m->world.Settings().worldOrigin-snap.origin));auto t=snap.definition.transform;t.position=restored.position;t.rotation=snap.state.rotation;
+                    auto restored=snap.state;
+                    // Absolute planetary descriptors do not live in the shifted
+                    // simulation frame. Their entity pose remains identity on
+                    // restore, just as during initial regional registration.
+                    if(!snap.definition.planet)restored.position=glm::vec3(glm::dvec3(restored.position)-(m->world.Settings().worldOrigin-snap.origin));
+                    auto t=snap.definition.transform;t.position=restored.position;t.rotation=snap.state.rotation;
                     auto records=snap.scripts;for(auto& js:records)js.entity=runtime;
                     if(!snap.particleImpacts.empty()&&!m->world.RestoreParticleImpacts(runtime,snap.particleImpacts,error)){ok=false;return;}
                     ok=m->world.RestoreRegionObject(runtime,t,restored,records,error,m->restoredRecords);
@@ -535,7 +543,7 @@ void WorldStreaming::ShiftOrigin(glm::dvec3 delta) {
  // Snapshot positions retain their capture origin; source recipes/region absolute
  // placement and immutable worker data are never translated in place.
  for(auto& [_,r]:m->regions)if(r.status.state=="active"){
-  for(auto& o:r.flat.Objects()){TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
-  for(auto& o:r.local.Objects()){if(!o.parent)TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
+  for(auto& o:r.flat.Objects()){if(!o.planet)TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
+  for(auto& o:r.local.Objects()){if(!o.parent&&!o.planet)TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
  }
 }

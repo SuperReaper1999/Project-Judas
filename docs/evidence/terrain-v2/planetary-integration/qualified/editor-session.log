@@ -1,0 +1,17 @@
+[Graphics] created OpenGL 4.6 Core request (auto policy)
+[Graphics] API=OpenGL 4.6 requested=auto selected=modern vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+[Graphics] supported UBO=1 compute=1 SSBO=1 DSA=1 bufferStorage=1 textureViews=1 MDI=1
+[Graphics] limits texture=16384 texture3D=2048 arrayLayers=2048 fragmentUnits=32 uniformBindings=84 uniformBlockBytes=65536 storageBindings=96 storageBlockBytes=2147483647 computeInvocations=1536 computeSharedBytes=49152
+Shadow maps: on
+Graphics: 4.6.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] shared authoring batch + undo PASS: 
+[editor autotest] duplicate created id 100: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/terrain-v2-planet-editor-observation.edit.png
+[editor autotest] edit frame: 0 draw calls, 0 triangles, 0 debug lines
+[editor autotest] wrote: /tmp/terrain-v2-planet-editor-observation.play.png
+[editor autotest] play frame: 1 steps, step 0.429 ms, 72 bodies, 0 contacts, 186 draw calls, 94720 triangles, 1 shadow passes, 0 lights, 254 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 5 textures, 0 terrain meshes, hits 2603, misses 7, failed 0, uploads 6, resident 12599884 bytes
+[editor autotest] jobs: 11 workers, 8 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

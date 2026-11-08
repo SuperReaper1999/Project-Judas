@@ -70,6 +70,8 @@ bool PrepareGeometry(Preparation &work, const std::vector<ChunkKey> &keys,
 size_t SourcePayloadBytes(const Source &source, const HeightLod *lod) {
     size_t bytes = sizeof(source) + source.heights.size() * sizeof(float) +
                    source.weights.size() * sizeof(glm::vec4) + source.edits.size() * sizeof(Edit);
+    if (source.chart)
+        bytes += source.chart->rim.size() * sizeof(float) + source.chart->surfaceFingerprint.size();
     if (lod)
         bytes += lod->Bytes();
     return bytes;

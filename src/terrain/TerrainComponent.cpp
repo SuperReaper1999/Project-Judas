@@ -3,6 +3,7 @@
 #include "RuntimeWorld.h"
 #include "SceneFingerprint.h"
 #include "TerrainAsset.h"
+#include "TerrainPlanetBinding.h"
 
 namespace TerrainV2 {
 bool ValidateOwnerPlacement(const SceneObject &o, std::string &error) {
@@ -41,6 +42,11 @@ bool ValidateOwner(const SceneObject &o, const AssetDatabase *assets, std::strin
     AssetPages pages;
     if (!pages.Open(asset->path, error))
         return false;
+    if (bool(pages.Index().metadata.chart) != bool(o.landscape->planet)) {
+        error =
+            "projected terrain requires terrain.planet; ordinary landscapes must leave it unset";
+        return false;
+    }
     for (const auto &id : pages.Index().metadata.layerTextures)
         if (!id.empty()) {
             const auto *texture = assets->Find(id);
@@ -65,6 +71,8 @@ bool SourceFingerprint(const Scene &scene, const AssetDatabase *assets, std::str
             bytes += o.landscape->asset + pages.Index().fingerprint;
             any = true;
         }
+    if (!ValidatePlanetTerrains(scene, assets, error))
+        return false;
     result = any ? SceneFingerprintSha256(bytes) : std::string{};
     error.clear();
     return true;

@@ -85,6 +85,32 @@ std::string EncodePreviewTga(const TextureData &t) {
 bool BuildPreviewMesh(const Source &source, MeshData &output, std::string &error) {
     if (!Validate(source, error))
         return false;
+    if (source.chart) {
+        std::vector<ChunkKey> keys;
+        for (unsigned z = 0; z < source.ChunksZ(); ++z)
+            for (unsigned x = 0; x < source.ChunksX(); ++x)
+                keys.push_back({x, z});
+        std::vector<Chunk> chunks;
+        if (!BuildChunks(source, keys, chunks, error, {}, 1048576))
+            return false;
+        MeshData mesh;
+        for (const auto &chunk : chunks) {
+            const auto offset = unsigned(mesh.vertices.size());
+            for (auto vertex : chunk.mesh.vertices) {
+                vertex.position += chunk.anchor;
+                vertex.uv = vertex.uv1;
+                mesh.vertices.push_back(vertex);
+            }
+            for (auto index : chunk.mesh.indices)
+                mesh.indices.push_back(offset + index);
+        }
+        if (!mesh.indices.empty())
+            mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1,
+                                         "planet terrain preview");
+        output = std::move(mesh);
+        error.clear();
+        return true;
+    }
     std::set<ChunkKey> volume;
     for (const auto &edit : source.edits)
         for (auto key : Affected(source, edit))

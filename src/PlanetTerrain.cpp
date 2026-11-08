@@ -34,6 +34,13 @@ bool ValidatePlanetSettings(const PlanetSettings& s,std::string& error){try{
  for(const auto& p:s.patches){require(finite(p.direction)&&glm::length(p.direction)>1e-12&&std::isfinite(p.extent)&&p.extent>0&&p.extent<s.radius&&p.resolution>=2&&p.resolution<=257&&p.heights.size()==size_t(p.resolution)*p.resolution,"invalid planetary height patch");samples+=p.heights.size();for(double v:p.heights)require(std::isfinite(v),"nonfinite planetary height sample");bound+=patchMax(p);}
  require(samples<=262144&&bound<s.radius*.25,"planet sample/height bound exceeded");error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}}
+unsigned PlanetCollisionLevel(const PlanetSettings& settings){
+ unsigned level=0;
+ while(level<26&&settings.radius*2/std::ldexp(32.,int(level))>settings.collisionSpacing)++level;
+ if(settings.radius*2/std::ldexp(32.,int(level))>settings.collisionSpacing*(1+1e-12))
+  throw std::runtime_error("planet collision depth cannot meet authored spacing");
+ return level;
+}
 std::string EncodePlanetSettings(const PlanetSettings& s){J j={{"version",1},{"radius",s.radius},{"center",array(s.center)},{"rotation",{s.rotation.w,s.rotation.x,s.rotation.y,s.rotation.z}},{"segments",s.segments},{"maxLevel",s.maxLevel},{"maxTiles",s.maxTiles},{"maxResident",s.maxResident},{"buildsPerFrame",s.buildsPerFrame},{"pixelError",s.pixelError},{"morphSeconds",s.morphSeconds},{"collisionSpacing",s.collisionSpacing},{"collisionRadius",s.collisionRadius},{"maxCollisionTiles",s.maxCollisionTiles},{"bands",J::array()},{"patches",J::array()}};
  for(auto& b:s.bands)j["bands"].push_back({{"amplitude",b.amplitude},{"wave",array(b.wave)}});
  for(auto& p:s.patches)j["patches"].push_back({{"direction",array(p.direction)},{"extent",p.extent},{"resolution",p.resolution},{"heights",p.heights}});

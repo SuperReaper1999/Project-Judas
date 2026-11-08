@@ -1,8 +1,10 @@
 #pragma once
 
 #include "MeshData.h"
+#include "TerrainPlanetChart.h"
 #include <array>
 #include <functional>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -18,6 +20,9 @@ struct Edit {
 };
 struct Source {
     unsigned version = 2;
+    // Version3 sources own a bounded planetary coordinate mapping. Ordinary
+    // version2 samples and their native encoding remain unchanged.
+    std::optional<PlanetChart> chart;
     unsigned samplesX = 129, samplesZ = 129, chunkCells = 16;
     float spacing = .5f, bottom = -4096, top = 4096;
     std::vector<float> heights;
@@ -46,6 +51,11 @@ Source Create(unsigned samplesX, unsigned samplesZ, float spacing, unsigned chun
 bool Validate(const Source &, std::string &);
 float Height(const Source &, float x, float z);
 float Density(const Source &, glm::vec3 point);
+// Physical-radius volume brushes on a chart, with conservative broadphase reach.
+// Ordinary extraction retains its existing binary64 brush calculation.
+double EditDistance(const Source &, glm::vec3, const Edit &);
+double BrushReach(const Source &, double radius);
+bool SourcePoint(const Source &, glm::vec3 localPoint, glm::vec3 &, std::string &);
 glm::vec4 Weights(const Source &, float x, float z);
 std::vector<ChunkKey> Affected(const Source &, const Edit &);
 bool Touches(const Source &, ChunkKey, const Edit &);

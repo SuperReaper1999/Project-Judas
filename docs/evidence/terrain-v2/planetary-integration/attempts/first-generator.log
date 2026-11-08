@@ -1,0 +1,13 @@
+created geographic terrain source "/home/conner/Documents/GitHub/Project-Judas/projects/terrain_v2_planet_workshop/Authoring/highlands.judasterrain2" span_m=61.6897; use terrain.planet and the derived geographic placement, not a flat mesh overlay
+terrain preview missing material texture: 8a220000000000000000000000000009
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/create_terrain_v2_planet_workshop.py", line 136, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/create_terrain_v2_planet_workshop.py", line 67, in main
+    subprocess.run([str(tool), "v2-native", str(source_path), str(model)], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author', 'v2-native', '/home/conner/Documents/GitHub/Project-Judas/projects/terrain_v2_planet_workshop/Authoring/highlands.judasterrain2', '/home/conner/Documents/GitHub/Project-Judas/projects/terrain_v2_planet_workshop/Assets/terrain/highlands.judasmodel']' returned non-zero exit status 1.

@@ -20,6 +20,8 @@ class TerrainV2Creation {
         std::string name, path, meshId, terrainId, previewId, error;
         float width = 0, depth = 0, halfHeight = 0;
         std::optional<SceneObject> replacedGround;
+        std::optional<SceneObject> planetSource;
+        std::optional<TerrainV2::PlanetChart> chart;
     };
     std::shared_ptr<Work> work;
     EditorFileBrowser browser;
@@ -27,6 +29,8 @@ class TerrainV2Creation {
     bool replaceGround = false;
     char name[96] = "Landscape", heightmap[1024] = "";
     int preset = 0, resolution = 1, seed = 7;
+    int landscapeType = 0, planetResolution = 2;
+    SceneObjectId planetId = 0;
     float spacing = 1, base = 0, height = 32;
     std::string error, createdPath;
     void Start(const EditorDocument &, const EditorPanelState &);

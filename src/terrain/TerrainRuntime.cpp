@@ -19,6 +19,8 @@ double Milliseconds(Clock::time_point start) {
 } // namespace
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
 Runtime::~Runtime() {
+    if (boundPlanet)
+        world.UnbindPlanetTerrain(owner, boundPlanet);
     if (navigation)
         world.Navigation().RemoveSurface(owner);
     ReleaseGraphics();
@@ -63,6 +65,15 @@ void Runtime::Synchronize() {
     const auto *d = Definition();
     if (!d || !d->body)
         return;
+    if (source->chart && (!boundPlanet || bindingPublished != world.IsPublished(owner))) {
+        std::string error;
+        if (!world.BindPlanetTerrain(owner, *source, error)) {
+            status.error = error;
+            return;
+        }
+        boundPlanet = d->landscape->planet;
+        bindingPublished = world.IsPublished(owner);
+    }
     if (navigation) {
         world.Navigation().SetSurfaceTransform(owner, d->transform);
         if (world.IsPublished(owner)) {
@@ -195,6 +206,8 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
     return true;
 }
 bool Runtime::ValidateSubmission(const Source &value, std::string &error) const {
+    if (!world.ValidatePlanetTerrain(owner, value, error))
+        return false;
     // The same resident budget applies to creation, restoration and edits.
     // A valid file is not permission to bypass the current runtime budget.
     if (size_t(value.ChunksX()) * value.ChunksZ() > 1024) {
@@ -296,7 +309,9 @@ bool Runtime::Brush(glm::vec3 point, const Edit &brush, std::string &error) {
     }
     auto next = std::make_shared<Source>(*source);
     auto edit = brush;
-    edit.point = glm::inverse(d->transform.rotation) * (point - d->transform.position);
+    if (!SourcePoint(*source, glm::inverse(d->transform.rotation) * (point - d->transform.position),
+                     edit.point, error))
+        return false;
     next->edits.push_back(edit);
     if (!Validate(*next, error))
         return false;
@@ -349,6 +364,17 @@ bool Runtime::Publish(std::string &error) {
                 physics.SetBodyTags(body, world.TagsOf(owner));
             }
             staged.push_back(body);
+        }
+        const auto parent = d->landscape ? d->landscape->planet : 0;
+        if (pending->source->chart &&
+            (boundPlanet != parent || !source || source->chart != pending->source->chart ||
+             bindingPublished != world.IsPublished(owner))) {
+            if (!world.BindPlanetTerrain(owner, *pending->source, error))
+                throw std::runtime_error(error);
+            if (boundPlanet && boundPlanet != parent)
+                world.UnbindPlanetTerrain(owner, boundPlanet);
+            boundPlanet = parent;
+            bindingPublished = world.IsPublished(owner);
         }
     } catch (const std::exception &e) {
         if (navigationChanged)

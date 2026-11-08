@@ -10,10 +10,18 @@ namespace {
 struct Field {
     const Source &source;
     std::vector<const Edit *> edits;
+    std::vector<glm::dvec3> physicalCenters;
     double operator()(glm::vec3 p) const {
         double d = double(p.y) - double(Height(source, p.x, p.z));
-        for (const auto *e : edits) {
-            double sphere = glm::length(glm::dvec3(p) - glm::dvec3(e->point)) - double(e->radius);
+        if (source.chart) {
+            const auto physical = source.chart->LocalPoint(p);
+            for (size_t i = 0; i < edits.size(); ++i) {
+                const auto *e = edits[i];
+                const double sphere = glm::length(physical - physicalCenters[i]) - e->radius;
+                d = e->kind == Edit::Kind::Remove ? std::max(d, -sphere) : std::min(d, sphere);
+            }
+        } else for (const auto *e : edits) {
+            const double sphere = glm::length(glm::dvec3(p) - glm::dvec3(e->point)) - double(e->radius);
             d = e->kind == Edit::Kind::Remove ? std::max(d, -sphere) : std::min(d, sphere);
         }
         return d;
@@ -51,7 +59,7 @@ static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::
         if (key.x >= input.ChunksX() || key.z >= input.ChunksZ())
             throw std::invalid_argument("terrain chunk outside source");
         const Source &s = input;
-        Field field{input, {}};
+        Field field{input, {}, {}};
         const unsigned n = s.chunkCells;
         const float width = n * s.spacing;
         const glm::vec3 anchor(key.x * width - (s.samplesX - 1) * s.spacing * .5f, 0,
@@ -60,6 +68,9 @@ static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::
             if (Touches(input, key, e))
                 field.edits.push_back(&e);
         }
+        if (s.chart)
+            for (const auto *edit : field.edits)
+                field.physicalCenters.push_back(s.chart->LocalPoint(edit->point));
         Chunk chunk;
         chunk.key = key;
         chunk.anchor = anchor;
@@ -254,6 +265,8 @@ static bool ExtractChunk(const Source &input, ChunkKey key, Chunk &output, std::
         }
         if (chunk.volumetric)
             ConformChunkTopology(mesh, s.spacing);
+        if (s.chart && !ProjectPlanetChunk(*s.chart, chunk, error))
+            return false;
         if (!mesh.indices.empty())
             mesh.primitives.emplace_back(0, unsigned(mesh.indices.size()), -1, "terrain");
         output = std::move(chunk);

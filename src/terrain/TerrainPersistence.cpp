@@ -11,7 +11,7 @@ namespace TerrainV2 {
 namespace {
 bool SameLayout(const Source &a, const Source &b) {
     return a.samplesX == b.samplesX && a.samplesZ == b.samplesZ && a.chunkCells == b.chunkCells &&
-           a.spacing == b.spacing && a.bottom == b.bottom && a.top == b.top;
+           a.spacing == b.spacing && a.bottom == b.bottom && a.top == b.top && a.chart == b.chart;
 }
 bool ReferenceSamples(AssetPages &pages, const Source *cached, const RasterChanges &oldChanges,
                       const RasterChanges &changes, Source &base, std::string &error) {

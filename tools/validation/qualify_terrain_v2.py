@@ -15,6 +15,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--planet', action='store_true',
+                        help='Exercise the geographic Workshop with the same gameplay gates.')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[2]
     build = args.build.resolve()
@@ -39,7 +41,8 @@ def main():
         record['build'] = json.loads(subprocess.check_output(
             [str(build / 'judas'), '--build-info-json'], text=True))
         project = out / 'editable'
-        shutil.copytree(repo / 'projects/terrain_v2_workshop', project,
+        project_name = 'terrain_v2_planet_workshop' if args.planet else 'terrain_v2_workshop'
+        shutil.copytree(repo / 'projects' / project_name, project,
                         ignore=shutil.ignore_patterns('Saves', '*.lock'))
         run('native-cook', [build / 'judas_terrain_author', 'v2-native',
                            project / 'Authoring/highlands.judasterrain2',
@@ -52,7 +55,7 @@ def main():
                               ('model', 'highlands.judasmodel'), ('preview', 'highlands.preview.tga')]:
             if hashlib.sha256((products / filename).read_bytes()).hexdigest() != receipt[key]:
                 raise RuntimeError(f'Cooked {key} product does not match its receipt.')
-        run('export', [build / 'judas_export', project / 'terrain_v2_workshop.judasproj',
+        run('export', [build / 'judas_export', project / (project_name + '.judasproj'),
                        out / 'original-package', build / 'judas'], repo)
         package = out / 'relocated game'
         (out / 'original-package').rename(package)
