@@ -26,6 +26,13 @@ paged separately. Removing a visual patch never removes its physical support.
   triangles and stitching. Different LODs share material pages. All cameras use
   the same bounded resource cache; their existing LOD histories remain separate.
 
+Publication invalidates only affected GPU pages. Excavation replaces its unique
+meshes while retaining unchanged height/material images and unrelated cave
+uploads. Sample changes are compared on the worker and invalidate their inclusive
+rectangle plus the normal/stitching dependency halo. Replacement bases/layouts
+still clear the old cache. This prevents repeated whole-landscape uploads during
+an ordinary queue of local edits; it does not skip physical publication.
+
 Characters, wheels, dynamic/sleeping bodies, global casts, navigation and particle
 snapshots obtain actual collision geometry. Fluid occupancy continues to use the
 immutable terrain source, including excavation air. Neither path depends on a

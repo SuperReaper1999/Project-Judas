@@ -183,10 +183,11 @@ void SetSamples(Source &source, const RasterChanges &changes) {
             source.weights.at(index) = value.weights;
         }
 }
-std::vector<uint32_t> ChangedHeights(const Source &a, const Source &b) {
-    std::vector<uint32_t> changed;
+namespace {
+template <class Changed>
+void VisitSampleDifferences(const Source &a, const Source &b, bool materials, Changed changed) {
     if (a.storage && a.storage == b.storage)
-        return changed;
+        return;
     if (a.storage && b.storage && a.storage->BaseFingerprint() == b.storage->BaseFingerprint()) {
         const auto &left = a.storage->Changes(), &right = b.storage->Changes();
         auto i = left.begin(), j = right.begin();
@@ -198,8 +199,10 @@ std::vector<uint32_t> ChangedHeights(const Source &a, const Source &b) {
                        hasRight = j != right.end() && j->first == index;
             const float x = hasLeft ? i->second.height : HeightSample(a, index),
                         y = hasRight ? j->second.height : HeightSample(b, index);
-            if (x != y)
-                changed.push_back(index);
+            if (x != y ||
+                (materials && (hasLeft ? i->second.weights : WeightSample(a, index)) !=
+                                  (hasRight ? j->second.weights : WeightSample(b, index))))
+                changed(index);
             if (hasLeft)
                 ++i;
             if (hasRight)
@@ -207,10 +210,31 @@ std::vector<uint32_t> ChangedHeights(const Source &a, const Source &b) {
         }
     } else {
         for (size_t i = 0; i < SampleCount(a); ++i)
-            if (HeightSample(a, i) != HeightSample(b, i))
-                changed.push_back(uint32_t(i));
+            if (HeightSample(a, i) != HeightSample(b, i) ||
+                (materials && WeightSample(a, i) != WeightSample(b, i)))
+                changed(uint32_t(i));
     }
+}
+} // namespace
+std::vector<uint32_t> ChangedHeights(const Source &a, const Source &b) {
+    std::vector<uint32_t> changed;
+    VisitSampleDifferences(a, b, false, [&](uint32_t index) { changed.push_back(index); });
     return changed;
+}
+std::optional<glm::uvec4> ChangedSampleBounds(const Source &a, const Source &b) {
+    std::optional<glm::uvec4> bounds;
+    VisitSampleDifferences(a, b, true, [&](uint32_t index) {
+        const unsigned x = index % a.samplesX, z = index / a.samplesX;
+        if (!bounds)
+            bounds = glm::uvec4(x, z, x, z);
+        else {
+            (*bounds)[0] = std::min((*bounds)[0], x);
+            (*bounds)[1] = std::min((*bounds)[1], z);
+            (*bounds)[2] = std::max((*bounds)[2], x);
+            (*bounds)[3] = std::max((*bounds)[3], z);
+        }
+    });
+    return bounds;
 }
 bool SameHeights(const Source &a, const Source &b) {
     if (SampleCount(a) != SampleCount(b))

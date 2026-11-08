@@ -32,5 +32,8 @@ float HeightSample(const Source &, size_t index);
 glm::vec4 WeightSample(const Source &, size_t index);
 void SetSamples(Source &, const RasterChanges &);
 std::vector<uint32_t> ChangedHeights(const Source &, const Source &);
+// Inclusive native-sample rectangle, including material-only changes. Compute
+// on the preparation worker; unchanged immutable backing visits no source pages.
+std::optional<glm::uvec4> ChangedSampleBounds(const Source &, const Source &);
 bool SameHeights(const Source &, const Source &);
 } // namespace TerrainV2

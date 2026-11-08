@@ -49,6 +49,10 @@ class RenderPages {
     const GpuTerrainPage &Acquire(Renderer &, const Source &, const RenderPageKey &,
                                   const std::function<std::shared_ptr<const Chunk>()> &mesh = {});
     void Clear(Renderer &);
+    // Preserve unaffected images/meshes across publication. Sample bounds are
+    // inclusive; stitched heights and central-difference normals include a halo.
+    void Invalidate(Renderer &, const Source &, std::optional<glm::uvec4> samples,
+                    const std::vector<ChunkKey> &meshes);
     CacheStatistics Statistics() const {
         auto s = stats;
         s.entries = pages.size();

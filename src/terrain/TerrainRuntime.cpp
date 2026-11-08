@@ -203,14 +203,26 @@ bool Runtime::Submit(std::shared_ptr<const Source> value, std::vector<ChunkKey> 
         }
     }
     const auto pendingCount = keys.size();
+    work->preservePresentation =
+        source && !replaceAll && source->samplesX == work->source->samplesX &&
+        source->samplesZ == work->source->samplesZ && source->spacing == work->source->spacing &&
+        source->chunkCells == work->source->chunkCells && source->chart == work->source->chart;
+    auto previous = source;
     auto handle = resources->Jobs()->Submit(
-        [work, keys = std::move(keys), nav = std::move(nav)](JobContext &context) mutable {
+        [work, previous, keys = std::move(keys),
+         nav = std::move(nav)](JobContext &context) mutable {
             if (!PrepareGeometry(*work, keys, [&] { return context.CancelRequested(); })) {
                 if (context.CancelRequested())
                     context.ReportCancelled();
                 else
                     context.SetError(work->error);
                 return;
+            }
+            if (work->preservePresentation) {
+                const auto start = Clock::now();
+                work->changedSamples = ChangedSampleBounds(*previous, *work->source);
+                work->changedMeshes = keys;
+                work->milliseconds += Milliseconds(start);
             }
             if (nav) {
                 const auto start = Clock::now();

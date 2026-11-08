@@ -152,6 +152,32 @@ void RenderPages::Clear(Renderer &renderer) {
     pages.clear();
     stats.bytes = 0;
 }
+void RenderPages::Invalidate(Renderer &renderer, const Source &source,
+                             std::optional<glm::uvec4> samples,
+                             const std::vector<ChunkKey> &meshes) {
+    renderer.EndMeshBatch();
+    for (auto it = pages.begin(); it != pages.end();) {
+        const auto &key = it->first;
+        bool changed = !key.grid && std::find(meshes.begin(), meshes.end(),
+                                              ChunkKey{key.patch.x, key.patch.z}) != meshes.end();
+        if (samples) {
+            const auto rect = Region(source, key);
+            const auto halo =
+                unsigned(std::max({1.f, key.edges.x, key.edges.y, key.edges.z, key.edges.w}));
+            changed |= uint64_t((*samples)[2]) + halo >= rect[0] &&
+                       uint64_t((*samples)[3]) + halo >= rect[1] &&
+                       (*samples)[0] <= uint64_t(rect[0]) + rect[2] + halo &&
+                       (*samples)[1] <= uint64_t(rect[1]) + rect[3] + halo;
+        }
+        if (!changed) {
+            ++it;
+            continue;
+        }
+        stats.bytes -= it->second.bytes;
+        Release(renderer, it->second);
+        it = pages.erase(it);
+    }
+}
 const GpuTerrainPage &
 RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageKey &key,
                      const std::function<std::shared_ptr<const Chunk>()> &mesh) {

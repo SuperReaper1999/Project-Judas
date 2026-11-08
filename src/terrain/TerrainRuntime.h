@@ -50,6 +50,9 @@ class Runtime {
         bool replaceAll = false;
         std::string baseAsset, baseFingerprint;
         RasterChanges raster;
+        bool preservePresentation = false;
+        std::optional<glm::uvec4> changedSamples;
+        std::vector<ChunkKey> changedMeshes;
     };
     struct Resident {
         PreparedChunk geometry;

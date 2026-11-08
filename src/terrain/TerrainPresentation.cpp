@@ -13,8 +13,13 @@ void Runtime::ReleaseGraphics() {
 }
 void Runtime::CommitPresentation() {
     auto *renderer = world.Resources() ? world.Resources()->GetRenderer() : nullptr;
-    if (renderer)
-        renderPages.Clear(*renderer);
+    if (renderer) {
+        if (pending->preservePresentation)
+            renderPages.Invalidate(*renderer, *pending->source, pending->changedSamples,
+                                   pending->changedMeshes);
+        else
+            renderPages.Clear(*renderer);
+    }
     drawPatches.Reset();
 }
 void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds) {

@@ -113,6 +113,21 @@ int main() {
               "chunk recipe retains only local edits, sharing bounded base pages");
         Check(paged.storage->Base()->Read(42).height == dense.heights[42],
               "base snapshot removes overrides without copying all samples");
+        Check(ChangedSampleBounds(old, paged) == glm::uvec4(42, 0, 512, 512),
+              "sparse publication finds the inclusive changed sample rectangle");
+        Check(!ChangedSampleBounds(paged, paged),
+              "unchanged backing does not invalidate any render samples");
+        Source paint = old;
+        SetSamples(paint, {{42, {HeightSample(old, 42), {0, 0, 1, 0}}}});
+        Check(ChangedHeights(old, paint).empty() &&
+                  ChangedSampleBounds(old, paint) == glm::uvec4(42, 0, 42, 0),
+              "material-only edits invalidate images without changing physical heights");
+        Check(ChangedSampleBounds(paint, old) == glm::uvec4(42, 0, 42, 0),
+              "restoring a removed sparse override also invalidates its image");
+        Source densePaint = dense;
+        densePaint.weights[42] = {0, 0, 1, 0};
+        Check(ChangedSampleBounds(dense, densePaint) == glm::uvec4(42, 0, 42, 0),
+              "dense authoring and paged material bounds agree");
         std::vector<uint8_t> original, encoded;
         Check(EncodeAsset(dense, original, error) && EncodeAsset(old, encoded, error) &&
                   original == encoded,

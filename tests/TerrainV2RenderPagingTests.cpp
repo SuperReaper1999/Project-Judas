@@ -1,4 +1,5 @@
 #include "EngineHost.h"
+#include "terrain/TerrainMesher.h"
 #include "terrain/TerrainRenderPages.h"
 #include "terrain/TerrainSamples.h"
 #include <glm/gtc/matrix_transform.hpp>
@@ -126,6 +127,46 @@ int main() {
         pages.Clear(renderer);
         check(pages.Statistics().bytes == 0 && pages.Statistics().entries == 0,
               "release every cached GPU resource");
+        {
+            TerrainV2::RenderPages live;
+            const TerrainV2::RenderPageKey near{{0, 0, 0}, glm::vec4(1), true},
+                far{{3, 3, 0}, glm::vec4(1), true}, cave{{1, 1, 0}, glm::vec4(1), false},
+                otherCave{{3, 2, 0}, glm::vec4(1), false};
+            auto geometry = std::make_shared<TerrainV2::Chunk>();
+            check(TerrainV2::ExtractValidatedChunk(source, {1, 1}, *geometry, error),
+                  "prepare real native geometry for publication control");
+            auto mesh = [&] { return geometry; };
+            const auto nearPage = live.Acquire(renderer, source, near);
+            const auto farPage = live.Acquire(renderer, source, far);
+            const auto cavePage = live.Acquire(renderer, source, cave, mesh);
+            const auto otherPage = live.Acquire(renderer, source, otherCave, mesh);
+            auto misses = live.Statistics().misses;
+            live.Invalidate(renderer, source, {}, {{1, 1}});
+            check(live.Statistics().entries == 3,
+                  "volume edit retires only its affected unique mesh");
+            auto same = [](auto a, auto b) { return a.id == b.id && a.generation == b.generation; };
+            check(same(live.Acquire(renderer, source, near).heights, nearPage.heights) &&
+                      same(live.Acquire(renderer, source, far).weights, farPage.weights) &&
+                      same(live.Acquire(renderer, source, otherCave, mesh).mesh, otherPage.mesh) &&
+                      live.Statistics().misses == misses,
+                  "excavation preserves ordinary images and unrelated cave uploads");
+            geometry->mesh.vertices.front().position.y += .25f;
+            check(!same(live.Acquire(renderer, source, cave, mesh).mesh, cavePage.mesh) &&
+                      live.Statistics().misses == misses + 1,
+                  "changed cave receives an actual replacement mesh");
+            auto edited = source;
+            edited.weights[8 * 65 + 8] = {0, 0, 1, 0};
+            live.Invalidate(renderer, edited, glm::uvec4(8, 8, 8, 8), {});
+            const auto painted = live.Acquire(renderer, edited, near);
+            check(!same(painted.weights, nearPage.weights) &&
+                      same(live.Acquire(renderer, edited, far).weights, farPage.weights),
+                  "paint invalidates its native rectangle, retaining distant material images");
+            live.Invalidate(renderer, edited, glm::uvec4(17, 8, 17, 8), {});
+            check(!same(live.Acquire(renderer, edited, near).heights, painted.heights),
+                  "normal differences across a page border invalidate the neighbour halo");
+            live.Clear(renderer);
+            check(live.Statistics().bytes == 0, "selective invalidation releases every resource");
+        }
         // Flat landscapes can select a coarse HEIGHT grid right beside the
         // camera. Small painted details must retain native material resolution.
         for (unsigned authoredCells : {32u, 9u}) {
