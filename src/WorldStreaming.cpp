@@ -1,4 +1,5 @@
 #include "AdvancedFluidPolicy.h"
+#include "terrain/TerrainPersistence.h"
 #include "PowertrainAuthoring.h"
 #include "modding/ModRuntime.h"
 #include "NamedAuthoring.h"
@@ -506,7 +507,7 @@ void WorldStreaming::Persist(SaveArchive& a,unsigned version){
    if(!a.reading){auto it=r.saved.begin();std::advance(it,j);local=it->first;snapshot=it->second;WriteSceneObjectBlock(snapshot.definition,text);}
    if(version>=7){a(snapshot.origin);a.Require(finite(snapshot.origin)&&glm::all(glm::lessThanEqual(glm::abs(snapshot.origin),glm::dvec3(1e12))),"invalid retained capture origin");}else if(a.reading)snapshot.origin=m->world.Settings().worldOrigin;
    a(local,snapshot.destroyed,text,snapshot.state.position,snapshot.state.rotation,snapshot.state.linearVelocity,snapshot.state.angularVelocity);if(version>=2)a(snapshot.deformable);if(version>=3){a(snapshot.animation);a.Require(snapshot.animation.size()<=1024*1024,"retained animation snapshot bound");}if(version>=4){a(snapshot.kinematic);a.Require(snapshot.kinematic.size()<=1024,"retained kinematic snapshot bound");}if(version>=5){a(snapshot.wheel);a.Require(snapshot.wheel.size()<=1024,"retained wheel snapshot bound");}if(version>=6){a(snapshot.powertrain);a.Require(snapshot.powertrain.size()<=64*1024,"retained powertrain snapshot bound");}if(version>=8){a(snapshot.weather);a.Require(snapshot.weather.size()<=65536,"retained weather snapshot bound");}
-   if(version>=9){a(snapshot.constructed,snapshot.terrain);a.Require(snapshot.terrain.size()<=2*1024*1024,"retained terrain record bound");}
+   if(version>=9){a(snapshot.constructed,snapshot.terrain);a.Require(snapshot.terrain.size()<=TerrainV2::MaximumSnapshotBytes,"retained terrain record bound");}
    if(version>=10){a(snapshot.particleImpacts);a.Require(snapshot.particleImpacts.size()<=8*1024*1024,"retained particle continuation bound");}
    uint32_t scripts=uint32_t(snapshot.scripts.size());a(scripts);a.Require(scripts<=16,"region script count bound");if(a.reading)snapshot.scripts.resize(scripts);for(auto& s:snapshot.scripts)a(s.entity,s.slot,s.json);
    if(a.reading&&!snapshot.destroyed){std::vector<std::string> lines;std::istringstream input(text);std::string line;while(std::getline(input,line))lines.push_back(line);size_t cursor=0;std::string error;a.Require(ParseSceneObjectBlock(lines,cursor,snapshot.definition,error)&&cursor==lines.size(),"invalid retained definition");}

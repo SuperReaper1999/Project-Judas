@@ -171,6 +171,7 @@ bool RuntimeTerrain::Capture(uint64_t id,std::string& out,std::string& error)con
  auto& p=*i->second.committed;SaveArchive archive;auto source=SerializeVolumeTerrain(p.source);bool nav=p.navigated;unsigned profile=p.profile;archive(source,nav,profile);out.assign(archive.bytes.begin(),archive.bytes.end());return true;
 }
 bool RuntimeTerrain::Restore(uint64_t id,const std::string& bytes,std::string& error,bool asynchronous){
+ if(bytes.size()>TerrainV2::MaximumSnapshotBytes){error="terrain snapshot exceeds the 8 MiB continuation budget";return false;}
  if(bytes.empty())return true;
  if(bytes.front()=='{'||TerrainV2::IsAsset(bytes)||TerrainV2::IsReferenceSnapshot(bytes)){
   auto i=records.find(id);

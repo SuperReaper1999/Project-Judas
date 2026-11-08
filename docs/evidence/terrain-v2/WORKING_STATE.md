@@ -82,11 +82,17 @@ changes reject stale patches. All active native collision chunks remain resident
 max1024; mapped planet patches render full detail, surrounding planet retainsLOD.
 This does not implement independent chunk physical interest or demand paging.
 
-NEXT: inspect large procedural-source cold-save budget discrepancy (capture8MiB,
-world/regional restore2MiB) with an actual failing fixture before corrections.
-Then complete remaining approved residency/material/consumer-copy/freshSDK
-qualification, retaining explicit bounded support rather than claiming universal
-planet-wide excavation. Do not replace installed RPG SDK or existing game assets.
+Geographic integration is pushed at f4e8335b392ed8c18aa3410af34b1ba5f68a8e8e.
+The subsequent save-budget correction verifies the mismatch: 5,271,385byte
+runtime source captured but ordinary cold restore rejected by old2MiB cap. One
+shared8MiB policy now matches SaveArchive/capture/direct/world/regional paths;
+30write/18coldread plus component/streaming/legacy58 controls pass. Oversize
+negative preserves exact live ray/body count. Evidence save-budget/. Check live
+Git for its checkpoint state, never assume a document's parent hash is current.
+
+NEXT: consumer-copy/freshSDK qualification and remaining residency/material bounds.
+All active native collision chunks are still resident; no demand-paging claim.
+Do not replace installed RPG SDK or existing game assets.
 
 ## Completed native navigation cache handoff
 

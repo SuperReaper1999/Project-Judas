@@ -112,7 +112,7 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
                 auto changes = raster;
                 archive(changes);
             }
-            if (archive.bytes.size() + 8 > 8 * 1024 * 1024)
+            if (archive.bytes.size() + ReferenceMagic.size() > MaximumSnapshotBytes)
                 throw std::runtime_error("terrain reference exceeds the save string budget");
             bytes =
                 std::string(raster.empty() ? ReferenceMagic : RasterReferenceMagic) + archive.bytes;
@@ -126,7 +126,7 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
     std::vector<uint8_t> encoded;
     if (!EncodeAsset(*source, encoded, error))
         return false;
-    if (encoded.size() > 8 * 1024 * 1024) {
+    if (encoded.size() > MaximumSnapshotBytes) {
         error = "terrain snapshot exceeds the save string budget; split editable terrain into "
                 "streamed regions";
         return false;
@@ -135,6 +135,10 @@ bool Runtime::Capture(std::string &bytes, std::string &error) const {
     return true;
 }
 bool Runtime::Restore(const std::string &bytes, std::string &error, bool asynchronous) {
+    if (bytes.size() > MaximumSnapshotBytes) {
+        error = "terrain snapshot exceeds the 8 MiB continuation budget";
+        return false;
+    }
     if (pending) {
         error = "terrain restore while edit pending";
         return false;

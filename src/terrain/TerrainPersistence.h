@@ -5,6 +5,9 @@
 #include <map>
 #include <string_view>
 namespace TerrainV2 {
+// Continuations share SaveArchive's existing string bound. Capture, direct
+// restoration, world saves and retained regions must agree on this policy.
+inline constexpr size_t MaximumSnapshotBytes = 8 * 1024 * 1024;
 inline constexpr std::string_view ReferenceMagic("JTRREF2\0", 8);
 inline constexpr std::string_view RasterReferenceMagic("JTRREF3\0", 8);
 inline bool IsReferenceSnapshot(std::string_view bytes) {

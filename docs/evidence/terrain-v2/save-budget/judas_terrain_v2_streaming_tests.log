@@ -1,0 +1,6 @@
+{"case":"native-region","visit":0,"load_ms":474.429,"largest_unit_ms":3.12364,"live_accounted_bytes":77006620,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":1,"load_ms":504.476,"largest_unit_ms":3.3327,"live_accounted_bytes":77006620,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":2,"load_ms":508.887,"largest_unit_ms":3.3327,"live_accounted_bytes":77006620,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":3,"load_ms":466.428,"largest_unit_ms":3.37325,"live_accounted_bytes":77006620,"terrain_geometry_estimate_bytes":28390676}
+{"case":"native-region","visit":4,"load_ms":477.273,"largest_unit_ms":3.37325,"live_accounted_bytes":77006620,"terrain_geometry_estimate_bytes":28390676}
+SUMMARY 69 checks 0 failures

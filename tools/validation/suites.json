@@ -9,6 +9,7 @@
     {"name":"terrain-v2-assets","target":"judas_terrain_v2_asset_tests","groups":["terrain","assets"]},
     {"name":"terrain-v2-components","target":"judas_terrain_v2_component_tests","groups":["terrain","lifecycle","persistence"]},
     {"name":"terrain-v2-planet-editor","target":"judas_terrain_v2_planet_editor_tests","groups":["terrain","editor","rendering"],"args":["{output}/terrain-v2-planet-editor"]},
+    {"name":"terrain-v2-persistence-budget","target":"judas_terrain_v2_persistence_budget_tests","groups":["terrain","persistence"]},
     {"name":"terrain-v2-planet-components","target":"judas_terrain_v2_planet_component_tests","groups":["terrain","physics","lifecycle","persistence"]},
     {"name":"terrain-v2-planet-streaming","target":"judas_terrain_v2_planet_streaming_tests","groups":["terrain","streaming","lifecycle","persistence"]},
     {"name":"terrain-v2-surface","target":"judas_terrain_v2_surface_tests","groups":["terrain","physics","persistence","scripting"]},

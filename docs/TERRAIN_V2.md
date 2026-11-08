@@ -483,3 +483,14 @@ as native projected assets. Each active patch retains all collision chunks and
 renders mapped geometry at native detail, while the surrounding planet retains
 its existing view-union LOD. This is not planet-wide volumetric paging or a claim
 that all remaining Terrain V2 work is complete.
+
+## Continuation size policy
+
+Runtime-created native landscapes and asset-reference journals share an8MiB
+continuation limit across capture, direct restoration, whole-world saves and
+inactive regions. A real one-kilometre513x513 runtime source produces a5.27MB
+record and cold-restores through both world and regional paths. The corrected
+reader no longer applies the older2MiB limit to successfully captured native
+state. Source/geometry, resident-chunk, whole-save and regional memory bounds
+still apply. Asset-backed terrain remains preferable for large authored worlds
+because saves retain references and edits rather than duplicating base arrays.
