@@ -1,0 +1,17 @@
+[
+  {
+    "target": "judas_terrain_v2_navigation_reuse_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-navigation-format-judas_terrain_v2_navigation_reuse_tests.log"
+  },
+  {
+    "target": "judas_navigation_raster_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-navigation-format-judas_navigation_raster_tests.log"
+  },
+  {
+    "target": "judas_terrain_v2_navigation_tests",
+    "returncode": 0,
+    "log": "/tmp/terrain-v2-navigation-format-judas_terrain_v2_navigation_tests.log"
+  }
+]

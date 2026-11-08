@@ -1,0 +1,2 @@
+919592c7792bcb144aa44e95050636cad26af96377ff0aead04548abb31045c6  src/NavigationAsset.h
+f0d27a40d84ff4d59b3ea5d29655df1fa561d7bf7cef63f149bfca8d2f9b2872  src/NavigationGeometryBake.cpp
