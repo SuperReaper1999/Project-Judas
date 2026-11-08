@@ -16,24 +16,153 @@ bool descendant(PlanetTileKey k,PlanetTileKey p){return k.face==p.face&&k.level>
 }
 PlanetTiles::PlanetTiles(PlanetSettings settings,PhysicsWorld* physics,unsigned layer,CategoryMask mask,CategoryMask tags):surface(std::move(settings)),m_physics(physics),m_layer(layer),m_mask(mask),m_tags(tags){for(unsigned f=0;f<6;++f)m_leaves.insert({f,0,0,0});IndexLeaves();}
 PlanetTiles::~PlanetTiles(){ClearCollision();if(m_renderer)for(auto& [_,t]:m_tiles)if(t.mesh.IsValid())m_renderer->DestroyMesh(t.mesh);}
-void PlanetTiles::SetTags(CategoryMask tags){m_tags=tags;if(m_physics)for(const auto& [_,c]:m_contacts)m_physics->SetBodyTags(c.body,tags);}
-void PlanetTiles::ClearCollision(){if(m_physics)for(auto& [_,c]:m_contacts)m_physics->DestroyBody(c.body);m_contacts.clear();m_pendingCooks.clear();m_stats.colliders=0;m_stats.collisionReady=false;m_focus.reset();}
-PlanetTiles::Tile& PlanetTiles::Ensure(PlanetTileKey key,double morph){auto it=m_tiles.find(key);if(it!=m_tiles.end())return it->second;Tile t;t.data=BuildPlanetTile(surface,key,surface.settings.segments);t.morph=morph;return m_tiles.emplace(key,std::move(t)).first->second;}
-std::vector<PlanetTileKey> PlanetTiles::Leaves()const{return {m_leaves.begin(),m_leaves.end()};}
-void PlanetTiles::IndexLeaves(){for(auto& range:m_ranges)range.clear();for(auto k:m_leaves)m_ranges[k.face].emplace_back(morton(k),k);for(auto& range:m_ranges)std::sort(range.begin(),range.end(),[](const auto& a,const auto& b){return a.first<b.first;});}
-PlanetTileKey PlanetTiles::LeafAt(V d)const{auto k=PlanetSurface::Locate(d,26);auto code=morton(k);const auto& ranges=m_ranges[k.face];auto it=std::upper_bound(ranges.begin(),ranges.end(),code,[](uint64_t a,const auto& b){return a<b.first;});return std::prev(it)->second;}
-V PlanetTiles::RenderPoint(PlanetTileKey key,unsigned x,unsigned y)const{return m_tiles.at(key).resolved.at(size_t(y)*(surface.settings.segments+1)+x);}
-V PlanetTiles::ResolvePoint(PlanetTileKey key,unsigned x,unsigned y)const{
- const unsigned n=surface.settings.segments;const auto& t=m_tiles.at(key);const auto i=size_t(y)*(n+1)+x;
- if(x&&y&&x<n&&y<n)return glm::mix(t.data.parentPoints[i],t.data.points[i],t.morph);
- // All owners of an edge select the same coarsest incident leaf. Fine edge
- // vertices lie on THAT leaf's actual triangle, including its morph state.
- // This also welds across cube faces; no face-specific neighbour table.
- const double count=double(1u<<key.level);auto model=PlanetSurface::Direction(key.face,2*(key.x+double(x)/n)/count-1,2*(key.y+double(y)/n)/count-1);
- auto uv=PlanetSurface::FaceCoordinates(key.face,model);const double epsilon=std::ldexp(1.,-int(key.level))*1e-5;
- PlanetTileKey common=key;double alpha=t.morph;
- for(int dy=(y==0?-1:0);dy<=(y==n?1:0);++dy)for(int dx=(x==0?-1:0);dx<=(x==n?1:0);++dx){auto other=LeafAt(PlanetSurface::Direction(key.face,uv.x+dx*epsilon,uv.y+dy*epsilon));if(other.level<common.level){common=other;alpha=m_tiles.at(other).morph;}else if(other.level==common.level){alpha=std::min(alpha,m_tiles.at(other).morph);if(other<common)common=other;}}
- const auto& owner=m_tiles.at(common);const auto& shared=owner.data;if(common.level<key.level)return storedPoint(shared,owner.resolved,model,n);auto p=storedPoint(shared,shared.points,model,n);if(common.level)p=glm::mix(storedPoint(shared,shared.parentPoints,model,n),p,alpha);return p;
+bool PlanetTiles::Masked(PlanetTileKey key) const {
+    for (const auto &cut : m_cutouts)
+        if (descendant(key, cut.tile))
+            return true;
+    return false;
+}
+bool PlanetTiles::SetTerrainCutouts(const std::vector<PlanetTerrainCutout> &cuts,
+                                    std::string &error) {
+    try {
+        if (cuts == m_cutouts) {
+            error.clear();
+            return true;
+        }
+        if (cuts.size() > 64)
+            throw std::invalid_argument("planet terrain cutout count exceeds64");
+        std::set<PlanetTileKey> fixed;
+        unsigned collisionLevel = 0;
+        while (collisionLevel < 26 &&
+               surface.settings.radius * 2 / std::ldexp(32., int(collisionLevel)) >
+                   surface.settings.collisionSpacing)
+            ++collisionLevel;
+        for (size_t i = 0; i < cuts.size(); ++i) {
+            const auto &c = cuts[i];
+            if (c.tile.face >= 6 || c.tile.level < 3 || c.tile.level > collisionLevel ||
+                c.boundaryLevel < c.tile.level || c.boundaryLevel > surface.settings.maxLevel ||
+                c.boundaryLevel - c.tile.level > 7 || c.tile.x == 0 || c.tile.y == 0 ||
+                uint64_t(c.tile.x) + 1 >= (uint64_t(1) << c.tile.level) ||
+                uint64_t(c.tile.y) + 1 >= (uint64_t(1) << c.tile.level))
+                throw std::invalid_argument("planet excavation requires an interior cube-face "
+                                            "patch within collision/visual depth");
+            for (size_t j = 0; j < i; ++j)
+                if (descendant(c.tile, cuts[j].tile) || descendant(cuts[j].tile, c.tile))
+                    throw std::invalid_argument("planet terrain replacement footprints overlap");
+            const int scale = 1 << int(c.boundaryLevel - c.tile.level);
+            const int x0 = int(c.tile.x) * scale, y0 = int(c.tile.y) * scale;
+            auto add = [&](int x, int y) {
+                fixed.insert({c.tile.face, c.boundaryLevel, unsigned(x0 + x), unsigned(y0 + y)});
+            };
+            for (int x = -1; x <= scale; ++x)
+                for (int y : {-1, 0, scale - 1, scale})
+                    add(x, y);
+            for (int y = 1; y < scale - 1; ++y)
+                for (int x : {-1, 0, scale - 1, scale})
+                    add(x, y);
+        }
+        std::vector<PlanetTileKey> pins(fixed.begin(), fixed.end());
+        // Validate the entire protected topology before changing either rendering or
+        // physical support. No budget limit may leave a partial unprepared hole.
+        SelectPlanetTiles(surface, {{surface.settings.center, 1., 1}}, pins);
+        m_cutouts = cuts;
+        m_fixedRims = std::move(pins);
+        m_coverageDirty = true;
+        if (m_physics)
+            for (const auto &[key, contact] : m_contacts)
+                m_physics->SetBodyEnabled(contact.body, !Masked(key));
+        error.clear();
+        return true;
+    } catch (const std::exception &e) {
+        error = e.what();
+        return false;
+    }
+}
+void PlanetTiles::SetTags(CategoryMask tags) {
+    m_tags = tags;
+    if (m_physics)
+        for (const auto &[_, c] : m_contacts)
+            m_physics->SetBodyTags(c.body, tags);
+}
+void PlanetTiles::ClearCollision() {
+    if (m_physics)
+        for (auto &[_, c] : m_contacts)
+            m_physics->DestroyBody(c.body);
+    m_contacts.clear();
+    m_pendingCooks.clear();
+    m_stats.colliders = 0;
+    m_stats.collisionReady = false;
+    m_focus.reset();
+}
+PlanetTiles::Tile &PlanetTiles::Ensure(PlanetTileKey key, double morph) {
+    auto it = m_tiles.find(key);
+    if (it != m_tiles.end())
+        return it->second;
+    Tile t;
+    t.data = BuildPlanetTile(surface, key, surface.settings.segments);
+    t.morph = morph;
+    return m_tiles.emplace(key, std::move(t)).first->second;
+}
+std::vector<PlanetTileKey> PlanetTiles::Leaves() const {
+    return {m_leaves.begin(), m_leaves.end()};
+}
+void PlanetTiles::IndexLeaves() {
+    for (auto &range : m_ranges)
+        range.clear();
+    for (auto k : m_leaves)
+        m_ranges[k.face].emplace_back(morton(k), k);
+    for (auto &range : m_ranges)
+        std::sort(range.begin(), range.end(),
+                  [](const auto &a, const auto &b) { return a.first < b.first; });
+}
+PlanetTileKey PlanetTiles::LeafAt(V d) const {
+    auto k = PlanetSurface::Locate(d, 26);
+    auto code = morton(k);
+    const auto &ranges = m_ranges[k.face];
+    auto it = std::upper_bound(ranges.begin(), ranges.end(), code,
+                               [](uint64_t a, const auto &b) { return a < b.first; });
+    return std::prev(it)->second;
+}
+V PlanetTiles::RenderPoint(PlanetTileKey key, unsigned x, unsigned y) const {
+    return m_tiles.at(key).resolved.at(size_t(y) * (surface.settings.segments + 1) + x);
+}
+V PlanetTiles::ResolvePoint(PlanetTileKey key, unsigned x, unsigned y) const {
+    const unsigned n = surface.settings.segments;
+    const auto &t = m_tiles.at(key);
+    const auto i = size_t(y) * (n + 1) + x;
+    if (x && y && x < n && y < n)
+        return glm::mix(t.data.parentPoints[i], t.data.points[i], t.morph);
+    // All owners of an edge select the same coarsest incident leaf. Fine edge
+    // vertices lie on THAT leaf's actual triangle, including its morph state.
+    // This also welds across cube faces; no face-specific neighbour table.
+    const double count = double(1u << key.level);
+    auto model = PlanetSurface::Direction(key.face, 2 * (key.x + double(x) / n) / count - 1,
+                                          2 * (key.y + double(y) / n) / count - 1);
+    auto uv = PlanetSurface::FaceCoordinates(key.face, model);
+    const double epsilon = std::ldexp(1., -int(key.level)) * 1e-5;
+    PlanetTileKey common = key;
+    double alpha = t.morph;
+    for (int dy = (y == 0 ? -1 : 0); dy <= (y == n ? 1 : 0); ++dy)
+        for (int dx = (x == 0 ? -1 : 0); dx <= (x == n ? 1 : 0); ++dx) {
+            auto other = LeafAt(
+                PlanetSurface::Direction(key.face, uv.x + dx * epsilon, uv.y + dy * epsilon));
+            if (other.level < common.level) {
+                common = other;
+                alpha = m_tiles.at(other).morph;
+            } else if (other.level == common.level) {
+                alpha = std::min(alpha, m_tiles.at(other).morph);
+                if (other < common)
+                    common = other;
+            }
+        }
+    const auto &owner = m_tiles.at(common);
+    const auto &shared = owner.data;
+    if (common.level < key.level)
+        return storedPoint(shared, owner.resolved, model, n);
+    auto p = storedPoint(shared, shared.points, model, n);
+    if (common.level)
+        p = glm::mix(storedPoint(shared, shared.parentPoints, model, n), p, alpha);
+    return p;
 }
 std::vector<std::pair<PlanetTileKey,double>> PlanetTiles::Dependencies(PlanetTileKey key)const{
  std::set<PlanetTileKey> keys{key};const double count=1u<<key.level,epsilon=std::ldexp(1.,-int(key.level))*1e-5;
@@ -43,7 +172,14 @@ std::vector<std::pair<PlanetTileKey,double>> PlanetTiles::Dependencies(PlanetTil
 void PlanetTiles::Upload(Tile& t){auto data=t.data;data.points=t.resolved;data.parentPoints=data.points;auto mesh=data.Mesh(1,0);if(t.mesh.IsValid())m_renderer->UpdateMeshVertices(t.mesh,mesh.vertices);else t.mesh=m_renderer->CreateMesh(mesh);}
 void PlanetTiles::Prepare(Renderer& renderer,V eye,V origin,double fov,unsigned pixels,double dt){Prepare(renderer,std::vector<PlanetView>{{eye,fov,pixels}},origin,dt);}
 void PlanetTiles::Prepare(Renderer& renderer,const std::vector<PlanetView>& views,V origin,double dt){(void)origin;const auto start=std::chrono::steady_clock::now();if(m_renderer&&m_renderer!=&renderer)throw std::logic_error("planet renderer owner changed");m_renderer=&renderer;
- auto selection=SelectPlanetTiles(surface,views);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()){m_leaves=desired;for(auto k:m_leaves)Ensure(k,1);}
+ auto selection=SelectPlanetTiles(surface,views,m_fixedRims);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()||m_coverageDirty){
+  std::set<PlanetTileKey> keep=desired;for(auto k:desired)if(k.level)keep.insert(k.Parent());
+  for(auto it=m_tiles.begin();it!=m_tiles.end();)if(!keep.count(it->first)){
+   if(it->second.mesh.IsValid()) renderer.DestroyMesh(it->second.mesh);
+   it=m_tiles.erase(it);
+  }else ++it;
+  m_leaves=desired;for(auto k:m_leaves)Ensure(k,1).morph=1;m_coverageDirty=false;
+ }
  for(auto k:m_leaves)Ensure(k,1);
  // Only complete sibling groups replace their parent. A frame can never show
  // an unprepared hole; the six coverage roots exist for the entire lifetime.
@@ -66,10 +202,11 @@ void PlanetTiles::Prepare(Renderer& renderer,const std::vector<PlanetView>& view
  // Retain only direct parents needed for reverse transitions. CPU/GPU products
  // have a hard bound even after an arbitrarily long trip around the planet.
  std::set<PlanetTileKey> keep=m_leaves;for(auto k:m_leaves)if(k.level)keep.insert(k.Parent());
- for(auto it=m_tiles.begin();it!=m_tiles.end();)if(!keep.count(it->first)){if(it->second.mesh.IsValid())renderer.DestroyMesh(it->second.mesh);it=m_tiles.erase(it);}else ++it;
- m_stats.uploadMs=ms(uploadStart);m_stats.leaves=unsigned(m_leaves.size());m_stats.resident=unsigned(m_tiles.size());m_stats.triangles=m_stats.leaves*surface.settings.segments*surface.settings.segments*2;m_stats.maximumPixelError=selection.maximumPixelError;m_stats.budgetLimited=selection.budgetLimited;m_stats.prepareMs=ms(start);
+ for(auto it=m_tiles.begin();it!=m_tiles.end();)if(!keep.count(it->first)){if(it->second.mesh.IsValid()) renderer.DestroyMesh(it->second.mesh);
+   it=m_tiles.erase(it);}else ++it;
+ m_stats.uploadMs=ms(uploadStart);m_stats.leaves=unsigned(m_leaves.size());m_stats.resident=unsigned(m_tiles.size());size_t drawn=m_leaves.size();if(!m_cutouts.empty())for(auto k:m_leaves)if(Masked(k))--drawn;m_stats.triangles=unsigned(drawn)*surface.settings.segments*surface.settings.segments*2;m_stats.maximumPixelError=selection.maximumPixelError;m_stats.budgetLimited=selection.budgetLimited;m_stats.prepareMs=ms(start);
 }
-void PlanetTiles::Draw(Renderer& renderer,V origin)const{for(auto k:m_leaves){auto it=m_tiles.find(k);if(it!=m_tiles.end()&&it->second.mesh.IsValid())renderer.DrawMesh(it->second.mesh,glm::vec3(it->second.data.origin-origin),{1,0,0,0},glm::vec3(1),{},glm::vec3(.24f,.43f,.31f));}}
+void PlanetTiles::Draw(Renderer& renderer,V origin)const{for(auto k:m_leaves){if(Masked(k))continue;auto it=m_tiles.find(k);if(it!=m_tiles.end()&&it->second.mesh.IsValid())renderer.DrawMesh(it->second.mesh,glm::vec3(it->second.data.origin-origin),{1,0,0,0},glm::vec3(1),{},glm::vec3(.24f,.43f,.31f));}}
 bool PlanetTiles::Collision(V focus,V origin,unsigned buildBudget){auto start=std::chrono::steady_clock::now();m_stats.collisionReady=false;if(!m_physics){m_stats.error="no physics owner";return false;}
  try{if(!std::isfinite(glm::length(focus))||glm::length(focus-origin)>8192)throw std::runtime_error("planet collision focus outside local physics chart");auto model=glm::conjugate(glm::normalize(surface.settings.rotation))*glm::normalize(focus-surface.settings.center);const unsigned n=32;
  unsigned level=0;while(level<26&&surface.settings.radius*2/std::ldexp(double(n),int(level))>surface.settings.collisionSpacing)++level;
@@ -88,7 +225,7 @@ bool PlanetTiles::Collision(V focus,V origin,unsigned buildBudget){auto start=st
  for(auto it=m_pendingCooks.begin();it!=m_pendingCooks.end();)if(!wanted.count(it->first))it=m_pendingCooks.erase(it);else ++it;
  bool preparing=false;for(auto k:wanted)if(!m_contacts.count(k)&&!m_pendingCooks.count(k)){if(!buildBudget){preparing=true;continue;}--buildBudget;auto tile=BuildPlanetTile(surface,k,n,false);auto cook=std::make_shared<CollisionAsset>();std::string error;if(!CookCollision(tile.Mesh(1,0),{},*cook,error))throw std::runtime_error(error);m_pendingCooks.emplace(k,std::make_pair(tile.origin,cook));}
  if(preparing){m_stats.error.clear();m_stats.collisionMs=ms(start);return false;}
- std::vector<BodyHandle> installed;installed.reserve(m_pendingCooks.size());try{for(auto& [k,p]:m_pendingCooks){auto body=m_physics->CreateShape(Shape::Cooked(p.second,""),{glm::vec3(p.first-origin),{1,0,0,0}},false,0,.7f,0);installed.push_back(body);m_physics->SetCollisionFilter(body,m_layer,m_mask);m_physics->SetBodyTags(body,m_tags);m_contacts.emplace(k,Contact{body,p.first});}}catch(...){for(auto h:installed)m_physics->DestroyBody(h);for(auto& [k,_]:m_pendingCooks)m_contacts.erase(k);throw;}
+ std::vector<BodyHandle> installed;installed.reserve(m_pendingCooks.size());try{for(auto& [k,p]:m_pendingCooks){auto body=m_physics->CreateShape(Shape::Cooked(p.second,""),{glm::vec3(p.first-origin),{1,0,0,0}},false,0,.7f,0);installed.push_back(body);m_physics->SetCollisionFilter(body,m_layer,m_mask);m_physics->SetBodyTags(body,m_tags);m_physics->SetBodyEnabled(body,!Masked(k));m_contacts.emplace(k,Contact{body,p.first});}}catch(...){for(auto h:installed)m_physics->DestroyBody(h);for(auto& [k,_]:m_pendingCooks)m_contacts.erase(k);throw;}
  m_pendingCooks.clear();
  for(auto it=m_contacts.begin();it!=m_contacts.end();)if(!wanted.count(it->first)){m_physics->DestroyBody(it->second.body);it=m_contacts.erase(it);}else ++it;
  m_stats.error.clear();m_stats.collisionReady=true;m_focus=focus;

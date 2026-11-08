@@ -1,0 +1,36 @@
+{
+  "base": "6315daadfc2de8e35c8f8d92b0e625b2df97633a",
+  "timestamp_utc": "2026-11-08T01:43:47.813874+00:00",
+  "scope": "Internal projected source geometry and actual PlanetTiles cutout composition; NOT yet ordinary asset/editor/runtime/save/streaming workflow",
+  "checks": {
+    "chart_and_composition": 1926,
+    "existing_planet_terrain": 10074,
+    "existing_planet_world": 220,
+    "modern_GPU": 343,
+    "portable_GPU": 343,
+    "registration": {
+      "tests": 11,
+      "existing_skips": 2
+    }
+  },
+  "metrics": {
+    "chart_max_inverse_m": 1.02204e-12,
+    "chart_max_independent_jacobian_error": 3.28295e-10,
+    "shared_float_seam_m": 3.82214e-06,
+    "render_vs_MK2_rim_m": 7.9968e-06
+  },
+  "failed_attempts": [
+    "First new test omitted PhysicsWorld::Init before CreateShape; gdb confirms AddBody crash. Harness repaired, no physics or acceptance changed.",
+    "First build of new target attempted before CMake regenerated; reconfigure succeeded.",
+    "First new coverage code emitted a misleading-indentation warning; formatting fixed and later frozen builds warning-free."
+  ],
+  "limitations": [
+    "Internal pieces only; no ordinary projected terrain asset/schema, project creation, runtime brush, persistence or region binding yet.",
+    "Cutouts currently require interior cube-face tiles and protected rim within visual/physical depth budgets.",
+    "Base collision backing is retained disabled, so unmask restores immediately. Collider count includes allocated backing; triangle diagnostics exclude masked draws.",
+    "Core source volume edits currently take source-chart radii; physical metric integration still required for ordinary APIs.",
+    "GPU figures are geometry/depth correctness, not FPS, gameplay or final terrain art acceptance.",
+    "Fixture work timer includes independent controls, world composition and selection comparisons, not a standalone runtime preparation benchmark.",
+    "No new controller, fluid, global gravity or solver changes. Main/releases/installedSDKs/consumerprojects/research untouched."
+  ]
+}

@@ -7,8 +7,9 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified branch checkpoints (verify live Git before changes)
 
-Experimental/origin last checked: 1b593d8f13a8a73e772ffdb014c3ddcde923421f.
-Navigation cache handoff changes are currently uncommitted on top; verify live Git.
+Experimental/origin last checked:6315daadfc2de8e35c8f8d92b0e625b2df97633a.
+Navigation cache handoff is committed/pushed. Planet chart/cutout work below is
+currently UNCOMMITTED; verify live Git before staging anything.
 Main/origin unchanged:1094d64515604fe9d03fdab479efc7f880b112a8.
 Native asset checkpoint58e73071; authoring b63d707e; runtime sculpt/paint/save
 c5fde88d; source-owned solid/fluid/particle integration a64c454a are PUSHED.
@@ -25,7 +26,48 @@ Never start a second build before the first session actually exits. If source
 changes during a multi-target build, freeze and do a final incremental build.
 Exporter/runtime provenance mismatch correctly rejects mixed intermediate binaries.
 
-## Current continuation — native navigation cache handoff
+## Active continuation — planetary patch core (qualified, normal workflow NOT finished)
+
+On top of6315daad, TerrainPlanetChart.*, PlanetTiles cutouts, protected-rim
+selection and tests are ready for an independent core checkpoint. No build/test
+running after final63357 exits (verify session). Source/asset/runtime/editor
+binding is NOT implemented. Normal projects still have no planetary excavation.
+Do not confuse core fixture success with a completed five-stage TerrainV2.
+
+Chart/composition1926, existingPlanetTerrain10074, existingPlanetWorld220,
+modernNVIDIA4.6 GPU343 and portable3.3 GPU343 PASS. Native chart follows existing
+PlanetSurface rays in binary64 and transforms both rendering/collision geometry.
+Normal transforms use analytic Jacobian. Patch origin includes base elevation;
+actual chunk anchors use their local elevation, preserving local float geometry
+at12km altitude instead of cancelling large floats.1e12absoluteorigin control.
+All6faces/geographic offsets checked for mapping; actual excavation composition
+is an interior-face patch. Native hill tunnel crosses chunks; uncut hill blocks
+samepath. Actual PlanetTiles base initially blocks native pit, then cutout exposes
+native floor; invalid cutouts preserve old support; moving physical interest/rim
+queries work; unmask re-enables retained base support without recooking.
+
+Rendering protects native-resolution rim leaves, leaves other LOD greedy/camera-
+union/budgeted, and suppresses base triangles in main AND shadow pass. Two-plane
+rim framebuffer depth vs actual MK2 error8um. No-cutout selection equals frozen
+6315daad source EXACTLY over20multi-camera/ortho/altitude cases. Triangle counters
+exclude suppressed base draws. Allocated collider stats include disabled backing;
+this is bounded restoration memory, not a claimed memory saving.
+
+Evidence planetary-core/. First harness crash was missing PhysicsWorld::Init;
+native gdb confirms AddBody. Harness corrected; expectations unchanged. First new
+target build needed CMake regeneration. New indentation warning fixed; final frozen
+builds clean. Fixture timer includes controls/world/selection, NOT runtime perf.
+
+NEXT normal workflow: chart metadata in Source/native files; auto-project source
+extraction/cooking/preview; world-metric brush conversion and solid containment;
+planet owner reference + safe source lifecycle/publication/streaming; editor creation
+and actual playable planet patch; cold save/relocated export and performance.
+Existing Source2/nativeformat1 must retain behavior. Proposed Source3/projected
+asset envelope2 would reject old readers, but NONE of that is implemented yet.
+Cube-face-border/cross-face excavation is outside first bounded cutout support.
+Keep main, fluid lock, existing projects/installedSDKs and research untouched.
+
+## Completed native navigation cache handoff
 
 Functional cache handoff is implemented on top of1b593d8f. The SAME Detour
 Surface builds privately through NavigationSystem::PrepareSurface on the existing
@@ -44,7 +86,7 @@ Cold73write/7read, components35,surface59,interactions85,streaming69,raster59,
 saveExclusions77,export18,existing actual navgame26 PASS. Desktop NVIDIA editor
 authoring/undo/PlayStop authoredIDENTICAL and relocatedWorkshop PASS; restored
 navready,8volumechunks,2surfacedabs,queue0,z=-10.6087. Screenshots inspected.
-Ready for scoped checkpoint after final source/diff review.
+Committed/pushed as6315daad; source/evidence review completed.
 
 Then continue physical residency/planetary work; fullTerrainV2 is incomplete.
 Current bounded native solid/nav pipeline does NOT make planetary excavation.

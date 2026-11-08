@@ -65,6 +65,10 @@ PlanetTileData BuildPlanetTile(const PlanetSurface&,PlanetTileKey,unsigned segme
 struct PlanetSelection {std::vector<PlanetTileKey> leaves;double maximumPixelError=0;bool budgetLimited=false;};
 struct PlanetView {glm::dvec3 eye;double fov;unsigned pixels;double orthographicHeight=0;};
 PlanetSelection SelectPlanetTiles(const PlanetSurface&,const std::vector<PlanetView>&);
+// Fixed leaves keep replacement-terrain rims on the same authored grid.
+// Other leaves still use the normal camera-union error and residency budgets.
+PlanetSelection SelectPlanetTiles(const PlanetSurface&,const std::vector<PlanetView>&,
+                                 const std::vector<PlanetTileKey>& fixedLeaves);
 PlanetSelection SelectPlanetTiles(const PlanetSurface&,glm::dvec3 eye,double verticalFov,unsigned pixels);
 // Barycentric parent surface used by geomorphs, not a radial-height blend.
 glm::dvec3 PlanetTrianglePoint(const PlanetSurface&,PlanetTileKey,glm::dvec3 direction,unsigned segments);

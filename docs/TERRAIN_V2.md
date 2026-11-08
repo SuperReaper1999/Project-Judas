@@ -407,3 +407,28 @@ Peak process RSS was 230,880–231,276 KiB before and 231,512–231,980 KiB afte
 there is no memory-reduction claim. These ten-sample grouped diagnostics do not
 establish general percentile distributions or FPS. Raw output and commands are
 in `docs/evidence/terrain-v2/navigation-cache`.
+
+
+## Planetary patch core (internal qualification)
+
+`TerrainPlanetChart` maps the existing sampled/volume geometry to bounded
+cube-face patches using the same binary64 rays as `PlanetSurface`. Both collision
+and rendering receive the mapped mesh. Patch and chunk origins retain local
+float32 geometry even at high elevation. `PlanetTiles` can suppress replaced
+base tiles and protect the native-resolution rim during ordinary multi-camera
+LOD. Disabled base collision backing is retained so removing an override can
+restore support immediately. Its allocated collider count includes that backing;
+submitted triangle diagnostics exclude hidden base tiles.
+
+The internal composition controls exercise actual MK2 pit/tunnel geometry,
+original-ground negative controls, geographic rim support and restoration.
+Modern/portable desktop framebuffer and shadow checks pass; ordinary no-cutout
+selection matches a frozen pre-change implementation exactly. This is core
+geometry qualification, not final visual or human gameplay acceptance.
+
+**This is not yet an authorable project feature.** Native projected source
+metadata, scene/planet ownership, ordinary brushes, saves, streaming and the
+editable planetary Workshop remain integration work. First cutouts require
+interior cube-face footprints and compatible visual/physical rim budgets;
+cross-face excavation is not supported. Do not put a normal flat native source
+over a planet and claim the underlying ground was removed.
