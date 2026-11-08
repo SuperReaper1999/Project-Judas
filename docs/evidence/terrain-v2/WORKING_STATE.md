@@ -7,10 +7,11 @@ research remain untouched. No delegation is authorized. No release is authorized
 
 ## Verified branch checkpoints (verify live Git before changes)
 
-Planetary core739805be and navigation handoff6315daad are pushed. The following
-normal-project integration is qualified for the next checkpoint; verify live
-Git for its commit/push status. This handoff deliberately does not guess its
-own enclosing commit hash. Main remains at the hash below.
+Planetary core739805be, navigation handoff6315daad, normal-project geographic
+integration f4e8335b and save-budget correction2e8bebca are pushed. The SDK,
+shared packaging inventory and documentation qualification below accompany this
+next checkpoint. This handoff deliberately does not guess its own enclosing
+commit hash. Verify live Git rather than treating a parent hash as HEAD.
 Main/origin unchanged:1094d64515604fe9d03fdab479efc7f880b112a8.
 Native asset checkpoint58e73071; authoring b63d707e; runtime sculpt/paint/save
 c5fde88d; source-owned solid/fluid/particle integration a64c454a are PUSHED.
@@ -90,8 +91,30 @@ shared8MiB policy now matches SaveArchive/capture/direct/world/regional paths;
 negative preserves exact live ray/body count. Evidence save-budget/. Check live
 Git for its checkpoint state, never assume a document's parent hash is current.
 
-NEXT: consumer-copy/freshSDK qualification and remaining residency/material bounds.
-All active native collision chunks are still resident; no demand-paging claim.
+Save-budget correction is pushed at2e8bebcadd3ad43e0b781be45f0c77d8ea3fb88e.
+Fresh local SDK .cache/terrain-v2/sdk-native-preview-2e8bebca-final verifies17tools,
+8standard editor/project/tool/moved-export operations, and SDK-contained flat and
+planetary native-cook/sculpt/paint/tunnel/cold-reload exports. It is host-native,
+GLIBC2.43, NOT Ubuntu24.04-qualified or published. SourceDirty and18untracked
+provenance remain honest; don't erase research to make them disappear. Installed
+RPG SDK remains local9f022cf1. Only our redundant first staging copy was removed.
+
+SDK/source inventory qualification exposed4omitted learning-project assertions:
+old Particles/Graffiti and new terrain samples. package_source now derives the
+learning roots from the SDK inventory, using the requested checkout's COMMITTED
+inventory for archives. Source-only disposable-Git and unrelated-game/save
+negative controls pass. Native SDK now includes both Workshops and its own terrain
+qualification driver. Package/CI-route/registration36pass(2existing skips).
+Git blob-reader pipes now close explicitly, removing observedResourceWarnings.
+Evidence sdk-qualification/. The SDK/shared-inventory work is qualified for this
+checkpoint; verify live Git for commit state. No build or test was running when
+the final qualification logs were collected.
+
+NEXT substantive boundaries: independent per-chunk physical interest/data paging
+and broader material/large-source interaction coverage remain open, not magically
+solved by the integrated Workshop. Current supported residency unit is a native
+source/region, max1024colliders per source; no demand-paging or whole-programme
+completion claim. Retain query correctness rather than evicting unseen support.
 Do not replace installed RPG SDK or existing game assets.
 
 ## Completed native navigation cache handoff
@@ -307,14 +330,16 @@ perterrain. Native files are paged but runtime arrays/GPUimages still whole-sour
 Separate physical interest from camera visibility, preserve support/publication.
 2. COMPLETED: fresh source/project creation,16bitheightmaps/presets,multisource
 selection,bytebounded undo,runtime surface sculpt/paint and sparse raster saves.
-3. Planetary excavation/provider override: preserve PlanetTiles precision/LOD and
-actually remove base render+collision. A cave prop over intact planet is invalid.
+3. COMPLETED bounded planetary excavation/provider override: actual base render
+and collision removal, precision/LOD, editor workflow, origin shifts and cold
+regional persistence. Interior face patches only, not whole-planet volume paging.
 4. COMPLETED bounded controls: source-owned navigation+atomic dirty publication,
 source-solid water occupancy,particle interactions/logical source IDs,real regional
 travel and cold persistence. Remaining large-source particle capture budgets and
 whole-coverage navigation rebuild limits are explicit above.
-5. Broader materials/visual quality, temporalLOD transition, final consumer copies,
-freshSDK/export and platform coverage. Do NOT replace installedRPG SDK or assets.
+5. COMPLETED fresh native local SDK/export and editable flat/planetary consumer
+copies. Broader materials/visual quality, temporalLOD transition and additional
+platform coverage remain open. Do NOT replace installedRPG SDK or assets.
 
 Known bounds: V1 import squarepitch/16cell/4mtiling; whole-empty ordinary editor
 model unsupported (runtime emptychunks valid); runtime V2 smoothvolume unsupported;

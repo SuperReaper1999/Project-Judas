@@ -27,8 +27,11 @@ Basic Water and swimming remain available. See the
 
 Experimental includes the [Renderer V2 work](docs/RENDERER_V2.md) and
 [editable Renderer Workshop](projects/renderer_v2_lab/README.md), alongside
-Editor V2 and Scripting V2. These are pending combined human review; the
-published Alpha packages remain unchanged.
+Editor V2 and Scripting V2. [Terrain V2](docs/TERRAIN_V2.md) adds editable native
+landscapes and bounded planetary excavation, with ordinary project authoring,
+source-owned navigation and cold persistence. Try the [Highlands](projects/terrain_v2_workshop/README.md)
+or [Planetary Workshop](projects/terrain_v2_planet_workshop/README.md).
+These remain Experimental source-build work; published Alpha packages are unchanged.
 
 The [SDK authoring reference](docs/SDK_AUTHORING.md) includes exact scene fields
 and a packaged terrain-to-NPC workflow.

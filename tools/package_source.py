@@ -7,6 +7,7 @@ This command never changes the source checkout, index, refs or untracked files.
 """
 
 import argparse
+import contextlib
 import gzip
 import hashlib
 import io
@@ -23,8 +24,19 @@ ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packag
 ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig.cmake", "README.md", "LICENSE", "engine-version.json", ".gitignore", ".gitattributes"}
 # Editable SDK examples and the original runtime-UI qualification fixture.
 # No other consumer games, saves or untracked experiments are selected.
-LEARNING_PROJECTS = {"beacon_grove", "tilemap_workshop", "sprite_animation_workshop", "2d_traversal_workshop",
-                     "ai_workshop", "willow_town", "menu_workshop", "terrain_navigation_workshop", "renderer_v2_lab"}
+def learning_projects(spec):
+    """Share the SDK's explicit project roots; never broaden a nested path."""
+    projects = set()
+    for directory in spec["directories"]:
+        path = PurePosixPath(directory)
+        if path.parts and path.parts[0] == "projects":
+            if len(path.parts) != 2 or path.parts[1] in (".", "..") or "\\" in directory:
+                raise ValueError("SDK learning projects must name an explicit projects/NAME root")
+            projects.add(path.parts[1])
+    return projects
+
+
+LEARNING_PROJECTS = learning_projects(json.loads((ROOT / "packaging/sdk-inventory.json").read_text()))
 QUALIFICATION_PROJECTS = {"ui_demo", "material_lab", "liquid_surface_demo"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 
@@ -38,14 +50,15 @@ def digest(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def selected(name, profile):
+def selected(name, profile, learning=None):
     if name in METADATA:
         return False
     if profile == "full":
         return True
     path = PurePosixPath(name)
+    projects = LEARNING_PROJECTS if learning is None else learning
     return (name in ENGINE_FILES or path.parts[0] in ENGINE_ROOTS or
-            len(path.parts)>2 and path.parts[0]=="projects" and path.parts[1] in (LEARNING_PROJECTS | QUALIFICATION_PROJECTS) and
+            len(path.parts)>2 and path.parts[0]=="projects" and path.parts[1] in (projects | QUALIFICATION_PROJECTS) and
             not ({"Saves", ".cache", "__pycache__"} & set(path.parts)) and path.suffix not in {".lock", ".judasstate"} or
             name.startswith("docs/judasjs/") or name == "docs/judas.d.ts" or
             len(path.parts) == 2 and path.parts[0] == "docs" and
@@ -85,13 +98,19 @@ def archive(args):
     release_channel = {"alpha": "Alpha", "beta": "Beta", "stable": "Stable"}.get(maturity, "Experimental")
     channel = args.channel or ({"main": release_channel, "Experimental": "Experimental"}.get(branch, "Local"))
     entries = git(source, "ls-tree", "-r", "-z", "HEAD").split(b"\0")
+    # --source may point at another committed checkout. Its own inventory is
+    # authoritative, rather than the tool's checkout or an unrelated live file.
+    inventory_path = "packaging/sdk-inventory.json"
+    learning = (learning_projects(json.loads(git(source, "show", revision + ":" + inventory_path)))
+                if git(source, "ls-tree", "--name-only", revision, "--", inventory_path).strip()
+                else set())
     blobs = {}
     for entry in entries:
         if not entry:
             continue
         info, encoded = entry.split(b"\t", 1)
         name = safe_path(encoded.decode("utf-8"))
-        if not selected(name, args.profile):
+        if not selected(name, args.profile, learning):
             continue
         mode, kind, blob = info.decode().split()
         if kind != "blob" or mode not in ("100644", "100755"):
@@ -158,6 +177,9 @@ def archive(args):
             if batch.poll() is None:
                 batch.kill()
                 batch.wait()
+            with contextlib.suppress(BrokenPipeError):
+                batch.stdin.close()
+            batch.stdout.close()
     report = {"schema": 1, "kind": "judas-source-archive", "file": output.name,
               "sha256": digest(output), "bytes": output.stat().st_size, "source": info,
               "files": len(records), "untrackedExcluded": len(untracked),

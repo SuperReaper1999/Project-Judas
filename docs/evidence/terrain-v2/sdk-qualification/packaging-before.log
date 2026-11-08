@@ -1,0 +1,49 @@
+....Explicit final operator approval phrase required
+.......FFFF.
+======================================================================
+FAIL: test_source_archive_retains_sdk_examples_and_ui_gate_projects (tests.test_release_packaging.QualificationScope.test_source_archive_retains_sdk_examples_and_ui_gate_projects) (project='projects/particle_v2_lab/particle_v2_lab.judasproj')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py", line 72, in test_source_archive_retains_sdk_examples_and_ui_gate_projects
+    self.assertTrue(package_source.selected(project,'engine'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_source_archive_retains_sdk_examples_and_ui_gate_projects (tests.test_release_packaging.QualificationScope.test_source_archive_retains_sdk_examples_and_ui_gate_projects) (project='projects/graffiti_workshop/graffiti_workshop.judasproj')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py", line 72, in test_source_archive_retains_sdk_examples_and_ui_gate_projects
+    self.assertTrue(package_source.selected(project,'engine'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_source_archive_retains_sdk_examples_and_ui_gate_projects (tests.test_release_packaging.QualificationScope.test_source_archive_retains_sdk_examples_and_ui_gate_projects) (project='projects/terrain_v2_workshop/terrain_v2_workshop.judasproj')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py", line 72, in test_source_archive_retains_sdk_examples_and_ui_gate_projects
+    self.assertTrue(package_source.selected(project,'engine'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_source_archive_retains_sdk_examples_and_ui_gate_projects (tests.test_release_packaging.QualificationScope.test_source_archive_retains_sdk_examples_and_ui_gate_projects) (project='projects/terrain_v2_planet_workshop/terrain_v2_planet_workshop.judasproj')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py", line 72, in test_source_archive_retains_sdk_examples_and_ui_gate_projects
+    self.assertTrue(package_source.selected(project,'engine'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.264s
+
+FAILED (failures=4)
+{
+  "action": "dry-run only",
+  "version": "2.0.0-alpha.1",
+  "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "publication": false
+}
+M100 coordinated qualification passed; known limitations remain classified separately

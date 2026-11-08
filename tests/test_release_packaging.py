@@ -52,6 +52,41 @@ class ReleaseNotes(unittest.TestCase):
 
 
 class QualificationScope(unittest.TestCase):
+    def test_learning_projects_follow_inventory_without_selecting_other_games(self):
+        spec=json.loads((ROOT/'packaging/sdk-inventory.json').read_text())
+        spec['directories'].append('projects/future_workshop')
+        selected=package_source.learning_projects(spec)
+        self.assertTrue(package_source.selected('projects/future_workshop/Scenes/main.judas','engine',selected))
+        self.assertFalse(package_source.selected('projects/future_workshop/Saves/player.judasstate','engine',selected))
+        self.assertFalse(package_source.selected('projects/lunar_island/private.js','engine',selected))
+        for invalid in ('projects', 'projects/../private', 'projects/name/Assets'):
+            with self.subTest(path=invalid),self.assertRaises(ValueError):
+                package_source.learning_projects({'directories':[invalid]})
+
+    def test_source_archive_uses_its_own_committed_inventory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);source=root/'source';source.mkdir()
+            files={'engine-version.json':(ROOT/'engine-version.json').read_text(),
+                   'packaging/sdk-inventory.json':json.dumps({'directories':['projects/fixture_workshop']}),
+                   'projects/fixture_workshop/Scenes/main.judas':'fixture scene',
+                   'projects/fixture_workshop/Saves/private.judasstate':'private save',
+                   'projects/lunar_island/private.js':'unrelated game'}
+            for name,text in files.items():
+                path=source/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text)
+            def git(*args):
+                subprocess.run(['git','-C',str(source),*args],check=True,capture_output=True)
+            git('init');git('add','engine-version.json','packaging','projects')
+            git('-c','user.name=Qualification','-c','user.email=fixture@example.invalid',
+                '-c','commit.gpgsign=false','commit','-m','fixture')
+            args=argparse.Namespace(source=source,output=root/'source.tar.gz',replace=False,
+                profile='engine',channel='Experimental',allow_untracked=False)
+            package_source.archive(args)
+            with tarfile.open(args.output) as archive:
+                names=set(archive.getnames())
+            self.assertIn('projects/fixture_workshop/Scenes/main.judas',names)
+            self.assertNotIn('projects/fixture_workshop/Saves/private.judasstate',names)
+            self.assertNotIn('projects/lunar_island/private.js',names)
+
     def test_source_archive_retains_sdk_examples_and_ui_gate_projects(self):
         inventory=json.loads((ROOT/'packaging/sdk-inventory.json').read_text())
         manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())

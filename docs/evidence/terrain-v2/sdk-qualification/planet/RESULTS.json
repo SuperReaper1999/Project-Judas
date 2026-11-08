@@ -1,0 +1,129 @@
+{
+  "passed": true,
+  "human_acceptance": false,
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "2.0.0-alpha.1-Experimental-2e8bebc-dirty-6050b8e75611-u159529a78ae7",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Linux",
+    "release_name": "Judas Engine Alpha v2.0.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "6050b8e75611ff331557c25b7d8574f39a3796c16acc950ecf028da82d584f32",
+    "source_origin": "git",
+    "source_revision": "2e8bebcadd3ad43e0b781be45f0c77d8ea3fb88e",
+    "source_tree": "438a935ccbb16901b707ad4323611379a8570720",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "159529a78ae7a812c63cba909ba8ef13730625495cc786e06e572435da0ecb0f",
+    "version": "2.0.0-alpha.1"
+  },
+  "settlement_cold_processes": 1,
+  "restored": {
+    "position": {
+      "x": 0.2731112539768219,
+      "y": 2.5945820808410645,
+      "z": -10.380638122558594
+    },
+    "terrain": {
+      "ready": true,
+      "busy": false,
+      "navigation": true,
+      "revision": 2,
+      "samples": 16641,
+      "triangles": 48405,
+      "bytes": 2407704,
+      "chunks": 64,
+      "volumeChunks": 8,
+      "pendingChunks": 0,
+      "prepareMs": 100.150433,
+      "publishMs": 0.074561,
+      "error": ""
+    },
+    "surfaceDabs": 2,
+    "remainingBrushes": 0,
+    "origin": {
+      "x": 92.93673162131846,
+      "y": 991.3251372940636,
+      "z": 92.93673162131846
+    }
+  },
+  "finished_utc": "2026-11-08T03:30:11.101352+00:00",
+  "runs": [
+    {
+      "name": "native-cook",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-2e8bebca-final/judas_terrain_author",
+        "v2-native",
+        "/tmp/terrain-v2-sdk-only-planet/editable/Authoring/highlands.judasterrain2",
+        "/tmp/terrain-v2-sdk-only-planet/editable/Assets/terrain/highlands.judasmodel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-2e8bebca-final",
+      "exit": 0,
+      "seconds": 0.21808455300197238
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-2e8bebca-final/judas_export",
+        "/tmp/terrain-v2-sdk-only-planet/editable/terrain_v2_planet_workshop.judasproj",
+        "/tmp/terrain-v2-sdk-only-planet/original-package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-2e8bebca-final/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/sdk-native-preview-2e8bebca-final",
+      "exit": 0,
+      "seconds": 0.5171487719999277
+    },
+    {
+      "name": "write",
+      "command": [
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/judas",
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-only-planet/unrelated working directory",
+      "exit": 0,
+      "seconds": 2.0167724220009404
+    },
+    {
+      "name": "settle-0",
+      "command": [
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/judas",
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-only-planet/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.6168042290009907
+    },
+    {
+      "name": "traverse",
+      "command": [
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/judas",
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-only-planet/unrelated working directory",
+      "exit": 0,
+      "seconds": 1.3668308249980328
+    },
+    {
+      "name": "read",
+      "command": [
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/judas",
+        "/tmp/terrain-v2-sdk-only-planet/relocated game/game.judasproj"
+      ],
+      "cwd": "/tmp/terrain-v2-sdk-only-planet/unrelated working directory",
+      "exit": 0,
+      "seconds": 0.8650503070020932
+    }
+  ],
+  "log_sha256": {
+    "export.log": "82ad93dde362534f9a38daed3ad1489d33418b35aa3791a787fcf1b49930646b",
+    "native-cook.log": "48ee162d85a003380e0c489750e43fe1e3bc67ee905d6f43eaf40294ddeb2a2b",
+    "read.log": "5d2719357f9789dc35bdf179ac3680db333f4af6d17b2497998ac6e6512fc0f8",
+    "settle-0.log": "18df2f3a1dfff91128ad40f22c1af7c794fef2722abda2e50db99d3fb45318d7",
+    "traverse.log": "4b0a8f6c733c3949b1015e4b4c38d7433dd9a6c6f23c910fce078fe08c44d6a7",
+    "write.log": "b9efeab8257b64ca87e24190cf9d93a8930b59d4832e5e845ebaaa49376a5f89"
+  }
+}

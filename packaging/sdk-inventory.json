@@ -37,7 +37,8 @@
     "tools/verify_android.py",
     "engine-version.json",
     "tools/release_manifest.py",
-    "docs/RELEASE_STATUS.json"
+    "docs/RELEASE_STATUS.json",
+    "tools/validation/qualify_terrain_v2.py"
   ],
   "directories": [
     "assets/fonts",
@@ -53,7 +54,9 @@
     "projects/terrain_navigation_workshop",
     "projects/renderer_v2_lab",
     "projects/particle_v2_lab",
-    "projects/graffiti_workshop"
+    "projects/graffiti_workshop",
+    "projects/terrain_v2_workshop",
+    "projects/terrain_v2_planet_workshop"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [

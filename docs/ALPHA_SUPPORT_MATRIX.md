@@ -104,3 +104,27 @@ inside the desktop SDK, and it does not qualify every native subsystem for the w
 
 Exact-source release-preparation results identify Linux and Windows checks. Earlier
 Android human acceptance remains real, but is not a new 1.2.x AI/device qualification.
+
+## Terrain V2 Experimental scope
+
+The current Terrain V2 integration is a source-build review checkpoint, not an
+extension of the published Alpha qualification above. Sampled native landscapes,
+bounded volumetric excavation, surface sculpt/paint, source-owned navigation,
+regional suspension, cold saves and geographic planet patches have focused Linux
+qualification. See [implementation and bounds](TERRAIN_V2.md) and
+[evidence](evidence/terrain-v2/planetary-integration/REVIEW.md).
+
+Desktop GTX970 OpenGL4.6 and portable3.3 paths are exercised. This does not certify
+new Windows, Android/GLES or browser terrain workflows. All active native source
+collision chunks remain resident (maximum1024); geographic patches use native
+render meshes, while the surrounding planet retains its existing LOD. Native
+files are indexed but runtime arrays are resident. Cross-face excavation,
+overlapping/movable planetary patches and automatic replication of terrain edits
+are not provided by this checkpoint. Existing representations remain available;
+assets are not automatically converted.
+
+The locally staged Terrain V2 SDK verifies17tools, fresh-project/editor/CLI work,
+SDK-only terrain cold saves and moved exports on this host. It is a native preview
+requiring GLIBC2.43, not a refreshed Ubuntu24.04 distribution. Dirty/untracked
+build provenance is retained. Published packages, release channels, the Alpha
+fluid lock and the user's installed game SDK are unchanged.

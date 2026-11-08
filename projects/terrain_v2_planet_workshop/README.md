@@ -35,10 +35,12 @@ patches; a stale source rejects Play rather than silently disconnecting.
 brush positions use absolute coordinates so origin shifts do not move the cuts.
 `geography.js` contains the authored demonstration route, not an engine solver.
 
-The generator `tools/create_terrain_v2_planet_workshop.py` accepts `--output NEW_DIR`
+The source-checkout generator `tools/create_terrain_v2_planet_workshop.py` accepts `--output NEW_DIR`
 and refuses existing directories. It uses the engine's `v2-planet`/`v2-native`
 commands and retains the existing texture/font licence notices. No downloaded
-assets or external authoring services are required.
+assets or external authoring services are required. The packaged SDK includes this
+editable project and its native creation tools; the repository generator itself
+is source-checkout tooling.
 
 This is a bounded local excavation region on a planet. All 64 native collision
 chunks remain resident while active; their visual meshes use native detail.
