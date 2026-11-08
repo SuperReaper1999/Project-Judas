@@ -1,0 +1,34 @@
+[
+  {
+    "name": "creation-modern",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/creation-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/planet-editor-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "creation-portable",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/creation-portable-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/planet-editor-portable-project"
+    ],
+    "returncode": 0
+  }
+]

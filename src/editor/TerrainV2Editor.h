@@ -2,6 +2,7 @@
 #include "EditorPanels.h"
 #include "TerrainV2Creation.h"
 #include "WorldDebugView.h"
+#include "authoring/TerrainEditorPreview.h"
 #include "terrain/TerrainBrush.h"
 #include "terrain/TerrainSource.h"
 #include <map>
@@ -27,7 +28,7 @@ class TerrainV2Editor {
     bool Editing() const { return editing; }
     bool Publishing() const { return bool(cook) || creation.Busy(); }
     bool Busy() const { return bool(task) || bool(cook) || creation.Busy(); }
-    const std::shared_ptr<MeshData> &Preview() const { return preview; }
+    const std::shared_ptr<const MeshData> &Preview() const { return preview; }
     const std::string &MeshId() const { return meshId; }
     const std::vector<std::string> &Sources() const { return sources; }
     const DebugLineList &Footprint() const { return footprint; }
@@ -36,7 +37,7 @@ class TerrainV2Editor {
     struct Task {
         JobHandle job;
         uint64_t revision = 0;
-        std::vector<TerrainV2::Chunk> chunks;
+        std::shared_ptr<const TerrainV2::EditorPreview> preview;
         std::string error;
     };
     struct Cook {
@@ -44,7 +45,7 @@ class TerrainV2Editor {
         std::string error;
     };
     struct Resident {
-        TerrainV2::Chunk chunk;
+        std::shared_ptr<const TerrainV2::Chunk> chunk;
         MeshHandle mesh;
     };
     std::string projectKey, path, meshId, error, disk;
@@ -59,7 +60,8 @@ class TerrainV2Editor {
     std::map<TerrainV2::ChunkKey, Resident> chunks;
     std::shared_ptr<Task> task;
     std::shared_ptr<Cook> cook;
-    std::shared_ptr<MeshData> preview;
+    std::shared_ptr<const MeshData> preview;
+    std::shared_ptr<const TerrainV2::EditorPreview> previewData;
     TextureHandle weights;
     DebugLineList footprint;
     glm::vec3 lastDab{0};
@@ -69,6 +71,10 @@ class TerrainV2Editor {
     uint64_t revision = 0;
     bool productsDirty = false, resetPending = false;
     bool Open(EditorPanelState &);
+    void ClearPreview() {
+        preview.reset();
+        previewData.reset();
+    }
     void DiscoverSources(const EditorPanelState &);
     void TrimHistory();
     bool PaletteDirty() const;

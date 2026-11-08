@@ -1,5 +1,5 @@
 #pragma once
-#include "MeshData.h"
+#include "TerrainRayPicking.h"
 #include "TextureData.h"
 #include "AssetDatabase.h"
 #include <array>
@@ -24,7 +24,6 @@ bool LoadTerrain(const std::string&,TerrainSource&,std::string&);
 MeshData BuildTerrainMesh(const TerrainSource&);
 bool PaintTerrainTexture(const TerrainSource&,const AssetDatabase&,TextureData&,std::string&);
 bool TerrainPoint(const TerrainSource&,float x,float z,glm::vec3& point);
-bool PickTerrain(const MeshData&,glm::vec3 origin,glm::vec3 direction,glm::vec3& hit);
 enum class TerrainBrushKind {Raise,Lower,Flatten,Smooth,Paint};
 struct TerrainBrush {TerrainBrushKind kind=TerrainBrushKind::Raise;float radius=3,strength=.5f,falloff=1;unsigned layer=0;};
 // A gesture has a frozen flatten height and arc-length dab scheduler, independent

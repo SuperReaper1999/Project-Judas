@@ -71,7 +71,6 @@ bool TerrainPoint(const TerrainSource& t,float x,float z,glm::vec3& point){
  auto a=t.heights[iz*t.nx+ix],b=t.heights[iz*t.nx+ix+1],c=t.heights[(iz+1)*t.nx+ix],d=t.heights[(iz+1)*t.nx+ix+1];
  float height=fx+fz<=1?a+(b-a)*fx+(c-a)*fz:d+(c-d)*(1-fx)+(b-d)*(1-fz);point={x,height,z};return true;
 }
-bool PickTerrain(const MeshData& m,glm::vec3 o,glm::vec3 d,glm::vec3& hit){float nearest=INFINITY;for(size_t i=0;i<m.indices.size();i+=3){auto a=m.vertices[m.indices[i]].position,b=m.vertices[m.indices[i+1]].position,c=m.vertices[m.indices[i+2]].position;auto e1=b-a,e2=c-a,p=glm::cross(d,e2);float det=glm::dot(e1,p);if(std::abs(det)<1e-8f)continue;float inv=1/det;auto t=o-a;float u=glm::dot(t,p)*inv;if(u<0||u>1)continue;auto q=glm::cross(t,e1);float v=glm::dot(d,q)*inv;if(v<0||u+v>1)continue;float dist=glm::dot(e2,q)*inv;if(dist>=0&&dist<nearest)nearest=dist;}if(!std::isfinite(nearest))return false;hit=o+d*nearest;return true;}
 TerrainDraft::Snapshot TerrainDraft::Capture()const{return {source.heights,source.weights};}
 void TerrainDraft::Restore(const Snapshot& s){if(source.heights!=s.heights)++m_geometryRevision;source.heights=s.heights;source.weights=s.weights;++m_revision;}
 void TerrainDraft::Push(std::vector<Snapshot>& list,Snapshot s){size_t bytes=s.heights.size()*20;size_t bound=std::min(size_t(64),std::max(size_t(1),size_t(32*1024*1024)/std::max(size_t(1),bytes)));if(list.size()>=bound)list.erase(list.begin());list.push_back(std::move(s));}

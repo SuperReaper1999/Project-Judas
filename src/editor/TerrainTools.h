@@ -12,7 +12,7 @@ struct TerrainEditor {
  // Editor smoke tests click the real primary control through SDL/ImGui.
  glm::vec2 editButtonCenter{};
  char path[512]="Imports/landscape.judasterrain";int resolution=65;float width=64,depth=64;
- std::shared_ptr<MeshData> preview;uint64_t previewRevision=~uint64_t(0);bool appearanceDirty=true;
+ std::shared_ptr<const MeshData> preview;uint64_t previewRevision=~uint64_t(0);bool appearanceDirty=true;
  MeshHandle mesh;TextureHandle texture;DebugLineList footprint;uint64_t appearanceRevision=~uint64_t(0);
  std::vector<NavigationDependency> navigationDependencies;
  struct NavigationTask {JobHandle job;};std::shared_ptr<NavigationTask> navigationTask;

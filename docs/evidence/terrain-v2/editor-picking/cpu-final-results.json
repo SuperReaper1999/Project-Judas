@@ -1,0 +1,45 @@
+[
+  {
+    "name": "correctness-final",
+    "command": [
+      "build/judas_terrain_v2_picking_tests"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "legacy-terrain",
+    "command": [
+      "build/judas_terrain_authoring_tests",
+      ".cache/terrain-v2/picking/legacy-terrain"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "legacy-volume",
+    "command": [
+      "build/judas_volume_terrain_tests",
+      ".cache/terrain-v2/picking/legacy-volume"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "world-building",
+    "command": [
+      "build/judas_world_building_tests",
+      ".cache/terrain-v2/picking/world-building"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "production-final-0",
+    "returncode": 0
+  },
+  {
+    "name": "production-final-1",
+    "returncode": 0
+  },
+  {
+    "name": "production-final-2",
+    "returncode": 0
+  }
+]

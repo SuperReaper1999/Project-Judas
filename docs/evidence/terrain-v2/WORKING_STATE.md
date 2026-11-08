@@ -2,6 +2,56 @@
 
 ## Latest verified state (supersedes historical next-action notes below)
 
+Terrain LOD checkpoint03927f7187161d48b38705e9c3605ca848f42390 is PUSHED.
+Its docs CI passed; engine gate42477623102 now SUCCESS in BOTH Alpha and
+Experimental build configurations (promotion job skipped as expected).
+All local build/test/benchmark sessions have EXITED. Main1094d645 unchanged.
+
+CURRENT UNCOMMITTED engineering slice: editor preview/picking. The worker snapshot
+and cached range implementation NOW EXISTS in authoring/TerrainEditorPreview.*
+and TerrainRayPicking.*. The original four-argument PickTerrain API is retained,
+its exact float primitive extracted (not replaced with a physics query). Editor
+Task captures the prior immutable snapshot; preparation, merged mesh and bounds
+are worker-owned. Main publishes whole snapshot and retains unchanged GPU chunks.
+ClearPreview releases compatibility mesh and query snapshot together. Published
+mesh views are const all the way through the legacy editor router; its old
+read-only test helper was updated to accept const, with every assertion retained.
+Final builds EXITED.2507 new checks pass; legacyterrain91/volume69/worldbuilding494
+pass. Actual editor15/creation46/planet23 pass EACH modern/portable. Three
+120-ray matched production benchmarks: oldmedian2.429..2.432ms vsnew.00534..00561;
+all112hitpoints EXACT. Triangle visits62914560->61440, bounds64KiB. Whole snapshot
+geometry/merge/bounds nowworker-owned. Saved retained mesh capacity including
+newbounds14819328B(14.133MiB); not peakRSS. Evidence .cache/terrain-v2/picking/.
+Native builds/tests/benchmarks have exited. Registration/build organization33
+pass(2existing skips), APIcontract PASS, currentdocs/release packaging tests and
+link checker PASS. Source modules/frozen oracle/diagnostic prototype/benchmark
+and raw GPU editor results are collected in editor-picking/. Only scoped
+checkpoint/push and a fresh matching local SDK remain for this slice. The old
+Python invocation guessed a nonexistent module; its retained failure is not an
+engine failure. The actual test_cmake_test_targets module passes unchanged.
+
+New tests/TerrainV2PickingTests.cpp plus independently frozen old reference from
+03927f71 are registered. The benchmark now compares actual production ranges
+against that reference, preserving original editor map ordering. The earlier
+disposable prototype source/binary remain in .cache/terrain-v2/picking/.
+Real baseline/prototype logs .cache/terrain-v2/picking/:
+513x513,1024chunks,524288triangles,120alternating rays. Existing merged hover
+median2.49781ms/p953.61973/worst4.58511. Disposable chunk-bounds prototype
+.008015/.025538/.038413ms,112hits,zero observed point differences. Existing
+main-thread preview merge32.3401ms; extra bounds preparation2.21186ms. These are
+diagnostic prototype results, NOT an implemented production fix yet.
+
+Proceed with a cohesive worker-prepared immutable preview snapshot (shared
+per-chunk geometry, same merged mesh and cached range bounds). Editor retains GPU
+handles and publishes the complete result together. Reuse/extract the original
+triangle picker, retain its old four-argument API and an independent frozen
+oracle; do not duplicate a second production triangle algorithm. Match old
+merged vertex/index ordering. Cache bounds in the snapshot and query only
+candidate triangle ranges. Preserve stale-job/cancellation/source-switch safety,
+brush/undo/Play/export workflows. Measure final helper against original rays and
+verify actual editor workflows. No change to physics/native save geometry.
+Do not restart fluid work or touch unrelated files/RPG SDK/main.
+
 Live GitHub verification after the operator's usage reset: documentation run
 42451149211 and engine-focused run42451149210 both SUCCESS for exact
 9c21b8def097709c6bd977fc467b55c340d2dce5. Main remains1094d645. The fixture

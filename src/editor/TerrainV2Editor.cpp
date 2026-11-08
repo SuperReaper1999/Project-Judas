@@ -81,6 +81,7 @@ bool TerrainV2Editor::Open(EditorPanelState &state) {
     undo.clear();
     redo.clear();
     appearanceDirty = true;
+    ClearPreview();
     Queue(All(source), state);
     return true;
 }
@@ -94,11 +95,12 @@ void TerrainV2Editor::Queue(const std::vector<TerrainV2::ChunkKey> &keys, Editor
     auto work = std::make_shared<Task>();
     work->revision = revision;
     auto captured = std::make_shared<const TerrainV2::Source>(source);
+    auto previous = previewData;
     work->job = state.importJobs->Submit(
-        [work, captured, keys](JobContext &context) {
-            if (!TerrainV2::BuildChunks(
-                    *captured, keys, work->chunks, work->error,
-                    [&] { return context.CancelRequested(); }, 1048576)) {
+        [work, captured, previous, keys](JobContext &context) {
+            if (!TerrainV2::PrepareEditorPreview(*captured, keys, previous, work->preview,
+                                                 work->error,
+                                                 [&] { return context.CancelRequested(); })) {
                 if (context.CancelRequested())
                     context.ReportCancelled();
                 else
@@ -209,7 +211,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
         legacy = false;
         activeProject = false;
         resetPending = true;
-        preview.reset();
+        ClearPreview();
         loaded = false;
         path.clear();
         DiscoverSources(state);
@@ -269,7 +271,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
                 path = *found;
                 legacy = false;
                 activeProject = true;
-                preview.reset();
+                ClearPreview();
                 resetPending = true;
                 loaded = false;
                 if (Open(state))
@@ -304,7 +306,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
             if (ImGui::Selectable(fs::path(candidate).filename().string().c_str(),
                                   candidate == path)) {
                 path = candidate;
-                preview.reset();
+                ClearPreview();
                 resetPending = true;
                 loaded = false;
                 if (Open(state))
@@ -321,7 +323,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
     if (auto created = creation.TakeCreatedPath(); !created.empty()) {
         path = std::move(created);
         activeProject = true;
-        preview.reset();
+        ClearPreview();
         resetPending = true;
         loaded = false;
         DiscoverSources(state);
@@ -481,24 +483,26 @@ void TerrainV2Editor::Prepare(Renderer &renderer, const EditorPanelState &state)
     if (task && state.importJobs->IsFinished(task->job)) {
         if (state.importJobs->StateOf(task->job) == JobState::Completed &&
             task->revision == revision) {
-            for (auto &chunk : task->chunks) {
-                auto &r = chunks[chunk.key];
-                if (r.mesh.IsValid())
-                    renderer.DestroyMesh(r.mesh);
-                r.mesh = {};
-                r.chunk = std::move(chunk);
+            const auto &ready = task->preview->Chunks();
+            for (auto it = chunks.begin(); it != chunks.end();) {
+                if (!ready.count(it->first)) {
+                    if (it->second.mesh.IsValid())
+                        renderer.DestroyMesh(it->second.mesh);
+                    it = chunks.erase(it);
+                } else
+                    ++it;
             }
-            auto mesh = std::make_shared<MeshData>();
-            for (const auto &[_, r] : chunks) {
-                unsigned offset = unsigned(mesh->vertices.size());
-                for (auto v : r.chunk.mesh.vertices) {
-                    v.position += r.chunk.anchor;
-                    mesh->vertices.push_back(v);
+            for (const auto &[key, chunk] : ready) {
+                auto &r = chunks[key];
+                if (r.chunk != chunk) {
+                    if (r.mesh.IsValid())
+                        renderer.DestroyMesh(r.mesh);
+                    r.mesh = {};
+                    r.chunk = chunk;
                 }
-                for (auto i : r.chunk.mesh.indices)
-                    mesh->indices.push_back(offset + i);
             }
-            preview = std::move(mesh);
+            previewData = task->preview;
+            preview = previewData->Mesh();
             error.clear();
         } else
             error = state.importJobs->ErrorOf(task->job);
@@ -523,7 +527,8 @@ void TerrainV2Editor::Prepare(Renderer &renderer, const EditorPanelState &state)
 }
 bool TerrainV2Editor::Dab(glm::vec3 point, EditorPanelState &state) {
     glm::vec3 samplePoint;
-    if (!TerrainV2::SourcePoint(source,point,samplePoint,error)) return false;
+    if (!TerrainV2::SourcePoint(source, point, samplePoint, error))
+        return false;
     std::vector<TerrainV2::ChunkKey> changed;
     if (mode >= 5) {
         TerrainV2::Edit e;
@@ -538,8 +543,9 @@ bool TerrainV2Editor::Dab(glm::vec3 point, EditorPanelState &state) {
         source = std::move(next);
     } else {
         brush.kind = TerrainV2::SurfaceBrush::Kind(mode);
-        auto applied=brush;
-        if(source.chart)applied.height+=float(source.chart->originHeight);
+        auto applied = brush;
+        if (source.chart)
+            applied.height += float(source.chart->originHeight);
         if (!TerrainV2::ApplySurfaceBrush(source, samplePoint, applied, changed, error))
             return false;
         appearanceDirty |= mode == 4;
@@ -575,15 +581,15 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
         redo.clear();
         TrimHistory();
     }
-    if (!editing || !focused || !preview)
+    if (!editing || !focused || !previewData)
         return false;
     auto *object = scene.Find(id);
     if (!object || !object->render || object->render->meshAsset != meshId)
         return down;
     glm::vec3 hit;
     const auto inverse = glm::inverse(object->transform.rotation);
-    if (!PickTerrain(*preview, inverse * (origin - object->transform.position), inverse * direction,
-                     hit))
+    if (!previewData->Pick(inverse * (origin - object->transform.position), inverse * direction,
+                           hit))
         return down;
     for (unsigned axis = 0; axis < 3; ++axis)
         for (unsigned i = 0; i < 48; ++i) {
@@ -603,7 +609,8 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
         before = source;
         gesture = true;
         glm::vec3 chartHit;
-        if(!TerrainV2::SourcePoint(source,hit,chartHit,error))return down;
+        if (!TerrainV2::SourcePoint(source, hit, chartHit, error))
+            return down;
         brush.height = chartHit.y - (source.chart ? float(source.chart->originHeight) : 0.f);
         Dab(hit, *frameState);
     } else if (gesture && glm::length(hit - lastDab) > brush.radius * .2f)
@@ -630,12 +637,12 @@ void TerrainV2Editor::Draw(Renderer &renderer, Scene &scene, ResourceManager &re
                 glm::inverse(glm::translate(glm::mat4(1), object.transform.position) *
                              glm::mat4_cast(object.transform.rotation)));
             for (auto &[_, r] : chunks) {
-                if (r.chunk.mesh.indices.empty())
+                if (!r.chunk || r.chunk->mesh.indices.empty())
                     continue;
                 if (!r.mesh.IsValid())
-                    r.mesh = renderer.CreateMesh(r.chunk.mesh);
+                    r.mesh = renderer.CreateMesh(r.chunk->mesh);
                 renderer.DrawMesh(
-                    r.mesh, object.transform.position + object.transform.rotation * r.chunk.anchor,
+                    r.mesh, object.transform.position + object.transform.rotation * r.chunk->anchor,
                     object.transform.rotation, glm::vec3(1), {}, object.render->color, 1);
             }
             renderer.EndTerrainMaterial();
@@ -668,4 +675,5 @@ void TerrainV2Editor::Shutdown(Renderer &renderer, JobSystem *jobs) {
     if (weights.IsValid())
         renderer.DestroyTexture(weights);
     weights = {};
+    ClearPreview();
 }

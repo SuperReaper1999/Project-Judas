@@ -613,3 +613,28 @@ bubbles and are not whole-game FPS or an optimization claim. See
 This remains a source-build preview. Native consumers must relink with matching
 headers/libraries; JudasJS APIs and terrain save formats do not change. Per-chunk
 physical interest, data demand paging and broader material support remain open.
+
+## Responsive large-landscape brush previews
+
+Editor preview preparation now produces one complete, read-only snapshot on the
+worker: changed chunk geometry, the compatibility mesh and cached picking bounds.
+The editor publishes them together and retains unchanged GPU chunks. Rejected,
+cancelled or stale work cannot replace the current geometry/query pair. Retired
+mesh readers keep safe shared ownership; source switches and shutdown release
+both views together.
+
+Brush hovering tests only triangle ranges whose conservative chunk bounds meet
+the ray, using the same two-sided primitive and flattened triangle order as the
+original picker. This is not an approximate terrain-height query: cave walls and
+mapped planetary geometry remain pickable. The old `PickTerrain` native API stays
+available. Internal editor preview mesh views are now const so readers cannot
+invalidate cached bounds accidentally. JudasJS and saved terrain are unchanged.
+
+On the kilometre fixture, three matched 120-ray runs reduced median query cost
+from about 2.43 ms to 0.0053–0.0056 ms, with exact original hit positions. The
+original 29–39 ms mesh assembly runs in the worker now, rather than during editor
+publication. Exact reservation also saves 14.1 MiB of retained mesh capacity,
+including the new 64 KiB query bounds. These are query/buffer measurements, not
+whole-editor FPS, a measured peak-RAM reduction or a hard publication deadline.
+Generic scene selection and legacy terrain/volume brush paths are not claimed
+to have this acceleration. See [controls and raw evidence](evidence/terrain-v2/editor-picking/REVIEW.md).

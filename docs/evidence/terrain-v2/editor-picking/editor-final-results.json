@@ -1,0 +1,50 @@
+[
+  {
+    "name": "editing-final-modern",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/editing-final-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "creation-final-modern",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/creation-final-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-final-modern",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/planet-editor-final-modern-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "editing-final-portable",
+    "command": [
+      "build/judas_terrain_v2_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/editing-final-portable-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "creation-final-portable",
+    "command": [
+      "build/judas_terrain_v2_creation_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/creation-final-portable-project"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "planet-editor-final-portable",
+    "command": [
+      "build/judas_terrain_v2_planet_editor_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/terrain-v2/picking/planet-editor-final-portable-project"
+    ],
+    "returncode": 0
+  }
+]

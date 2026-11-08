@@ -1,0 +1,23 @@
+[  0%] Built target judas_glad
+[  0%] Built target judas_profiler
+[  7%] Built target freetype
+[ 14%] Built target judas_graphics_caps
+[ 14%] Built target judas_jobs
+[ 14%] Built target judas_audio_backend
+[ 14%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 14%] Built target judas_app_icon
+[ 14%] Built target judas_meshoptimizer
+[ 14%] Built target judas_icu_build
+[ 14%] Built target judas_quickjs
+[ 21%] Built target judas_navigation_backend
+[ 21%] Built target harfbuzz
+[ 21%] Built target judas_materials
+[ 28%] Built target judas_navigation_cook
+[ 28%] Linking CXX static library libjudas_build_identity.a
+[ 28%] Built target judas_build_identity
+[100%] Built target judas_engine
+[100%] Built target judas_navigation_baker
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_terrain_v2_picking_benchmark.dir/tests/TerrainV2PickingBenchmark.cpp.o
+[100%] Linking CXX executable judas_terrain_v2_picking_benchmark
+[100%] Built target judas_terrain_v2_picking_benchmark

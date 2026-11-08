@@ -18,7 +18,7 @@ void Check(bool ok, const std::string &text) {
     if (!ok)
         throw std::runtime_error(text);
 }
-float Highest(const std::shared_ptr<MeshData> &mesh) {
+float Highest(const std::shared_ptr<const MeshData> &mesh) {
     float h = -1e9f;
     for (auto &v : mesh->vertices)
         h = std::max(h, v.position.y);
