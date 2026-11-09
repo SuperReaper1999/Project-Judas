@@ -137,7 +137,7 @@ judas_warnings(judas_sprite_math_tests)
 
 # No physics middleware. Judas owns rigid-body state, integration,
 # collision detection, contact generation, and contact resolution itself
-# (src/RigidBody.*, src/Contacts.*, src/ContactSolver.*, src/PhysicsWorld.cpp)
+# (src/RigidBody.*, src/Contacts.*, src/physics/WorldMk2Solver.cpp, src/PhysicsWorld.cpp)
 # — see docs/ARCHITECTURE.md, "Physics ownership," for the milestone this
 # decision belongs to and why Jolt Physics (used through the first M7-Final
 # attempt, recoverable via git history/the milestone-7b tag for the last
@@ -145,6 +145,8 @@ judas_warnings(judas_sprite_math_tests)
 # dependency.
 
 include(cmake/PhysicsWorldSources.cmake)
+include(cmake/TerrainRuntimeSources.cmake)
+include(cmake/GameWaterRuntimeSources.cmake)
 
 set(JUDAS_PHYSICS_SOURCES
     src/PlanarGeometry.cpp
@@ -239,6 +241,8 @@ set(JUDAS_PARTICLE_SOURCES
     src/particles/ParticlePersistence.cpp)
 
 add_library(judas_engine STATIC
+    ${JUDAS_TERRAIN_SOURCES}
+    ${JUDAS_GAME_WATER_SOURCES}
     ${JUDAS_SCRIPTING_SOURCES}
     src/scripting/BindingRegistry.cpp
     src/scripting/BindingValues.cpp

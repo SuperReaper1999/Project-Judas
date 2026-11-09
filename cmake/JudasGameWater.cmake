@@ -1,12 +1,6 @@
-# The runtime owns the optional scene backend. Ordinary projects allocate no
-# grid state. The separate diagnostics executable remains opt-in.
-target_sources(judas_engine PRIVATE
-    src/fluid/GameWater.cpp src/fluid/GameWaterAir.cpp src/fluid/GameWaterGeometry.cpp
-    src/fluid/GameWaterPressure.cpp src/fluid/GameWaterTransport.cpp src/fluid/GameWaterSources.cpp
-    src/fluid/GameWaterCoupling.cpp src/fluid/GameWaterPersistence.cpp
-    src/fluid/GameWaterSurface.cpp src/fluid/GameWaterRuntime.cpp
-    src/fluid/GameWaterRuntimeGeometry.cpp src/fluid/GameWaterRuntimeQueries.cpp
-    src/fluid/GameWaterRuntimePersistence.cpp src/fluid/GameWaterRuntimePresentation.cpp)
+# Desktop qualification and opt-in diagnostics. The engine runtime sources are
+# shared through GameWaterRuntimeSources.cmake on every platform.
+
 # Regression targets are available to the normal focused validation manifest,
 # independently of the optional interactive diagnostic application.
 add_library(judas_game_water INTERFACE)

@@ -154,7 +154,16 @@ Qualification found and corrected real current defects:
 4. Two original OBJ fixtures were initially hidden by the compiler-object ignore
    rule after relocation. Their exact original bytes are committed and the rule
    now admits authored OBJ files throughout the fixture tree.
-5. Several fixtures depended on the process working directory. They now locate
+5. The real WebAssembly link exposed runtime source groups registered below
+   desktop-only returns. Terrain and GameWater sources now have common engine
+   ownership on every platform; compiler-free positive/negative controls reject
+   missing groups or a return-boundary regression. No alternate solver or terrain
+   fallback was restored.
+6. Coordinated qualification exposed a powertrain test still asserting the old
+   22-participant envelope limit. It now proves exact roundtrip at the existing
+   shared limit of 25 and rejects 26. The production bound is unchanged; actual
+   mechanical cold-state and streaming checks remain.
+7. Several fixtures depended on the process working directory. They now locate
    their committed inputs explicitly. No private user data path is required.
 
 The single changed UI vertex-shader golden is backed by a byte comparison:

@@ -1,32 +1,9 @@
-# Terrain data, extraction and runtime publication have separate ownership.
+# Desktop terrain authoring and qualification. Runtime sources are registered
+# unconditionally through TerrainRuntimeSources.cmake.
 target_sources(judas_world_authoring PRIVATE
     src/authoring/TerrainRayPicking.cpp
     src/authoring/TerrainEditorPreview.cpp)
-target_sources(judas_engine PRIVATE
-    src/terrain/TerrainSource.cpp
-    src/terrain/TerrainSamples.cpp
-    src/terrain/TerrainGeometryPages.cpp
-    src/terrain/TerrainGeometrySpill.cpp
-    src/terrain/TerrainPlanetChart.cpp
-    src/planet/PlanetCoverage.cpp
-    src/terrain/TerrainPlanetBinding.cpp
-    src/terrain/TerrainAsset.cpp
-    src/terrain/TerrainComponent.cpp
-    src/terrain/TerrainLod.cpp
-    src/terrain/TerrainLodTransition.cpp
-    src/terrain/TerrainBrush.cpp
-    src/terrain/TerrainSurface.cpp
-    src/terrain/TerrainSolid.cpp
-    src/terrain/TerrainMesher.cpp
-    src/terrain/TerrainTopology.cpp
-    src/terrain/TerrainRuntime.cpp
-    src/terrain/TerrainPreparation.cpp
-    src/terrain/TerrainCollision.cpp
-    src/terrain/TerrainNavigation.cpp
-    src/terrain/TerrainPresentation.cpp
-    src/terrain/TerrainRenderPages.cpp
-    src/terrain/TerrainPersistence.cpp
-    src/WorldTerrainQueries.cpp)
+
 judas_add_engine_test(judas_terrain_v2_collision_tests tests/TerrainV2CollisionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_tests tests/TerrainV2Tests.cpp)
 judas_add_engine_test(judas_terrain_v2_planet_chart_tests tests/TerrainV2PlanetChartTests.cpp SOURCES tests/TerrainV2PlanetSelectionReference.cpp)

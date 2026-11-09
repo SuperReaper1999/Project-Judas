@@ -382,5 +382,63 @@ cmake_language(DEFER CALL record_graph)
             self.assert_policy(self.graph(policy=broken))
 
 
+class SharedRuntimeSources(unittest.TestCase):
+    """Mobile/browser early returns must not leave a partial V2 engine."""
+    modules = ('TerrainRuntimeSources.cmake', 'GameWaterRuntimeSources.cmake')
+
+    def collect(self, source=None):
+        source = source if source is not None else (ROOT / 'CMakeLists.txt').read_text(encoding='utf-8')
+        match = re.search(r'add_library\(judas_engine STATIC\s.*?\n\)', source, re.S)
+        self.assertIsNotNone(match)
+        boundary = source.index('if(EMSCRIPTEN)', match.end())
+        # Evaluate the actual common engine declaration with only these modules
+        # loaded. No compiler, SDL, network or cross toolchain is needed here.
+        includes = []
+        for module in self.modules:
+            statement = f'include(cmake/{module})'
+            self.assertLess(source.index(statement), boundary,
+                            module + ' registered after the mobile runtime split')
+            includes.append(f'include("{(ROOT / "cmake" / module).as_posix()}")')
+        with tempfile.TemporaryDirectory(prefix='judas-common-runtime-') as folder:
+            root = pathlib.Path(folder)
+            trace = root / 'sources.txt'
+            script = root / 'inspect.cmake'
+            script.write_text('cmake_minimum_required(VERSION 3.20)\n' +
+                '\n'.join(includes) + '\n' +
+                'function(add_library target kind)\n' +
+                f' file(WRITE "{trace.as_posix()}" "${{ARGN}}")\nendfunction()\n' +
+                match.group() + '\n', encoding='utf-8')
+            result = subprocess.run(['cmake','-P',str(script)], capture_output=True,
+                                    text=True, encoding='utf-8', timeout=15)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            return trace.read_text(encoding='utf-8').split(';')
+
+    def check_sources(self, source=None):
+        sources = self.collect(source)
+        # Authoring-only terrain sources are intentionally not mobile runtime.
+        authoring = {'TerrainCook.cpp','TerrainGeneration.cpp','TerrainPreview.cpp'}
+        runtime = [p for p in (ROOT/'src/terrain').glob('*.cpp') if p.name not in authoring]
+        runtime += list((ROOT/'src/fluid').glob('GameWater*.cpp'))
+        runtime += [ROOT/'src/WorldTerrainQueries.cpp', ROOT/'src/planet/PlanetCoverage.cpp']
+        for path in runtime:
+            self.assertEqual(sources.count(path.relative_to(ROOT).as_posix()), 1,
+                             'missing/duplicated shared runtime: ' + path.name)
+
+    def test_shared_v2_runtime_is_complete_before_cross_platform_returns(self):
+        self.check_sources()
+
+    def test_desktop_only_registration_is_detected(self):
+        source = (ROOT/'CMakeLists.txt').read_text(encoding='utf-8')
+        line = 'include(cmake/TerrainRuntimeSources.cmake)'
+        broken = source.replace(line, '') + '\n' + line + '\n'
+        with self.assertRaises(AssertionError):
+            self.check_sources(broken)
+
+    def test_missing_runtime_group_is_detected(self):
+        source = (ROOT/'CMakeLists.txt').read_text(encoding='utf-8')
+        with self.assertRaises(AssertionError):
+            self.check_sources(source.replace('    ${JUDAS_GAME_WATER_SOURCES}\n',''))
+
+
 if __name__ == "__main__":
     unittest.main()
