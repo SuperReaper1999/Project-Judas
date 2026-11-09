@@ -11,7 +11,7 @@ struct WheelSettings {
     std::string part; // Optional stable rigid-fracture part key; chassis then identifies its owner.
     glm::vec3 mount{0};
     glm::quat orientation{1,0,0,0}; // down -Y, axle +X, forward -Z
-    float radius=.35f, minLength=.1f, restLength=.35f, maxLength=.6f;
+    float radius=.35f, width=.22f, minLength=.1f, restLength=.35f, maxLength=.6f;
     float springStiffness=20000, damping=2200, spinInertia=1;
     float friction=1, rollingResistance=.02f; // resistance coefficient: torque = coefficient * load * radius
     unsigned collisionLayer=0;

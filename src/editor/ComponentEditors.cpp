@@ -151,6 +151,7 @@ void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
     if(ImGui::DragFloat3("Frame rotation degrees",&degrees.x,.5f))v.orientation=glm::normalize(glm::quat(glm::radians(degrees)));
     TrackEdit(doc);
     DragScalar(doc,"Wheel radius m",v.radius,.01f);
+    DragScalar(doc,"Tread width m",v.width,.01f);
     DragScalar(doc,"Minimum suspension m",v.minLength,.01f);DragScalar(doc,"Rest suspension m",v.restLength,.01f);DragScalar(doc,"Maximum suspension m",v.maxLength,.01f);
     DragScalar(doc,"Spring N/m",v.springStiffness,100);DragScalar(doc,"Damping N s/m",v.damping,20);
     DragScalar(doc,"Spin inertia kg m2",v.spinInertia,.1f);DragScalar(doc,"Tyre friction",v.friction,.05f);DragScalar(doc,"Rolling resistance",v.rollingResistance,.001f);

@@ -568,7 +568,7 @@ declare module "judas" {
     part:string;
     /** Chassis-local mount (metres) and orientation; down -Y, axle +X, forward -Z. */
     mount:Vec3;orientation:Quat;
-    radius:number;minLength:number;restLength:number;maxLength:number;
+    radius:number;width:number;minLength:number;restLength:number;maxLength:number;
     /** N/m, N s/m, and kg m² respectively. */
     springStiffness:number;damping:number;spinInertia:number;
     friction:number;rollingResistance:number;

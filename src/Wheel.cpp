@@ -1,6 +1,7 @@
 #include "Wheel.h"
 #include "SaveArchive.h"
 #include "PerformanceProfiler.h"
+#include "vehicles/WheelContact.h"
 #include <glm/gtc/constants.hpp>
 #include <algorithm>
 #include <cmath>
@@ -56,12 +57,12 @@ glm::quat MountRotation(const WheelSettings& s,const BodyTransform& body,const W
 }
 
 bool ValidateWheelSettings(const WheelSettings& s,std::string& error) {
-    const float values[]={s.radius,s.minLength,s.restLength,s.maxLength,s.springStiffness,s.damping,
+    const float values[]={s.radius,s.width,s.minLength,s.restLength,s.maxLength,s.springStiffness,s.damping,
         s.spinInertia,s.friction,s.rollingResistance,s.orientation.w,s.orientation.x,s.orientation.y,s.orientation.z};
     for(float x:values)if(!std::isfinite(x)){error="nonfinite wheel setting";return false;}
     const double norm=glm::dot(glm::dquat(s.orientation),glm::dquat(s.orientation));
     if(s.part.size()>128||!s.chassis||!Finite(s.mount)||!std::isfinite(glm::length(s.mount))||norm<1e-12||norm>1e12||s.radius<=0||
-       s.minLength<0||s.restLength<=s.minLength||s.maxLength<s.restLength||
+       s.width<=0||s.minLength<0||s.restLength<=s.minLength||s.maxLength<s.restLength||
        s.springStiffness<=0||s.damping<0||s.spinInertia<=1e-8f||s.friction<0||
        s.rollingResistance<0||s.collisionLayer>=64) {
         error="invalid wheel chassis, dimensions, spring, inertia or filter";return false;
@@ -92,18 +93,7 @@ void WheelInstance::Step(PhysicsWorld& world,BodyHandle chassis,float dt) {
     const glm::vec3 axis=mountRotation*glm::vec3(-1,0,0);
     const glm::vec3 anchor=transform.position+transform.rotation*settings.mount;
 
-    PhysicsQueryFilter filter;filter.includeLayers=settings.collisionMask;
-    filter.requiredTags=settings.requiredTags;filter.excludedTags=settings.excludedTags;
-    filter.ignoredBodies.push_back(chassis);
-    // Cast policy also respects the other collider's ordinary M39 mask. The
-    // same broadphase finds those candidates; no private wheel collision tree.
-    const auto endpoint=anchor+down*settings.maxLength;
-    world.QueryBodiesInAabbInto(glm::min(anchor,endpoint)-glm::vec3(settings.radius),
-        glm::max(anchor,endpoint)+glm::vec3(settings.radius),candidates,filter);
-    for(auto body:candidates){unsigned layer=0;CategoryMask mask=0;
-        if(world.GetCollisionFilter(body,layer,mask)&&!(mask&(CategoryMask(1)<<settings.collisionLayer)))filter.ignoredBodies.push_back(body);
-    }
-    auto hit=world.SphereCast(anchor,settings.radius,down,settings.maxLength,filter);
+    const auto hit = JudasVehicles::FindSupport(world,chassis,settings,anchor,down,axis,candidates);
     const float projection=hit.hit?glm::dot(hit.normal,-down):0;
     if(hit.hit&&projection>1e-4f) {
         state.contact=true;state.body=hit.body;state.point=hit.point;state.normal=hit.normal;

@@ -457,7 +457,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
         if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))w.Fail("wheel owns visual placement and requires unit scale without another motion producer");
         const auto* chassis=scene.Find(v.chassis);if(!chassis||(v.part.empty()?(!chassis->body||chassis->characterMotor||chassis->deformable):(!chassis->deformable||chassis->body)))w.Fail("wheel chassis must reference an ordinary body or a rigid partition owner with a part key");
         w.U64(o.id);w.Boolean(v.enabled);w.U64(v.chassis);w.Vector(v.mount);w.Quaternion(v.orientation);
-        w.Number(v.radius);w.Number(v.minLength);w.Number(v.restLength);w.Number(v.maxLength);w.Number(v.springStiffness);w.Number(v.damping);
+        w.Number(v.radius);w.Number(v.width);w.Number(v.minLength);w.Number(v.restLength);w.Number(v.maxLength);w.Number(v.springStiffness);w.Number(v.damping);
         w.Number(v.spinInertia);w.Number(v.friction);w.Number(v.rollingResistance);w.U32(v.collisionLayer);w.U64(v.collisionMask);w.U64(v.requiredTags);w.U64(v.excludedTags);
     }}
     for(const auto& o:scene.Objects())if(o.wheel&&!o.wheel->part.empty()){w.Text("Judas.Wheel.Part.1");w.U64(o.id);w.Text(o.wheel->part);}

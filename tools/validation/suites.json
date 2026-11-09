@@ -1585,6 +1585,16 @@
         "--cold-suite",
         "{output}/camera-cold"
       ]
+    },
+    {
+      "name": "vehicle-v2-contact",
+      "target": "judas_vehicle_contact_tests",
+      "groups": [
+        "physics",
+        "mk2",
+        "lifecycle"
+      ],
+      "args": []
     }
   ],
   "known_findings": [

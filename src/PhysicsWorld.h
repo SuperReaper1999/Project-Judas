@@ -23,6 +23,10 @@ struct PhysicsQueryFilter {
     bool includeSensors=false;
     std::vector<BodyHandle> ignoredBodies;
     bool planar=false; // Query domain; ordinary spatial queries never hit planar geometry.
+    // Optional supporting-face selection. Zero disables it. Applied before
+    // nearest-hit reduction, including individual concave mesh triangles.
+    glm::vec3 normalAxis{0};
+    float minimumNormalDot=0;
 };
 
 // A snapshot query result. No hit leaves hit=false; point/normal then have no

@@ -422,6 +422,8 @@ PhysicsCastHit PhysicsWorld::Cast(const Shape &shape, const BodyTransform &pose,
                  glm::dvec4(pose.rotation.x, pose.rotation.y, pose.rotation.z, pose.rotation.w));
     double d2 = glm::dot(glm::dvec3(direction), glm::dvec3(direction));
     if (!finite(pose.position) || !finite(direction) || !std::isfinite(maximum) || maximum < 0 ||
+        !finite(filter.normalAxis) || !std::isfinite(filter.minimumNormalDot) ||
+        filter.minimumNormalDot < -1 || filter.minimumNormalDot > 1 ||
         d2 <= 0 || !std::isfinite(q2) || q2 <= 0)
         throw std::invalid_argument(
             "cast requires finite pose, nonzero orientation/direction and nonnegative distance");
@@ -451,9 +453,9 @@ PhysicsCastHit PhysicsWorld::Cast(const Shape &shape, const BodyTransform &pose,
             if (stats)
                 ++stats->primitivesTested;
             const auto primitive = PrimitiveAt(body.shape, body.rigidBody, part);
-            const auto hit = shape.type==ShapeType::Planar?CastPlanarPrimitive(shape,pose,unit,nearest,primitive):CastAgainstPrimitive(shape, pose, unit, nearest, primitive);
+            const auto hit = shape.type==ShapeType::Planar?CastPlanarPrimitive(shape,pose,unit,nearest,primitive):CastAgainstPrimitive(shape, pose, unit, nearest, primitive,false,filter.normalAxis,filter.minimumNormalDot);
             const auto handle = m_impl->MakeHandle(slot);
-            if (hit.hit && (!result.hit || hit.distance < nearest ||
+            if (hit.hit && (filter.normalAxis==glm::vec3(0) || glm::dot(hit.normal,filter.normalAxis)>filter.minimumNormalDot) && (!result.hit || hit.distance < nearest ||
                             (hit.distance == nearest && handle.id < result.body.id))) {
                 nearest = hit.distance;
                 result.hit = true;

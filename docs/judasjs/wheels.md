@@ -62,7 +62,7 @@ or choose a camera. See the [complete copyable example](examples/wheel.js).
 ## Snapshots
 
 `settings` contains `enabled`, `chassisId`/`chassis`, `mount`, `orientation`,
-`radius`, `minLength`, `restLength`, `maxLength`, `springStiffness`, `damping`,
+`radius`, `width`, `minLength`, `restLength`, `maxLength`, `springStiffness`, `damping`,
 `spinInertia`, `friction`, `rollingResistance`, `collisionLayer`, `collisionMask`,
 `requiredTags` and `excludedTags`. The latter arrays use project category names.
 `chassis` is an ordinary Entity wrapper; check its `valid` property before using
@@ -100,8 +100,12 @@ stiffness N/m and damping N s/m. Read `entity.presentedTransform` in
 `presentationUpdate` for an interpolated visual wheel pose; use authoritative
 state for physical/gameplay decisions.
 
-The contact proxy is a sphere swept along the suspension travel, separate from
-the visual wheel mesh. Normal impulses support/compress the chassis, and bounded
+The current contact proxy samples a finite-width rounded tread along suspension
+travel, separately from the visual wheel mesh. `width` is authored in metres.
+Supporting faces are selected before nearest-hit reduction, so a vertical wall
+does not hide the floor, including within a single concave collider. Circular
+tread contact is refined against discovered surface planes; this is a bounded
+approximation, not full rotating-wheel CCD. Normal impulses support/compress the chassis, and bounded
 longitudinal/lateral tyre impulses affect its real velocity and wheel spin.
 Dynamic ground receives the opposite impulse; moving/kinematic ground supplies
 its actual point velocity. Collider classification uses the existing collision

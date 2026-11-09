@@ -252,6 +252,7 @@ add_library(judas_engine STATIC
     src/NetworkSession.cpp
     src/NetworkTransport.cpp
     src/Wheel.cpp
+    src/vehicles/WheelContact.cpp
     src/WorldWheels.cpp
     src/Powertrain.cpp
     src/PowertrainAuthoring.cpp

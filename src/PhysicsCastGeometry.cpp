@@ -46,7 +46,11 @@ PrimitiveCastHit MakeHit(double t,const Distance& d,bool overlap) {
 }
 
 PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pose,
-    const glm::vec3& direction,double maximum,const PrimitivePose& target,bool initialOnly) {
+    const glm::vec3& direction,double maximum,const PrimitivePose& target,bool initialOnly,
+    const glm::vec3& normalAxis,float minimumNormalDot) {
+    const auto accepted=[&](const PrimitiveCastHit& hit) {
+        return hit.hit && (normalAxis==glm::vec3(0) || glm::dot(hit.normal,normalAxis)>minimumNormalDot);
+    };
     const auto targetR=PrimitiveRotation(target);
     const glm::dvec3 targetCenter=PrimitiveCenter(target);
     const auto queryR=ContactRotation(pose.rotation);
@@ -111,7 +115,8 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
                 const auto e=b-a,g=c-a,p=glm::cross(velocity,g);double det=glm::dot(e,p);if((!target.shape.asset->convex&&!target.shape.asset->twoSided&&det<=1e-12)||std::abs(det)<=1e-12)continue;
                 const auto v=local-a;double u=glm::dot(v,p)/det;if(u< -1e-10||u>1+1e-10)continue;auto q=glm::cross(v,e);double w=glm::dot(velocity,q)/det;if(w< -1e-10||u+w>1+1e-10)continue;double t=glm::dot(g,q)/det;if(t<0||t>best)continue;
                 if(nearest.hit&&t==best&&i>nearest.feature)continue;
-                best=t;nearest={true,false,t,glm::vec3(targetCenter+targetR*(local+velocity*t)),glm::vec3(targetR*(det>0?f.normal:-f.normal)),i};
+                PrimitiveCastHit candidate{true,false,t,glm::vec3(targetCenter+targetR*(local+velocity*t)),glm::vec3(targetR*(det>0?f.normal:-f.normal)),i};
+                if(accepted(candidate)){best=t;nearest=candidate;}
             }return nearest;
         }
         auto advance=[&](uint32_t feature,double bound){
@@ -144,7 +149,7 @@ PrimitiveCastHit CastAgainstPrimitive(const Shape& cast,const BodyTransform& pos
         target.shape.asset->Candidates(lo-glm::dvec3(tolerance),hi+glm::dvec3(tolerance),candidates,&visited);
         CountCollisionQuery(visited,0);
         PrimitiveCastHit nearest;double bound=maximum;
-        for(auto feature:candidates){auto hit=advance(feature,bound);if(initialOnly&&hit.hit)return hit;if(hit.hit&&(!nearest.hit||hit.distance<nearest.distance||(hit.distance==nearest.distance&&hit.feature<nearest.feature))){nearest=hit;bound=hit.distance;}}
+        for(auto feature:candidates){auto hit=advance(feature,bound);if(!accepted(hit))continue;if(initialOnly)return hit;if(!nearest.hit||hit.distance<nearest.distance||(hit.distance==nearest.distance&&hit.feature<nearest.feature)){nearest=hit;bound=hit.distance;}}
         return nearest;
     }
     if(target.shape.type==ShapeType::Terrain) {

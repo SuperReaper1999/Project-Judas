@@ -665,6 +665,7 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             vector("mount", config.mount);
             quaternion("orientation", config.orientation);
             number("radius", config.radius);
+            number("width", config.width);
             number("minLength", config.minLength);
             number("restLength", config.restLength);
             number("maxLength", config.maxLength);
