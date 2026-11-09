@@ -7,6 +7,7 @@
 #include "editor/EditorPanels.h"
 #include "editor/EditorPreferences.h"
 #include "editor/EditorWorkspace.h"
+#include "editor/EditorPlatformPlacement.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include <cstdio>
@@ -33,6 +34,86 @@ void DrawExtensionPanel(EditorContext &context) {
     ImGui::Begin("Extension proof");
     ImGui::TextUnformatted(context.project.IsLoaded() ? "Project" : "No project");
     ImGui::End();
+}
+ImVec2 nativePosition{1505, 380};
+unsigned nativeQueries = 0;
+ImVec2 NativePosition(ImGuiViewport*) { ++nativeQueries; return nativePosition; }
+
+void CheckNativePlacement(ImGuiWindow* window) {
+    auto& context = *ImGui::GetCurrentContext();
+    auto& platform = ImGui::GetPlatformIO();
+    const auto previousMonitors = platform.Monitors;
+    const auto previousGetter = platform.Platform_GetWindowPos;
+    const auto previousPosition = window->Pos, previousSize = window->Size;
+    auto* previousViewport = window->Viewport;
+    const auto previousViewportId = window->ViewportId;
+    const auto previousOwned = window->ViewportOwned;
+    const auto previousNext = context.NextWindowData;
+    const auto previousMouse = context.IO.MousePos;
+    ImGuiPlatformMonitor monitor;
+    monitor.MainPos={0,0}; monitor.MainSize={1920,1080};
+    monitor.WorkPos={0,28}; monitor.WorkSize={1920,998};
+    platform.Monitors.clear(); platform.Monitors.push_back(monitor);
+    platform.Platform_GetWindowPos = NativePosition;
+    ImGuiViewportP native;
+    native.ID=window->ID; native.Window=window; native.Pos={1590,688}; native.Size={337,646};
+    native.PlatformWindowCreated=true; native.PlatformMonitor=0;
+    window->Viewport=&native; window->ViewportId=native.ID; window->ViewportOwned=true;
+    window->Size=native.Size;
+    ImGui::SetWindowPos(window,native.Pos,ImGuiCond_Always);
+    context.NextWindowData.ClearFlags();
+    const auto active=context.ActiveId;
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==1505&&window->Pos.y==380&&native.Pos.x==1505&&native.Pos.y==380,
+          "idle native placement adopts the compositor's real position before building hit areas");
+    Check(context.ActiveId==active&&window->Size.x==337&&window->Size.y==646,
+          "placement reconciliation preserves focus ownership and user sizing");
+    context.MovingWindow=window; context.IO.MouseDown[0]=true; context.IO.MousePos={1650,700};
+    native.Pos={1590,688}; ImGui::SetWindowPos(window,native.Pos,ImGuiCond_Always);
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==1583&&window->Pos.y==380&&native.Pos.x==1583&&native.Pos.y==380,
+          "drag projection uses the compositor work area instead of requesting a rejected native position");
+    Check(context.IO.MousePos.x==1650&&context.IO.MousePos.y==700&&context.IO.MouseDown[0]&&
+              context.MovingWindow==window&&context.ActiveId==active,
+          "constrained drag retains the real pointer, held button and docking payload owner");
+    native.Pos={800,200}; ImGui::SetWindowPos(window,native.Pos,ImGuiCond_Always);
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==800&&window->Pos.y==200,"valid native positions are not snapped or relocated");
+    ImGuiPlatformMonitor left=monitor;left.MainPos={-1280,0};left.MainSize={1280,1024};
+    left.WorkPos={-1280,25};left.WorkSize={1280,999};platform.Monitors.push_back(left);
+    context.IO.MousePos={-100,200};native.Pos={-150,700};ImGui::SetWindowPos(window,native.Pos,ImGuiCond_Always);
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==-337&&window->Pos.y==378,
+          "native drags choose the pointer's monitor including negative desktop coordinates");
+    context.MovingWindow=nullptr;context.IO.MouseDown[0]=false;
+    native.Pos={800,200};ImGui::SetWindowPos(window,{50,60},ImGuiCond_Always);
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==50&&window->Pos.y==60,
+          "explicit application/off-screen recovery placement is not overwritten before admission");
+    native.Pos={800,200};ImGui::SetWindowPos(window,native.Pos,ImGuiCond_Always);
+    context.NextWindowData.HasFlags|=ImGuiNextWindowDataFlags_HasPos;
+    context.NextWindowData.PosVal={70,90};
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==800&&window->Pos.y==200&&context.NextWindowData.PosVal.x==70,
+          "ordinary explicit next-window placement retains priority");
+    ImGuiDockNode host(window->ID);window->DockNodeAsHost=&host;
+    ReconcileEditorPlatformPlacement(&native);
+    Check(window->Pos.x==1505&&window->Pos.y==380&&context.NextWindowData.PosVal.x==1505&&
+              context.NextWindowData.PosVal.y==380,
+          "floating dock-host pending placement agrees with its admitted native position");
+    window->DockNodeAsHost=nullptr;context.NextWindowData.ClearFlags();
+    native.PlatformWindowCreated=false;const auto queries=nativeQueries;
+    ReconcileEditorPlatformPlacement(&native);
+    Check(nativeQueries==queries,"new viewports are never queried before native window creation");
+    const auto primary=ImGui::GetMainViewport()->Pos;
+    ReconcileEditorPlatformPlacement(ImGui::GetMainViewport());
+    Check(ImGui::GetMainViewport()->Pos.x==primary.x&&ImGui::GetMainViewport()->Pos.y==primary.y,
+          "main editor viewport is never constrained or repositioned by panel admission");
+    native.PlatformWindowCreated=false;
+    platform.Platform_GetWindowPos=previousGetter;platform.Monitors=previousMonitors;
+    window->Viewport=previousViewport;window->ViewportId=previousViewportId;window->ViewportOwned=previousOwned;
+    window->Size=previousSize;ImGui::SetWindowPos(window,previousPosition,ImGuiCond_Always);
+    context.NextWindowData=previousNext;context.IO.MousePos=previousMouse;
 }
 } // namespace
 
@@ -101,6 +182,8 @@ int main() {
 
     state.showInspector = true;
     EditorWorkspace workspace;
+    bool showWorld = false;
+    bool placeWorld = false;
     auto frame = [&] {
         preferences.ApplyPending(state);
         ImGui::NewFrame();
@@ -123,6 +206,17 @@ int main() {
         if (BeginEditorPanel("Console", &state.showConsole, state))
             ImGui::TextUnformatted("Script output");
         ImGui::End();
+        if (showWorld) {
+            if (placeWorld) {
+                ImGui::SetNextWindowPos({420, 220});
+                ImGui::SetNextWindowSize({360, 300});
+                placeWorld = false;
+            }
+            if (ImGui::Begin("World building", &showWorld)) {
+                for (int i = 0; i < 60; ++i) ImGui::Text("Recipe property %d", i);
+            }
+            ImGui::End();
+        }
         ImGui::Render();
     };
     frame();
@@ -205,6 +299,33 @@ int main() {
     ImGui::Render();
     Check(!document.IsDirty() && !state.runtime && !project.IsLoaded(),
           "docking, workspace changes and recovery never create a game world or edit scene content");
+    showWorld = placeWorld = true;
+    frame();frame();
+    auto* world = ImGui::FindWindowByName("World building");
+    ImGui::DockBuilderDockWindow("World building", scene->DockId);
+    frame();frame();
+    Check(world->DockId == scene->DockId && world->DockTabIsVisible,
+          "World building can join the scene's real dock tabs");
+    const auto tab = world->DC.DockTabItemRect;
+    io.AddMousePosEvent(tab.Min.x + 30, tab.GetCenter().y);
+    frame();
+    io.AddMouseButtonEvent(0, true);frame();
+    io.AddMousePosEvent(tab.Min.x + 60, tab.Min.y + 95);frame();frame();
+    const auto dragged = world->Pos;
+    for (int i=0;i<12;++i)frame();
+    Check(world->Pos.x==dragged.x&&world->Pos.y==dragged.y,
+          "held docking drag has stable geometry while the pointer is stationary");
+    io.AddMouseButtonEvent(0, false);frame();frame();
+    Check(!io.MouseDown[0]&&!ImGui::GetCurrentContext()->MovingWindow,
+          "release after docking/undocking leaves no stuck mouse move");
+    std::printf("WORLD_DOCK_TRACE dock=%u pos=%.1f,%.1f size=%.1f,%.1f title=%.1f active=%u\n",
+                world->DockId,world->Pos.x,world->Pos.y,world->Size.x,world->Size.y,world->TitleBarHeight,
+                ImGui::GetCurrentContext()->ActiveId);
+    CheckNativePlacement(world);
+    io.AddMousePosEvent(world->Pos.x+world->Size.x-ImGui::GetStyle().FramePadding.x-ImGui::GetFontSize()*.5f,
+                        world->Pos.y+world->TitleBarHeight*.5f);
+    frame();io.AddMouseButtonEvent(0,true);frame();io.AddMouseButtonEvent(0,false);frame();frame();
+    Check(!showWorld,"World building closes immediately after drag without a scrollbar/focus recovery click");
     ImGui::DestroyContext();
     std::printf("SUMMARY %u checks %u failures\n", checks, failures);
     return failures ? 1 : 0;

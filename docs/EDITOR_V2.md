@@ -86,10 +86,10 @@ Linux image review exercised Dark at UI scales 0.85, 1.0 and 1.5, and Light at
 1.0 and 1.25. These are automated captures reviewed by the agent, not operator acceptance.
 These are scoped checks, not human acceptance or universal monitor/DPI coverage.
 
-Preference schema **3** adds workspace identity, docking state and independent
-panel visibility. Readers accept schemas 1/2: appearance and named layouts are
-retained, and layouts without a dock graph receive a fresh V2 arrangement. This
-is an editor-layout migration, not a conversion of scene or project content.
+Preference schema **3** stores workspace identity, docking state and independent
+panel visibility. Older preference schemas are deliberately unsupported in the
+current V2 source; invalid settings report an error and use defaults. This does
+not convert or modify scene or project content.
 Preferences remain personal SDL `Judas/Editor` data (`workspace.json` and
 `windows.ini`), outside exported projects. Scene state, selection and the editor
 camera are not part of a layout snapshot. Failed preference saves retain the
@@ -103,6 +103,14 @@ launch only. Linux native detached Scene/Game qualification passed its scoped
 automated tests; Windows Editor V2 has not been rerun. Existing Windows acceptance
 does not qualify this new integration. Android/browser exports are game-runtime workflows, not editor
 distributions.
+
+On the SDL/XWayland route, native panel drags follow the pointer monitor's usable
+work area, matching compositor placement constraints. The editor reconciles the
+admitted native position before building the panel's controls, so title bars and
+close buttons retain their visible hit areas after docking/undocking. Native
+floating windows, monitor-to-monitor movement and saved dock layouts remain
+available. Native X11/Windows and the in-window fallback keep their existing
+placement policy. Mixed-monitor/DPI hardware still needs separate qualification.
 
 ## Source ownership
 

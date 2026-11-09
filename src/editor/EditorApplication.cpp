@@ -1,4 +1,5 @@
 #include "EditorApplication.h"
+#include "EditorPlatformPlacement.h"
 #include "../ExperimentalBrowser.h"
 #include "AnimationTimeline.h"
 #include "BrowserExportWorkflow.h"
@@ -275,6 +276,7 @@ int EditorApplication::Run(int argc, char **argv) {
         std::fprintf(stderr, "Editor UI backend initialization failed: %s\n", SDL_GetError());
         return 1;
     }
+    InstallEditorPlatformPlacement();
     window.SetEventHook([this,
                          editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event &event) {
         ImGui_ImplSDL2_ProcessEvent(&event);

@@ -487,6 +487,7 @@ add_library(judas_editor_core STATIC
     src/editor/EditorViewportPresenter.cpp
     src/editor/EditorPanelRegistry.cpp
     src/editor/EditorWorkspace.cpp
+    src/editor/EditorPlatformPlacement.cpp
     src/editor/EditorAutomation.cpp
     src/editor/EditorAutomationTerrainAndAsync.cpp
     src/editor/EditorAutomationAssets.cpp
@@ -1614,7 +1615,7 @@ judas_add_engine_test(judas_script_module_acceptance_tests tests/ScriptModuleAcc
 judas_add_engine_test(judas_editor_window_routing_tests tests/EditorWindowRoutingTests.cpp)
 
 judas_add_engine_test(judas_editor_v2_workspace_tests tests/EditorV2WorkspaceTests.cpp
-    SOURCES src/editor/EditorPanelRegistry.cpp src/editor/EditorWorkspace.cpp src/editor/EditorPreferences.cpp src/editor/EditorHistory.cpp LIBRARIES judas_editor_design judas_imgui)
+    SOURCES src/editor/EditorPanelRegistry.cpp src/editor/EditorWorkspace.cpp src/editor/EditorPlatformPlacement.cpp src/editor/EditorPreferences.cpp src/editor/EditorHistory.cpp LIBRARIES judas_editor_design judas_imgui)
 judas_add_engine_test(judas_editor_asset_browser_tests tests/EditorAssetBrowserTests.cpp
     SOURCES src/editor/AssetBrowserModel.cpp src/editor/AssetPublicationWorkflow.cpp LIBRARIES judas_model_import)
 

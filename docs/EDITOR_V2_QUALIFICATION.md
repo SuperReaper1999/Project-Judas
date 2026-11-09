@@ -256,3 +256,43 @@ For combined Editor/Scripting V2 human review:
 5. Export, move the package and play it. Report the backend and monitor setup.
 
 Main promotion and Alpha v2.0.0 publication require separate operator acceptance.
+
+## Native placement correction — 2026-11-09
+
+A human report identified erratic detached-panel docking and title-bar controls
+that recovered only after clicking the scrollbar. Investigation reproduced a
+concrete native/logical geometry divergence on KWin/XWayland: after a constrained
+337×646 panel drag, ImGui retained `(1590,688)` while SDL and the native client
+window remained at `(1505,380)`. The header was consequently drawn and hit-tested
+in different desktop frames. A normal dock-tree-only test did not reproduce this.
+
+`EditorPlatformPlacement` uses the existing pre-Begin viewport hook on SDL/XWayland.
+Native drags are projected into the pointer monitor's usable work area; idle
+panels adopt the admitted native position before their header/hit rectangles are
+built. It does not reset focus, synthesize button releases, discard layouts,
+disable native windows, or modify the vendored ImGui implementation. Native X11,
+Windows and native-Wayland/in-window behaviour are unchanged. A window-flag
+experiment did not solve the issue and was discarded.
+
+Repeating the constrained drag after correction settled ImGui, SDL and the actual
+native client at `(1583,380)`, with no scrollbar recovery click. Native-to-Inspector
+docking and immediate tab closure passed, and the closed visibility persisted in
+the isolated saved layout. Agent-reviewed captures confirm ordinary Inspector and
+World Building presentation. These are automated desktop checks, not human acceptance.
+
+The workspace suite now has **39 checks**, covering stationary drag stability,
+release ownership, immediate closure, native placement, pointer/button retention,
+negative-coordinate monitor selection, explicit placement/recovery, floating dock
+hosts, uncreated viewports and main-window exclusion. A no-op placement negative
+control fails four new checks; the production implementation passes all 39.
+Raw native events, original failures, captures and rejected experiments remain in
+`.cache/editor-docking-input/`. Further editor regression and exact checkpoint/CI
+results accompany the handover; pending checks are not asserted to have passed here.
+
+Normal-build follow-up: the original 520×720 detached panel also docked into the
+central Scene/Game node, and that node identity survived editor shutdown in the
+isolated saved layout. All four registered workspace/viewport/window-routing/
+preferences gates passed. The editor application lifecycle executable was run
+separately (it is not one of those four registered gates) and passed. Documentation
+link/freshness validation passed. These checks used disposable preference copies;
+the operator's personal layout and projects were not reset or edited by the tests.
