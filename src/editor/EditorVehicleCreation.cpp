@@ -37,7 +37,7 @@ SceneObjectId CreateEditorVehicle(EditorDocument& document,Project& project,Asse
     if(!visual)return 0;
     JudasVehicles::AssemblyRecipe recipe;
     recipe.name=kind=="vehicle-car"?"Car":kind=="vehicle-truck"?"Truck":kind=="vehicle-bus"?"Bus":"Trailer";
-    recipe.axles=kind=="vehicle-truck"?3:kind=="vehicle-bus"?4:2;
+    recipe.axles=kind=="vehicle-truck"?3:kind=="vehicle-bus"?4:kind=="vehicle-trailer"?1:2;
     recipe.mass=kind=="vehicle-car"?500:kind=="vehicle-trailer"?800:2000;
     recipe.powered=kind!="vehicle-trailer";recipe.parent=parent;
     recipe.pose.position=parent?glm::vec3(0,1.1f,0):position+glm::vec3(0,1.1f,0);

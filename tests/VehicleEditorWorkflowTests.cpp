@@ -29,6 +29,10 @@ int main(){unsigned checks=0;auto check=[&](bool value,const std::string& messag
  for(const auto* kind:{"vehicle-truck","vehicle-bus","vehicle-trailer"}){
    const auto id=CreateEditorVehicle(document,project,assets,kind,{0,0,0},parent,error);
    check(id&&document.GetScene().Find(id)->parent==parent,"preset creates actual child assembly: "+error);
+   if(std::string(kind)=="vehicle-trailer"){
+     unsigned wheels=0;for(const auto& object:document.GetScene().Objects())if(object.wheel&&object.wheel->chassis==id)++wheels;
+     check(wheels==2&&!document.GetScene().Find(id)->powertrain,"unpowered trailer preset uses a freely following single axle, not a fixed car wheelbase");
+   }
  }
  document.GetScene().Find(parent)->transform.scale={2,1,1};const auto before=document.GetScene();
  check(!CreateEditorVehicle(document,project,assets,"vehicle-car",{},parent,error)&&ScenesEqual(before,document.GetScene()),"scaled parent rejects without changing scene");

@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "separate_writer_reader": true,
+  "held_S_brake_latch_restored": true,
+  "restored_vs_uninterrupted_position_error_m": 3.3331735952909694e-05,
+  "reader_final_speed_mps": 0,
+  "reader_final_articulation_rad": 0.5609709310572101,
+  "scope": "actual game script, real SaveService, offscreen Mesa graphics; isolated test copy and user data"
+}

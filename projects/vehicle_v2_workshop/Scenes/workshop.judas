@@ -1739,7 +1739,7 @@ object 501 "Axle 1 left"
   parent 500
   wheel.enabled true
   wheel.chassis 500
-  wheel.mount -0.9 -0.1 -0.95
+  wheel.mount -0.9 -0.1 0.175
   wheel.orientation 1 0 0 0
   wheel.radius 0.35
   wheel.width .24
@@ -1755,7 +1755,7 @@ object 501 "Axle 1 left"
   wheel.collisionMask 18446744073709551615
   wheel.requiredTags 0
   wheel.excludedTags 0
-  position -0.9 -0.5 -0.95
+  position -0.9 -0.5 0.175
   rotation 1 0 0 0
   scale 1 1 1
 end
@@ -1780,7 +1780,7 @@ object 503 "Axle 1 right"
   parent 500
   wheel.enabled true
   wheel.chassis 500
-  wheel.mount 0.9 -0.1 -0.95
+  wheel.mount 0.9 -0.1 0.175
   wheel.orientation 1 0 0 0
   wheel.radius 0.35
   wheel.width .24
@@ -1796,7 +1796,7 @@ object 503 "Axle 1 right"
   wheel.collisionMask 18446744073709551615
   wheel.requiredTags 0
   wheel.excludedTags 0
-  position 0.9 -0.5 -0.95
+  position 0.9 -0.5 0.175
   rotation 1 0 0 0
   scale 1 1 1
 end
@@ -1821,7 +1821,7 @@ object 505 "Axle 2 left"
   parent 500
   wheel.enabled true
   wheel.chassis 500
-  wheel.mount -0.9 -0.1 0.95
+  wheel.mount -0.9 -0.1 0.825
   wheel.orientation 1 0 0 0
   wheel.radius 0.35
   wheel.width .24
@@ -1837,7 +1837,7 @@ object 505 "Axle 2 left"
   wheel.collisionMask 18446744073709551615
   wheel.requiredTags 0
   wheel.excludedTags 0
-  position -0.9 -0.5 0.95
+  position -0.9 -0.5 0.825
   rotation 1 0 0 0
   scale 1 1 1
 end
@@ -1862,7 +1862,7 @@ object 507 "Axle 2 right"
   parent 500
   wheel.enabled true
   wheel.chassis 500
-  wheel.mount 0.9 -0.1 0.95
+  wheel.mount 0.9 -0.1 0.825
   wheel.orientation 1 0 0 0
   wheel.radius 0.35
   wheel.width .24
@@ -1878,7 +1878,7 @@ object 507 "Axle 2 right"
   wheel.collisionMask 18446744073709551615
   wheel.requiredTags 0
   wheel.excludedTags 0
-  position 0.9 -0.5 0.95
+  position 0.9 -0.5 0.825
   rotation 1 0 0 0
   scale 1 1 1
 end

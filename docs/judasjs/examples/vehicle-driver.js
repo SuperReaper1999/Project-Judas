@@ -56,6 +56,25 @@ export function driveVehicle(chassis,throttle,steering,brakeTorque=0,maximumStee
             steeringAngle:wheel.settings.mount.z<front+.05?angle:0});
     }
 }
+/** Project-owned two-pedal policy. Opposing the current travel applies service
+ * brakes; release that pedal before selecting reverse. Native torque APIs stay
+ * direct. State is serializable so a cold save retains a held braking pedal.
+ * @param {{brakingDirection:number}} state @param {number} throttle
+ * @param {number} speed Signed forward speed in m/s. @param {boolean} brakeHeld
+ */
+export function resolveVehiclePedals(state,throttle,speed,brakeHeld=false) {
+    const direction=Math.abs(throttle)>.05?Math.sign(throttle):0;
+    if(!direction)state.brakingDirection=0;
+    if(direction&&direction*speed<-.2)state.brakingDirection=direction;
+    const opposing=direction!==0&&state.brakingDirection===direction;
+    return {drive:brakeHeld||opposing?0:throttle,brake:brakeHeld?1:opposing?Math.abs(throttle):0};
+}
+/** @param {import('judas').Entity} chassis */
+export function vehicleForwardSpeed(chassis) {
+    const forward=rotate(chassis.transform.rotation,{x:0,y:0,z:-1});
+    const velocity=chassis.velocity;
+    return forward.x*velocity.x+forward.y*velocity.y+forward.z*velocity.z;
+}
 /** @param {import('judas').Entity} chassis */
 export function chaseVehicle(chassis) {
     const pose=chassis.presentedTransform;
@@ -75,11 +94,13 @@ export const properties={
 };
 export default class {
     /** @param {{entity:import('judas').Entity,properties:{driving:boolean,camera:boolean,maximumSteer:number,brakeTorque:number}}} context */
-    constructor({entity,properties}){this.entity=entity;this.properties=properties;this.state={};}
+    constructor({entity,properties}){this.entity=entity;this.properties=properties;this.state={pedals:{brakingDirection:0}};}
     fixedUpdate(){
-        driveVehicle(this.entity,this.properties.driving?input.axis('vehicle_throttle'):0,
+        const pedals=resolveVehiclePedals(this.state.pedals,this.properties.driving?input.axis('vehicle_throttle'):0,
+            vehicleForwardSpeed(this.entity),input.held('vehicle_brake'));
+        driveVehicle(this.entity,pedals.drive,
             this.properties.driving?-input.axis('vehicle_steer'):0,
-            input.held('vehicle_brake')?this.properties.brakeTorque:0,this.properties.maximumSteer);
+            pedals.brake*this.properties.brakeTorque,this.properties.maximumSteer);
     }
     presentationUpdate(){if(this.properties.camera)chaseVehicle(this.entity);}
     destroy(){if(this.properties.camera)world.clearView();}

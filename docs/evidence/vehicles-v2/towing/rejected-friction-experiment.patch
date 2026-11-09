@@ -1,0 +1,26 @@
+--- accepted/WheelSolver.cpp
++++ rejected/WheelSolver.cpp
+@@ -179,7 +179,22 @@
+     double x=solve.longImpulse+(-vx*b+c*vy)/determinant;
+     double y=solve.lateralImpulse+(-vy*a+c*vx)/determinant;
+     const double length=std::hypot(x,y),limit=solve.friction*(solve.normalImpulse+solve.stopImpulse);
+-    if(length>limit&&length>0){x*=limit/length;y*=limit/length;}
++    if(length>limit&&length>0) {
++        const double rhsX=a*solve.longImpulse+c*solve.lateralImpulse-vx;
++        const double rhsY=c*solve.longImpulse+b*solve.lateralImpulse-vy;
++        double low=0,high=limit>0?std::hypot(rhsX,rhsY)/limit:0;
++        if(limit<=0)x=y=0;
++        else {
++            for(unsigned iteration=0;iteration<40;++iteration) {
++                const double multiplier=(low+high)*.5;
++                const double aa=a+multiplier,bb=b+multiplier,det=aa*bb-c*c;
++                x=(bb*rhsX-c*rhsY)/det;y=(aa*rhsY-c*rhsX)/det;
++                if(std::hypot(x,y)>limit)low=multiplier;else high=multiplier;
++            }
++            const double aa=a+high,bb=b+high,det=aa*bb-c*c;
++            x=(bb*rhsX-c*rhsY)/det;y=(aa*rhsY-c*rhsX)/det;
++        }
++    }
+     Apply(world,*this,solve.longitudinal,solve,float(x)-solve.longImpulse);
+     Apply(world,*this,solve.lateral,solve,float(y)-solve.lateralImpulse);
+     solve.longImpulse=float(x);solve.lateralImpulse=float(y);

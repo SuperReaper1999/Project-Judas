@@ -100,3 +100,13 @@ The extended controls include head-on vehicle collisions and 20 seconds of drive
 6. Judge steering, suspension, load transfer, collision and camera feel. Automation does not make those human acceptance decisions.
 
 Current modelling limits and deferred capabilities are explicit in [Vehicles V2](VEHICLES_V2.md). Windows/Android/browser native execution is not yet qualified for this change.
+
+## Human review and towing follow-up — 2026-11-09
+
+The operator completed hands-on Vehicles V2 review and accepted the tested
+capabilities except towing. The connected tractor could turn to face the trailer
+while decelerating in a turn. The operator authorized conditional acceptance after
+that correction and successful qualification; no second human test is implied.
+See [the towing follow-up](VEHICLES_V2_TOWING.md) for the reproduced mechanism,
+current controls, regression gates, measurements and qualification scope.
+The original measurements above remain scoped to their recorded checkpoints.

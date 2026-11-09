@@ -1,0 +1,17 @@
+PASS create fresh developer project: 
+PASS populate ordinary project starter: 
+PASS Create car selects a complete assembly: 
+PASS project-owned driver and native powertrain are attached
+PASS exact starter camera is superseded without guessing at user scripts
+PASS packaged driver imports and compiles against actual JudasJS
+PASS one Undo removes complete assembly and restores starter camera
+PASS Redo restores vehicle and driver
+PASS driving input settings survive project reopen: 
+PASS complete vehicle and driver are prefab-authorable: 
+PASS preset creates actual child assembly: 
+PASS preset creates actual child assembly: 
+PASS preset creates actual child assembly: 
+PASS unpowered trailer preset uses a freely following single axle, not a fixed car wheelbase
+PASS scaled parent rejects without changing scene
+PASS conflicting logical input types reject atomically with an actionable message
+SUMMARY 16 checks

@@ -24,7 +24,9 @@ void Step(RuntimeWorld& world,InputSystem& input){input.BeginFixedStep();world.F
 }
 int main(int argc,char** argv){try{
  const auto root=fs::absolute(argc>1?argv[1]:"build/m81-wheel-script");fs::create_directories(root/"Assets");
+ fs::copy_file("docs/judasjs/examples/vehicle-driver.js",root/"Assets/vehicle-driver.js",fs::copy_options::overwrite_existing);
  std::ofstream(root/"Assets/probe.js")<<R"JS(import {world,Wheel} from 'judas';
+import {resolveVehiclePedals,vehicleForwardSpeed} from './vehicle-driver.js';
 export default class {
  constructor({entity}){this.entity=entity;this.state={steps:0};}
  rejects(fn,kind){let caught=false;try{fn();}catch(e){caught=e instanceof kind;}if(!caught)throw Error('expected '+kind.name);}
@@ -33,6 +35,21 @@ export default class {
   if(world.entity('2').wheel!==null)throw Error('no implicit wheel component');
   const s=this.wheel.settings;if(s.chassis.id!=='2'||Math.abs(s.radius-.35)>1e-6||s.collisionLayer!=='Default')throw Error('settings snapshot');
   s.radius=99;if(this.wheel.settings.radius===99)throw Error('mutable native snapshot');
+  const pedals={brakingDirection:0};
+  let command=resolveVehiclePedals(pedals,-1,5);
+  if(command.drive!==0||command.brake!==1)throw Error('S must brake forward travel');
+  command=resolveVehiclePedals(JSON.parse(JSON.stringify(pedals)),-1,0);
+  if(command.drive!==0||command.brake!==1)throw Error('held brake must not become reverse after save');
+  resolveVehiclePedals(pedals,0,0);
+  command=resolveVehiclePedals(pedals,-.4,0);
+  if(command.drive!==-.4||command.brake!==0)throw Error('release and re-press selects actual reverse');
+  command=resolveVehiclePedals(pedals,1,-2);
+  if(command.drive!==0||command.brake!==1)throw Error('W must brake reverse travel symmetrically');
+  resolveVehiclePedals(pedals,0,0);
+  command=resolveVehiclePedals(pedals,1,0,true);
+  if(command.drive!==0||command.brake!==1)throw Error('service brake must suppress motor effort');
+  if(!Number.isFinite(vehicleForwardSpeed(world.entity('2'))))throw Error('actual signed speed API');
+  this.state.pedals=true;
   this.state.started=true;
  }
  update(){
@@ -74,6 +91,7 @@ export default class {
  }
 })JS";
  AssetDatabase db;db.Scan(root.string(),(root/"Assets").string());std::string error;AssetRecord script;
+ AssetRecord driver;Check(db.Track((root/"Assets/vehicle-driver.js").string(),driver,error),"registered exact vehicle control module");
  Check(db.Track((root/"Assets/probe.js").string(),script,error),"registered wheel script");
  Scene scene;
  auto& ground=scene.CreateObject("ordinary ground");ground.id=1;ground.body=SceneBodyComponent{};ground.body->halfExtents={10,.1f,10};ground.transform.position={0,-.1f,0};
@@ -84,6 +102,7 @@ export default class {
  auto* runtime=world.RuntimeWheel(3);Check(runtime&&runtime->command.driveTorque==120&&runtime->command.brakeTorque==3&&std::abs(runtime->command.steeringAngle-.12f)<1e-6f,"partial commands preserve values and failed command is atomic");
  Check(runtime&&std::abs(runtime->settings.friction-.7f)<1e-6f&&runtime->settings.springStiffness==20000,"runtime configuration matches actual physics component");
  Step(world,input);Check(world.Scripts()->Diagnostics().empty()&&State(world).value("started",false)&&State(world).value("phaseGuards",false)&&State(world).value("contact",false),"real VM reads contact and enforces phase/argument/snapshot contracts");
+ Check(State(world).value("pedals",false),"exact project driver brakes opposing travel, latches through serialized state and permits deliberate reverse");
  Check(runtime->state.contact&&runtime->state.normalForce>0&&world.Physics().GetLinearVelocity(world.RuntimeBody(2)).z<0,"public command produces real chassis traction");
  std::ofstream(root/"Assets/lifetime.js")<<R"JS(import {world} from 'judas';
 export default class {

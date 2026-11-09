@@ -38,6 +38,24 @@ Spring compression/rebound uses a compliant backward-Euler unilateral row. `rebo
 
 Geometry/source preparation occurs on four native vehicle intervals per fixed step. Chassis, wheel and shaft constraints then iterate together through MK2's velocity-coupling interface. Source torque and brake capacity are integrated once per vehicle interval, not once per solver sweep. Wheels use canonical physical-layout ordering and symmetric sweeps. Sorting alone is not the order-independence test: the regression also reverses deliberately unsorted constraint sweeps.
 
+## Driving policy and trailer layouts
+
+The editable driver uses W/S as opposing pedals: pressing S during forward travel
+applies service brakes; keep holding it to remain stopped. Release and press again
+to select reverse. W behaves symmetrically while reversing; Space is an explicit
+service brake. Releasing the accelerator coasts. This is project-owned input policy,
+not a change to native torque APIs or a hidden velocity/yaw constraint.
+
+A freely following utility trailer needs an appropriate axle layout. The Workshop
+uses a rear tandem at local Z=0.175 and 0.825 m, rather than a fixed car wheelbase
+at ±0.95 m; service brake torque is sized separately for its 900 kg and the tractor's
+700 kg. The editor's unpowered trailer preset uses one axle. Widely separated fixed
+trailer axles scrub strongly in turns; use a steerable bogie if that layout is needed.
+Real jackknifing remains possible under excessive reversing or insufficient grip;
+no artificial articulation limit or anti-jackknife rotation lock is applied.
+
+See [towing correction and qualification](VEHICLES_V2_TOWING.md).
+
 ## Tyres, drive and sleep
 
 The two tangent rows share a Coulomb disk, with coefficient `sqrt(wheelFriction * groundFriction)`. Running response uses load-scaled `longitudinalStiffness` and `lateralStiffness`; low-speed contact uses static grip. Slip can exceed available grip. No hidden driving aid, artificial energy clamp or vehicle pose integrator is applied.

@@ -1,0 +1,107 @@
+PASS build current vehicle fixture: 
+PASS build current vehicle fixture: 
+PASS query-supported chassis naturally sleep in MK2
+ORDER position_difference_m=0
+PASS reversed component registration preserves ten-second driving trajectory
+PASS drive wakes and physically moves chassis
+PASS build current vehicle fixture: 
+PASS removing support wakes a sleeping vehicle without stale suspension
+PASS build current vehicle fixture: 
+PASS moving ground wakes and carries the real chassis
+PASS build current vehicle fixture: 
+PASS changed support geometry wakes without a handle change
+PASS suspension re-equilibrates on the changed support plane
+PASS build current vehicle fixture: 
+PASS sleep cache detects a new collider inside tread reach even when old support is unchanged
+PASS build current vehicle fixture: 
+PASS multi-axle support carries independent mg load
+PASS multi-axle vehicle drives without four-wheel assumptions
+PASS build current vehicle fixture: 
+PASS multi-axle support carries independent mg load
+PASS multi-axle vehicle drives without four-wheel assumptions
+PASS build current vehicle fixture: 
+PASS build current vehicle fixture: 
+UNSORTED_SOLVE position_difference_m=0.00326999
+PASS constraint-order convergence is real without canonical component sorting
+PASS build current vehicle fixture: 
+PASS select zero external gravity for energy control
+ENERGY initial_j=6937.5 maximum_j=6937.5 final_j=6123.94
+PASS passive tyres and suspension do not create mechanical energy
+PASS author reusable vehicle assembly: 
+PASS authoring derives wheel and drivetrain counts from the layout
+PASS complete authored vehicle becomes an ordinary prefab
+PASS build current vehicle fixture: 
+PASS authored parked assembly sleeps
+PASS authored electric graph moves the real multi-wheel chassis
+PASS invalid vehicle authoring is an atomic scene failure
+PASS author reusable vehicle assembly: 
+PASS authoring derives wheel and drivetrain counts from the layout
+PASS complete authored vehicle becomes an ordinary prefab
+PASS build current vehicle fixture: 
+PASS authored parked assembly sleeps
+PASS authored electric graph moves the real multi-wheel chassis
+PASS invalid vehicle authoring is an atomic scene failure
+PASS author reusable vehicle assembly: 
+PASS authoring derives wheel and drivetrain counts from the layout
+PASS complete authored vehicle becomes an ordinary prefab
+PASS build current vehicle fixture: 
+PASS authored parked assembly sleeps
+PASS authored electric graph moves the real multi-wheel chassis
+PASS invalid vehicle authoring is an atomic scene failure
+PASS author unpowered trailer
+PASS build current vehicle fixture: 
+TRAILER maximum_hitch_error_m=0.000558079
+PASS real joint tows unpowered wheels and preserves the articulated attachment
+PASS build current vehicle fixture: 
+PASS rolling-speed control preserves support and independent distance expectation
+PASS build current vehicle fixture: 
+PASS rolling-speed control preserves support and independent distance expectation
+PASS build current vehicle fixture: 
+PASS rolling-speed control preserves support and independent distance expectation
+PASS build current vehicle fixture: 
+PASS rolling-speed control preserves support and independent distance expectation
+PASS build current vehicle fixture: 
+PASS unrepresentable wheel effort fails before publishing any rotor or chassis impulse
+PASS encode native terrain support fixture
+PASS register actual terrain source: 
+PASS publish native Terrain V2 vehicle collision: 
+PASS native terrain supports a sleeping vehicle
+PASS commit real vehicle/terrain origin shift: 
+PASS origin shift preserves chassis and wheel contact frame
+PASS excavate and republish terrain under the sleeping chassis: 
+PASS terrain revision invalidates cached support and chassis falls into actual excavation
+PASS build current vehicle fixture: 
+PASS structural subdivisions preserve four vehicle preparations and one physical torque interval
+PASS build current vehicle fixture: 
+PASS structural subdivisions preserve four vehicle preparations and one physical torque interval
+PASS build current vehicle fixture: 
+PASS structural subdivisions preserve four vehicle preparations and one physical torque interval
+PASS build current vehicle fixture: 
+PASS two real wheel-supported chassis collide without crossing or losing support
+PASS head-on vehicle impact settles through MK2 rather than a separate vehicle collision response
+PASS build current vehicle fixture: 
+PASS build current vehicle fixture: 
+PASS recenter origin on the vehicle during sustained driven travel
+TRAVEL expected=0.0269661,0.779903,-316.711 actual=0.0269524,0.779903,-316.711 origin_shift_trajectory_error_m=6.25509e-05
+PASS twenty-second driven travel preserves trajectory through origin shift
+TOW_COAST old_max_articulation_rad=2.39843 current=0.275625
+PASS original fixed car-wheelbase trailer reproduces folding while coasting (negative control)
+PASS rear tandem trailer follows during a sustained coasting turn without folding
+TOW_BRAKE slope=0 articulation_rad=0.441556 stopping_articulation_rad=0.433814 stopped_speed=0 stopped_yaw_rad=0 reverse_m=0.246821 hitch_m=0.000855277 push_N=2142.1
+PASS turning service-brake stop and deliberate reverse retain free, attached articulation
+PASS braked flat/sloped rig remains stopped without yaw drift
+PASS release and re-press reverse genuinely backs the articulated rig
+PASS braking fixture exercises a real compressive hitch reaction
+TOW_BRAKE slope=0.1 articulation_rad=0.20008 stopping_articulation_rad=0.20008 stopped_speed=0.0196721 stopped_yaw_rad=0.00313377 reverse_m=1.4903 hitch_m=0.000857418 push_N=1988.41
+PASS turning service-brake stop and deliberate reverse retain free, attached articulation
+PASS braked flat/sloped rig remains stopped without yaw drift
+PASS release and re-press reverse genuinely backs the articulated rig
+PASS braking fixture exercises a real compressive hitch reaction
+TOW_BRAKE slope=-0.1 articulation_rad=0.923484 stopping_articulation_rad=0.8597 stopped_speed=0.0133273 stopped_yaw_rad=0.00071758 reverse_m=0.421786 hitch_m=0.000784441 push_N=1538.11
+PASS turning service-brake stop and deliberate reverse retain free, attached articulation
+PASS braked flat/sloped rig remains stopped without yaw drift
+PASS release and re-press reverse genuinely backs the articulated rig
+PASS braking fixture exercises a real compressive hitch reaction
+PASS unbraked pushing trailer remains a dynamic MK2 load, without artificial yaw locks
+PASS repeated drive, brake, deliberate reverse and stop cycles do not fold the rig
+SUMMARY 97 checks

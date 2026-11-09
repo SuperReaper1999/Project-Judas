@@ -99,7 +99,9 @@ def vehicle(root,name,axles,mass,position,color,powered=True,radius=.35):
     shafts=[];sources=[]
     for n in range(axles*2):
         wheel_id=root+1+2*n
-        mount=(-.9 if n%2==0 else .9,-.1,1.9*(n//2-(axles-1)*.5))
+        # A cargo trailer has a rear tandem, not two widely separated car axles.
+        axle_z=(.175+.65*(n//2)) if not powered else 1.9*(n//2-(axles-1)*.5)
+        mount=(-.9 if n%2==0 else .9,-.1,axle_z)
         stiffness=mass*9.81/(axles*2*.08);damping=1.8*math.sqrt(stiffness*mass/(axles*2))
         obj(wheel_id,f'Axle {n//2+1} '+('left' if n%2==0 else 'right'),tuple(mount[i]+(0,-.4,0)[i] for i in range(3)),root,{
             'wheel.enabled':'true','wheel.chassis':str(root),'wheel.mount':vector(mount),'wheel.orientation':'1 0 0 0',
@@ -126,6 +128,7 @@ vehicle(300,'Eight-wheel bus',4,4000,(7,1.2,18),(.58,.28,.72),radius=.5)
 vehicle(400,'Tow vehicle',2,700,(20,1,10),(.24,.58,.85))
 vehicle(500,'Cargo trailer',2,900,(20,1,15),(.65,.7,.75),False)
 layout[-1]['rig'].append('500')
+layout[-1]['brakes']={'400':700*9.81*.35/4*1.2,'500':900*9.81*.35/4*1.2}
 # The car demonstrates the existing combustion/clutch/reduction/open-diff
 # mechanics. Other layouts use independent electric wheel motors.
 car_graph={'version':1,'enabled':True,'shafts':[
@@ -165,5 +168,5 @@ for name,axis,bindings in actions:
     tokens += [json.dumps(name),'1' if axis else '0',str(len(bindings))]
     for control,scale in bindings:tokens += [json.dumps(control),str(scale),'0']
 write('Vehicle_V2_Workshop.judasproj','JudasProject 1\nname "Vehicles V2 Workshop"\nbasic-water "true"\nwater-swimming "true"\nadvanced-fluid-dynamics "false"\nstartup-scene "Scenes/workshop.judas"\nassets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\ninput-map '+json.dumps(' '.join(tokens))+'\n')
-write('README.md','# Vehicles V2 Workshop\n\nEditable project-owned driving, native MK2 chassis, finite-width wheels and powertrains.\n\nW/S accelerate/reverse; A/D steer; Space brake; 1/2/3/4 select car/truck/bus/tow rig; K/L save/load; R reload; Esc pause/resume.\n\nThe tow rig uses an ordinary ball joint and unpowered trailer. Paint-free original procedural geometry; DejaVu font licence is in Assets/Fonts. Physics limits and qualification are in the engine Vehicles V2 documentation.\n')
+write('README.md','# Vehicles V2 Workshop\n\nEditable project-owned driving, native MK2 chassis, finite-width wheels and powertrains.\n\nW/S drive/brake (release and press again to reverse); A/D steer; Space brake; 1/2/3/4 select car/truck/bus/tow rig; K/L save/load; R reload; Esc pause/resume.\n\nThe tow rig uses an ordinary ball joint and unpowered trailer. Paint-free original procedural geometry; DejaVu font licence is in Assets/Fonts. Physics limits and qualification are in the engine Vehicles V2 documentation.\n')
 print(OUT/'Vehicle_V2_Workshop.judasproj')

@@ -1,0 +1,16 @@
+{
+  "baseline": "5200408d76011b20789346f6c534915c78265cb4",
+  "fix": "Project trailer geometry, driver pedal policy, per-body brake sizing; native MK2, wheel and powertrain solvers unchanged",
+  "native_checks": 97,
+  "wheel_script_checks": 20,
+  "editor_checks": 16,
+  "negative_control_old_coast_articulation_radians": 2.398425102,
+  "current_coast_articulation_radians": 0.2756251991,
+  "performance": "Three alternating pairs, 3300 measured fixed steps per pair member after 300 warm-up steps, CPU2 pinned. Old broken rig folds and sleeps; corrected one keeps coasting. Different active time means median is not a per-active-step regression/speedup comparison. Full step includes MK2; rendering and JS are excluded.",
+  "rejected": [
+    "Friction-disk metric prototype did not resolve the folding; restored accepted WheelSolver.cpp byte-for-byte.",
+    "Early disposable diagnostic accidentally steered trailer as well as tractor; those measurements excluded.",
+    "Initial arbitrary 0.8-radian assertion rejected legitimate 0.86-radian downhill articulation; replaced by explicit following-direction gates, stopping <60 degrees and deliberate reverse <90, with unchanged hitch/velocity/yaw drift checks. No inherited regression tolerance was changed."
+  ],
+  "cold_game": "Separate actual game writer/reader, held S remains a brake after restoration, trace and images retained in .cache/vehicles-v2/towing; initial monitor used nonexistent command readback and an initial save attempt lacked writable XDG path; corrected test setup without engine changes."
+}

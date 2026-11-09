@@ -1,9 +1,9 @@
 import {world,input,ui,saves,scenes} from 'judas';
-import {driveVehicle,chaseVehicle,wheelsOf} from './vehicle-driver.js';
+import {driveVehicle,chaseVehicle,wheelsOf,resolveVehiclePedals,vehicleForwardSpeed} from './vehicle-driver.js';
 import {vehicles} from './layout.js';
 
 export default class {
-    constructor(){this.state={selected:0};this.request=null;this.notice='';}
+    constructor(){this.state={selected:0,pedals:{brakingDirection:0}};this.request=null;this.notice='';}
     start(){this.hud=ui.get('vehicle_workshop');this.hud.modal=false;}
     restore(){this.start();this.notice='Restored saved vehicle and drivetrain state.';}
     uiUpdate(){
@@ -21,7 +21,7 @@ export default class {
         const drive=chassis.powertrain?.state;
         const status=this.request?saves.status(this.request):null;
         this.hud.get('telemetry').text='VEHICLES V2 | '+chosen.name+(this.hud.modal?' | PAUSED':'')+'\n'+
-            'W/S drive / reverse | A/D steer | Space brake | 1–4 change vehicle | K/L save/load | R restart | Esc pause\n'+
+            'W/S drive / brake; release + press to reverse | A/D steer | Space brake | 1–4 change vehicle | K/L save/load | R restart | Esc pause\n'+
             'Speed '+(speed*3.6).toFixed(1)+' km/h | Support '+states.filter(s=>s.contact).length+'/'+states.length+
             ' | '+(states.every(s=>s.sleeping)?'SLEEPING':'ACTIVE')+' | Loads N: '+loads.join(' / ')+'\n'+
             'Grip: '+states.map(s=>s.gripUtilization.toFixed(2)).join(' / ')+' | Slip: '+states.map(s=>s.slipRatio.toFixed(2)).join(' / ')+'\n'+
@@ -30,12 +30,14 @@ export default class {
     }
     fixedUpdate(){
         const selected=vehicles[this.state.selected];
+        const pedals=resolveVehiclePedals(this.state.pedals,input.axis('vehicle_throttle'),
+            vehicleForwardSpeed(world.entity(selected.id)),input.held('vehicle_brake'));
         for(const vehicle of vehicles)for(const id of vehicle.rig){
             const active=selected.id===vehicle.id;
             const isTractor=id===vehicle.id;
-            driveVehicle(world.entity(id),active&&isTractor?input.axis('vehicle_throttle'):0,
+            driveVehicle(world.entity(id),active&&isTractor?pedals.drive:0,
                 active&&isTractor?-input.axis('vehicle_steer'):0,
-                !active||input.held('vehicle_brake')?vehicle.brakeTorque:0);
+                (!active?1:pedals.brake)*(vehicle.brakes?.[id]??vehicle.brakeTorque));
         }
     }
     presentationUpdate(){chaseVehicle(world.entity(vehicles[this.state.selected].id));}

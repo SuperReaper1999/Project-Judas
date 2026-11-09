@@ -8,7 +8,7 @@ judas_add_engine_test(judas_bending_tests tests/BendingTests.cpp WARNINGS -Wpeda
 
 judas_add_engine_test(judas_wheel_tests tests/WheelTests.cpp WARNINGS -Wpedantic)
 judas_add_engine_test(judas_vehicle_contact_tests tests/VehicleContactTests.cpp WARNINGS -Wpedantic)
-judas_add_engine_test(judas_vehicle_dynamics_tests tests/VehicleDynamicsTests.cpp WARNINGS -Wpedantic)
+judas_add_engine_test(judas_vehicle_dynamics_tests tests/VehicleDynamicsTests.cpp SOURCES tests/VehicleTowingTests.cpp WARNINGS -Wpedantic)
 judas_add_engine_test(judas_wheel_script_tests tests/WheelScriptTests.cpp WARNINGS -Wpedantic)
 judas_add_engine_test(judas_wheel_lifecycle_tests tests/WheelLifecycleTests.cpp WARNINGS -Wpedantic)
 

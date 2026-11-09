@@ -30,6 +30,7 @@ export const vehicles=[
       "400",
       "500"
     ],
-    "brakeTorque": 721.035
+    "brakeTorque": 721.035,
+    "brakes": {"400":721.035,"500":927.045}
   }
 ];

@@ -15,6 +15,8 @@
 #include <limits>
 #include <stdexcept>
 
+unsigned RunVehicleTowingChecks();
+
 namespace {
 unsigned checks=0;
 void Check(bool value,const std::string& label) {
@@ -323,7 +325,7 @@ void Cold(const std::string& mode,const std::filesystem::path& root) {
 }
 int main(int argc,char** argv) {
     try {
-        if(argc==3)Cold(argv[1],argv[2]);else {SleepingAndOrder();UnorderedConstraints();PassiveEnergy();AuthoredAssemblies();TrailerAndSpeed();TerrainAndIntervals();TrafficAndTravel();if(argc==2)Cold("write",argv[1]);}
+        if(argc==3)Cold(argv[1],argv[2]);else {SleepingAndOrder();UnorderedConstraints();PassiveEnergy();AuthoredAssemblies();TrailerAndSpeed();TerrainAndIntervals();TrafficAndTravel();checks+=RunVehicleTowingChecks();if(argc==2)Cold("write",argv[1]);}
         std::cout<<"SUMMARY "<<checks<<" checks\n";return 0;
     }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
 }

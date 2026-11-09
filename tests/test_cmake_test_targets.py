@@ -73,12 +73,18 @@ class CMakeTestTargets(unittest.TestCase):
         self.assertEqual(list(records), [target for target, _, _ in TARGETS], "target order/names changed")
         for target, main, application in TARGETS:
             self.assertEqual(records[target], {
-                "sources": [f"tests/{main}.cpp"] + (APPLICATION_SOURCES if application else []),
+                "sources": [f"tests/{main}.cpp"] + (APPLICATION_SOURCES if application else []) +
+                    (["tests/VehicleTowingTests.cpp"] if target=="judas_vehicle_dynamics_tests" else []),
                 "links": ["PRIVATE", "judas_engine"], "warnings": ["-Wpedantic"]}, target)
 
     def test_exact_sources_links_warnings_and_order(self):
         self.assertIn("include(cmake/tests/MechanicalTests.cmake)", (ROOT / "CMakeLists.txt").read_text(encoding="utf-8"))
         self.assert_contract(self.declarations())
+
+    def test_missing_towing_regression_detected(self):
+        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
+        with self.assertRaises(AssertionError):
+            self.assert_contract(self.declarations(module=module.replace(" SOURCES tests/VehicleTowingTests.cpp", "", 1)))
 
     def test_missing_target_detected(self):
         module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")

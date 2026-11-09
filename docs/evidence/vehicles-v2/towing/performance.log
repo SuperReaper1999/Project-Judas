@@ -1,0 +1,6 @@
+TIMING old=1 repeat=0 samples=3300 p50=0.163919 p95=0.392981 p99=0.411937 worst=0.548555 articulation=2.398425102
+TIMING old=0 repeat=0 samples=3300 p50=0.358546 p95=0.366632 p99=0.374486 worst=0.531833 articulation=0.2756251991
+TIMING old=0 repeat=1 samples=3300 p50=0.36023 p95=0.368154 p99=0.374106 worst=0.493039 articulation=0.2756251991
+TIMING old=1 repeat=1 samples=3300 p50=0.163528 p95=0.389224 p99=0.404312 worst=0.418099 articulation=2.398425102
+TIMING old=1 repeat=2 samples=3300 p50=0.164109 p95=0.390236 p99=0.406276 worst=0.423699 articulation=2.398425102
+TIMING old=0 repeat=2 samples=3300 p50=0.359408 p95=0.367913 p99=0.377121 worst=0.577779 articulation=0.2756251991

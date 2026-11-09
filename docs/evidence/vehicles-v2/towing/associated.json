@@ -1,0 +1,38 @@
+[
+  {
+    "target": "judas_vehicle_dynamics_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_wheel_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_wheel_lifecycle_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_wheel_script_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_powertrain_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_powertrain_lifecycle_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_powertrain_script_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_joint_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_vehicle_editor_workflow_tests",
+    "exit": 0
+  }
+]
