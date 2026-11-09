@@ -1,0 +1,5 @@
+Retained rejected controls:
+1. Moving an initially near-zero-X car to X=-1024 and requiring <2 cm trajectory agreement after 20s failed: original world X=.0269661, shifted .00134277 (Z=-316.711 in both). Float position updates below the remote chart's ulp can quantize lateral drift. This is deliberately moving the car farther from the origin, not ordinary recentering.
+2. Prototype reconstructing local wheel lever arms did not repair it (.0257551 m difference). Both prototype sources/logs retained; rejected and restored original engine code exactly.
+3. A proposed body-position recenter at 5s incorrectly assumed arbitrary anchors. RuntimeWorld::RequestOrigin rounds absolute anchors to 512 m. It correctly made no shift for ~20m travel; the test incorrectly added an uncommitted shift. Source contract inspected and corrected the fixture, not the engine.
+Final test preserves its original 2cm tolerance, travels 20s, requests a real nonzero 512m anchor near the end, and compares absolute trajectories. Existing 1024m instantaneous terrain/body/contact continuity and excavation assertions remain unchanged.

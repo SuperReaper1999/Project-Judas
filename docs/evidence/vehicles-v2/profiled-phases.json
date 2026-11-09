@@ -1,0 +1,266 @@
+{
+  "baseline": {
+    "powered=1 vehicles=1 driven=0 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.006122,
+        "p95_ms": 0.006361,
+        "p99_ms": 0.006582,
+        "worst_ms": 0.013014
+      },
+      "Rigid physics": {
+        "p50_ms": 0.008265,
+        "p95_ms": 0.008587,
+        "p99_ms": 0.009398,
+        "worst_ms": 0.01606
+      },
+      "whole_step": {
+        "p50_ms": 0.046047,
+        "p95_ms": 0.050275,
+        "p99_ms": 0.053932,
+        "worst_ms": 0.072156
+      }
+    },
+    "powered=1 vehicles=1 driven=1 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.006122,
+        "p95_ms": 0.006333,
+        "p99_ms": 0.009629,
+        "worst_ms": 0.019166
+      },
+      "Rigid physics": {
+        "p50_ms": 0.011732,
+        "p95_ms": 0.011993,
+        "p99_ms": 0.013555,
+        "worst_ms": 0.034195
+      },
+      "whole_step": {
+        "p50_ms": 0.048712,
+        "p95_ms": 0.051306,
+        "p99_ms": 0.055906,
+        "worst_ms": 0.107773
+      }
+    },
+    "powered=1 vehicles=25 driven=0 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.136438,
+        "p95_ms": 0.141999,
+        "p99_ms": 0.144793,
+        "worst_ms": 0.163739
+      },
+      "Rigid physics": {
+        "p50_ms": 0.102704,
+        "p95_ms": 0.107322,
+        "p99_ms": 0.109757,
+        "worst_ms": 0.13273
+      },
+      "whole_step": {
+        "p50_ms": 0.47738,
+        "p95_ms": 0.485666,
+        "p99_ms": 0.490695,
+        "worst_ms": 0.612244
+      }
+    },
+    "powered=1 vehicles=6 driven=1 rough=1 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.033302,
+        "p95_ms": 0.034445,
+        "p99_ms": 0.038452,
+        "worst_ms": 0.056425
+      },
+      "Rigid physics": {
+        "p50_ms": 0.0373,
+        "p95_ms": 0.041288,
+        "p99_ms": 0.042941,
+        "worst_ms": 0.050936
+      },
+      "whole_step": {
+        "p50_ms": 0.151596,
+        "p95_ms": 0.158349,
+        "p99_ms": 0.162706,
+        "worst_ms": 0.184949
+      }
+    },
+    "powered=1 vehicles=2 driven=0 rough=0 impact=1": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.011271,
+        "p95_ms": 0.011563,
+        "p99_ms": 0.01613,
+        "worst_ms": 0.022432
+      },
+      "Rigid physics": {
+        "p50_ms": 0.012594,
+        "p95_ms": 0.01604,
+        "p99_ms": 0.023464,
+        "worst_ms": 0.045125
+      },
+      "whole_step": {
+        "p50_ms": 0.062768,
+        "p95_ms": 0.069381,
+        "p99_ms": 0.075262,
+        "worst_ms": 0.125627
+      }
+    }
+  },
+  "v2": {
+    "powered=1 vehicles=1 driven=0 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.050988,
+        "p95_ms": 0.05278,
+        "p99_ms": 0.056296,
+        "worst_ms": 0.066013
+      },
+      "Rigid physics": {
+        "p50_ms": 0.066024,
+        "p95_ms": 0.070854,
+        "p99_ms": 0.071926,
+        "worst_ms": 0.081554
+      },
+      "Vehicle contact preparation": {
+        "p50_ms": 0.006513,
+        "p95_ms": 0.006623,
+        "p99_ms": 0.006702,
+        "worst_ms": 0.019326
+      },
+      "Vehicle suspension and tyres": {
+        "p50_ms": 0.000871,
+        "p95_ms": 0.000903,
+        "p99_ms": 0.000922,
+        "worst_ms": 0.007326
+      },
+      "whole_step": {
+        "p50_ms": 0.094788,
+        "p95_ms": 0.100008,
+        "p99_ms": 0.102974,
+        "worst_ms": 0.125807
+      }
+    },
+    "powered=1 vehicles=1 driven=1 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.052279,
+        "p95_ms": 0.056564,
+        "p99_ms": 0.057512,
+        "worst_ms": 0.069852
+      },
+      "Rigid physics": {
+        "p50_ms": 0.226487,
+        "p95_ms": 0.233049,
+        "p99_ms": 0.237378,
+        "worst_ms": 0.249891
+      },
+      "Vehicle contact preparation": {
+        "p50_ms": 0.113947,
+        "p95_ms": 0.118924,
+        "p99_ms": 0.119656,
+        "worst_ms": 0.139353
+      },
+      "Vehicle suspension and tyres": {
+        "p50_ms": 0.043081,
+        "p95_ms": 0.043602,
+        "p99_ms": 0.048122,
+        "worst_ms": 0.063028
+      },
+      "whole_step": {
+        "p50_ms": 0.26482,
+        "p95_ms": 0.271843,
+        "p99_ms": 0.277584,
+        "worst_ms": 0.294856
+      }
+    },
+    "powered=1 vehicles=25 driven=0 rough=0 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 1.3046,
+        "p95_ms": 1.335889,
+        "p99_ms": 1.355085,
+        "worst_ms": 1.948384
+      },
+      "Rigid physics": {
+        "p50_ms": 1.630986,
+        "p95_ms": 1.668256,
+        "p99_ms": 1.721326,
+        "worst_ms": 2.493413
+      },
+      "Vehicle contact preparation": {
+        "p50_ms": 0.229743,
+        "p95_ms": 0.240464,
+        "p99_ms": 0.256354,
+        "worst_ms": 0.382142
+      },
+      "Vehicle suspension and tyres": {
+        "p50_ms": 0.027012,
+        "p95_ms": 0.030658,
+        "p99_ms": 0.033535,
+        "worst_ms": 0.05289
+      },
+      "whole_step": {
+        "p50_ms": 1.751323,
+        "p95_ms": 1.790758,
+        "p99_ms": 1.853366,
+        "worst_ms": 2.64044
+      }
+    },
+    "powered=1 vehicles=6 driven=1 rough=1 impact=0": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.316957,
+        "p95_ms": 0.326736,
+        "p99_ms": 0.331951,
+        "worst_ms": 0.4109
+      },
+      "Rigid physics": {
+        "p50_ms": 1.63796,
+        "p95_ms": 1.722078,
+        "p99_ms": 1.739781,
+        "worst_ms": 2.055167
+      },
+      "Vehicle contact preparation": {
+        "p50_ms": 0.989508,
+        "p95_ms": 1.06032,
+        "p99_ms": 1.083674,
+        "worst_ms": 1.247755
+      },
+      "Vehicle suspension and tyres": {
+        "p50_ms": 0.265462,
+        "p95_ms": 0.270838,
+        "p99_ms": 0.273447,
+        "worst_ms": 0.310495
+      },
+      "whole_step": {
+        "p50_ms": 1.744069,
+        "p95_ms": 1.82383,
+        "p99_ms": 1.843918,
+        "worst_ms": 2.166005
+      }
+    },
+    "powered=1 vehicles=2 driven=0 rough=0 impact=1": {
+      "Mechanical powertrains": {
+        "p50_ms": 0.101231,
+        "p95_ms": 0.106591,
+        "p99_ms": 0.107432,
+        "worst_ms": 0.167587
+      },
+      "Rigid physics": {
+        "p50_ms": 0.25974,
+        "p95_ms": 0.474896,
+        "p99_ms": 0.493701,
+        "worst_ms": 0.623105
+      },
+      "Vehicle contact preparation": {
+        "p50_ms": 0.146257,
+        "p95_ms": 0.264518,
+        "p99_ms": 0.270459,
+        "worst_ms": 0.357504
+      },
+      "Vehicle suspension and tyres": {
+        "p50_ms": 0.001612,
+        "p95_ms": 0.087974,
+        "p99_ms": 0.090614,
+        "worst_ms": 0.107802
+      },
+      "whole_step": {
+        "p50_ms": 0.301559,
+        "p95_ms": 0.525902,
+        "p99_ms": 0.548585,
+        "worst_ms": 0.683068
+      }
+    }
+  }
+}

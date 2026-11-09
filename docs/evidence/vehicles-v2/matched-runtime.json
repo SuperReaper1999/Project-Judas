@@ -1,0 +1,66 @@
+{
+  "baseline": {
+    "CASE profiled=0 powered=1 vehicles=1 driven=0 rough=0 impact=0": {
+      "p50_ms": 0.031309,
+      "p95_ms": 0.033272,
+      "p99_ms": 0.039875,
+      "worst_ms": 0.485436
+    },
+    "CASE profiled=0 powered=1 vehicles=1 driven=1 rough=0 impact=0": {
+      "p50_ms": 0.034595,
+      "p95_ms": 0.03709,
+      "p99_ms": 0.051407,
+      "worst_ms": 0.501046
+    },
+    "CASE profiled=0 powered=1 vehicles=25 driven=0 rough=0 impact=0": {
+      "p50_ms": 0.444549,
+      "p95_ms": 0.484043,
+      "p99_ms": 0.741349,
+      "worst_ms": 0.833212
+    },
+    "CASE profiled=0 powered=1 vehicles=6 driven=1 rough=1 impact=0": {
+      "p50_ms": 0.13237,
+      "p95_ms": 0.144853,
+      "p99_ms": 0.202322,
+      "worst_ms": 0.452374
+    },
+    "CASE profiled=0 powered=1 vehicles=2 driven=0 rough=0 impact=1": {
+      "p50_ms": 0.047229,
+      "p95_ms": 0.05312,
+      "p99_ms": 0.072397,
+      "worst_ms": 0.415022
+    }
+  },
+  "v2": {
+    "CASE profiled=0 powered=1 vehicles=1 driven=0 rough=0 impact=0": {
+      "p50_ms": 0.072847,
+      "p95_ms": 0.077406,
+      "p99_ms": 0.091923,
+      "worst_ms": 0.558975
+    },
+    "CASE profiled=0 powered=1 vehicles=1 driven=1 rough=0 impact=0": {
+      "p50_ms": 0.216228,
+      "p95_ms": 0.226106,
+      "p99_ms": 0.263927,
+      "worst_ms": 0.66831
+    },
+    "CASE profiled=0 powered=1 vehicles=25 driven=0 rough=0 impact=0": {
+      "p50_ms": 1.639753,
+      "p95_ms": 1.954496,
+      "p99_ms": 2.005943,
+      "worst_ms": 2.118505
+    },
+    "CASE profiled=0 powered=1 vehicles=6 driven=1 rough=1 impact=0": {
+      "p50_ms": 1.559481,
+      "p95_ms": 1.762625,
+      "p99_ms": 1.89294,
+      "worst_ms": 3.290597
+    },
+    "CASE profiled=0 powered=1 vehicles=2 driven=0 rough=0 impact=1": {
+      "p50_ms": 0.249601,
+      "p95_ms": 0.451622,
+      "p99_ms": 0.5038,
+      "worst_ms": 0.85395
+    }
+  }
+}

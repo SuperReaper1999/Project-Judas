@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "separateWriterReader": true,
+  "engineCheckoutHidden": true,
+  "sdkHiddenDuringGame": true,
+  "sourceProjectHiddenDuringGame": true,
+  "relocatedRuntime": true,
+  "restoredTowZ": 3.909492,
+  "softwareGraphics": true,
+  "humanAcceptance": false
+}

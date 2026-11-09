@@ -1,0 +1,34 @@
+{
+  "code_revision": "1afc3ff23833c72ede30e86d2d8ae1a9b70d7adb",
+  "baseline_revision": "cd4cb87e41f0fc6bc1b7928f6649de3274ba94a4",
+  "human_accepted": false,
+  "ci": {
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/42691676009",
+    "experimental": {
+      "passed": 178,
+      "failed": 0
+    },
+    "alpha": {
+      "passed": 174,
+      "unavailable_locked_fluid_cases": 4,
+      "failed": 0
+    },
+    "ubuntu24_sdk_abi_loader_checks": true
+  },
+  "local_native_cases": 140,
+  "unchanged_environment_retests": 5,
+  "supplemental_commands": 20,
+  "sdk_tools": 15,
+  "sdk_tool_commands": 39,
+  "sdk_workflow_operations": 8,
+  "namespace_engine_checkout_hidden": true,
+  "namespace_sdk_read_only": true,
+  "relocated_game_sdk_and_source_hidden": true,
+  "windows_native_executed": false,
+  "android_executed": false,
+  "browser_executed": false,
+  "gpu_hardware": "NVIDIA GTX 970 desktop OpenGL 4.6 and portable 3.3",
+  "namespace_graphics": "Mesa llvmpipe; not GPU hardware certification",
+  "local_sdk_platform": "Host-native Linux/glibc 2.43; not the Ubuntu 24.04 SDK",
+  "boundary": "No promotion, publication, fluid unlock or RPG SDK modification"
+}

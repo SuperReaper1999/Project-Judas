@@ -1,0 +1,40 @@
+BUILD {
+  "architecture": "x86_64",
+  "build_id": "2.0.0-alpha.1-Experimental-cd4cb87-clean-3cc3fcd0f9b4",
+  "channel": "Experimental",
+  "compiler": "GNU",
+  "compiler_version": "15.2.0",
+  "configuration": "Release",
+  "maturity": "alpha",
+  "platform": "Linux",
+  "release_name": "Judas Engine Alpha v2.0.0",
+  "schema": 1,
+  "source_dirty": false,
+  "source_fingerprint": "3cc3fcd0f9b464030c6774ecd39884f60d29c879d16c9271be898e393a0a5636",
+  "source_origin": "git",
+  "source_revision": "cd4cb87e41f0fc6bc1b7928f6649de3274ba94a4",
+  "source_tree": "6ff8aaade620d492c70557b9ef4769f71e9fbd81",
+  "source_untracked_count": 0,
+  "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "version": "2.0.0-alpha.1"
+}
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=1 driven=0 rough=0 impact=0
+whole_step n=1080 p50_ms=0.031309 p95_ms=0.033272 p99_ms=0.039284 worst_ms=0.309945
+OUTCOME sleepers=0 contacts=4 min_y_m=0.76823902 peak_angular_rad_s=0.00017999114 primary_distance_m=0.05678561 wheels=4
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=1 driven=1 rough=0 impact=0
+whole_step n=1080 p50_ms=0.034595 p95_ms=0.03683 p99_ms=0.047679 worst_ms=0.404533
+OUTCOME sleepers=0 contacts=4 min_y_m=0.7682175 peak_angular_rad_s=0.050365388 primary_distance_m=185.009 wheels=4
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=25 driven=0 rough=0 impact=0
+whole_step n=1080 p50_ms=0.444549 p95_ms=0.491236 p99_ms=0.745126 worst_ms=0.803215
+OUTCOME sleepers=0 contacts=100 min_y_m=0.76823902 peak_angular_rad_s=0.0001801179 primary_distance_m=0.05678561 wheels=100
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=6 driven=1 rough=1 impact=0
+whole_step n=1080 p50_ms=0.13229 p95_ms=0.144853 p99_ms=0.202322 worst_ms=0.431313
+OUTCOME sleepers=0 contacts=24 min_y_m=0.76283008 peak_angular_rad_s=0.34966543 primary_distance_m=0.39225009 wheels=24
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=2 driven=0 rough=0 impact=1
+whole_step n=1200 p50_ms=0.04746 p95_ms=0.05312 p99_ms=0.072397 worst_ms=0.325444
+OUTCOME sleepers=0 contacts=8 min_y_m=0.57433665 peak_angular_rad_s=1.6971482 primary_distance_m=1.1814622 wheels=8

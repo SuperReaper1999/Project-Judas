@@ -1,0 +1,183 @@
+{
+  "passed": true,
+  "sourceRevision": "1afc3ff23833c72ede30e86d2d8ae1a9b70d7adb",
+  "originalGates": "gates/RESULTS.json",
+  "originalEnvironment": "SDL offscreen native resize unsupported; restricted network listeners failed",
+  "unchangedTargetedRetests": [
+    "../pointer-x11-final/RESULTS.json",
+    "../network-native-final/RESULTS.json"
+  ],
+  "nativeCases": 140,
+  "extraCommands": [
+    {
+      "name": "one-way-platform-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_one_way_platform_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/one-way-platform",
+        "--cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "grid-movement-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_grid_movement_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/grid-movement",
+        "--cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "grid-movement-cold-queue",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_grid_movement_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/grid-movement",
+        "--cold-queue"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "ai-reservation-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ai_reservation_script_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/ai-reservation-cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "ai-reservation-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ai_reservation_script_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/ai-reservation-cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "utility-ai-application-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_utility_ai_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/ai_workshop/AI_Workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/ai-workshop",
+        "cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "willow-town-application-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_willow_town_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/willow-town",
+        "cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "willow-town-life-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_willow_town_life_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/willow_town/Willow_Town.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/willow-town-life",
+        "cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "vehicle-v2-cold",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_vehicle_dynamics_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/gates/vehicle-v2-cold"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_joint_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_wheel_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_wheel_lifecycle_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_lifecycle_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_powertrain_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_powertrain_lifecycle_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_lifecycle_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_gravity_selection_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "release-python",
+      "command": [
+        "/usr/bin/python3",
+        "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_manifest.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "release-packaging",
+      "command": [
+        "/usr/bin/python3",
+        "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "identity-controls",
+      "command": [
+        "/usr/bin/python3",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_build_identity_checks.py",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/identity.json"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "packaging-controls",
+      "command": [
+        "/usr/bin/python3",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_packaging_checks.py",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/native-final/packaging.json"
+      ],
+      "exit": 0
+    }
+  ],
+  "humanAcceptance": false
+}

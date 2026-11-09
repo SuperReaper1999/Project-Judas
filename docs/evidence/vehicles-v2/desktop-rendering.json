@@ -1,0 +1,47 @@
+{
+  "scope": "Last 119 rendered frames of 1800 REALTIME frames; 1280x720 GTX970 OpenGL4.6; profiler enabled; swap interval zero in harness; not synthetic FRAMES timing",
+  "outer_cpu": {
+    "n": 119,
+    "p50_ms": 0.8096169999999999,
+    "p95_ms": 1.970357,
+    "p99_ms": 1.988491,
+    "worst_ms": 2.5583549999999997
+  },
+  "render_cpu": {
+    "n": 119,
+    "p50_ms": 0.189437,
+    "p95_ms": 0.211669,
+    "p99_ms": 0.255221,
+    "worst_ms": 0.300076
+  },
+  "gpu_main_camera": {
+    "n": 117,
+    "p50_ms": 0.783616,
+    "p95_ms": 0.78592,
+    "p99_ms": 0.792096,
+    "worst_ms": 0.794912
+  },
+  "gpu_shadow": {
+    "n": 118,
+    "p50_ms": 0.118304,
+    "p95_ms": 0.119936,
+    "p99_ms": 0.127424,
+    "worst_ms": 0.129216
+  },
+  "rss_bytes": 169881600,
+  "profiler_reserved_bytes": 70537152,
+  "fixed_steps_in_window": 6,
+  "accumulator_caps": 0,
+  "diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "startup_ms": 199.864017
+}

@@ -1,0 +1,40 @@
+BUILD {
+  "architecture": "x86_64",
+  "build_id": "2.0.0-alpha.1-Experimental-1afc3ff-clean-7f57f9a4de64",
+  "channel": "Experimental",
+  "compiler": "GNU",
+  "compiler_version": "15.2.0",
+  "configuration": "Release",
+  "maturity": "alpha",
+  "platform": "Linux",
+  "release_name": "Judas Engine Alpha v2.0.0",
+  "schema": 1,
+  "source_dirty": false,
+  "source_fingerprint": "7f57f9a4de648ab7d6c0b0ad0fd9a27b61383f7094fbeb19fa58c36a540c5085",
+  "source_origin": "git",
+  "source_revision": "1afc3ff23833c72ede30e86d2d8ae1a9b70d7adb",
+  "source_tree": "0aa57c7c3d1db25707ca39c9e11e60909bb0abe3",
+  "source_untracked_count": 0,
+  "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "version": "2.0.0-alpha.1"
+}
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=1 driven=0 rough=0 impact=0
+whole_step n=1080 p50_ms=0.072847 p95_ms=0.077406 p99_ms=0.091873 worst_ms=0.384716
+OUTCOME sleepers=1 contacts=4 min_y_m=0.77992302 peak_angular_rad_s=0 primary_distance_m=0 wheels=4
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=1 driven=1 rough=0 impact=0
+whole_step n=1080 p50_ms=0.216228 p95_ms=0.224985 p99_ms=0.263927 worst_ms=0.66831
+OUTCOME sleepers=0 contacts=4 min_y_m=0.77988774 peak_angular_rad_s=0.042026982 primary_distance_m=184.8387 wheels=4
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=25 driven=0 rough=0 impact=0
+whole_step n=1080 p50_ms=1.639753 p95_ms=1.954496 p99_ms=2.005943 worst_ms=2.060116
+OUTCOME sleepers=25 contacts=100 min_y_m=0.77992302 peak_angular_rad_s=0 primary_distance_m=0 wheels=100
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=6 driven=1 rough=1 impact=0
+whole_step n=1080 p50_ms=1.552659 p95_ms=1.663197 p99_ms=1.880477 worst_ms=2.02492
+OUTCOME sleepers=0 contacts=24 min_y_m=0.77439618 peak_angular_rad_s=0.74647397 primary_distance_m=35.115253 wheels=24
+CAPTURE incomplete_frames=0
+CASE profiled=0 powered=1 vehicles=2 driven=0 rough=0 impact=1
+whole_step n=1200 p50_ms=0.248899 p95_ms=0.447915 p99_ms=0.5038 worst_ms=0.743543
+OUTCOME sleepers=2 contacts=8 min_y_m=0.77853149 peak_angular_rad_s=0.13824612 primary_distance_m=1.8919625 wheels=8
