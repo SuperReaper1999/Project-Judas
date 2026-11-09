@@ -1,0 +1,1938 @@
+JudasScene 3
+settings
+  name "Vehicles V2 Workshop"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .5
+  sun-color 1 .97 .9
+  ambient .28 .3 .34
+  background-color .12 .2 .3
+  fidelity-policy none
+  next-id 1100
+end
+
+object 1 "Uniform gravity"
+  gravity uniform 9.81
+  gravity.region box 3000 3000 3000
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 2 "Ground"
+  render box
+  render.half-extents 45 0.5 140
+  render.radius .5
+  render.color 0.2 0.29 0.22
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 45 0.5 140
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position -15 -0.5 -20
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 3 "Driving lane"
+  render box
+  render.half-extents 28 0.04 90
+  render.radius .5
+  render.color 0.25 0.28 0.31
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 28 0.04 90
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 0 -0.02 -40
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 4 "Climbing ramp"
+  render box
+  render.half-extents 7 0.25 8
+  render.radius .5
+  render.color 0.55 0.52 0.38
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 7 0.25 8
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 0 0.7094954993478884 -35
+  rotation 0.9982005399352042 0.059964006479444595 0 0
+  scale 1 1 1
+end
+
+object 10 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -25.0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 11 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -26.8
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 12 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -28.6
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 13 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -30.4
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 14 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -32.2
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 15 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -34.0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 16 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -35.8
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 17 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -37.6
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 18 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -39.4
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 19 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -41.2
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 20 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -43.0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 21 "Rough strip"
+  render box
+  render.half-extents 3 0.065 0.25
+  render.radius .5
+  render.color 0.42 0.43 0.45
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.065 0.25
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 18 0.065 -44.8
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 30 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position -7 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 31 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position -5 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 32 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position -3 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 33 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position -1 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 34 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position 1 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 35 "Loose collision crate"
+  render box
+  render.half-extents 0.45 0.5 0.45
+  render.radius .5
+  render.color 0.72 0.43 0.18
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.5 0.45
+  body.radius .5
+  body.mass 30
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 0
+  position 3 0.5 -15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 40 "Wall beside support test"
+  render box
+  render.half-extents 0.18 0.6 8
+  render.radius .5
+  render.color 0.35 0.48 0.56
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.18 0.6 8
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position -19 0.6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 41 "Boundary barrier"
+  render box
+  render.half-extents 0.3 0.4 85
+  render.radius .5
+  render.color 0.7 0.65 0.3
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.3 0.4 85
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position -59 0.4 -30
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 42 "Boundary barrier"
+  render box
+  render.half-extents 0.3 0.4 85
+  render.radius .5
+  render.color 0.7 0.65 0.3
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.3 0.4 85
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  position 95 0.4 -30
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 50 "Terrain V2 off-road test"
+  render box
+  render.half-extents 32 8 32
+  render.radius .5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 32 8 32
+  body.radius .5
+  body.mass 1
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  terrain.asset "9ee34b6e47363c25384e6c54c60fdb58"
+  position 62 0 -25
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 100 "Combustion road car"
+  render box
+  render.half-extents 0.72 0.2 1.35
+  render.radius .5
+  render.color 0.1 0.7 0.73
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.72 0.2 1.35
+  body.radius .5
+  body.mass 500
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 2
+  body.compound-box 0 0 0 .72 .2 1.35
+  body.compound-box 0 .55 0 .55 .35 0.6075
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"engine\",\"kind\":\"internal\",\"inertia\":0.25,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[-1,0,0]},{\"name\":\"input\",\"kind\":\"internal\",\"inertia\":0.1,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[-1,0,0]},{\"name\":\"carrier\",\"kind\":\"internal\",\"inertia\":0.1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[-1,0,0]},{\"name\":\"left\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"105\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"right\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"107\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"engine\",\"shaft\":0,\"kind\":\"combustion\",\"torqueCurve\":[[0,0],[800,65],[2500,150],[5000,120],[6500,0]],\"maxTorque\":160,\"maxPower\":100000,\"starterTorque\":120}],\"links\":[{\"name\":\"clutch\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":2,\"ratio\":1,\"maxTorque\":200},{\"name\":\"gearbox\",\"kind\":\"gear\",\"input\":1,\"output\":2,\"outputB\":2,\"ratio\":0.25,\"maxTorque\":200},{\"name\":\"open\",\"kind\":\"differential\",\"input\":2,\"output\":3,\"outputB\":4,\"ratio\":1,\"maxTorque\":200}],\"brakes\":[]}"
+  position -14 1 12
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 190 "Cabin"
+  parent 100
+  render box
+  render.half-extents 0.55 0.35 0.6075
+  render.radius .5
+  render.color 0.165 0.5549999999999999 0.5745
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  position 0 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 101 "Axle 1 left"
+  parent 100
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 15328.125
+  wheel.damping 2491.5638914143865
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 102 "Tread"
+  parent 101
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 103 "Axle 1 right"
+  parent 100
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 15328.125
+  wheel.damping 2491.5638914143865
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 104 "Tread"
+  parent 103
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 105 "Axle 2 left"
+  parent 100
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 15328.125
+  wheel.damping 2491.5638914143865
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 106 "Tread"
+  parent 105
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 107 "Axle 2 right"
+  parent 100
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 15328.125
+  wheel.damping 2491.5638914143865
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 108 "Tread"
+  parent 107
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 200 "Six-wheel utility truck"
+  render box
+  render.half-extents 0.72 0.2 2.3
+  render.radius .5
+  render.color 0.8 0.38 0.12
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.72 0.2 2.3
+  body.radius .5
+  body.mass 2200
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 2
+  body.compound-box 0 0 0 .72 .2 2.3
+  body.compound-box 0 .55 0 .55 .35 1.035
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"wheel_205\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"205\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_207\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"207\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_209\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"209\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_211\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"211\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor_205\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1169.025,\"maxPower\":44000,\"starterTorque\":0},{\"name\":\"motor_207\",\"shaft\":1,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1169.025,\"maxPower\":44000,\"starterTorque\":0},{\"name\":\"motor_209\",\"shaft\":2,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1169.025,\"maxPower\":44000,\"starterTorque\":0},{\"name\":\"motor_211\",\"shaft\":3,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1169.025,\"maxPower\":44000,\"starterTorque\":0}],\"links\":[],\"brakes\":[]}"
+  position -5 1.2 16
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 290 "Cabin"
+  parent 200
+  render box
+  render.half-extents 0.55 0.35 1.035
+  render.radius .5
+  render.color 0.62 0.34700000000000003 0.178
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  position 0 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 201 "Axle 1 left"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -0.9 -0.1 -1.9
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -1.9
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 202 "Tread"
+  parent 201
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 203 "Axle 1 right"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 0.9 -0.1 -1.9
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -1.9
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 204 "Tread"
+  parent 203
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 205 "Axle 2 left"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -0.9 -0.1 0.0
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 0.0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 206 "Tread"
+  parent 205
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 207 "Axle 2 right"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 0.9 -0.1 0.0
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 0.0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 208 "Tread"
+  parent 207
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 209 "Axle 3 left"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -0.9 -0.1 1.9
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 1.9
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 210 "Tread"
+  parent 209
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 211 "Axle 3 right"
+  parent 200
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 0.9 -0.1 1.9
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 44962.5
+  wheel.damping 7308.5874148155335
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 1.9
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 212 "Tread"
+  parent 211
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 300 "Eight-wheel bus"
+  render box
+  render.half-extents 0.72 0.2 3.2499999999999996
+  render.radius .5
+  render.color 0.58 0.28 0.72
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.72 0.2 3.2499999999999996
+  body.radius .5
+  body.mass 4000
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 2
+  body.compound-box 0 0 0 .72 .2 3.2499999999999996
+  body.compound-box 0 .55 0 .55 .35 1.4625
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"wheel_309\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"309\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_311\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"311\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_313\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"313\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_315\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"315\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor_309\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1594.125,\"maxPower\":80000,\"starterTorque\":0},{\"name\":\"motor_311\",\"shaft\":1,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1594.125,\"maxPower\":80000,\"starterTorque\":0},{\"name\":\"motor_313\",\"shaft\":2,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1594.125,\"maxPower\":80000,\"starterTorque\":0},{\"name\":\"motor_315\",\"shaft\":3,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":1594.125,\"maxPower\":80000,\"starterTorque\":0}],\"links\":[],\"brakes\":[]}"
+  position 7 1.2 18
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 390 "Cabin"
+  parent 300
+  render box
+  render.half-extents 0.55 0.35 1.4625
+  render.radius .5
+  render.color 0.477 0.28200000000000003 0.568
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  position 0 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 301 "Axle 1 left"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount -0.9 -0.1 -2.8499999999999996
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -2.8499999999999996
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 302 "Tread"
+  parent 301
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 303 "Axle 1 right"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount 0.9 -0.1 -2.8499999999999996
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -2.8499999999999996
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 304 "Tread"
+  parent 303
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 305 "Axle 2 left"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount -0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 306 "Tread"
+  parent 305
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 307 "Axle 2 right"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount 0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 308 "Tread"
+  parent 307
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 309 "Axle 3 left"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount -0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 310 "Tread"
+  parent 309
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 311 "Axle 3 right"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount 0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 312 "Tread"
+  parent 311
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 313 "Axle 4 left"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount -0.9 -0.1 2.8499999999999996
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 2.8499999999999996
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 314 "Tread"
+  parent 313
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 315 "Axle 4 right"
+  parent 300
+  wheel.enabled true
+  wheel.chassis 300
+  wheel.mount 0.9 -0.1 2.8499999999999996
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.5
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 61312.5
+  wheel.damping 9966.255565657546
+  wheel.spinInertia 1.0
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 2.8499999999999996
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 316 "Tread"
+  parent 315
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 1.0 0.12 1.0
+end
+
+object 400 "Tow vehicle"
+  render box
+  render.half-extents 0.72 0.2 1.35
+  render.radius .5
+  render.color 0.24 0.58 0.85
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.72 0.2 1.35
+  body.radius .5
+  body.mass 700
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 2
+  body.compound-box 0 0 0 .72 .2 1.35
+  body.compound-box 0 .55 0 .55 .35 0.6075
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"wheel_401\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"401\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_403\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"403\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_405\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"405\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel_407\",\"kind\":\"wheel\",\"inertia\":1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"407\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor_401\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":390.56062499999996,\"maxPower\":14000,\"starterTorque\":0},{\"name\":\"motor_403\",\"shaft\":1,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":390.56062499999996,\"maxPower\":14000,\"starterTorque\":0},{\"name\":\"motor_405\",\"shaft\":2,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":390.56062499999996,\"maxPower\":14000,\"starterTorque\":0},{\"name\":\"motor_407\",\"shaft\":3,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":390.56062499999996,\"maxPower\":14000,\"starterTorque\":0}],\"links\":[],\"brakes\":[]}"
+  position 20 1 10
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 490 "Cabin"
+  parent 400
+  render box
+  render.half-extents 0.55 0.35 0.6075
+  render.radius .5
+  render.color 0.256 0.477 0.6525
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  position 0 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 401 "Axle 1 left"
+  parent 400
+  wheel.enabled true
+  wheel.chassis 400
+  wheel.mount -0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 21459.375
+  wheel.damping 3488.189447980141
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 402 "Tread"
+  parent 401
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 403 "Axle 1 right"
+  parent 400
+  wheel.enabled true
+  wheel.chassis 400
+  wheel.mount 0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 21459.375
+  wheel.damping 3488.189447980141
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 404 "Tread"
+  parent 403
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 405 "Axle 2 left"
+  parent 400
+  wheel.enabled true
+  wheel.chassis 400
+  wheel.mount -0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 21459.375
+  wheel.damping 3488.189447980141
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 406 "Tread"
+  parent 405
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 407 "Axle 2 right"
+  parent 400
+  wheel.enabled true
+  wheel.chassis 400
+  wheel.mount 0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 21459.375
+  wheel.damping 3488.189447980141
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 408 "Tread"
+  parent 407
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 500 "Cargo trailer"
+  render box
+  render.half-extents 0.72 0.2 1.35
+  render.radius .5
+  render.color 0.65 0.7 0.75
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.72 0.2 1.35
+  body.radius .5
+  body.mass 900
+  body.friction .8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.managed true
+  body.compound-count 2
+  body.compound-box 0 0 0 .72 .2 1.35
+  body.compound-box 0 .55 0 .55 .35 0.6075
+  position 20 1 15
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 590 "Cabin"
+  parent 500
+  render box
+  render.half-extents 0.55 0.35 0.6075
+  render.radius .5
+  render.color 0.5225000000000001 0.5549999999999999 0.5875
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  position 0 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 501 "Axle 1 left"
+  parent 500
+  wheel.enabled true
+  wheel.chassis 500
+  wheel.mount -0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 27590.625
+  wheel.damping 4484.815004545896
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 502 "Tread"
+  parent 501
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 503 "Axle 1 right"
+  parent 500
+  wheel.enabled true
+  wheel.chassis 500
+  wheel.mount 0.9 -0.1 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 27590.625
+  wheel.damping 4484.815004545896
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 504 "Tread"
+  parent 503
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 505 "Axle 2 left"
+  parent 500
+  wheel.enabled true
+  wheel.chassis 500
+  wheel.mount -0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 27590.625
+  wheel.damping 4484.815004545896
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 506 "Tread"
+  parent 505
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 507 "Axle 2 right"
+  parent 500
+  wheel.enabled true
+  wheel.chassis 500
+  wheel.mount 0.9 -0.1 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.35
+  wheel.width .24
+  wheel.minLength .08
+  wheel.restLength .4
+  wheel.maxLength .7
+  wheel.springStiffness 27590.625
+  wheel.damping 4484.815004545896
+  wheel.spinInertia 0.48999999999999994
+  wheel.friction 1.05
+  wheel.rollingResistance .015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.9 -0.5 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 508 "Tread"
+  parent 507
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 0.055 0.065 0.075
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "56ba5e07836cb906d3e4a627b2a2d3b2"
+  render.texture-asset ""
+  position 0 0 0
+  rotation 0.7071067811865476 0 0 0.7071067811865476
+  scale 0.7 0.12 0.7
+end
+
+object 600 "Articulated tow hitch"
+  joint 2
+  joint.body-a 400
+  joint.body-b 500
+  joint.anchor-a 0 0 1.8
+  joint.anchor-b 0 0 -3.2
+  joint.frame-a 1 0 0 0
+  joint.frame-b 1 0 0 0
+  joint.enabled true
+  joint.limits false
+  joint.motor false
+  joint.spring false
+  joint.lower -1
+  joint.upper 1
+  joint.speed 0
+  joint.max-force 10000
+  joint.rest 0
+  joint.stiffness 10
+  joint.damping 1
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 1000 "Workshop controls"
+  ui.asset "521784cd7aaf9c973949a69655537734"
+  ui.name "vehicle_workshop"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "bf9fc08810ce4ec2888f2a1fc115435c"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

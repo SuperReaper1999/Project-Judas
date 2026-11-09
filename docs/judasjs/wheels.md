@@ -1,6 +1,6 @@
 # Wheel — suspension, rolling and tyre contact
 
-[Index](../JUDASJS.md) · [Physics](physics.md) · [Entities/prefabs](entities.md) · [M81 authoring and limitations](../WHEELS.md)
+[Index](../JUDASJS.md) · [Physics](physics.md) · [Entities/prefabs](entities.md) · [Vehicles V2 authoring and limitations](../VEHICLES_V2.md)
 
 An authored Wheel component references an ordinary dynamic rigid-body chassis.
 Each wheel has its own suspension, rotational inertia, torque/brake commands and
@@ -63,16 +63,17 @@ or choose a camera. See the [complete copyable example](examples/wheel.js).
 
 `settings` contains `enabled`, `chassisId`/`chassis`, `mount`, `orientation`,
 `radius`, `width`, `minLength`, `restLength`, `maxLength`, `springStiffness`, `damping`,
-`spinInertia`, `friction`, `rollingResistance`, `collisionLayer`, `collisionMask`,
+`spinInertia`, `reboundRatio`, `longitudinalStiffness`, `lateralStiffness`, `friction`, `rollingResistance`, `collisionLayer`, `collisionMask`,
 `requiredTags` and `excludedTags`. The latter arrays use project category names.
 `chassis` is an ordinary Entity wrapper; check its `valid` property before using
 a reference after destruction. Geometry/reference/filter changes are authored;
-`configure` accepts only friction, spring stiffness, damping and rolling resistance.
+`configure` accepts friction, spring stiffness, damping, rebound ratio, longitudinal/lateral stiffness and rolling resistance.
 
 `state` contains `available`, `contact`, `initialOverlap`, `contactEntityId`/
 `contactEntity`, `point`, `normal`, `groundVelocity`, `center`, `rotation`,
 `length`, `normalForce`, `angularVelocity`, `angle`, `longitudinalSlip`,
-`lateralSlip`, `longitudinalImpulse` and `lateralImpulse`. Contact witness data
+`lateralSlip`, `longitudinalImpulse`, `lateralImpulse`, `sleeping`, `slipRatio`,
+`slipAngle`, `gripUtilization` and `diagnostic`. Contact witness data
 is meaningful when `contact` is true; a miss gives `contactEntity: null`.
 Slip values describe the relative tyre/ground motion before the last friction
 impulse, while impulses describe the applied response. `angularVelocity` is
@@ -115,9 +116,9 @@ layers/masks and tags, with the chassis ignored and sensors excluded.
 
 This is a query-contact wheel with one independent rotational degree of freedom,
 not a separate rigid wheel body. Author the chassis mass to include unsprung
-translational mass. The sphere proxy has no tyre width, tread, deformable tyre,
-mesh-rim collision or full wheel-body gyroscopic model. See
-[M81 limitations](../WHEELS.md#limitations) before using very steep faces,
+translational mass. The finite-width support proxy is not a deformable tyre,
+mesh-rim collider or full wheel-body gyroscopic model. See
+[Vehicles V2 limits](../VEHICLES_V2.md#persistence-platforms-and-limits) before using very steep faces,
 very thin/high-speed terrain or full-contact bicycle balancing.
 
 Save/load retains independent commands and rotational state. Scene replacement,

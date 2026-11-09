@@ -18,6 +18,8 @@ TARGETS = [
     ("judas_structural_tests", "StructuralTests", False),
     ("judas_bending_tests", "BendingTests", False),
     ("judas_wheel_tests", "WheelTests", False),
+    ("judas_vehicle_contact_tests", "VehicleContactTests", False),
+    ("judas_vehicle_dynamics_tests", "VehicleDynamicsTests", False),
     ("judas_wheel_script_tests", "WheelScriptTests", False),
     ("judas_wheel_lifecycle_tests", "WheelLifecycleTests", False),
     ("judas_powertrain_tests", "PowertrainTests", False),
