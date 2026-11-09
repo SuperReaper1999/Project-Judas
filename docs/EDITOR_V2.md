@@ -257,3 +257,11 @@ Before acceptance, use an existing project and a fresh project to check:
 Pending human review is not inferred from a screenshot, synthetic input or a
 successful automated build. Main and published Alpha packages remain unchanged
 until separately authorized.
+
+## Viewport presentation ownership
+
+A hidden Game tab retains its target for reuse but does not render its main
+image. If Scene is the only visible view, it owns presentation cadence and
+camera-texture updates. When both are visible, Game owns those updates and
+Scene observes without advancing them again. Simulation and audio remain
+independent of visibility. See [the measured terrain/editor follow-up](EDITOR_TERRAIN_PERFORMANCE.md).

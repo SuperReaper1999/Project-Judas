@@ -533,7 +533,8 @@ add_library(judas_editor_core STATIC
     src/editor/SpriteSheetEditor.cpp
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
-     src/editor/TerrainV2Editor.cpp
+    src/editor/TerrainV2Editor.cpp
+    src/editor/TerrainV2PreviewRenderer.cpp
     src/editor/TerrainV2Creation.cpp
     src/editor/TerrainPlanetPreview.cpp
     src/editor/TerrainV2Inspector.cpp

@@ -31,7 +31,12 @@ bool Intersects(glm::dvec3 lo, glm::dvec3 hi, glm::dvec3 origin, glm::dvec3 dire
 }
 } // namespace
 
-size_t EditorPreview::BoundsBytes() const { return ranges.capacity() * sizeof(Range); }
+size_t EditorPreview::BoundsBytes() const {
+    // POD range storage plus an estimate for map node links; allocator
+    // bookkeeping and the source/mesh products are accounted separately.
+    return ranges.capacity() * sizeof(Range) +
+           bounds.size() * (sizeof(decltype(bounds)::value_type) + 4 * sizeof(void *));
+}
 
 bool EditorPreview::Pick(glm::vec3 origin, glm::vec3 direction, glm::vec3 &hit,
                          size_t *testedTriangles) const {
@@ -129,11 +134,25 @@ bool PrepareEditorPreview(const Source &source, const std::vector<ChunkKey> &key
                 range.minimum[axis] = std::nextafter(float(range.minimum[axis]), -INFINITY);
                 range.maximum[axis] = std::nextafter(float(range.maximum[axis]), INFINITY);
             }
+            prepared->bounds.emplace(chunk->key, std::make_pair(glm::vec3(range.minimum), glm::vec3(range.maximum)));
             prepared->ranges.push_back(range);
         }
     }
     if (stop())
         return false;
+    prepared->source = std::make_shared<const Source>(source);
+    if (!source.chart) {
+        const auto *old = previous ? &previous->PublishedSource() : nullptr;
+        // Excavation changes volume ownership, not the base height hierarchy.
+        // Share immutable metadata when the entire height mapping is unchanged.
+        if (old && previous->lod && old->samplesX == source.samplesX &&
+            old->samplesZ == source.samplesZ && old->chunkCells == source.chunkCells &&
+            old->spacing == source.spacing && old->storage == source.storage &&
+            old->heights == source.heights)
+            prepared->lod = previous->lod;
+        else
+            prepared->lod = std::make_shared<HeightLod>(source);
+    }
     prepared->mesh = std::move(meshData);
     output = std::move(prepared);
     error.clear();

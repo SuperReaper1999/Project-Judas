@@ -189,7 +189,7 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
     const auto start = std::chrono::steady_clock::now();
     ++stats.misses;
     const auto materialKey = Region(source, key);
-    auto image = BuildRenderPage(source, key, !weights.count(materialKey));
+    auto image = BuildRenderPage(source, key, ownWeights && !weights.count(materialKey));
     auto geometry = mesh ? mesh() : nullptr;
     const size_t imageWeightBytes =
         image.weights.levels.empty() ? 0 : image.weights.levels[0].bytes.size();
@@ -197,7 +197,7 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
                          (geometry ? geometry->mesh.vertices.size() * sizeof(MeshVertex) +
                                          geometry->mesh.indices.size() * sizeof(uint32_t)
                                    : 0);
-    const size_t weightBytes = size_t(materialKey[2] + 1) * (materialKey[3] + 1) * 4;
+    const size_t weightBytes = ownWeights ? size_t(materialKey[2] + 1) * (materialKey[3] + 1) * 4 : 0;
     if (bytes + weightBytes > stats.budget)
         throw std::runtime_error("terrain render page exceeds its GPU budget");
     // Terrain draws are immediate between Begin/EndTerrainMaterial; flushing
@@ -214,7 +214,7 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
         pages.erase(oldest);
         ++stats.evictions;
     }
-    if (!weights.count(materialKey) && image.weights.levels.empty())
+    if (ownWeights && !weights.count(materialKey) && image.weights.levels.empty())
         image = BuildRenderPage(source, key);
     GpuTerrainPage page;
     page.weightKey = materialKey;
@@ -223,7 +223,7 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
     page.weightRect = image.weightRect;
     if (key.grid)
         page.heights = renderer.CreateTexture(image.heights);
-    if (!weights.count(materialKey)) {
+    if (ownWeights && !weights.count(materialKey)) {
         WeightPage weight;
         weight.texture = renderer.CreateTexture(image.weights);
         weight.rect = image.weightRect;
@@ -231,9 +231,11 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
         stats.bytes += weight.bytes;
         weights.emplace(materialKey, std::move(weight));
     }
-    auto &weight = weights.at(materialKey);
-    ++weight.references;
-    page.weights = weight.texture;
+    if (ownWeights) {
+        auto &weight = weights.at(materialKey);
+        ++weight.references;
+        page.weights = weight.texture;
+    }
     if (geometry)
         page.mesh = renderer.CreateMesh(geometry->mesh);
     stats.bytes += bytes;

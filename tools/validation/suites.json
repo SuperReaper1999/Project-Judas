@@ -44,6 +44,15 @@
       ]
     },
     {
+      "name": "terrain-v2-editor-preview-rendering",
+      "target": "judas_terrain_v2_preview_render_tests",
+      "groups": [
+        "terrain",
+        "editor",
+        "rendering"
+      ]
+    },
+    {
       "name": "terrain-v2-collision-cook",
       "target": "judas_terrain_v2_collision_tests",
       "groups": [

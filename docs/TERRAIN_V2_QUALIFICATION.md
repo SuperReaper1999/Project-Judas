@@ -201,3 +201,11 @@ the authored source unless deliberately committed through the editor workflow.
 
 **Endpoint:** automated engineering qualification followed by the operator's
 hands-on review. No main promotion, publication or human acceptance is implied.
+
+## Experimental editor-performance follow-up — 2026-11-09
+
+The accepted review's editor-performance observation remains historical evidence.
+A later measured correction adds editing-preview LOD and removes hidden Game
+presentation; it does not establish that the architectural purge fixed the
+original severe slowdown. See [the follow-up report](EDITOR_TERRAIN_PERFORMANCE.md)
+for matched measurements, worker tradeoffs, memory accounting and human checks.

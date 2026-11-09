@@ -1,6 +1,7 @@
 #pragma once
 #include "EditorPanels.h"
 #include "TerrainV2Creation.h"
+#include "TerrainV2PreviewRenderer.h"
 #include "WorldDebugView.h"
 #include "authoring/TerrainEditorPreview.h"
 #include "terrain/TerrainBrush.h"
@@ -43,10 +44,6 @@ class TerrainV2Editor {
         JobHandle job;
         std::string error;
     };
-    struct Resident {
-        std::shared_ptr<const TerrainV2::Chunk> chunk;
-        MeshHandle mesh;
-    };
     std::string projectKey, path, meshId, error, disk;
     std::vector<std::string> sources;
     TerrainV2Creation creation;
@@ -56,7 +53,8 @@ class TerrainV2Editor {
     TerrainV2::MaterialDetail paletteDetail;
     std::vector<TerrainV2::Source> undo, redo;
     TerrainV2::SurfaceBrush brush;
-    std::map<TerrainV2::ChunkKey, Resident> chunks;
+    TerrainV2PreviewRenderer previewRenderer;
+    std::optional<TerrainV2::Edit> brushHint;
     std::shared_ptr<Task> task;
     std::shared_ptr<Cook> cook;
     std::shared_ptr<const MeshData> preview;

@@ -467,7 +467,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
         cook.reset();
     }
     ImGui::Text("%u x %u samples | %zu chunks | %s", source.samplesX, source.samplesZ,
-                chunks.size(), dirty ? "Unsaved" : "Saved");
+                previewData ? previewData->Chunks().size() : size_t(0), dirty ? "Unsaved" : "Saved");
     if (Busy())
         ImGui::TextUnformatted("Preparing changed chunks in the background…");
     if (!error.empty())
@@ -477,10 +477,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
 }
 void TerrainV2Editor::Prepare(Renderer &renderer, const EditorPanelState &state) {
     if (resetPending) {
-        for (auto &[_, r] : chunks)
-            if (r.mesh.IsValid())
-                renderer.DestroyMesh(r.mesh);
-        chunks.clear();
+        previewRenderer.Clear(renderer);
         if (weights.IsValid())
             renderer.DestroyTexture(weights);
         weights = {};
@@ -489,24 +486,7 @@ void TerrainV2Editor::Prepare(Renderer &renderer, const EditorPanelState &state)
     if (task && state.importJobs->IsFinished(task->job)) {
         if (state.importJobs->StateOf(task->job) == JobState::Completed &&
             task->revision == revision) {
-            const auto &ready = task->preview->Chunks();
-            for (auto it = chunks.begin(); it != chunks.end();) {
-                if (!ready.count(it->first)) {
-                    if (it->second.mesh.IsValid())
-                        renderer.DestroyMesh(it->second.mesh);
-                    it = chunks.erase(it);
-                } else
-                    ++it;
-            }
-            for (const auto &[key, chunk] : ready) {
-                auto &r = chunks[key];
-                if (r.chunk != chunk) {
-                    if (r.mesh.IsValid())
-                        renderer.DestroyMesh(r.mesh);
-                    r.mesh = {};
-                    r.chunk = chunk;
-                }
-            }
+            previewRenderer.Publish(renderer, task->preview);
             previewData = task->preview;
             preview = previewData->Mesh();
             error.clear();
@@ -568,6 +548,7 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
                              glm::vec3 direction, bool pressed, bool down, bool cancel,
                              bool focused, std::string &status) {
     footprint.Clear();
+    brushHint.reset();
     if (!activeProject || !loaded || !frameState)
         return false;
     if (cancel && gesture) {
@@ -597,6 +578,7 @@ bool TerrainV2Editor::Stroke(const Scene &scene, SceneObjectId id, glm::vec3 ori
     if (!previewData->Pick(inverse * (origin - object->transform.position), inverse * direction,
                            hit))
         return down;
+    brushHint = TerrainV2::Edit{TerrainV2::Edit::Kind::Remove, hit, brush.radius};
     for (unsigned axis = 0; axis < 3; ++axis)
         for (unsigned i = 0; i < 48; ++i) {
             glm::vec3 p[2];
@@ -648,15 +630,8 @@ void TerrainV2Editor::Draw(Renderer &renderer, Scene &scene, ResourceManager &re
                 glm::inverse(glm::translate(glm::mat4(1), object.transform.position) *
                              glm::mat4_cast(object.transform.rotation)),
                 source.materialDetail, normal);
-            for (auto &[_, r] : chunks) {
-                if (!r.chunk || r.chunk->mesh.indices.empty())
-                    continue;
-                if (!r.mesh.IsValid())
-                    r.mesh = renderer.CreateMesh(r.chunk->mesh);
-                renderer.DrawMesh(
-                    r.mesh, object.transform.position + object.transform.rotation * r.chunk->anchor,
-                    object.transform.rotation, glm::vec3(1), {}, object.render->color, 1);
-            }
+            previewRenderer.Draw(renderer, object.transform.position, object.transform.rotation,
+                                 object.render->color, brushHint);
             renderer.EndTerrainMaterial();
             object.render->visible = false;
         }
@@ -680,10 +655,7 @@ void TerrainV2Editor::Shutdown(Renderer &renderer, JobSystem *jobs) {
         }
     task.reset();
     cook.reset();
-    for (auto &[_, r] : chunks)
-        if (r.mesh.IsValid())
-            renderer.DestroyMesh(r.mesh);
-    chunks.clear();
+    previewRenderer.Clear(renderer);
     if (weights.IsValid())
         renderer.DestroyTexture(weights);
     weights = {};

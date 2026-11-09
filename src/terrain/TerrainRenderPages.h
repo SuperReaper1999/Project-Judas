@@ -45,7 +45,8 @@ struct GpuTerrainPage {
 };
 class RenderPages {
   public:
-    explicit RenderPages(size_t budget = 32 * 1024 * 1024) { stats.budget = budget; }
+    explicit RenderPages(size_t budget = 32 * 1024 * 1024, bool ownWeights = true)
+        : ownWeights(ownWeights) { stats.budget = budget; }
     const GpuTerrainPage &Acquire(Renderer &, const Source &, const RenderPageKey &,
                                   const std::function<std::shared_ptr<const Chunk>()> &mesh = {});
     void Clear(Renderer &);
@@ -61,6 +62,7 @@ class RenderPages {
     double prepareMs = 0, worstPrepareMs = 0;
 
   private:
+    bool ownWeights;
     struct WeightPage {
         TextureHandle texture;
         glm::vec4 rect;

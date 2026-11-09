@@ -1,13 +1,17 @@
 #pragma once
 #include "terrain/TerrainSource.h"
+#include "terrain/TerrainLod.h"
 #include <map>
 #include <memory>
 
 namespace TerrainV2 {
 // Complete worker product. GPU handles remain editor-owned. Geometry is immutable
-// after publication, including the shared MeshData view used by legacy picking.
+// after publication, including the shared MeshData view used by scene picking.
 class EditorPreview {
   public:
+    const Source &PublishedSource() const { return *source; }
+    const HeightLod *Lod() const { return lod.get(); }
+    const auto &Bounds() const { return bounds; }
     const auto &Chunks() const { return chunks; }
     const std::shared_ptr<const MeshData> &Mesh() const { return mesh; }
     bool Pick(glm::vec3 origin, glm::vec3 direction, glm::vec3 &hit,
@@ -15,6 +19,9 @@ class EditorPreview {
     size_t BoundsBytes() const;
 
   private:
+    std::map<ChunkKey, std::pair<glm::vec3, glm::vec3>> bounds;
+    std::shared_ptr<const Source> source;
+    std::shared_ptr<const HeightLod> lod;
     struct Range {
         size_t first = 0, count = 0;
         glm::dvec3 minimum{0}, maximum{0};

@@ -28,6 +28,7 @@ float Highest(const std::shared_ptr<const MeshData> &mesh) {
 int main(int argc, char **argv) {
     try {
         const auto input =
+            argc > 2 ? fs::path(argv[2]) :
             fs::path(__FILE__).parent_path().parent_path() / "projects/terrain_v2_workshop";
         const fs::path root = argc > 1 ? argv[1] : "/tmp/judas-terrain-v2-editor-check";
         Check(!fs::exists(root), "UI qualification uses a fresh disposable project copy");
