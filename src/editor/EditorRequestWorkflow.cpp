@@ -4,6 +4,7 @@
 #include "EditorAssetActions.h"
 #include "EditorContext.h"
 #include "EditorCreationMenu.h"
+#include "EditorVehicleCreation.h"
 #include "EditorDocument.h"
 #include "EditorMilestoneNotice.h"
 #include "EditorPauseExample.h"
@@ -349,6 +350,11 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
             createdId = id;
             context.panels.status =
                 id ? "Created native 2D collision with a matching editable sprite image" : error;
+        } else if (r.createKind.rfind("vehicle-",0)==0) {
+            std::string error;
+            createdId=CreateEditorVehicle(context.document,context.project,context.host.Assets(),
+                r.createKind,r.createPosition,r.createParent,error);
+            context.panels.status=createdId?"Vehicle created. W/S drive, A/D steer, Space brakes; edit its project script for controls.":error;
         } else if (r.createKind == "capsule" || r.createKind == "cylinder") {
             std::string error;
             const auto id = CreateEditorPrimitive(context.document, context.project, context.host.Assets(),

@@ -253,6 +253,10 @@ add_library(judas_engine STATIC
     src/NetworkTransport.cpp
     src/Wheel.cpp
     src/vehicles/WheelContact.cpp
+    src/vehicles/WheelSolver.cpp
+    src/vehicles/VehicleRuntime.cpp
+    src/vehicles/VehicleDebug.cpp
+    src/authoring/VehicleAssembly.cpp
     src/WorldWheels.cpp
     src/Powertrain.cpp
     src/PowertrainAuthoring.cpp
@@ -524,6 +528,7 @@ add_library(judas_editor_core STATIC
     src/editor/EditorAssetActions.cpp
     src/editor/EditorPreferences.cpp
     src/editor/EditorPrimitiveAssets.cpp
+    src/editor/EditorVehicleCreation.cpp
     src/editor/EditorPauseExample.cpp
     src/editor/ProjectSettingsPanel.cpp
     src/editor/BrowserExportWorkflow.cpp
@@ -1624,6 +1629,7 @@ judas_add_engine_test(judas_editor_asset_browser_tests tests/EditorAssetBrowserT
 judas_add_engine_test(judas_editor_v2_viewport_tests tests/EditorViewportPresenterTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_application_lifecycle_tests tests/EditorApplicationLifecycleTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_console_tests tests/EditorConsolePanelTests.cpp LIBRARIES judas_editor_core)
+judas_add_engine_test(judas_vehicle_editor_workflow_tests tests/VehicleEditorWorkflowTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_inspector_workflow_tests tests/EditorInspectorWorkflowTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_hierarchy_selection_tests tests/EditorHierarchySelectionTests.cpp LIBRARIES judas_editor_core)
 judas_add_engine_test(judas_editor_hierarchy_creation_workflow_tests tests/EditorHierarchyCreationWorkflowTests.cpp LIBRARIES judas_editor_core)

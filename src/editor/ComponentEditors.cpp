@@ -146,7 +146,7 @@ void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
         ImGui::EndCombo();
     }
     TextField(doc,"Rigid partition part key (optional)",v.part);
-    DragVec3(doc,"Mount (chassis/part COM local)",v.mount);
+    DragVec3(doc,"Mount (chassis/part local)",v.mount);
     auto degrees=glm::degrees(glm::eulerAngles(glm::normalize(v.orientation)));
     if(ImGui::DragFloat3("Frame rotation degrees",&degrees.x,.5f))v.orientation=glm::normalize(glm::quat(glm::radians(degrees)));
     TrackEdit(doc);
@@ -159,6 +159,25 @@ void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
         DrawCategoryLayer(doc,"Wheel collision layer",v.collisionLayer,categories.collision);DrawCategoryMask(doc,"Wheel collision mask",v.collisionMask,categories.collision);
         DrawCategoryMask(doc,"Wheel required tags",v.requiredTags,categories.tags,false);DrawCategoryMask(doc,"Wheel excluded tags",v.excludedTags,categories.tags,false);}
     ImGui::TextWrapped("Local frame: suspension -Y, axle +X, rolling forward -Z. Mount and frame are relative to the chassis; no world-up assumption. This entity presents the wheel only. fixedUpdate supplies torque, brake and steering.");
+    if(ImGui::TreeNode("Tyre response and rebound")) {
+        DragScalar(doc,"Rebound damping multiplier",v.reboundRatio,.05f);
+        DragScalar(doc,"Longitudinal slip stiffness",v.longitudinalStiffness,.25f);
+        DragScalar(doc,"Lateral slip stiffness",v.lateralStiffness,.25f);
+        ImGui::TextWrapped("Load-scaled running tyre stiffness; low-speed contact uses static grip. Higher values resist slip more strongly. Grip still shares a combined friction limit.");
+        ImGui::TreePop();
+    }
+    if(state.runtime)if(const auto* live=state.runtime->RuntimeWheel(object.id)) {
+        const auto& current=live->state;
+        ImGui::SeparatorText("Live wheel");
+        ImGui::TextUnformatted(current.sleeping?"Sleeping":current.contact?"Ground contact":"No support");
+        const float compression=(v.restLength-current.length)/std::max(1e-4f,v.restLength-v.minLength);
+        ImGui::ProgressBar(std::clamp(compression,0.f,1.f),ImVec2(-1,0),"Suspension compression");
+        ImGui::Text("Travel %.3f m | Support %.0f N",current.length,current.normalForce);
+        ImGui::Text("Spin %.1f rpm | Grip %.0f%%",current.angularVelocity*9.5492966f,current.gripUtilization*100);
+        ImGui::Text("Slip ratio %.3f | Lateral angle %.1f deg",current.slipRatio,glm::degrees(current.slipAngle));
+        ImGui::Text("Tyre impulse %.3f / %.3f N s",current.longitudinalImpulse,current.lateralImpulse);
+        if(!current.diagnostic.empty())ImGui::TextWrapped("%s",current.diagnostic.c_str());
+    }
     std::string error;if(!ValidateWheelSettings(v,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
 }
 void PowertrainNumber(EditorDocument& doc,const char* label,double& value){double next=value;if(ImGui::InputDouble(label,&next,0,0,"%.8g")&&std::isfinite(next)){doc.BeginEdit();value=next;doc.CommitEdit();}}

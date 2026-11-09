@@ -1,5 +1,6 @@
 #include "CollisionAsset.h"
 #include "WorldDebugView.h"
+#include "vehicles/VehicleDebug.h"
 #include "CollisionGeometry.h"
 
 #include <algorithm>
@@ -117,6 +118,8 @@ void DrawLight(DebugLineList& out, const DynamicLight& light) {
 void BuildWorldDebugLines(const RuntimeWorld& world, float alpha,
                           const DebugViewOptions& options, DebugLineList& out) {
     if (!world.IsBuilt() || !options.AnyEnabled()) return;
+    if(options.collisionShapes||options.contacts)
+        JudasVehicles::Debug(world,alpha,options.collisionShapes,options.contacts,out);
     if(options.navigation)world.Navigation().Debug(out);
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
 

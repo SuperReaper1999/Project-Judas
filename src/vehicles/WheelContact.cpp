@@ -1,4 +1,5 @@
 #include "WheelContact.h"
+#include "PerformanceProfiler.h"
 
 #include <algorithm>
 #include <array>
@@ -7,7 +8,7 @@
 namespace JudasVehicles {
 PhysicsCastHit FindSupport(PhysicsWorld& world, BodyHandle chassis, const WheelSettings& settings,
                           glm::vec3 anchor, glm::vec3 down, glm::vec3 axle,
-                          std::vector<BodyHandle>& candidates) {
+                          std::vector<BodyHandle>& candidates,WheelContactCache* cache,bool sleeping) {
     PhysicsQueryFilter filter;
     filter.includeLayers = settings.collisionMask;
     filter.requiredTags = settings.requiredTags;
@@ -26,6 +27,38 @@ PhysicsCastHit FindSupport(PhysicsWorld& world, BodyHandle chassis, const WheelS
         if (world.GetCollisionFilter(body, layer, mask) &&
             !(mask & (CategoryMask(1) << settings.collisionLayer)))
             filter.ignoredBodies.push_back(body);
+    }
+
+    bool cacheable=cache&&sleeping;
+    if(cacheable) {
+        cache->scratch.clear();
+        for(const auto body:candidates) {
+            if(std::any_of(filter.ignoredBodies.begin(),filter.ignoredBodies.end(),
+                           [&](auto ignored){return ignored.id==body.id;}))continue;
+            // A moving or potentially moving candidate invalidates reuse.
+            // A broadphase membership check detects new nearby obstructions;
+            // identity/pose/immutable geometry detect edits without a timer.
+            if(world.IsDynamicBody(body)||world.IsKinematicBody(body)){cacheable=false;break;}
+            Shape shape;BodyTransform pose;
+            if(!world.GetBodyShape(body,shape,pose,false)||shape.type==ShapeType::CompoundBoxes){cacheable=false;break;}
+            cache->scratch.push_back({body,pose,shape.type,shape.halfExtents,shape.radius,
+                                      shape.halfHeight,shape.asset,shape.terrain});
+        }
+        std::sort(cache->scratch.begin(),cache->scratch.end(),[](const auto& a,const auto& b){return a.body.id<b.body.id;});
+        bool same=cacheable&&cache->valid&&cache->chassis.id==chassis.id&&cache->chassis.world==chassis.world&&
+            cache->anchor==anchor&&cache->down==down&&cache->axle==axle&&cache->radius==settings.radius&&
+            cache->width==settings.width&&cache->travel==settings.maxLength&&cache->colliders.size()==cache->scratch.size();
+        for(size_t i=0;same&&i<cache->scratch.size();++i) {
+            const auto& a=cache->colliders[i];const auto& b=cache->scratch[i];
+            same=a.body.id==b.body.id&&a.body.world==b.body.world&&a.pose.position==b.pose.position&&
+                a.pose.rotation==b.pose.rotation&&a.type==b.type&&a.half==b.half&&a.radius==b.radius&&
+                a.halfHeight==b.halfHeight&&a.asset==b.asset&&a.terrain==b.terrain;
+        }
+        if(same){JUDAS_PROFILE_COUNTER("Vehicle cached support",1,ProfileCounterMode::Sum);return cache->hit;}
+    }
+    if(cache) {
+        cache->valid=false;
+        if(!cacheable){cache->colliders.clear();cache->scratch.clear();}
     }
 
     // Three tracks across the width, each with five rounded tread samples.
@@ -72,11 +105,17 @@ PhysicsCastHit FindSupport(PhysicsWorld& world, BodyHandle chassis, const WheelS
             }
         }
     }
+    JUDAS_PROFILE_COUNTER("Vehicle tread probes",15,ProfileCounterMode::Sum);
     if(witnesses) {
         // Equal-height tread contacts form one resultant patch. Picking the
         // first edge would create a spurious steering torque on a flat road.
         best.point=glm::vec3(points/double(witnesses));
         best.normal=glm::vec3(glm::normalize(normals));
+    }
+    if(cacheable) {
+        cache->valid=true;cache->chassis=chassis;cache->anchor=anchor;cache->down=down;cache->axle=axle;
+        cache->radius=settings.radius;cache->width=settings.width;cache->travel=settings.maxLength;cache->hit=best;
+        cache->colliders.swap(cache->scratch);
     }
     return best;
 }

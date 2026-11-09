@@ -34,6 +34,8 @@ bool RuntimeWorld::SetWheelSettings(EntityId id,const WheelSettings& settings){
     if(!wheel||!ValidateWheelSettings(settings,error))return false;
     const auto* chassis=RuntimeDefinition(WheelChassisEntity(settings));
     if(!chassis||!chassis->body||IsTransientEntity(WheelChassisEntity(settings))||!RuntimeBody(WheelChassisEntity(settings)).IsValid())return false;
+    m_physics.Wake(RuntimeBody(WheelChassisEntity(wheel->settings)));
+    m_physics.Wake(RuntimeBody(WheelChassisEntity(settings)));
     m_scriptDefinitions.at(id).wheel=settings;wheel->settings=settings;
     RefreshWheelParticipants();
     wheel->state.length=std::clamp(wheel->state.length,settings.minLength,settings.maxLength);
@@ -42,14 +44,10 @@ bool RuntimeWorld::SetWheelSettings(EntityId id,const WheelSettings& settings){
     return true;
 }
 void RuntimeWorld::UpdateWheels(float dt){
-    JUDAS_PROFILE_SCOPE("Wheel suspension and tyres");
-    JUDAS_PROFILE_COUNTER("Wheel instances",double(m_wheelOwners.size()),ProfileCounterMode::Latest);
-    for(auto id:m_wheelOwners){
-        auto* wheel=RuntimeWheel(id);if(!wheel)continue;
-        // Entity identity is resolved every step. A destroyed/reused native slot
-        // never substitutes for the authored chassis reference.
-        wheel->Step(m_physics,RuntimeBody(WheelChassisEntity(wheel->settings)),dt);
-    }
+    for(auto id:m_wheelOwners)if(auto* wheel=RuntimeWheel(id))wheel->previous=wheel->state;
+    PrepareWheelInterval(dt);
+    for(unsigned iteration=0;iteration<8;++iteration)SolveWheelInterval();
+    FinishWheelInterval();
 }
 void RuntimeWorld::PublishWheels(){
     for(auto id:m_wheelOwners){

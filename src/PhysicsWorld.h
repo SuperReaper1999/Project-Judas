@@ -521,6 +521,14 @@ public:
         const std::function<void(float,unsigned)>& afterInterval,
         const VelocityCoupling* velocityCoupling=nullptr);
     bool IsSleeping(BodyHandle) const;
+    struct ConstraintSupport {
+        BodyHandle body, support;
+        bool quiet=true;
+    };
+    // Derived, generation-safe support edges from owner-thread external
+    // constraints. Replace the complete set at a physical boundary; these
+    // participate in ordinary sleep islands, not a separate sleep policy.
+    void SetConstraintSupports(std::vector<ConstraintSupport>);
     void Wake(BodyHandle);
     void SetSleepingEnabled(bool enabled); // diagnostic reference; default enabled
     void PersistSleep(class SaveArchive&,BodyHandle);

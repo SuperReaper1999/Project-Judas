@@ -79,7 +79,21 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     }
     // Mechanical sources advance once; wheel contacts then feed their actual
     // axle load back into the same rotational network before rigid integration.
-    if(world.MechanicalIterations()==0){
+    if(world.HasVehicleMechanics()) {
+        world.BeginVehicleStep(fixedDeltaTime);
+        const unsigned materialRounds=(world.MechanicalIterations()+3)/4;
+        auto coupling=PhysicsWorld::VelocityCoupling::ForEachSubstep(std::max(4u,materialRounds),
+            [&](const auto& interval){world.SolveVehicleSubstep(interval);},
+            [&](const auto& interval){world.CompleteVehicleSubstep(interval);});
+        physics.StepCoupled(fixedDeltaTime,structuralIntervals,
+            [&](float h,unsigned){
+                if(structuralIntervals>1)PrepareDynamicBodiesForStep(world.DynamicBodies(),gravity,physics,h,
+                    BodyHandle{},[&world,&physics](size_t slot,glm::vec3){
+                        return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,
+                            physics.GetTransform(world.DynamicBodies()[slot].Handle()).position);
+                    });
+            },[&](float,unsigned){world.PublishPowertrainConnections();},&coupling);
+    }else if(world.MechanicalIterations()==0){
         world.UpdatePowertrains(fixedDeltaTime);
         world.UpdateWheels(fixedDeltaTime);
         world.ResolvePowertrainLoads(fixedDeltaTime);

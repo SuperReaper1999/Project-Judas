@@ -48,6 +48,11 @@ auto PhysicsWorld::Impl::Wake(unsigned slot) -> void {
                 if (b == n && !bodies[a].rigidBody.IsStatic())
                     queue.push_back(a);
             }
+        for(const auto& edge:constraintSupports)if(Get(edge.body)&&Get(edge.support)) {
+            const auto a=edge.body.id&kSlotMask,b=edge.support.id&kSlotMask;
+            if(a==n&&bodies[b].isDynamic)queue.push_back(b);
+            if(b==n&&bodies[a].isDynamic)queue.push_back(a);
+        }
     }
 }
 
@@ -95,6 +100,8 @@ auto PhysicsWorld::Impl::Settle(float dt) -> void {
     for (const auto &j : joints)
         if (JointActive(j) && Get(j.state.settings.bodyB))
             unite(j.state.settings.bodyA.id & kSlotMask, j.state.settings.bodyB.id & kSlotMask);
+    for(const auto& edge:constraintSupports)if(Get(edge.body)&&Get(edge.support))
+        unite(edge.body.id&kSlotMask,edge.support.id&kSlotMask);
     for (auto i : aliveSlots)
         if (bodies[i].isDynamic && bodies[i].enabled && !bodies[i].sensor) {
             const auto r = root(i);
@@ -127,6 +134,11 @@ auto PhysicsWorld::Impl::Settle(float dt) -> void {
     for (const auto &[_, e] : stepTouches)
         if (!e.sensor && Get(e.a) && Get(e.b))
             anchorPair(e.a.id & kSlotMask, e.b.id & kSlotMask);
+    for(const auto& edge:constraintSupports)if(Get(edge.body)&&Get(edge.support)) {
+        const auto a=edge.body.id&kSlotMask,b=edge.support.id&kSlotMask;
+        anchorPair(a,b);
+        sleepIslands[root(a)].quiet &= edge.quiet;
+    }
     for (const auto &j : joints)
         if (JointActive(j)) {
             const auto &s = j.state.settings;
@@ -291,4 +303,20 @@ void PhysicsWorld::PersistSleep(SaveArchive &a, BodyHandle h) {
                   std::isfinite(b->lastAcceleration.x) && std::isfinite(b->lastAcceleration.y) &&
                   std::isfinite(b->lastAcceleration.z),
               "invalid settling state");
+}
+
+void PhysicsWorld::SetConstraintSupports(std::vector<ConstraintSupport> supports) {
+    auto key=[](const auto& edge){return std::make_pair(edge.body.id,edge.support.id);};
+    supports.erase(std::remove_if(supports.begin(),supports.end(),[&](const auto& edge){
+        return !m_impl->Get(edge.body)||!m_impl->Get(edge.support)||
+               !IsBodyEnabled(edge.body)||!IsBodyEnabled(edge.support);
+    }),supports.end());
+    std::sort(supports.begin(),supports.end(),[&](const auto& a,const auto& b){return key(a)<key(b);});
+    for(const auto& previous:m_impl->constraintSupports) {
+        const auto found=std::lower_bound(supports.begin(),supports.end(),previous,
+            [&](const auto& a,const auto& b){return key(a)<key(b);});
+        if(found==supports.end()||key(*found)!=key(previous))Wake(previous.body);
+    }
+    for(const auto& edge:supports)if(!edge.quiet)Wake(edge.body);
+    m_impl->constraintSupports=std::move(supports);
 }

@@ -160,7 +160,8 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("wheel.radius",F(v.radius));w.Line("wheel.width",F(v.width));w.Line("wheel.minLength",F(v.minLength));
         w.Line("wheel.restLength",F(v.restLength));w.Line("wheel.maxLength",F(v.maxLength));
         w.Line("wheel.springStiffness",F(v.springStiffness));w.Line("wheel.damping",F(v.damping));
-        w.Line("wheel.spinInertia",F(v.spinInertia));w.Line("wheel.friction",F(v.friction));
+        w.Line("wheel.spinInertia",F(v.spinInertia));
+        w.Line("wheel.reboundRatio",F(v.reboundRatio));w.Line("wheel.longitudinalStiffness",F(v.longitudinalStiffness));w.Line("wheel.lateralStiffness",F(v.lateralStiffness));w.Line("wheel.friction",F(v.friction));
         w.Line("wheel.rollingResistance",F(v.rollingResistance));
         w.Line("wheel.collisionLayer",std::to_string(v.collisionLayer));w.Line("wheel.collisionMask",std::to_string(v.collisionMask));
         w.Line("wheel.requiredTags",std::to_string(v.requiredTags));w.Line("wheel.excludedTags",std::to_string(v.excludedTags));
@@ -792,6 +793,9 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
            !p.Float("wheel.springStiffness",v.springStiffness)||!p.Float("wheel.damping",v.damping)||!p.Float("wheel.spinInertia",v.spinInertia)||!p.Float("wheel.friction",v.friction)||!p.Float("wheel.rollingResistance",v.rollingResistance)||
            !p.Layer("wheel.collisionLayer",v.collisionLayer)||!p.Mask("wheel.collisionMask",v.collisionMask)||!p.Mask("wheel.requiredTags",v.requiredTags)||!p.Mask("wheel.excludedTags",v.excludedTags))return false;
         if(p.Has("wheel.width")&&!p.Float("wheel.width",v.width))return false;
+        if(p.Has("wheel.reboundRatio")&&!p.Float("wheel.reboundRatio",v.reboundRatio))return false;
+        if(p.Has("wheel.longitudinalStiffness")&&!p.Float("wheel.longitudinalStiffness",v.longitudinalStiffness))return false;
+        if(p.Has("wheel.lateralStiffness")&&!p.Float("wheel.lateralStiffness",v.lateralStiffness))return false;
         if(p.Has("wheel.part")&&!p.String("wheel.part",v.part))return false;
         std::string error;if(!ValidateWheelSettings(v,error))return reader.Fail(error);o.wheel=v;
     }

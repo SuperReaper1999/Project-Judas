@@ -244,6 +244,7 @@ struct PhysicsWorld::Impl {
 
     std::vector<JointInput> JointInputs(const std::vector<unsigned char> *included = nullptr);
     bool sleepingEnabled = true;
+    std::vector<PhysicsWorld::ConstraintSupport> constraintSupports;
     void Wake(unsigned slot);
     uint64_t sleepTraceStep = 0;
     static constexpr unsigned kNoSleepMember = std::numeric_limits<unsigned>::max();

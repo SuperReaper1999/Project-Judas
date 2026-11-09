@@ -1,5 +1,7 @@
 #pragma once
 #include "PhysicsWorld.h"
+#include "vehicles/WheelConstraintState.h"
+#include "vehicles/WheelContactCache.h"
 #include <string>
 
 // A suspension mount belongs to an ordinary dynamic body. The component's
@@ -13,6 +15,10 @@ struct WheelSettings {
     glm::quat orientation{1,0,0,0}; // down -Y, axle +X, forward -Z
     float radius=.35f, width=.22f, minLength=.1f, restLength=.35f, maxLength=.6f;
     float springStiffness=20000, damping=2200, spinInertia=1;
+    float reboundRatio=1;
+    // Dimensionless load-scaled shear stiffness versus slip ratio/angle.
+    // Low-speed static contact remains a sticking constraint, not a creep force.
+    float longitudinalStiffness=12, lateralStiffness=10;
     float friction=1, rollingResistance=.02f; // resistance coefficient: torque = coefficient * load * radius
     unsigned collisionLayer=0;
     CategoryMask collisionMask=kAllCategories, requiredTags=0, excludedTags=0;
@@ -28,6 +34,9 @@ struct WheelState {
     float length=0, normalForce=0, angularVelocity=0, angle=0;
     float longitudinalSlip=0, lateralSlip=0, longitudinalImpulse=0, lateralImpulse=0;
     bool initialOverlap=false;
+    bool sleeping=false;
+    float slipRatio=0, slipAngle=0, gripUtilization=0;
+    std::string diagnostic;
 };
 bool ValidateWheelSettings(const WheelSettings&,std::string& error);
 bool ValidateWheelCommand(const WheelCommand&,std::string& error);
@@ -42,10 +51,17 @@ public:
     WheelState state;
     WheelState previous;
     void Step(PhysicsWorld&,BodyHandle chassis,float dt);
+    void PrepareInterval(PhysicsWorld&,BodyHandle chassis,float dt);
+    void SolveIteration(PhysicsWorld&);
+    void FinishInterval(PhysicsWorld&);
+    bool HasSleepSupport() const;
+    bool QuietSupport(const PhysicsWorld&) const;
     void Publish(PhysicsWorld&,BodyHandle chassis);
     // Only durable command/spin/travel state is archived. Contact handles and
     // broadphase scratch are reconstructed from authoritative geometry.
     void Persist(class SaveArchive&);
 private:
     std::vector<BodyHandle> candidates;
+    JudasVehicles::WheelConstraintState solve;
+    JudasVehicles::WheelContactCache contactCache;
 };

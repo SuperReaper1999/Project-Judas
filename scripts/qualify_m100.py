@@ -62,6 +62,9 @@ def main():
             if name=='grid-movement':run(name+'-cold-queue',[executable,output/'gates'/name,'--cold-queue'])
     for name,command in ai_cold_commands(tests,build,output/'gates'):
         run(name,command)
+    if 'vehicle-v2-dynamics' in names:
+        run('vehicle-v2-cold',[build/('judas_vehicle_dynamics_tests.exe' if os.name=='nt' else 'judas_vehicle_dynamics_tests'),
+                               'read',output/'gates'/'vehicle-v2-cold'])
     for target in EXTRA:run(target,[build/(target+('.exe' if os.name=='nt' else ''))])
     run('release-python',[sys.executable,ROOT/'tests/test_release_manifest.py'])
     run('release-packaging',[sys.executable,ROOT/'tests/test_release_packaging.py'])

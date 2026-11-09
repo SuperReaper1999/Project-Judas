@@ -619,15 +619,15 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             } else {
                 if (JS_IsArray(arg(2)) ||
                     !KnownOptions(c, arg(2),
-                                  {"friction", "springStiffness", "damping", "rollingResistance"}))
+                                  {"friction", "springStiffness", "damping", "rollingResistance", "reboundRatio", "longitudinalStiffness", "lateralStiffness"}))
                     return JS_ThrowTypeError(
                         c, "wheel configuration accepts "
-                           "friction/springStiffness/damping/rollingResistance only");
+                           "friction/springStiffness/damping/rollingResistance/reboundRatio/longitudinalStiffness/lateralStiffness only");
                 const char *names[] = {"friction", "springStiffness", "damping",
-                                       "rollingResistance"};
+                                       "rollingResistance", "reboundRatio", "longitudinalStiffness", "lateralStiffness"};
                 float *values[] = {&next.friction, &next.springStiffness, &next.damping,
-                                   &next.rollingResistance};
-                for (unsigned i = 0; i < 4; ++i) {
+                                   &next.rollingResistance, &next.reboundRatio, &next.longitudinalStiffness, &next.lateralStiffness};
+                for (unsigned i = 0; i < 7; ++i) {
                     auto v = JS_GetPropertyStr(c, arg(2), names[i]);
                     bool present = !JS_IsUndefined(v);
                     JS_FreeValue(c, v);
@@ -671,6 +671,9 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             number("maxLength", config.maxLength);
             number("springStiffness", config.springStiffness);
             number("damping", config.damping);
+            number("reboundRatio", config.reboundRatio);
+            number("longitudinalStiffness", config.longitudinalStiffness);
+            number("lateralStiffness", config.lateralStiffness);
             number("spinInertia", config.spinInertia);
             number("friction", config.friction);
             number("rollingResistance", config.rollingResistance);
@@ -701,6 +704,11 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             JS_SetPropertyStr(c, result, "available", JS_NewBool(c, state.available));
             JS_SetPropertyStr(c, result, "contact", JS_NewBool(c, state.contact));
             JS_SetPropertyStr(c, result, "initialOverlap", JS_NewBool(c, state.initialOverlap));
+            JS_SetPropertyStr(c, result, "sleeping", JS_NewBool(c, state.sleeping));
+            JS_SetPropertyStr(c, result, "diagnostic", JS_NewString(c, state.diagnostic.c_str()));
+            number("slipRatio", state.slipRatio);
+            number("slipAngle", state.slipAngle);
+            number("gripUtilization", state.gripUtilization);
             JS_SetPropertyStr(
                 c, result, "contactEntityId",
                 JS_NewString(c, std::to_string(world.EntityIdOfBody(state.body)).c_str()));

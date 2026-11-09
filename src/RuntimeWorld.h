@@ -382,6 +382,10 @@ public:
     bool SetWheelSettings(EntityId,const WheelSettings&);
     void UpdateWheels(float dt);
     void PublishWheels();
+    void BeginVehicleStep(float dt);
+    bool HasVehicleMechanics() const {return !m_wheelOwners.empty()||!m_powertrainOwners.empty();}
+    void SolveVehicleSubstep(const PhysicsWorld::VelocityCoupling::Substep&);
+    void CompleteVehicleSubstep(const PhysicsWorld::VelocityCoupling::Substep&);
     PowertrainInstance* RuntimePowertrain(EntityId id);
     const PowertrainInstance* RuntimePowertrain(EntityId id)const;
     bool SetPowertrainSettings(EntityId,const PowertrainSettings&,std::string&);
@@ -642,6 +646,13 @@ private:
     std::map<EntityId,WheelInstance> m_wheels;
     std::set<EntityId> m_wheelOwners,m_wheelParticipants;
     void RefreshWheelParticipants();
+    void PrepareWheelInterval(float dt);
+    void SolveWheelInterval();
+    void FinishWheelInterval();
+    std::vector<EntityId> m_vehicleWheels;
+    double m_vehicleClock=0,m_vehicleNext=0;
+    float m_vehicleStep=0,m_vehicleInterval=0;
+    bool m_vehicleIntervalOpen=false;
     std::map<EntityId,PowertrainInstance> m_powertrains;
     std::set<EntityId> m_powertrainOwners,m_powertrainParticipants;
     void RefreshPowertrainParticipants();

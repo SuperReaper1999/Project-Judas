@@ -1595,6 +1595,30 @@
         "lifecycle"
       ],
       "args": []
+    },
+    {
+      "name": "vehicle-v2-dynamics",
+      "target": "judas_vehicle_dynamics_tests",
+      "groups": [
+        "physics",
+        "mk2",
+        "lifecycle",
+        "persistence"
+      ],
+      "args": [
+        "{output}/vehicle-v2-cold"
+      ]
+    },
+    {
+      "name": "vehicle-v2-authoring",
+      "target": "judas_vehicle_editor_workflow_tests",
+      "groups": [
+        "physics",
+        "editor",
+        "scripting",
+        "lifecycle"
+      ],
+      "args": []
     }
   ],
   "known_findings": [

@@ -559,6 +559,7 @@ declare module "judas" {
   }
   export interface WheelSettingsPatch {
     friction?:number;springStiffness?:number;damping?:number;
+    reboundRatio?:number;longitudinalStiffness?:number;lateralStiffness?:number;
     /** Torque = coefficient * normal load * radius. */
     rollingResistance?:number;
   }
@@ -571,12 +572,14 @@ declare module "judas" {
     radius:number;width:number;minLength:number;restLength:number;maxLength:number;
     /** N/m, N s/m, and kg m² respectively. */
     springStiffness:number;damping:number;spinInertia:number;
+    reboundRatio:number;longitudinalStiffness:number;lateralStiffness:number;
     friction:number;rollingResistance:number;
     collisionLayer:string|null;collisionMask:string[];requiredTags:string[];excludedTags:string[];
   }
   export interface WheelState {
     /** Whether a usable enabled dynamic chassis exists; wheel.enabled is independent. */
     available:boolean;contact:boolean;initialOverlap:boolean;
+    sleeping:boolean;diagnostic:string;slipRatio:number;slipAngle:number;gripUtilization:number;
     contactEntityId:EntityId;contactEntity:Entity|null;
     /** World-space contact witness, surface normal and ground point velocity. */
     point:Vec3;normal:Vec3;groundVelocity:Vec3;
