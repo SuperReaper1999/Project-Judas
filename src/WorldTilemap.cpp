@@ -18,7 +18,7 @@ bool RuntimeWorld::EditTilemapCell(EntityId id,const std::string& layer,glm::ive
     const auto found=m_settings.authoringRecipes.find(key);
     const auto* root=RuntimeDefinition(id);
     const auto* assets=m_assets?m_assets->Assets():nullptr;
-    if(!root||found==m_settings.authoringRecipes.end()||!assets||legacyGameplay||IsTransientEntity(id)){
+    if(!root||found==m_settings.authoringRecipes.end()||!assets||IsTransientEntity(id)){
         error="runtime tile edit requires an authored tilemap and a project-owned world";
         return false;
     }

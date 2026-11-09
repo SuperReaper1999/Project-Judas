@@ -131,12 +131,12 @@ int main(int argc,char** argv){
         const auto rotation=settings.rotation;const auto up=rotation*glm::vec3(0,1,0);
         const auto definition=world.RuntimeDefinition(id);const float level=definition->fluidVolume->fillHeight;
         auto worldPoint=[&](glm::vec3 p){return origin+rotation*p;};
-        auto step=[&](){window.Input().BeginFrame();host.PumpResources();play.Frame(window,renderer,1.f/60,true,false);};
+        auto step=[&](){window.Input().BeginFrame();host.PumpResources();play.Frame(window,renderer,1.f/60,false);};
         for(int frame=0;frame<40;++frame)step();
         const auto before=water->Find(id)->Quantity();
         auto render=[&](glm::vec3 eye,glm::vec3 target,const std::string& label,bool save){
             profiler.BeginFrame("Water visual "+name+" "+label);
-            RenderWorldFrame(renderer,1280,800,world,&play.Session(),glm::lookAt(worldPoint(eye),worldPoint(target),up),
+            RenderWorldFrame(renderer,1280,800,world,glm::lookAt(worldPoint(eye),worldPoint(target),up),
                 glm::perspective(glm::radians(70.f),1.6f,.05f,300.f),worldPoint(eye),1,1.f/60,WorldRenderPurpose::Observer);
             if(save){std::vector<unsigned char> pixels;renderer.CaptureFrame(1280,800,pixels);
                 Check(WriteRgbPng((out/(name+"-"+label+".png")).string(),1280,800,pixels),"capture "+name+" "+label);}
@@ -169,7 +169,7 @@ int main(int argc,char** argv){
             double renderTime=0;
             if(visible){
                 start=Clock::now();const auto eye=worldPoint({-3,level-.45f,2});
-                RenderWorldFrame(renderer,1280,800,world,&play.Session(),glm::lookAt(eye,worldPoint({1,level-.35f,-2}),up),
+                RenderWorldFrame(renderer,1280,800,world,glm::lookAt(eye,worldPoint({1,level-.35f,-2}),up),
                     glm::perspective(glm::radians(70.f),1.6f,.05f,300.f),eye,1,1.f/60,WorldRenderPurpose::Observer);
                 window.SwapBuffers();renderTime=std::chrono::duration<double,std::milli>(Clock::now()-start).count();submission.push_back(renderTime);
             }

@@ -76,15 +76,7 @@ glm::vec3 EditorCamera::Up() const {
     return glm::normalize(glm::cross(Right(), Forward()));
 }
 
-void EditorCamera::Update(const Window &window, float deltaSeconds, bool lookActive, int mouseDeltaX,
-                          int mouseDeltaY, bool fast) {
-    const glm::vec3 axes{
-        float(window.IsActionActive(Action::StrafeRight)) - float(window.IsActionActive(Action::StrafeLeft)),
-        float(window.IsActionActive(Action::MoveUp)) - float(window.IsActionActive(Action::MoveDown)),
-        float(window.IsActionActive(Action::MoveForward)) -
-            float(window.IsActionActive(Action::MoveBackward))};
-    UpdateLocal(deltaSeconds, lookActive, mouseDeltaX, mouseDeltaY, fast, axes);
-}
+
 
 void EditorCamera::UpdateLocal(float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
                                bool fast, const glm::vec3 &movementAxes) {

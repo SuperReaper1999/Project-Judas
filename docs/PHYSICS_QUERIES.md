@@ -2,7 +2,7 @@
 
 ## Editable terrain products
 
-[M75 local terrain](M75.md) is an ordinary cooked static triangle mesh, including existing ray/sphere/capsule/box casts and closest-point support. No terrain-only raycast or infinite fallback exists. A finite one-sided patch has no underside or volume. Draft edits are author-time only; queries see published content.
+[M75 local terrain (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) is an ordinary cooked static triangle mesh, including existing ray/sphere/capsule/box casts and closest-point support. No terrain-only raycast or infinite fallback exists. A finite one-sided patch has no underside or volume. Draft edits are author-time only; queries see published content.
 
 
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
@@ -19,7 +19,7 @@ See [current batch contracts](judasjs/physics.md). Existing geometry is unchange
 
 M64 extends these existing queries to actual cooked hulls, static triangle surfaces
 and oriented compound children. It adds `physics.closestPoint` and read-only
-`Entity.collider` metadata. See [current geometry contracts](M64_COLLISION.md) and
+`Entity.collider` metadata. See [current geometry contracts](COLLISION_AUTHORING.md) and
 [JudasJS physics](judasjs/physics.md) for surface/containment, sidedness, feature keys
 and bounded convergence. The M44 sections below retain their milestone context.
 

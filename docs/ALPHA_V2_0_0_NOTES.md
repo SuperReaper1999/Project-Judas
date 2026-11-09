@@ -21,6 +21,15 @@ tag, update-channel manifest or main-branch promotion is part of this work.
 - **Particles V2:** optional native collision snapshots, CPU reliable impacts,
   resident desktop GPU effects and persistent game-owned deposition examples.
   See [backends, limits and authoring](PARTICLES_V2.md).
+- **Terrain V2:** source-owned heightfields, local sparse excavation, planetary
+  precision and independently budgeted source/collision/render residency. See
+  [terrain workflows](TERRAIN_V2.md).
+- **Advanced Fluids V2:** game-resolution conservative grid water with independent
+  presentation; operator gameplay/visual review passed on Experimental. The Alpha
+  lock remains, and no supported release is unlocked by these notes.
+- **Architectural purge:** retired native demo gameplay, PBF and reservoir liquids,
+  bounded V1 terrain, historical apps and compatibility paths. See
+  [intentional removals](V2_BREAKING_CHANGES.md).
 - Asset import diagnostics flag plausible unit/scale mismatches with dimensions
   and corrective guidance. They are advisory; importing a legitimately large
   environment remains possible and no automatic rescaling is implied.
@@ -42,7 +51,8 @@ an asynchronous gameplay scheduler or a required script-conversion step.
 
 Basic Water and swimming remain independent of Advanced Fluids. The **published
 Alpha-channel fluid lock is unchanged**. Experimental builds retain the existing
-repair-only opt-in; that path is not qualified for gameplay. Keep Advanced Fluids
+explicit project opt-in; its V2 gameplay/visual review is separate from release
+qualification. Keep Advanced Fluids
 disabled in the RPG project. New V2 platform results retain their recorded scope;
 existing Windows/Android acceptance is not blanket certification of this new
 local build. A host-built Linux SDK is not automatically an Ubuntu 24.04 ABI

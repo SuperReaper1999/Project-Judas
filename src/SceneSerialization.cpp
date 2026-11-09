@@ -68,7 +68,6 @@ const char* ShapeName(SceneShape s) {
         case SceneShape::Sphere: return "sphere";
         case SceneShape::Compound: return "compound";
         case SceneShape::Mesh: return "mesh";
-        case SceneShape::Terrain: return "terrain";
         case SceneShape::ConvexHull: return "hull";
         case SceneShape::TriangleMesh: return "triangle-mesh";
         case SceneShape::Sprite: return "sprite";
@@ -148,7 +147,6 @@ void WriteObject(Writer& w, const SceneObject& o) {
     if(o.weather)w.Line("weather.region",Quote(EncodeWeatherSettings(*o.weather)));
     if(o.weatherResponse)w.Line("weather.response",Quote(EncodeWeatherResponseSettings(*o.weatherResponse)));
     for(const auto& [key,value]:DeformableProperties(o))w.Line(key,Quote(value));
-    for(const auto& [key,value]:LiquidProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:NavigationProperties(o))w.Line(key,Quote(value));
     if(o.powertrain)w.Line("powertrain.graph",Quote(EncodePowertrainSettings(*o.powertrain)));
     if(o.gravitySelection){const auto& s=*o.gravitySelection;
@@ -339,14 +337,12 @@ void WriteObject(Writer& w, const SceneObject& o) {
         if(b.shape==SceneShape::Planar&&b.planar)w.Line("body.planar-v1",Quote(EncodePlanar(*b.planar)));
         w.Line("body.half-extents", V(b.halfExtents));
         w.Line("body.radius", F(b.radius));
-        w.Line("body.terrain", Quote(b.terrainSurface));
         if(!b.collisionAsset.empty())w.Line("body.collision-asset",Quote(b.collisionAsset));
         w.Line("body.mass", F(b.mass));
         w.Line("body.friction", F(b.friction));
         w.Line("body.restitution", F(b.restitution));
         w.Line("body.initial-velocity", V(b.initialLinearVelocity));
         if(b.initialAngularVelocity!=glm::vec3(0))w.Line("body.initial-angular-velocity",V(b.initialAngularVelocity));
-        w.Line("body.pickable", b.pickable ? "true" : "false");
         w.Line("body.managed", b.managed ? "true" : "false");
         w.Line("body.compound-count", std::to_string(b.compoundBoxes.size()));
         for (const CompoundBox& box : b.compoundBoxes) {
@@ -354,10 +350,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
             if(box.rotation!=glm::quat(1,0,0,0)||box.type!=ShapeType::Box||box.key||!box.assetId.empty())value+=" "+Q(box.rotation)+" "+std::to_string(int(box.type))+" "+F(box.radius)+" "+Quote(box.assetId)+" "+std::to_string(box.key?box.key:uint32_t(&box-b.compoundBoxes.data()+1));
             w.Line("body.compound-box",value);
         }
-        w.Line("body.fluid-cavity-count", std::to_string(b.fluidCavities.size()));
-        for (const SceneFluidCavity& cavity : b.fluidCavities) {
-            w.Line("body.fluid-cavity", V(cavity.localCenter) + " " + V(cavity.halfExtents));
-        }
+
     }
     if (o.gravity) {
         const SceneGravityComponent& g = *o.gravity;
@@ -378,38 +371,13 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("light.range", F(l.range));
         w.Line("light.cone", F(l.innerConeDegrees) + " " + F(l.outerConeDegrees));
     }
-    if (o.door) {
-        const SceneDoorComponent& d = *o.door;
-        if(d.collisionLayer)w.Line("door.collision-layer",std::to_string(d.collisionLayer));
-        if(d.collisionMask!=kAllCategories)w.Line("door.collision-mask",std::to_string(d.collisionMask));
-        w.Line("door", "");
-        w.Line("door.hinge-axis", V(d.localHingeAxis));
-        w.Line("door.open-angle", F(d.openAngleDegrees));
-        w.Line("door.angular-speed", F(d.angularSpeedDegreesPerSecond));
-    }
-    if (o.lightSwitch) {
-        const SceneLightSwitchComponent& s = *o.lightSwitch;
-        w.Line("light-switch", "");
-        w.Line("light-switch.hinge-axis", V(s.localHingeAxis));
-        w.Line("light-switch.toggle-angle", F(s.toggleAngleDegrees));
-        w.Line("light-switch.angular-speed", F(s.angularSpeedDegreesPerSecond));
-        w.Line("light-switch.lamp-offset", V(s.lampLocalOffset));
-        w.Line("light-switch.lamp-color", V(s.lampColor));
-        w.Line("light-switch.lamp-range", F(s.lampRange));
-    }
-    if (o.vehicle) {
-        const SceneVehicleComponent& v = *o.vehicle;
-        w.Line("vehicle", v.gravity == SceneVehicleGravity::Local ? "local" : "celestial");
-        w.Line("vehicle.headlight", v.headlight ? "true" : "false");
-        w.Line("vehicle.navigation-lights", v.navigationLights ? "true" : "false");
-        w.Line("vehicle.drag-coefficient", F(v.dragCoefficient));
-        w.Line("vehicle.initial-pilot-attached", v.initialPilotAttached ? "true" : "false");
-    }
+
+
+
     if (o.celestial) {
         const SceneCelestialComponent& c = *o.celestial;
         w.Line("celestial", "");
         w.Line("celestial.gravitational-parameter", F(c.gravitationalParameter));
-        w.Line("celestial.operator-thrust", F(c.operatorThrustForce));
     }
     if (o.atmosphere) {
         const SceneAtmosphereComponent& a = *o.atmosphere;
@@ -437,27 +405,14 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("fluid-volume.spacing", F(f.spacing));
         w.Line("fluid-volume.count", std::to_string(f.countX) + " " + std::to_string(f.countY) +
                                          " " + std::to_string(f.countZ));
-        w.Line("fluid-volume.emitter", f.emitter ? "true" : "false");
-        w.Line("fluid-volume.emitter-offset", V(f.emitterLocalOffset));
-        w.Line("fluid-volume.max-particles", std::to_string(f.maxParticles));
-        if (f.backend == SceneFluidBackend::Grid) {
-            w.Line("fluid-volume.backend", "grid");
+        {
             w.Line("fluid-volume.fill-height", F(f.fillHeight));
             w.Line("fluid-volume.density", F(f.density));
             w.Line("fluid-volume.color", V(f.color));
             w.Line("fluid-volume.opacity", F(f.opacity));
         }
     }
-    if (o.playerStart) {
-        const ScenePlayerStartComponent& p = *o.playerStart;
-        if(p.collisionLayer) w.Line("player-start.collision-layer",std::to_string(p.collisionLayer));
-        if(p.collisionMask!=kAllCategories) w.Line("player-start.collision-mask",std::to_string(p.collisionMask));
-        w.Line("player-start", p.view == ScenePlayerView::ThirdPerson ? "third-person" : "first-person");
-        w.Line("player-start.yaw", F(p.yawDegrees));
-        w.Line("player-start.density", F(p.density));
-        w.Line("player-start.fluid-drag", F(p.fluidDrag));
-        w.Line("player-start.swim-acceleration", F(p.swimAcceleration));
-    }
+
     w.Raw("end\n");
 }
 
@@ -568,7 +523,6 @@ bool ParseShape(const Token& t, SceneShape& out) {
     else if (t.text == "sphere") out = SceneShape::Sphere;
     else if (t.text == "compound") out = SceneShape::Compound;
     else if (t.text == "mesh") out = SceneShape::Mesh;
-    else if (t.text == "terrain") out = SceneShape::Terrain;
     else if(t.text=="hull")out=SceneShape::ConvexHull;
     else if(t.text=="triangle-mesh")out=SceneShape::TriangleMesh;
     else if(t.text=="sprite")out=SceneShape::Sprite;
@@ -582,7 +536,6 @@ bool ParseShape(const Token& t, SceneShape& out) {
 struct Block {
     std::map<std::string, std::vector<Token>> values;
     std::vector<std::vector<Token>> compoundBoxes;
-    std::vector<std::vector<Token>> fluidCavities;
     std::set<std::string> seen;
 };
 
@@ -684,7 +637,6 @@ public:
         return true;
     }
     const std::vector<std::vector<Token>>& CompoundBoxes() const { return m_block.compoundBoxes; }
-    const std::vector<std::vector<Token>>& FluidCavities() const { return m_block.fluidCavities; }
 
 private:
     const std::vector<Token>* Require(const std::string& key, std::size_t count) {
@@ -718,11 +670,7 @@ bool ReadBlock(Reader& reader, Block& block) {
             block.seen.insert(key);
             continue;
         }
-        if (key == "body.fluid-cavity") {
-            block.fluidCavities.push_back(values);
-            block.seen.insert(key);
-            continue;
-        }
+
         if (block.values.count(key)) return reader.Fail("duplicate key '" + key + "'");
         block.values[key] = values;
         block.seen.insert(key);
@@ -753,16 +701,8 @@ bool ParseSettings(Reader& reader, const Block& block, Scene& scene) {
         if(s.appearanceResetState.size()>65536||!DecodeAppearanceState(s.appearanceResetState,baseline,error))return reader.Fail("invalid appearance reset baseline: "+error);
     }
     {std::string error;if(!ValidateAppearance(s,error))return reader.Fail(error);}
-    if (!p.Float("fluid-scale", s.fluidScale)) return false;
     // New authored fields are optional when reading existing version-3 scenes; their
     // declared defaults are always serialized and fingerprinted on output.
-    if (p.Has("fluid-update-rate-hz") && !p.Float("fluid-update-rate-hz", s.fluidUpdateRateHz)) return false;
-    if (p.Has("fluid-hydrostatic-drag-rate") &&
-        !p.Float("fluid-hydrostatic-drag-rate", s.fluidHydrostaticDragRate)) return false;
-    if (!(s.fluidUpdateRateHz > 0.0f) || s.fluidHydrostaticDragRate < 0.0f) {
-        return reader.Fail("fluid update rate must be positive and hydrostatic drag non-negative");
-    }
-    if (!p.FluidCavities().empty()) return reader.Fail("body.fluid-cavity is misplaced in settings");
     const std::vector<Token>* policy = p.Header("fidelity-policy", 1, 3);
     if (!policy) return false;
     if ((*policy)[0].text == "none" && policy->size() == 1) {
@@ -824,8 +764,6 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     std::map<std::string,std::string> deformFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("deformable.",0)==0){std::string value;if(!p.String(key,value))return false;deformFields[key]=value;}
     std::string deformError;if(!ApplyDeformableProperties(deformFields,o,deformError))return reader.Fail(deformError);
-    std::map<std::string,std::string> liquidFields;
-    for(const auto& [key,tokens]:block.values)if(key.rfind("liquid.",0)==0){std::string value;if(!p.String(key,value))return false;liquidFields[key]=value;}
     // Decode after all collider components: liquid validation depends on them.
     std::map<std::string,std::string> navFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
@@ -1084,14 +1022,12 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         }else if(p.Has("body.planar-v1"))return reader.Fail("2D descriptor requires a planar body");
         if (!p.Vec3("body.half-extents", b.halfExtents)) return false;
         if (!p.Float("body.radius", b.radius)) return false;
-        if (!p.String("body.terrain", b.terrainSurface)) return false;
         if(p.Has("body.collision-asset")&&!p.String("body.collision-asset",b.collisionAsset))return false;
         if (!p.Float("body.mass", b.mass)) return false;
         if (!p.Float("body.friction", b.friction)) return false;
         if (!p.Float("body.restitution", b.restitution)) return false;
         if (!p.Vec3("body.initial-velocity", b.initialLinearVelocity)) return false;
         if(p.Has("body.initial-angular-velocity")&&!p.Vec3("body.initial-angular-velocity",b.initialAngularVelocity))return false;
-        if (!p.Bool("body.pickable", b.pickable)) return false;
         if (!p.Bool("body.managed", b.managed)) return false;
         int compoundCount = 0;
         if (!p.Int("body.compound-count", compoundCount)) return false;
@@ -1110,42 +1046,21 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
             else box.key=0; // legacy vector-position identity is preserved
             b.compoundBoxes.push_back(box);
         }
-        int cavityCount = 0;
-        if (p.Has("body.fluid-cavity-count") && !p.Int("body.fluid-cavity-count", cavityCount)) return false;
-        if (cavityCount < 0 || static_cast<std::size_t>(cavityCount) != p.FluidCavities().size()) {
-            return reader.Fail("body.fluid-cavity-count does not match the body.fluid-cavity lines");
-        }
-        for (const std::vector<Token>& t : p.FluidCavities()) {
-            SceneFluidCavity cavity;
-            if (t.size() != 6 || !ParseFloat(t[0], cavity.localCenter.x) ||
-                !ParseFloat(t[1], cavity.localCenter.y) || !ParseFloat(t[2], cavity.localCenter.z) ||
-                !ParseFloat(t[3], cavity.halfExtents.x) || !ParseFloat(t[4], cavity.halfExtents.y) ||
-                !ParseFloat(t[5], cavity.halfExtents.z) || !(cavity.halfExtents.x > 0.0f) ||
-                !(cavity.halfExtents.y > 0.0f) || !(cavity.halfExtents.z > 0.0f)) {
-                return reader.Fail("body.fluid-cavity expects a finite center and three finite positive half extents");
-            }
-            b.fluidCavities.push_back(cavity);
-        }
         if(b.compoundBoxes.size()>64)return reader.Fail("compound limit is 64 children");
         std::set<uint32_t> childKeys;for(size_t i=0;i<b.compoundBoxes.size();++i)if(!childKeys.insert(b.compoundBoxes[i].key?b.compoundBoxes[i].key:uint32_t(i+1)).second)return reader.Fail("duplicate compound child key");
         if (b.shape == SceneShape::Compound && b.compoundBoxes.empty()) {
             return reader.Fail("a compound body needs at least one body.compound-box");
         }
-        if (b.shape == SceneShape::Terrain && b.terrainSurface.empty()) {
-            return reader.Fail("a terrain body needs a body.terrain surface identifier");
-        }
+
         if (b.motion != SceneBodyMotion::Static && !(b.mass > 0.0f)) {
             return reader.Fail("a moving body needs a positive body.mass for authority changes");
         }
-        if (b.motion != SceneBodyMotion::Static && b.shape == SceneShape::Terrain) {
-            return reader.Fail("terrain bodies must be static");
-        }
+
         if((b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh)&&b.collisionAsset.empty())return reader.Fail("cooked body requires body.collision-asset");
         if(b.shape==SceneShape::TriangleMesh&&(b.motion!=SceneBodyMotion::Static||b.sensor))return reader.Fail("triangle mesh is static surface, not moving body or volume sensor");
         o.body = b;
         std::string placementError;if(!ValidateCollisionPlacement(o,placementError))return reader.Fail(placementError);
-    } else if (p.Has("body.compound-count") || !p.CompoundBoxes().empty() ||
-               p.Has("body.fluid-cavity-count") || !p.FluidCavities().empty()) {
+    } else if (p.Has("body.compound-count") || !p.CompoundBoxes().empty()) {
         return reader.Fail("body.* keys require a 'body' header");
     }
     if (p.Has("gravity")) {
@@ -1197,54 +1112,13 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if(l.range<=0||l.intensity<0||l.innerConeDegrees<0||l.outerConeDegrees<=0||l.outerConeDegrees>=90||l.innerConeDegrees>l.outerConeDegrees||glm::any(glm::lessThan(l.color,glm::vec3(0))))return reader.Fail("invalid light range, colour, intensity or cone");
         o.light = l;
     }
-    if (p.Has("door")) {
-        SceneDoorComponent d;
-        if(p.Has("door.collision-layer")&&!p.Layer("door.collision-layer",d.collisionLayer))return false;
-        if(p.Has("door.collision-mask")&&!p.Mask("door.collision-mask",d.collisionMask))return false;
-        if (!p.Header("door", 0, 0)) return false;
-        if (!p.Vec3("door.hinge-axis", d.localHingeAxis)) return false;
-        if (!p.Float("door.open-angle", d.openAngleDegrees)) return false;
-        if (!p.Float("door.angular-speed", d.angularSpeedDegreesPerSecond)) return false;
-        if (!o.render || o.render->shape != SceneShape::Box) {
-            return reader.Fail("a door needs a box render component for its panel");
-        }
-        o.door = d;
-    }
-    if (p.Has("light-switch")) {
-        SceneLightSwitchComponent s;
-        if (!p.Header("light-switch", 0, 0)) return false;
-        if (!p.Vec3("light-switch.hinge-axis", s.localHingeAxis)) return false;
-        if (!p.Float("light-switch.toggle-angle", s.toggleAngleDegrees)) return false;
-        if (!p.Float("light-switch.angular-speed", s.angularSpeedDegreesPerSecond)) return false;
-        if (!p.Vec3("light-switch.lamp-offset", s.lampLocalOffset)) return false;
-        if (!p.Vec3("light-switch.lamp-color", s.lampColor)) return false;
-        if (!p.Float("light-switch.lamp-range", s.lampRange)) return false;
-        if (!o.render || o.render->shape != SceneShape::Box) {
-            return reader.Fail("a light switch needs a box render component for its lever");
-        }
-        o.lightSwitch = s;
-    }
-    if (p.Has("vehicle")) {
-        SceneVehicleComponent v;
-        const std::vector<Token>* h = p.Header("vehicle", 1, 1);
-        if (!h) return false;
-        if ((*h)[0].text == "local") v.gravity = SceneVehicleGravity::Local;
-        else if ((*h)[0].text == "celestial") v.gravity = SceneVehicleGravity::Celestial;
-        else return reader.Fail("vehicle gravity must be local or celestial");
-        if (!p.Bool("vehicle.headlight", v.headlight)) return false;
-        if (!p.Bool("vehicle.navigation-lights", v.navigationLights)) return false;
-        if (!p.Float("vehicle.drag-coefficient", v.dragCoefficient)) return false;
-        if (!p.Bool("vehicle.initial-pilot-attached", v.initialPilotAttached)) return false;
-        if (!o.body || o.body->motion != SceneBodyMotion::Dynamic || o.body->shape != SceneShape::Box) {
-            return reader.Fail("a vehicle needs a dynamic box body");
-        }
-        o.vehicle = v;
-    }
+
+
+
     if (p.Has("celestial")) {
         SceneCelestialComponent c;
         if (!p.Header("celestial", 0, 0)) return false;
         if (!p.Float("celestial.gravitational-parameter", c.gravitationalParameter)) return false;
-        if (!p.Float("celestial.operator-thrust", c.operatorThrustForce)) return false;
         if (!o.body) return reader.Fail("a celestial component needs a body");
         o.celestial = c;
     }
@@ -1279,18 +1153,12 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     if (p.Has("fluid-volume")) {
         SceneFluidVolumeComponent f;
         if (!p.Header("fluid-volume", 0, 0)) return false;
-        if (p.Has("fluid-volume.backend")) {
-            const auto* backend = p.Header("fluid-volume.backend", 1, 1);
-            if (!backend) return false;
-            if ((*backend)[0].text == "grid") f.backend = SceneFluidBackend::Grid;
-            else if ((*backend)[0].text != "particles")
-                return reader.Fail("fluid-volume.backend expects grid or particles");
-        }
+
         if (!p.Float("fluid-volume.spacing", f.spacing)) return false;
         const std::vector<Token>* count = p.Header("fluid-volume.count", 3, 3);
         if (!count) return false;
         long long cx = 0, cy = 0, cz = 0;
-        const long long maximumDimension = f.backend == SceneFluidBackend::Grid ? 262144 : 1000;
+        const long long maximumDimension = 262144;
         if (!ParseInt((*count)[0], cx) || !ParseInt((*count)[1], cy) || !ParseInt((*count)[2], cz) ||
             cx < 0 || cy < 0 || cz < 0 || cx > maximumDimension || cy > maximumDimension || cz > maximumDimension) {
             return reader.Fail("fluid-volume.count expects three non-negative integers");
@@ -1298,51 +1166,28 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         f.countX = static_cast<int>(cx);
         f.countY = static_cast<int>(cy);
         f.countZ = static_cast<int>(cz);
-        if (!p.Bool("fluid-volume.emitter", f.emitter)) return false;
-        if (!p.Vec3("fluid-volume.emitter-offset", f.emitterLocalOffset)) return false;
-        if (!p.Int("fluid-volume.max-particles", f.maxParticles)) return false;
         if (p.Has("fluid-volume.fill-height") && !p.Float("fluid-volume.fill-height", f.fillHeight)) return false;
         if (p.Has("fluid-volume.density") && !p.Float("fluid-volume.density", f.density)) return false;
         if (p.Has("fluid-volume.color") && !p.Vec3("fluid-volume.color", f.color)) return false;
         if (p.Has("fluid-volume.opacity") && !p.Float("fluid-volume.opacity", f.opacity)) return false;
         if (!(f.spacing > 0.0f)) return reader.Fail("fluid-volume.spacing must be positive");
-        if (f.backend == SceneFluidBackend::Grid &&
-            (cx < 2 || cy < 2 || cz < 2 || cx * cy * cz > 262144 || f.spacing <= .01f ||
+        if ((cx < 2 || cy < 2 || cz < 2 || cx * cy * cz > 262144 || f.spacing <= .01f ||
              f.fillHeight < 0 || f.fillHeight > f.spacing * f.countY ||
              f.density <= 0 || f.density > 10000 || f.opacity < 0 || f.opacity > 1 ||
              glm::any(glm::lessThan(f.color, glm::vec3(0))) ||
-             glm::any(glm::greaterThan(f.color, glm::vec3(1))) || f.emitter))
+             glm::any(glm::greaterThan(f.color, glm::vec3(1)))))
             return reader.Fail("grid water: invalid dimensions, fill, density, colour or opacity; use runtime volume sources instead of particle emitters");
         o.fluidVolume = f;
     }
-    if (p.Has("player-start")) {
-        ScenePlayerStartComponent ps;
-        if(p.Has("player-start.collision-layer")&&!p.Layer("player-start.collision-layer",ps.collisionLayer))return false;
-        if(p.Has("player-start.collision-mask")&&!p.Mask("player-start.collision-mask",ps.collisionMask))return false;
-        const std::vector<Token>* h = p.Header("player-start", 1, 1);
-        if (!h) return false;
-        if ((*h)[0].text == "third-person") ps.view = ScenePlayerView::ThirdPerson;
-        else if ((*h)[0].text == "first-person") ps.view = ScenePlayerView::FirstPerson;
-        else return reader.Fail("player-start view must be third-person or first-person");
-        if (!p.Float("player-start.yaw", ps.yawDegrees)) return false;
-        if (p.Has("player-start.density") && !p.Float("player-start.density", ps.density)) return false;
-        if (p.Has("player-start.fluid-drag") && !p.Float("player-start.fluid-drag", ps.fluidDrag)) return false;
-        if (p.Has("player-start.swim-acceleration") &&
-            !p.Float("player-start.swim-acceleration", ps.swimAcceleration)) return false;
-        if (!(ps.density > 0.0f) || ps.fluidDrag < 0.0f || ps.swimAcceleration < 0.0f) {
-            return reader.Fail("player density must be positive; fluid drag and swim acceleration must be non-negative");
-        }
-        o.playerStart = ps;
-    }
+
     if(o.animation&&(!o.render||o.render->shape!=SceneShape::Mesh))return reader.Fail("animation requires a mesh render component");
-    if (o.render && (o.render->shape == SceneShape::Compound || o.render->shape == SceneShape::Terrain)) {
+    if (o.render && (o.render->shape == SceneShape::Compound)) {
         if (!o.body || o.body->shape != o.render->shape) {
             return reader.Fail("a compound/terrain render component needs a body of the same shape");
         }
     }
     if(p.Has("body.physical-material-override")&&(!o.body||!p.Bool("body.physical-material-override",o.body->physicalMaterialOverride)))return reader.Fail("invalid physical material override");
     if(p.Has("body.physical-material")){std::string asset;if(!o.body||!p.String("body.physical-material",asset)||(!asset.empty()&&!IsValidAssetId(asset)))return reader.Fail("invalid physical material identity");o.body->physicalMaterial=asset;}
-    std::string liquidError;if(!ApplyLiquidProperties(liquidFields,o,liquidError))return reader.Fail(liquidError);
     return p.CheckNoUnknown();
 }
 
@@ -1403,9 +1248,6 @@ bool SaveSceneToString(const Scene& scene, std::string& outText) {
     if(!s.appearanceResetState.empty())w.Line("appearance-reset-v1",Quote(s.appearanceResetState));
     if(s.backgroundColor!=glm::vec3(.08f,.09f,.11f))w.Line("background-color",V(s.backgroundColor));
     if(s.linearRendering||!s.environmentAsset.empty()||s.exposure!=1||s.environmentIntensity!=1||s.environmentRotation!=glm::quat(1,0,0,0)||s.environmentBackground){w.Line("linear-rendering",B(s.linearRendering));w.Line("exposure",F(s.exposure));w.Line("environment",Quote(s.environmentAsset));w.Line("environment-intensity",F(s.environmentIntensity));w.Line("environment-rotation",Q(s.environmentRotation));w.Line("environment-background",B(s.environmentBackground));}
-    w.Line("fluid-scale", F(s.fluidScale));
-    w.Line("fluid-update-rate-hz", F(s.fluidUpdateRateHz));
-    w.Line("fluid-hydrostatic-drag-rate", F(s.fluidHydrostaticDragRate));
     w.Line("fidelity-policy", s.fidelityPolicy == SceneFidelityPolicy::None
                                   ? std::string("none")
                                   : "distance " + F(s.fidelityFullRadius) + " " + F(s.fidelityCoarseRadius));
@@ -1448,7 +1290,6 @@ bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& 
     }
 
     bool settingsSeen = false;
-    bool playerStartSeen = false;
     while (reader.Next(tokens)) {
         if (tokens[0].quoted) return reader.Fail("expected 'settings' or 'object'");
         if (tokens[0].text == "settings") {
@@ -1467,10 +1308,7 @@ bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& 
             if (!ReadBlock(reader, block)) return false;
             SceneObject object;
             if (!ParseObject(reader, header, block, object)) return false;
-            if (object.playerStart) {
-                if (playerStartSeen) return reader.Fail("more than one object has a player-start");
-                playerStartSeen = true;
-            }
+
             if (!scene.InsertObject(object)) {
                 return reader.Fail("duplicate object id " + std::to_string(object.id));
             }

@@ -89,7 +89,6 @@ void RuntimeWorld::UpdateWeather(float dt){
         const auto body=RuntimeBody(id);if(!m_physics.IsDynamicBody(body)||!m_physics.IsBodyEnabled(body))continue;
         // M26 already applies whole-body atmosphere drag to its celestial
         // vehicle. Never add a second whole-body drag force to that body.
-        if(m_vehicle&&m_atmosphere&&m_vehicle->handle.id==body.id&&m_vehicle->component.gravity==SceneVehicleGravity::Celestial)continue;
         const auto position=m_physics.GetTransform(body).position;const auto sample=SampleWeather(m_settings.worldOrigin+V(position));const auto velocity=m_physics.GetLinearVelocity(body);const auto relative=sample.wind-V(velocity);if(!sample.active||glm::length(relative)<1e-5)continue;
         PhysicsQueryFilter filter;filter.includeLayers=o->weatherResponse->occlusionMask;filter.ignoredBodies.push_back(body);
         const auto incoming=glm::vec3(glm::normalize(relative));const auto hit=m_physics.Raycast(position,-incoming,12,filter);++m_weatherWork.forceQueries;

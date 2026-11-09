@@ -36,7 +36,7 @@ int main(){
         RuntimeWorld world;world.ConfigureProject(project.Settings());check(world.Build(doc.GetScene(),&host.Resources(),error),"normal runtime builds authored player, UI and physical probe");host.Resources().WaitForAll();
         auto& window=host.GetWindow();window.SetTestInputMode(true);window.Input().SetMap(project.Settings().input,error);
         InteractivePlay play;check(play.Begin(world,WorldCoordinates{},error),"ordinary Play begins");
-        auto frame=[&](const std::string& key="",float value=0){window.Input().BeginFrame();if(!key.empty())window.Input().SetPhysical(key,value);host.PumpResources();play.Frame(window,host.GetRenderer(),1.f/60,true,true);};
+        auto frame=[&](const std::string& key="",float value=0){window.Input().BeginFrame();if(!key.empty())window.Input().SetPhysical(key,value);host.PumpResources();play.Frame(window,host.GetRenderer(),1.f/60,true);};
         for(int i=0;i<10;++i)frame();
         auto& ui=world.UI();const auto handle=ui.Find("pause_menu");
         check(handle&&!ui.Document(handle)->visible&&!play.IsPaused(),"example starts hidden without pausing gameplay");

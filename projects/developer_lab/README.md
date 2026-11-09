@@ -31,5 +31,5 @@ Hide it when testing a game whose mouse should be captured.
 
 The exported game intentionally has no debugger panel and retains the demonstration
 fault until the source is repaired before export. Read
-[the tools guide](../../docs/M94_DEVELOPER_TOOLS.md) for exact lifecycle, snapshot,
+[the tools guide](../../docs/SCRIPT_DEBUGGING.md) for exact lifecycle, snapshot,
 save, source-checking and iteration limitations.

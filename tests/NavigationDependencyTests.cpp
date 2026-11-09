@@ -1,29 +1,92 @@
 #include "NavigationDependencies.h"
-#include "ModAuthoring.h"
-#include "TerrainAuthoring.h"
 #include "NavigationAsset.h"
 #include "ProjectExporter.h"
 #include "SceneSerialization.h"
+#include "CollisionAsset.h"
+#include "ModelArchive.h"
+#include "SceneFingerprint.h"
+#include "terrain/TerrainSource.h"
+#include "terrain/TerrainMesher.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-namespace fs=std::filesystem;
-int main(int argc,char** argv){if(argc!=3){std::cerr<<"usage: judas_navigation_dependency_tests owned-copy.judasproj terrain-source-relative\n";return 2;}int count=0;auto check=[&](bool ok,const char* name){++count;std::cout<<(ok?"PASS ":"FAIL ")<<name<<'\n';if(!ok)throw std::runtime_error(name);};try{
- Project p;AssetDatabase assets;std::string error;check(p.Load(argv[1],error)&&JudasMods::OpenAuthorAssets(p,assets,error),"open ordinary owned project with published kit");TerrainDraft draft;check(draft.Open(p.Resolve(argv[2]),error),"open owned terrain");std::vector<NavigationDependency> rows;
- check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"discover shared terrain dependents");unsigned owned=0;for(auto& row:rows)if(!row.readOnly){++owned;check(!row.stale,"initial owned navigation is fresh");}check(owned>=2,"two independently authored scenes share geometry");
- draft.source.heights[draft.source.heights.size()/2]+=.25f;draft.MarkChanged();check(draft.Save(error),"save genuine terrain sculpt");TerrainCookResult result;check(CookTerrain(draft.source,draft.Path(),p.RootDir(),assets,result,error)&&result.geometryChanged,"publish changed geometry through normal cook");check(JudasMods::OpenAuthorAssets(p,assets,error)&&InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"inspect all dependents after cook");owned=0;for(auto& row:rows)if(!row.readOnly){++owned;check(row.stale,"both scenes report stale bake");}
- // A failure after one bounded surface bake still cannot publish half a batch.
- std::vector<NavigationDependency> broken;for(auto& row:rows)if(!row.readOnly)broken.push_back(row);broken.back().surface=99999999;
- check(!RebuildNavigationDependencies(p,assets,broken,error),"late invalid surface preserves last-good batch");
- check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"failed batch remains inspectable");for(auto& row:rows)if(!row.readOnly)check(row.stale,"failed batch publishes neither dependent scene");
- unsigned cancellationCalls=0;check(!RebuildNavigationDependencies(p,assets,rows,error,[&]{return ++cancellationCalls>=3;}),"cancel after actual bounded bake preserves last-good batch");
- check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"post-bake cancellation remains inspectable");for(auto& row:rows)if(!row.readOnly)check(row.stale,"post-bake cancellation publishes neither scene");
- std::vector<NavigationDependency> one;for(auto& row:rows)if(!row.readOnly){one.push_back(row);break;}
- check(!RebuildNavigationDependencies(p,assets,rows,error,[]{return true;}),"cancel preserves all last-good bakes");check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"cancelled batch remains inspectable");for(auto& row:rows)if(!row.readOnly)check(row.stale,"cancel did not publish scene or navigation");
- check(RebuildNavigationDependencies(p,assets,one,error),"explicit first-scene-only rebuild");check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"inspect partly rebuilt project");unsigned fresh=0,stale=0;for(auto& row:rows)if(!row.readOnly)(row.stale?stale:fresh)++;check(fresh==1&&stale>=1,"deliberately unrepaired second scene stays stale");
- for(auto& row:rows)if(!row.readOnly&&row.stale){Scene scene;check(LoadSceneFromFile(p.Resolve(row.scene),scene,error),"load deliberately unrepaired scene");check(!ValidateSceneContent(scene,assets,p.Settings().classification,p.Settings().navigation,error)&&error.find("Stale navigation")!=std::string::npos,"normal package validation rejects stale second-scene bake");}
- check(RebuildNavigationDependencies(p,assets,rows,error),"integrated stale-owned-scenes rebuild");check(InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"recheck batch");for(auto& row:rows)if(!row.readOnly)check(!row.stale,"every owned dependent scene fresh");
- for(auto& row:rows)if(!row.readOnly){Scene scene;check(LoadSceneFromFile(p.Resolve(row.scene),scene,error)&&ValidateSceneContent(scene,assets,p.Settings().classification,p.Settings().navigation,error),"normal package scene validation accepts refreshed dependent");}
- draft.source.textureSize=draft.source.textureSize==256?512:256;draft.MarkChanged(false);check(draft.Save(error)&&CookTerrain(draft.source,draft.Path(),p.RootDir(),assets,result,error)&&!result.geometryChanged,"appearance-only cook does not change geometry");check(JudasMods::OpenAuthorAssets(p,assets,error)&&InspectNavigationDependencies(p,assets,draft.source.meshId,rows,error),"inspect appearance-only cook");for(auto& row:rows)if(!row.readOnly)check(!row.stale,"appearance-only cook retains fresh navigation");
- std::cout<<count<<" navigation dependency checks passed\n";return 0;
- }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+#include <stdexcept>
+
+namespace fs = std::filesystem;
+int main() {
+    unsigned checks = 0;
+    auto check = [&](bool okay, const std::string& message) {
+        ++checks;
+        if (!okay) throw std::runtime_error(message);
+    };
+    try {
+        const auto root = fs::temp_directory_path() / ("judas-nav-dependencies-" + MintAssetId());
+        Project project;
+        AssetDatabase assets;
+        std::string error;
+        check(Project::CreateNew(root.string(), "Navigation dependencies", project, error), error);
+        auto source = TerrainV2::Create(33,33,.5f);
+        auto publish = [&] {
+            MeshData mesh;
+            for(unsigned z=0;z<source.ChunksZ();++z)for(unsigned x=0;x<source.ChunksX();++x) {
+                TerrainV2::Chunk chunk;
+                check(TerrainV2::BuildChunk(source,{x,z},chunk,error),error);
+                const unsigned offset=mesh.vertices.size();
+                for(auto v:chunk.mesh.vertices){v.position+=chunk.anchor;mesh.vertices.push_back(v);}
+                for(auto i:chunk.mesh.indices)mesh.indices.push_back(offset+i);
+            }
+            std::vector<uint8_t> bytes;
+            check(EncodeModelArchive(mesh,bytes,error),error);
+            std::ofstream model(root/"Assets/ground.judasmodel",std::ios::binary);
+            model.write(reinterpret_cast<const char*>(bytes.data()),bytes.size());model.close();
+            assets.Scan(project.RootDir(),project.AssetsDir());
+            AssetRecord modelAsset;if(const auto* found=assets.FindByRelativePath("Assets/ground.judasmodel"))modelAsset=*found;else check(assets.Track((root/"Assets/ground.judasmodel").string(),modelAsset,error),error);
+            CollisionAsset collision;
+            check(CookCollision(mesh,{},collision,error),error);
+            collision.sourceAsset=modelAsset.id;
+            collision.settingsFingerprint=CollisionSettingsFingerprint({});
+            collision.sourceFingerprint=SceneFingerprintSha256(std::string(bytes.begin(),bytes.end()));
+            check(SaveCollisionAsset((root/"Assets/ground.judascollision").string(),collision,error),error);
+            AssetRecord cooked;if(const auto* found=assets.FindByRelativePath("Assets/ground.judascollision"))cooked=*found;else check(assets.Track((root/"Assets/ground.judascollision").string(),cooked,error),error);
+            return std::pair(modelAsset.id,cooked.id);
+        };
+        const auto ids=publish();
+        Scene scene;
+        auto& ground=scene.CreateObject("Source-owned terrain geometry");
+        ground.render=SceneRenderComponent{};ground.render->shape=SceneShape::Mesh;ground.render->meshAsset=ids.first;
+        ground.body=SceneBodyComponent{};ground.body->shape=SceneShape::TriangleMesh;ground.body->collisionAsset=ids.second;
+        auto& nav=scene.CreateObject("Navigation");nav.navigationSurface=NavigationSurfaceSettings{};
+        nav.navigationSurface->halfExtents={8,4,8};nav.navigationSurface->minRegion=0;
+        for(const char* path:{"Scenes/main.judas","Scenes/second.judas"})
+            check(SaveSceneToFile(scene,project.Resolve(path),error),error);
+        assets.Scan(project.RootDir(),project.AssetsDir());
+        std::vector<NavigationDependency> rows;
+        auto inspect=[&] {check(InspectNavigationDependencies(project,assets,ids.first,rows,error),error);};
+        inspect();check(rows.size()==2,"two scene dependencies discovered without a historical application");
+        check(RebuildNavigationDependencies(project,assets,rows,error),error);inspect();
+        for(const auto& row:rows)check(!row.stale,"initial baked navigation is fresh");
+        source.heights[source.heights.size()/2]+=.25f;publish();inspect();
+        for(const auto& row:rows)check(row.stale,"source geometry publication invalidates both scenes");
+        auto broken=rows;broken.back().surface=99999999;
+        check(!RebuildNavigationDependencies(project,assets,broken,error),"late invalid surface rejects whole batch");inspect();
+        for(const auto& row:rows)check(row.stale,"failed batch preserves both previous bakes");
+        unsigned calls=0;
+        check(!RebuildNavigationDependencies(project,assets,rows,error,[&]{return ++calls>=3;}),"cancellation after a bake prevents publication");inspect();
+        for(const auto& row:rows)check(row.stale,"cancelled batch publishes neither scene");
+        check(RebuildNavigationDependencies(project,assets,{rows.front()},error),error);inspect();
+        unsigned fresh=0;for(const auto& row:rows)fresh+=!row.stale;
+        check(fresh==1,"explicit single-scene rebuild leaves the other stale");
+        check(RebuildNavigationDependencies(project,assets,rows,error),error);inspect();
+        for(const auto& row:rows) {
+            check(!row.stale,"both scenes have current navigation");
+            Scene loaded;check(LoadSceneFromFile(project.Resolve(row.scene),loaded,error),error);
+            check(ValidateSceneContent(loaded,assets,project.Settings().classification,project.Settings().navigation,error),error);
+            loaded.Objects().front().render->color={.2f,.7f,.3f};
+            check(SaveSceneToFile(loaded,project.Resolve(row.scene),error),error);
+        }
+        inspect();for(const auto& row:rows)check(!row.stale,"appearance-only changes preserve navigation");
+        fs::remove_all(root);
+        std::cout<<checks<<" navigation dependency checks passed\n";
+        return 0;
+    } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}
+}

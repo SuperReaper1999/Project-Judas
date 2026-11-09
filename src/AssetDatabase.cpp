@@ -2,7 +2,6 @@
 #include "../third_party/nlohmann/json.hpp"
 #include "AudioEnvironment.h"
 #include "NavigationAsset.h"
-#include "LiquidTypes.h"
 #include "AssetDatabase.h"
 #include "terrain/TerrainAsset.h"
 #include "CollisionAsset.h"
@@ -112,7 +111,6 @@ const char* AssetTypeName(AssetType type) {
         case AssetType::Prefab: return "prefab";
         case AssetType::Script: return "script";
         case AssetType::UI: return "ui";
-        case AssetType::Liquid: return "liquid";
         case AssetType::Navigation: return "navigation";
     }
     return "mesh";
@@ -130,7 +128,6 @@ bool AssetTypeForExtension(const std::string& extension, AssetType& outType) {
     if(e==".judasworld"){outType=AssetType::World;return true;}
     if(e==".judasloc"){outType=AssetType::Catalog;return true;}
     if(e==".judasenv"){outType=AssetType::Environment;return true;}
-    if(e==".judasbasin"||e==".judascavity"){outType=AssetType::Liquid;return true;}
     if(e==".judasnav"){outType=AssetType::Navigation;return true;}
     if(e==".judasui"){outType=AssetType::UI;return true;}
     if (e == ".js") { outType = AssetType::Script; return true; }
@@ -184,7 +181,6 @@ bool AssetDatabase::ValidateAssetFile(const std::string& path, AssetType type, s
         case AssetType::PhysicalMaterial:{PhysicalMaterial m;return LoadPhysicalMaterial(path,m,outError);}
         case AssetType::Collision: {CollisionAsset a;return LoadCollisionAsset(path,a,outError);}
         case AssetType::Deformable: {std::ifstream s(path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(s),{}};DeformableAsset a;return DecodeDeformableAsset(bytes,a,outError);}
-        case AssetType::Liquid: {std::ifstream s(path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(s),{}};LiquidResource r;return DecodeLiquidResource(bytes,r,outError);}
         case AssetType::Navigation: {NavigationData d;return LoadNavigation(path,d,outError);}
         case AssetType::UI: {UIDocument d;return LoadUIDocument(path,d,outError);}
         case AssetType::Script: { std::ifstream input(path);if(!input){outError="Cannot read script";return false;}return true;}
@@ -251,7 +247,6 @@ bool AssetDatabase::ReadMeta(const std::string& metaPath, AssetId& outId, AssetT
             else if(tokens[1].first=="physicalMaterial")outType=AssetType::PhysicalMaterial;
             else if(tokens[1].first=="collision")outType=AssetType::Collision;
             else if(tokens[1].first=="deformable")outType=AssetType::Deformable;
-            else if(tokens[1].first=="liquid")outType=AssetType::Liquid;
             else if(tokens[1].first=="navigation")outType=AssetType::Navigation;
             else if(tokens[1].first=="ui")outType=AssetType::UI;
             else if (tokens[1].first == "prefab") outType = AssetType::Prefab;

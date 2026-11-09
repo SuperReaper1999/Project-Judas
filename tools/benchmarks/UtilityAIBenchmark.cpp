@@ -37,7 +37,7 @@ export default class {
     for(bool ai:{false,true})for(int count:{0,100,500}) {
         Scene scene;
         for(int i=0;i<count;++i)scene.CreateObject("worker").scripts.push_back({1,script.id,true,ai?"{\"ai\":true}":"{\"ai\":false}"});
-        RuntimeWorld world;ProjectSettings project;project.legacyGameplay=false;world.ConfigureProject(project);
+        RuntimeWorld world;ProjectSettings project;world.ConfigureProject(project);
         if(!world.Build(scene,&resources,error)){std::cerr<<error;return 1;}
         for(int i=0;i<12;++i)world.FixedScripts(&input,1.f/60);
         if(world.Scripts()&&!world.Scripts()->Diagnostics().empty())return 2;

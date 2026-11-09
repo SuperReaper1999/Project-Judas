@@ -371,7 +371,7 @@ void DrawAssetList(EditorDocument &doc, EditorPanelState &state, EditorRequests 
     if (ImGui::BeginPopup("assetFilters")) {
         const char *types[] = {
             "All types",   "Mesh",  "Texture",      "Font",       "Audio",     "Prefab",
-            "Script",      "UI",    "Navigation",   "Liquid",     "Material",  "Environment",
+            "Script",      "UI",    "Navigation",     "Material",  "Environment",
             "Catalog",     "World", "Audio effect", "Deformable", "Collision", "Physical material",
             "Sprite sheet"};
         int type = state.assetTypeFilter + 1;

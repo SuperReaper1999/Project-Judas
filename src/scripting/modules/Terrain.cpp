@@ -45,7 +45,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
         return o;
     };
 
-    if (op == "terrainState" || op == "terrainCreate" || op == "terrainBrush" || op == "terrainLandscape" || op == "terrainSurface") {
+    if (op == "terrainState" || op == "terrainBrush" || op == "terrainLandscape" || op == "terrainSurface") {
         EntityId owner = 0;
         try {
             auto identity = String(c, arg(1));
@@ -142,82 +142,24 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
                 return JS_ThrowTypeError(c, "%s", error.c_str());
             return JS_TRUE;
         }
-        if (op == "terrainCreate") {
-            auto options = arg(2);
-            auto source = JS_GetPropertyStr(c, options, "source");
-            VolumeTerrainSource volume;
-            if (!JS_IsUndefined(source)) {
-                bool ok =
-                    JS_IsString(source) && ParseVolumeTerrain(String(c, source), volume, error);
-                JS_FreeValue(c, source);
-                if (!ok)
-                    return JS_ThrowTypeError(c, "invalid volume source: %s", error.c_str());
-            } else {
-                JS_FreeValue(c, source);
-                auto n = JS_GetPropertyStr(c, options, "resolution"),
-                     ext = JS_GetPropertyStr(c, options, "extent");
-                glm::vec3 count, extent;
-                bool ok = ReadVec(c, n, count) && ReadVec(c, ext, extent);
-                JS_FreeValue(c, n);
-                JS_FreeValue(c, ext);
-                if (!ok || glm::any(glm::lessThan(count, glm::vec3(3))) ||
-                    glm::any(glm::greaterThan(count, glm::vec3(32))) ||
-                    count != glm::floor(count) || glm::any(glm::lessThan(extent, glm::vec3(.3f))) ||
-                    glm::any(glm::greaterThan(extent, glm::vec3(64))))
-                    return JS_ThrowTypeError(
-                        c, "terrain requires integer resolution 3..32 and extent .3..64");
-                try {
-                    volume = CreateVolumeTerrain(glm::uvec3(count), extent);
-                } catch (const std::exception &ex) {
-                    return JS_ThrowTypeError(c, "%s", ex.what());
-                }
-            }
-            auto nav = JS_GetPropertyStr(c, options, "navigation"),
-                 profile = JS_GetPropertyStr(c, options, "profile");
-            bool valid = JS_IsUndefined(nav) || JS_IsBool(nav);
-            bool enabled = JS_IsBool(nav) && JS_ToBool(c, nav);
-            double profileId = 0;
-            valid &= JS_IsUndefined(profile) ||
-                     (JS_IsNumber(profile) && JS_ToFloat64(c, &profileId, profile) == 0 &&
-                      std::isfinite(profileId) && profileId >= 0 && profileId <= 65535 &&
-                      profileId == std::floor(profileId));
-            JS_FreeValue(c, nav);
-            JS_FreeValue(c, profile);
-            if (!valid)
-                return JS_ThrowTypeError(c, "invalid terrain navigation/profile");
-            if (!world.LiveTerrain().ReadyToSave())
-                return JS_FALSE;
-            if (!world.LiveTerrain().Create(owner, std::move(volume), enabled, unsigned(profileId),
-                                            error))
-                return JS_ThrowTypeError(c, "%s", error.c_str());
-            return JS_TRUE;
-        }
         glm::vec3 point;
-        float radius = 0, strength = 1;
+        float radius = 0;
         auto options = arg(3);
         auto kind = JS_GetPropertyStr(c, options, "kind");
         auto name = String(c, kind);
         JS_FreeValue(c, kind);
-        VolumeBrush brush;
+        TerrainV2::Edit brush;
         if (name == "remove")
-            brush.kind = VolumeBrushKind::Remove;
+            brush.kind = TerrainV2::Edit::Kind::Remove;
         else if (name == "add")
-            brush.kind = VolumeBrushKind::Add;
-        else if (name == "smooth")
-            brush.kind = VolumeBrushKind::Smooth;
+            brush.kind = TerrainV2::Edit::Kind::Add;
         else
-            return JS_ThrowTypeError(c, "terrain brush kind must be add/remove/smooth");
-        auto value = JS_GetPropertyStr(c, options, "strength");
-        bool hasStrength = !JS_IsUndefined(value);
-        JS_FreeValue(c, value);
-        if (!ReadVec(c, arg(2), point) || !Number(c, options, "radius", radius) ||
-            (hasStrength && !Number(c, options, "strength", strength)))
-            return JS_ThrowTypeError(c, "finite terrain brush point/radius/strength required");
+            return JS_ThrowTypeError(c, "excavation brush kind must be add/remove; use surfaceBrush for smoothing");
+        if (!ReadVec(c, arg(2), point) || !Number(c, options, "radius", radius))
+            return JS_ThrowTypeError(c, "finite terrain brush point/radius required");
         brush.radius = radius;
-        brush.strength = strength;
         const auto *state = world.LiveTerrain().Status(owner);
-        if (world.LiveTerrain().IsLandscape(owner) ? (state && state->busy)
-                                                  : !world.LiveTerrain().ReadyToSave())
+        if (state && state->busy)
             return JS_FALSE;
         if (!world.LiveTerrain().Brush(owner, point, brush, error))
             return JS_ThrowTypeError(c, "%s", error.c_str());
@@ -282,7 +224,7 @@ JSValue HandleTerrain(BindingContext &context, const std::string &op, int argc,
 } // namespace
 void RegisterTerrainBindings(BindingRegistry &registry) {
     registry.Add("Terrain",
-                 {"terrainState", "terrainCreate", "terrainLandscape", "terrainBrush", "terrainSurface", "planetInfo", "planetSample",
+                 {"terrainState", "terrainLandscape", "terrainBrush", "terrainSurface", "planetInfo", "planetSample",
                   "planetCollision", "planetClear"},
                  HandleTerrain);
 }

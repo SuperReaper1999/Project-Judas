@@ -35,7 +35,7 @@ CategoryMask MatchingHierarchyTags(const EditorPanelState &state) {
 }
 EditorVisuals::Icon HierarchyIcon(const SceneObject &object) {
     using Icon = EditorVisuals::Icon;
-    if (object.characterMotor || object.playerStart)
+    if (object.characterMotor )
         return Icon::Person;
     if (object.renderCamera)
         return Icon::Camera;

@@ -5,9 +5,6 @@ settings
   sun-color 1 0.98 0.92
   sun-direction -0.3 0.8 0.5
   ambient 0.3 0.32 0.35
-  fluid-scale 13
-  fluid-update-rate-hz 20
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 100
 end
@@ -31,14 +28,11 @@ object 1 "Spherical world"
   render.mesh-asset ""
   render.texture-asset ""
   body.half-extents 0.5 0.5 0.5
-  body.terrain ""
   body.mass 1
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2 "Basin wall"
@@ -53,7 +47,6 @@ object 2 "Basin wall"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -61,11 +54,9 @@ object 2 "Basin wall"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 3 "Basin wall"
@@ -80,7 +71,6 @@ object 3 "Basin wall"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -88,11 +78,9 @@ object 3 "Basin wall"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 4 "Basin wall"
@@ -107,7 +95,6 @@ object 4 "Basin wall"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -115,11 +102,9 @@ object 4 "Basin wall"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 5 "Basin wall"
@@ -134,7 +119,6 @@ object 5 "Basin wall"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -142,11 +126,9 @@ object 5 "Basin wall"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 6 "Entry deck"
@@ -161,7 +143,6 @@ object 6 "Entry deck"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -169,11 +150,9 @@ object 6 "Entry deck"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 7 "Exit step"
@@ -188,7 +167,6 @@ object 7 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -196,11 +174,9 @@ object 7 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 8 "Exit step"
@@ -215,7 +191,6 @@ object 8 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -223,11 +198,9 @@ object 8 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 9 "Exit step"
@@ -242,7 +215,6 @@ object 9 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -250,11 +222,9 @@ object 9 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 10 "Exit step"
@@ -269,7 +239,6 @@ object 10 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -277,11 +246,9 @@ object 10 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 11 "Exit step"
@@ -296,7 +263,6 @@ object 11 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -304,11 +270,9 @@ object 11 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 12 "Exit step"
@@ -323,7 +287,6 @@ object 12 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -331,11 +294,9 @@ object 12 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 13 "Exit step"
@@ -350,7 +311,6 @@ object 13 "Exit step"
   body.mass 1
   body.friction 0.8
   body.restitution 0
-  body.pickable false
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -358,11 +318,9 @@ object 13 "Exit step"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 14 "Open carrying bucket"
@@ -377,15 +335,12 @@ object 14 "Open carrying bucket"
   body.mass 1500
   body.friction 0.8
   body.restitution 0
-  body.pickable true
   body.compound-count 5
   body.compound-box 0 -0.86 0 0.97 0.12 0.97
   body.compound-box -0.85 0.06 0 0.12 0.8 0.97
   body.compound-box 0.85 0.06 0 0.12 0.8 0.97
   body.compound-box 0 0.06 -0.85 0.73 0.8 0.12
   body.compound-box 0 0.06 0.85 0.73 0.8 0.12
-  body.fluid-cavity-count 1
-  body.fluid-cavity 0 0.06 0 0.73 0.8 0.73
   render.half-extents 0.5 0.5 0.5
   render.radius 0.5
   render.alpha 1
@@ -393,7 +348,6 @@ object 14 "Open carrying bucket"
   render.texture-asset ""
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
 end
@@ -410,7 +364,6 @@ object 15 "Low density block"
   body.mass 256
   body.friction 0.8
   body.restitution 0
-  body.pickable true
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -418,11 +371,9 @@ object 15 "Low density block"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 16 "High density block"
@@ -437,7 +388,6 @@ object 16 "High density block"
   body.mass 1024
   body.friction 0.8
   body.restitution 0
-  body.pickable true
   render.radius 0.5
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
@@ -445,11 +395,9 @@ object 16 "High density block"
   render.mesh-asset ""
   render.texture-asset ""
   body.radius 0.5
-  body.terrain ""
   body.initial-velocity 0 0 0
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 99 "Planet basin — grid-water replacement"
@@ -457,12 +405,8 @@ object 99 "Planet basin — grid-water replacement"
  rotation 0.923879533 0 0 -0.382683432
  scale 1 1 1
  fluid-volume
- fluid-volume.backend grid
  fluid-volume.spacing 0.4
  fluid-volume.count 20 14 20
- fluid-volume.emitter false
- fluid-volume.emitter-offset 0 0 0
- fluid-volume.max-particles 0
  fluid-volume.fill-height 3
  fluid-volume.density 1000
  fluid-volume.color 0.025 0.26 0.32

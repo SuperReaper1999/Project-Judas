@@ -17,7 +17,6 @@ bool RuntimeWorld::PrepareRigidFracture(EntityId owner,std::string& error){
     JUDAS_PROFILE_SCOPE("Fracture rigid preparation/publication");
     auto it=m_deformables.find(owner);if(it==m_deformables.end())return false;auto& r=it->second;auto& sim=r.simulation;if(!sim.asset->fracture||!sim.asset->fracture->rigid)return true;if(r.rigid.initialized)return true;
     const auto& c=*sim.asset->fracture;const auto definition=*RuntimeDefinition(owner);
-    if(definition.liquidBasin||definition.liquidContainer||definition.liquidConnection){error="liquid-bearing fracture is unsupported; conserved owner retained";return false;}
     for(auto& a:sim.settings.attachments)if(a.kind==DeformableAttachment::Kind::Bone){error="rigid fracture supports require world/body frames";return false;}
     // Preparation validates every child definition before allocating any body.
     std::vector<SceneObject> children;std::vector<EntityPhysicalState> motion;

@@ -20,7 +20,7 @@ export default class SurfaceWorkshop {
         this.doc = ui.get('particle_lab');
         this.doc.modal = false;
         this.doc.get('pause').visible = false;
-        ui.debugOverlayVisible = false;
+
         this.emitters = world.queryTags(['emitter']);
         this.receivers = world.queryTags(['receiver']);
         this.view = this.state.viewId ? players.get(this.state.viewId) : null;

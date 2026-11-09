@@ -128,12 +128,6 @@ declare module "judas" {
     readonly stats:SignalStats;
   };
 
-  export interface LiquidState {entityId:EntityId;entity:Entity|null;enabled:boolean;equilibriumValid:boolean;container:boolean;material:string;density:number;volume:number;capacity:number;stableCapacity:number;coordinate:number;surface:LiquidSurfaceState|null}
-  export interface LiquidSurfaceState {enabled:boolean;cells:number;faces:number;volume:number;iterations:number;retries:number;limitedFaces:number;residual:number;partitionError:number;stepSeconds:number}
-  export interface LiquidAccounting {reservoirs:number;containers:number;detached:number;total:number;expected:number;error:number;tolerance:number}
-  export interface LiquidSample {entityId:EntityId;entity:Entity|null;material:string;density:number;depth:number;coordinate:number;surfacePoint:Vec3;normal:Vec3;up:Vec3;velocity:Vec3}
-  export class LiquidVolume {constructor(handle:string);handle:string;readonly valid:boolean;readonly state:LiquidState;set enabled(value:boolean);transferTo(destination:LiquidVolume,volume:number,options?:{sourcePoint?:Vec3;destinationPoint?:Vec3}):number;applyImpulse(point:Vec3,impulse:Vec3):boolean;set surfaceEnabled(value:boolean)}
-  export const liquid:{sample(point:Vec3):LiquidSample|null;samplePresented(point:Vec3):LiquidSample|null;accounting(material?:string):LiquidAccounting;readonly errors:{entityId:EntityId;message:string}[];readonly connections:{entityId:EntityId;active:boolean}[];submerged(target:Entity):{volume:number;center:Vec3;buoyancy:Vec3}};
   export type EntityId = string;
   export type AssetId = string;
   export type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue };
@@ -260,7 +254,6 @@ declare module "judas" {
     primitiveIndex: number; initialOverlap: boolean; shape: "capsule" | "sphere" | "box" | "terrain" | "hull" | "triangle-mesh" | "planar";
     childKey:number;feature:number|null;
   }
-  export interface LegacySweepHit { hit: boolean; distance: number; normal: Vec3; entityId: EntityId }
   export interface FluidSample { immersion: number; density: number; velocity: Vec3; acceleration: Vec3 }
   /** Plain wrappers reacquire native state. Treat the writable ID as opaque. */
   export type ResourceStatus = "unloaded"|"queued"|"loading"|"cpu-ready"|"ready"|"failed"|"cancelled";
@@ -430,7 +423,6 @@ declare module "judas" {
     setSocket(target:null|undefined):boolean;
     clearSocket():boolean;
     material(slot?:MaterialTarget):Material;
-    readonly liquid:LiquidVolume|null;
     readonly gravity:EntityGravity;
     constructor(id: string | number | bigint);
     id: EntityId;
@@ -544,7 +536,6 @@ declare module "judas" {
     /** Conservative broadphase candidates, not exact overlap results. */
     overlap(min: Vec3, max: Vec3, filter?: QueryFilter): Entity[];
     /** Legacy fixed player-sized capsule; prefer physics.capsuleCast for explicit dimensions. */
-    sweepCapsule(from: Vec3, displacement: Vec3, rotation?: Quat, filter?: QueryFilter): LegacySweepHit;
   };
   export interface CharacterSettingsPatch {
     radius?: number; halfHeight?: number; offset?: Vec3;
@@ -754,13 +745,11 @@ declare module "judas" {
     setMaterial(options:DeformableMaterialOptions):boolean;
     raycast(origin:Vec3,direction:Vec3,maximum:number):DeformableHit|null;
   }
-  /** Optional bounded editable volume on a root unit-scale static body. */
-  export type TerrainCreateOptions = ({source:string;resolution?:never;extent?:never}|
-    {source?:never;resolution:Vec3;extent:Vec3}) & {navigation?:boolean;profile?:number};
+  /** Terrain V2 landscape and excavation on a root unit-scale static body. */
   export interface TerrainStatus {
     readonly ready:boolean; readonly busy:boolean; readonly navigation:boolean;
     readonly revision:number; readonly samples:number; readonly triangles:number;
-    /** Native Terrain V2 CPU payload estimate (paged samples/collision/navigation); legacy bounded volumes retain their grid estimate. Excludes allocator/driver overhead. */
+    /** Terrain V2 CPU payload estimate (paged samples/collision/navigation). Excludes allocator/driver overhead. */
     readonly bytes:number;
     readonly prepareMs:number; readonly publishMs:number; readonly error:string;
     readonly chunks:number; readonly volumeChunks:number; readonly pendingChunks:number;
@@ -771,7 +760,7 @@ declare module "judas" {
     readonly sourceEvictions:number; readonly collisionEvictions:number; readonly gpuEvictions:number;
     readonly pagePrepareMs:number; readonly worstPagePrepareMs:number;
   }
-  export interface TerrainBrushOptions {kind:"remove"|"add"|"smooth";radius:number;strength?:number;}
+  export interface TerrainBrushOptions {kind:"remove"|"add";radius:number;}
   export interface TerrainSurfaceBrushOptions {
     kind:"raise"|"lower"|"flatten"|"smooth"|"paint";
     radius:number; strength?:number; height?:number; layer?:0|1|2|3;
@@ -780,7 +769,6 @@ declare module "judas" {
     constructor(id:string);
     id:string;
     readonly state:TerrainStatus|null;
-    create(options:TerrainCreateOptions):boolean;
     /** V2 sampled landscape source JSON; physical chunks share the source with excavation. */
     createLandscape(source:string):boolean;
     /** Point is in the current simulation frame; radius is in metres. */
@@ -1249,7 +1237,6 @@ declare module "judas" {
     get(name: string): UIDocument | null;
     load(asset: AssetId, name: string): UIDocument;
     quit(): void;
-    debugOverlayVisible: boolean;
   };
   export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back" | "submit" | "dragStart" | "dragOver" | "drop" | "dragEnd" | "dragCancel"; sourceDocument:string;sourceElement:string;dragType:string;targetDocument:string;targetElement:string;position:{x:number;y:number}; value: number; playerId: string|null; text:string; item:string }
   export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null; selfBody: Entity | null; selfJoint: string | null; otherArticulation: Entity | null; otherJoint: string | null }

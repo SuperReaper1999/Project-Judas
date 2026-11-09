@@ -11,7 +11,6 @@
 #include "RadialTerrain.h"
 #include "ResourceManager.h"
 #include "SkeletalAnimation.h"
-#include "TerrainLibrary.h"
 #include "TextureLoader.h"
 #include "CookedTexture.h"
 
@@ -202,15 +201,7 @@ const MeshData* EditorScenePicker::AssetMesh(const std::string& id, bool collisi
     return m_meshes.insert_or_assign(id, std::move(entry)).first->second.mesh.get();
 }
 
-const MeshData* EditorScenePicker::TerrainMesh(const std::string& identifier) {
-    const auto found = m_terrains.find(identifier);
-    if (found != m_terrains.end()) return &found->second;
-    const auto terrain = CreateTerrainSurface(identifier);
-    if (!terrain) return nullptr;
-    if (m_terrains.size() >= 8) m_terrains.erase(m_terrains.begin());
-    // Same static authoring tessellation as ResourceManager::GetTerrainMesh.
-    return &m_terrains.emplace(identifier, terrain->BuildMesh(96, 128)).first->second;
-}
+
 
 EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, glm::vec3 direction,
                                      const AssetDatabase* assets, const ResourceManager* resources,
@@ -284,14 +275,6 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
                             MeshHit(*mesh, local, render, false, nullptr, distance)) accept(object.id, distance);
                     }
                 }
-            } else if (render.shape == SceneShape::Terrain && object.body) {
-                const auto* mesh = TerrainMesh(object.body->terrainSurface);
-                Ray local; double distance = 0;
-                if (mesh && LocalRay(world, transform.position, transform.rotation, glm::vec3(1), local) &&
-                    MeshHit(*mesh, local, render, false, nullptr, distance)) accept(object.id, distance);
-            } else if (object.door || object.lightSwitch) {
-                primitive(transform.position + glm::normalize(transform.rotation) * glm::vec3(render.halfExtents.x, 0, 0),
-                          transform.rotation, glm::vec3(1), render.halfExtents, 0, false);
             } else if (render.shape == SceneShape::Box || render.shape == SceneShape::Sphere) {
                 primitive(transform.position, transform.rotation, transform.scale,
                           render.halfExtents, render.radius, render.shape == SceneShape::Sphere);
@@ -322,7 +305,7 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
         }
         if (object.fluidVolume) {
             const auto& fluid = *object.fluidVolume;
-            const auto scale=fluid.backend==SceneFluidBackend::Grid?transform.scale:glm::vec3(1);
+            const auto scale=transform.scale;
             primitive(transform.position + glm::normalize(transform.rotation) * (fluid.LocalCenter()*scale),
                       transform.rotation, glm::vec3(1), fluid.HalfExtents()*scale, 0, false);
         }
@@ -349,7 +332,7 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
     return best;
 }
 
-void EditorScenePicker::Clear() { m_meshes.clear();m_images.clear(); m_terrains.clear();m_draft.reset();m_draftId.clear(); }
+void EditorScenePicker::Clear() { m_meshes.clear();m_images.clear();m_draft.reset();m_draftId.clear(); }
 
 const TextureData* EditorScenePicker::AssetImage(const std::string& id,const AssetDatabase* assets,std::string* error) {
     const auto* record=assets?assets->Find(id):nullptr;

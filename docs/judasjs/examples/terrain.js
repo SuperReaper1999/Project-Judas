@@ -1,13 +1,10 @@
-// Attach to a root unit-scale static body. Game meaning remains project-owned.
+// Attach to an authored Terrain V2 owner (terrain.asset), root/unit-scale/static.
+// Create its landscape with the editor Terrain tool before attaching this script.
 import {input,physics,world} from 'judas';
 export default class {
   /** @param {import('judas').ScriptContext} context */
   constructor({entity}){this.entity=entity;}
-  ensureCreated(){if(!this.entity.terrain.state)this.entity.terrain.create({
-    resolution:{x:21,y:17,z:21},extent:{x:16,y:10,z:16},navigation:true
-  });}
   fixedUpdate(){
-    this.ensureCreated();
     const terrain=this.entity.terrain,state=terrain.state;
     if(!state?.ready||state.busy||!input.pressed('dig'))return;
     const ray=world.viewRay;if(!ray)return;

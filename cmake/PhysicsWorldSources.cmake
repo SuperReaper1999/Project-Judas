@@ -10,7 +10,6 @@ set(JUDAS_PHYSICS_WORLD_SOURCES
     src/physics/WorldContacts.cpp
     src/physics/WorldMk2Solver.cpp
     src/physics/WorldJoints.cpp
-    src/physics/WorldParticles.cpp
     src/physics/WorldPersistence.cpp
     src/physics/WorldQueries.cpp
     src/physics/WorldSleep.cpp

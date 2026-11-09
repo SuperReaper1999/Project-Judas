@@ -5,7 +5,7 @@ export default class Studio {
  constructor({properties}){this.rotated=properties.rotated;this.state={time:0,clip:'Idle',action:'',footsteps:0,strikes:0,interactions:0,tour:false,last:'Ready',yaw:0};}
  start(){this.bind();}
  restore(){this.bind();}
- bind(){this.saveRequest=null;this.state.requestState='';this.state.requestError='';this.actor=world.entity('10');this.target=world.entity('30');this.beacon=world.entity('31');this.doc=ui.get('studio');this.doc.modal=false;this.doc.get('pause').visible=false;ui.debugOverlayVisible=false;input.pointerCapture=false;this.basis=this.rotated?axis(vec(0,0,1),Math.PI/2):{x:0,y:0,z:0,w:1};}
+ bind(){this.saveRequest=null;this.state.requestState='';this.state.requestError='';this.actor=world.entity('10');this.target=world.entity('30');this.beacon=world.entity('31');this.doc=ui.get('studio');this.doc.modal=false;this.doc.get('pause').visible=false;input.pointerCapture=false;this.basis=this.rotated?axis(vec(0,0,1),Math.PI/2):{x:0,y:0,z:0,w:1};}
  uiUpdate(){this.opened=false;if(input.pressed('pause')&&!this.doc.modal){this.pause(true);this.opened=true;}if(input.pressed('save'))this.saveRequest=saves.save('motion-studio',{name:'Motion Studio'});if(input.pressed('load'))this.saveRequest=saves.load('motion-studio');}
  pause(on){this.doc.modal=on;this.doc.get('pause').visible=on;}
  onUI(e){if(e.document!=='studio')return;if((e.type==='back'&&!this.opened)||(e.type==='click'&&e.element==='resume'))this.pause(false);if(e.type==='click'&&e.element==='reload')scenes.reload();}

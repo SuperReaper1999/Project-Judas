@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Judas / The Repair Bench",
-    "legacyGameplay": false,
     "saveIdentity": "5f5a2abd94faedc62f1fccd8314c20b56f02cfed4f5583761cb479efc8a15660",
     "iconAsset": "",
     "worldManifest": "",

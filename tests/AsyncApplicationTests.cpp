@@ -116,7 +116,7 @@ struct Fixture {
         auto bp=b/"Assets/7.obj";Mesh(bp,9);std::string error;
         if(!AssetDatabase::WriteMeta(bp.string()+".judasmeta",Id(7),AssetType::Mesh,"FTFT2 other project",error))throw std::runtime_error(error);
         scene.Settings().name="FTFT2 async application";
-        auto& start=scene.CreateObject("Start");start.transform.position=glm::vec3(0,2,6);start.playerStart=ScenePlayerStartComponent{};
+        auto& start=scene.CreateObject("Start");start.transform.position=glm::vec3(0,2,6);
         for(int i=0;i<2;++i){auto& object=scene.CreateObject("Shared asset consumer");object.transform.position=glm::vec3(float(i*2),0,-2);object.render=SceneRenderComponent{};object.render->shape=SceneShape::Mesh;object.render->meshAsset=Id(1);}
         auto& mover=scene.CreateObject("Moving primitive");moving=mover.id;mover.transform.position=glm::vec3(-2,1,0);mover.render=SceneRenderComponent{};mover.body=SceneBodyComponent{};mover.body->motion=SceneBodyMotion::Dynamic;mover.body->initialLinearVelocity=glm::vec3(0.25f,0,0);
         if(!SaveSceneToFile(scene,(a/"Scenes/main.judas").string(),error))throw std::runtime_error(error);
@@ -174,7 +174,7 @@ int RunCase(const std::string& name,const fs::path& output) {
     auto journal=std::make_shared<Journal>(output/(name+".events.tsv"));ApplicationControl control;
     control.hidden=true;control.resourceTrace=[journal](const auto& e){journal->Observe(e);};
     control.frameSeconds=[](float){return 1.0f/60.0f;};
-    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0;bool done=false,initialView=false;float initialX=0;unsigned int retainedHandle=0,retainedGeneration=0;std::uint64_t uploads=0;
+    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0;bool done=false;float initialX=0;unsigned int retainedHandle=0,retainedGeneration=0;std::uint64_t uploads=0;
     control.hostReady=[&](EngineHost& host){
         Check(!host.Resources().BlockingMode()&&host.Resources().Jobs()==&host.Jobs()&&host.Jobs().WorkerCount()>0&&host.Resources().GetRenderer()==&host.GetRenderer(),"normal application has async workers and real renderer (no headless residency)");
         std::printf("ASYNC enabled=%d workers=%u renderer_present=%d\n",!host.Resources().BlockingMode(),host.Jobs().WorkerCount(),host.Resources().GetRenderer()!=nullptr);
@@ -185,11 +185,12 @@ int RunCase(const std::string& name,const fs::path& output) {
         if(name=="corrupt-recovery"){std::ofstream(fixture.Asset(9))<<"not an OBJ";std::ofstream(fixture.Asset(10))<<"not a PNG";}
     };
     control.worldReady=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
+        SceneTransform view;view.position={0,2,6};world.SetRuntimeView(view,60);
         if(name=="shared-progress"){
             gate->Wait();Check(host.Resources().RefCount(Id(1))==2,"two real authored consumers share demand");
             const auto count=host.Resources().Stats().misses;host.Resources().AddRef(Id(1));host.Resources().RequestMesh(Id(1));host.Resources().ReleaseRef(Id(1));
             Check(host.Resources().RefCount(Id(1))==2&&host.Resources().Stats().misses==count&&host.Resources().StateOf(Id(1))==ResourceState::Loading,"release one consumer keeps shared in-flight load alive");
-            initialView=play.Session().ViewMode()==PlayerViewMode::FirstPerson;EntityPhysicalState s;world.GetEntityState(fixture.moving,s);initialX=s.position.x;
+            EntityPhysicalState s;world.GetEntityState(fixture.moving,s);initialX=s.position.x;
             host.GetWindow().SetEventHook([&](const SDL_Event& e){if(e.type==SDL_KEYDOWN&&e.key.keysym.scancode==SDL_SCANCODE_V)++phase;});ToggleView();
         }else{host.Jobs().WaitAll();host.Resources().Pump();VerifyMesh(host,1,1);}
     };
@@ -216,7 +217,7 @@ int RunCase(const std::string& name,const fs::path& output) {
                 rm.ReleaseRef(Id(7)); // External consumer ends after the synchronous project drain.
                 Check(host.Jobs().Stats().queued==0&&host.Jobs().Stats().running==0,"project replacement drains old work before database handoff");
                 Check(!rm.TryGetMesh(Id(7)).IsValid(),"old project resource is unavailable after closure");
-                Scene replacement;replacement.Settings().name="Other project";auto& s=replacement.CreateObject("Start");s.playerStart=ScenePlayerStartComponent{};
+                Scene replacement;replacement.Settings().name="Other project";replacement.CreateObject("Start");
                 std::string error;Check(world.Build(replacement,&rm,error)&&play.Begin(world,WorldCoordinates{},error),"application scene/session handoff uses real world lifecycle: "+error);
                 if(name=="project-switch")Request(rm,7);
             }else if(name=="missing-recovery") {Request(rm,8);Request(rm,11);host.Jobs().WaitAll();}
@@ -241,7 +242,7 @@ int RunCase(const std::string& name,const fs::path& output) {
         if(name=="shared-progress"){
             if(frames==4){
                 EntityPhysicalState s;world.GetEntityState(fixture.moving,s);
-                Check(phase==1&&(play.Session().ViewMode()==PlayerViewMode::FirstPerson)!=initialView,"normal SDL events reached actual gameplay view toggle while IO outstanding");
+                Check(phase==1&&host.GetWindow().Input().Action("view_toggle").held,"normal SDL events reach logical project input while IO remains outstanding");
                 Check(!play.IsPaused()&&play.FixedStepsSinceReset()>=4&&s.position.x>initialX,"normal fixed-step scene advances physically while IO is held");
                 std::vector<unsigned char> pixels;host.GetRenderer().CaptureFrame(host.GetWindow().Width(),host.GetWindow().Height(),pixels);
                 bool varied=false;

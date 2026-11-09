@@ -4,6 +4,8 @@
 #include "RuntimeWorld.h"
 #include "SceneSession.h"
 #include "ProjectExporter.h"
+#include "SceneSerialization.h"
+#include <stdexcept>
 #include <SDL2/SDL.h>
 #include <filesystem>
 #include <fstream>
@@ -13,12 +15,35 @@ void Check(bool ok,const char* name){++checks;failures+=!ok;std::printf("%s %s\n
 int main(int argc,char** argv){
  namespace fs=std::filesystem;
  fs::path out=argc==3?argv[2]:"build/m43-tests";fs::create_directories(out);
- std::string project="projects/scene_demo/scene_demo.judasproj";
- if(argc==5&&std::string(argv[3])=="--project")project=argv[4];
- // Malformed-candidate test edits only a disposable copy of ordinary content.
- fs::path fixture=out/"project";fs::remove_all(fixture);
- fs::copy(fs::path(project).parent_path(),fixture,fs::copy_options::recursive);
- project=(fixture/"scene_demo.judasproj").string();
+ // The fixture owns only the scene/session contracts exercised below.
+ fs::path fixture=fs::absolute(out/"project");fs::remove_all(fixture);
+ Project authored;std::string why;
+ if(!Project::CreateNew(fixture.string(),"Scene transitions",authored,why))throw std::runtime_error(why);
+ auto asset=[&](const char* file,const char* identity,AssetType type){
+  if(!AssetDatabase::WriteMeta((fixture/"Assets"/file).string()+".judasmeta",identity,type,"Original focused Judas regression fixture",why))throw std::runtime_error(why);
+ };
+ const char* events="42424242424242424242424242424201",*hud="42424242424242424242424242424202",*prefabId="42424242424242424242424242424203",*uiId="42424242424242424242424242424204";
+ std::ofstream(fixture/"Assets/events.js")<<R"JS(import {scenes,session} from 'judas';
+ export default class {onTriggerEnter(){if(scenes.current!=='Scenes/a.judas')return;
+ session.set('hasKey',true);session.set('visits',(session.get('visits')||0)+1);
+ scenes.load('Scenes/b.judas');session.set('callbackCompleted',true);}})JS";
+ std::ofstream(fixture/"Assets/hud.js")<<R"JS(import {ui,input,world} from 'judas';
+ export default class {start(){ui.get('game_ui').modal=false;input.pointerCapture=true;world.setView({position:{x:0,y:3,z:8},rotation:{w:1,x:0,y:0,z:0}},60);}})JS";
+ asset("events.js",events,AssetType::Script);asset("hud.js",hud,AssetType::Script);
+ UIDocument document;UIElement canvas;canvas.id="root";canvas.kind=UIKind::Canvas;document.elements.push_back(canvas);UIElement counter;counter.id="counter";counter.parent="root";counter.kind=UIKind::Text;counter.text="Scene fixture";document.elements.push_back(counter);
+ if(!SaveUIDocument((fixture/"Assets/menu.judasui").string(),document,why))throw std::runtime_error(why);
+ asset("menu.judasui",uiId,AssetType::UI);
+ Scene prefab;auto& body=prefab.CreateObject("Trigger entrant");body.body=SceneBodyComponent{};body.body->motion=SceneBodyMotion::Dynamic;
+ if(!SaveSceneToFile(prefab,(fixture/"Assets/participant.judasprefab").string(),why))throw std::runtime_error(why);
+ asset("participant.judasprefab",prefabId,AssetType::Prefab);
+ Scene a;
+ auto& controller=a.CreateObject("Controller");controller.ui=SceneUIComponent{uiId,"game_ui"};controller.scripts.push_back({1,hud,true,"{}"});
+ auto& camera=a.CreateObject("View");camera.transform.position={0,3,8};
+ a.CreateObject("Marker");auto& prop=a.CreateObject("Authored movable");prop.transform.position={-4,1,0};prop.body=SceneBodyComponent{};prop.body->motion=SceneBodyMotion::Dynamic;prop.render=SceneRenderComponent{};
+ a.CreateObject("Marker two");auto& gate=a.CreateObject("Transition trigger");gate.transform.position={0,1,0};gate.body=SceneBodyComponent{};gate.body->sensor=true;gate.body->halfExtents={1,1,1};gate.scripts.push_back({1,events,true,"{}"});
+ authored.Settings().startupScene="Scenes/a.judas";
+ if(!authored.Save(why)||!SaveSceneToFile(a,authored.Resolve("Scenes/a.judas"),why)||!SaveSceneToFile(a,authored.Resolve("Scenes/b.judas"),why))throw std::runtime_error(why);
+ std::string project=authored.ProjectFile();
  ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
  control.hostReady=[](EngineHost& host){std::string error;host.Audio().Init(error,true);};
  int frame=0,phase=0;EntityId spawned=0;const RuntimeWorld* preservedWorld=nullptr;std::shared_ptr<SceneSession> session;
@@ -58,6 +83,7 @@ int main(int argc,char** argv){
   }else if(phase==4){
    Check(s->Current()=="Scenes/a.judas"&&!s->Pending(),"malformed candidate consumed without changing current scene");
    Check(&world==preservedWorld&&world.Scripts()&&!world.FindEntity(spawned)&&s->Get("hasKey")=="true","failed transition retains live systems and session");
+   Check(world.UI().Element(world.UI().Find("game_ui"),"counter")->text=="LIVE WORLD MARKER","rejected candidate preserves live UI state");
    phase=5;SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);
   }
   if(frame>60){Check(false,"transition progress");SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}

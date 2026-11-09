@@ -67,8 +67,7 @@ auto PhysicsWorld::Impl::CacheBytes() const -> std::size_t {
     bytes += CCDQueryBytes() + overlapPairs.StorageBytes();
     return bytes +
            (impactPoseSamples.capacity() + impactAnchorSamples.capacity()) *
-               sizeof(ImpactPoseSample) +
-           solver.FrameStorageBytes();
+               sizeof(ImpactPoseSample);
 }
 
 auto PhysicsWorld::Impl::CCDQueryBytes() const -> std::size_t {

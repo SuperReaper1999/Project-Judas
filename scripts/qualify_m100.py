@@ -9,8 +9,8 @@ import sys
 from prealpha_validate import partition_channel_tests
 
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=['ai','2d','core','mk2','water','network','lifecycle','onboarding','application','liquid','input','rendering']
-EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_player_swimming_tests']
+GROUPS=['ai','2d','core','mk2','water','network','lifecycle','onboarding','application','input','rendering']
+EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_character_motor_tests']
 COLD_APPLICATIONS=('utility-ai-application','willow-town-application','willow-town-life')
 
 

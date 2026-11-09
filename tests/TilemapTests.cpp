@@ -38,7 +38,7 @@ int main(int argc,char** argv){try{
   SaveStorage storage((root/"ColdSlots").string());GameSnapshot snapshot;bool recovered=false;
   Check(storage.Read("tilemap",snapshot,recovered,error)&&!recovered,"new process reads durable modern tilemap save");
   Scene restored;Check(WorldPersistence::SceneFrom(snapshot.participants,restored,error),"new process reconstructs actual generated scene");
-  ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;
+  ResourceManager resources(nullptr,&assets);RuntimeWorld world;
   Check(world.Build(restored,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"native participants restore before continuation: "+error);
   SceneObjectId id=0;for(const auto& o:restored.Objects())if(o.name=="Native drop")id=o.id;Check(id!=0,"saved moving object retained stable identity");
   std::ifstream file(root/"endpoint.bin",std::ios::binary);std::string bytes{std::istreambuf_iterator<char>(file),{}};SaveArchive expected(bytes);glm::vec3 position,velocity;expected(position,velocity);expected.Finish();
@@ -81,7 +81,7 @@ int main(int argc,char** argv){try{
    bool inside=p.x>box[0].x&&p.x<box[2].x&&p.y>box[0].y&&p.y<box[2].y;if(x>=-1&&x<=0)exact&=!inside;}}
  Check(exact,"merged collision rectangles do not bridge the excavated hole");
  // Real native bodies, impulses, gravity and contact. No screen boundary.
- ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Scene physical=scene;
+ ResourceManager resources(nullptr,&assets);RuntimeWorld world;Scene physical=scene;
  auto& drop=physical.CreateObject("Native drop");drop.transform.position={2,4,0};drop.body=SceneBodyComponent{};drop.body->shape=SceneShape::Planar;drop.body->motion=SceneBodyMotion::Dynamic;drop.body->planar=PlanarBox({.3,.3});const auto dropId=drop.id;
  const auto editsFile=root/"Assets/runtime-edits.js";
  std::ofstream(editsFile)<<R"JS(export default class {
@@ -102,12 +102,12 @@ int main(int argc,char** argv){try{
  for(int i=0;i<180;++i){world.Physics().ApplyForce(body,{0,-9.81f,0});world.Physics().Step(1.f/60);}
  const auto pose=world.Physics().GetTransform(body);Check(pose.position.y>1.2f&&pose.position.y<1.4f,"falling body rests on actual painted floor");
  Scene hole=preserved;auto& falling=hole.CreateObject("Hole negative control");falling.transform.position={-.5f,4,0};falling.body=physical.Find(dropId)->body;const auto holeId=falling.id;
- RuntimeWorld holeWorld;holeWorld.legacyGameplay=false;Check(holeWorld.Build(hole,&resources,error),"erased opening builds independent physical negative control");
+ RuntimeWorld holeWorld;Check(holeWorld.Build(hole,&resources,error),"erased opening builds independent physical negative control");
  for(int i=0;i<180;++i){holeWorld.Physics().ApplyForce(holeWorld.RuntimeBody(holeId),{0,-9.81f,0});holeWorld.Physics().Step(1.f/60);}
  Check(holeWorld.Physics().GetTransform(holeWorld.RuntimeBody(holeId)).position.y < -5,"erasing tiles removes real collision; body falls through actual hole");
  auto tilted=physical;const auto rotation=glm::angleAxis(.63f,glm::normalize(glm::vec3(1,2,3)));tilted.Find(owner)->transform.rotation=rotation;
  tilted.Find(dropId)->transform.position=rotation*tilted.Find(dropId)->transform.position;tilted.Find(dropId)->transform.rotation=rotation;
- RuntimeWorld rotated;rotated.legacyGameplay=false;Check(rotated.Build(tilted,&resources,error),"rotated grid and body share native plane");
+ RuntimeWorld rotated;Check(rotated.Build(tilted,&resources,error),"rotated grid and body share native plane");
  for(int i=0;i<180;++i){rotated.Physics().ApplyForce(rotated.RuntimeBody(dropId),rotation*glm::vec3(0,-9.81f,0));rotated.Physics().Step(1.f/60);}
  const auto local=glm::inverse(rotation)*rotated.Physics().GetTransform(rotated.RuntimeBody(dropId)).position;
  Check(std::abs(local.y-pose.position.y)<.001f&&std::abs(local.z)<.0001f,"rotated gravity preserves local landing and actual planar mobility");
@@ -151,7 +151,7 @@ int main(int argc,char** argv){try{
  Scene streamFixture=physical;
  streamFixture.Find(owner)->scripts.clear();
  fs::create_directories(root/"Scenes");Check(SaveSceneToFile(streamFixture,(root/"Scenes/tiles.judas").string(),error),"write ordinary region with generated tile geometry");
- JobSystem jobs(2);ResourceManager streamedResources(nullptr,&assets,&jobs);RuntimeWorld streamWorld;streamWorld.legacyGameplay=false;Scene empty;Check(streamWorld.Build(empty,&streamedResources,error),"streaming root has no hidden tile system");
+ JobSystem jobs(2);ResourceManager streamedResources(nullptr,&assets,&jobs);RuntimeWorld streamWorld;Scene empty;Check(streamWorld.Build(empty,&streamedResources,error),"streaming root has no hidden tile system");
  WorldManifest manifest;WorldRegion region;region.id="tiles";region.scene="Scenes/tiles.judas";manifest.regions.emplace(region.id,region);WorldStreaming stream(streamWorld,streamedResources,project,manifest);
  auto pump=[&](const std::function<bool()>& done){auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);while(std::chrono::steady_clock::now()<deadline){streamedResources.Pump();stream.Advance(false);if(done())return true;std::this_thread::sleep_for(std::chrono::milliseconds(1));}return false;};
  auto request=stream.Request("tiles",false,error);Check(request&&pump([&]{return stream.Status(request)&&stream.Status(request)->state=="active";}),"actual streaming publishes tilemap region");

@@ -48,14 +48,14 @@ bool WorldSystem::Build(const Scene &scene, std::string &error) {
     std::map<std::uint64_t, std::unique_ptr<Region>> staged;
     std::size_t total = 0;
     for (const auto &object : scene.Objects()) {
-        if (!object.fluidVolume || object.fluidVolume->backend != SceneFluidBackend::Grid)
+        if (!object.fluidVolume)
             continue;
         if (staged.size() >= 8) {
             error = "at most eight active grid-water regions are supported";
             return false;
         }
         const auto &component = *object.fluidVolume;
-        if (component.emitter || !std::isfinite(component.fillHeight) || component.fillHeight < 0 ||
+        if (!std::isfinite(component.fillHeight) || component.fillHeight < 0 ||
             component.fillHeight > component.spacing * component.countY) {
             error = "grid-water region needs a fill height inside its domain and no "
                     "particle emitter; use scripted volume sources";
@@ -248,7 +248,7 @@ bool RuntimeWorld::BuildGridWater(const Scene &scene, std::string &error) {
     if (!m_advancedFluids)
         return true;
     if (!std::any_of(scene.Objects().begin(), scene.Objects().end(), [](const auto &object) {
-            return object.fluidVolume && object.fluidVolume->backend == SceneFluidBackend::Grid;
+            return object.fluidVolume;
         }))
         return true;
     auto candidate = std::make_unique<JudasWater::WorldSystem>(*this);

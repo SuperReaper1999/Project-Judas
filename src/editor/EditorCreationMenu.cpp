@@ -34,10 +34,8 @@ void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requ
         {"Mesh", "mesh", "An empty mesh renderer. Choose an imported mesh in the Render component."},
         {"Point light", "point-light", "Light emitted in all directions around a point."},
         {"Spot light", "spot-light", "A directional cone of light."},
-        {"Door (legacy gameplay)", "door", "Only interactive with legacy gameplay enabled; modern doors use project scripts."},
         {"Gravity region", "gravity-region", "A bounded uniform gravity field; configure direction and strength in the inspector."},
         {"Basic water", "basic-water", "Inexpensive visible water and swimming; does not require advanced fluid simulation."},
-        {"Player start (legacy gameplay)", "player-start", "A spawn marker for legacy gameplay, not a script-owned CharacterMotor player."},
         {"Render camera", "render-camera", "An additional rendered view; script-owned main cameras use world.setCamera."},
         {"Audio emitter", "audio-emitter", "A sound source. Choose an audio asset in the inspector."},
         {"Audio listener", "audio-listener", "An authored listening position for scene audio."}
@@ -89,7 +87,7 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
                                         : kind == "dynamic-sphere" ? "Dynamic sphere" : kind == "mesh" ? "Mesh"
                                         : kind == "point-light" ? "Point light" : kind == "spot-light" ? "Spot light"
                                         : kind == "door" ? "Door" : kind == "gravity-region" ? "Gravity region"
-                                        : kind == "player-start" ? "Player start" : kind == "render-camera" ? "Render camera" : kind == "audio-emitter" ? "Audio emitter" : kind == "audio-listener" ? "Audio listener" : "Object");
+                                        : kind == "render-camera" ? "Render camera" : kind == "audio-emitter" ? "Audio emitter" : kind == "audio-listener" ? "Audio listener" : "Object");
     o.parent = parent;
     o.transform.position = parent == kInvalidSceneObjectId ? position : glm::vec3(0.0f);
     if (kind == "box" || kind == "dynamic-box") {
@@ -99,7 +97,7 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.body->shape = SceneShape::Box;
         o.body->motion = kind == "box" ? SceneBodyMotion::Static : SceneBodyMotion::Dynamic;
         o.body->mass = 5.0f;
-        o.body->pickable = kind == "dynamic-box";
+
     } else if (kind == "sphere" || kind == "dynamic-sphere") {
         o.render = SceneRenderComponent{};
         o.render->shape = SceneShape::Sphere;
@@ -107,7 +105,7 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.body->shape = SceneShape::Sphere;
         o.body->motion = kind == "sphere" ? SceneBodyMotion::Static : SceneBodyMotion::Dynamic;
         o.body->mass = 4.0f;
-        o.body->pickable = kind == "dynamic-sphere";
+
     } else if (kind == "mesh") {
         o.render = SceneRenderComponent{};
         o.render->shape = SceneShape::Mesh;
@@ -135,12 +133,6 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.light = SceneLightComponent{};
         o.light->kind = kind == "point-light" ? SceneLightKind::Point : SceneLightKind::Spot;
         o.light->color = glm::vec3(3.0f, 2.8f, 2.4f);
-    } else if (kind == "door") {
-        o.render = SceneRenderComponent{};
-        o.render->shape = SceneShape::Box;
-        o.render->halfExtents = glm::vec3(1.0f, 1.0f, 0.1f);
-        o.render->color = glm::vec3(0.55f, 0.38f, 0.22f);
-        o.door = SceneDoorComponent{};
     } else if (kind == "basic-water") {
         o.name="Basic water";o.basicWater=BasicWaterSettings{};
     } else if (kind == "gravity-region") {
@@ -154,8 +146,6 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.audioEmitter=SceneAudioEmitterComponent{};
     } else if (kind == "audio-listener") {
         o.audioListener=SceneAudioListenerComponent{};
-    } else if (kind == "player-start") {
-        o.playerStart = ScenePlayerStartComponent{};
     }
     if(kind=="mesh"&&animation)o.animation=*animation;
     const SceneObjectId id = o.id;

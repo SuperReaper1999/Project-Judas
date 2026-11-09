@@ -13,7 +13,7 @@ SceneObjectId CreateEditorPauseExample(EditorDocument& doc,const Project& projec
     namespace fs=std::filesystem;
     bool transaction=false;std::string staged;
     try{
-        if(!project.IsLoaded()||project.Settings().legacyGameplay)throw std::runtime_error("Open a project with legacy gameplay disabled before adding the pause example.");
+        if(!project.IsLoaded())throw std::runtime_error("Open a project before adding the pause example.");
         if(doc.EditInProgress())throw std::runtime_error("Finish the current inspector edit first.");
         if(parent&&!doc.GetScene().Find(parent))throw std::runtime_error("The chosen parent no longer exists.");
         for(const auto& object:doc.GetScene().Objects())if(object.ui&&object.ui->name=="pause_menu")throw std::runtime_error("This scene already has a pause_menu document.");

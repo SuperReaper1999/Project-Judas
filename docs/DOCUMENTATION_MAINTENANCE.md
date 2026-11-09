@@ -1,6 +1,6 @@
 # Maintaining current documentation
 
-[Current status and finding register](PREALPHA.md) · [Architecture](ARCHITECTURE.md) ·
+[Current status and finding register](CURRENT_STATUS.md) · [Architecture](ARCHITECTURE.md) ·
 [JudasJS](JUDASJS.md) · [Build identity](BUILD_RELEASES.md)
 
 Current guidance must describe actual source/runtime contracts. A milestone's
@@ -99,7 +99,7 @@ python3 scripts/check_current_docs.py --require-tracked
 ```
 
 Do not edit text between the `judas-release-status` markers by hand.
-`docs/PREALPHA_FINDINGS.json` owns the original finding dispositions. The same
+`docs/CURRENT_FINDINGS.json` owns the original finding dispositions. The same
 refresh command regenerates its Markdown table. Retain superseded dispositions
 in the dated updates list and link actual later evidence. The
 [outstanding-work register](OUTSTANDING_WORK.md) owns current follow-up priorities.

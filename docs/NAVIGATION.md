@@ -2,7 +2,7 @@
 
 ## Terrain-derived navigation
 
-[M75](M75.md) supplies ordinary static triangle-mesh terrain to existing Recast extraction. Sculpting changes the geometry fingerprint and makes the old bake stale; a new offline bake provides normal Detour queries. Painting alone retains geometry and does not invalidate navigation. Navigation remains advisory.
+[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) supplies ordinary static triangle-mesh terrain to existing Recast extraction. Sculpting changes the geometry fingerprint and makes the old bake stale; a new offline bake provides normal Detour queries. Painting alone retains geometry and does not invalidate navigation. Navigation remains advisory.
 
 
 Navigation answers where an agent may go and proposes routes/steering.
@@ -172,5 +172,5 @@ Surface enable state is authored; runtime toggles cover agents/obstacles/links.
 
 See [JudasJS navigation reference](judasjs/navigation.md),
 [copyable example](judasjs/examples/navigation.js), [CharacterMotor](judasjs/character.md),
-[physics queries](judasjs/physics.md), and [M53 evidence](evidence/m53/README.md).
+[physics queries](judasjs/physics.md), and [M53 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m53/README.md).
 Human gameplay/visual acceptance remains the authority.

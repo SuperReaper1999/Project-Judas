@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Graffiti Workshop",
-    "legacyGameplay": false,
     "saveIdentity": "e1b82da86aeea894c7705fdf15cee5e6964ea0d49adcdaf057eae6e24fcf033f",
     "iconAsset": "",
     "worldManifest": "",

@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
     Scene scene; scene.Settings().name="Package fixture"; SceneObjectId instance;
     check(InstantiatePrefab(scene,prefab,"33333333333333333333333333333333",SceneTransform{},instance,error),"linked prefab authored");
     fs::path assets=project.AssetsDir();
-    fs::copy_file("assets/models/beacon.obj", assets/"mesh.obj");
-    fs::copy_file("assets/textures/beacon.png", assets/"texture.png");
+    fs::copy_file("tests/fixtures/engine-assets/models/beacon.obj", assets/"mesh.obj");
+    fs::copy_file("tests/fixtures/engine-assets/textures/beacon.png", assets/"texture.png");
     check(SaveSceneToFile(prefab,(assets/"prop.judasprefab").string(),error),"write prefab source");
     check(AssetDatabase::WriteMeta((assets/"mesh.obj").string()+kAssetMetaExtension,child.render->meshAsset,AssetType::Mesh,"/private/import/path",error)&&
           AssetDatabase::WriteMeta((assets/"texture.png").string()+kAssetMetaExtension,child.render->textureAsset,AssetType::Texture,"import",error)&&
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
       check(ExportProject(project,options,result,error)&&!fs::exists(temp/"game/stale.txt"),"re-export replaces stale package files");
       fs::remove(assets/"texture.png");
       check(!ExportProject(project,options,result,error)&&!error.empty()&&fs::exists(temp/"game/Assets/texture.png"),"missing asset fails without damaging last complete export");
-      fs::copy_file("assets/textures/beacon.png", assets/"texture.png");
+      fs::copy_file("tests/fixtures/engine-assets/textures/beacon.png", assets/"texture.png");
       fs::rename(temp/"game",temp/"moved game");
       Project moved;check(ReadGamePackage((temp/"moved game").string(),launch,error)&&moved.Load((temp/"moved game"/launch.projectFile).string(),error)&&fs::exists(moved.StartupScenePath()),"moved package resolves unchanged relative scene");
       std::string saves; check(PackageSaveDirectory(launch,saves,error)&&fs::path(saves).is_absolute()&&saves.find((temp/"moved game").string())==std::string::npos,"runtime saves outside installation");

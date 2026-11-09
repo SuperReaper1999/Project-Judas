@@ -48,9 +48,7 @@ void Pure() {
     changed.lightViewProjection[0][0] = std::nextafter(1.f, 2.f);
     Check(!cache.Matches(changed), "one-ULP light projection change invalidates exact chart reuse");
     changed = key;
-    changed.includePlayerModel = false;
-    Check(!cache.Matches(changed),
-          "player-caster omission cannot inherit a chart rendered with the player");
+
     changed = key;
     changed.source = 55;
     cache.Remember(changed);
@@ -152,7 +150,7 @@ void Native(const std::filesystem::path &output) {
     lamp.light->outerConeDegrees = 42;
     lamp.light->castsShadow = true;
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     if (!world.Build(scene, nullptr, error)) {
         Check(false, error.c_str());
         return;
@@ -177,7 +175,7 @@ void Native(const std::filesystem::path &output) {
     const auto frame = [&](bool reuse) {
         Reuse(reuse);
         renderer.ResetStats();
-        RenderWorldFrame(renderer, 320, 240, world, nullptr, view, projection, {0, 0, 0}, 1);
+        RenderWorldFrame(renderer, 320, 240, world, view, projection, {0, 0, 0}, 1);
         std::vector<unsigned char> pixels;
         renderer.CaptureFrame(320, 240, pixels);
         return pixels;

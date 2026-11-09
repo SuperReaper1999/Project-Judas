@@ -23,7 +23,7 @@ double Milliseconds(Clock::time_point start) {
 struct Counters {
     std::uint64_t predicates=0, fallbacks=0, unresolved=0;
     std::uint64_t orientationHits=0, orientationRebuilds=0, boundHits=0, boundRebuilds=0;
-    std::uint64_t shapeRebuilds=0, solverFrames=0, allocations=0;
+    std::uint64_t shapeRebuilds=0, allocations=0;
     std::size_t peakCacheBytes=0;
 };
 template<class T, class=void> struct Geometry {
@@ -44,7 +44,7 @@ template<class T> struct Cache<T, std::void_t<decltype(std::declval<T>().orienta
     static void Add(const T& s, Counters& c) {
         c.orientationHits+=s.orientationCacheHits; c.orientationRebuilds+=s.orientationCacheRebuilds;
         c.boundHits+=s.boundCacheHits; c.boundRebuilds+=s.boundCacheRebuilds;
-        c.shapeRebuilds+=s.shapeCacheRebuilds; c.solverFrames+=s.solverFrameBuilds;
+        c.shapeRebuilds+=s.shapeCacheRebuilds;
         c.allocations+=s.geometryCacheAllocations; c.peakCacheBytes=std::max(c.peakCacheBytes,s.geometryCacheBytes);
     }
     static constexpr bool available=true;
@@ -134,7 +134,7 @@ bool Workload(const char* name,int kind,bool trace) {
                 Cache<PhysicsWorld::StepStats>::available?"true":"false",(unsigned long long)counters.orientationHits,
                 (unsigned long long)counters.orientationRebuilds,(unsigned long long)counters.boundHits,
                 (unsigned long long)counters.boundRebuilds,(unsigned long long)counters.shapeRebuilds,
-                (unsigned long long)counters.solverFrames,(unsigned long long)counters.allocations,counters.peakCacheBytes,
+                (unsigned long long)counters.allocations,counters.peakCacheBytes,
                 usage.ru_maxrss,(unsigned long long)checksum,finite?"true":"false",pass?"true":"false");
     return pass;
 }

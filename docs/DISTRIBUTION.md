@@ -41,7 +41,7 @@ existing ICU/Visual C++ runtime dependency closure and redistribution notices.
 The Linux distribution baseline is **Ubuntu 24.04 x86-64**, built and qualified
 on that host in CI. The SDK gate reads ELF **required** symbol versions (not
 exported symbol definitions), rejects glibc requirements above **2.39**, records
-GLIBCXX/CXXABI requirements and checks all 17 tools with the actual host loader.
+GLIBCXX/CXXABI requirements and checks all 15 current tools with the actual host loader.
 It also requires the qualification host to identify as Ubuntu 24.04. This is a
 declared baseline with a mechanical gate; only a completed CI receipt establishes
 that a particular checkpoint passed. GPU/application checks remain separate.

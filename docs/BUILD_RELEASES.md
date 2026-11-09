@@ -91,7 +91,7 @@ configure-time registration plan; execution uses the embedded binary identity.
 `judas-validation-channel-plan.json`, per-case results and CTest logs are retained
 in each channel's separate CI artifact. Known historical manual failures retain
 their existing admission rules. The original six Alpha CI failures are preserved
-in [the investigation record](evidence/alpha-ci-channel-policy/ORIGINAL_FAILURE.json);
+in [the investigation record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/alpha-ci-channel-policy/ORIGINAL_FAILURE.json);
 this repairs test selection, not the experimental fluid solver. No published tag
 or package is replaced by this correction.
 

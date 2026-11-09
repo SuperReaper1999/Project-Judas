@@ -24,9 +24,6 @@
         0.44,
         0.51
       ],
-      "fluid-scale": 1,
-      "fluid-update-rate-hz": 30,
-      "fluid-hydrostatic-drag-rate": 2,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -65,7 +62,6 @@
             0.42
           ],
           "body.radius": 0.42,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.65,
@@ -74,10 +70,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             1,

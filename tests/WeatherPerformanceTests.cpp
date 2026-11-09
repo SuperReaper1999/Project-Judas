@@ -28,7 +28,7 @@ struct Result {
     bool okay=false;
 };
 Result Run(unsigned fields,bool responses,bool enabled,unsigned quality){
-    const Scene scene=Content(fields,responses);RuntimeWorld world;world.legacyGameplay=false;world.weatherQuality=quality;std::string error;Result result;
+    const Scene scene=Content(fields,responses);RuntimeWorld world;world.weatherQuality=quality;std::string error;Result result;
     result.okay=world.Build(scene,nullptr,error);Check(result.okay,"ordinary headless weather workload builds");if(!result.okay){std::printf("BUILD %s\n",error.c_str());return result;}
     std::vector<EntityId> bodies;
     for(const auto& o:scene.Objects()){if(o.weather)world.RuntimeWeather(o.id)->SetEnabled(enabled);if(o.body&&o.body->motion==SceneBodyMotion::Dynamic)bodies.push_back(o.id);}

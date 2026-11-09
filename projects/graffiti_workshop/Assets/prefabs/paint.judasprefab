@@ -30,7 +30,6 @@
         0.24
       ],
       "linear-rendering": true,
-      "fluid-scale": 1,
       "next-id": 1000,
       "fidelity-policy": {
         "mode": {

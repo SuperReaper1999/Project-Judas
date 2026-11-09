@@ -5,7 +5,7 @@ MK2 is Judas's only rigid physics solver. The operator human-accepted
 Subsequent Experimental corrections require their own acceptance. There is no
 MK1 selector, fallback solver or requirement to reproduce MK1 trajectories.
 
-The [unaltered development record](MK2_PHYSICS_DEVELOPMENT.md) preserves the
+The [unaltered development record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/MK2_PHYSICS_DEVELOPMENT.md) preserves the
 experiments, rejected approaches, original failures, measurements and stage-time
 acceptance statements. Its old “not promoted”, alternate-solver flags and interim
 open gaps are historical, not the current runtime contract.
@@ -41,7 +41,7 @@ join through the same owner, without a second simulation system. Gameplay forces
 and per-entity gravity are engine primitives; input policy remains project JS.
 All awake bodies share the chronological intervals. Pre-applied external kicks
 are redistributed only for actual constraints/velocity couplings; free flight
-retains its public pre-step impulse timing. The [qualification follow-up](PREALPHA_FINAL_QUALIFICATION.md)
+retains its public pre-step impulse timing. The [qualification follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_QUALIFICATION.md)
 records the suspension regression and balanced-kick proof for this correction.
 
 Native participants that need a solve at every chronological boundary can use
@@ -114,7 +114,7 @@ WASD measurements with exact stage identities. Those are not universal 60 Hz
 certification or fresh measurements of every later checkpoint. The old Pre-Alpha
 TOI-event/island hitch diagnoses describe the removed MK1 architecture.
 
-The [rotation/contact correction](PREALPHA_MK2_ROTATION_CORRECTION.md) repairs the
+The [rotation/contact correction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_MK2_ROTATION_CORRECTION.md) repairs the
 moderate-rate elastic energy-gain reproduction through consistent rotation and
 chronological response. Its measured energy, collision, momentum, cold-save and
 performance evidence is separate from the preserved original failure record.
@@ -129,8 +129,8 @@ mesh arrival/continuation, contacts, movement and save/lifecycle regressions.
 Water/default-off policy and fresh-process basic-water continuation have their own
 entries. The rotation and process-separated rotation-cold suites cover the new
 trajectory and continuation contracts. Synthetic and automated passes do not establish human acceptance.
-See [Pre-Alpha status](PREALPHA.md) and
-[the final correction work](PREALPHA_FINAL_CORRECTIONS.md).
+See [Pre-Alpha status](CURRENT_STATUS.md) and
+[the final correction work (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_CORRECTIONS.md).
 
 ## Optional native material impulse transactions (Experimental)
 

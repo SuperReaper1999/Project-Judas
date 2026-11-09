@@ -67,8 +67,8 @@ bool RuntimeWorld::SetRuntimePlacement(EntityId id,const SceneTransform& t,bool 
     if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{t.position,t.rotation}))return false;
     SceneObject placement;placement.body=authored->body;placement.transform=t;std::string placementError;if(!ValidateCollisionPlacement(placement,placementError))return false;
     // Baked static capacity data cannot silently follow a runtime teleport.
-    if((authored->liquidBasin||(authored->fluidVolume&&authored->fluidVolume->backend==SceneFluidBackend::Grid))&&(t.position!=authored->transform.position||t.rotation!=authored->transform.rotation||t.scale!=authored->transform.scale))return false;
-    if((authored->liquidContainer||authored->deformable)&&t.scale!=glm::vec3(1))return false;
+    if((authored->fluidVolume)&&(t.position!=authored->transform.position||t.rotation!=authored->transform.rotation||t.scale!=authored->transform.scale))return false;
+    if((authored->deformable)&&t.scale!=glm::vec3(1))return false;
     if(!std::isfinite(glm::dot(t.position,t.position))||!std::isfinite(glm::dot(t.scale,t.scale))||
        !std::isfinite(glm::dot(t.rotation,t.rotation))||glm::dot(t.rotation,t.rotation)<1e-12f)return false;
     // Optional weather resolves owner placement before publication. Reject an
@@ -116,8 +116,8 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
         error="live terrain owns static collision chunks; body authority changes are unsupported";return false;
     }
     if((record&&record->fidelity!=SimulationFidelity::Full)||definition->body->managed||definition->characterMotor||definition->animation||definition->ragdoll||
-       definition->vehicle||definition->combustible||definition->celestial||definition->door||definition->lightSwitch||definition->gravity||
-       definition->atmosphere||definition->fluidVolume||definition->liquidBasin||definition->liquidContainer||definition->deformable||
+       definition->combustible||definition->celestial||definition->gravity||
+       definition->atmosphere||definition->fluidVolume||definition->deformable||
        definition->navigationSurface||m_jointParticipants.count(id)){
         error="this body's component ownership or fidelity does not support authority changes";return false;
     }
@@ -142,7 +142,7 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
         DynamicBody::Visual visual;visual.shape=settings.shape==SceneShape::Sphere?DynamicBody::Shape::Sphere:DynamicBody::Shape::Box;
         visual.halfExtents=settings.halfExtents;visual.radius=settings.radius;if(definition->render)visual.color=definition->render->color;
         DynamicVisual dv;dv.id=id;dv.name=definition->name;dv.hasRender=bool(definition->render);if(definition->render)dv.render=*definition->render;
-        dv.compoundBoxes=settings.compoundBoxes;dv.scale=definition->transform.scale;dv.initialLinearVelocity=settings.initialLinearVelocity;dv.pickable=settings.pickable;
+        dv.compoundBoxes=settings.compoundBoxes;dv.scale=definition->transform.scale;dv.initialLinearVelocity=settings.initialLinearVelocity;
         retained.slot=m_dynamicBodies.size();retained.requiresFull=true;
         m_dynamicBodies.emplace_back(body,visual,pose.position,pose.rotation);m_dynamicVisuals.push_back(std::move(dv));
         m_extraEntities.erase(std::remove_if(m_extraEntities.begin(),m_extraEntities.end(),[id](const auto& e){return e.id==id;}),m_extraEntities.end());

@@ -92,7 +92,7 @@ quaternion `x y z w`. Source object positions remain local to that origin. The
 session origin is subtracted in double precision before converting to float;
 M85 adds opt-in checked live-origin changes for a supported component subset; see [planetary terrain and origins](planetary-terrain.md). Bounds are oriented 3D half extents for interest.
 
-See [M59 authoring/component matrix](../M59_WORLD_STREAMING.md) and the executable
+See [M59 authoring/component matrix](../WORLD_STREAMING.md) and the executable
 [streaming cookbook](examples/streaming.js). Related APIs:
 [scene/session](scenes-state.md), [navigation](navigation.md),
 [character motors](character.md), [physics](physics.md).
@@ -120,7 +120,7 @@ policy above; active articulation and return still pin. Compatible adoption requ
 a complete hierarchical/socket/joint assembly; partial assemblies and group-owned
 articulation are rejected. Revisit reconstructs suspended rigid
 bodies/joints awake with fresh safe handles; adopted members do not duplicate.
-See [integration lifecycle proof](../evidence/m65/REPORT.md).
+See [integration lifecycle proof (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m65/REPORT.md).
 
 ## Prescribed bodies (M71)
 
@@ -143,5 +143,5 @@ hierarchies/articulations and resource-backed subsystem ownership remain restric
 Cross-region dependencies still pin. Pending terrain work defers suspension; retained
 geometry prepares asynchronously while the destination stays private. Private
 rigid/kinematic bodies do not accumulate simulated motion during preparation.
-See [scope and lab](../M97_LIVING_WORLD.md). The normal collider-enabled property
+See [scope and lab (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md). The normal collider-enabled property
 continues to control collision, not whether a gameplay body is simulated.

@@ -1,5 +1,4 @@
 #include "../../PerformanceProfiler.h"
-#include "../../PlayerController.h"
 #include "../../AssetDatabase.h"
 #include "../../ResourceManager.h"
 #include "../../RuntimeWorld.h"
@@ -431,7 +430,7 @@ JSValue HandlePhysicsQueries(BindingContext &context, const std::string &op, int
         return results;
     }
 
-    if (op == "overlap" || op == "sweep" || op == "cast" || op == "closestPoint") {
+    if (op == "overlap" || op == "cast" || op == "closestPoint") {
         glm::vec3 min, max;
         if (!ReadVec(c, arg(1), min) || !ReadVec(c, arg(2), max))
             return JS_ThrowTypeError(c, "invalid bounds");
@@ -487,28 +486,7 @@ JSValue HandlePhysicsQueries(BindingContext &context, const std::string &op, int
                 return JS_ThrowTypeError(c, "cast: %s", e.what());
             }
         }
-        if (op == "sweep") {
-            glm::quat rotation;
-            auto r = arg(4);
-            if (!Number(c, r, "w", rotation.w) || !Number(c, r, "x", rotation.x) ||
-                !Number(c, r, "y", rotation.y) || !Number(c, r, "z", rotation.z) ||
-                !std::isfinite(glm::dot(rotation, rotation)) ||
-                glm::dot(rotation, rotation) < 1e-12f)
-                return JS_ThrowTypeError(c, "invalid rotation");
-            // Same player-sized capsule as the legacy controller, without requiring its spawned
-            // shape: script-owned (non-legacy) worlds never register one, and every sweep reported
-            // a miss.
-            auto hit = world.Physics().SweepCapsuleMotion(
-                PlayerController::CapsuleRadius(), PlayerController::CapsuleHalfHeight(), min,
-                glm::normalize(rotation), max, false, 0, 1, &filter, 0, kAllCategories, false);
-            auto o = JS_NewObject(c);
-            JS_SetPropertyStr(c, o, "hit", JS_NewBool(c, hit.hit));
-            JS_SetPropertyStr(c, o, "distance", JS_NewFloat64(c, hit.distance));
-            JS_SetPropertyStr(c, o, "normal", Vec(c, hit.normal));
-            auto entityId = world.EntityIdOfBody(hit.hitBody);
-            JS_SetPropertyStr(c, o, "entityId", JS_NewString(c, std::to_string(entityId).c_str()));
-            return o;
-        }
+
         std::vector<EntityId> result;
         for (auto handle : world.Physics().QueryBodiesInAabb(min, max, filter)) {
             auto id = world.EntityIdOfBody(handle);
@@ -528,7 +506,7 @@ JSValue HandlePhysicsQueries(BindingContext &context, const std::string &op, int
 } // namespace
 void RegisterPhysicsQueriesBindings(BindingRegistry &registry) {
     registry.Add("PhysicsQueries",
-                 {"gravitySample", "cast2D", "overlapShape", "castMany", "overlap", "sweep", "cast",
+                 {"gravitySample", "cast2D", "overlapShape", "castMany", "overlap",  "cast",
                   "closestPoint"},
                  HandlePhysicsQueries);
 }

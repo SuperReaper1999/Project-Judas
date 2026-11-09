@@ -14,7 +14,7 @@
 #include "../third_party/nlohmann/json.hpp"
 #include <memory>
 namespace {void add(std::set<AssetId>& ids,const AssetId& id){if(!id.empty())ids.insert(id);}}
-void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool advancedFluids){
+void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids){
  add(ids,scene.Settings().environmentAsset);
  if(!scene.Settings().appearanceResetState.empty()){auto baseline=scene.Settings();std::string error;if(DecodeAppearanceState(baseline.appearanceResetState,baseline,error))add(ids,baseline.environmentAsset);}
  for(const auto& o:scene.Objects()){
@@ -36,14 +36,12 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
   if(o.audioZone)add(ids,o.audioZone->asset);
   if(o.navigationSurface)add(ids,o.navigationSurface->asset);
   if(o.deformable)add(ids,o.deformable->asset);
-  if(advancedFluids&&o.liquidBasin){add(ids,o.liquidBasin->geometry);add(ids,o.liquidBasin->asset);}
-  if(advancedFluids&&o.liquidContainer)add(ids,o.liquidContainer->geometry);
  }
 }
-bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,std::set<std::string>& auxiliary,std::string& error,bool advancedFluids){
+bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,std::set<std::string>& auxiliary,std::string& error){
  std::set<AssetId> ids;
  if(record.type==AssetType::Terrain){TerrainV2::AssetPages source;if(!source.Open(record.path,error))return false;for(const auto& id:source.Index().metadata.layerTextures)add(ids,id);add(ids,source.Index().metadata.materialDetail.normalTexture);}
- else if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids,advancedFluids);}
+ else if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids);}
  else if(record.type==AssetType::SpriteSheet){SpriteSheet sheet;if(!LoadSpriteSheet(record.path,sheet,error))return false;add(ids,sheet.texture);}
  else if(record.type==AssetType::UI){UIDocument d;if(!LoadUIDocument(record.path,d,error))return false;for(auto& e:d.elements){add(ids,e.texture);add(ids,e.font);}}
  else if(record.type==AssetType::Material){MaterialDefinition m;if(!LoadMaterial(record.path,m,error))return false;for(auto& map:m.maps)add(ids,map.asset);}

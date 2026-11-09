@@ -1,7 +1,7 @@
 # Native physical constraint participants (Experimental)
 
 This optional C++ interface supports development of the replacement pressure
-backend. **It does not enable Advanced Fluids**, replace `FluidWorld`, or add a
+backend. **It does not enable Advanced Fluids**, add a retired backend, or add a
 JudasJS binding. Published Alpha packages retain their compiled fluid lock.
 
 Include `PhysicsConstraintBatch.h` alongside `PhysicsWorld.h`. Set
@@ -83,4 +83,4 @@ mesh silently loses body-boundary tags when actual native motion includes a tiny
 rotation. The reference now detects this and fails closed; general moving owned
 cut geometry must be completed before claiming that runtime case passes.
 
-Detailed measured outcomes and preserved failures: [native interface checkpoint](ADVANCED_FLUID_NATIVE_INTERFACE.txt).
+Detailed measured outcomes and preserved failures: [native interface checkpoint (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ADVANCED_FLUID_NATIVE_INTERFACE.txt).

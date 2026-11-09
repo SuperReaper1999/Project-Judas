@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
         JobSystem jobs(2);
         ResourceManager resources(nullptr, nullptr, &jobs);
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         std::string error;
         std::map<std::string, SaveChunk> saved;
         if (!read) {

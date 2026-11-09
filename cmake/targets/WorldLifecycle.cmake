@@ -1,14 +1,13 @@
 # Subsystem build declarations. Test registration remains in JudasValidation.cmake.
-judas_add_engine_test(judas_living_world_tests tests/LivingWorldTests.cpp)
-judas_add_engine_test(judas_living_world_streaming_tests tests/LivingWorldStreamingTests.cpp)
-judas_add_engine_test(judas_living_world_application_tests tests/LivingWorldApplicationTests.cpp APPLICATION)
+
+
 
 # M98 persistence evolution uses the existing archive/storage/restore path.
 add_executable(judas_save tools/SaveEvolutionMain.cpp)
 target_link_libraries(judas_save PRIVATE judas_engine)
 judas_warnings(judas_save)
 judas_add_engine_test(judas_save_evolution_tests tests/SaveEvolutionTests.cpp)
-judas_add_engine_test(judas_save_evolution_application_tests tests/SaveEvolutionApplicationTests.cpp APPLICATION)
+
 
 # Optional multiplayer shares the existing authoritative world; no network setup offline.
 add_executable(judas_server src/DedicatedMain.cpp)

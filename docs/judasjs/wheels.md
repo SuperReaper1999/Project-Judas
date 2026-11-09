@@ -1,6 +1,6 @@
 # Wheel — suspension, rolling and tyre contact
 
-[Index](../JUDASJS.md) · [Physics](physics.md) · [Entities/prefabs](entities.md) · [M81 authoring and limitations](../M81_WHEELS.md)
+[Index](../JUDASJS.md) · [Physics](physics.md) · [Entities/prefabs](entities.md) · [M81 authoring and limitations](../WHEELS.md)
 
 An authored Wheel component references an ordinary dynamic rigid-body chassis.
 Each wheel has its own suspension, rotational inertia, torque/brake commands and
@@ -113,7 +113,7 @@ This is a query-contact wheel with one independent rotational degree of freedom,
 not a separate rigid wheel body. Author the chassis mass to include unsprung
 translational mass. The sphere proxy has no tyre width, tread, deformable tyre,
 mesh-rim collision or full wheel-body gyroscopic model. See
-[M81 limitations](../M81_WHEELS.md#limitations) before using very steep faces,
+[M81 limitations](../WHEELS.md#limitations) before using very steep faces,
 very thin/high-speed terrain or full-contact bicycle balancing.
 
 Save/load retains independent commands and rotational state. Scene replacement,
@@ -134,4 +134,4 @@ part's ordinary physical body, including plastic displacement and detachment.
 `wheel.settings.part` returns this string (empty for an ordinary chassis).
 Missing/unpublished/removed parts make the wheel unavailable; no body-slot alias
 is substituted. This is an authored source selection, not a new gameplay controller.
-See [physical section authoring](../M83_COARSE_CRASH.md).
+See [physical section authoring](../COARSE_CRASH.md).

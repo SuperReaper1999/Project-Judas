@@ -21,7 +21,6 @@
 
 #include "LightAttenuation.h"
 #include "LightTransforms.h"
-#include "PauseMenu.h"
 
 namespace {
 
@@ -234,33 +233,7 @@ void TestSpotConeFactor() {
 // request behind (see docs/ARCHITECTURE.md, "Milestone 14, Input
 // ownership"): the request itself is always drained so it can never go
 // stale, but it only flips `torchOn` while `!pauseMenu.IsOpen()`.
-void TestTorchToggleInputOwnership() {
-    std::printf("Section F: torch toggle obeys the same input-ownership boundary as UI input\n");
 
-    PauseMenu menu;
-    bool torchOn = false;
-
-    auto handleTorchToggleRequest = [&](bool requested) {
-        // Same shape as Application::Run's own gated block: drain always,
-        // act only while gameplay owns input.
-        if (requested && !menu.IsOpen()) torchOn = !torchOn;
-    };
-
-    handleTorchToggleRequest(true);
-    Check(torchOn, "torch toggles normally during ordinary gameplay");
-
-    menu.HandleBackRequest();  // open the pause menu
-    Check(menu.IsOpen(), "menu is open for the rest of this check");
-    handleTorchToggleRequest(true);
-    Check(torchOn, "a toggle request while the menu owns input does not change torch state");
-
-    menu.HandleBackRequest();  // close the menu (resume)
-    Check(!menu.IsOpen(), "menu closed");
-    Check(torchOn, "torch state is unchanged merely by closing the menu (no stale toggle fires on resume)");
-
-    handleTorchToggleRequest(true);
-    Check(!torchOn, "gameplay control of the torch is fully restored after resume");
-}
 
 int main() {
     TestTorchTransformAtIdentity();
@@ -271,7 +244,6 @@ int main() {
     TestSpacecraftLightRotateTheUniverse();
     TestAttenuationDecreasesWithDistance();
     TestSpotConeFactor();
-    TestTorchToggleInputOwnership();
 
     if (g_failures == 0) {
         std::printf("\nALL TESTS PASSED\n");

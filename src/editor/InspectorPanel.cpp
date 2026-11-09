@@ -38,7 +38,7 @@ namespace {
 // owns edit transactions; the design primitives own only interaction/paint.
 EditorVisuals::Icon ObjectIcon(const SceneObject &object) {
     using Icon = EditorVisuals::Icon;
-    if (object.characterMotor || object.playerStart)
+    if (object.characterMotor )
         return Icon::Person;
     if (object.renderCamera)
         return Icon::Camera;

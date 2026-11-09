@@ -4,7 +4,6 @@
 #include "AuthoringJSON.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
-#include "EditorStabilization.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "ModAuthoring.h"
@@ -18,10 +17,9 @@
 #include "ScreenshotWriter.h"
 #include "ScriptTools.h"
 #include "SpriteSheetEditor.h"
-#include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "TilemapEditor.h"
 #include "UtilityAIEditor.h"
-#include "VolumeTerrainTools.h"
 #include "WorldStreaming.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -43,7 +41,6 @@
 #include <vector>
 
 namespace fs = std::filesystem;
-#include "EditorStabilization.h"
 EditorAutomation::EditorAutomation(EditorApplication &application, EngineHost &engine)
     : app(application), host(engine), window(engine.GetWindow()), renderer(engine.GetRenderer()),
       initialWindowWidth(window.Width()), initialWindowHeight(window.Height()),
@@ -55,8 +52,6 @@ EditorAutomation::EditorAutomation(EditorApplication &application, EngineHost &e
       workspaceAutotest(autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_WORKSPACE")),
       animationTimelineAutotest(autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_ANIMATION")),
       importRecipe(autotest ? std::getenv("JUDAS_EDITOR_AUTOTEST_IMPORT") : nullptr),
-      terrainAutotest(autotest ? std::getenv("JUDAS_EDITOR_AUTOTEST_TERRAIN") : nullptr),
-      volumeAutotest(autotest ? std::getenv("JUDAS_EDITOR_AUTOTEST_VOLUME") : nullptr),
       retargetAutotest(autotest ? std::getenv("JUDAS_EDITOR_AUTOTEST_RETARGET") : nullptr) {}
 
 EditorAutomationNativePoint EditorAutomation::NativePoint(glm::vec2 point, const char *panelName) const {
@@ -126,17 +121,9 @@ void EditorAutomation::navigationFocus(bool focused) {
     SDL_PushEvent(&event);
 }
 
-void EditorAutomation::volumeCheck(bool ok, const char *label) {
-    if (!ok)
-        ++volumeFailures;
-    std::fprintf(stderr, "[M84 editor volume] %s: %s\n", ok ? "PASS" : "FAIL", label);
-}
 
-void EditorAutomation::terrainCheck(bool value, const char *label) {
-    if (!value)
-        ++terrainFailures;
-    std::fprintf(stderr, "[M75 terrain editor] %s: %s\n", value ? "PASS" : "FAIL", label);
-}
+
+
 
 void EditorAutomation::screenshot(const std::string &path) {
     std::vector<unsigned char> pixels;
@@ -167,18 +154,7 @@ bool EditorAutomation::Initialize() {
                 return false;
         }
     }
-    if (autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_LIQUID_BAKE")) {
-        std::vector<SceneObjectId> ids;
-        for (const auto &o : app.m_document.GetScene().Objects())
-            if (o.liquidBasin)
-                ids.push_back(o.id);
-        for (auto id : ids) {
-            bool ok = BakeEditorLiquid(app.m_document, id, app.m_panels);
-            std::fprintf(stderr, "[editor autotest] liquid bake %llu: %s: %s\n",
-                         static_cast<unsigned long long>(id), ok ? "PASS" : "FAIL",
-                         app.m_panels.status.c_str());
-        }
-    }
+
     if (autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_NAV_BAKE")) {
         std::vector<SceneObjectId> surfaces;
         for (const auto &o : app.m_document.GetScene().Objects())
@@ -273,10 +249,7 @@ bool EditorAutomation::Initialize() {
             app.m_quit = true;
         }
     }
-    if (const char *output = std::getenv("JUDAS_EDITOR_STABILIZATION")) {
-        app.m_stabilization = std::make_unique<EditorApplication::StabilizationAutomation>();
-        app.m_stabilization->output = output;
-    }
+
 
     return true;
 }
@@ -389,6 +362,7 @@ void EditorAutomation::AfterRequests() {
 void EditorAutomation::AfterRender(EditorRequests &deferredRequests) {
     if (!autotest)
         return;
+    ++autotestFrame;
     RunTerrainAndAsyncChecks(deferredRequests);
     RunAssetsChecks();
     RunWorkspaceChecks();

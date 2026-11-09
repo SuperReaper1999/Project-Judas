@@ -21,7 +21,7 @@ PAGES = (
     'README.md',
     'docs/README.md',
     'docs/VERSIONING.md',
-    'docs/PREALPHA.md',
+    'docs/CURRENT_STATUS.md',
     'docs/ALPHA_SUPPORT_MATRIX.md',
     'docs/RELEASING.md',
     'docs/DISTRIBUTION.md',
@@ -104,7 +104,7 @@ def replace_block(text, start, end, value, document):
 
 
 def findings_table(root):
-    register = json.loads((root / 'docs/PREALPHA_FINDINGS.json').read_text(encoding='utf-8'))
+    register = json.loads((root / 'docs/CURRENT_FINDINGS.json').read_text(encoding='utf-8'))
     rows = register['findings']
     if not rows or len({row['id'] for row in rows}) != len(rows):
         raise ValueError('finding IDs must be nonempty and unique')
@@ -129,7 +129,7 @@ def refresh(root, write=False):
         expected = replace_block(text, START, END, summary(root, document), document)
         if expected != text:
             replacements.append((document, path, expected))
-    document = 'docs/PREALPHA_FINDINGS.md'
+    document = 'docs/CURRENT_FINDINGS.md'
     path = root / document
     text = path.read_text(encoding='utf-8')
     expected = replace_block(text, '<!-- judas-findings:start -->',

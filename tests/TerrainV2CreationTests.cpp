@@ -2,7 +2,7 @@
 #include "Project.h"
 #include "RuntimeWorld.h"
 #include "editor/ComponentEditors.h"
-#include "editor/TerrainTools.h"
+#include "editor/TerrainV2Editor.h"
 #include "editor/TerrainV2Editor.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
         state.importJobs = &host.Jobs();
         state.showTerrain = true;
         EditorRequests requests;
-        TerrainEditor tools;
+        TerrainV2Editor tools;
         auto frame = [&] {
             ImGui::NewFrame();
             ImGui::SetNextWindowPos({0, 0}, ImGuiCond_Always);
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
         auto wait = [&] {
             for (unsigned i = 0; i < 10000; ++i) {
                 frame();
-                if (!tools.v2->Busy())
+                if (!tools.Busy())
                     return;
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
@@ -87,9 +87,9 @@ int main(int argc, char **argv) {
         };
         frame();
         frame();
-        click("Create Terrain V2 landscape");
+        click("New landscape");
         frame();
-        Check(tools.v2->Active(), "normal terrain panel opens V2 creation without authored files");
+        Check(tools.Active(), "normal terrain panel opens V2 creation without authored files");
         click("Create landscape");
         Check(!tools.Guard(state), "pending creation blocks project/Play lifetime changes");
         wait();
@@ -108,9 +108,9 @@ int main(int argc, char **argv) {
               "created asset is registered and readable: " + error);
         Check(source.samplesX == 129 && source.heights.front() == 0,
               "default terrain is a sensible editable flat surface at zero");
-        Check(tools.v2->Loaded() && tools.v2->Preview() && tools.v2->Sources().size() == 1,
+        Check(tools.Loaded() && tools.Preview() && tools.Sources().size() == 1,
               "creation enters live viewport editing automatically");
-        const auto firstPath = tools.v2->Sources().front();
+        const auto firstPath = tools.Sources().front();
         document.Undo();
         Check(!document.GetScene().Find(first),
               "scene Undo removes new owner without deleting assets");
@@ -118,11 +118,11 @@ int main(int argc, char **argv) {
         document.Select(first);
         Check(document.GetScene().Find(first) && host.Assets().Find(sourceId),
               "Redo restores placement and asset identity");
-        Check(tools.v2->Stroke(document.GetScene(), first, {0, 10, 0}, {0, -1, 0}, true, true,
+        Check(tools.Stroke(document.GetScene(), first, {0, 10, 0}, {0, -1, 0}, true, true,
                                false, true, state.status),
               "sculpt fresh terrain through actual viewport hook");
         wait();
-        tools.v2->Stroke(document.GetScene(), first, {0, 10, 0}, {0, -1, 0}, false, false, false,
+        tools.Stroke(document.GetScene(), first, {0, 10, 0}, {0, -1, 0}, false, false, false,
                          true, state.status);
         Check(!tools.Guard(state), "unsaved source edit cannot silently enter Play");
         click("Save and update playable terrain");
@@ -194,7 +194,7 @@ int main(int argc, char **argv) {
         Check(tools.Guard(state), "published material changes permit Play again");
         Check(document.Save(error), "ordinary scene Save persists terrain ownership: " + error);
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         Check(world.Build(document.GetScene(), &host.Resources(), error),
               "new project's normal scene starts with real native collision: " + error);
         Check(world.HasRuntimeTerrain(first) && world.LiveTerrain().Status(first)->ready,
@@ -204,18 +204,18 @@ int main(int argc, char **argv) {
         click("Create landscape");
         wait();
         const auto second = document.Selected();
-        Check(second != first && tools.v2->Sources().size() == 2,
+        Check(second != first && tools.Sources().size() == 2,
               "second source gets independent assets and appears in the source chooser");
         click("Source");
         click(fs::path(firstPath).filename().string().c_str());
         wait();
         // Both generated names share a prefix; stable filenames, not ID order,
         // determine the chooser's deterministic ordering.
-        Check(tools.v2->MeshId() == firstMesh,
+        Check(tools.MeshId() == firstMesh,
               "choosing another source reopens its actual native preview");
         Check(document.Selected() &&
                   document.GetScene().Find(document.Selected())->render->meshAsset ==
-                      tools.v2->MeshId(),
+                      tools.MeshId(),
               "source choice immediately selects its actual scene owner");
         Check(document.GetScene().Find(first)->render->meshAsset == firstMesh,
               "creating and switching sources preserves existing terrain references");
@@ -275,15 +275,15 @@ int main(int argc, char **argv) {
         auto *toolsMenu = context->OpenPopupStack.back().Window;
         ImGui::ActivateItemByID(ImHashStr("Paint", 0, toolsMenu->GetID(4)));
         frame();
-        const auto previousMesh = tools.v2->Preview();
+        const auto previousMesh = tools.Preview();
         const auto oldWeight = source.weights[64 * 129 + 64].x;
-        Check(tools.v2->Stroke(document.GetScene(), third, {0, 100, 0}, {0, -1, 0}, true, true,
+        Check(tools.Stroke(document.GetScene(), third, {0, 100, 0}, {0, -1, 0}, true, true,
                                false, true, state.status),
               "fresh image terrain accepts an actual paint gesture");
         frame();
-        tools.v2->Stroke(document.GetScene(), third, {0, 100, 0}, {0, -1, 0}, false, false, false,
+        tools.Stroke(document.GetScene(), third, {0, 100, 0}, {0, -1, 0}, false, false, false,
                          true, state.status);
-        Check(!tools.v2->Busy() && tools.v2->Preview() == previousMesh,
+        Check(!tools.Busy() && tools.Preview() == previousMesh,
               "material-only painting does not rebuild or replace terrain geometry");
         click("Save and update playable terrain");
         wait();
@@ -292,15 +292,6 @@ int main(int argc, char **argv) {
               "painted material samples survive native source publication");
         Check(document.Save(error),
               "multiple native terrain sources save through the ordinary scene document");
-        click("Legacy terrain tools");
-        frame();
-        Check(!tools.v2->Active() && !tools.loaded,
-              "legacy authoring stays accessible without reusing native draft state");
-        click("Create Terrain V2 landscape");
-        frame();
-        Check(tools.v2->Active(),
-              "returning to V2 creation preserves the existing source catalogue");
-        click("Cancel new landscape");
         const ComponentEditor *descriptor = nullptr;
         for (const auto &entry : ComponentEditorRegistry())
             if (std::string(entry.name) == "Landscape")
@@ -310,7 +301,7 @@ int main(int argc, char **argv) {
               "native component owns a real inspector and asset-backed creation workflow");
         descriptor->requestAdd(state);
         frame();
-        Check(tools.v2->Active() && !state.terrainCreateRequested,
+        Check(tools.Active() && !state.terrainCreateRequested,
               "registry creation request is consumed locally by the terrain workflow");
         click("Cancel new landscape");
         document.BeginEdit();
@@ -323,7 +314,7 @@ int main(int argc, char **argv) {
         state.terrainEditAsset = sourceId;
         frame();
         wait();
-        Check(document.Selected() == first && tools.v2->MeshId() == firstMesh,
+        Check(document.Selected() == first && tools.MeshId() == firstMesh,
               "inspector/asset request reopens the correct source and selects its owner");
         document.BeginEdit();
         auto &ground = document.GetScene().CreateObject("Ground");

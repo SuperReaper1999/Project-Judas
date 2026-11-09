@@ -37,9 +37,10 @@ void DrawEditorWorkspaceChrome(EditorDocument &doc, EditorPanelState &state, Edi
     const float scale = ImGui::GetIO().FontGlobalScale;
     const float logicalWidth = display.x / std::max(.85f, scale);
     PlaceWorkspacePanel(state.workspace.toolbar);
+    ImGui::SetNextWindowViewport(ImGui::GetMainViewport()->ID);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {14 * scale, 8 * scale});
     ImGui::Begin("##workspaceToolbar", nullptr,
-                 kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar |
+                 kWorkspacePanelFlags | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar |
                      ImGuiWindowFlags_NoScrollWithMouse);
     auto *draw = ImGui::GetWindowDrawList();
     const auto position = ImGui::GetWindowPos(), size = ImGui::GetWindowSize();
@@ -312,7 +313,6 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         ImGui::MenuItem("AI actions and decisions", nullptr, &state.showUtilityAI);
         if (ImGui::BeginMenu("Terrain and world tools")) {
             ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
-            ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
             ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
             ImGui::EndMenu();
         }
@@ -373,16 +373,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
         DrawEditorOverlayMenu(state.debug);
         ImGui::EndMenu();
     }
-    if (ImGui::BeginMenu("World", !editing)) {
-        ImGui::TextDisabled("%s", state.worldStatePath.empty() ? "(no world-state path: save the scene first)"
-                                                               : state.worldStatePath.c_str());
-        if (ImGui::MenuItem("Save world state", "F6", false, !state.worldStatePath.empty()))
-            requests.saveWorldState = true;
-        if (ImGui::MenuItem("Delete world state (pristine baseline next Play)", "F7", false,
-                            !state.worldStatePath.empty()))
-            requests.deleteWorldState = true;
-        ImGui::EndMenu();
-    }
+
     if (ImGui::BeginMenu("Play")) {
         if (ImGui::MenuItem(editing ? "Play scene" : "Stop", "F5")) {
             if (editing)
@@ -410,10 +401,11 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
 
 void DrawStatusBar(EditorDocument &doc, EditorPanelState &state) {
     PlaceWorkspacePanel(state.workspace.status);
+    ImGui::SetNextWindowViewport(ImGui::GetMainViewport()->ID);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 4));
     ImGui::Begin("##status", nullptr,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-                     ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings);
+                     ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDocking);
     const std::string message = std::string(doc.IsDirty() ? "Unsaved edits  |  " : "") + state.status;
     ImGui::TextUnformatted(message.c_str());
     if (ImGui::IsItemHovered())

@@ -7,7 +7,6 @@
 #include "SceneFingerprint.h"
 #include "Prefab.h"
 #include "NavigationAsset.h"
-#include "WorldState.h"
 #include <filesystem>
 #include <algorithm>
 #include <fstream>
@@ -115,7 +114,6 @@ int main(){namespace fs=std::filesystem;fs::path root="build/m59-unit-project";f
  check(coupled.StageRegionObject(plain,plain,error),"body-less regional registration");coupled.PublishRegion({plain.id});coupled.RemoveRegionObject(plain.id);
  JointState intact;check(coupled.Physics().GetJoint(retainedHinge,intact),"body-less region teardown preserves existing physical joint handles");
  auto motorSource=source();SceneObject motor;motor.id=8;motor.characterMotor=CharacterMotorSettings{};motor.transform.position={0,2,0};motorSource.InsertObject(motor);SaveSceneToFile(motorSource,(root/"Scenes/motor.judas").string(),error);WorldManifest motorManifest=manifest;motorManifest.regions.clear();motorManifest.regions["a"]=a;motorManifest.regions["a"].scene="Scenes/motor.judas";RuntimeWorld motorWorld;motorWorld.Build(bootstrap,&resources,error);WorldStreaming motorStream(motorWorld,resources,p,motorManifest);auto motorToken=motorStream.Request("a",false,error);pump(motorStream,[&]{return motorStream.Status(motorToken)->state=="active";});auto* motion=motorWorld.RuntimeCharacter(motorStream.Resolve("a",8));motion->velocity={1,2,3};motorWorld.UpdateCharacters(0);motorStream.Release(motorToken);pump(motorStream,[&]{return motorStream.Stats().active==0;});motorToken=motorStream.Request("a",false,error);pump(motorStream,[&]{return motorStream.Status(motorToken)->state=="active";});motion=motorWorld.RuntimeCharacter(motorStream.Resolve("a",8));check(motion&&motion->velocity==glm::vec3(1,2,3),"idle motor root velocity survives ordinary region suspension");
- auto delta=CaptureWorldState(world);check(!ApplyWorldState(world,delta,error)&&error.find("composed")!=std::string::npos,"composed disk delta explicitly rejected");
  // A world endpoint is joint-entity-local authored data, transformed once.
  auto anchorScene=source();SceneObject localJoint;localJoint.id=9;localJoint.transform.position={1,2,3};localJoint.joint=SceneJointComponent{};localJoint.joint->bodyA=2;localJoint.joint->settings.anchorB={2,0,0};localJoint.joint->settings.frameB=glm::angleAxis(.4f,glm::vec3(1,0,0));anchorScene.InsertObject(localJoint);SaveSceneToFile(anchorScene,(root/"Scenes/anchors.judas").string(),error);
  auto anchorRegion=a;anchorRegion.scene="Scenes/anchors.judas";anchorRegion.origin+=glm::dvec3(10,0,0);anchorRegion.rotation=glm::angleAxis(glm::half_pi<float>(),glm::vec3(0,0,1));WorldManifest anchorManifest=manifest;anchorManifest.regions={{"a",anchorRegion}};RuntimeWorld anchorWorld;anchorWorld.Build(bootstrap,&resources,error);WorldStreaming anchorStream(anchorWorld,resources,p,anchorManifest);auto anchorToken=anchorStream.Request("a",false,error);pump(anchorStream,[&]{return anchorStream.Status(anchorToken)->state=="active";});

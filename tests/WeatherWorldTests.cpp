@@ -20,7 +20,7 @@ Scene Fixture(){
  auto& wall=scene.CreateObject("windbreak");wall.transform.position={-2,2,8};wall.body=SceneBodyComponent{};wall.body->halfExtents={.15f,3,1};return scene;
 }
 void Step(RuntimeWorld& w,float dt=1.f/60){w.UpdateWeather(dt);w.Physics().Step(dt);}
-bool Build(RuntimeWorld& w,const Scene& s,std::string& e){w.legacyGameplay=false;bool result=w.Build(s,nullptr,e);if(!result)std::printf("BUILD %s\n",e.c_str());return result;}
+bool Build(RuntimeWorld& w,const Scene& s,std::string& e){bool result=w.Build(s,nullptr,e);if(!result)std::printf("BUILD %s\n",e.c_str());return result;}
 bool Near(V a,V b,double tolerance=1e-5){return glm::length(a-b)<tolerance;}
 }
 int main(){

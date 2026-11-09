@@ -182,7 +182,7 @@ Use the sample with resolved Judas gravity for project-owned buoyancy, drag and
 propulsion. CharacterMotor remains geometric movement, not a built-in swim mode.
 See [Project Settings and water](../PROJECT_SETTINGS_AND_WATER.md) for authoring,
 defaults, experimental opt-in, approximation limits and the Stillwater project.
-The particle path still has its [existing limitations](../FLUID_DEMO.md).
+The particle path still has its [existing limitations (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_DEMO.md).
 
 ## Portal views: off-axis frustum and oblique clip plane
 

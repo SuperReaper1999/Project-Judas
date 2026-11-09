@@ -60,7 +60,6 @@ bool CreateAndAttachEditorAI(EditorDocument& doc,SceneObjectId owner,const Proje
     bool edit=false;
     try {
         if(!project.IsLoaded()||!doc.GetScene().Find(owner))throw std::runtime_error("Open a project and select an existing object first");
-        if(project.Settings().legacyGameplay)throw std::runtime_error("Disable legacy gameplay in Project Settings before creating a script-owned AI actor");
         if(doc.EditInProgress())throw std::runtime_error("Finish the current inspector edit before creating AI behaviour");
         // A human may have added Scripts before choosing this creation command.
         // Validate a copy with only the first placeholder we will fill omitted;

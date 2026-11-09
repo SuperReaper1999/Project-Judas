@@ -2,9 +2,8 @@
 // boundary, project -> startup scene -> runtime, the shipped projects,
 // gizmo mathematics with undo/redo, the inspector's data round trip and
 // Edit/Play separation — all headless (no window, no GL, no font). Run
-// from the repository root: the technology-demonstration project
-// (judas_tech_demo.judasproj) and projects/tiny_game are loaded through
-// the same code the runtime and editor use. Temporary projects are
+// from the repository root through the same code used by runtime/editor.
+// Temporary projects are
 // created under the system temp directory and removed afterwards.
 #include <cmath>
 #include <cstdio>
@@ -18,7 +17,6 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "AssetDatabase.h"
-#include "GameSession.h"
 #include "Project.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
@@ -145,11 +143,11 @@ void SectionAssetIdentity() {
 
     // Import a real mesh and texture from the engine's demo tree.
     AssetRecord mesh, texture;
-    Check(db.Import("assets/models/beacon.obj", "models/lighthouse.obj", mesh, error), "importing a valid .obj succeeds: " + error);
+    Check(db.Import("tests/fixtures/engine-assets/models/beacon.obj", "models/lighthouse.obj", mesh, error), "importing a valid .obj succeeds: " + error);
     Check(IsValidAssetId(mesh.id) && mesh.type == AssetType::Mesh && mesh.relativePath == "Assets/models/lighthouse.obj",
           "the imported mesh has a valid id, the mesh type and the destination path");
     Check(fs::is_regular_file(mesh.path) && fs::is_regular_file(mesh.path + ".judasmeta"), "the file and its sidecar were written");
-    Check(db.Import("assets/textures/beacon.png", "", texture, error) && texture.type == AssetType::Texture &&
+    Check(db.Import("tests/fixtures/engine-assets/textures/beacon.png", "", texture, error) && texture.type == AssetType::Texture &&
               texture.relativePath == "Assets/beacon.png",
           "importing a texture with an empty destination keeps its file name");
     AssetRecord bad;
@@ -160,7 +158,7 @@ void SectionAssetIdentity() {
     }
     Check(!db.Import(temp.Str() + "/broken.obj", "", bad, error) && !fs::exists(project.AssetsDir() + "/broken.obj"),
           "an undecodable mesh is refused and leaves nothing behind: " + error);
-    Check(!db.Import("assets/models/beacon.obj", "models/lighthouse.obj", bad, error), "importing onto an existing destination is refused");
+    Check(!db.Import("tests/fixtures/engine-assets/models/beacon.obj", "models/lighthouse.obj", bad, error), "importing onto an existing destination is refused");
 
     // A scene refers to the asset by id.
     Scene scene;
@@ -203,7 +201,7 @@ void SectionAssetIdentity() {
           "a sidecar whose file is gone is reported as missing, not silently dropped");
 
     // Untracked + Track with a forced id; duplicate id and corrupt sidecar problems.
-    fs::copy_file("assets/models/plane.obj", project.AssetsDir() + "/plane.obj", ec);
+    fs::copy_file("tests/fixtures/engine-assets/models/plane.obj", project.AssetsDir() + "/plane.obj", ec);
     AssetDatabase untrackedScan;
     untrackedScan.Scan(project.RootDir(), project.AssetsDir());
     Check(untrackedScan.Untracked().size() == 1, "a file without a sidecar is listed as untracked");
@@ -289,20 +287,20 @@ void SectionProjectRuntime() {
     std::string error;
     Check(Project::CreateNew(temp.Str(), "Current runtime", project, error), "fresh project creation: " + error);
     project.Settings().startupScene = "Scenes/main.judas";
-    project.Settings().legacyGameplay = false;
+
     const auto authored = ProjectPhysicsFixture();
     Check(project.Save(error) && SaveSceneToFile(authored, project.StartupScenePath(), error), "authored startup scene persists");
     Project reopened;
     Scene scene;
     Check(reopened.Load(project.ProjectFile(), error) && LoadSceneFromFile(reopened.StartupScenePath(), scene, error), "fresh project reopens its own startup scene");
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     Check(world.Build(scene, nullptr, error), "ordinary runtime builds current authored components");
-    GameSession session;
-    Check(session.Begin(world, error), "runtime simulation context begins");
+
+    Check(world.IsBuilt(), "runtime simulation context begins");
     Window window;
     window.SetTestInputMode(true);
-    for (int i = 0; i < 240; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    for (int i = 0; i < 240; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     Check(world.DynamicBodies().size() == 1 && Near(world.DynamicBodies()[0].GetPosition().y, .5f, .05f), "authored dynamic box settles on real collision");
     const auto counts = world.CountLifecycle();
     Check(counts.full == 1 && counts.coarse == 0 && counts.dormant == 0, "ordinary project retains full physics without a fidelity policy");
@@ -408,24 +406,23 @@ void SectionInspectorRoundTrip() {
         o.transform.scale = glm::vec3(2.0f, 0.5f, 1.25f);
         o.render = SceneRenderComponent{}; o.render->shape = SceneShape::Mesh; o.render->meshAsset = "0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21";
         o.render->textureAsset = "5e4d3c2b1a0f4e6d9c8b7a6f5e4d3c2b"; o.render->color = glm::vec3(0.1f, 0.2f, 0.3f); o.render->alpha = 0.75f;
-        o.body = SceneBodyComponent{}; o.body->motion = SceneBodyMotion::Dynamic; o.body->mass = 12.5f; o.body->pickable = true; o.body->managed = true;
+        o.body = SceneBodyComponent{}; o.body->motion = SceneBodyMotion::Dynamic; o.body->mass = 12.5f;  o.body->managed = true;
         o.body->initialLinearVelocity = glm::vec3(0.0f, 0.0f, -3.0f);
         o.gravity = SceneGravityComponent{}; o.gravity->kind = SceneGravityKind::Uniform; o.gravity->regionShape = SceneRegionShape::Box; o.gravity->regionHalfExtents = glm::vec3(7.0f);
         o.light = SceneLightComponent{}; o.light->kind = SceneLightKind::Spot; o.light->range = 33.0f; o.light->innerConeDegrees = 10.0f;
-        o.vehicle = SceneVehicleComponent{}; o.vehicle->gravity = SceneVehicleGravity::Celestial; o.vehicle->dragCoefficient = 0.7f;
-        o.celestial = SceneCelestialComponent{}; o.celestial->operatorThrustForce = 5.0f;
+        o.celestial = SceneCelestialComponent{}; o.celestial->gravitationalParameter = 5.0f;
         o.combustible = SceneCombustibleComponent{}; o.combustible->initialFuelMassKg = 0.5f;
-        o.fluidVolume = SceneFluidVolumeComponent{}; o.fluidVolume->emitter = true; o.fluidVolume->maxParticles = 77;
+        o.fluidVolume = SceneFluidVolumeComponent{}; o.fluidVolume->fillHeight = 1.7f;
     }
     {
         SceneObject& o = scene.CreateObject("Door");
         o.render = SceneRenderComponent{}; o.render->halfExtents = glm::vec3(1.0f, 1.0f, 0.1f);
-        o.door = SceneDoorComponent{}; o.door->openAngleDegrees = 75.0f;
+        o.basicWater = BasicWaterSettings{}; o.basicWater->waveSpeed = 1.7f;
     }
     {
         SceneObject& o = scene.CreateObject("Switch");
         o.render = SceneRenderComponent{}; o.render->halfExtents = glm::vec3(0.06f, 0.18f, 0.04f);
-        o.lightSwitch = SceneLightSwitchComponent{}; o.lightSwitch->lampRange = 4.0f;
+        o.renderCamera = SceneRenderCameraComponent{}; o.renderCamera->width = 512;
     }
     {
         SceneObject& o = scene.CreateObject("Planet");
@@ -435,7 +432,7 @@ void SectionInspectorRoundTrip() {
     }
     {
         SceneObject& o = scene.CreateObject("Start");
-        o.playerStart = ScenePlayerStartComponent{}; o.playerStart->view = ScenePlayerView::FirstPerson; o.playerStart->yawDegrees = 45.0f;
+        o.characterMotor = CharacterMotorSettings{}; o.characterMotor->stepHeight = .45f;
     }
     std::string text, error;
     Check(SaveSceneToString(scene, text), "objects carrying every component type serialize");
@@ -444,9 +441,9 @@ void SectionInspectorRoundTrip() {
     if (loaded.Objects().size() != 5) { Check(false, "five objects reloaded"); return; }
     Check(ScenesEqual(scene, loaded), "every component's every field survives exactly (what the inspector edits is what the file holds)");
     const SceneObject& ship = loaded.Objects()[0];
-    Check(ship.render && ship.body && ship.gravity && ship.light && ship.vehicle && ship.celestial && ship.combustible && ship.fluidVolume &&
-              loaded.Objects()[1].door && loaded.Objects()[2].lightSwitch && loaded.Objects()[3].atmosphere && loaded.Objects()[4].playerStart,
-          "all twelve component types are present after reload");
+    Check(ship.render && ship.body && ship.gravity && ship.light && ship.celestial && ship.combustible && ship.fluidVolume &&
+              loaded.Objects()[1].basicWater && loaded.Objects()[2].renderCamera && loaded.Objects()[3].atmosphere && loaded.Objects()[4].characterMotor,
+          "all current fixture component types are present after reload");
     Check(ship.render->meshAsset == "0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21" && ship.render->textureAsset == "5e4d3c2b1a0f4e6d9c8b7a6f5e4d3c2b",
           "asset references round-trip as ids");
 }
@@ -467,20 +464,20 @@ void SectionEditPlaySeparation() {
     std::string before;
     SaveSceneToString(authored, before);
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     Check(world.Build(authored, nullptr, error), "it instantiates: " + error);
-    GameSession session;
-    Check(session.Begin(world, error), "a session begins");
+
+    Check(world.IsBuilt(), "a session begins");
     Window window;
     window.SetTestInputMode(true);
-    for (int i = 0; i < 120; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    for (int i = 0; i < 120; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     world.Physics().SetLinearVelocity(world.DynamicBodies()[0].Handle(), glm::vec3(5.0f, 3.0f, 0.0f));
-    for (int i = 0; i < 120; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    for (int i = 0; i < 120; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     Check(!Near(world.DynamicBodies()[0].GetPosition(), authored.Objects()[2].transform.position, 0.5f), "the runtime body moved");
     std::string after;
     SaveSceneToString(authored, after);
     Check(after == before, "the authored scene is byte-identical after play (no delta ever written into it)");
-    session.End();
+
     world.Destroy();
     // Canonical serialization may spell out defaults absent from the original
     // authored file. Disk preservation compares actual pre/post bytes.

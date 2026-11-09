@@ -12,7 +12,6 @@
 #include "CameraLens.h"
 #include "GravitySelection.h"
 #include "NavigationTypes.h"
-#include "LiquidTypes.h"
 #include "AudioTypes.h"
 #include "JointTypes.h"
 #include "PoseComposition.h"
@@ -66,9 +65,9 @@ struct SceneTransform {
     glm::vec3 scale{1.0f};
 };
 
-enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, TriangleMesh, Sprite, Planar };
+enum class SceneShape { Box, Sphere, Compound, Mesh, ConvexHull, TriangleMesh, Sprite, Planar };
 
-// What Renderer draws for the object. Compound and Terrain reuse the body
+// What Renderer draws for the object. Compound reuses the body
 // component's geometry (there is nothing sensible to draw otherwise);
 // Box/Sphere/Mesh are self-contained and need no body at all.
 struct SceneRenderComponent {
@@ -107,10 +106,7 @@ enum class SceneBodyMotion { Static, Dynamic, Kinematic };
 // Explicit body-local fluid interior. Membership is geometric; it never
 // depends on an object name, particle velocity or body mass. The bounds
 // describe a resolved cavity, not an additional collision shape.
-struct SceneFluidCavity {
-    glm::vec3 localCenter{0.0f};
-    glm::vec3 halfExtents{0.5f};
-};
+
 
 struct SceneBodyComponent {
     bool sensor=false;
@@ -118,24 +114,19 @@ struct SceneBodyComponent {
     unsigned collisionLayer = 0;
     CategoryMask collisionMask = kAllCategories;
     SceneBodyMotion motion = SceneBodyMotion::Static;
-    SceneShape shape = SceneShape::Box;  // Box, Sphere, Compound or Terrain
+    SceneShape shape = SceneShape::Box;  // Box, Sphere or Compound
     glm::vec3 halfExtents{0.5f};
     float radius = 0.5f;
     std::string collisionAsset;
     std::string physicalMaterial; // shared identity; empty keeps legacy factors
     bool physicalMaterialOverride=false; // explicit instance coefficients override shared defaults
     std::vector<CompoundBox> compoundBoxes;
-    std::vector<SceneFluidCavity> fluidCavities;
-    // Terrain: identifier of a surface the engine can construct (see
-    // src/TerrainLibrary.h). A scene never embeds the elevation function.
-    std::string terrainSurface;
     float mass = 1.0f;  // Dynamic, or the mass to use on an explicit authority change.
     float friction = 0.6f;
     float restitution = 0.1f;
     glm::vec3 initialLinearVelocity{0.0f};  // World COM m/s; dynamic or prescribed velocity.
     glm::vec3 initialAngularVelocity{0.0f}; // World rad/s; zero keeps legacy content unchanged.
     // Gameplay eligibility for the existing M18 pick-up/throw interaction.
-    bool pickable = false;
     // Milestone 29: whether the scene's fidelity policy may move this
     // entity between Full, Coarse and Dormant simulation. Default false: an
     // unmanaged entity is Full forever and the lifecycle machinery never
@@ -178,39 +169,19 @@ struct SceneLightComponent {
 
 // The M16 hinged door. Uses the render component's box half-extents and
 // colour; Door owns its own static physics body, so no body component.
-struct SceneDoorComponent {
-    unsigned collisionLayer=0;
-    CategoryMask collisionMask=kAllCategories;
-    glm::vec3 localHingeAxis{0.0f, 1.0f, 0.0f};
-    float openAngleDegrees = 90.0f;
-    float angularSpeedDegreesPerSecond = 120.0f;
-};
+
 
 // The M16 lever that toggles one lamp. Lamp offset is in the object's
 // local frame.
-struct SceneLightSwitchComponent {
-    glm::vec3 localHingeAxis{0.0f, 0.0f, 1.0f};
-    float toggleAngleDegrees = 40.0f;
-    float angularSpeedDegreesPerSecond = 220.0f;
-    glm::vec3 lampLocalOffset{0.0f, 1.0f, 0.0f};
-    glm::vec3 lampColor{3.0f};
-    float lampRange = 10.0f;
-};
 
-enum class SceneVehicleGravity { Local, Celestial };
+
+
 
 // The M8/M11/M12 pilotable rigid body. Requires a dynamic box body.
 // `Local`: samples the scene's gravity contexts like any other body and
 // also joins pairwise celestial gravity. `Celestial`: receives only the
 // point-mass fields of static celestial sources (the M26 terrain planet).
-struct SceneVehicleComponent {
-    SceneVehicleGravity gravity = SceneVehicleGravity::Local;
-    bool headlight = true;
-    bool navigationLights = true;
-    float dragCoefficient = 1.0f;
-    // Start the run with the player already secured as pilot (M26 pass).
-    bool initialPilotAttached = false;
-};
+
 
 // Newtonian gravitation participant. A dynamic body joins the pairwise
 // N-body set using its own mass; a static body is a point-mass source with
@@ -219,7 +190,6 @@ struct SceneCelestialComponent {
     float gravitationalParameter = 0.0f;  // m^3/s^2, static sources only
     // Operator thrust demonstration (M20): force applied by the P/M/N
     // keys. Zero disables it.
-    float operatorThrustForce = 0.0f;
 };
 
 // The M26 hydrostatic gas around a celestial object; the object's
@@ -246,16 +216,11 @@ struct SceneCombustibleComponent {
 // Authored advanced water. Existing scenes retain their particle backend.
 // Grid Water reuses spacing/count as cell size/domain dimensions and owns
 // physical quantity independently of presentation. Both obey project policy.
-enum class SceneFluidBackend { Particles, Grid };
 struct SceneFluidVolumeComponent {
-    float spacing = 0.05f;
-    int countX = 5;
-    int countY = 5;
-    int countZ = 5;
-    bool emitter = false;
-    glm::vec3 emitterLocalOffset{0.0f};
-    int maxParticles = 0;
-    SceneFluidBackend backend = SceneFluidBackend::Particles;
+    float spacing = 0.4f;
+    int countX = 30;
+    int countY = 12;
+    int countZ = 20;
     // Grid domain is centred on local X/Z and grows upward from the owner.
     // spacing/count are reused as cell size/domain dimensions for this backend.
     float fillHeight = 2.f;
@@ -263,21 +228,13 @@ struct SceneFluidVolumeComponent {
     glm::vec3 color{.035f, .30f, .38f};
     float opacity = .82f;
     glm::vec3 HalfExtents() const {return .5f*spacing*glm::vec3(countX,countY,countZ);}
-    glm::vec3 LocalCenter() const {return {0,HalfExtents().y-(backend==SceneFluidBackend::Particles?.5f*spacing:0),0};}
+    glm::vec3 LocalCenter() const {return {0,HalfExtents().y,0};}
 };
 
-enum class ScenePlayerView { ThirdPerson, FirstPerson };
+
 
 // Where the player starts. Exactly one object may carry this.
-struct ScenePlayerStartComponent {
-    unsigned collisionLayer = 0;
-    CategoryMask collisionMask = kAllCategories;
-    float yawDegrees = 0.0f;
-    ScenePlayerView view = ScenePlayerView::ThirdPerson;
-    float density = 950.0f;          // kg/m^3; approximate fluid response
-    float fluidDrag = 2.0f;          // inverse seconds
-    float swimAcceleration = 4.0f;  // m/s^2 at full immersion
-};
+
 
 // Perspective camera, local -Z forward and +Y up, matching existing views.
 struct SceneRenderCameraComponent {
@@ -340,10 +297,6 @@ struct SceneObject {
     std::optional<GravitySelection> gravitySelection;
     bool renderVisible=true; // local entity scope; does not deactivate children or simulation
     std::optional<DeformableSettings> deformable;
-    std::optional<LiquidBasinSettings> liquidBasin;
-    std::optional<LiquidContainerSettings> liquidContainer;
-    std::optional<LiquidConnectionSettings> liquidConnection;
-    std::optional<LiquidInteractionSettings> liquidInteraction;
     std::optional<NavigationSurfaceSettings> navigationSurface;
     std::optional<NavigationAgentSettings> navigationAgent;
     std::optional<NavigationObstacleSettings> navigationObstacle;
@@ -380,14 +333,10 @@ struct SceneObject {
     std::optional<SceneBodyComponent> body;
     std::optional<SceneGravityComponent> gravity;
     std::optional<SceneLightComponent> light;
-    std::optional<SceneDoorComponent> door;
-    std::optional<SceneLightSwitchComponent> lightSwitch;
-    std::optional<SceneVehicleComponent> vehicle;
     std::optional<SceneCelestialComponent> celestial;
     std::optional<SceneAtmosphereComponent> atmosphere;
     std::optional<SceneCombustibleComponent> combustible;
     std::optional<SceneFluidVolumeComponent> fluidVolume;
-    std::optional<ScenePlayerStartComponent> playerStart;
 };
 
 enum class SceneFidelityPolicy { None, Distance };
@@ -413,9 +362,6 @@ struct SceneSettings {
     glm::vec3 ambientColor{0.16f, 0.17f, 0.19f};
     // Multiplies the fluid solver's default length scales (M25 used 10x
     // for the lake). 1 is the M24 cup resolution.
-    float fluidScale = 1.0f;
-    float fluidUpdateRateHz = 30.0f;
-    float fluidHydrostaticDragRate = 2.0f;  // inverse seconds
     // Milestone 29: the fidelity policy this scene asks the runtime to run
     // over its managed entities. None (the default) leaves everything at
     // Full simulation. Distance is the demonstration policy: Full within

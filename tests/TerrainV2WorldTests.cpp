@@ -89,7 +89,7 @@ export default class {
             o.scripts.push_back({1, record.id, true, "{}"});
     }
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     Check(world.Build(scene, &resources, error), "build script landscapes: " + error);
     for (uint64_t id : {1, 2}) {
         Check(world.LiveTerrain().CreateLandscape(id, TerrainV2::Create(17, 17, .5f), error),
@@ -117,7 +117,7 @@ void RejectSensor(JobSystem &jobs) {
     AssetDatabase assets;
     ResourceManager resources(nullptr, &assets, &jobs);
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     auto scene = SceneSource();
     scene.Find(1)->body->sensor = true;
@@ -135,7 +135,7 @@ void SeamTravel(JobSystem &jobs) {
     AssetDatabase assets;
     ResourceManager resources(nullptr, &assets, &jobs);
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     auto scene = SceneSource();
     Check(world.Build(scene, &resources, error, nullptr, nullptr, true), "build seam-travel world");
@@ -196,7 +196,7 @@ void ReplacingOwner(JobSystem &jobs) {
     AssetDatabase assets;
     ResourceManager resources(nullptr, &assets, &jobs);
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     Check(world.Build(SceneSource(), &resources, error, nullptr, nullptr, true),
           "build replacement world");
@@ -241,7 +241,7 @@ int main(int argc, char **argv) {
         JobSystem jobs(2);
         ResourceManager resources(nullptr, &assets, &jobs);
         RuntimeWorld w;
-        w.legacyGameplay = false;
+
         std::string error;
         auto scene = SceneSource();
         Check(w.Build(scene, &resources, error, nullptr, nullptr, true),
@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
             Check(hit.hit && w.EntityIdOfBody(hit.body) == 1,
                   "generated collision resolves stable terrain owner");
             for (float z = -5; z <= 5; z += .75f) {
-                Check(w.LiveTerrain().Brush(1, {0, 1.6f, z}, {VolumeBrushKind::Remove, 1.25f, 1},
+                Check(w.LiveTerrain().Brush(1, {0, 1.6f, z}, {TerrainV2::Edit::Kind::Remove, {}, 1.25f},
                                             error),
                       "queue excavation: " + error);
                 Wait(w, 1);

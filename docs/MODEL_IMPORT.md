@@ -4,9 +4,9 @@ Introduced against M66 starting checkpoint
 `3e5147a4ed97102200da91b4181c97b2a98942ba`. The accepted content contract remains.
 accepted M68 cache/readiness changes are described in [Scalability](SCALABILITY.md).
 Judas normalizes content; scripts decide what the content means.
-[Animation](ANIMATION.md) · [Materials](MATERIALS.md) · [Collision](M64_COLLISION.md)
-· [JudasJS](JUDASJS.md) · [M66 results](evidence/m66/REPORT.md)
-· [Editor/import-time retargeting (M74)](M74.md)
+[Animation](ANIMATION.md) · [Materials](MATERIALS.md) · [Collision](COLLISION_AUTHORING.md)
+· [JudasJS](JUDASJS.md) · [M66 results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m66/REPORT.md)
+· [Editor/import-time retargeting (M74)](ANIMATION_RETARGETING.md)
 
 ## Import, inspect, place
 
@@ -84,7 +84,7 @@ this transfer; ordinary importing/playback of STEP tracks remains supported.
 An already-extracted source motion track is explicitly rejected before cooking,
 so the author must choose a source retaining its original skeletal locomotion.
 The transferred operation then uses the existing preserve/in-place/extract root
-policy, not another root-motion system. See [M74](M74.md) for the exact recipe,
+policy, not another root-motion system. See [M74](ANIMATION_RETARGETING.md) for the exact recipe,
 shared CLI, measured tolerances, invalidation and supported limits.
 
 ## Same CLI, same service
@@ -326,5 +326,5 @@ material parts, source topology and embedded map roles while adding render-only
 LODs and compressed streams. Source import/reimport remains authoritative and
 separate. Animated assets continue through the normal import path; rigid cooking
 rejects them. Textures can use `.judastex` mip chains. See
-[asset cooking/residency contracts](M93_ASSET_PIPELINE.md) and
-[The Packed Museum](../projects/asset_lab/README.md).
+[asset cooking/residency contracts](ASSET_PIPELINE.md) and
+[The Packed Museum (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/asset_lab/README.md).

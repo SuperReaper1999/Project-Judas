@@ -1,7 +1,6 @@
 #include "ScriptSystem.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
-#include "WorldState.h"
 #include "WorldPersistence.h"
 #include "Project.h"
 #include "InputSystem.h"
@@ -59,7 +58,7 @@ export default class {
     if(!read)Check(assets.Track((root/"Assets/agent.js").string(),record,error),"ordinary registered definition consumer");
     else {const auto* found=assets.FindByRelativePath("Assets/agent.js");Check(found!=nullptr,"cold process rediscovers exact script asset");if(!found)return 2;record=*found;}
     Scene scene;auto& npc=scene.CreateObject("NPC");npc.scripts.push_back({1,record.id,true,"{}"});const auto id=npc.id;
-    ResourceManager resources(nullptr,&assets);RuntimeWorld world;ProjectSettings project;project.legacyGameplay=false;world.ConfigureProject(project);
+    ResourceManager resources(nullptr,&assets);RuntimeWorld world;ProjectSettings project;world.ConfigureProject(project);
     InputSystem input;
     if(read){
         std::ifstream file(root/"save.snapshot",std::ios::binary);

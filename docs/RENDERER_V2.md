@@ -137,7 +137,7 @@ immutable until renderer shutdown.
 `JUDAS_PERSISTENT_UPLOADS=0` and `JUDAS_SHADOW_REUSE=0` independently select the established fallback paths.
 These controls do not change scene counts or graphics quality.
 
-The [5 November fluid comparison](FLUID_RENDER_V2_COMPARISON.md) found unchanged
+The [5 November fluid comparison](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_RENDER_V2_COMPARISON.md) found unchanged
 typical water-scene GPU cost but a reproducible small-scene tail regression
 associated with persistent uploads on the GTX 970. The subsequent
 [stream retirement correction](RENDERER_V2_UPLOAD_HITCH.md) removes the measured

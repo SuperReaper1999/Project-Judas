@@ -44,7 +44,7 @@ int main(int argc,char** argv){
             }
         }
         RuntimeWorld world;
-        world.legacyGameplay=false;
+
         if(!world.Build(scene,&resources,error)){
             std::cerr<<error;
             return 1;

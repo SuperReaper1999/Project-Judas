@@ -29,10 +29,10 @@ void Check(bool condition, const char* description) {
 }
 
 void TestBeaconModelLoads() {
-    std::printf("Model: assets/models/beacon.obj loads with real geometry\n");
+    std::printf("Model: tests/fixtures/engine-assets/models/beacon.obj loads with real geometry\n");
     MeshData mesh;
     std::string error;
-    const bool ok = LoadObjMesh("assets/models/beacon.obj", mesh, error);
+    const bool ok = LoadObjMesh("tests/fixtures/engine-assets/models/beacon.obj", mesh, error);
     Check(ok, "LoadObjMesh succeeds");
     if (!ok) {
         std::printf("  (error: %s)\n", error.c_str());
@@ -66,7 +66,7 @@ void TestMissingModelFailsCleanly() {
     std::printf("Model: a missing file fails intelligibly, not silently\n");
     MeshData mesh;
     std::string error;
-    const bool ok = LoadObjMesh("assets/models/does_not_exist.obj", mesh, error);
+    const bool ok = LoadObjMesh("tests/fixtures/engine-assets/models/does_not_exist.obj", mesh, error);
     Check(!ok, "LoadObjMesh returns false for a missing file");
     Check(!error.empty(), "an error message is produced");
     Check(error.find("does_not_exist.obj") != std::string::npos,
@@ -75,10 +75,10 @@ void TestMissingModelFailsCleanly() {
 }
 
 void TestBeaconTextureLoads() {
-    std::printf("Texture: assets/textures/beacon.png loads with sensible dimensions\n");
+    std::printf("Texture: tests/fixtures/engine-assets/textures/beacon.png loads with sensible dimensions\n");
     TextureData texture;
     std::string error;
-    const bool ok = LoadTextureFromFile("assets/textures/beacon.png", texture, error);
+    const bool ok = LoadTextureFromFile("tests/fixtures/engine-assets/textures/beacon.png", texture, error);
     Check(ok, "LoadTextureFromFile succeeds");
     if (!ok) {
         std::printf("  (error: %s)\n", error.c_str());
@@ -91,7 +91,7 @@ void TestBeaconTextureLoads() {
           "pixel buffer size matches width * height * 4 channels (always decoded to RGBA)");
 
     // The texture is authored as four distinct solid-ish quadrants (see
-    // assets/textures/beacon.png's generator notes in
+    // tests/fixtures/engine-assets/textures/beacon.png's generator notes in
     // docs/ARCHITECTURE.md) — confirm the decoded pixel data actually
     // varies rather than being a solid color end to end (a real, if crude,
     // check that decoding produced real image content, not a blank buffer).
@@ -110,7 +110,7 @@ void TestMissingTextureFailsCleanly() {
     std::printf("Texture: a missing file fails intelligibly, not silently\n");
     TextureData texture;
     std::string error;
-    const bool ok = LoadTextureFromFile("assets/textures/does_not_exist.png", texture, error);
+    const bool ok = LoadTextureFromFile("tests/fixtures/engine-assets/textures/does_not_exist.png", texture, error);
     Check(!ok, "LoadTextureFromFile returns false for a missing file");
     Check(!error.empty(), "an error message is produced");
     Check(error.find("does_not_exist.png") != std::string::npos,

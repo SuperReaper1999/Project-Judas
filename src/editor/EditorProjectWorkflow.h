@@ -7,8 +7,7 @@ class EditorPreferences;
 class EditorMilestoneNotice;
 struct EditorSceneViewport;
 struct EditorPlaySession;
-struct TerrainEditor;
-struct VolumeTerrainEditor;
+class TerrainV2Editor;
 struct UtilityAIEditor;
 struct SpriteSheetEditor;
 
@@ -19,8 +18,7 @@ struct EditorProjectServices {
     EditorPlaySession &session;
     EditorPreferences &preferences;
     EditorMilestoneNotice &updates;
-    std::unique_ptr<TerrainEditor> &terrain;
-    std::unique_ptr<VolumeTerrainEditor> &volumeTerrain;
+    std::unique_ptr<TerrainV2Editor> &terrain;
     std::unique_ptr<UtilityAIEditor> &utilityAI;
     std::unique_ptr<SpriteSheetEditor> &spriteSheets;
     bool &quit;
@@ -37,7 +35,6 @@ class EditorProjectWorkflow {
     bool CreateProject(EditorContext &, EditorProjectServices &, const std::string &, const std::string &,
                        std::string &, bool = true, int = 0);
     std::string ResolveScenePath(EditorContext &, const std::string &) const;
-    std::string WorldStatePathFor(EditorContext &, const std::string &) const;
     bool OpenScene(EditorContext &, EditorProjectServices &, const std::string &, std::string &);
     bool RunProject(EditorContext &, std::string &);
     void HandleRequests(EditorContext &, EditorProjectServices &, EditorRequests &);

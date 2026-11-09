@@ -144,10 +144,10 @@ script-asset attribution is retained. This reduces diagnostic event floods witho
 omitting gameplay callbacks or changing their order. Inspect dropped/truncated
 records before interpreting any capture: the original overflowing live capture is
 preserved as a failure, alongside later zero-overflow captures in the
-[follow-up evidence](evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
+[follow-up evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
 
 These diagnostics do not change solver iterations, physical thresholds, wake
-semantics or scheduling. The [M87 scaling report](M87_PHYSICS_SCALING.md) explains
+semantics or scheduling. The [M87 scaling report](PHYSICS_SCALING.md) explains
 the separate owner-thread allocation probe used by its benchmark; ordinary M56
 capture is not a general-purpose heap-allocation tracer.
 

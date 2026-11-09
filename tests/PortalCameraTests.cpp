@@ -55,7 +55,7 @@ Scene Fixture(){
     return s;
 }
 glm::vec3 Centre(Renderer& r,RuntimeWorld& w){
-    RenderWorldFrame(r,64,64,w,nullptr,glm::lookAt(glm::vec3(0,20,0),glm::vec3(0),glm::vec3(0,0,-1)),glm::perspective(1.f,1.f,.1f,50.f),{0,1,0},1);
+    RenderWorldFrame(r,64,64,w,glm::lookAt(glm::vec3(0,20,0),glm::vec3(0),glm::vec3(0,0,-1)),glm::perspective(1.f,1.f,.1f,50.f),{0,1,0},1);
     TextureData t;if(!r.ReadTextureForDiagnostics(w.CameraTexture(4),t)||t.width!=64)return glm::vec3(-1);
     const int k=(32*64+32)*4;return {t.pixels[k]/255.f,t.pixels[k+1]/255.f,t.pixels[k+2]/255.f};
 }
@@ -73,7 +73,7 @@ int main(){
     Check(Is(Centre(renderer,world),{1,0,0}),"plain camera sees the near occluder");
     cam.hasClipPlane=true;cam.clipNormal={0,0,-1};cam.clipPoint={0,0,-4};
     Check(Is(Centre(renderer,world),{0,1,0}),"oblique clip plane removes the occluder in front of the window");
-    world.legacyGameplay=false;
+
     Check(world.RequestOrigin({512,0,512},error)&&world.CommitOrigin(),"explicit chart change accepts ordinary camera scene");
     Check(cam.clipPoint==glm::vec3(-512,0,-516)&&cam.clipNormal==glm::vec3(0,0,-1)&&Is(Centre(renderer,world),{0,1,0}),"origin translation preserves the actual oblique-camera image and plane");
     const auto translatedPlane=cam.clipPoint;cam.clipPoint={0,0,-4};
@@ -110,7 +110,7 @@ export default class {
     AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());AssetRecord script;
     Check(assets.Track((root/"Assets/check.js").string(),script,error),"portal API fixture uses registered script asset");
     ResourceManager resources(nullptr,&assets);Scene scripted=Fixture();scripted.Find(4)->scripts.push_back({1,script.id,true,"{}"});
-    RuntimeWorld vm;vm.legacyGameplay=false;const bool built=vm.Build(scripted,&resources,error);Check(built,"ordinary scripted camera world builds");if(!built){std::printf("BUILD %s\n",error.c_str());return 1;}vm.UpdateScripts(nullptr,.01f);
+    RuntimeWorld vm;const bool built=vm.Build(scripted,&resources,error);Check(built,"ordinary scripted camera world builds");if(!built){std::printf("BUILD %s\n",error.c_str());return 1;}vm.UpdateScripts(nullptr,.01f);
     const auto states=vm.Scripts()->Capture();for(const auto& d:vm.Scripts()->Diagnostics())std::printf("SCRIPT %s\n",d.message.c_str());
     Check(vm.Scripts()->Diagnostics().empty()&&states.size()==1&&states[0].json.find("\"checked\":true")!=std::string::npos,"public JS set/read/keep/clear/detached/atomic-invalid camera contracts execute");vm.Destroy();
     std::printf("%d checks, %d failures\n",checks,failures);

@@ -24,7 +24,6 @@
 #include "SceneSerialization.h"
 #include "TestHarness.h"
 #include "WorldCoordinates.h"
-#include "WorldState.h"
 #include "WorldPresentation.h"
 #include "ScreenshotWriter.h"
 
@@ -39,7 +38,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     }
 
 #ifdef __EMSCRIPTEN__
-    if(!options.project.IsLoaded()||options.project.Settings().legacyGameplay||options.project.Settings().advancedFluidDynamics) {
+    if(!options.project.IsLoaded()||options.project.Settings().advancedFluidDynamics) {
         std::fprintf(stderr,"Experimental browser games require a project with script-owned gameplay and Advanced Fluid Dynamics disabled\n");
         return 1;
     }
@@ -108,9 +107,8 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
 
     auto worldOwner=std::make_unique<RuntimeWorld>();
     auto sceneControl=std::make_shared<SceneSession>(options.project,options.scenePath);
-    sceneControl->EnableSaves(!options.worldStatePath.empty());
+    sceneControl->EnableSaves(options.project.IsLoaded());
     if(options.project.IsLoaded())worldOwner->audioGroups=options.project.Settings().audio;
-    worldOwner->legacyGameplay = !options.project.IsLoaded() || options.project.Settings().legacyGameplay;
     if(options.project.IsLoaded())worldOwner->ConfigureProject(options.project.Settings());
     worldOwner->SetSceneControl(sceneControl);
     RuntimeWorld& world=*worldOwner;
@@ -119,25 +117,11 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
                      error.c_str());
         return 1;
     }
-    // Milestone 29: the saved world-state delta (if any) layers over the
-    // freshly built baseline before the session begins.
-    bool worldStateApplied = false;
-    if (!world.IsComposed()&&!ApplyWorldStateFileIfPresent(world, options.worldStatePath, worldStateApplied, error)) {
-        std::fprintf(stderr, "World state '%s' could not be applied: %s\n", options.worldStatePath.c_str(),
-                     error.c_str());
-        return 1;
-    }
     if(!options.networkMode.empty())world.Network().SetLaunch(options.networkMode,options.networkAddress,options.networkPort,false);
     InteractivePlay play;
     if (!play.Begin(world, worldCoordinates, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;
-    }
-    play.SetWorldStatePath(world.IsComposed()?std::string{}:options.worldStatePath, worldStateApplied);
-    if(world.IsComposed())std::fprintf(stderr,"World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available\n");
-    else if (!options.worldStatePath.empty()) {
-        std::fprintf(stderr, "World state: %s (%s)\n", options.worldStatePath.c_str(),
-                     worldStateApplied ? "loaded" : "none saved");
     }
     std::fprintf(stderr, "Project: %s (%s)\nScene: %s (%s)\nWorld origin (m): %.3f, %.3f, %.3f\n",
                  options.project.IsLoaded() ? options.project.Settings().name.c_str() : "(none)",
@@ -163,15 +147,14 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
 
     if (control && control->worldReady) control->worldReady(host, world, play);
 
-    RuntimeDiagnostics diagnostics(options.fluidDiagnostics, options.atmosphereDiagnostics,
+    RuntimeDiagnostics diagnostics(options.fluidDiagnostics,
                                    options.fireDiagnostics, options.liveTelemetry);
-    play.SetFixedStepMeasurementFlags(options.atmosphereDiagnostics, options.fireDiagnostics,
+    play.SetFixedStepMeasurementFlags(options.fireDiagnostics,
                                       options.fluidDiagnostics);
     play.SetFixedStepObserver([&](const FixedStepMeasurements& m, double ms) {
-        diagnostics.RecordFixedStep(play.Session(), m, ms);
+        diagnostics.RecordFixedStep(play.World(), m, ms);
     });
 
-    bool screenshotWritten = false;
     const Uint64 frequency = SDL_GetPerformanceFrequency();
     Uint64 previousCounter = SDL_GetPerformanceCounter();
     startupProfile.End();
@@ -201,21 +184,10 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         if (control && control->frameSeconds) frameDeltaTime = control->frameSeconds(frameDeltaTime);
 
         play.Frame(window, renderer, frameDeltaTime);
-        if (play.ConsumeResetOccurred()) screenshotWritten = false;
-        diagnostics.RecordTelemetryFrame(play.Session());
-        diagnostics.RecordFrame(play.Session(), play.LastSurfaceMilliseconds(), play.LastSceneMilliseconds(),
+        diagnostics.RecordTelemetryFrame(play.World());
+        diagnostics.RecordFrame(play.World(), play.LastSurfaceMilliseconds(), play.LastSceneMilliseconds(),
                                 frameDeltaTime);
 
-        // Opt-in visual validation of a settled scene after ten seconds of
-        // fixed-step simulation (M25), read back through the renderer.
-        if (!options.terrainScreenshotPath.empty() && !screenshotWritten && play.FixedStepsSinceReset() >= 600) {
-            std::vector<unsigned char> pixels;
-            renderer.CaptureFrame(window.Width(), window.Height(), pixels);
-            const bool written = WriteRgbPng(options.terrainScreenshotPath, window.Width(), window.Height(), pixels);
-            std::fprintf(stderr, "Scene screenshot %s: %s\n", written ? "written" : "failed",
-                         options.terrainScreenshotPath.c_str());
-            screenshotWritten = true;
-        }
         if (control && control->afterFrame) control->afterFrame(host, world, play);
         { JUDAS_PROFILE_WAIT("Swap present wait"); window.SwapBuffers(); }
         if(!sceneControl->AdvanceOuter(worldOwner,play,host.Resources(),window.Input(),error)||!error.empty()){

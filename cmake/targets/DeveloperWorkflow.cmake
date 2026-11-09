@@ -25,4 +25,3 @@ judas_warnings(judas_ui_production_tests)
 
 judas_add_engine_test(judas_ui_showcase_application_tests tests/UIShowcaseApplicationTests.cpp APPLICATION)
 
-

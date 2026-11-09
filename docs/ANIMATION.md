@@ -3,7 +3,7 @@
 **Accepted M70 extension:** shared multi-target IK and optional partial/full-active
 physical regions now extend the historical clip/pose/passive-ragdoll scope below.
 The older milestone statements remain their historical contracts. See
-[M70](M70.md) for current phases, authority and limitations, and the
+[M70](MULTI_TARGET_IK.md) for current phases, authority and limitations, and the
 [JudasJS reference](judasjs/animation-ragdolls.md) for exact public interfaces.
 M61 already persists animation/articulation runtime state; M70 extends that
 ownership for physical modes and pending requests.
@@ -11,7 +11,7 @@ ownership for physical modes and pending requests.
 
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
-**M74 current authoring extension:** [editor/import-time retargeting](M74.md)
+**M74 current authoring extension:** [editor/import-time retargeting](ANIMATION_RETARGETING.md)
 transfers an existing performance through an explicit reusable profile and bakes
 ordinary target-compatible named clips. The target retains its bind skeleton,
 weights, geometry and existing clips. Runtime consumes the usual immutable

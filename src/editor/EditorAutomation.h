@@ -24,7 +24,7 @@ class EditorAutomation {
         return autotest != nullptr;
     }
     bool Failed() const {
-        return terrainFailures || navigationFailures;
+        return navigationFailures;
     }
 
   private:
@@ -39,8 +39,6 @@ class EditorAutomation {
     void navigationButton(bool);
     void navigationMotion(int, int);
     void navigationFocus(bool);
-    void volumeCheck(bool, const char *);
-    void terrainCheck(bool, const char *);
     void screenshot(const std::string &);
     EditorApplication &app;
     EngineHost &host;
@@ -58,13 +56,8 @@ class EditorAutomation {
     std::size_t profilerFrozenSteps = 0;
     std::string autotestBaseline;
     bool animationTimelineRecook = false, animationTimelineAutotest;
-    const char *importRecipe, *terrainAutotest, *volumeAutotest, *retargetAutotest;
-    int volumeUiFrame = 0, volumeWaitFrames = 0, volumeFailures = 0;
-    bool volumeUiReady = false;
-    std::vector<float> volumeBefore, volumeEdited, terrainInitial, terrainEdited;
-    std::vector<std::array<float, 4>> terrainPainted;
-    int terrainFailures = 0, terrainUiFrame = 0;
-    bool terrainUiReady = false, automatedExport = false;
+    const char *importRecipe, *retargetAutotest;
+    bool automatedExport = false;
     const char *exportDestination = nullptr;
     int exportRequestFrame = 14;
     unsigned retargetWaitFrames = 0, importWaitFrames = 0;

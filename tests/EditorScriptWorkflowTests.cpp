@@ -63,7 +63,7 @@ int main() {
         project.Settings().startupScene="Scenes/main.judas";
         check(SaveSceneToFile(doc.GetScene(),project.StartupScenePath(),error),"scene attachment saves normally");
         Scene scene;check(LoadSceneFromFile(project.StartupScenePath(),scene,error)&&scene.Find(owner)->scripts[0].asset==scene.Find(second)->scripts[0].asset,"reload preserves actual shared asset references");
-        ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;
+        ResourceManager resources(nullptr,&assets);RuntimeWorld world;
         check(world.Build(scene,&resources,error),"ordinary runtime builds both attached scripts");
         InputSystem input;world.UpdateScripts(&input,.25f);
         check(world.Scripts()&&world.Scripts()->Diagnostics().empty()&&world.Scripts()->Capture().size()==2,"new scripts execute independently without VM faults");

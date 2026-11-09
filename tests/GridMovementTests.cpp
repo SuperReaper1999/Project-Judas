@@ -4,7 +4,6 @@
 #include "ResourceManager.h"
 #include "WorldPersistence.h"
 #include "Simulation.h"
-#include "GameSession.h"
 #include "ScriptSystem.h"
 #include "SceneSerialization.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -14,7 +13,7 @@
 namespace fs=std::filesystem;using Json=nlohmann::json;
 unsigned checks=0;void Check(bool ok,const std::string& text){++checks;if(!ok)throw std::runtime_error(text);std::cout<<"PASS "<<text<<'\n';}
 Json State(RuntimeWorld& w){for(const auto& s:w.Scripts()->Capture())if(s.entity==1)return Json::parse(s.json);throw std::runtime_error("grid state absent");}
-void Tick(RuntimeWorld& w,InputSystem& input,int count){GameSession session;std::string e;Check(session.Begin(w,e),"begin normal played session");for(int i=0;i<count;++i){input.BeginFrame();input.BeginFixedStep();StepAuthoritativeWorld(session,input,1.f/60);w.UpdateScripts(&input,1.f/60);}for(const auto& d:w.Scripts()->Diagnostics())throw std::runtime_error(d.message);}
+void Tick(RuntimeWorld& w,InputSystem& input,int count){std::string e;Check(w.IsBuilt(),"begin normal played session");for(int i=0;i<count;++i){input.BeginFrame();input.BeginFixedStep();StepAuthoritativeWorld(w,input,1.f/60);w.UpdateScripts(&input,1.f/60);}for(const auto& d:w.Scripts()->Diagnostics())throw std::runtime_error(d.message);}
 int main(int argc,char** argv){try{
  if(argc!=2&&argc!=3&&argc!=4)return 2;
  const auto root=fs::absolute(argv[1]);const bool cold=argc==3,coldQueue=cold&&std::string(argv[2])=="--cold-queue";std::string error;
@@ -33,7 +32,7 @@ int main(int argc,char** argv){try{
     Check(obstacle!=nullptr,"grid starter contains an authored blocking cell");
     Check(obstacle->render->sprite.size==glm::vec2(.9f)&&obstacle->body->planar->vertices[2]==glm::dvec2(.45),"starter visible obstacle and physical footprint occupy the same cell");
     if(legacy){obstacle->body->planar=PlanarBox({.7,1.5});obstacle->render->sprite.size={1.4f,3};}
-    RuntimeWorld starter;starter.legacyGameplay=false;
+    RuntimeWorld starter;
     Check(starter.Build(authored,&starterResources,error),"build unmodified starter with real script and layout");
     InputSystem keys;Check(keys.SetMap(project.Settings().input,error),"starter uses normal project controls");
     keys.SetPhysical("key:A",1);Tick(starter,keys,7);keys.SetPhysical("key:A",0);Tick(starter,keys,25);
@@ -51,7 +50,7 @@ int main(int argc,char** argv){try{
   Check(SaveSceneToFile(scene,project.StartupScenePath(),error)&&project.Save(error),"save editable grid fixture");
  }else Check(project.Load((root/"Grid_Movement.judasproj").string(),error),"cold process opens grid project");
  AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());ResourceManager resources(nullptr,&assets);resources.SetBlockingMode(true);InputSystem input;Check(input.SetMap(project.Settings().input,error),"ordinary project bindings");
- RuntimeWorld world;world.legacyGameplay=false;GameSnapshot snapshot;snapshot.project="grid-preset";snapshot.scene="Scenes/main.judas";snapshot.content=std::string(64,'c');SaveStorage storage((root/"Cold").string());
+ RuntimeWorld world;GameSnapshot snapshot;snapshot.project="grid-preset";snapshot.scene="Scenes/main.judas";snapshot.content=std::string(64,'c');SaveStorage storage((root/"Cold").string());
  if(cold){bool recovered=false;Check(storage.Read(coldQueue?"grid-queue":"grid",snapshot,recovered,error)&&WorldPersistence::SceneFrom(snapshot.participants,scene,error),"fresh process reads mid-step snapshot");Check(world.Build(scene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"cold restores pending cell and native kinematic state");Tick(world,input,coldQueue?60:30);
   Check(glm::length(world.Physics().GetTransform(world.RuntimeBody(1)).position-glm::vec3(coldQueue?0.f:1.f,1,0))<1e-5f,"cold resumes remaining cell without snap or replaying input");Check(State(world)["moves"]==(coldQueue?3:2),"cold commits each traversed cell exactly once");std::cout<<"GRID_COLD checks="<<checks<<" failures=0\n";return 0;
  }
@@ -63,7 +62,7 @@ int main(int argc,char** argv){try{
  input.SetPhysical("key:W",1);Tick(world,input,7);input.SetPhysical("key:W",0);
  const auto partial=world.Physics().GetTransform(world.RuntimeBody(1)).position;Check(partial.y>0&&partial.y<1&&State(world)["target"]!=nullptr,"save fixture is genuinely partway through a cell");
  Check(WorldPersistence::Capture(world,snapshot.participants,error)&&storage.Write("grid",snapshot,error),"publish real partial-step cold save");
- Scene queuedScene;Check(WorldPersistence::SceneFrom(snapshot.participants,queuedScene,error),"reconstruct independent queued-turn fixture");RuntimeWorld queued;queued.legacyGameplay=false;
+ Scene queuedScene;Check(WorldPersistence::SceneFrom(snapshot.participants,queuedScene,error),"reconstruct independent queued-turn fixture");RuntimeWorld queued;
  Check(queued.Build(queuedScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(queued,error)&&WorldPersistence::Restore(queued,snapshot.participants,error),"restore separate world before queuing a turn");InputSystem queuedInput;Check(queuedInput.SetMap(project.Settings().input,error),"isolated queued-turn input map");
  queuedInput.SetPhysical("key:A",1);queuedInput.SetPhysical("key:A",0);Tick(queued,queuedInput,1);Check(State(queued)["queued"]!=nullptr,"short turn is actually pending in saved script state");
  GameSnapshot queueSave;queueSave.project=snapshot.project;queueSave.scene=snapshot.scene;queueSave.content=snapshot.content;

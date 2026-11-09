@@ -14,7 +14,6 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include "GameSession.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "Simulation.h"
@@ -107,8 +106,8 @@ Outcome Exercise(const Fixture& f, const Scene& scene, const std::string& path,
     RuntimeWorld world;
     std::string error;
     if(!world.Build(scene,nullptr,error)) throw std::runtime_error("Build: "+error);
-    Check(world.DynamicBodies().size()==1 && world.StaticBodies().empty() && !world.HasFluid() &&
-          world.CelestialParticipants().empty() && !world.GetVehicle(), f.id+" ordinary isolated rigid scene");
+    Check(world.DynamicBodies().size()==1 && world.StaticBodies().empty() && !world.GridWater() &&
+          world.CelestialParticipants().empty(), f.id+" ordinary isolated rigid scene");
     const WorldCoordinates coordinates(scene.Settings().worldOrigin);
     const std::array<glm::vec3,6> positions={glm::vec3(0),glm::vec3(3,4,5),glm::vec3(-40,6,17),
         glm::vec3(120,-80,10),glm::vec3(-100,100,-99),glm::vec3(255,-0.125f,1)};
@@ -140,8 +139,8 @@ Outcome Exercise(const Fixture& f, const Scene& scene, const std::string& path,
         else Check(Equal(observed,result.acceleration),f.id+" uniform field is position-independent");
     }
     Check(world.Gravity().Sample(glm::vec3(600,600,600))==glm::vec3(0),f.id+" unclaimed space remains zero");
-    GameSession session;
-    if(!session.Begin(world,error)) throw std::runtime_error("Begin: "+error);
+
+    if(!world.IsBuilt()) throw std::runtime_error("Begin: "+error);
     Window window;
     window.SetTestInputMode(true); // only held-input acquisition; same StepPlayedWorld.
     const auto handle=world.DynamicBodies().front().Handle();
@@ -149,7 +148,7 @@ Outcome Exercise(const Fixture& f, const Scene& scene, const std::string& path,
     Check(world.Physics().GetLinearVelocity(handle)==glm::vec3(0),f.id+" body starts at rest");
     std::size_t contacts=0;
     for(int n=1;n<=120;++n) {
-        StepPlayedWorld(session,window,SimulationTiming::kFixedTimestep);
+        StepPlayedWorld(world,window,SimulationTiming::kFixedTimestep);
         contacts+=world.Physics().LastStepContactCount();
         if(n!=1 && n!=10 && n!=60 && n!=120) continue;
         const long double time=n*static_cast<long double>(SimulationTiming::kFixedTimestep);

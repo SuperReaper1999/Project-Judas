@@ -7,7 +7,7 @@ const rotation=(yaw,pitch)=>{const cy=Math.cos(yaw/2),sy=Math.sin(yaw/2),cp=Math
 export default class {
  constructor({entity}){this.entity=entity;this.state={yaw:0,pitch:-.05,tool:'dig',layer:2,surfaceDabs:0,queue:[]};}
  start(){this.owner=world.entity('1');this.hud=ui.get('game_ui');
-  ui.debugOverlayVisible=false;input.pointerCapture=true;
+  input.pointerCapture=true;
   if(this.hud){this.hud.modal=false;for(const id of ['main','options','pause','image'])this.hud.get(id).visible=false;
    this.hud.get('hud').visible=true;this.hud.get('hud_title').text='TERRAIN V2 / HIGHLANDS WORKSHOP';
    this.hud.get('hud_help').text='WASD + mouse: explore | Space: jump | T: tunnel\n1: dig | 2: raise | 3: lower | 4: paint | 5: next layer\nLeft click: selected tool | Right click: add material\nF6/F7: save/load | R: reset | Esc: pause';}

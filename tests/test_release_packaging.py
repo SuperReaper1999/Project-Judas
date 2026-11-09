@@ -192,14 +192,14 @@ class QualificationScope(unittest.TestCase):
             self.assertEqual(checks[0].kwargs['cwd'],output.resolve())
 
     def test_alpha_preserves_but_does_not_certify_unavailable_runtime(self):
-        tests=[{'name':'rotation','target':'judas_liquid_rotation_tests'},
-               {'name':'surface','target':'judas_liquid_surface_tests'},
+        tests=[{'name':'core','target':'judas_game_water_tests'},
+               {'name':'runtime','target':'judas_game_water_runtime_tests'},
                {'name':'origin','target':'judas_origin_environment_tests'},
                {'name':'water-policy','target':'judas_project_water_tests'}]
         original=copy.deepcopy(tests)
         selected,unavailable=qualify_m100.partition_channel_tests(tests,'Alpha')
-        self.assertEqual([t['name'] for t in selected],['rotation','water-policy'])
-        self.assertEqual([t['name'] for t in unavailable],['surface','origin'])
+        self.assertEqual([t['name'] for t in selected],['core','origin','water-policy'])
+        self.assertEqual([t['name'] for t in unavailable],['runtime'])
         self.assertTrue(all(t['status']=='not-exercised' for t in unavailable))
         self.assertEqual(tests,original)
         selected,unavailable=qualify_m100.partition_channel_tests(tests,'Experimental')

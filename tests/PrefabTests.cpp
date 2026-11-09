@@ -1,9 +1,9 @@
+#include "WorldPersistence.h"
 #include "Prefab.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
 #include "SceneFingerprint.h"
-#include "WorldState.h"
 #include "editor/EditorDocument.h"
 #include <chrono>
 #include <algorithm>
@@ -52,22 +52,19 @@ int main(){
     Scene flat;Check(FlattenHierarchy(resolved,flat,error)&&flat.Find(childA)->transform.position==glm::vec3(4,2,0),"parent-local transform resolution");
     ResourceManager resources(nullptr,&assets);
     RuntimeWorld world;Check(world.Build(resolved,&resources,error),"ordinary world construction resolves prefab");
-    const auto fingerprint=world.BaselineFingerprint();const auto saved=CaptureWorldState(world);
+    const auto fingerprint=world.BaselineFingerprint();
     prefab.Find(cid)->light->range=12;SaveSceneToFile(prefab,path,error);RuntimeWorld changed;
     Check(changed.Build(resolved,&resources,error)&&changed.BaselineFingerprint()!=fingerprint,"effective authored fingerprint notices source edit");
-    Check(!ApplyWorldState(changed,saved,error),"old save rejected against changed prefab baseline");
     Check(world.Build(resolved,&resources,error),"refresh current authored baseline before spawning");
     auto start=std::chrono::steady_clock::now();auto spawned=world.SpawnPrefab(asset.id,placement,error);
     const auto spawnUs=std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-start).count();
     Check(spawned!=0,"runtime spawn actual body and child light");
     Check(world.FindEntity(spawned)&&!world.FindEntity(spawned)->authored,"spawn root ordinary independent runtime identity");
-    auto delta=CaptureWorldState(world);RuntimeWorld restored;
-    Check(restored.Build(resolved,&resources,error),"fresh current baseline");
-    auto malformed=delta;
-    for(auto& change:malformed.entities)if(change.created&&change.definition.parent){change.definition.parent=987654321;break;}
-    const auto beforeCount=restored.Entities().size();
-    Check(!ApplyWorldState(restored,malformed,error)&&restored.Entities().size()==beforeCount&&restored.AdditionalEntities().empty(),"invalid created parent rejected before world mutation");
-    Check(ApplyWorldState(restored,delta,error),"created runtime hierarchy state reconstruction");
+    std::map<std::string,SaveChunk> snapshot;Scene savedScene;RuntimeWorld restored;
+    Check(WorldPersistence::Capture(world,snapshot,error)&&WorldPersistence::SceneFrom(snapshot,savedScene,error),"created hierarchy captures through current participants");
+    Scene invalid=savedScene;for(auto& object:invalid.Objects())if(object.parent){object.parent=987654321;break;}
+    RuntimeWorld rejected;Check(!rejected.Build(invalid,&resources,error,nullptr,nullptr,true)&&!rejected.IsBuilt(),"dangling created parent is rejected before publication");
+    Check(restored.Build(savedScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,snapshot,error)&&restored.RuntimeDefinition(spawned),"current snapshot reconstructs created runtime hierarchy");
     Check(world.DestroyHierarchy(spawned,error)&&world.FindEntity(spawned)->lifecycle==EntityLifecycle::Destroyed,"destroy spawned hierarchy normally");
     Check(world.FindEntity(a)->lifecycle!=EntityLifecycle::Destroyed,"other instance unaffected");
     RuntimeWorld play;const auto authoredBefore=resolved;

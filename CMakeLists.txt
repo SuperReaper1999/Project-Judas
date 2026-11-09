@@ -153,12 +153,12 @@ set(JUDAS_PHYSICS_SOURCES
     third_party/quickhull/QuickHull.cpp
     src/JointSolver.cpp
     src/PhysicsCastGeometry.cpp
-    src/ImpactSolver.cpp
+
     src/RigidBody.cpp
     src/RigidRotation.cpp
     src/RigidBodyGravity.cpp
     src/Contacts.cpp
-    src/ContactSolver.cpp
+
     src/RadialTerrain.cpp
     src/Broadphase.cpp
     src/Narrowphase.cpp
@@ -267,11 +267,7 @@ add_library(judas_engine STATIC
     src/Material.cpp
     src/Environment.cpp
     src/Tangents.cpp
-    src/LiquidGeometry.cpp
-    src/LiquidTypes.cpp
-    src/LiquidSystem.cpp
-    src/LiquidSurface.cpp
-    src/VolumeTerrainGeometry.cpp
+
     src/RuntimeTerrain.cpp
     src/NavigationSystem.cpp
     src/NavigationTypes.cpp
@@ -319,13 +315,8 @@ add_library(judas_engine STATIC
     src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/CharacterMotor.cpp
-    src/PlayerController.cpp
-    src/PlayerView.cpp
     src/StepClimb.cpp
     src/DynamicBody.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/PilotAttachment.cpp
-    src/PilotControl.cpp
     src/ReferenceFrame.cpp
     src/CollisionAuthoring.cpp
     src/CollisionSource.cpp
@@ -333,25 +324,14 @@ add_library(judas_engine STATIC
     src/ModelArchive.cpp
     src/AssetCook.cpp
     src/UIWidgets.cpp
-    src/PauseMenu.cpp
-    src/HUD.cpp
     src/LightTransforms.cpp
     src/LightAttenuation.cpp
     src/ShadowTransforms.cpp
     src/HingeTransform.cpp
-    src/InteractionSystem.cpp
-    src/ObjectManipulation.cpp
-    src/FluidWorld.cpp
-    src/ProductionFluidCoupling.cpp
-    src/FluidHydrostatics.cpp
-    src/FluidBoundaryOwnership.cpp
-    src/FluidSurface.cpp
     src/CombustionWorld.cpp
     src/FirePresentation.cpp
-    src/TerrainDemo.cpp
-    src/TerrainLibrary.cpp
-    src/Door.cpp
-    src/LightSwitch.cpp
+
+
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -389,26 +369,22 @@ add_library(judas_engine STATIC
     src/WorldWeather.cpp
     src/WorldOrigin.cpp
     src/RuntimeWorld.cpp
-    src/GameSession.cpp
     src/Simulation.cpp
     src/BasicWater.cpp
     src/WorldWater.cpp
     src/WorldPresentation.cpp
-    src/GameplayHud.cpp
     src/EngineHost.cpp
     src/ScriptFaultNotice.cpp
     src/InteractivePlay.cpp
     src/ScreenshotWriter.cpp
     src/FidelityPolicy.cpp
     src/CoarseSimulation.cpp
-    src/WorldState.cpp
     src/SaveStorage.cpp
     src/SaveStorageWindows.cpp
     src/PlatformServices.cpp
     src/SaveEvolution.cpp
     src/SaveService.cpp
     src/MotorPersistence.cpp
-    src/LiquidPersistence.cpp
     src/WorldPersistence.cpp
     ${JUDAS_PHYSICS_SOURCES}
     ${JUDAS_PHYSICS_WORLD_SOURCES}
@@ -512,7 +488,6 @@ add_library(judas_editor_core STATIC
     src/editor/EditorAutomationAssets.cpp
     src/editor/EditorAutomationWorkspace.cpp
     src/editor/EditorAutomationSimulation.cpp
-    src/editor/EditorStabilization.cpp
     src/editor/EditorProjectWorkflow.cpp
     src/editor/EditorRequestWorkflow.cpp
     src/editor/EditorExportWorkflow.cpp
@@ -553,11 +528,11 @@ add_library(judas_editor_core STATIC
     src/editor/SpriteSheetEditor.cpp
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
-    src/editor/TerrainTools.cpp src/editor/TerrainV2Editor.cpp
+     src/editor/TerrainV2Editor.cpp
     src/editor/TerrainV2Creation.cpp
     src/editor/TerrainPlanetPreview.cpp
     src/editor/TerrainV2Inspector.cpp
-    src/editor/VolumeTerrainTools.cpp
+
     src/editor/ModTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
@@ -725,62 +700,20 @@ judas_warnings(judas_step_climb_tests)
 # (see src/PilotAttachment.*) — pure CPU math against hand-crafted
 # BodyTransform values, no PhysicsWorld simulation needed at all (only the
 # BodyTransform struct from src/PhysicsWorld.h, a header dependency).
-add_executable(judas_pilot_attachment_tests
-    tests/PilotAttachmentTests.cpp
-    src/PilotAttachment.cpp
-)
-target_include_directories(judas_pilot_attachment_tests PRIVATE src)
-target_link_libraries(judas_pilot_attachment_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_pilot_attachment_tests)
 
 # Pilot release clearance across spacecraft rotations and gravity frames.
-add_executable(judas_pilot_dismount_tests
-    tests/PilotDismountTests.cpp
-    src/PilotAttachment.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_pilot_dismount_tests PRIVATE src)
-target_link_libraries(judas_pilot_dismount_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_pilot_dismount_tests)
 
 # Milestone 11: headless tests for the spacecraft's full 6DOF control (see
 # src/FlyingPrimitiveControl.*) — a real PhysicsWorld plus a real Window
 # constructed without Init (test-input mode only, no SDL/GL call ever
 # happens — see tests/SpacecraftControlTests.cpp's own header comment).
-add_executable(judas_spacecraft_control_tests
-    tests/SpacecraftControlTests.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/Window.cpp
-    src/InputSystem.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_spacecraft_control_tests PRIVATE src)
-target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
-judas_warnings(judas_spacecraft_control_tests)
 
 # M21: coupled spacecraft/celestial-gravity orbit and torque-based SAS tests.
-add_executable(judas_spacecraft_flight_tests
-    tests/SpacecraftFlightTests.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/Window.cpp
-    src/InputSystem.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-    src/CelestialGravity.cpp
-)
-target_include_directories(judas_spacecraft_flight_tests PRIVATE src)
-target_include_directories(judas_spacecraft_flight_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_spacecraft_flight_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
-judas_warnings(judas_spacecraft_flight_tests)
 
 # M22: moving/rotating reference-frame transforms and live rigid-body data.
 add_executable(judas_reference_frame_tests
     tests/ReferenceFrameTests.cpp
     src/ReferenceFrame.cpp
-    src/PilotAttachment.cpp
     ${JUDAS_PHYSICS_SOURCES}
     ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
@@ -794,12 +727,9 @@ judas_warnings(judas_reference_frame_tests)
 # view-data formatting), never a GL context or window. Links Renderer.cpp/
 # GLAD only because UIMenuScreen::Draw/HUD::Draw
 # reference Renderer's UI drawing methods at compile time (same reasoning
-# judas_spacecraft_control_tests already applies to Window.cpp: the code
+#  already applies to Window.cpp: the code
 # must link, but this suite never actually calls Draw or touches a real GL
 # context — see tests/UITests.cpp's own header comment).
-add_executable(judas_ui_tests tests/UITests.cpp)
-target_link_libraries(judas_ui_tests PRIVATE judas_engine)
-judas_warnings(judas_ui_tests)
 
 # Milestone 14: headless tests for the dynamic-lighting math (src/
 # LightTransforms.*, src/LightAttenuation.*) and the torch's input-
@@ -839,58 +769,16 @@ judas_warnings(judas_shadow_tests)
 # reference Renderer's drawing methods at compile time — this suite never
 # calls any of them (same reasoning judas_lighting_tests/judas_shadow_tests
 # already document for their own Renderer-touching dependencies).
-add_executable(judas_interactable_tests tests/InteractableTests.cpp)
-target_link_libraries(judas_interactable_tests PRIVATE judas_engine)
-judas_warnings(judas_interactable_tests)
 
 # Milestone 17: player camera-pose math and view-input ownership. Pure CPU,
 # including arbitrary-orientation and rotate-the-universe checks.
-add_executable(judas_player_view_tests
-    tests/PlayerViewTests.cpp
-    src/PlayerView.cpp
-    src/LightTransforms.cpp
-)
-target_include_directories(judas_player_view_tests PRIVATE src)
-target_link_libraries(judas_player_view_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_player_view_tests)
 
 # Milestone 18: pickup/carry/drop/throw semantics against the real Judas
 # PhysicsWorld, plus interaction targeting and rotate-the-universe carry
 # transform checks. No renderer/window is initialized.
-add_executable(judas_object_manipulation_tests
-    tests/ObjectManipulationTests.cpp
-    src/ObjectManipulation.cpp
-    src/InteractionSystem.cpp
-    src/DynamicBody.cpp
-    ${JUDAS_TEST_SUPPORT_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_object_manipulation_tests PRIVATE src)
-target_link_libraries(judas_object_manipulation_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_object_manipulation_tests)
 
 # Long fixed-step player locomotion against sphere and flat supports,
 # including rotated worlds and the ascending spacecraft-release regression.
-add_executable(judas_player_curved_locomotion_tests
-    tests/PlayerCurvedLocomotionTests.cpp
-    src/CharacterMotor.cpp
-    src/PlayerController.cpp
-    src/PlayerView.cpp
-    src/LightTransforms.cpp
-    src/PilotControl.cpp
-    src/PilotAttachment.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/Window.cpp
-    src/InputSystem.cpp
-    src/StepClimb.cpp
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-    ${JUDAS_PHYSICS_SOURCES}
-    src/RadicalGravity.cpp
-)
-target_include_directories(judas_player_curved_locomotion_tests PRIVATE src)
-target_include_directories(judas_player_curved_locomotion_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_player_curved_locomotion_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
-judas_warnings(judas_player_curved_locomotion_tests)
 
 # M23: exercise global double placement and precise local simulation across
 # physics, gravity, orbital flight, player presentation, frames and pickup.
@@ -898,12 +786,7 @@ add_executable(judas_world_coordinates_tests
     tests/WorldCoordinatesTests.cpp
     src/CelestialGravity.cpp
     src/DynamicBody.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/InteractionSystem.cpp
-    src/ObjectManipulation.cpp
     src/CharacterMotor.cpp
-    src/PlayerController.cpp
-    src/PlayerView.cpp
     src/LightTransforms.cpp
     src/ReferenceFrame.cpp
     src/ShadowTransforms.cpp
@@ -929,45 +812,13 @@ target_include_directories(judas_compound_body_tests PRIVATE src)
 target_link_libraries(judas_compound_body_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_compound_body_tests)
 
-add_executable(judas_fluid_world_tests
-    tests/FluidWorldTests.cpp
-    src/FluidWorld.cpp
-    ${JUDAS_TEST_SUPPORT_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_fluid_world_tests PRIVATE src)
-target_link_libraries(judas_fluid_world_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_fluid_world_tests)
-
-add_executable(judas_fluid_rigid_coupling_tests
-    tests/FluidRigidCouplingTests.cpp
-    src/FluidWorld.cpp
-    src/ObjectManipulation.cpp
-    src/DynamicBody.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_fluid_rigid_coupling_tests PRIVATE src)
-target_link_libraries(judas_fluid_rigid_coupling_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_fluid_rigid_coupling_tests)
-
-add_executable(judas_fluid_surface_tests
-    tests/FluidSurfaceTests.cpp
-    src/FluidSurface.cpp
-)
-target_include_directories(judas_fluid_surface_tests PRIVATE src)
-target_link_libraries(judas_fluid_surface_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_fluid_surface_tests)
-
 # M25: the same continuous terrain surface feeds real player/rigid queries
 # and fluid contact. Both suites are headless; the interactive composition
 # root and GL presentation remain covered by the gameplay harness/operator.
 add_executable(judas_terrain_physics_tests
     tests/TerrainPhysicsTests.cpp
-    src/TerrainDemo.cpp
+
     src/CharacterMotor.cpp
-    src/PlayerController.cpp
-    src/PlayerView.cpp
     src/LightTransforms.cpp
     src/StepClimb.cpp
     src/Window.cpp
@@ -980,46 +831,18 @@ target_include_directories(judas_terrain_physics_tests PRIVATE src ${SDL2_INCLUD
 target_link_libraries(judas_terrain_physics_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 judas_warnings(judas_terrain_physics_tests)
 
-add_executable(judas_terrain_fluid_tests
-    tests/TerrainFluidTests.cpp
-    src/TerrainDemo.cpp
-    src/FluidWorld.cpp
-    ${JUDAS_TEST_SUPPORT_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_terrain_fluid_tests PRIVATE src)
-target_link_libraries(judas_terrain_fluid_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_terrain_fluid_tests)
-
 # M26: equilibrium gas profile and spacecraft/atmosphere forces, including
 # a real PhysicsWorld orbital pass. These suites need no window or GL context.
 add_executable(judas_atmosphere_tests
     tests/AtmosphereTests.cpp
     src/AtmosphereField.cpp
     src/ReferenceFrame.cpp
-    src/TerrainDemo.cpp
+
     src/RadialTerrain.cpp
 )
 target_include_directories(judas_atmosphere_tests PRIVATE src)
 target_link_libraries(judas_atmosphere_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_atmosphere_tests)
-
-add_executable(judas_atmospheric_flight_tests
-    tests/AtmosphericFlightTests.cpp
-    src/AtmosphereField.cpp
-    src/AerodynamicDrag.cpp
-    src/ReferenceFrame.cpp
-    src/CelestialGravity.cpp
-    src/DynamicBody.cpp
-    src/FlyingPrimitiveControl.cpp
-    src/Window.cpp
-    src/InputSystem.cpp
-    ${JUDAS_PHYSICS_SOURCES}
-    ${JUDAS_PHYSICS_WORLD_SOURCES}
-)
-target_include_directories(judas_atmospheric_flight_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
-judas_warnings(judas_atmospheric_flight_tests)
 
 # M27: finite thermal fuel state and atmosphere-coupled combustion, plus
 # presentation transforms tested without a window or GL context.
@@ -1028,11 +851,10 @@ add_executable(judas_combustion_tests
     src/CombustionWorld.cpp
     src/FirePresentation.cpp
     src/AtmosphereField.cpp
-    src/TerrainDemo.cpp
+
     src/ReferenceFrame.cpp
     src/CelestialGravity.cpp
     src/RadicalGravity.cpp
-    src/FlyingPrimitiveControl.cpp
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
@@ -1062,7 +884,6 @@ judas_warnings(judas_combustion_tests)
 #
 # FTFT1: canonical authored-baseline identity and atomic delta validation.
 judas_add_engine_test(judas_scene_fingerprint_tests tests/SceneFingerprintTests.cpp)
-judas_add_engine_test(judas_world_state_tests tests/WorldStateTests.cpp)
 
 # FTFT2: runs the SAME Application.cpp normal loop with deterministic observers.
 add_executable(judas_async_application_tests
@@ -1091,8 +912,8 @@ judas_add_engine_test(judas_contact_lifecycle_tests tests/ContactLifecycleTests.
 judas_add_engine_test(judas_contact_cache_tests tests/ContactCacheTests.cpp)
 
 # FTFT4A-P allocation/lifetime regressions; actual engine, unchanged physics.
-add_executable(judas_contact_storage_tests tests/ContactStorageTests.cpp)
-target_link_libraries(judas_contact_storage_tests PRIVATE judas_engine)
+
+
 
 # FTFT4B-1 diagnostics: current production path; physical failures remain failures.
 judas_add_engine_test(judas_timing_defect_probe tests/TimingDefectProbe.cpp)
@@ -1104,21 +925,21 @@ target_link_libraries(judas_rigid_motion_tests PRIVATE judas_engine)
 add_executable(judas_poisson_policy_witness tests/PoissonPolicyWitness.cpp)
 target_link_libraries(judas_poisson_policy_witness PRIVATE judas_engine)
 
-add_executable(judas_impact_solver_tests tests/ImpactSolverTests.cpp)
-target_link_libraries(judas_impact_solver_tests PRIVATE judas_engine)
+
+
 add_executable(judas_impact_timing_tests tests/ImpactTimingTests.cpp)
 target_link_libraries(judas_impact_timing_tests PRIVATE judas_engine)
-judas_add_engine_test(judas_growing_impact_tests tests/GrowingImpactTests.cpp)
+
 judas_add_engine_test(judas_friction_jacobian_tests tests/FrictionJacobianTests.cpp)
 judas_add_engine_test(judas_reciprocal_inertia_tests tests/ReciprocalInertiaTests.cpp)
-judas_add_engine_test(judas_tracked_contact_rows_tests tests/TrackedContactRowsTests.cpp)
+
 
 judas_add_engine_test(judas_overlap_pair_index_tests tests/OverlapPairIndexTests.cpp)
-judas_add_engine_test(judas_contact_block_tests tests/ContactBlockTests.cpp)
-judas_add_engine_test(judas_contact_block_noop_tests tests/ContactBlockNoopTests.cpp)
-judas_add_engine_test(judas_contact_patch_physical_tests tests/ContactPatchPhysicalTests.cpp)
-judas_add_engine_test(judas_contact_block_continuation_tests tests/ContactBlockContinuationTests.cpp)
-judas_add_engine_test(judas_block_activation_tests tests/BlockActivationTests.cpp)
+
+
+
+
+
 judas_add_engine_test(judas_ccd_anchor_reuse_tests tests/CCDAnchorReuseTests.cpp)
 judas_add_engine_test(judas_native_mesh_growth_tests tests/NativeMeshGrowthTests.cpp)
 judas_add_engine_test(judas_clip_polygon_tests tests/ClipPolygonTests.cpp)
@@ -1130,13 +951,12 @@ judas_add_engine_test(judas_impact_robustness_tests tests/ImpactRobustnessTests.
 # FTFT6: ordinary standalone application on a tiny authored project.
 
 # FTFT6: mixed fidelity/persistence and asset identity integrity.
-judas_add_engine_test(judas_lifecycle_integration_tests tests/LifecycleIntegrationTests.cpp)
+
 judas_add_engine_test(judas_asset_integrity_tests tests/AssetIntegrityTests.cpp)
 
 # FTFT7: actual fixed-step celestial reciprocity across simulation fidelities.
 judas_add_engine_test(judas_coarse_celestial_tests tests/CoarseCelestialTests.cpp)
 judas_add_engine_test(judas_orbital_integrity_tests tests/OrbitalIntegrityTests.cpp)
-judas_add_engine_test(judas_spacecraft_frame_integration_tests tests/SpacecraftFrameIntegrationTests.cpp)
 
 # FTFT8: independent finite-fuel and state-based thermal energy accounting.
 judas_add_engine_test(judas_thermal_accounting_tests tests/ThermalAccountingTests.cpp)
@@ -1144,45 +964,21 @@ judas_add_engine_test(judas_thermal_accounting_tests tests/ThermalAccountingTest
 # FTFT8: serialized-scene thermal/heater path through ordinary played-world steps.
 judas_add_engine_test(judas_combustion_integration_tests tests/CombustionIntegrationTests.cpp)
 
-judas_add_engine_test(judas_player_swimming_tests tests/PlayerSwimmingTests.cpp)
-
-judas_add_engine_test(judas_fluid_metadata_tests tests/FluidMetadataTests.cpp)
-
 # FTFT9: deterministic shape/particle-field hydrostatic approximation.
-judas_add_engine_test(judas_fluid_hydrostatics_tests tests/FluidHydrostaticsTests.cpp)
-judas_add_engine_test(judas_fluid_wet_support_tests tests/FluidWetSupportTests.cpp)
-judas_add_engine_test(judas_fluid_vertical_support_tests tests/FluidVerticalSupportTests.cpp)
-judas_add_engine_test(judas_fluid_known_geometry_tests tests/FluidKnownGeometryTests.cpp)
-judas_add_engine_test(judas_fluid_root_admission_diagnostics tests/FluidRootAdmissionDiagnostics.cpp)
-judas_add_engine_test(judas_fluid_local_wet_support_tests tests/FluidLocalWetSupportTests.cpp)
-judas_add_engine_test(judas_fluid_settling_reference_tests tests/FluidSettlingReferenceTests.cpp)
-judas_add_engine_test(judas_fluid_settling_contract_tests tests/FluidSettlingContractTests.cpp)
-judas_add_engine_test(judas_fluid_volume_drag_tests tests/FluidVolumeDragTests.cpp)
-
-judas_add_engine_test(judas_production_fluid_tests tests/ProductionFluidTests.cpp)
-judas_add_engine_test(judas_fluid_cadence_motion_tests tests/FluidCadenceMotionTests.cpp)
 
 # FTFT9: actual authored compound-cavity load and moving-container integration.
-judas_add_engine_test(judas_fluid_container_integration_tests tests/FluidContainerIntegrationTests.cpp)
 
 # FTFT9: ordinary played-world swimming consumes the actual coarse particle field.
-judas_add_engine_test(judas_player_fluid_integration_tests tests/PlayerFluidIntegrationTests.cpp)
 
 # FTFT9: actual contained particle / finite-mass wall energy budget.
-judas_add_engine_test(judas_fluid_cavity_impact_tests tests/FluidCavityImpactTests.cpp)
 
 # FTFT9: isolated configured smoothing momentum/energy accounting.
-judas_add_engine_test(judas_fluid_smoothing_budget_tests tests/FluidSmoothingBudgetTests.cpp)
 
 # FTFT9: all corner normals and exact-touch particle sweeps.
-judas_add_engine_test(judas_fluid_boundary_contact_tests tests/FluidBoundaryContactTests.cpp)
-judas_add_engine_test(judas_fluid_contact_clearance_tests tests/FluidContactClearanceTests.cpp)
 
 # FTFT9: existing contact-solver batch adapter, independent impulse/support oracles.
-judas_add_engine_test(judas_particle_contact_batch_tests tests/ParticleContactBatchTests.cpp)
 
 # FTFT9: shipped-scene whole-step timing, including fluid preparation/coupling.
-judas_add_engine_test(judas_production_fluid_performance tests/ProductionFluidPerformance.cpp)
 
 # M33: actual Renderer/RuntimeWorld GL passes, authored round-trip and Play/Stop.
 judas_add_engine_test(judas_render_camera_tests tests/RenderCameraTests.cpp SOURCES src/editor/EditorHistory.cpp)
@@ -1197,10 +993,10 @@ judas_add_engine_test(judas_consumer_pointer_tests tests/ConsumerPointerTests.cp
 
 judas_add_engine_test(judas_prefab_tests tests/PrefabTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
-judas_add_engine_test(judas_prefab_application_tests tests/PrefabApplicationTests.cpp APPLICATION)
+
 
 judas_add_engine_test(judas_visual_particle_tests tests/VisualParticleTests.cpp SOURCES src/editor/EditorHistory.cpp)
-judas_add_engine_test(judas_particle_application_tests tests/ParticleApplicationTests.cpp APPLICATION)
+
 
 # M38 standalone export uses the same project/export implementation as editor.
 add_executable(judas_export src/ExportMain.cpp)
@@ -1242,20 +1038,18 @@ add_executable(judas_ragdoll_tests tests/RagdollTests.cpp)
 target_link_libraries(judas_ragdoll_tests PRIVATE judas_engine)
 
 # Focused fluid-demo performance observation of the ordinary application.
-add_executable(judas_fluid_demo_probe tools/FluidDemoProbe.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_fluid_demo_probe PRIVATE judas_engine)
-judas_warnings(judas_fluid_demo_probe)
-add_executable(judas_fluid_render_probe tools/benchmarks/FluidRenderProbe.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_fluid_render_probe PRIVATE judas_engine)
-target_compile_definitions(judas_fluid_render_probe PRIVATE JUDAS_FLUID_PROBE_V2=1)
-judas_warnings(judas_fluid_render_probe)
 
-judas_add_engine_test(judas_fluid_demo_integration_tests tests/FluidDemoIntegrationTests.cpp)
+
+
+
+
+
+
 
 judas_add_engine_test(judas_character_motor_tests tests/CharacterMotorTests.cpp)
 
 # M50 developer documentation examples; uses the normal engine/QuickJS runtime.
-judas_add_engine_test(judasjs_examples_tests tests/JudasJSExamplesTests.cpp)
+judas_add_engine_test(judas_cookbook_tests tests/JudasJSExamplesTests.cpp)
 
 # M51 ordinary project behaviour composition and explicit compatibility boundary.
 
@@ -1270,26 +1064,6 @@ add_executable(judas_navigation_bake tools/NavigationBake.cpp)
 target_link_libraries(judas_navigation_bake PRIVATE judas_navigation_baker)
 add_executable(judas_navigation_tests tests/NavigationTests.cpp)
 target_link_libraries(judas_navigation_tests PRIVATE judas_navigation_baker)
-
-add_executable(judas_liquid_tests tests/LiquidTests.cpp)
-target_link_libraries(judas_liquid_tests PRIVATE judas_engine)
-add_executable(judas_liquid_bake tools/LiquidBake.cpp)
-target_link_libraries(judas_liquid_bake PRIVATE judas_engine)
-
-add_executable(judas_liquid_application_tests tests/LiquidApplicationTests.cpp)
-target_link_libraries(judas_liquid_application_tests PRIVATE judas_engine)
-
-add_executable(judas_liquid_surface_tests tests/LiquidSurfaceTests.cpp)
-target_link_libraries(judas_liquid_surface_tests PRIVATE judas_engine)
-
-add_executable(judas_liquid_surface_application_tests tests/LiquidSurfaceApplicationTests.cpp)
-target_link_libraries(judas_liquid_surface_application_tests PRIVATE judas_engine)
-
-add_executable(judas_liquid_surface_refill_tests tests/LiquidSurfaceRefillTests.cpp)
-target_link_libraries(judas_liquid_surface_refill_tests PRIVATE judas_engine)
-
-add_executable(judas_liquid_surface_loop_tests tests/LiquidSurfaceLoopTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_liquid_surface_loop_tests PRIVATE judas_engine)
 
 add_executable(judas_profiler_tests tests/PerformanceProfilerTests.cpp)
 target_link_libraries(judas_profiler_tests PRIVATE judas_engine)
@@ -1317,7 +1091,7 @@ add_executable(judas_material_tests tests/MaterialTests.cpp)
 target_link_libraries(judas_material_tests PRIVATE judas_engine)
 
 # Legacy direct-Renderer test targets need the reusable M57 material implementation.
-foreach(target judas_ui_tests judas_lighting_tests judas_interactable_tests)
+foreach(target  judas_lighting_tests )
     target_link_libraries(${target} PRIVATE judas_engine)
 endforeach()
 
@@ -1440,7 +1214,7 @@ judas_add_engine_test(judas_world_building_tests tests/WorldBuildingTests.cpp SO
 
 add_library(judas_world_authoring STATIC src/terrain/TerrainCook.cpp src/terrain/TerrainPreview.cpp
     src/terrain/TerrainGeneration.cpp
-    src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
+    src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp   src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation_baker)
 judas_warnings(judas_world_authoring)
@@ -1472,13 +1246,13 @@ judas_add_engine_test(judas_windows_readiness_tests tests/WindowsReadinessTests.
 add_executable(judas_terrain_author tools/TerrainAuthor.cpp)
 target_link_libraries(judas_terrain_author PRIVATE judas_world_authoring)
 judas_warnings(judas_terrain_author)
-add_executable(judas_terrain_authoring_tests tests/TerrainAuthoringTests.cpp)
-target_link_libraries(judas_terrain_authoring_tests PRIVATE judas_world_authoring)
-judas_warnings(judas_terrain_authoring_tests)
-add_executable(judas_terrain_pipeline_tests tests/TerrainPipelineTests.cpp)
-target_link_libraries(judas_terrain_pipeline_tests PRIVATE judas_world_authoring judas_navigation_baker)
-judas_warnings(judas_terrain_pipeline_tests)
-judas_add_engine_test(judas_terrain_application_tests tests/TerrainApplicationTests.cpp APPLICATION)
+
+
+
+
+
+
+
 
 if(WIN32)
     target_link_libraries(judas_engine PUBLIC shell32 ole32)
@@ -1550,16 +1324,16 @@ judas_add_engine_test(judas_motor_runtime_tags_tests tests/MotorRuntimeTagsTests
 include(cmake/tests/MechanicalTests.cmake)
 
 # M84 bounded editable volumes cook into the existing runtime asset pipeline.
-add_executable(judas_volume_author tools/VolumeTerrainAuthor.cpp)
-target_link_libraries(judas_volume_author PRIVATE judas_world_authoring)
-judas_warnings(judas_volume_author)
-add_executable(judas_volume_terrain_tests tests/VolumeTerrainTests.cpp)
-target_link_libraries(judas_volume_terrain_tests PRIVATE judas_world_authoring judas_navigation_baker)
-judas_warnings(judas_volume_terrain_tests)
-judas_add_engine_test(judas_volume_application_tests tests/VolumeTerrainApplicationTests.cpp APPLICATION)
-add_executable(judas_volume_performance_tests tests/VolumeTerrainPerformanceTests.cpp)
-target_link_libraries(judas_volume_performance_tests PRIVATE judas_world_authoring)
-judas_warnings(judas_volume_performance_tests)
+
+
+
+
+
+
+
+
+
+
 
 # Ordinary consumer-game integration; no Planetfall policy links into the engine.
 
@@ -1675,12 +1449,11 @@ include(cmake/targets/DeveloperWorkflow.cmake)
 
 include(cmake/targets/WorldLifecycle.cmake)
 
-judas_add_engine_test(judas_prealpha_lifecycle_tests tests/PreAlphaLifecycleTests.cpp)
+
 
 judas_add_engine_test(judas_first_project_tests tests/FirstProjectTests.cpp)
 judas_add_engine_test(judas_origin_environment_tests tests/OriginEnvironmentTests.cpp)
-judas_add_engine_test(judas_liquid_rotation_tests tests/LiquidRotationTests.cpp)
-judas_add_engine_test(judas_liquid_bake_frame_tests tests/LiquidBakeFrameTests.cpp)
+
 judas_add_engine_test(judas_collision_witness_tests tests/CollisionWitnessTests.cpp)
 judas_add_engine_test(judas_origin_admission_tests tests/OriginAdmissionTests.cpp)
 
@@ -1702,7 +1475,7 @@ judas_add_engine_test(judas_basic_water_application_tests tests/BasicWaterApplic
 judas_add_engine_test(judas_basic_water_preview_tests tests/BasicWaterPreviewTests.cpp)
 
 judas_add_engine_test(judas_project_fluid_policy_tests tests/ProjectFluidPolicyTests.cpp)
-judas_add_engine_test(judas_fluid_lifecycle_qualification_tests tests/FluidLifecycleQualificationTests.cpp)
+
 add_dependencies(judas_project_fluid_policy_tests judas)
 
 judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTests.cpp
@@ -1737,9 +1510,6 @@ add_executable(judas_planar_benchmark tools/benchmarks/PlanarPhysicsBenchmark.cp
 target_link_libraries(judas_planar_benchmark PRIVATE judas_engine)
 judas_warnings(judas_planar_benchmark)
 
-add_executable(judas_planar_playground tools/demos/PlanarPlayground.cpp)
-target_link_libraries(judas_planar_playground PRIVATE judas_engine)
-judas_warnings(judas_planar_playground)
 
 judas_add_engine_test(judas_planar_physics_tests tests/PlanarPhysicsTests.cpp)
 judas_add_engine_test(judas_planar_integration_tests tests/PlanarIntegrationTests.cpp
@@ -1828,13 +1598,11 @@ judas_add_engine_test(judas_utility_ai_editor_tests tests/UtilityAIEditorTests.c
     SOURCES src/editor/UtilityAIEditor.cpp LIBRARIES judas_imgui)
 
 # Independent, test-only geometry diagnostics; no production wetness calls.
-add_executable(judas_fluid_coverage_observation_tests tests/FluidCoverageObservationTests.cpp)
-target_link_libraries(judas_fluid_coverage_observation_tests PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_fluid_coverage_observation_tests)
-add_executable(judas_fluid_coverage_replay tools/validation/FluidCoverageReplay.cpp)
-target_include_directories(judas_fluid_coverage_replay PRIVATE src tests)
-target_link_libraries(judas_fluid_coverage_replay PRIVATE ${JUDAS_GLM})
-judas_warnings(judas_fluid_coverage_replay)
+
+
+
+
+
 
 judas_add_engine_test(judas_script_binding_registry_tests tests/ScriptBindingRegistryTests.cpp)
 judas_add_engine_test(judas_script_module_acceptance_tests tests/ScriptModuleAcceptanceTests.cpp)

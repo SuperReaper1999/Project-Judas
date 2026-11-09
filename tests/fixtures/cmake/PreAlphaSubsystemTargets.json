@@ -28,56 +28,6 @@
       [
         "add_executable",
         [
-          "judas_breakwater_application_tests",
-          "tests/BreakwaterApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_breakwater_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_breakwater_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_breakwater_performance",
-          "tests/BreakwaterPerformance.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_breakwater_performance",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_breakwater_performance"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_local_multiplayer_tests",
           "tests/LocalMultiplayerTests.cpp"
         ]
@@ -262,31 +212,6 @@
       [
         "add_executable",
         [
-          "judas_rendering_lab_tests",
-          "tests/RenderingLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_rendering_shadow_scale_tests",
           "tests/RenderingShadowScaleTests.cpp"
         ]
@@ -311,31 +236,6 @@
         "judas_warnings",
         [
           "judas_rendering_shadow_scale_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_rendering_lab_performance",
-          "tests/RenderingLabPerformance.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_performance",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_performance"
         ]
       ],
       [
@@ -420,31 +320,6 @@
         "judas_warnings",
         [
           "judas_asset_residency_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_asset_lab_tests",
-          "tests/AssetLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_asset_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_asset_lab_tests"
         ]
       ],
       [
@@ -677,73 +552,6 @@
       [
         "add_executable",
         [
-          "judas_living_world_tests",
-          "tests/LivingWorldTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_streaming_tests",
-          "tests/LivingWorldStreamingTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_streaming_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_streaming_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_application_tests",
-          "tests/LivingWorldApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_save",
           "tools/SaveEvolutionMain.cpp"
         ]
@@ -781,31 +589,6 @@
         "judas_warnings",
         [
           "judas_save_evolution_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_save_evolution_application_tests",
-          "tests/SaveEvolutionApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_save_evolution_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_save_evolution_application_tests"
         ]
       ],
       [
@@ -1008,31 +791,6 @@
       [
         "add_executable",
         [
-          "judas_breakwater_application_tests",
-          "tests/BreakwaterApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_breakwater_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_breakwater_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_local_multiplayer_tests",
           "tests/LocalMultiplayerTests.cpp"
         ]
@@ -1192,31 +950,6 @@
       [
         "add_executable",
         [
-          "judas_rendering_lab_tests",
-          "tests/RenderingLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_rendering_shadow_scale_tests",
           "tests/RenderingShadowScaleTests.cpp"
         ]
@@ -1241,31 +974,6 @@
         "judas_warnings",
         [
           "judas_rendering_shadow_scale_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_rendering_lab_performance",
-          "tests/RenderingLabPerformance.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_performance",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_performance"
         ]
       ],
       [
@@ -1350,31 +1058,6 @@
         "judas_warnings",
         [
           "judas_asset_residency_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_asset_lab_tests",
-          "tests/AssetLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_asset_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_asset_lab_tests"
         ]
       ],
       [
@@ -1607,73 +1290,6 @@
       [
         "add_executable",
         [
-          "judas_living_world_tests",
-          "tests/LivingWorldTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_streaming_tests",
-          "tests/LivingWorldStreamingTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_streaming_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_streaming_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_application_tests",
-          "tests/LivingWorldApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_save",
           "tools/SaveEvolutionMain.cpp"
         ]
@@ -1711,31 +1327,6 @@
         "judas_warnings",
         [
           "judas_save_evolution_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_save_evolution_application_tests",
-          "tests/SaveEvolutionApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_save_evolution_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_save_evolution_application_tests"
         ]
       ],
       [
@@ -1946,31 +1537,6 @@
       [
         "add_executable",
         [
-          "judas_breakwater_application_tests",
-          "tests/BreakwaterApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_breakwater_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_breakwater_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_local_multiplayer_tests",
           "tests/LocalMultiplayerTests.cpp"
         ]
@@ -2130,31 +1696,6 @@
       [
         "add_executable",
         [
-          "judas_rendering_lab_tests",
-          "tests/RenderingLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_rendering_shadow_scale_tests",
           "tests/RenderingShadowScaleTests.cpp"
         ]
@@ -2179,31 +1720,6 @@
         "judas_warnings",
         [
           "judas_rendering_shadow_scale_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_rendering_lab_performance",
-          "tests/RenderingLabPerformance.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_rendering_lab_performance",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_rendering_lab_performance"
         ]
       ],
       [
@@ -2288,31 +1804,6 @@
         "judas_warnings",
         [
           "judas_asset_residency_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_asset_lab_tests",
-          "tests/AssetLabTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_asset_lab_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_asset_lab_tests"
         ]
       ],
       [
@@ -2545,73 +2036,6 @@
       [
         "add_executable",
         [
-          "judas_living_world_tests",
-          "tests/LivingWorldTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_streaming_tests",
-          "tests/LivingWorldStreamingTests.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_streaming_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_streaming_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_living_world_application_tests",
-          "tests/LivingWorldApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_living_world_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_living_world_application_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
           "judas_save",
           "tools/SaveEvolutionMain.cpp"
         ]
@@ -2649,31 +2073,6 @@
         "judas_warnings",
         [
           "judas_save_evolution_tests"
-        ]
-      ],
-      [
-        "add_executable",
-        [
-          "judas_save_evolution_application_tests",
-          "tests/SaveEvolutionApplicationTests.cpp",
-          "src/Application.cpp",
-          "src/RuntimeOptions.cpp",
-          "src/RuntimeDiagnostics.cpp",
-          "src/TestHarness.cpp"
-        ]
-      ],
-      [
-        "target_link_libraries",
-        [
-          "judas_save_evolution_application_tests",
-          "PRIVATE",
-          "judas_engine"
-        ]
-      ],
-      [
-        "judas_warnings",
-        [
-          "judas_save_evolution_application_tests"
         ]
       ],
       [

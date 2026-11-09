@@ -1,81 +1,19 @@
-# Terrain — live bounded volumes
-
-Current M97 API. `entity.terrain` is a handle even before initialization; `state`
-is null until `create`. A stale entity throws ReferenceError. Invalid operations,
-unsupported owners, exhausted budgets throw TypeError. `create`/`brush` return true when queued, or
-false while another volume owns the single preparation lane; retry later.
-
-```js
-const terrain = rock.terrain;
-if (!terrain.state) terrain.create({
-  resolution: {x:21,y:17,z:21}, extent:{x:16,y:10,z:16}, navigation:true
-});
-// Later, after state.ready && !state.busy:
-terrain.brush(hit.point,{kind:'remove',radius:2,strength:1});
-```
-
-`create(options)` creates a bounded solid grid, or accepts `source` containing a
-serialized M84 `JudasVolumeTerrain` source instead of resolution/extent. This allows
-project-owned authored caves to start editable in a standalone without filesystem
-writes. Per-instance density is independent; original assets remain immutable.
-`navigation` defaults false; `profile` defaults 0 and must be registered.
-Creation requires a root, unit-scale static body without a planet, deformable or
-baked navigation-surface component. Orientation is arbitrary. Do not combine with
-another component that owns the same collision geometry.
-
-`brush(point, options)` uses M84's `add`, `remove`, or `smooth` field operation.
-Point is **current simulation-frame** world position, radius is local metres
-(.05–1024, with brushes constrained to the finite source), strength defaults 1
-and must be 0–1. A brush is one dab, not a held-tool stroke; game JS owns cadence,
-target queries, rewards and construction rules. Prefer authoritative fixedUpdate
-for input-driven edits. No universal world-up is assumed.
-
-`state` reports ready/busy/navigation, committed revision, samples/triangles,
-estimated geometry bytes, last prepareMs/publishMs and error. Creation and brushes
-prepare asynchronously. Only one preparation per world is accepted; false signals
-normal backpressure. Retry creation from fixedUpdate until a state record exists. Failed extraction/cook/navigation keeps the last committed geometry.
-An entirely empty extracted volume is rejected. No resolution reduction occurs.
-
-All three representations publish between steps. Until then queries/rendering/nav
-continue using the last complete product. CPU preparation never mutates physics or
-GL. Native navigation is rebuilt only for this volume's triangles, in its authored
-local +Y navigation frame, using the selected agent profile. It does not rebake
-nearby independent surfaces, obstacles or arbitrary unions automatically. Use links
-for traversal between separately owned surfaces. Support orientation and sampled
-[gravity](physics.md) remain separate.
-
-Limits: 8 volumes/world, 32768 samples/volume, 262144 total samples, 64m per axis,
-16384 triangles/product. M84's finite air boundary remains. This is neither soil
-simulation nor planetary terrain LOD editing. Small rotated volumes can be placed
-in planetary environments, including live-origin worlds. Adding solid around an
-occupied body uses ordinary penetration recovery; scripts should avoid entombment.
-
-Committed density and navigation settings survive cold saves and snapshot regions.
-Pending edits defer saves/unload. Restore prepares collision/navigation before
-publishing the replacement world. Stop discards runtime edits; explicitly save to
-retain them. Source authoring files are never changed by gameplay.
-
-See [scenes/streaming](scenes-state.md), [queries](physics.md),
-[Living World Lab](../M97_LIVING_WORLD.md).
-
-## Terrain V2 landscape preview (Experimental)
+# Terrain V2 runtime editing
 
 `entity.terrain.createLandscape(sourceJson)` initializes an opt-in sampled
 landscape on a root, unit-scale static owner. `sourceJson` is a serialized
 `JudasTerrainV2` source, not a model asset ID. Its regular heightfield and local
 excavations share one source and one collision publication boundary. Use
-`terrain.brush(point, {kind:"remove"|"add", radius, strength:1})` to excavate or
+`terrain.brush(point, {kind:"remove"|"add", radius})` to excavate or
 add material. Points use the current simulation frame, including after an origin
-shift. The V2 landscape path does not currently implement the legacy volumetric
-`smooth` brush; it rejects it explicitly. Existing bounded volume `create` and
-`smooth` behaviour is unchanged.
+shift. Volumetric smooth is unsupported; surface smoothing uses `surfaceBrush`.
 
 `terrain.state` additionally reports `chunks`, `volumeChunks`, and
 `pendingChunks`. `bytes` is a CPU geometry/source estimate, **not** total process,
 BVH or GPU memory. `prepareMs` is worker preparation elapsed time;
 `publishMs` is owner-thread publication time. Do not interpret either as FPS.
 A pending edit is explicit backpressure; check `busy` before another edit.
-Unlike the older bounded-volume preparation lane, independent V2 owners can
+Independent V2 owners can
 prepare concurrently. A busy owner returns false without submitting another
 edit. Translation and rotation update all derived colliders; live scaling and
 motion-authority changes are rejected explicitly.
@@ -133,14 +71,11 @@ Procedural sources continue to use complete native snapshots within the existing
 8 MiB save-string limit. Existing journal-only reference saves remain readable.
 Invalid sample indices, weights and changed base assets are rejected.
 
-This API does not yet rebuild independent authored navigation surfaces or update
-a fluid solid-volume bake. Those integrations remain explicit Terrain V2 work;
-do not infer a successful terrain publication also rebuilt those systems.
+Independent baked navigation surfaces require explicit rebaking. Source-owned live navigation follows terrain publication. Advanced Fluids V2 uses its own current collision preparation; no retired liquid bake is produced.
 
 Native landscapes can opt into source-owned navigation through the existing
 Navigation Surface component, using an empty baked-asset reference. The editor's
-**Live terrain navigation** option configures it. This does not change the legacy
-bounded-volume `create({navigation,profile})` contract. See [navigation](navigation.md)
+**Live terrain navigation** option configures it. See [navigation](navigation.md)
 for coverage, actor steering and publication details. Geometric changes update
 both support and routes; material painting preserves both collider and navigation
 identities. Native navigation remains optional.
@@ -154,7 +89,7 @@ LOD. Camera visibility never removes physics support. The state object exposes
 `gpuPageBytes`, `gpuPageBudget`, `gpuPages` and `gpuEvictions`. `pagePrepareMs` is
 the last GPU page preparation/upload; `worstPagePrepareMs` is its high-water mark,
 not a sum for the current frame. `bytes` is a current CPU payload estimate for
-native landscapes; the legacy bounded volume component retains its grid estimate.
+landscapes.
 
 Caches allocate on demand. A pending edit retains old collision until complete.
 Resource pressure or damaged pages report errors rather than becoming empty

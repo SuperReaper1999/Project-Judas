@@ -74,7 +74,7 @@ int main() {
         if (key) window.Input().SetPhysical(key, value);
         if (lookY) window.Input().AddDelta("mouse:dy", lookY);
         host.PumpResources();
-        play.Frame(window, host.GetRenderer(), dt, true, false);
+        play.Frame(window, host.GetRenderer(), dt, false);
     };
     auto tap = [&](const char* key) {
         frame(1.f / 60, 0, key, 1);

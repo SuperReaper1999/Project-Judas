@@ -10,10 +10,9 @@ inline void DrawEditorOverlayMenu(DebugViewOptions &d) {
     ImGui::MenuItem("Gravity vectors + regions", nullptr, &d.gravity);
     ImGui::MenuItem("Frame axes", nullptr, &d.frameAxes);
     ImGui::MenuItem("Lights", nullptr, &d.lights);
-    ImGui::MenuItem("Interaction ranges", nullptr, &d.interactionRanges);
     ImGui::MenuItem("Lifecycle / fidelity", nullptr, &d.lifecycle);
     ImGui::MenuItem("Terrain normals (sampled)", nullptr, &d.terrainNormals);
-    ImGui::MenuItem("Fluid particles", nullptr, &d.fluidParticles);
+    ImGui::MenuItem("Water bounds", nullptr, &d.waterBounds);
     ImGui::MenuItem("Atmosphere radii", nullptr, &d.atmosphere);
     ImGui::MenuItem("Broadphase bounds", nullptr, &d.broadphase);
     ImGui::MenuItem("Navigation mesh / routes", nullptr, &d.navigation);

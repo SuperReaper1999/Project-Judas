@@ -10,7 +10,6 @@ void RuntimeWorld::ConfigureProject(const ProjectSettings& project) {
     m_advancedFluids=project.advancedFluidDynamics && !AdvancedFluidDynamicsRestriction();
     m_basicWaterEnabled=project.basicWater;
     m_waterSwimming=project.waterSwimming;
-    legacyGameplay=project.legacyGameplay;
     audioGroups=project.audio;
 }
 bool RuntimeWorld::SetBasicWater(EntityId id,const BasicWaterSettings& settings){
@@ -50,11 +49,6 @@ std::vector<glm::vec2> RuntimeWorld::WaterOpticalPaths(const glm::mat4& view,con
         if(result.empty())result=std::move(grid);
         else for(std::size_t i=0;i<result.size()&&i<grid.size();++i)
             if(grid[i].y>grid[i].x&&(result[i].y<=result[i].x||grid[i].x<result[i].x))result[i]=grid[i];}
-    if (m_advancedFluids && !m_liquid->States().empty()) {
-        auto advanced=m_liquid->OpticalPaths(view,projection,columns,rows,alpha);
-        if (result.empty()) return advanced;
-        for (size_t i=0;i<result.size()&&i<advanced.size();++i)
-            if (advanced[i].y>advanced[i].x && (result[i].y<=result[i].x || advanced[i].x<result[i].x)) result[i]=advanced[i];
-    }
+
     return result;
 }

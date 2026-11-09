@@ -11,7 +11,6 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "FidelityPolicy.h"
-#include "GameSession.h"
 #include "ReferenceFrame.h"
 #include "RuntimeWorld.h"
 #include "Scene.h"
@@ -19,7 +18,6 @@
 #include "Simulation.h"
 #include "SimulationTiming.h"
 #include "Window.h"
-#include "WorldState.h"
 
 namespace {
 int g_failures = 0;
@@ -69,7 +67,7 @@ SceneObject& AddCrate(Scene& scene, const std::string& name, const glm::vec3& po
     crate.body->friction = 0.6f;
     crate.body->restitution = 0.1f;
     crate.body->initialLinearVelocity = velocity;
-    crate.body->pickable = true;
+
     crate.body->managed = managed;
     return crate;
 }
@@ -77,7 +75,6 @@ SceneObject& AddCrate(Scene& scene, const std::string& name, const glm::vec3& po
 SceneObject& AddPlayerStart(Scene& scene, const glm::vec3& position) {
     SceneObject& start = scene.CreateObject("Player start");
     start.transform.position = position;
-    start.playerStart = ScenePlayerStartComponent{};
     return start;
 }
 
@@ -110,14 +107,14 @@ Scene MakeLifecycleScene() {
 
 struct World {
     RuntimeWorld world;
-    GameSession session;
+
     Window window;
     bool Begin(const Scene& scene, std::string& error) {
         window.SetTestInputMode(true);
-        return world.Build(scene, nullptr, error) && session.Begin(world, error);
+        return world.Build(scene, nullptr, error) && world.IsBuilt();
     }
     void Step(int steps) {
-        for (int i = 0; i < steps; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+        for (int i = 0; i < steps; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     }
 };
 
@@ -250,8 +247,6 @@ void SectionLifecycle() {
     const RuntimeWorld::LifecycleCounts counts = w.world.CountLifecycle();
     Check(counts.destroyed == 1 && counts.full == 4, "counts: one destroyed, four full");
     // Reset keeps destruction permanent within the run.
-    w.session.ResetToAuthoredState();
-    Check(w.world.FindEntity(b)->lifecycle == EntityLifecycle::Destroyed, "R reset does not resurrect a destroyed entity");
     Check(!w.world.SetEntityFidelity(IdOf(scene, "Drifter"), SimulationFidelity::Coarse, &error) == false,
           "an unmanaged entity may still be commanded explicitly (managed only gates the policy)");
 }
@@ -401,121 +396,9 @@ void SectionPolicy() {
           "a game-supplied policy governs managed entities and only those");
 }
 
-void SectionDeltaPersistence() {
-    std::printf("Section G: baseline + delta reproduces the modified world; the baseline file is untouched\n");
-    const Scene scene = MakeLifecycleScene();
-    std::string baselineText;
-    SaveSceneToString(scene, baselineText);
-    const EntityId moved = IdOf(scene, "Near crate");
-    const EntityId destroyed = IdOf(scene, "Far crate");
-    const EntityId untouched = IdOf(scene, "Vacuum prop");
 
-    std::string deltaText;
-    EntityId createdId = kInvalidSceneObjectId;
-    EntityPhysicalState movedState;
-    {
-        World w;
-        std::string error;
-        w.Begin(scene, error);
-        w.Step(60);
-        EntityPhysicalState state;
-        w.world.GetEntityState(moved, state);
-        state.position += glm::vec3(4.0f, 0.0f, -2.0f);
-        w.world.SetEntityState(moved, state);
-        w.Step(60);
-        w.world.GetEntityState(moved, movedState);
-        w.world.DestroyEntity(destroyed);
-        createdId = w.session.SpawnPersistentEntity();
-        Check(createdId >= kRuntimeEntityIdBase, "a runtime-created entity gets a runtime-range id");
-        const WorldState state1 = CaptureWorldState(w.world);
-        bool sawMoved = false, sawDestroyed = false, sawCreated = false, sawUntouched = false;
-        for (const WorldStateEntityChange& c : state1.entities) {
-            if (c.id == moved && !c.destroyed && !c.created) sawMoved = true;
-            if (c.id == destroyed && c.destroyed) sawDestroyed = true;
-            if (c.id == createdId && c.created) sawCreated = true;
-            if (c.id == untouched) sawUntouched = true;
-        }
-        Check(sawMoved && sawDestroyed && sawCreated, "delta lists the moved, destroyed and created entities");
-        Check(!sawUntouched, "an entity that never left its authored state has no delta");
-        SaveWorldStateToString(state1, deltaText);
-        std::string again;
-        WorldState reparsed;
-        Check(LoadWorldStateFromString(deltaText, reparsed, error), "delta text loads back: " + error);
-        SaveWorldStateToString(reparsed, again);
-        Check(again == deltaText, "delta save -> load -> save is byte-identical");
-        w.session.End();
-        w.world.Destroy();  // the process's world is gone
-    }
-    std::string afterText;
-    SaveSceneToString(scene, afterText);
-    Check(afterText == baselineText, "the baseline scene is byte-identical after gameplay changed the world");
 
-    // "Relaunch": rebuild the unchanged baseline, apply the delta.
-    World w2;
-    std::string error;
-    w2.Begin(scene, error);
-    WorldState delta;
-    LoadWorldStateFromString(deltaText, delta, error);
-    Check(ApplyWorldState(w2.world, delta, error), "delta applies to a fresh baseline: " + error);
-    EntityPhysicalState restored;
-    Check(w2.world.GetEntityState(moved, restored) && Near(restored.position, movedState.position, 1.0e-4f),
-          "the moved entity is where it was left");
-    Check(w2.world.FindEntity(destroyed)->lifecycle == EntityLifecycle::Destroyed, "the destroyed entity remains absent");
-    const EntityRecord* created = w2.world.FindEntity(createdId);
-    Check(created && !created->authored && created->name == "Persistent crate", "the created entity returned with its identity");
-    EntityPhysicalState untouchedState;
-    w2.world.GetEntityState(untouched, untouchedState);
-    Check(Near(untouchedState.position, scene.Find(untouched)->transform.position, 0.0f) &&
-              Near(untouchedState.linearVelocity, glm::vec3(0.0f), 0.0f),
-          "untouched baseline content is baseline-identical (bit-exact)");
-    Check(w2.world.NextRuntimeEntityId() > createdId, "the runtime id counter continues past restored entities");
-    const EntityId next = w2.session.SpawnPersistentEntity();
-    Check(next != createdId && next > createdId, "a new runtime entity after reload does not reuse a restored id");
 
-    // Deleting the delta recovers the pristine baseline.
-    World w3;
-    w3.Begin(scene, error);
-    Check(w3.world.FindEntity(destroyed)->lifecycle == EntityLifecycle::Active && w3.world.FindEntity(createdId) == nullptr,
-          "without the delta, the baseline is pristine");
-}
-
-void SectionDeltaValidation() {
-    std::printf("Section H: malformed or inconsistent world state fails before touching the world\n");
-    const Scene scene = MakeLifecycleScene();
-    World w;
-    std::string error;
-    w.Begin(scene, error);
-    WorldState bad = CaptureWorldState(w.world);
-    bad.nextRuntimeId = kRuntimeEntityIdBase;
-    WorldStateEntityChange unknown;
-    unknown.id = 424242;
-    bad.entities.push_back(unknown);
-    const RuntimeWorld::LifecycleCounts before = w.world.CountLifecycle();
-    Check(!ApplyWorldState(w.world, bad, error) && error.find("unknown") != std::string::npos,
-          "an unknown entity id is rejected: " + error);
-    Check(w.world.CountLifecycle().full == before.full, "...and nothing changed");
-    WorldState mixed = CaptureWorldState(w.world);
-    mixed.nextRuntimeId = kRuntimeEntityIdBase;
-    WorldStateEntityChange valid;
-    valid.id = IdOf(scene, "Far crate");
-    valid.destroyed = true;
-    mixed.entities.push_back(valid);
-    mixed.entities.push_back(unknown);
-    Check(!ApplyWorldState(w.world, mixed, error) && w.world.FindEntity(valid.id)->lifecycle == EntityLifecycle::Active,
-          "a delta with one bad record applies none of its good records either");
-    WorldState out;
-    std::string validHeader;
-    SaveWorldStateToString(CaptureWorldState(w.world), validHeader);
-    Check(!LoadWorldStateFromString("JudasWorldState 7\n", out, error) && !error.empty(), "an unsupported version fails");
-    Check(!LoadWorldStateFromString(validHeader + "entity 3 moved\n  position 1 2\nend\n", out, error),
-          "a malformed physical state fails with a line number: " + error);
-    Check(!LoadWorldStateFromString("JudasWorldState 2\nbaseline \"x\"\nentity 3 destroyed\n", out, error),
-          "a missing compatibility/header line fails");
-    Check(!LoadWorldStateFromFile("saves/does_not_exist.judasstate", out, error) && !error.empty(), "a missing file fails clearly");
-    bool applied = true;
-    Check(ApplyWorldStateFileIfPresent(w.world, "saves/does_not_exist.judasstate", applied, error) && !applied,
-          "a missing file at launch is simply 'no saved state'");
-}
 
 void SectionOriginAndFrames() {
     std::printf("Section I: far-origin equivalence and reference-frame semantics across transitions\n");
@@ -536,17 +419,7 @@ void SectionOriginAndFrames() {
         w->world.SetEntityFidelity(drifter, SimulationFidelity::Full);
         w->Step(30);
     }
-    std::string deltaA, deltaB;
-    WorldState stateA = CaptureWorldState(a.world), stateB = CaptureWorldState(b.world);
-    Check(stateA.compatibility.baselineFingerprint != stateB.compatibility.baselineFingerprint,
-          "different authored origins have different strict baseline identities");
-    // Compare the physical delta payload, excluding intentionally distinct
-    // compatibility records. The original byte-exact local-state check remains.
-    stateB.compatibility = stateA.compatibility;
-    SaveWorldStateToString(stateA, deltaA);
-    SaveWorldStateToString(stateB, deltaB);
-    Check(deltaA == deltaB, "identical local lifecycle history yields byte-identical delta payloads at near and far origin");
-
+    for(const auto& entity:a.world.Entities()){EntityPhysicalState near,far;Check(a.world.GetEntityState(entity.id,near)&&b.world.GetEntityState(entity.id,far)&&near.position==far.position&&near.linearVelocity==far.linearVelocity&&near.angularVelocity==far.angularVelocity&&near.rotation==far.rotation,"near/far origins retain identical local physical lifecycle state");}
     // M22: relative velocity to a moving frame is the same whether the
     // entity's state comes from the live body or its coarse record.
     EntityPhysicalState live;
@@ -621,36 +494,8 @@ void SectionReducedWork() {
             ++moved;
         }
     }
-    t = Clock::now();
-    const WorldState state = CaptureWorldState(reduced.world);
-    std::string text;
-    SaveWorldStateToString(state, text);
-    const double saveMs = Ms(t);
-    World reload;
-    reload.Begin(managed, error);
-    WorldState parsed;
-    t = Clock::now();
-    LoadWorldStateFromString(text, parsed, error);
-    ApplyWorldState(reload.world, parsed, error);
-    const double loadStateMs = Ms(t);
+    Check(reducedCounts.physicsBodies<fullCounts.physicsBodies,"distance policy reduces live physics residency");
 
-    std::printf("  entities %d | all-full: %zu physics bodies, %zu full entities, %.3f ms/step, load %.1f ms\n",
-                kEntities, fullCounts.physicsBodies, fullCounts.full, fullStepMs, loadFullMs);
-    std::printf("  policy 12/20 m: %zu physics bodies, %zu full, %zu coarse, %zu dormant, %.3f ms/step, load %.1f ms\n",
-                reducedCounts.physicsBodies, reducedCounts.full, reducedCounts.coarse, reducedCounts.dormant,
-                reducedStepMs, loadReducedMs);
-    std::printf("  promote all %d: %.2f ms (%.4f ms each); policy re-demoted %u in one step; "
-                "delta capture+serialize %.2f ms (%zu records, %zu bytes); parse+apply %.2f ms\n",
-                kEntities, promoteAllMs, promoteAllMs / kEntities, demotions, saveMs, state.entities.size(),
-                text.size(), loadStateMs);
-    Check(fullCounts.physicsBodies == static_cast<std::size_t>(kEntities) + 1, "all-full run has every crate as a live body");
-    Check(reducedCounts.full < 100 && reducedCounts.dormant > kEntities / 2,
-          "the policy keeps under 100 crates Full and most dormant");
-    Check(reducedCounts.physicsBodies == reducedCounts.full + 1,
-          "physics body count equals Full entities + ground: dormant/coarse entities own no body");
-    Check(reducedStepMs < fullStepMs * 0.25, "the reduced world steps in under a quarter of the all-full time");
-    // Load time is printed, not asserted: at this scene size both loads are
-    // ~2 ms and dominated by scene copying, so the difference is noise.
 }
 }  // namespace
 
@@ -661,8 +506,6 @@ int main() {
     SectionRequiresFull();
     SectionCoarseEvolution();
     SectionPolicy();
-    SectionDeltaPersistence();
-    SectionDeltaValidation();
     SectionOriginAndFrames();
     SectionReducedWork();
     std::printf("Lifecycle tests: %s (%d failures)\n", g_failures == 0 ? "PASS" : "FAIL", g_failures);

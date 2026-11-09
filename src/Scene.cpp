@@ -152,18 +152,14 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
                     return false;
                 }
             }
-            if (x.fluidCavities.size() != y.fluidCavities.size()) return false;
-            for (std::size_t i = 0; i < x.fluidCavities.size(); ++i) {
-                if (!Eq(x.fluidCavities[i].localCenter, y.fluidCavities[i].localCenter) ||
-                    !Eq(x.fluidCavities[i].halfExtents, y.fluidCavities[i].halfExtents)) return false;
-            }
+
             const bool planarEqual=(!x.planar&&!y.planar)||(x.planar&&y.planar&&EncodePlanar(*x.planar)==EncodePlanar(*y.planar));
             return planarEqual && x.motion == y.motion && x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) &&
-                   x.radius == y.radius && x.terrainSurface == y.terrainSurface &&
+                   x.radius == y.radius &&
                    x.mass == y.mass && x.friction == y.friction &&
                    x.restitution == y.restitution &&
                    Eq(x.initialLinearVelocity, y.initialLinearVelocity) &&
-                   Eq(x.initialAngularVelocity, y.initialAngularVelocity) && x.pickable == y.pickable &&
+                   Eq(x.initialAngularVelocity, y.initialAngularVelocity) &&
                    x.managed == y.managed;
         })) {
         return false;
@@ -182,34 +178,9 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         })) {
         return false;
     }
-    if (!OptEq(a.door, b.door, [](const SceneDoorComponent& x, const SceneDoorComponent& y) {
-            return Eq(x.localHingeAxis, y.localHingeAxis) && x.collisionLayer == y.collisionLayer && x.collisionMask == y.collisionMask && x.openAngleDegrees == y.openAngleDegrees &&
-                   x.angularSpeedDegreesPerSecond == y.angularSpeedDegreesPerSecond;
-        })) {
-        return false;
-    }
-    if (!OptEq(a.lightSwitch, b.lightSwitch,
-               [](const SceneLightSwitchComponent& x, const SceneLightSwitchComponent& y) {
-                   return Eq(x.localHingeAxis, y.localHingeAxis) &&
-                          x.toggleAngleDegrees == y.toggleAngleDegrees &&
-                          x.angularSpeedDegreesPerSecond == y.angularSpeedDegreesPerSecond &&
-                          Eq(x.lampLocalOffset, y.lampLocalOffset) && Eq(x.lampColor, y.lampColor) &&
-                          x.lampRange == y.lampRange;
-               })) {
-        return false;
-    }
-    if (!OptEq(a.vehicle, b.vehicle, [](const SceneVehicleComponent& x, const SceneVehicleComponent& y) {
-            return x.gravity == y.gravity && x.headlight == y.headlight &&
-                   x.navigationLights == y.navigationLights &&
-                   x.dragCoefficient == y.dragCoefficient &&
-                   x.initialPilotAttached == y.initialPilotAttached;
-        })) {
-        return false;
-    }
     if (!OptEq(a.celestial, b.celestial,
                [](const SceneCelestialComponent& x, const SceneCelestialComponent& y) {
-                   return x.gravitationalParameter == y.gravitationalParameter &&
-                          x.operatorThrustForce == y.operatorThrustForce;
+                   return x.gravitationalParameter == y.gravitationalParameter;
                })) {
         return false;
     }
@@ -237,20 +208,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
     if (!OptEq(a.fluidVolume, b.fluidVolume,
                [](const SceneFluidVolumeComponent& x, const SceneFluidVolumeComponent& y) {
                    return x.spacing == y.spacing && x.countX == y.countX && x.countY == y.countY &&
-                          x.countZ == y.countZ && x.emitter == y.emitter &&
-                          Eq(x.emitterLocalOffset, y.emitterLocalOffset) &&
-                          x.maxParticles == y.maxParticles && x.backend == y.backend &&
-                          (x.backend != SceneFluidBackend::Grid ||
-                           (x.fillHeight == y.fillHeight && x.density == y.density &&
-                            Eq(x.color, y.color) && x.opacity == y.opacity));
-               })) {
-        return false;
-    }
-    if (!OptEq(a.playerStart, b.playerStart,
-               [](const ScenePlayerStartComponent& x, const ScenePlayerStartComponent& y) {
-                   return x.yawDegrees == y.yawDegrees && x.view == y.view &&
-                          x.density == y.density && x.fluidDrag == y.fluidDrag &&
-                          x.swimAcceleration == y.swimAcceleration && x.collisionLayer == y.collisionLayer && x.collisionMask == y.collisionMask;
+                          x.countZ == y.countZ && x.fillHeight == y.fillHeight &&
+                          x.density == y.density && Eq(x.color,y.color) && x.opacity == y.opacity;
                })) {
         return false;
     }
@@ -269,9 +228,7 @@ bool ScenesEqual(const Scene& a, const Scene& b) {
     if(sa.authoringRecipes!=sb.authoringRecipes)return false;
     if (sa.name != sb.name || !Eq(sa.worldOrigin, sb.worldOrigin) ||
         !Eq(sa.sunDirection, sb.sunDirection) || !Eq(sa.sunColor, sb.sunColor) ||sa.sunEnabled!=sb.sunEnabled||sa.sunIntensity!=sb.sunIntensity||
-        !Eq(sa.ambientColor, sb.ambientColor) || sa.fluidScale != sb.fluidScale ||
-        sa.fluidUpdateRateHz != sb.fluidUpdateRateHz ||
-        sa.fluidHydrostaticDragRate != sb.fluidHydrostaticDragRate ||
+        !Eq(sa.ambientColor, sb.ambientColor) ||
         sa.fidelityPolicy != sb.fidelityPolicy || sa.fidelityFullRadius != sb.fidelityFullRadius ||
         sa.fidelityCoarseRadius != sb.fidelityCoarseRadius) {
         return false;

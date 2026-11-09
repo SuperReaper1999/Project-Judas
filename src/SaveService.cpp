@@ -94,7 +94,6 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(!m_identityError.empty()){error=m_identityError;Finish(error);return;}if(m_content.empty())return;
   GameSnapshot snapshot;auto start=Clock::now();
   if(s.operation=="save"){
-   if(m_session.m_project.Settings().legacyGameplay){error="modern slots require legacy-gameplay false; built-in legacy player/control state uses the separate .judasstate contract";Finish(error);return;}
    if(m_session.m_streaming&&!m_session.m_streaming->SaveReady()){s.waitingFor="streaming";return;}
    if(!WorldPersistence::Prepare(*world,error)){s.waitingFor="resources";if(error=="loading"&&ms(m_restoreStart)<=30000){error.clear();return;}if(error=="loading")error="required save participants failed to prepare within 30 seconds";Finish(error);return;}
    SaveEvolutionIdentity evolution;if(!SaveEvolutionCurrent(m_session.m_project.Settings().saveEvolution,evolution,error)){Finish(error);return;}snapshot.compatibility=evolution.compatibility;snapshot.contentVersion=evolution.version;
@@ -150,7 +149,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("sprite-content"))!=hasSpriteAnimation){error="sprite animation content participant does not match snapshot components";Finish(error);return;}
   const bool hasParticleImpacts=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable;});
   if(bool(saved.participants.count("particle-impacts"))!=hasParticleImpacts){error="particle impact participant does not match snapshot components";Finish(error);return;}
-  const bool hasGridWater=m_session.m_project.Settings().advancedFluidDynamics&&std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid;});
+  const bool hasGridWater=m_session.m_project.Settings().advancedFluidDynamics&&std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.fluidVolume;});
   if(bool(saved.participants.count("grid-water"))!=hasGridWater){error="grid-water participant does not match active snapshot components";Finish(error);return;}
   const bool hasDeformable=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.deformable);});
   const bool hasKinematic=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.body&&o.body->motion==SceneBodyMotion::Kinematic;});
@@ -160,8 +159,8 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("wheels"))!=hasWheel){error="wheel participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("kinematic-motion"))!=hasKinematic){error="kinematic motion participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
-  if(saved.participants.size()!=size_t(11+hasGridWater+hasSpriteAnimation+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+hasParticleImpacts+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))){error="save participant inventory does not match snapshot components";Finish(error);return;}
-  m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;m_staged->legacyGameplay=m_session.m_project.Settings().legacyGameplay;
+  if(saved.participants.size()!=size_t(10+hasGridWater+hasSpriteAnimation+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+hasParticleImpacts+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))){error="save participant inventory does not match snapshot components";Finish(error);return;}
+  m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;
   m_staged->ConfigureProject(m_session.m_project.Settings());
   if(!m_staged->Build(scene,&m_resources,error,&m_session.m_project.Settings().classification,&m_session.m_project.Settings().navigation,true)){Finish(error);return;}s.state="preparing";s.waitingFor="restoration";
  }
@@ -182,14 +181,13 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
  if(!localeControl.Configuration().locales.empty()){auto sessionIt=m_product->snapshot.participants.find("session");SaveArchive localeData(sessionIt->second.data);std::map<std::string,std::string> values;std::string wanted;localeData(values,wanted);if(localeControl.Locale()!=wanted)return;}
  if(!WorldPersistence::PrepareAudio(*m_staged,error)){if(error=="loading"){error.clear();return;}Finish(error);return;}
  auto& saved=m_product->snapshot;
- GameSession validation;if(!validation.Begin(*m_staged,error)){Finish(error);return;}validation.End();
  // Everything fallible above operated on a private world. The validated normal
  // session is published once; no legacy authored delta is overlaid on it.
  JUDAS_PROFILE_SCOPE("Save activation");
  auto control=world->SceneControl();m_session.m_accepting=false;play.End();m_session.m_streaming.reset();m_session.m_streamWorld=nullptr;
  world=std::move(m_staged);m_session.m_values=std::move(m_stagedSession->m_values);std::string locale=m_stagedSession->Localization(&m_resources).Locale();if(!m_session.Localization(&m_resources).Configuration().locales.empty())m_session.Localization(&m_resources).SetLocale(locale,error);
  m_session.m_streaming=std::move(m_stagedSession->m_streaming);m_session.m_streamWorld=world.get();m_session.m_current=saved.scene;m_session.m_accepting=true;if(m_session.m_streaming)m_session.m_streaming->ResumeOwnership();world->SetSceneControl(std::move(control));
- if(!play.Begin(*world,WorldCoordinates(world->Settings().worldOrigin),error)){error="published save session start failed: "+error;Finish(error);return;}play.SetWorldStatePath("",false);WorldPersistence::Published(*world);
+ if(!play.Begin(*world,WorldCoordinates(world->Settings().worldOrigin),error)){error="published save session start failed: "+error;Finish(error);return;}WorldPersistence::Published(*world);
  if(s.migrated)m_protectedSlots.insert(s.slot);
  s.restoreMs=ms(m_restoreStart);Finish("");
 }

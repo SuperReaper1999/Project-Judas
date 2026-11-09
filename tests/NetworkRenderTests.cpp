@@ -59,7 +59,7 @@ std::vector<unsigned char> Draw(Renderer& renderer, RuntimeWorld& world, float o
     renderer.SetLighting({0, 0, 1}, {0, 0, 0}, {1, 1, 1});
     renderer.SetDynamicLights({});
     renderer.InvalidateShadowSlot(0);
-    DrawWorldGeometry(renderer, world, nullptr, 1, {});
+    DrawWorldGeometry(renderer, world, 1, {});
     renderer.EndFrame();
     std::vector<unsigned char> pixels;
     renderer.CaptureFrame(Width, Height, pixels);
@@ -70,7 +70,7 @@ struct Instance {
     RuntimeWorld world;
     explicit Instance(EngineHost& engine, const Project& project, const Scene& scene) {
         std::string error;
-        world.legacyGameplay = false;
+
         world.SetSceneControl(std::make_shared<SceneSession>(project, project.StartupScenePath()));
         Check(world.Build(scene, &engine.Resources(), error, &project.Settings().classification,
                           &project.Settings().navigation), "ordinary render/network world builds: " + error);
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
         fs::create_directories(fixture / "Scenes");
         ProjectSettings settings;
         settings.name = "M99 actual replica draw fixture";
-        settings.legacyGameplay = false;
+
         settings.startupScene = "Scenes/render.judas";
         { std::ofstream file(fixture / "render.judasproj"); file << Project::SerializeToString(settings); }
         Scene scene;
@@ -179,7 +179,7 @@ int main(int argc, char** argv) {
             // Read actual shadow depth, not the renderer's CPU submissions.
             auto& renderer = engine.GetRenderer();
             renderer.BeginShadowPass(0, Projection() * View());
-            DrawWorldGeometry(renderer, client.world, nullptr, 1, {});
+            DrawWorldGeometry(renderer, client.world, 1, {});
             GLint viewport[4]{};
             glGetIntegerv(GL_VIEWPORT, viewport);
             std::vector<float> depth(static_cast<size_t>(viewport[2]));

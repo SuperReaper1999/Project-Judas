@@ -44,9 +44,7 @@ private:
         std::vector<bool> mirroredParts;
     };
     const MeshData* AssetMesh(const std::string& id, bool collision, const AssetDatabase* assets);
-    const MeshData* TerrainMesh(const std::string& identifier);
     std::map<std::string, CachedMesh> m_meshes;
-    std::map<std::string, MeshData> m_terrains;
     struct CachedImage {std::string path;std::filesystem::file_time_type modified{};std::uintmax_t bytes=0;TextureData data;};
     std::map<std::string,CachedImage> m_images;
     const TextureData* AssetImage(const std::string&,const AssetDatabase*,std::string* error);

@@ -5,9 +5,6 @@ settings
   sun-direction 0.4 0.7 0.35
   sun-color 1 0.98 0.92
   ambient 0.5 0.5 0.5
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 100
 end
@@ -28,15 +25,12 @@ object 1 "Floor"
   body static box
   body.half-extents 25 0.3 25
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 3 "Uniform gravity"

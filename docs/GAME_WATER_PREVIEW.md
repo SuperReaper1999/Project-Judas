@@ -10,7 +10,7 @@ The [Water API](judasjs/water.md) lists exact scene keys, handles and receipts.
 
 The previous exact/cut-fragment solvers and their failed controls remain research
 references. They are not this solver's architecture or its microscopic acceptance
-specification. [Previous checkpoint](FLUID_BULK_STORAGE.md).
+specification. [Previous checkpoint (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_BULK_STORAGE.md).
 
 ## Build and play the editable project
 
@@ -22,10 +22,9 @@ build/judas_editor projects/water_v2_workshop/water_v2_workshop.judasproj
 build/judas projects/water_v2_workshop/water_v2_workshop.judasproj
 ```
 
-In the editor, add **Fluid volume**, select **Grid water V2**, configure its cell
-size, dimensions and fill height, and explicitly enable Advanced Fluid Dynamics
-in Project Settings. New editor-added volumes use the grid backend. Old scenes
-without `fluid-volume.backend` retain their particle backend and canonical identity.
+In the editor, add **Fluid volume**, configure cell size, dimensions and fill height,
+and explicitly enable Advanced Fluid Dynamics in Project Settings. Grid Water V2
+is the sole advanced backend; PBF scenes and backend selectors are retired.
 A domain's owner is its bottom centre; positive uniform scale and rotation work.
 
 WASD/mouse walk/look; Space jump/swim; Q dive; G grab/release; H throw; F pump/drain;

@@ -32,7 +32,6 @@ DeformableInstance* RuntimeWorld::RuntimeDeformable(EntityId id,std::string& err
         return nullptr;
         }auto asset=m_assets->GetDeformable(definition->deformable->asset,error);
     if(!asset)return nullptr;
-    if(asset->fracture&&(definition->liquidBasin||definition->liquidContainer||definition->liquidConnection)){error="liquid-bearing fracture unsupported; remove fracture or conserved liquid component";return nullptr;}
     if(!asset->sourceAsset.empty()){
         const auto* source=m_assets->Assets()->Find(asset->sourceAsset);
         std::string digest;

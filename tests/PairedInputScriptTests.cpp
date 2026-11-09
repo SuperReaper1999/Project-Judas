@@ -105,16 +105,16 @@ export default class {
     map.Add("stop_rumble",false);map.AddBinding("stop_rumble",{"key:F11"});
     map.Add("probe_paused_rumble",false);map.AddBinding("probe_paused_rumble",{"key:F12"});
     project.Settings().input=map;project.Settings().startupScene="Scenes/probe.judas";
-    project.Settings().legacyGameplay=false;Check(project.Save(error),"project saves paired binding normally");
+    Check(project.Save(error),"project saves paired binding normally");
     Scene scene;auto& owner=scene.CreateObject("Input reader");owner.scripts.push_back({1,script.id,true,"{}"});owner.ui=SceneUIComponent{uiAsset.id,"fixture",true};
     Check(SaveSceneToFile(scene,project.StartupScenePath(),error),"registered startup scene saved");
     auto world=std::make_unique<RuntimeWorld>();
-    Check(world->Build(scene,&host.Resources(),error),"normal world with script and UI");world->legacyGameplay=false;
+    Check(world->Build(scene,&host.Resources(),error),"normal world with script and UI");
     if(failures){std::puts(error.c_str());host.Shutdown();return 1;}
     auto control=std::make_shared<SceneSession>(project,project.StartupScenePath());world->SetSceneControl(control);
     auto& window=host.GetWindow();window.SetTestInputMode(true);Check(window.Input().SetMap(map,error),"normal input map installed");
     InteractivePlay play;Check(play.Begin(*world,WorldCoordinates{},error),"ordinary play session begins");
-    auto frame=[&](float dt){play.Frame(window,host.GetRenderer(),dt,false,false);};
+    auto frame=[&](float dt){play.Frame(window,host.GetRenderer(),dt,false);};
     frame(0);window.BeginTestFrame();
     Flick(window.Input());const auto delivered=window.Input().StickSamples("right").samples.size();frame(1.f/240);
     auto state=State(*world);
@@ -176,15 +176,6 @@ export default class {
     const auto fresh=window.Input().StickSamples("right",oldCursor);
     Check(fresh.reset&&fresh.samples.empty(),"scene replacement invalidates old paired observations before new scripts");
     frame(0);Check(world->Scripts()&&world->Scripts()->Diagnostics().empty(),"replacement VM has no stale input/script faults");
-    play.Menu().HandleBackRequest();
-    const int pulsesBeforeLegacyPause=pulses;
-    press("key:F12");
-    Check(play.IsPaused()&&State(*world).contains("pausedPulse")&&State(*world)["pausedPulse"]==false&&
-          pulses==pulsesBeforeLegacyPause,"legacy pause blocks new hardware dispatch from UI callbacks");
-    play.Menu().HandleBackRequest();
-    press("key:F12");
-    Check(!play.IsPaused()&&State(*world)["pausedPulse"]==true&&pulses==pulsesBeforeLegacyPause+1,
-          "same UI vibration is dispatched after resuming");
     std::ofstream(out/"state.json")<<State(*world).dump(2)<<'\n';
     play.End();world->Destroy();host.Shutdown();
     std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;

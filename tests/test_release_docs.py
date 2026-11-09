@@ -30,7 +30,7 @@ class ReleaseDocumentationTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text('# Current\n' + docs.START + '\n' + docs.END +
                             '\nHistorical Alpha v1.0.0 stays unchanged.\n', encoding='utf-8')
-        (self.root / 'docs/PREALPHA_FINDINGS.md').write_text(
+        (self.root / 'docs/CURRENT_FINDINGS.md').write_text(
             '# Findings\n<!-- judas-findings:start -->\n<!-- judas-findings:end -->\n',
             encoding='utf-8')
         (self.root / 'docs/ALPHA_V1_2_5_NOTES.md').write_text('# Notes\n', encoding='utf-8')
@@ -42,7 +42,7 @@ class ReleaseDocumentationTests(unittest.TestCase):
     def write_records(self):
         for name, value in [('engine-version.json', self.source),
                             ('docs/RELEASE_STATUS.json', {'schema': 1, 'publication': self.publication}),
-                            ('docs/PREALPHA_FINDINGS.json', self.findings)]:
+                            ('docs/CURRENT_FINDINGS.json', self.findings)]:
             (self.root / name).write_text(json.dumps(value), encoding='utf-8')
 
     def test_current_source_and_publication_pass_without_git(self):
@@ -77,7 +77,7 @@ class ReleaseDocumentationTests(unittest.TestCase):
     def test_finding_change_requires_matching_table(self):
         self.findings['findings'][0]['disposition'] = 'Corrected with scoped evidence.'
         self.write_records()
-        self.assertEqual(docs.refresh(self.root), ['docs/PREALPHA_FINDINGS.md'])
+        self.assertEqual(docs.refresh(self.root), ['docs/CURRENT_FINDINGS.md'])
         docs.refresh(self.root, write=True)
         self.assertEqual(docs.refresh(self.root), [])
 

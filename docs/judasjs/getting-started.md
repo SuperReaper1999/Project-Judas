@@ -13,7 +13,7 @@ use scripts to supply game rules. No C++ recompilation is needed to change those
 rules. This guide describes the current Alpha API; the source version is recorded
 in [engine-version.json](../../engine-version.json). Tooling changes and platform
 coverage are recorded on the [landing page](../JUDASJS.md),
-[support matrix](../ALPHA_SUPPORT_MATRIX.md) and [qualification history](../PREALPHA.md).
+[support matrix](../ALPHA_SUPPORT_MATRIX.md) and [qualification history](../CURRENT_STATUS.md).
 
 ## 1. Create an ordinary project
 
@@ -21,7 +21,7 @@ Open the current `judas_editor` and choose **File → New project…**. Supply a
 directory and game name. The editor creates a `.judasproj`, `Assets/`,
 `Scenes/main.judas` and `Saves/`, then opens the starter scene. The scene contains
 a floor, uniform-gravity region, light and a historical Player start marker.
-New projects use `legacy-gameplay false`: that marker does **not** supply a modern
+Project creation does **not** supply an implicit native
 character, input policy or camera. Add those explicitly when your game needs them.
 
 A small project can look like this:
@@ -80,7 +80,7 @@ general async callback runtime. Top-level module code also runs during inspector
 metadata inspection, without a world: keep native game work inside callbacks.
 
 Stop, save source and Play again for a fresh world. For a deliberate in-place
-script-session replacement, use [M94 developer tools](../M94_DEVELOPER_TOOLS.md).
+script-session replacement, use [M94 developer tools](../SCRIPT_DEBUGGING.md).
 Reload can retain bounded JSON state, but reconstructs the VM and callbacks;
 it is not automatic hot reload or arbitrary object migration. Editing runtime
 objects does not rewrite your authored scene.
@@ -155,9 +155,9 @@ keys directly. Review required names in each cookbook fixture. Unknown input nam
 read neutral rather than throwing. Gravity/support/camera up remain separate;
 derive movement from entity/motor frames, not global world-Y.
 
-For a complete inspectable game, [Spring Range](../../projects/shooter_game/shooter_game.judasproj)
+For a complete inspectable game, [Spring Range (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/shooter_game/shooter_game.judasproj)
 composes character, first/third-person camera, queries, hinges, UI and feedback in
-separate project scripts. [Character Lab](../../projects/character_lab/README.md)
+separate project scripts. [Character Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/character_lab/README.md)
 shows current pose/physical composition. Their names and game rules are examples,
 not engine conventions.
 
@@ -172,7 +172,7 @@ Save source, scene and project settings. Select the startup scene in Project
 settings, then open **File → Build & Export…**. Use **Run project** to exercise
 ordinary runtime startup. Choose a package directory outside the project and
 click **Export desktop game**. Export uses saved files. Copy the package elsewhere and run
-its `judas` executable. [Export workflow](../M38.md) · [Windows status/requirements](../WINDOWS.md).
+its `judas` executable. [Export workflow](../EXPORTS.md) · [Windows status/requirements](../WINDOWS.md).
 
 All registered assets is the safe default. If choosing dependency closure, declare
 dynamic asset IDs (for example runtime-spawned prefabs) as project runtime roots;

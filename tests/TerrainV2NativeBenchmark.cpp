@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
             Require(decoded.heights == source.heights && decoded.weights == source.weights,
                     "native sample readback differs");
             RuntimeWorld world;
-            world.legacyGameplay = false;
+
             start = Clock::now();
             Require(world.Build(scene, &resources, error), error);
             const auto buildMs = Ms(start);
@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
             Require(world.LiveTerrain().Wait(1, error), error);
             const auto paintMs = Ms(start);
             start = Clock::now();
-            Require(world.LiveTerrain().Brush(1, hit.point, {VolumeBrushKind::Remove, 6, 1}, error),
+            Require(world.LiveTerrain().Brush(1, hit.point, {TerrainV2::Edit::Kind::Remove, {}, 6}, error),
                     error);
             Require(world.LiveTerrain().Wait(1, error), error);
             const auto editMs = Ms(start);

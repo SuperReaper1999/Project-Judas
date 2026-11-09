@@ -11,10 +11,7 @@
 #include "ProjectStarter.h"
 #include "RetargetPanel.h"
 #include "SceneSerialization.h"
-#include "TerrainLibrary.h"
-#include "TerrainTools.h"
-#include "VolumeTerrainTools.h"
-#include "WorldState.h"
+#include "TerrainV2Editor.h"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -51,9 +48,6 @@ Scene MakeStarterScene() {
     ground.gravity->kind = SceneGravityKind::Uniform;
     ground.gravity->regionShape = SceneRegionShape::Box;
     ground.gravity->regionHalfExtents = glm::vec3(30.0f);
-    SceneObject &start = scene.CreateObject("Player start");
-    start.transform.position = glm::vec3(0.0f, 1.0f, 5.0f);
-    start.playerStart = ScenePlayerStartComponent{};
     SceneObject &lamp = scene.CreateObject("Lamp");
     lamp.transform.position = glm::vec3(0.0f, 4.0f, 0.0f);
     lamp.light = SceneLightComponent{};
@@ -64,7 +58,6 @@ Scene MakeStarterScene() {
 } // namespace
 
 void EditorProjectWorkflow::RefreshProjectLists(EditorContext &context) {
-    context.panels.terrainSurfaces = KnownTerrainSurfaces();
     context.panels.sceneFiles.clear();
     context.panels.project = &context.project;
     context.panels.assets = &context.host.Assets();
@@ -93,10 +86,7 @@ bool EditorProjectWorkflow::OpenProject(EditorContext &context, EditorProjectSer
         services.terrain->Shutdown(context.host.GetRenderer(), context.panels.importJobs);
         services.terrain.reset();
     }
-    if (services.volumeTerrain) {
-        services.volumeTerrain->Shutdown(context.host.GetRenderer(), context.panels.importJobs);
-        services.volumeTerrain.reset();
-    }
+
     RetireRetargetProject(context.panels);
     auto retiringContent = context.project.ModSession(); // retain leases until old jobs are joined
     context.project = project;
@@ -160,17 +150,10 @@ std::string EditorProjectWorkflow::ResolveScenePath(EditorContext &context, cons
     return context.project.IsLoaded() ? context.project.Resolve(input) : input;
 }
 
-std::string EditorProjectWorkflow::WorldStatePathFor(EditorContext &context,
-                                                     const std::string &scenePath) const {
-    if (scenePath.empty())
-        return std::string();
-    return context.project.IsLoaded() ? context.project.WorldStatePathForScene(scenePath)
-                                      : DefaultWorldStatePath(scenePath);
-}
+
 
 bool EditorProjectWorkflow::OpenScene(EditorContext &context, EditorProjectServices &services,
                                       const std::string &path, std::string &outError) {
-    context.panels.liquidPreview.Clear();
     context.panels.deformablePreview.Clear();
     context.panels.collisionPreview.Clear();
     const std::string resolved = ResolveScenePath(context, path);

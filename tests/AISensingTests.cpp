@@ -27,7 +27,7 @@ int Benchmark() {
     using Clock=std::chrono::steady_clock;
     std::cout<<"targets,cached,iterations,median_us,p95_us,worst_us,query_candidates,raycasts,truncated_samples\n";
     for(int count:{64,256}) {
-        ProjectSettings project;project.legacyGameplay=false;unsigned tag=0;project.classification.tags.Add("target",tag);
+        ProjectSettings project;unsigned tag=0;project.classification.tags.Add("target",tag);
         Scene scene;const auto owner=Body(scene,"observer",{0,0,0});
         for(int i=0;i<count;++i)Body(scene,"target",{float(i%16+1),0,float(i/16+1)},0,1);
         RuntimeWorld world;world.ConfigureProject(project);std::string error;
@@ -50,7 +50,7 @@ int Benchmark() {
 }
 int main(int argc,char** argv) {
     if(argc==2&&std::string(argv[1])=="--benchmark")return Benchmark();
-    ProjectSettings project;project.legacyGameplay=false;unsigned ignored=0;
+    ProjectSettings project;unsigned ignored=0;
     project.classification.tags.Add("target",ignored);project.classification.collision.Add("Target",ignored);
     Scene scene;
     const auto owner=Body(scene,"observer",{0,0,0});

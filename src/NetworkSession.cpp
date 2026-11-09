@@ -28,10 +28,7 @@ const char* RepresentationIssue(const SceneObject* d) {
         {bool(d->joint), "joint state is not replicated"},
         {bool(d->socket), "socket attachment state is not replicated"},
         {bool(d->planet), "planet state is not replicated"},
-        {bool(d->liquidBasin), "liquid reservoir state is not replicated"},
-        {bool(d->liquidContainer), "liquid container state is not replicated"},
         {bool(d->fluidVolume), "advanced fluid state is not replicated (including Grid Water V2)"},
-        {d->body && d->body->shape == SceneShape::Terrain, "terrain body state is not replicated"},
     };
     for (const auto& restriction : restrictions)
         if (restriction.first) return restriction.second;
@@ -62,7 +59,7 @@ struct NetworkSession::Impl {
  bool ValidOptions(const Options& o,bool host,std::string& e){
   if(o.address.empty()||o.address.size()>15||o.port>65535||(!host&&!o.port)||o.maxPeers<1||o.maxPeers>7||o.snapshotHz<1||o.snapshotHz>30||o.name.size()>64||o.controls.size()>32){e="Invalid network options (IPv4, port, 1..7 peers, 1..30 Hz, 32 controls)";return false;}
   std::set<std::string> controls;for(auto& name:o.controls)if(name.empty()||name.size()>64||!controls.insert(name).second){e="Control names must be distinct nonempty strings up to 64 bytes";return false;}
-  auto c=world.SceneControl();auto* r=world.Resources();if(world.legacyGameplay||!c||c->ComposedProject()||c->ProjectConfig().ModSession()||!r||!r->Assets()||!r->Jobs()){e="Networking requires a modern, single-scene, unmodded project with resources/jobs";return false;}
+  auto c=world.SceneControl();auto* r=world.Resources();if(!c||c->ComposedProject()||c->ProjectConfig().ModSession()||!r||!r->Assets()||!r->Jobs()){e="Networking requires a modern, single-scene, unmodded project with resources/jobs";return false;}
   if(host)for(auto& name:o.controls){auto* entry=c->ProjectConfig().Settings().input.Find(name);if(!entry||entry->vector){e="Network controls must name project scalar actions/axes";return false;}}
   if(world.Scripts()&&world.Scripts()->HasReloaded()){e="Stop and Play after script reload before opening a content-checked session";return false;}
   if(c->OperationInProgress()){e="Wait for pending scene/save operations before opening a session";return false;}return true;

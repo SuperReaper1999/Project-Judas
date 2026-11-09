@@ -3,7 +3,7 @@
 Optional server-authoritative sessions for small games using the same authored
 scene/content. Scripts decide gameplay; the engine validates scalar controls,
 replicates explicitly registered state and interpolates client presentation.
-[Scope/security](../M99_NETWORK.md) · [Local players](local-multiplayer.md) ·
+[Scope/security](../NETWORKING.md) · [Local players](local-multiplayer.md) ·
 [CharacterMotor](character.md) · [Physics](physics.md) ·
 [Presentation/cameras](effects-camera.md) · [Saves](saves.md).
 
@@ -220,7 +220,7 @@ that its current runtime state matches a fresh matching build.
 Snapshots are capped at 64 KiB. Reduce entries/JSON or interest if a publication
 exceeds that bound; the engine reports failure instead of silently dropping fields.
 No unlimited bandwidth, malicious-client security or universal world replication
-is implied. See [transport, Android LAN instructions and security limits](../M99_NETWORK.md).
+is implied. See [transport, Android LAN instructions and security limits](../NETWORKING.md).
 
 ### Query and presentation boundary
 

@@ -26,7 +26,6 @@
       ],
       "linear-rendering": true,
       "next-id": 2000,
-      "fluid-scale": 1,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -90,7 +89,6 @@
             13
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -99,7 +97,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -162,7 +159,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -171,7 +167,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -234,7 +229,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -243,7 +237,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -306,7 +299,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -315,7 +307,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -378,7 +369,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -387,7 +377,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -450,7 +439,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -459,7 +447,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -522,7 +509,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -531,7 +517,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -594,7 +579,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -603,7 +587,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -666,7 +649,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -675,7 +657,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -738,7 +719,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -747,7 +727,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -810,7 +789,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -819,7 +797,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -882,7 +859,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -891,7 +867,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [
@@ -954,7 +929,6 @@
             1.25
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.75,
           "body.restitution": 0.1,
@@ -963,7 +937,6 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
           "render.half-extents": [

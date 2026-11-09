@@ -141,7 +141,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     {
         static std::string evolutionProject;static std::vector<char> draft(1024*1024+1);
         if(evolutionProject!=project.ProjectFile()){evolutionProject=project.ProjectFile();CopyToBuffer(s.saveEvolution,draft.data(),draft.size());}
-        ImGui::TextWrapped("Optional project-owned JSON policy. Pin exact old content hashes; explicit ordered migrations never relax native physics validation. See docs/M98_SAVE_EVOLUTION.md. Restart Play after saving configuration.");
+        ImGui::TextWrapped("Optional project-owned JSON policy. Pin exact old content hashes; explicit ordered migrations never relax native physics validation. See docs/SAVE_EVOLUTION.md. Restart Play after saving configuration.");
         ImGui::InputTextMultiline("Evolution policy",draft.data(),draft.size(),{0,220});
         if(ImGui::Button("Validate / apply save policy")){std::string e;if(ValidateSaveEvolution(draft.data(),e)){s.saveEvolution=draft.data();state.status="Applied save policy; Save project, then restart Play";}else state.status=e;}
         ImGui::SameLine();if(ImGui::Button("Reset policy draft"))CopyToBuffer(s.saveEvolution,draft.data(),draft.size());
@@ -187,7 +187,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     }
     if(page==9){
         ImGui::TextWrapped("Online and local multiplayer are optional runtime services, configured by project JavaScript through the existing players/network APIs. Hosting, joining, ports, interest and authority remain explicit game policy; opening a project never starts a network listener.");
-        ImGui::TextWrapped("See docs/judasjs/network.md and docs/M99_NETWORK.md for supported replication and security limits.");
+        ImGui::TextWrapped("See docs/judasjs/network.md and docs/NETWORKING.md for supported replication and security limits.");
     }
     if(page==10){
         if (const char* restriction = AdvancedFluidDynamicsRestriction()) {
@@ -207,12 +207,12 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
             else s.advancedFluidDynamics=false;
         }
         if(s.advancedFluidDynamics)ImGui::TextColored({1,.65f,.2f,1},"EXPERIMENTAL - performance-intensive; supported combinations only");
-        ImGui::TextWrapped("Enables particle/PBF simulation, conserved reservoirs/containers, transfers, dynamic surfaces, fluid buoyancy and drag. Disabled by default. Basic water and its swimming queries work independently.");
-        ImGui::TextWrapped("Existing advanced components remain authored when disabled, but do not simulate or allocate particle fields. Save, then restart Play. Old advanced-fluid projects must opt in explicitly. See docs/PROJECT_SETTINGS_AND_WATER.md for numerical, persistence and integration limits.");
+        ImGui::TextWrapped("Enables conservative grid water, finite trapped-air reservoirs, moving-body displacement, buoyancy and drag. Disabled by default. Basic water and swimming work independently.");
+        ImGui::TextWrapped("Existing advanced components remain authored when disabled, but do not simulate or allocate solver grids. Save, then restart Play. See docs/PROJECT_SETTINGS_AND_WATER.md for numerical, persistence and integration limits.");
         if(ImGui::BeginPopupModal("Enable experimental fluid physics?",nullptr,ImGuiWindowFlags_AlwaysAutoResize)){
             ImGui::TextWrapped("Advanced Fluid Dynamics is experimental and potentially performance-intensive.\n"
                 "Known contact stability issues can apply excessive forces; unavailable in Alpha.\n"
-                "Particle/PBF, conserved-volume dynamics and fluid-body interactions have documented\n"
+                "Grid water, conserved-volume dynamics and fluid-body interactions have documented\n"
                 "numerical, geometry, streaming and origin-shift limitations.\n"
                 "Enable only for projects that need those systems. Basic water does not need it.");
             if(ImGui::Button("Enable experimental fluids")&&editing){s.advancedFluidDynamics=true;ImGui::CloseCurrentPopup();}
@@ -221,8 +221,6 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         }
         }
         ImGui::Separator();
-        ImGui::Checkbox("Legacy gameplay compatibility (historical projects)",&s.legacyGameplay);
-        ImGui::TextWrapped("New projects use script-owned gameplay. Compatibility restores historical built-in controls only when explicitly selected.");
     }
     if(page==kExportSettingsPage){
     {

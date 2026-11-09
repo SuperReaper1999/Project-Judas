@@ -99,7 +99,6 @@ std::string Project::SerializeToString(const ProjectSettings& s) {
     out += "saves-dir " + Quote(s.savesDir) + "\n";
     if(!s.saveEvolution.empty())out += "save-evolution " + Quote(s.saveEvolution) + "\n";
     if(!s.saveIdentity.empty())out += "save-identity " + Quote(s.saveIdentity) + "\n";
-    out += "legacy-gameplay " + Quote(s.legacyGameplay ? "true" : "false") + "\n";
     out += "input-map " + Quote(s.input.Serialize()) + "\n";
     if (!s.classification.IsDefault()) out += "classification " + Quote(s.classification.Serialize()) + "\n";
     out += "navigation " + Quote(s.navigation.Serialize()) + "\n";
@@ -182,10 +181,7 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
         else if (key == "saves-dir") s.savesDir = value;
         else if(key=="save-evolution"){if(!ValidateSaveEvolution(value,outError))return false;s.saveEvolution=value;}
         else if(key=="save-identity"){if(value.size()!=64||value.find_first_not_of("0123456789abcdef")!=std::string::npos){outError="invalid save identity";return false;}s.saveIdentity=value;}
-        else if (key == "legacy-gameplay") {
-            if(value!="true"&&value!="false"){outError="legacy-gameplay must be true or false";return false;}
-            s.legacyGameplay=value=="true";
-        }
+
         else if (key == "world-manifest") { s.worldManifest=value; }
         else if (key == "localization") { if(!ProjectLocalization::Parse(value,s.localization,outError))return false; }
         else if (key == "navigation") { if(!ProjectNavigation::Parse(value,s.navigation,outError))return false; }
@@ -276,7 +272,6 @@ bool Project::CreateNew(const std::string& rootDir, const std::string& name, Pro
     }
     Project project;
     project.m_settings = ProjectSettings{};
-    project.m_settings.legacyGameplay = false;
     // Authored identity survives renames/exports; unrelated same-name projects
     // must not share player slots. Existing projects retain their legacy identity.
     project.m_settings.saveIdentity = MintAssetId() + MintAssetId();
@@ -332,10 +327,4 @@ std::string Project::MakeRelative(const std::string& path) const {
     const fs::path relative = absolute.lexically_relative(root);
     if (relative.empty() || relative.string().rfind("..", 0) == 0) return Generic(absolute);
     return Generic(relative);
-}
-
-std::string Project::WorldStatePathForScene(const std::string& scenePath) const {
-    const std::string stem = fs::path(scenePath).stem().string();
-    if (stem.empty()) return std::string();
-    return Generic(fs::path(SavesDir()) / (stem + ".judasstate"));
 }

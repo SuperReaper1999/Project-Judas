@@ -109,8 +109,8 @@ build. Do not delete it, change hashes to lie about compatibility, or blindly tu
 on migration. Matching identity metadata is not certification of native state.
 
 For an intentional game update, author an ordered, exact-source-allowlisted policy
-and request migration explicitly. See [save evolution](M98_SAVE_EVOLUTION.md) and
-[source-only Save Evolution Lab](../projects/save_evolution_lab/README.md), which
+and request migration explicitly. See [save evolution](SAVE_EVOLUTION.md) and
+[source-only Save Evolution Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/save_evolution_lab/README.md), which
 contains real old/new content and failure cases. Unknown physical history cannot
 be invented by a migration. Migration failure must leave the source intact.
 

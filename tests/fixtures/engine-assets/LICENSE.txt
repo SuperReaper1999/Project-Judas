@@ -1,0 +1,2 @@
+Original Judas procedural audio, OBJ and texture regression fixtures.
+MIT licence, as in repository LICENSE. Font licences remain with the engine fonts.

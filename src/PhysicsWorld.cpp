@@ -41,9 +41,6 @@ bool PhysicsWorld::Init() {
     if (m_impl) return true;
     m_impl = new Impl();
     if(std::getenv("JUDAS_VALIDATION_NATIVE_OVERLAPS"))m_impl->overlapPairs.UseNativeQueries();
-    const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;
-    m_impl->solver.EnableBlockNormals(blockNormals);
-    m_impl->impactSolver.EnableBlockNormals(blockNormals);
     return true;
 }
 
@@ -219,7 +216,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     const Clock::time_point narrowphaseStart = Clock::now();
 
     // 3) Narrowphase at the current poses — the sole authority on contact.
-    w.solver.Clear();
     w.lastStepContacts.clear();
     w.pendingCache.clear();
     w.cacheUsed.assign(w.contactCache.size(), 0);
@@ -390,21 +386,15 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     w.stats.proxyReinsertions = w.reinsertionsSinceStep;
     w.reinsertionsSinceStep = 0;
     w.stats.treeHeight = w.tree.Height();
-    JUDAS_PROFILE_COUNTER("Physics block normal solves", contact_block::diagnostics.solves, ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics block normal fallbacks", contact_block::diagnostics.fallbacks, ProfileCounterMode::Latest);
     w.stats.orientationCacheHits = w.cacheCounters.orientationHits - cachesBefore.orientationHits;
     w.stats.orientationCacheRebuilds =
         w.cacheCounters.orientationRebuilds - cachesBefore.orientationRebuilds;
     w.stats.boundCacheHits = w.cacheCounters.boundHits - cachesBefore.boundHits;
     w.stats.boundCacheRebuilds = w.cacheCounters.boundRebuilds - cachesBefore.boundRebuilds;
     w.stats.shapeCacheRebuilds = w.cacheCounters.shapeRebuilds - cachesBefore.shapeRebuilds;
-    w.stats.solverFrameBuilds = w.solver.FrameBuilds();
     w.stats.geometryCacheAllocations =
-        w.cacheCounters.allocations - cachesBefore.allocations + w.solver.FrameAllocations();
-    w.stats.geometryCacheAllocatedBytes = w.cacheCounters.allocatedBytes -
-                                          cachesBefore.allocatedBytes +
-                                          w.solver.FrameAllocatedBytes();
-    w.stats.solverFrameNodeRequests = w.solver.FrameNodeRequests();
+        w.cacheCounters.allocations - cachesBefore.allocations;
+    w.stats.geometryCacheAllocatedBytes = w.cacheCounters.allocatedBytes - cachesBefore.allocatedBytes;
     w.stats.geometryCacheBytes = w.CacheBytes();
     const Clock::time_point stepEnd = Clock::now();
     w.stats.broadphaseMilliseconds = MillisecondsBetween(broadphaseStart, narrowphaseStart) +
@@ -448,8 +438,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     JUDAS_PROFILE_COUNTER("Physics sleep islands", double(w.sleepIslandCount),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics sleep scratch bytes", double(w.sleepScratchBytes),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics persistent contact rows", double(w.solver.Constraints().size()),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics joint rows",
                           double(w.joints.empty() ? 0 : w.jointSolver.RowCount()),
@@ -615,10 +603,8 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
             SUM(boundCacheHits);
             SUM(boundCacheRebuilds);
             SUM(shapeCacheRebuilds);
-            SUM(solverFrameBuilds);
             SUM(geometryCacheAllocations);
             SUM(geometryCacheAllocatedBytes);
-            SUM(solverFrameNodeRequests);
             SUM(impactEvents);
             SUM(impactSafetyFallback);
             SUM(impactEventCapFallback);

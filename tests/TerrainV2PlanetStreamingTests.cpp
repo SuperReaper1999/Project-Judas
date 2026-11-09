@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
             Check(!fs::exists(root), "fresh fixture required");
             Check(Project::CreateNew(root.string(), "Planet regional terrain", project, error),
                   error);
-            project.Settings().legacyGameplay = false;
+
             Check(project.Save(error), error);
             std::vector<uint8_t> bytes;
             Check(TerrainV2::EncodeAsset(source, bytes, error), error);
@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
             const auto center =
                 glm::vec3(planet.center + planet.rotation * chart.ModelPoint({0, -.5, 0}) -
                           world.Settings().worldOrigin);
-            Check(world.LiveTerrain().Brush(id, center, {VolumeBrushKind::Remove, 3, 1}, error) &&
+            Check(world.LiveTerrain().Brush(id, center, {TerrainV2::Edit::Kind::Remove, {}, 3}, error) &&
                       world.LiveTerrain().Wait(id, error),
                   error);
             Check(height() < -2.5, "streamed excavation removes the real base planet");

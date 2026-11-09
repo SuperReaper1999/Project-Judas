@@ -1,7 +1,5 @@
-#include "TestProjectPath.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "SceneSerialization.h"
 #include "WorldPersistence.h"
@@ -12,13 +10,13 @@
 namespace {unsigned checks=0,failures=0;void Check(bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);}}
 int main(){
  std::string error;EngineHost host;Check(host.Init("M90 participant continuity",480,320,false,error),"native hidden GL/resource host starts");if(failures){std::puts(error.c_str());return 1;}
- host.OpenProjectAssets(TestProjectPath("ragdoll_demo").string(),(TestProjectPath("ragdoll_demo")/"Assets").string());auto& resources=host.Resources();resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();
- Scene scene;Check(LoadSceneFromFile((TestProjectPath("ragdoll_demo")/"Scenes/main.judas").string(),scene,error),"original ordinary skeletal fixture loads");if(failures)return 1;
+ host.OpenProjectAssets((std::filesystem::path(__FILE__).parent_path().parent_path()/"tests/fixtures/animation").string(),(std::filesystem::path(__FILE__).parent_path().parent_path()/"tests/fixtures/animation/Assets").string());auto& resources=host.Resources();resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();
+ Scene scene;Check(LoadSceneFromFile((std::filesystem::path(__FILE__).parent_path().parent_path()/"tests/fixtures/animation/ragdoll.judas").string(),scene,error),"original ordinary skeletal fixture loads");if(failures)return 1;
  for(auto& o:scene.Objects()){o.scripts.clear();o.ui.reset();}
  auto& socket=scene.CreateObject("visual socket");const auto socketId=socket.id;socket.socket=SceneSocketComponent{11,"Root/Elbow/Tip",{},true};socket.render=SceneRenderComponent{};
- RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&resources,error),"skeletal world builds with script-owned execution");if(failures){std::puts(error.c_str());return 1;}world.UpdateAnimations(0);world.UpdateSockets();
+ RuntimeWorld world;Check(world.Build(scene,&resources,error),"skeletal world builds with script-owned execution");if(failures){std::puts(error.c_str());return 1;}world.UpdateAnimations(0);world.UpdateSockets();
  Check(world.EnterRagdoll(10,error),"real mapped passive articulation activates");if(failures){std::puts(error.c_str());return 1;}
- GameSession session;Check(session.Begin(world,error),"ordinary fixed-step path starts");for(unsigned i=0;i<45;++i)StepPlayedWorld(session,host.GetWindow(),1.f/60);
+ Check(world.IsBuilt(),"ordinary fixed-step path starts");for(unsigned i=0;i<45;++i)StepPlayedWorld(world,host.GetWindow(),1.f/60);
  auto bone=world.RuntimeBody(world.RagdollBody(10,"Root"));const auto p=world.Physics().GetTransform(bone).position,v=world.Physics().GetLinearVelocity(bone);const auto originalOrigin=world.Settings().worldOrigin;const auto beforeSocket=world.PresentedTransform(socketId,world.RuntimeDefinition(socketId)->transform,.35f);const auto beforeSkin=*world.AnimationSkin(10,.35f);const auto bodyCount=world.Physics().AliveBodyCount();
  const glm::dvec3 delta(512,-512,512);
  Check(world.RequestOrigin(originalOrigin+delta,error)&&world.CommitOrigin(),"active ragdoll and socket accept native chart translation");
@@ -26,11 +24,11 @@ int main(){
  Check(glm::length(glm::dvec3(world.Physics().GetTransform(bone).position)+delta-glm::dvec3(p))<.0002&&world.Physics().GetLinearVelocity(bone)==v,"physical bone endpoint translates with no velocity injection");
  world.UpdateSockets();auto afterSocket=world.PresentedTransform(socketId,world.RuntimeDefinition(socketId)->transform,.35f);Check(glm::length(glm::dvec3(afterSocket.position)+delta-glm::dvec3(beforeSocket.position))<.001,"resolved socket position remains continuous");
  const auto afterSkin=*world.AnimationSkin(10,.35f);double skinError=0;for(size_t i=0;i<beforeSkin.size();++i)for(unsigned c=0;c<4;++c)skinError=std::max(skinError,double(glm::length(beforeSkin[i][c]-afterSkin[i][c])));Check(skinError<.001,"interpolated skin remains model-local across chart publication");
- for(unsigned i=0;i<45;++i){StepPlayedWorld(session,host.GetWindow(),1.f/60);}
+ for(unsigned i=0;i<45;++i){StepPlayedWorld(world,host.GetWindow(),1.f/60);}
  Check(world.RagdollActive(10)&&std::isfinite(world.Physics().GetTransform(bone).position.x),"articulation continues real constraints/contact after shift");
- std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error),"active shifted articulation captures full continuation");Scene saved;Check(WorldPersistence::SceneFrom(chunks,saved,error),"saved articulation reconstructs shifted scene");RuntimeWorld cold;cold.legacyGameplay=false;bool restored=cold.Build(saved,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(cold,error)&&WorldPersistence::Restore(cold,chunks,error);Check(restored,"fresh world restores shifted articulation");if(!restored)std::puts(error.c_str());
+ std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error),"active shifted articulation captures full continuation");Scene saved;Check(WorldPersistence::SceneFrom(chunks,saved,error),"saved articulation reconstructs shifted scene");RuntimeWorld cold;bool restored=cold.Build(saved,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(cold,error)&&WorldPersistence::Restore(cold,chunks,error);Check(restored,"fresh world restores shifted articulation");if(!restored)std::puts(error.c_str());
  if(restored){auto restoredBone=cold.RuntimeBody(cold.RagdollBody(10,"Root"));Check(restoredBone.IsValid()&&glm::length(cold.Physics().GetTransform(restoredBone).position-world.Physics().GetTransform(bone).position)<.0001,"cold continuation checks actual restored bone endpoint");}
- Check(world.LeaveRagdoll(10,.25f,error)&&!world.Physics().IsBodyEnabled(bone),"return after rebasing retires old physical generation");for(unsigned i=0;i<20;++i)StepPlayedWorld(session,host.GetWindow(),1.f/60);Check(world.RuntimeAnimation(10)->external.count("ragdollReturn")==0,"pose return completes without a stale producer");
+ Check(world.LeaveRagdoll(10,.25f,error)&&!world.Physics().IsBodyEnabled(bone),"return after rebasing retires old physical generation");for(unsigned i=0;i<20;++i)StepPlayedWorld(world,host.GetWindow(),1.f/60);Check(world.RuntimeAnimation(10)->external.count("ragdollReturn")==0,"pose return completes without a stale producer");
  // World-space IK intent moves with the chart; model-space intent must not.
  auto* animation=world.RuntimeAnimation(10);FullBodyIKSettings ik;ik.bodyRoot="Root";ik.chains.push_back({"arm",{"Root","Root/Elbow","Root/Elbow/Tip"}});
  FullBodyIKTarget worldTarget;worldTarget.id="world";worldTarget.chain="arm";worldTarget.space=IKTargetSpace::World;worldTarget.position={1,3,0};
@@ -42,7 +40,7 @@ int main(){
  else std::puts(error.c_str());
  Check(world.ConfigureFullBodyIK(10,std::nullopt,error),"IK relinquishes its own pose contribution normally");
  PhysicalAnimationSettings physical;Check(world.ConfigurePhysicalAnimation(10,physical,error),"optional physical animation setup remains ordinary");PhysicalAnimationRequest passive;passive.mode=PhysicalAnimationMode::Passive;
- Check(world.RequestPhysicalAnimation(10,passive,error),"physical pose authority transition requests normally");for(unsigned i=0;i<3;++i)StepPlayedWorld(session,host.GetWindow(),1.f/60);
+ Check(world.RequestPhysicalAnimation(10,passive,error),"physical pose authority transition requests normally");for(unsigned i=0;i<3;++i)StepPlayedWorld(world,host.GetWindow(),1.f/60);
  const auto reference=world.PhysicalAnimationSnapshot(10);Check(world.RequestOrigin(originalOrigin+delta,error)&&world.CommitOrigin(),"physical animation authority and reference histories translate");const auto shiftedReference=world.PhysicalAnimationSnapshot(10);
  bool same=reference.mode==shiftedReference.mode&&reference.recentReferenceWorld.size()==shiftedReference.recentReferenceWorld.size();for(size_t i=0;i<reference.recentReferenceWorld.size();++i)same&=glm::length(glm::dvec3(shiftedReference.recentReferenceWorld[i][3])+delta-glm::dvec3(reference.recentReferenceWorld[i][3]))<.001;
  Check(same&&world.RagdollActive(10),"physical mode and actual articulation survive without authority handoff or reset");

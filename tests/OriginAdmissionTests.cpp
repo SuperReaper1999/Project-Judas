@@ -17,7 +17,7 @@ void Check(bool condition, const char* description) {
 void Build(RuntimeWorld& world, double origin) {
     Scene scene;
     scene.Settings().worldOrigin = {origin, 0, 0};
-    world.legacyGameplay = false;
+
     std::string error;
     Check(world.Build(scene, nullptr, error), "ordinary empty world constructs at accepted origin");
 }

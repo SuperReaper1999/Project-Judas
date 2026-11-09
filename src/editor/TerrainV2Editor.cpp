@@ -5,7 +5,6 @@
 #include "SceneFingerprint.h"
 #include "WorldPresentation.h"
 #include "authoring/AuthoringDocument.h"
-#include "authoring/TerrainAuthoring.h"
 #include "imgui.h"
 #include "terrain/TerrainCook.h"
 #include "terrain/TerrainMesher.h"
@@ -246,7 +245,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
         if (dirty || Busy())
             return Active();
         projectKey = state.project->ProjectFile();
-        legacy = false;
+
         activeProject = false;
         resetPending = true;
         ClearPreview();
@@ -307,7 +306,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
                                "Authoring. Keep the source files with your project.";
             else {
                 path = *found;
-                legacy = false;
+
                 activeProject = true;
                 ClearPreview();
                 resetPending = true;
@@ -318,8 +317,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
             state.terrainEditAsset.clear();
         }
     }
-    if (!Active())
-        return false;
+    activeProject = true;
     frameState = &state;
     if (!state.showTerrain)
         return true;
@@ -352,10 +350,7 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
             }
         ImGui::EndCombo();
     }
-    if (ImGui::Button("Legacy terrain tools")) {
-        legacy = true;
-        editing = false;
-    }
+
     ImGui::EndDisabled();
     creation.Panel(doc, state, requests);
     if (auto created = creation.TakeCreatedPath(); !created.empty()) {
@@ -423,31 +418,9 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
     }
     ImGui::TextWrapped("Drag on the selected landscape. One gesture = one undo. Escape cancels. "
                        "Excavation works through the actual hillside, including chunk boundaries.");
-    if (ImGui::Button("Undo") && !undo.empty()) {
-        redo.push_back(source);
-        source = std::move(undo.back());
-        ReadPalette();
-        undo.pop_back();
-        dirty = true;
-        productsDirty = true;
-        ++revision;
-        appearanceDirty = true;
-        Queue(All(source), state);
-        TrimHistory();
-    }
+    if (ImGui::Button("Undo")) Undo(state);
     ImGui::SameLine();
-    if (ImGui::Button("Redo") && !redo.empty()) {
-        undo.push_back(source);
-        source = std::move(redo.back());
-        ReadPalette();
-        redo.pop_back();
-        dirty = true;
-        productsDirty = true;
-        ++revision;
-        appearanceDirty = true;
-        Queue(All(source), state);
-        TrimHistory();
-    }
+    if (ImGui::Button("Redo")) Redo(state);
     if (EditorDesign::ActionButton("Save and update playable terrain",
                                    EditorDesign::Tone::Primary)) {
         ApplyPalette();
@@ -462,14 +435,9 @@ bool TerrainV2Editor::Panel(EditorDocument &doc, EditorPanelState &state,
             if (asset) {
                 auto work = std::make_shared<Cook>();
                 const auto sourcePath = path, output = asset->path;
-                const bool native =
-                    std::any_of(doc.GetScene().Objects().begin(), doc.GetScene().Objects().end(),
-                                [&](const auto &o) {
-                                    return o.landscape && o.render && o.render->meshAsset == meshId;
-                                });
                 work->job = state.importJobs->Submit(
-                    [work, sourcePath, output, native](JobContext &context) {
-                        std::string a = "terrain", b = native ? "v2-native" : "v2-cook",
+                    [work, sourcePath, output](JobContext &context) {
+                        std::string a = "terrain", b = "v2-native",
                                     c = sourcePath, d = output;
                         char *argv[] = {a.data(), b.data(), c.data(), d.data()};
                         if (TerrainV2AuthorCommand(4, argv) != 0) {
@@ -721,3 +689,33 @@ void TerrainV2Editor::Shutdown(Renderer &renderer, JobSystem *jobs) {
     weights = {};
     ClearPreview();
 }
+
+void TerrainV2Editor::Undo(EditorPanelState &state) {
+    if (undo.empty() || Busy()) return;
+
+        redo.push_back(source);
+        source = std::move(undo.back());
+        ReadPalette();
+        undo.pop_back();
+        dirty = true;
+        productsDirty = true;
+        ++revision;
+        appearanceDirty = true;
+        Queue(All(source), state);
+        TrimHistory();
+    }
+
+void TerrainV2Editor::Redo(EditorPanelState &state) {
+    if (redo.empty() || Busy()) return;
+
+        undo.push_back(source);
+        source = std::move(redo.back());
+        ReadPalette();
+        redo.pop_back();
+        dirty = true;
+        productsDirty = true;
+        ++revision;
+        appearanceDirty = true;
+        Queue(All(source), state);
+        TrimHistory();
+    }

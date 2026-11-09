@@ -106,15 +106,17 @@ class GateTests(unittest.TestCase):
         summary = json.loads(result.stdout)
         manifest = gate.load_manifest(gate.MANIFEST)
         self.assertEqual(summary['tests'], len(manifest['tests']))
-        self.assertEqual(summary['manual'], 2)
+        self.assertEqual(summary['manual'], 0)
         self.assertEqual({entry['name'] for entry in manifest['tests'] if entry.get('manual', False)},
-                         {'liquid-origin-grid-query', 'fluid-known-geometry'})
+                         set())
 
     def test_finding_status_annotation_preserves_observed_results(self):
         manifest = gate.load_manifest(gate.MANIFEST)
         entries = {row['name']: row for row in manifest['tests']}
+        entries['preserved-negative']={'finding':'NEGATIVE'}
+        manifest['known_findings'].append(dict(id='NEGATIVE',status='open-failing-control'))
         for name, expected in [('impact-mesh-continuation', 'resolved-original-fixtures-bounded-ccd'),
-                               ('liquid-origin-grid-query', 'open-query-continuity-failing')]:
+                               ('preserved-negative', 'open-failing-control')]:
             for observed, exit_code in [('passed', 0), ('failed', 1)]:
                 with self.subTest(name=name, observed=observed):
                     result = dict(status=observed, exit=exit_code)
@@ -135,27 +137,8 @@ class GateTests(unittest.TestCase):
         # Resolved contracts may graduate into the ordinary gate. Unresolved
         # findings must not silently become acceptance passes through scheduling.
         scheduled = {key for key, row in findings.items() if row['scheduled']}
-        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'CCD-MESH-CONTINUATION', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS',
-                                     'LIQUID-ORIGIN-TOTAL-IDENTITY', 'FLU-ROOT-ADMISSION'})
-        self.assertEqual(findings['FLU-ROOT-ADMISSION']['status'], 'resolved-local-reconstruction')
-        root_admission = next(row for row in manifest['tests'] if row['name'] == 'fluid-root-admission')
-        self.assertEqual(root_admission['target'], 'judas_fluid_root_admission_diagnostics')
-        self.assertIn('water', root_admission['groups'])
-        self.assertFalse(root_admission.get('manual', False))
-        self.assertEqual(findings['LIQUID-ORIGIN-GRID-QUERY']['status'], 'open-query-continuity-failing')
-        knots = next(row for row in manifest['tests'] if row['name'] == 'liquid-bake-knots-only')
-        self.assertEqual(knots['args'][:2], ['--bake-only', 'knots'])
-        self.assertEqual(knots['groups'], ['liquid'])
-        full = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-grid-query')
-        self.assertEqual(full['args'][:2], ['--bake-regression', 'knots'])
-        self.assertTrue(full['manual'])
-        self.assertEqual(findings['LIQUID-ORIGIN-TOTAL-IDENTITY']['status'], 'resolved-oracle-causal-baseline')
-        atomic = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-total-identity')
-        self.assertEqual(atomic['args'][:2], ['--bake-regression', 'normalization'])
-        self.assertFalse(atomic.get('manual', False))
-        controls = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-query-controls')
-        self.assertEqual(controls['args'][:2], ['--query-controls', 'knots'])
-        self.assertNotIn('LIQUID-ORIGIN-GRID-QUERY', controls.get('finding', ''))
+        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'CCD-MESH-CONTINUATION'})
+        self.assertFalse(any(key.startswith(('LIQUID-', 'FLU-')) for key in findings))
         self.assertEqual(findings['CCD-MESH-ARRIVAL']['status'], 'resolved-first-arrival')
         arrival = next(row for row in manifest['tests'] if row['name'] == 'impact-mesh-arrival')
         self.assertEqual(arrival['groups'], ['collision'])
@@ -231,7 +214,7 @@ class GateTests(unittest.TestCase):
             self.assertEqual(result['status'], 'failed')
 
     def test_channel_policy_uses_verified_binary_and_never_hides_failure(self):
-        entry = dict(name='surface', target='judas_liquid_surface_tests')
+        entry = dict(name='water', target='judas_game_water_runtime_tests')
         expected = dict(source_revision='a' * 40)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -252,8 +235,8 @@ class GateTests(unittest.TestCase):
                         gate.run_verified_case([sys.executable], root / 'log', root,
                             os.environ.copy(), 5, expected, entry=entry, expected_channel='Alpha')
 
-    def test_particle_cadence_requires_the_existing_advanced_runtime_opt_in(self):
-        entry = dict(name='fluid-cadence-motion', target='judas_fluid_cadence_motion_tests')
+    def test_grid_water_requires_the_advanced_runtime_opt_in(self):
+        entry = dict(name='game-water-runtime', target='judas_game_water_runtime_tests')
         selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
         self.assertFalse(selected)
         self.assertEqual(unavailable[0]['status'], 'not-exercised')
@@ -279,26 +262,19 @@ class GateTests(unittest.TestCase):
         self.assertEqual(selected, [entry])
         self.assertFalse(unavailable)
 
-    def test_material_optics_requires_advanced_runtime_without_hiding_ordinary_water(self):
-        # The combined material/application fixture renders the actual M55
-        # optical boundary. It must exercise that system on Experimental, not
-        # silently certify empty optical paths while Alpha keeps it locked.
-        material = dict(name='material-application', target='judas_material_application_tests')
-        ordinary = dict(name='hydrostatics', target='judas_fluid_hydrostatics_tests')
-        selected, unavailable = gate.partition_channel_tests([material, ordinary], 'Alpha')
+    def test_basic_water_runs_on_alpha_without_advanced_fluid_runtime(self):
+        advanced = dict(name='grid-water', target='judas_game_water_runtime_tests')
+        ordinary = dict(name='basic-water', target='judas_project_water_tests')
+        selected, unavailable = gate.partition_channel_tests([advanced, ordinary], 'Alpha')
         self.assertEqual(selected, [ordinary])
         self.assertEqual(len(unavailable), 1)
-        self.assertEqual(unavailable[0]['target'], material['target'])
         self.assertEqual(unavailable[0]['status'], 'not-exercised')
-        selected, unavailable = gate.partition_channel_tests([material, ordinary], 'Experimental')
-        self.assertEqual(selected, [material, ordinary])
-        self.assertFalse(unavailable)
 
     def test_unavailable_main_receipt_is_not_a_pass(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             output = root / 'results'
-            argv = ['gate', '--test', 'liquid-surface', '--output', str(output)]
+            argv = ['gate', '--test', 'game-water-runtime', '--output', str(output)]
             with mock.patch.object(sys, 'argv', argv), \
                  mock.patch.object(gate, 'source_identity', return_value={}), \
                  mock.patch.object(gate, 'git', return_value=None), \
@@ -310,7 +286,7 @@ class GateTests(unittest.TestCase):
             self.assertEqual(receipt['tests'][0]['status'], 'not-exercised')
 
     def test_channel_override_cannot_hide_real_execution(self):
-        with mock.patch.object(sys, 'argv', ['gate', '--channel', 'Alpha', '--test', 'liquid-surface']):
+        with mock.patch.object(sys, 'argv', ['gate', '--channel', 'Alpha', '--test', 'game-water-runtime']):
             with self.assertRaises(SystemExit) as error:
                 gate.main()
             self.assertEqual(error.exception.code, 2)

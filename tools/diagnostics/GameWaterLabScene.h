@@ -3,7 +3,7 @@
 #include "PhysicsWorld.h"
 #include "fluid/GameWater.h"
 #include <vector>
-struct TerrainSource;
+namespace TerrainV2 {struct Source;}
 
 namespace WaterLab {
 struct Body {
@@ -27,7 +27,7 @@ class Scene {
     PhysicsWorld physics;
     std::vector<Body> bodies;
     std::vector<Wall> walls;
-    std::shared_ptr<TerrainSource> terrain;
+    std::shared_ptr<TerrainV2::Source> terrain;
     MeshData terrainMesh;
     JudasWater::Settings settings;
     unsigned step = 0, mode = 0;

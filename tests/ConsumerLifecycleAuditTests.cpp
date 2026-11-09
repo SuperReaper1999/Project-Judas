@@ -193,7 +193,7 @@ int main(int argc, char** argv) {
     Project project; std::string error;
     Check(Project::CreateNew(root.string(), "Public lifecycle audit", project, error), "FIXTURE.PROJECT", "ordinary new project: " + error);
     if (failures) return 1;
-    project.Settings().legacyGameplay = false;
+
     project.Settings().startupScene = "Scenes/audit.judas";
     Check(project.Save(error), "FIXTURE.PROJECT_SAVE", "normal project registration: " + error);
     Check(Write(root / "Assets/item.js", itemScript), "FIXTURE.SCRIPT_WRITE", "original local item script written");

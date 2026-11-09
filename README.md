@@ -1,13 +1,7 @@
-Copyright (c) 2026 Conner / SuperReaper1999 · [MIT License](LICENSE).
+# Judas Engine
 
-# Judas Engine Alpha
-
-Judas is a general-purpose, C++ game engine for building physical, scriptable
-worlds. Its capabilities are optional: use the parts you need, from a small
-flat-terrain game to large planetary scenes with vehicles, spacecraft,
-arbitrary gravity, terrain, liquids, weather, deformables and seamless world
-transitions. Ordinary game policy lives in project JavaScript; the engine
-provides the reusable systems and runtime.
+A C++ game engine with project-owned JudasJS gameplay, 2D and 3D authoring,
+MK2 physics, large worlds and optional simulation systems.
 
 <!-- judas-release-status:start -->
 Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
@@ -19,206 +13,49 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-**Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
-Basic Water and swimming remain available. See the
-[restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
+## Start here
 
-## Current status
+- [First project](docs/FIRST_PROJECT.md) and [Editor V2 guide](docs/EDITOR_V2.md).
+- [SDK authoring: terrain → navigation → NPC movement](docs/SDK_AUTHORING.md).
+- [JudasJS reference](docs/JUDASJS.md), [typed API](docs/judas.d.ts) and [cookbook](docs/judasjs/cookbook.md).
+- [2D game workflow](docs/2D_GAME_WORKFLOW.md): sprites, tiles, animation, planar collision and traversal.
+- [Documentation index](docs/README.md), [support matrix](docs/ALPHA_SUPPORT_MATRIX.md) and [current limitations](docs/CURRENT_FINDINGS.md).
 
-Experimental includes the [Renderer V2 work](docs/RENDERER_V2.md) and
-[editable Renderer Workshop](projects/renderer_v2_lab/README.md), alongside
-Editor V2 and Scripting V2. [Terrain V2](docs/TERRAIN_V2.md) adds editable native
-landscapes and bounded planetary excavation, with ordinary project authoring,
-source-owned navigation, independently paged source/collision/visual resources
-and cold persistence. See the [qualification and human checklist](docs/TERRAIN_V2_QUALIFICATION.md).
-Try the [Highlands](projects/terrain_v2_workshop/README.md)
-or [Planetary Workshop](projects/terrain_v2_planet_workshop/README.md).
-These remain Experimental source-build work; published Alpha packages are unchanged.
+## Current V2 source
 
-The [SDK authoring reference](docs/SDK_AUTHORING.md) includes exact scene fields
-and a packaged terrain-to-NPC workflow.
+Scripting, Editor, Renderer, Particles and Terrain V2 are integrated on Experimental.
+Advanced Fluids V2 has a playable conservative water grid and independent visual
+surface; **the Alpha compiled fluid lock remains unchanged**. Basic Water and
+swimming work independently and are enabled by default.
 
-Build sprite-based games with [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md), sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset. Start with the [2D quick start](docs/2D_QUICKSTART.md).
+The [architectural purge](docs/ARCHITECTURAL_PURGE.md) removes native demo gameplay,
+pose-delta saves, PBF fluids, reservoir/container liquids and separate V1 terrain.
+No historical API or project compatibility is promised. Historical demos and their
+matching implementations remain in Git history. Six consumer games have separate
+editable preservation copies; they are not engine dependencies.
 
-For NPCs, start with [Game AI](docs/GAME_AI.md) and its [JudasJS API](docs/judasjs/ai.md). Judas selects actions; project scripts own movement, work, combat and other outcomes. Try [Little Haven](projects/ai_workshop/README.md) for decisions and authoring, or [Willow Town](projects/willow_town/README.md) for selectable residents, employment, needs, aging and persistent death. Little Haven and Willow Town are included as editable SDK/source learning projects; package manifests identify the exact shipped files.
+Try [Terrain Workshop](projects/terrain_v2_workshop/README.md),
+[Planetary Workshop](projects/terrain_v2_planet_workshop/README.md),
+[Graffiti Workshop](projects/graffiti_workshop/README.md),
+[Stillwater](projects/basic_water_lab/README.md) or
+[Willow Town](projects/willow_town/README.md). The complete curated list is in the
+[purge report](docs/ARCHITECTURAL_PURGE.md).
 
-[Browser export](docs/BROWSER_SUPPORT.md) is an early optional source workflow, visible only with `-ExpBrowserSupport=1`. It uses the same engine through WebAssembly/WebGL2 and requires a separate Linux/Emscripten toolchain. It is not enabled by default or a general browser-support guarantee.
+## Build and qualify
 
-`main` contains operator-accepted source; `Experimental` is ongoing development.
-Published Alpha versions, future Beta and eventual Stable/GA are separate
-[distribution channels](docs/VERSIONING.md), not extra development branches.
-No update checker silently installs anything or overwrites your projects.
-
-[Previous UI release](docs/ALPHA_V1_2_2_NOTES.md) ·
-[Previous native 2D release](docs/ALPHA_V1_1_0_NOTES.md) ·
-[Previous orientation/resize patch](docs/ALPHA_V1_0_4_NOTES.md) ·
-[Previous authoring patch](docs/ALPHA_V1_0_3_NOTES.md) ·
-[Previous rain patch](docs/ALPHA_V1_0_2_NOTES.md) ·
-[Original Alpha notes](docs/ALPHA_V1_0_0_NOTES.md) ·
-[Supported platforms and limits](docs/ALPHA_SUPPORT_MATRIX.md) ·
-[Installation and verification](docs/DISTRIBUTION.md) ·
-[First project](docs/FIRST_PROJECT.md) · [Release process](docs/RELEASING.md)
-
-For an exact checkout identity use `git rev-parse HEAD`; for a built tool use
-`judas_editor --build-info-json` or its packaged `BUILD_INFO.json`. These identify
-the actual source, compiler and channel rather than a checkpoint copied into this
-README. See [current work, validation and support boundaries](docs/PREALPHA.md)
-and [build identity, channels and distribution](docs/BUILD_RELEASES.md).
-
-Included M92 rendering adds opaque mesh instancing,
-per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
-lights and shared multi-view planetary LOD. See the
-[Rendering Lab](projects/rendering_lab/README.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
-M91 collision continuity remains included. **MK2 is now the authoritative physics
-engine**; older MK1 performance investigations remain historical evidence.
-The [current physics contract](docs/MK2_PHYSICS_ARCHITECTURE.md) and
-[accepted rotation/contact correction](docs/PREALPHA_MK2_ROTATION_CORRECTION.md)
-describe current behaviour and measured limits. Dense workloads remain
-content-dependent; historical FPS values are not current universal guarantees.
-See the [support matrix](docs/ALPHA_SUPPORT_MATRIX.md) and
-[final Linux qualification](docs/PREALPHA_FINAL_QUALIFICATION.md) before choosing
-an SDK or assuming cross-system/platform coverage.
-
-M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
-poses, attachments, deformables, audio and particles through checked local-origin
-transitions. This remains a bounded local physics chart. Accepted Pre-Alpha work
-extends it to conserved liquid owners/parcels and analytic atmosphere/thermal
-carriers; legacy PBF remains excluded. These extensions do not imply regional
-liquid suspension or thermal cold-save support. Start with the
-[travel lab](projects/travelling_lab/README.md), [M90 contracts](docs/M90_ASSEMBLY_TRAVEL.md)
-and [original validation evidence](docs/evidence/m90/REPORT.md).
-
-Native Linux, Windows and Android runtimes and optional local multiplayer remain
-available. Linux is the current acceptance platform; Windows VM checks are native
-functional evidence. The operator also confirms making and playing multiple
-Android games; exact revisions/devices were not specified in that additional
-confirmation, and no fresh APK was built for the desktop Alpha refresh. Android
-targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
-x86_64 emulators. Broader hardware and physical-controller coverage remains
-outstanding. See [Windows](docs/WINDOWS.md), [Android](docs/ANDROID.md),
-[local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
-[validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
-
-Human-accepted M93 adds **cooked assets, rigid mesh LOD and optional
-visual residency**. Start with [The Packed Museum](projects/asset_lab/README.md),
-[the pipeline guide](docs/M93_ASSET_PIPELINE.md) and
-[M93 evidence](docs/evidence/m93/REPORT.md).
-Windows/Android M93 are unvalidated.
-
-Human-accepted M94 adds [JudasJS debugging and deliberate reload](docs/M94_DEVELOPER_TOOLS.md):
-source breakpoints, stepping, safe variable snapshots and compile/import diagnostics.
-Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 validation remains pending.
-
-M95 adds [animation event tracks, a timeline and collision-aware
-root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 is human accepted; its Windows/Android validation remains outstanding.
-M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human accepted.
-M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md).
-Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
-Human-accepted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md).
-Try [Save Evolution Lab](projects/save_evolution_lab/README.md).
-Human-accepted M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
-Try [Connected Workshop](projects/connected_workshop/README.md) in two processes or Android + Linux.
-M99 phone-to-Linux testing used USB forwarding; Wi-Fi, Internet deployment and
-Windows M99 validation remain outstanding.
-
-## Highlights
-
-- C++ engine with SDL2, OpenGL 3.3 Core on desktop, and an optional OpenGL ES
-  3 Android runtime.
-- Rigid-body physics, joints, CCD, character motors, wheels, powertrains,
-  deformables, fracture and physical structural connections.
-- Local and planetary terrain, volumetric terrain authoring, navigation,
-  world streaming, saves and scene transitions.
-- Optional Utility AI, weather, atmosphere, particles, audio, animation,
-  ragdolls, cameras, UI and profiling; Basic Water is available independently of
-  the Alpha-locked advanced-fluid simulation.
-- Project JavaScript through JudasJS for gameplay, input, cameras, UI,
-  persistence and other game-owned policy.
-- An editor, project/scene authoring format, native Linux/Windows standalone
-  export and optional native Android APK export.
-
-The demonstrations in `projects/` are editable capability examples, not a
-single bundled game. Useful starting points include [Breakwater](projects/breakwater/README.md),
-[Core Scramble](projects/core_scramble/README.md), [Mechanical Arcade](projects/physics_stress_lab/README.md),
-the [Weather Lab](projects/weather_lab/README.md), and the [Planetary Terrain
-Lab](projects/planetary_terrain_lab/planetary_terrain_lab.judasproj).
-
-## Build on Linux
-
-Linux is the primary development and validation platform. Install CMake 3.20+,
-a C++17 compiler, SDL2 and GLM development packages, Python 3.11+ for SDK/validation
-tooling, and a working
-OpenGL 3.3 environment. On Ubuntu/Debian:
+Follow [installation/distribution](docs/DISTRIBUTION.md) for dependencies,
+[build identity](docs/BUILD_RELEASES.md) for provenance and
+[Linux baseline builds](docs/LINUX_BASELINE_BUILD.md) for Ubuntu-compatible SDKs.
 
 ```sh
-sudo apt install cmake libsdl2-dev libglm-dev build-essential python3
-cmake -S . -B build/Experimental -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
-cmake --build build/Experimental --target judas_linux_sdk -j2
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
+cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
+ctest --test-dir build -L prealpha --output-on-failure
 ```
 
-The SDK target builds the public tools and stages a self-contained engine SDK
-inventory with checksums; it does not build every historical test executable.
-Linux system-library requirements remain documented in the distribution guide.
-For only the editor/runtime, build targets `judas_editor judas` instead.
-Use a separate build directory with `-DJUDAS_BUILD_CHANNEL=Alpha` for Alpha
-builds. Channel selection alone does not qualify or publish a build. See
-[distribution and relocation checks](docs/DISTRIBUTION.md).
+Graphics checks require a working desktop GL context or Xvfb/Mesa. Headless native
+checks do not prove hardware/controller/audio acceptance. See [Windows](docs/WINDOWS.md),
+[Android](docs/ANDROID.md) and [experimental browser export](docs/BROWSER_SUPPORT.md).
+Source identity is not a published release or human acceptance of this checkpoint.
 
-From an unpacked SDK, start `./judas_editor` on Linux or
-`.\judas_editor.exe` on Windows. Follow [your first visible project](docs/FIRST_PROJECT.md)
-to create a project without repository examples. The verified **engine source
-archive** includes the curated 2D and AI learning projects, while larger consumer
-games and research remain outside it; see [source archive scope](docs/DISTRIBUTION.md#source-archives-without-git-history).
-
-In a **full Git checkout**, run the included projects with your source-build tools:
-
-```sh
-./build/Experimental/judas judas_tech_demo.judasproj
-./build/Experimental/judas projects/tiny_game/tiny_game.judasproj
-./build/Experimental/judas_editor projects/tiny_game/tiny_game.judasproj
-```
-
-The first build compiles local third-party sources and can take a while.
-See [the editor guide](docs/EDITOR_GUIDE.md) and each example's README for
-controls and project-specific setup.
-
-## Android
-
-Android export is optional and requires the Android SDK command-line tools,
-JDK 17+, NDK 28.2.13676358, Android 16 / API 36, CMake and Python 3.11+.
-The supported export host is Linux:
-
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
-cmake --build build --target judas judas_export -j4
-python3 tools/build_android.py projects/breakwater/breakwater.judasproj \
-  --sdk "$ANDROID_SDK_ROOT" --abis arm64-v8a --output /tmp/Breakwater.apk
-```
-
-See [Native Android games](docs/ANDROID.md) for the complete setup, export
-options, lifecycle behavior and current limitations.
-
-## Documentation
-
-- [Documentation index](docs/README.md) — current references, platform scope and historical records
-- [Your first visible project](docs/FIRST_PROJECT.md) — create, debug, reload and export a small project
-- [Architecture](docs/ARCHITECTURE.md) — engine boundaries and major systems
-- [JudasJS](docs/JUDASJS.md) and [getting started](docs/judasjs/getting-started.md)
-- [Editor guide](docs/EDITOR_GUIDE.md) and [content authoring](docs/CONTENT_AUTHORING.md)
-- [Game AI authoring](docs/GAME_AI.md), [AI scripting](docs/judasjs/ai.md) and [2D quick start](docs/2D_QUICKSTART.md)
-- [Android](docs/ANDROID.md) and [Windows notes](docs/WINDOWS.md)
-- [Feature documentation](docs/) and [validation evidence](docs/evidence/)
-- [Archived historical README](docs/DontReadMe_Final.md) — the previous root
-  README, preserved verbatim for reference
-
-## Contributing
-
-Build a focused example, read the relevant feature documentation, and keep
-claims tied to reproducible repository evidence. Contributions that improve
-the engine, examples, documentation or validation are welcome; experimental
-features should remain clearly scoped.
-
-## License
-
-Project Judas is licensed under the [MIT License](LICENSE). Vendored
-dependencies retain their own notices and licence terms.
+Copyright © 2026 Conner / SuperReaper1999. [MIT licence](LICENSE).

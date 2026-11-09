@@ -13,18 +13,14 @@
 
 #include "CelestialGravity.h"
 #include "FirePresentation.h"
-#include "FluidSurface.h"
 #include "fluid/GameWaterRuntime.h"
-#include "GameSession.h"
 #include "LightTransforms.h"
-#include "PilotAttachment.h"
 #include "RadialTerrain.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "RuntimeWorld.h"
 #include "Scene.h"
 #include "ShadowTransforms.h"
-#include "TerrainLibrary.h"
 #include "PlanetTerrain.h"
 #include "render/ShadowPassCache.h"
 
@@ -51,25 +47,6 @@ std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resour
 }
 
 namespace {
-const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
-
-// Milestone 14 torch (see docs/ARCHITECTURE.md, "Milestone 14").
-const glm::vec3 kTorchColor(3.0f, 2.9f, 2.6f);
-constexpr float kTorchRange = 35.0f;
-constexpr float kTorchInnerConeDegrees = 18.0f;
-constexpr float kTorchOuterConeDegrees = 28.0f;
-
-// Milestone 14 vehicle light rig, in the vehicle's own frame: one
-// headlight at the nose (local -Z), red/green navigation lights at the
-// wingtips (local -X/+X). Offsets scale with the body's half-extents.
-const glm::vec3 kShipHeadlightColor(4.0f, 4.0f, 3.8f);
-constexpr float kShipHeadlightRange = 45.0f;
-constexpr float kShipHeadlightInnerConeDegrees = 12.0f;
-constexpr float kShipHeadlightOuterConeDegrees = 22.0f;
-const glm::vec3 kShipPortLightColor(2.2f, 0.15f, 0.1f);
-const glm::vec3 kShipStarboardLightColor(0.1f, 2.2f, 0.2f);
-constexpr float kShipNavLightRange = 12.0f;
-
 // Milestone 15 directional shadow frustum.
 constexpr float kDirShadowHalfExtent = 25.0f;
 constexpr float kDirShadowDistance = 40.0f;
@@ -149,7 +126,6 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
             DrawMeshOrPlaceholder(r, resources, render, position, rotation, scale, alpha, generated,skin);
             break;
         case SceneShape::Compound:
-        case SceneShape::Terrain:
         case SceneShape::ConvexHull:
         case SceneShape::TriangleMesh:
             break;  // handled by their owners
@@ -187,8 +163,7 @@ PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float 
 
 }
 
-static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
-                              float alpha, const WorldDrawOptions& options, PresentedObjects* objects) {
+static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world,                               float alpha, const WorldDrawOptions& options, PresentedObjects* objects) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
     r.BeginMeshBatch();
     const auto& statics = world.StaticRenderables();
@@ -206,42 +181,12 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const Game
     world.DrawRuntimeTerrain(r);
     world.DrawPhysicalBalances(r);
     r.SetMaterialBindings({});
-    if (options.includeTerrain) {
-        for (const RuntimeWorld::Terrain& t : world.Terrains()) {
-            if(!world.RenderVisible(t.id))continue;
-            r.SetRenderLayer(world.RenderLayerOf(t.id));
-            const auto* definition=world.RuntimeDefinition(t.id);
-            r.SetMaterialBindings(definition&&definition->render?BuildRenderMaterialBindings(world.Resources(),*definition->render):std::vector<MaterialBinding>{});
-            if (t.mesh.IsValid()) {
-                r.DrawMesh(t.mesh, t.position, t.rotation, glm::vec3(1.0f), TextureHandle{}, t.color);
-            }
-        }
-    }
+
     r.SetMaterialBindings({});
-    for(size_t i=0;i<world.Doors().size();++i){auto id=world.DoorIds()[i];if(!world.RenderVisible(id))continue;r.SetRenderLayer(world.RenderLayerOf(id));const auto* d=world.RuntimeDefinition(id);r.SetMaterialBindings(d&&d->render?BuildRenderMaterialBindings(world.Resources(),*d->render):std::vector<MaterialBinding>{});world.Doors()[i].Draw(r,alpha);}
-    for(size_t i=0;i<world.LightSwitches().size();++i){auto id=world.LightSwitchIds()[i];if(!world.RenderVisible(id))continue;r.SetRenderLayer(world.RenderLayerOf(id));const auto* d=world.RuntimeDefinition(id);r.SetMaterialBindings(d&&d->render?BuildRenderMaterialBindings(world.Resources(),*d->render):std::vector<MaterialBinding>{});world.LightSwitches()[i].Draw(r,alpha);}
     r.SetMaterialBindings({});
     r.SetRenderLayer(0);
 
-    if (session && session->UsesLegacyGameplay() && !world.view) {
-        // Milestone 11: while attached, the pilot is rendered from the
-        // SAME presented vehicle pose the camera and vehicle mesh use.
-        glm::vec3 playerPosition;
-        glm::quat playerOrientation;
-        const PlayerController& player = session->Player();
-        if (session->IsPiloting() && session->Attachment().attached) {
-            const DynamicBody& ship = world.DynamicBodies()[world.GetVehicle()->dynamicIndex];
-            const BodyTransform presented{ship.GetPresentedPosition(alpha), ship.GetPresentedOrientation(alpha)};
-            ApplyPilotAttachment(session->Attachment(), presented, playerPosition, playerOrientation);
-        } else {
-            playerPosition = player.GetPresentedPosition(alpha);
-            playerOrientation = player.GetPresentedOrientation(alpha);
-        }
-        const bool visible = session->ViewMode() == PlayerViewMode::ThirdPerson || session->IsPiloting();
-        if (options.includePlayerModel && visible) {
-            r.DrawBox(playerPosition, playerOrientation, player.GetRenderHalfExtents(), kPlayerColor);
-        }
-    }
+
 
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
@@ -272,20 +217,15 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const Game
     r.SetRenderLayer(0);
     // The fluid receives ordinary lighting/shadows in the colour pass; its
     // constantly rebuilt surface does not occupy the depth maps.
-    if (world.HasFluid() && !world.Fluid().Particles().empty() && world.FluidMesh().IsValid() &&
-        !r.IsShadowPass()) {
-        r.DrawMesh(world.FluidMesh(), glm::vec3(0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
-                   TextureHandle{}, glm::vec3(0.12f, 0.48f, 0.82f));
-    }
+
     r.EndMeshBatch();
 }
 
-void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world, const GameSession* session,
-                       float alpha, const WorldDrawOptions& options) {
-    DrawWorldGeometry(renderer, world, session, alpha, options, nullptr);
+void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world,                        float alpha, const WorldDrawOptions& options) {
+    DrawWorldGeometry(renderer, world, alpha, options, nullptr);
 }
 
-void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSession* session, float alpha) {
+void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, float alpha) {
     JUDAS_PROFILE_SCOPE("Particles and water presentation");
     r.FlushMaterialBlends();r.FlushSprites();r.SetMaterialBindings({});
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
@@ -299,16 +239,7 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
             r.EndTransparentPass();
         }
     }
-    if(world.AdvancedFluidsEnabled()&&!world.Liquids().States().empty()){
-      r.BeginTransparentPass();
-      for(const auto& [id,s]:world.Liquids().States())if(s.enabled&&s.equilibriumValid&&s.volume>0&&(!s.entity||EntityRenderVisible(world,s.entity))){
-        auto pose=s.pose;if(s.container)if(auto* o=world.RuntimeDefinition(s.entity))pose=world.PresentedTransform(s.entity,o->transform,alpha);
-        VisualBounds localBounds;localBounds.Include(glm::vec3(s.minimum));localBounds.Include(glm::vec3(s.maximum));
-        if(!r.AllowsLayer(world.RenderLayerOf(s.entity))||!r.IsVisible(TransformBounds(localBounds,glm::translate(glm::mat4(1),pose.position)*glm::mat4_cast(pose.rotation))))continue;
-        MeshData mesh=s.dynamicSurface?s.dynamicSurface->Mesh(alpha):s.surface;for(auto& v:mesh.vertices){v.position=pose.position+pose.rotation*v.position;v.normal=pose.rotation*v.normal;}r.SetRenderLayer(world.RenderLayerOf(s.entity));r.DrawTransientSurface(mesh,{.035f,.34f,.72f},.76f);}
-      r.SetRenderLayer(0);for(const auto& [id,p]:world.Liquids().Parcels())r.DrawSphere(p.position,float(std::cbrt(3*p.volume/(4*3.141592653589793))),{.05f,.5f,.9f},.85f);
-      r.EndTransparentPass();
-    }
+
     if(const auto* grid=world.GridWater()){
         r.BeginTransparentPass();grid->Draw(r);r.EndTransparentPass();
     }
@@ -400,72 +331,14 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
     }
 
     r.SetRenderLayer(0);
-    if (session && session->IgniterPowered()) {
-        glm::vec3 eye, look;
-        session->Player().GetTorchTransform(alpha, eye, look);
-        r.BeginTransparentPass();
-        r.DrawSphere(eye + look * 1.5f, 0.08f, glm::vec3(1.0f, 0.46f, 0.10f), 0.8f);
-        r.EndTransparentPass();
-    }
+
 }
 
-std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const GameSession* session, float alpha) {
+std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, float alpha) {
     std::vector<DynamicLight> lights;
-    if (session && session->TorchOn()) {
-        DynamicLight torch;
-        torch.kind = LightKind::Spot;
-        session->Player().GetTorchTransform(alpha, torch.position, torch.direction);
-        torch.color = kTorchColor;
-        torch.range = kTorchRange;
-        torch.innerConeDegrees = kTorchInnerConeDegrees;
-        torch.outerConeDegrees = kTorchOuterConeDegrees;
-        torch.shadowMapIndex = kTorchShadowSlot;
-        lights.push_back(torch);
-    }
-    if (world.legacyGameplay && world.GetVehicle()) {
-        const RuntimeWorld::Vehicle& vehicle = *world.GetVehicle();
-        const DynamicBody& ship = world.DynamicBodies()[vehicle.dynamicIndex];
-        const glm::vec3 position = ship.GetPresentedPosition(alpha);
-        const glm::quat orientation = ship.GetPresentedOrientation(alpha);
-        if (vehicle.component.headlight) {
-            DynamicLight headlight;
-            headlight.kind = LightKind::Spot;
-            headlight.position = TransformLocalLightPosition(position, orientation,
-                                                             glm::vec3(0.0f, 0.0f, -vehicle.halfExtents.z));
-            headlight.direction = TransformLocalLightDirection(orientation, glm::vec3(0.0f, 0.0f, -1.0f));
-            headlight.color = kShipHeadlightColor;
-            headlight.range = kShipHeadlightRange;
-            headlight.innerConeDegrees = kShipHeadlightInnerConeDegrees;
-            headlight.outerConeDegrees = kShipHeadlightOuterConeDegrees;
-            headlight.shadowMapIndex = kShipHeadlightShadowSlot;
-            lights.push_back(headlight);
-        }
-        if (vehicle.component.navigationLights) {
-            DynamicLight port;
-            port.kind = LightKind::Point;
-            port.position = TransformLocalLightPosition(position, orientation,
-                                                        glm::vec3(-vehicle.halfExtents.x, 0.0f, 0.0f));
-            port.color = kShipPortLightColor;
-            port.range = kShipNavLightRange;
-            lights.push_back(port);
-            DynamicLight starboard;
-            starboard.kind = LightKind::Point;
-            starboard.position = TransformLocalLightPosition(position, orientation,
-                                                             glm::vec3(vehicle.halfExtents.x, 0.0f, 0.0f));
-            starboard.color = kShipStarboardLightColor;
-            starboard.range = kShipNavLightRange;
-            lights.push_back(starboard);
-        }
-    }
-    for (const LightSwitch& lightSwitch : world.LightSwitches()) {
-        if (!lightSwitch.IsLampOn()) continue;
-        DynamicLight lamp;
-        lamp.kind = LightKind::Point;
-        lamp.position = lightSwitch.GetLampPosition();
-        lamp.color = lightSwitch.GetLampColor();
-        lamp.range = lightSwitch.GetLampRange();
-        lights.push_back(lamp);
-    }
+
+
+
     for (const RuntimeWorld::StaticLight& s : world.StaticLights()) {
         if(!world.IsPublished(s.id))continue;
         DynamicLight light;
@@ -485,31 +358,10 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const Game
     return lights;
 }
 
-void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float /*alpha*/) {
-    // 30 Hz particle state is held; rigid interpolation alpha would replay the
-    // same fluid interval twice. Presentation never feeds the field sampler.
-    if (!world.HasFluid() || !world.FluidMesh().IsValid() || !world.FluidSurfaceDirty()) return;
-    JUDAS_PROFILE_SCOPE("Legacy fluid surface update");
-    std::vector<glm::vec3> positions;
-    positions.reserve(world.Fluid().Particles().size());
-    for (std::size_t i = 0; i < world.Fluid().Particles().size(); ++i) {
-        positions.push_back(world.Fluid().Particles()[i].position);
-    }
-    // Presentation resolution follows particle spacing. The former fixed
-    // 0.40 m grid over-refined coarser fields (cubic extraction work), even
-    // though their simulation contained less detail. Preserve scale-1 and
-    // scale-10 reference resolutions; this never affects authoritative water.
-    const float scale = world.Settings().fluidScale;
-    const float smoothing = scale > 1.0f ? world.FluidSettingsUsed().smoothingRadius : 0.105f;
-    const float cell = scale > 1.0f ? std::max(0.05f, 0.04f * scale) : 0.05f;
-    renderer.UpdateMeshVertices(world.FluidMesh(), BuildFluidSurface(positions, smoothing, cell, 0.45f));
-    // The latest liquid state is held between executed liquid updates. Reuse
-    // its exact mesh; a new/reset world owns a separate invalidation marker.
-    world.MarkFluidSurfaceUploaded();
-}
+
 
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
-                      const GameSession* session, const glm::mat4& view, const glm::mat4& projection,
+                      const glm::mat4& view, const glm::mat4& projection,
                       const glm::vec3& shadowFocus, float alpha,float frameSeconds,WorldRenderPurpose purpose,const RenderTargetHandle* destination) {
     const bool observer=purpose==WorldRenderPurpose::Observer;
     JUDAS_PROFILE_SCOPE("World render submission");
@@ -581,7 +433,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     if(world.Resources())world.Resources()->RequestEnvironment(settings.environmentAsset);
     renderer.SetSceneAppearance(settings.linearRendering,settings.exposure,world.Resources()?world.Resources()->TryGetEnvironment(settings.environmentAsset):EnvironmentHandle{},settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
     renderer.SetLighting(settings.sunDirection, settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0), settings.ambientColor);
-    const std::vector<DynamicLight> lights = BuildWorldLights(world, session, alpha);
+    const std::vector<DynamicLight> lights = BuildWorldLights(world, alpha);
 
     // Each camera receives its own relevance decision and actual shadow chart.
     // Targets/viewport are restored by Renderer; no pass borrows another eye's
@@ -634,14 +486,13 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                                         const WorldDrawOptions& options) {
                 JudasRender::ShadowPassKey key;
                 key.slot=slot;key.source=identity;key.lightViewProjection=chart;
-                key.includePlayerModel=options.includePlayerModel;
                 key.viewDependentLod=viewDependentLod;
                 if (viewDependentLod) {
                     key.cameraView=cameraView;key.cameraProjection=cameraProjection;key.viewport=viewport;
                 }
                 if (reuseShadows && shadowCache.Matches(key) && renderer.ReuseShadowChart(slot,chart)) return;
                 renderer.BeginShadowPass(slot,chart);
-                DrawWorldGeometry(renderer,world,session,alpha,options,&presentedObjects);
+                DrawWorldGeometry(renderer,world,alpha,options,&presentedObjects);
                 renderer.EndShadowPass();
                 if (reuseShadows) shadowCache.Remember(key);
             };
@@ -654,7 +505,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                 const auto& light=selected[source];
                 if (light.shadowMapIndex<=0) continue;
                 WorldDrawOptions options;
-                options.includePlayerModel=lights[source].shadowMapIndex!=kTorchShadowSlot;
+
                 drawShadow(light.shadowMapIndex,light.identity,
                     ComputeSpotShadowMatrix(light.position,light.direction,light.outerConeDegrees,light.range),options);
             }
@@ -706,8 +557,8 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.SetRenderMask(c.renderMask);
             lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
-            DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{}, &presentedObjects);
-            DrawWorldTransparents(renderer, world, session, alpha);
+            DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
+            DrawWorldTransparents(renderer, world, alpha);
             renderer.DrawWeather(true);
             renderer.EndRenderTarget(); ++camera.updates;
         }
@@ -726,7 +577,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
-            DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{}, &presentedObjects);DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
+            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{}, &presentedObjects);DrawWorldTransparents(renderer,world,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
         if(destination&&!renderer.BeginRenderTarget(*destination))return;
         renderer.ClearWeather();renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);
@@ -744,8 +595,8 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     lightPass();
     renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
-    DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{}, &presentedObjects);
-    DrawWorldTransparents(renderer, world, session, alpha);
+    DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
+    DrawWorldTransparents(renderer, world, alpha);
     renderer.DrawWeather();
     renderer.EndFrame();
     }
@@ -785,7 +636,7 @@ void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager&
     const bool hasWater = std::any_of(scene.Objects().begin(), scene.Objects().end(),
         [basicWater](const SceneObject& o) { return o.renderVisible &&
             ((basicWater&&o.basicWater&&o.basicWater->enabled)||
-             (o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid&&o.fluidVolume->fillHeight>0)); });
+             (o.fluidVolume&&o.fluidVolume->fillHeight>0)); });
     if (!hasWater) return;
     // All opaque geometry, including neighbouring regions, must be submitted
     // before this pass. Transparent water deliberately does not write depth.
@@ -799,7 +650,7 @@ void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager&
         r.SetRenderLayer(o.renderLayer);
         if(basicWater&&o.basicWater)r.DrawBasicWater(*o.basicWater, o.transform.position,
                         glm::normalize(o.transform.rotation), 0);
-        if(o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid&&o.fluidVolume->fillHeight>0){
+        if(o.fluidVolume&&o.fluidVolume->fillHeight>0){
             const auto& f=*o.fluidVolume;BasicWaterSettings style;style.color=f.color;style.opacity=f.opacity;
             style.halfExtents={f.HalfExtents().x*o.transform.scale.x,f.fillHeight*o.transform.scale.y,f.HalfExtents().z*o.transform.scale.z};
             style.waveAmplitude=0;
@@ -839,35 +690,12 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
                     const CompoundBox& box = o.body->compoundBoxes[part];
                     DrawCompoundChild(r,&assets,box,position,rotation,part==0?render.color:render.secondaryColor,render.alpha);
                 }
-            } else if (render.shape == SceneShape::Terrain && o.body) {
-                const std::shared_ptr<const RadialTerrain> surface = CreateTerrainSurface(o.body->terrainSurface);
-                if (surface) {
-                    const MeshHandle mesh = assets.GetTerrainMesh(o.body->terrainSurface, *surface);
-                    if (mesh.IsValid()) {
-                        r.DrawMesh(mesh, position, rotation, glm::vec3(1.0f), TextureHandle{}, render.color);
-                    }
-                }
-            } else if (o.door) {
-                // A closed door's panel hangs from its hinge edge (Door.h).
-                r.DrawBox(position + rotation * glm::vec3(render.halfExtents.x, 0.0f, 0.0f), rotation,
-                          render.halfExtents, render.color);
-            } else if (o.lightSwitch) {
-                r.DrawBox(position + rotation * glm::vec3(render.halfExtents.x, 0.0f, 0.0f), rotation,
-                          render.halfExtents, render.color);
             } else {
                 DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f,{},nullptr,o.id);
             }
         }
         // Authored liquid is shown as its particle lattice bounds.
-        if (o.fluidVolume && o.fluidVolume->backend==SceneFluidBackend::Particles && !r.IsShadowPass()) {
-            r.SetMaterialBindings({});
-            const SceneFluidVolumeComponent& f = *o.fluidVolume;
-            const glm::vec3 half(0.5f * f.spacing * static_cast<float>(f.countX),
-                                 0.5f * f.spacing * static_cast<float>(f.countY),
-                                 0.5f * f.spacing * static_cast<float>(f.countZ));
-            r.DrawBox(position + rotation * glm::vec3(0.0f, half.y - 0.5f * f.spacing, 0.0f), rotation, half,
-                      glm::vec3(0.12f, 0.48f, 0.82f));
-        }
+
     }
     r.SetRenderLayer(0);
     r.SetMaterialBindings({});

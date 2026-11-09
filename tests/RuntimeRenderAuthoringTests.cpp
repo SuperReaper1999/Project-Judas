@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
     const std::string defaultText =
         "JudasScene 3\nsettings\n  name \"\"\n  world-origin 0 0 0\n"
         "  sun-direction 0.4 0.7 0.35\n  sun-color 1 0.98 0.92\n  ambient 0.16 0.17 0.19\n"
-        "  fluid-scale 1\n  fluid-update-rate-hz 30\n  fluid-hydrostatic-drag-rate 2\n"
+        ""
         "  fidelity-policy none\n  next-id 1\nend\n";
     Check(SaveSceneToString(empty, legacy) && legacy == defaultText, "default scene keeps pre-M72 file bytes without extension records");
     MaterialSlot oldSlot; oldSlot.asset = material; oldSlot.overrides.baseColor = glm::vec4(1, 0, 0, .5f); oldSlot.overrides.roughness = .25f;
@@ -139,10 +139,10 @@ int main(int argc, char** argv) {
     const auto scenePath = (directory / "appearance.judas").string();
     Check(WriteAuthoredDocument(scenePath, legacy, "scene", error, true) && LoadSceneFromFile(scenePath, round, error) && ScenesEqual(scene, round),
           "named file save/load durably preserves original reset appearance: " + error);
-    SceneSettings reset = scene.Settings(); reset.name = "Unrelated scene name"; reset.fluidScale = 2;
+    SceneSettings reset = scene.Settings(); reset.name = "Unrelated scene name"; reset.worldOrigin.x = 2048;
     SceneSettings expectedReset; expectedReset.environmentAsset = resetEnvironment;
     Check(DecodeAppearanceState(round.Settings().appearanceResetState, reset, error) &&
-          EncodeAppearanceState(reset) == EncodeAppearanceState(expectedReset) && reset.name == "Unrelated scene name" && reset.fluidScale == 2,
+          EncodeAppearanceState(reset) == EncodeAppearanceState(expectedReset) && reset.name == "Unrelated scene name" && reset.worldOrigin.x == 2048,
           "reset baseline decodes only appearance while preserving unrelated scene settings");
     auto noEnvironment = scene; noEnvironment.Settings().environmentAsset.clear();
     std::string noEnvironmentText; Scene noEnvironmentRound;

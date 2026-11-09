@@ -2,7 +2,8 @@
 #include "CollisionAsset.h"
 #include "SaveStorage.h"
 #include "SceneFingerprint.h"
-#include "authoring/TerrainAuthoring.h"
+#include "terrain/TerrainSource.h"
+#include "terrain/TerrainMesher.h"
 #include "fluid/GameWaterCoupling.h"
 #include <chrono>
 #include <filesystem>
@@ -56,15 +57,21 @@ Scene::Scene(unsigned selected, bool rotate, bool empty)
         wall({8, 2.8f, 4.75f}, {.1f, .2f, .65f});
         gateShape = {water.ToWorld({8, 2.8f, 4}), {.1f, .2f, .1f}, settings.rotation};
     } else if (mode == 3) {
-        terrain = std::make_shared<TerrainSource>(CreateTerrain(25, 17, 12, 8));
-        for (unsigned z = 0; z < terrain->nz; ++z)
-            for (unsigned x = 0; x < terrain->nx; ++x) {
-                const float px = float(x) * 12 / (terrain->nx - 1) - 5,
-                            pz = float(z) * 8 / (terrain->nz - 1) - 4;
-                terrain->heights[z * terrain->nx + x] =
+        terrain = std::make_shared<TerrainV2::Source>(TerrainV2::Create(33, 17, .5f));
+        for (unsigned z = 0; z < terrain->samplesZ; ++z)
+            for (unsigned x = 0; x < terrain->samplesX; ++x) {
+                const float px = float(x) * terrain->spacing - 7,
+                            pz = float(z) * terrain->spacing - 4;
+                terrain->heights[z * terrain->samplesX + x] =
                     .12f + 2.4f * std::exp(-px * px / 3.f - pz * pz / 5.f);
             }
-        terrainMesh = BuildTerrainMesh(*terrain);
+        for (unsigned z=0;z<terrain->ChunksZ();++z)for(unsigned x=0;x<terrain->ChunksX();++x){
+            TerrainV2::Chunk chunk;
+            if(!TerrainV2::BuildChunk(*terrain,{x,z},chunk,error))throw std::runtime_error(error);
+            const unsigned offset=terrainMesh.vertices.size();
+            for(auto vertex:chunk.mesh.vertices){vertex.position+=chunk.anchor;terrainMesh.vertices.push_back(vertex);}
+            for(auto index:chunk.mesh.indices)terrainMesh.indices.push_back(offset+index);
+        }
         auto collision = std::make_shared<CollisionAsset>();
         if (!CookCollision(terrainMesh, {}, *collision, error))
             throw std::runtime_error(error);
@@ -77,8 +84,7 @@ Scene::Scene(unsigned selected, bool rotate, bool empty)
     water.BakeStatic([&](glm::vec3 p) {
         if (terrain) {
             const auto q = water.ToLocal(p) - glm::vec3(6, 0, 4);
-            glm::vec3 surface(0);
-            if (TerrainPoint(*terrain, q.x, q.z, surface) && q.y <= surface.y)
+            if (std::abs(q.x)<=8 && std::abs(q.z)<=4 && q.y<=TerrainV2::Height(*terrain,q.x,q.z))
                 return true;
         }
         for (const auto &b : walls)

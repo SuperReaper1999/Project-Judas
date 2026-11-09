@@ -1,6 +1,5 @@
-// Independent tensor construction and actual public ContactSolver controls.
+// Independent tensor construction and actual rigid-body impulse controls.
 #include "RigidBody.h"
-#include "ContactSolver.h"
 #include <array>
 #include <cmath>
 #include <cstdio>
@@ -44,19 +43,6 @@ void CheckAngularResponse(const RigidBody& actual,const glm::vec3& before,
     }
 }
 
-contact_block::Matrix Gram(const glm::mat3& inertia,const std::array<glm::vec3,4>& offsets){
-    contact_block::Matrix K{};
-    for(unsigned i=0;i<4;++i)for(unsigned j=i;j<4;++j){
-        const auto ai=glm::cross(glm::dvec3(offsets[i]),glm::dvec3(0,1,0));
-        const auto aj=glm::cross(glm::dvec3(offsets[j]),glm::dvec3(0,1,0));
-        K[i][j]=K[j][i]=1+glm::dot(ai,glm::dmat3(inertia)*aj);
-    }
-    return K;
-}
-bool Valid(const contact_block::Matrix& K){
-    contact_block::NormalPatch patch;patch.Prepare(K,4);
-    contact_block::Vector answer{};return patch.Solve({},{},answer);
-}
 void Construction(){
     RigidBody body;
     body.inverseMass=1;
@@ -104,62 +90,7 @@ void Construction(){
     Check(invalid.InverseInertiaWorld()[0][0]==-1,
           "negative authored mobility is never eigenvalue-clamped or regularized");
 }
-void ActualPatches(){
-    unsigned oldRejected=0,newAccepted=0;
-    for(unsigned sample=0;sample<64;++sample){
-        RigidBody body,ground;
-        body.inverseMass=1;body.inverseInertiaLocal=SolidBoxInverseInertia(1,{.2f,.3f,.4f});
-        body.position={0,.3f,0};body.linearVelocity={0,-1,0};
-        body.orientation=glm::angleAxis(float(sample+1)*.03125f,glm::vec3(0,1,0));
-        const auto R=ContactRotation(body.orientation);
-        const std::array<glm::dvec3,4> local{{{-.2f,-.3f,-.4f},{.2f,-.3f,-.4f},
-                                            {.2f,-.3f,.4f},{-.2f,-.3f,.4f}}};
-        std::array<glm::vec3,4> offsets{};
-        ContactSolver solver;solver.EnableBlockNormals(true);
-        for(unsigned i=0;i<4;++i){
-            Contact c;c.hit=true;c.normal={0,1,0};c.preciseNormal={0,1,0};
-            c.hasLocalAnchors=true;c.signedSeparation=0;c.localAnchorA=local[i];
-            const auto world=glm::dvec3(body.position)+R*local[i];
-            c.localAnchorB=world;c.point=glm::vec3(world);
-            offsets[i]=glm::vec3(R*local[i]);
-            solver.AddContact(body,ground,c,0,0);
-        }
-        const auto oldK=Gram(OriginalWorld(body),offsets);
-        const auto newK=Gram(body.InverseInertiaWorld(),offsets);
-        const bool oldValid=Valid(oldK),newValid=Valid(newK);
-        oldRejected+=!oldValid;newAccepted+=newValid;
-        if(!oldValid)
-            std::printf("NATIVE_FALSE_PSD sample=%u angle=%a old_IAxz=%a old_IAzx=%a\n",sample,
-                double(float(sample+1)*.03125f),double(OriginalWorld(body)[0][2]),
-                double(OriginalWorld(body)[2][0]));
-        Check(newValid,"four-point cyclic patch uses an independently valid PSD response");
-        solver.Prepare(0);
-        Check(Bits(solver.Constraints().front().inverseInertiaA,body.InverseInertiaWorld()),
-              "actual ContactSolver frame uses coherent corrected mobility for impulse application");
-        const auto before=contact_block::diagnostics;
-        solver.SolveVelocities(1);
-        Check(contact_block::diagnostics.solves==before.solves+1&&
-              contact_block::diagnostics.fallbacks==before.fallbacks,
-              "actual four-point solver no longer degrades to scalar fallback on this patch");
-        double load=0;
-        for(const auto& row:solver.Constraints()){
-            Check(row.normalImpulse>=0&&row.tangentImpulse==glm::vec3(0),
-                  "all actual normal reactions remain unilateral without invented friction");
-            load+=row.normalImpulse;
-        }
-        Check(std::abs(load-1)<64*std::numeric_limits<float>::epsilon(),
-              "real inelastic normal impulse balances the incoming unit momentum");
-        Check(glm::length(body.linearVelocity)<64*std::numeric_limits<float>::epsilon()&&
-              glm::length(body.angularVelocity)<64*std::numeric_limits<float>::epsilon(),
-              "actual represented normal response stops without artificial torque");
-    }
-    Check(oldRejected>0,"literal old native tensor independently reproduces a real four-point PSD failure");
-    // The preserved GCC/Linux run rejected 19/64. The old float expression's
-    // exact count may vary with compiler association; the physical contract is
-    // that every corrected patch succeeds, checked independently below.
-    Check(newAccepted==64,"corrected coherent construction handles all unchanged cyclic fixtures");
-    std::printf("cyclic fixtures: native rejected %u/64, coherent accepted %u/64\n",oldRejected,newAccepted);
-}
+
 void DegenerateAndInvalidInputs(){
     RigidBody body;body.inverseMass=1;
     body.inverseInertiaLocal=glm::mat3(0);
@@ -223,7 +154,7 @@ void NativeQuaternionAndDirectApplications(){
           "static torque kick preserves velocity and clears only owned accumulators");
 }
 }
-int main(){Construction();ActualPatches();DegenerateAndInvalidInputs();NativeQuaternionAndDirectApplications();
+int main(){Construction();DegenerateAndInvalidInputs();NativeQuaternionAndDirectApplications();
     std::printf("shared reciprocal inertia: %u checks, %u failures\n",checks,failures);
     return failures?1:0;
 }

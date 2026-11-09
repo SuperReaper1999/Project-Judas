@@ -6,9 +6,6 @@ settings
   sun-color 1 0.98 0.92
   ambient 0.16 0.17 0.19
   background-color 0.1 0.17 0.25
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 14
 end
@@ -37,15 +34,12 @@ object 2 "Courtyard floor"
   body static box
   body.half-extents 12 0.5 12
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 3 "Back wall"
@@ -64,15 +58,12 @@ object 3 "Back wall"
   body static box
   body.half-extents 12 2 0.3
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 4 "Left wall"
@@ -91,15 +82,12 @@ object 4 "Left wall"
   body static box
   body.half-extents 0.3 2 10
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 5 "Jump steps"
@@ -118,15 +106,12 @@ object 5 "Jump steps"
   body static box
   body.half-extents 0.5 0.11 1
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 6 "Jump steps"
@@ -145,15 +130,12 @@ object 6 "Jump steps"
   body static box
   body.half-extents 0.5 0.32999998 1
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 7 "Jump steps"
@@ -172,15 +154,12 @@ object 7 "Jump steps"
   body static box
   body.half-extents 0.5 0.55 1
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 8 "Pushable MK2 crate"
@@ -199,15 +178,12 @@ object 8 "Pushable MK2 crate"
   body dynamic box
   body.half-extents 0.4 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 9 "Pushable MK2 crate"
@@ -226,15 +202,12 @@ object 9 "Pushable MK2 crate"
   body dynamic box
   body.half-extents 0.4 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 10 "Pushable MK2 crate"
@@ -253,15 +226,12 @@ object 10 "Pushable MK2 crate"
   body dynamic box
   body.half-extents 0.4 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 11 "Pushable MK2 crate"
@@ -280,15 +250,12 @@ object 11 "Pushable MK2 crate"
   body dynamic box
   body.half-extents 0.4 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 12 "Pushable MK2 crate"
@@ -307,15 +274,12 @@ object 12 "Pushable MK2 crate"
   body dynamic box
   body.half-extents 0.4 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 4
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 13 "Player - ordinary first person template"

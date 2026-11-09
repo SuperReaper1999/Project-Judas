@@ -24,14 +24,6 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
 
     auto arg = [&](int i) { return i < argc ? argv[i] : JS_UNDEFINED; };
     // Existing dispatch branches begin.
-    if (op == "uiDiagnostics") {
-        if (argc > 1) {
-            if (!JS_IsBool(arg(1)))
-                return JS_ThrowTypeError(c, "debug visibility requires boolean");
-            world.UI().debugOverlayVisible = JS_ToBool(c, arg(1));
-        }
-        return JS_NewBool(c, world.UI().debugOverlayVisible);
-    }
     if (op == "uiFind")
         return JS_NewUint32(c, world.UI().Find(String(c, arg(1))));
     if (op == "uiQuit") {
@@ -400,7 +392,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
 } // namespace
 void RegisterUIBindings(BindingRegistry &registry) {
     registry.Add("UI",
-                 {"uiDiagnostics", "uiFind", "uiQuit", "uiLoad", "uiControl", "uiLayout", "uiGet",
+                 {"uiFind", "uiQuit", "uiLoad", "uiControl", "uiLayout", "uiGet",
                   "uiSet", "uiUnload"},
                  HandleUI);
 }

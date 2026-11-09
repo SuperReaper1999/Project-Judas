@@ -166,7 +166,7 @@ Local playable packages: `.cache/browser-delivery/ready-player-web` and
 `.cache/browser-delivery/breakwater-touch-web`. They retain parent/dirty-source build
 identity, not a fabricated clean post-commit identity. Exact receipts, original gates,
 source snapshots, raw results, failures, source copies and hashes are preserved in
-[`evidence/browser-delivery-20261031`](evidence/browser-delivery-20261031).
+[`evidence/browser-delivery-20261031` (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/browser-delivery-20261031).
 The benchmark package and identity comparison remain under `.cache/browser-delivery`.
 Raw log files are losslessly gzip-compressed; `RAW_LOG_HASHES.json` records the exact
 decompressed hashes and sizes. No whitespace or failure output was stripped.

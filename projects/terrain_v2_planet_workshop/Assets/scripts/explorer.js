@@ -28,7 +28,7 @@ export default class PlanetExplorer {
         this.planet=world.entity('3');
         this.hud=ui.get('game_ui');
         this.ready=false;
-        ui.debugOverlayVisible=false;
+
         input.pointerCapture=true;
         if(!this.owner.terrain.state?.ready)throw new Error('Projected native terrain did not initialize.');
         if(this.hud) {

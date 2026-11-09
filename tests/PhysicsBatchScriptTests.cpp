@@ -148,7 +148,7 @@ export default class {
  definition.Find(overlapSensor)->body->sensor=true;
  Scene prefabScene;auto spawned=prefabScene.CreateObject("Runtime box").id;auto* spawn=prefabScene.Find(spawned);spawn->body=SceneBodyComponent{};spawn->tags=CategoryBit(runtimeTag);
  Check(SaveSceneToFile(prefabScene,(root/"Assets/query.judasprefab").string(),error)&&assets.Track((root/"Assets/query.judasprefab").string(),prefab,error),"ordinary prefab asset");
- ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(definition,&resources,error,&categories),"normal authoritative runtime world");
+ ResourceManager resources(nullptr,&assets);RuntimeWorld world;Check(world.Build(definition,&resources,error,&categories),"normal authoritative runtime world");
  SceneTransform placement;placement.position={12,0,0};Check(world.SpawnPrefab(prefab.id,placement,error)!=0,"normal runtime prefab spawn");
  auto nearBody=world.RuntimeBody(near);auto dynamicBody=world.RuntimeBody(dynamic);auto nearBefore=world.Physics().GetTransform(nearBody);auto dynamicBefore=world.Physics().GetTransform(dynamicBody);
  InputSystem input;world.UpdateScripts(&input,1.f/60);

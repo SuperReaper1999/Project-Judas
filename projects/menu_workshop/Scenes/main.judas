@@ -5,9 +5,6 @@ settings
   sun-direction 0.4 0.7 0.35
   sun-color 1 0.98 0.92
   ambient 0.3 0.32 0.34
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   main-camera.render-mask 1
   next-id 12
@@ -132,15 +129,12 @@ object 8 "Camp floor"
   body static box
   body.half-extents 12 0.2 12
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 9 "Nearby supply chest"
@@ -159,15 +153,12 @@ object 9 "Nearby supply chest"
   body static box
   body.half-extents 0.7 0.4 0.4
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 10 "Pause witness - real falling body"
@@ -186,15 +177,12 @@ object 10 "Pause witness - real falling body"
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.3
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 11 "Satchel menu - project-owned rules"

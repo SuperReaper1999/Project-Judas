@@ -231,7 +231,7 @@ a deliberate safe-boundary session replacement. **Keep JSON state** retains only
 supported instance state; constructors and `start` run again. Stop/Play provides
 a fresh authored world. Disk changes never hot-reload automatically.
 Use Stop/Play before cold saves or online sessions after a reload, as described
-in [debugging, stepping and reload boundaries](M94_DEVELOPER_TOOLS.md).
+in [debugging, stepping and reload boundaries](SCRIPT_DEBUGGING.md).
 Local file/document opening uses the
 OS default handler, which must be configured to open Markdown/scripts usefully.
 Use **Help → JudasJS reference** or **Making your first project** for the offline
@@ -272,11 +272,11 @@ worker pool; GPU upload and drawing stay in Renderer on the editor thread.
 
 The game uses the resulting **ordinary named target clip** with the existing
 animation API. It needs no runtime profile, source rig or retargeting service.
-See [M74's transfer convention, bounds and limitations](M74.md) and
+See [M74's transfer convention, bounds and limitations](ANIMATION_RETARGETING.md) and
 [model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
 
 For ordinary clip preview, scrubbing and event-track authoring, use
-**Window → Animation → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
+**Window → Animation → Animation timeline**; see the [animation workflow](ANIMATION_WORKFLOW.md).
 Retargeting and the runtime animation timeline are separate tools.
 
 ## Terrain authoring and live edits
@@ -285,9 +285,9 @@ Retargeting and the runtime animation timeline are separate tools.
 Select a terrain and open its source, or create/cook a new source and instance.
 Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and
 Cook are separate. Draft graphics are not published collision. This authoring
-panel is unavailable during Play. See [M75 workflow, units and lifetime](M75.md#editor-workflow).
+panel is unavailable during Play. See [M75 workflow, units and lifetime (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md).
 
-[Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md) uses its own source/cook workflow.
+[Volumetric terrain (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M84_VOLUMETRIC_TERRAIN.md) uses its own source/cook workflow.
 Project JavaScript can separately request bounded live volume edits through
 [runtime terrain APIs](judasjs/terrain.md); that does not enable the authoring
 brush during Play or automatically save runtime changes into the authored source.
@@ -320,7 +320,7 @@ controls and **Reset runtime environment**. **Undo preview / Redo preview** use
 a separate bounded history; they do not change authored Ctrl+Z history or silently
 save runtime values to the scene. Start/Stop clears this preview history and Stop
 reconstructs authored state. See [exact API/reset contracts](judasjs/materials.md)
-and the [Render Control Lab](../projects/render_control_lab/README.md).
+and the [Render Control Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/render_control_lab/README.md).
 
 ## Play, stop and ship
 
@@ -333,7 +333,7 @@ state and returns to the authored scene.
 Select the startup scene and input bindings in **File → Project settings**.
 Open **File → Build & Export…**. **Run project** launches the separate runtime.
 To create a movable package, choose a destination outside your project and click
-**Export desktop game**. [Export reference](M38.md) · [Windows](WINDOWS.md)
+**Export desktop game**. [Export reference](EXPORTS.md) · [Windows](WINDOWS.md)
 
 The same window links to export settings for scene and asset inclusion. It shows
 **Build for browser…** only with the [experimental browser opt-in](BROWSER_SUPPORT.md).
@@ -348,9 +348,9 @@ from [judas.d.ts](judas.d.ts), with setup in [practices](judasjs/practices.md).
 4. Track a script, open its file and reference, attach it, then Play/Stop.
 5. Save, reopen and export a small project.
 
-Automated evidence is in [M71 editor polish](evidence/m71/editor-polish/README.md)
-and [wheel/picking follow-up](evidence/m71/editor-picking-zoom/README.md).
-Those receipts describe accepted M71 work. [M72 review](M72.md#human-review)
+Automated evidence is in [M71 editor polish (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m71/editor-polish/README.md)
+and [wheel/picking follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m71/editor-picking-zoom/README.md).
+Those receipts describe accepted M71 work. [M72 review](RUNTIME_RENDERING.md#human-review)
 adds lighting, hiding and material checks; current results are reported there.
 Offscreen checks do not establish physical desktop capture or human usability.
 
@@ -379,7 +379,7 @@ before extraction; see [versioning and integrity](VERSIONING.md#updates).
 HTTPS requests are bounded and use optional system curl, without GitHub CLI or
 sign-in. Missing utilities, offline access, absent initial publication and malformed
 metadata are nonfatal. Public Git ancestry is no longer the update authority.
-The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS.md)
+The [original milestone-notice receipt (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/editor-milestone-notice/RESULTS.md)
 remains historical and does not describe this implementation.
 
 ## Project documents and first-project workflow
@@ -468,7 +468,7 @@ failed/conflicting saves preserve live changes. Run/Export read saved content,
 with **Save all and continue / Use saved version / Cancel** when edits exist.
 Choosing the saved version does not discard the live edits. See
 [the first-project walkthrough](FIRST_PROJECT.md) and
-[current correction scope](PREALPHA_FINAL_CORRECTIONS.md).
+[current correction scope (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_CORRECTIONS.md).
 
 ## Finding specialized tools
 

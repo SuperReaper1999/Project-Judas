@@ -58,8 +58,8 @@ int main() {
             {"Static sphere", "sphere"}, {"Dynamic box", "dynamic-box"},
             {"Dynamic sphere", "dynamic-sphere"}, {"Mesh", "mesh"},
             {"Point light", "point-light"}, {"Spot light", "spot-light"},
-            {"Door (legacy gameplay)", "door"}, {"Gravity region", "gravity-region"},
-            {"Basic water", "basic-water"}, {"Player start (legacy gameplay)", "player-start"},
+            {"Gravity region", "gravity-region"},
+            {"Basic water", "basic-water"},
             {"Render camera", "render-camera"}, {"Audio emitter", "audio-emitter"},
             {"Audio listener", "audio-listener"}
         };
@@ -116,7 +116,7 @@ int main() {
               "child has parent-local origin, identity rotation and unit scale");
         check(doc.Selected() == child && doc.Selection().size() == 1, "new child is immediately the sole selection");
         check(object->render && object->body && object->body->motion == SceneBodyMotion::Dynamic &&
-                  object->body->mass == 5.f && object->body->pickable,
+                  object->body->mass == 5.f,
               "dynamic box retains ordinary render, collision, mass and interaction defaults");
         doc.Undo();
         check(!doc.GetScene().Find(child) && doc.GetScene().Find(parent) &&

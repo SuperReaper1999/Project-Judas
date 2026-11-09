@@ -56,13 +56,13 @@ def require_supported_project(project_text):
         if not isinstance(document,dict) or not isinstance(document.get('data'),dict):
             raise ValueError('Expected a named project data object')
         policy=document['data']
-        unsupported=policy.get('advancedFluidDynamics',False) or policy.get('legacyGameplay',True)
+        unsupported=policy.get('advancedFluidDynamics',False)
     else:
         import shlex
         fields={line[0]:line[1:] for raw in project_text.splitlines() if (line:=shlex.split(raw))}
-        unsupported=fields.get('advanced-fluid-dynamics',['false'])!=['false'] or fields.get('legacy-gameplay',['true'])!=['false']
+        unsupported=fields.get('advanced-fluid-dynamics',['false'])!=['false']
     if unsupported:
-        raise ValueError('Browser projects require script-owned gameplay and Advanced Fluid Dynamics disabled')
+        raise ValueError('Browser projects require Advanced Fluid Dynamics disabled')
 
 def copy_browser_licenses(sdk,output):
     destination=output/'licenses'

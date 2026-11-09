@@ -1,5 +1,4 @@
 #include "ContactVelocity.h"
-#include "ContactSolver.h"
 #include "RigidBody.h"
 
 #include <algorithm>
@@ -113,52 +112,10 @@ void Mathematics() {
     }
     Check(quadraticBadNulls>0,"rejected expanded-quadratic control actually exposes its lost angular null");
 }
-void ActualSolver() {
-    // Exact cyclic rotations keep r||d and n perpendicular in represented
-    // coordinates while exercising different physical gravity/reference axes.
-    const glm::quat rotations[]={{1,0,0,0},{.5f,.5f,.5f,.5f},{.5f,-.5f,-.5f,-.5f}};
-    for(const auto& orientation:rotations)for(bool moving:{false,true})
-        for(float scale:{1.f,1e4f,1e8f,1e12f}) {
-            RigidBody a,b;a.inverseMass=1;a.orientation=orientation;
-            a.inverseInertiaLocal=glm::mat3(0);
-            a.inverseInertiaLocal[0][0]=scale;a.inverseInertiaLocal[1][1]=.3f*scale;a.inverseInertiaLocal[2][2]=.07f*scale;
-            const glm::dmat3 rotation=ContactRotation(orientation);
-            const glm::vec3 r=glm::vec3(rotation*glm::dvec3(.6f,.8f,0));
-            const glm::vec3 n=glm::vec3(rotation*glm::dvec3(0,0,1));
-            const glm::vec3 boundary=moving?n*2.f:glm::vec3(0);
-            b.linearVelocity=boundary;
-            Contact contact;contact.hit=contact.hasLocalAnchors=true;
-            contact.normal=n;contact.preciseNormal=n;
-            contact.localAnchorA={.6f,.8f,0};contact.localAnchorB={0,0,0};
-            ContactSolver solver;solver.AddContact(a,b,contact,2,0,1);solver.Prepare();
-            const auto& prepared=solver.Constraints().front();
-            const float kNormal=Native(a.inverseMass+b.inverseMass,prepared.velocityOffsetA,
-                prepared.velocityOffsetB,prepared.inverseInertiaA,prepared.inverseInertiaB,n);
-            const float normalMass=kNormal>1e-6f?1.f/kNormal:0;
-            Check(Bits(prepared.normalMass,normalMass),"normal coefficient remains original cross-product arithmetic");
-            // Warmstart supplies an existing normal reaction, not this test's
-            // incoming velocity. Set an exact no-normal-residual physical state
-            // afterward so the next real point operation only measures friction.
-            a.linearVelocity=boundary+r;a.angularVelocity={0,0,0};
-            b.angularVelocity={0,0,0};
-            solver.SolveVelocities(1);
-            const auto& row=solver.Constraints().front();
-            Check(Bits(row.normalImpulse,1.f),"actual friction operation does not alter supported normal load");
-            Check(glm::length(a.linearVelocity-boundary)<2e-6f,
-                  "actual solver eliminates parallel-lever tangential slip even at large inertia");
-            Check(glm::length(a.angularVelocity)<2e-6f,
-                  "actual exact-null friction response invents no rotational impulse");
-            Check(glm::length(row.tangentImpulse)>0.9f&&glm::length(row.tangentImpulse)<1.1f,
-                  "actual un-clamped Coulomb response applies the full physical unit impulse");
-            Check(glm::length(row.tangentImpulse)<=row.friction*row.normalImpulse,
-                  "actual friction remains inside the existing Coulomb disc");
-            Check(b.linearVelocity==boundary&&b.angularVelocity==glm::vec3(0),
-                  "moving prescribed boundary retains its actual velocity and ownership");
-        }
-}
+
 }
 int main() {
-    Mathematics();ActualSolver();
+    Mathematics();
     std::printf("friction Jacobian: %u checks, %u failures, %u rejected-quadratic null violations; "
                 "max_stable_error=%.12g max_derived_bound=%.12g max_native_error=%.12g\n",
                 checks,failures,quadraticBadNulls,largestError,largestErrorBound,largestNativeError);

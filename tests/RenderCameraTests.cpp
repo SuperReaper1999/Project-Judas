@@ -1,3 +1,7 @@
+#include "WorldPersistence.h"
+#include "SaveStorage.h"
+#include "ToolProcess.h"
+#include "EnginePaths.h"
 #include <algorithm>
 #include <chrono>
 #include <cstdio>
@@ -15,7 +19,6 @@
 #include "SceneFingerprint.h"
 #include "SceneSerialization.h"
 #include "WorldPresentation.h"
-#include "WorldState.h"
 #include "InteractivePlay.h"
 #include "editor/EditorDocument.h"
 #include "ScreenshotWriter.h"
@@ -26,7 +29,7 @@ Scene Fixture(){
  Scene s;s.Settings().name="Camera surfaces";s.Settings().ambientColor=glm::vec3(1);s.Settings().sunColor=glm::vec3(0);
  auto& red=s.CreateObject("Moving subject");red.transform.position={-1,1,0};red.render=SceneRenderComponent{};
  red.render->color={1,.05f,.02f};red.body=SceneBodyComponent{};red.body->motion=SceneBodyMotion::Dynamic;
- red.body->initialLinearVelocity={.15f,0,0};red.body->pickable=true;
+ red.body->initialLinearVelocity={.15f,0,0};
  auto& green=s.CreateObject("Other subject");green.transform.position={1,1,0};green.render=SceneRenderComponent{};green.render->color={.02f,1,.05f};
  auto& c=s.CreateObject("West view");c.transform.position={-1,1,4};c.renderCamera=SceneRenderCameraComponent{};
  c.renderCamera->width=128;c.renderCamera->height=96;c.renderCamera->farPlane=50;
@@ -34,16 +37,79 @@ Scene Fixture(){
  d.renderCamera->width=128;d.renderCamera->height=96;d.renderCamera->farPlane=50;
  auto& screen=s.CreateObject("Display surface");screen.transform.position={0,1,2};screen.render=SceneRenderComponent{};
  screen.render->halfExtents={.7f,.45f,.025f};screen.render->color=glm::vec3(1);screen.render->textureCamera=3;
- auto& player=s.CreateObject("Player start");player.transform.position={0,1,6};player.playerStart=ScenePlayerStartComponent{};
- player.playerStart->view=ScenePlayerView::FirstPerson;
+
  return s;
+}
+// Genuine cold processes must reconstruct dead target identities without
+// bringing their bodies, scripts or GPU targets back to life.
+int CameraCold(const std::string& mode, const std::filesystem::path& path) {
+    std::string error;
+    auto check=[&](bool okay,const char* stage) {
+        if(!okay)throw std::runtime_error(std::string(stage)+": "+error);
+    };
+    try {
+        GameSnapshot snapshot;
+        if(mode=="--cold-write") {
+            auto scene=Fixture();
+            scene.Find(1)->renderCamera=SceneRenderCameraComponent{};
+            RuntimeWorld world;
+            check(world.Build(scene,nullptr,error),"construct producer");
+            check(world.DestroyEntity(1,&error),"destroy target owner");
+            auto consumer=*scene.Find(5);
+            consumer.id=kInvalidSceneObjectId;
+            consumer.body=SceneBodyComponent{};
+            consumer.body->motion=SceneBodyMotion::Dynamic;
+            consumer.render->textureCamera=1;
+            check(world.CreateEntity(consumer,nullptr,&error)!=kInvalidSceneObjectId,"create consumer");
+            snapshot.project="camera-persistence-fixture";
+            snapshot.scene="Scenes/cameras.judas";
+            check(ComputeSceneFingerprint(scene,snapshot.content,error),"source identity");
+            check(WorldPersistence::Capture(world,snapshot.participants,error),"capture");
+            const auto bytes=EncodeGameSnapshot(snapshot);
+            std::ofstream file(path,std::ios::binary);
+            file.write(bytes.data(),bytes.size());
+            check(bool(file),"write current checksummed container");
+        } else {
+            std::ifstream file(path,std::ios::binary);
+            const std::string bytes((std::istreambuf_iterator<char>(file)),{});
+            check(DecodeGameSnapshot(bytes,snapshot,error),"decode unchanged cold container");
+            Scene scene;
+            check(WorldPersistence::SceneFrom(snapshot.participants,scene,error),"snapshot definitions");
+            RuntimeWorld world;
+            check(world.Build(scene,nullptr,error,nullptr,nullptr,true),"private construction");
+            check(WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"restore participants");
+            check(world.FindEntity(1)&&world.FindEntity(1)->lifecycle==EntityLifecycle::Destroyed&&
+                  !world.RuntimeDefinition(1)&&!world.RuntimeBody(1).IsValid()&&!world.CameraTexture(1).IsValid(),"target stays destroyed");
+            unsigned consumers=0;
+            for(const auto& object:world.ScriptObjects())
+                if(object.id>=kRuntimeEntityIdBase&&object.render&&object.render->textureCamera==1&&world.RuntimeBody(object.id).IsValid())++consumers;
+            check(consumers==1,"live physical consumer retains original dead-target identity");
+            std::map<std::string,SaveChunk> again;
+            check(WorldPersistence::Capture(world,again,error)&&
+                  again.at("retired-render-cameras").data==snapshot.participants.at("retired-render-cameras").data,"resave retains identity");
+        }
+        std::printf("PASS camera cold %s\n",mode.c_str());
+        return 0;
+    } catch(const std::exception& e) {std::fprintf(stderr,"FAIL camera cold: %s\n",e.what());return 1;}
 }
 glm::mat4 View(){return glm::lookAt(glm::vec3(0,2,8),glm::vec3(0,1,0),glm::vec3(0,1,0));}
 glm::mat4 Projection(){return glm::perspective(glm::radians(60.f),320.f/240,.1f,50.f);}
-void Frame(Renderer& r,RuntimeWorld& w){RenderWorldFrame(r,320,240,w,nullptr,View(),Projection(),{0,1,0},1);}
+void Frame(Renderer& r,RuntimeWorld& w){RenderWorldFrame(r,320,240,w,View(),Projection(),{0,1,0},1);}
 double Median(std::vector<double> v){std::sort(v.begin(),v.end());return .5*(v[(v.size()-1)/2]+v[v.size()/2]);}
 }
 int main(int argc,char**argv){
+ if(argc==3&&(std::string(argv[1])=="--cold-write"||std::string(argv[1])=="--cold-read"))return CameraCold(argv[1],argv[2]);
+ if(argc==3&&std::string(argv[1])=="--cold-suite") {
+  const auto directory=std::filesystem::absolute(argv[2]);std::filesystem::create_directories(directory);
+  const auto path=directory/"camera.save";std::string log,error;
+  const auto executable=(std::filesystem::path(EngineExecutableDir())/std::filesystem::path(argv[0]).filename()).string();
+  if(!CaptureToolOutput(executable,{"--cold-write",path.string()},log,error,std::chrono::seconds(30),65536)){std::fprintf(stderr,"%s%s",log.c_str(),error.c_str());return 1;}
+  std::printf("%s",log.c_str());std::ifstream beforeFile(path,std::ios::binary);const std::string before((std::istreambuf_iterator<char>(beforeFile)),{});beforeFile.close();
+  if(!CaptureToolOutput(executable,{"--cold-read",path.string()},log,error,std::chrono::seconds(30),65536)){std::fprintf(stderr,"%s%s",log.c_str(),error.c_str());return 1;}
+  std::printf("%s",log.c_str());std::ifstream afterFile(path,std::ios::binary);const std::string after((std::istreambuf_iterator<char>(afterFile)),{});
+  return before==after?0:1;
+ }
+
  std::filesystem::path out="build/m33-focused";
  if(argc==3&&std::string(argv[1])=="--demo"){std::string error;return SaveSceneToFile(Fixture(),argv[2],error)?0:2;}
  if(argc==3&&std::string(argv[1])=="--output")out=argv[2];
@@ -188,8 +254,17 @@ int main(int argc,char**argv){
  SceneObject consumer=scene.Objects()[4];consumer.id=kInvalidSceneObjectId;consumer.body=SceneBodyComponent{};
  consumer.body->motion=SceneBodyMotion::Dynamic;consumer.render->textureCamera=1;
  Check(source.CreateEntity(consumer,nullptr,&error)!=kInvalidSceneObjectId,"runtime consumer may retain stable reference to destroyed authored camera");
- const WorldState delta=CaptureWorldState(source);
- Check(ApplyWorldState(destination,delta,error)&&destination.FindEntity(1)->lifecycle==EntityLifecycle::Destroyed,"mixed destroy/create camera delta applies through shared persistence preflight");
+ std::map<std::string,SaveChunk> snapshot;Scene saved;
+ Check(WorldPersistence::Capture(source,snapshot,error)&&WorldPersistence::SceneFrom(snapshot,saved,error)&&destination.Build(saved,nullptr,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(destination,error)&&WorldPersistence::Restore(destination,snapshot,error)&&destination.FindEntity(1)->lifecycle==EntityLifecycle::Destroyed,"mixed destroy/create camera delta applies through shared persistence preflight");
+ Check(!destination.RuntimeBody(1).IsValid()&&!destination.CameraTexture(1).IsValid()&&
+       destination.RuntimeDefinition(1)==nullptr,"restored retired camera does not resurrect body or target");
+ auto malformed=snapshot;malformed.at("retired-render-cameras").version=99;
+ RuntimeWorld rejected;Check(rejected.Build(saved,nullptr,error,nullptr,nullptr,true)&&
+       !WorldPersistence::Restore(rejected,malformed,error),"newer retired-camera participant rejects");
+ auto missing=snapshot;missing.erase("retired-render-cameras");RuntimeWorld incomplete;
+ Check(incomplete.Build(saved,nullptr,error,nullptr,nullptr,true)&&
+       !WorldPersistence::Restore(incomplete,missing,error),"missing retirement state cannot silently revive the camera");
+
  consumer.render->textureCamera=999;
  Check(!destination.ValidateEntityCreation(consumer,error),"runtime consumer rejects nonexistent camera definition");
  }
@@ -199,7 +274,7 @@ int main(int argc,char**argv){
  Check(ScenesEqual(doc.GetScene(),baseline),"camera editor undo restores authored configuration");doc.Redo();doc.Undo();
  RuntimeWorld world;Check(world.Build(doc.GetScene(),nullptr,error),"Play world builds from editor document");
  InteractivePlay play;window.SetTestInputMode(true);Check(play.Begin(world,WorldCoordinates{},error),"same InteractivePlay runtime path starts");
- play.Frame(window,renderer,1.f/60,false);play.Frame(window,renderer,1.f/60,false);
+ play.Frame(window,renderer,1.f/60);play.Frame(window,renderer,1.f/60);
  Check(world.PresentationCameras()[0].updates>0,"actual InteractivePlay frame renders secondary camera");
  play.End();world.Destroy();Check(ScenesEqual(doc.GetScene(),baseline),"Play/Stop leaves authored camera scene unchanged");
  }

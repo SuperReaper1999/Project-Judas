@@ -39,7 +39,7 @@ geometry-integrated bending, combined axial/bending stress and approximate torsi
 Per-interface strengths can be authored in the editor or partition source; the
 state's top-level strength fields remain family defaults. Existing methods,
 callbacks, safe handles and legacy asset behaviour are unchanged. See
-[structural authoring, equations, limitations and lab](../M79_STRUCTURES.md).
+[structural authoring, equations, limitations and lab](../STRUCTURES.md).
 
 Assets/strengths are authored offline. Elastic compliance and plastic yield are
 separate. Default compression does not crush; an optional positive cooked
@@ -99,7 +99,7 @@ individual `setColliderEnabled` retains the physical cell but disables its colli
 Liquid-bearing fractured owners are unsupported and rejected; no conserved water
 is deleted by this feature.
 
-See [M63 architecture/authoring](../M63_FRACTURE.md), [deformables](deformables.md),
+See [M63 architecture/authoring](../FRACTURE.md), [deformables](deformables.md),
 [physics/joints](physics.md), [saves](saves.md), [streaming](streaming.md), and the
 [executed example](examples/fracture.js).
 
@@ -111,7 +111,7 @@ an M61 save; capture fails with a diagnostic before replacing a good slot.
 
 A rigid partition can additionally author a finite elastic/plastic law on each
 interface. The current implementation and practical lab are documented in
-[M83 physical sections](../M83_COARSE_CRASH.md). This changes physical collider and
+[M83 physical sections](../COARSE_CRASH.md). This changes physical collider and
 mount geometry through ordinary body motion; it is not a visual crush animation.
 
 Interface snapshots also contain `material` (boolean), `plasticTranslation`

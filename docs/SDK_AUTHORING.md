@@ -1,62 +1,38 @@
-# SDK authoring reference
+# Versioned SDK authoring reference
 
-Use the copy shipped with your SDK. Check its BUILD_INFO.json for the engine
-version, source revision and channel. This page describes terrain cook format
-M75-1, JudasScene 3 text authoring, and the navigation bake used by this SDK.
-The baker may rewrite the scene in the structured format. Keep the authored
-source under version control and let the SDK tools write generated assets.
-
-## Experimental Terrain V2 preview
-
-The source-build Alpha V2 preview additionally supports native sampled/volumetric
-landscapes. Use the current [Terrain V2 guide](TERRAIN_V2.md), including its
-geographic native-patch workflow and `terrain.planet` scene reference. It reuses
-this navigation system through source-owned live surfaces; the V1 baked-mesh
-recipe below remains valid for existing projects. Do not assume these preview
-formats exist in older published SDKs or replace a project's assets automatically.
+Use this copy with its SDK BUILD_INFO.json. This reference describes the current
+Terrain V2, JudasScene 3 text/named documents and native navigation baker.
+Do not use old V1 terrain create/brush/cook commands or liquid-bake tools.
 
 ## Terrain → navmesh → NPC
 
-Start with the [Terrain Navigation Workshop](../projects/terrain_navigation_workshop/README.md).
-Its scene has complete object blocks, including transforms, static triangle-mesh
-collision, a navigation surface, and a scripted CharacterMotor courier. The
-recipe creates and sculpts terrain, installs its asset IDs and bakes navigation.
+Create a landscape in **World → Terrain tools → New landscape**, then sculpt,
+paint or excavate it. Save and update playable terrain publishes the native
+asset, preview and source receipt together. Keep the owner root, unit-scale and
+static. See [Terrain V2](TERRAIN_V2.md) and the editable
+[Highlands Workshop](../projects/terrain_v2_workshop/README.md).
 
-### Terrain source and cooked scene fields
-
-In the editor use **View → Terrain and world tools → Terrain sculpt / paint**.
-Create a project-owned Imports/*.judasterrain source, cook it, then choose
-**Create terrain instance**. Keep the terrain instance at unit scale.
-Select it and use **Edit selected terrain** to sculpt. Save the editable source
-and cook again to publish render and collision products.
-
-The CLI equivalent, run from the project root:
+From an existing project's root:
 
 ```sh
-mkdir -p Imports
-"$SDK/judas_terrain_author" create Imports/yard.judasterrain 65 65 32 32 Assets/Terrain/yard
-"$SDK/judas_terrain_author" brush Imports/yard.judasterrain raise 0 0 8 3 0.6
-"$SDK/judas_terrain_author" cook Workshop.judasproj Imports/yard.judasterrain
+mkdir -p Authoring Assets/Terrain
+"$SDK/judas_terrain_author" v2-new Authoring/yard.judasterrain2 highlands 65 0.5 19 2
+"$SDK/judas_terrain_author" v2-native Authoring/yard.judasterrain2 Assets/Terrain/yard.judasmodel
 ```
 
-Create takes X/Z sample counts (2–257), width and depth in metres, and the
-product directory. The raise brush takes local X/Y/Z, radius in metres and
-height change in metres. The cook reads the project-relative source path.
-Use the `id` strings from the generated `.judasmeta` sidecars. Asset IDs are
-project references, so don't copy another project's IDs into these fields.
+`v2-new` takes source, generation kind, sample count, spacing, seed and amplitude.
+`v2-native` writes a native `.judasterrain`, preview model/texture and recipe.
+Register the files using the editor Asset Browser. Use the generated metadata's
+IDs, never another project's IDs. The terrain entity's exact binding is
+`terrain.asset "NATIVE_ASSET_ID"`. Its render preview may reference the model and
+texture, but live geometry, collision, excavation and paging belong to that
+native terrain owner. There is no independent full-mesh collision bake to keep
+synchronised. An empty `nav.surface.asset` on this same owner selects source-owned
+live navigation; source publication updates it alongside collision.
 
-| Scene key | Value |
-| --- | --- |
-| `render` | `mesh` |
-| `render.mesh-asset` | ID from terrain.judasmodel.judasmeta |
-| `render.texture-asset` | ID from terrain.tga.judasmeta |
-| `body` | `static triangle-mesh` |
-| `body.collision-asset` | ID from terrain.judascollision.judasmeta |
-
-Copy the full terrain object from the workshop for the accompanying required
-render/body fields. The source itself stays in Imports; the scene references
-the cooked outputs. This heightfield recipe covers a flat world with sculpted
-heights. Use [volumetric terrain](M84_VOLUMETRIC_TERRAIN.md) for overhangs.
+For independent static scene geometry, add a separate Navigation Surface and bake
+it with the SDK tool. The complete surface keys follow. Unlike a native terrain
+surface, independent bakes need rebuilding when included geometry changes.
 
 ### Navigation surface
 
@@ -96,8 +72,7 @@ does not invalidate the bake. Render-only geometry does not contribute.
 
 ### NPC movement
 
-Add a **Character Motor**, **Navigation agent**, and script attachment. The
-workshop's Courier object shows the complete `motor.*` and `script.0.*` fields.
+Add a **Character Motor**, **Navigation agent**, and script attachment.
 Its agent uses these exact scene keys:
 
 ```text

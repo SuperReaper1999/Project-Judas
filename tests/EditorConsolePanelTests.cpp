@@ -122,7 +122,7 @@ int main() try {
     const auto healthyId = healthy.id;
     healthy.scripts.push_back({1, healthyAsset.id, true, "{}"});
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     Check(world.Build(scene, &resources, error), "consumer world builds without a graphics runtime");
     const auto body = world.RuntimeBody(faultId);
     world.Physics().SetLinearVelocity(body, {1, -2, 3});

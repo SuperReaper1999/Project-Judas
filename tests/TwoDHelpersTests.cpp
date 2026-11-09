@@ -30,7 +30,7 @@ export default class {constructor({entity}){this.entity=entity;this.state={};}
  auto observe=[&](RuntimeWorld& w){InputSystem input;w.UpdateScripts(&input,.016f);w.FixedScripts(&input,1.f/60);for(const auto& d:w.Scripts()->Diagnostics())throw std::runtime_error(d.message);
   for(const auto& s:w.Scripts()->Capture()){if(s.entity==owner)return nlohmann::json::parse(s.json);}
   throw std::runtime_error("probe absent");};
- RuntimeWorld world;world.legacyGameplay=false;check(world.Build(scene,&resources,error),"build actual planar targets and visual parallax");auto state=observe(world);
+ RuntimeWorld world;check(world.Build(scene,&resources,error),"build actual planar targets and visual parallax");auto state=observe(world);
  check(state["stab"].size()==1&&state["stab"][0]==std::to_string(ahead),"thrust really hits front body without hitting side body");
  const auto hits=state["swipe"].get<std::vector<std::string>>();
  check(std::set<std::string>(hits.begin(),hits.end())==std::set<std::string>{std::to_string(ahead),std::to_string(side)}&&state["invalid"]==true,"bounded swipe reaches both physical targets once; invalid plane rejects");

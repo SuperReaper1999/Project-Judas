@@ -3,7 +3,7 @@ import {add,mul,axis,qm,rotate,norm,length} from './math.js';
 // Project policy only: movement/look, demo comparisons, routing and physical door choice.
 export default class {
  constructor({entity}){this.entity=entity;this.yaw=0;this.pitch=0;this.clock=0;this.open=false;this.doppler=true;this.bypass=false;this.toneOn=true;this.frames=0;this.state={started:false};}
- start(){this.doc=ui.get('audio_lab');this.music=world.entity('20');this.tone=world.entity('21');this.noise=world.entity('22');this.pulse=world.entity('23');this.click=world.entity('24');this.hinge=physics.joint(world.entity('34'));ui.debugOverlayVisible=false;input.pointerCapture=true;this.state.started=true;}
+ start(){this.doc=ui.get('audio_lab');this.music=world.entity('20');this.tone=world.entity('21');this.noise=world.entity('22');this.pulse=world.entity('23');this.click=world.entity('24');this.hinge=physics.joint(world.entity('34'));input.pointerCapture=true;this.state.started=true;}
  menu(open){this.doc.modal=open;this.doc.get('menu').visible=open;input.pointerCapture=!open;}
  action(name){
   if(name==='resume')this.menu(false);

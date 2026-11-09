@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
             Check(!fs::exists(root), "use a fresh project fixture");
             Check(Project::CreateNew(root.string(), "Native regional terrain", project, error),
                   "create ordinary project");
-            project.Settings().legacyGameplay = false;
+
             Check(project.Save(error), "persist scripted project policy");
             auto source =
                 residency ? TerrainV2::Create(1025, 1025, 1, 32) : TerrainV2::Create(513, 513, 2);
@@ -258,7 +258,7 @@ int main(int argc, char **argv) {
                       world.LiveTerrain().Wait(id, error),
                   "sculpt an actual streamed owner");
             Check(
-                world.LiveTerrain().Brush(id, {0, 3, 0}, {VolumeBrushKind::Remove, 6, 1}, error) &&
+                world.LiveTerrain().Brush(id, {0, 3, 0}, {TerrainV2::Edit::Kind::Remove, {}, 6}, error) &&
                     world.LiveTerrain().Wait(id, error),
                 "excavate an actual streamed owner");
             stream.Advance(false);

@@ -4,59 +4,31 @@
 #include <cstdio>
 #include <limits>
 
-#include "GameSession.h"
 #include "RadialTerrain.h"
 #include "ReferenceFrame.h"
 #include "RuntimeWorld.h"
 
-RuntimeDiagnostics::RuntimeDiagnostics(bool fluid, bool atmosphere, bool fire, bool telemetry)
-    : m_fluid(fluid), m_atmosphere(atmosphere), m_fire(fire), m_telemetry(telemetry) {
+RuntimeDiagnostics::RuntimeDiagnostics(bool fluid, bool fire, bool telemetry)
+    : m_fluid(fluid), m_fire(fire), m_telemetry(telemetry) {
     if (m_telemetry) {
         std::printf(
-            "frame,posX,posY,posZ,upX,upY,upZ,yaw,pitch,lookX,lookY,lookZ,grounded,velX,velY,"
-            "velZ,gravX,gravY,gravZ\n");
+            "frame,posX,posY,posZ,upX,upY,upZ,lookX,lookY,lookZ,gravX,gravY,gravZ\n");
         std::fflush(stdout);
     }
 }
 
 void RuntimeDiagnostics::PrepareMeasurements(FixedStepMeasurements& m) const {
     m.measureFluid = m_fluid;
-    m.measureAtmosphere = m_atmosphere;
     m.measureFire = m_fire;
-    m.fluidMeasured = m.atmosphereMeasured = m.fireMeasured = false;
+    m.fluidMeasured = m.fireMeasured = false;
 }
 
-void RuntimeDiagnostics::RecordFixedStep(const GameSession& session, const FixedStepMeasurements& m,
-                                         double fixedStepMilliseconds) {
-    const RuntimeWorld& world = session.World();
+void RuntimeDiagnostics::RecordFixedStep(const RuntimeWorld& world, const FixedStepMeasurements& m,
+                                         double /*fixedStepMilliseconds*/) {
     ++m_fixedSteps;
     if (m.fluidMeasured) {
         m_fluidMilliseconds += m.fluidMilliseconds;
         ++m_fluidSteps;
-    }
-    if (m_atmosphere && m.atmosphereMeasured) {
-        m_atmosphereMilliseconds += m.atmosphereMilliseconds;
-        m_fixedMilliseconds += fixedStepMilliseconds;
-        ++m_atmosphereSteps;
-        if (m_atmosphereSteps % 600 == 0 && world.GetVehicle() && world.GetAtmosphere()) {
-            const BodyHandle ship = world.GetVehicle()->handle;
-            const RuntimeWorld::Atmosphere& atmosphere = *world.GetAtmosphere();
-            const glm::vec3 position = world.Physics().GetTransform(ship).position;
-            const float radius = glm::length(position - atmosphere.frame.originPosition);
-            const glm::vec3 relativeVelocity = RelativeVelocityToFrame(
-                atmosphere.frame, position, world.Physics().GetLinearVelocity(ship));
-            const float specificEnergy = 0.5f * glm::dot(relativeVelocity, relativeVelocity) +
-                                         atmosphere.field.SpecificPotentialAtRadius(radius);
-            std::fprintf(stderr,
-                         "M26: atmosphere %.4f ms/sample, full fixed step %.4f ms; "
-                         "rho %.5f kg/m^3, P %.3f Pa, airspeed %.2f m/s, drag %.2f N; "
-                         "planet r %.2f m, specific E %.3f J/kg\n",
-                         m_atmosphereMilliseconds / static_cast<double>(m_atmosphereSteps),
-                         m_fixedMilliseconds / static_cast<double>(m_atmosphereSteps),
-                         m.lastAerodynamicDrag.density, m.lastAerodynamicDrag.pressure,
-                         m.lastAerodynamicDrag.relativeAirspeed, glm::length(m.lastAerodynamicDrag.force),
-                         radius, specificEnergy);
-        }
     }
     if (m_fire && m.fireMeasured) {
         m_fireMilliseconds += m.fireMilliseconds;
@@ -77,49 +49,26 @@ void RuntimeDiagnostics::RecordFixedStep(const GameSession& session, const Fixed
     }
 }
 
-void RuntimeDiagnostics::RecordFrame(const GameSession& session, double surfaceMilliseconds,
+void RuntimeDiagnostics::RecordFrame(const RuntimeWorld& world, double surfaceMilliseconds,
                                      double sceneMilliseconds, float frameDeltaSeconds) {
     if (!m_fluid) return;
-    const RuntimeWorld& world = session.World();
     ++m_frames;
     m_surfaceMilliseconds += surfaceMilliseconds;
     m_sceneMilliseconds += sceneMilliseconds;
     m_frameMilliseconds += frameDeltaSeconds * 1000.0;
-    if (m_frames % 120 != 0 || !world.HasFluid()) return;
-    const FluidDiagnostics state = world.Fluid().GetDiagnostics();
-    float minimumClearance = std::numeric_limits<float>::max();
-    for (const RuntimeWorld::Terrain& terrain : world.Terrains()) {
-        for (const FluidParticle& particle : world.Fluid().Particles()) {
-            const glm::vec3 local = glm::conjugate(terrain.rotation) * (particle.position - terrain.position);
-            minimumClearance = std::min(minimumClearance, terrain.surface->Sample(local).signedDistance);
-        }
-    }
-    std::fprintf(stderr,
-                 "Fluid timing: %zu particles; %.3f ms/fluid step (%zu steps); %.3f ms/surface+upload; "
-                 "%.3f ms/scene CPU submit; %.3f ms/frame wall; mass %.3f kg; "
-                 "mean/max over-density %.2f/%.2f%%; COM (%.3f, %.3f, %.3f) m; kinetic %.3f J",
-                 state.particleCount, m_fluidMilliseconds / static_cast<double>(std::max<std::size_t>(m_fluidSteps, 1)),
-                 m_fluidSteps, m_surfaceMilliseconds / m_frames, m_sceneMilliseconds / m_frames,
-                 m_frameMilliseconds / m_frames, state.totalMass, state.meanPositiveDensityError * 100.0f,
-                 state.maxPositiveDensityError * 100.0f, state.centerOfMass.x, state.centerOfMass.y,
-                 state.centerOfMass.z, state.kineticEnergy);
-    if (!world.Terrains().empty()) std::fprintf(stderr, "; min terrain clearance %.3f m", minimumClearance);
-    std::fprintf(stderr, "\n");
-    std::fflush(stderr);
+    if (m_frames % 120 != 0) return;
+    std::fprintf(stderr,"Water presentation: %.3f ms/preparation, %.3f ms/scene CPU, %.3f ms/frame wall; grid %s\n",
+                 m_surfaceMilliseconds/m_frames,m_sceneMilliseconds/m_frames,m_frameMilliseconds/m_frames,
+                 world.GridWater()?"resident":"inactive");
 }
 
-void RuntimeDiagnostics::RecordTelemetryFrame(const GameSession& session) {
-    if (!m_telemetry) return;
-    constexpr int kInterval = 10;
-    if ((m_telemetryFrames++ % kInterval) != 0) return;
-    const PlayerController& player = session.Player();
-    const glm::vec3 pos = player.GetPosition();
-    const glm::vec3 up = player.GetOrientation() * glm::vec3(0.0f, 1.0f, 0.0f);
-    const glm::vec3 look = player.GetLookDirection();
-    const glm::vec3 vel = player.GetVelocity();
-    const glm::vec3 grav = session.World().Gravity().Sample(pos);
-    std::printf("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.2f,%.2f,%.3f,%.3f,%.3f,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n",
-                m_telemetryFrames, pos.x, pos.y, pos.z, up.x, up.y, up.z, player.GetYaw(), player.GetPitch(),
-                look.x, look.y, look.z, player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z, grav.x, grav.y, grav.z);
-    std::fflush(stdout);
+void RuntimeDiagnostics::RecordTelemetryFrame(const RuntimeWorld& world) {
+    if (!m_telemetry || (m_telemetryFrames++ % 10) != 0 || !world.view) return;
+    const auto& pose = world.view->pose;
+    const auto up = pose.rotation * glm::vec3(0,1,0);
+    const auto look = pose.rotation * glm::vec3(0,0,-1);
+    const auto gravity = world.Gravity().Sample(pose.position);
+    std::printf("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n",
+                m_telemetryFrames,pose.position.x,pose.position.y,pose.position.z,
+                up.x,up.y,up.z,look.x,look.y,look.z,gravity.x,gravity.y,gravity.z);
 }

@@ -1,7 +1,6 @@
 #include "InputSystem.h"
 #include "Project.h"
 #include "Window.h"
-#include "PlayerController.h"
 #include <chrono>
 #include <cmath>
 #include <cstdio>
@@ -43,12 +42,12 @@ int main(){
     Window window;Check(window.Init("M35 input",320,240,false),"real SDL window backend starts");window.SetMouseCaptured(true);
     auto key=[&](Uint32 type,SDL_Scancode code){SDL_Event e{};e.type=type;e.key.type=type;e.key.keysym.scancode=code;SDL_PushEvent(&e);};
     window.PollEvents();key(SDL_KEYDOWN,SDL_SCANCODE_SPACE);key(SDL_KEYUP,SDL_SCANCODE_SPACE);window.PollEvents();
-    Check(window.Input().Action("jump").pressed&&window.Input().Action("jump").released&&window.ConsumeJumpRequest()&&!window.ConsumeJumpRequest(),"actual SDL short press feeds logical input and existing gameplay handoff");
+    Check(window.Input().Action("jump").pressed&&window.Input().Action("jump").released,"actual SDL short press feeds logical input and existing gameplay handoff");
     auto runtimeMap=InputMap::Defaults();runtimeMap.ReplaceBinding("move_y",1,{"key:Q"});window.Input().SetMap(runtimeMap,error);
     key(SDL_KEYDOWN,SDL_SCANCODE_Q);window.PollEvents();Check(window.InputAxis("move_y")==1,"window consumers honor project rebind");key(SDL_KEYUP,SDL_SCANCODE_Q);window.PollEvents();Check(window.InputAxis("move_y")==0,"raw release clears rebound axis");
-    PlayerController player({0,1,0},0);const auto before=player.GetLookDirection();SDL_Event motion{};motion.type=SDL_MOUSEMOTION;motion.motion.xrel=30;SDL_PushEvent(&motion);window.PollEvents();player.UpdateFrameInput(window);
-    Check(glm::length(player.GetLookDirection()-before)>.01f,"representative player consumes named look axis through normal frame input");
-    window.SetInputClaimed(true,true);key(SDL_KEYDOWN,SDL_SCANCODE_SPACE);window.PollEvents();Check(!window.ConsumeJumpRequest(),"editor-owned input does not create gameplay press");
+    SDL_Event motion{};motion.type=SDL_MOUSEMOTION;motion.motion.xrel=30;SDL_PushEvent(&motion);window.PollEvents();
+    Check(window.InputAxis("look_x")!=0,"actual mouse movement reaches the project-owned look axis");
+    window.SetInputClaimed(true,true);key(SDL_KEYDOWN,SDL_SCANCODE_SPACE);window.PollEvents();Check(!window.Input().Action("jump").pressed,"editor-owned input does not create gameplay press");
     window.SetInputClaimed(false,false);
 #if SDL_VERSION_ATLEAST(2,0,14)
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,"1"); // hidden-window test, not runtime policy

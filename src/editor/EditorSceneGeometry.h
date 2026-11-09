@@ -26,8 +26,6 @@ inline float PickRadius(const SceneObject &o) {
             radius = std::max(radius, o.body->radius);
         else if (o.body->shape == SceneShape::Box)
             radius = std::max(radius, glm::length(o.body->halfExtents));
-        else if (o.body->shape == SceneShape::Terrain)
-            radius = std::max(radius, 90.0f);
     }
     if (o.gravity) {
         radius = std::max(radius, o.gravity->regionShape == SceneRegionShape::Sphere
@@ -55,7 +53,7 @@ inline std::optional<InitialFrameTarget> InitialFraming(const Scene &authored) {
         return InitialFrameTarget{object.id, object.transform.position, PickRadius(object)};
     };
     for (const auto &object : world.Objects())
-        if (object.playerStart || object.characterMotor)
+        if (object.characterMotor)
             return target(object);
     const auto visible = [&](const SceneObject &object) {
         return object.renderVisible && object.render && object.render->visible &&
@@ -70,8 +68,7 @@ inline std::optional<InitialFrameTarget> InitialFraming(const Scene &authored) {
     for (const auto &object : world.Objects())
         if (object.body || object.renderCamera || object.light ||
             (!object.ui && !object.gravity && !object.planet && !object.atmosphere && !object.celestial &&
-             !object.basicWater && !object.weather && !object.fluidVolume && !object.liquidBasin &&
-             !object.liquidConnection))
+             !object.basicWater && !object.weather && !object.fluidVolume))
             return target(object);
     // An environment-only scene still has a meaningful overview when it has
     // actual visible geometry. A metadata-only/empty scene keeps the camera.

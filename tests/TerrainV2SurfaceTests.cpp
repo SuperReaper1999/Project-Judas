@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
         const auto pose = owner.transform;
         auto point = [&](glm::vec3 p) { return pose.position + pose.rotation * p; };
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         Check(world.Build(scene, &resources, error), "build native landscape: " + error);
         auto hitHeight = [&](float x, float z) {
             auto hit =
@@ -158,14 +158,14 @@ int main(int argc, char **argv) {
             Check(!world.LiveTerrain().Surface(1, {1e30f, 0, 0}, brush, error),
                   "far finite input is rejected before integer indexing");
             Check(world.LiveTerrain().Brush(1, point({3, 3, 0}),
-                                            {VolumeBrushKind::Remove, 1.25f, 1}, error),
+                                            {TerrainV2::Edit::Kind::Remove, {}, 1.25f}, error),
                   "excavate after surface edits");
             wait();
             Check(hitHeight(3, 0) < 2.2f, "real excavation coexists with sculpted samples");
             Check(world.CaptureRuntimeTerrain(1, bytes, error), "save combined native terrain");
             Write(root / "terrain.state", bytes);
             RuntimeWorld second;
-            second.legacyGameplay = false;
+
             Check(second.Build(scene, &resources, error) &&
                       second.LiveTerrain().Restore(1, bytes, error),
                   "independent world restores combined native terrain");
@@ -198,7 +198,7 @@ export default class {
             entry.landscape = SceneLandscapeSettings{asset.id};
             entry.scripts.push_back({1, script.id, true, "{}"});
             RuntimeWorld live;
-            live.legacyGameplay = false;
+
             Check(live.Build(scripted, &resources, error),
                   "ordinary scene initializes terrain before script");
             InputSystem input;
@@ -225,7 +225,7 @@ export default class {
             limitedOwner.body = SceneBodyComponent{};
             limitedOwner.landscape = SceneLandscapeSettings{largeAsset.id};
             RuntimeWorld budgetWorld;
-            budgetWorld.legacyGameplay = false;
+
             Check(budgetWorld.Build(limited, &resources, error), "build actual large source");
             TerrainV2::SurfaceBrush wide;
             wide.radius = 128;

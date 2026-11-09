@@ -15,9 +15,8 @@
 #include "Ragdoll.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
-#include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "TilemapEditor.h"
-#include "VolumeTerrainTools.h"
 #include "WorldCoordinates.h"
 #include "WorldPresentation.h"
 #include "WorldDebugView.h"
@@ -186,7 +185,6 @@ void EditorSceneViewport::DrawEditOverlay(EditorContext &context, Renderer &rend
     if (context.panels.debug.navigation)
         debugLines.Append(context.panels.navigationPreview);
     debugLines.Append(context.panels.recipePreview);
-    debugLines.Append(context.panels.liquidPreview);
     debugLines.Append(context.panels.deformablePreview);
     debugLines.Append(context.panels.collisionPreview);
     for (auto id : context.document.Selection())
@@ -330,14 +328,15 @@ void EditorSceneViewport::UpdateCameraNavigation(EditorContext &context,
     if (active == EditorCameraGesture::Pan)
         camera.Pan(mouseDeltaX, mouseDeltaY,
                    std::max(1, static_cast<int>(context.panels.workspace.viewport.size.y)));
-    camera.Update(window, deltaSeconds, active == EditorCameraGesture::Look, mouseDeltaX, mouseDeltaY, fast);
+    camera.UpdateLocal(deltaSeconds, active == EditorCameraGesture::Look, mouseDeltaX, mouseDeltaY, fast,
+                       {window.InputAxis("move_x"),window.InputAxis("move_z"),window.InputAxis("move_y")});
     // Keep the existing 8 m object-placement plane; the camera's separate
     // focus depth only determines the pan scale after framing a selection.
     context.panels.cameraFocus = camera.Is2D() ? camera.Focus() : camera.Position() + camera.Forward() * 8.0f;
 }
 
-void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSeconds, TerrainEditor *terrain,
-                                        VolumeTerrainEditor *volumeTerrain, TilemapEditor *tilemapEditor) {
+void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSeconds, TerrainV2Editor *terrain,
+                                        TilemapEditor *tilemapEditor) {
     JUDAS_PROFILE_SCOPE("Editor viewport");
     Window &window = context.host.GetWindow();
     Renderer &renderer = context.host.GetRenderer();
@@ -382,9 +381,9 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
                                    gesture.Active() == EditorCameraGesture::None && !navigation.middleDown &&
                                    !navigation.rightDown;
     bool brushOwns = false;
-    if (terrain && terrain->loaded) {
+    if (terrain && terrain->Loaded()) {
         terrain->Prepare(renderer, context.panels);
-        picker.SetDraftMesh(terrain->draft.source.meshId, terrain->preview);
+        picker.SetDraftMesh(terrain->MeshId(), terrain->Preview());
         Scene flat;
         std::string error;
         if (FlattenHierarchy(context.document.GetScene(), flat, error)) {
@@ -394,29 +393,10 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
                                         viewportOwnsMouse && ImGui::IsMouseClicked(ImGuiMouseButton_Left),
                                         viewportOwnsMouse && io.MouseDown[ImGuiMouseButton_Left],
                                         ImGui::IsKeyPressed(ImGuiKey_Escape),
-                                        focused && !terrain->Busy(context.panels), context.panels.status);
+                                        focused && !terrain->Busy(), context.panels.status);
         }
     }
-    if (volumeTerrain && volumeTerrain->loaded) {
-        volumeTerrain->Prepare(renderer, context.panels);
-        if (volumeTerrain->editing) {
-            if (terrain)
-                terrain->editing = false;
-            picker.SetDraftMesh(volumeTerrain->draft.source.meshId, volumeTerrain->preview);
-        }
-        Scene flat;
-        std::string error;
-        if (FlattenHierarchy(context.document.GetScene(), flat, error)) {
-            glm::vec3 ro, rd;
-            ViewportRay(context, int(io.MousePos.x), int(io.MousePos.y), ro, rd);
-            brushOwns |=
-                volumeTerrain->Stroke(flat, context.document.Selected(), ro, rd,
-                                      viewportOwnsMouse && ImGui::IsMouseClicked(ImGuiMouseButton_Left),
-                                      viewportOwnsMouse && io.MouseDown[ImGuiMouseButton_Left],
-                                      ImGui::IsKeyPressed(ImGuiKey_Escape),
-                                      focused && !volumeTerrain->Busy(context.panels), context.panels.status);
-        }
-    }
+
     if (tilemapEditor && (tilemapEditor->painting || tilemapEditor->StrokeActive())) {
         glm::vec3 origin, direction;
         ViewportRay(context, int(io.MousePos.x), int(io.MousePos.y), origin, direction);
@@ -516,8 +496,6 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
     if (terrain)
         terrain->Draw(renderer, scene, context.host.Resources());
-    if (volumeTerrain)
-        volumeTerrain->Draw(renderer, scene, context.host.Resources());
     std::string planetError;
     planetPreview.Draw(renderer, scene, context.host.Resources(), planetError);
     if (!planetError.empty()) context.panels.status = planetError;
@@ -573,9 +551,7 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     renderer.DrawWeather();
     DrawEditOverlay(context, renderer, scene);
     if (terrain)
-        renderer.DrawDebugLines(terrain->footprint.Lines(), true);
-    if (volumeTerrain)
-        renderer.DrawDebugLines(volumeTerrain->footprint.Lines(), true);
+        renderer.DrawDebugLines(terrain->Footprint().Lines(), true);
     if (tilemapEditor && tilemapEditor->painting)
         renderer.DrawDebugLines(tilemapEditor->overlay.Lines(), false);
     renderer.EndFrame();
@@ -648,13 +624,12 @@ void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySes
     camera.UpdateLocal(dt, active == EditorCameraGesture::Look, dx, dy, io.KeyShift, movement);
     if (EditorCameraCanDolly(navigation, active, true))
         camera.Dolly(io.MouseWheel);
-    UpdateFluidSurface(renderer, *session.world, session.lastAlpha);
-    RenderWorldFrame(renderer, size.x, size.y, *session.world, &session.play->Session(), camera.ViewMatrix(),
+    RenderWorldFrame(renderer, size.x, size.y, *session.world, camera.ViewMatrix(),
                      camera.ProjectionMatrix(float(size.x) / size.y), camera.Position(), session.lastAlpha,
                      dt, WorldRenderPurpose::Observer);
     if (context.panels.debug.AnyEnabled()) {
         debugLines.Clear();
-        BuildWorldDebugLines(*session.world, &session.play->Session(), session.lastAlpha,
+        BuildWorldDebugLines(*session.world, session.lastAlpha,
                              context.panels.debug, debugLines);
         renderer.DrawDebugLines(debugLines.Lines());
     }

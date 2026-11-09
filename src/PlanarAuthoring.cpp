@@ -4,14 +4,14 @@
 #include "Contacts.h"
 
 bool HasSpatialMotionProducer(const SceneObject& o){
-    return (o.body&&o.body->shape!=SceneShape::Planar)||o.characterMotor||o.ragdoll||o.deformable||o.wheel||o.powertrain||o.fluidVolume||o.liquidBasin||o.liquidContainer||o.liquidConnection;
+    return (o.body&&o.body->shape!=SceneShape::Planar)||o.characterMotor||o.ragdoll||o.deformable||o.wheel||o.powertrain||o.fluidVolume;
 }
 bool ValidatePlanarDefinition(const SceneObject& o,std::string& error){
     if(!o.body||o.body->shape!=SceneShape::Planar)return true;
     const auto& b=*o.body;
     if(!b.planar||!ValidatePlanar(*b.planar,error)){if(error.empty())error="missing native 2D collider";return false;}
     if(b.planar->kind==PlanarKind::Chain&&b.motion!=SceneBodyMotion::Static){error="2D chains are static-only";return false;}
-    if(o.characterMotor||o.ragdoll||o.deformable||o.wheel||o.powertrain||o.vehicle||o.combustible||o.socket||o.liquidInteraction||o.liquidContainer||!b.fluidCavities.empty()){
+    if(o.characterMotor||o.ragdoll||o.deformable||o.wheel||o.powertrain||o.combustible||o.socket){
         error="2D bodies cannot use spatial motors, assemblies, sockets or fluid coupling; use the 2D player script and native planar joints";return false;
     }
     if(o.transform.scale!=glm::vec3(1)){error="2D collision uses explicit dimensions: keep transform scale 1 and edit collider/sprite sizes";return false;}

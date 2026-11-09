@@ -21,7 +21,7 @@ behaviours for ordered slots; persistent slot IDs are separate from slot order.
 Prefab source/instance edits use normal component serialization and overrides.
 Properties may store asset IDs as strings; entity properties use the documented
 [inspector entity-reference schema](judasjs/lifecycle.md). Editing a property does not rewrite JS.
-Restart Play for a clean world, or use [M94 deliberate script reload](M94_DEVELOPER_TOOLS.md). It can retain bounded JSON instance state; no arbitrary live object/closure migration is provided.
+Restart Play for a clean world, or use [M94 deliberate script reload](SCRIPT_DEBUGGING.md). It can retain bounded JSON instance state; no arbitrary live object/closure migration is provided.
 
 ```js
 import {input, world, console} from 'judas';
@@ -54,7 +54,7 @@ Asynchronous callbacks/top-level await are unsupported; no promise scheduler.
 
 One engine-owned `ScriptSystem` lives in each played `RuntimeWorld`. Calls run on
 the runtime/main thread, outside renderer/physics ownership. Both standalone and
-editor Play call the same `GameSession` frame and `StepPlayedWorld` fixed boundaries.
+editor Play call the same `InteractivePlay` frame and `StepPlayedWorld` fixed boundaries.
 Menus pause gameplay callbacks; M41 uiUpdate/onUI remain active for UI. Fixed input uses M35's latched snapshot, including short
 presses across zero-step frames, without consuming another system's snapshot.
 Entities run by stable ID, then authored slot order. Spawns join at the next
@@ -114,61 +114,12 @@ Use the public [`saves` service](judasjs/saves.md) for cold-process persistence.
 It captures the current supported native participants, script JSON state and
 session state through the existing owner-thread/worker publication boundary.
 The default is exact-content compatibility. M98 adds explicit developer-owned
-[save migration policy and recovery](M98_SAVE_EVOLUTION.md); changing registered
+[save migration policy and recovery](SAVE_EVOLUTION.md); changing registered
 code does not automatically authorize loading an old save. Reloaded scripts
-require Stop/Play before compatible saves; see [developer tools](M94_DEVELOPER_TOOLS.md).
+require Stop/Play before compatible saves; see [developer tools](SCRIPT_DEBUGGING.md).
 Unsupported participants and incomplete historical continuation data remain
 explicit errors/limitations, not silently reconstructed state.
 
-### Legacy M29/M40 scene deltas
+### Current persistence only
 
-The older `.judasstate` path is distinct from modern slots. M29 version 2 gains
-an **optional `script-state-schema 1` extension**, with records
-keyed by stable entity/slot. Script-free saves/scene fingerprints are unchanged;
-old readers reject the unknown extension. Complete state/reference validation
-precedes mutation. Runtime-created prefab definitions restore through ordinary
-M29 creation, and saved state is installed before `start`/update resumes. No VM heap,
-closures, modules, bytecode or promise state is persisted. Save does not restore
-one-shot audio, callbacks' transient private members, runtime tags or the global
-runtime clock. Reapply state-driven transient effects in `start` when needed.
-
-Authored schema-5 fingerprints gain tagged `Judas.ScriptComponents.1` data.
-Scripted worlds additionally hash **all registered project JS IDs and source
-contents** (`Judas.ScriptSources.1`): deliberately strict compatibility also covers
-runtime-only prefab behaviours. Paths/timestamps/pointers never enter that digest.
-Any registered code change/addition/removal rejects these legacy exact-baseline
-scripted-world deltas. Modern slots apply the independent policy above.
-Missing/broken scripts fault their own instances; export rejects broken required
-module/import closures. Script-free worlds retain their old compatibility.
-
-The first module/construction/callback failure logs asset/entity/slot/context and
-runtime message/stack, then disables only that instance until Play restarts. Other
-instances continue. An interrupt guard defaults to 10,000 VM polling callbacks per
-invocation (`ScriptSystem::SetBudget`), with 64 MiB VM memory and 512 KiB stack limits.
-This is trusted project code with limited engine capabilities, **not a malicious
-security sandbox or hard realtime guarantee**. Native allocations and indivisible
-native calls are not time-sliced.
-
-## Demo / operator check
-
-Open `projects/script_demo/script_demo.judasproj` and Play:
-
-1. G reports a locked door; K collects the yellow key; G now opens/closes blue door.
-2. P spawns green scripted prefab hierarchies; J applies impulses to them independently.
-3. Hear the effects and see bursts; normal keyboard/mouse movement still works.
-4. F6 saves; restart/reload retains key, door and spawned instance states. F7 deletes
-   that save explicitly when starting fresh. Do not edit the baseline to test loading.
-5. Stop restores authored editor content; export/move/run the same project normally.
-
-All key/lock/spawner rules live in JS. C++ supplies only engine primitives.
-Human visual/listening acceptance remains the operator's responsibility.
-
-## M44 explicit geometry queries
-
-Import `physics` for `raycast`, `sphereCast`, `capsuleCast` and `boxCast`.
-They return a nearest-hit snapshot with a normal safe entity wrapper, or `null`.
-They share M39 query filtering and never drive collision response/events.
-See [PHYSICS_QUERIES.md](PHYSICS_QUERIES.md) for signatures, conventions and
-terrain limitations; typed declarations are in `judas.d.ts`.
-
-M45 adds `physics.joint(ownerEntity)` and safe `Joint` controls for enabling, limits, bounded motors and spring/damping. See [JOINTS.md](JOINTS.md) and the `Joint` declaration in `judas.d.ts`. These expose physical relationships; project JavaScript supplies their meaning.
+Modern SaveService slots preserve supported runtime/script state. Native pose-delta `.judasstate` saves and their script-state extensions are retired. There is no migration or compatibility overlay; open historical projects with their matching historical engine.

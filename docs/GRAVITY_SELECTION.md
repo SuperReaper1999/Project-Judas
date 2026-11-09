@@ -86,7 +86,7 @@ at `(0,1,0)` for a quarter-turn narrow box. Both paths now use the same
 
 ## Demonstration and human checklist
 
-Open [gravity selection lab](../projects/gravity_selection_lab/gravity_selection_lab.judasproj).
+Open [gravity selection lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/gravity_selection_lab/gravity_selection_lab.judasproj).
 The room has unchanged floor/walls/ceiling, ordinary spatial gravity, selectable
 uniform/RadicalGravity sources and two props with independent gravity.
 
@@ -99,5 +99,5 @@ uniform/RadicalGravity sources and two props with independent gravity.
 7. Escape pauses/releases capture; resume, then **R** reloads authored defaults.
 8. Try the exported package and editor Play/Stop. Desktop feel and Windows require human review.
 
-Evidence: [gravity-selection](evidence/gravity-selection/README.md). This is a
+Evidence: [gravity-selection (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/gravity-selection/README.md). This is a
 small API lab, not a finished gravity-switching game or new character behaviour.

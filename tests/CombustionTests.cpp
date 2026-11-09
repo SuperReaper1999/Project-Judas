@@ -12,12 +12,11 @@
 #include "CelestialGravity.h"
 #include "CombustionWorld.h"
 #include "FirePresentation.h"
-#include "FlyingPrimitiveControl.h"
 #include "PhysicsWorld.h"
 #include "RadialTerrain.h"
 #include "RadicalGravity.h"
 #include "ReferenceFrame.h"
-#include "TerrainDemo.h"
+#include "fixtures/terrain/RadialFixture.h"
 #include "Window.h"
 #include "WorldCoordinates.h"
 
@@ -300,14 +299,14 @@ AuthoredSpreadResult RunAuthoredTerrainSpread(const glm::quat& universeRotation,
                                               int fixedHeaterOffStep = -1) {
     // Rebuild the actual M25 terrain and M27 spawn geometry. The authored
     // planet centre is a scene placement, not a physical universal origin.
-    const auto terrain = TerrainDemo::CreateSurface();
+    const auto terrain = TerrainFixture::CreateSurface();
     const AtmosphereField atmosphere(AtmosphereParameters{}, terrain.get());
     const glm::vec3 planetCentre = translation +
         universeRotation * glm::vec3(300.0f, 0.0f, 0.0f);
     const ReferenceFrame planetFrame{planetCentre, universeRotation,
                                       glm::vec3(0.0f), glm::vec3(0.0f)};
     const glm::vec3 localShipSurface =
-        TerrainDemo::LocalPointAbove(*terrain, -3.0f, -3.0f, 0.5f);
+        TerrainFixture::LocalPointAbove(*terrain, -3.0f, -3.0f, 0.5f);
     const glm::vec3 shipPosition = planetCentre + universeRotation * localShipSurface;
     const glm::vec3 localNormal = terrain->Sample(localShipSurface).outwardNormal;
     const glm::quat shipRotation = universeRotation *
@@ -665,157 +664,6 @@ void TestMovingRigidBodyAndReset() {
           "thermal reset restores initial fuel and temperature without stale burn rate");
 }
 
-struct CargoAscentResult {
-    std::array<int, 3> vacuumStep{{-1, -1, -1}};
-    std::array<float, 3> finalCargoRadius{{0.0f, 0.0f, 0.0f}};
-    float finalShipRadius = 0.0f;
-    float fuelAtVacuum = -1.0f;
-    float finalFuel = 0.0f;
-    float finalOxidizerDensity = 0.0f;
-    float largestSupportGap = -std::numeric_limits<float>::infinity();
-    float largestCargoStep = 0.0f;
-    float finalShipCargoSeparation = 0.0f;
-    bool burnedInAir = false;
-    bool staleReactionInVacuum = false;
-};
-
-CargoAscentResult RunShipCargoAscent(bool sasEnabled, bool allThreeBlocks) {
-    Fixture fixture;
-    constexpr float shipMass = 80.0f;
-    constexpr float cargoMass = 5.0f;
-    constexpr float shipThrustNewtons = 1200.0f;
-    constexpr float localGravityRegionRadius = 103.0f;
-    const glm::vec3 outward(1.0f, 0.0f, 0.0f);
-    const glm::quat shipRotation = glm::angleAxis(
-        glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    const glm::vec3 shipStart(82.0f, 0.0f, 0.0f);
-    // The first position matches the real M27 demo block. The other two
-    // reproduce the near-spread and distant negative-control placements.
-    const std::array<glm::vec3, 3> localOffsets{{
-        {-1.1f, 0.53f, -1.2f}, {-1.1f, 0.53f, -0.65f}, {1.4f, 0.53f, 2.2f}}};
-    std::array<BodyHandle, 3> cargo;
-    const int cargoCount = allThreeBlocks ? 3 : 1;
-    for (int i = 0; i < cargoCount; ++i) {
-        const glm::vec3 position = shipStart + shipRotation * localOffsets[i];
-        cargo[i] = fixture.physics.CreateDynamicBox(
-            position, {0.25f, 0.25f, 0.25f}, cargoMass, 0.8f, 0.0f);
-        fixture.physics.ResetBody(cargo[i], position, shipRotation);
-    }
-    // Match Application's collision-body insertion order: the pickup
-    // candidates exist before their supporting spacecraft body.
-    const BodyHandle ship = fixture.physics.CreateDynamicBox(
-        shipStart, {2.0f, 0.25f, 3.0f}, shipMass, 0.8f, 0.0f);
-    fixture.physics.ResetBody(ship, shipStart, shipRotation);
-    // Match the live demonstration coating while beginning after a genuine
-    // ignition has already raised A above its threshold.
-    CombustibleMaterial fuel;
-    fuel.heatCapacityJPerK = 150.0f;
-    fuel.initialFuelMassKg = 0.12f;
-    fuel.ignitionTemperatureK = 550.0f;
-    fuel.maximumFuelRateKgPerSecond = 0.003f;
-    fuel.radiativeAreaSquareMeters = 1.5f;
-    fuel.retainedCombustionHeatFraction = 0.75f;
-    fixture.combustion.AddBody(cargo[0], fuel, 650.0f);
-    const RadicalGravity propGravity(glm::vec3(0.0f), 9.81f);
-    Window window;
-    window.SetTestInputMode(true);
-    FlyingPrimitiveControl control;
-    control.handle = ship;
-    SetSpacecraftSasEnabled(control, sasEnabled, fixture.physics);
-    CargoAscentResult result;
-    glm::vec3 previousCargo = fixture.physics.GetTransform(cargo[0]).position;
-    int vacuumStepsForA = 0;
-    for (int step = 0; step < 600; ++step) {
-        const glm::vec3 shipPosition = fixture.physics.GetTransform(ship).position;
-        fixture.physics.ApplyForce(ship, shipMass *
-            CelestialGravity::AccelerationFromPointMass(
-                glm::vec3(0.0f), fixture.atmosphere.Parameters().gravitationalParameter,
-                shipPosition));
-        fixture.physics.ApplyForce(ship, outward * shipThrustNewtons);
-        ApplyFlyingPrimitiveControl(control, window, fixture.physics);
-        for (int i = 0; i < cargoCount; ++i) {
-            const glm::vec3 position = fixture.physics.GetTransform(cargo[i]).position;
-            if (glm::length(position) < localGravityRegionRadius) {
-                fixture.physics.ApplyLinearAcceleration(cargo[i],
-                    propGravity.Sample(position), kDt);
-            }
-        }
-        fixture.physics.Step(kDt);
-        fixture.ThermalStep();
-        const BodyTransform shipAfter = fixture.physics.GetTransform(ship);
-        const glm::vec3 firstCargo = fixture.physics.GetTransform(cargo[0]).position;
-        const ThermalBodyState& thermal = *fixture.combustion.State(cargo[0]);
-        const float firstRadius = glm::length(firstCargo);
-        const glm::vec3 firstInShip = glm::inverse(shipAfter.rotation) *
-            (firstCargo - shipAfter.position);
-        result.largestSupportGap = std::max(result.largestSupportGap,
-                                             firstInShip.y - 0.50f);
-        result.largestCargoStep = std::max(result.largestCargoStep,
-                                            glm::length(firstCargo - previousCargo));
-        previousCargo = firstCargo;
-        if (firstRadius < fixture.atmosphere.Parameters().topRadius &&
-            thermal.burnRateKgPerSecond > 0.0f) result.burnedInAir = true;
-        for (int i = 0; i < cargoCount; ++i) {
-            const float radius = glm::length(fixture.physics.GetTransform(cargo[i]).position);
-            if (result.vacuumStep[i] < 0 &&
-                radius >= fixture.atmosphere.Parameters().topRadius) {
-                result.vacuumStep[i] = step;
-            }
-        }
-        if (result.vacuumStep[0] >= 0) {
-            if (result.fuelAtVacuum < 0.0f) result.fuelAtVacuum = thermal.remainingFuelMassKg;
-            result.staleReactionInVacuum |= thermal.burnRateKgPerSecond > 0.0f ||
-                                            thermal.heatOutputWatts > 0.0f;
-            ++vacuumStepsForA;
-        }
-        if (sasEnabled && vacuumStepsForA >= 20) break;
-    }
-    const glm::vec3 finalShip = fixture.physics.GetTransform(ship).position;
-    const glm::vec3 finalFirstCargo = fixture.physics.GetTransform(cargo[0]).position;
-    result.finalShipRadius = glm::length(finalShip);
-    result.finalShipCargoSeparation = glm::length(finalShip - finalFirstCargo);
-    for (int i = 0; i < cargoCount; ++i) {
-        result.finalCargoRadius[i] = glm::length(fixture.physics.GetTransform(cargo[i]).position);
-    }
-    result.finalFuel = fixture.combustion.State(cargo[0])->remainingFuelMassKg;
-    result.finalOxidizerDensity = fixture.combustion.State(cargo[0])->localOxidizerMassDensity;
-    return result;
-}
-
-void TestShipContactCarriesFuelToVacuum() {
-    std::printf("Section I: SAS-held ship lifts physical burning cargo into vacuum\n");
-    const CargoAscentResult stabilized = RunShipCargoAscent(true, false);
-    const CargoAscentResult freeAttitude = RunShipCargoAscent(false, false);
-    const CargoAscentResult threeBlocks = RunShipCargoAscent(true, true);
-    std::printf("  SAS on/off A exit step %d/%d; SAS three-block A/B/C %d/%d/%d; "
-                "ship/cargo r %.3f/%.3f m, gap %.4f m, step %.4f m\n",
-                stabilized.vacuumStep[0], freeAttitude.vacuumStep[0],
-                threeBlocks.vacuumStep[0], threeBlocks.vacuumStep[1],
-                threeBlocks.vacuumStep[2],
-                stabilized.finalShipRadius, stabilized.finalCargoRadius[0],
-                stabilized.largestSupportGap, stabilized.largestCargoStep);
-    Check(stabilized.burnedInAir && stabilized.vacuumStep[0] > 0 &&
-          stabilized.finalShipRadius > 110.0f &&
-          stabilized.finalCargoRadius[0] > 110.0f &&
-          stabilized.finalShipCargoSeparation < 3.0f &&
-          stabilized.largestSupportGap < 0.25f &&
-          stabilized.largestCargoStep < 1.0f,
-          "production SAS plus 1200 N thrust carries the off-centre block by ordinary rigid contact");
-    Check(!stabilized.staleReactionInVacuum &&
-          Near(stabilized.finalFuel, stabilized.fuelAtVacuum, 1.0e-6f) &&
-          stabilized.finalOxidizerDensity == 0.0f,
-          "the physically carried material extinguishes as its own position reaches vacuum");
-    Check(freeAttitude.finalShipRadius > 110.0f &&
-          freeAttitude.vacuumStep[0] < 0 && freeAttitude.finalCargoRadius[0] < 110.0f &&
-          freeAttitude.finalShipCargoSeparation > 20.0f,
-          "without attitude hold, the off-centre block can slide off during ascent");
-    Check(threeBlocks.vacuumStep[0] > 0 && threeBlocks.vacuumStep[1] > 0 &&
-          std::abs(threeBlocks.vacuumStep[0] - threeBlocks.vacuumStep[1]) < 20 &&
-          threeBlocks.finalCargoRadius[0] > 110.0f &&
-          threeBlocks.finalCargoRadius[1] > 110.0f,
-          "the real near-spread A/B block pair rides the SAS-held ship into vacuum together");
-}
-
 glm::vec3 Centroid(const std::vector<FireVisualPrimitive>& visuals,
                    FireVisualKind kind) {
     glm::vec3 sum(0.0f);
@@ -969,7 +817,6 @@ int main() {
     TestOxidizerVacuumAndReturn();
     TestFlowRotationAndFarOrigin();
     TestMovingRigidBodyAndReset();
-    TestShipContactCarriesFuelToVacuum();
     TestProductPresentation();
     TestThinAirFuelAccounting();
     TestStepCost();

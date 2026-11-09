@@ -13,7 +13,7 @@ import time
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--build', default='build-water')
+    parser.add_argument('--build', default='build')
     parser.add_argument('--graphics', action='store_true', help='Requires a working native GL desktop')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
@@ -42,19 +42,22 @@ def main():
         ('policy', 'judas_project_water_tests'),
         ('settings-ui', 'judas_project_settings_editor_tests'),
         ('scene', 'judas_scene_tests'), ('project', 'judas_project_tests'),
-        ('conserved-surface', 'judas_liquid_surface_tests'),
+        ('conservative-grid', 'judas_game_water_tests'),
         ('mk2', 'judas_mk2_physics_tests'),
         ('balance-foundation', 'judas_physical_balance_foundation_tests'),
         ('balance-controller', 'judas_physical_balance_controller_tests'),
     ]:
         run(name, target)
     run('origin-environment', 'judas_origin_environment_tests', [out/'origin'])
-    run('particle-control', 'judas_production_fluid_tests', ['--neutral', '--output', out/'particles'])
+    channel=json.loads(subprocess.check_output([str(build/'judas'),'--build-info-json'],text=True))['channel']
+    if channel!='Alpha':
+        run('grid-runtime','judas_game_water_runtime_tests')
+        run('grid-script','judas_game_water_script_tests')
+    else:
+        print('Advanced runtime checks unavailable in Alpha; not numerical passes')
     if args.graphics:
         env = dict(os.environ)
         env.setdefault('SDL_VIDEODRIVER', 'x11')
-        run('conserved-application', 'judas_liquid_application_tests', env=env)
-        run('surface-application', 'judas_liquid_surface_application_tests', env=env)
         run('cold-write', 'judas_basic_water_application_tests', ['--cold-write', out/'cold'], env)
         saved = out/'cold'/'water.save'
         before = hashlib.sha256(saved.read_bytes()).hexdigest()

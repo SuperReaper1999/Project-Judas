@@ -71,22 +71,21 @@ void PanMath() {
 
     Window window;
     window.SetTestInputMode(true);
-    window.SetTestActionState(Action::MoveForward, true);
     const auto beforeLook = camera.Forward();
-    camera.Update(window, 0.5f, true, 20, -10, false);
+    camera.UpdateLocal(0.5f,true,20,-10,false,{0,0,1});
     Check(glm::length(camera.Forward() - beforeLook) > 0.01f, "existing right-drag camera look still rotates");
     Check(glm::length(camera.Position() - startPosition) > 5.9f, "existing fly input still translates the camera");
 }
 void LocalMovement() {
     Window gameplay;
     gameplay.SetTestInputMode(true);
-    gameplay.SetTestActionState(Action::MoveBackward, true);
+    gameplay.Input().SetPhysical("key:S",1);
     EditorCamera local;
     local.SetPose({0, 0, 0}, 0, 0);
     local.UpdateLocal(.5f, true, 0, 0, false, {0, 0, 1});
     Check(Near(local.Position(), {0, 0, 6}),
           "observer physical forward input moves independently of opposite gameplay input");
-    Check(gameplay.IsActionActive(Action::MoveBackward) && !gameplay.IsActionActive(Action::MoveForward),
+    Check(gameplay.InputAxis("move_y")==-1,
           "editor local camera input never changes authoritative gameplay actions");
     const auto before = local.Position();
     const auto forward = local.Forward();
@@ -96,18 +95,7 @@ void LocalMovement() {
     local.UpdateLocal(.5f, true, 0, 0, true, {1, 1, 1});
     Check(std::abs(glm::length(local.Position() - before) - 24) < 2e-5f,
           "local diagonal movement preserves normalized speed and Shift multiplier");
-    EditorCamera original, explicitInput;
-    original.SetPose({2, 4, 6}, 35, -20);
-    explicitInput.SetPose({2, 4, 6}, 35, -20);
-    gameplay.SetTestActionState(Action::MoveBackward, false);
-    gameplay.SetTestActionState(Action::MoveForward, true);
-    gameplay.SetTestActionState(Action::StrafeRight, true);
-    gameplay.SetTestActionState(Action::MoveUp, true);
-    original.Update(gameplay, .2f, true, 5, -3, false);
-    explicitInput.UpdateLocal(.2f, true, 5, -3, false, {1, 1, 1});
-    Check(Near(original.Position(), explicitInput.Position()) &&
-              Near(original.Forward(), explicitInput.Forward()),
-          "Window camera API and explicit movement share the same integration");
+    EditorCamera explicitInput;
     explicitInput.Set2D(true);
     const auto twoD = explicitInput.Position();
     explicitInput.UpdateLocal(.5f, true, 30, 20, true, {1, 1, 1});

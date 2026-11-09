@@ -4,7 +4,7 @@
 
 Judas captures/reconstructs engine state. Projects decide when to save and what
 score, inventory or other game data belongs in script `state`/`session`.
-See [participation and storage contract](../M61_SAVES.md),
+See [participation and storage contract](../PERSISTENCE.md),
 [lifecycle](lifecycle.md), [scene/session](scenes-state.md),
 [streaming](streaming.md), [safe handles](entities.md).
 
@@ -34,13 +34,13 @@ if (result?.state === 'failed') console.log(result.error);
 dynamic actor omits its scene entity but retains a sleep record. Full restoration
 then fails with `saved sleep body unavailable/duplicate`. The normal non-excluded
 control passes. The original failure remains in the
-[measured reproduction](../evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md).
+[measured reproduction (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md).
 The subsequent M78 correction applies the existing retained-body ownership rule
 to sleep capture as well as contacts. Newly captured eligible exclusions restore;
 required mapped articulation bodies retain their sleep records despite their
 internal transient flag. Sleep format 1 and strict missing/duplicate/truncated
 record rejection are unchanged. Previously emitted orphan-bearing slots are not
-repaired retrospectively. See [current scoped results](../M78_LIFECYCLE_CLOSURE.md).
+repaired retrospectively. See [current scoped results (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md).
 
 Slot IDs are 1–64 ASCII letters/digits/underscore/hyphen, not paths. Names are
 independent bounded Unicode strings. Metadata and script/session data must use
@@ -74,7 +74,7 @@ references/local helpers, not spawn new-game content unconditionally. Saved
 `state` replaces constructor defaults before callbacks. Modern loaded slots call
 `restore(dt)` **instead of** `start(dt)`, then normal phase callbacks. A missing
 restore callback does nothing; start is never replayed as an implicit fallback.
-The legacy `.judasstate` lifecycle remains separate.
+Historical pose-delta persistence is retired.
 
 ```js
 import {ui, saves} from 'judas';
@@ -120,9 +120,9 @@ Modern slots also retain motor support/motion state and remap the supporting
 identity to fresh bodies. Runtime joint limits/motor/spring settings persist;
 native handles and most solver caches rebuild. Current captures also retain a
 guarded joint continuation context; see below. These guarantees belong to explicit
-modern slot save/load, not ordinary reload or the legacy `.judasstate` path.
+modern slot save/load, not ordinary scene reload.
 Composed projects use the same service with qualified resident/retained region
-records; the legacy delta restriction does not disable modern slot saves.
+records.
 
 ## M65 participant compatibility
 
@@ -171,14 +171,14 @@ present the remaining subset as complete or empty; the native controller keeps
 its ordinary first-sample wait. A genuinely completed empty publication remains
 distinct from an unpublished one.
 
-An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction](../M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. The same closure also records live motor tag propagation to the query capsule; [CharacterMotor metadata](character.md) describes the current rule.
+An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. The same closure also records live motor tag propagation to the query capsule; [CharacterMotor metadata](character.md) describes the current rule.
 
 This is not a promise of universal bitwise trajectories or persistence of every
 cache. Old articulation/contact versions remain readable through their previous
 cold-start path. An older in-progress save that omitted this context can still
 fail to continue its original bounded physical task. The original M77 failure is
 preserved, separately from passing new captures. See the
-[mechanism and compatibility report](../M78_COLD_CONTINUATION.md).
+[mechanism and compatibility report (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_COLD_CONTINUATION.md).
 
 ## M97 mutable regions
 
@@ -237,7 +237,7 @@ a successfully migrated session requires a **different destination slot**.
 Ordinary overwrite retains the exact previous valid bytes. `judas_save` provides
 inspection, dry conversion, separate-slot conversion/recovery and previous-good
 recovery. It does not replace the game's full native restore validation.
-See [policy schema, tools, fixtures and boundaries](../M98_SAVE_EVOLUTION.md).
+See [policy schema, tools, fixtures and boundaries](../SAVE_EVOLUTION.md).
 
 ## Active network sessions
 

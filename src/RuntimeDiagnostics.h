@@ -4,7 +4,7 @@
 
 #include "Simulation.h"
 
-class GameSession;
+class RuntimeWorld;
 class RuntimeOptions;
 
 // Milestone 28: the opt-in stderr/stdout measurement printers the
@@ -15,28 +15,26 @@ class RuntimeOptions;
 // averages here so Application's loop stays free of accumulator bookkeeping.
 class RuntimeDiagnostics {
 public:
-    RuntimeDiagnostics(bool fluid, bool atmosphere, bool fire, bool telemetry);
+    RuntimeDiagnostics(bool fluid, bool fire, bool telemetry);
 
-    bool AnyFixedStepMeasurement() const { return m_fluid || m_atmosphere || m_fire; }
+    bool AnyFixedStepMeasurement() const { return m_fluid || m_fire; }
     // Configures which timings StepPlayedWorld should measure.
     void PrepareMeasurements(FixedStepMeasurements& measurements) const;
     // Call after every fixed step with that step's measurements.
-    void RecordFixedStep(const GameSession& session, const FixedStepMeasurements& measurements,
+    void RecordFixedStep(const RuntimeWorld& world, const FixedStepMeasurements& measurements,
                          double fixedStepMilliseconds);
     // Call once per render frame with presentation-side timings.
-    void RecordFrame(const GameSession& session, double surfaceMilliseconds, double sceneMilliseconds,
+    void RecordFrame(const RuntimeWorld& world, double surfaceMilliseconds, double sceneMilliseconds,
                      float frameDeltaSeconds);
     // The JUDAS_LIVE_TELEMETRY CSV (header printed by the constructor).
-    void RecordTelemetryFrame(const GameSession& session);
+    void RecordTelemetryFrame(const RuntimeWorld& world);
 
 private:
-    bool m_fluid, m_atmosphere, m_fire, m_telemetry;
+    bool m_fluid, m_fire, m_telemetry;
     std::size_t m_fixedSteps = 0;
     double m_fluidMilliseconds = 0.0;
     std::size_t m_fluidSteps = 0;
-    double m_atmosphereMilliseconds = 0.0;
     double m_fixedMilliseconds = 0.0;
-    std::size_t m_atmosphereSteps = 0;
     double m_fireMilliseconds = 0.0;
     std::size_t m_fireSteps = 0;
     int m_frames = 0;

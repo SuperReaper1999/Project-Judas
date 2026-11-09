@@ -1,6 +1,5 @@
 #include "RuntimeTerrain.h"
 #include "NavigationSystem.h"
-#include "LiquidSystem.h"
 #include <stdexcept>
 #pragma once
 
@@ -17,15 +16,12 @@
 #include "AtmosphereField.h"
 #include "CelestialGravity.h"
 #include "CombustionWorld.h"
-#include "Door.h"
 #include "DynamicBody.h"
 #include "EntityLifecycle.h"
 #include "FidelityPolicy.h"
-#include "FluidWorld.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
 #include "GravityVolume.h"
-#include "LightSwitch.h"
 #include "PhysicsWorld.h"
 #include "ReferenceFrame.h"
 #include "Renderer.h"
@@ -44,7 +40,6 @@ class SceneSession;
 class RadialTerrain;
 class ResourceManager;
 struct PhysicalMaterial;
-class ProductionFluidCoupling;
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {class WorldSystem;}
 namespace TerrainV2 {struct PreparedAsset;struct Source;}
@@ -64,8 +59,8 @@ namespace TerrainV2 {struct PreparedAsset;struct Source;}
 // authored/runtime boundary the editor's Play/Stop relies on.
 //
 // This class owns no gameplay: no player, no pilot control, no pick-up,
-// no input. Those live in GameSession (src/GameSession.h) and read this
-// world through the accessors below. It also decides no step ordering —
+// no input. Project scripts own gameplay; InteractivePlay routes input and
+// coordinates their execution. This world also decides no step ordering —
 // see src/Simulation.h — and issues no draw calls — see
 // src/WorldPresentation.h. It is the inventory of a running scene, not
 // the loop that runs it.
@@ -73,7 +68,6 @@ class SaveArchive;
 class RuntimeWorld {
 public:
     // Project execution policy, retained across Build/Destroy; not simulation state.
-    bool legacyGameplay = true;
     bool pointerCapture = false; // Script intent; modal UI temporarily overrides capture.
     void SetSceneControl(std::shared_ptr<SceneSession> control) { m_sceneControl=std::move(control); }
     std::shared_ptr<SceneSession> SceneControl() const { return m_sceneControl; }
@@ -85,16 +79,6 @@ public:
         glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
         glm::vec3 halfExtents{0.5f};
         float radius = 0.5f;
-    };
-    struct Terrain {
-        SceneObjectId id = kInvalidSceneObjectId;
-        BodyHandle handle;
-        std::shared_ptr<const RadialTerrain> surface;
-        std::string identifier;
-        glm::vec3 position{0.0f};
-        glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
-        MeshHandle mesh;
-        glm::vec3 color{0.5f};
     };
     struct ParticleEmitter {
         SceneObjectId id=0;SceneTransform transform;VisualParticlePool pool;
@@ -200,7 +184,6 @@ public:
         std::vector<CompoundBox> compoundBoxes;  // Compound render only
         glm::vec3 scale{1.0f};
         glm::vec3 initialLinearVelocity{0.0f};
-        bool pickable = false;
     };
     struct StaticLight {
         SceneObjectId id = kInvalidSceneObjectId;
@@ -208,13 +191,7 @@ public:
         glm::vec3 position{0.0f};
         glm::vec3 direction{0.0f, 0.0f, -1.0f};
     };
-    struct Vehicle {
-        SceneObjectId id = kInvalidSceneObjectId;
-        BodyHandle handle;
-        std::size_t dynamicIndex = 0;
-        SceneVehicleComponent component;
-        glm::vec3 halfExtents{1.0f};
-    };
+
     // Static Newtonian source acting on Celestial-gravity vehicles.
     struct PointMassSource {
         SceneObjectId id = kInvalidSceneObjectId;
@@ -222,10 +199,7 @@ public:
         glm::vec3 position{0.0f};
         float gravitationalParameter = 0.0f;
     };
-    struct OperatorThrust {
-        BodyHandle handle;
-        float force = 0.0f;
-    };
+
     struct Atmosphere {
         SceneObjectId id = kInvalidSceneObjectId;
         std::string name;
@@ -240,19 +214,8 @@ public:
         std::size_t dynamicIndex = 0;
         float sourceRadius = 0.25f;
     };
-    struct FluidVolume {
-        SceneObjectId id = kInvalidSceneObjectId;
-        SceneFluidVolumeComponent component;
-        glm::vec3 position{0.0f};
-        glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
-        float particleMass = 0.0f;
-    };
-    struct PlayerStart {
-        glm::vec3 position{0.0f};
-        float yawDegrees = 0.0f;
-        ScenePlayerView view = ScenePlayerView::ThirdPerson;
-        float density = 950.0f, fluidDrag = 2.0f, swimAcceleration = 4.0f;
-    };
+
+
     // Milestone 30: the authored gravity regions as instantiated, kept only
     // so the debug view can draw them (GravityContextMap holds abstract
     // volumes with no geometry accessors, by design).
@@ -342,37 +305,20 @@ public:
     const std::vector<DynamicVisual>& DynamicVisuals() const { return m_dynamicVisuals; }
     const std::vector<StaticBody>& StaticBodies() const { return m_staticBodies; }
     const std::vector<StaticRenderable>& StaticRenderables() const { return m_staticRenderables; }
-    const std::vector<Terrain>& Terrains() const { return m_terrains; }
     bool SetLight(EntityId,const SceneLightComponent&);
     const std::vector<StaticLight>& StaticLights() const { return m_staticLights; }
     const std::vector<GravityRegion>& GravityRegions() const { return m_gravityRegions; }
-    std::vector<Door>& Doors() { return m_doors; }
-    const std::vector<Door>& Doors() const { return m_doors; }
-    std::vector<LightSwitch>& LightSwitches() { return m_lightSwitches; }
-    const std::vector<LightSwitch>& LightSwitches() const { return m_lightSwitches; }
 
-    const std::optional<Vehicle>& GetVehicle() const { return m_vehicle; }
     const CelestialGravity& Celestial() const { return *m_celestial; }
     const std::vector<BodyHandle>& CelestialParticipants() const { return m_celestialParticipants; }
     const std::vector<PointMassSource>& PointMassSources() const { return m_pointMassSources; }
-    const std::vector<OperatorThrust>& OperatorThrusts() const { return m_operatorThrusts; }
     const std::optional<Atmosphere>& GetAtmosphere() const { return m_atmosphere; }
     CombustionWorld& Combustion() { return m_combustion; }
     const CombustionWorld& Combustion() const { return m_combustion; }
     const std::vector<Combustible>& Combustibles() const { return m_combustibles; }
 
-    FluidWorld& Fluid() { if(!m_fluid)throw std::logic_error("Advanced Fluid Dynamics is disabled; use basic water/swimming queries");return *m_fluid; }
-    const FluidWorld& Fluid() const { if(!m_fluid)throw std::logic_error("Advanced Fluid Dynamics is disabled; use basic water/swimming queries");return *m_fluid; }
-    const FluidSettings& FluidSettingsUsed() const { return m_fluidSettings; }
-    const std::vector<FluidVolume>& FluidVolumes() const { return m_fluidVolumes; }
-    MeshHandle FluidMesh() const { return m_fluidMesh; }
-    bool FluidSurfaceDirty() const { return m_fluid && m_fluidSurfaceRevision != m_fluid->Revision(); }
-    void MarkFluidSurfaceUploaded() const { m_fluidSurfaceRevision = m_fluid->Revision(); }
-    ProductionFluidCoupling& FluidCoupling() { return *m_fluidCoupling; }
-    const ProductionFluidCoupling& FluidCoupling() const { return *m_fluidCoupling; }
-    bool HasFluid() const { return m_advancedFluids && !m_fluidVolumes.empty(); }
-    // The M25 held-key water source: adds one particle at the next emitter
-    // slot if any emitter has capacity. Returns false when none does.
+
+    // Shared project scripting lifecycle; gameplay policy stays in project modules.
     void UpdateScripts(const InputSystem* input,float dt);
     void PresentationScripts(const InputSystem* input,float dt,float alpha);
     void DispatchPhysicsEvents(const InputSystem* input,float dt);
@@ -445,9 +391,6 @@ public:
     void PublishPowertrains(float dt);
     void PublishPowertrainConnections();
     void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
-    LiquidSystem& Liquids(){return *m_liquid;}
-    const LiquidSystem& Liquids()const{return *m_liquid;}
-    void UpdateLiquids(double dt){if(m_advancedFluids&&m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
     RuntimeTerrain& LiveTerrain(){if(!m_runtimeTerrain)m_runtimeTerrain=std::make_unique<RuntimeTerrain>(*this);return *m_runtimeTerrain;}
     bool EditTilemapCell(EntityId,const std::string& layer,glm::ivec2 cell,
                          const std::string& frame,bool flipX,bool flipY,std::string& error);
@@ -545,13 +488,7 @@ public:
     bool IsTransientEntity(EntityId id)const {const auto* e=FindEntity(id);return e&&e->transient;}
 
     void SynchronizeJoints();
-    bool EmitFluidParticle();
-    std::size_t EmittedFluidParticles() const { return m_emittedParticles; }
 
-    const std::optional<PlayerStart>& GetPlayerStart() const { return m_playerStart; }
-    // Handles of the live, pickable entities (recomputed: handles change
-    // across reconstruction — refresh whenever EntityVersion() changes).
-    std::vector<BodyHandle> PickableBodies() const;
     const SceneSettings& Settings() const { return m_settings; }
     bool RequestOrigin(glm::dvec3 absolute,std::string&);
     bool CommitOrigin();
@@ -643,10 +580,6 @@ public:
     void AdvanceSimulationTime(double seconds) { m_simulationTime += seconds; }
 
     // Doors/switches by scene object id, for persisted interactable state.
-    Door* FindDoor(SceneObjectId id);
-    LightSwitch* FindLightSwitch(SceneObjectId id);
-    const std::vector<SceneObjectId>& DoorIds() const { return m_doorIds; }
-    const std::vector<SceneObjectId>& LightSwitchIds() const { return m_lightSwitchIds; }
 
 // M59 registration seam uses the same component constructor as Build.
     bool StageRegionObject(const SceneObject& worldObject,const SceneObject& localObject,std::string&,const std::string& stableIdentity="",TerrainV2::PreparedAsset* terrain=nullptr);
@@ -676,8 +609,6 @@ private:
     std::shared_ptr<SceneSession> m_sceneControl;
     std::map<unsigned,EntityId> m_touchEntityHistory;
     std::map<unsigned,std::pair<EntityId,std::string>> m_touchArticulationHistory;
-    struct FluidVolumeSetup;
-    void PopulateFluid();
     // Creates the PhysicsWorld body for a record's definition at `state`,
     // binds it to the record's slot, and refreshes the slot's visual.
     bool InstantiateEntityBody(EntityRecord& record, const EntityPhysicalState& state, std::string* outError);
@@ -694,9 +625,7 @@ private:
     ProjectClassification m_categories;
     std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
-    std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>(false);
     std::unique_ptr<JudasWater::WorldSystem> m_gridWater;
-    bool m_hasLiquid=false;
     bool m_advancedFluidsRequested=false;
     bool m_advancedFluids=false, m_basicWaterEnabled=true, m_waterSwimming=true;
     std::set<EntityId> m_basicWaterOwners;
@@ -775,7 +704,6 @@ private:
     std::set<EntityId> m_spriteAnimationOwners;
     std::map<EntityId,SpriteAnimationStep> m_spriteSteps;
     std::vector<StaticBody> m_staticBodies;
-    std::vector<Terrain> m_terrains;
     std::vector<StaticRenderable> m_staticRenderables;
     AudioSystem* m_audioSystem=nullptr;
     std::map<EntityId,std::string> m_audioIdentities;
@@ -797,29 +725,15 @@ private:
     std::vector<DynamicBody> m_dynamicBodies;
     std::vector<DynamicVisual> m_dynamicVisuals;
     std::vector<StaticLight> m_staticLights;
-    std::vector<Door> m_doors;
-    std::vector<LightSwitch> m_lightSwitches;
 
-    std::optional<Vehicle> m_vehicle;
     std::unique_ptr<CelestialGravity> m_celestial;
     std::vector<BodyHandle> m_celestialParticipants;
     std::vector<PointMassSource> m_pointMassSources;
-    std::vector<OperatorThrust> m_operatorThrusts;
     std::optional<Atmosphere> m_atmosphere;
-    std::shared_ptr<const RadialTerrain> m_atmosphereTerrain;  // keeps the masked surface alive
     CombustionWorld m_combustion;
     std::vector<Combustible> m_combustibles;
 
-    FluidSettings m_fluidSettings;
-    std::unique_ptr<FluidWorld> m_fluid;
-    std::unique_ptr<ProductionFluidCoupling> m_fluidCoupling;
-    std::vector<FluidVolume> m_fluidVolumes;
-    MeshHandle m_fluidMesh;
-    mutable std::uint64_t m_fluidSurfaceRevision = ~std::uint64_t{0};
-    std::size_t m_emittedParticles = 0;
 
-    std::optional<PlayerStart> m_playerStart;
-    std::vector<BodyHandle> m_pickableBodies;
     std::map<EntityId,std::set<AssetId>> m_renderAssetDemand;
     AssetId m_runtimeEnvironmentAsset;
     std::vector<AssetId> m_referencedAssets;  // released on Destroy
@@ -830,6 +744,4 @@ private:
     unsigned int m_entityVersion = 0;
     unsigned int m_transitionsThisStep = 0;
     double m_simulationTime = 0.0;
-    std::vector<SceneObjectId> m_doorIds;
-    std::vector<SceneObjectId> m_lightSwitchIds;
 };

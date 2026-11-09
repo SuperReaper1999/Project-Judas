@@ -1,6 +1,6 @@
 # Supported content authoring — M67 candidate
 
-[World-building workflow](M67_WORLD_BUILDING.md) · [JudasJS](JUDASJS.md)
+[World-building workflow (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M67_WORLD_BUILDING.md) · [JudasJS](JUDASJS.md)
 
 ## One editable document
 
@@ -83,7 +83,7 @@ render state. Optional fields include object `render-visible`; `render.visible`,
 encoded strings validated by the ordinary material/appearance codecs, not a new
 document format. Default omissions preserve historical schema-5 fingerprints.
 Use normal editor/converter output for these encodings. Runtime calls remain
-isolated from authored files; [M72](M72.md) describes reset/save/retention ownership.
+isolated from authored files; [M72](RUNTIME_RENDERING.md) describes reset/save/retention ownership.
 
 Build the existing `judas_scene_author` target. Paths below are examples; keep
 experiments in a copied project. Commands reject invalid data with nonzero status.

@@ -185,13 +185,7 @@ export const ui = {
         return id ? new UIDocument(id) : null;
     },
     load: (asset, name) => new UIDocument(call("uiLoad", asset, name)),
-    quit: () => call("uiQuit"),
-    get debugOverlayVisible() {
-        return call("uiDiagnostics");
-    },
-    set debugOverlayVisible(v) {
-        call("uiDiagnostics", v);
-    }
+    quit: () => call("uiQuit")
 };
 )JS";
 } // namespace ScriptBindings::LibraryParts

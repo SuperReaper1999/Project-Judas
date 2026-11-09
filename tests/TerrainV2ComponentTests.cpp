@@ -97,9 +97,6 @@ int main() {
             Check(!TerrainV2::ValidateOwner(incompatible, &assets, error),
                   "native terrain cannot silently discard a competing compound collider");
             incompatible = owner;
-            incompatible.body->fluidCavities.emplace_back();
-            Check(!TerrainV2::ValidateOwner(incompatible, &assets, error),
-                  "native terrain rejects competing body cavity ownership explicitly");
             incompatible = owner;
             incompatible.body->sensor = true;
             Check(
@@ -116,7 +113,7 @@ int main() {
             Check(references.count(asset.id),
                   "ordinary scene/export dependency graph sees terrain source");
             RuntimeWorld world;
-            world.legacyGameplay = false;
+
             Check(world.Build(scene, &resources, error),
                   "normal scene builds native terrain without a script bootstrap: " + error);
             Check(world.HasRuntimeTerrain(1) && world.LiveTerrain().Status(1)->ready,
@@ -137,7 +134,7 @@ int main() {
                     friction == material.friction && restitution == material.restitution;
             }
             Check(materialMatches, "material mutation updates actual generated collision");
-            Check(world.LiveTerrain().Brush(1, {0, 2.5f, 0}, {VolumeBrushKind::Remove, 1.5f, 1},
+            Check(world.LiveTerrain().Brush(1, {0, 2.5f, 0}, {TerrainV2::Edit::Kind::Remove, {}, 1.5f},
                                             error),
                   "runtime excavation uses native source");
             Wait(world);
@@ -170,7 +167,7 @@ int main() {
             Check(WorldPersistence::Capture(world, chunks, error),
                   "ordinary world save captures terrain reference: " + error);
             RuntimeWorld cold;
-            cold.legacyGameplay = false;
+
             Check(cold.Build(scene, &resources, error),
                   "independent world loads same native asset: " + error);
             Check(WorldPersistence::Restore(cold, chunks, error),

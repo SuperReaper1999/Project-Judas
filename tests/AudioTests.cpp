@@ -26,47 +26,36 @@ Scene Fixture(){
     listener.transform.position={2,3,4};listener.transform.rotation=glm::angleAxis(.6f,glm::normalize(glm::vec3(1,2,3)));
     auto& emitter=s.CreateObject("Source");emitter.audioEmitter=SceneAudioEmitterComponent{};
     emitter.audioEmitter->asset=loopId;emitter.audioEmitter->loop=true;emitter.audioEmitter->volume=.2f;
-    emitter.body=SceneBodyComponent{};emitter.body->motion=SceneBodyMotion::Dynamic;emitter.body->pickable=true;
+    emitter.body=SceneBodyComponent{};emitter.body->motion=SceneBodyMotion::Dynamic;
     emitter.transform.position={-2,1,-3};
     auto& ui=s.CreateObject("Non-spatial");ui.audioEmitter=SceneAudioEmitterComponent{};
     ui.audioEmitter->asset=musicId;ui.audioEmitter->spatial=false;ui.transform.position={10000,-20,55};
-    auto& player=s.CreateObject("Start");player.playerStart=ScenePlayerStartComponent{};
+    auto& player=s.CreateObject("Start");
     return s;
 }
 }
-int main(int argc,char** argv){
-    if(argc==3&&std::string(argv[1])=="--demo"){
-        Scene demo=Fixture();demo.Settings().name="Judas audio";
-        demo.Objects()[0].audioListener->followActiveView=true;
-        demo.Objects()[1].transform.position={3,.7,0};demo.Objects()[1].body.reset();demo.Objects()[1].render=SceneRenderComponent{};demo.Objects()[1].render->color={1,.15f,.08f};
-        demo.Objects()[2].audioEmitter->volume=.25f;
-        demo.Objects()[3].transform.position={0,.9f,6};demo.Objects()[3].playerStart->view=ScenePlayerView::FirstPerson;
-        auto& cue=demo.CreateObject("Green one-shot source");cue.transform.position={-3,.7f,0};cue.render=SceneRenderComponent{};cue.render->shape=SceneShape::Sphere;cue.render->color={.1f,1,.2f};cue.audioEmitter=SceneAudioEmitterComponent{};cue.audioEmitter->asset=shotId;cue.audioEmitter->volume=.35f;
-        auto& ground=demo.CreateObject("Floor");ground.transform.position={0,-.1f,0};ground.render=SceneRenderComponent{};ground.render->halfExtents={15,.1f,15};ground.body=SceneBodyComponent{};ground.body->halfExtents=ground.render->halfExtents;
-        auto& gravity=demo.CreateObject("Uniform gravity");gravity.gravity=SceneGravityComponent{};gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->magnitude=9.81f;gravity.gravity->regionShape=SceneRegionShape::Box;gravity.gravity->regionHalfExtents={100,100,100};
-        std::string error;return SaveSceneToFile(demo,argv[2],error)?0:1;
-    }
+int main(){
     std::string error;AudioSystem audio;
     Check(!audio.IsInitialized()&&audio.VoiceCount()==0,"unused service opens no device and owns no voices");
     Check(audio.Init(error,true),"actual miniaudio engine starts in explicit device-free test mode");
-    AssetDatabase db;db.Scan(std::filesystem::current_path().string(),"assets");
+    AssetDatabase db;db.Scan(std::filesystem::current_path().string(),"tests/fixtures/engine-assets");
     const auto* record=db.Find(loopId);Check(record&&record->type==AssetType::Audio,"ordinary metadata discovers stable audio asset");
     AssetId id;AssetType type;std::string source;
-    Check(AssetDatabase::ReadMeta("assets/audio/loop.wav.judasmeta",id,type,source,error)&&id==loopId&&type==AssetType::Audio,"audio metadata round-trips normal type/id");
-    AudioData pcm;Check(LoadAudioFromFile("assets/audio/loop.wav",pcm,error)&&pcm.channels==1&&pcm.Frames()==96000,"real WAV decoder produces whole clip PCM");
-    AudioData mp3;Check(LoadAudioFromFile("assets/audio/centered.mp3",mp3,error)&&mp3.channels==1&&mp3.Frames()>30000,"compressed MP3 uses same backend decoder");
+    Check(AssetDatabase::ReadMeta("tests/fixtures/engine-assets/audio/loop.wav.judasmeta",id,type,source,error)&&id==loopId&&type==AssetType::Audio,"audio metadata round-trips normal type/id");
+    AudioData pcm;Check(LoadAudioFromFile("tests/fixtures/engine-assets/audio/loop.wav",pcm,error)&&pcm.channels==1&&pcm.Frames()==96000,"real WAV decoder produces whole clip PCM");
+    AudioData mp3;Check(LoadAudioFromFile("tests/fixtures/engine-assets/audio/centered.mp3",mp3,error)&&mp3.channels==1&&mp3.Frames()>30000,"compressed MP3 uses same backend decoder");
     AudioData unchanged=pcm;const unsigned char corrupt[8]={1,2,3,4,5,6,7,8};
     Check(!DecodeAudioFromMemory(corrupt,sizeof(corrupt),unchanged,error)&&unchanged.samples==pcm.samples,"failed decode leaves existing data intact");
     const auto project=std::filesystem::path(".cache/m34-asset-tests");std::filesystem::remove_all(project);std::filesystem::create_directories(project/"Assets");
     AssetDatabase imported;imported.Scan(project.string(),(project/"Assets").string());AssetRecord importedClip;
-    Check(imported.Import("assets/audio/one_shot.wav","cue.wav",importedClip,error),"ordinary import validates decoder and creates stable audio metadata");
+    Check(imported.Import("tests/fixtures/engine-assets/audio/one_shot.wav","cue.wav",importedClip,error),"ordinary import validates decoder and creates stable audio metadata");
     const auto importedId=importedClip.id;
     Check(imported.Move(importedId,"renamed/cue.wav",error)&&imported.Find(importedId)&&imported.Find(importedId)->type==AssetType::Audio,"audio rename/move preserves stable identity");
     const auto importedPath=imported.Find(importedId)->path;
     {std::ofstream bad(importedPath,std::ios::binary|std::ios::trunc);bad.write(reinterpret_cast<const char*>(corrupt),sizeof(corrupt));}
     ResourceManager broken(nullptr,&imported,nullptr,&audio);
     Check(!broken.GetAudio(importedId,error).IsValid()&&broken.StateOf(importedId)==ResourceState::Failed,"corrupt file fails through actual resource IO/decoder path");
-    std::filesystem::copy_file("assets/audio/one_shot.wav",importedPath,std::filesystem::copy_options::overwrite_existing);broken.Invalidate(importedId);
+    std::filesystem::copy_file("tests/fixtures/engine-assets/audio/one_shot.wav",importedPath,std::filesystem::copy_options::overwrite_existing);broken.Invalidate(importedId);
     Check(broken.GetAudio(importedId,error).IsValid(),"corrected input recovers through supported invalidation path");broken.Shutdown();
     JobSystem jobs(2);ResourceManager resources(nullptr,&db,&jobs,&audio);
     resources.AddRef(loopId);resources.RequestAudio(loopId);resources.RequestAudio(loopId);resources.WaitForAll();
@@ -132,7 +121,7 @@ int main(int argc,char** argv){
     {
         EngineHost host;Check(host.Init("M34 integration",320,240,false,error),"normal EngineHost starts audio service independently of Renderer");
         host.GetWindow().SetTestInputMode(true);Check(host.Audio().Init(error,true),"explicit device-free mode uses host-owned actual backend");
-        host.OpenProjectAssets(std::filesystem::current_path().string(),"assets");
+        host.OpenProjectAssets(std::filesystem::current_path().string(),"tests/fixtures/engine-assets");
         Scene scene=authored;scene.Objects()[0].audioListener->followActiveView=true;
         const Scene baseline=scene;
         RuntimeWorld runtime;Check(runtime.Build(scene,&host.Resources(),error),"same authored bindings build through process services");
@@ -140,7 +129,7 @@ int main(int argc,char** argv){
         game.Frame(host.GetWindow(),host.GetRenderer(),1.f/60,false);
         Check(host.Audio().VoiceCount()==2&&host.Audio().Listener().forward==glm::vec3(0,0,-1),"ordinary interactive frame creates voices and updates active-camera listener");
         game.End();Check(host.Audio().VoiceCount()==0&&ScenesEqual(scene,baseline)&&ScenesEqual(authored,Fixture()),"ordinary Stop releases host voices without authored mutations");
-        runtime.Destroy();host.OpenProjectAssets(std::filesystem::current_path().string(),"assets");
+        runtime.Destroy();host.OpenProjectAssets(std::filesystem::current_path().string(),"tests/fixtures/engine-assets");
         Check(host.Audio().VoiceCount()==0&&host.Audio().ClipCount()==0,"project closure clears runtime clips and voices");
         host.Shutdown();Check(!host.Audio().IsInitialized(),"process shutdown closes audio backend");
     }

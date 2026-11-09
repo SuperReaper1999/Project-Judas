@@ -24,9 +24,6 @@
         0.44,
         0.51
       ],
-      "fluid-scale": 1,
-      "fluid-update-rate-hz": 30,
-      "fluid-hydrostatic-drag-rate": 2,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -65,7 +62,6 @@
             11.7
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -74,10 +70,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             -0.5,
@@ -138,7 +132,6 @@
             0.3
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -147,10 +140,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             1.1,
@@ -211,7 +202,6 @@
             0.3
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -220,10 +210,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             1.1,
@@ -284,7 +272,6 @@
             11.4
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -293,10 +280,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             -11.4,
             1.1,
@@ -357,7 +342,6 @@
             11.4
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -366,10 +350,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             11.4,
             1.1,
@@ -2362,7 +2344,6 @@
             0.8
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2371,10 +2352,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             -4,
             0.5,
@@ -2435,7 +2414,6 @@
             0.8
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2444,10 +2422,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             4,
             0.5,
@@ -2508,7 +2484,6 @@
             0.8
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2517,10 +2492,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             0.5,
@@ -2581,7 +2554,6 @@
             0.8
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2590,10 +2562,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             0,
             0.5,
@@ -2654,7 +2624,6 @@
             0.65
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 2,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2663,10 +2632,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             -3,
             0.7,
@@ -2727,7 +2694,6 @@
             0.65
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 2,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2736,10 +2702,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             3,
             0.7,
@@ -2800,7 +2764,6 @@
             0.65
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 2,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2809,10 +2772,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             -3,
             0.7,
@@ -2873,7 +2834,6 @@
             0.65
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 2,
           "body.friction": 0.35,
           "body.restitution": 0.45,
@@ -2882,10 +2842,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
           "body.compound-count": 0,
-          "body.fluid-cavity-count": 0,
           "position": [
             3,
             0.7,

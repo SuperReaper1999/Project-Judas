@@ -44,7 +44,7 @@ export default class {
  update(){if(input.pressed('reset'))input.setBindings(null);}
 })JS";
         AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());AssetRecord record;check(assets.Track(script.string(),record,error),"register actual public-API script");
-        ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Scene scene;
+        ResourceManager resources(nullptr,&assets);RuntimeWorld world;Scene scene;
         auto& object=scene.CreateObject("Rebind observer");object.scripts.push_back({1,record.id,true,"{}"});
         check(world.Build(scene,&resources,error),"script builds through ordinary runtime");world.UpdateScripts(&input,.016f);
         auto state=nlohmann::json::parse(world.Scripts()->Capture().front().json);

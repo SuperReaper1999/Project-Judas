@@ -92,7 +92,7 @@ export default class {
  Check(db.Track((root/"Assets/patch.judasdeform").string(),material,error)&&db.Track((root/"Assets/probe.js").string(),script,error),"normal AssetDatabase registers material and public probe");
  ResourceManager resources(nullptr,&db);resources.AddRef(material.id);resources.RequestDeformable(material.id);resources.WaitForAll();resources.Pump(100);
  Check(bool(resources.GetDeformable(material.id,error)),"ordinary resource path publishes baked material without special native fixture injection");
- auto scene=Fixture(material.id,script.id);RuntimeWorld world;world.legacyGameplay=false;
+ auto scene=Fixture(material.id,script.id);RuntimeWorld world;
  const bool built=world.Build(scene,&resources,error);if(!built)std::printf("BUILD_ERROR %s\n",error.c_str());
  Check(built,"ordinary runtime builds material, dynamic mount and conditional transmission");
  InputSystem input;world.UpdateScripts(&input,1.f/60);Step(world,input);
@@ -112,7 +112,7 @@ export default class {
  fixedUpdate(){if(!this.material.valid){let read=false,write=false;try{this.material.state;}catch(e){read=e instanceof ReferenceError;}try{this.material.attach('patch',{kind:'world'});}catch(e){write=e instanceof ReferenceError;}if(!read||!write)throw Error('stale material');this.state.stale=true;}}
 })JS";
  AssetRecord lifetime;Check(db.Track((root/"Assets/lifetime.js").string(),lifetime,error),"ordinary retained-handle lifetime probe registered");
- auto lifeScene=scene;lifeScene.Find(3)->scripts.clear();lifeScene.Find(2)->scripts={{1,lifetime.id,true,"{}"}};RuntimeWorld life;life.legacyGameplay=false;
+ auto lifeScene=scene;lifeScene.Find(3)->scripts.clear();lifeScene.Find(2)->scripts={{1,lifetime.id,true,"{}"}};RuntimeWorld life;
  Check(life.Build(lifeScene,&resources,error),"independent material lifetime world builds");Step(life,input);
  Check(life.DestroyEntity(3),"normal owning material destruction succeeds");Step(life,input);
  Check(life.Scripts()->Diagnostics().empty()&&State(life).value("stale",false),"destroyed generation-safe material handle invalidates and throws on state and mutations");life.Destroy();
@@ -120,7 +120,7 @@ export default class {
  fs::copy_file("docs/judasjs/examples/mechanical-damage.js",root/"Assets/example.js",fs::copy_options::overwrite_existing);AssetRecord example;
  Check(db.Track((root/"Assets/example.js").string(),example,error),"exact cookbook file registered as project script");
  auto cookbookScene=Fixture(material.id,example.id);DeformableAttachment attachment;attachment.group="patch";attachment.kind=DeformableAttachment::Kind::Body;attachment.target=2;attachment.forceLimit=1;cookbookScene.Find(3)->deformable->attachments={attachment};
- RuntimeWorld cookbook;cookbook.legacyGameplay=false;Check(cookbook.Build(cookbookScene,&resources,error),"exact cookbook scene uses normal authored finite connection");
+ RuntimeWorld cookbook;Check(cookbook.Build(cookbookScene,&resources,error),"exact cookbook scene uses normal authored finite connection");
  InputMap map;map.Add("test_load",false);map.AddBinding("test_load",{"key:I"});Check(input.SetMap(map,error),"project logical input map binds the cookbook load action");input.SetPhysical("key:I",1);
  Step(cookbook,input);Step(cookbook,input);const auto sample=State(cookbook);auto* physical=cookbook.RuntimeDeformable(3,error);
  Check(cookbook.Scripts()->Diagnostics().empty()&&sample.value("loaded",false)&&sample.value("released",false)&&physical&&physical->released[0],"exact cookbook applies physical impulse and observes real released attachment without script break");

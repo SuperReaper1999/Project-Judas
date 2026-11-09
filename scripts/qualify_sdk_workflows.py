@@ -5,8 +5,10 @@ Run the editor first to create work/game/SDK_First_Game.judasproj. Fixture copie
 are supplied by the orchestrator; the SDK itself stays read-only and verified.
 """
 import argparse
+import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import time
@@ -19,6 +21,7 @@ def main():
     project=root/'game/SDK_First_Game.judasproj';game=project.parent;rows=[]
     ext='.exe' if os.name=='nt' else ''
     env={k:v for k,v in os.environ.items() if not k.startswith('JUDAS_')}
+    env['XDG_DATA_HOME']=str(out/'user-data')
     def run(tool,*args,expected=0):
         command=[str(sdk/(tool+ext)),*map(str,args)];start=time.monotonic()
         child=subprocess.run(command,cwd=out,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=120,env=env)
@@ -43,26 +46,74 @@ def main():
     recipe=json.loads(rows[-1]['stdout'])['recipe'];run('judas_model_import_cli','--recipe',recipe)
     run('judas_model_import_cli','--inspect',game/'Assets/triangle.judasmodel')
     run('judas_cook',game/'Assets/triangle.judasmodel',out/'triangle.judasmesh')
-    run('judas_volume_author','create',game/'Assets/soil.judasvolume',9,9,9,8,8,8)
-    run('judas_volume_author','validate',game/'Assets/soil.judasvolume')
-    run('judas_volume_author','brush',game/'Assets/soil.judasvolume','remove',0,0,0,2,1)
-    run('judas_volume_author','cook',project,'Assets/soil.judasvolume')
     run('judas_deformable_bake','sheet',out/'sheet.judasdeform',4,4,2,2,1)
-    run('judas_terrain_author','create',game/'Assets/ground.judasterrain',9,9,8,8)
-    run('judas_terrain_author','brush',game/'Assets/ground.judasterrain','raise',0,0,0,2,.5)
-    run('judas_terrain_author','validate',game/'Assets/ground.judasterrain')
-    run('judas_terrain_author','cook',project,'Assets/ground.judasterrain')
+    source=game/'Authoring/ground.json';source.parent.mkdir(exist_ok=True)
+    run('judas_terrain_author','v2-new',source,'highlands',33,.5,19,2)
+    run('judas_terrain_author','v2-validate',source)
+    run('judas_terrain_author','v2-pack',source,game/'Assets/ground.judasterrain')
+    run('judas_terrain_author','v2-native',source,game/'Assets/ground.judasmodel')
     run('judas_collision_cook','mesh',obj,out/'triangle.judascollision','00000000000000000000000000000001',0)
     run('judas_collision_cook','mesh',obj,out/'bad.judascollision','00000000000000000000000000000001',0,0,1,1,expected=1)
     run('judas_environment_bake',root/'fixtures/studio.hdr',out/'invalid.judasenv',8,8,expected=1)
     run('judas_environment_bake',root/'fixtures/studio.hdr',out/'studio.judasenv',16,32)
-    mod=root/'fixtures/modding_lab/modding_lab.judasproj'
+    # Ordinary projects remain opted out. Verify rejection before explicitly
+    # authoring a separate, self-contained contract for kit qualification.
+    run('judas_mod','kit',project,out/'disabled-kit',sdk/'docs',expected=1)
+    if 'not opted into modding' not in rows[-1]['stderr']:
+        raise RuntimeError('Missing explicit mod opt-in diagnostic')
+    run('judas_mod','registries',project)
+    registries=rows[-1]['stdout'].strip()
+    if len(registries)!=64 or any(c not in '0123456789abcdef' for c in registries):
+        raise RuntimeError('Invalid registry identity')
+    contract=dict(format=1,enabled=True,executable=False,game='sdk-qualification-'+hashlib.sha256(str(root).encode()).hexdigest()[:12],
+                  gameVersion='1.0.0',version='1.0.0',registries=registries,
+                  additions=['mesh','scene'],published={},behaviors={},
+                  replacements={},extensions={},editableSources=[])
+    mod=game/'ModKit.judasproj'
+    # JudasProject's quoted string grammar matches JSON escaping here.
+    mod.write_text(project.read_text(encoding='utf-8')+'mod-contract '+
+                   json.dumps(json.dumps(contract,separators=(',',':')))+'\n',encoding='utf-8')
     run('judas_mod','kit',mod,out/'kit',sdk/'docs')
     run('judas_mod','new',out/'kit',out/'new-mod','qualification-mod')
-    run('judas_navigation_bake',mod,'Scenes/landscape.judas')
-    run('judas_liquid_bake',root/'fixtures/liquid_reservoir_demo/liquid_reservoir_demo.judasproj','Scenes/lab.judas')
+    author=next((out/'new-mod').glob('*.judasproj'))
+    manifest=author.parent/'mod.json'
+    draft=json.loads(manifest.read_text(encoding='utf-8'))
+    draft.update(author='Judas qualification',license='MIT',notices=['NOTICE.txt'])
+    manifest.write_text(json.dumps(draft,indent=2)+'\n',encoding='utf-8')
+    (author.parent/'NOTICE.txt').write_text('Original Judas triangle fixture, MIT; see the SDK LICENSE.\n',encoding='utf-8')
+    run('judas_model_import_cli','--create',author,obj,'Assets/triangle.judasmodel')
+    run('judas_model_import_cli','--recipe',json.loads(rows[-1]['stdout'])['recipe'])
+    run('judas_mod','validate',author)
+    package=out/'qualification-mod.judasmod'
+    run('judas_mod','package',author,package)
+    payload_hash=rows[-1]['stdout'].split()[-1]
+    run('judas_mod','inspect',package)
+    run('judas_mod','install',mod,package)
+    run('judas_mod','enable',mod,'qualification-mod','1.0.0',payload_hash)
+    run('judas_mod','resolve',mod)
+    if 'qualification-mod' not in rows[-1]['stdout']:
+        raise RuntimeError('Explicit mod loadout did not resolve')
+    run('judas_mod','disable',mod,'qualification-mod')
+    run('judas_mod','remove',mod,'qualification-mod','1.0.0',payload_hash)
+    # A real independent navigation surface, not an empty-scene no-op.
+    nav_scene=game/'Scenes/sdk-navigation.judas'
+    scene_text=(game/'Scenes/main.judas').read_text(encoding='utf-8')
+    nav_id=max(map(int,re.findall(r'^object (\d+) ',scene_text,re.MULTILINE)))+1
+    scene_text=re.sub(r'next-id \d+',f'next-id {nav_id+1}',scene_text,count=1)
+    nav_scene.write_text(scene_text+f'\nobject {nav_id} "SDK navigation"\n'
+        ' position 0 0 0\n rotation 1 0 0 0\n scale 1 1 1\n'
+        ' nav.surface.enabled "1"\n nav.surface.includeDynamic "0"\n'
+        ' nav.surface.profile "0"\n nav.surface.sources "18446744073709551615"\n'
+        ' nav.surface.halfExtents "8 4 8"\n nav.surface.cellSize "0.2"\n'
+        ' nav.surface.cellHeight "0.1"\n nav.surface.tileSize "32"\n'
+        ' nav.surface.minRegion "0"\n nav.surface.simplification "1.3"\n'
+        ' nav.surface.asset ""\nend\n',encoding='utf-8')
+    run('judas_navigation_bake',project,'Scenes/sdk-navigation.judas')
+    baked=game/f'Assets/navigation/surface-{nav_id}.judasnav'
+    if not baked.is_file() or baked.stat().st_size<128:
+        raise RuntimeError('Navigation baker did not produce a real tiled surface')
     run('judas_server',project,28978,1)
-    run('judas_server',mod,28978,1,expected=1)
+    run('judas_server',project,0,1,expected=1)
     run('judas_export',project,root/'cli-export')
     (out/'COMPLETE.json').write_text(json.dumps({'passed':True,'actualToolOperations':len(rows),'tools':sorted(set(r['tool'] for r in rows))},indent=2)+'\n')
     print(len(rows),'SDK operations passed; editor/runtime are verified separately')

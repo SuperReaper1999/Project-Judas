@@ -224,13 +224,8 @@ extendEntity({
     }
 });
 extendWorld({
-    overlap: (min, max, filter = {}) => call("overlap", min, max, filter).map(entity),
-    sweepCapsule: (from, displacement, rotation = {
-        w: 1,
-        x: 0,
-        y: 0,
-        z: 0
-    }, filter = {}) => call("sweep", from, displacement, filter, rotation)
+    overlap: (min, max, filter = {}) => call("overlap", min, max, filter).map(entity)
+
 });
 )JS";
 } // namespace ScriptBindings::LibraryParts

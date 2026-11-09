@@ -19,7 +19,7 @@ change collision. Convex polygons require consistent strict winding (3–64
 vertices); open two-sided static chains accept 2–1024 vertices. No automatic
 sprite-alpha collision tracing or tilemap authoring is implied.
 
-Use a modern project with `legacy-gameplay` disabled (the 2D templates set this). The legacy spatial player adapter is rejected in planar worlds. One runtime world must use one physical domain. Planar bodies reject spatial
+One runtime world must use one physical domain. Planar bodies reject spatial
 CharacterMotor, ragdoll, wheel, powertrain, fluid and attachment coupling; 3D
 visuals/cameras/UI remain allowed. Use the project-owned 2D controller rather
 than the spatial CharacterMotor. Dynamic chains and unsupported mixtures fail

@@ -259,7 +259,7 @@ def generate():
     (ASSETS/'layout.js').write_text('// Generated physical layout. See tools/CreateWillowTown.py.\nexport default '+json.dumps(layout,separators=(',',':'))+';\n')
     meta('Assets/layout.js','script')
     for f,typ in [('game.js','script'),('town.js','script'),('life.js','script'),('citizen.ai.js','script'),('hud.judasui','ui')]:meta('Assets/'+f,typ)
-    scene=['JudasScene 3','settings','  name "Willow Town - a little life simulation"','  world-origin 0 0 0','  sun-direction 0.4 0.7 0.35','  sun-color 1 1 1','  ambient 1 1 1','  sun-enabled false','  background-color 0.14 0.22 0.19','  fluid-scale 1','  fluid-update-rate-hz 30','  fluid-hydrostatic-drag-rate 2','  fidelity-policy none','  next-id 3000','end','']
+    scene=['JudasScene 3','settings','  name "Willow Town - a little life simulation"','  world-origin 0 0 0','  sun-direction 0.4 0.7 0.35','  sun-color 1 1 1','  ambient 1 1 1','  sun-enabled false','  background-color 0.14 0.22 0.19','  fidelity-policy none','  next-id 3000','end','']
     def obj(oid,name,x=0,y=0,texture=None,size=(1,1),layer=-2,ysort=False,pivot=(.5,.5),frame=(0,0,1,1),body=None,extra=()):
         lines=['object '+str(oid)+' '+q(name),f'  position {x} {y} 0','  rotation 1 0 0 0','  scale 1 1 1']
         lines+=list(extra)
@@ -273,7 +273,7 @@ def generate():
         if body:
             mode,w,h=body
             planar={'version':1,'kind':1,'radius':0,'lockRotation':True,'vertices':[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]]}
-            lines+=['  body '+mode+' planar','  body.planar-v1 '+q(json.dumps(planar,separators=(',',':'))),'  body.half-extents 0.5 0.5 0.5','  body.radius 0.5','  body.terrain ""','  body.mass 1','  body.friction 0','  body.restitution 0','  body.initial-velocity 0 0 0','  body.pickable false','  body.managed false','  body.compound-count 0','  body.fluid-cavity-count 0']
+            lines+=['  body '+mode+' planar','  body.planar-v1 '+q(json.dumps(planar,separators=(',',':'))),'  body.half-extents 0.5 0.5 0.5','  body.radius 0.5','  body.mass 1','  body.friction 0','  body.restitution 0','  body.initial-velocity 0 0 0','  body.managed false','  body.compound-count 0']
         lines+=['end',''];scene.extend(lines)
     obj(1,'Town simulation - Assets/game.js',extra=['  scripts 1','  script.0.id 1','  script.0.asset '+q(asset_id('Assets/game.js')),'  script.0.enabled true','  script.0.properties "{}"'])
     obj(2,'Town interface',extra=['  ui.asset '+q(asset_id('Assets/hud.judasui')),'  ui.name "willow_town"','  ui.enabled true'])
@@ -300,7 +300,7 @@ def generate():
     for name,kind,controls in bindings:
         encoded+=q(name)+' '+str(kind)+' '+str(len(controls))+' '
         for control,scale in controls:encoded+=q(control)+' '+str(scale)+' 0 '
-    project='\n'.join(['JudasProject 1','name "Willow Town"','editor-2d "true"','basic-water "true"','water-swimming "true"','advanced-fluid-dynamics "false"','startup-scene "Scenes/main.judas"','assets-dir "Assets"','scenes-dir "Scenes"','saves-dir "Saves"','save-identity '+q(hashlib.sha256(b'WillowTown-v2').hexdigest()),'legacy-gameplay "false"','input-map '+q(encoded),''])
+    project='\n'.join(['JudasProject 1','name "Willow Town"','editor-2d "true"','basic-water "true"','water-swimming "true"','advanced-fluid-dynamics "false"','startup-scene "Scenes/main.judas"','assets-dir "Assets"','scenes-dir "Scenes"','saves-dir "Saves"','save-identity '+q(hashlib.sha256(b'WillowTown-v2').hexdigest()),'input-map '+q(encoded),''])
     (PROJECT/'Willow_Town.judasproj').write_text(project)
     (PROJECT/'ASSET_LICENSE.txt').write_text('Willow Town original pixel art\nCopyright (c) 2026 Conner / SuperReaper1999\n\nAll images in Assets/Art are original deterministic artwork produced by\ntools/CreateWillowTown.py, under the Project Judas MIT license. No external\nmodels, textures or game assets were downloaded. Source art generation is\npreserved in that tool. Pillow and DejaVu Sans (including its Bold variant)\nare authoring dependencies only. DejaVu is distributed separately under its\npermissive font license: https://dejavu-fonts.github.io/License.html . No font\nfiles or Python dependencies are redistributed or required by the running game.\n')
     ui=ROOT/'tools/CreateWillowTownUI.py'

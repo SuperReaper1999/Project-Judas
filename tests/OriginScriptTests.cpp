@@ -28,7 +28,7 @@ export default class {
  Check(assets.Track((root/"Assets/origin.js").string(),good,error)&&assets.Track((root/"Assets/fault.js").string(),bad,error),"ordinary origin callback assets register");
  Scene scene;auto& a=scene.CreateObject("motor script");a.characterMotor=CharacterMotorSettings{};a.transform.position={2,3,4};a.scripts.push_back({1,good.id,true,"{}"});
  auto& b=scene.CreateObject("fault isolation");b.scripts.push_back({1,bad.id,true,"{}"});
- ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;
+ ResourceManager resources(nullptr,&assets);RuntimeWorld world;
  Check(world.Build(scene,&resources,error),"ordinary VM world builds");if(failures)return 1;
  auto* player=world.Players().Create("independent view",{},error);SceneTransform view;view.position={5,6,7};world.Players().SetView(player->id,view,70,.1f,500,error);
  // Unstarted instances cannot receive callbacks before their lifecycle begins.

@@ -22,7 +22,7 @@ export default class {
  restore(){this.bind();}
  bind(){
   this.doc=ui.get('physics_stress_lab');this.doc.modal=false;this.doc.get('pause').visible=false;
-  ui.debugOverlayVisible=false;input.pointerCapture=true;
+  input.pointerCapture=true;
   this.drives=world.queryTags(['arcade_drive']).map((owner,index)=>({owner,joint:physics.joint(owner),index,direction:this.state.directions[index]}));
   this.bodies=world.queryTags(['stress_dynamic']);this.chassis=world.queryTags(['arcade_chassis']);
   this.loose=world.queryTags(['loose_piece']);this.commands=[];this.hudAge=1;this.request=0;

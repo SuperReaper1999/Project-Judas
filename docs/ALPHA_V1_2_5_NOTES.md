@@ -22,4 +22,4 @@ Experimental history following Alpha v1.2.4.
 
 Advanced Fluid Dynamics remains locked in Alpha. Basic Water and swimming
 remain available. See the [support matrix](ALPHA_SUPPORT_MATRIX.md) and
-[previous patch](ALPHA_V1_2_4_NOTES.md).
+[previous patch (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_4_NOTES.md).

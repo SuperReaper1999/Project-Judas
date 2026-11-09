@@ -5,10 +5,10 @@ import {v,sub,mul,len,norm,camera} from './math.js';
 const GOALS=[v(-8,0,-8),v(8,0,8),v(8,0,-8),v(-8,0,8)];
 export default class CoreScramble {
  constructor(){this.state={time:90,scores:[0,0,0,0],split:false,count:2,finished:false,bots:[null,null,null,null],joined:[true,true,false,false],cooldowns:[0,0,0,0]};this.roster=[];this.seenPads=new Set();this.cooldowns=this.state.cooldowns;this.touchStarts=new Map();this.feedback='PUSH THE WHITE CORES INTO YOUR COLOUR';this.spawnClock=0;}
- start(){this.loadHUD();ui.debugOverlayVisible=false;input.pointerCapture=false;for(let i=0;i<this.state.count;i++)this.join(i);for(let i=0;i<5;i++)this.spawnCore(i);this.layout();}
+ start(){this.loadHUD();input.pointerCapture=false;for(let i=0;i<this.state.count;i++)this.join(i);for(let i=0;i<5;i++)this.spawnCore(i);this.layout();}
  // Runtime player/device handles intentionally are not persistent identifiers.
  // Rebuild local seats and input ownership from project policy after a reload.
- restore(){this.loadHUD();ui.debugOverlayVisible=false;input.pointerCapture=false;this.cooldowns=this.state.cooldowns;for(let i=0;i<4;i++)if(this.state.joined[i])this.join(i,saves.resolve(this.state.bots[i]));this.layout();if(this.state.finished)this.finish();}
+ restore(){this.loadHUD();input.pointerCapture=false;this.cooldowns=this.state.cooldowns;for(let i=0;i<4;i++)if(this.state.joined[i])this.join(i,saves.resolve(this.state.bots[i]));this.layout();if(this.state.finished)this.finish();}
 
  loadHUD(){const portrait=world.viewport.width<world.viewport.height;if(!this.hud){this.hud=ui.get('scramble');this.hudPortrait=false;}if(this.hud&&portrait===this.hudPortrait)return;const modal=this.hud?.modal||false;if(this.hud)this.hud.unload();this.hud=ui.load(C[portrait?'hudPortrait':'hud'],'scramble');this.hudPortrait=portrait;if(this.state.finished)this.finish();else this.globalMenu(modal);}
 

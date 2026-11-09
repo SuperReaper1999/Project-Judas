@@ -47,7 +47,6 @@ constexpr Panel panels[] = {
     {"scene", "Scene settings", &EditorPanelState::showSceneSettings},
     {"project", "Project settings", &EditorPanelState::showProjectSettings},
     {"terrain", "Terrain tools", &EditorPanelState::showTerrain},
-    {"volume", "Volumetric terrain", &EditorPanelState::showVolumeTerrain},
     {"animation", "Animation timeline", &EditorPanelState::showAnimationTimeline},
     {"sprite-animation", "Sprite sheets and frame animation", &EditorPanelState::showSpriteSheetEditor},
     {"tilemaps", "Tilemap painter", &EditorPanelState::showTilemapEditor},

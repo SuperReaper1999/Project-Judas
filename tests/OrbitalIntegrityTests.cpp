@@ -11,7 +11,6 @@
 #include <set>
 #include <stdexcept>
 #include <string>
-#include "GameSession.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "Simulation.h"
@@ -55,7 +54,7 @@ struct State {
 };
 struct Played {
     RuntimeWorld world;
-    GameSession session;
+
     Window window;
     BodyHandle a, b;
     explicit Played(const Configuration& c) {
@@ -63,7 +62,6 @@ struct Played {
         scene.Settings().name = c.name;
         scene.Settings().worldOrigin = c.origin;
         auto& start = scene.CreateObject("Remote player");
-        start.playerStart = ScenePlayerStartComponent{};
         start.transform.position = glm::vec3(c.translation + glm::dvec3(0, 1000, 0));
         const double sum = double(c.massA) + c.massB;
         const double speed = std::sqrt(kG * sum / c.separation) * c.speedFraction;
@@ -83,8 +81,6 @@ struct Played {
             object.body->restitution = 0;
             object.body->initialLinearVelocity = glm::vec3(c.boost + Rotate({0, factor * speed, 0}, c.angle));
             if (!second || c.celestialB) object.celestial = SceneCelestialComponent{};
-            if (!second && object.celestial) object.celestial->operatorThrustForce = c.thrustA;
-            if (second && c.vehicleB) object.vehicle = SceneVehicleComponent{};
         };
         append(c.reverseOrder);
         append(!c.reverseOrder);
@@ -99,7 +95,7 @@ struct Played {
         std::string again;
         Require(SaveSceneToString(loaded, again) && text == again, c.name + " canonical scene round-trip");
         Require(world.Build(loaded, nullptr, error), c.name + " RuntimeWorld: " + error);
-        Require(session.Begin(world, error), c.name + " GameSession: " + error);
+        Require(world.IsBuilt(), c.name + " RuntimeWorld: " + error);
         window.SetTestInputMode(true); // supplies no keys; never replaces the simulation path
         const auto* entityA = world.FindEntity(idA);
         const auto* entityB = world.FindEntity(idB);
@@ -108,14 +104,14 @@ struct Played {
         b = world.DynamicBodies()[entityB->slot].Handle();
         Check(world.Physics().GetMass(a) == c.massA && world.Physics().GetMass(b) == c.massB,
               c.name + " represented authored masses retained");
-        Check(world.Gravity().Sample(glm::vec3(c.translation)) == glm::vec3(0) && !world.HasFluid() &&
+        Check(world.Gravity().Sample(glm::vec3(c.translation)) == glm::vec3(0) && !world.GridWater() &&
               world.PointMassSources().empty() && !world.GetFidelityPolicy(), c.name + " no competing gravity or fidelity policy");
     }
     State Get() const {
         const auto& p = world.Physics();
         return {p.GetTransform(a).position, p.GetTransform(b).position, p.GetLinearVelocity(a), p.GetLinearVelocity(b)};
     }
-    void Step(float dt) { StepPlayedWorld(session, window, dt); ++totalSteps; }
+    void Step(float dt) { StepPlayedWorld(world, window, dt); ++totalSteps; }
 };
 glm::dvec3 Momentum(const State& s, const Configuration& c) { return double(c.massA) * s.va + double(c.massB) * s.vb; }
 glm::dvec3 Barycentre(const State& s, const Configuration& c) { return (double(c.massA) * s.a + double(c.massB) * s.b) / (double(c.massA) + c.massB); }
@@ -244,86 +240,11 @@ void Equivalent(const Result& reference, const Result& other, const Configuratio
     Check(positionError < .02 && velocityError < .002, label + " transformed trajectory agrees within 2 cm / 2 mm/s");
     std::cout << "EQUIVALENCE " << label << " position_error=" << positionError << " velocity_error=" << velocityError << '\n';
 }
-glm::dvec3 AllMomentum(Played& played) {
-    glm::dvec3 p(0);
-    for (const auto& body : played.world.DynamicBodies()) if (body.IsLive())
-        p += double(played.world.Physics().GetMass(body.Handle())) * glm::dvec3(played.world.Physics().GetLinearVelocity(body.Handle()));
-    return p;
-}
-glm::dvec3 ExpectedThrust(Played& played, BodyHandle actor, double force) {
-    // Independent mass-weighted centre from actual initial represented states.
-    glm::dvec3 bary(0); double mass = 0;
-    for (const auto& body : played.world.DynamicBodies()) if (body.IsLive()) {
-        const double m = played.world.Physics().GetMass(body.Handle());
-        bary += m * glm::dvec3(played.world.Physics().GetTransform(body.Handle()).position); mass += m;
-    }
-    const auto offset = glm::dvec3(played.world.Physics().GetTransform(actor).position) - bary / mass;
-    return force * offset / glm::length(offset);
-}
-void OperatorThrustLifecycle() {
-    Configuration c; c.thrustA = 5e12f;
-    State freshResult;
-    for (bool reconstruct : {false, true}) {
-        ++cases; const int before = failures;
-        c.name = reconstruct ? "thrust_after_reconstruct" : "thrust_fresh";
-        Played played(c); std::string error;
-        if (reconstruct) {
-            const EntityId id = played.world.EntityIdOfBody(played.a); const auto stale = played.a;
-            Require(played.world.SetEntityFidelity(id, SimulationFidelity::Coarse, &error), "thrust body Coarse: " + error);
-            Require(played.world.SetEntityFidelity(id, SimulationFidelity::Full, &error), "thrust body Full: " + error);
-            const auto* entity = played.world.FindEntity(id); played.a = played.world.DynamicBodies()[entity->slot].Handle();
-            Check(played.a.id != stale.id && !played.world.Physics().IsDynamicBody(stale), "thrust fixture actually changes physics generation");
-        }
-        const auto initialP = AllMomentum(played), expectedImpulse = ExpectedThrust(played, played.a, c.thrustA) * double(c.dt);
-        Check(played.world.OperatorThrusts().size() == 1 && played.world.OperatorThrusts().front().handle.id == played.a.id,
-              c.name + " operator force binds to current body generation");
-        played.window.SetTestActionState(Action::PlanetRadialThrust, true); played.Step(c.dt);
-        const auto impulse = AllMomentum(played) - initialP;
-        const double residual = glm::length(impulse - expectedImpulse) / glm::length(expectedImpulse);
-        Check(residual < 2e-5, c.name + " total momentum equals independently calculated external thrust impulse");
-        if (reconstruct) {
-            const auto after = played.Get();
-            Check(glm::length(after.va - freshResult.va) < 1e-6 && glm::length(after.vb - freshResult.vb) < 1e-6,
-                  "reconstructed thrust produces the same physical result as fresh authored body");
-        } else freshResult = played.Get();
-        std::cout << "CASE " << c.name << ' ' << (before == failures ? "PASS" : "FAIL") << " expected_external_impulse=";
-        Print(expectedImpulse); std::cout << " measured_external_impulse="; Print(impulse); std::cout << " normalized_residual=" << residual << '\n';
-    }
-    {
-        ++cases; const int before = failures; c = Configuration{}; c.name = "runtime_created_thrust";
-        Played played(c); std::string error;
-        SceneObject definition; definition.name = "Created celestial"; definition.transform.position = {32, 2, 0};
-        definition.body = SceneBodyComponent{}; definition.body->motion = SceneBodyMotion::Dynamic;
-        definition.body->shape = SceneShape::Sphere; definition.body->radius = .1f; definition.body->mass = c.massB;
-        definition.celestial = SceneCelestialComponent{}; definition.celestial->operatorThrustForce = 5e12f;
-        const EntityId id = played.world.CreateEntity(definition, nullptr, &error);
-        Require(id != kInvalidSceneObjectId, "create runtime celestial with operator force: " + error);
-        const auto actor = played.world.DynamicBodies()[played.world.FindEntity(id)->slot].Handle();
-        Check(played.world.OperatorThrusts().size() == 1 && played.world.OperatorThrusts().front().handle.id == actor.id,
-              "runtime-created operator force is registered");
-        const auto initialP = AllMomentum(played), expectedImpulse = ExpectedThrust(played, actor, definition.celestial->operatorThrustForce) * double(c.dt);
-        played.window.SetTestActionState(Action::PlanetRadialThrust, true); played.Step(c.dt);
-        const auto measured = AllMomentum(played) - initialP;
-        const double residual = glm::length(measured - expectedImpulse) / glm::length(expectedImpulse);
-        Check(residual < 2e-5, "runtime-created operator force supplies authored external impulse");
-        std::cout << "CASE " << c.name << ' ' << (before == failures ? "PASS" : "FAIL") << " expected_external_impulse=";
-        Print(expectedImpulse); std::cout << " measured_external_impulse="; Print(measured); std::cout << " normalized_residual=" << residual << '\n';
-        ++cases; const int beforeDestroy = failures;
-        Require(played.world.DestroyEntity(id, &error), "destroy runtime celestial operator: " + error);
-        Check(played.world.OperatorThrusts().empty(), "destroying celestial removes its operator-force handle");
-        const auto p = AllMomentum(played); played.Step(c.dt);
-        Check(glm::length(AllMomentum(played) - p) / (double(c.massA) + c.massB) < 2e-6,
-              "destroyed operator cannot apply external impulse to surviving bodies");
-        std::cout << "CASE destroyed_thrust " << (beforeDestroy == failures ? "PASS" : "FAIL") << " active_operator_count="
-                  << played.world.OperatorThrusts().size() << '\n';
-    }
-}
 void Run(bool witnessOnly) {
     Configuration c;
-    c.name = "local_vehicle_with_explicit_celestial"; c.vehicleB = true;
+    c.name = "box_with_explicit_celestial"; c.vehicleB = true;
     FirstStep(c);
     if (witnessOnly) return;
-    OperatorThrustLifecycle();
     c.name = "local_vehicle_automatic_participant"; c.celestialB = false; FirstStep(c);
     c = Configuration{}; c.name = "unequal_pair_first_force"; FirstStep(c);
     c.angle = 1.17; c.name = "rotated_pair_first_force"; FirstStep(c);
@@ -371,17 +292,16 @@ void Run(bool witnessOnly) {
 }
 } // namespace
 int main(int argc, char** argv) {
-    bool witnessOnly = false, thrustOnly = false;
+    bool witnessOnly = false;
     for (int i = 1; i < argc; ++i) {
         const std::string arg = argv[i];
         if (arg == "--witness-only") witnessOnly = true;
-        else if (arg == "--thrust-witness-only") thrustOnly = true;
         else if (arg == "--output" && i + 1 < argc) outputDirectory = argv[++i];
         else { std::cerr << "unknown argument " << arg << '\n'; return 2; }
     }
     std::cout << std::setprecision(17);
     if (!outputDirectory.empty()) fs::create_directories(outputDirectory);
-    try { if (thrustOnly) OperatorThrustLifecycle(); else Run(witnessOnly); } catch (const std::exception& error) { Check(false, error.what()); }
+    try { Run(witnessOnly); } catch (const std::exception& error) { Check(false, error.what()); }
     std::cout << "Orbital integrity: " << cases << " cases, " << totalSteps << " ordinary fixed steps, " << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
 }

@@ -1,6 +1,5 @@
 #include "RuntimeWorld.h"
 #include "EngineHost.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "SceneSerialization.h"
 #include "SceneFingerprint.h"
@@ -69,7 +68,7 @@ export default class {
 })JS";
  Check(AssetDatabase::WriteMeta((fixture/"Assets/proof.js").string()+kAssetMetaExtension,scriptId,AssetType::Script,"proof.js",error),"normal script metadata");
  host.OpenProjectAssets(fixture.string(),(fixture/"Assets").string());auto scene=Fixture();scene.Find(10)->scripts.push_back({1,scriptId,true,"{}"});
- RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&host.Resources(),error),"ordinary mixed world builds");
+ RuntimeWorld world;Check(world.Build(scene,&host.Resources(),error),"ordinary mixed world builds");
  host.Resources().WaitForAll();world.UpdateScripts(&host.GetWindow().Input(),1.f/60);
  Check(world.Scripts()&&world.Scripts()->Diagnostics().empty(),"actual public VM calls fault-free");
  auto states=world.Scripts()->Capture();std::string state=states.empty()?"":states.front().json;
@@ -86,8 +85,8 @@ export default class {
  Check(Near(world.SampleEntityGravity(20,world.RuntimeDefinition(20)->transform.position),expected),"selected RadicalGravity remains position-addressed");
  selection.mode=GravitySelection::Mode::Uniform;selection.source=0;selection.acceleration={0,0,-9.81f};
  Check(world.SetGravitySelection(20,selection,error),"rigid body accepts uniform override");
- GameSession game;Check(game.Begin(world,error),"ordinary fixed-step game begins");
- for(int i=0;i<90;++i){host.GetWindow().Input().BeginFixedStep();StepPlayedWorld(game,host.GetWindow(),1.f/60);}
+ Check(world.IsBuilt(),"ordinary fixed-step game begins");
+ for(int i=0;i<90;++i){host.GetWindow().Input().BeginFixedStep();StepPlayedWorld(world,host.GetWindow(),1.f/60);}
  auto* motor=world.RuntimeCharacter(10);auto* other=world.RuntimeCharacter(11);
  Check(world.Scripts()->Diagnostics().empty(),"fixedUpdate selection is fault-free");
  Check(motor&&motor->result.supported&&glm::dot(motor->result.supportNormal,glm::vec3(-1,0,0))>.99f,"selected motor lands on physical wall");
@@ -105,7 +104,7 @@ export default class {
  Check(!world.SetGravitySelection(10,selection,error)&&Near(world.SampleEntityGravity(10,motor->position),{2,3,4}),"invalid native write is atomic");
  std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error),"modern slot captures gravity intent");if(!error.empty())std::printf("CAPTURE %s\n",error.c_str());
  Scene saved;Check(WorldPersistence::SceneFrom(chunks,saved,error),"snapshot uses ordinary scene fields");
- RuntimeWorld restored;restored.legacyGameplay=false;Check(restored.Build(saved,&host.Resources(),error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error),"fresh world restores selection and motion");if(!error.empty())std::printf("RESTORE %s\n",error.c_str());
+ RuntimeWorld restored;Check(restored.Build(saved,&host.Resources(),error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error),"fresh world restores selection and motion");if(!error.empty())std::printf("RESTORE %s\n",error.c_str());
  Check(Near(restored.SampleEntityGravity(10,restored.RuntimeCharacter(10)->position),{2,3,4}),"restored motor selected gravity");
  restored.Destroy();
  selection.mode=GravitySelection::Mode::Field;selection.source=2;selection.acceleration={0,0,0};world.SetGravitySelection(10,selection,error);
@@ -175,6 +174,6 @@ export default class {
   auto nanoseconds=std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-start).count()/20000;
   std::printf("PERF %s ns_per_sample %.3f checksum %.3f\n",mode.c_str(),nanoseconds,float(sum));
  }
- game.End();world.Destroy();Check(!world.RuntimeCharacter(10),"Stop clears motor and selection world");host.Shutdown();
+ world.Destroy();Check(!world.RuntimeCharacter(10),"Stop clears motor and selection world");host.Shutdown();
  std::printf("SUMMARY %u checks %u failures\n",checks,failures);return failures?1:0;
 }

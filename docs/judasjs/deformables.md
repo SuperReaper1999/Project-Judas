@@ -77,8 +77,8 @@ See [lifecycle](lifecycle.md), [physics](physics.md),
 M64 extends sampled rigid contact to cooked static meshes, convex hulls and
 oriented compound children through the same authoritative geometry path. This
 does not add exact mesh/cloth CCD, motor blocking or deformable M42 events.
-See [M64 geometry coverage](../M64_COLLISION.md) and the
-[M62 implementation/limits](../M62_DEFORMABLES.md) for the physical support envelope.
+See [M64 geometry coverage](../COLLISION_AUTHORING.md) and the
+[M62 implementation/limits](../DEFORMABLES.md) for the physical support envelope.
 
 ## M63 fracture cooks
 
@@ -88,7 +88,7 @@ topology-aware picks, support release and the restrictions on reset/material/att
 
 ## M80 elastic/plastic structural solids
 
-[M80 bending](../M80_BENDING.md) reuses this API for physically deforming
+[M80 bending](../BENDING.md) reuses this API for physically deforming
 tetrahedral solids and optional soft section-based failure. Solid elastic strain
 uses `shearCompliance`; `volumeCompliance` controls volume preservation.
 `stretchCompliance`/`bendCompliance` remain cloth parameters. Yield/rate/capped
@@ -144,4 +144,4 @@ with unlimited historical strength; no absent strength history is invented.
 
 A [Powertrain connection prerequisite](powertrains.md#physical-connection-prerequisite)
 can require this patch and an intact M79 material path. The next mechanical fixed
-interval observes committed release/fracture. See [M83 model and bounds](../M83_MECHANICAL_DAMAGE.md).
+interval observes committed release/fracture. See [M83 model and bounds](../MECHANICAL_DAMAGE.md).

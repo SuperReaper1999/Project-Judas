@@ -9,9 +9,6 @@ export class Terrain {
     get state() {
         return call("terrainState", this.id);
     }
-    create(options) {
-        return call("terrainCreate", this.id, options);
-    }
     createLandscape(source) {
         return call("terrainLandscape", this.id, source);
     }

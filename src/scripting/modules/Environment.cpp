@@ -13,7 +13,6 @@
 #include <stdexcept>
 #include <tuple>
 
-#include "../../ProductionFluidCoupling.h"
 
 using namespace ScriptBindingValues;
 namespace ScriptBindings {
@@ -64,15 +63,7 @@ JSValue HandleEnvironment(BindingContext &context, const std::string &op, int ar
         return result;
     };
 
-    auto liquidHandle = [&](JSValueConst value) {
-        LiquidHandle h;
-        std::istringstream text(String(c, value));
-        char separator = 0;
-        if (!(text >> h.generation >> separator >> h.id) || separator != ':')
-            return LiquidHandle{};
-        text >> std::ws;
-        return text.eof() ? h : LiquidHandle{};
-    };
+
 
     if (op == "weatherQuality") {
         if (argc > 1) {
@@ -233,199 +224,6 @@ JSValue HandleEnvironment(BindingContext &context, const std::string &op, int ar
         return JS_TRUE;
     }
 
-    if (op == "liquidValid")
-        return JS_NewBool(c, world.Liquids().Get(liquidHandle(arg(1))) != nullptr);
-
-    if (op == "liquidState" || op == "liquidEnabled" || op == "liquidTransfer" ||
-        op == "liquidImpulse" || op == "liquidSurfaceEnabled") {
-        auto h = liquidHandle(arg(1));
-        auto *state = world.Liquids().Get(h);
-        if (!state)
-            return JS_ThrowReferenceError(c, "stale liquid handle");
-        if (op == "liquidEnabled") {
-            if (!JS_IsBool(arg(2)))
-                return JS_ThrowTypeError(c, "boolean required");
-            return JS_NewBool(c, world.Liquids().SetEnabled(h, JS_ToBool(c, arg(2))));
-        }
-        if (op == "liquidImpulse") {
-            if (!s->fixed)
-                return JS_ThrowTypeError(c, "surface impulse belongs in fixedUpdate");
-            glm::vec3 p, v;
-            if (!ReadVec(c, arg(2), p) || !ReadVec(c, arg(3), v))
-                return JS_ThrowTypeError(c, "finite point and impulse required");
-            return JS_NewBool(c, world.Liquids().SurfaceImpulse(h, p, v));
-        }
-        if (op == "liquidSurfaceEnabled") {
-            if (!JS_IsBool(arg(2)))
-                return JS_ThrowTypeError(c, "boolean required");
-            return JS_NewBool(c, world.Liquids().SurfaceEnabled(h, JS_ToBool(c, arg(2))));
-        }
-        if (op == "liquidTransfer") {
-            if (!s->fixed)
-                return JS_ThrowTypeError(c, "liquid transfer belongs in fixedUpdate");
-            auto other = liquidHandle(arg(2));
-            if (!world.Liquids().Get(other))
-                return JS_ThrowReferenceError(c, "stale destination");
-            double volume;
-            if (JS_ToFloat64(c, &volume, arg(3)) || !std::isfinite(volume) || volume < 0)
-                return JS_ThrowTypeError(c, "finite nonnegative volume required");
-            std::optional<glm::vec3> sourcePoint, destinationPoint;
-            auto options = arg(4);
-            for (auto entry :
-                 {std::pair<const char *, std::optional<glm::vec3> *>{"sourcePoint", &sourcePoint},
-                  {"destinationPoint", &destinationPoint}}) {
-                auto v = JS_GetPropertyStr(c, options, entry.first);
-                if (!JS_IsUndefined(v)) {
-                    glm::vec3 p;
-                    if (!ReadVec(c, v, p)) {
-                        JS_FreeValue(c, v);
-                        return JS_ThrowTypeError(c, "finite exchange point required");
-                    }
-                    *entry.second = p;
-                }
-                JS_FreeValue(c, v);
-            }
-            return JS_NewFloat64(
-                c, world.Liquids().Transfer(h, other, volume, sourcePoint, destinationPoint));
-        }
-        auto v = JS_NewObject(c);
-        JS_SetPropertyStr(c, v, "entityId", JS_NewString(c, std::to_string(state->entity).c_str()));
-        JS_SetPropertyStr(c, v, "enabled", JS_NewBool(c, state->enabled));
-        JS_SetPropertyStr(c, v, "container", JS_NewBool(c, state->container));
-        JS_SetPropertyStr(c, v, "equilibriumValid", JS_NewBool(c, state->equilibriumValid));
-        JS_SetPropertyStr(c, v, "material", JS_NewString(c, state->material.id.c_str()));
-        JS_SetPropertyStr(c, v, "density", JS_NewFloat64(c, state->material.density));
-        JS_SetPropertyStr(c, v, "volume", JS_NewFloat64(c, state->volume));
-        JS_SetPropertyStr(c, v, "capacity", JS_NewFloat64(c, state->capacity));
-        JS_SetPropertyStr(c, v, "stableCapacity", JS_NewFloat64(c, state->stableCapacity));
-        JS_SetPropertyStr(c, v, "coordinate", JS_NewFloat64(c, state->q));
-        auto surface = state->dynamicSurface;
-        JSValue info = JS_NULL;
-        if (surface) {
-            info = JS_NewObject(c);
-            JS_SetPropertyStr(c, info, "enabled", JS_NewBool(c, surface->enabled));
-            for (auto field :
-                 {std::pair<const char *, double>{"cells", double(surface->cells.size())},
-                  {"faces", double(surface->discharge.size())},
-                  {"volume", surface->Volume()},
-                  {"iterations", double(surface->stats.iterations)},
-                  {"retries", double(surface->stats.retries)},
-                  {"limitedFaces", double(surface->stats.limitedFaces)},
-                  {"residual", surface->stats.residual},
-                  {"partitionError", surface->Volume() - state->volume},
-                  {"stepSeconds", surface->stats.seconds}})
-                JS_SetPropertyStr(c, info, field.first, JS_NewFloat64(c, field.second));
-        }
-        JS_SetPropertyStr(c, v, "surface", info);
-        return v;
-    }
-
-    if (op == "liquidAccounting") {
-        auto a = world.Liquids().Accounting(String(c, arg(1)));
-        auto v = JS_NewObject(c);
-        for (auto field : {std::pair<const char *, double>{"reservoirs", a.reservoirs},
-                           {"containers", a.containers},
-                           {"detached", a.detached},
-                           {"total", a.total},
-                           {"expected", a.expected},
-                           {"error", a.error},
-                           {"tolerance", a.tolerance}}) {
-            JS_SetPropertyStr(c, v, field.first, JS_NewFloat64(c, field.second));
-        }
-        return v;
-    }
-
-    if (op == "liquidSample" || op == "liquidPresentedSample") {
-        glm::vec3 p;
-        if (!ReadVec(c, arg(1), p))
-            return JS_ThrowTypeError(c, "finite point required");
-        auto sample = world.Liquids().Sample(
-            p, {}, op == "liquidPresentedSample" && s->inPresentation ? s->presentationAlpha : 1);
-        if (!sample)
-            return JS_NULL;
-        auto v = JS_NewObject(c);
-        JS_SetPropertyStr(c, v, "entityId",
-                          JS_NewString(c, std::to_string(sample->entity).c_str()));
-        JS_SetPropertyStr(c, v, "material", JS_NewString(c, sample->material.id.c_str()));
-        JS_SetPropertyStr(c, v, "density", JS_NewFloat64(c, sample->material.density));
-        JS_SetPropertyStr(c, v, "depth", JS_NewFloat64(c, sample->depth));
-        JS_SetPropertyStr(c, v, "coordinate", JS_NewFloat64(c, sample->coordinate));
-        JS_SetPropertyStr(c, v, "surfacePoint", Vec(c, sample->surfacePoint));
-        JS_SetPropertyStr(c, v, "normal", Vec(c, sample->normal));
-        JS_SetPropertyStr(c, v, "up", Vec(c, sample->up));
-        JS_SetPropertyStr(c, v, "velocity", Vec(c, sample->velocity));
-        return v;
-    }
-
-    if (op == "liquidErrors" || op == "liquidConnections") {
-        auto v = JS_NewArray(c);
-        uint32_t i = 0;
-        if (op == "liquidErrors")
-            for (auto [id, error] : world.Liquids().Errors()) {
-                auto e = JS_NewObject(c);
-                JS_SetPropertyStr(c, e, "entityId", JS_NewString(c, std::to_string(id).c_str()));
-                JS_SetPropertyStr(c, e, "message", JS_NewString(c, error.c_str()));
-                JS_SetPropertyUint32(c, v, i++, e);
-            }
-        else
-            for (auto [id, active] : world.Liquids().Connections()) {
-                auto e = JS_NewObject(c);
-                JS_SetPropertyStr(c, e, "entityId", JS_NewString(c, std::to_string(id).c_str()));
-                JS_SetPropertyStr(c, e, "active", JS_NewBool(c, active));
-                JS_SetPropertyUint32(c, v, i++, e);
-            }
-        return v;
-    }
-
-    if (op == "liquidSubmerged") {
-        EntityId id = 0;
-        try {
-            id = std::stoull(String(c, arg(1)));
-        } catch (...) {
-            return JS_ThrowReferenceError(c, "invalid entity");
-        }
-        auto *o = world.RuntimeDefinition(id);
-        if (!o || !o->body)
-            return JS_ThrowReferenceError(c, "missing collider");
-        auto h = world.RuntimeBody(id);
-        if (!h.IsValid())
-            return JS_ThrowReferenceError(c, "stale collider");
-        if (!world.Physics().IsBodyEnabled(h)) {
-            auto v = JS_NewObject(c);
-            JS_SetPropertyStr(c, v, "volume", JS_NewFloat64(c, 0));
-            JS_SetPropertyStr(c, v, "center", Vec(c, glm::vec3(0)));
-            JS_SetPropertyStr(c, v, "buoyancy", Vec(c, glm::vec3(0)));
-            return v;
-        }
-        auto pose = world.Physics().GetTransform(h);
-        LiquidGeometry geometry;
-        if (o->body->shape == SceneShape::Box)
-            geometry =
-                LiquidBox(-glm::dvec3(o->body->halfExtents), glm::dvec3(o->body->halfExtents));
-        else if (o->body->shape == SceneShape::Compound)
-            for (auto box : o->body->compoundBoxes) {
-                if (box.type != ShapeType::Box)
-                    return JS_ThrowTypeError(
-                        c, "submerged requires box children; no hull volume proxy");
-                auto g = LiquidBox(-glm::dvec3(box.halfExtents), glm::dvec3(box.halfExtents));
-                for (auto &cell : g.cells)
-                    for (auto &p : cell)
-                        p = glm::dvec3(box.localCenter) + glm::dquat(box.rotation) * p;
-                geometry.cells.insert(geometry.cells.end(), g.cells.begin(), g.cells.end());
-            }
-        else
-            return JS_ThrowTypeError(c, "submerged supports box/compound colliders");
-        for (auto &t : geometry.cells)
-            for (auto &p : t)
-                p = glm::dvec3(pose.position) + glm::dquat(pose.rotation) * p;
-        auto a = world.Liquids().Submerged(geometry);
-        auto v = JS_NewObject(c);
-        JS_SetPropertyStr(c, v, "volume", JS_NewFloat64(c, a.volume));
-        JS_SetPropertyStr(c, v, "center", Vec(c, a.center));
-        JS_SetPropertyStr(c, v, "buoyancy", Vec(c, a.buoyancy));
-        return v;
-    }
-
     if (op == "fluidSample") {
         glm::vec3 p, up, tangent;
         double height, radius;
@@ -434,22 +232,12 @@ JSValue HandleEnvironment(BindingContext &context, const std::string &op, int ar
             !std::isfinite(height) || !std::isfinite(radius) || height < 0 || radius <= 0 ||
             glm::length(up) < 1e-6f || glm::length(glm::cross(up, tangent)) < 1e-6f)
             return JS_ThrowTypeError(c, "invalid liquid query");
-        auto sample = world.HasFluid()
-                          ? world.FluidCoupling().SampleField(p, glm::normalize(up), float(height),
-                                                              float(radius), tangent)
-                          : FluidFieldSample{};
-        if (!world.WaterSwimmingEnabled())
-            sample = {};
-        else {
-            auto basic = world.SampleWater(p, glm::normalize(up), float(height), float(radius));
-            if (basic.immersion > sample.fraction)
-                sample = {basic.immersion, basic.density, basic.velocity, {0, 0, 0}};
-        }
+        auto sample = world.SampleWater(p,glm::normalize(up),float(height),float(radius));
         auto o = JS_NewObject(c);
-        JS_SetPropertyStr(c, o, "immersion", JS_NewFloat64(c, sample.fraction));
+        JS_SetPropertyStr(c, o, "immersion", JS_NewFloat64(c, sample.immersion));
         JS_SetPropertyStr(c, o, "density", JS_NewFloat64(c, sample.density));
         JS_SetPropertyStr(c, o, "velocity", Vec(c, sample.velocity));
-        JS_SetPropertyStr(c, o, "acceleration", Vec(c, sample.acceleration));
+        JS_SetPropertyStr(c, o, "acceleration", Vec(c, glm::vec3(0)));
         return o;
     }
 
@@ -467,12 +255,7 @@ JSValue HandleEnvironment(BindingContext &context, const std::string &op, int ar
     if (!definition)
         return JS_ThrowReferenceError(c, "stale or invalid entity %llu", (unsigned long long)id);
 
-    if (op == "liquidOwner") {
-        auto h = world.Liquids().Handle(id);
-        if (!world.Liquids().Get(h))
-            return JS_NULL;
-        return JS_NewString(c, (std::to_string(h.generation) + ":" + std::to_string(h.id)).c_str());
-    }
+
 
     if (op == "basicWater" || op == "basicWaterSet") {
         if (!definition->basicWater)
@@ -537,11 +320,7 @@ void RegisterEnvironmentBindings(BindingRegistry &registry) {
     registry.Add(
         "Environment",
         {"weatherQuality",       "weatherSample",     "weatherExists",   "weatherState",
-         "weatherEnabled",       "weatherTransition", "weatherStrike",   "liquidValid",
-         "liquidState",          "liquidEnabled",     "liquidTransfer",  "liquidImpulse",
-         "liquidSurfaceEnabled", "liquidAccounting",  "liquidSample",    "liquidPresentedSample",
-         "liquidErrors",         "liquidConnections", "liquidSubmerged", "fluidSample",
-         "liquidOwner",          "basicWater",        "basicWaterSet"},
+         "weatherEnabled",       "weatherTransition", "weatherStrike", "fluidSample",          "basicWater",        "basicWaterSet"},
         HandleEnvironment);
 }
 } // namespace ScriptBindings

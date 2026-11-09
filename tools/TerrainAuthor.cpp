@@ -1,19 +1,11 @@
 #include "BuildIdentity.h"
 #include "terrain/TerrainCook.h"
-#include "TerrainAuthoring.h"
-#include "ModAuthoring.h"
-#include "Project.h"
 #include <iostream>
-#include <filesystem>
-namespace {unsigned Count(const char* value){std::string text=value;size_t consumed=0;auto count=std::stoull(text,&consumed);if(consumed!=text.size()||count<2||count>257)throw std::runtime_error("terrain sample count must be an integer in 2..257");return unsigned(count);}}
-namespace {void WritableSource(const std::string& path){std::string error;if(!ValidateTerrainWritePath(path,error))throw std::runtime_error(error);}}
-int main(int argc,char** argv){
+int main(int argc, char **argv) {
     if (HandleBuildIdentityArguments(argc, argv, "terrain_author")) return 0;
-    if (argc > 1 && std::string(argv[1]).rfind("v2-", 0) == 0) return TerrainV2AuthorCommand(argc, argv);
-try{std::string error;if(argc<3)throw std::runtime_error("usage: judas_terrain_author create SOURCE [nx nz width depth [product-directory]] | validate SOURCE | brush SOURCE raise/lower/flatten/smooth/paint x y z radius strength [layer] | fork SOURCE DEST | cook PROJECT SOURCE | v2-new OUTPUT flat/highlands/island SAMPLES SPACING SEED HEIGHT | v2-heightmap IMAGE OUTPUT SAMPLES SPACING MIN MAX | v2-native SOURCE OUTPUT.judasmodel | v2-pack SOURCE OUTPUT.judasterrain | v2-planet PLANET.json OUTPUT DX DY DZ CELLS | v2-validate SOURCE | v2-cook SOURCE OUTPUT.judasmodel | v2-import V1_SOURCE NEW_SOURCE");std::string command=argv[1];TerrainDraft draft;
- if(command=="create"){WritableSource(argv[2]);draft.source=CreateTerrain(argc>3?Count(argv[3]):65,argc>4?Count(argv[4]):65,argc>5?std::stof(argv[5]):64,argc>6?std::stof(argv[6]):64);if(argc>7)draft.source.productDirectory=argv[7];{auto file=Project::FindProjectFileFor(argv[2]);if(!file.empty()){Project p;if(!p.Load(file,error)||!JudasMods::QualifyTerrain(p,draft.source,error))throw std::runtime_error(error);}}draft.SetPath(argv[2]);if(std::filesystem::exists(argv[2]))throw std::runtime_error("create will not overwrite a source");if(!draft.Save(error))throw std::runtime_error(error);}
- else if(command=="cook"){if(argc!=4)throw std::runtime_error("cook PROJECT SOURCE");Project project;if(!project.Load(argv[2],error))throw std::runtime_error(error);AssetDatabase assets;if(!JudasMods::OpenAuthorAssets(project,assets,error))throw std::runtime_error(error);auto source=project.Resolve(argv[3]);WritableSource(source);TerrainSource t;if(!LoadTerrain(source,t,error))throw std::runtime_error(error);TerrainCookResult r;if(!CookTerrain(t,source,project.RootDir(),assets,r,error))throw std::runtime_error(error);std::cout<<"cook "<<r.milliseconds<<" ms, "<<r.bytes<<" bytes; geometry "<<r.geometryChanged<<", appearance "<<r.appearanceChanged<<"\n";}
- else {if(!draft.Open(argv[2],error))throw std::runtime_error(error);if(command=="validate")std::cout<<"valid terrain "<<draft.source.nx<<" x "<<draft.source.nz<<"\n";
- else if(command=="fork"){if(argc!=4||std::filesystem::exists(argv[3]))throw std::runtime_error("fork requires a new destination");WritableSource(argv[3]);TerrainDraft independent;independent.source=ForkTerrain(draft.source);{auto file=Project::FindProjectFileFor(argv[3]);if(!file.empty()){Project p;if(!p.Load(file,error)||!JudasMods::QualifyTerrain(p,independent.source,error))throw std::runtime_error(error);}}independent.SetPath(argv[3]);if(!independent.Save(error))throw std::runtime_error(error);}
- else if(command=="brush"){WritableSource(argv[2]);if(argc<9)throw std::runtime_error("brush arguments");std::string kind=argv[3];TerrainBrush brush;if(kind=="raise")brush.kind=TerrainBrushKind::Raise;else if(kind=="lower")brush.kind=TerrainBrushKind::Lower;else if(kind=="flatten")brush.kind=TerrainBrushKind::Flatten;else if(kind=="smooth")brush.kind=TerrainBrushKind::Smooth;else if(kind=="paint")brush.kind=TerrainBrushKind::Paint;else throw std::runtime_error("unknown brush");brush.radius=std::stof(argv[7]);brush.strength=std::stof(argv[8]);brush.layer=argc>9?unsigned(std::stoul(argv[9])):0;if(!draft.Begin({std::stof(argv[4]),std::stof(argv[5]),std::stof(argv[6])},brush,error))throw std::runtime_error(error);draft.End();if(!draft.Save(error))throw std::runtime_error(error);}
- else throw std::runtime_error("unknown terrain command");}return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+    if (argc == 2 && std::string(argv[1]) == "--help") {
+        std::cout << "judas_terrain_author v2-new | v2-heightmap | v2-planet | v2-native | v2-pack | v2-validate\n";
+        return 0;
+    }
+    return TerrainV2AuthorCommand(argc, argv);
+}

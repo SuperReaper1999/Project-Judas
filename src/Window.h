@@ -10,26 +10,7 @@
 #include "render/GraphicsCapabilities.h"
 #include <optional>
 
-enum class Action {
-    MoveForward,
-    MoveBackward,
-    StrafeLeft,
-    StrafeRight,
-    MoveUp,
-    MoveDown,
-    PitchUp,
-    PitchDown,
-    YawLeft,
-    YawRight,
-    RollLeft,
-    RollRight,
-    PlanetProgradeThrust,
-    PlanetRetrogradeThrust,
-    PlanetRadialThrust,
-    AddTerrainWater,
-    UseIgniter,
-    Count,
-};
+
 
 class Window {
 public:
@@ -63,31 +44,18 @@ public:
     void CancelCloseRequest() { m_shouldClose = false; }
     void SwapBuffers();
 
-    bool IsActionActive(Action action) const;
 
     void GetMouseDelta(int& deltaX, int& deltaY) const;
     void GetLookDelta(float& deltaX,float& deltaY) const;
 
-    bool ConsumeResetRequest();
 
-    bool ConsumeJumpRequest();
 
-    bool ConsumeControlToggleRequest();
 
-    bool ConsumeTorchToggleRequest();
 
-    bool ConsumeInteractRequest();
 
-    bool ConsumeViewToggleRequest();
 
-    bool ConsumeThrowRequest();
 
-    bool ConsumeSasToggleRequest();
 
-    bool ConsumeSpawnEntityRequest();
-    bool ConsumeDestroyEntityRequest();
-    bool ConsumeSaveWorldStateRequest();
-    bool ConsumeDeleteWorldStateRequest();
 
     bool ConsumeUIBackRequest();
     bool ConsumeUINavigateUpRequest();
@@ -129,7 +97,6 @@ public:
     void ApplyTestPhysical(const std::string& control,float value);
     void SetTestTouch(std::int64_t finger,float x,float y,float pressure,bool down);
     void SetTestTilt(std::optional<InputTilt> sample,unsigned quarterTurns=0);
-    void SetTestActionState(Action action, bool active);
     void QueueTestMouseDelta(int deltaX, int deltaY);
     void RequestTestJump();
     void RequestTestReset();
@@ -193,10 +160,6 @@ private:
     bool m_viewToggleRequested = false;
     bool m_throwRequested = false;
     bool m_sasToggleRequested = false;
-    bool m_spawnEntityRequested = false;
-    bool m_destroyEntityRequested = false;
-    bool m_saveWorldStateRequested = false;
-    bool m_deleteWorldStateRequested = false;
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;
     bool m_uiDownRequested = false;
@@ -211,7 +174,6 @@ private:
     std::vector<std::pair<std::string,float>> m_testPhysical;
     std::vector<std::tuple<std::string,std::string,float>> m_testDevices;
     bool m_testInputMode = false;
-    bool m_testActionState[static_cast<int>(Action::Count)] = {};
     mutable int m_testMouseDeltaX = 0;
     mutable int m_testMouseDeltaY = 0;
     bool m_testJumpRequested = false;

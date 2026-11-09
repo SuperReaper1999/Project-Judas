@@ -6,7 +6,6 @@
 #include "EditorAssetActions.h"
 #include "EditorAutomation.h"
 #include "EditorShortcuts.h"
-#include "EditorStabilization.h"
 #include "EditorToolPanels.h"
 #include "EngineHost.h"
 #include "EnginePaths.h"
@@ -16,10 +15,9 @@
 #include "RetargetPanel.h"
 #include "ScriptTools.h"
 #include "SpriteSheetEditor.h"
-#include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "TilemapEditor.h"
 #include "UtilityAIEditor.h"
-#include "VolumeTerrainTools.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
@@ -48,7 +46,6 @@ EditorProjectServices EditorApplication::ProjectServices() {
             m_preferences,
             m_milestoneNotice,
             m_terrain,
-            m_volumeTerrain,
             m_utilityAIEditor,
             m_spriteSheetEditor,
             m_quit,
@@ -91,11 +88,7 @@ std::string EditorApplication::ResolveScenePath(const std::string &input) {
     auto context = Context(requests);
     return m_projectWorkflow.ResolveScenePath(context, input);
 }
-std::string EditorApplication::WorldStatePathFor(const std::string &scenePath) {
-    EditorRequests requests;
-    auto context = Context(requests);
-    return m_projectWorkflow.WorldStatePathFor(context, scenePath);
-}
+
 bool EditorApplication::OpenScene(const std::string &path, std::string &outError) {
     EditorRequests requests;
     auto context = Context(requests);
@@ -109,13 +102,10 @@ bool EditorApplication::RunProject(std::string &outMessage) {
 }
 bool EditorApplication::StartPlay(std::string &error) {
     if (m_terrain && !m_terrain->Guard(m_panels)) {
-        error = m_terrain->error;
+        error = m_panels.status;
         return false;
     }
-    if (m_volumeTerrain && !m_volumeTerrain->Guard(m_panels)) {
-        error = m_volumeTerrain->error;
-        return false;
-    }
+
     EditorRequests requests;
     auto context = Context(requests);
     const bool started = m_playSession.StartPlay(context, m_sceneViewport, m_scriptTools, error);
@@ -171,7 +161,7 @@ void EditorApplication::UpdateCameraNavigation(const EditorCameraGestureInput &i
 void EditorApplication::FrameEditMode(float dt) {
     EditorRequests requests;
     auto context = Context(requests);
-    m_sceneViewport.FrameEditMode(context, dt, m_terrain.get(), m_volumeTerrain.get(), m_tilemapEditor.get());
+    m_sceneViewport.FrameEditMode(context, dt, m_terrain.get(), m_tilemapEditor.get());
 }
 void EditorApplication::DrawModelImportPreview(float dt) {
     EditorRequests requests;
@@ -262,7 +252,7 @@ int EditorApplication::Run(int argc, char **argv) {
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     m_shell.RegisterPanels(m_sceneViewport, m_playSession,
-                           {m_scriptTools, m_terrain, m_volumeTerrain, m_modTools, m_animationTimeline,
+                           {m_scriptTools, m_terrain, m_modTools, m_animationTimeline,
                             m_utilityAIEditor, m_spriteSheetEditor, m_tilemapEditor});
     if (!m_scriptTools)
         m_scriptTools = std::make_unique<ScriptTools>();
@@ -452,7 +442,6 @@ int EditorApplication::Run(int argc, char **argv) {
         automation.BeforeRequests(requests);
         HandleRequests(requests);
         automation.AfterRequests();
-        AdvanceStabilizationAutomation();
 
         DrawModelImportPreview(deltaSeconds);
         UpdateRetargetPreview(m_panels, renderer, deltaSeconds);
@@ -476,8 +465,7 @@ int EditorApplication::Run(int argc, char **argv) {
     }
 
     Shutdown(true);
-    return automation.Failed() || (m_tilemapEditor && m_tilemapEditor->TestFailures()) ||
-                   (m_stabilization && m_stabilization->failures)
+    return automation.Failed() || (m_tilemapEditor && m_tilemapEditor->TestFailures())
                ? 1
                : 0;
 }
@@ -505,10 +493,7 @@ void EditorApplication::Shutdown(bool savePreferences) {
         m_terrain->Shutdown(renderer, m_panels.importJobs);
         m_terrain.reset();
     }
-    if (m_volumeTerrain) {
-        m_volumeTerrain->Shutdown(renderer, m_panels.importJobs);
-        m_volumeTerrain.reset();
-    }
+
     ShutdownRetargetPreview(m_panels, renderer);
     EditorRequests requests;
     auto context = Context(requests);

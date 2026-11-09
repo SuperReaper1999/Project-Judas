@@ -9,7 +9,7 @@ on:
       'scripts/qualify_m100.py', 'scripts/qualify_sdk.py', 'scripts/qualify_sdk_workflows.py',
       'tests/test_ci_workflows.py', 'tests/test_release_packaging.py', 'tests/test_release_manifest.py',
       'tools/assemble_release_run.py', 'tools/prepare_release.py', 'tools/publish_release.py',
-      'tools/release_manifest.py', 'tools/release_docs.py', 'tests/test_release_docs.py', 'docs/RELEASE_STATUS.json', 'docs/PREALPHA_FINDINGS.json', 'tools/package_source.py', 'tools/generate_changelog.py', 'tools/verification/current-docs.json'
+      'tools/release_manifest.py', 'tools/release_docs.py', 'tests/test_release_docs.py', 'docs/RELEASE_STATUS.json', 'docs/CURRENT_FINDINGS.json', 'tools/package_source.py', 'tools/generate_changelog.py', 'tools/verification/current-docs.json'
     ]
   pull_request:
     branches: [Experimental, main]

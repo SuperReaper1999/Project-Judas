@@ -9,7 +9,6 @@ bool DecodeModelArchive(const void*,size_t,MeshData&,std::string& error);
 bool VerifyImportedModelFresh(const std::string& projectRoot,const std::string& modelPath,std::string& error);
 // Play permits last-good ordinary imports. Terrain must match its current
 // source and cooked collision because those define the authored physical world.
-bool VerifyTerrainModelFreshForPlay(const std::string& projectRoot,const std::string& modelPath,std::string& error);
 
 // Bounded metadata inspection without image decode or a full model DOM. A
 // metadata result is NOT semantic validation of geometry; callers retain that

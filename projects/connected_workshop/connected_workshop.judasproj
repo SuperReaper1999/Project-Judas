@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Connected Workshop",
-    "legacyGameplay": false,
     "saveIdentity": "6d139e8d1d0f11baddf2fa20eb3105cb30b848f3a0461fdf371b35440436c575",
     "iconAsset": "",
     "worldManifest": "",

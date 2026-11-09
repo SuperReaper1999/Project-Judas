@@ -5,9 +5,6 @@
 #include <string>
 
 #include "AerodynamicDrag.h"
-#include "GameSession.h"
-#include "HUD.h"
-#include "PauseMenu.h"
 #include "Simulation.h"
 #include "WorldCoordinates.h"
 
@@ -16,17 +13,9 @@ class RuntimeWorld;
 class Window;
 struct RenderTargetHandle;
 
-// Milestone 28: one interactive frame of a played scene — the loop body
-// the `judas` runtime has run since Milestone 13, factored out so the
-// editor's Play mode runs the identical thing: the single input-routing
-// boundary (pause menu first, gameplay only when no menu owns input), the
-// fixed-step accumulator with its catch-up cap, presentation
-// interpolation, the M15 shadow/colour frame from the player's camera,
-// and the HUD/menu overlay. Owns the PauseMenu, HUD and accumulator; the
-// GameSession it drives is begun over a RuntimeWorld the caller built.
-//
-// The runtime's opt-in measurement printers hook in through
-// `SetFixedStepObserver`; nothing in this class prints.
+// Shared runtime/editor Play lifecycle. Borrows the caller-owned world, routes
+// authored UI before gameplay input, advances the bounded fixed clock and
+// presents authored views. Gameplay, menus and controls belong to scripts.
 class InteractivePlay {
 public:
     using FixedStepObserver = std::function<void(const FixedStepMeasurements&, double fixedStepMilliseconds)>;
@@ -35,16 +24,12 @@ public:
     using WorldOverlay = std::function<void(Renderer&, float presentationAlpha)>;
 
     bool Begin(RuntimeWorld& world, const WorldCoordinates& worldCoordinates, std::string& outError);
-    // Milestone 29: where F6 writes / F7 deletes the world-state delta for
-    // this run, and whether one was applied at load. Empty disables both.
-    void SetWorldStatePath(const std::string& path, bool loadedFromFile);
-    const std::string& WorldStatePath() const { return m_worldStatePath; }
-    bool SaveWorldStateNow(std::string& outMessage);
-    bool DeleteWorldStateNow(std::string& outMessage);
     void End();
-    bool IsActive() const { return m_session.IsActive(); }
+    bool IsActive() const { return m_world != nullptr; }
+    RuntimeWorld& World() { return *m_world; }
+    const RuntimeWorld& World() const { return *m_world; }
 
-    void SetFixedStepMeasurementFlags(bool atmosphere, bool fire, bool fluid);
+    void SetFixedStepMeasurementFlags(bool fire, bool fluid);
     // Presentation policy persists through scene/save replacement. No callback recovery.
     void SetScriptFaultNoticeEnabled(bool enabled) {
         m_scriptFaultNoticeOverride = enabled;
@@ -61,23 +46,15 @@ public:
     double LastFixedStepMilliseconds() const { return m_lastStepMilliseconds; }
     const FixedStepMeasurements& LastMeasurements() const { return m_measurements; }
 
-    // Routes this frame's already-pumped input, advances the simulation
-    // by however many fixed steps `frameDeltaTime` earns (none while the
-    // pause menu is open), and renders the presented world plus the HUD
-    // and menu into the window. `drawHud` false skips the overlay (the
-    // editor draws its own). Returns the presentation alpha used.
-    float Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud = true, bool render = true,
+    // Route input, run fixed steps unless authored UI pauses/owns input, then
+    // present the world and project UI. Rendering can be skipped for service waits.
+    float Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render = true,
                 const RenderTargetHandle* destination = nullptr);
 
-    GameSession& Session() { return m_session; }
-    const GameSession& Session() const { return m_session; }
-    PauseMenu& Menu() { return m_pauseMenu; }
     bool QuitRequested() const;
     bool IsPaused() const;
-    // Fixed steps since Begin or the last reset (M25's screenshot timer).
+    // Fixed steps completed by this Play instance.
     std::size_t FixedStepsSinceReset() const { return m_fixedStepsSinceReset; }
-    bool ConsumeResetOccurred();
-    const AerodynamicDragResult& LastAerodynamicDrag() const { return m_lastAerodynamicDrag; }
     // Presentation-side timings of the last Frame (fluid surface rebuild,
     // scene submission), for the runtime's diagnostics.
     double LastSurfaceMilliseconds() const { return m_lastSurfaceMilliseconds; }
@@ -86,24 +63,18 @@ public:
 private:
     bool m_scriptFaultNotice = false;
     std::optional<bool> m_scriptFaultNoticeOverride;
-    GameSession m_session;
-    PauseMenu m_pauseMenu;
-    HUD m_hud;
+    RuntimeWorld* m_world = nullptr;
     WorldCoordinates m_worldCoordinates;
     FixedStepMeasurements m_measurements;
     FixedStepObserver m_observer;
     WorldOverlay m_overlay;
     int m_lastStepsThisFrame = 0;
     double m_lastStepMilliseconds = 0.0;
-    AerodynamicDragResult m_lastAerodynamicDrag;
     float m_physicsAccumulator = 0.0f;
     std::size_t m_fixedStepsSinceReset = 0;
-    bool m_resetOccurred = false;
     bool m_wasPauseMenuOpen = false;
     bool m_captureInitialized = false;
     bool m_pointerCaptureAllowed = true;
     double m_lastSurfaceMilliseconds = 0.0;
     double m_lastSceneMilliseconds = 0.0;
-    std::string m_worldStatePath;
-    std::string m_worldStateStatus;
 };

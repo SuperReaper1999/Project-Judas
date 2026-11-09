@@ -114,7 +114,6 @@ bool ValidatePrefab(const Scene& prefab,std::string& error) {
         auto* source=prefab.Find(o.gravitySelection->source);if(!source||!source->gravity){error="prefab gravity selection source must be an internal gravity field";return false;}}
     for(const auto& o:prefab.Objects())if(o.wheel){auto* chassis=prefab.Find(o.wheel->chassis);if(!chassis||(o.wheel->part.empty()?!chassis->body:!chassis->deformable)){error="prefab wheel requires an internal chassis body or partition owner";return false;}}
     for(const auto& o:prefab.Objects())if(o.joint){auto a=prefab.Find(o.joint->bodyA),b=prefab.Find(o.joint->bodyB);if(!a||!a->body||(o.joint->bodyB&&(!b||!b->body))){error="prefab joint references missing body";return false;}}
-    for(const auto& o:prefab.Objects())if(o.liquidConnection){auto a=prefab.Find(o.liquidConnection->source),b=prefab.Find(o.liquidConnection->destination);if(!a||!b||!a->liquidBasin||!b->liquidBasin){error="prefab liquid connection references missing basin";return false;}}
     int roots=0;for(const auto& o:prefab.Objects()){
         roots+=!o.parent;
         if(o.prefabRoot||!o.prefabAsset.empty()){error="nested prefab references are unsupported in M36";return false;}
@@ -154,7 +153,6 @@ bool InstantiatePrefab(Scene& scene,const Scene& prefab,const AssetId& asset,con
         copy.prefabRoot=root;copy.prefabSource=o.id;
         if(copy.render&&copy.render->textureCamera)copy.render->textureCamera=ids.at(copy.render->textureCamera);
         if(copy.deformable)for(auto& a:copy.deformable->attachments)if(a.target){auto it=ids.find(a.target);if(it==ids.end()){error="prefab attachment target outside source";return false;}a.target=it->second;}
-        if(copy.liquidConnection){copy.liquidConnection->source=ids.at(copy.liquidConnection->source);copy.liquidConnection->destination=ids.at(copy.liquidConnection->destination);}
         if(copy.gravitySelection&&copy.gravitySelection->source)copy.gravitySelection->source=ids.at(copy.gravitySelection->source);
         if(copy.socket)copy.socket->target=ids.at(copy.socket->target);
         if(copy.wheel)copy.wheel->chassis=ids.at(copy.wheel->chassis);
@@ -194,7 +192,6 @@ bool ResolvePrefabs(const Scene& scene,const AssetDatabase* assets,Scene& resolv
             copy.prefabRoot=root.id;copy.prefabSource=o.id;
             if(copy.render&&copy.render->textureCamera){auto it=mapping.find(copy.render->textureCamera);if(it==mapping.end()){error="prefab camera reference outside source";return false;}copy.render->textureCamera=it->second;}
             if(copy.deformable)for(auto& a:copy.deformable->attachments)if(a.target){auto it=mapping.find(a.target);if(it==mapping.end()){error="prefab attachment target outside source";return false;}a.target=it->second;}
-            if(copy.liquidConnection){auto a=mapping.find(copy.liquidConnection->source),b=mapping.find(copy.liquidConnection->destination);if(a==mapping.end()||b==mapping.end()){error="prefab liquid connection outside source";return false;}copy.liquidConnection->source=a->second;copy.liquidConnection->destination=b->second;}
             if(copy.gravitySelection&&copy.gravitySelection->source){auto target=mapping.find(copy.gravitySelection->source);if(target==mapping.end()){error="gravity source outside prefab";return false;}copy.gravitySelection->source=target->second;}
             if(copy.wheel){auto target=mapping.find(copy.wheel->chassis);if(target==mapping.end()){error="wheel chassis outside prefab";return false;}copy.wheel->chassis=target->second;}
             if(copy.powertrain){for(auto target:PowertrainReferences(*copy.powertrain))if(!mapping.count(target)){error="powertrain reference outside prefab";return false;}RemapPowertrainReferences(*copy.powertrain,[&](uint64_t id){return mapping.at(id);});}
@@ -233,7 +230,6 @@ void CapturePrefabEdits(const Scene& before,Scene& after) {
             if(copy.powertrain){const auto* root=after.Find(o.prefabRoot);if(root)RemapPowertrainReferences(*copy.powertrain,[&](uint64_t id){for(auto pair:root->prefabIds)if(id==pair.second)return pair.first;return id;});}
             if(copy.socket){const auto* root=after.Find(o.prefabRoot);if(root)for(auto pair:root->prefabIds)if(copy.socket->target==pair.second){copy.socket->target=pair.first;break;}}
             if(copy.deformable){const auto* root=after.Find(o.prefabRoot);if(root)for(auto& a:copy.deformable->attachments)for(auto pair:root->prefabIds)if(a.target==pair.second){a.target=pair.first;break;}}
-            if(copy.liquidConnection){const auto* root=after.Find(o.prefabRoot);if(root){auto a=copy.liquidConnection->source,b=copy.liquidConnection->destination;for(const auto& pair:root->prefabIds){if(pair.second==a)copy.liquidConnection->source=pair.first;if(pair.second==b)copy.liquidConnection->destination=pair.first;}}}
             std::map<SceneObjectId,SceneObjectId> reverse;const auto* root=after.Find(o.prefabRoot);if(root)for(auto [source,id]:root->prefabIds)reverse[id]=source;for(auto& slot:copy.scripts)slot.properties=ScriptSystem::RemapPropertyEntities(slot.properties,reverse);
             return ObjectProperties(copy);};
         auto a=normalized(*previous),b=normalized(o);

@@ -1,5 +1,4 @@
 #include "EngineHost.h"
-#include "GameSession.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
@@ -46,8 +45,8 @@ int main(int argc, char **argv) {
                          &project.Settings().navigation))
             throw std::runtime_error(error);
         const auto buildMs = milliseconds(begin);
-        GameSession game;
-        if (!game.Begin(world, error))
+
+        if (!world.IsBuilt())
             throw std::runtime_error(error);
         host.Resources().WaitForAll();
         GLuint query;
@@ -60,7 +59,7 @@ int main(int argc, char **argv) {
             world.AdvanceRuntimeTerrain();
             world.UpdateUIScripts(&window.Input(), 1.f / 60);
             world.UpdateScripts(&window.Input(), 1.f / 60);
-            StepPlayedWorld(game, window, 1.f / 60);
+            StepPlayedWorld(world, window, 1.f / 60);
             world.PresentationScripts(&window.Input(), 1.f / 60, 1);
             const auto simulation = milliseconds(start);
             const auto view = world.view.value();
@@ -92,7 +91,7 @@ int main(int argc, char **argv) {
             glFinish();
             glBeginQuery(GL_TIME_ELAPSED, query);
             start = Clock::now();
-            RenderWorldFrame(renderer, 1280, 800, world, &game, matrix, projection, eye, 1,
+            RenderWorldFrame(renderer, 1280, 800, world, matrix, projection, eye, 1,
                              1.f / 60);
             if (std::string_view(phase) == "traversal") {
                 const auto actualEye = glm::vec3(glm::inverse(renderer.ViewMatrix())[3]);
@@ -171,7 +170,7 @@ int main(int argc, char **argv) {
         if (glGetError() != GL_NO_ERROR)
             throw std::runtime_error("OpenGL measurement error.");
         glDeleteQueries(1, &query);
-        game.End();
+
         world.Destroy();
         host.Shutdown();
         return 0;

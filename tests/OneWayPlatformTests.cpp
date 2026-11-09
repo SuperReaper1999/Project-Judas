@@ -23,7 +23,7 @@ glm::vec3 Run(float start,float speed,bool oneWay,glm::quat q={1,0,0,0}){
 }
 void Advance(RuntimeWorld& w,int count){for(int i=0;i<count;++i){w.Physics().ApplyLinearAcceleration(w.RuntimeBody(2),{0,-9.81f,0},1.f/60);w.Physics().Step(1.f/60);}}
 void Persistence(const std::string& directory,bool cold){
- std::string error;ResourceManager resources(nullptr,nullptr);RuntimeWorld w;w.legacyGameplay=false;Scene scene;GameSnapshot snapshot;snapshot.project="one-way";snapshot.scene="main";snapshot.content=std::string(64,'e');SaveStorage storage(directory);
+ std::string error;ResourceManager resources(nullptr,nullptr);RuntimeWorld w;Scene scene;GameSnapshot snapshot;snapshot.project="one-way";snapshot.scene="main";snapshot.content=std::string(64,'e');SaveStorage storage(directory);
  if(cold){bool recovered=false;Check(storage.Read("crossing",snapshot,recovered,error)&&WorldPersistence::SceneFrom(snapshot.participants,scene,error),"fresh process reads one-way crossing snapshot");}
  else{auto& floor=scene.CreateObject("One way");floor.body=SceneBodyComponent{};floor.body->shape=SceneShape::Planar;floor.body->planar=PlanarChain({{-3,0},{3,0}},true);
   auto& actor=scene.CreateObject("Jumper");actor.transform.position={0,-1.2f,0};actor.body=SceneBodyComponent{};actor.body->shape=SceneShape::Planar;actor.body->planar=PlanarCapsule(.25,.25,true);actor.body->motion=SceneBodyMotion::Dynamic;actor.body->initialLinearVelocity={0,9,0};}
@@ -31,7 +31,7 @@ void Persistence(const std::string& directory,bool cold){
  if(cold){Check(WorldPersistence::Prepare(w,error)&&WorldPersistence::Restore(w,snapshot.participants,error),"cold restores exact physical state without a one-way cache");Advance(w,232);Check(std::abs(w.Physics().GetTransform(w.RuntimeBody(2)).position.y-.5f)<.02f,"cold crossing resumes and lands on the blocking side");return;}
  Advance(w,8);Check(w.Physics().GetTransform(w.RuntimeBody(2)).position.y<.5f&&w.Physics().GetLinearVelocity(w.RuntimeBody(2)).y>0,"capture occurs while moving upward through the platform");
  Check(WorldPersistence::Capture(w,snapshot.participants,error)&&storage.Write("crossing",snapshot,error),"durably save in-progress one-way crossing");
- Scene restoredScene;Check(WorldPersistence::SceneFrom(snapshot.participants,restoredScene,error),"restore scene carries versioned side geometry");RuntimeWorld restored;restored.legacyGameplay=false;
+ Scene restoredScene;Check(WorldPersistence::SceneFrom(snapshot.participants,restoredScene,error),"restore scene carries versioned side geometry");RuntimeWorld restored;
  Check(restored.Build(restoredScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,snapshot.participants,error),"restore crossing into independent native world");
  Advance(w,232);Advance(restored,232);Check(w.Physics().GetTransform(w.RuntimeBody(2)).position==restored.Physics().GetTransform(restored.RuntimeBody(2)).position&&w.Physics().GetLinearVelocity(w.RuntimeBody(2))==restored.Physics().GetLinearVelocity(restored.RuntimeBody(2)),"restored crossing continues to identical actual pose and velocity");
 }

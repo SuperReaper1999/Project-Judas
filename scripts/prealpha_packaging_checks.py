@@ -93,10 +93,10 @@ class PackagingChecks(unittest.TestCase):
         self.source.mkdir()
         self.binaries.mkdir()
         self.spec = {"schema": 1, "tools": ["judas"], "windows_tools": [],
-                     "files": ["LICENSE", "docs/PREALPHA_FINDINGS.json"],
+                     "files": ["LICENSE", "docs/CURRENT_FINDINGS.json"],
                      "directories": ["docs/judasjs"], "current_markdown": "docs"}
         for name in ("LICENSE", "docs/JUDASJS.md", "docs/judasjs/entities.md",
-                     "docs/PREALPHA_FINDINGS.json", "tools/package_sdk.py", "packaging/sdk-inventory.json"):
+                     "docs/CURRENT_FINDINGS.json", "tools/package_sdk.py", "packaging/sdk-inventory.json"):
             path = self.source / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("fixture\n")
@@ -121,8 +121,8 @@ class PackagingChecks(unittest.TestCase):
         missing = set(spec["tools"] + spec["windows_tools"]) - targets
         self.assertFalse(missing, f"SDK tools missing reachable CMake declarations: {sorted(missing)}")
         self.assertTrue({"judas_cook", "judas_script_check", "judas_save", "judas_server",
-                         "judas_volume_author", "judas_collision_cook"} <= set(spec["tools"]))
-        self.assertIn("docs/PREALPHA_FINDINGS.json", spec["files"])
+                         "judas_terrain_author", "judas_collision_cook"} <= set(spec["tools"]))
+        self.assertIn("docs/CURRENT_FINDINGS.json", spec["files"])
         for name in spec["files"] + spec["directories"]:
             self.assertTrue((ROOT / name).exists(), name)
 
@@ -201,7 +201,7 @@ add_executable(${target} ${sources})
         self.assertFalse(self.output.exists())
 
     def test_sdk_current_finding_data_survives_relocation_and_missing_data_fails(self):
-        register = self.source / "docs/PREALPHA_FINDINGS.json"
+        register = self.source / "docs/CURRENT_FINDINGS.json"
         register.write_text('{"schema":1,"findings":[{"id":"preserved-fixture"}]}\n')
         payload = register.read_bytes()
         package_sdk.stage(self.args)
@@ -209,13 +209,13 @@ add_executable(${target} ${sources})
         self.output.rename(moved)
         self.args.output = moved
         package_sdk.verify(moved)
-        self.assertEqual((moved / "docs/PREALPHA_FINDINGS.json").read_bytes(), payload)
+        self.assertEqual((moved / "docs/CURRENT_FINDINGS.json").read_bytes(), payload)
         before = (moved / "SDK_MANIFEST.json").read_bytes()
         register.unlink()
         with self.assertRaises(FileNotFoundError):
             package_sdk.stage(self.args)
         self.assertEqual((moved / "SDK_MANIFEST.json").read_bytes(), before)
-        self.assertEqual((moved / "docs/PREALPHA_FINDINGS.json").read_bytes(), payload)
+        self.assertEqual((moved / "docs/CURRENT_FINDINGS.json").read_bytes(), payload)
         package_sdk.verify(moved)
 
     def test_windows_dependency_inventory_and_missing_dll_negative_control(self):
@@ -400,7 +400,7 @@ add_executable(${target} ${sources})
         for name, content in {"CMakeLists.txt": "cmake_minimum_required(VERSION 3.20)\n",
                               "engine-version.json": '{"schema":1,"version":"0.1.0-prealpha","maturity":"pre-alpha"}',
                               "src/code.cpp": "exact tracked source\n", "docs/evidence/preserved.txt": "unchanged history\n",
-                              "docs/PREALPHA_FINDINGS.json": '{"scope":"current finding register"}\n',
+                              "docs/CURRENT_FINDINGS.json": '{"scope":"current finding register"}\n',
                               "docs/another-contract.json": '{"scope":"generic machine-readable reference"}\n',
                               "docs/evidence/original.json": '{"scope":"protected historical fixture"}\n',
                               "docs/DontReadMe_Final.md": "archived README\n",
@@ -440,7 +440,7 @@ add_executable(${target} ${sources})
 
     def test_source_archive_keeps_current_machine_docs_and_excludes_history(self):
         args = self.source_checkout()
-        required = {"docs/PREALPHA_FINDINGS.json", "docs/another-contract.json"}
+        required = {"docs/CURRENT_FINDINGS.json", "docs/another-contract.json"}
         excluded = {"docs/evidence/original.json", "docs/evidence/preserved.txt",
                     "docs/DontReadMe_Final.md", "docs/FTFT.md", "projects/game/game.js"}
         package_source.archive(args)

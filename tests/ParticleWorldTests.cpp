@@ -54,7 +54,7 @@ int IdleBenchmark(bool active = false, ParticleBackend backend = ParticleBackend
             settings.spread = glm::vec3(0); settings.useGravity = false;
             settings.maxParticles = 192; settings.collisionRadius = .01f;
         }
-        RuntimeWorld world; world.legacyGameplay = false;
+        RuntimeWorld world;
         std::string error;
         Require(world.Build(scene, resources, error), "collision benchmark fixture: " + error);
         std::vector<double> rows;
@@ -89,7 +89,7 @@ void SharedSnapshots() {
     const auto original = *scene.Objects()[0].particleEmitter;
     auto &second = scene.CreateObject("Compatible emitter");
     second.transform = scene.Objects()[0].transform; second.particleEmitter = original;
-    RuntimeWorld world; world.legacyGameplay = false; std::string error;
+    RuntimeWorld world;  std::string error;
     Require(world.Build(scene, nullptr, error) && world.EmitParticleBurst(1,1) && world.EmitParticleBurst(3,1),
             "compatible live CPU emitters build and emit");
     world.UpdateVisualParticles(dt);
@@ -161,7 +161,7 @@ void IdleCpuLifecycle() {
     auto &settings = *scene.Objects()[0].particleEmitter;
     settings.loop = false; settings.velocity = {0, -40, 0};
     settings.useGravity = false; settings.restitution = 1; settings.collisionRadius = .1f;
-    RuntimeWorld world; world.legacyGameplay = false;
+    RuntimeWorld world;
     std::string error;
     Require(world.Build(scene, nullptr, error), "CPU collision lifecycle builds without graphics: " + error);
     world.UpdateVisualParticles(dt);
@@ -248,7 +248,7 @@ unsigned Live(const std::vector<JudasParticles::GpuParticleState> &state) {
 }
 void Lifecycle(EngineHost &host) {
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     Require(world.Build(Fixture(ParticleBackend::Gpu), &host.Resources(), error),
             "ordinary world construction selects authored required GPU backend");
@@ -326,7 +326,7 @@ void Lifecycle(EngineHost &host) {
 }
 void Fallback(EngineHost &host) {
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     Require(world.Build(Fixture(ParticleBackend::Auto, true), &host.Resources(), error) &&
                 world.EmitParticleBurst(1, 2), "ordinary Auto collision effect queues start-time burst");
@@ -370,7 +370,7 @@ void SelectedGravity(EngineHost &host) {
     selected.source = sourceId;
     definition->gravitySelection = selected;
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     Require(world.Build(scene, &host.Resources(), error) && world.EmitParticleBurst(1, 1),
             "actual world publishes an explicitly selected radial particle source");
@@ -411,8 +411,7 @@ void SharedGpu(EngineHost &host, bool localRegion = false) {
     auto settings = *scene.Objects()[0].particleEmitter;
     auto &second = scene.CreateObject("Shared GPU emitter");
     second.transform = scene.Objects()[0].transform; second.particleEmitter = settings;
-    RuntimeWorld shared, control; shared.legacyGameplay = control.legacyGameplay = false;
-    std::string error;
+    RuntimeWorld shared, control; std::string error;
     Require(shared.Build(scene,&host.Resources(),error) && control.Build(scene,&host.Resources(),error),
             "shared and independent GPU worlds build from identical authored geometry");
     // Independent histories force the control to capture/upload separately.
@@ -450,7 +449,6 @@ void SharedGpu(EngineHost &host, bool localRegion = false) {
 }
 void Portable(EngineHost &host) {
     RuntimeWorld automatic, required;
-    automatic.legacyGameplay = required.legacyGameplay = false;
     std::string error;
     Require(automatic.Build(Fixture(ParticleBackend::Auto), &host.Resources(), error) &&
                 automatic.EmitParticleBurst(1, 3), "portable Auto emitter queues its pre-init burst");

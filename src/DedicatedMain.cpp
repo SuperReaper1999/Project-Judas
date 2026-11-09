@@ -1,6 +1,5 @@
 #include "BuildIdentity.h"
 #include "AssetDatabase.h"
-#include "GameSession.h"
 #include "InputSystem.h"
 #include "JobSystem.h"
 #include "LocalMultiplayer.h"
@@ -58,8 +57,6 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
     Project project;
     std::string error;
     if (!project.Load(projectPath, error)) throw std::runtime_error("Project: " + error);
-    if (project.Settings().legacyGameplay)
-        throw std::runtime_error("dedicated hosting requires legacy-gameplay false");
     if (!project.Settings().worldManifest.empty())
         throw std::runtime_error("dedicated hosting of composed/streamed worlds is not supported yet");
     if (!project.Settings().modContract.empty() || project.ModSession())
@@ -84,7 +81,6 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
     ResourceManager resources(nullptr, &assets, &jobs);
     auto control = std::make_shared<SceneSession>(project, project.StartupScenePath());
     RuntimeWorld world;
-    world.legacyGameplay = false;
     world.audioGroups = project.Settings().audio;
     world.SetSceneControl(control);
     world.ConfigureProject(project.Settings());
@@ -92,8 +88,6 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
                      &project.Settings().navigation))
         throw std::runtime_error("World: " + error);
     world.Network().SetLaunch("host", "0.0.0.0", port, true);
-    GameSession session;
-    if (!session.Begin(world, error)) throw std::runtime_error("Session: " + error);
     InputSystem input;
     if (!input.SetMap(project.Settings().input, error))
         throw std::runtime_error("Input: " + error);
@@ -127,7 +121,7 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
             input.BeginFixedStep();
             if (auto* players = world.PlayersIfLoaded()) players->BeginFixedStep();
-            StepAuthoritativeWorld(session, input, SimulationTiming::kFixedTimestep);
+            StepAuthoritativeWorld(world, input, SimulationTiming::kFixedTimestep);
             accumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
             ++steps;
@@ -144,7 +138,6 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
     world.EndScripts();
-    session.End();
     world.Destroy();
     resources.Shutdown();
     jobs.Shutdown();

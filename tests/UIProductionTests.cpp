@@ -94,22 +94,19 @@ int main(int argc,char** argv){std::filesystem::path out=argc>1?argv[1]:".cache/
  std::vector<double> samples;for(int n=0;n<320;++n){auto t=std::chrono::steady_clock::now();input.BeginFrame();ui.Input(input,{-1,-1},false,1280,720);if(n>=20)samples.push_back(std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-t).count());}std::sort(samples.begin(),samples.end());printf("PERFORMANCE rows=10000 widgets=%zu median_us=%.3f p95_us=%.3f worst_us=%.3f visible_rows=%u draws=%u\n",doc.elements.size(),samples[150],samples[285],samples.back(),ui.Stats().listRows,ui.Stats().draws);
  for(size_t count:{size_t(100),size_t(1000),size_t(10000)}){auto subset=std::vector<UIListItem>(items.begin(),items.begin()+count);ui.SetItems(h,"items",subset,error);ui.Select(h,"items",int(count)-1);ui.Layout(1280,720);std::vector<double> work;size_t bytes=0;for(auto& row:subset)bytes+=sizeof(UIListItem)+row.id.size()+row.text.size();for(int n=0;n<110;++n){auto t=std::chrono::steady_clock::now();input.BeginFrame();ui.Input(input,{-1,-1},false,1280,720);if(n>=10)work.push_back(std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-t).count());}std::sort(work.begin(),work.end());renderer.BeginUIFrame(1280,720);ui.Draw(renderer,1280,720);renderer.EndUIFrame();printf("SCALING rows=%zu median_us=%.3f p95_us=%.3f worst_us=%.3f visible_rows=%u payload_bytes=%zu draw_cpu_us=%.3f\n",count,work[50],work[95],work.back(),ui.Stats().listRows,bytes,ui.Stats().renderUs);}
  Check(ui.Unload(h)&&!ui.SelectText(h,"name",{0,0})&&!ui.Focus(h,"name"),"unloaded handles fail safely");
- for(bool legacy:{false,true}){
-  RuntimeWorld world;world.legacyGameplay=legacy;Scene scene;
+ for(unsigned trial=0;trial<1;++trial){
+  RuntimeWorld world;Scene scene;
   Check(world.Build(scene,&host.Resources(),error),"HUD isolation world builds through ordinary runtime");
   InteractivePlay play;Check(play.Begin(world,WorldCoordinates{},error),"HUD isolation enters ordinary Play");
-  play.Frame(window,renderer,0,false,true);const auto withoutHud=renderer.UIDrawCalls();
-  play.Frame(window,renderer,0,true,true);const auto withHud=renderer.UIDrawCalls();
-  Check(legacy?withHud>withoutHud:withHud==withoutHud&&withHud==0,
-        legacy?"explicit legacy gameplay retains its diagnostic HUD":"modern starter renders no legacy diagnostic HUD");
+  play.Frame(window,renderer,0,true);const auto withoutHud=renderer.UIDrawCalls();
+  play.Frame(window,renderer,0,true);const auto withHud=renderer.UIDrawCalls();
+  Check(withHud==withoutHud&&withHud==0,
+        "ordinary starter renders no engine-owned gameplay HUD");
   auto authored=world.UI().Add(Fixture(),"authored-hud",0,error);Check(authored!=0,"authored UI added through ordinary runtime");
-  world.UI().debugOverlayVisible=false;
-  play.Frame(window,renderer,0,false,true);const auto authoredOnly=renderer.UIDrawCalls();
-  play.Frame(window,renderer,0,true,true);
+  play.Frame(window,renderer,0,true);const auto authoredOnly=renderer.UIDrawCalls();
+  play.Frame(window,renderer,0,true);
   Check(authoredOnly>0&&renderer.UIDrawCalls()==authoredOnly,"project-owned UI renders independently of legacy HUD");
-  world.UI().debugOverlayVisible=true;play.Frame(window,renderer,0,true,true);
-  Check(legacy?renderer.UIDrawCalls()>authoredOnly:renderer.UIDrawCalls()==authoredOnly,
-        "debug-overlay preference cannot enable inactive legacy gameplay HUD");
+play.Frame(window,renderer,0,true);
   play.End();world.Destroy();
  }
  host.Shutdown();printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;

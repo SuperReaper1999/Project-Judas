@@ -26,7 +26,7 @@ int main(int argc,char** argv){try{
  Project project;std::string error;
  if(fs::exists(projectRoot/"Lifecycle.judasproj"))Check(project.Load((projectRoot/"Lifecycle.judasproj").string(),error),error);
  else Check(Project::CreateNew(projectRoot.string(),"Lifecycle",project,error),error);
- project.Settings().startupScene="Scenes/main.judas";project.Settings().legacyGameplay=false;Check(project.Save(error),"save test project configuration");
+ project.Settings().startupScene="Scenes/main.judas";Check(project.Save(error),"save test project configuration");
  fs::create_directories(projectRoot/"Assets");
  std::ofstream(projectRoot/"Assets/quit.js")<<R"JS(import {ui} from 'judas';
  export default class {constructor(){this.state={frames:0};}uiUpdate(){if(++this.state.frames===3)ui.quit();}})JS";
@@ -50,7 +50,7 @@ int main(int argc,char** argv){try{
  const auto quitter=asset("quit.js"),fault=asset("fault.js"),observer=asset("observe.js"),saver=asset("save.js");
  auto harness=[&](const char* name,const std::string& text,bool quitting,unsigned& frames){
   Scene scene;if(quitting)scene.CreateObject("Quit owner").scripts.push_back({1,quitter,true,"{}"});
-  RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&host.Resources(),error),error);InteractivePlay play;Check(play.Begin(world,WorldCoordinates{},error),error);
+  RuntimeWorld world;Check(world.Build(scene,&host.Resources(),error),error);InteractivePlay play;Check(play.Begin(world,WorldCoordinates{},error),error);
   std::ofstream(root/name)<<text;frames=0;
   const int result=RunTestHarness(host.GetWindow(),host.GetRenderer(),play,(root/name).string(),{},[&](){++frames;},[](const std::string&){return false;});play.End();return result;
  };
@@ -63,7 +63,7 @@ int main(int argc,char** argv){try{
  Check(harness("pending-service.txt","FRAMES 5\nWAIT_SERVICES save 100 2\n",true,frames)!=0,"quit cannot bypass incomplete same-frame service wait");
  Scene scene;const auto owner=scene.CreateObject("Fault owner").id;scene.Find(owner)->scripts.push_back({1,fault,true,"{}"});
  const auto healthy=scene.CreateObject("Healthy observer").id;scene.Find(healthy)->scripts.push_back({1,observer,true,"{}"});
- RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&host.Resources(),error),error);InputSystem input;auto faultSession=std::make_shared<SceneSession>(project,project.StartupScenePath());world.SetSceneControl(faultSession);world.UpdateUIScripts(&input,.016f);
+ RuntimeWorld world;Check(world.Build(scene,&host.Resources(),error),error);InputSystem input;auto faultSession=std::make_shared<SceneSession>(project,project.StartupScenePath());world.SetSceneControl(faultSession);world.UpdateUIScripts(&input,.016f);
  Check(!faultSession->SavesIfLoaded(),"busy query alone does not instantiate or hash save service");
  UIDocument doc;doc.reference={640,360};UIElement canvas;canvas.id="root";canvas.kind=UIKind::Canvas;doc.elements.push_back(canvas);
  UIElement button;button.id="button";button.parent="root";button.kind=UIKind::Button;button.size={200,100};doc.elements.push_back(button);
@@ -82,7 +82,7 @@ int main(int argc,char** argv){try{
  Check(!(pixels[i]>40&&pixels[i+1]<30&&pixels[i+2]<30),"explicit banner policy survives a new play session");play.End();
  // Actual save service, script request, busy rejection and completion while modal.
  Scene saveScene;saveScene.CreateObject("Save owner").scripts.push_back({1,saver,true,"{}"});Check(SaveSceneToFile(saveScene,project.StartupScenePath(),error),error);
- auto savedWorld=std::make_unique<RuntimeWorld>();savedWorld->legacyGameplay=false;Check(savedWorld->Build(saveScene,&host.Resources(),error),error);
+ auto savedWorld=std::make_unique<RuntimeWorld>();Check(savedWorld->Build(saveScene,&host.Resources(),error),error);
  auto session=std::make_shared<SceneSession>(project,project.StartupScenePath());savedWorld->SetSceneControl(session);Check(play.Begin(*savedWorld,WorldCoordinates{},error),error);
  UIDocument modal;modal.modal=true;modal.elements.push_back(canvas);savedWorld->UI().Add(modal,"pause",0,error);
  bool done=false;const auto start=std::chrono::steady_clock::now();

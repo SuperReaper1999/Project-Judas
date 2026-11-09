@@ -6,7 +6,6 @@ settings
  sun-color 1 0.94 0.82
  ambient 0.35 0.4 0.43
  background-color 0.48 0.66 0.76
- fluid-scale 1
  fidelity-policy none
  next-id 999
 end
@@ -41,12 +40,10 @@ object 3 "Pool bottom"
  body static box
  body.half-extents 8 0.2 7
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -67,12 +64,10 @@ object 4 "South bank"
  body static box
  body.half-extents 14 0.3 4
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -93,12 +88,10 @@ object 5 "North bank"
  body static box
  body.half-extents 14 0.3 4
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -119,12 +112,10 @@ object 6 "West bank"
  body static box
  body.half-extents 4 0.3 6
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -145,12 +136,10 @@ object 7 "East bank"
  body static box
  body.half-extents 4 0.3 6
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -171,12 +160,10 @@ object 8 "Pool stone retaining wall"
  body static box
  body.half-extents 0.2 1.7 6.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -197,12 +184,10 @@ object 9 "Pool stone retaining wall"
  body static box
  body.half-extents 0.2 1.7 6.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -223,12 +208,10 @@ object 10 "Pool stone retaining wall"
  body static box
  body.half-extents 7.4 1.7 0.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -249,12 +232,10 @@ object 11 "Pool stone retaining wall"
  body static box
  body.half-extents 7.4 1.7 0.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -275,12 +256,10 @@ object 12 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -301,12 +280,10 @@ object 13 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -327,12 +304,10 @@ object 14 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -353,12 +328,10 @@ object 15 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -379,12 +352,10 @@ object 16 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -405,12 +376,10 @@ object 17 "Walkable pool step"
  body static box
  body.half-extents 0.4 0.25 1.2
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -431,12 +400,10 @@ object 18 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -457,12 +424,10 @@ object 19 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -483,12 +448,10 @@ object 20 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -509,12 +472,10 @@ object 21 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -535,12 +496,10 @@ object 22 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -561,12 +520,10 @@ object 23 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -587,12 +544,10 @@ object 24 "Wooden jetty"
  body static box
  body.half-extents 1.2 0.12 0.21
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -613,12 +568,10 @@ object 25 "Jetty post"
  body static box
  body.half-extents 0.09 0.7 0.09
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -639,12 +592,10 @@ object 26 "Jetty post"
  body static box
  body.half-extents 0.09 0.7 0.09
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -665,12 +616,10 @@ object 27 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -736,12 +685,10 @@ object 31 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -807,12 +754,10 @@ object 35 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -878,12 +823,10 @@ object 39 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -949,12 +892,10 @@ object 43 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1020,12 +961,10 @@ object 47 "Cedar trunk"
  body static box
  body.half-extents 0.22 1 0.22
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1091,12 +1030,10 @@ object 51 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1117,12 +1054,10 @@ object 52 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1143,12 +1078,10 @@ object 53 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1169,12 +1102,10 @@ object 54 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1195,12 +1126,10 @@ object 55 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1221,12 +1150,10 @@ object 56 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1247,12 +1174,10 @@ object 57 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1273,12 +1198,10 @@ object 58 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1299,12 +1222,10 @@ object 59 "Paving stone"
  body static box
  body.half-extents 0.48 0.04 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1325,12 +1246,10 @@ object 60 "Garden rock"
  body static box
  body.half-extents 0.7 0.35 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1351,12 +1270,10 @@ object 61 "Garden rock"
  body static box
  body.half-extents 0.7 0.35 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1377,12 +1294,10 @@ object 62 "Garden rock"
  body static box
  body.half-extents 0.7 0.35 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end
@@ -1403,12 +1318,10 @@ object 63 "Garden rock"
  body static box
  body.half-extents 0.7 0.35 0.55
  body.radius 0.5
- body.terrain ""
  body.mass 1
  body.friction 0.8
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
 end

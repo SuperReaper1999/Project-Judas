@@ -31,18 +31,13 @@ Scene AllComponents() {
     o.body = SceneBodyComponent{};
     o.body->motion = SceneBodyMotion::Dynamic;
     o.body->compoundBoxes.push_back({glm::vec3(0.0f), glm::vec3(0.5f)});
-    o.body->fluidCavities.push_back({glm::vec3(0.0f), glm::vec3(0.25f)});
     o.gravity = SceneGravityComponent{};
     o.light = SceneLightComponent{};
-    o.door = SceneDoorComponent{};
-    o.lightSwitch = SceneLightSwitchComponent{};
-    o.vehicle = SceneVehicleComponent{};
     o.celestial = SceneCelestialComponent{};
     o.celestial->gravitationalParameter = 2.0f;
     o.atmosphere = SceneAtmosphereComponent{};
     o.combustible = SceneCombustibleComponent{};
     o.fluidVolume = SceneFluidVolumeComponent{};
-    o.playerStart = ScenePlayerStartComponent{};
     s.CreateObject("Second object");
     return s;
 }
@@ -81,9 +76,9 @@ int main() {
               "cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0",
           "SHA-256 million-a known vector");
     // Independently packed with Python struct's explicit big-endian formats
-    // and hashlib.sha256, not this canonical writer: 146 bytes for schema-5 Scene{} (scene format 3).
-    Check(Fingerprint(Scene{}) == "74ff6d15a7ff84dc8ba816b6bab6787a2146bd32c42f66d2e73e00848165dd87",
-          "schema 5 default Scene independent binary/hash golden vector");
+    // and hashlib.sha256, not this canonical writer: 134 bytes for schema-6 Scene{} (scene format 3).
+    Check(Fingerprint(Scene{}) == "fc5bc0ba61e50845d67f15616ad389be8f7fd52f19b17337dc599b4cc9df3d78",
+          "schema 6 default Scene independent binary/hash golden vector");
     const auto s = AllComponents();
     RoundTrip(s, "all-component scene");
     auto zeros = s;
@@ -107,8 +102,7 @@ int main() {
 
 #define SETTING(field, value) CheckSceneChange(s, "settings." #field, [](Scene& x) { x.Settings().field = value; })
     SETTING(name, "Renamed"); SETTING(worldOrigin.x, 1.0e12); SETTING(sunDirection.y, 0.2f);
-    SETTING(sunColor.z, 0.2f); SETTING(ambientColor.x, 0.2f); SETTING(fluidScale, 2.0f);
-    SETTING(fluidUpdateRateHz, 20.0f); SETTING(fluidHydrostaticDragRate, 3.0f);
+    SETTING(sunColor.z, 0.2f); SETTING(ambientColor.x, 0.2f);
     SETTING(fidelityPolicy, SceneFidelityPolicy::None); SETTING(fidelityFullRadius, 49.0f); SETTING(fidelityCoarseRadius, 151.0f);
 #undef SETTING
     CheckSceneChange(s, "NextId", [](Scene& x) { x.SetNextId(100); });
@@ -122,9 +116,8 @@ int main() {
     FIELD(render->color.y, 0.3f); FIELD(render->alpha, 0.3f); FIELD(render->secondaryColor.y, 0.3f);
     FIELD(render->secondaryAlpha, 0.3f); FIELD(render->meshAsset, "stable-mesh-id"); FIELD(render->textureAsset, "stable-texture-id");
     FIELD(body->motion, SceneBodyMotion::Static); FIELD(body->shape, SceneShape::Sphere);
-    FIELD(body->halfExtents.z, 0.7f); FIELD(body->radius, 0.7f); FIELD(body->terrainSurface, "terrain-identifier");
-    FIELD(body->mass, 3.0f); FIELD(body->friction, 0.3f); FIELD(body->restitution, 0.3f); FIELD(body->initialLinearVelocity.x, 2.0f);
-    FIELD(body->pickable, true); FIELD(body->managed, true); FIELD(body->compoundBoxes[0].localCenter.y, 1.0f);
+    FIELD(body->halfExtents.z, 0.7f); FIELD(body->radius, 0.7f);
+    FIELD(body->mass, 3.0f); FIELD(body->friction, 0.3f); FIELD(body->restitution, 0.3f); FIELD(body->initialLinearVelocity.x, 2.0f); FIELD(body->managed, true); FIELD(body->compoundBoxes[0].localCenter.y, 1.0f);
     FIELD(body->compoundBoxes[0].halfExtents.z, 0.7f);
     CheckObjectChange(s, "compound count", [](SceneObject& o) { o.body->compoundBoxes.clear(); });
     FIELD(gravity->kind, SceneGravityKind::Uniform); FIELD(gravity->magnitude, 1.0f);
@@ -132,29 +125,17 @@ int main() {
     CheckObjectChange(boxRegion, "box gravity extents", [](SceneObject& o) { o.gravity->regionHalfExtents.y = 7.0f; });
     FIELD(light->kind, SceneLightKind::Spot); FIELD(light->color.x, 2.0f); FIELD(light->range, 11.0f);
     FIELD(light->innerConeDegrees, 14.0f); FIELD(light->outerConeDegrees, 26.0f);
-    FIELD(door->localHingeAxis.z, 0.1f); FIELD(door->openAngleDegrees, 91.0f); FIELD(door->angularSpeedDegreesPerSecond, 121.0f);
-    FIELD(lightSwitch->localHingeAxis.x, 0.1f); FIELD(lightSwitch->toggleAngleDegrees, 41.0f);
-    FIELD(lightSwitch->angularSpeedDegreesPerSecond, 221.0f); FIELD(lightSwitch->lampLocalOffset.z, 1.0f);
-    FIELD(lightSwitch->lampColor.z, 2.0f); FIELD(lightSwitch->lampRange, 11.0f);
-    FIELD(vehicle->gravity, SceneVehicleGravity::Celestial); FIELD(vehicle->headlight, false); FIELD(vehicle->navigationLights, false);
-    FIELD(vehicle->dragCoefficient, 2.0f); FIELD(vehicle->initialPilotAttached, true);
-    FIELD(celestial->gravitationalParameter, 1.0f); FIELD(celestial->operatorThrustForce, 1.0f);
+    FIELD(celestial->gravitationalParameter, 1.0f);
     FIELD(atmosphere->referenceRadius, 81.0f); FIELD(atmosphere->topRadius, 111.0f); FIELD(atmosphere->referenceDensity, 0.06f);
     FIELD(atmosphere->polytropicExponent, 1.5f); FIELD(atmosphere->oxidizerMassFraction, 0.2f); FIELD(atmosphere->referenceTemperatureKelvin, 301.0f);
     FIELD(combustible->heatCapacityJPerK, 151.0f); FIELD(combustible->initialFuelMassKg, 0.13f); FIELD(combustible->ignitionTemperatureK, 551.0f);
     FIELD(combustible->maximumFuelRateKgPerSecond, 0.004f); FIELD(combustible->radiativeAreaSquareMeters, 1.6f);
     FIELD(combustible->retainedCombustionHeatFraction, 0.76f);
-    FIELD(fluidVolume->spacing, 0.06f); FIELD(fluidVolume->countX, 6); FIELD(fluidVolume->countY, 6); FIELD(fluidVolume->countZ, 6);
-    FIELD(fluidVolume->emitter, true); FIELD(fluidVolume->emitterLocalOffset.z, 1.0f); FIELD(fluidVolume->maxParticles, 100);
-    FIELD(playerStart->view, ScenePlayerView::FirstPerson); FIELD(playerStart->yawDegrees, 1.0f);
-    FIELD(playerStart->density, 1000.0f); FIELD(playerStart->fluidDrag, 3.0f);
-    FIELD(playerStart->swimAcceleration, 5.0f);
-    FIELD(body->fluidCavities[0].localCenter.x, 0.1f);
-    FIELD(body->fluidCavities[0].halfExtents.z, 0.3f);
-    CheckObjectChange(s, "fluid cavity presence/count", [](SceneObject& o) { o.body->fluidCavities.clear(); });
+    FIELD(fluidVolume->fillHeight, 1.5f); FIELD(fluidVolume->density, 997.f); FIELD(fluidVolume->opacity, .7f); FIELD(fluidVolume->color.x, .2f);
+    FIELD(fluidVolume->spacing, 0.45f); FIELD(fluidVolume->countX, 6); FIELD(fluidVolume->countY, 6); FIELD(fluidVolume->countZ, 6);
 #define REMOVE(field) CheckObjectChange(s, #field " presence", [](SceneObject& o) { o.field.reset(); })
-    REMOVE(render); REMOVE(body); REMOVE(gravity); REMOVE(light); REMOVE(door); REMOVE(lightSwitch);
-    REMOVE(vehicle); REMOVE(celestial); REMOVE(atmosphere); REMOVE(combustible); REMOVE(fluidVolume); REMOVE(playerStart);
+    REMOVE(render); REMOVE(body); REMOVE(gravity); REMOVE(light);
+    REMOVE(celestial); REMOVE(atmosphere); REMOVE(combustible); REMOVE(fluidVolume);
 #undef REMOVE
 #undef FIELD
     auto invalid = s;
@@ -165,7 +146,7 @@ int main() {
     invalid = s; invalid.Settings().worldOrigin.z = std::numeric_limits<double>::infinity(); Reject(invalid, "non-finite setting rejected");
     invalid = s; invalid.Objects()[0].body->motion = static_cast<SceneBodyMotion>(99); Reject(invalid, "invalid enum rejected");
 
-    for (const char* path : {"assets/scenes/classic.judas", "assets/scenes/terrain.judas", "assets/scenes/flat_playground.judas", "assets/scenes/fidelity_demo.judas"}) {
+    for (const char* path : {"projects/terrain_v2_workshop/Scenes/highlands.judas", "projects/basic_water_lab/Scenes/stillwater.judas", "projects/2d_traversal_workshop/Scenes/grid.judas"}) {
         Scene authored; std::string error;
         const bool loadedOk = LoadSceneFromFile(path, authored, error);
         Check(loadedOk, std::string("load authored fixture ") + path + ": " + error);

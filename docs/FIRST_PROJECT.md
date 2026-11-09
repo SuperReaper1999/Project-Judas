@@ -8,7 +8,7 @@ uses workspace/Window navigation, with quick view options in the toolbar.
 [Ownership, readiness, presentation and saves](DEVELOPER_WORKFLOWS.md)
 
 [API index](JUDASJS.md) · [Full authoring guide](judasjs/getting-started.md) ·
-[Debugger and reload](M94_DEVELOPER_TOOLS.md) · [Distribution](DISTRIBUTION.md)
+[Debugger and reload](SCRIPT_DEBUGGING.md) · [Distribution](DISTRIBUTION.md)
 
 Start with one visibly rotating box and an explicit camera. This small project
 needs no downloaded art, CharacterMotor, input bindings, gamepad, npm or C++ game
@@ -38,8 +38,7 @@ This uses the same public example described below; no hidden native controller
 or C++ compilation is involved. Existing scripts are never overwritten.
 
 Choose **Empty scene** if you want to assemble everything below yourself. That
-scene has a floor, authored gravity, light and historical start marker. The marker
-does not create a modern player: new projects use `legacy-gameplay false`.
+scene has ordinary authored objects; add a player preset or your own CharacterMotor/script when you need movement.
 
 Use **Add object** at the top of Hierarchy and choose **Static box** (or right-click empty
 hierarchy space for the same root-creation menu). The new object is selected.
@@ -100,8 +99,7 @@ The startup log says `My first Judas project is running.` Stop returns to the
 authored scene. The code needs no input capture; this first exercise does not
 provide walking or mouse look.
 
-New projects use `legacy-gameplay false`: they do not inherit the historical
-player/spacecraft debug HUD. The visible starter owns its camera through its
+Projects own their gameplay and HUD; no native demonstration controller is installed. The visible starter owns its camera through its
 script. Use [runtime UI](judasjs/ui.md) for your game interface. In Editor V2,
 Game shows the played frame; Scene uses the editor camera to observe the same
 world during Play. Authored values remain read-only until Stop.
@@ -184,4 +182,4 @@ checks actual rotation/camera endpoints, syntax-failure isolation, deliberate
 reload and state continuation. It needs no private content, renderer or compiler
 at execution time. It does **not** certify editor clicks, visual appearance,
 export, platform hardware or human acceptance; test receipts record execution
-status separately in the [Pre-Alpha evidence](evidence/prealpha-pass2/).
+status separately in the [Pre-Alpha evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass2).

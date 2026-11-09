@@ -43,7 +43,7 @@ int main(int argc,char** argv){fs::path out=argc>1?argv[1]:"/tmp/m66-runtime";fs
  camera.transform.position={1,1,8};
  camera.renderCamera=SceneRenderCameraComponent{};
  RuntimeWorld world;
- world.legacyGameplay=false;
+
  Check(world.Build(scene,&resources,error),"synthetic model/camera world uses the ordinary runtime");
  resources.WaitForAll();world.UpdateAnimations(.4);
  const auto* first=world.RuntimeAnimation(firstId);
@@ -55,7 +55,7 @@ int main(int argc,char** argv){fs::path out=argc>1?argv[1]:"/tmp/m66-runtime";fs
  SceneTransform bone;
  Check(world.JointPose(firstId,"BoneA","world",1,bone),"stable synthetic joint resolves through normal runtime socket query");
  r.ResetStats();
- RenderWorldFrame(r,640,480,world,nullptr,
+ RenderWorldFrame(r,640,480,world,
      glm::lookAt(glm::vec3(1,1,8),glm::vec3(1,1,0),glm::vec3(0,1,0)),
      glm::perspective(glm::radians(60.f),640.f/480,.1f,100.f),{0,1,0},1);
  TextureData secondary;

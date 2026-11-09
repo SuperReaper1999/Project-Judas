@@ -59,8 +59,7 @@ bool ValidateSceneClassification(const Scene& scene,const ProjectClassification&
         if(o.ragdoll)for(const auto& bone:o.ragdoll->bones)if(!categories.collision.names.count(bone.collisionLayer)){error="unregistered ragdoll collision layer";return false;}
         if((o.tags&~categories.tags.ActiveMask())||!categories.render.names.count(o.renderLayer)||
            (o.body&&!categories.collision.names.count(o.body->collisionLayer))||
-           (o.door&&!categories.collision.names.count(o.door->collisionLayer))||
-           (o.playerStart&&!categories.collision.names.count(o.playerStart->collisionLayer))){
+           false){
             error="Entity "+std::to_string(o.id)+" references an unregistered tag/layer; repair its assignment in Project settings/Inspector";return false;
         }
     }

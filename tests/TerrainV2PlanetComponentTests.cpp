@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
         auto &parent = scene.CreateObject("Absolute planet");
         parent.planet = planet;
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         Check(world.Build(scene, &resources, error),
               "normal scene builds projected assets independent of object order: " + error);
         auto point = [&](glm::dvec3 value) {
@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
                 ready = world.PlanetCollision(3, scene.Settings().worldOrigin, error);
             Check(ready, "base physical interest ready: " + error);
             Check(std::abs(height()) < .003, "initial curved surface matches geographic placement");
-            Check(world.LiveTerrain().Brush(1, point({0, -.5, 0}), {VolumeBrushKind::Remove, 3, 1},
+            Check(world.LiveTerrain().Brush(1, point({0, -.5, 0}), {TerrainV2::Edit::Kind::Remove, {}, 3},
                                             error) &&
                       world.LiveTerrain().Wait(1, error),
                   "normal public excavation with world-metric radius: " + error);

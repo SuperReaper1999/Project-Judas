@@ -5,7 +5,7 @@ Main remains unchanged. This is automated Linux qualification, not new human
 acceptance, a release, a fluid unlock or platform-wide certification.
 
 [Developer guide](GAME_AI.md) · [API and bounds](judasjs/ai.md) ·
-[Raw evidence](evidence/ai-usability-20261101/README.txt)
+[Raw evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/ai-usability-20261101/README.txt)
 
 ## Delivered
 

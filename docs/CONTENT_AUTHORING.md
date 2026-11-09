@@ -2,7 +2,7 @@
 
 ## Editable terrain
 
-[M75](M75.md) documents `.judasterrain` sources and `judas_terrain_author`. Shared CPU services create/edit/fork/cook finite landscapes into ordinary model/texture/collision assets with guarded hash receipts. Sources remain editable; exported runtime products do not require authoring inputs. This complements named scene authoring and commodity model import.
+[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) documents `.judasterrain` sources and `judas_terrain_author`. Shared CPU services create/edit/fork/cook finite landscapes into ordinary model/texture/collision assets with guarded hash receipts. Sources remain editable; exported runtime products do not require authoring inputs. This complements named scene authoring and commodity model import.
 
 
 Current M67 candidate: [supported named documents and CLI](NAMED_AUTHORING.md)
@@ -104,4 +104,4 @@ these settings through the normal project serializer.
 
 ## Volumetric terrain sources
 
-[Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md) adds project-owned `.judasvolume` scalar sources and a dedicated editor/CLI authoring workflow. It cooks ordinary models/colliders and uses the existing navigation dependency, prefab, save, region and export paths. It is not a runtime brush API or a new asset pipeline.
+[Volumetric terrain (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M84_VOLUMETRIC_TERRAIN.md) adds project-owned `.judasvolume` scalar sources and a dedicated editor/CLI authoring workflow. It cooks ordinary models/colliders and uses the existing navigation dependency, prefab, save, region and export paths. It is not a runtime brush API or a new asset pipeline.

@@ -7,11 +7,7 @@
 inline void RemoveDormantFluidComponents(SceneObject& object, bool advanced) {
     if (advanced) return;
     object.fluidVolume.reset();
-    object.liquidBasin.reset();
-    object.liquidContainer.reset();
-    object.liquidConnection.reset();
 }
 inline bool IsDormantFluidProperty(std::string_view key, bool advanced) {
-    return !advanced && (key.substr(0, 7) == "liquid." ||
-                         key.substr(0, 6) == "fluid." || key == "fluid-volume");
+    return !advanced && (key.substr(0, 6) == "fluid." || key == "fluid-volume");
 }

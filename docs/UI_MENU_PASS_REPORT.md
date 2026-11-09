@@ -35,7 +35,7 @@ framework was needed.
   text-size preference, physical pause and real asynchronous Save/Load.
 
 Exact changed-file and binary SHA-256 inventories, commands and raw results are
-under [evidence](evidence/ui-menu-pass-20261102/results.json). The source inventory
+under [evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/ui-menu-pass-20261102/results.json). The source inventory
 is scoped to this pass and deliberately excludes unrelated historical experiments.
 
 ## Qualification

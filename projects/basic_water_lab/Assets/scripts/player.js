@@ -10,7 +10,7 @@ const axis=(a,t)=>({w:Math.cos(t/2),...mul(a,Math.sin(t/2))});
 const rotate=(q,v)=>{const r=qm(qm(q,{w:0,...v}),{w:q.w,x:-q.x,y:-q.y,z:-q.z});return {x:r.x,y:r.y,z:r.z}};
 export default class {
  constructor({entity}){this.entity=entity;this.state={yaw:0,pitch:-.2};this.immersion=0;}
- start(){this.hud=ui.get('game_ui');ui.debugOverlayVisible=false;input.pointerCapture=true;
+ start(){this.hud=ui.get('game_ui');input.pointerCapture=true;
   if(this.hud){this.hud.modal=false;for(const id of ['main','options','pause','image'])this.hud.get(id).visible=false;this.hud.get('hud').visible=true;
    this.hud.get('hud_title').text='STILLWATER / BASIC WATER';
    this.hud.get('hud_help').text='WASD + mouse: explore | Space: jump / swim up | Q: dive\nWalk down the steps or jump into the pool. Escape: pause | R: restart';

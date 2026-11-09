@@ -16,7 +16,6 @@
 #include "ScriptTools.h"
 #include "WorldCoordinates.h"
 #include "WorldDebugView.h"
-#include "WorldState.h"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -38,26 +37,6 @@ EditorPlaySession::~EditorPlaySession() = default;
 bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &viewport,
                                   std::unique_ptr<ScriptTools> &scriptTools, std::string &outError) {
     JUDAS_PROFILE_SCOPE("Editor Play startup");
-    {
-        JUDAS_PROFILE_SCOPE("Editor Play model preflight");
-        // Each Play rechecks current bytes. Repeated scene instances share
-        // only this check, never a freshness decision from an earlier Play.
-        std::unordered_set<std::string> checkedModels;
-        for (const auto &object : context.document.GetScene().Objects()) {
-            if (!object.render || object.render->meshAsset.empty())
-                continue;
-            const auto *asset = context.host.Assets().Find(object.render->meshAsset);
-            if (!asset || asset->readOnly || fs::path(asset->path).extension() != ".judasmodel" ||
-                !checkedModels.insert(asset->path).second)
-                continue;
-            if (!VerifyTerrainModelFreshForPlay(context.project.RootDir(), asset->path, outError)) {
-                outError = asset->relativePath + ": " + outError;
-                return false;
-            }
-        }
-        JUDAS_PROFILE_COUNTER("Editor Play model archives checked", double(checkedModels.size()),
-                              ProfileCounterMode::Latest);
-    }
     Project playedProject = context.project;
     if (!JudasMods::PrepareSession(playedProject, false, outError))
         return false;
@@ -73,26 +52,12 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
     }
     viewport.CancelCameraNavigation(context);
     world = std::make_unique<RuntimeWorld>();
-    world->legacyGameplay = context.project.Settings().legacyGameplay;
     world->audioGroups = context.project.Settings().audio;
     world->ConfigureProject(context.project.Settings());
     world->SetSceneControl(std::make_shared<SceneSession>(context.project, context.document.Path()));
     world->SceneControl()->SetEditorSaveIsolation(true);
     if (!world->Build(playedScene, &context.host.Resources(), outError,
                       &context.project.Settings().classification, &context.project.Settings().navigation)) {
-        StopPlay(context, viewport);
-        return false;
-    }
-    // Milestone 29: a saved world-state delta for this scene file layers
-    // over the freshly instantiated baseline, exactly as the runtime does.
-    context.panels.worldStatePath =
-        (context.document.Path().empty() ? std::string()
-         : context.project.IsLoaded()    ? context.project.WorldStatePathForScene(context.document.Path())
-                                         : DefaultWorldStatePath(context.document.Path()));
-    bool stateApplied = false;
-    if (world->IsComposed())
-        context.panels.worldStatePath.clear();
-    if (!ApplyWorldStateFileIfPresent(*world, context.panels.worldStatePath, stateApplied, outError)) {
         StopPlay(context, viewport);
         return false;
     }
@@ -112,22 +77,19 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
     }
     viewport.BeginObservation(context.document.GetScene().Settings().worldOrigin);
     play->SetScriptFaultNoticeEnabled(true);
-    play->SetWorldStatePath(context.panels.worldStatePath, stateApplied);
     // The debug view over the played world, inside the 3D frame.
     play->SetWorldOverlay([this, panels = &context.panels](Renderer &renderer, float alpha) {
         if (!panels->debug.AnyEnabled() || !world)
             return;
         debugLines.Clear();
-        BuildWorldDebugLines(*world, &play->Session(), alpha, panels->debug, debugLines);
+        BuildWorldDebugLines(*world, alpha, panels->debug, debugLines);
         renderer.DrawDebugLines(debugLines.Lines());
     });
     context.panels.runtime = world.get();
     context.runtime = world.get();
     context.panels.renderPreviewHistory.reset();
     context.panels.mode = EditorMode::Play;
-    context.panels.status = world->legacyGameplay
-                                ? "Playing historical controls: Escape pauses; Stop restores authored state"
-                                : "Playing project scripts; Stop restores authored state";
+    context.panels.status = "Playing project scripts; Stop restores authored state";
     // Keys pressed while editing (F to focus, R, Space, ...) must not fire
     // as gameplay requests on the first played frame, and a gizmo drag in
     // progress is abandoned.
@@ -136,7 +98,7 @@ bool EditorPlaySession::StartPlay(EditorContext &context, EditorSceneViewport &v
     if (context.document.EditInProgress())
         context.document.CancelEdit();
     context.host.GetWindow().ClearPendingRequests();
-    context.host.GetWindow().SetMouseCaptured(world->legacyGameplay);
+    context.host.GetWindow().SetMouseCaptured(world->pointerCapture);
     return true;
 }
 
@@ -182,7 +144,7 @@ bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTool
     play->SetPointerCaptureAllowed(allowCapture);
     // The identical frame the runtime runs. Escape opens the M13
     // pause menu, which releases the mouse for the editor panels.
-    lastAlpha = play->Frame(window, renderer, deltaSeconds, /*drawHud=*/true, render, destination);
+    lastAlpha = play->Frame(window, renderer, deltaSeconds, render, destination);
     if (scriptTools->clockReset) {
         clockReset = true;
         scriptTools->clockReset = false;
@@ -212,22 +174,17 @@ bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTool
             window.Input().DiscardStickHistory();
         context.panels.runtime = world.get();
         context.runtime = world.get();
-        context.panels.worldStatePath = play->WorldStatePath();
     }
     context.panels.playPaused = play->IsPaused();
     if (play->QuitRequested())
         context.requests.stop = true;
-    const GameSession &session = play->Session();
     const RuntimeWorld::LifecycleCounts counts = world->CountLifecycle();
     char info[200];
     std::snprintf(info, sizeof(info),
                   "entities %zu full / %zu coarse / %zu dormant / %zu destroyed | %zu physics bodies | %zu "
-                  "particles | %s",
+                  "particles",
                   counts.full, counts.coarse, counts.dormant, counts.destroyed, counts.physicsBodies,
-                  world->HasFluid() ? world->Fluid().Particles().size() : std::size_t{0},
-                  session.IsPiloting()            ? "piloting"
-                  : session.Player().IsGrounded() ? "grounded"
-                                                  : "airborne");
+                  world->VisualEmitters().size());
     context.panels.runtimeInfo = info;
 
     return clockReset;

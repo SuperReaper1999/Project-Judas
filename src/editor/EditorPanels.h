@@ -47,8 +47,6 @@ struct EditorRequests {
     bool focusSelection = false;
     bool resetWorkspace = false;
     bool quit = false;
-    bool saveWorldState = false;
-    bool deleteWorldState = false;
     // Milestone 30: project and asset operations.
     bool newProject = false;
     bool openProject = false;
@@ -97,7 +95,6 @@ struct ProfilerData {
     unsigned int drawCalls = 0, triangles = 0, shadowPasses = 0, dynamicLights = 0, debugLines = 0;
     unsigned int meshesVisible = 0, meshesCulled = 0, emittersVisible = 0, emittersCulled = 0,
                  particlesSubmitted = 0;
-    std::size_t fluidParticles = 0;
     float fluidMilliseconds = 0.0f;   // fluid solve inside the last step (0 when not measured)
     float surfaceMilliseconds = 0.0f; // fluid surface rebuild (presentation)
     float sceneMilliseconds = 0.0f;   // RenderWorldFrame submission
@@ -137,7 +134,6 @@ struct EditorPanelState {
     bool showTerrain = false;
     std::string terrainEditAsset;
     bool terrainCreateRequested = false;
-    bool showVolumeTerrain = false;
     bool showMods = false;
     std::shared_ptr<RetargetPanelState> retarget;
     bool showNavigationHelp = false;
@@ -182,12 +178,10 @@ struct EditorPanelState {
     unsigned worldPreviewRevision = 0;
     RuntimeWorld *runtime = nullptr;
     std::shared_ptr<RuntimeRenderHistory> renderPreviewHistory; // discarded on Play/Stop or world replacement
-    std::string worldStatePath;
     bool playPaused = false;
     bool showWorldBuilding = false;
     DebugLineList recipePreview;
     DebugLineList navigationPreview;
-    DebugLineList liquidPreview;
     DebugLineList deformablePreview;
     DebugLineList collisionPreview;
     std::string deformableDestination = "deformable.judasdeform", deformableSource,
@@ -218,7 +212,6 @@ struct EditorPanelState {
     SceneObjectId newScriptOwner = kInvalidSceneObjectId;
     std::string newScriptName = "NewScript.js", scriptWorkflowMessage;
     std::string pathInput; // Open / Save As text field
-    std::vector<std::string> terrainSurfaces;
     glm::vec3 cameraFocus{0.0f}; // where "create" places new objects
     std::string runtimeInfo;     // one-line runtime summary while playing
 
@@ -276,8 +269,8 @@ void DrawConsolePanel(EditorPanelState &state);
 void DrawStatusBar(EditorDocument &doc, EditorPanelState &state);
 
 // Creates an object of `kind` ("empty", "box", "sphere", "dynamic-box",
-// "dynamic-sphere", "point-light", "spot-light", "player-start", "mesh",
-// "door", "gravity-region") at `position`, recording one undo step.
+// "dynamic-sphere", "point-light", "spot-light", "mesh", "gravity-region")
+// at `position`, recording one undo step.
 // Returns its id (0 for a missing parent). Children start at their parent's local
 // origin. `meshAssetId` is used by "mesh"; creation selects the new object.
 SceneObjectId CreateObjectOfKind(EditorDocument &doc, const std::string &kind, const glm::vec3 &position,

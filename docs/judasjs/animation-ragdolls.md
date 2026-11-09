@@ -8,7 +8,7 @@ WHY playback/physical transitions occur; it cannot access raw pose arrays or GL.
 
 ## Animation
 
-See the [M95 timeline and root-motion workflow](../M95_ANIMATION_WORKFLOW.md) for
+See the [M95 timeline and root-motion workflow](../ANIMATION_WORKFLOW.md) for
 event authoring, fixed-step sampling, blend policies, persistence and limitations.
 
 `advance(seconds)` returns an `AnimationSample` during `fixedUpdate`, once per
@@ -174,7 +174,7 @@ presentationUpdate() {
 }
 ```
 
-[Integration project and authoring](../M65_INTEGRATION.md) shows two independent
+[Integration project and authoring (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M65_INTEGRATION.md) shows two independent
 foot targets on a tilting board and a hand socket through interrupted crossfades
 and ragdoll output. Scripts no longer need transitionFraction to estimate bones.
 
@@ -183,7 +183,7 @@ and ragdoll output. Scripts no longer need transitionFraction to estimate bones.
 The editor's stable-key skeleton picker and rest-pose axis overlay show each imported
 joint's **local** axes. M45 hinge/slider frame X is the constraint axis; orient the
 frame to the intended imported joint axis rather than assuming humanoid names or Y.
-The picker is not an automatic physical mapping/fitter. See [authoring](../M65_INTEGRATION.md).
+The picker is not an automatic physical mapping/fitter. See [authoring (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M65_INTEGRATION.md).
 
 Ragdoll entry uses recent evaluated world-joint samples and their simulation sample
 interval when available, plus entity motion. Body-free scripted transform changes
@@ -320,7 +320,7 @@ actor.animation.ikTargets([{id:'palm',chain:'contact',space:'world',
   offset:[0,0,.07]}]);
 ```
 
-Mapping names here belong to the [Character Lab](../M70.md), not engine conventions.
+Mapping names here belong to the [Character Lab](../MULTI_TARGET_IK.md), not engine conventions.
 Use `animation.info.joints` and the normal skeleton picker for another imported model.
 Existing `crossFade`, `layer`, `limb` and visual sockets remain composable.
 
@@ -419,7 +419,7 @@ scene/prefab/save paths; disposable solve caches and GPU matrices are not serial
 Judas plans bounded physical corrections; game scripts decide whether to attempt
 standing/recovery and whether to permit corrective steps. Configuration is explicit,
 optional and inactive until requested. The original bounded mechanical rig envelope
-and platform results are in [M77](../M77.md). Subsequent [cold-save corrections](saves.md#joint-continuation-and-legacy-compatibility)
+and platform results are in [M77](../BALANCE.md). Subsequent [cold-save corrections](saves.md#joint-continuation-and-legacy-compatibility)
 preserve physical continuation in new captures; old snapshots without that history
 have a separate compatibility limit. These APIs do not provide a general humanoid
 gait or recovery guarantee.

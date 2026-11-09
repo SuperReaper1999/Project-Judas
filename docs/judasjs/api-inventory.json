@@ -1197,21 +1197,6 @@
       "maximum": 4
     },
     {
-      "symbol": "LiquidVolume.applyImpulse",
-      "minimum": 2,
-      "maximum": 2
-    },
-    {
-      "symbol": "LiquidVolume.constructor",
-      "minimum": 1,
-      "maximum": 1
-    },
-    {
-      "symbol": "LiquidVolume.transferTo",
-      "minimum": 2,
-      "maximum": 3
-    },
-    {
       "symbol": "LocalPlayer.assign",
       "minimum": 1,
       "maximum": 2
@@ -1408,11 +1393,6 @@
     },
     {
       "symbol": "Terrain.constructor",
-      "minimum": 1,
-      "maximum": 1
-    },
-    {
-      "symbol": "Terrain.create",
       "minimum": 1,
       "maximum": 1
     },
@@ -1647,26 +1627,6 @@
     },
     {
       "symbol": "input.vector",
-      "minimum": 1,
-      "maximum": 1
-    },
-    {
-      "symbol": "liquid.accounting",
-      "minimum": 0,
-      "maximum": 1
-    },
-    {
-      "symbol": "liquid.sample",
-      "minimum": 1,
-      "maximum": 1
-    },
-    {
-      "symbol": "liquid.samplePresented",
-      "minimum": 1,
-      "maximum": 1
-    },
-    {
-      "symbol": "liquid.submerged",
       "minimum": 1,
       "maximum": 1
     },
@@ -2069,11 +2029,6 @@
       "symbol": "world.spawnPrefab",
       "minimum": 1,
       "maximum": 3
-    },
-    {
-      "symbol": "world.sweepCapsule",
-      "minimum": 2,
-      "maximum": 4
     },
     {
       "symbol": "world.toAbsolute",
@@ -3178,17 +3133,6 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
-      "symbol": "Entity.liquid",
-      "kinds": [
-        "get"
-      ],
-      "native": [
-        "liquidOwner"
-      ],
-      "type": "docs/judas.d.ts:Entity.liquid",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
       "symbol": "Entity.mass",
       "kinds": [
         "get"
@@ -4253,99 +4197,6 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
-      "symbol": "LiquidVolume",
-      "kinds": [
-        "class"
-      ],
-      "native": [],
-      "type": "docs/judas.d.ts:LiquidVolume",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.applyImpulse",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidImpulse"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.applyImpulse",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.constructor",
-      "kinds": [
-        "call"
-      ],
-      "native": [],
-      "type": "docs/judas.d.ts:LiquidVolume.constructor",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.enabled",
-      "kinds": [
-        "set"
-      ],
-      "native": [
-        "liquidEnabled"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.enabled",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.handle",
-      "kinds": [
-        "field"
-      ],
-      "native": [],
-      "type": "docs/judas.d.ts:LiquidVolume.handle",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.state",
-      "kinds": [
-        "get"
-      ],
-      "native": [
-        "liquidState"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.state",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.surfaceEnabled",
-      "kinds": [
-        "set"
-      ],
-      "native": [
-        "liquidSurfaceEnabled"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.surfaceEnabled",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.transferTo",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidTransfer"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.transferTo",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "LiquidVolume.valid",
-      "kinds": [
-        "get"
-      ],
-      "native": [
-        "liquidValid"
-      ],
-      "type": "docs/judas.d.ts:LiquidVolume.valid",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
       "symbol": "LocalPlayer",
       "kinds": [
         "class"
@@ -5243,17 +5094,6 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Terrain.constructor",
-      "reference": "docs/judasjs/terrain.md"
-    },
-    {
-      "symbol": "Terrain.create",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "terrainCreate"
-      ],
-      "type": "docs/judas.d.ts:Terrain.create",
       "reference": "docs/judasjs/terrain.md"
     },
     {
@@ -6348,81 +6188,6 @@
       ],
       "type": "docs/judas.d.ts:input.vector",
       "reference": "docs/judasjs/input.md"
-    },
-    {
-      "symbol": "liquid",
-      "kinds": [
-        "namespace"
-      ],
-      "native": [],
-      "type": "docs/judas.d.ts:liquid",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.accounting",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidAccounting"
-      ],
-      "type": "docs/judas.d.ts:liquid.accounting",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.connections",
-      "kinds": [
-        "get"
-      ],
-      "native": [
-        "liquidConnections"
-      ],
-      "type": "docs/judas.d.ts:liquid.connections",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.errors",
-      "kinds": [
-        "get"
-      ],
-      "native": [
-        "liquidErrors"
-      ],
-      "type": "docs/judas.d.ts:liquid.errors",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.sample",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidSample"
-      ],
-      "type": "docs/judas.d.ts:liquid.sample",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.samplePresented",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidPresentedSample"
-      ],
-      "type": "docs/judas.d.ts:liquid.samplePresented",
-      "reference": "docs/judasjs/liquid.md"
-    },
-    {
-      "symbol": "liquid.submerged",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "liquidSubmerged"
-      ],
-      "type": "docs/judas.d.ts:liquid.submerged",
-      "reference": "docs/judasjs/liquid.md"
     },
     {
       "symbol": "localization",
@@ -7576,18 +7341,6 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
-      "symbol": "ui.debugOverlayVisible",
-      "kinds": [
-        "get",
-        "set"
-      ],
-      "native": [
-        "uiDiagnostics"
-      ],
-      "type": "docs/judas.d.ts:ui.debugOverlayVisible",
-      "reference": "docs/judasjs/ui.md"
-    },
-    {
       "symbol": "ui.get",
       "kinds": [
         "call"
@@ -7825,17 +7578,6 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
-      "symbol": "world.sweepCapsule",
-      "kinds": [
-        "call"
-      ],
-      "native": [
-        "sweep"
-      ],
-      "type": "docs/judas.d.ts:world.sweepCapsule",
-      "reference": "docs/judasjs/entities.md"
-    },
-    {
       "symbol": "world.toAbsolute",
       "kinds": [
         "call"
@@ -8024,19 +7766,6 @@
     "lifecycleBusy",
     "lightInfo",
     "lightSettings",
-    "liquidAccounting",
-    "liquidConnections",
-    "liquidEnabled",
-    "liquidErrors",
-    "liquidImpulse",
-    "liquidOwner",
-    "liquidPresentedSample",
-    "liquidSample",
-    "liquidState",
-    "liquidSubmerged",
-    "liquidSurfaceEnabled",
-    "liquidTransfer",
-    "liquidValid",
     "localeChoose",
     "localeFormat",
     "localeInfo",
@@ -8213,9 +7942,7 @@
     "stickDelta",
     "stickSamples",
     "stopAudio",
-    "sweep",
     "terrainBrush",
-    "terrainCreate",
     "terrainLandscape",
     "terrainState",
     "terrainSurface",
@@ -8225,7 +7952,6 @@
     "touches",
     "transform",
     "uiControl",
-    "uiDiagnostics",
     "uiFind",
     "uiGet",
     "uiLayout",

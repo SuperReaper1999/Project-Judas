@@ -6,6 +6,8 @@
 #include "SceneSession.h"
 #include "WorldStreaming.h"
 #include <chrono>
+#include <fstream>
+#include <filesystem>
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -66,7 +68,29 @@ int main(){std::string error;JobSystem jobs(2);AudioSystem audio;audio.SetJobSys
   std::printf("WORKLOAD mode=%d voices=%zu streams=%zu PCM=%zu buffered=%zu reverb=%zu rays=%llu retirements=%zu underruns=%llu",mode,stats.voices,stats.streams,stats.streamBytes,stats.bufferedBytes,stats.reverbProcessors,(unsigned long long)runtime.AudioQueryCount(),stats.pendingRetirements,(unsigned long long)stats.underruns);summary(frames,"audio_work");summary(control,"control");summary(dsp,"DSP");std::puts("");Check(stats.voices==size_t(count),"requested modest workload voices created");runtime.Destroy();for(int n=0;n<20&&audio.Diagnostics().pendingRetirements;++n){audio.Update();std::this_thread::sleep_for(std::chrono::milliseconds(1));}
  }
  // Real ordinary M59 registration/adoption/removal, root cursor persists.
- Project range;Check(range.Load("projects/streamed_range/streamed_range.judasproj",error),"current streamed game project");resources.Shutdown();db.Scan(range.RootDir(),range.AssetsDir());ResourceManager regionResources(nullptr,&db,&jobs,&audio);regionResources.SetHeadlessResidency(true);Scene root;Check(LoadSceneFromFile(range.StartupScenePath(),root,error),"registered streamed root scene");for(auto& o:root.Objects()){o.scripts.clear();o.ui.reset();}RuntimeWorld streamed;streamed.audioGroups=range.Settings().audio;Check(streamed.Build(root,&regionResources,error,&range.Settings().classification,&range.Settings().navigation),"audio root through ordinary world path");auto session=std::make_shared<SceneSession>(range,range.StartupScenePath());streamed.SetSceneControl(session);auto* stream=session->Streaming(streamed,error);Check(stream!=nullptr,"normal world manifest coordinator");if(!stream){std::puts(error.c_str());return 1;}streamed.BeginAudio();
+ Project range;const auto regionRoot=std::filesystem::temp_directory_path()/("judas-audio-regions-"+MintAssetId());
+ Check(Project::CreateNew(regionRoot.string(),"Audio region fixture",range,error),"create focused audio streaming project");
+ for(const char* file:{"music.flac","music.flac.judasmeta","pulse.wav","pulse.wav.judasmeta","ambience.flac","ambience.flac.judasmeta"})
+  std::filesystem::copy_file(std::filesystem::path(p.AssetsDir())/"audio"/file,regionRoot/"Assets"/file);
+ range.Settings().startupScene="Scenes/main.judas";std::filesystem::create_directories(regionRoot/"Scenes");
+ Scene root;auto& listenerOwner=root.CreateObject("Listener");listenerOwner.audioListener=SceneAudioListenerComponent{};auto& musicOwner=root.CreateObject("Persistent music");musicOwner.id=610;musicOwner.audioEmitter=SceneAudioEmitterComponent{};
+ musicOwner.audioEmitter->asset="60606060606060606060606060606001";musicOwner.audioEmitter->loading=AudioLoading::Streamed;
+ musicOwner.audioEmitter->playOnStart=true;musicOwner.audioEmitter->loop=true;musicOwner.audioEmitter->spatial=false;
+ root.SetNextId(611);const bool rootSaved=SaveSceneToFile(root,range.StartupScenePath(),error);Check(rootSaved,("save focused persistent audio root: "+error).c_str());
+ Scene regional;auto& carried=regional.CreateObject("Adoptable buffered source");carried.id=30;carried.audioEmitter=SceneAudioEmitterComponent{};
+ carried.audioEmitter->asset="60606060606060606060606060606004";carried.audioEmitter->playOnStart=true;carried.audioEmitter->loop=true;
+ auto& localStream=regional.CreateObject("Regional ambience");localStream.id=31;localStream.audioEmitter=SceneAudioEmitterComponent{};
+ localStream.audioEmitter->asset="60606060606060606060606060606003";localStream.audioEmitter->loading=AudioLoading::Streamed;localStream.audioEmitter->playOnStart=true;localStream.audioEmitter->loop=true;
+ regional.SetNextId(32);Check(SaveSceneToFile(regional,range.Resolve("Scenes/region.judas"),error),"save focused regional buffered and streamed sources");
+ std::ofstream manifest(regionRoot/"Assets/world.judasworld");manifest<<"JudasWorld 1\n";
+ for(int i=0;i<2;++i)manifest<<"region \"gallery-"<<i<<"\" \"Scenes/region.judas\" 0 0 0 0 0 0 1 16 16 16 0 \"snapshot\" 65536 \"\"\n";
+ manifest.close();AssetDatabase authoredAssets;authoredAssets.Scan(range.RootDir(),range.AssetsDir());AssetRecord worldAsset;Check(authoredAssets.Track((regionRoot/"Assets/world.judasworld").string(),worldAsset,error),"register authored world manifest");range.Settings().worldManifest=worldAsset.id;Check(range.Save(error),"save ordinary streaming manifest selection");
+ resources.Shutdown();db.Scan(range.RootDir(),range.AssetsDir());ResourceManager regionResources(nullptr,&db,&jobs,&audio);regionResources.SetHeadlessResidency(true);
+ RuntimeWorld streamed;streamed.audioGroups=range.Settings().audio;
+ Check(streamed.Build(root,&regionResources,error,&range.Settings().classification,&range.Settings().navigation),("audio root through ordinary world path: "+error).c_str());
+ auto session=std::make_shared<SceneSession>(range,range.StartupScenePath());streamed.SetSceneControl(session);auto* stream=session->Streaming(streamed,error);
+ Check(stream!=nullptr,"normal world manifest coordinator");if(!stream){std::puts(error.c_str());return 1;}streamed.BeginAudio();
+
  // This isolated audio clock still initializes region script metadata through
  // normal lifecycle. Otherwise conservative unpublished-schema pins cannot retire.
  auto frame=[&]{regionResources.Pump();streamed.UpdateScripts(nullptr,0);stream->Advance(false);streamed.UpdateAudio(glm::mat4(1),1,.016);audio.AdvanceWithoutDevice(512);std::this_thread::sleep_for(std::chrono::milliseconds(1));};

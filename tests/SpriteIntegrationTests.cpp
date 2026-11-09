@@ -31,7 +31,7 @@ int main(int argc,char** argv){try{
         SaveStorage storage((root/"ColdSaves").string());GameSnapshot snapshot;bool recovered=false;
         Check(storage.Read("sprite",snapshot,recovered,error),"cold process reads original slot with checksum");
         Scene scene;Check(WorldPersistence::SceneFrom(snapshot.participants,scene,error),"cold process reconstructs exact sprite scene");
-        RuntimeWorld world;world.legacyGameplay=false;
+        RuntimeWorld world;
         Check(world.Build(scene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"cold process restores full participants: "+error);
         const SceneObject* player=nullptr;for(const auto& o:scene.Objects())if(!o.scripts.empty())player=&o;
         Check(player&&EncodeSprite(world.RuntimeDefinition(player->id)->render->sprite)==expected&&world.view&&world.view->lens.pixelPerfect&&world.view->lens.projection==CameraProjectionKind::Orthographic,"cold process actual sprite and lens endpoint matches saved state");
@@ -48,7 +48,7 @@ int main(int argc,char** argv){try{
     Project reopened;Scene loaded;
     Check(reopened.Load(project.ProjectFile(),error)&&reopened.Settings().editor2D&&LoadSceneFromFile(project.StartupScenePath(),loaded,error),"reopen project default 2D view and native sprite scene");
     AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());
-    ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;
+    ResourceManager resources(nullptr,&assets);RuntimeWorld world;
     Check(world.Build(loaded,&resources,error,&project.Settings().classification,&project.Settings().navigation),"runtime builds ordinary sprites: "+error);
     world.viewportWidth=320;world.viewportHeight=240;
     InputSystem input;world.UpdateScripts(&input,1.f/60);world.PresentationScripts(&input,1.f/60,.5f);
@@ -67,7 +67,7 @@ int main(int argc,char** argv){try{
     std::ofstream(root/"project-path.txt")<<project.ProjectFile();
     std::ofstream(root/"expected-sprite.json")<<EncodeSprite(sprite);
     Scene savedScene;Check(WorldPersistence::SceneFrom(snapshot.participants,savedScene,error),"restore modern scene definitions");
-    RuntimeWorld restored;restored.legacyGameplay=false;
+    RuntimeWorld restored;
     Check(restored.Build(savedScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,snapshot.participants,error),"fresh runtime restores complete participants: "+error);
     Check(restored.RuntimeDefinition(player->id)->render->sprite==sprite&&restored.view&&restored.view->lens==world.view->lens,"actual modern restored sprite settings and camera lens match saved state");
     Scene bad=loaded;bad.Objects()[0].body=SceneBodyComponent{};bad.Objects()[0].body->shape=SceneShape::Sprite;
@@ -98,7 +98,7 @@ export default class {
     AssetRecord probe;Check(assets.Track(probePath.string(),probe,error),"track ordinary API probe");
     Scene api;auto& probeObject=api.CreateObject("Sprite API probe");probeObject.render=SceneRenderComponent{};
     probeObject.render->shape=SceneShape::Sprite;probeObject.scripts.push_back({1,probe.id,true,"{}"});
-    RuntimeWorld apiWorld;apiWorld.legacyGameplay=false;Check(apiWorld.Build(api,&resources,error),"API probe world builds");
+    RuntimeWorld apiWorld;Check(apiWorld.Build(api,&resources,error),"API probe world builds");
     apiWorld.viewportWidth=320;apiWorld.viewportHeight=240;apiWorld.UpdateScripts(&input,1.f/60);
     Check(apiWorld.Scripts()->Diagnostics().empty(),"sprite/projection/multiplayer API probe has no VM faults");
     const auto observed=nlohmann::json::parse(apiWorld.Scripts()->Capture().front().json);

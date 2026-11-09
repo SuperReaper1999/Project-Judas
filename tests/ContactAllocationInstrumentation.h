@@ -22,7 +22,7 @@ struct Scope { Span& out;Point begin{};explicit Scope(Span& s):out(s){}~Scope(){
 template<class T,class=void>struct Cache{static void print(const T&) {std::printf("\"cache_calls\":null,\"cache_bytes\":null");}};
 template<class T>struct Cache<T,std::void_t<decltype(std::declval<T>().geometryCacheAllocations)>>{static void print(const T&s){std::printf("\"cache_calls\":%zu,\"cache_bytes\":%zu",s.geometryCacheAllocations,s.geometryCacheBytes);}};
 template<class T,class=void>struct Bytes{static void print(const T&) {std::printf(",\"cache_allocated_bytes\":null");}};
-template<class T>struct Bytes<T,std::void_t<decltype(std::declval<T>().geometryCacheAllocatedBytes)>>{static void print(const T&s){std::printf(",\"cache_allocated_bytes\":%zu,\"frame_node_requests\":%zu",s.geometryCacheAllocatedBytes,s.solverFrameNodeRequests);}};
+template<class T>struct Bytes<T,std::void_t<decltype(std::declval<T>().geometryCacheAllocatedBytes)>>{static void print(const T&s){std::printf(",\"cache_allocated_bytes\":%zu",s.geometryCacheAllocatedBytes);}};
 template<class Stats>struct Meter {
  Point begin{},constructionEnd{},stepBegin{},teardownBegin{};Span steps[30]{};Stats statistics[30]{};
  void built(){constructionEnd=Point{};}

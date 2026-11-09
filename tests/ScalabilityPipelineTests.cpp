@@ -57,7 +57,7 @@ int main(int argc,char** argv){
   Project project;Check(Project::CreateNew((out/"project").string(),"Closure test",project,error),error);
   auto assets=fs::path(project.AssetsDir());const std::string mesh="11111111111111111111111111111111",texture="22222222222222222222222222222222",prefab="33333333333333333333333333333333",shared="44444444444444444444444444444444",junk="55555555555555555555555555555555";
   auto asset=[&](const char* name,const std::string& id,AssetType type,const char* input){fs::copy_file(input,assets/name);Check(AssetDatabase::WriteMeta((assets/name).string()+kAssetMetaExtension,id,type,"owned",error),error);};
-  asset("mesh.obj",mesh,AssetType::Mesh,"assets/models/beacon.obj");asset("texture.png",texture,AssetType::Texture,"assets/textures/beacon.png");asset("shared.png",shared,AssetType::Texture,"assets/textures/beacon.png");asset("unreferenced.png",junk,AssetType::Texture,"assets/textures/beacon.png");
+  asset("mesh.obj",mesh,AssetType::Mesh,"tests/fixtures/engine-assets/models/beacon.obj");asset("texture.png",texture,AssetType::Texture,"tests/fixtures/engine-assets/textures/beacon.png");asset("shared.png",shared,AssetType::Texture,"tests/fixtures/engine-assets/textures/beacon.png");asset("unreferenced.png",junk,AssetType::Texture,"tests/fixtures/engine-assets/textures/beacon.png");
   Scene prop;auto& object=prop.CreateObject("Prop");object.render=SceneRenderComponent{};object.render->meshAsset=mesh;object.render->textureAsset=texture;
   Check(SaveSceneToFile(prop,(assets/"prop.judasprefab").string(),error)&&AssetDatabase::WriteMeta((assets/"prop.judasprefab").string()+kAssetMetaExtension,prefab,AssetType::Prefab,"owned",error),error);
   project.Settings().startupScene="Scenes/start.judas";Scene main;main.CreateObject("root");Check(SaveSceneToFile(main,project.StartupScenePath(),error),error);
@@ -87,7 +87,7 @@ int main(int argc,char** argv){
    auto changed=world.RuntimeDefinition(a)->transform;changed.position={8,0,0};
    Check(world.SetRuntimeTransform(a,changed)&&world.RuntimeDefinition(b)->transform.position==placement.position,"mutating one packaged instance does not couple shared resources");}
   Check(ExportProject(project,exportOptions,result,error)&&Read(out/"closure/DEPENDENCIES.json")==acceptedReport,"repeat export dependency report deterministic after deliberate corruption");
-  fs::remove(assets/"texture.png");Check(!ExportProject(project,exportOptions,result,error)&&fs::exists(out/"closure/Assets/texture.png"),"missing transitive asset leaves previous valid package intact");fs::copy_file("assets/textures/beacon.png",assets/"texture.png");
+  fs::remove(assets/"texture.png");Check(!ExportProject(project,exportOptions,result,error)&&fs::exists(out/"closure/Assets/texture.png"),"missing transitive asset leaves previous valid package intact");fs::copy_file("tests/fixtures/engine-assets/textures/beacon.png",assets/"texture.png");
   const std::string external="66666666666666666666666666666666";
   // Runtime glTF compatibility is deliberately self-contained. External source
   // dependencies are cooked into the archive by M66, not imported by a game.
@@ -100,7 +100,7 @@ int main(int argc,char** argv){
   fs::copy_file("tests/fixtures/m66/multipart.gltf",assets/"embedded.gltf",fs::copy_options::overwrite_existing);
   // Exercise deferred admission, not just three submitted tiny requests.
   std::vector<AssetId> burst;
-  for(int i=0;i<12;++i){std::string id=std::string(30,'a')+"0123456789abcdef"[i]+"0";auto file=assets/("burst-"+std::to_string(i)+".png");fs::copy_file("assets/textures/beacon.png",file);Check(AssetDatabase::WriteMeta(file.string()+kAssetMetaExtension,id,AssetType::Texture,"owned",error),error);burst.push_back(id);}
+  for(int i=0;i<12;++i){std::string id=std::string(30,'a')+"0123456789abcdef"[i]+"0";auto file=assets/("burst-"+std::to_string(i)+".png");fs::copy_file("tests/fixtures/engine-assets/textures/beacon.png",file);Check(AssetDatabase::WriteMeta(file.string()+kAssetMetaExtension,id,AssetType::Texture,"owned",error),error);burst.push_back(id);}
   before.Scan(project.RootDir(),project.AssetsDir());
   JobSystem jobs(2);ResourceManager resources(nullptr,&before,&jobs);resources.SetHeadlessResidency(true);resources.SetBudgetBytes(1000000);
   for(auto& id:{texture,shared,junk}){resources.AddRef(id);resources.RequestTexture(id);}Check(resources.Stats().admittedRequests<=3,"bounded resource admission");resources.ReleaseRef(shared);resources.WaitForAll();Check(resources.StateOf(texture)==ResourceState::Ready&&resources.StateOf(junk)==ResourceState::Ready&&resources.StateOf(shared)!=ResourceState::Ready,"cancel retires only own shared-payload request");for(auto& id:burst){resources.AddRef(id);resources.RequestTexture(id);}Check(resources.Stats().loading==12&&resources.Stats().admittedRequests<=3,"burst is queued behind bounded decode admission");

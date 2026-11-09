@@ -28,9 +28,8 @@
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "SpriteSheetEditor.h"
-#include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "UtilityAIEditor.h"
-#include "VolumeTerrainTools.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include <SDL2/SDL.h>
@@ -86,8 +85,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
     }
     if (terrainReplaces && services.terrain && !services.terrain->Guard(context.panels))
         return;
-    if (terrainReplaces && services.volumeTerrain && !services.volumeTerrain->Guard(context.panels))
-        return;
+
     const bool replacesDocument =
         r.quit || r.newScene || r.open || r.newProject || r.openProject || !r.openSceneRelative.empty();
     const bool replacesProject = r.quit || r.newProject || r.openProject;
@@ -136,17 +134,7 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
     }
     if (r.stop && context.panels.mode == EditorMode::Play)
         services.stopPlay();
-    if (context.panels.mode == EditorMode::Play && services.session.play) {
-        std::string message;
-        if (r.saveWorldState) {
-            services.session.play->SaveWorldStateNow(message);
-            context.panels.status = message;
-        }
-        if (r.deleteWorldState) {
-            services.session.play->DeleteWorldStateNow(message);
-            context.panels.status = message;
-        }
-    }
+
     if (r.openJudasJS || r.openQuickStart)
         r.openExternalPath =
             ResolveEngineDataPath(r.openQuickStart ? "docs/judasjs/getting-started.md" : "docs/JUDASJS.md");
@@ -301,18 +289,14 @@ void EditorProjectWorkflow::HandleRequests(EditorContext &context, EditorProject
         }
     }
     if (r.undo) {
-        if (services.volumeTerrain && services.volumeTerrain->loaded && services.volumeTerrain->editing)
-            services.volumeTerrain->draft.Undo();
-        else if (services.terrain && services.terrain->loaded && services.terrain->editing)
-            services.terrain->draft.Undo();
+        if (services.terrain && services.terrain->Loaded() && services.terrain->Editing())
+            services.terrain->Undo(context.panels);
         else
             context.document.Undo();
     }
     if (r.redo) {
-        if (services.volumeTerrain && services.volumeTerrain->loaded && services.volumeTerrain->editing)
-            services.volumeTerrain->draft.Redo();
-        else if (services.terrain && services.terrain->loaded && services.terrain->editing)
-            services.terrain->draft.Redo();
+        if (services.terrain && services.terrain->Loaded() && services.terrain->Editing())
+            services.terrain->Redo(context.panels);
         else
             context.document.Redo();
     }

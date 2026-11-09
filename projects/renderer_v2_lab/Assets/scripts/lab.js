@@ -39,7 +39,7 @@ export default class RendererWorkshop {
         this.doc = ui.get('rendering_lab');
         this.doc.modal = false;
         this.doc.get('pause').visible = false;
-        ui.debugOverlayVisible = false;
+
         this.lamps = world.queryTags(['lamp']);
         this.cameras = world.queryTags(['gallery_camera']);
         this.views = (this.state.viewIds || []).map(id => players.get(id)).filter(value => value?.valid);

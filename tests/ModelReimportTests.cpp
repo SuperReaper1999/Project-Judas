@@ -36,8 +36,7 @@ int main(int argc,char** argv){try{
  Check(!renamedKey.empty()&&Cook(recipe,alias),"explicit retained local-name alias resolves reported joint rename");Write(recipe,settings);
  source["nodes"][1]["name"]="Tip"; // restore exact accepted source instead below
  auto original=Read("tests/fixtures/m66/external.gltf");Write(owned,original);ModelCookTask restored;Check(Cook(recipe,restored),"source correction retries normally");accepted=Hash(first.output);
- auto image=owned.parent_path()/"café color.png";auto missing=image.string()+".missing";fs::rename(image,missing);ModelCookTask dependency;Check(!CookModelRecipe(recipe,dependency)&&Hash(first.output)==accepted,"missing dependency preserves accepted generation");Check(!VerifyImportedModelFresh(root.string(),first.output,error),"export rejects stale/missing source instead of silently shipping last-good");Check(VerifyTerrainModelFreshForPlay(root.string(), first.output, error) && error.empty(),
-       "Play retains an ordinary last-good model when export rejects its changed dependency");fs::rename(missing,image);
+ auto image=owned.parent_path()/"café color.png";auto missing=image.string()+".missing";fs::rename(image,missing);ModelCookTask dependency;Check(!CookModelRecipe(recipe,dependency)&&Hash(first.output)==accepted,"missing dependency preserves accepted generation");Check(!VerifyImportedModelFresh(root.string(),first.output,error),"export rejects stale/missing source instead of silently shipping last-good");fs::rename(missing,image);
  // A first import with missing files must be editable/retryable; explicit
  // remaps point only at already project-owned buffer/image dependencies.
  auto brokenSource=root/"unresolved.gltf";auto unresolved=original;

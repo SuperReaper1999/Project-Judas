@@ -2,10 +2,10 @@
 
 ## Terrain base-color painting
 
-[M75](M75.md#representation-and-boundaries) blends up to four registered base-color textures using normalized spatial weights and local metre tiling into one ordinary opaque baked texture. It does not add multilayer PBR, shader graphs or per-texel physical materials. Geometry and appearance revisions are separate.
+[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) blends up to four registered base-color textures using normalized spatial weights and local metre tiling into one ordinary opaque baked texture. It does not add multilayer PBR, shader graphs or per-texel physical materials. Geometry and appearance revisions are separate.
 
 
-Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [M72 ownership/review](M72.md), [material lab](../projects/material_lab/material_lab.judasproj), [Spring Range](../projects/shooter_game/shooter_game.judasproj).
+Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [M72 ownership/review](RUNTIME_RENDERING.md), [material lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/material_lab/material_lab.judasproj), [Spring Range (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/shooter_game/shooter_game.judasproj).
 
 M72 extends the existing pipeline with validated runtime sun/ambient/environment
 controls, local entity/component visibility and isolated whole/slot/stable-part

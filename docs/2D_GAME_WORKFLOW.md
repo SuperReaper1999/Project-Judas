@@ -86,14 +86,14 @@ Game/test defects found during development are preserved rather than hidden:
 - A copied Escape hint did not provide a pause implementation. The final game
   explicitly authors its pause UI/script and tests its effect on simulation.
 
-[Raw evidence, commands and source/binary fingerprints](evidence/2d-game-workflow/README.md).
+[Raw evidence, commands and source/binary fingerprints (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/2d-game-workflow/README.md).
 
 ## Scope and remaining decisions
 
 This qualifies a practical bounded top-down workflow on Linux; it is not a claim
 that all 2D genres, tile counts or subsystem combinations are production-certified.
 Static tilemap, animation and planar-physics boundaries remain as documented in
-[Stage 4](2D_STAGE4.md). Existing 3D, skeletal and fluid implementations were not
+[Stage 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE4.md). Existing 3D, skeletal and fluid implementations were not
 changed. Windows/Android validation and human acceptance remain separate.
 
 Frame measurements in evidence are whole application update/render durations

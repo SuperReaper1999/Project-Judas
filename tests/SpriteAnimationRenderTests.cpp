@@ -73,7 +73,7 @@ int main(int argc,char** argv){
         o.render->spritePlayback->sheet=record.id;
         o.render->spritePlayback->clip="colors";
         RuntimeWorld world;
-        world.legacyGameplay=false;
+
         Check(world.Build(scene,&resources,error),"normal scene requests sheet and image");
         CameraLens lens;
         lens.projection=CameraProjectionKind::Orthographic;
@@ -82,7 +82,7 @@ int main(int argc,char** argv){
             0,0,5
         },glm::quat(1,0,0,0),60,.01f,100,lens,320,240);
         auto capture=[&](){
-            RenderWorldFrame(renderer,320,240,world,nullptr,frame.view,frame.projection,{
+            RenderWorldFrame(renderer,320,240,world,frame.view,frame.projection,{
                 0,0,0
             },1);
             std::vector<unsigned char> pixels;

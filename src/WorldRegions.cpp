@@ -123,7 +123,6 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
             const auto slot=e->slot;handle=m_dynamicBodies[slot].Handle();if(handle.IsValid())m_physics.DestroyBody(handle);
             m_dynamicBodies.erase(m_dynamicBodies.begin()+slot);m_dynamicVisuals.erase(m_dynamicVisuals.begin()+slot);
             for(auto& other:m_entities)if(other.slot>slot)--other.slot;
-            if(m_vehicle&&m_vehicle->dynamicIndex>slot)--m_vehicle->dynamicIndex;
             for(auto& c:m_combustibles)if(c.dynamicIndex>slot)--c.dynamicIndex;
         }else if(auto it=m_entityCategories.find(id);it!=m_entityCategories.end()){handle=it->second.body;if(handle.IsValid())m_physics.DestroyBody(handle);}
     } else if(auto it=m_entityCategories.find(id);it!=m_entityCategories.end()) {

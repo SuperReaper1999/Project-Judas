@@ -28,7 +28,7 @@ int main(int argc,char** argv){try{
     for(auto& o:scene.Objects())if(o.render){o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;o.body->planar=PlanarBox({.5,.5});o.body->friction=.7f;}}
    std::vector<SceneObjectId> ids;const float top=float(count/64);
    for(int i=0;i<8;++i){auto& o=scene.CreateObject("Dynamic probe");o.transform.position={1.5f+i*8,top+2,0};o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;o.body->planar=PlanarCircle(.15);o.body->motion=SceneBodyMotion::Dynamic;ids.push_back(o.id);}
-   ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;if(!world.Build(scene,&resources,error))throw std::runtime_error(error);
+   ResourceManager resources(nullptr,&assets);RuntimeWorld world;if(!world.Build(scene,&resources,error))throw std::runtime_error(error);
    std::vector<double> steps;for(int i=0;i<180;++i){for(auto id:ids)world.Physics().ApplyForce(world.RuntimeBody(id),{0,-9.81f,0});auto start=Clock::now();world.Physics().Step(1.f/60);if(i>=60)steps.push_back(Ms(start));}
    for(auto id:ids){const auto p=world.Physics().GetTransform(world.RuntimeBody(id)).position;if(std::abs(p.y-top-.15f)>.002f||std::abs(p.z)>.0001f)throw std::runtime_error("physical landing gate failed");}
    Report(naive?"per_tile_physics_ms":"merged_physics_ms",count,steps);

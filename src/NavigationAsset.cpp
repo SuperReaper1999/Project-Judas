@@ -3,7 +3,6 @@
 #include "CollisionAsset.h"
 #include "AssetDatabase.h"
 #include "SceneFingerprint.h"
-#include "TerrainLibrary.h"
 #include "RadialTerrain.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainComponent.h"
@@ -52,8 +51,8 @@ bool CollectNavigationGeometry(const Scene& scene,const SceneObject& surface,con
     else if(part.type==ShapeType::Sphere){const int lat=24,lon=48;for(int j=0;j<lat;++j)for(int i=0;i<lon;++i){auto vertex=[&](int row,int col){double a=3.141592653589793*row/lat,p=6.283185307179586*col/lon;auto v=part.radius*glm::vec3(std::sin(a)*std::cos(p),std::cos(a),std::sin(a)*std::sin(p));return glm::inverse(surface.transform.rotation)*(pose.position+pose.rotation*v-surface.transform.position);};triangle(g,vertex(j,i),vertex(j,i+1),vertex(j+1,i));triangle(g,vertex(j,i+1),vertex(j+1,i+1),vertex(j+1,i));}}
   }}
   else if(b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh){const auto* record=assets?assets->Find(b.collisionAsset):nullptr;CollisionAsset cooked;if(!record||record->type!=AssetType::Collision||!LoadCollisionAsset(record->path,cooked,error)||cooked.convex!=(b.shape==SceneShape::ConvexHull)||staleCollision(cooked,*assets,error)){error="navigation requires valid cooked collision asset: "+error;return false;}for(auto& f:cooked.faces){glm::vec3 v[3];for(int k=0;k<3;++k)v[k]=glm::inverse(surface.transform.rotation)*(o.transform.position+o.transform.rotation*glm::vec3(cooked.vertices[f.vertices[k]])-surface.transform.position);triangle(g,v[0],v[1],v[2]);}}
-  else if(b.shape==SceneShape::Sphere||b.shape==SceneShape::Terrain){MeshData mesh;
-   if(b.shape==SceneShape::Terrain){auto terrain=CreateTerrainSurface(b.terrainSurface);if(!terrain){error="unknown terrain navigation source";return false;}mesh=terrain->BuildMesh(96,192);}else{ // Tessellate the actual sphere collider, not its visual mesh.
+  else if(b.shape==SceneShape::Sphere){MeshData mesh;
+   { // Tessellate the actual sphere collider, not its visual mesh.
     const int lat=24,lon=48;for(int j=0;j<=lat;++j)for(int i=0;i<=lon;++i){float a=3.14159265f*j/lat,p=6.2831853f*i/lon;MeshVertex v;v.position=b.radius*glm::vec3(std::sin(a)*std::cos(p),std::cos(a),std::sin(a)*std::sin(p));mesh.vertices.push_back(v);}for(int j=0;j<lat;++j)for(int i=0;i<lon;++i){unsigned a=j*(lon+1)+i,c=a+lon+1;mesh.indices.insert(mesh.indices.end(),{a,a+1,c,a+1,c+1,c});}}
    auto cv=[&](unsigned i){return glm::inverse(surface.transform.rotation)*(o.transform.position+o.transform.rotation*mesh.vertices[i].position-surface.transform.position);};for(size_t i=0;i+2<mesh.indices.size();i+=3)triangle(g,cv(mesh.indices[i]),cv(mesh.indices[i+1]),cv(mesh.indices[i+2]));
   }else{error="unsupported authoritative navigation collider shape";return false;}

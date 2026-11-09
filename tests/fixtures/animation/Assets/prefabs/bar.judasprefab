@@ -5,9 +5,6 @@ settings
   sun-direction 0.4 0.7 0.35
   sun-color 1 0.98 0.92
   ambient 0.5 0.5 0.5
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 2
 end

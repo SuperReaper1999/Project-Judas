@@ -5,7 +5,6 @@
 #include "WorldStreaming.h"
 #include <thread>
 #include <chrono>
-#include "GameSession.h"
 #include "Simulation.h"
 #include "Project.h"
 #include "AssetDatabase.h"
@@ -14,7 +13,6 @@
 #include "ScriptSystem.h"
 #include "SceneSerialization.h"
 #include "WorldPersistence.h"
-#include "WorldState.h"
 #include "SaveStorage.h"
 #include "Prefab.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -27,10 +25,10 @@ namespace fs=std::filesystem;
 unsigned checks=0;
 void Check(bool ok,const std::string& label){++checks;if(!ok)throw std::runtime_error(label);std::cout<<"PASS "<<label<<'\n';}
 void Tick(RuntimeWorld& world,InputSystem& input,int count) {
-    GameSession session;std::string error;
-    if(!session.Begin(world,error))throw std::runtime_error(error);
+    std::string error;
+    if(!world.IsBuilt())throw std::runtime_error(error);
     for(int i=0;i<count;++i){input.BeginFrame();input.BeginFixedStep();
-        StepAuthoritativeWorld(session,input,1.f/60);
+        StepAuthoritativeWorld(world,input,1.f/60);
         world.UpdateScripts(&input,1.f/60);world.PresentationScripts(&input,1.f/60,.5f);
     }
     Check(!world.Scripts()||world.Scripts()->Diagnostics().empty(),"fixed-step execution has no VM diagnostics");
@@ -43,7 +41,7 @@ void StreamingChecks(const fs::path& root,Project& project){
     auto& pin=region.CreateObject("Planar region pin");pin.joint=SceneJointComponent{};pin.joint->bodyA=2;pin.joint->settings.type=JointType::PlanarPin;pin.joint->settings.anchorB={2,1,0};
     Check(SaveSceneToFile(region,(root/"Scenes/region.judas").string(),error),"author real planar streamed assembly");
     AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());JobSystem jobs(2);ResourceManager resources(nullptr,&assets,&jobs);
-    RuntimeWorld world;world.legacyGameplay=false;Scene empty;Check(world.Build(empty,&resources,error),"empty persistent root for ordinary region coordinator");
+    RuntimeWorld world;Scene empty;Check(world.Build(empty,&resources,error),"empty persistent root for ordinary region coordinator");
     WorldManifest manifest;WorldRegion entry;entry.id="planar";entry.scene="Scenes/region.judas";manifest.regions.emplace(entry.id,entry);
     Check(ValidateWorldManifest(manifest,project,error),"ordinary manifest accepts planar source: "+error);
     WorldStreaming stream(world,resources,project,manifest);
@@ -73,7 +71,7 @@ int main(int argc,char** argv){try{
         SaveStorage storage((root/"ColdSaves").string());GameSnapshot snapshot;bool recovered=false;
         Check(storage.Read("planar",snapshot,recovered,error),"cold process reads checksum-protected modern slot: "+error);
         Scene scene;Check(WorldPersistence::SceneFrom(snapshot.participants,scene,error),"cold process reconstructs planar authored geometry: "+error);
-        RuntimeWorld world;world.legacyGameplay=false;
+        RuntimeWorld world;
         Check(world.Build(scene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"cold process restores actual planar physical participants: "+error);
         nlohmann::json expected;{std::ifstream file(root/"physical.json");file>>expected;}
         const auto id=Player(scene);const auto body=world.RuntimeBody(id);const auto pose=world.Physics().GetTransform(body);
@@ -92,9 +90,8 @@ int main(int argc,char** argv){try{
     Scene loaded;Check(LoadSceneFromFile(project.StartupScenePath(),loaded,error),"reload full planar descriptor");
     const auto id=Player(scene);Check(EncodePlanar(*scene.Find(id)->body->planar)==EncodePlanar(*loaded.Find(id)->body->planar),"lossless native collider serialization");
     AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());ResourceManager resources(nullptr,&assets);
-    RuntimeWorld legacy;Check(!legacy.Build(loaded,&resources,error)&&error.find("legacy-gameplay")!=std::string::npos,"legacy spatial player adapter rejects before entering a planar world");
     error.clear();
-    RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(loaded,&resources,error),"build native planar runtime: "+error);
+    RuntimeWorld world;Check(world.Build(loaded,&resources,error),"build native planar runtime: "+error);
     InputSystem input;Check(input.SetMap(project.Settings().input,error),"project owns controls");
     Tick(world,input,120);const auto body=world.RuntimeBody(id);const auto resting=world.Physics().GetTransform(body).position;
     std::cout<<"MEASURE resting="<<resting.x<<','<<resting.y<<'\n';Check(resting.y>.095f&&resting.y<.105f,"capsule lands at actual floor height");
@@ -111,7 +108,6 @@ int main(int argc,char** argv){try{
     Check(!world.SetRuntimeTransform(id,forbidden)&&world.RuntimeDefinition(id)->transform.position==definitionBefore.position,"off-plane runtime pose rejects before definition publication");
     EntityPhysicalState physicalBefore;world.GetEntityState(id,physicalBefore);auto badPhysical=physicalBefore;badPhysical.linearVelocity.z=1;
     Check(!world.SetEntityState(id,badPhysical)&&world.Physics().GetLinearVelocity(body)==physicalBefore.linearVelocity,"forbidden physical restore rejects before publishing partial endpoint");
-    Check(!CanCaptureLegacyWorldState(world,error),"legacy delta saves explicitly reject unsupported planar continuation");
     error.clear();
     GameSnapshot snapshot;snapshot.project="planar-stage2";snapshot.scene="main";snapshot.content=std::string(64,'b');
     Check(WorldPersistence::Capture(world,snapshot.participants,error),"modern capture preserves planar state: "+error);
@@ -121,14 +117,14 @@ int main(int argc,char** argv){try{
     // Genuine absent/broken mechanism controls: no floor, mixed physical worlds,
     // forbidden chain authority and invalid geometry must not look successful.
     Scene mixed=scene;auto& spatial=mixed.CreateObject("wrong 3D floor");spatial.body=SceneBodyComponent{};
-    RuntimeWorld bad;bad.legacyGameplay=false;Check(!bad.Build(mixed,&resources,error)&&error.find("Mixed")!=std::string::npos,"mixed spatial/planar producer rejects with actionable diagnostic");
+    RuntimeWorld bad;Check(!bad.Build(mixed,&resources,error)&&error.find("Mixed")!=std::string::npos,"mixed spatial/planar producer rejects with actionable diagnostic");
     Scene invalid=scene;invalid.Find(id)->body->planar=PlanarChain({{-1,0},{1,0}});
     Check(!bad.Build(invalid,&resources,error),"dynamic chain rejects instead of manufacturing mass");
     Scene noFloor=scene;noFloor.Objects().erase(std::remove_if(noFloor.Objects().begin(),noFloor.Objects().end(),[&](const auto& o){return o.body&&o.body->motion==SceneBodyMotion::Static;}),noFloor.Objects().end());
-    RuntimeWorld falling;falling.legacyGameplay=false;Check(falling.Build(noFloor,&resources,error),"no-floor negative control builds");Tick(falling,input,90);
+    RuntimeWorld falling;Check(falling.Build(noFloor,&resources,error),"no-floor negative control builds");Tick(falling,input,90);
     Check(falling.Physics().GetTransform(falling.RuntimeBody(id)).position.y<-5,"no-floor negative control actually falls; player script does not clamp height");
     Scene topdown;Project topProject;Check(Project::CreateNew((root/"Topdown").string(),"Topdown",topProject,error)&&PopulatePlanarProjectStarter(topProject,topdown,false,error),"create separate top-down project");
-    AssetDatabase topAssets;topAssets.Scan(topProject.RootDir(),topProject.AssetsDir());ResourceManager topResources(nullptr,&topAssets);RuntimeWorld top;top.legacyGameplay=false;
+    AssetDatabase topAssets;topAssets.Scan(topProject.RootDir(),topProject.AssetsDir());ResourceManager topResources(nullptr,&topAssets);RuntimeWorld top;
     Check(top.Build(topdown,&topResources,error),"top-down native world builds");InputSystem topInput;topInput.SetMap(topProject.Settings().input,error);
     topInput.SetPhysical("key:W",1);Tick(top,topInput,30);Check(top.Physics().GetTransform(top.RuntimeBody(Player(topdown))).position.y>3,"top-down movement follows project up input with no gravity");
     topProject.Settings().startupScene="Scenes/main.judas";Check(topProject.Save(error)&&SaveSceneToFile(topdown,topProject.StartupScenePath(),error),"save editable top-down project");
@@ -158,7 +154,7 @@ export default class {
 })JS";
     AssetRecord probe;Check(assets.Track(probePath.string(),probe,error),"track ordinary native 2D API probe");
     Scene api=scene;api.Find(id)->scripts={{1,probe.id,true,"{}"}};
-    RuntimeWorld apiWorld;apiWorld.legacyGameplay=false;Check(apiWorld.Build(api,&resources,error),"build public 2D API probe");
+    RuntimeWorld apiWorld;Check(apiWorld.Build(api,&resources,error),"build public 2D API probe");
     InputSystem apiInput;Tick(apiWorld,apiInput,1);
     const auto observed=nlohmann::json::parse(apiWorld.Scripts()->Capture().front().json);
     for(const auto* key:{"detached","query","directionRejected","chainRejected","poseRejected","atomic","velocityRejected","pin","weld","spatialJointRejected"})
@@ -184,7 +180,7 @@ export default class {
         support.body->shape=SceneShape::Planar;support.body->planar=PlanarBox({3,.2});support.body->motion=SceneBodyMotion::Kinematic;
         support.body->initialLinearVelocity=rotating?glm::vec3(0):glm::vec3(1,0,0);
         support.body->initialAngularVelocity=rotating?glm::vec3(0,0,.1f):glm::vec3(0);
-        RuntimeWorld ride;ride.legacyGameplay=false;Check(ride.Build(riding,&resources,error),"build real player/support scene");
+        RuntimeWorld ride;Check(ride.Build(riding,&resources,error),"build real player/support scene");
         InputSystem rideInput;rideInput.SetMap(project.Settings().input,error);Tick(ride,rideInput,90);
         const auto riderPose=ride.Physics().GetTransform(ride.RuntimeBody(id));const auto supportPose=ride.Physics().GetTransform(ride.RuntimeBody(supportId));
         std::cout<<"RIDE rotating="<<rotating<<" player="<<riderPose.position.x<<','<<riderPose.position.y<<" support="<<supportPose.position.x<<'\n';

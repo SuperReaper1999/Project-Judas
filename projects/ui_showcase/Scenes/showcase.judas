@@ -25,7 +25,6 @@
         0.26
       ],
       "next-id": 1000,
-      "fluid-scale": 1,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"

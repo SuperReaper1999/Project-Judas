@@ -68,7 +68,7 @@ implementation changed to make the test pass.
 
 ## Reproduction / evidence
 
-Raw logs and screenshots: [evidence/2d-usability](evidence/2d-usability/).
+Raw logs and screenshots: [evidence/2d-usability (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/2d-usability).
 Use the current native Release build. Fresh workflow directories are required.
 
 ```sh

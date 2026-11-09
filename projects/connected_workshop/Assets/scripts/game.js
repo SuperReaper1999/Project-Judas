@@ -26,7 +26,7 @@ export default class ConnectedWorkshop {
   this.serverPort=launch.mode?launch.port:this.props.port;
   this.serverAddress=launch.mode==='join'?launch.address:this.props.serverAddress;
   this.dedicated=!!launch.dedicated;
-  this.hud=ui.get('connected');ui.debugOverlayVisible=false;input.pointerCapture=false;
+  this.hud=ui.get('connected');input.pointerCapture=false;
   if(this.hud){this.hud.get('address').text=this.serverAddress;this.hud.get('address_label').text='SERVER IPv4 / PORT '+this.serverPort;this.layout();}
   if(launch.mode==='host'&&network.mode==='offline')this.host(launch.port);
   else if(launch.mode==='join'&&network.mode==='offline')this.join(launch.address,launch.port);

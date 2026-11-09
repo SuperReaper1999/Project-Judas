@@ -47,10 +47,10 @@ def box(number, name, position, half, color, dynamic=False, mass=8, tags=0, sphe
               'render.mesh-asset': '', 'render.texture-asset': '', 'tags': tags}
     if not decorative:
         fields.update({'body': {'motion': {'symbol': 'dynamic' if dynamic else 'static'}, 'shape': {'symbol': 'sphere' if sphere else 'box'}},
-                       'body.half-extents': half, 'body.radius': half[0], 'body.terrain': '',
+                       'body.half-extents': half, 'body.radius': half[0],
                        'body.mass': mass, 'body.friction': .65, 'body.restitution': .025,
-                       'body.initial-velocity': [0, 0, 0], 'body.pickable': False,
-                       'body.managed': False, 'body.compound-count': 0, 'body.fluid-cavity-count': 0})
+                       'body.initial-velocity': [0, 0, 0],
+                       'body.managed': False, 'body.compound-count': 0})
     return obj(number, name, position, **fields)
 
 

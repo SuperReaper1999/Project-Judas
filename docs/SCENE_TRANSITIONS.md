@@ -36,7 +36,7 @@ Application and editor Play use the same `SceneSession::Apply` operation.
 Loading/building and ordinary player construction are checked in an unstarted
 candidate before ending the live scene. A malformed/unbuildable candidate reports
 its error and leaves the live scene intact. On success, old scripts stop, scene UI
-and audio stop/release, GameSession ends, and the old RuntimeWorld is destroyed.
+and audio stop/release, InteractivePlay detaches, and the old RuntimeWorld is destroyed.
 The freshly constructed world begins normally. No additive worlds are simulated.
 Requests during outgoing destruction callbacks are rejected. Force/physics order
 and event generation are unchanged.

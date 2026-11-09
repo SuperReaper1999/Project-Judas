@@ -5,7 +5,6 @@
 #include "SceneSerialization.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "Window.h"
 #include "WorldPersistence.h"
@@ -22,14 +21,14 @@ using Json=nlohmann::json;
 unsigned checks=0;
 void Check(bool condition,const std::string& label){++checks;if(!condition)throw std::runtime_error(label);std::cout<<"PASS "<<label<<'\n';}
 Json State(RuntimeWorld& world,SceneObjectId owner){for(const auto& record:world.Scripts()->Capture())if(record.entity==owner)return Json::parse(record.json);throw std::runtime_error("missing AI actor state");}
-void Tick(GameSession& session,Window& window,int frames){for(int i=0;i<frames;++i){session.HandleFrameInput(window,false,false,false,false,false);StepPlayedWorld(session,window,1.f/60);}}
+void Tick(RuntimeWorld& world,Window& window,int frames){for(int i=0;i<frames;++i){world.UpdateScripts(&window.Input(),1.f/60);StepPlayedWorld(world,window,1.f/60);}}
 int main(int argc,char** argv)try{
  const bool keep=argc==2;
  const auto root=keep?fs::absolute(argv[1]):fs::temp_directory_path()/("judas-ai-workflow-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
  Check(!fs::exists(root),"test output is a fresh isolated directory");
  Project project;std::string error;
  Check(Project::CreateNew(root.string(),"FreshAI",project,error),"create ordinary project: "+error);
- project.Settings().legacyGameplay=false;
+
  AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());
  EditorDocument doc;
  const auto floor=doc.GetScene().CreateObject("Floor").id;
@@ -82,45 +81,45 @@ int main(int argc,char** argv)try{
  Scene scene;Check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"reopen saved fresh project scene");
  ResourceManager resources(nullptr,&assets);resources.SetBlockingMode(true);RuntimeWorld world;world.ConfigureProject(project.Settings());
  Check(world.Build(scene,&resources,error),"build actual generated actor: "+error);
- Window window;window.SetTestInputMode(true);GameSession session;Check(session.Begin(world,error),"begin normal project session");
- Tick(session,window,45);
+ Window window;window.SetTestInputMode(true);Check(world.IsBuilt(),"begin normal project session");
+ Tick(world,window,45);
  Check(world.Scripts()->Diagnostics().empty(),"generated script starts without VM faults");
  Check(world.RuntimeCharacter(owner)->position.x>1&&State(world,owner).at("brain").at("selected").at("action")=="patrol","native utility choice drives real CharacterMotor movement");
- Tick(session,window,60);
+ Tick(world,window,60);
  Check(world.Scripts()->Diagnostics().empty()&&State(world,owner).at("health").get<double>()<.9&&State(world,owner).at("brain").at("selected").at("action")=="hide","real targeted damage causes hide decision");
  std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error),"capture modern AI/physical state");
  const auto state=State(world,owner);const auto position=world.RuntimeCharacter(owner)->position;
  Scene saved;Check(WorldPersistence::SceneFrom(chunks,saved,error),"decode normal saved scene");RuntimeWorld restored;restored.ConfigureProject(project.Settings());
  Check(restored.Build(saved,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error),"private world restores normal participants: "+error);
  Check(restored.RuntimeCharacter(owner)->position==position,"physical motor endpoint restores exactly before continuation");
- GameSession resumed;Check(resumed.Begin(restored,error),"resume normal restored session");Tick(resumed,window,1);
+ Check(restored.IsBuilt(),"resume normal restored session");Tick(restored,window,1);
  const auto resumedState=State(restored,owner);
  Check(restored.Scripts()->Diagnostics().empty()&&std::abs(resumedState.at("brain").at("elapsed").get<double>()-state.at("brain").at("elapsed").get<double>()-1./60)<1e-6,"native agent clock genuinely continues through modern save restoration");
  const auto selected=EditorAIAgentsForEntity(restored.Scripts()->AIInspections(),owner);
  Check(selected.size()==1&&selected[0].entity==owner&&EditorAIAgentsForEntity(restored.Scripts()->AIInspections(),floor).empty(),"selected-object inspection filters actual ownership without inferring visual targets");
- restored.DestroyEntity(created.coverPoint,&error);Tick(resumed,window,20);
+ restored.DestroyEntity(created.coverPoint,&error);Tick(restored,window,20);
  Check(restored.Scripts()->Diagnostics().empty()&&State(restored,owner).at("brain").at("selected").at("action")!="hide","deleted cover target invalidates the action safely");
- resumed.End();restored.Destroy();
- Tick(session,window,600);
+ restored.Destroy();
+ Tick(world,window,600);
  Check(world.Scripts()->Diagnostics().empty()&&State(world,owner).at("health").get<double>()>=.9,"cover arrival performs actual recovery and returns to patrol");
- session.End();world.Destroy();
- Scene disabled=scene;disabled.Find(owner)->scripts[0].enabled=false;RuntimeWorld dormant;dormant.ConfigureProject(project.Settings());Check(dormant.Build(disabled,&resources,error),"disabled behaviour still builds ordinary actor");GameSession idle;Check(idle.Begin(dormant,error),"disabled behaviour session starts");Tick(idle,window,20);
- Check(dormant.Scripts()&&EditorAIAgentsForEntity(dormant.Scripts()->AIInspections(),owner).empty()&&std::abs(dormant.RuntimeCharacter(owner)->position.x)<1e-6,"disabled script creates no AI or hidden movement");idle.End();dormant.Destroy();
+ world.Destroy();
+ Scene disabled=scene;disabled.Find(owner)->scripts[0].enabled=false;RuntimeWorld dormant;dormant.ConfigureProject(project.Settings());Check(dormant.Build(disabled,&resources,error),"disabled behaviour still builds ordinary actor");Check(dormant.IsBuilt(),"disabled behaviour session starts");Tick(dormant,window,20);
+ Check(dormant.Scripts()&&EditorAIAgentsForEntity(dormant.Scripts()->AIInspections(),owner).empty()&&std::abs(dormant.RuntimeCharacter(owner)->position.x)<1e-6,"disabled script creates no AI or hidden movement");dormant.Destroy();
  // Different marker heights must not prevent a true patrol loop: arrival
  // and candidate eligibility both use the same gravity-tangent displacement.
  Scene raised=scene;raised.Find(floor)->scripts.clear();raised.Find(created.patrolPoint)->transform.position.y+=4;raised.Find(created.returnPoint)->transform.position.y+=2;
- RuntimeWorld heights;heights.ConfigureProject(project.Settings());Check(heights.Build(raised,&resources,error),"height-offset target scene builds");GameSession heightSession;Check(heightSession.Begin(heights,error),"height-offset session begins");float farthest=0,minimumAfterFar=1000;bool reachedFar=false;
- for(int i=0;i<240;++i){Tick(heightSession,window,1);const float x=heights.RuntimeCharacter(owner)->position.x;farthest=std::max(farthest,x);if(x>2.7f)reachedFar=true;if(reachedFar)minimumAfterFar=std::min(minimumAfterFar,x);}
+ RuntimeWorld heights;heights.ConfigureProject(project.Settings());Check(heights.Build(raised,&resources,error),"height-offset target scene builds");Check(heights.IsBuilt(),"height-offset session begins");float farthest=0,minimumAfterFar=1000;bool reachedFar=false;
+ for(int i=0;i<240;++i){Tick(heights,window,1);const float x=heights.RuntimeCharacter(owner)->position.x;farthest=std::max(farthest,x);if(x>2.7f)reachedFar=true;if(reachedFar)minimumAfterFar=std::min(minimumAfterFar,x);}
  std::cout<<"HEIGHT_TRACE max_x="<<farthest<<" final_x="<<heights.RuntimeCharacter(owner)->position.x<<" min_after_far="<<minimumAfterFar<<'\n';
- Check(heights.Scripts()->Diagnostics().empty()&&farthest>2.7f&&minimumAfterFar<.3f,"height-offset patrol markers still produce outward and return movement");heightSession.End();heights.Destroy();
+ Check(heights.Scripts()->Diagnostics().empty()&&farthest>2.7f&&minimumAfterFar<.3f,"height-offset patrol markers still produce outward and return movement");heights.Destroy();
  // The same scaffold respects actual native planar collider geometry.
  EditorDocument planarDoc;const auto planarOwner=planarDoc.GetScene().CreateObject("Planar NPC").id;
  auto* planarActor=planarDoc.GetScene().Find(planarOwner);planarActor->body=SceneBodyComponent{};planarActor->body->shape=SceneShape::Planar;planarActor->body->planar=PlanarBox({.3,.3},true);planarActor->body->motion=SceneBodyMotion::Kinematic;
  EditorAIBehaviourAssets planarAssets;Check(CreateAndAttachEditorAI(planarDoc,planarOwner,project,assets,"PlanarGuard",planarAssets,error),"existing kinematic 2D actor uses the same behaviour workflow");
  const auto wall=planarDoc.GetScene().CreateObject("Real planar wall").id;planarDoc.GetScene().Find(wall)->body=SceneBodyComponent{};planarDoc.GetScene().Find(wall)->body->shape=SceneShape::Planar;planarDoc.GetScene().Find(wall)->body->planar=PlanarBox({.2,2},true);planarDoc.GetScene().Find(wall)->transform.position={1.4f,0,0};
- RuntimeWorld planarWorld;planarWorld.ConfigureProject(project.Settings());Check(planarWorld.Build(planarDoc.GetScene(),&resources,error),"native 2D starter and wall build");GameSession planarSession;Check(planarSession.Begin(planarWorld,error),"native planar session begins");Tick(planarSession,window,90);
+ RuntimeWorld planarWorld;planarWorld.ConfigureProject(project.Settings());Check(planarWorld.Build(planarDoc.GetScene(),&resources,error),"native 2D starter and wall build");Check(planarWorld.IsBuilt(),"native planar session begins");Tick(planarWorld,window,90);
  const auto planarPosition=planarWorld.Physics().GetTransform(planarWorld.RuntimeBody(planarOwner)).position;
- Check(planarWorld.Scripts()->Diagnostics().empty()&&planarPosition.x>.3f&&planarPosition.x<1.1f&&std::abs(planarPosition.z)<1e-6,"starter moves physically in its native plane and stops before the real wall");planarSession.End();planarWorld.Destroy();
+ Check(planarWorld.Scripts()->Diagnostics().empty()&&planarPosition.x>.3f&&planarPosition.x<1.1f&&std::abs(planarPosition.z)<1e-6,"starter moves physically in its native plane and stops before the real wall");planarWorld.Destroy();
  if(!keep)fs::remove_all(root);else std::cout<<"FRESH_PROJECT "<<project.RootDir()<<'\n';
  std::cout<<"Utility AI workflow: "<<checks<<" checks, 0 failures\n";return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}

@@ -212,8 +212,7 @@ log levels, file sink or developer debugger API. The virtual module also sets
 Boolean get/set request for relative pointer capture in this runtime world.
 Modal UI temporarily releases actual capture; the getter reports script intent,
 not device state. The request resets at world destruction/authored reset.
-New projects start uncaptured until a script requests capture. Historical projects
-with `legacy-gameplay "true"` retain their compatibility capture policy.
+New projects start uncaptured until a script requests capture. There is no native gameplay capture adapter.
 
 ## Touch and pointer snapshots (M88)
 

@@ -57,9 +57,8 @@ InputMap InputMap::Defaults(){
     const std::pair<const char*,const char*> actions[]={
       {"move_forward","W"},{"move_backward","S"},{"strafe_left","A"},{"strafe_right","D"},{"move_up","E"},{"move_down","Q"},
       {"pitch_up","I"},{"pitch_down","K"},{"yaw_left","J"},{"yaw_right","L"},{"roll_left","U"},{"roll_right","O"},
-      {"prograde","P"},{"retrograde","M"},{"radial","N"},{"add_water","B"},{"igniter","C"},
-      {"reset","R"},{"jump","Space"},{"control_toggle","F"},{"torch_toggle","T"},{"interact","G"},{"view_toggle","V"},{"throw","H"},{"sas_toggle","X"},
-      {"spawn","Z"},{"destroy","Y"},{"save_state","F6"},{"delete_state","F7"},{"pause","Escape"},{"ui_up","Up"},{"ui_down","Down"},{"ui_activate","Return"},{"ui_left","Left"},{"ui_right","Right"}};
+      {"reset","R"},{"jump","Space"},{"torch_toggle","T"},{"interact","G"},{"view_toggle","V"},{"throw","H"},
+      {"pause","Escape"},{"ui_up","Up"},{"ui_down","Down"},{"ui_activate","Return"},{"ui_left","Left"},{"ui_right","Right"}};
     for(auto a:actions){m.Add(a.first,false);m.AddBinding(a.first,{std::string("key:")+a.second});}
     for(auto a:{std::pair<const char*,const char*>{"move_forward","Up"},{"move_backward","Down"},{"strafe_left","Left"},{"strafe_right","Right"},{"ui_activate","Keypad Enter"}})m.AddBinding(a.first,{std::string("key:")+a.second});
     for(auto a:{std::pair<const char*,const char*>{"jump","South"},{"interact","West"},{"pause","Start"},{"ui_activate","South"},{"ui_up","DpadUp"},{"ui_down","DpadDown"},{"ui_left","DpadLeft"},{"ui_right","DpadRight"}})m.AddBinding(a.first,{std::string("pad:")+a.second});

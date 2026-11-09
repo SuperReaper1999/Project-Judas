@@ -7,9 +7,6 @@ settings
   ambient 0.16 0.17 0.19
   sun-enabled false
   background-color 0.055 0.085 0.11
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 209
 end
@@ -37,15 +34,12 @@ object 1 "Platformer player - editable game.js"
   body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
   render.sprite-playback-v1 "{\"version\":1,\"sheet\":\"33333333333333333333333333333332\",\"clip\":\"idle\",\"frame\":\"\",\"time\":0,\"speed\":1,\"playing\":true,\"loop\":true}"
 end
 
@@ -3074,15 +3068,12 @@ object 191 "Floor"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-24.0,-0.5],[24.0,-0.5],[24.0,0.5],[-24.0,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 192 "Left wall"
@@ -3103,15 +3094,12 @@ object 192 "Left wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 193 "Right wall"
@@ -3132,15 +3120,12 @@ object 193 "Right wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 194 "Jump platform"
@@ -3161,15 +3146,12 @@ object 194 "Jump platform"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.399999976158142,-0.25],[1.399999976158142,-0.25],[1.399999976158142,0.25],[-1.399999976158142,0.25]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 195 "Upper platform"
@@ -3190,15 +3172,12 @@ object 195 "Upper platform"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.399999976158142,-0.25],[1.399999976158142,-0.25],[1.399999976158142,0.25],[-1.399999976158142,0.25]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 196 "2D world gravity"
@@ -3227,15 +3206,12 @@ object 197 "Pushable crate"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 198 "Pushable crate"
@@ -3256,15 +3232,12 @@ object 198 "Pushable crate"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 199 "Pushable crate"
@@ -3285,15 +3258,12 @@ object 199 "Pushable crate"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 200 "Moving platform - physical support"
@@ -3319,15 +3289,12 @@ object 200 "Moving platform - physical support"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.4,-0.2],[1.4,-0.2],[1.4,0.2],[-1.4,0.2]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 201 "Rotating support"
@@ -3353,15 +3320,12 @@ object 201 "Rotating support"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.2],[2.0,-0.2],[2.0,0.2],[-2.0,0.2]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 202 "Sloped physical ramp"
@@ -3372,15 +3336,12 @@ object 202 "Sloped physical ramp"
   body.planar-v1 "{\"version\":1,\"kind\":3,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.5],[2.0,-0.5],[2.0,1.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 203 "Ramp outline (visual)"
@@ -3449,15 +3410,12 @@ object 206 "Pinned physical rotor"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.5,-0.12],[1.5,-0.12],[1.5,0.12],[-1.5,0.12]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 207 "2D pin joint (world anchor)"
@@ -3508,13 +3466,10 @@ object 208 "Goal sensor"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.6,-1.5],[0.6,-1.5],[0.6,1.5],[-0.6,1.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end

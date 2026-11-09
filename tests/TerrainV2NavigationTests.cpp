@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
         agent.navigationAgent = NavigationAgentSettings{};
         agent.transform.position = {-5, 2, 0};
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         Check(world.Build(scene, &resources, error),
               "native navigation ready at normal build: " + error);
         const auto height = [&](glm::vec3 point) { return world.Navigation().Sample(point, .3f); };
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
             auto straight = world.Navigation().FindPath({-5, 2, 0}, {5, 2, 0});
             Check(straight.status == NavigationPath::Status::Complete && straight.distance < 10.1f,
                   "original planar route crosses the uncut source");
-            Check(world.LiveTerrain().Brush(1, {0, 2, 0}, {VolumeBrushKind::Remove, 2, 1}, error),
+            Check(world.LiveTerrain().Brush(1, {0, 2, 0}, {TerrainV2::Edit::Kind::Remove, {}, 2}, error),
                   "queue real excavation across all four chunk corners");
             Check(height({0, 2, 0}) && world.Physics().Raycast({0, 4, 0}, {0, -1, 0}, 3).hit,
                   "pending edit retains old complete collision and navigation");
@@ -175,7 +175,7 @@ int main(int argc, char **argv) {
             Check(world.CaptureRuntimeTerrain(1, excavated, error),
                   "capture current source revision");
             Check(world.LiveTerrain().Brush(1, pose.position + pose.rotation * glm::vec3(0, 2, 0),
-                                            {VolumeBrushKind::Remove, 32, 1}, error) &&
+                                            {TerrainV2::Edit::Kind::Remove, {}, 32}, error) &&
                       world.LiveTerrain().Wait(1, error),
                   "remove the entire native surface");
             Check(world.Navigation().Statistics().polygons == 0 &&
@@ -186,7 +186,7 @@ int main(int argc, char **argv) {
                       height(pose.position + pose.rotation * glm::vec3(5, 2, 0)),
                   "restoring removed material restores matching navigation");
             RuntimeWorld staged;
-            staged.legacyGameplay = false;
+
             Check(staged.Build(Scene{}, &resources, error), "build independent regional owner");
             TerrainV2::PreparedAsset product;
             TerrainV2::NavigationInput nav;
@@ -279,7 +279,7 @@ int main(int argc, char **argv) {
             auto bad = scene;
             bad.Find(1)->navigationSurface->includeDynamic = true;
             RuntimeWorld rejected;
-            rejected.legacyGameplay = false;
+
             Check(!rejected.Build(bad, &resources, error),
                   "native ownership rejects misleading dynamic-source configuration");
             auto exportScene = scene;
@@ -317,13 +317,13 @@ int main(int argc, char **argv) {
             auto hills = scene;
             hills.Find(1)->landscape->asset = hillAsset.id;
             RuntimeWorld tunnel;
-            tunnel.legacyGameplay = false;
+
             Check(tunnel.Build(hills, &resources, error), "build hillside navigation");
             Check(!tunnel.Navigation().Sample({0, .5f, 0}, .3f),
                   "solid hill has no invented underground navigation");
             for (float z = 7; z >= -7; z -= 1) {
                 Check(tunnel.LiveTerrain().Brush(1, {0, 1.9f, z},
-                                                 {VolumeBrushKind::Remove, 1.5f, 1}, error) &&
+                                                 {TerrainV2::Edit::Kind::Remove, {}, 1.5f}, error) &&
                           tunnel.LiveTerrain().Wait(1, error),
                       "advance real cross-chunk tunnel and navigation together");
             }

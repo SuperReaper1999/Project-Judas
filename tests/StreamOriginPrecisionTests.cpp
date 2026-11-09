@@ -122,7 +122,7 @@ struct StreamedWorld {
     StreamedWorld(ResourceManager& resources, const Project& project,
                   const WorldManifest& manifest, glm::dvec3 origin,
                   unsigned reservedIdentities = 0) {
-        world.legacyGameplay = false;
+
         Scene root;
         root.Settings().worldOrigin = origin;
         std::string error;
@@ -287,7 +287,7 @@ int main() {
         const bool created = Project::CreateNew((temporary.Path() / "project").string(),
                                                 "ordinary-origin-precision", project, error);
         Require(created, "create isolated ordinary precision project: " + error);
-        project.Settings().legacyGameplay = false;
+
         const bool projectSaved = project.Save(error);
         Require(projectSaved, "save script-owned execution policy: " + error);
 

@@ -7,7 +7,6 @@
 #include "ResourceManager.h"
 #include "InputSystem.h"
 #include "Prefab.h"
-#include "WorldState.h"
 #include <chrono>
 #include <filesystem>
 #include <fstream>

@@ -5,11 +5,11 @@ Current public JavaScript signatures, examples and lifetime rules: [JudasJS refe
 Judas owns layout/rendering/input. Project `.judasui` assets own the hierarchy;
 JavaScript owns menus, HUD meaning and reactions. No browser or gameplay UI classes.
 
-**Accepted M58 update:** [Unicode text / localization](M58.md) and the
+**Accepted M58 update:** [Unicode text / localization](LOCALIZATION.md) and the
 [current JS contract](judasjs/localization.md) supersede the original ASCII text
 limitations below. Runtime-label source editing now includes a shaped-text preview.
 
-**Current M96 extension:** [UI toolkit](M96_UI_TOOLKIT.md) and [public API](judasjs/ui.md)
+**Current M96 extension:** [UI toolkit (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md) and [public API](judasjs/ui.md)
 add native editable text/IME, scrolling, virtual lists, focus, semantic observations
 and explicit control-state snapshots. The editor retains its normal canvas, named
 source, undo and explicit save workflow. M96 was human accepted; current platform coverage remains separate.
@@ -56,7 +56,7 @@ TrueType loader/ASCII atlas, wrapping at word boundaries and alignment. No Unico
 rich text, scrollbars or advanced shaping. Font atlases are cached by Renderer
 (maximum 64 paths, destroyed at renderer shutdown); image references are released
 on document unload/owner destruction and after texture replacement.
-Current font/layout resource and cache lifetimes are specified in [M58](M58.md).
+Current font/layout resource and cache lifetimes are specified in [M58](LOCALIZATION.md).
 
 ## Script API
 

@@ -56,7 +56,6 @@ def main():
     model=DEST/'Assets/terrain/highlands.judasmodel'
     subprocess.run([str(ROOT/'build/judas_terrain_author'),'v2-native',str(DEST/'Authoring/highlands.judasterrain2'),str(model)],check=True)
     meta(model,'model','mesh')
-    meta(model.parent/'terrain-source.js','data','script')
     meta(model.with_suffix('.preview.tga'),'preview','texture')
     meta(model.with_suffix('.judasterrain'),'native','terrain')
     controls=[('move_x',[('key:A',-1),('key:D',1)],1),('move_y',[('key:S',-1),('key:W',1)],1),
@@ -66,7 +65,7 @@ def main():
     controls.extend([('ui_click',[('mouse:Left',1)],0),('ui_activate',[('key:Return',1)],0),
                      ('ui_next',[('key:Tab',1)],0),('ui_scroll',[('mouse:wheelY',1)],1)])
     inputmap='1 '+str(len(controls))+' '+' '.join(json.dumps(k)+' '+str(axis)+' '+str(len(bindings))+' '+' '.join(json.dumps(p)+' '+str(v)+' 0' for p,v in bindings) for k,bindings,axis in controls)
-    (DEST/'terrain_v2_workshop.judasproj').write_text('JudasProject 1\nname "Terrain V2 — Highlands Workshop"\nstartup-scene "Scenes/highlands.judas"\nassets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\nlegacy-gameplay "false"\nadvanced-fluid-dynamics "false"\ninput-map '+json.dumps(inputmap)+'\n')
+    (DEST/'terrain_v2_workshop.judasproj').write_text('JudasProject 1\nname "Terrain V2 — Highlands Workshop"\nstartup-scene "Scenes/highlands.judas"\nassets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\nadvanced-fluid-dynamics "false"\ninput-map '+json.dumps(inputmap)+'\n')
     header='''JudasScene 3
 settings
  name "Terrain V2 — Highlands"
@@ -75,7 +74,6 @@ settings
  sun-color 1 0.94 0.82
  ambient 0.34 0.39 0.45
  background-color 0.48 0.67 0.81
- fluid-scale 1
  fidelity-policy none
  next-id 100
 end
@@ -96,10 +94,8 @@ object 1 "Editable Highlands — heightfield and caves"
  body static box
  body.half-extents 24 8 24
  body.radius 1
- body.terrain ""
  body.mass 1
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
  body.collision-asset ""

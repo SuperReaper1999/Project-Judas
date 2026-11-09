@@ -83,9 +83,9 @@ files. Browser fixtures have their own profiles and durable-save ownership.
 
 ## Provenance and evidence
 
-[SUMMARY.json](evidence/browser-player-20261031/SUMMARY.json) records complete
+[SUMMARY.json (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/browser-player-20261031/SUMMARY.json) records complete
 build receipts, actual runtime hashes, exact core-source hashes and result counts.
-[SHA256SUMS.txt](evidence/browser-player-20261031/SHA256SUMS.txt) hashes the retained
+[SHA256SUMS.txt (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/browser-player-20261031/SHA256SUMS.txt) hashes the retained
 evidence. Raw compressed logs, successful captures, failed captures and relevant
 attempt sources are retained beside it. Browser profiles/build trees are excluded.
 

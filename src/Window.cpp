@@ -293,37 +293,16 @@ void Window::SetEventHook(std::function<void(const SDL_Event&)> hook) {
     m_eventHook = std::move(hook);
 }
 
-bool Window::ConsumeSpawnEntityRequest() {
-    if (m_testInputMode) return false;
-    const bool requested = ConsumeNamedAction("spawn");
-    m_spawnEntityRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeDestroyEntityRequest() {
-    if (m_testInputMode) return false;
-    const bool requested = ConsumeNamedAction("destroy");
-    m_destroyEntityRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeSaveWorldStateRequest() {
-    if (m_testInputMode) return false;
-    const bool requested = ConsumeNamedAction("save_state");
-    m_saveWorldStateRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeDeleteWorldStateRequest() {
-    if (m_testInputMode) return false;
-    const bool requested = ConsumeNamedAction("delete_state");
-    m_deleteWorldStateRequested = false;
-    return requested;
-}
+
+
+
+
 
 void Window::ClearPendingRequests() {
     m_input.DiscardPending();m_consumed.clear();
-    m_spawnEntityRequested = m_destroyEntityRequested = m_saveWorldStateRequested = m_deleteWorldStateRequested = false;
     m_resetRequested = m_jumpRequested = m_controlToggleRequested = m_torchToggleRequested = false;
     m_interactRequested = m_viewToggleRequested = m_throwRequested = m_sasToggleRequested = false;
     m_uiBackRequested = m_uiUpRequested = m_uiDownRequested = m_uiActivateRequested = m_uiClickRequested = false;
@@ -680,14 +659,7 @@ void Window::SwapBuffers() {
 #endif
 }
 
-bool Window::IsActionActive(Action action) const {
-    if (m_testInputMode) {
-        return m_testActionState[static_cast<int>(action)];
-    }
 
-    static const char* names[]={"move_forward","move_backward","strafe_left","strafe_right","move_up","move_down","pitch_up","pitch_down","yaw_left","yaw_right","roll_left","roll_right","prograde","retrograde","radial","add_water","igniter"};
-    const int index=static_cast<int>(action);return index>=0&&index<static_cast<int>(Action::Count)&&m_input.Action(names[index]).held;
-}
 
 void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
     if (m_testInputMode) {
@@ -702,88 +674,25 @@ void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
     deltaY=m_mouseCaptured?static_cast<int>(m_input.Axis("look_y")):0;
 }
 
-bool Window::ConsumeResetRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testResetRequested;
-        m_testResetRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("reset");
-    m_resetRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeJumpRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testJumpRequested;
-        m_testJumpRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("jump");
-    m_jumpRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeControlToggleRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testControlToggleRequested;
-        m_testControlToggleRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("control_toggle");
-    m_controlToggleRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeTorchToggleRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testTorchToggleRequested;
-        m_testTorchToggleRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("torch_toggle");
-    m_torchToggleRequested = false;
-    return requested;
-}
+
+
+
+
 
 void Window::RequestTestTorchToggle() {
     m_testTorchToggleRequested = true;
 }
 
-bool Window::ConsumeInteractRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testInteractRequested;
-        m_testInteractRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("interact");
-    m_interactRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeViewToggleRequest() {
-    if (m_testInputMode) return false;
-    const bool requested = ConsumeNamedAction("view_toggle");
-    m_viewToggleRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeThrowRequest() {
-    const bool requested = ConsumeNamedAction("throw");
-    m_throwRequested = false;
-    return requested;
-}
 
-bool Window::ConsumeSasToggleRequest() {
-    if (m_testInputMode) {
-        const bool requested = m_testSasToggleRequested;
-        m_testSasToggleRequested = false;
-        return requested;
-    }
-    const bool requested = ConsumeNamedAction("sas_toggle");
-    m_sasToggleRequested = false;
-    return requested;
-}
+
+
+
+
 
 void Window::RequestTestSasToggle() {
     m_testSasToggleRequested = true;
@@ -824,9 +733,7 @@ void Window::SetTestTilt(std::optional<InputTilt> sample,unsigned quarterTurns) 
 }
 
 
-void Window::SetTestActionState(Action action, bool active) {
-    m_testActionState[static_cast<int>(action)] = active;
-}
+
 
 void Window::QueueTestMouseDelta(int deltaX, int deltaY) {
     m_testMouseDeltaX += deltaX;
@@ -928,16 +835,7 @@ void Window::SetMouseCaptured(bool captured) {
 }
 
 float Window::InputAxis(const std::string& name)const{
-    if(m_testInputMode){
-        auto pair=[&](Action positive,Action negative){return float(IsActionActive(positive))-float(IsActionActive(negative));};
-        if(name=="move_y")return pair(Action::MoveForward,Action::MoveBackward);
-        if(name=="move_x")return pair(Action::StrafeRight,Action::StrafeLeft);
-        if(name=="move_z")return pair(Action::MoveUp,Action::MoveDown);
-        if(name=="pitch")return pair(Action::PitchUp,Action::PitchDown);
-        if(name=="yaw")return pair(Action::YawLeft,Action::YawRight);
-        if(name=="roll")return pair(Action::RollRight,Action::RollLeft);
-        return 0;
-    }
+
     return m_input.Axis(name);
 }
 

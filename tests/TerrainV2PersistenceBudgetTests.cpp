@@ -47,7 +47,7 @@ void Region(const std::filesystem::path &root, bool read) {
     std::string error;
     if (!read) {
         Check(Project::CreateNew(root.string(), "Terrain budget", project, error), error);
-        project.Settings().legacyGameplay = false;
+
         Check(project.Save(error), error);
         Scene source;
         source.CreateObject("Regional runtime-created landscape").body = SceneBodyComponent{};
@@ -86,7 +86,7 @@ void Region(const std::filesystem::path &root, bool read) {
         Check(world.LiveTerrain().CreateLandscape(id, source, error) &&
                   world.LiveTerrain().Wait(id, error),
               error);
-        Check(world.LiveTerrain().Brush(id, {0, 1, 0}, {VolumeBrushKind::Remove, 3, 1}, error) &&
+        Check(world.LiveTerrain().Brush(id, {0, 1, 0}, {TerrainV2::Edit::Kind::Remove, {}, 3}, error) &&
                   world.LiveTerrain().Wait(id, error),
               error);
     }
@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
         auto &owner = scene.CreateObject("Runtime-created one-kilometre landscape");
         owner.body = SceneBodyComponent{};
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         std::string error;
         Check(world.Build(scene, &resources, error), error);
         std::map<std::string, SaveChunk> saved;
@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
             Check(world.LiveTerrain().CreateLandscape(1, source, error) &&
                       world.LiveTerrain().Wait(1, error),
                   error);
-            Check(world.LiveTerrain().Brush(1, {0, 1, 0}, {VolumeBrushKind::Remove, 3, 1}, error) &&
+            Check(world.LiveTerrain().Brush(1, {0, 1, 0}, {TerrainV2::Edit::Kind::Remove, {}, 3}, error) &&
                       world.LiveTerrain().Wait(1, error),
                   error);
             std::string state;

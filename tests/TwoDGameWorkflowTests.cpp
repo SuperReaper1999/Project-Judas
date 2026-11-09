@@ -40,7 +40,7 @@ int main(int argc,char** argv){unsigned checks=0;try{
  check(ScriptSystem::CheckProjectSources(assets).empty(),"corrected source compiles without restarting editor");
  check(doc.SaveAs(p.StartupScenePath(),error)&&p.Save(error),"save project and scene through actual document path");EditorDocument reopened;check(reopened.Load(p.StartupScenePath(),error),"reopen saved authored scene");
  auto* actor=reopened.GetScene().Find(1);actor->render->spritePlayback=SpritePlayback{sheet.id,"test-loop","",0,1,true,true};
- ResourceManager resources(nullptr,&assets);resources.SetBlockingMode(true);RuntimeWorld world;world.legacyGameplay=false;
+ ResourceManager resources(nullptr,&assets);resources.SetBlockingMode(true);RuntimeWorld world;
  check(world.Build(reopened.GetScene(),&resources,error),"reopened composed sprites, animation, scripts and physical grid build");InputSystem input;world.UpdateScripts(&input,.016f);
  check(world.Scripts()->Diagnostics().empty(),"newly attached source executes in ordinary world");bool ticked=false;for(const auto& state:world.Scripts()->Capture())if(state.entity==owner)ticked=state.json.find("\"ticks\":1")!=std::string::npos;
  check(ticked,"script actually executes instead of merely being present");

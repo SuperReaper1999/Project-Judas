@@ -2,7 +2,7 @@
 
 [Index](../JUDASJS.md) · [Modules/lifecycle](lifecycle.md) · [Scene/session](scenes-state.md)
 
-M76 provisional checkpoint; **NOT HUMAN VALIDATED**, human review pending. These bindings expose detached metadata,
+These bindings expose detached metadata,
 not installation, permission or sandbox controls. See the [modding guide](../MODDING.md).
 
 ```js

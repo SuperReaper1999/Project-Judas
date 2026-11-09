@@ -13,7 +13,7 @@ int main(){
  Scene scene;auto& listener=scene.CreateObject("listener");listener.audioListener=SceneAudioListenerComponent{true,true};
  auto& emitter=scene.CreateObject("emitter");emitter.transform.position={2,1,-5};emitter.audioEmitter=SceneAudioEmitterComponent{};
  emitter.audioEmitter->asset="60606060606060606060606060606002";emitter.audioEmitter->loop=true;emitter.audioEmitter->playOnStart=true;emitter.audioEmitter->doppler=1;
- RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&resources,error),"ordinary emitter/listener world builds");if(failures)return 1;
+ RuntimeWorld world;Check(world.Build(scene,&resources,error),"ordinary emitter/listener world builds");if(failures)return 1;
  resources.WaitForAll();world.BeginAudio();world.UpdateAudio(glm::mat4(1),1,.02f);audio.AdvanceWithoutDevice(480);
  world.UpdateAudio(glm::translate(glm::mat4(1),glm::vec3(-.1f,0,0)),1,.02f);
  const auto voice=world.AudioEmitters()[0].voice;AudioVoiceSnapshot before,after;Check(audio.Snapshot(voice,before)&&before.positionSeconds>0,"actual persistent voice advances before translation");

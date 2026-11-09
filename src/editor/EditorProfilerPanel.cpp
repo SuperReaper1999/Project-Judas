@@ -74,7 +74,6 @@ void DrawProfilerPanel(EditorPanelState &state) {
         ImGui::Text("Debug lines: %u", p.debugLines);
         ImGui::Text("Scene submission: %.2f ms", p.sceneMilliseconds);
         ImGui::Separator();
-        ImGui::Text("Fluid particles: %zu", p.fluidParticles);
         ImGui::Text("Fluid solve (in step): %s", p.fluidMilliseconds > 0.0f ? "" : "not measured");
         if (p.fluidMilliseconds > 0.0f) {
             ImGui::SameLine();
@@ -82,10 +81,9 @@ void DrawProfilerPanel(EditorPanelState &state) {
         }
         ImGui::Text("Fluid surface rebuild: %.2f ms", p.surfaceMilliseconds);
         ImGui::Separator();
-        ImGui::Text("Resources: %zu ready (%zu meshes, %zu textures), %zu loading, %zu failed, %zu "
-                    "terrain meshes",
+        ImGui::Text("Resources: %zu ready (%zu meshes, %zu textures), %zu loading, %zu failed",
                     p.resources.ready, p.resources.loadedMeshes, p.resources.loadedTextures,
-                    p.resources.loading, p.resources.failed, p.resources.loadedTerrainMeshes);
+                    p.resources.loading, p.resources.failed);
         ImGui::Text("  resident %.1f MB of %.0f MB budget (peak %.1f MB)",
                     p.resources.bytesResident / 1048576.0, p.resources.budgetBytes / 1048576.0,
                     p.resources.peakBytesResident / 1048576.0);

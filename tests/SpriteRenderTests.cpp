@@ -60,10 +60,10 @@ int main(int argc,char** argv){try{
     auto& secondary=scene.CreateObject("independent orthographic target");secondary.transform.position={0,0,5};
     secondary.renderCamera=SceneRenderCameraComponent{};secondary.renderCamera->width=secondary.renderCamera->height=80;
     secondary.renderCamera->lens=lens;
-    RuntimeWorld world;world.legacyGameplay=false;
+    RuntimeWorld world;
     Check(world.Build(scene,nullptr,error),"native sprite world builds without hidden resources or physics");
     SceneTransform camera;camera.position={0,0,5};Check(world.SetRuntimeView(camera,60,.01f,100,lens),"world accepts orthographic lens");
-    RenderWorldFrame(r,320,240,world,nullptr,frame.view,frame.projection,{0,0,0},1);
+    RenderWorldFrame(r,320,240,world,frame.view,frame.projection,{0,0,0},1);
     std::vector<unsigned char> worldPixels;r.CaptureFrame(320,240,worldPixels);
     Check(pixel(worldPixels,160,120)==glm::ivec3(0,255,0),"ordinary runtime WorldPresentation draws actual native sprite");
     const auto& target=world.PresentationCameras().front().target;
@@ -75,7 +75,7 @@ int main(int argc,char** argv){try{
     players.SetViewport(left,{0,0,.5f,1},error);players.SetViewport(right,{.5f,0,.5f,1},error);
     players.SetView(left,camera,60,.01f,100,error,lens);camera.position.x=10;
     players.SetView(right,camera,60,.01f,100,error,lens);
-    RenderWorldFrame(r,320,240,world,nullptr,frame.view,frame.projection,{0,0,0},1);
+    RenderWorldFrame(r,320,240,world,frame.view,frame.projection,{0,0,0},1);
     std::vector<unsigned char> split;r.CaptureFrame(320,240,split);
     Check(pixel(split,80,120)==glm::ivec3(0,255,0)&&pixel(split,240,120)==glm::ivec3(0),"two independently positioned orthographic player views show distinct actual world contents");
     std::vector<double> times;

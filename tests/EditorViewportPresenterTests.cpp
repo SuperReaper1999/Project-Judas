@@ -149,7 +149,6 @@ int main(int argc, char **argv) try {
     EditorSceneViewport scene;
     EditorPlaySession session;
     session.world = std::make_unique<RuntimeWorld>();
-    session.world->legacyGameplay = false;
     Scene physicalScene;
     auto &object = physicalScene.CreateObject("Actual physical owner");
     object.body = SceneBodyComponent{};
@@ -466,7 +465,7 @@ int main(int argc, char **argv) try {
         return result;
     };
     auto runtimeFrame = [&] {
-        RenderWorldFrame(renderer, targetSize.x, targetSize.y, *session.world, &session.play->Session(),
+        RenderWorldFrame(renderer, targetSize.x, targetSize.y, *session.world,
                          expectedView, projection, scene.camera.Position(), 1, 1.f / 60,
                          WorldRenderPurpose::Runtime, &scene.target);
     };
@@ -478,7 +477,7 @@ int main(int argc, char **argv) try {
     const auto runtimePixels = targetPixels(scene.target);
     // Independent known-camera render: inspect the image produced by the
     // observer entry point, not renderer state restored when its pass ends.
-    RenderWorldFrame(renderer, targetSize.x, targetSize.y, *session.world, &session.play->Session(),
+    RenderWorldFrame(renderer, targetSize.x, targetSize.y, *session.world,
                      expectedView, projection, scene.camera.Position(), 1, 1.f / 60,
                      WorldRenderPurpose::Observer, &scene.target);
     const auto expectedObserverPixels = targetPixels(scene.target);

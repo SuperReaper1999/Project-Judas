@@ -184,8 +184,7 @@ Scene SaveScene(){Scene scene;scene.Settings().name="parallel geometry persisten
     for(unsigned i=0;i<240;++i){const unsigned cell=i/2;auto& body=scene.CreateObject("ordinary physical instance");body.body=SceneBodyComponent{};body.body->motion=SceneBodyMotion::Dynamic;body.body->halfExtents=glm::vec3(.25f);body.body->radius=.25f;body.body->shape=i%3?SceneShape::Box:SceneShape::Sphere;body.body->restitution=0;body.transform.position={float(cell%10)*2+(i%2?.25f:-.25f),.25f,float(cell/10)*2};}return scene;
 }
 void PersistenceAndRuntimeWiring(JobSystem& jobs){
-    ResourceManager resources(nullptr,nullptr,&jobs);RuntimeWorld serial,parallel,cold,coldSerial;serial.legacyGameplay=parallel.legacyGameplay=cold.legacyGameplay=coldSerial.legacyGameplay=false;
-    const auto scene=SaveScene();std::string error;
+    ResourceManager resources(nullptr,nullptr,&jobs);RuntimeWorld serial,parallel,cold,coldSerial;const auto scene=SaveScene();std::string error;
     Require(serial.Build(scene,nullptr,error)&&parallel.Build(scene,&resources,error),"runtime build: "+error);
     for(unsigned i=0;i<4;++i){GravityStep(serial.Physics());Measured([&]{GravityStep(parallel.Physics());});}
     Check(Counter("Physics initial geometry worker lanes")==4&&PhysicalState(serial.Physics())==PhysicalState(parallel.Physics()),"ordinary RuntimeWorld borrows its ResourceManager job service and preserves real contacts");

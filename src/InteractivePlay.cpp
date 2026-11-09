@@ -9,9 +9,8 @@
 
 #include <cstdio>
 
-#include "GameplayHud.h"
 #include "Renderer.h"
-#include "WorldState.h"
+#include "CameraProjection.h"
 #include "RuntimeWorld.h"
 #include "SimulationTiming.h"
 #include "Window.h"
@@ -29,77 +28,32 @@ bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCo
     PerformanceProfiler::Get().Boundary("Play begin");
     End();
     m_worldCoordinates = worldCoordinates;
-    if (!m_session.Begin(world, outError)) return false;
-    m_pauseMenu.Reset();
+    m_world = &world;
+    outError.clear();
     m_physicsAccumulator = 0.0f;
     m_fixedStepsSinceReset = 0;
-    m_resetOccurred = false;
     m_wasPauseMenuOpen = false;
     m_captureInitialized = false;
-    m_lastAerodynamicDrag = {};
     world.BeginAudio();
     return true;
 }
 
 void InteractivePlay::End() {
  PerformanceProfiler::Get().Boundary("Play end");
-    if(m_session.IsActive()){m_session.World().EndScripts();m_session.World().EndAudio();}
-    m_session.End();
+    if(m_world){m_world->EndScripts();m_world->EndAudio();}
+    m_world = nullptr;
 }
 
-void InteractivePlay::SetWorldStatePath(const std::string& path, bool loadedFromFile) {
-    m_worldStatePath = path;
-    m_worldStateStatus = path.empty() ? std::string() : path + (loadedFromFile ? " (loaded)" : " (none saved)");
-}
-
-bool InteractivePlay::SaveWorldStateNow(std::string& outMessage) {
-    if (m_worldStatePath.empty()) {
-        outMessage = "No world-state path for this scene (unsaved scene?)";
-        return false;
-    }
-    std::string error;
-    if(!CanCaptureLegacyWorldState(m_session.World(),error)){outMessage="Save failed: "+error;return false;}
-    const WorldState state = CaptureWorldState(m_session.World());
-    if (!SaveWorldStateToFile(state, m_worldStatePath, error)) {
-        outMessage = "Save failed: " + error;
-        return false;
-    }
-    outMessage = "Saved world state (" + std::to_string(state.entities.size()) + " entity, " +
-                 std::to_string(state.interactables.size()) + " interactable changes) to " + m_worldStatePath;
-    m_worldStateStatus = m_worldStatePath + " (saved)";
-    return true;
-}
-
-bool InteractivePlay::DeleteWorldStateNow(std::string& outMessage) {
-    if (m_worldStatePath.empty()) {
-        outMessage = "No world-state path for this scene";
-        return false;
-    }
-    if (std::remove(m_worldStatePath.c_str()) != 0) {
-        outMessage = "No saved world state to delete at " + m_worldStatePath;
-        m_worldStateStatus = m_worldStatePath + " (none saved)";
-        return false;
-    }
-    outMessage = "Deleted " + m_worldStatePath + "; the next launch is the pristine baseline";
-    m_worldStateStatus = m_worldStatePath + " (deleted)";
-    return true;
-}
-
-void InteractivePlay::SetFixedStepMeasurementFlags(bool atmosphere, bool fire, bool fluid) {
-    m_measurements.measureAtmosphere = atmosphere;
+void InteractivePlay::SetFixedStepMeasurementFlags(bool fire, bool fluid) {
     m_measurements.measureFire = fire;
     m_measurements.measureFluid = fluid;
 }
 
-bool InteractivePlay::ConsumeResetOccurred() {
-    const bool occurred = m_resetOccurred;
-    m_resetOccurred = false;
-    return occurred;
-}
 
-float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud, bool render, const RenderTargetHandle* destination) {
+
+float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render, const RenderTargetHandle* destination) {
     JUDAS_PROFILE_SCOPE("Play frame");
-    RuntimeWorld& world = m_session.World();
+    RuntimeWorld& world = *m_world;
     world.PumpNetwork(std::chrono::duration<double>(Clock::now().time_since_epoch()).count());
 
     // Paired controller observations belong to this play session. A menu's
@@ -121,79 +75,32 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     auto textTarget=world.UIIfLoaded()?world.UI().TextTarget():std::optional<UITextTarget>{};if(textTarget)window.SetTextInput(true,textTarget->player,int(textTarget->rect.position.x),int(textTarget->rect.position.y),int(textTarget->rect.size.x),int(textTarget->rect.size.y),textTarget->token);else window.SetTextInput(false);
     if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),frameDeltaTime,true);
     uiOwned|=world.UIIfLoaded()&&world.UIIfLoaded()->OwnsInput();
-    if (window.ConsumeUIBackRequest()&&!authoredUI&&world.legacyGameplay) m_pauseMenu.HandleBackRequest();
-    const bool uiUp = window.ConsumeUINavigateUpRequest();
-    const bool uiDown = window.ConsumeUINavigateDownRequest();
-    const bool uiActivate = window.ConsumeUIActivateRequest();
-    int uiClickX = 0, uiClickY = 0;
-    const bool uiClicked = window.ConsumeUIClickRequest(uiClickX, uiClickY);
-    if (m_pauseMenu.IsOpen()) {
-        m_pauseMenu.Layout(window.InputWidth(), window.InputHeight());
-        if (uiUp) m_pauseMenu.NavigateUp();
-        if (uiDown) m_pauseMenu.NavigateDown();
-        if (uiActivate) m_pauseMenu.Activate();
-        int mouseX = 0, mouseY = 0;
-        window.GetMousePosition(mouseX, mouseY);
-        m_pauseMenu.HandleMouseMove(glm::vec2(static_cast<float>(mouseX), static_cast<float>(mouseY)));
-        if (uiClicked) {
-            m_pauseMenu.HandleMouseClick(glm::vec2(static_cast<float>(uiClickX), static_cast<float>(uiClickY)));
-        }
-    }
     window.Input().SuspendRumble(IsPaused());
     // A replacement scene may begin after an outgoing modal menu released
     // the cursor. Reconcile ownership after the new scene's UI starts.
-    const bool capture = m_pointerCaptureAllowed && !IsPaused() && (world.legacyGameplay || world.pointerCapture);
+    const bool capture = m_pointerCaptureAllowed && !IsPaused() && world.pointerCapture;
     if (!m_captureInitialized || window.IsMouseCaptured() != capture) {
         window.SetMouseCaptured(capture);
         m_wasPauseMenuOpen = IsPaused();
         m_captureInitialized = true;
     }
-    // Edge requests are drained every frame regardless of pause state so a
-    // press while the menu owns input can never fire on resume.
-    const bool torchToggleRequested = window.ConsumeTorchToggleRequest();
-    const bool interactRequested = window.ConsumeInteractRequest();
-    const bool viewToggleRequested = window.ConsumeViewToggleRequest();
-    const bool throwRequested = window.ConsumeThrowRequest();
-    const bool sasToggleRequested = window.ConsumeSasToggleRequest();
-    // Milestone 29: persistence keys work whether or not the menu is open —
-    // saving a frozen world is exactly when you want it.
-    if (world.legacyGameplay && window.ConsumeSaveWorldStateRequest()) {
-        std::string message;
-        SaveWorldStateNow(message);
-        m_session.SetLastLifecycleMessage(message);
-    }
-    if (world.legacyGameplay && window.ConsumeDeleteWorldStateRequest()) {
-        std::string message;
-        DeleteWorldStateNow(message);
-        m_session.SetLastLifecycleMessage(message);
-    }
-    m_session.UpdateInteractionTarget();
-
     frameDeltaTime = std::min(frameDeltaTime, SimulationTiming::kMaxFrameDeltaTime);
 
     // Milestone 13 pause policy: while the menu is open nothing advances —
     // no input, no accumulator, no steps.
     bool profileCap=false; double profileDiscarded=0;
     if (!IsPaused()&&!uiOwned) {
-        m_session.HandleFrameInput(window, torchToggleRequested, interactRequested, viewToggleRequested,
-                                   throwRequested, sasToggleRequested, frameDeltaTime);
-        if (m_session.ConsumeResetOccurred()) {
-            m_lastAerodynamicDrag = {};
-            m_physicsAccumulator = 0.0f;
-            m_fixedStepsSinceReset = 0;
-            m_resetOccurred = true;
-        }
+        world.UpdateScripts(&window.Input(),frameDeltaTime);
         m_physicsAccumulator += frameDeltaTime;
         int stepsThisFrame = 0;
-        const bool measuring = m_measurements.measureAtmosphere || m_measurements.measureFire ||
+        const bool measuring = m_measurements.measureFire ||
                                m_measurements.measureFluid;
         while (m_physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
             window.Input().BeginFixedStep();if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();
             const auto stepStart = Clock::now();
-            m_measurements.atmosphereMeasured = m_measurements.fireMeasured = m_measurements.fluidMeasured = false;
-            StepPlayedWorld(m_session, window, SimulationTiming::kFixedTimestep, &m_measurements);
-            m_lastAerodynamicDrag = m_measurements.lastAerodynamicDrag;
+            m_measurements.fireMeasured = m_measurements.fluidMeasured = false;
+            StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep, &m_measurements);
             m_lastStepMilliseconds = MillisecondsSince(stepStart);
             if (m_observer) m_observer(m_measurements, measuring ? m_lastStepMilliseconds : 0.0);
             m_physicsAccumulator -= SimulationTiming::kFixedTimestep;
@@ -214,20 +121,8 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     const float presentationAlpha = m_physicsAccumulator / SimulationTiming::kFixedTimestep;
     window.Input().SuspendRumble(IsPaused());
     world.PresentationScripts(&window.Input(),frameDeltaTime,presentationAlpha);
-    if(m_resetOccurred)window.Input().StopRumble();
     const int height = std::max(window.InputHeight(), 1);
-    const float aspectRatio = static_cast<float>(window.InputWidth()) / static_cast<float>(height);
-    const PlayerController& player = m_session.Player();
-    glm::mat4 view(1.0f);
-    if (world.legacyGameplay && m_session.IsPiloting()) {
-        // Milestone 8: anchor the same camera to the vehicle's presented
-        // pose while piloting.
-        const DynamicBody& ship = world.DynamicBodies()[world.GetVehicle()->dynamicIndex];
-        view = player.GetViewMatrix(ship.GetPresentedPosition(presentationAlpha),
-                                    ship.GetPresentedOrientation(presentationAlpha));
-    } else if (world.legacyGameplay) {
-        view = player.GetViewMatrix(presentationAlpha, m_session.ViewMode());
-    }
+    glm::mat4 view(1);
     if(world.view){const auto& v=*world.view;view=glm::lookAt(v.pose.position,v.pose.position+v.pose.rotation*glm::vec3(0,0,-1),v.pose.rotation*glm::vec3(0,1,0));}
     world.viewportWidth=window.InputWidth();world.viewportHeight=height;
     if(world.Scripts())world.Scripts()->SetView(view);
@@ -235,11 +130,10 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // Audio publication is a runtime service, independent of drawing/capture.
     if (!render) return presentationAlpha;
     const auto surfaceStart = Clock::now();
-    UpdateFluidSurface(renderer, world, presentationAlpha);
     m_lastSurfaceMilliseconds = MillisecondsSince(surfaceStart);
     const auto sceneStart = Clock::now();
-    RenderWorldFrame(renderer, window.InputWidth(), window.InputHeight(), world, &m_session, view,
-                     player.GetProjectionMatrix(aspectRatio), player.GetPresentedPosition(presentationAlpha),
+    RenderWorldFrame(renderer, window.InputWidth(), window.InputHeight(), world, view,
+                     BuildCameraFrame(glm::vec3(0),glm::quat(1,0,0,0),60,.1f,1000,CameraLens{},window.InputWidth(),height).projection, glm::vec3(glm::inverse(view)[3]),
                      presentationAlpha,frameDeltaTime,WorldRenderPurpose::Runtime,destination);
     m_lastSceneMilliseconds = MillisecondsSince(sceneStart);
     // Auxiliary cameras have finished. Resume the display image without clearing
@@ -249,15 +143,6 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
 
     // Milestone 13: HUD + pause menu overlay, drawn last, on top.
     renderer.BeginUIFrame(window.InputWidth(), window.InputHeight());
-    if (world.legacyGameplay && drawHud && m_pauseMenu.IsHudVisible() && (!authoredUI||world.UI().debugOverlayVisible)) {
-        m_worldCoordinates=WorldCoordinates(m_session.World().Settings().worldOrigin);
-        HUDViewData hud = BuildHudView(m_session, m_worldCoordinates, m_lastAerodynamicDrag);
-        hud.worldStateInfo = m_worldStateStatus;
-        hud.lifecycleMessage = m_session.LastLifecycleMessage();
-        if (!hud.worldStateInfo.empty() || !hud.lifecycleMessage.empty()) hud.lifecycleAvailable = true;
-        m_hud.Draw(renderer, window.InputWidth(), window.InputHeight(), hud);
-    }
-    if(world.legacyGameplay&&!authoredUI)m_pauseMenu.Draw(renderer, window.InputWidth(), window.InputHeight());
     if(authoredUI)world.UI().Draw(renderer,window.InputWidth(),window.InputHeight(),&world);
     if(m_scriptFaultNotice)DrawScriptFaultNotice(renderer,window.InputWidth(),window.InputHeight(),world.Scripts(),world.Resources()?world.Resources()->Assets():nullptr);
     renderer.EndUIFrame();
@@ -265,5 +150,5 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     return presentationAlpha;
 }
 
-bool InteractivePlay::IsPaused()const{return m_pauseMenu.IsOpen()||(m_session.IsActive()&&m_session.World().UIIfLoaded()&&m_session.World().UIIfLoaded()->Paused());}
-bool InteractivePlay::QuitRequested()const{return m_pauseMenu.QuitRequested()||(m_session.IsActive()&&m_session.World().UIIfLoaded()&&m_session.World().UIIfLoaded()->QuitRequested());}
+bool InteractivePlay::IsPaused()const{return m_world && m_world->UIIfLoaded() && m_world->UIIfLoaded()->Paused();}
+bool InteractivePlay::QuitRequested()const{return m_world && m_world->UIIfLoaded() && m_world->UIIfLoaded()->QuitRequested();}

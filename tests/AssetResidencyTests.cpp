@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
   c.renderCamera->updateEveryFrames = 1000;
   c.renderCamera->farPlane = 80;
   RuntimeWorld world;
-  world.legacyGameplay = false;
+
   Check(world.Build(scene, &assets, error),
         "ordinary optional residency world builds");
   Check(assets.RefCount(models[0].id) == 0 &&
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
   auto frame = [&] {
     assets.AdvanceVisualFrame();
     assets.Pump();
-    RenderWorldFrame(renderer, 640, 360, world, nullptr, view, projection,
+    RenderWorldFrame(renderer, 640, 360, world, view, projection,
                      {0, 0, 0}, 1);
   };
   frame();
@@ -156,11 +156,11 @@ int main(int argc, char **argv) {
   world.Destroy();
   assets.ReleaseAll();
   RuntimeWorld restored;
-  restored.legacyGameplay = false;
+
   Check(restored.Build(saved, &assets, error),
         "restored world reconstructs ordinary visual owners");
   assets.AdvanceVisualFrame();
-  RenderWorldFrame(renderer, 640, 360, restored, nullptr, view, projection,
+  RenderWorldFrame(renderer, 640, 360, restored, view, projection,
                    {0, 0, 0}, 1);
   Check(
       assets.StateOf(models[0].id) == ResourceState::Ready,
@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
   assets.ReleaseAll();
   assets.ConfigureVisualStreaming(0);
   RuntimeWorld legacy;
-  legacy.legacyGameplay = false;
+
   Check(legacy.Build(scene, &assets, error) &&
             assets.RefCount(models[0].id) > 0 &&
             assets.StateOf(models[2].id) == ResourceState::Ready,

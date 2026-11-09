@@ -23,7 +23,7 @@ bool Valid(const ShadowPassKey &key) {
                                       key.viewport.z > 0 && key.viewport.w > 0));
 }
 bool Equal(const ShadowPassKey &a, const ShadowPassKey &b) {
-    return a.slot == b.slot && a.source == b.source && a.includePlayerModel == b.includePlayerModel &&
+    return a.slot == b.slot && a.source == b.source &&
            a.viewDependentLod == b.viewDependentLod &&
            Equal(a.lightViewProjection, b.lightViewProjection) &&
            (!a.viewDependentLod ||

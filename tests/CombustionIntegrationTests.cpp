@@ -1,6 +1,6 @@
-// FTFT8: ordinary authored scenes, input and played-world thermal path.
-// Sources/budgets below are independent analytical checks; no replacement
-// thermal loop or manual AddBody registration supplies acceptance evidence.
+// Authored RuntimeWorld registration and public MK2/combustion integration.
+// The fixture owns an explicit external heater; analytical material budgets
+// independently check the real thermal solver, without built-in gameplay.
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -13,7 +13,6 @@
 #include <string>
 #include <vector>
 #include <glm/gtc/quaternion.hpp>
-#include "GameSession.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "Simulation.h"
@@ -28,12 +27,12 @@ struct Frame {std::string name;glm::quat rotation{1,0,0,0};glm::vec3 shift{0};gl
 struct Result {std::string name;int count=0,failed=0,ignition=-1,extinction=-1;double initialT=0,finalT=0,initialFuel=0,finalFuel=0,chemical=0,heater=0,environment=0,gas=0,storageResidual=0,chemicalResidual=0,initialHeater=0,firstT=0,oxygen=0;};
 std::vector<Result> results;
 void Check(bool ok,const std::string& label){++checks;if(!ok){++failures;std::cerr<<"FAIL "<<label<<'\n';}}
-struct Played {RuntimeWorld world;GameSession session;Window window;Scene scene;
+struct Played {RuntimeWorld world;Window window;Scene scene;RadiantHeater heater;bool powered=false;
     bool Begin(const Scene& authored,const fs::path& output,const std::string& name){std::string text,error;bool ok=SaveSceneToString(authored,text);Check(ok,name+" serialization");if(!ok)return false;
         std::ofstream(output/(name+".judas"))<<text;ok=LoadSceneFromString(text,scene,error);Check(ok,name+" load: "+error);if(!ok)return false;
-        window.SetTestInputMode(true);ok=world.Build(scene,nullptr,error)&&session.Begin(world,error);Check(ok,name+" runtime/session: "+error);return ok;}
-    void Heater(bool on){window.SetTestActionState(Action::UseIgniter,on);session.HandleFrameInput(window,false,false,false,false,false);}
-    void Step(){StepPlayedWorld(session,window,dt);++steps;}
+        window.SetTestInputMode(true);ok=world.Build(scene,nullptr,error)&&world.IsBuilt();Check(ok,name+" runtime/session: "+error);return ok;}
+    void Heater(bool on){powered=on;heater.powerWatts=on?18000:0;}
+    void Step(){world.Physics().Step(dt);world.Combustion().Step(dt,world.Physics(),world.GetAtmosphere()?&world.GetAtmosphere()->field:nullptr,world.GetAtmosphere()?world.GetAtmosphere()->frame:ReferenceFrame{},powered?&heater:nullptr);++steps;}
 };
 Scene Make(const Frame& frame,bool atmosphere,float temperature,float oxygen,const SceneCombustibleComponent& material,glm::vec3 velocity,bool nearHeater){
     Scene scene;scene.Settings().name="FTFT8 thermal "+frame.name;scene.Settings().worldOrigin=frame.origin;
@@ -41,11 +40,12 @@ Scene Make(const Frame& frame,bool atmosphere,float temperature,float oxygen,con
     auto& body=scene.CreateObject("Finite coating");body.transform.position=frame.Point(center);body.transform.rotation=frame.rotation;
     body.body=SceneBodyComponent{};body.body->motion=SceneBodyMotion::Dynamic;body.body->shape=SceneShape::Sphere;body.body->radius=.2f;body.body->mass=25;body.body->friction=0;body.body->restitution=0;body.body->initialLinearVelocity=frame.rotation*velocity;body.combustible=material;
     if(atmosphere){auto& gas=scene.CreateObject("Prescribed reservoir");gas.transform.position=frame.Point({0,0,0});gas.transform.rotation=frame.rotation;gas.body=SceneBodyComponent{};gas.body->shape=SceneShape::Sphere;gas.body->radius=1;gas.celestial=SceneCelestialComponent{};gas.celestial->gravitationalParameter=62784;gas.atmosphere=SceneAtmosphereComponent{};gas.atmosphere->referenceDensity=.2f;gas.atmosphere->referenceTemperatureKelvin=temperature;gas.atmosphere->oxidizerMassFraction=oxygen;}
-    auto& player=scene.CreateObject("Operator");player.transform.position=frame.Point(center+glm::vec3(0,-.7f,nearHeater?1.75f:2.5f));player.playerStart=ScenePlayerStartComponent{};player.playerStart->yawDegrees=frame.yaw;return scene;
+    return scene;
 }
 Result Run(const Frame& frame,const std::string& family,const fs::path& output,bool atmosphere,float referenceTemperature,float oxygen,SceneCombustibleComponent material,int heaterSteps,int count,glm::vec3 velocity={0,0,0},bool nearHeater=false){
     Result r;r.name=family+"-"+frame.name;const int failedBefore=failures;Played p;
     if(!p.Begin(Make(frame,atmosphere,referenceTemperature,oxygen,material,velocity,nearHeater),output,r.name))return r;
+    p.heater.worldPosition=frame.Point((atmosphere?glm::vec3(80,0,0):glm::vec3(0))+glm::vec3(0,0,nearHeater?.25f:1.f));
     const auto* entity=p.world.FindEntity(p.scene.Objects()[0].id);const BodyHandle h=p.world.DynamicBodies()[entity->slot].Handle();auto& physics=p.world.Physics();
     const glm::vec3 v=physics.GetLinearVelocity(h),spin=frame.rotation*glm::vec3(.1f,-.2f,.3f);physics.SetAngularVelocity(h,spin);
     const auto* initial=p.world.Combustion().State(h);Check(initial!=nullptr,r.name+" authored thermal registration");if(!initial)return r;
@@ -54,7 +54,7 @@ Result Run(const Frame& frame,const std::string& family,const fs::path& output,b
     const double initialExpected=atmosphere?referenceTemperature:300.;Check(std::abs(r.initialT-initialExpected)<.001,r.name+" authored reservoir initializes temperature");
     Check(r.initialFuel==double(material.initialFuelMassKg),r.name+" serialized finite fuel maps exactly");
     std::ofstream csv(output/(r.name+".csv"));csv<<std::setprecision(17)<<"step,x,y,z,temperature_before,temperature_after,fuel_before,fuel_after,burn_rate,chemical_W,gas_W,heater_W,pair_W,environment_W,oxygen_supply,oxidizer_density,storage_residual_J,chemical_residual_J\n";
-    for(int i=0;i<count;++i){const auto before=*p.world.Combustion().State(h);p.Heater(i<heaterSteps);Check(p.session.IgniterPowered()==(i<heaterSteps),r.name+" ordinary input powers heater");p.Step();const auto after=*p.world.Combustion().State(h);const auto position=physics.GetTransform(h).position;
+    for(int i=0;i<count;++i){const auto before=*p.world.Combustion().State(h);p.Heater(i<heaterSteps);Check(p.powered==(i<heaterSteps),r.name+" fixture explicitly owns external heater power");p.Step();const auto after=*p.world.Combustion().State(h);const auto position=physics.GetTransform(h).position;
         Check(std::isfinite(after.temperatureKelvin)&&after.temperatureKelvin>0&&after.remainingFuelMassKg>=0&&after.remainingFuelMassKg<=before.remainingFuelMassKg,r.name+" finite state/fuel monotonically consumed");
         Check(physics.GetLinearVelocity(h)==v&&physics.GetAngularVelocity(h)==spin,r.name+" thermal path cannot add mechanical impulse");
         Check(physics.LastStepContactCount()==0,r.name+" collision-free carrier");

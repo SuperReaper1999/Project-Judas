@@ -47,7 +47,6 @@ startup-scene "Scenes/pool.judas"
 assets-dir "Assets"
 scenes-dir "Scenes"
 saves-dir "Saves"
-legacy-gameplay "false"
 basic-water "true"
 water-swimming "true"
 advanced-fluid-dynamics "true"
@@ -69,7 +68,6 @@ settings
  sun-color 1 0.94 0.82
  ambient 0.35 0.4 0.43
  background-color 0.48 0.66 0.76
- fluid-scale 1
  fidelity-policy none
  next-id 100
 end
@@ -80,12 +78,8 @@ end
  rotation {rotation}
  scale 1 1 1
  fluid-volume
- fluid-volume.backend grid
  fluid-volume.spacing 0.4
  fluid-volume.count 30 10 20
- fluid-volume.emitter false
- fluid-volume.emitter-offset 0 0 0
- fluid-volume.max-particles 0
  fluid-volume.fill-height 2
  fluid-volume.density 1000
  fluid-volume.color 0.025 0.26 0.32
@@ -111,12 +105,10 @@ end
  body {motion} {shape}
  body.half-extents {vec(half)}
  body.radius {half[0]}
- body.terrain ""
  body.mass {density*(8*math.prod(half) if shape=='box' else 4*math.pi*half[0]**3/3):.8g}
  body.friction 0.7
  body.restitution 0.05
  body.initial-velocity 0 0 0
- body.pickable true
  body.managed false
  body.compound-count 0
 end
@@ -155,12 +147,8 @@ end
  rotation {q}
  scale 1 1 1
  fluid-volume
- fluid-volume.backend grid
  fluid-volume.spacing 0.4
  fluid-volume.count 20 14 20
- fluid-volume.emitter false
- fluid-volume.emitter-offset 0 0 0
- fluid-volume.max-particles 0
  fluid-volume.fill-height 3
  fluid-volume.density 1000
  fluid-volume.color 0.025 0.26 0.32

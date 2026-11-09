@@ -32,7 +32,6 @@ void EditorProfilerSnapshot::Collect(EditorContext &context, const EditorPlaySes
             p.sceneMilliseconds = 0.0f;
         p.physicsBodies = p.dynamicBodies = p.contacts = 0;
         p.entitiesFull = p.entitiesCoarse = p.entitiesDormant = p.entitiesDestroyed = 0;
-        p.fluidParticles = 0;
         p.physics = PhysicsWorld::StepStats{};
         return;
     }
@@ -46,7 +45,6 @@ void EditorProfilerSnapshot::Collect(EditorContext &context, const EditorPlaySes
     p.entitiesCoarse = counts.coarse;
     p.entitiesDormant = counts.dormant;
     p.entitiesDestroyed = counts.destroyed;
-    p.fluidParticles = session.world->HasFluid() ? session.world->Fluid().Particles().size() : 0;
     const FixedStepMeasurements &m = session.play->LastMeasurements();
     p.fluidMilliseconds = m.fluidMeasured ? static_cast<float>(m.fluidMilliseconds) : 0.0f;
     p.surfaceMilliseconds = static_cast<float>(session.play->LastSurfaceMilliseconds());

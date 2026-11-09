@@ -264,9 +264,9 @@ public:
         // Derived geometry caches; count actual work within this Step only.
         std::size_t orientationCacheHits = 0, orientationCacheRebuilds = 0;
         std::size_t boundCacheHits = 0, boundCacheRebuilds = 0;
-        std::size_t shapeCacheRebuilds = 0, solverFrameBuilds = 0;
+        std::size_t shapeCacheRebuilds = 0;
+        std::size_t geometryCacheAllocatedBytes = 0;
         std::size_t geometryCacheBytes = 0, geometryCacheAllocations = 0;
-        std::size_t geometryCacheAllocatedBytes = 0, solverFrameNodeRequests = 0;
         // impactEvents includes substep restitution events and continuous arrival attempts.
         std::size_t impactEvents=0;
         // Actual path-hold operations (not unique bodies). Cap holds are a subset.
@@ -396,49 +396,6 @@ public:
     void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
                              const glm::vec3& worldPoint);
 
-    // FTFT9 finite-mass normal coupling. One batch shares the ordinary
-    // inelastic contact solver with the touching rigid island and, when
-    // remainingRigidDt>0, only its already-cached signed-gap support.
-    // It changes velocities only: no forces, pose integration, warm cache or
-    // motion-ledger mutation. Normals point from the boundary into the particle.
-    struct ContactParticle {
-        glm::vec3 position{0}, velocity{0};
-        float mass = 0;
-    };
-    struct ParticleBoundaryContact {
-        std::size_t particleIndex = 0;
-        BodyHandle body;
-        glm::vec3 point{0}, normal{0}, wallVelocity{0};
-        // false: prescribed boundary, with no reaction on the actual owner.
-        // true: owner and its touching rigid island receive the same-solve reaction.
-        bool twoWay = false;
-        // Explicit inelastic relative-normal target. The fluid caller owns its
-        // physical gap / fluid interval; remainingRigidDt belongs to support.
-        float minimumNormalVelocity = 0;
-    };
-    // particleImpulses is per input contact, applied TO the particle. Optional
-    // staticSupportImpulse is the external impulse applied BY physical static
-    // support to the finite rigid island (excludes prescribed particle walls).
-    struct ParticleContactStats {
-        int iterations = 0;
-        std::size_t rigidContactRows = 0;
-        std::size_t persistentGapRows = 0;
-        int normalAccelerations = 0;
-        std::size_t normalMatrixProducts = 0;
-        int normalAccelerationBreakdowns = 0;
-        int normalAccelerationRejections = 0; // optional correction failed actual prepared-row admissibility
-        int normalAccelerationBoundaryDeclines = 0; // moving prescribed normal endpoint: bounded PGS only
-        float maximumClosingSpeed = 0; // excess closing beyond the existing row target
-        float speedScale = 1;
-        bool iterationCapReached = false;
-    };
-    ParticleContactStats GetParticleContactStats() const;
-    void SolveParticleContacts(std::vector<ContactParticle>& particles,
-                               const std::vector<ParticleBoundaryContact>& contacts,
-                               std::vector<glm::vec3>& particleImpulses,
-                               glm::vec3* staticSupportImpulse = nullptr,
-                               float remainingRigidDt = 0);
-
     // Generic rigid-body velocity access — the same category as
     // GetTransform/ResetBody below, just for velocity. Added in Milestone
     // 7-A for the player's minimal push-on-contact behavior (see
@@ -503,7 +460,7 @@ public:
     // Milestone 32 order: (1) velocity from forces/torques; (2) broadphase
     // candidate pairs from the dynamic AABB tree (src/Broadphase.h) — no
     // all-pairs pass exists any more; (3) narrowphase at the current poses;
-    // (4) accumulated-impulse contact solve (src/ContactSolver.h), position
+    // (4) MK2 contact solve (src/physics/WorldMk2Solver.cpp), position
     // integration from the solved velocities, direct penetration removal;
     // (5) proxy refresh. Before M32 positions were integrated before contacts
     // were detected; the reordering is what lets a resting body's gravity

@@ -10,7 +10,6 @@ struct ShadowPassKey {
     int slot = -1;
     std::uint64_t source = 0;
     glm::mat4 lightViewProjection{1};
-    bool includePlayerModel = true;
     bool viewDependentLod = false;
     glm::mat4 cameraView{1}, cameraProjection{1};
     glm::ivec4 viewport{0};

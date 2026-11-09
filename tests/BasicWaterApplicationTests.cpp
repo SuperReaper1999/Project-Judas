@@ -1,4 +1,3 @@
-#include "TestProjectPath.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
@@ -35,7 +34,7 @@ int main(int argc,char** argv){
         std::cout<<"PASS actual fresh-process water continuation and unchanged source save\n";return 0;
     }
 
-    std::string error;Project project;Check(project.Load((TestProjectPath("basic_water_lab")/"basic_water_lab.judasproj").string(),error),"load ordinary basic-water project: "+error);
+    std::string error;Project project;Check(project.Load((std::filesystem::path(__FILE__).parent_path().parent_path()/"projects/basic_water_lab/basic_water_lab.judasproj").string(),error),"load ordinary basic-water project: "+error);
     EngineHost host;if(!host.Init("Basic water workflow",960,540,false,error)){std::cerr<<error<<'\n';return 1;}
     std::cout<<"GL "<<glGetString(GL_RENDERER)<<" | "<<glGetString(GL_VERSION)<<'\n';
     host.OpenProjectAssets(project.RootDir(),project.AssetsDir());host.Resources().SetBlockingMode(true);
@@ -56,7 +55,7 @@ int main(int argc,char** argv){
         host.Resources().WaitForAll();
         if(reading)Check(WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"cold-process restore before publication: "+error);
         EntityId swimmer=0;for(const auto& o:scene.Objects())if(o.characterMotor)swimmer=o.id;
-        Check(swimmer!=0&&!world.HasFluid()&&world.Liquids().States().empty(),"default scene has a real motor and no advanced fluid owners");
+        Check(swimmer!=0&&!world.GridWater(),"default scene has a real motor and no advanced fluid owners");
         InteractivePlay play;Check(play.Begin(world,WorldCoordinates(world.Settings().worldOrigin),error),"ordinary InteractivePlay begins: "+error);
         if(failures)return 1;
         if(reading){auto* motor=world.RuntimeCharacter(swimmer);Check(motor&&std::abs(motor->position.y+1)<.001f&&glm::length(motor->velocity)<.001f,"fresh process restores the actual saved motor pose and velocity");}
@@ -68,7 +67,7 @@ int main(int argc,char** argv){
             if(frame==120||frame==131)window.Input().SetPhysical("key:Escape",1);
             if(frame==121||frame==132)window.Input().SetPhysical("key:Escape",0);
             if(profiling)profiler.BeginFrame("Basic water workflow");
-            const auto start=std::chrono::steady_clock::now();play.Frame(window,host.GetRenderer(),1.f/60,true,true);
+            const auto start=std::chrono::steady_clock::now();play.Frame(window,host.GetRenderer(),1.f/60,true);
             frames.push_back(std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count());
             if(play.LastFixedStepsThisFrame())steps.push_back(play.LastFixedStepMilliseconds());
             if(frame==120){pauseStart=play.FixedStepsSinceReset();Check(play.IsPaused(),"logical pause action opens the authored menu");}
@@ -83,7 +82,7 @@ int main(int argc,char** argv){
         Check(healthy,"ordinary project scripts remain healthy");
         auto* motor=world.RuntimeCharacter(swimmer);if(!motor)return 1;
         if(mode==0)finalWet=motor->position.y;else if(mode==1)finalDry=motor->position.y;
-        Check(world.Liquids().States().empty()&&world.Liquids().StepTimes().total==0&&!world.HasFluid(),"rendering/swimming/pausing never activates an advanced solver");
+        Check(!world.GridWater(),"rendering/swimming/pausing never activates an advanced solver");
         std::cout<<"ENDPOINT mode="<<mode<<" y="<<motor->position.y<<" vy="<<motor->velocity.y<<"\n";
         if(!reading){if(mode==0){
             // For the documented centre-line quadrature, 950/1000 immersion

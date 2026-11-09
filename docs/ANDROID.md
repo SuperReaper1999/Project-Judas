@@ -21,10 +21,10 @@ have recorded phone reviews. M89 local multiplayer was accepted on desktop;
 Android multiplayer hardware testing was not inferred. These reviews do not
 certify all later engine changes or every desktop feature on Android. M99 used USB
 forwarding, not a demonstrated Wi-Fi/Internet deployment. See
-[M99 platform scope](M99_NETWORK.md), [current Pre-Alpha qualification](PREALPHA.md)
-and the original [M88](evidence/m88/HUMAN_VALIDATION.md),
-[M89](evidence/m89/HUMAN_VALIDATION.md) and
-[M99](evidence/m99/HUMAN_VALIDATION.md) acceptance records.
+[M99 platform scope](NETWORKING.md), [current Pre-Alpha qualification](CURRENT_STATUS.md)
+and the original [M88 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/HUMAN_VALIDATION.md),
+[M89 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/HUMAN_VALIDATION.md) and
+[M99 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m99/HUMAN_VALIDATION.md) acceptance records.
 
 **M96 update:** the UI toolkit adds native editable fields, SDL IME/clipboard,
 scrolling and per-player focus through the shared runtime. The common M93 mesh
@@ -32,7 +32,7 @@ codec link dependency now also reaches Android before its early CMake return.
 M96 arm64 compilation, development APK signature and 16 KiB alignment are checked;
 new keyboard/IME/touch interaction has not received device/emulator acceptance.
 Earlier Android hardware acceptance is not retroactively withdrawn. See the
-[UI contracts](M96_UI_TOOLKIT.md) and [M96 results](evidence/m96/REPORT.md).
+[UI contracts (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md) and [M96 results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m96/REPORT.md).
 
 
 Android is an **optional runtime target**. Linux and Windows keep their existing
@@ -44,10 +44,10 @@ adapter; this is not a browser, remote desktop or streaming client.
 **Current scope:** Android 16 / API 36 target, minimum API 26, OpenGL ES 3,
 arm64-v8a phones/tablets and x86_64 emulators. Linux is the supported APK build
 host for this first toolchain. An editor on Android is not included. The operator
-[accepted Breakwater on their phone](evidence/m88/HUMAN_VALIDATION.md) on
+[accepted Breakwater on their phone (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/HUMAN_VALIDATION.md) on
 16 October 2026. Tablet, broad vendor-driver, sustained thermal/battery, physical
 16 KiB and real-controller coverage remain outstanding. Emulator measurements
-remain separate from phone results in [M88 evidence](evidence/m88/REPORT.md).
+remain separate from phone results in [M88 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/REPORT.md).
 
 ## Build and export
 
@@ -258,8 +258,8 @@ Standard Android InputDevice gamepads route independently through SDL instances.
 Physical multi-keyboard/multi-mouse separation is not available through this SDL2
 adapter. Four touch players are best suited to a tablet. Broader touch-device and
 physical-controller qualification remains outstanding; retain the narrower
-[M89 acceptance](evidence/m89/HUMAN_VALIDATION.md) and separate emulator/virtual
-input scope in [M89 evidence](evidence/m89/REPORT.md).
+[M89 acceptance (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/HUMAN_VALIDATION.md) and separate emulator/virtual
+input scope in [M89 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/REPORT.md).
 
 For repeated builds `--icu-host-tools /absolute/path/to/matching/icu-host-build`
 may reuse ICU 76.1's existing native data tools. The default still builds its own;
@@ -345,4 +345,4 @@ matching receipt/DEX/manifest. This is genuine operator acceptance; APK bytes
 and device identity were not independently collected in this follow-up.
 Automated evidence separately covers SDK manifest compilation, the actual SDL
 orientation callback, and Java compilation. Desktop aspect tests do not certify
-Android sensors or touch hardware. See [patch notes](ALPHA_V1_0_4_NOTES.md).
+Android sensors or touch hardware. See [patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_4_NOTES.md).

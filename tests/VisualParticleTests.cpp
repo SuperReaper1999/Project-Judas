@@ -17,7 +17,7 @@ int checks=0,failures=0;
 void Check(bool b,const char* label){++checks;failures+=!b;std::printf("%s %s\n",b?"PASS":"FAIL",label);}
 Scene Demo(){Scene s;s.Settings().name="Visibility and visual emitters";s.Settings().ambientColor={.5f,.5f,.5f};
  auto& floor=s.CreateObject("Floor");floor.transform.position={0,-.3f,0};floor.render=SceneRenderComponent{};floor.render->halfExtents={25,.3f,25};floor.body=SceneBodyComponent{};floor.body->halfExtents=floor.render->halfExtents;
- auto& player=s.CreateObject("Player start");player.playerStart=ScenePlayerStartComponent{};player.playerStart->view=ScenePlayerView::FirstPerson;player.transform.position={0,1.5f,8};
+ auto& player=s.CreateObject("Player start");player.transform.position={0,1.5f,8};
  auto& gravity=s.CreateObject("Uniform gravity");gravity.gravity=SceneGravityComponent{};gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->magnitude=3;gravity.gravity->regionShape=SceneRegionShape::Box;gravity.gravity->regionHalfExtents={50,50,50};
  for(int i=0;i<30;++i){auto& box=s.CreateObject("Ordinary prop");box.transform.position={float(i%10-5)*2,0.5f,float(i/10)*-4};box.render=SceneRenderComponent{};box.render->color={.2f+.06f*(i%5),.4f,.7f};}
  auto& smoke=s.CreateObject("Looping smoke");smoke.transform.position={-2,0.5f,0};smoke.particleEmitter=ParticleEmitterSettings{};smoke.particleEmitter->textureAsset="37373737373737373737373737373737";
@@ -95,7 +95,7 @@ int main(int argc,char** argv){
  resources.WaitForAll();
  texturedWorld.UpdateVisualParticles(.1f);
  auto capture=[&]{
-    RenderWorldFrame(r,256,256,texturedWorld,nullptr,glm::mat4(1),projection,{0,0,0},1);
+    RenderWorldFrame(r,256,256,texturedWorld,glm::mat4(1),projection,{0,0,0},1);
     std::vector<unsigned char> pixels;
     r.CaptureFrame(256,256,pixels);
     return pixels;

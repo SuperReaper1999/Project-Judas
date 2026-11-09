@@ -4,7 +4,6 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
-#include "WorldState.h"
 #include "InputSystem.h"
 #include "Prefab.h"
 #include <chrono>
@@ -41,10 +40,10 @@ export default class {
     auto states=world.Scripts()->Capture();for(const auto& state:states)std::printf("STATE %llu/%llu %s\n",(unsigned long long)state.entity,(unsigned long long)state.slot,state.json.c_str());
     Check(states.size()==2&&states[0].json.find("\"frames\":2")!=std::string::npos&&states[0].json.find("\"steps\":2")!=std::string::npos,"frame/fixed callbacks have separate cadence");
     Check(states.size()==2&&states[0].json.find("\"speed\":7")!=std::string::npos&&states[1].json.find("\"speed\":3")!=std::string::npos,"independent instances and authored overrides");
-    auto saved=CaptureWorldState(world);Check(SaveWorldStateToString(saved,text),"controlled script state saved");WorldState parsed;Check(LoadWorldStateFromString(text,parsed,error),"controlled script state parsed");
-    RuntimeWorld restored;Check(restored.Build(scene,&resources,error)&&ApplyWorldState(restored,parsed,error),"script state restore before VM callbacks");restored.UpdateScripts(&input,.02f);
+    auto saved=world.Scripts()->Capture(true);
+    RuntimeWorld restored;Check(restored.Build(scene,&resources,error)&&restored.RestoreScriptState(saved,error),"script state restores before VM callbacks");restored.UpdateScripts(&input,.02f);
     auto after=restored.Scripts()->Capture();Check(after[0].json.find("\"frames\":4")!=std::string::npos,"restored state visible to resumed gameplay");
-    auto bad=parsed;bad.scripts[0].slot=99;auto before=CaptureWorldState(restored);Check(!ApplyWorldState(restored,bad,error)&&CaptureWorldState(restored).scripts[0].json==before.scripts[0].json,"invalid slot leaves live state unchanged");
+    auto bad=after;bad[0].json="not JSON";auto before=restored.Scripts()->Capture();Check(!restored.RestoreScriptState(bad,error)&&restored.Scripts()->Capture()[0].json==before[0].json,"invalid state leaves live script state unchanged");
     Check(ScriptSystem::ValidateJson("{\"x\":[true,null,2]}",error)&&!ScriptSystem::ValidateJson("{\"x\":1e999}",error),"JSON-like state accepts finite bounded data only");
     Scene prefab=scene;prefab.DestroyObject(id2);prefab.Find(id)->body=SceneBodyComponent{};prefab.Find(id)->body->motion=SceneBodyMotion::Dynamic;
     auto child=prefab.CreateObject("Child").id;prefab.Find(child)->parent=id;prefab.Find(child)->scripts.push_back({1,script.id,true,"{}"});
@@ -54,17 +53,17 @@ export default class {
     Check(ResolvePrefabs(edited,&db,resolved,error)&&resolved.Find(rootId)->scripts[0].properties=="{\"speed\":9}","generic prefab property override preserves script data");
     placement.position={2,3,4};auto spawned=world.SpawnPrefab(prefabAsset.id,placement,error);
     Check(spawned&&world.RuntimeDefinition(spawned)->scripts.size()==1&&world.FindEntity(spawned),"runtime SpawnPrefab creates ordinary scripted hierarchy");
-    world.UpdateScripts(&input,.01f);auto spawnSave=CaptureWorldState(world);RuntimeWorld spawnRestored;
-    Check(spawnRestored.Build(scene,&resources,error)&&ApplyWorldState(spawnRestored,spawnSave,error),"runtime-created script instance and state restore together");spawnRestored.UpdateScripts(&input,.01f);
+    world.UpdateScripts(&input,.01f);std::map<std::string,SaveChunk> spawnSave;Scene spawnScene;RuntimeWorld spawnRestored;
+    Check(WorldPersistence::Capture(world,spawnSave,error)&&WorldPersistence::SceneFrom(spawnSave,spawnScene,error)&&spawnRestored.Build(spawnScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(spawnRestored,error)&&WorldPersistence::Restore(spawnRestored,spawnSave,error),"runtime-created script instance and state restore together");spawnRestored.UpdateScripts(&input,.01f);
     Check(spawnRestored.Scripts()->Capture().size()==4&&world.DestroyHierarchy(spawned,error)&&!world.RuntimeDefinition(spawned),"spawned behaviours independent and normal hierarchy destruction");spawnRestored.Destroy();
-    std::ofstream(root/"Assets/native.js")<<R"JS(import {input,world} from 'judas';
+    std::ofstream(root/"Assets/native.js")<<R"JS(import {input,world,physics} from 'judas';
 export default class {constructor({entity}){this.entity=entity;this.state={};}
 start(){this.state.parent=this.entity.parent;this.state.classification=this.entity.classification;}
 fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:0,y:1,z:0});this.entity.applyTorque({x:0,y:0,z:1});
  this.state.velocity=this.entity.velocity;this.entity.angularVelocity={x:0,y:0,z:2};this.state.angular=this.entity.angularVelocity;
  this.entity.addTag('target');this.state.tag=this.entity.hasTag('target');this.state.query=world.queryTags(['target']).length;
  this.state.overlap=world.overlap({x:-2,y:-2,z:-2},{x:2,y:2,z:2},{includeLayers:['Default'],requiredTags:['target']}).length;
- this.state.sweep=world.sweepCapsule({x:-3,y:0,z:0},{x:5,y:0,z:0}).hit;
+ this.state.sweep=!!physics.capsuleCast({position:{x:-3,y:0,z:0},rotation:{x:0,y:0,z:0,w:1}},0.3,0.5,{x:1,y:0,z:0},5);
  this.entity.transform={position:{x:0,y:2,z:0}};this.state.position=this.entity.transform.position;this.state.input=input.pressed('interact');}
 })JS";
     AssetRecord native;db.Track(fs::absolute(root/"Assets/native.js").string(),native,error);Scene nativeScene;
@@ -74,7 +73,7 @@ fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:
     auto nativeStates=nativeWorld.Scripts()->Capture();auto nativeText=nativeStates.empty()?"":nativeStates[0].json;std::printf("NATIVE %s\n",nativeText.c_str());
     Check(nativeWorld.Scripts()->Diagnostics().empty()&&nativeText.find("\"input\":true")!=std::string::npos,"fixed script receives latched short logical-input press");
     Check(nativeText.find("\"tag\":true")!=std::string::npos&&nativeText.find("\"query\":1")!=std::string::npos&&nativeText.find("\"overlap\":1")!=std::string::npos,"tags and filtered authoritative physics queries");
-    Check(nativeText.find("\"sweep\":true")!=std::string::npos,"world.sweepCapsule hits a body in a script-owned (non-legacy) world");
+    Check(nativeText.find("\"sweep\":true")!=std::string::npos,"explicit physics.capsuleCast hits a body in a scripted world");
     Check(nativeText.find("\"velocity\":{\"x\":1")!=std::string::npos&&nativeText.find("\"position\":{\"x\":0,\"y\":2")!=std::string::npos,"forces/impulse/velocity and immediate authoritative transform readback");nativeWorld.Destroy();
     std::ofstream(root/"Assets/runtime-controls.js")<<R"JS(
 export default class {
@@ -204,7 +203,7 @@ export default class {
     for(int count:{0,10,100}){Scene load;for(int i=0;i<count;++i){auto& o=load.CreateObject("light script");o.scripts.push_back({1,script.id,true,"{}"});}RuntimeWorld perf;perf.Build(load,&resources,error);perf.UpdateScripts(&input,.016f);
         auto start=std::chrono::steady_clock::now();for(int i=0;i<200;++i){perf.UpdateScripts(&input,.016f);perf.FixedScripts(&input,.016f);}
         std::printf("PERFORMANCE scripts=%d frame_plus_fixed_us=%.3f\n",count,std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-start).count()/200);perf.Destroy();}
-    auto fingerprint=world.BaselineFingerprint();std::ofstream(root/"Assets/helper.js")<<"export const increment=3;";RuntimeWorld changed;Check(changed.Build(scene,&resources,error)&&changed.BaselineFingerprint()!=fingerprint&&!ApplyWorldState(changed,parsed,error),"transitive script source change rejects old save");
+    auto fingerprint=world.BaselineFingerprint();std::ofstream(root/"Assets/helper.js")<<"export const increment=3;";RuntimeWorld changed;Check(changed.Build(scene,&resources,error)&&changed.BaselineFingerprint()!=fingerprint,"transitive script source change changes compatibility identity");
     std::ofstream(root/"Assets/fault.js")<<"export default class {update(){throw new Error('intentional fault')}}";
     std::ofstream(root/"Assets/loop.js")<<"export default class {update(){while(true){}}}";
     AssetRecord fault,loop;db.Track(fs::absolute(root/"Assets/fault.js").string(),fault,error);db.Track(fs::absolute(root/"Assets/loop.js").string(),loop,error);

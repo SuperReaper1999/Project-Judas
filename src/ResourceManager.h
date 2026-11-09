@@ -16,7 +16,6 @@
 #include "SpriteAnimation.h"
 #include "AudioSystem.h"
 #include "NavigationAsset.h"
-#include "LiquidTypes.h"
 #include "JobSystem.h"
 #include "MeshData.h"
 #include "Renderer.h"
@@ -78,7 +77,6 @@ struct ResourceStats {
     std::size_t loadedTextures = 0;
     std::size_t loadedAudio = 0;
     std::size_t loadedNavigation = 0;
-    std::size_t loadedTerrainMeshes = 0;
     std::size_t failed = 0;
     std::size_t loading = 0;   // Queued + Loading + CpuReady
     std::size_t ready = 0;     // Ready mesh + texture entries
@@ -135,8 +133,6 @@ public:
     std::shared_ptr<const CollisionAsset> RequireCollision(const AssetId&,std::string& error);
     ResourceState RequestDeformable(const AssetId&,JobPriority priority=JobPriority::Normal);
     std::shared_ptr<const DeformableAsset> GetDeformable(const AssetId&,std::string& error);
-    ResourceState RequestLiquid(const AssetId&,JobPriority priority=JobPriority::Normal);
-    std::shared_ptr<const LiquidResource> GetLiquid(const AssetId&,std::string& error);
     ResourceState RequestNavigation(const AssetId&,JobPriority priority=JobPriority::Normal);
     std::shared_ptr<const NavigationData> GetNavigation(const AssetId&,std::string& error);
     ResourceState RequestAudio(const AssetId& id, JobPriority priority = JobPriority::Normal);
@@ -166,9 +162,6 @@ public:
     EnvironmentHandle TryGetEnvironment(const AssetId&);
     std::optional<MaterialDefinition> TryGetMeshMaterial(const AssetId&,unsigned slot)const;
     std::shared_ptr<const MaterialDefinition> TryGetMaterialDefinition(const AssetId&)const;
-    // Terrain surfaces are engine-constructed (TerrainLibrary), keyed by
-    // identifier rather than asset id, and still built synchronously.
-    MeshHandle GetTerrainMesh(const std::string& identifier, const RadialTerrain& surface);
 
     // Demand lifetime. Reference counts protect from eviction; the last
     // ReleaseRef of an in-flight load cancels it.
@@ -252,7 +245,6 @@ private:
         std::shared_ptr<AudioEnvironmentSettings> audioEnvironment;
         std::shared_ptr<TextFont const> font;std::shared_ptr<Catalog> catalog;
         std::shared_ptr<NavigationData> navigation;
-        std::shared_ptr<LiquidResource> liquid;
         std::shared_ptr<DeformableAsset> deformable;
         std::shared_ptr<SpriteSheet> spriteSheet;
         std::shared_ptr<PhysicalMaterial> physicalMaterial;
@@ -274,7 +266,6 @@ private:
         std::shared_ptr<const AudioEnvironmentSettings> audioEnvironment;
         std::shared_ptr<const TextFont> font;std::shared_ptr<const Catalog> catalog;
         std::shared_ptr<const NavigationData> navigation;
-        std::shared_ptr<const LiquidResource> liquid;
         std::shared_ptr<const DeformableAsset> deformable;
         std::shared_ptr<const SpriteSheet> spriteSheet;
         std::shared_ptr<const PhysicalMaterial> physicalMaterial;
@@ -312,7 +303,6 @@ private:
     bool m_headlessResidency = false;
     std::thread::id m_ownerThread;
     std::map<AssetId, Entry> m_entries;
-    std::map<std::string, MeshHandle> m_terrainMeshes;
     std::vector<std::shared_ptr<LoadTask>> m_inFlight;  // tasks with a job outstanding
     mutable ResourceStats m_stats;
     std::uint64_t m_budgetBytes = 256ull * 1024ull * 1024ull;

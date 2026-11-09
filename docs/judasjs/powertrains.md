@@ -1,6 +1,6 @@
 # Powertrain — shafts, torque sources and mechanical connections
 
-[Index](../JUDASJS.md) · [Wheels](wheels.md) · [Physics/joints](physics.md) · [Entities/prefabs](entities.md) · [Saves](saves.md) · [M82 model/authoring](../M82_POWERTRAINS.md)
+[Index](../JUDASJS.md) · [Wheels](wheels.md) · [Physics/joints](physics.md) · [Entities/prefabs](entities.md) · [Saves](saves.md) · [M82 model/authoring](../POWERTRAINS.md)
 
 An optional authored Powertrain component contains a bounded rotational network.
 Internal shafts have real rotational inertia. Terminals can refer to ordinary
@@ -161,7 +161,7 @@ Connection availability is reconstructed, not saved as a second damage truth.
 Committed material changes are observed at the next mechanical interval.
 
 See [Deformable strength and observations](deformables.md#m83-materialbody-connection-strength)
-and [M83 model/authoring](../M83_MECHANICAL_DAMAGE.md).
+and [M83 model/authoring](../MECHANICAL_DAMAGE.md).
 
 ## Material group prerequisites (M83)
 
@@ -170,4 +170,4 @@ A connection can opt in to `groups: true`. `attachment` and required
 constraints. The link requires an intact physical material path between them.
 Default false retains the attachment/release semantics described above.
 There is no health flag or script-driven drivetrain damage calculation.
-See [physical section integration](../M83_COARSE_CRASH.md).
+See [physical section integration](../COARSE_CRASH.md).

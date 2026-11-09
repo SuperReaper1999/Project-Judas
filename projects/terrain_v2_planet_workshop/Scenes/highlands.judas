@@ -6,7 +6,6 @@ settings
  sun-color 1 0.94 0.82
  ambient 0.34 0.39 0.45
  background-color 0.48 0.67 0.81
- fluid-scale 1
  fidelity-policy none
  next-id 100
 end
@@ -28,10 +27,8 @@ object 1 "Editable Highlands — heightfield and caves"
  body static box
  body.half-extents 24 8 24
  body.radius 1
- body.terrain ""
  body.mass 1
  body.initial-velocity 0 0 0
- body.pickable false
  body.managed false
  body.compound-count 0
  body.collision-asset ""

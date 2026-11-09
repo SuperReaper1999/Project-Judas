@@ -8,16 +8,11 @@ class Scene;
 
 // Persisted compatibility scheme. Bump this whenever canonical field coverage,
 // ordering or meaning changes. The save format records this independently.
-constexpr int kSceneFingerprintVersion = 5;
+constexpr int kSceneFingerprintVersion = 6;
 
 // SHA-256 over canonical authored data, never runtime state or file paths.
-// Schema 5 adds stable hierarchy and prefab provenance/override metadata.
-// RuntimeWorld fingerprints the resolved effective scene, including source components.
-// Schema 4 added audio emitter/listener metadata.
-// Schema 3 added render cameras and stable generated-texture references.
-// Schema 2 added explicit fluid cavities, update/drag settings, and player fluid
-// response parameters, including their defaults. Older saved fingerprints are
-// deliberately incompatible; authored scene format 3 remains readable.
+// Schema 6 retires built-in gameplay, PBF and reservoir fields. Older saves
+// require their historical engine; no retired-format migration is provided.
 // Includes scene/object names, object order (gravity priority), stable
 // IDs/NextId, every serialized component and active settings. Inactive gravity
 // region alternatives and None-policy distance radii are not serialized and

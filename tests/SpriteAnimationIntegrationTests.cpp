@@ -8,7 +8,6 @@
 #include "SaveStorage.h"
 #include "ScriptSystem.h"
 #include "Simulation.h"
-#include "GameSession.h"
 #include "Prefab.h"
 #include "../third_party/nlohmann/json.hpp"
 #include <filesystem>
@@ -24,13 +23,13 @@ void Check(bool ok,const std::string& label){
     std::cout<<"PASS "<<label<<'\n';
 }
 void Tick(RuntimeWorld& w,InputSystem& input,int n){
-    GameSession session;
+
     std::string error;
-    if(!session.Begin(w,error))throw std::runtime_error(error);
+    if(!w.IsBuilt())throw std::runtime_error(error);
     for(int i=0;i<n;++i){
         input.BeginFrame();
         input.BeginFixedStep();
-        StepAuthoritativeWorld(session,input,1.f/60);
+        StepAuthoritativeWorld(w,input,1.f/60);
         w.UpdateScripts(&input,1.f/60);
     }
     if(w.Scripts())for(const auto& fault:w.Scripts()->Diagnostics())throw std::runtime_error(fault.message);
@@ -67,7 +66,7 @@ int main(int argc,char** argv){
             Scene scene;
             Check(WorldPersistence::SceneFrom(snapshot.participants,scene,error),"fresh process reconstructs authored snapshot");
             RuntimeWorld restored;
-            restored.legacyGameplay=false;
+
             Check(restored.Build(scene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,snapshot.participants,error),"fresh process restores physical world and sprite phase: "+error);
             nlohmann::json expected;
             {
@@ -91,7 +90,7 @@ int main(int argc,char** argv){
             1.1f,-.2f,0
         };
         RuntimeWorld world;
-        world.legacyGameplay=false;
+
         Check(world.Build(scene,&resources,error),"build real gameplay and sheet dependency");
         Tick(world,input,100);
         Check(State(world).value("grounded",false),"real controller is grounded before interaction");
@@ -151,7 +150,7 @@ int main(int argc,char** argv){
         Scene saved;
         Check(WorldPersistence::SceneFrom(snapshot.participants,saved,error),"snapshot scene includes real playback configuration");
         RuntimeWorld restored;
-        restored.legacyGameplay=false;
+
         Check(restored.Build(saved,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,snapshot.participants,error),"restore into independent world before next fixed step: "+error);
         Tick(restored,input,15);
         Check(EncodeSpritePlayback(*restored.RuntimeDefinition(1)->render->spritePlayback)==EncodeSpritePlayback(after)&&State(restored).at("strikes")==expected["afterStrikes"],"independent continuation matches uninterrupted phase and events");
@@ -180,7 +179,7 @@ int main(int argc,char** argv){
         resources.Invalidate(p.sheet);
         for(int i=0;i<3;++i){
             RuntimeWorld repeat;
-            repeat.legacyGameplay=false;
+
             Check(repeat.Build(scene,&resources,error),"repeated scene construction");
             Tick(repeat,input,3);
             repeat.Destroy();
@@ -210,7 +209,7 @@ int main(int argc,char** argv){
         const auto otherTime=world.RuntimeDefinition(b)->render->spritePlayback->time;
         Tick(world,input,3);
         Check(world.RuntimeDefinition(a)->render->spritePlayback->time==.12&&world.RuntimeDefinition(b)->render->spritePlayback->time>otherTime,"prefab clocks are independent; no shared asset mutation");
-        RuntimeWorld excluded;excluded.legacyGameplay=false;
+        RuntimeWorld excluded;
     Check(excluded.Build(prefab,&resources,error)&&WorldPersistence::Prepare(excluded,error),"prepare transient-only animated fixture");
     Check(excluded.SetTransientEntity(1,true,error),"exclude optional animated actor from modern saves");
     std::map<std::string,SaveChunk> excludedChunks;
@@ -222,7 +221,7 @@ int main(int argc,char** argv){
         regional.render->spritePlayback->time=.1;
         Check(SaveSceneToFile(region,(root/"Scenes/animated-region.judas").string(),error),"author genuine streamed animation region");
         RuntimeWorld streamed;
-        streamed.legacyGameplay=false;
+
         Scene empty;
         Check(streamed.Build(empty,&resources,error),"build empty streaming root");
         WorldManifest manifest;

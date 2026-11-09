@@ -92,32 +92,6 @@ bool VerifyImportRecordFresh(const std::string& root, const Json& j, std::string
             throw std::runtime_error("import record outside project");
         return file;
     };
-    // Terrain provenance is authoring/export-only. Painting keeps geometry hashes stable.
-    const auto kind = j.value("kind", std::string());
-    if (kind == "terrain" || kind == "volume-terrain") {
-        const bool volume = kind == "volume-terrain";
-        const auto receiptPath = owned(j.at("receipt"));
-        if (!std::filesystem::is_regular_file(receiptPath) || std::filesystem::file_size(receiptPath) > 1024 * 1024)
-            throw std::runtime_error("missing/bounded terrain cook receipt");
-        std::ifstream file(receiptPath);
-        const auto receipt = Json::parse(file, [](int depth, Json::parse_event_t, const Json&) {
-            if (depth >= 16) throw std::runtime_error("terrain receipt nesting bound");
-            return true;
-        });
-        if (receipt.at("format") != (volume ? "JudasVolumeTerrainCook" : "JudasTerrainCook") ||
-            receipt.at("version") != 1 || receipt.at("revision") != (volume ? "M84-1" : "M75-1"))
-            throw std::runtime_error("terrain cook revision; recook before export");
-        for (const char* group : {"inputs", "products"}) {
-            const auto& files = receipt.at(group);
-            if (files.size() > 16)
-                throw std::runtime_error("terrain receipt bounds");
-            for (auto it = files.begin(); it != files.end(); ++it) {
-                std::string digest;
-                if (!SceneFingerprintSha256File(owned(it.key()).string(), digest, error) || digest != it.value())
-                    throw std::runtime_error("stale terrain source/product: " + it.key() + "; save and recook before export");
-            }
-        }
-    } else {
         const auto recipePath = owned(j.at("recipe"));
         std::ifstream recipe(recipePath);
         if (!recipe)
@@ -136,7 +110,6 @@ bool VerifyImportRecordFresh(const std::string& root, const Json& j, std::string
             if (!SceneFingerprintSha256File(owned(it.key()).string(), digest, error) || digest != it.value())
                 throw std::runtime_error("stale imported source/dependency: " + it.key() + "; reimport before export");
         }
-    }
     error.clear();
     return true;
 }
@@ -148,24 +121,6 @@ bool VerifyImportedModelFresh(const std::string& root, const std::string& path, 
         if (!ReadModelImportRecord(path, record, error))
             return false;
         return record.empty() || VerifyImportRecordFresh(root, Json::parse(record), error);
-    } catch (const std::exception& e) {
-        error = e.what();
-        return false;
-    }
-}
-
-bool VerifyTerrainModelFreshForPlay(const std::string& root, const std::string& path, std::string& error) {
-    try {
-        std::string record;
-        // Leave unreadable models to the ordinary runtime resource diagnostics.
-        if (!ReadModelImportRecord(path, record, error) || record.empty()) {
-            error.clear();
-            return true;
-        }
-        const auto provenance = Json::parse(record);
-        const auto kind = provenance.value("kind", std::string());
-        return (kind != "terrain" && kind != "volume-terrain") ||
-               VerifyImportRecordFresh(root, provenance, error);
     } catch (const std::exception& e) {
         error = e.what();
         return false;

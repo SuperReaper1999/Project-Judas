@@ -109,8 +109,8 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
     if (o.render) {
         w.Context(object + " render");
         const auto& r = *o.render;
-        if(r.shape!=SceneShape::Sprite&&int(r.shape)>4)w.Fail("invalid render shape");
-        w.Enum(r.shape, 7, "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
+        if(r.shape!=SceneShape::Box&&r.shape!=SceneShape::Sphere&&r.shape!=SceneShape::Compound&&r.shape!=SceneShape::Mesh&&r.shape!=SceneShape::Sprite)w.Fail("invalid render shape");
+        w.Enum(r.shape, int(SceneShape::Planar), "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
         w.Vector(r.color); w.Number(r.alpha); w.Vector(r.secondaryColor); w.Number(r.secondaryAlpha);
         w.Text(r.meshAsset); w.Text(r.textureAsset); w.U64(r.textureCamera);
         if(r.spritePlayback){if(r.shape!=SceneShape::Sprite||!ValidSpritePlayback(*r.spritePlayback)||!IsValidAssetId(r.spritePlayback->sheet))w.Fail("invalid sprite playback");w.Text("SpritePlayback.1");w.Text(EncodeSpritePlayback(*r.spritePlayback));}
@@ -143,20 +143,15 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         const auto& b = *o.body;
         w.Enum(b.motion, 2, "body motion");
         if(b.shape==SceneShape::Sprite)w.Fail("sprite is not a physical collider");
-        w.Enum(b.shape,8,"body shape");
+        w.Enum(b.shape,int(SceneShape::Planar),"body shape");
         if(b.shape==SceneShape::Planar){if(!b.planar)w.Fail("missing planar geometry");else w.Text(EncodePlanar(*b.planar));}
         else if(b.planar)w.Fail("planar descriptor on spatial body");
-        if(b.motion!=SceneBodyMotion::Static&&(b.shape==SceneShape::Terrain||b.shape==SceneShape::TriangleMesh))w.Fail("terrain and concave triangle surfaces must remain static");
-        w.Vector(b.halfExtents); w.Number(b.radius); w.Text(b.terrainSurface);
+        if(b.motion!=SceneBodyMotion::Static&&(b.shape==SceneShape::TriangleMesh))w.Fail("terrain and concave triangle surfaces must remain static");
+        w.Vector(b.halfExtents); w.Number(b.radius);
         w.Number(b.mass); w.Number(b.friction); w.Number(b.restitution); w.Vector(b.initialLinearVelocity);
-        w.Boolean(b.pickable); w.Boolean(b.managed); w.U64(b.compoundBoxes.size());
+        w.Boolean(b.managed); w.U64(b.compoundBoxes.size());
         for (const auto& box : b.compoundBoxes) { w.Vector(box.localCenter); w.Vector(box.halfExtents); }
-        w.U64(b.fluidCavities.size());
-        for (const auto& cavity : b.fluidCavities) {
-            w.Vector(cavity.localCenter); w.Vector(cavity.halfExtents);
-            if (!(cavity.halfExtents.x > 0.0f) || !(cavity.halfExtents.y > 0.0f) ||
-                !(cavity.halfExtents.z > 0.0f)) w.Fail("fluid cavity half extents must be positive");
-        }
+
     }
     w.Boolean(o.gravity.has_value());
     if (o.gravity) {
@@ -173,30 +168,13 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Enum(l.kind, 1, "light kind"); w.Vector(l.color); w.Number(l.range);
         w.Number(l.innerConeDegrees); w.Number(l.outerConeDegrees);
     }
-    w.Boolean(o.door.has_value());
-    if (o.door) {
-        w.Context(object + " door");
-        const auto& d = *o.door;
-        w.Vector(d.localHingeAxis); w.Number(d.openAngleDegrees); w.Number(d.angularSpeedDegreesPerSecond);
-    }
-    w.Boolean(o.lightSwitch.has_value());
-    if (o.lightSwitch) {
-        w.Context(object + " light switch");
-        const auto& s = *o.lightSwitch;
-        w.Vector(s.localHingeAxis); w.Number(s.toggleAngleDegrees); w.Number(s.angularSpeedDegreesPerSecond);
-        w.Vector(s.lampLocalOffset); w.Vector(s.lampColor); w.Number(s.lampRange);
-    }
-    w.Boolean(o.vehicle.has_value());
-    if (o.vehicle) {
-        w.Context(object + " vehicle");
-        const auto& v = *o.vehicle;
-        w.Enum(v.gravity, 1, "vehicle gravity"); w.Boolean(v.headlight); w.Boolean(v.navigationLights);
-        w.Number(v.dragCoefficient); w.Boolean(v.initialPilotAttached);
-    }
+
+
+
     w.Boolean(o.celestial.has_value());
     if (o.celestial) {
         w.Context(object + " celestial");
-        w.Number(o.celestial->gravitationalParameter); w.Number(o.celestial->operatorThrustForce);
+        w.Number(o.celestial->gravitationalParameter);
     }
     w.Boolean(o.atmosphere.has_value());
     if (o.atmosphere) {
@@ -218,9 +196,7 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Context(object + " fluid volume");
         const auto& f = *o.fluidVolume;
         w.Number(f.spacing); w.Integer(f.countX); w.Integer(f.countY); w.Integer(f.countZ);
-        w.Boolean(f.emitter); w.Vector(f.emitterLocalOffset); w.Integer(f.maxParticles);
-        if (f.backend != SceneFluidBackend::Particles) {
-            w.Enum(f.backend, 1, "fluid backend");
+        {
             w.Number(f.fillHeight); w.Number(f.density); w.Vector(f.color); w.Number(f.opacity);
             if (f.countX < 2 || f.countY < 2 || f.countZ < 2 ||
                 f.countX > 262144 || f.countY > 262144 || f.countZ > 262144 ||
@@ -228,19 +204,11 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
                 f.fillHeight < 0 || f.fillHeight > f.countY * f.spacing ||
                 f.density <= 0 || f.density > 10000 || f.opacity < 0 || f.opacity > 1 ||
                 glm::any(glm::lessThan(f.color, glm::vec3(0))) ||
-                glm::any(glm::greaterThan(f.color, glm::vec3(1))) || f.emitter)
+                glm::any(glm::greaterThan(f.color, glm::vec3(1))) )
                 w.Fail("invalid grid water dimensions, fill, material or emitter");
         }
     }
-    w.Boolean(o.playerStart.has_value());
-    if (o.playerStart) {
-        w.Context(object + " player start");
-        const auto& p = *o.playerStart;
-        w.Enum(p.view, 1, "player view"); w.Number(p.yawDegrees);
-        w.Number(p.density); w.Number(p.fluidDrag); w.Number(p.swimAcceleration);
-        if (!(p.density > 0.0f) || p.fluidDrag < 0.0f || p.swimAcceleration < 0.0f)
-            w.Fail("player density must be positive; fluid drag and swim acceleration must be non-negative");
-    }
+
 }
 
 }  // namespace
@@ -334,10 +302,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     w.Context("settings");
     const auto& s = scene.Settings();
     w.Text(s.name); w.Vector(s.worldOrigin); w.Vector(s.sunDirection);
-    w.Vector(s.sunColor); w.Vector(s.ambientColor); w.Number(s.fluidScale);
-    w.Number(s.fluidUpdateRateHz); w.Number(s.fluidHydrostaticDragRate);
-    if (!(s.fluidUpdateRateHz > 0.0f) || s.fluidHydrostaticDragRate < 0.0f)
-        w.Fail("fluid update rate must be positive and hydrostatic drag non-negative");
+    w.Vector(s.sunColor); w.Vector(s.ambientColor);
     w.Enum(s.fidelityPolicy, 1, "fidelity policy");
     if (s.fidelityPolicy == SceneFidelityPolicy::Distance) {
         w.Number(s.fidelityFullRadius); w.Number(s.fidelityCoarseRadius);
@@ -450,16 +415,12 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     bool classified=s.mainCameraRenderMask!=kAllCategories;
     for(const auto& o:scene.Objects()) classified|=o.tags||o.renderLayer||
         (o.body&&(o.body->collisionLayer||o.body->collisionMask!=kAllCategories))||
-        (o.door&&(o.door->collisionLayer||o.door->collisionMask!=kAllCategories))||
-        (o.playerStart&&(o.playerStart->collisionLayer||o.playerStart->collisionMask!=kAllCategories))||
         (o.renderCamera&&o.renderCamera->renderMask!=kAllCategories);
     if(classified){w.Text("Judas.Classification.1");w.U64(s.mainCameraRenderMask);
         for(const auto& o:scene.Objects()){
             w.U64(o.id);w.U64(o.tags);w.U32(o.renderLayer);
             if(o.renderLayer>=64)w.Fail("invalid render layer");
             w.Boolean(bool(o.body));if(o.body){w.U32(o.body->collisionLayer);w.U64(o.body->collisionMask);if(o.body->collisionLayer>=64)w.Fail("invalid collision layer");}
-            w.Boolean(bool(o.door));if(o.door){w.U32(o.door->collisionLayer);w.U64(o.door->collisionMask);if(o.door->collisionLayer>=64)w.Fail("invalid door layer");}
-            w.Boolean(bool(o.playerStart));if(o.playerStart){w.U32(o.playerStart->collisionLayer);w.U64(o.playerStart->collisionMask);if(o.playerStart->collisionLayer>=64)w.Fail("invalid player layer");}
             w.Boolean(bool(o.renderCamera));if(o.renderCamera)w.U64(o.renderCamera->renderMask);
         }
     }
@@ -467,8 +428,6 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(deformables){w.Text("Judas.Deformable.1");w.U64(deformables);for(const auto& o:scene.Objects())if(o.deformable){w.U64(o.id);auto properties=DeformableProperties(o);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t waters=0;for(const auto& o:scene.Objects())waters+=o.basicWater.has_value();
     if(waters){w.Text("Judas.BasicWater.1");w.U64(waters);for(const auto& o:scene.Objects())if(o.basicWater){std::string error;if(!ValidateBasicWater(*o.basicWater,error))w.Fail(error);w.U64(o.id);w.Text(EncodeBasicWater(*o.basicWater));}}
-    size_t liquid=0;for(const auto& o:scene.Objects())liquid+=!LiquidProperties(o).empty();
-    if(liquid){w.Text("Judas.ConservedLiquid.1");w.U64(liquid);for(const auto& o:scene.Objects()){auto properties=LiquidProperties(o);if(properties.empty())continue;std::string error;if(!ValidateLiquidComponents(o,error))w.Fail(error);w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t landscapes = 0;
     for (const auto& o : scene.Objects()) landscapes += o.landscape.has_value();
     if (landscapes) {

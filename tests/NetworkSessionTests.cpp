@@ -1,5 +1,4 @@
 #include "AssetDatabase.h"
-#include "GameSession.h"
 #include "InputSystem.h"
 #include "JobSystem.h"
 #include "LocalMultiplayer.h"
@@ -12,7 +11,6 @@
 #include "SceneSerialization.h"
 #include "SceneSession.h"
 #include "Simulation.h"
-#include "WorldState.h"
 #include "../third_party/nlohmann/json.hpp"
 
 #include <algorithm>
@@ -58,7 +56,7 @@ struct Content {
         fs::create_directories(root / "Saves");
         ProjectSettings settings;
         settings.name = "M99 native session fixture";
-        settings.legacyGameplay = false;
+
         settings.startupScene = "Scenes/session.judas";
         settings.saveIdentity = std::string(64, '9');
         settings.input.Add("network_custom", true);
@@ -113,27 +111,27 @@ struct Content {
 
 struct Instance {
     RuntimeWorld world;
-    GameSession game;
+
     InputSystem input;
     std::shared_ptr<SceneSession> control;
     explicit Instance(Content& content) {
         std::string error;
         control = std::make_shared<SceneSession>(content.project, content.project.StartupScenePath());
-        world.legacyGameplay = false;
+
         world.SetSceneControl(control);
         Check(world.Build(content.scene, &content.resources, error,
                           &content.project.Settings().classification, &content.project.Settings().navigation),
               "independent native world builds: " + error);
-        Check(game.Begin(world, error) && input.SetMap(content.project.Settings().input, error),
+        Check(world.IsBuilt() && input.SetMap(content.project.Settings().input, error),
               "ordinary script-owned session begins: " + error);
         Check(glm::distance(world.SampleEntityGravity(2, {0, 1, 0}), glm::vec3(0, -9.81f, 0)) < 1e-5f,
               "fixture supplies authored gravity instead of assuming a universal default");
     }
-    ~Instance() { world.EndScripts(); game.End(); world.Destroy(); }
+    ~Instance() { world.EndScripts();  world.Destroy(); }
     NetworkSession& Net() { return world.Network(); }
     void Fixed() {
         input.BeginFixedStep();
-        StepAuthoritativeWorld(game, input, 1.f / 60);
+        StepAuthoritativeWorld(world, input, 1.f / 60);
     }
 };
 
@@ -429,8 +427,6 @@ int main(int argc, char** argv) {
         std::string error, boxId, motorId;
         auto& server = host.Net();
         auto& remote = client.Net();
-        Check(CanCaptureLegacyWorldState(host.world, error), "offline legacy-delta capture remains supported where previously valid");
-        const auto offlineDelta = CaptureWorldState(host.world);
         Check(!server.Active() && !server.Client() && !host.control->networkActive,
               "optional networking starts inactive with no scene gate");
         NetworkSession::Options options;
@@ -536,13 +532,6 @@ int main(int argc, char** argv) {
         Check(!saves->Request("save", "online", "Online", "{}", error) &&
               !saves->Request("load", "online", "Online", "{}", error) && !saves->Busy(),
               "online cold save/load rejected without a partial service transaction");
-        bool captureRejected = false;
-        try { (void)CaptureWorldState(host.world); } catch (const std::logic_error&) { captureRejected = true; }
-        const auto endpointBeforeDelta = host.world.Physics().GetTransform(host.world.RuntimeBody(2)).position;
-        Check(!CanCaptureLegacyWorldState(host.world, error) && captureRejected &&
-              !ApplyWorldState(host.world, offlineDelta, error) &&
-              host.world.Physics().GetTransform(host.world.RuntimeBody(2)).position == endpointBeforeDelta,
-              "editor/native legacy world-state save and apply cannot bypass active session persistence boundary");
         Check(server.SetOwner(motorId, other.Net().PeerId(), error), "host can deliberately transfer control ownership");
         Check(driver.Until([&] { auto entries = remote.Entries();auto* entry = FindEntry(entries, motorId);
               return entry && entry->owner == other.Net().PeerId(); }),
@@ -653,20 +642,12 @@ int main(int argc, char** argv) {
                     static_cast<unsigned long long>(stats.transport.bytesReceived), stats.peers, stats.entities);
         remote.Close();other.Net().Close();server.Close();
         Check(!host.control->networkActive && !server.Active(), "close releases native lifecycle gate and sockets");
-        Check(CanCaptureLegacyWorldState(host.world, error), "network close restores previously valid legacy-delta capture path");
         auto offlineSave = saves->Request("save", "offline", "Offline", "{}", error);
         Check(offlineSave != 0 && saves->Cancel(offlineSave),
               "offline save request remains valid and cancellable after network closure");
         Check(host.control->Reload(error) && host.control->Pending(), "offline scene request remains available after close");
         Check(!server.Host(options, error) && !server.Active() && host.control->Pending(),
               "pending scene transaction prevents opening a competing network session");
-        const auto timeBefore = client.world.SimulationTimeSeconds();
-        client.world.legacyGameplay = true;
-        bool legacyRejected = false;
-        try { client.Fixed(); } catch (const std::invalid_argument&) { legacyRejected = true; }
-        client.world.legacyGameplay = false;
-        Check(legacyRejected && client.world.SimulationTimeSeconds() == timeBefore,
-              "headless fixed-step API rejects legacy execution before changing physical time");
         std::printf("SUMMARY %u checks 0 failures\n", checks);
         return 0;
     } catch (const std::exception& error) {

@@ -1,6 +1,6 @@
 """Execute the extracted CMake declarations without a compiler or engine build.
 
-The expected inputs preserve the accepted pre-extraction M79–M83 target contract.
+The expected inputs preserve the current retained mechanical target contract.
 Negative controls deliberately remove/change mechanisms instead of counting names.
 """
 
@@ -16,25 +16,19 @@ APPLICATION_SOURCES = ["src/Application.cpp", "src/RuntimeOptions.cpp",
                        "src/RuntimeDiagnostics.cpp", "src/TestHarness.cpp"]
 TARGETS = [
     ("judas_structural_tests", "StructuralTests", False),
-    ("judas_structural_application_tests", "StructuralApplicationTests", True),
     ("judas_bending_tests", "BendingTests", False),
-    ("judas_bending_application_tests", "BendingApplicationTests", True),
     ("judas_wheel_tests", "WheelTests", False),
     ("judas_wheel_script_tests", "WheelScriptTests", False),
     ("judas_wheel_lifecycle_tests", "WheelLifecycleTests", False),
-    ("judas_wheel_application_tests", "WheelApplicationTests", True),
     ("judas_powertrain_tests", "PowertrainTests", False),
     ("judas_powertrain_script_tests", "PowertrainScriptTests", False),
     ("judas_powertrain_lifecycle_tests", "PowertrainLifecycleTests", False),
-    ("judas_powertrain_application_tests", "PowertrainApplicationTests", True),
     ("judas_mechanical_damage_tests", "MechanicalDamageTests", False),
     ("judas_mechanical_connection_tests", "MechanicalConnectionTests", False),
     ("judas_mechanical_damage_application_tests", "MechanicalDamageApplicationTests", True),
     ("judas_mechanical_crash_application_tests", "MechanicalCrashApplicationTests", True),
-    ("judas_vehicle_damage_application_tests", "MechanicalVehicleCrashApplicationTests", True),
     ("judas_mechanical_damage_script_tests", "MechanicalDamageScriptTests", False),
     ("judas_section_material_tests", "SectionMaterialTests", False),
-    ("judas_coarse_crash_application_tests", "CoarseCrashApplicationTests", True),
 ]
 
 

@@ -35,14 +35,12 @@
 #include "Broadphase.h"
 #include "OverlapPairIndex.h"
 #include "CollisionShapes.h"
-#include "ContactSolver.h"
 #include "Contacts.h"
 #include "Narrowphase.h"
 #include "RadialTerrain.h"
 #include "RigidBody.h"
 #include "RigidMotion.h"
 #include "RigidMotionBounds.h"
-#include "ImpactSolver.h"
 #include "JointSolver.h"
 #include <atomic>
 
@@ -288,10 +286,6 @@ struct PhysicsWorld::Impl {
     bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
                     float dt);
-    ContactSolver solver;
-    ContactSolver particleSolver; // independent storage; never replays the rigid warm cache
-    PhysicsWorld::ParticleContactStats particleContactStats;
-    ImpactSolver impactSolver;
     double stepDuration = 0;
 
     // A derived CCD sample, never an integration anchor. Many incident pairs

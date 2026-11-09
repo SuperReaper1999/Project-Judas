@@ -86,7 +86,7 @@ Focused Linux native checks include:
 - Real editor New Project grid-template handling, save and Play/Stop; relocated
   standalone traversal scenes with collision, scene changes and save/load.
 
-[Evidence and reproduction commands](evidence/2d-traversal/README.md) record exact source/binary fingerprints and separates preliminary
+[Evidence and reproduction commands (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/2d-traversal/README.md) record exact source/binary fingerprints and separates preliminary
 setup/prototype failures from final results. Builds use two compiler jobs on the
 8 GB Linux host. Windows/Android and Ubuntu-compatible SDK packaging are not qualified by this
 host-build pass. The relocated export is a local test package, not a release artifact. These are

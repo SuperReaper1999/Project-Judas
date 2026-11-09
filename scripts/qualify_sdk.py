@@ -28,7 +28,7 @@ def main():
     windows=os.name=='nt';ext='.exe' if windows else '';rows=[]
     identity=json.loads((sdk/'BUILD_INFO.json').read_text())
     spec=importlib.util.spec_from_file_location('baseline',ROOT/'tools/build_linux_baseline.py');baseline=importlib.util.module_from_spec(spec);spec.loader.exec_module(baseline)
-    shutil.copytree(ROOT/'tests/fixtures/releases/sdk',work/'fixtures')
+    shutil.copytree(ROOT/'tests/fixtures/rendering',work/'fixtures')
     shutil.copyfile(ROOT/'scripts/qualify_sdk_workflows.py',work/'tool-workflows.py')
     active=sdk
     if a.mesa:
@@ -41,7 +41,7 @@ def main():
     inner_active=Path('/source') if a.rootfs else active
     inner_work=Path('/build') if a.rootfs else work
     base_env={k:v for k,v in os.environ.items() if not k.startswith('JUDAS_')}
-    base_env.update(SDL_AUDIODRIVER='dummy',JUDAS_WORLD_STATE='none',PYTHONUTF8='1')
+    base_env.update(SDL_AUDIODRIVER='dummy',PYTHONUTF8='1')
     def run(name,command,env=None,expected=0):
         start=time.monotonic()
         with (work/(name+'.log')).open('w',encoding='utf-8') as f:
@@ -61,7 +61,7 @@ def main():
         if mode=='create':env.update(JUDAS_EDITOR_AUTOTEST_POLISH='1',JUDAS_EDITOR_AUTOTEST_NEW_PROJECT=str(work/'game'),JUDAS_EDITOR_AUTOTEST_EXPORT=str(work/'editor-export'))
         else:command+=[work/'game/SDK_First_Game.judasproj']
         if a.rootfs:
-            script='set -eu\nexport SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy LIBGL_ALWAYS_SOFTWARE=1 JUDAS_WORLD_STATE=none\n'
+            script='set -eu\nexport SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy LIBGL_ALWAYS_SOFTWARE=1\n'
             script+=f'export XDG_CONFIG_HOME=/build/editor-config-{mode} JUDAS_EDITOR_AUTOTEST=/build/editor-{mode}\n'
             if mode=='create':script+='export JUDAS_EDITOR_AUTOTEST_POLISH=1 JUDAS_EDITOR_AUTOTEST_NEW_PROJECT=/build/game JUDAS_EDITOR_AUTOTEST_EXPORT=/build/editor-export\n'
             script+='cd /tmp\nexec xvfb-run -a /source/judas_editor'+(' /build/game/SDK_First_Game.judasproj' if mode=='play' else '')+'\n'
@@ -78,7 +78,7 @@ def main():
         driver=work/('driver-'+name);driver.mkdir()
         (driver/'smoke.test').write_text('STEPS 90\nLOG_EVERY 30\nSCREENSHOT 89 '+('/build/moved.png' if a.rootfs else str(driver/'moved.png'))+'\n')
         if a.rootfs:
-            (driver/'run.sh').write_text('set -eu\nexport SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy LIBGL_ALWAYS_SOFTWARE=1 JUDAS_WORLD_STATE=none JUDAS_TEST_SCRIPT=/build/smoke.test\ncd /tmp\nexec xvfb-run -a /source/judas /source/game.judasproj\n')
+            (driver/'run.sh').write_text('set -eu\nexport SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy LIBGL_ALWAYS_SOFTWARE=1 JUDAS_TEST_SCRIPT=/build/smoke.test\ncd /tmp\nexec xvfb-run -a /source/judas /source/game.judasproj\n')
             run('relocated-'+name,prefix(moved,driver)+['/bin/sh','/build/run.sh'])
         else:
             launch=moved

@@ -109,7 +109,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.kinematicMotion` | `kinematicMotion` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.light` | `lightInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `Entity.mass` | `mass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `Entity.modelParts` | `modelParts` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -209,15 +208,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Joint.setSpring` | `jointSet` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Joint.state` | `jointState` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Joint.valid` | `jointValid` | [declaration](../judas.d.ts) | [reference](physics.md) |
-| `LiquidVolume` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.applyImpulse` | `liquidImpulse` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.enabled` | `liquidEnabled` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.state` | `liquidState` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.surfaceEnabled` | `liquidSurfaceEnabled` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.transferTo` | `liquidTransfer` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `LiquidVolume.valid` | `liquidValid` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `LocalPlayer` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `LocalPlayer.assign` | `playerAssign` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `LocalPlayer.clearView` | `playerView` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
@@ -304,7 +294,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.brush` | `terrainBrush` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
-| `Terrain.create` | `terrainCreate` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.createLandscape` | `terrainLandscape` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Terrain.state` | `terrainState` | [declaration](../judas.d.ts) | [reference](terrain.md) |
@@ -405,13 +394,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `input.tilt` | `tilt` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.touches` | `touches` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.vector` | `vector` | [declaration](../judas.d.ts) | [reference](input.md) |
-| `liquid` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.accounting` | `liquidAccounting` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.connections` | `liquidConnections` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.errors` | `liquidErrors` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.sample` | `liquidSample` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.samplePresented` | `liquidPresentedSample` | [declaration](../judas.d.ts) | [reference](liquid.md) |
-| `liquid.submerged` | `liquidSubmerged` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `localization` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](localization.md) |
 | `localization.available` | `localeInfo` | [declaration](../judas.d.ts) | [reference](localization.md) |
 | `localization.direction` | `localeInfo` | [declaration](../judas.d.ts) | [reference](localization.md) |
@@ -519,7 +501,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `time.elapsed` | `elapsed` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `time.fixed` | `fixed` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `ui` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
-| `ui.debugOverlayVisible` | `uiDiagnostics` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `ui.get` | `uiFind` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `ui.load` | `uiLoad` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `ui.quit` | `uiQuit` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -542,7 +523,6 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.setAppearance` | `appearanceSet` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setView` | `setView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.spawnPrefab` | `spawn` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `world.sweepCapsule` | `sweep` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.toAbsolute` | `worldAbsolute` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.toLocal` | `worldLocal` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.unproject` | `viewportRay` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |

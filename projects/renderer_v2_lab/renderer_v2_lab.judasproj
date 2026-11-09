@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Judas Renderer V2 Workshop",
-    "legacyGameplay": false,
     "saveIdentity": "45d516b4b95c8e164232540d54d4f31a13d755f6bb26668d0f5e2c22cd2e7828",
     "iconAsset": "",
     "worldManifest": "",

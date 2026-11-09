@@ -56,9 +56,9 @@ judas_add_engine_test(judas_terrain_v2_render_tests tests/TerrainV2RenderTests.c
 judas_add_engine_test(judas_terrain_v2_transition_tests tests/TerrainV2TransitionTests.cpp)
 judas_add_engine_test(judas_terrain_v2_planet_render_tests tests/TerrainV2PlanetRenderTests.cpp)
 # Matched geometry preparation benchmark, intentionally not a timing gate.
-add_executable(judas_terrain_v2_benchmark tests/TerrainV2Benchmark.cpp)
-target_link_libraries(judas_terrain_v2_benchmark PRIVATE judas_world_authoring)
-judas_warnings(judas_terrain_v2_benchmark)
+
+
+
 add_executable(judas_terrain_v2_picking_benchmark tests/TerrainV2PickingBenchmark.cpp tests/TerrainV2PickingReference.cpp)
 target_link_libraries(judas_terrain_v2_picking_benchmark PRIVATE judas_world_authoring)
 judas_warnings(judas_terrain_v2_picking_benchmark)

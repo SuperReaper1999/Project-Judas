@@ -59,8 +59,7 @@ class EditorApplication {
     EditorPlaySession m_playSession;
     EditorAssetPreview m_assetPreview;
     EditorMilestoneNotice m_milestoneNotice;
-    std::unique_ptr<struct TerrainEditor> m_terrain;
-    std::unique_ptr<struct VolumeTerrainEditor> m_volumeTerrain;
+    std::unique_ptr<class TerrainV2Editor> m_terrain;
     std::unique_ptr<struct ModTools> m_modTools;
 
     bool StartPlay(std::string &outError);
@@ -74,7 +73,6 @@ class EditorApplication {
     bool OpenScene(const std::string &path, std::string &outError);
     bool RunProject(std::string &outMessage);
     std::string ResolveScenePath(const std::string &input);
-    std::string WorldStatePathFor(const std::string &scenePath);
     void FrameEditMode(float deltaSeconds);
     void UpdateCameraNavigation(const EditorCameraGestureInput &input, int mouseDeltaX, int mouseDeltaY,
                                 float deltaSeconds, bool fast);
@@ -91,9 +89,6 @@ class EditorApplication {
     // never cancelled) while it is open; the set follows every edit.
     void RefreshAssetDemand();
 
-    struct StabilizationAutomation;
-    void AdvanceStabilizationAutomation();
-    std::unique_ptr<StabilizationAutomation> m_stabilization;
 
     std::unique_ptr<AnimationTimeline> m_animationTimeline;
     std::unique_ptr<UtilityAIEditor> m_utilityAIEditor;

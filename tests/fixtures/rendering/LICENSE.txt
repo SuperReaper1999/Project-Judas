@@ -1,0 +1,2 @@
+studio.hdr is an original Judas synthetic lighting regression fixture.
+Distributed under the repository MIT licence.

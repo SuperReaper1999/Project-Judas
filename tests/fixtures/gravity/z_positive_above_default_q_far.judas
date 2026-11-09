@@ -6,7 +6,6 @@ settings
   sun-direction 0.4 0.7 0.35
   sun-color 1 0.98 0.92
   ambient 0.16 0.17 0.19
-  fluid-scale 1
   fidelity-policy none
   next-id 4
 end
@@ -35,12 +34,10 @@ object 2 "Free body"
   body dynamic box
   body.half-extents 0.1 0.1 0.1
   body.radius 0.1
-  body.terrain ""
   body.mass 37
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
 end
@@ -49,6 +46,4 @@ object 3 "Player start"
   position 2000 2000 2000
   rotation 1 0 0 0
   scale 1 1 1
-  player-start third-person
-  player-start.yaw 0
 end

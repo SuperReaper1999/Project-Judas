@@ -85,7 +85,7 @@ research are untouched. No fluid work starts as part of this pass.
 ## Reproduction and retained material
 
 Full records are in
-[`evidence/browser-android-emulator-20261031`](evidence/browser-android-emulator-20261031),
+[`evidence/browser-android-emulator-20261031` (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/browser-android-emulator-20261031),
 including the binary save, engine package receipt, original/probe source hashes,
 resource-limit failure, successful session settings, exact executed diagnostic
 sources, invalid oracles, successful lifecycle observations and raw console logs.

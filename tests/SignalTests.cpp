@@ -3,7 +3,6 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "InputSystem.h"
-#include "WorldState.h"
 #include "SceneSerialization.h"
 #include "Prefab.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -47,7 +46,7 @@ int main(){
         Check(f.State(3)["none"]["recipients"]==0&&f.State(3)["none"]["sequence"].is_null(),"no listener accepts zero recipients without queued history");
         Check(z["received"][0]["sender"]=="3"&&z["received"][0]["slot"]=="1","full precision engine-derived sender identities");
         // Save capture does not run pending deliveries; restored counters register once.
-        f.world.FixedScripts(&f.input,1.f/60);auto snapshot=CaptureWorldState(f.world);RuntimeWorld restored;Check(restored.Build(f.scene,&f.resources,f.error)&&ApplyWorldState(restored,snapshot,f.error),"legacy delta script state rehydrates normally");restored.UpdateScripts(&f.input,.02f);restored.Destroy();
+        f.world.FixedScripts(&f.input,1.f/60);
         auto records=f.world.Scripts()->Capture();RuntimeWorld modern;Check(modern.Build(f.scene,&f.resources,f.error)&&modern.RestoreScriptState(records,f.error,true),"modern restore installs saved script state before restore");modern.UpdateScripts(&f.input,.02f);modern.Scripts()->DrainSignals(&f.input,.016f,false);
         auto states=modern.Scripts()->Capture();Check(Json::parse(states[0].json)["restores"]==1&&Json::parse(states[0].json)["received"].size()==1,"restore helper rebuilds subscriptions without replay/reset");modern.Destroy();
         // Slot retirement while messages wait: re-subscription must not resurrect old token.

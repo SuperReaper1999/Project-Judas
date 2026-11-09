@@ -13,7 +13,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "GameSession.h"
 #include "RuntimeWorld.h"
 #include "Scene.h"
 #include "SceneSerialization.h"
@@ -37,7 +36,6 @@ Scene MakeAuthoredScene() {
     Scene scene;
     scene.Settings().name = "Test scene";
     scene.Settings().worldOrigin = glm::dvec3(1.0e9, -2.0e9, 3.0e9);
-    scene.Settings().fluidScale = 1.0f;
 
     SceneObject& ground = scene.CreateObject("Ground");
     ground.transform.position = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -72,7 +70,7 @@ Scene MakeAuthoredScene() {
     crate.body->friction = 0.6f;
     crate.body->restitution = 0.15f;
     crate.body->initialLinearVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-    crate.body->pickable = true;
+
 
     SceneObject& lamp = scene.CreateObject("Lamp");
     lamp.transform.position = glm::vec3(-2.0f, 3.0f, 2.0f);
@@ -85,9 +83,6 @@ Scene MakeAuthoredScene() {
 
     SceneObject& start = scene.CreateObject("Player start");
     start.transform.position = glm::vec3(0.0f, 2.0f, 4.0f);
-    start.playerStart = ScenePlayerStartComponent{};
-    start.playerStart->yawDegrees = 180.0f;
-    start.playerStart->view = ScenePlayerView::FirstPerson;
     return scene;
 }
 
@@ -262,28 +257,26 @@ void SectionRuntimeSeparation() {
     Check(world.Build(scene, nullptr, error), ("scene instantiates headlessly: " + error).c_str());
     Check(world.DynamicBodies().size() == 1 && world.StaticBodies().size() == 1,
           "one dynamic and one static body were created");
-    Check(world.GetPlayerStart().has_value() && Near(world.GetPlayerStart()->position, glm::vec3(0.0f, 2.0f, 4.0f)),
-          "the player start was read from the scene");
     Check(world.StaticLights().size() == 1, "the standalone light was instantiated");
 
-    GameSession session;
-    Check(session.Begin(world, error), "a game session begins over the world");
+
+    Check(world.IsBuilt(), "a game session begins over the world");
     Window window;
     window.SetTestInputMode(true);
     const SceneObjectId crateId = scene.Objects()[1].id;
     const glm::vec3 authoredCratePosition = scene.Find(crateId)->transform.position;
-    for (int i = 0; i < 180; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    for (int i = 0; i < 180; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     const glm::vec3 fallen = world.DynamicBodies()[0].GetPosition();
     Check(fallen.y < authoredCratePosition.y - 2.0f, "the crate fell under the scene's gravity during play");
     Check(Near(scene.Find(crateId)->transform.position, authoredCratePosition),
           "playing did not touch the authored scene object");
     world.Physics().SetLinearVelocity(world.DynamicBodies()[0].Handle(), glm::vec3(3.0f, 0.0f, 0.0f));
-    for (int i = 0; i < 30; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+    for (int i = 0; i < 30; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
     Check(std::abs(world.DynamicBodies()[0].GetPosition().x - authoredCratePosition.x) > 0.1f,
           "runtime mutation moved the body sideways");
 
     // Stop: the runtime instance is discarded; the Scene is what it was.
-    session.End();
+
     world.Destroy();
     std::string afterPlay;
     SaveSceneToString(scene, afterPlay);
@@ -293,11 +286,9 @@ void SectionRuntimeSeparation() {
     Check(world.Build(scene, nullptr, error), "the same scene instantiates again after stop");
     Check(Near(world.DynamicBodies()[0].GetPosition(), authoredCratePosition),
           "the second run starts from the authored pose, not the mutated one");
-    Check(session.Begin(world, error), "a second session begins");
-    for (int i = 0; i < 60; ++i) StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
-    session.ResetToAuthoredState();
-    Check(Near(world.DynamicBodies()[0].GetPosition(), authoredCratePosition),
-          "an in-run reset restores the authored pose as well");
+    Check(world.IsBuilt(), "a second session begins");
+    for (int i = 0; i < 60; ++i) StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
+
 }
 
 void SectionRuntimeLoading() {
@@ -312,45 +303,7 @@ void SectionRuntimeLoading() {
     Check(world.Build(loaded, nullptr, error), "the reloaded scene instantiates");
     std::remove(path.c_str());
 
-    // The committed demonstrations: every shipped scene loads and builds.
-    const char* shipped[] = {
-        "assets/scenes/classic.judas", "assets/scenes/classic_fluid_rotated.judas",
-        "assets/scenes/classic_fluid_zero.judas", "assets/scenes/terrain.judas",
-        "assets/scenes/terrain_rotated.judas", "assets/scenes/terrain_atmospheric_pass.judas",
-        "assets/scenes/terrain_atmospheric_pass_rotated.judas",
-    };
-    for (const char* file : shipped) {
-        Scene scene;
-        RuntimeWorld shippedWorld;
-        const bool ok = LoadSceneFromFile(file, scene, error) && shippedWorld.Build(scene, nullptr, error);
-        Check(ok, (std::string("shipped scene loads and instantiates: ") + file + (ok ? "" : " — " + error)).c_str());
-        std::string roundTrip;
-        SaveSceneToString(scene, roundTrip);
-        Scene again;
-        Check(LoadSceneFromString(roundTrip, again, error) && ScenesEqual(scene, again),
-              "  ...and round-trips through the format unchanged");
-    }
-    Scene classic;
-    LoadSceneFromFile("assets/scenes/classic.judas", classic, error);
-    RuntimeWorld classicWorld;ProjectSettings fluids;fluids.advancedFluidDynamics=true;classicWorld.ConfigureProject(fluids);
-    classicWorld.Build(classic, nullptr, error);
-    Check(classicWorld.GetVehicle().has_value() && classicWorld.Doors().size() == 1 &&
-              classicWorld.LightSwitches().size() == 1 && classicWorld.CelestialParticipants().size() == 3 &&
-              classicWorld.HasFluid() && classicWorld.Fluid().Particles().size() == 125,
-          "classic scene: vehicle, door, switch, three Newtonian participants, 125 water particles");
-    Scene terrain;
-    LoadSceneFromFile("assets/scenes/terrain.judas", terrain, error);
-    RuntimeWorld terrainWorld;terrainWorld.ConfigureProject(fluids);
-    terrainWorld.Build(terrain, nullptr, error);
-    Check(terrainWorld.Terrains().size() == 1 && terrainWorld.GetAtmosphere().has_value() &&
-              terrainWorld.Combustibles().size() == 3 && terrainWorld.PointMassSources().size() == 1 &&
-              terrainWorld.Fluid().Particles().size() == 125,
-          "terrain scene: terrain body, atmosphere, three combustibles, point-mass source, lake");
-    Check(terrainWorld.EmitFluidParticle() && terrainWorld.Fluid().Particles().size() == 126,
-          "the authored emitter adds real particles on demand");
-    terrainWorld.RestoreAuthoredState();
-    Check(terrainWorld.Fluid().Particles().size() == 125 && terrainWorld.EmittedFluidParticles() == 0,
-          "restoring authored state discards emitted particles");
+
 }
 
 void SectionInstantiationErrors() {
@@ -359,12 +312,12 @@ void SectionInstantiationErrors() {
     SceneObject& terrain = scene.CreateObject("Bad terrain");
     terrain.body = SceneBodyComponent{};
     terrain.body->motion = SceneBodyMotion::Static;
-    terrain.body->shape = SceneShape::Terrain;
-    terrain.body->terrainSurface = "no-such-surface";
+    terrain.body->shape = SceneShape::TriangleMesh;
+    terrain.body->collisionAsset = "no-such-surface";
     RuntimeWorld world;
     std::string error;
     Check(!world.Build(scene, nullptr, error) && error.find("no-such-surface") != std::string::npos,
-          "an unknown terrain surface id fails with the id in the message");
+          "an unknown collision asset fails with the id in the message");
     Check(!world.IsBuilt(), "a failed build leaves no world behind");
 }
 }  // namespace

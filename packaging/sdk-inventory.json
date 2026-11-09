@@ -6,13 +6,11 @@
     "judas_export",
     "judas_scene_author",
     "judas_navigation_bake",
-    "judas_liquid_bake",
     "judas_environment_bake",
     "judas_deformable_bake",
     "judas_collision_cook",
     "judas_model_import_cli",
     "judas_terrain_author",
-    "judas_volume_author",
     "judas_mod",
     "judas_cook",
     "judas_script_check",
@@ -27,7 +25,7 @@
     "README.md",
     "docs/judas.d.ts",
     "docs/judasmod.example.json",
-    "docs/PREALPHA_FINDINGS.json",
+    "docs/CURRENT_FINDINGS.json",
     "third_party/RUNTIME_NOTICES.txt",
     "third_party/imgui/LICENSE.txt",
     "third_party/android/SDL-LICENSE.txt",
@@ -60,10 +58,7 @@
     "projects/connected_workshop"
   ],
   "current_markdown": "docs",
-  "excluded_markdown": [
-    "docs/DontReadMe_Final.md",
-    "docs/FTFT.md"
-  ],
+  "excluded_markdown": [],
   "source_only_projects": [
     "projects/animation_studio",
     "projects/audio_lab",
@@ -71,7 +66,6 @@
     "projects/core_scramble",
     "projects/developer_lab",
     "projects/physics_stress_lab",
-    "projects/save_evolution_lab",
     "projects/ui_showcase",
     "projects/water_v2_workshop"
   ]

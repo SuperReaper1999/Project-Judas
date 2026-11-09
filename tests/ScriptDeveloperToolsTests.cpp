@@ -3,7 +3,6 @@
 #include "ResourceManager.h"
 #include "InputSystem.h"
 #include "WorldPersistence.h"
-#include "WorldState.h"
 #include "Project.h"
 #include "SceneSession.h"
 #include <chrono>
@@ -45,7 +44,7 @@ int main(){
     Check(assets.Track((root/"Assets/driver.js").string(),main,error)&&assets.Track((root/"Assets/helper.js").string(),dependency,error),"normal tracked modules");
     ResourceManager resources(nullptr,&assets);Scene scene;
     auto& object=scene.CreateObject("independent consumer");auto id=object.id;object.body=SceneBodyComponent{};object.body->mass=2;object.body->motion=SceneBodyMotion::Dynamic;object.scripts.push_back({1,main.id,true,"{}"});
-    RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&resources,error),"ordinary physical world builds");
+    RuntimeWorld world;Check(world.Build(scene,&resources,error),"ordinary physical world builds");
     auto& scripts=world.PrepareScriptTools();InputSystem input;
     Check(scripts.CheckSources(error),"compile/link preflight does not require constructors or gameplay execution");
     Check(scripts.Capture().empty(),"preflight did not create instances");
@@ -95,8 +94,6 @@ int main(){
     Check(State(scripts).find("\"subscriptions\":1")!=std::string::npos&&State(scripts).find("\"pending\":0")!=std::string::npos,"reload rebinds one subscription and discards queued old-generation deliveries");
     scripts.DrainSignals(&input,.02f,false);Check(State(scripts).find("\"received\":1")!=std::string::npos,"only replacement-generation signal callback receives the new event");
     std::map<std::string,SaveChunk> chunks;Check(!WorldPersistence::Capture(world,chunks,error)&&error.find("Stop and Play")!=std::string::npos,"reloaded baseline cannot publish incompatible modern saves");
-    Check(!CanCaptureLegacyWorldState(world,error),"legacy save also rejects reloaded baseline");
-    bool captureRejected=false;try{(void)CaptureWorldState(world);}catch(const std::logic_error&){captureRejected=true;}Check(captureRejected,"direct native legacy capture cannot certify a stale source baseline");
     Check(scripts.Reload(false,error),"explicit fresh reload available");world.UpdateScripts(&input,.016f);Check(State(scripts).find("\"count\":35")!=std::string::npos,"fresh reload resets JS state but uses edited source");
     // Inspection must not invoke getters, proxies or toString implementations.
     Write(root/"Assets/driver.js",R"JS(export default class {

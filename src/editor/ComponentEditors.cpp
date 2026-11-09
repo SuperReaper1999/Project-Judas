@@ -602,7 +602,6 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
         DragScalar(doc, "Wall alpha", r.secondaryAlpha, 0.01f, 0.0f, 1.0f);
         ImGui::TextDisabled("Geometry comes from the compound body.");
     }
-    if (r.shape == SceneShape::Terrain) ImGui::TextDisabled("Geometry comes from the terrain body.");
 }
 
 void JointPicker(EditorDocument& doc,SceneObject& source,EditorPanelState& state,const char* label,std::string& key,bool optional=false){
@@ -853,7 +852,6 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     }
     if (b.shape == SceneShape::Box) DragVec3(doc, "Half extents##body", b.halfExtents, 0.01f);
     if (b.shape == SceneShape::Sphere) DragScalar(doc, "Radius##body", b.radius, 0.01f, 0.001f, 100000.0f);
-    if (b.shape == SceneShape::Terrain) StringCombo(doc, "Surface", b.terrainSurface, state.terrainSurfaces, false);
     if (b.shape == SceneShape::Compound) {
         ImGui::Text("%zu children (one body; summed mass volumes)", b.compoundBoxes.size());
         for (std::size_t i = 0; i < b.compoundBoxes.size(); ++i) {
@@ -879,60 +877,7 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
             doc.CommitEdit();
         }
     }
-    const bool cavitiesOpen=b.shape!=SceneShape::Planar&&ImGui::TreeNodeEx("Fluid cavities",ImGuiTreeNodeFlags_NoTreePushOnOpen,"Fluid cavities (%zu)",b.fluidCavities.size());
-    if(cavitiesOpen){
-        ImGui::PushID("fluid-cavities");
-        for (std::size_t i = 0; i < b.fluidCavities.size(); ++i) {
-            ImGui::PushID(static_cast<int>(i));
-            auto& cavity = b.fluidCavities[i];
-            DragVec3(doc, "Interior center", cavity.localCenter, 0.005f);
-            DragScalar(doc, "Interior half X", cavity.halfExtents.x, 0.005f, 0.001f, 100000.0f);
-            DragScalar(doc, "Interior half Y", cavity.halfExtents.y, 0.005f, 0.001f, 100000.0f);
-            DragScalar(doc, "Interior half Z", cavity.halfExtents.z, 0.005f, 0.001f, 100000.0f);
-            const bool remove = ImGui::SmallButton("Remove cavity");
-            ImGui::PopID();
-            if (remove) {
-                doc.BeginEdit();
-                b.fluidCavities.erase(b.fluidCavities.begin() + static_cast<std::ptrdiff_t>(i));
-                doc.CommitEdit();
-                break;
-            }
-        }
-        if (ImGui::SmallButton("Add fluid cavity")) {
-            doc.BeginEdit();
-            b.fluidCavities.emplace_back();
-            doc.CommitEdit();
-        }
-        ImGui::PopID();
-        if (!b.fluidCavities.empty()) ImGui::TextDisabled("Bounds must describe the resolved interior, up to its opening.");
-    }
-    if(b.motion!=SceneBodyMotion::Static)ImGui::SeparatorText("Mass and initial motion");
-    if (b.motion == SceneBodyMotion::Dynamic) {
-        DragScalar(doc, "Mass (kg)", b.mass, 0.1f, 0.001f, 1.0e30f);
-        Checkbox(doc, "Pickable (G/H)", b.pickable);
-        if (InspectorDisclosure("Initial motion and streaming")) {
-            DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
-            ImGui::SetItemTooltip("World COM velocity in metres per second at Play start.");
-            DragVec3(doc,"Initial angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
-            Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
-            if (!b.managed) ImGui::TextDisabled("Always fully simulated; streaming policy does not suspend this body.");
-        }
-    }
-    if(b.motion==SceneBodyMotion::Kinematic){
-        DragScalar(doc,"Transition mass (kg)",b.mass,.1f,.001f,1e30f);
-        ImGui::SetItemTooltip("Mass used if this ordinary body changes to dynamic authority. Kinematic motion itself has zero inverse mass.");
-        DragVec3(doc,"Prescribed COM velocity (world m/s)",b.initialLinearVelocity,.05f);
-        DragVec3(doc,"Prescribed angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
-        ImGui::TextWrapped("Scripts command this body's fixed-step motion. Targets and persistent velocities use the normal Entity API. Gravity and impulses do not move it; dynamic neighbours respond through contacts.");
-        if(b.shape==SceneShape::Terrain||b.shape==SceneShape::TriangleMesh)ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Terrain and concave triangle surfaces must remain static.");
-    }
-    ImGui::SeparatorText("Surface response");
-    AssetField(doc,"Physical material (empty = legacy)",b.physicalMaterial,AssetType::PhysicalMaterial,true,state);
-    if(!b.physicalMaterial.empty())Checkbox(doc,"Override shared physical coefficients",b.physicalMaterialOverride);
-    if(b.physicalMaterial.empty()||b.physicalMaterialOverride){
-    DragScalar(doc, "Friction", b.friction, 0.01f, 0.0f, 5.0f);
-    DragScalar(doc, "Restitution", b.restitution, 0.01f, 0.0f, 1.0f);
-    }
+
 }
 
 void DrawGravity(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
@@ -964,40 +909,14 @@ void DrawLight(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     }
 }
 
-void DrawDoor(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
-    ImGui::TextDisabled("Historical gameplay adapter; modern projects use ordinary components + JS.");
-    if(state.project){auto& d=*o.door;DrawCategoryLayer(doc,"Collision layer",d.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",d.collisionMask,state.project->Settings().classification.collision);}
-    DragVec3(doc, "Hinge axis (local)", o.door->localHingeAxis, 0.01f);
-    DragScalar(doc, "Open angle (deg)", o.door->openAngleDegrees, 0.5f, 0.0f, 180.0f);
-    DragScalar(doc, "Angular speed (deg/s)", o.door->angularSpeedDegreesPerSecond, 1.0f, 0.0f, 3600.0f);
-    ImGui::TextDisabled("Needs a box Render for the panel; hinge at the object's transform.");
-}
 
-void DrawLightSwitch(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
-    ImGui::TextDisabled("Historical gameplay adapter; modern projects use ordinary components + JS.");
-    SceneLightSwitchComponent& s = *o.lightSwitch;
-    DragVec3(doc, "Hinge axis (local)##sw", s.localHingeAxis, 0.01f);
-    DragScalar(doc, "Toggle angle (deg)", s.toggleAngleDegrees, 0.5f, 0.0f, 180.0f);
-    DragScalar(doc, "Angular speed (deg/s)##sw", s.angularSpeedDegreesPerSecond, 1.0f, 0.0f, 3600.0f);
-    DragVec3(doc, "Lamp offset (local)", s.lampLocalOffset, 0.05f);
-    ColorEdit(doc, "Lamp color", s.lampColor);
-    DragScalar(doc, "Lamp range", s.lampRange, 0.1f, 0.0f, 1000.0f);
-}
 
-void DrawVehicle(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
-    ImGui::TextDisabled("Historical gameplay adapter; modern projects use ordinary components + JS.");
-    SceneVehicleComponent& v = *o.vehicle;
-    Combo(doc, "Gravity source", v.gravity, kVehicleGravityNames, 2);
-    Checkbox(doc, "Headlight", v.headlight);
-    Checkbox(doc, "Navigation lights", v.navigationLights);
-    DragScalar(doc, "Drag coefficient", v.dragCoefficient, 0.01f, 0.0f, 10.0f);
-    Checkbox(doc, "Start with pilot attached", v.initialPilotAttached);
-    ImGui::TextDisabled("Needs a dynamic box Body. One vehicle per scene.");
-}
+
+
+
 
 void DrawCelestial(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     DragScalar(doc, "Gravitational parameter (static, m^3/s^2)", o.celestial->gravitationalParameter, 10.0f, 0.0f, 1.0e30f);
-    DragScalar(doc, "Operator thrust (N)", o.celestial->operatorThrustForce, 1.0e9f, 0.0f, 1.0e30f);
     ImGui::TextDisabled("Dynamic: joins pairwise Newtonian gravity by its mass.");
 }
 
@@ -1024,13 +943,6 @@ void DrawCombustible(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
 
 void DrawFluidVolume(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     SceneFluidVolumeComponent& f = *o.fluidVolume;
-    int backend=int(f.backend);
-    if(ImGui::Combo("Simulation backend",&backend,"Legacy particle research\0Grid water V2\0")){
-        doc.BeginEdit();f.backend=SceneFluidBackend(backend);
-        if(f.backend==SceneFluidBackend::Grid){f.spacing=.4f;f.countX=30;f.countY=12;f.countZ=20;f.emitter=false;}
-        doc.CommitEdit();
-    }
-    if(f.backend==SceneFluidBackend::Grid){
         ImGui::TextWrapped("Experimental: conserved game-resolution water. Requires Project Settings > Experimental > Advanced Fluid Dynamics; Alpha remains locked.");
         DragScalar(doc,"Cell size (m)",f.spacing,.01f,.02f,10);
         int dimensions[3]={f.countX,f.countY,f.countZ};
@@ -1044,35 +956,13 @@ void DrawFluidVolume(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
         ImGui::ColorEdit3("Water colour",&f.color.x);TrackEdit(doc);
         DragScalar(doc,"Opacity",f.opacity,.01f,0,1);
         ImGui::TextWrapped("The owner is the bottom centre of a stationary domain. Rotate local +Y away from gravity. Cells below your resolution are approximate; use larger domains sparingly.");
-        return;
-    }
-    DragScalar(doc, "Particle spacing (m)", f.spacing, 0.001f, 0.001f, 100.0f);
-    int count[3] = {f.countX, f.countY, f.countZ};
-    if (ImGui::DragInt3("Lattice count", count, 1.0f, 0, 1000)) {
-        f.countX = count[0]; f.countY = count[1]; f.countZ = count[2];
-    }
-    TrackEdit(doc);
-    Checkbox(doc, "Emitter (hold B)", f.emitter);
-    if (f.emitter) {
-        DragVec3(doc, "Emitter offset (local)", f.emitterLocalOffset, 0.05f);
-        DragInt(doc, "Max particles", f.maxParticles, 0, 100000);
-    }
-    ImGui::TextDisabled("Lattice grows along local +Y from the object.");
+
 }
 
-void DrawPlayerStart(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
-    ImGui::TextDisabled("Historical gameplay adapter; modern projects use ordinary components + JS.");
-    if(state.project){auto& p=*o.playerStart;DrawCategoryLayer(doc,"Collision layer",p.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",p.collisionMask,state.project->Settings().classification.collision);}
-    DragScalar(doc, "Yaw (deg)", o.playerStart->yawDegrees, 0.5f, -360.0f, 360.0f);
-    Combo(doc, "View", o.playerStart->view, kViewNames, 2);
-    DragScalar(doc, "Density (kg/m^3)", o.playerStart->density, 1.0f, 0.001f, 1.0e6f);
-    DragScalar(doc, "Fluid drag (1/s)", o.playerStart->fluidDrag, 0.05f, 0.0f, 1000.0f);
-    DragScalar(doc, "Swim acceleration (m/s^2)", o.playerStart->swimAcceleration, 0.1f, 0.0f, 1000.0f);
-    ImGui::TextDisabled("Exactly one object may carry a player start.");
-}
 
-void PreviewLiquid(const LiquidBasinData& data,const SceneObject& o,double volume,EditorPanelState& state){state.liquidPreview.Clear();MeshData surface;const double q=LiquidInverse(data,volume);glm::vec3 minimum(1e30f),maximum(-1e30f);for(auto& t:data.geometry.cells){for(auto v:t){minimum=glm::min(minimum,glm::vec3(v));maximum=glm::max(maximum,glm::vec3(v));}LiquidClip(t,{data.equilibrium.Coordinate(t[0]),data.equilibrium.Coordinate(t[1]),data.equilibrium.Coordinate(t[2]),data.equilibrium.Coordinate(t[3])},q,&surface);}state.liquidPreview.Box(o.transform.position+o.transform.rotation*(minimum+maximum)*.5f,o.transform.rotation,(maximum-minimum)*.5f,{.15f,.4f,.9f});for(size_t i=0;i+2<surface.vertices.size();i+=3)for(int j=0;j<3;++j)state.liquidPreview.Line(o.transform.position+o.transform.rotation*surface.vertices[i+j].position,o.transform.position+o.transform.rotation*surface.vertices[i+(j+1)%3].position,{.1f,.5f,.95f});}
-void LiquidNumber(EditorDocument& doc,const char* label,double& value){double temp=value;if(ImGui::InputDouble(label,&temp,.001,.1,"%.8g")&&std::isfinite(temp)&&temp>=0){doc.BeginEdit();value=temp;doc.CommitEdit();}}
+
+
+void NonnegativeNumber(EditorDocument& doc,const char* label,double& value){double temp=value;if(ImGui::InputDouble(label,&temp,.001,.1,"%.8g")&&std::isfinite(temp)&&temp>=0){doc.BeginEdit();value=temp;doc.CommitEdit();}}
 void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     auto& d=*o.deformable;
     Checkbox(doc,"Enabled",d.enabled);Checkbox(doc,"Cloth self-contact",d.selfContact);
@@ -1082,12 +972,12 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     if(DragInt(doc,"Iterations",iterations,1,16))d.iterations=unsigned(iterations);
     if(state.project){DrawCategoryLayer(doc,"Collision layer",d.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",d.collisionMask,state.project->Settings().classification.collision);}
     auto& m=d.material;
-    LiquidNumber(doc,"Density (kg/m2 cloth; kg/m3 solid)",m.density);
-    LiquidNumber(doc,"Stretch compliance",m.stretchCompliance);LiquidNumber(doc,"Shear compliance",m.shearCompliance);
-    LiquidNumber(doc,"Bend compliance",m.bendCompliance);LiquidNumber(doc,"Volume compliance",m.volumeCompliance);
-    LiquidNumber(doc,"Damping (1/s)",m.damping);LiquidNumber(doc,"Contact thickness (m)",m.thickness);LiquidNumber(doc,"Friction",m.friction);
-    LiquidNumber(doc,"Air drag (1/s)",m.airDrag);glm::vec3 air(m.airVelocity);if(DragVec3(doc,"World air velocity",air))m.airVelocity=air;
-    LiquidNumber(doc,"Yield strain (0 disables)",m.yieldStrain);LiquidNumber(doc,"Plastic rate (1/s)",m.plasticRate);LiquidNumber(doc,"Maximum plastic strain",m.maximumPlasticStrain);
+    NonnegativeNumber(doc,"Density (kg/m2 cloth; kg/m3 solid)",m.density);
+    NonnegativeNumber(doc,"Stretch compliance",m.stretchCompliance);NonnegativeNumber(doc,"Shear compliance",m.shearCompliance);
+    NonnegativeNumber(doc,"Bend compliance",m.bendCompliance);NonnegativeNumber(doc,"Volume compliance",m.volumeCompliance);
+    NonnegativeNumber(doc,"Damping (1/s)",m.damping);NonnegativeNumber(doc,"Contact thickness (m)",m.thickness);NonnegativeNumber(doc,"Friction",m.friction);
+    NonnegativeNumber(doc,"Air drag (1/s)",m.airDrag);glm::vec3 air(m.airVelocity);if(DragVec3(doc,"World air velocity",air))m.airVelocity=air;
+    NonnegativeNumber(doc,"Yield strain (0 disables)",m.yieldStrain);NonnegativeNumber(doc,"Plastic rate (1/s)",m.plasticRate);NonnegativeNumber(doc,"Maximum plastic strain",m.maximumPlasticStrain);
     std::string error;std::shared_ptr<const DeformableAsset> asset;
     if(state.resources&&!d.asset.empty()){state.resources->RequestDeformable(d.asset);asset=state.resources->GetDeformable(d.asset,error);}
     if(!error.empty())ImGui::TextWrapped("Asset: %s",error.c_str());
@@ -1130,8 +1020,8 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     for(size_t i=0;i<d.attachments.size();){auto& a=d.attachments[i];ImGui::PushID(int(i));ImGui::Separator();ImGui::Text("Attachment %s",a.group.c_str());Checkbox(doc,"Attachment enabled",a.enabled);const char* kinds[]={"world (authored root anchor)","rigid body (finite mass)","skeleton joint (prescribed)"};Combo(doc,"Target kind",a.kind,kinds,3);
         if(a.kind!=DeformableAttachment::Kind::World){std::vector<std::string> labels,values;for(auto& target:doc.GetScene().Objects())if(a.kind==DeformableAttachment::Kind::Body?bool(target.body):bool(target.animation)){labels.push_back(target.name);values.push_back(std::to_string(target.id));}std::string id=std::to_string(a.target);if(LabelledCombo(doc,"Target entity",id,labels,values,false))a.target=std::stoull(id);if(a.kind==DeformableAttachment::Kind::Bone)TextField(doc,"Stable skeleton joint key",a.joint);}
         glm::vec3 offset(a.offset);if(DragVec3(doc,"Target-local offset",offset))a.offset=offset;
-        LiquidNumber(doc,"Attachment force limit N (0 = unlimited)",a.forceLimit);
-        LiquidNumber(doc,"Attachment moment limit N m (0 = unlimited)",a.torqueLimit);
+        NonnegativeNumber(doc,"Attachment force limit N (0 = unlimited)",a.forceLimit);
+        NonnegativeNumber(doc,"Attachment moment limit N m (0 = unlimited)",a.torqueLimit);
         if(a.forceLimit>0||a.torqueLimit>0){
             const auto* target=doc.GetScene().Find(a.target);
             if(a.kind!=DeformableAttachment::Kind::Body||!target||!target->body||target->body->motion!=SceneBodyMotion::Dynamic)
@@ -1157,7 +1047,7 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     ImGui::TextWrapped("Nodes simulate in world space; root is initial placement. Explicit reset moves the entire state. Bone pins consume the fixed-step resolved pose. Render materials use normal Render slots.");
 }
 
-void LiquidMaterialEditor(EditorDocument& doc,LiquidMaterial& material){TextField(doc,"Liquid material identity",material.id);LiquidNumber(doc,"Density kg/m3",material.density);}
+
 void DrawBasicWater(EditorDocument& doc,SceneObject& o,EditorPanelState&){
     auto& w=*o.basicWater;Checkbox(doc,"Enabled",w.enabled);
     DragVec3(doc,"Half width / depth / half length",w.halfExtents,.1f);
@@ -1171,25 +1061,10 @@ void DrawBasicWater(EditorDocument& doc,SceneObject& o,EditorPanelState&){
     ImGui::TextWrapped("Lightweight prescribed volume: local +Y surface, water below it. Visual waves do not simulate flow or change the mean swimming volume. Scale must be one; use explicit extents. No rigid-body buoyancy or conserved quantity.");
     std::string error;if(!ValidateBasicWater(w,error))ImGui::TextColored({1,.4f,.3f,1},"%s",error.c_str());
 }
-void DrawLiquidBasin(EditorDocument& doc,SceneObject& o,EditorPanelState& state){auto& b=*o.liquidBasin;Checkbox(doc,"Enabled",b.enabled);AssetField(doc,"Physical cavity",b.geometry,AssetType::Liquid,true,state);AssetField(doc,"Baked capacity",b.asset,AssetType::Liquid,true,state);LiquidMaterialEditor(doc,b.material);LiquidNumber(doc,"Initial volume m3",b.initialVolume);LiquidNumber(doc,"Curve volume tolerance m3",b.volumeTolerance);LiquidNumber(doc,"Height tolerance metres",b.heightTolerance);
- Checkbox(doc,"Dynamic surface (rebake required)",b.surface.enabled);
- if(b.surface.enabled){int columns=int(b.surface.columns),rows=int(b.surface.rows);
-  if(ImGui::SliderInt("Surface columns",&columns,2,32)){doc.BeginEdit();b.surface.columns=unsigned(columns);doc.CommitEdit();}
-  if(ImGui::SliderInt("Surface rows",&rows,2,32)){doc.BeginEdit();b.surface.rows=unsigned(rows);doc.CommitEdit();}
-  LiquidNumber(doc,"Surface friction /s",b.surface.friction);LiquidNumber(doc,"Solve relative tolerance",b.surface.tolerance);
-  int iterations=int(b.surface.iterations),budget=int(b.surface.parcelBudget);
-  if(ImGui::SliderInt("Pressure iteration budget",&iterations,4,512)){doc.BeginEdit();b.surface.iterations=unsigned(iterations);doc.CommitEdit();}
-  if(ImGui::SliderInt("Splash parcel budget",&budget,0,1024)){doc.BeginEdit();b.surface.parcelBudget=unsigned(budget);doc.CommitEdit();}
-  LiquidNumber(doc,"Splash threshold m/s",b.surface.splashSpeed);LiquidNumber(doc,"Splash fraction",b.surface.splashFraction);
-  ImGui::TextWrapped("Fixed volume cells over the physical cavity; no vertical dynamic grid. Static mode remains available. Settings require rebake.");
- }
- if(state.mode==EditorMode::Edit&&state.project&&state.assets){if(ImGui::Button("Bake liquid capacity"))BakeEditorLiquid(doc,o.id,state);if(ImGui::Button("Clear capacity reference")){doc.BeginEdit();b.asset.clear();doc.CommitEdit();}
- auto* asset=state.assets->Find(b.asset);LiquidBasinData data;std::string error;Scene resolved,flat;if(asset&&LoadLiquidBasin(asset->path,data,error)&&ResolvePrefabs(doc.GetScene(),state.assets,resolved,error)&&FlattenHierarchy(resolved,flat,error)){auto* basin=flat.Find(o.id);auto hash=basin?LiquidSourceFingerprint(flat,*basin,*state.assets,error):std::string{};ImGui::Text("%s | %.3f litres capacity | %zu samples",hash==data.fingerprint?"Current":"STALE",data.capacity*1000,data.curve.size());std::vector<float> volumes;for(auto point:data.curve)volumes.push_back(float(point.volume*1000));ImGui::PlotLines("Capacity curve (L)",volumes.data(),int(volumes.size()));ImGui::Text("Solved coordinate %.6f; radial bound %.6f m",LiquidInverse(data,b.initialVolume),data.coordinateError);if(ImGui::Button("Preview basin bounds/surface")&&basin)PreviewLiquid(data,*basin,b.initialVolume,state);}else if(asset)ImGui::TextWrapped("%s",error.c_str());}
- if(state.runtime){auto h=state.runtime->Liquids().Handle(o.id);if(auto* r=state.runtime->Liquids().Get(h))ImGui::Text("Runtime %.3f L | coordinate %.6f",r->volume*1000,r->q);}
-}
-void DrawLiquidContainer(EditorDocument& doc,SceneObject& o,EditorPanelState& state){auto& a=*o.liquidContainer;Checkbox(doc,"Enabled",a.enabled);AssetField(doc,"Physical cavity",a.geometry,AssetType::Liquid,true,state);LiquidMaterialEditor(doc,a.material);LiquidNumber(doc,"Initial volume m3",a.initialVolume);LiquidNumber(doc,"Opening area m2",a.openingArea);LiquidNumber(doc,"Discharge coefficient",a.discharge);for(size_t i=0;i<a.opening.size();++i){ImGui::PushID(int(i));glm::vec3 temp(a.opening[i]);if(ImGui::DragFloat3("Opening vertex (local metres)",&temp.x,.01f)){doc.BeginEdit();a.opening[i]=temp;doc.CommitEdit();}if(a.opening.size()>3&&ImGui::Button("Remove vertex")){doc.BeginEdit();a.opening.erase(a.opening.begin()+i);doc.CommitEdit();ImGui::PopID();break;}ImGui::PopID();}if(a.opening.size()<32&&ImGui::Button("Add opening vertex")){doc.BeginEdit();a.opening.push_back(a.opening.back());doc.CommitEdit();}ImGui::TextWrapped("Vented air; local uniform gravity. Tilt recomputes actual clipped cavity volume.");if(state.runtime)if(auto* r=state.runtime->Liquids().Get(state.runtime->Liquids().Handle(o.id)))ImGui::Text("%.3f L | stable capacity %.3f L",r->volume*1000,r->stableCapacity*1000);}
-void DrawLiquidConnection(EditorDocument& doc,SceneObject& o,EditorPanelState&){auto& c=*o.liquidConnection;Checkbox(doc,"Enabled",c.enabled);Checkbox(doc,"Bidirectional",c.bidirectional);auto ref=[&](const char* name,SceneObjectId& id){auto* selected=doc.GetScene().Find(id);if(ImGui::BeginCombo(name,selected?selected->name.c_str():"Select basin")){for(auto& b:doc.GetScene().Objects())if(b.liquidBasin&&ImGui::Selectable((b.name+" ##"+std::to_string(b.id)).c_str(),b.id==id)){doc.BeginEdit();id=b.id;doc.CommitEdit();}ImGui::EndCombo();}};ref("Source",c.source);ref("Destination",c.destination);LiquidNumber(doc,"Opening area m2",c.openingArea);LiquidNumber(doc,"Discharge",c.discharge);ImGui::TextWrapped("Entity position is the saddle/spill point; its actual gravity potential determines opening.");}
-void DrawLiquidInteraction(EditorDocument& doc,SceneObject& o,EditorPanelState&){Checkbox(doc,"Enabled",o.liquidInteraction->enabled);LiquidNumber(doc,"Bulk drag coefficient",o.liquidInteraction->drag);ImGui::TextWrapped("Opt-in box/compound hydrostatics; keep this body outside particle-liquid ownership.");}
+
+
+
+
 
 void NavProfile(EditorDocument& doc,unsigned& profile,EditorPanelState& state){if(!state.project)return;CategoryRegistry registry;registry.names.clear();for(auto [id,p]:state.project->Settings().navigation.profiles)registry.names[id]=p.name;DrawCategoryLayer(doc,"Agent profile",profile,registry);}
 void DrawNavSurface(EditorDocument& doc,SceneObject& o,EditorPanelState& state){if(o.landscape){DrawTerrainV2Navigation(doc,o,state);return;}auto& n=*o.navigationSurface;Checkbox(doc,"Enabled",n.enabled);NavProfile(doc,n.profile,state);Checkbox(doc,"Include dynamic bake sources",n.includeDynamic);if(state.project)DrawCategoryMask(doc,"Physical source layers",n.sources,state.project->Settings().classification.collision);DragVec3(doc,"Local bounds half extents",n.halfExtents);DragScalar(doc,"Cell size",n.cellSize,.01f,.02f,2);DragScalar(doc,"Cell height",n.cellHeight,.01f,.01f,1);DragInt(doc,"Tile size (cells)",n.tileSize,16,128);DragInt(doc,"Minimum region (cells)",n.minRegion,0,100);DragScalar(doc,"Simplification",n.simplification,.1f,.1f,10);AssetField(doc,"Baked navigation",n.asset,AssetType::Navigation,true,state);ImGui::TextWrapped("Object rotation defines the navigation frame; local +Y is its traversal up. Gravity is independent.");
@@ -1223,7 +1098,7 @@ ComponentEditor Make(const char* name, char indicator, std::optional<T> SceneObj
 }
 ComponentEditor GridWaterEditor(){
     auto editor=Make<SceneFluidVolumeComponent>("Fluid volume",'W',&SceneObject::fluidVolume,DrawFluidVolume);
-    editor.add=[](SceneObject& object){SceneFluidVolumeComponent component;component.backend=SceneFluidBackend::Grid;
+    editor.add=[](SceneObject& object){SceneFluidVolumeComponent component;
         component.spacing=.4f;component.countX=30;component.countY=12;component.countZ=20;object.fluidVolume=component;};
     return editor;
 }
@@ -1360,10 +1235,6 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),
         Make<DeformableSettings>("Deformable",'D',&SceneObject::deformable,DrawDeformable),
         Make<BasicWaterSettings>("Basic water",'W',&SceneObject::basicWater,DrawBasicWater),
-        Make<LiquidBasinSettings>("Liquid basin",'Q',&SceneObject::liquidBasin,DrawLiquidBasin),
-        Make<LiquidContainerSettings>("Liquid container",'C',&SceneObject::liquidContainer,DrawLiquidContainer),
-        Make<LiquidConnectionSettings>("Liquid connection",'S',&SceneObject::liquidConnection,DrawLiquidConnection),
-        Make<LiquidInteractionSettings>("Liquid interaction",'B',&SceneObject::liquidInteraction,DrawLiquidInteraction),
         Make<NavigationSurfaceSettings>("Navigation surface",'N',&SceneObject::navigationSurface,DrawNavSurface),
         Make<NavigationAgentSettings>("Navigation agent",'N',&SceneObject::navigationAgent,DrawNavAgent),
         Make<NavigationObstacleSettings>("Navigation obstacle",'N',&SceneObject::navigationObstacle,DrawNavObstacle),
@@ -1388,14 +1259,10 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<SceneBodyComponent>("Body", 'B', &SceneObject::body, DrawBody),
         Make<SceneGravityComponent>("Gravity region", 'G', &SceneObject::gravity, DrawGravity),
         Make<SceneLightComponent>("Light", 'L', &SceneObject::light, DrawLight),
-        Make<SceneDoorComponent>("Door", 'D', &SceneObject::door, DrawDoor),
-        Make<SceneLightSwitchComponent>("Light switch", 'S', &SceneObject::lightSwitch, DrawLightSwitch),
-        Make<SceneVehicleComponent>("Vehicle", 'V', &SceneObject::vehicle, DrawVehicle),
         Make<SceneCelestialComponent>("Celestial", 'C', &SceneObject::celestial, DrawCelestial),
         Make<SceneAtmosphereComponent>("Atmosphere", 'A', &SceneObject::atmosphere, DrawAtmosphere),
         Make<SceneCombustibleComponent>("Combustible", 'F', &SceneObject::combustible, DrawCombustible),
         GridWaterEditor(),
-        Make<ScenePlayerStartComponent>("Player start", 'P', &SceneObject::playerStart, DrawPlayerStart),
     };
     return registry;
 }
@@ -1463,13 +1330,7 @@ bool BakeEditorNavigation(EditorDocument& doc,SceneObjectId id,EditorPanelState&
     state.status="Baked "+std::to_string(data.layers.size())+" tile layers. Save scene to persist reference.";return true;
 }
 
-bool BakeEditorLiquid(EditorDocument& doc,SceneObjectId id,EditorPanelState& state){
- if(state.mode!=EditorMode::Edit||!state.project||!state.assets){state.status="Open an editable project to bake";return false;}
- Scene resolved,flat;std::string error;if(!ResolvePrefabs(doc.GetScene(),state.assets,resolved,error)||!FlattenHierarchy(resolved,flat,error)){state.status=error;return false;}auto* o=flat.Find(id);if(!o||!o->liquidBasin){state.status="Select a liquid basin";return false;}LiquidGeometry geometry;GravityEquilibrium eq;std::string hash;LiquidBasinData data;if(!PrepareLiquidBake(flat,*o,*state.assets,geometry,eq,hash,error)||!BakeLiquidBasin(geometry,eq,o->liquidBasin->volumeTolerance,o->liquidBasin->heightTolerance,hash,data,error)){state.status=error;return false;}
- if(!BakeLiquidSurface(data,o->liquidBasin->surface,data.dynamicSurface,error,&geometry)){state.status=error;return false;}
- auto path=std::filesystem::path(state.project->AssetsDir())/"liquid"/("basin-"+std::to_string(id)+".judasbasin");std::filesystem::create_directories(path.parent_path());if(!SaveLiquidBasin(path.string(),data,error)){state.status=error;return false;}AssetRecord asset;auto* previous=state.assets->FindByRelativePath(std::filesystem::relative(path,state.project->RootDir()).generic_string());if(previous)asset=*previous;else if(!state.assets->Track(path.string(),asset,error)){state.status=error;return false;}doc.BeginEdit();doc.GetScene().Find(id)->liquidBasin->asset=asset.id;doc.CommitEdit();if(state.resources)state.resources->Invalidate(asset.id);PreviewLiquid(data,*o,o->liquidBasin->initialVolume,state);
- state.status="Baked "+std::to_string(data.capacity*1000)+" L capacity / "+std::to_string(data.curve.size())+" samples. Save scene.";return true;
-}
+
 
 bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState& state,int action){
     auto* object=doc.GetScene().Find(id);std::string error;

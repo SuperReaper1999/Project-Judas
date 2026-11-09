@@ -2085,7 +2085,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
                 copy->linearVelocity = copy->angularVelocity = glm::vec3(0);
         }
     }
-    std::vector<ImpactContact> rows;
+    std::vector<Contact> rows;
     const float friction =
         std::sqrt(std::max(0.f, bodies[a].friction) * std::max(0.f, bodies[b].friction));
     for (int k = 0; k < manifold.count; ++k) {
@@ -2094,9 +2094,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
             c.signedSeparation = 0; // first touch, to bisection resolution
             c.penetration = 0;
         }
-        rows.push_back({&bodyA, &bodyB, c, friction,
-                        std::max(bodies[a].restitution, bodies[b].restitution), false});
-        rows.back().pointNormals = ConcaveShape(bodies[a]) || ConcaveShape(bodies[b]);
+        rows.push_back(c);
     }
     std::vector<SolverBody> participants(2);
     for (unsigned i=0;i<2;++i) {
@@ -2110,7 +2108,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     float approach = 0;
     for (const auto& contact : rows) {
         Row row{}; row.a=0; row.b=1; row.arriving=true;
-        const auto& c=contact.geometry;
+        const auto& c=contact;
         const auto arm=[&](const RigidBody& rb,bool first) {
             if (!c.hasLocalAnchors) return glm::vec3(glm::dvec3(c.point)-glm::dvec3(rb.position));
             const auto local=first?c.localAnchorA:c.localAnchorB;
@@ -2118,7 +2116,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
         };
         row.rA=row.rA0=arm(bodyA,true); row.rB=row.rB0=arm(bodyB,false);
         row.n=c.normal;ContactTangents(bodyA,bodyB,row);
-        row.friction=friction;row.restitution=contact.restitution;
+        row.friction=friction;row.restitution=std::max(bodies[a].restitution,bodies[b].restitution);
         PrepareRow(participants[0],participants[1],row);
         approach=std::min(approach,RowNormalSpeed(participants,row));
         response.push_back(row);
@@ -2166,7 +2164,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     // The arrival is a touch of this step, as for MK1's impact events.
     for (std::size_t i=0;i<rows.size();++i) {
         const auto& row=rows[i]; const auto& impulse=response[i];
-        Observe(a,b,row.geometry,impulse.normalImpulse);
+        Observe(a,b,row,impulse.normalImpulse);
         const auto handleA=MakeHandle(a).id, handleB=MakeHandle(b).id;
         const auto pair=std::minmax(handleA,handleB);
         stepTouches[pair].impulseAvailable=true;

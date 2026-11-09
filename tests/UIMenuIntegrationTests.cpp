@@ -42,7 +42,7 @@ void ScriptPolicy(Renderer& renderer,const fs::path& output){
  Scene scene;auto& camera=scene.CreateObject("Camera");const auto cameraId=camera.id;camera.renderCamera=SceneRenderCameraComponent{};
  auto& other=scene.CreateObject("Not a camera");const auto otherId=other.id;other.render=SceneRenderComponent{};
  auto& owner=scene.CreateObject("Script owner");const auto ownerId=owner.id;owner.ui=SceneUIComponent{uiAsset.id,"probe",true};owner.scripts.push_back({1,script.id,true,"{}"});ScriptSystem::SetPropertyEntity(owner.scripts[0].properties,"camera",cameraId);ScriptSystem::SetPropertyEntity(owner.scripts[0].properties,"other",otherId);
- ResourceManager resources(&renderer,&assets);RuntimeWorld world;ProjectSettings settings;settings.legacyGameplay=false;world.ConfigureProject(settings);Check(world.Build(scene,&resources,error),"binding world builds");InputSystem input;world.UpdateUIScripts(&input,.016f);
+ ResourceManager resources(&renderer,&assets);RuntimeWorld world;ProjectSettings settings;world.ConfigureProject(settings);Check(world.Build(scene,&resources,error),"binding world builds");InputSystem input;world.UpdateUIScripts(&input,.016f);
  J state;for(auto& r:world.Scripts()->Capture())if(r.entity==ownerId)state=J::parse(r.json);
  Check(state.value("rejects",0)==5&&state.value("font",false),"public script bridge rejects noncamera/nonimage/missing sources and reads actual font style");
  const auto h=world.UI().Find("probe");Check(world.UI().PreviewCamera(h,"preview")==cameraId,"invalid replacement preserves previous valid binding");world.UI().Unload(h);world.UpdateUIScripts(&input,.016f);
@@ -121,11 +121,11 @@ int main(int argc,char** argv)try{
  auto& renderer=host.GetRenderer();auto& window=host.GetWindow();window.Input().SetMap(project.Settings().input,error);
  InteractivePlay play;Check(play.Begin(world,WorldCoordinates{},error),"normal interactive Play begins");
  const auto body=world.RuntimeBody(witness);const auto initial=world.Physics().GetTransform(body);
- for(int i=0;i<12;++i){window.Input().BeginFrame();host.PumpResources();play.Frame(window,renderer,1.f/60,false,true);}
+ for(int i=0;i<12;++i){window.Input().BeginFrame();host.PumpResources();play.Frame(window,renderer,1.f/60,true);}
  Check(glm::length(world.Physics().GetTransform(body).position-initial.position)==0,"actual paused Play leaves physical endpoint unchanged");
  Check(world.CameraTexture(camera).IsValid()&&world.PresentationCameras()[0].updates>=12,"preview camera updates while physical world is paused");
  std::vector<unsigned char> pixels,before;renderer.CaptureFrame(1280,720,before);Check(WriteRgbPng((output/(read?"cold-menu.png":"menu.png")).string(),1280,720,before),"real menu GL frame captured");
- click("turn_right");window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,false,true);renderer.CaptureFrame(1280,720,pixels);
+ click("turn_right");window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,true);renderer.CaptureFrame(1280,720,pixels);
  const auto rect=world.UI().LayoutOf(h,"preview")->rect;size_t changed=0;
  for(int y=int(rect.position.y);y<int(rect.position.y+rect.size.y);++y)for(int x=int(rect.position.x);x<int(rect.position.x+rect.size.x);++x){auto i=(size_t(y)*1280+x)*3;if(pixels[i]!=before[i]||pixels[i+1]!=before[i+1]||pixels[i+2]!=before[i+2])++changed;}
  Check(changed>1000,"rotating real geometry changes preview pixels, not a static portrait");
@@ -139,10 +139,10 @@ int main(int argc,char** argv)try{
  source.settings.enabled=false;drawProbe();Check(channel(25,1)>200&&channel(25,0)<20,"disabled camera clears to panel background instead of stale frame");source.settings.enabled=true;probe.Unload(ph);
  const auto targets=renderer.RenderTargetDiagnostics().liveTargets;
  for(int i=0;i<8;++i){
-  click("resume");const auto updates=world.PresentationCameras()[0].updates;window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,false,true);
+  click("resume");const auto updates=world.PresentationCameras()[0].updates;window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,true);
   Check(!world.UI().Paused()&&!world.PresentationCameras()[0].settings.enabled&&world.PresentationCameras()[0].updates==updates,"actual Resume disables preview work while the world runs");
   input.Reset();input.SetPhysical("key:Escape",1);world.UpdateUIScripts(&input,.016f);world.UI().Input(input,{-1,-1},false,1280,720);world.DispatchUIEvents(&input,.016f);input.Reset();
-  window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,false,true);Check(world.UI().Paused(),"actual Escape reopens usable menu");
+  window.Input().BeginFrame();play.Frame(window,renderer,1.f/60,true);Check(world.UI().Paused(),"actual Escape reopens usable menu");
  }
  Check(renderer.RenderTargetDiagnostics().liveTargets==targets,"repeated UI presentation reuses target allocation");
  if(!read){GameSnapshot saved;saved.project="ui-menu-test";saved.scene="Scenes/main.judas";saved.content=std::string(64,'c');Check(WorldPersistence::Capture(world,saved.participants,error),"capture modern participant state: "+error);std::ofstream(output/"snapshot.save",std::ios::binary)<<EncodeGameSnapshot(saved);std::ofstream(output/"expected.json")<<State(world).dump(2);const auto pose=world.Physics().GetTransform(body);const auto velocity=world.Physics().GetLinearVelocity(body);std::ofstream(output/"expected-body.json")<<J{{"position",{pose.position.x,pose.position.y,pose.position.z}},{"velocity",{velocity.x,velocity.y,velocity.z}}}.dump();}

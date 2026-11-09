@@ -31,7 +31,7 @@ Body participants remain Full fidelity while active. Disabling a participating c
 
 Prefab source IDs remap through the normal stable instance mapping. Joint settings use generic serialized-property overrides. Runtime `SpawnPrefab` creates ordinary bodies and joints after the complete hierarchy exists.
 
-Canonical fingerprint schema remains **5**: a tagged `Judas.RigidJoints.1` extension includes all joint settings and references only for scenes containing joints. Existing no-joint fingerprints remain unchanged. Created runtime joint definitions use ordinary world-state entity serialization; references are preflighted before mutation. Under the original M45 legacy-save contract, runtime motor configuration and warm impulses were transient. Modern M61 slots preserve runtime enabled/limits/motor/spring settings and references; numerical solver caches are rebuilt. See [current save contracts](M61_SAVES.md).
+Canonical fingerprint schema remains **5**: a tagged `Judas.RigidJoints.1` extension includes all joint settings and references only for scenes containing joints. Existing no-joint fingerprints remain unchanged. Created runtime joint definitions use ordinary world-state entity serialization; references are preflighted before mutation. Under the original M45 legacy-save contract, runtime motor configuration and warm impulses were transient. Modern M61 slots preserve runtime enabled/limits/motor/spring settings and references; numerical solver caches are rebuilt. See [current save contracts](PERSISTENCE.md).
 
 ## JavaScript
 
@@ -59,4 +59,4 @@ Limitations: hinge limits must stay within the wrapped angle range; initially op
 
 `JointConfiguration.rotationalResistance` (and the ordinary joint/ragdoll mapping inspector field) is a nonnegative viscous coefficient in N·m·s/rad. Default **0** preserves existing content. Ball joints resist all three free angular axes; hinges resist their free axis. It is solved implicitly alongside contacts and constraints, has no target pose, and does not force sleep. Fixed/slider joints do not use it. The post-M65 Skate adaptation authors 0.05 on the free head and right-foot joints; the unchanged rig and its continued-motion observations remain in the original review and corrective baseline evidence.
 
-[Corrective review and measurements](POST_M65_CONSUMER_REPAIRS.md).
+[Corrective review and measurements (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/POST_M65_CONSUMER_REPAIRS.md).

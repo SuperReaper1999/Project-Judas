@@ -8,9 +8,6 @@ settings
   ambient 0.16 0.17 0.19
   sun-enabled false
   background-color 0.055 0.085 0.11
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 396
 end
@@ -38,15 +35,12 @@ object 1 "Platformer player - editable game.js"
   body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 190 "Controls HUD"
@@ -2476,15 +2470,12 @@ object 331 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-7.0,-1.0],[7.0,-1.0],[7.0,1.0],[-7.0,1.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 332 "Tile collision Ground"
@@ -2497,15 +2488,12 @@ object 332 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-2.5],[0.5,-2.5],[0.5,2.5],[-0.5,2.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 333 "Tile collision Ground"
@@ -2518,15 +2506,12 @@ object 333 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-8.0,-1.0],[8.0,-1.0],[8.0,1.0],[-8.0,1.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 334 "Tile collision Ground"
@@ -2539,15 +2524,12 @@ object 334 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.5],[2.0,-0.5],[2.0,0.5],[-2.0,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 335 "Tile collision Ground"
@@ -2560,15 +2542,12 @@ object 335 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.5,-0.5],[1.5,-0.5],[1.5,0.5],[-1.5,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 336 "Tile collision Ground"
@@ -2581,15 +2560,12 @@ object 336 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.5,-0.5],[2.5,-0.5],[2.5,0.5],[-2.5,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 337 "Tile collision Ground"
@@ -2602,15 +2578,12 @@ object 337 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-0.5],[0.5,-0.5],[0.5,0.5],[-0.5,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 338 "Tile collision Ground"
@@ -2623,15 +2596,12 @@ object 338 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-8.0,-1.0],[8.0,-1.0],[8.0,1.0],[-8.0,1.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 339 "Tile collision Ground"
@@ -2644,15 +2614,12 @@ object 339 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-3.0,-0.5],[3.0,-0.5],[3.0,0.5],[-3.0,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 340 "Tile collision Ground"
@@ -2665,15 +2632,12 @@ object 340 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.5,-1.0],[2.5,-1.0],[2.5,1.0],[-2.5,1.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 341 "Tile collision Ground"
@@ -2686,15 +2650,12 @@ object 341 "Tile collision Ground"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-3.5],[0.5,-3.5],[0.5,3.5],[-0.5,3.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.7
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 342 "Tile Scenery (-11,0)"
@@ -3585,15 +3546,12 @@ object 390 "Collectible star"
   body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 391 "Collectible star"
@@ -3620,15 +3578,12 @@ object 391 "Collectible star"
   body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 392 "Collectible star"
@@ -3655,15 +3610,12 @@ object 392 "Collectible star"
   body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 393 "Pushable crate"
@@ -3684,15 +3636,12 @@ object 393 "Pushable crate"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.4,-0.4],[0.4,-0.4],[0.4,0.4],[-0.4,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 394 "Pushable crate"
@@ -3713,15 +3662,12 @@ object 394 "Pushable crate"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.4,-0.4],[0.4,-0.4],[0.4,0.4],[-0.4,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 2
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 395 "Workshop controls - ordinary project JavaScript"

@@ -53,8 +53,6 @@ class EditorCamera {
     float OrthographicHeight() const {
         return m_orthoHeight;
     }
-    void Update(const Window &window, float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
-                bool fast);
 
     // Editor-owned physical inputs, independent of a project's gameplay map.
     // Axes are right, world-up and forward. Gesture ownership is decided by

@@ -29,7 +29,7 @@ Configuration: `radius`, `halfHeight` (capsule cylinder half-height), `offset`
 (model-local metres), `stepHeight`, `supportDistance`, `skin`, `maxSlopeDegrees`,
 `gravityScale`, `reorientationDegreesPerSecond`, `interactionMass`, `maxPushImpulse`,
 `collisionLayer` (registered name), `collisionMask` (names), `requiredTags`,
-`excludedTags`. Defaults/ranges are in [motor architecture](../M49_CHARACTER_MOTOR.md).
+`excludedTags`. Defaults/ranges are in [motor architecture](../CHARACTER_MOTOR.md).
 Unknown object properties are ignored; typings help detect mistakes.
 
 Gravity is current acceleration sampled at the motor, NOT a support normal.
@@ -56,8 +56,8 @@ Frame and UI-only script startup register published motor geometry before callba
 Runtime `Entity.addTag` / `removeTag` also update the live query capsule, so
 `requiredTags` / `excludedTags` cast filters observe the same classification as
 entity lookup. This is separate from the motor's own movement-filter settings.
-The original [LIF-003 failure](../evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md)
-is preserved; the [lifecycle closure](../M78_LIFECYCLE_CLOSURE.md#final-lif-003-and-combined-closure)
+The original [LIF-003 failure (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md)
+is preserved; the [lifecycle closure (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md)
 records the generic correction and authored/streamed/tag-mutation checks.
 
 Current limits: query-only motors don't physically block each other; endpoint sensors and coalesced
@@ -75,12 +75,12 @@ Ordinary reload/Stop reconstructs authored motor state. Explicit [M61 slots](sav
 preserve velocity/orientation, support state and its supporting identity, then
 reconstruct generation-safe handles. Do not retain a support wrapper across Load.
 
-Use [conserved `liquid.sample`](liquid.md) for M54/M55 water, or
+Use [conserved `liquid.sample` (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/judasjs/liquid.md) for M54/M55 water, or
 [`world.fluidSample`](effects-camera.md#worldfluidsample) for default basic-water volumes or the explicitly enabled
 legacy PBF field, to implement buoyancy/drag/propulsion in project JS. Existing
 coarse production liquid limitations still apply; do not turn the motor into a
 hardcoded swim mode. Copyable [motor example](examples/character.js), current full
-project [character demo](../../projects/character_demo/character_demo.judasproj).
+project [character demo (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/character_demo/character_demo.judasproj).
 
 ## Inclined support and touch events (M65)
 
@@ -132,6 +132,6 @@ state remain separate filters. See [entity classification](entities.md).
 sweep/slide/step path without accumulating animation speed into velocity.
 `orient(worldQuaternion)` supplies orientation intent without a teleport or
 velocity reset; normal gravity alignment still applies. Both require
-`fixedUpdate` before motor resolution. See the [root-motion workflow](../M95_ANIMATION_WORKFLOW.md)
+`fixedUpdate` before motor resolution. See the [root-motion workflow](../ANIMATION_WORKFLOW.md)
 and [animation reference](animation-ragdolls.md). There is no built-in animation
 controller or gameplay state machine.

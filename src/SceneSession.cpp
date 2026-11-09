@@ -71,14 +71,9 @@ bool SceneSession::Apply(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& p
     if(!LoadSceneFromFile(m_project.Resolve(requested),scene,error))return false;
     auto next=std::make_unique<RuntimeWorld>();
     next->audioGroups=m_project.Settings().audio;
-    next->legacyGameplay=m_project.Settings().legacyGameplay;
     next->ConfigureProject(m_project.Settings());
     next->SetSceneControl(world->SceneControl());
     if(!next->Build(scene,&resources,error,&m_project.Settings().classification, &m_project.Settings().navigation))return false;
-    // Validate ordinary player/session construction before ending the old scene.
-    GameSession validation;
-    if(!validation.Begin(*next,error))return false;
-    validation.End();
     auto state=world->SceneControl();
     m_accepting=false;
     play.End(); // stop callbacks, UI and audio before releasing scene resources
@@ -88,7 +83,6 @@ bool SceneSession::Apply(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& p
     m_accepting=true;
     world->SetSceneControl(std::move(state));
     if(!play.Begin(*world,WorldCoordinates(scene.Settings().worldOrigin),error))return false;
-    play.SetWorldStatePath(m_saves&&!world->IsComposed()?m_project.WorldStatePathForScene(m_project.Resolve(requested)):"",false);
     // No automatic save overlay: reload means fresh authored scene. Explicit
     // save/load compatibility remains tied to this new world's baseline.
     return true;

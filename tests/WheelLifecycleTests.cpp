@@ -27,7 +27,7 @@ bool Near(float a,float b,float epsilon=1e-5f){return std::abs(a-b)<=epsilon;}
 void ManagedRegionPublication(){
     Scene root;root.Settings().fidelityPolicy=SceneFidelityPolicy::Distance;
     root.Settings().fidelityFullRadius=10;root.Settings().fidelityCoarseRadius=25;
-    RuntimeWorld world;world.legacyGameplay=false;std::string error;
+    RuntimeWorld world;std::string error;
     Check(world.Build(root,nullptr,error),"distance-policy region publication fixture builds");
     const auto source=Fixture();SceneObject chassis=*source.Find(2),wheel=*source.Find(3);
     chassis.id=100;chassis.transform.position={1000,.55f,0};
@@ -69,7 +69,7 @@ int main(){
     round.Find(3)->wheel->friction=.3f;Check(ComputeSceneFingerprint(round,modified,error)&&modified!=base,"tyre setting changes authored fingerprint");
     auto malformed=scene;malformed.Find(3)->wheel->chassis=999;
     Check(!ComputeSceneFingerprint(malformed,modified,error),"missing chassis reference is rejected by authored validation");
-    malformed=scene;malformed.Find(3)->body=SceneBodyComponent{};RuntimeWorld invalid;invalid.legacyGameplay=false;
+    malformed=scene;malformed.Find(3)->body=SceneBodyComponent{};RuntimeWorld invalid;
     Check(!invalid.Build(malformed,nullptr,error),"wheel and rigid body cannot compete for owner motion");
     malformed=scene;malformed.Find(3)->transform.scale={2,1,1};
     Check(!invalid.Build(malformed,nullptr,error),"wheel owner non-unit scale is rejected rather than changing physical radius");
@@ -79,7 +79,7 @@ int main(){
     Check(InstantiatePrefab(instances,prefab,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",pose,second,error),"second normal wheel prefab instance");
     bool mapped=first!=second;for(const auto& object:instances.Objects())if(object.wheel)mapped&=object.wheel->chassis==object.prefabRoot;
     Check(mapped,"wheel chassis references remap independently for each prefab instance");
-    RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,nullptr,error),"headless generic wheel world builds without player or vehicle policy");
+    RuntimeWorld world;Check(world.Build(scene,nullptr,error),"headless generic wheel world builds without player or vehicle policy");
     auto* one=world.RuntimeWheel(3);auto* two=world.RuntimeWheel(4);Check(one&&two&&one!=two,"wheel runtime state is independently owned");
     one->command={18,2,.2f};Tick(world,4);Check(one->state.available&&one->state.contact,"wheel queries authoritative geometry in the normal world");
     Check(two->command.driveTorque==0&&two->command.steeringAngle==0,"commanding one wheel does not alter another wheel");
@@ -90,7 +90,7 @@ int main(){
     auto bad=one->settings;bad.radius=0;Check(!world.SetWheelSettings(3,bad)&&one->settings.radius==scene.Find(3)->wheel->radius,"invalid wheel configuration has no partial runtime mutation");
     auto configured=one->settings;configured.friction=.42f;Check(world.SetWheelSettings(3,configured),"valid wheel configuration uses normal component setter");
     std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error)&&chunks.count("wheels")&&chunks.at("wheels").version==1,"durable save adds only its optional wheel participant");
-    Scene saved;RuntimeWorld restored;restored.legacyGameplay=false;
+    Scene saved;RuntimeWorld restored;
     Check(WorldPersistence::SceneFrom(chunks,saved,error)&&restored.Build(saved,nullptr,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error),"fresh world restores ordinary physical state and wheel participant");
     auto* recovered=restored.RuntimeWheel(3);
     Check(recovered&&recovered->command.driveTorque==one->command.driveTorque&&recovered->command.brakeTorque==one->command.brakeTorque&&recovered->command.steeringAngle==one->command.steeringAngle&&Near(recovered->state.angularVelocity,one->state.angularVelocity)&&Near(recovered->state.angle,one->state.angle)&&Near(recovered->state.length,one->state.length),"new process wheel continuation restores exact command, spin, phase and travel");
@@ -106,16 +106,16 @@ int main(){
     for(EntityId id:{3,4,5,6})Check(world.DestroyEntity(id,&error),"single wheel owner can be destroyed independently");
     Check(world.SetEntityFidelity(2,SimulationFidelity::Coarse,&error),"last wheel removal releases only its derived fidelity requirement");
     Check(world.SetTransientEntity(2,true,error),"last wheel removal releases the required-save dependency");
-    RuntimeWorld changed;changed.legacyGameplay=false;Check(changed.Build(scene,nullptr,error),"reference replacement fixture builds");
+    RuntimeWorld changed;Check(changed.Build(scene,nullptr,error),"reference replacement fixture builds");
     SceneObject replacement;replacement.body=SceneBodyComponent{};replacement.body->motion=SceneBodyMotion::Dynamic;replacement.body->managed=true;replacement.transform.position={8,.55f,0};
     const auto replacementId=changed.CreateEntity(replacement,nullptr,&error);bool reassigned=replacementId!=0;
     for(EntityId id:{3,4,5,6}){auto settings=changed.RuntimeWheel(id)->settings;settings.chassis=replacementId;reassigned&=changed.SetWheelSettings(id,settings);}
     Check(reassigned&&changed.SetEntityFidelity(2,SimulationFidelity::Coarse,&error)&&!changed.SetEntityFidelity(replacementId,SimulationFidelity::Coarse,&error),"changing chassis references releases the old body and retains the new body");
-    RuntimeWorld gone;gone.legacyGameplay=false;Check(gone.Build(scene,nullptr,error),"chassis destruction fixture builds");const auto original=gone.RuntimeBody(2);Check(gone.DestroyEntity(2,&error),"native one-entity destruction removes chassis only");
+    RuntimeWorld gone;Check(gone.Build(scene,nullptr,error),"chassis destruction fixture builds");const auto original=gone.RuntimeBody(2);Check(gone.DestroyEntity(2,&error),"native one-entity destruction removes chassis only");
     const auto newOwner=gone.CreateEntity(replacement,nullptr,&error);gone.UpdateWheels(1.f/60);
     Check(newOwner&&gone.RuntimeBody(newOwner).id!=original.id&&gone.RuntimeWheel(3)&&!gone.RuntimeWheel(3)->state.available,"destroyed chassis reference never aliases a reused body slot");
     Check(!WorldPersistence::Capture(gone,chunks,error)&&error.find("wheel chassis")!=std::string::npos,"orphaned wheel save fails with its missing required chassis");
-    RuntimeWorld hierarchy;hierarchy.legacyGameplay=false;Check(hierarchy.Build(scene,nullptr,error)&&hierarchy.DestroyHierarchy(2,error)&&!hierarchy.RuntimeWheel(3),"explicit hierarchy destruction retires every wheel owner");
+    RuntimeWorld hierarchy;Check(hierarchy.Build(scene,nullptr,error)&&hierarchy.DestroyHierarchy(2,error)&&!hierarchy.RuntimeWheel(3),"explicit hierarchy destruction retires every wheel owner");
     hierarchy.Destroy();Check(!hierarchy.RuntimeWheel(3),"world stop discards wheel state and safe access");
     ManagedRegionPublication();
     std::printf("SUMMARY %u checks %u failures\n",checks,failures);return failures?1:0;

@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <string>
 #include <glm/gtc/quaternion.hpp>
-#include "GameSession.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "Simulation.h"
@@ -28,8 +27,6 @@ void Case(const char* name, bool localVehicle, bool bothCoarse, bool initiallyRe
           bool reversedOrder, const glm::quat& rotation, const glm::vec3& translation,
           const glm::vec3& boost) {
     Scene scene; scene.Settings().name = name;
-    auto& start = scene.CreateObject("Observer"); start.playerStart = ScenePlayerStartComponent{};
-    start.transform.position = glm::vec3(0,100,100);
     EntityId ids[2]{};
     const float authoredMass[2] = {2.0e12f, 1.0e12f};
     for (int index = 0; index < 2; ++index) {
@@ -42,13 +39,13 @@ void Case(const char* name, bool localVehicle, bool bothCoarse, bool initiallyRe
         body.body->mass = authoredMass[i]; body.body->friction = 0; body.body->restitution = 0;
         body.body->initialLinearVelocity = boost + rotation * (initiallyResting ? glm::vec3(0) :
             (i == 0 ? glm::vec3(.3f,-.2f,.1f) : glm::vec3(-8.0f,.4f,-.2f)));
-        if (localVehicle && i == 1) { body.vehicle = SceneVehicleComponent{}; body.vehicle->gravity = SceneVehicleGravity::Local; }
+        if (localVehicle && i == 1) body.celestial = SceneCelestialComponent{};
         else body.celestial = SceneCelestialComponent{};
     }
     std::string text, error; SaveSceneToString(scene, text); Scene loaded;
     Check(LoadSceneFromString(text, loaded, error), std::string(name)+" serialized_scene");
-    RuntimeWorld world; GameSession session; Window window; window.SetTestInputMode(true);
-    if (!world.Build(loaded, nullptr, error) || !session.Begin(world, error)) { Check(false,std::string(name)+" construct "+error); return; }
+    RuntimeWorld world;  Window window; window.SetTestInputMode(true);
+    if (!world.Build(loaded, nullptr, error) || !world.IsBuilt()) { Check(false,std::string(name)+" construct "+error); return; }
     // Effective represented mass is the physical mass used by each fidelity:
     // live rigid inverse mass; authored mass retained by Coarse records.
     const BodyHandle fullHandle = world.DynamicBodies()[world.FindEntity(ids[1])->slot].Handle();
@@ -62,7 +59,7 @@ void Case(const char* name, bool localVehicle, bool bothCoarse, bool initiallyRe
     const glm::dvec3 firstForce = Force(before[0].position,masses[0],before[1].position,masses[1]);
     double worst = 0;
     for (int step=0; step<12; ++step) {
-        StepPlayedWorld(session,window,dt); ++steps;
+        StepPlayedWorld(world,window,dt); ++steps;
         EntityPhysicalState state[2]; world.GetEntityState(ids[0],state[0]); world.GetEntityState(ids[1],state[1]);
         const glm::dvec3 p = masses[0]*glm::dvec3(state[0].linearVelocity)+masses[1]*glm::dvec3(state[1].linearVelocity);
         const double residual = glm::length(p-initialP); worst=std::max(worst,residual/scale);
@@ -80,8 +77,6 @@ void Case(const char* name, bool localVehicle, bool bothCoarse, bool initiallyRe
 }
 void AuthoredGravityAcrossFidelity() {
     Scene scene; scene.Settings().name = "FTFT7 authored gravity fidelity";
-    auto& start = scene.CreateObject("Observer"); start.playerStart = ScenePlayerStartComponent{};
-    start.transform.position = glm::vec3(0,100,100);
     auto& source = scene.CreateObject("Static source"); source.body = SceneBodyComponent{};
     source.body->shape = SceneShape::Sphere; source.body->radius = .1f;
     source.celestial = SceneCelestialComponent{}; source.celestial->gravitationalParameter = 1000.0f;
@@ -92,14 +87,14 @@ void AuthoredGravityAcrossFidelity() {
     body.transform.position = glm::vec3(5,8,0); body.body = SceneBodyComponent{};
     body.body->motion = SceneBodyMotion::Dynamic; body.body->shape = SceneShape::Sphere;
     body.body->radius = .1f; body.body->initialLinearVelocity = glm::vec3(1,2,3);
-    RuntimeWorld full, coarse; GameSession fullSession, coarseSession; Window window;
+    RuntimeWorld full, coarse;  Window window;
     window.SetTestInputMode(true); std::string error;
     if (!full.Build(scene,nullptr,error) || !coarse.Build(scene,nullptr,error) ||
-        !fullSession.Begin(full,error) || !coarseSession.Begin(coarse,error)) {
+        !full.IsBuilt() || !coarse.IsBuilt()) {
         Check(false,"gravity_fidelity construct "+error); return;
     }
     Check(coarse.SetEntityFidelity(id,SimulationFidelity::Coarse,&error),"gravity_fidelity demote");
-    StepPlayedWorld(fullSession,window,dt); StepPlayedWorld(coarseSession,window,dt); steps+=2;
+    StepPlayedWorld(full,window,dt); StepPlayedWorld(coarse,window,dt); steps+=2;
     EntityPhysicalState a,b; full.GetEntityState(id,a); coarse.GetEntityState(id,b);
     const glm::dvec3 expected = glm::dvec3(1,2,3)+glm::dvec3(0,-3,0)*double(dt);
     std::printf("FTFT7 GRAVITY FIDELITY full=(%.9g,%.9g,%.9g) coarse=(%.9g,%.9g,%.9g) expected=(%.17g,%.17g,%.17g)\n",

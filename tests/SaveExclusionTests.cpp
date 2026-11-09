@@ -114,18 +114,18 @@ void Simple(const fs::path& out,bool exclude,bool reinclude,bool malformed){
  if(malformed)Malformed(source,kept,chunks,out/"malformed");
 }
 void Articulated(const fs::path& out,const fs::path& repository){
- const auto project=repository/"projects/ragdoll_demo";const AssetId asset="46464646464646464646464646464601";
+ const auto project=repository/"tests/fixtures/animation";const AssetId asset="46464646464646464646464646464601";
  AssetDatabase assets;assets.Scan(project.string(),(project/"Assets").string());
  Require(assets.Find(asset)!=nullptr,"articulation original project asset registered");
  ResourceManager resources(nullptr,&assets);resources.SetHeadlessResidency(true);
  resources.RequestMesh(asset);resources.WaitForAll();
  Require(resources.StateOf(asset)==ResourceState::Ready&&resources.TryGetSkeletal(asset)!=nullptr,"articulation real skeleton decode without GPU substitute",resources.ErrorOf(asset));
  Scene authored;std::string error;
- Require(LoadSceneFromFile((project/"Scenes/main.judas").string(),authored,error),"articulation ordinary original scene loads",error);
+ Require(LoadSceneFromFile((project/"ragdoll.judas").string(),authored,error),"articulation ordinary original scene loads",error);
  const auto* original=authored.Find(10);Require(original&&original->ragdoll&&original->animation,"articulation original three-bone definition exists");
  Scene scene;scene.Settings()=authored.Settings();auto rig=*original;rig.scripts.clear();
  Require(scene.InsertObject(rig),"articulation ordinary owner inserted with normal scene identity");
- RuntimeWorld source,destination;source.legacyGameplay=false;destination.legacyGameplay=false;
+ RuntimeWorld source,destination;
  Require(source.Build(scene,&resources,error),"articulation normal source world",error);source.UpdateAnimations(0);
  Require(source.EnterRagdoll(rig.id,error),"articulation real public physical activation",error);
  Check(!source.SetTransientEntity(rig.id,true,error)&&error.find("required component cannot be transient")!=std::string::npos&&!source.IsTransientEntity(rig.id),"articulation required owner cannot be publicly excluded",{{"error",error}});error.clear();

@@ -6,7 +6,6 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "PhysicsWorld.h"
-#include "PilotAttachment.h"
 
 namespace {
 int gFailures = 0;
@@ -184,29 +183,6 @@ void TestPhysicsBodyRelativeVelocity() {
                                          physics.GetLinearVelocity(ship)),
                  expectedShipRelativeVelocity, 3.0e-5f,
                  "spacecraft velocity is reported relative to a moving, rotating celestial body");
-
-    const glm::vec3 pilotLocalOffset(0.3f, 1.2f, -0.5f);
-    const ReferenceFrame shipFrame = FrameFromBody(physics, ship);
-    const glm::vec3 pilotWorldPosition = PositionToWorld(shipFrame, pilotLocalOffset);
-    PilotAttachment attachment;
-    BeginPilotAttachment(attachment, physics.GetTransform(ship), pilotWorldPosition,
-                         physics.GetTransform(ship).rotation);
-    glm::vec3 attachedPosition;
-    glm::quat attachedOrientation;
-    ApplyPilotAttachment(attachment, physics.GetTransform(ship), attachedPosition,
-                         attachedOrientation);
-    const glm::vec3 attachedPilotWorldVelocity =
-        VelocityToWorld(shipFrame, attachment.localOffset, glm::vec3(0.0f));
-    const glm::vec3 releaseVelocity = ComputePilotReleaseVelocity(
-        physics.GetTransform(ship), physics.GetLinearVelocity(ship),
-        physics.GetAngularVelocity(ship), attachedPosition);
-    CheckVecNear(attachedPilotWorldVelocity, releaseVelocity, 3.0e-5f,
-                 "attached pilot world velocity matches spacecraft point velocity used on release");
-    CheckVecNear(RelativeVelocityToFrame(shipFrame, attachedPosition,
-                                         attachedPilotWorldVelocity), glm::vec3(0.0f),
-                 3.0e-5f, "attached pilot is stationary in the moving spacecraft frame");
-    Check(glm::length(attachedPilotWorldVelocity) > 1.0f,
-          "attached pilot can be stationary relative to a spacecraft moving in world space");
 
     physics.ResetBody(planet, planetPosition, planetOrientation);
     physics.ResetBody(ship, shipWorldPosition, shipOrientation);

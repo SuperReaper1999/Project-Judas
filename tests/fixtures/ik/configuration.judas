@@ -24,9 +24,6 @@
         0.17,
         0.19
       ],
-      "fluid-scale": 1,
-      "fluid-update-rate-hz": 30,
-      "fluid-hydrostatic-drag-rate": 2,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"

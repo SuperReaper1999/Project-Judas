@@ -108,10 +108,10 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
   for(const auto& command:script.commands)if(command.kind=="HAPTICS"){
    haptics=std::make_unique<TestHaptics>(window.Input());break;
   }
-  for(const auto& c:script.commands)if(c.kind=="SAMPLE_GRAVITY"){glm::vec3 p;std::istringstream(c.path)>>p.x>>p.y>>p.z;auto g=play.Session().World().Gravity().Sample(p);std::printf("sample,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f\n",p.x,p.y,p.z,g.x,g.y,g.z);}
+  for(const auto& c:script.commands)if(c.kind=="SAMPLE_GRAVITY"){glm::vec3 p;std::istringstream(c.path)>>p.x>>p.y>>p.z;auto g=play.World().Gravity().Sample(p);std::printf("sample,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f\n",p.x,p.y,p.z,g.x,g.y,g.z);}
   Uint64 last=SDL_GetPerformanceCounter();
   std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused");
-  for(size_t i=0;i<play.Session().World().DynamicBodies().size();++i){std::printf(",obj%zuPosX,obj%zuPosY,obj%zuPosZ,obj%zuVelX,obj%zuVelY,obj%zuVelZ",i,i,i,i,i,i);}
+  for(size_t i=0;i<play.World().DynamicBodies().size();++i){std::printf(",obj%zuPosX,obj%zuPosY,obj%zuPosZ,obj%zuVelX,obj%zuVelY,obj%zuVelZ",i,i,i,i,i,i);}
   std::printf("\n");
   const auto quit=[&](int frame){
    if(!play.QuitRequested())return false;
@@ -143,20 +143,20 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
     if(frame==c.begin&&c.kind.rfind("POINTER",0)==0){window.SetTestPointer(int(c.value),int(c.other));if(c.kind!="POINTER")window.ApplyTestPhysical("mouse:Left",c.kind=="POINTER_DOWN"?1.f:0.f);}
     if(frame==c.begin&&c.kind.rfind("TOUCH_",0)==0){const bool active=window.Input().TouchId(0,c.finger)!=0;Require(c.kind=="TOUCH_DOWN"?!active:active,"touch transition requires matching contact lifetime");window.SetTestTouch(c.finger,c.value,c.other,c.pressure,c.kind!="TOUCH_UP");}
     if(frame==c.begin&&c.kind=="TAP"){if(c.name=="key:Space")window.RequestTestJump();if(c.name=="key:R")window.RequestTestReset();if(c.name=="key:F")window.RequestTestControlToggle();}
-    if(c.kind=="HOLD"){const std::map<std::string,Action> actions={{"key:W",Action::MoveForward},{"key:S",Action::MoveBackward},{"key:A",Action::StrafeLeft},{"key:D",Action::StrafeRight},{"key:Q",Action::MoveDown},{"key:E",Action::MoveUp},{"key:I",Action::PitchUp},{"key:K",Action::PitchDown},{"key:J",Action::YawLeft},{"key:L",Action::YawRight},{"key:U",Action::RollLeft},{"key:O",Action::RollRight}};auto it=actions.find(c.name);Require(it!=actions.end(),"unknown HOLD key "+c.name);window.SetTestActionState(it->second,frame>=c.begin&&frame<c.end);}
+    if(c.kind=="HOLD")window.Input().SetPhysical(c.name,frame>=c.begin&&frame<c.end?1:0);
    }
    bool capture=false;for(const auto& c:script.commands)capture|=c.kind=="SCREENSHOT"&&c.begin==frame;
    float dt=script.seconds;if(script.realtime){auto now=SDL_GetPerformanceCounter();dt=float(now-last)/SDL_GetPerformanceFrequency();last=now;}
-   play.Frame(window,renderer,dt,true,capture||script.realtime);
-   if(auto* scripts=play.Session().World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed: "+scripts->Diagnostics().front().message);
+   play.Frame(window,renderer,dt,capture||script.realtime);
+   if(auto* scripts=play.World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed: "+scripts->Diagnostics().front().message);
    for(const auto& c:script.commands)if(c.begin==frame){
     if(c.kind=="SCREENSHOT"){std::filesystem::path output(c.path);if(output.has_parent_path())std::filesystem::create_directories(output.parent_path());std::vector<unsigned char> pixels;renderer.CaptureFrame(window.Width(),window.Height(),pixels);Require(WriteRgbPng(c.path,window.Width(),window.Height(),pixels),"capture failed "+c.path);std::printf("[TestHarness] Wrote screenshot: %s\n",c.path.c_str());}
-    if(c.kind=="EXPECT_VIEWPORT"){const auto& world=play.Session().World();Require(window.Width()==c.width&&window.Height()==c.height&&world.viewportWidth==c.width&&world.viewportHeight==c.height,"window/gameplay viewport expectation failed");}
+    if(c.kind=="EXPECT_VIEWPORT"){const auto& world=play.World();Require(window.Width()==c.width&&window.Height()==c.height&&world.viewportWidth==c.width&&world.viewportHeight==c.height,"window/gameplay viewport expectation failed");}
     if(c.kind=="EXPECT_POINTER"){const auto p=window.Input().Pointer();Require(std::abs(p.x-c.value)<1e-5f&&std::abs(p.y-c.other)<1e-5f&&p.down==(c.down!=0),"gameplay pointer expectation failed");}
     if(c.kind=="EXPECT_TOUCHES")Require(window.Input().Touches().size()==std::size_t(c.value),"gameplay touch count expectation failed");
     if(c.kind=="EXPECT_AXIS")Require(std::abs(window.Input().Axis(c.name)-c.value)<1e-5f,"axis expectation failed "+c.name);
     if(c.kind=="EXPECT_HELD")Require(window.Input().Action(c.name).held==(c.value!=0),"held expectation failed "+c.name);
-    if(c.kind=="EXPECT_SCENE")Require(play.Session().World().SceneControl()&&play.Session().World().SceneControl()->Current()==c.name,"scene expectation failed "+c.name);
+    if(c.kind=="EXPECT_SCENE")Require(play.World().SceneControl()&&play.World().SceneControl()->Current()==c.name,"scene expectation failed "+c.name);
     if(c.kind=="EXPECT_QUIT")Require(play.QuitRequested(),"expected quit was not requested by frame "+std::to_string(frame));
     if(c.kind=="EXPECT_NO_QUIT")Require(!play.QuitRequested(),"unexpected quit at frame "+std::to_string(frame));
     if(c.kind=="EXPECT_PAUSED")Require(play.IsPaused()==(c.value!=0),"pause expectation failed");
@@ -173,19 +173,19 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
      Require(!play.QuitRequested(),"quit requested before service completed: "+c.name);
      Require(std::chrono::steady_clock::now()<deadline,"service wait timed out: "+c.name+" at scripted frame "+std::to_string(frame));
      ProfileFrame waitProfile("scripted service wait");if(beforeFrame)beforeFrame();window.BeginTestFrame();
-     play.Frame(window,renderer,0,true,false);if(auto* scripts=play.Session().World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed during service wait: "+scripts->Diagnostics().front().message);if(afterFrame)afterFrame();++waits;SDL_Delay(1);
+     play.Frame(window,renderer,0,false);if(auto* scripts=play.World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed during service wait: "+scripts->Diagnostics().front().message);if(afterFrame)afterFrame();++waits;SDL_Delay(1);
     }
     std::printf("[TestHarness] service %s ready after %u wait frames at frame %d\n",c.name.c_str(),waits,frame);
    }
    if(quit(frame))break;
-   if(script.logEvery&&frame%script.logEvery==0){auto& world=play.Session().World();glm::vec3 p=play.Session().Player().GetPosition(),v=play.Session().Player().GetVelocity();bool supported=play.Session().Player().IsGrounded();glm::vec3 up=play.Session().Player().GetOrientation()*glm::vec3(0,1,0);
+   if(script.logEvery&&frame%script.logEvery==0){auto& world=play.World();glm::vec3 p=world.view?world.view->pose.position:glm::vec3(0),v(0);bool supported=false;glm::vec3 up=world.view?world.view->pose.rotation*glm::vec3(0,1,0):glm::vec3(0,1,0);
     if(!script.entity.empty()){EntityId id=std::stoull(script.entity);auto* d=world.RuntimeDefinition(id);Require(d,"selected entity is unavailable");const auto pose=world.PresentedTransform(id,d->transform,1);p=pose.position;up=pose.rotation*glm::vec3(0,1,0);if(auto* m=world.RuntimeCharacter(id)){v=m->result.velocity;supported=m->result.supported;}else v=world.Physics().GetLinearVelocity(world.RuntimeBody(id));}
     const auto g=world.Gravity().Sample(p);
-    std::printf("%d,%.5f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%d,%d,%d",frame,frame*script.seconds,p.x,p.y,p.z,up.x,up.y,up.z,supported,v.x,v.y,v.z,g.x,g.y,g.z,play.Session().VehicleControl().controlled,frame,play.LastFixedStepsThisFrame(),play.IsPaused());
+    std::printf("%d,%.5f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%d,%d,%d",frame,frame*script.seconds,p.x,p.y,p.z,up.x,up.y,up.z,supported,v.x,v.y,v.z,g.x,g.y,g.z,0,frame,play.LastFixedStepsThisFrame(),play.IsPaused());
     for(auto& b:world.DynamicBodies()){auto pos=b.GetPosition(),vel=world.Physics().GetLinearVelocity(b.Handle());std::printf(",%.6f,%.6f,%.6f,%.6f,%.6f,%.6f",pos.x,pos.y,pos.z,vel.x,vel.y,vel.z);}std::printf("\n");
    }
   }
-  if(std::getenv("JUDAS_METADATA_TRACE")){auto work=play.Session().World().MetadataStats();auto json=ScriptSystem::MetadataStats();std::printf("[TestHarness] metadata lookups=%llu rebuilds=%llu copies=%llu JSON-contexts=%llu reference-inspections=%llu\n",(unsigned long long)work.lookups,(unsigned long long)work.indexRebuilds,(unsigned long long)work.definitionsCopied,(unsigned long long)json.parserConstructions,(unsigned long long)json.referenceInspections);}
+  if(std::getenv("JUDAS_METADATA_TRACE")){auto work=play.World().MetadataStats();auto json=ScriptSystem::MetadataStats();std::printf("[TestHarness] metadata lookups=%llu rebuilds=%llu copies=%llu JSON-contexts=%llu reference-inspections=%llu\n",(unsigned long long)work.lookups,(unsigned long long)work.indexRebuilds,(unsigned long long)work.definitionsCopied,(unsigned long long)json.parserConstructions,(unsigned long long)json.referenceInspections);}
   window.SetTestInputMode(false);return 0;
  }catch(const std::exception& e){std::fprintf(stderr,"[TestHarness] %s\n",e.what());window.SetTestInputMode(false);return 1;}
 }

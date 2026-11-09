@@ -127,7 +127,7 @@ Static cooked meshes use explicit one/two-sided contact/cast policy; closest-poi
 inspection sees either side. Hulls are closed convex volumes. Sphere/capsule/fixed
 box casts against cooked surfaces use a bounded 256-advance policy per candidate,
 1e-5 metre convergence tolerance, throwing on exhaustion instead of a clean miss.
-No rotational sweep / general high-speed CCD claim. [Cooking and pair coverage](../M64_COLLISION.md).
+No rotational sweep / general high-speed CCD claim. [Cooking and pair coverage](../COLLISION_AUTHORING.md).
 
 ## Joint
 

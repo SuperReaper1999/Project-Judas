@@ -87,7 +87,7 @@ archive identity rather than stripping it.
 
 ## Qualification and boundaries
 
-See the [cross-build evidence](evidence/windows-cross/REPORT.md) for exact tested
+See the [cross-build evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/windows-cross/REPORT.md) for exact tested
 versions, commands, failures and native Windows results. Compilation and import
 closure alone are not gameplay acceptance. VM software rendering is functional
 validation, not physical GPU or performance qualification. Test your own project

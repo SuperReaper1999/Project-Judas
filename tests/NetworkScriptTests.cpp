@@ -1,6 +1,4 @@
-#include "TestProjectPath.h"
 #include "AssetDatabase.h"
-#include "GameSession.h"
 #include "InputSystem.h"
 #include "JobSystem.h"
 #include "NetworkSession.h"
@@ -32,10 +30,10 @@ struct Content {
  explicit Content(const fs::path& file){std::string error;Check(project.Load(file.string(),error),"project loads: "+error);assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"ordinary asset registration has no problems");const bool loaded=LoadSceneFromFile(project.StartupScenePath(),scene,error);Check(loaded,"scene loads: "+error);}
 };
 struct Instance {
- RuntimeWorld world;GameSession game;InputSystem input;Content& content;
- explicit Instance(Content& c,const Scene& source):content(c){std::string error;world.legacyGameplay=false;world.viewportWidth=1280;world.viewportHeight=720;world.SetSceneControl(std::make_shared<SceneSession>(c.project,c.project.StartupScenePath()));Check(world.Build(source,&c.resources,error,&c.project.Settings().classification,&c.project.Settings().navigation),"headless world builds through ordinary resource path: "+error);Check(input.SetMap(c.project.Settings().input,error)&&game.Begin(world,error),"authoritative session starts: "+error);}
- ~Instance(){world.EndScripts();game.End();world.Destroy();}
- void Frame(double now){input.BeginFrame();world.PumpNetwork(now);world.UpdateUIScripts(&input,1.f/60);world.UpdateScripts(&input,1.f/60);input.BeginFixedStep();if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();StepAuthoritativeWorld(game,input,1.f/60);Healthy(world);}
+ RuntimeWorld world;InputSystem input;Content& content;
+ explicit Instance(Content& c,const Scene& source):content(c){std::string error;world.viewportWidth=1280;world.viewportHeight=720;world.SetSceneControl(std::make_shared<SceneSession>(c.project,c.project.StartupScenePath()));Check(world.Build(source,&c.resources,error,&c.project.Settings().classification,&c.project.Settings().navigation),"headless world builds through ordinary resource path: "+error);Check(input.SetMap(c.project.Settings().input,error)&&world.IsBuilt(),"authoritative session starts: "+error);}
+ ~Instance(){world.EndScripts();world.Destroy();}
+ void Frame(double now){input.BeginFrame();world.PumpNetwork(now);world.UpdateUIScripts(&input,1.f/60);world.UpdateScripts(&input,1.f/60);input.BeginFixedStep();if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();StepAuthoritativeWorld(world,input,1.f/60);Healthy(world);}
 };
 const char* Probe=R"JS(import {network,world,input} from 'judas';
 export const properties={role:{type:'string',default:'host'},port:{type:'number',default:0}};
@@ -79,7 +77,7 @@ int Bindings(const fs::path& root){
  Check(!fs::exists(root),"fresh fixture directory preserves original evidence");fs::create_directories(root/"Assets");fs::create_directories(root/"Scenes");
  std::ofstream(root/"Assets/probe.js")<<Probe;
  AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());AssetRecord script;std::string error;Check(assets.Track((root/"Assets/probe.js").string(),script,error),"ordinary JS fixture registered: "+error);
- ProjectSettings settings;settings.name="M99 public script fixture";settings.legacyGameplay=false;settings.startupScene="Scenes/fixture.judas";settings.saveIdentity=std::string(64,'8');settings.input.entries.clear();settings.input.Add("thrust",true);settings.input.AddBinding("thrust",{"key:D"});settings.input.Add("activate",false);settings.input.AddBinding("activate",{"key:Space"});settings.input.Add("leave",false);settings.input.AddBinding("leave",{"key:L"});
+ ProjectSettings settings;settings.name="M99 public script fixture";settings.startupScene="Scenes/fixture.judas";settings.saveIdentity=std::string(64,'8');settings.input.entries.clear();settings.input.Add("thrust",true);settings.input.AddBinding("thrust",{"key:D"});settings.input.Add("activate",false);settings.input.AddBinding("activate",{"key:Space"});settings.input.Add("leave",false);settings.input.AddBinding("leave",{"key:L"});
  std::ofstream(root/"fixture.judasproj")<<Project::SerializeToString(settings);
  Scene scene;auto& owner=scene.CreateObject("Binding probe");owner.scripts={{1,script.id,true,"{}"}};auto& box=scene.CreateObject("Physical target");box.body=SceneBodyComponent{};box.body->motion=SceneBodyMotion::Dynamic;box.body->mass=2;box.transform.position={0,2,0};auto& motor=scene.CreateObject("Associated motor");motor.characterMotor=CharacterMotorSettings{};motor.characterMotor->gravityScale=0;auto& nested=scene.CreateObject("Unsupported child");nested.parent=2;
  Check(SaveSceneToFile(scene,(root/"Scenes/fixture.judas").string(),error),"fixture scene writes: "+error);
@@ -106,7 +104,7 @@ int Bindings(const fs::path& root){
 }
 
 void DiagonalIntent(){
- Content content(TestProjectPath("connected_workshop")/"connected_workshop.judasproj");
+ Content content((fs::path(__FILE__).parent_path().parent_path()/"projects/connected_workshop")/"connected_workshop.judasproj");
  Instance host(content,content.scene);host.world.Network().SetLaunch("host","127.0.0.1",0,true);
  Scene peerScene=content.scene;peerScene.Find(1)->scripts.clear();Instance client(content,peerScene);
  double now=200;auto pump=[&](unsigned count){for(unsigned i=0;i<count;++i){now+=1./60;content.resources.Pump();client.Frame(now);host.Frame(now);std::this_thread::sleep_for(std::chrono::milliseconds(1));}};

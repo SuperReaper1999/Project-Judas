@@ -39,7 +39,7 @@ policy, hit queries/impulses, UI and camera behaviour. `math.js` is small projec
 quaternion/vector math. The engine owns the actual animation sampling, collision,
 physical target and resource lifecycle. No animation state machine lives in C++.
 
-See [workflow, API and limitations](../../docs/M95_ANIMATION_WORKFLOW.md),
+See [workflow, API and limitations](../../docs/ANIMATION_WORKFLOW.md),
 [animation reference](../../docs/judasjs/animation-ragdolls.md) and the
 [copyable motor example](../../docs/judasjs/examples/animation-motion.js).
 

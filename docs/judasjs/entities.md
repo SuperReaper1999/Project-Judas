@@ -63,7 +63,7 @@ operations remain callable while disabled, although physics participation stops.
 Use stable asset IDs, not filenames, for prefab/resource APIs. Runtime prefab
 support is the existing ordinary component subset, not every imaginable engine
 component. Nested prefab variants are not introduced here. Source data is not
-modified by runtime edits. See [prefab architecture](../M36.md).
+modified by runtime edits. See [prefab architecture](../PREFABS.md).
 
 Tags are semantic labels (many per entity); collision layers/masks are physical
 policy; render layers/camera masks are independent presentation policy. Registries
@@ -88,7 +88,7 @@ acceleration gives a world torque; it does not add a controller or holding polic
 
 ## `Entity.liquid` (M54)
 
-Nullable generation-safe [LiquidVolume](liquid.md) owner after resource loading and fixed-step registration. It exposes conserved quantity/capacity/material snapshots and paired transfers. It is separate from the legacy PBF `world.fluidSample` API.
+Nullable generation-safe [LiquidVolume (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/judasjs/liquid.md) owner after resource loading and fixed-step registration. It exposes conserved quantity/capacity/material snapshots and paired transfers. It is separate from the legacy PBF `world.fluidSample` API.
 
 ## `Entity.deformable` — M62
 
@@ -118,7 +118,7 @@ for (const child of collider?.children ?? []) {
 }
 ```
 
-See [queries](physics.md#physicsclosestpoint) and [collision assets](../M64_COLLISION.md).
+See [queries](physics.md#physicsclosestpoint) and [collision assets](../COLLISION_AUTHORING.md).
 
 ## M65 references and physical/presentation consumers
 
@@ -161,7 +161,7 @@ running while render-hidden. Editor hierarchy/inspector selection remains availa
 to find and restore an object; editor overlays are distinct from world geometry.
 Authored visibility uses normal scene/prefab/undo paths. Play/Stop and reload restore
 authored values; modern slots and region retention preserve supported live gates.
-See [M72 ownership and limits](../M72.md).
+See [M72 ownership and limits](../RUNTIME_RENDERING.md).
 
 ## `Entity.modelParts` and `Entity.setPartVisible(identity, visible)`
 
@@ -253,8 +253,6 @@ commands. Modern save slots retain current motion type, pose/physical velocities
 and durable command state; region suspension uses the same command participant. Private staged actors retain
 validated initial intent until normal publication; retained snapshot commands
 replace that initial intent.
-The separate legacy F6 `.judasstate` pose-delta save rejects kinematic intent or
-changed authority with guidance to use modern save slots.
 Restoration reinstates remaining intent after current physical state and rebuilds
 disposable history without replaying the last movement. Removal, region unload
 and Stop retire normal handles and pending commands. Legacy default authoring and
@@ -277,7 +275,7 @@ fixedUpdate(dt) {
 // mover.setMotionType('dynamic', {preserveVelocity:true});
 ```
 
-The ordinary [kinematic lab](../../projects/kinematic_lab/) executes these public
+The ordinary [kinematic lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/kinematic_lab) executes these public
 VM calls with dynamic crates and motor supports. Its retained evidence records
 measured bounds and validation separately from this API contract.
 
@@ -309,8 +307,7 @@ if (lamp?.light) lamp.setLight({enabled:true, intensity:4, castsShadow:true});
 
 These are presentation settings: frame updates may change them. They enter ordinary
 modern save snapshots and streamed entity definitions; GPU lists/maps are transient.
-Legacy pose-only `.judasstate` deltas do not persist light patches. Scripts restoring
-such old states must reapply their own intent. Mutating the returned copy has no effect.
+Mutating the returned copy has no effect.
 
 See [rendering](rendering.md) for tiled lighting, shadow budgets and current limits.
 

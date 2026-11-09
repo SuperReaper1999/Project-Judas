@@ -40,9 +40,6 @@
         0
       ],
       "environment-background": false,
-      "fluid-scale": 1,
-      "fluid-update-rate-hz": 30,
-      "fluid-hydrostatic-drag-rate": 2,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -108,7 +105,6 @@
             0.6
           ],
           "body.radius": 1,
-          "body.terrain": "",
           "body.mass": 15,
           "body.friction": 0.7,
           "body.restitution": 0.1,
@@ -117,15 +113,13 @@
             0,
             0
           ],
-          "body.pickable": true,
           "body.managed": false,
           "scripts": 1,
           "script.0.id": 1,
           "script.0.asset": "d7d54258eced64b097eea5383af06a35",
           "script.0.enabled": true,
           "script.0.properties": "{}",
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       }
     ]

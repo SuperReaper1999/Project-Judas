@@ -1,5 +1,4 @@
 #include "../third_party/nlohmann/json.hpp"
-#include "GameSession.h"
 #include "Project.h"
 #include "ProjectFeaturePolicy.h"
 #include "RuntimeWorld.h"
@@ -61,7 +60,7 @@ Scene Pool() {
     auto &water = scene.CreateObject("Water");
     water.fluidVolume = SceneFluidVolumeComponent{};
     auto &f = *water.fluidVolume;
-    f.backend = SceneFluidBackend::Grid;
+
     f.spacing = .4f;
     f.countX = 20;
     f.countY = 10;
@@ -96,9 +95,9 @@ int main(int argc, char **argv) {
           "grid fields roundtrip: " + error);
     RuntimeWorld off;
     ProjectSettings disabled;
-    disabled.legacyGameplay = false;
+
     off.ConfigureProject(disabled);
-    Check(off.Build(parsed, nullptr, error) && !off.GridWater() && !off.HasFluid(),
+    Check(off.Build(parsed, nullptr, error) && !off.GridWater(),
           "default policy never allocates an advanced backend: " + error);
     auto invalid = parsed;
     auto &invalidGrid = *invalid.Find(waterId)->fluidVolume;
@@ -132,14 +131,6 @@ int main(int argc, char **argv) {
     }
     Check(source.GridWater() && source.GridWater()->Owners() == std::vector<std::uint64_t>{waterId},
           "runtime has exactly the scene-owned grid");
-    bool legacyAllocated = true;
-    try {
-        source.Fluid();
-    } catch (const std::logic_error &) {
-        legacyAllocated = false;
-    }
-    Check(!legacyAllocated && !source.HasFluid() && source.FluidVolumes().empty(),
-          "grid-only projects do not allocate the legacy particle solver");
     if (operation == "--read") {
         SaveStorage storage(directory);
         GameSnapshot snapshot;
@@ -161,12 +152,12 @@ int main(int argc, char **argv) {
         Check(cold.GridWater() &&
                   std::abs(cold.GridWater()->Find(waterId)->Quantity() - expected) < 1e-10,
               "cold process retains changed quantity");
-        GameSession game;
-        Check(game.Begin(cold, error), "cold process resumes");
+
+        Check(cold.IsBuilt(), "cold process resumes");
         InputSystem input;
         for (unsigned i = 0; i < 120; ++i) {
             input.BeginFixedStep();
-            StepAuthoritativeWorld(game, input, 1.f / 60);
+            StepAuthoritativeWorld(cold, input, 1.f / 60);
         }
         Check(cold.GridWater()->Error().empty() &&
                   std::abs(cold.GridWater()->Find(waterId)->Quantity() - expected) < 1e-8,
@@ -174,18 +165,18 @@ int main(int argc, char **argv) {
         std::cout << checks << " checks, " << failures << " failures\n";
         return failures ? 1 : 0;
     }
-    GameSession session;
-    Check(session.Begin(source, error), "ordinary authoritative session starts: " + error);
+
+    Check(source.IsBuilt(), "ordinary authoritative session starts: " + error);
     InputSystem input;
-    auto tick = [&](RuntimeWorld &world, GameSession &game, unsigned count) {
+    auto tick = [&](RuntimeWorld &world, unsigned count) {
         for (unsigned i = 0; i < count; ++i) {
             input.BeginFixedStep();
-            StepAuthoritativeWorld(game, input, 1.f / 60);
+            StepAuthoritativeWorld(world, input, 1.f / 60);
         }
         Check(world.GridWater()->Error().empty(),
               "ordinary simulation has no grid publication error: " + world.GridWater()->Error());
     };
-    tick(source, session, 600);
+    tick(source, 600);
     Check(source.GridWater()->Stats(waterId).geometryBakes == 1,
           "moving CharacterMotor and rigid props do not trigger static rebakes");
     if (operation == "--write") {
@@ -235,9 +226,9 @@ int main(int argc, char **argv) {
     Check(std::abs(Quantity(*restored.GridWater()->Find(waterId)) -
                    Quantity(*source.GridWater()->Find(waterId))) < 1e-8,
           "restored quantity is preserved before the first resumed step");
-    GameSession resumed;
-    Check(resumed.Begin(restored, error), "restored session starts");
-    tick(restored, resumed, 60);
+
+    Check(restored.IsBuilt(), "restored session starts");
+    tick(restored, 60);
     Check(restored.RequestOrigin({512, 0, 0}, error) && restored.CommitOrigin(),
           "active grid follows normal origin shifts: " + error);
     Check(restored.SampleWater({-512, 1, 0}, {0, 1, 0}, .3f, .2f).immersion > .9f,
@@ -254,12 +245,12 @@ int main(int argc, char **argv) {
     Check(source.StageRegionObject(wall, wall, error),
           "stage ordinary streamed collider: " + error);
     source.PublishRegion({wall.id});
-    tick(source, session, 1);
+    tick(source, 1);
     Check(source.GridWater()->Stats(waterId).geometryBakes == 2,
           "published streamed collider invalidates cached capacity");
     source.HideRegion({wall.id});
     source.RemoveRegionObject(wall.id);
-    tick(source, session, 1);
+    tick(source, 1);
     Check(source.GridWater()->Stats(waterId).geometryBakes == 3 &&
               std::abs(Quantity(*source.GridWater()->Find(waterId)) - 89.6) < 1e-4,
           "unloaded collider invalidates geometry without losing displaced water");
@@ -300,8 +291,8 @@ int main(int argc, char **argv) {
         RuntimeWorld planet;
         planet.ConfigureProject(enabled);
         Check(planet.Build(environment, nullptr, error), "build rotated/radial chart: " + error);
-        GameSession live;
-        Check(live.Begin(planet, error), "start gravity comparison");
+
+        Check(planet.IsBuilt(), "start gravity comparison");
         std::vector<double> times;
         std::ofstream csv;
         if (!directory.empty())
@@ -315,7 +306,7 @@ int main(int argc, char **argv) {
                     waterId, radial ? glm::vec3(0, 1, 0) : rotation * glm::vec3(0, 1, 0),
                     radial ? glm::vec3(30, 10, 0) : rotation * glm::vec3(30, 10, 0), 1);
             input.BeginFixedStep();
-            StepAuthoritativeWorld(live, input, 1.f / 60);
+            StepAuthoritativeWorld(planet, input, 1.f / 60);
             const auto stats = planet.GridWater()->Stats(waterId);
             const auto &v = planet.GridWater()->Find(waterId)->Stats();
             if (i >= 60)

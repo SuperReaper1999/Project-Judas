@@ -43,18 +43,15 @@ class BrowserExportTests(unittest.TestCase):
         with patch.object(browser.sys, 'platform', 'win32'):
             self.denied('-ExpBrowserSupport=1')
 
-    def test_actual_legacy_project_and_policy_controls(self):
+    def test_actual_project_and_policy_controls(self):
         source=(ROOT/'projects/2d_traversal_workshop/2D_Traversal_Workshop.judasproj').read_text(encoding='utf-8')
         browser.require_supported_project(source)
-        for text in [source.replace('advanced-fluid-dynamics "false"','advanced-fluid-dynamics "true"'),
-                     source.replace('legacy-gameplay "false"','legacy-gameplay "true"')]:
-            with self.assertRaisesRegex(ValueError, 'script-owned gameplay'):
-                browser.require_supported_project(text)
+        with self.assertRaisesRegex(ValueError, 'Advanced Fluid Dynamics disabled'):
+            browser.require_supported_project(source.replace('advanced-fluid-dynamics "false"','advanced-fluid-dynamics "true"'))
 
     def test_named_format_cannot_bypass_policy(self):
-        browser.require_supported_project('{"data":{"legacyGameplay":false,"advancedFluidDynamics":false}}')
-        for text in ['{"data":{"legacyGameplay":false,"advancedFluidDynamics":true}}',
-                     '{"data":{"legacyGameplay":true}}', '{}']:
+        browser.require_supported_project('{"data":{"advancedFluidDynamics":false}}')
+        for text in ['{"data":{"advancedFluidDynamics":true}}', '{}']:
             with self.assertRaises(ValueError):
                 browser.require_supported_project(text)
 

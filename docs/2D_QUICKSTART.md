@@ -91,6 +91,6 @@ Keep the installed SDK intact so its checksums remain meaningful.
 - [Beacon Grove](../projects/beacon_grove/README.md): complete small action/adventure.
 - [Traversal Workshop](../projects/2d_traversal_workshop/README.md): 1 selects jump-through
   platforms; 2 selects grid movement; R resets; F6/F7 save/load.
-- [Stage 3](2D_STAGE3.md): sprite sheets, frame animation and events.
-- [Stage 4](2D_STAGE4.md): tilemap authoring and collision boundaries.
+- [Stage 3 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE3.md): sprite sheets, frame animation and events.
+- [Stage 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE4.md): tilemap authoring and collision boundaries.
 - [JudasJS 2D physics](judasjs/physics-2d.md): actual APIs and controller limitations.

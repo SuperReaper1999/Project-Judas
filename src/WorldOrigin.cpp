@@ -21,10 +21,7 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin, std::string &error) const 
         error = "origin outside finite absolute precision range";
         return false;
     }
-    if (legacyGameplay) {
-        error = "live origins require script-owned execution";
-        return false;
-    }
+
     const auto delta = origin - m_settings.worldOrigin;
     if(!CanShiftParticleOrigin(delta,error))return false;
     if (!OriginLimits::ValidTranslation(delta)) {
@@ -39,30 +36,11 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin, std::string &error) const 
         }
     // These are ownership restrictions, not a request to silently drop state.
     // Name the actual blocker so projects can retire it before retrying.
-    if (m_liquid && !m_liquid->CanShiftOrigin(delta, error))
-        return false;
-    if (!m_fluidVolumes.empty()) {
-        error =
-            "active legacy fluid has no live-origin contract; unload its fluid owners before changing origin";
-        return false;
-    }
-    if (m_emittedParticles) {
-        error =
-            "active emitted liquid particles have no live-origin contract; retire them before changing origin";
-        return false;
-    }
+
+
     for (const auto &[id, o] : m_scriptDefinitions) {
         if (!RuntimeDefinition(id))
             continue;
-        // A liquid-only actor may have no rigid/render proxy yet. Until its actual
-        // cavity is published we cannot certify the complete volume's chart bounds.
-        if (delta != glm::dvec3(0) && (o.liquidBasin || o.liquidContainer) &&
-            (!m_liquid || !m_liquid->Handle(id).id)) {
-            error =
-                "entity " + std::to_string(id) +
-                " liquid geometry not published; prepare liquid resources before changing origin";
-            return false;
-        }
         if (o.body || o.characterMotor || o.render || o.light || o.renderCamera) {
             auto p = glm::dvec3(o.transform.position);
             const auto body = RuntimeBody(id);
@@ -152,8 +130,6 @@ bool RuntimeWorld::CommitOrigin() {
     m_pendingOrigin.reset();
     m_physics.ShiftOrigin(delta);
     if(m_gridWater)m_gridWater->ShiftOrigin(delta);
-    if (m_liquid)
-        m_liquid->ShiftOrigin(delta);
     if (m_atmosphere)
         shift(m_atmosphere->frame.originPosition);
     // Combustion owns thermal scalars and generation-safe body handles, not a
@@ -249,8 +225,6 @@ bool RuntimeWorld::CommitOrigin() {
         shift(b.position);
     for (auto &r : m_staticRenderables)
         shift(r.position);
-    for (auto &t : m_terrains)
-        shift(t.position);
     for (auto &l : m_staticLights)
         shift(l.position);
     for (auto &c : m_renderCameras) {

@@ -7,9 +7,6 @@
 
 #include <glm/gtc/quaternion.hpp>
 
-#include "GameSession.h"
-#include "Interactable.h"
-#include "PlayerController.h"
 #include "RadialTerrain.h"
 #include "RuntimeWorld.h"
 #include "Scene.h"
@@ -75,7 +72,6 @@ void DrawBodyShape(DebugLineList& out, const SceneBodyComponent& body, const glm
                 if(child.type==ShapeType::Box)out.Box(position + rotation * child.localCenter, rotation*child.rotation, child.halfExtents, color);else if(child.type==ShapeType::Sphere)out.Sphere(position+rotation*child.localCenter,child.radius,color);
             }
             break;
-        case SceneShape::Terrain:
         case SceneShape::Mesh:
         case SceneShape::ConvexHull:
         case SceneShape::TriangleMesh:
@@ -118,7 +114,7 @@ void DrawLight(DebugLineList& out, const DynamicLight& light) {
 }
 }  // namespace
 
-void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session, float alpha,
+void BuildWorldDebugLines(const RuntimeWorld& world, float alpha,
                           const DebugViewOptions& options, DebugLineList& out) {
     if (!world.IsBuilt() || !options.AnyEnabled()) return;
     if(options.navigation)world.Navigation().Debug(out);
@@ -144,9 +140,7 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
             if (sb.shape == SceneShape::Box) out.Box(sb.position, sb.rotation, sb.halfExtents, kStaticShapeColor);
             else if (sb.shape == SceneShape::Sphere) out.Sphere(sb.position, sb.radius, kStaticShapeColor);
         }
-        for (const RuntimeWorld::Terrain& t : world.Terrains()) {
-            if (t.surface) out.Sphere(t.position, t.surface->BoundRadius(), kTerrainColor, 48);
-        }
+
         for (const EntityRecord& e : world.Entities()) {
             if (e.lifecycle == EntityLifecycle::Destroyed || !e.definition.body) continue;
             if (e.slot >= bodies.size() || !bodies[e.slot].IsLive()) continue;  // no physics shape exists
@@ -156,17 +150,14 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
         }
     }
 
-    if (options.playerCapsule && session) {
-        const PlayerController& player = session->Player();
-        const glm::vec3 position = player.GetPresentedPosition(alpha);
-        const glm::quat orientation = player.GetPresentedOrientation(alpha);
-        out.Capsule(position, orientation, PlayerController::CapsuleRadius(), PlayerController::CapsuleHalfHeight(),
-                    kCapsuleColor);
-        const glm::vec3 up = orientation * glm::vec3(0.0f, 1.0f, 0.0f);
-        const glm::vec3 foot = position - up * (PlayerController::CapsuleHalfHeight() + PlayerController::CapsuleRadius());
-        out.Circle(foot, up, PlayerController::CapsuleRadius() * 1.2f,
-                   player.IsGrounded() ? kGroundedColor : kAirborneColor, 16);
-        out.Arrow(position, position + player.GetLookDirection() * 1.5f, kCapsuleColor, 0.2f);
+
+
+    if (options.playerCapsule) for(const auto& object:world.ScriptObjects()) {
+        if(!object.characterMotor)continue;
+        const auto pose=world.PresentedTransform(object.id,object.transform,alpha);
+        const auto& motor=*object.characterMotor;
+        out.Capsule(pose.position+pose.rotation*motor.offset,pose.rotation,
+                    motor.radius,motor.halfHeight,kCapsuleColor);
     }
 
     if (options.broadphase) {
@@ -184,13 +175,7 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
             out.Cross(c.point, 0.06f, kContactColor);
             out.Arrow(c.point, c.point + c.normal * 0.4f, kContactColor, 0.08f);
         }
-        if (session && session->Player().IsGrounded()) {
-            const BodyHandle support = session->Player().GetSupportBodyHandle();
-            if (support.IsValid()) {
-                const BodyTransform t = world.Physics().GetTransform(support);
-                out.Line(session->Player().GetPresentedPosition(alpha), t.position, kGroundedColor);
-            }
-        }
+
     }
 
     if (options.gravity) {
@@ -203,7 +188,6 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
         for (const DynamicBody& body : bodies) {
             if (body.IsLive()) arrow(body.GetPresentedPosition(alpha));
         }
-        if (session) arrow(session->Player().GetPresentedPosition(alpha));
         for (const RuntimeWorld::GravityRegion& region : world.GravityRegions()) {
             DrawGravityRegion(out, region.component, region.position, region.rotation);
         }
@@ -212,33 +196,17 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
     if (options.frameAxes) {
         out.Axes(glm::vec3(0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), 2.0f);
         for (const RuntimeWorld::StaticBody& sb : world.StaticBodies()) out.Axes(sb.position, sb.rotation, 0.6f);
-        for (const RuntimeWorld::Terrain& t : world.Terrains()) out.Axes(t.position, t.rotation, 5.0f);
         for (const DynamicBody& body : bodies) {
             if (body.IsLive()) out.Axes(body.GetPresentedPosition(alpha), body.GetPresentedOrientation(alpha), 0.6f);
         }
-        if (session) {
-            out.Axes(session->Player().GetPresentedPosition(alpha), session->Player().GetPresentedOrientation(alpha), 0.8f);
-        }
+
     }
 
     if (options.lights) {
-        for (const DynamicLight& light : BuildWorldLights(world, session, alpha)) DrawLight(out, light);
+        for (const DynamicLight& light : BuildWorldLights(world, alpha)) DrawLight(out, light);
     }
 
-    if (options.interactionRanges && session) {
-        const Interactable* target = session->InteractionTarget();
-        for (const Interactable* interactable : session->Interactables()) {
-            if (!interactable) continue;
-            const bool isTarget = interactable == target;
-            out.Sphere(interactable->GetInteractionPoint(), interactable->GetInteractionRadius(),
-                       isTarget ? kInteractTargetColor : kInteractColor, isTarget ? 24 : 12);
-        }
-        const BodyHandle held = session->Manipulation().HeldBody();
-        if (held.IsValid()) {
-            const BodyTransform t = world.Physics().GetTransform(held);
-            out.Line(session->Player().GetPresentedPosition(alpha), t.position, kInteractTargetColor);
-        }
-    }
+
 
     if (options.lifecycle) {
         for (const EntityRecord& e : world.Entities()) {
@@ -252,41 +220,9 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
         }
     }
 
-    if (options.terrainNormals) {
-        for (const RuntimeWorld::Terrain& t : world.Terrains()) {
-            if (!t.surface) continue;
-            // Sample around the player when there is one, else around the
-            // terrain's local +Y pole: 8 rings x 16 directions.
-            glm::vec3 centreLocal = glm::vec3(0.0f, 1.0f, 0.0f);
-            if (session) {
-                const glm::vec3 local = glm::inverse(t.rotation) * (session->Player().GetPresentedPosition(alpha) - t.position);
-                if (glm::length(local) > 1.0e-3f) centreLocal = glm::normalize(local);
-            }
-            const glm::vec3 helper = std::abs(centreLocal.y) < 0.9f ? glm::vec3(0.0f, 1.0f, 0.0f) : glm::vec3(1.0f, 0.0f, 0.0f);
-            const glm::vec3 u = glm::normalize(glm::cross(helper, centreLocal));
-            const glm::vec3 v = glm::cross(centreLocal, u);
-            for (int ring = 0; ring <= 8; ++ring) {
-                const float angle = static_cast<float>(ring) * 0.02f;  // radians of arc from centre
-                const int count = ring == 0 ? 1 : 16;
-                for (int i = 0; i < count; ++i) {
-                    const float phi = static_cast<float>(i) / static_cast<float>(count) * 6.2831853f;
-                    const glm::vec3 direction = glm::normalize(centreLocal * std::cos(angle) +
-                                                               (u * std::cos(phi) + v * std::sin(phi)) * std::sin(angle));
-                    const TerrainSample sample = t.surface->Sample(direction * t.surface->BoundRadius());
-                    const glm::vec3 point = t.position + t.rotation * sample.surfacePoint;
-                    const glm::vec3 normal = t.rotation * sample.outwardNormal;
-                    out.Arrow(point, point + normal * 1.0f, kNormalColor, 0.12f);
-                }
-            }
-        }
-    }
 
-    if (options.fluidParticles && world.HasFluid()) {
-        const FluidWorld& fluid = world.Fluid();
-        const std::size_t count = std::min(fluid.Particles().size(), kMaxFluidParticleMarkers);
-        const float size = std::max(0.01f, world.FluidSettingsUsed().particleRadius * 0.5f);
-        for (std::size_t i = 0; i < count; ++i) out.Cross(fluid.PresentedPosition(i, alpha), size, kFluidColor);
-    }
+
+
 
     if (options.atmosphere && world.GetAtmosphere()) {
         const RuntimeWorld::Atmosphere& a = *world.GetAtmosphere();
@@ -305,14 +241,10 @@ void BuildAuthoredDebugLines(const Scene& scene, const DebugViewOptions& options
         if (options.collisionShapes && o.body) {
             const bool dynamic = o.body->motion == SceneBodyMotion::Dynamic;
             DrawBodyShape(out, *o.body, position, rotation, dynamic ? kDynamicShapeColor : kStaticShapeColor);
-            if (o.body->shape == SceneShape::Terrain) out.Cross(position, 2.0f, kTerrainColor);
         }
-        if (options.collisionShapes && o.door && o.render) {
-            out.Box(position + rotation * glm::vec3(o.render->halfExtents.x, 0.0f, 0.0f), rotation, o.render->halfExtents,
-                    kStaticShapeColor);
-        }
+
         if (options.gravity && o.gravity) DrawGravityRegion(out, *o.gravity, position, rotation);
-        if (options.frameAxes && (o.body || o.render || o.light || o.playerStart)) out.Axes(position, rotation, 0.6f);
+        if (options.frameAxes && (o.body || o.render || o.light )) out.Axes(position, rotation, 0.6f);
         if (options.lights && o.light) {
             DynamicLight light;
             light.kind = o.light->kind == SceneLightKind::Spot ? LightKind::Spot : LightKind::Point;
@@ -322,24 +254,15 @@ void BuildAuthoredDebugLines(const Scene& scene, const DebugViewOptions& options
             light.outerConeDegrees = o.light->outerConeDegrees;
             DrawLight(out, light);
         }
-        if (options.lights && o.lightSwitch) {
-            out.Cross(position + rotation * o.lightSwitch->lampLocalOffset, 0.25f, kLightColor);
-        }
-        if (options.playerCapsule && o.playerStart) {
-            const glm::quat facing = glm::angleAxis(glm::radians(o.playerStart->yawDegrees), glm::vec3(0.0f, 1.0f, 0.0f));
-            out.Capsule(position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), PlayerController::CapsuleRadius(),
-                        PlayerController::CapsuleHalfHeight(), kPlayerStartColor);
-            out.Arrow(position, position + facing * glm::vec3(0.0f, 0.0f, -1.5f), kPlayerStartColor, 0.2f);
-        }
+
+
         if (options.atmosphere && o.atmosphere) {
             out.Sphere(position, o.atmosphere->referenceRadius, kAtmosphereColor, 48);
             out.Sphere(position, o.atmosphere->topRadius, kAtmosphereColor * 0.6f, 48);
         }
-        if(options.fluidParticles&&o.liquidContainer){const auto& p=o.liquidContainer->opening;for(size_t i=0;i<p.size();++i)out.Line(position+rotation*glm::vec3(p[i]),position+rotation*glm::vec3(p[(i+1)%p.size()]),kFluidColor);}
-        if(options.fluidParticles&&o.liquidConnection){out.Cross(position,.15f,kFluidColor);for(auto id:{o.liquidConnection->source,o.liquidConnection->destination})if(auto* basin=scene.Find(id))out.Line(position,basin->transform.position,kFluidColor);}
-        if (options.fluidParticles && o.fluidVolume) {
+        if (options.waterBounds && o.fluidVolume) {
             const SceneFluidVolumeComponent& f = *o.fluidVolume;
-            const auto scale=f.backend==SceneFluidBackend::Grid?o.transform.scale:glm::vec3(1);
+            const auto scale=o.transform.scale;
             out.Box(position + rotation * (f.LocalCenter()*scale), rotation, f.HalfExtents()*scale, kFluidColor);
         }
     }

@@ -25,7 +25,6 @@
         0.26
       ],
       "next-id": 1000,
-      "fluid-scale": 1,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -90,7 +89,6 @@
             10
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -99,10 +97,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -271,7 +267,6 @@
             0.55
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 6,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -280,10 +275,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -343,7 +336,6 @@
             0.35
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -352,10 +344,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -415,7 +405,6 @@
             0.3
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -424,10 +413,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -487,7 +474,6 @@
             0.35
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -496,10 +482,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -559,7 +543,6 @@
             0.35
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -568,10 +551,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -631,7 +612,6 @@
             0.35
           ],
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.mass": 1,
           "body.friction": 0.6,
           "body.restitution": 0.1,
@@ -640,10 +620,8 @@
             0,
             0
           ],
-          "body.pickable": false,
           "body.managed": false,
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {

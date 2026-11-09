@@ -246,7 +246,7 @@ void TerrainV2Creation::Panel(EditorDocument &doc, EditorPanelState &state,
                 object.renderLayer = old.renderLayer;
                 auto settings = *old.body;
                 settings.halfExtents = object.body->halfExtents;
-                settings.pickable = false;
+
                 object.body = settings;
                 auto *previous = doc.GetScene().Find(old.id);
                 previous->render->visible = false;

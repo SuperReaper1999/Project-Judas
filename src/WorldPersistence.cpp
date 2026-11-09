@@ -20,6 +20,24 @@ bool ReliableParticleParticipant(const RuntimeWorld& world) {
            !world.IsTransientEntity(object.id)) return true;
     return false;
 }
+// Keep dead render-target identities referenced by surviving consumers.
+std::set<EntityId> RetiredCameraReferences(const RuntimeWorld& world,
+                                          const std::function<bool(EntityId)>& includes) {
+    std::set<EntityId> result;
+    if(!std::any_of(world.PresentationCameras().begin(),world.PresentationCameras().end(),
+                   [&](const auto& camera){const auto* owner=world.FindEntity(camera.id);
+                       return owner&&owner->lifecycle==EntityLifecycle::Destroyed;}))return result;
+    for(const auto& object:world.ScriptObjects()) {
+        if(!includes(object.id))continue;
+        if(!object.render||!object.render->textureCamera)continue;
+        const auto id=object.render->textureCamera;
+        const auto* record=world.FindEntity(id);
+        if(record&&record->lifecycle==EntityLifecycle::Destroyed&&
+           std::any_of(world.PresentationCameras().begin(),world.PresentationCameras().end(),
+                       [id](const auto& camera){return camera.id==id;}))result.insert(id);
+    }
+    return result;
+}
 void transform(SaveArchive& a,SceneTransform& t){a(t.position,t.rotation,t.scale);}
 void physical(SaveArchive& a,EntityPhysicalState& s){a(s.position,s.rotation,s.linearVelocity,s.angularVelocity);}
 void pose(SaveArchive& a,SkeletalPose& p){uint32_t n=uint32_t(p.local.size());a(n);a.Require(n<=kModelNodeLimit,"saved pose joint limit");if(a.reading)p.local.resize(n);for(auto& t:p.local)a(t.translation,t.rotation,t.scale);}
@@ -40,13 +58,9 @@ std::string SpriteContent(RuntimeWorld& w,const std::function<bool(uint64_t)>& i
 }
 bool NeedsAnimationObservation(const RuntimeWorld::AnimationInstance& instance){return instance.asset&&std::any_of(instance.asset->clips.begin(),instance.asset->clips.end(),[](const auto& clip){return !clip.events.empty()||!clip.motion.empty();});}
 uint32_t count(SaveArchive& a,size_t size,uint32_t limit=8192){uint32_t n=uint32_t(size);a(n);a.Require(n<=limit,"participant record limit");return n;}
-const char* UnsupportedSnapshotComponent(const SceneObject& object,bool advancedFluids) {
- if(advancedFluids&&object.fluidVolume&&object.fluidVolume->backend==SceneFluidBackend::Particles)return "legacy PBF";
+const char* UnsupportedSnapshotComponent(const SceneObject& object) {
  if(object.atmosphere)return "atmosphere";
  if(object.combustible)return "combustion";
- if(object.vehicle)return "legacy vehicle";
- if(object.door)return "legacy door";
- if(object.lightSwitch)return "legacy switch";
  return nullptr;
 }
 }
@@ -74,7 +88,13 @@ void WorldPersistence::EntitiesExtended(RuntimeWorld& w,SaveArchive& a,unsigned 
    if(o.joint){JointState state;if(w.Physics().GetJoint(w.RuntimeJoint(o.id),state)){o.joint->settings=state.settings;if(!o.joint->bodyB){auto inverse=glm::inverse(o.transform.rotation);o.joint->settings.anchorB=inverse*(state.settings.anchorB-o.transform.position);o.joint->settings.frameB=inverse*state.settings.frameB;}o.joint->settings.bodyA={};o.joint->settings.bodyB={};}}
    if(!scene.InsertObject(o))throw std::runtime_error("duplicate snapshot entity");
   }
-  objects=scene.Objects();SaveSceneToString(scene,text);
+  objects=scene.Objects();
+  for(auto id:RetiredCameraReferences(w,[&](auto id){return IncludesEntity(w,id);})) {
+   SceneObject camera;camera.id=id;camera.name="Destroyed camera reference";
+   camera.renderCamera=SceneRenderCameraComponent{};camera.renderCamera->enabled=false;
+   if(!scene.InsertObject(camera))throw std::runtime_error("duplicate retired camera identity");
+  }
+  SaveSceneToString(scene,text);
  }
  a(text,next,time);
  for(const auto& o:w.ScriptObjects())if(o.id>=kRuntimeEntityIdBase)a.Require(next>o.id,"saved allocation counter aliases live identity");
@@ -287,7 +307,14 @@ bool WorldPersistence::Capture(RuntimeWorld& world,std::map<std::string,SaveChun
  chunks.swap(prepared);
  return true;
 }
-bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}if(w.Scripts()&&w.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}JUDAS_PROFILE_SCOPE("Save capture");if(!Prepare(w,error))return false;try{chunks.clear();auto spriteContent=SpriteContent(w,[&](auto id){return IncludesEntity(w,id);});if(!spriteContent.empty())chunks["sprite-content"]={1,spriteContent};if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->Owners().empty()){SaveArchive a;auto owners=w.m_runtimeTerrain->Owners();uint32_t n=uint32_t(owners.size());a(n);for(auto id:owners){std::string data;if(!w.CaptureRuntimeTerrain(id,data,error))return false;a(id,data);}chunks["runtime-terrain"]={1,std::move(a.bytes)};}if(!w.m_weather.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_weather.size());a(n);for(const auto& [owner,_]:w.m_weather){auto id=owner;std::string record;if(!w.CaptureWeather(id,record,error))return false;a(id,record);}chunks["weather"]={1,std::move(a.bytes)};}if(!w.m_planets.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_planets.size());a(n);for(auto& [id,planet]:w.m_planets){auto focus=planet->CollisionFocus();bool ready=focus.has_value();glm::dvec3 point=focus.value_or(glm::dvec3(0));auto savedId=id;a(savedId,ready,point);}chunks["planets"]={1,std::move(a.bytes)};}const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){ProfileScope participant(PerformanceProfiler::Get().Intern("Save capture "+name));SaveArchive a;unsigned version=name=="entities"?2:1;
+bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}if(w.Scripts()&&w.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}JUDAS_PROFILE_SCOPE("Save capture");if(!Prepare(w,error))return false;try{chunks.clear();
+ const auto retiredCameras=RetiredCameraReferences(w,[&](auto id){return IncludesEntity(w,id);});
+ if(!retiredCameras.empty()) {
+  SaveArchive a;auto n=count(a,retiredCameras.size());(void)n;
+  for(auto id:retiredCameras){auto value=id;a(value);}
+  chunks["retired-render-cameras"]={1,std::move(a.bytes)};
+ }
+ auto spriteContent=SpriteContent(w,[&](auto id){return IncludesEntity(w,id);});if(!spriteContent.empty())chunks["sprite-content"]={1,spriteContent};if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->Owners().empty()){SaveArchive a;auto owners=w.m_runtimeTerrain->Owners();uint32_t n=uint32_t(owners.size());a(n);for(auto id:owners){std::string data;if(!w.CaptureRuntimeTerrain(id,data,error))return false;a(id,data);}chunks["runtime-terrain"]={1,std::move(a.bytes)};}if(!w.m_weather.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_weather.size());a(n);for(const auto& [owner,_]:w.m_weather){auto id=owner;std::string record;if(!w.CaptureWeather(id,record,error))return false;a(id,record);}chunks["weather"]={1,std::move(a.bytes)};}if(!w.m_planets.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_planets.size());a(n);for(auto& [id,planet]:w.m_planets){auto focus=planet->CollisionFocus();bool ready=focus.has_value();glm::dvec3 point=focus.value_or(glm::dvec3(0));auto savedId=id;a(savedId,ready,point);}chunks["planets"]={1,std::move(a.bytes)};}const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){ProfileScope participant(PerformanceProfiler::Get().Intern("Save capture "+name));SaveArchive a;unsigned version=name=="entities"?2:1;
  if(name=="articulation")for(const auto& [_,r]:w.m_ragdolls)for(auto joint:r.joints){JointState state;if(w.Physics().GetJoint(joint,state)&&state.settings.rotationalResistance)version=2;}
  if(name=="articulation"&&std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return r.second.physicalControlled;}))version=3;
  if(name=="articulation"&&(!w.m_jointOwners.empty()||std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return !r.second.joints.empty();})))version=4;
@@ -304,7 +331,7 @@ bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,Save
  if(!w.m_wheelOwners.empty()){SaveArchive wheels;Wheels(w,wheels);chunks["wheels"]={1,std::move(wheels.bytes)};}
  if(!w.m_powertrainOwners.empty()){SaveArchive trains;Powertrains(w,trains);chunks["powertrains"]={1,std::move(trains.bytes)};}
  if(!w.m_balances.empty()){SaveArchive balanceState;PhysicalBalance(w,balanceState);chunks["physical-balance"]={1,std::move(balanceState.bytes)};}
- if(!w.m_physicalAnimations.empty()){SaveArchive physicalState;PhysicalAnimation(w,physicalState);unsigned version=1;if(!w.m_balances.empty()){version=2;std::vector<EntityId> balanceOwners;for(const auto& [id,_]:w.m_balances)balanceOwners.push_back(id);physicalState(balanceOwners);}chunks["physical-animation"]={version,std::move(physicalState.bytes)};}if(!w.m_deformableOwners.empty()){bool strengths=false,materials=false;for(auto id:w.m_deformableOwners){std::string error;auto* sim=w.RuntimeDeformable(id,error);if(!sim)throw std::runtime_error("required deformable resource not ready: "+error);materials|=sim->asset->fracture&&sim->asset->fracture->HasMaterials();for(const auto& attachment:sim->settings.attachments)strengths|=attachment.forceLimit>0||attachment.torqueLimit>0;}SaveArchive deforms;Deformables(w,deforms,true,strengths||materials);chunks["deformables"]={materials?6u:strengths?4u:3u,std::move(deforms.bytes)};}SaveArchive liquid;w.Liquids().Persist(liquid);chunks["liquid"]={1,std::move(liquid.bytes)};
+ if(!w.m_physicalAnimations.empty()){SaveArchive physicalState;PhysicalAnimation(w,physicalState);unsigned version=1;if(!w.m_balances.empty()){version=2;std::vector<EntityId> balanceOwners;for(const auto& [id,_]:w.m_balances)balanceOwners.push_back(id);physicalState(balanceOwners);}chunks["physical-animation"]={version,std::move(physicalState.bytes)};}if(!w.m_deformableOwners.empty()){bool strengths=false,materials=false;for(auto id:w.m_deformableOwners){std::string error;auto* sim=w.RuntimeDeformable(id,error);if(!sim)throw std::runtime_error("required deformable resource not ready: "+error);materials|=sim->asset->fracture&&sim->asset->fracture->HasMaterials();for(const auto& attachment:sim->settings.attachments)strengths|=attachment.forceLimit>0||attachment.torqueLimit>0;}SaveArchive deforms;Deformables(w,deforms,true,strengths||materials);chunks["deformables"]={materials?6u:strengths?4u:3u,std::move(deforms.bytes)};}
  // Contacts and sleep must retain the same physical owners as the entity
  // participant. Mapped articulation bodies are engine-transient but remain
  // required by their durable owner; ordinary explicitly excluded actors do not.
@@ -321,7 +348,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
  error.clear();
  // Diagnose unsupported ownership before creating lazy participants or touching
  // a caller's existing snapshot. Live-origin support does not imply save support.
- for(const auto& object:w.ScriptObjects())if(const auto* component=UnsupportedSnapshotComponent(object,w.AdvancedFluidsEnabled())){
+ for(const auto& object:w.ScriptObjects())if(const auto* component=UnsupportedSnapshotComponent(object)){
   error="entity "+std::to_string(object.id)+" component "+component+": no modern slot participant; separate legacy contract only";
   return false;
  }
@@ -359,9 +386,21 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
   // Defer the ENTIRE snapshot until its ordinary prefill/seek has committed.
   if(!available||!voice.ready||voice.seeking){error="loading";return false;}
  }
- if(!w.Liquids().PreparePersistence(w,error))return false;
  for(auto id:w.m_animationOwners){auto* v=w.RuntimeAnimation(id);if(!v||!v->asset){auto* d=w.RuntimeDefinition(id);auto* resources=w.Resources();if(d&&d->render&&resources&&resources->StateOf(d->render->meshAsset)==ResourceState::Failed){error="required skeleton "+std::to_string(id)+": "+resources->ErrorOf(d->render->meshAsset);return false;}error="loading";return false;}}return true;}
 bool WorldPersistence::Restore(RuntimeWorld& w,const std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before loading";return false;}JUDAS_PROFILE_SCOPE("Save restoration");try{
+ if(auto it=chunks.find("retired-render-cameras");it!=chunks.end()) {
+  SaveArchive a(it->second.data);a.Require(it->second.version==1,"newer retired-camera state");
+  uint32_t n=0;a(n);a.Require(n>0&&n<=8192,"retired camera identity limit");
+  std::set<EntityId> seen;
+  for(uint32_t i=0;i<n;++i) {
+   EntityId id=0;a(id);const auto* object=w.RuntimeDefinition(id);
+   a.Require(seen.insert(id).second&&object&&object->renderCamera&&!object->renderCamera->enabled&&
+             !object->body&&!object->render&&object->scripts.empty(),"invalid retired camera placeholder");
+   std::string detail;a.Require(w.DestroyEntity(id,&detail),"retired camera restoration: "+detail);
+  }
+  a.Finish();
+ }
+
  const bool needsParticleImpacts=ReliableParticleParticipant(w);
  const auto particleChunk=chunks.find("particle-impacts");
  if(needsParticleImpacts?(particleChunk==chunks.end()||particleChunk->second.version!=1):particleChunk!=chunks.end())
@@ -389,7 +428,7 @@ if(auto it=chunks.find("runtime-terrain");it!=chunks.end()){if(it->second.versio
  if(hasJointContinuation){SaveArchive state(deferredJointContinuation);JointContinuation(w,state);state.Finish();}
  if(auto it=chunks.find("sleep");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer sleep participant");SaveArchive sleeping(it->second.data);auto n=count(sleeping,0);std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;sleeping(id);auto h=w.RuntimeBody(id);sleeping.Require(w.Physics().IsDynamicBody(h)&&seen.insert(id).second,"saved sleep body unavailable/duplicate");w.Physics().PersistSleep(sleeping,h);}sleeping.Finish();}
 if(needsParticleImpacts){SaveArchive observations(particleChunk->second.data);w.PersistParticleImpacts(observations);observations.Finish();}
-for(auto name:{"liquid","scripts","contacts"}){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(std::string(name)=="contacts"&&it->second.version==2)))throw std::runtime_error("required participant missing/newer");SaveArchive a(it->second.data);if(std::string(name)=="liquid")w.Liquids().Persist(a);else if(std::string(name)=="contacts"){
+for(auto name:{"scripts","contacts"}){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(std::string(name)=="contacts"&&it->second.version==2)))throw std::runtime_error("required participant missing/newer");SaveArchive a(it->second.data);if(std::string(name)=="contacts"){
  a.Require((hasJointContinuation&&it->second.version==2)||(!hasJointContinuation&&it->second.version==1),"required joint/contact continuation pair missing");
  w.Physics().PersistTouches(a,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);});
  if(it->second.version>=2)w.Physics().PersistCompletedContactObservations(a,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);});
@@ -416,7 +455,7 @@ bool WorldPersistence::PrepareAudio(RuntimeWorld& w,std::string& error){
 bool RuntimeWorld::SetTransientEntity(EntityId id,bool transient,std::string& error){
  auto* e=FindEntity(id);const auto* d=RuntimeDefinition(id);if(!e||!d){error="stale entity";return false;}
  if(d->particleEmitter&&d->particleEmitter->impacts==ParticleImpactDelivery::Reliable){error="entity "+std::to_string(id)+": reliable particle observations require a persistent owner";return false;}
- if(m_wheelParticipants.count(id)||m_powertrainParticipants.count(id)||d->socket||d->deformable||d->liquidBasin||d->liquidContainer||d->liquidConnection||d->characterMotor||d->wheel||d->powertrain||d->animation||d->ragdoll||d->joint||d->navigationAgent||d->navigationSurface||d->navigationObstacle||d->navigationLink||d->audioEmitter||d->audioListener||d->gravity||d->weather||!d->scripts.empty()){error="entity "+std::to_string(id)+": required component cannot be transient";return false;}
+ if(m_wheelParticipants.count(id)||m_powertrainParticipants.count(id)||d->socket||d->deformable||d->characterMotor||d->wheel||d->powertrain||d->animation||d->ragdoll||d->joint||d->navigationAgent||d->navigationSurface||d->navigationObstacle||d->navigationLink||d->audioEmitter||d->audioListener||d->gravity||d->weather||!d->scripts.empty()){error="entity "+std::to_string(id)+": required component cannot be transient";return false;}
  e->transient=transient;return true;
 }
 

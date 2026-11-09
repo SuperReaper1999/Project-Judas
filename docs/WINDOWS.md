@@ -24,7 +24,7 @@ The original failure remains preserved: the native identity test passed its 55
 assertions, but its wrapper compared null and empty tracked-status values.
 The corrected rotation executable retained its ordinary **1 MiB stack reserve**.
 The clean Git build identity, SDK verification/inspection and logs are archived
-with the [acceptance record](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json). These receipts were inspected read-only
+with the [acceptance record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json). These receipts were inspected read-only
 from the operator's mounted HDD; no checks were rerun during this closeout.
 
 **Not claimed:** controller/gamepad hardware validation, clean-machine distribution
@@ -33,7 +33,7 @@ build path-with-spaces workaround remains a limitation; see the original receipt
 Earlier automated files correctly retain their pre-human-test boundary; this
 later operator statement supplies only the explicit hardware scope above.
 
-The [seven-finding correction report](PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md)
+The [seven-finding correction report (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md)
 retains the original Linux/Windows 10 VM failures, fixes and regression evidence.
 
 ## Building Windows games from Linux
@@ -56,15 +56,15 @@ tools. Runtime DLL staging covers executables declared after M76 as well.
 | Recorded work | Actual scope | What it does not establish |
 |---|---|---|
 | [Latest recorded release](RELEASING.md#current-boundary) | Exact-source native MSVC SDK, selected functional gates and package inspection | A fresh Windows hardware trial or broad clean-machine certification |
-| [Windows 11 acceptance](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json) | Effective 59/59 native gate, 33/33 extras and operator project/save/game/audio trial at `6941b381` | Controller hardware, clean-machine distribution, universal GPU/configuration coverage or later revisions |
-| [Pass 4](evidence/prealpha-pass4/windows/REPORT.md) | Complete 18-executable SDK, native physics/persistence, editor and relocated export in Windows 10 VM | Physical GPU/audio/controller acceptance or every later revision |
-| [Pass 5](evidence/prealpha-pass5/windows/REPORT.md) | 16 selected native build targets; engine, editor, runtime/export and M70/M77 cold restoration | A rebuilt all-tool SDK, hardware performance or a clean-machine install |
-| [Later CCD/dense follow-ups](PREALPHA.md) | See each current report's Linux results | No fresh Windows qualification is inferred from shared source or older VM passes |
+| [Windows 11 acceptance (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json) | Effective 59/59 native gate, 33/33 extras and operator project/save/game/audio trial at `6941b381` | Controller hardware, clean-machine distribution, universal GPU/configuration coverage or later revisions |
+| [Pass 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass4/windows/REPORT.md) | Complete 18-executable SDK, native physics/persistence, editor and relocated export in Windows 10 VM | Physical GPU/audio/controller acceptance or every later revision |
+| [Pass 5 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass5/windows/REPORT.md) | 16 selected native build targets; engine, editor, runtime/export and M70/M77 cold restoration | A rebuilt all-tool SDK, hardware performance or a clean-machine install |
+| [Later CCD/dense follow-ups](CURRENT_STATUS.md) | See each current report's Linux results | No fresh Windows qualification is inferred from shared source or older VM passes |
 
 The Pass 4/5 reports preserve their four then-failing curved-mesh assertions.
 Later Linux corrections do not rewrite those historical Windows results. Linux
 is the measured performance reference; Windows VM timing is diagnostic
-and nonblocking. Use [Pre-Alpha status](PREALPHA.md) for current finding dispositions.
+and nonblocking. Use [Pre-Alpha status](CURRENT_STATUS.md) for current finding dispositions.
 
 `Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel Alpha`,
 `Beta`, `Experimental`, `Stable` (GA only) or `Local` and an optional `-BuildDirectory` to keep independent
@@ -90,7 +90,7 @@ It reports missing dependencies instead of treating the DLL filename list as
 proof of closure. System32/API-set resolution is not a minimum-OS, graphics or
 application test. Write the qualification receipt outside the verified SDK.
 
-The [Pre-Alpha pass-2 check](evidence/prealpha-pass2/packaging/REPORT.md) exercised
+The [Pre-Alpha pass-2 check (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass2/packaging/REPORT.md) exercised
 15 packaging controls but could not complete native compilation with its then-full
 VM disk. That remains the historical result. Pass 4 supplies the newer scoped
 native qualification below; physical hardware validation remains outstanding.
@@ -100,7 +100,7 @@ Windows receipts below describe their original checkpoints, not new validation.
 
 ## Pre-Alpha Pass 4 native qualification
 
-The [Pass 4 receipt](evidence/prealpha-pass4/windows/REPORT.md) qualifies native
+The [Pass 4 receipt (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass4/windows/REPORT.md) qualifies native
 Windows 10 VM execution of engine checkpoint
 `9deb47d1667e5b6bd1abe708ed343c3fbf6fe847`, with the later Python-only SDK fix
 `df8929f73505d407697b5d35b115fc71d9100471` identified separately. MSVC 2022 x64
@@ -148,10 +148,10 @@ remain outstanding.** VM timing is informational and does not gate Linux fixes.
 
 ## M76 local modding candidate
 
-The provisional [M76 checkpoint](M76.md), **NOT HUMAN VALIDATED**, based on accepted M75 checkpoint
+The provisional [M76 checkpoint (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M76.md), **NOT HUMAN VALIDATED**, based on accepted M75 checkpoint
 `38d345883a541d4eb2faa43c321e940d223fce09`, was compiled and exercised natively
 in the existing Windows 10 VM. **Human M76 review and physical Windows validation
-remain pending.** See [M76 evidence](evidence/m76/REPORT.md) for exact scope.
+remain pending.** See [M76 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m76/REPORT.md) for exact scope.
 
 - Native package/policy/storage: 124 checks passed (three POSIX-specific link cases
   are Linux-only). Transferred source hashes and refreshed MSVC binaries were checked.
@@ -177,7 +177,7 @@ Windows result.
 
 The earlier Windows update retains its historical operator acceptance. On
 **2026-10-09**, native Windows 10 VM verification passed for checkpoint
-`df0c301f688e62e4baa59a837beb05d42aa75e3c`: accepted [M72](M72.md) plus optional
+`df0c301f688e62e4baa59a837beb05d42aa75e3c`: accepted [M72](RUNTIME_RENDERING.md) plus optional
 per-entity gravity selection. The Release SDK, focused checks, editor and moved
 game packages worked under the qualifications below. This was native Windows,
 not Wine; it does **not** certify hardware graphics/audio/controller support or

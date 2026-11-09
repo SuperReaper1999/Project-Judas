@@ -100,7 +100,7 @@ export default class {
     scene.Find(second)->scripts.push_back({1,npcAsset.id,true,"{\"name\":\"second\"}"});
     const auto observer=scene.CreateObject("observer").id;
     scene.Find(observer)->scripts.push_back({1,observerAsset.id,true,"{}"});
-    ResourceManager resources(nullptr,&assets);ProjectSettings project;project.legacyGameplay=false;
+    ResourceManager resources(nullptr,&assets);ProjectSettings project;
     RuntimeWorld world;world.ConfigureProject(project);InputSystem input;
     if(read) {
         std::ifstream file(root/"snapshot.save",std::ios::binary);

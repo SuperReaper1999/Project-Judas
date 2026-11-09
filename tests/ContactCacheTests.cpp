@@ -184,7 +184,7 @@ void SharedContacts() {
     // The retired MK1 ContactSolver frame counter is not a MK2 contract.
     // Independent bounds, geometry invalidation and real cache reuse remain checked.
     Check(s.geometryCacheBytes>0,"persistent cache memory is reported");
-    std::cout<<"CACHE shared bodies="<<s.bodies<<" contacts="<<s.contactPoints<<" orientation_hits="<<s.orientationCacheHits<<" orientation_rebuilds="<<s.orientationCacheRebuilds<<" bound_hits="<<s.boundCacheHits<<" bound_rebuilds="<<s.boundCacheRebuilds<<" shape_rebuilds="<<s.shapeCacheRebuilds<<" solver_frames="<<s.solverFrameBuilds<<" bytes="<<s.geometryCacheBytes<<" allocations="<<s.geometryCacheAllocations<<'\n';
+    std::cout<<"CACHE shared bodies="<<s.bodies<<" contacts="<<s.contactPoints<<" orientation_hits="<<s.orientationCacheHits<<" orientation_rebuilds="<<s.orientationCacheRebuilds<<" bound_hits="<<s.boundCacheHits<<" bound_rebuilds="<<s.boundCacheRebuilds<<" shape_rebuilds="<<s.shapeCacheRebuilds<<" bytes="<<s.geometryCacheBytes<<" allocations="<<s.geometryCacheAllocations<<'\n';
 }
 void SweepCheck(const ShapeSweepHit& hit,bool expected,double distance,BodyHandle wall,const std::string& label) {
     ++sweepCases;Check(hit.hit==expected,label+" hit/miss");

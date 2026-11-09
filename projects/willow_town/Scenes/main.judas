@@ -7,9 +7,6 @@ settings
   ambient 1 1 1
   sun-enabled false
   background-color 0.14 0.22 0.19
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 3000
 end
@@ -404,15 +401,12 @@ object 301 "Mara - Baker"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 302 "Eli - Carpenter"
@@ -433,15 +427,12 @@ object 302 "Eli - Carpenter"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 303 "Nia - Gardener"
@@ -462,15 +453,12 @@ object 303 "Nia - Gardener"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 304 "Theo - Grocer"
@@ -491,15 +479,12 @@ object 304 "Theo - Grocer"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 305 "Ada - Courier"
@@ -520,15 +505,12 @@ object 305 "Ada - Courier"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 306 "Sam - Park keeper"
@@ -549,15 +531,12 @@ object 306 "Sam - Park keeper"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.24,-0.24],[0.24,-0.24],[0.24,0.24],[-0.24,0.24]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 500 "Selected resident halo"
@@ -704,15 +683,12 @@ object 2000 "House back wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-4.0,-0.1],[4.0,-0.1],[4.0,0.1],[-4.0,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2001 "House west wall"
@@ -723,15 +699,12 @@ object 2001 "House west wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.8],[0.1,-2.8],[0.1,2.8],[-0.1,2.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2002 "House east wall"
@@ -742,15 +715,12 @@ object 2002 "House east wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.8],[0.1,-2.8],[0.1,2.8],[-0.1,2.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2003 "House entry wall"
@@ -761,15 +731,12 @@ object 2003 "House entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2004 "House entry wall"
@@ -780,15 +747,12 @@ object 2004 "House entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2005 "Bed"
@@ -799,15 +763,12 @@ object 2005 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2006 "Bed"
@@ -818,15 +779,12 @@ object 2006 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2007 "Bed"
@@ -837,15 +795,12 @@ object 2007 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2008 "Dining table"
@@ -856,15 +811,12 @@ object 2008 "Dining table"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.625,-0.4],[0.625,-0.4],[0.625,0.4],[-0.625,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2009 "House back wall"
@@ -875,15 +827,12 @@ object 2009 "House back wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-4.0,-0.1],[4.0,-0.1],[4.0,0.1],[-4.0,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2010 "House west wall"
@@ -894,15 +843,12 @@ object 2010 "House west wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.8],[0.1,-2.8],[0.1,2.8],[-0.1,2.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2011 "House east wall"
@@ -913,15 +859,12 @@ object 2011 "House east wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.8],[0.1,-2.8],[0.1,2.8],[-0.1,2.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2012 "House entry wall"
@@ -932,15 +875,12 @@ object 2012 "House entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2013 "House entry wall"
@@ -951,15 +891,12 @@ object 2013 "House entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2014 "Bed"
@@ -970,15 +907,12 @@ object 2014 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2015 "Bed"
@@ -989,15 +923,12 @@ object 2015 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2016 "Bed"
@@ -1008,15 +939,12 @@ object 2016 "Bed"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.75,-0.4],[0.75,-0.4],[0.75,0.4],[-0.75,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2017 "Dining table"
@@ -1027,15 +955,12 @@ object 2017 "Dining table"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.625,-0.4],[0.625,-0.4],[0.625,0.4],[-0.625,0.4]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2018 "Shop back wall"
@@ -1046,15 +971,12 @@ object 2018 "Shop back wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-4.0,-0.1],[4.0,-0.1],[4.0,0.1],[-4.0,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2019 "Shop west wall"
@@ -1065,15 +987,12 @@ object 2019 "Shop west wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-3.2],[0.1,-3.2],[0.1,3.2],[-0.1,3.2]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2020 "Shop east wall"
@@ -1084,15 +1003,12 @@ object 2020 "Shop east wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-3.2],[0.1,-3.2],[0.1,3.2],[-0.1,3.2]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2021 "Shop entry wall"
@@ -1103,15 +1019,12 @@ object 2021 "Shop entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2022 "Shop entry wall"
@@ -1122,15 +1035,12 @@ object 2022 "Shop entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.55,-0.1],[1.55,-0.1],[1.55,0.1],[-1.55,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2023 "Workshop back wall"
@@ -1141,15 +1051,12 @@ object 2023 "Workshop back wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-3.0,-0.1],[3.0,-0.1],[3.0,0.1],[-3.0,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2024 "Workshop west wall"
@@ -1160,15 +1067,12 @@ object 2024 "Workshop west wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.7500000000000004],[0.1,-2.7500000000000004],[0.1,2.7500000000000004],[-0.1,2.7500000000000004]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2025 "Workshop east wall"
@@ -1179,15 +1083,12 @@ object 2025 "Workshop east wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-2.7500000000000004],[0.1,-2.7500000000000004],[0.1,2.7500000000000004],[-0.1,2.7500000000000004]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2026 "Workshop entry wall"
@@ -1198,15 +1099,12 @@ object 2026 "Workshop entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.05,-0.1],[1.05,-0.1],[1.05,0.1],[-1.05,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2027 "Workshop entry wall"
@@ -1217,15 +1115,12 @@ object 2027 "Workshop entry wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-1.05,-0.1],[1.05,-0.1],[1.05,0.1],[-1.05,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2028 "Grocer and bakery counters"
@@ -1236,15 +1131,12 @@ object 2028 "Grocer and bakery counters"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-3.1,-0.45],[3.1,-0.45],[3.1,0.45],[-3.1,0.45]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2029 "Grocer side shelves"
@@ -1255,15 +1147,12 @@ object 2029 "Grocer side shelves"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.35,-1.1],[0.35,-1.1],[0.35,1.1],[-0.35,1.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2030 "Carpentry bench"
@@ -1274,15 +1163,12 @@ object 2030 "Carpentry bench"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-2.4,-0.45],[2.4,-0.45],[2.4,0.45],[-2.4,0.45]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2031 "Town fountain"
@@ -1293,15 +1179,12 @@ object 2031 "Town fountain"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.925,-0.925],[0.925,-0.925],[0.925,0.925],[-0.925,0.925]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2032 "Park bench"
@@ -1312,15 +1195,12 @@ object 2032 "Park bench"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.9,-0.225],[0.9,-0.225],[0.9,0.225],[-0.9,0.225]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2033 "Park bench"
@@ -1331,15 +1211,12 @@ object 2033 "Park bench"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.9,-0.225],[0.9,-0.225],[0.9,0.225],[-0.9,0.225]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2034 "West boundary"
@@ -1350,15 +1227,12 @@ object 2034 "West boundary"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-10.8],[0.1,-10.8],[0.1,10.8],[-0.1,10.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2035 "East boundary"
@@ -1369,15 +1243,12 @@ object 2035 "East boundary"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.1,-10.8],[0.1,-10.8],[0.1,10.8],[-0.1,10.8]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2036 "North boundary"
@@ -1388,15 +1259,12 @@ object 2036 "North boundary"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-15.8,-0.1],[15.8,-0.1],[15.8,0.1],[-15.8,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2037 "South boundary"
@@ -1407,15 +1275,12 @@ object 2037 "South boundary"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-15.8,-0.1],[15.8,-0.1],[15.8,0.1],[-15.8,0.1]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2038 "Tree trunk"
@@ -1426,15 +1291,12 @@ object 2038 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2039 "Tree trunk"
@@ -1445,15 +1307,12 @@ object 2039 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2040 "Tree trunk"
@@ -1464,15 +1323,12 @@ object 2040 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2041 "Tree trunk"
@@ -1483,15 +1339,12 @@ object 2041 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2042 "Tree trunk"
@@ -1502,15 +1355,12 @@ object 2042 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2043 "Tree trunk"
@@ -1521,15 +1371,12 @@ object 2043 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2044 "Tree trunk"
@@ -1540,15 +1387,12 @@ object 2044 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2045 "Tree trunk"
@@ -1559,15 +1403,12 @@ object 2045 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2046 "Tree trunk"
@@ -1578,15 +1419,12 @@ object 2046 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2047 "Tree trunk"
@@ -1597,15 +1435,12 @@ object 2047 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2048 "Tree trunk"
@@ -1616,15 +1451,12 @@ object 2048 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2049 "Tree trunk"
@@ -1635,13 +1467,10 @@ object 2049 "Tree trunk"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.16,-0.16],[0.16,-0.16],[0.16,0.16],[-0.16,0.16]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end

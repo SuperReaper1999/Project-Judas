@@ -120,15 +120,7 @@ void FloorAndPrimitives() {
     Check(hit.id == compoundId && Near(hit.distance, 9.8f),
           "compound child offset and rotation match rendering without applying entity scale");
 
-    Scene doors;
-    const auto door = AddBox(doors, {0, 0, 0}, {1, 2, 0.2f});
-    doors.Find(door)->door = SceneDoorComponent{};
-    doors.Find(door)->transform.scale = glm::vec3(5);
-    hit = picker.Pick(doors, {1.75f, 0, 5}, {0, 0, -1});
-    Check(hit.id == door && Near(hit.distance, 4.8f),
-          "closed door visual selection uses its hinge-offset panel");
-    Check(picker.Pick(doors, {2.2f, 0, 5}, {0, 0, -1}).id == 0,
-          "closed door selection follows its unscaled authored-render dimensions");
+
 }
 
 void HierarchyAndFallback() {
@@ -181,12 +173,11 @@ void InitialCameraFraming() {
     const auto rendered = AddBox(scene, {3, 5, 7}, {1, 2, 3});
     auto &player = scene.CreateObject("player area");
     const auto playerId = player.id;
-    player.playerStart = ScenePlayerStartComponent{};
+    player.characterMotor = CharacterMotorSettings{};
     player.transform.position = {0, 102, 0};
     auto focus = InitialFraming(scene);
     Check(focus && focus->id == playerId && focus->point == glm::vec3(0, 102, 0),
           "startup framing prefers the player area over metadata and a planet centre");
-    scene.Find(playerId)->playerStart.reset();
     scene.Find(playerId)->characterMotor = CharacterMotorSettings{};
     focus = InitialFraming(scene);
     Check(focus && focus->id == playerId,

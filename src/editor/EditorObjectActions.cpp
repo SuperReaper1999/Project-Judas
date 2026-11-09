@@ -83,7 +83,6 @@ SceneObjectId DuplicateObject(EditorDocument &doc, SceneObjectId id) {
     created.id = newId;
     created.name = newName;
     // A scene has at most one player start; the copy must not carry it.
-    created.playerStart.reset();
     // Place the copy right after the original (order is authored data).
     std::vector<SceneObject> &objects = scene.Objects();
     std::size_t sourceIndex = 0, copyIndex = objects.size() - 1;

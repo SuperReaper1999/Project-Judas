@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Core Scramble",
-    "legacyGameplay": false,
     "saveIdentity": "1ccb525f62a9f25feebeeb41d766db1f5f050c723847f27a58711954923ec58f",
     "iconAsset": "",
     "worldManifest": "",

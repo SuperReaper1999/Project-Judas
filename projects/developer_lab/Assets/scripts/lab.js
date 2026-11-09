@@ -1,7 +1,7 @@
 import { world, ui, input, scenes, entity } from 'judas';
 export default class Workshop {
     constructor() { this.state = { elapsed: 0 }; }
-    start() { this.doc = ui.get('workshop'); this.doc.modal = false; this.doc.get('pause').visible = false; ui.debugOverlayVisible = false; input.pointerCapture = false; }
+    start() { this.doc = ui.get('workshop'); this.doc.modal = false; this.doc.get('pause').visible = false;  input.pointerCapture = false; }
     pause(on) { this.doc.modal = on; this.doc.get('pause').visible = on; }
     uiUpdate() { this.opened = false; if (input.pressed('pause') && !this.doc.modal) { this.pause(true); this.opened = true; } }
     onUI(e) { if (e.document !== 'workshop') return; if ((e.type === 'back' && !this.opened) || (e.type === 'click' && e.element === 'resume')) this.pause(false); if (e.type === 'click' && e.element === 'reload') scenes.reload(); }

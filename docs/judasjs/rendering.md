@@ -91,4 +91,4 @@ material controls and saves continue to use the same public APIs. No native
 render dispatch or new gameplay binding is required. LOD is selected independently
 for each actual view; collision keeps the base geometry. Optional project visual
 residency is a soft memory policy, not a guarantee of total GPU memory usage.
-See [cooking, LOD, budgets and current limitations](../M93_ASSET_PIPELINE.md).
+See [cooking, LOD, budgets and current limitations](../ASSET_PIPELINE.md).

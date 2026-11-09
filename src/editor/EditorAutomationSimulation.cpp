@@ -5,7 +5,6 @@
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
 #include "EditorAutomation.h"
-#include "EditorStabilization.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "ModAuthoring.h"
@@ -19,10 +18,9 @@
 #include "ScreenshotWriter.h"
 #include "ScriptTools.h"
 #include "SpriteSheetEditor.h"
-#include "TerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "TilemapEditor.h"
 #include "UtilityAIEditor.h"
-#include "VolumeTerrainTools.h"
 #include "WorldStreaming.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -137,15 +135,15 @@ void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
         }
         DebugViewOptions all;
         all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
-            all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere =
+            all.lifecycle = all.terrainNormals = all.waterBounds = all.atmosphere =
                 true;
         app.m_panels.debug =
-            terrainAutotest || volumeAutotest || polishAutotest || pickingAutotest || workspaceAutotest
+            polishAutotest || pickingAutotest || workspaceAutotest
                 ? DebugViewOptions{}
                 : all;
         app.m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_2D") &&
-                                    !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest &&
-                                    !volumeAutotest && !retargetAutotest && !polishAutotest &&
+                                    !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") &&
+                                    !retargetAutotest && !polishAutotest &&
                                     !pickingAutotest && !workspaceAutotest;
     } else if (autotestFrame == 10) {
         // Duplicate + undo must leave the scene exactly as authored.
@@ -194,13 +192,13 @@ void EditorAutomation::RunSimulationChecks(EditorRequests &deferredRequests) {
         std::fprintf(
             stderr,
             "[editor autotest] play frame: %d steps, step %.3f ms, %zu bodies, %zu contacts, %u draw "
-            "calls, %u triangles, %u shadow passes, %u lights, %u debug lines, %zu particles\n",
+            "calls, %u triangles, %u shadow passes, %u lights, %u debug lines\n",
             p.fixedStepsThisFrame, p.fixedStepMilliseconds, p.physicsBodies, p.contacts, p.drawCalls,
-            p.triangles, p.shadowPasses, p.dynamicLights, p.debugLines, p.fluidParticles);
+            p.triangles, p.shadowPasses, p.dynamicLights, p.debugLines);
         std::fprintf(stderr,
-                     "[editor autotest] resources: %zu meshes, %zu textures, %zu terrain meshes, hits "
+                     "[editor autotest] resources: %zu meshes, %zu textures, hits "
                      "%llu, misses %llu, failed %zu, uploads %llu, resident %llu bytes\n",
-                     p.resources.loadedMeshes, p.resources.loadedTextures, p.resources.loadedTerrainMeshes,
+                     p.resources.loadedMeshes, p.resources.loadedTextures,
                      p.resources.hits, p.resources.misses, p.resources.failed, p.resources.uploads,
                      static_cast<unsigned long long>(p.resources.bytesResident));
         std::fprintf(stderr,

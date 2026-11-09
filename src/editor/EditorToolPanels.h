@@ -3,8 +3,7 @@
 class EditorPanelRegistry;
 struct EditorContext;
 struct ScriptTools;
-struct TerrainEditor;
-struct VolumeTerrainEditor;
+class TerrainV2Editor;
 struct ModTools;
 struct AnimationTimeline;
 struct UtilityAIEditor;
@@ -12,8 +11,7 @@ struct SpriteSheetEditor;
 struct TilemapEditor;
 struct EditorToolServices {
     std::unique_ptr<ScriptTools> &scripts;
-    std::unique_ptr<TerrainEditor> &terrain;
-    std::unique_ptr<VolumeTerrainEditor> &volume;
+    std::unique_ptr<TerrainV2Editor> &terrain;
     std::unique_ptr<ModTools> &mods;
     std::unique_ptr<AnimationTimeline> &animation;
     std::unique_ptr<UtilityAIEditor> &ai;

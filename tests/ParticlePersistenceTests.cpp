@@ -279,7 +279,7 @@ void PersistentOwnership() {
     object.particleEmitter = ParticleEmitterSettings{};
     object.particleEmitter->impacts = ParticleImpactDelivery::Reliable;
     RuntimeWorld world;
-    world.legacyGameplay = false;
+
     std::string error;
     Require(world.Build(scene, nullptr, error) && world.FindEntity(object.id),
             "reliable owner has a genuine entity record for exclusion controls");

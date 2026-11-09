@@ -62,9 +62,9 @@ int main() {
         gravity.gravity->kind = SceneGravityKind::Uniform;
         gravity.gravity->regionRadius = 10000;
         RuntimeWorld basic;
-        basic.legacyGameplay = false;
+
         Check(basic.Build(scene, &resources, error), "ordinary terrain without advanced systems");
-        Check(!basic.GridWater() && !basic.HasFluid(), "terrain never enables a fluid backend");
+        Check(!basic.GridWater(), "terrain never enables a fluid backend");
         auto initial = basic.LiveTerrain().Solids({-4, 0, -4}, {4, 4, 4});
         Check(initial.size() == 1 && initial[0].Contains({0, .25f, 0}) &&
                   !initial[0].Contains({0, 1.25f, 0}),
@@ -95,7 +95,7 @@ int main() {
         auto painted = basic.LiveTerrain().Solids({-4, 0, -4}, {4, 4, 4});
         Check(initial[0].SameGeometry(painted[0]),
               "material publication does not invalidate solid geometry");
-        Check(basic.LiveTerrain().Brush(1, {0, .5f, 0}, {VolumeBrushKind::Remove, 1, 1}, error),
+        Check(basic.LiveTerrain().Brush(1, {0, .5f, 0}, {TerrainV2::Edit::Kind::Remove, {}, 1}, error),
               "queue real excavation");
         auto pending = basic.LiveTerrain().Solids({-4, 0, -4}, {4, 4, 4});
         Check(pending[0].SameGeometry(initial[0]) && pending[0].Contains({0, .25f, 0}),
@@ -143,7 +143,7 @@ int main() {
         } else {
             auto &water = scene.CreateObject("Source-aware water");
             water.fluidVolume = SceneFluidVolumeComponent{};
-            water.fluidVolume->backend = SceneFluidBackend::Grid;
+
             water.fluidVolume->countX = 16;
             water.fluidVolume->countY = 8;
             water.fluidVolume->countZ = 16;
@@ -151,7 +151,7 @@ int main() {
             water.fluidVolume->fillHeight = 2;
             const auto waterId = water.id;
             ProjectSettings settings;
-            settings.legacyGameplay = false;
+
             settings.advancedFluidDynamics = true;
             RuntimeWorld world;
             world.ConfigureProject(settings);
@@ -201,7 +201,7 @@ int main() {
             Check(system->Step(1.f / 60, error) && system->Stats(waterId).geometryBakes == bakes,
                   "paint does not rebake physical water occupancy: " + error);
             Check(
-                world.LiveTerrain().Brush(1, {0, .5f, 0}, {VolumeBrushKind::Remove, 1, 1}, error) &&
+                world.LiveTerrain().Brush(1, {0, .5f, 0}, {TerrainV2::Edit::Kind::Remove, {}, 1}, error) &&
                     world.LiveTerrain().Wait(1, error),
                 "excavate solid beneath actual water");
             Check(system->Step(1.f / 60, error),

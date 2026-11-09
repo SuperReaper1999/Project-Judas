@@ -4,7 +4,7 @@ M68 is accepted at `c042797c755df68b45e36aa917c4ca72818b9bcd`; its original
 starting checkpoint was `52828779993843d9c8b0060f5e30e49e61d0466f`.
 M67 human acceptance remains provisional/deferred. Automated checks here do not
 supply that acceptance. Measurements and exact commands are in
-[evidence/m68](evidence/m68/REPORT.md).
+[evidence/m68 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m68/REPORT.md).
 
 ## Runtime work
 

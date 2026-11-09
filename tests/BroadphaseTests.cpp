@@ -592,7 +592,7 @@ void TestScaleStatistics() {
                 s.geometryPredicates, s.geometryExactFallbacks, s.geometryUnresolved);
     std::printf("  cache orientation %zu hits %zu rebuilds; bounds %zu hits %zu rebuilds; shapes %zu; solver frames %zu; bytes %zu; allocations %zu\n",
                 s.orientationCacheHits, s.orientationCacheRebuilds, s.boundCacheHits,
-                s.boundCacheRebuilds, s.shapeCacheRebuilds, s.solverFrameBuilds,
+                s.boundCacheRebuilds, s.shapeCacheRebuilds,
                 s.geometryCacheBytes, s.geometryCacheAllocations);
     Check(s.possiblePairs == 1500u * 1499u / 2u + 1500u, "possible-pair count is the all-pairs count");
     Check(s.candidatePairs < s.possiblePairs / 100, "broadphase hands the narrowphase < 1% of all pairs");

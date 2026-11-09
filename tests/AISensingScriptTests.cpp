@@ -3,7 +3,6 @@
 #include "ResourceManager.h"
 #include "Project.h"
 #include "InputSystem.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "Window.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -59,16 +58,16 @@ export default class {
 )JS";
  AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());AssetRecord script;std::string error;
  Check(assets.Track((root/"Assets/npc.js").string(),script,error),"ordinary registered consumer script");
- ProjectSettings project;project.legacyGameplay=false;unsigned tag=0;project.classification.tags.Add("food",tag);
+ ProjectSettings project;unsigned tag=0;project.classification.tags.Add("food",tag);
  Scene scene;std::vector<SceneObjectId> actors;
  for(float x:{-1.f,1.f}){auto& npc=scene.CreateObject("NPC");actors.push_back(npc.id);npc.transform.position={x,0,0};
   npc.body=SceneBodyComponent{};npc.body->motion=SceneBodyMotion::Kinematic;npc.body->halfExtents={.2f,.2f,.2f};npc.scripts.push_back({1,script.id,true,"{}"});}
  auto& meal=scene.CreateObject("last meal");const auto mealId=meal.id;meal.transform.position={0,0,3};meal.tags=CategoryBit(tag);meal.body=SceneBodyComponent{};meal.body->halfExtents={.2f,.2f,.2f};
  ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.ConfigureProject(project);
  Check(world.Build(scene,&resources,error,&project.classification),"two physical NPCs and one tagged food target build");InputSystem input;
- GameSession session;Window window;window.SetTestInputMode(true);
- Check(session.Begin(world,error),"ordinary played-world session starts");
- for(int i=0;i<180;++i)StepPlayedWorld(session,window,.05f);
+ Window window;window.SetTestInputMode(true);
+ Check(world.IsBuilt(),"ordinary played-world session starts");
+ for(int i=0;i<180;++i)StepPlayedWorld(world,window,.05f);
  Check(world.Scripts()&&world.Scripts()->Diagnostics().empty(),"sensing, decisions, leases and physical movement execute in real VM without faults");
  unsigned eaten=0,observed=0,unknown=0;for(const auto& r:world.Scripts()->Capture()){
   const auto s=J::parse(r.json);std::cout<<"NPC "<<r.entity<<" "<<s.dump()<<'\n';eaten+=s.at("eaten").get<unsigned>();observed+=s.at("observed").get<unsigned>();unknown+=s.at("unknown").get<unsigned>();
@@ -83,5 +82,5 @@ export default class {
  const auto remaining=world.Scripts()->Capture();
  Check(remaining.size()==1&&J::parse(remaining[0].json).value("retirementGuards",0)==4,"retiring project callbacks cannot create agents/sensors/scopes or acquire new leases");
  Check(remaining.size()==1&&J::parse(remaining[0].json).value("cleanups",0)==1,"project cleanup after sensor disposal executes exactly once");
- session.End();world.Destroy();fs::remove_all(root);std::cout<<checks<<" AI sensing/script checks, "<<failures<<" failures\n";return failures?1:0;
+ world.Destroy();fs::remove_all(root);std::cout<<checks<<" AI sensing/script checks, "<<failures<<" failures\n";return failures?1:0;
 } catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}

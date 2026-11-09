@@ -12,8 +12,7 @@
 struct EditorContext;
 struct EditorPlaySession;
 struct EditorAssetPreview;
-struct TerrainEditor;
-struct VolumeTerrainEditor;
+class TerrainV2Editor;
 struct TilemapEditor;
 
 // Scene-view tools own camera/gesture/target state, independently of the shell.
@@ -26,7 +25,7 @@ struct EditorSceneViewport {
     void DrawEditOverlay(EditorContext &, Renderer &, const Scene &);
     void CancelCameraNavigation(EditorContext &);
     void UpdateCameraNavigation(EditorContext &, const EditorCameraGestureInput &, int, int, float, bool);
-    void FrameEditMode(EditorContext &, float, TerrainEditor *, VolumeTerrainEditor *, TilemapEditor *);
+    void FrameEditMode(EditorContext &, float, TerrainV2Editor *, TilemapEditor *);
     void Destroy(Renderer &);
     void RenderLive(EditorContext &, const EditorPlaySession &, float);
     void BeginObservation(glm::dvec3 authoredOrigin);

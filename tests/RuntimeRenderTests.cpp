@@ -35,13 +35,13 @@ glm::vec3 Probe(const std::vector<unsigned char>& pixels,glm::vec3 p,const glm::
 bool Near(glm::vec3 a,glm::vec3 b,float tolerance=5){return glm::all(glm::lessThanEqual(glm::abs(a-b),glm::vec3(tolerance)));}
 bool StrongChannel(glm::vec3 colour,unsigned channel){return colour[channel]>180&&colour[(channel+1)%3]<5&&colour[(channel+2)%3]<5;}
 std::vector<unsigned char> Frame(Renderer& r,RuntimeWorld& world,const glm::mat4& view=View(),const glm::mat4& projection=Projection()){
-    RenderWorldFrame(r,Width,Height,world,nullptr,view,projection,{0,0,0},1);
+    RenderWorldFrame(r,Width,Height,world,view,projection,{0,0,0},1);
     std::vector<unsigned char> pixels;r.CaptureFrame(Width,Height,pixels);return pixels;
 }
 float Depth(){float depth=1;GLint viewport[4];glGetIntegerv(GL_VIEWPORT,viewport);glReadPixels(viewport[2]/2,viewport[3]/2,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&depth);return depth;}
 float WorldShadow(Renderer& r,RuntimeWorld& world){
     r.BeginShadowPass(0,glm::ortho(-3.f,3.f,-2.25f,2.25f,.1f,20.f)*View());
-    DrawWorldGeometry(r,world,nullptr,1,{});auto depth=Depth();r.EndShadowPass();return depth;
+    DrawWorldGeometry(r,world,1,{});auto depth=Depth();r.EndShadowPass();return depth;
 }
 Scene PrimitiveScene(){
     Scene scene;scene.Settings().sunDirection={0,0,1};scene.Settings().sunColor={1,1,1};scene.Settings().ambientColor={0,0,0};scene.Settings().backgroundColor={0,0,0};
@@ -168,7 +168,7 @@ int main(int argc,char** argv){
         Check(world.Build(scene,&host.Resources(),error),"bounded 128-instance observation builds through shared source references");host.Resources().WaitForAll();const double prepareMs=Milliseconds(start);
         const auto source=host.Resources().TryGetMaterial(materialId);
         std::printf("PERF cold_world_and_shared_source_prepare_ms=%.4f instances=%u new_texture_uploads=%u new_mesh_uploads=%u shared_material_handles=%u disk_cache=uncontrolled\n",prepareMs,Instances,textureCreates-coldTextures,meshCreates-coldMeshes,unsigned(source.IsValid()));
-        for(unsigned i=0;i<2;++i)RenderWorldFrame(r,Width,Height,world,nullptr,View(),Projection(),{0,0,0},1);
+        for(unsigned i=0;i<2;++i)RenderWorldFrame(r,Width,Height,world,View(),Projection(),{0,0,0},1);
         r.FinishForDiagnostics();const auto steadyTextures=textureCreates,steadyMeshes=meshCreates;const auto steadyBytes=r.AppearanceBytes();
         auto& profiler=PerformanceProfiler::Get();const bool wasEnabled=profiler.Enabled();profiler.Enable(true);profiler.Clear();profiler.RegisterThread("M72 render observation");
         auto measure=[&](unsigned frames,bool change){std::vector<double> times;times.reserve(frames);
@@ -176,7 +176,7 @@ int main(int argc,char** argv){
                 if(change){auto settings=world.Settings();settings.sunIntensity=frame%2?.4f:1.f;settings.sunColor=frame%2?glm::vec3(1,.7f,.4f):glm::vec3(1);settings.sunEnabled=frame%10!=0;world.SetAppearance(settings);
                     for(unsigned i=1;i<=Instances;++i){MaterialOverride patch;patch.baseColor=glm::vec4(1,frame%2?.6f:1.f,1,1);world.SetRuntimeMaterial(i,"*",{"",patch});world.SetRenderVisible(i,true,(i+frame)%4!=0);}
                 }
-                RenderWorldFrame(r,Width,Height,world,nullptr,View(),Projection(),{0,0,0},1);times.push_back(Milliseconds(frameStart));
+                RenderWorldFrame(r,Width,Height,world,View(),Projection(),{0,0,0},1);times.push_back(Milliseconds(frameStart));
             }return times;
         };
         ReportTiming("shared_defaults_cpu_submission",measure(DefaultFrames,false));r.FinishForDiagnostics();
@@ -186,7 +186,7 @@ int main(int argc,char** argv){
         Check(profiler.Export((out/"shared-instance-profile.json").string(),error),"bounded workload exports existing M56 scope collection");profiler.Enable(wasEnabled);
         for(unsigned i=1;i<=Instances;++i)world.SetRenderVisible(i,true,true);
         const auto reloadCreates=textureCreates,reloadDestroys=textureDestroys;std::vector<double> reloadTimes;bool retiredAll=true;
-        for(unsigned i=0;i<Reloads;++i){auto reloadStart=Timer::now();MaterialOverride replacement;replacement.textures[0]=redId;world.SetRuntimeMaterial(1,"*",{"",replacement});RenderWorldFrame(r,Width,Height,world,nullptr,View(),Projection(),{0,0,0},1);host.Resources().WaitForAll();RenderWorldFrame(r,Width,Height,world,nullptr,View(),Projection(),{0,0,0},1);
+        for(unsigned i=0;i<Reloads;++i){auto reloadStart=Timer::now();MaterialOverride replacement;replacement.textures[0]=redId;world.SetRuntimeMaterial(1,"*",{"",replacement});RenderWorldFrame(r,Width,Height,world,View(),Projection(),{0,0,0},1);host.Resources().WaitForAll();RenderWorldFrame(r,Width,Height,world,View(),Projection(),{0,0,0},1);
             const auto retired=host.Resources().TryGetTexture(redId);host.Resources().Release(redId);TextureData data;retiredAll=retiredAll&&retired.IsValid()&&!r.ReadTextureForDiagnostics(retired,data);reloadTimes.push_back(Milliseconds(reloadStart));
         }
         ReportTiming("replacement_prepare_submit_retire",reloadTimes);std::printf("PERF repeated_retirement cycles=%u texture_creates=%u texture_destroys=%u\n",Reloads,textureCreates-reloadCreates,textureDestroys-reloadDestroys);

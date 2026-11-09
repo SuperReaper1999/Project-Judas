@@ -7,9 +7,6 @@ settings
   ambient 0.16 0.17 0.19
   sun-enabled false
   background-color 0.055 0.085 0.11
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 475
 end
@@ -37,15 +34,12 @@ object 1 "Grid RPG player - editable game.js"
   body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 2 "Backdrop - editable sprite tiles"
@@ -81,15 +75,12 @@ object 191 "Floor"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-12.0,-0.5],[12.0,-0.5],[12.0,0.5],[-12.0,0.5]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 192 "Left wall"
@@ -110,15 +101,12 @@ object 192 "Left wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 193 "Right wall"
@@ -139,15 +127,12 @@ object 193 "Right wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 196 "Ground tile"
@@ -4843,15 +4828,12 @@ object 471 "One-way platform - preview arrow in Body"
   body.planar-v1 "{\"version\":2,\"kind\":4,\"radius\":0.0,\"lockRotation\":true,\"vertices\":[[-1.4,0.0],[1.4,0.0]],\"oneWay\":true}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 472 "One-way platform - preview arrow in Body"
@@ -4872,15 +4854,12 @@ object 472 "One-way platform - preview arrow in Body"
   body.planar-v1 "{\"version\":2,\"kind\":4,\"radius\":0.0,\"lockRotation\":true,\"vertices\":[[-1.4,0.0],[1.4,0.0]],\"oneWay\":true}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 1
   body.friction 0.6
   body.restitution 0.1
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 473 "2D gravity"

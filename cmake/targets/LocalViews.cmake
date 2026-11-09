@@ -3,10 +3,7 @@
 add_executable(judas_touch_input_tests tests/TouchInputTests.cpp src/InputSystem.cpp)
 target_include_directories(judas_touch_input_tests PRIVATE src)
 judas_warnings(judas_touch_input_tests)
-judas_add_engine_test(judas_breakwater_application_tests tests/BreakwaterApplicationTests.cpp APPLICATION)
-if(UNIX AND NOT ANDROID)
-judas_add_engine_test(judas_breakwater_performance tests/BreakwaterPerformance.cpp APPLICATION)
-endif()
+
 
 # M89 optional local player/device and UI routing contracts.
 judas_add_engine_test(judas_local_multiplayer_tests tests/LocalMultiplayerTests.cpp)

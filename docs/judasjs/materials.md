@@ -1,9 +1,9 @@
 # Materials and scene appearance
 
-[Index](../JUDASJS.md) · [Rendering contracts](../MATERIALS.md) · [M72 ownership and review](../M72.md) · [Render visibility](entities.md#render-visibility-m72)
+[Index](../JUDASJS.md) · [Rendering contracts](../MATERIALS.md) · [M72 ownership and review](../RUNTIME_RENDERING.md) · [Render visibility](entities.md#render-visibility-m72)
 
 The [material example](examples/materials.js) uses the ordinary public handles;
-[M72 validation status](../M72.md#validation-status) records current execution.
+[M72 validation status](../RUNTIME_RENDERING.md#validation-status) records current execution.
 
 Judas provides material, light and environment primitives. Project JS chooses
 transitions, sun paths and the meaning of a visual change. All values below are

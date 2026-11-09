@@ -97,6 +97,6 @@ explicitly before switching. Main, split-screen and secondary cameras use their
 own projections and LOD/resource interests. Lens settings survive authored
 serialization and new cold saves; existing default-camera saves remain unchanged.
 
-See [Stage 1 report](../2D_STAGE1.md) and [camera APIs](effects-camera.md).
+See [Stage 1 report (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE1.md) and [camera APIs](effects-camera.md).
 
 [Stage 3: sprite sheets, clip authoring and frame events](sprite-animation.md) extends these sprites through an optional typed content resource.

@@ -238,10 +238,10 @@ void SectionPriority() {
 void SectionAsyncFile() {
     std::printf("Section C: asynchronous file reads\n");
     JobSystem jobs(3);
-    auto ok = ReadFileAsync(jobs, "assets/models/beacon.obj");
-    Check(ok->Wait() == FileReadStatus::Succeeded && ok->Bytes().size() == fs::file_size("assets/models/beacon.obj"),
+    auto ok = ReadFileAsync(jobs, "tests/fixtures/engine-assets/models/beacon.obj");
+    Check(ok->Wait() == FileReadStatus::Succeeded && ok->Bytes().size() == fs::file_size("tests/fixtures/engine-assets/models/beacon.obj"),
           "a valid read completes with every byte of the file");
-    auto missing = ReadFileAsync(jobs, "assets/models/does_not_exist.obj");
+    auto missing = ReadFileAsync(jobs, "tests/fixtures/engine-assets/models/does_not_exist.obj");
     Check(missing->Wait() == FileReadStatus::Failed && missing->Error().find("not found") != std::string::npos,
           "a missing file fails with a useful message: " + missing->Error());
     {
@@ -251,7 +251,7 @@ void SectionAsyncFile() {
         gate.lock();
         one.Submit([&](JobContext&) { std::lock_guard<std::mutex> hold(gate); });
         for (int i = 0; i < 200 && one.Stats().running < 1; ++i) std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        auto request = ReadFileAsync(one, "assets/models/beacon.obj");
+        auto request = ReadFileAsync(one, "tests/fixtures/engine-assets/models/beacon.obj");
         Check(request->Cancel() == FileReadStatus::Cancelled, "a queued read is cancelled");
         gate.unlock();
         one.WaitAll();
@@ -261,7 +261,7 @@ void SectionAsyncFile() {
         // The caller drops its reference immediately; the worker's copy keeps the request alive.
         std::weak_ptr<FileReadRequest> weak;
         {
-            auto request = ReadFileAsync(jobs, "assets/textures/beacon.png");
+            auto request = ReadFileAsync(jobs, "tests/fixtures/engine-assets/textures/beacon.png");
             weak = request;
         }
         jobs.WaitAll();
@@ -269,7 +269,7 @@ void SectionAsyncFile() {
     }
     {
         std::vector<std::shared_ptr<FileReadRequest>> requests;
-        const char* files[] = {"assets/models/beacon.obj", "assets/models/plane.obj", "assets/textures/beacon.png",
+        const char* files[] = {"tests/fixtures/engine-assets/models/beacon.obj", "tests/fixtures/engine-assets/models/plane.obj", "tests/fixtures/engine-assets/textures/beacon.png",
                                "assets/fonts/DejaVuSans.ttf", "README.md"};
         for (int i = 0; i < 200; ++i) requests.push_back(ReadFileAsync(jobs, files[i % 5], static_cast<JobPriority>(i % 3)));
         bool allOk = true;
@@ -299,7 +299,7 @@ void SectionAsyncFile() {
 void SectionResources() {
     std::printf("Section D: asynchronous resource loading (real assets, headless residency)\n");
     AssetDatabase db;
-    db.Scan(".", "assets");
+    db.Scan(".", "tests/fixtures/engine-assets");
     JobSystem jobs(3);
     {
         ResourceManager resources(nullptr, &db, &jobs);
@@ -364,7 +364,7 @@ void SectionResources() {
         Check(resources.RequestMesh("abcdefabcdefabcdefabcdefabcdefab") == ResourceState::Failed && resources.Stats().misses == 1,
               "a failed asset is not retried by itself");
         std::error_code ec;
-        fs::copy_file("assets/models/beacon.obj", temp.path / "Assets" / "bad.obj", fs::copy_options::overwrite_existing, ec);
+        fs::copy_file("tests/fixtures/engine-assets/models/beacon.obj", temp.path / "Assets" / "bad.obj", fs::copy_options::overwrite_existing, ec);
         resources.Invalidate("abcdefabcdefabcdefabcdefabcdefab");
         resources.RequestMesh("abcdefabcdefabcdefabcdefabcdefab");
         resources.WaitForAll();

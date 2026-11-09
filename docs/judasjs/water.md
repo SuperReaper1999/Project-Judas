@@ -20,8 +20,7 @@ or export. Authoring a component does not bypass that policy.
 
 ## Authoring a region
 
-Add **Fluid volume** to a stationary object. New editor components select Grid
-Water V2; old particle-authored scenes retain their backend. The owner is the
+Add **Fluid volume** to a stationary object. Grid Water V2 is the sole advanced backend. The owner is the
 domain's bottom centre, with local +Y pointing away from gravity. Positive
 uniform scale is supported. Set cell size, domain cell counts, initial fill
 height, density, colour and opacity. Use colliders for walls and other solids.
@@ -30,12 +29,8 @@ The exact scene keys, inside an ordinary object block, are:
 
 ```text
 fluid-volume
-fluid-volume.backend grid
 fluid-volume.spacing 0.4
 fluid-volume.count 30 12 20
-fluid-volume.emitter false
-fluid-volume.emitter-offset 0 0 0
-fluid-volume.max-particles 0
 fluid-volume.fill-height 2
 fluid-volume.density 1000
 fluid-volume.color 0.035 0.3 0.38

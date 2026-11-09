@@ -22,7 +22,7 @@ export default class WillowTown {
   this.town=new Town(this.state);this.town.start(restoring);
   this.doc=ui.get('willow_town');
   if(!this.doc)throw Error('Willow Town interface is missing from the scene');
-  input.pointerCapture=false;ui.debugOverlayVisible=false;
+  input.pointerCapture=false;
   this.layout();this.camera();this.paint();
   if(this.observationRun)this.observe('WILLOW_WATCH_START');
  }

@@ -7,11 +7,8 @@
 #include "SceneFingerprint.h"
 #include "NamedAuthoring.h"
 #include "Prefab.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "InputSystem.h"
-#include "ProductionFluidCoupling.h"
-#include "LiquidGeometry.h"
 #include "WorldPersistence.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <filesystem>
@@ -27,7 +24,7 @@ Scene WaterScene(bool advancedComponents=false){
     Scene s;s.Settings().name="Basic and advanced policy";
     auto& water=s.CreateObject("Pool");water.basicWater=BasicWaterSettings{};water.basicWater->flow={.4f,0,0};
     auto& gravity=s.CreateObject("Gravity");gravity.gravity=SceneGravityComponent{};gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->magnitude=9.81f;gravity.gravity->regionRadius=10000;
-    if(advancedComponents){auto& fluid=s.CreateObject("Legacy particle field");fluid.fluidVolume=SceneFluidVolumeComponent{};fluid.fluidVolume->countX=2;fluid.fluidVolume->countY=2;fluid.fluidVolume->countZ=2;fluid.fluidVolume->spacing=.1f;}
+    if(advancedComponents){auto& fluid=s.CreateObject("Advanced grid owner");fluid.fluidVolume=SceneFluidVolumeComponent{};fluid.fluidVolume->countX=2;fluid.fluidVolume->countY=2;fluid.fluidVolume->countZ=2;fluid.fluidVolume->spacing=.1f;fluid.fluidVolume->fillHeight=.1f;}
     return s;
 }
 }
@@ -38,7 +35,7 @@ int main(){
     const bool alphaChannel = std::string(GetBuildIdentity().channel) == "Alpha";
     Check((AdvancedFluidDynamicsRestriction() != nullptr) == alphaChannel,
           "advanced-fluid restriction agrees with independently observed build channel");
-    ProjectSettings defaults;defaults.name="Water policy";defaults.startupScene="Scenes/main.judas";defaults.legacyGameplay=false;
+    ProjectSettings defaults;defaults.name="Water policy";defaults.startupScene="Scenes/main.judas";
     Check(defaults.basicWater&&defaults.waterSwimming&&!defaults.advancedFluidDynamics,"basic water/swimming on, advanced off by default");
     auto text=Project::SerializeToString(defaults);ProjectSettings parsed;
     Check(Project::ParseFromString(text,parsed,error)&&parsed.basicWater&&parsed.waterSwimming&&!parsed.advancedFluidDynamics,"project policy round trip");
@@ -73,15 +70,12 @@ int main(){
     std::string before,after;Check(ComputeSceneFingerprint(scene,before,error),"water scene fingerprint");restored.Find(1)->basicWater->waveSpeed+=.5f;
     Check(ComputeSceneFingerprint(restored,after,error)&&before!=after,"wave parameters participate in content identity");
     RuntimeWorld world;world.ConfigureProject(defaults);Check(world.Build(scene,nullptr,error),"default world constructs authored basic and dormant advanced components: "+error);
-    Check(!world.HasFluid()&&world.FluidVolumes().empty()&&world.BasicWaters().size()==1,"default world allocates no particle field or particle owners");
-    bool noParticleStorage=false;try{world.Fluid();}catch(const std::logic_error&){noParticleStorage=true;}Check(noParticleStorage,"default world has no hidden FluidWorld allocation");
+    Check(!world.GridWater()&&world.BasicWaters().size()==1,"default world allocates no advanced simulation owner");
     Check(world.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==1,"runtime water query works with advanced disabled");
     SceneObject forbidden;forbidden.gravity=SceneGravityComponent{};Check(!world.CreateEntity(forbidden,nullptr,&error)&&error.find("scene-global")!=std::string::npos,"cold metadata repair does not permit runtime creation of scene-global gravity");
-    GameSession game;Check(game.Begin(world,error),"default world session begins");InputSystem input;
-    for(unsigned i=0;i<120;++i){input.BeginFixedStep();StepAuthoritativeWorld(game,input,1.f/60);}
-    Check(world.Liquids().States().empty()&&world.Liquids().Parcels().empty()&&world.Liquids().StepTimes().total==0&&!world.HasFluid(),"120 real steps perform no advanced fluid work");
-    auto denied=world.Liquids().AddBasin(1,{}, {},nullptr,error);Check(!denied.id&&error.find("disabled")!=std::string::npos,"disabled world rejects even native liquid-owner registration before surface allocation");
-    Check(world.EmitFluidParticle()==false,"default emitter cannot activate a hidden particle solver");
+    Check(world.IsBuilt(),"default world session begins");InputSystem input;
+    for(unsigned i=0;i<120;++i){input.BeginFixedStep();StepAuthoritativeWorld(world,input,1.f/60);}
+    Check(!world.GridWater(),"120 real steps perform no advanced solver work");
     bool locked=false;try{world.ConfigureProject(enabled);}catch(const std::logic_error&){locked=true;}Check(locked,"live project policy cannot mutate under an existing world");
     std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error),"cold-save capture with dormant advanced authorship: "+error);
     Scene cold;Check(WorldPersistence::SceneFrom(chunks,cold,error),"cold save reconstructs basic water authoring");RuntimeWorld coldWorld;coldWorld.ConfigureProject(defaults);
@@ -89,8 +83,8 @@ int main(){
     for(const auto& o:cold.Objects()){EntityPhysicalState a,b;std::cout<<"Cold diagnostic entity "<<o.id<<" original state="<<world.GetEntityState(o.id,a)<<" restored state="<<coldWorld.GetEntityState(o.id,b)<<" name="<<o.name<<"\n";}
     const bool coldRestored=coldBuilt&&WorldPersistence::Restore(coldWorld,chunks,error);
     Check(coldRestored,"cold restore uses ordinary persistence with default policy: "+error);
-    Check(coldWorld.BasicWaters().size()==1&&coldWorld.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==1&&!coldWorld.HasFluid(),"restored water remains usable without a fluid solver");
-    game.End();
+    Check(coldWorld.BasicWaters().size()==1&&coldWorld.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==1&&!coldWorld.GridWater(),"restored water remains usable without a fluid solver");
+
     SceneObject region;region.id=777;region.name="Streamed water";region.basicWater=BasicWaterSettings{};region.transform.position={20,0,0};
     Check(world.StageRegionObject(region,region,error)&&world.BasicWaters().size()==1,"staged regional water is private before publication");
     world.PublishRegion({777});Check(world.BasicWaters().size()==2&&world.SampleWater({20,-1,0},{0,1,0},.3f,.2f).immersion==1,"published region supplies ordinary water queries");
@@ -99,25 +93,21 @@ int main(){
     Scene prefab;Check(CreatePrefab(scene,1,prefab,error)&&prefab.Objects().front().basicWater.has_value(),"ordinary prefab authoring preserves basic water");
     Check(world.RequestOrigin({512,0,0},error)&&world.CommitOrigin(),"basic water supports existing live origin shifts");
     Check(world.SampleWater({-512,-1,0},{0,1,0},.3f,.2f).immersion==1,"water frame follows shifted world");
-    world.Destroy();Check(world.Build(scene,nullptr,error)&&!world.HasFluid()&&world.BasicWaters().size()==1,"Play/Stop reconstruction retains immutable project policy");
+    world.Destroy();Check(world.Build(scene,nullptr,error)&&!world.GridWater()&&world.BasicWaters().size()==1,"Play/Stop reconstruction retains immutable project policy");
     auto optin=defaults;optin.advancedFluidDynamics=true;RuntimeWorld advanced;advanced.ConfigureProject(optin);
     if (AdvancedFluidDynamicsRestriction()) {
         Check(!advanced.AdvancedFluidsEnabled(),"Alpha denies effective activation even before Build");
         Check(!advanced.Build(scene,nullptr,error)&&error.find("contact stability")!=std::string::npos,
               "Alpha rejects explicit opt-in before constructing the world");
         Check(!advanced.IsBuilt(),"rejected Alpha world is not published");
-        bool noField=false;try{advanced.Fluid();}catch(const std::logic_error&){noField=true;}
-        Check(noField,"rejected Alpha opt-in allocates no particle field");
-        Check(advanced.Liquids().States().empty()&&advanced.Liquids().Parcels().empty(),
-              "rejected Alpha opt-in creates no advanced liquid owners");
+        Check(!advanced.GridWater(),"rejected Alpha opt-in allocates no advanced solver");
         Check(!advanced.Build(Scene{},nullptr,error),"even an empty scene cannot bypass Alpha project policy");
         Check(!advanced.Build(scene,nullptr,error,nullptr,nullptr,true),"cold snapshot construction cannot bypass Alpha policy");
-        Check(!advanced.EmitFluidParticle(),"rejected Alpha project cannot emit particles");
     } else {
-    Check(advanced.Build(scene,nullptr,error)&&advanced.HasFluid()&&advanced.Fluid().Particles().size()==8,"explicit opt-in creates existing PBF field");
-    GameSession advancedGame;Check(advancedGame.Begin(advanced,error),"opt-in session begins");for(unsigned i=0;i<4;++i){input.BeginFixedStep();StepAuthoritativeWorld(advancedGame,input,1.f/60);}
-    Check(advanced.FluidCoupling().Measurements().executedSteps>0&&advanced.HasFluid(),"opt-in existing particle path executes");
-    advancedGame.End();
+    Check(advanced.Build(scene,nullptr,error)&&advanced.GridWater(),"explicit Experimental opt-in creates the authoritative grid owner");
+    for(unsigned i=0;i<4;++i){input.BeginFixedStep();StepAuthoritativeWorld(advanced,input,1.f/60);}
+    Check(advanced.GridWater()!=nullptr,"opted-in current backend advances through normal simulation");
+
     }
     auto off=defaults;off.basicWater=false;RuntimeWorld noWater;noWater.ConfigureProject(off);Check(noWater.Build(WaterScene(),nullptr,error)&&noWater.BasicWaters().empty()&&noWater.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"basic-water project switch controls rendering volumes and queries");
     auto noSwim=defaults;noSwim.waterSwimming=false;RuntimeWorld visualOnly;visualOnly.ConfigureProject(noSwim);Check(visualOnly.Build(WaterScene(),nullptr,error)&&visualOnly.BasicWaters().size()==1&&visualOnly.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"swimming can be disabled independently of water surfaces");

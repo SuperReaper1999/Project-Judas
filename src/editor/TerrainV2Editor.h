@@ -7,9 +7,7 @@
 #include "terrain/TerrainSource.h"
 #include <map>
 
-// V2 workflow owns source, gestures, worker products and presentation. The
-// legacy terrain tool only routes viewport hooks while V1 projects keep their
-// existing workflow. No implementation is added to the editor frame loop.
+// Owns terrain source, gestures, worker products and viewport presentation.
 class TerrainV2Editor {
   public:
     bool Panel(EditorDocument &, EditorPanelState &, EditorRequests &);
@@ -19,11 +17,12 @@ class TerrainV2Editor {
     void Draw(Renderer &, Scene &, ResourceManager &);
     bool Guard(EditorPanelState &);
     void Shutdown(Renderer &, JobSystem *);
-    bool Active() const { return !legacy && (activeProject || creation.Active()); }
+    bool Active() const { return activeProject || creation.Active(); }
     void BeginCreation() {
-        legacy = false;
         creation.Show();
     }
+    void Undo(EditorPanelState &);
+    void Redo(EditorPanelState &);
     bool Loaded() const { return loaded; }
     bool Editing() const { return editing; }
     bool Publishing() const { return bool(cook) || creation.Busy(); }
@@ -51,7 +50,6 @@ class TerrainV2Editor {
     std::string projectKey, path, meshId, error, disk;
     std::vector<std::string> sources;
     TerrainV2Creation creation;
-    bool legacy = false;
     TerrainV2::Source source, before;
     std::array<std::string, 4> paletteTextures;
     std::array<glm::vec3, 4> paletteColours;

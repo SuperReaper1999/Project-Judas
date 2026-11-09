@@ -1,5 +1,4 @@
 #include "AssetDatabase.h"
-#include "GameSession.h"
 #include "InputSystem.h"
 #include "JobSystem.h"
 #include "NetworkSession.h"
@@ -61,21 +60,21 @@ export default class {
 })JS";
 struct Instance {
     RuntimeWorld world;
-    GameSession game;
+
     InputSystem input;
     std::shared_ptr<SceneSession> control;
     Instance(const Project& project, const Scene& scene, ResourceManager& resources, const char* role) {
         std::string error;
         control = std::make_shared<SceneSession>(project, project.StartupScenePath());
         Check(control->Set("role", Json(role).dump(), error), "ordinary session state selects fixture role");
-        world.legacyGameplay = false;
+
         world.SetSceneControl(control);
         Check(world.Build(scene, &resources, error, &project.Settings().classification, &project.Settings().navigation),
               "ordinary public script world builds: " + error);
-        Check(game.Begin(world, error) && input.SetMap(project.Settings().input, error), "session begins: " + error);
+        Check(world.IsBuilt() && input.SetMap(project.Settings().input, error), "session begins: " + error);
     }
-    ~Instance() { world.EndScripts();game.End();world.Destroy(); }
-    void Fixed() { input.BeginFixedStep();StepAuthoritativeWorld(game, input, dt);Healthy(world); }
+    ~Instance() { world.EndScripts();world.Destroy(); }
+    void Fixed() { input.BeginFixedStep();StepAuthoritativeWorld(world, input, dt);Healthy(world); }
 };
 } // namespace
 
@@ -92,7 +91,7 @@ int main(int argc, char** argv) {
         Check(assets.Track((root / "Assets/probe.js").string(), script, error), "normal script asset registration");
         ProjectSettings settings;
         settings.name = "M99 fixed-boundary regression";
-        settings.legacyGameplay = false;
+
         settings.startupScene = "Scenes/boundary.judas";
         settings.saveIdentity = std::string(64, 'b');
         { std::ofstream file(root / "boundary.judasproj");file << Project::SerializeToString(settings); }

@@ -63,7 +63,7 @@ The original M87 seconds-long dense-pile failure remains preserved in its
 [historical report](../../docs/evidence/m87/live-slowdown-followup/REPORT.md).
 M91's matched measurements and physical checks are in the
 [current report](../../docs/evidence/m91/REPORT.md), with the numerical contract
-[explained separately](../../docs/M91_COLLISION_CONTINUITY.md).
+[explained separately](../../docs/COLLISION_CONTINUITY.md).
 
 **The 1,024-piece pile is an extreme stress workload.** The M91 measurement
 improved the failure region, with isolated stalls still present. The default

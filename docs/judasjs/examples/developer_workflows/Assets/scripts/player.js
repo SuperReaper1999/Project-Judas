@@ -50,7 +50,6 @@ export default class Player {
     bind() {
         players.set(this.entity.id, this);
         this.hud = ui.get('lesson');
-        ui.debugOverlayVisible = false;
         this.hud.modal = false;
         input.pointerCapture = true;
         this.request = null;

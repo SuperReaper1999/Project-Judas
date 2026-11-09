@@ -5,8 +5,7 @@
 #include "EditorPanels.h"
 #include "EditorWorkspace.h"
 #include "ScriptTools.h"
-#include "TerrainTools.h"
-#include "VolumeTerrainTools.h"
+#include "TerrainV2Editor.h"
 #include "ModTools.h"
 #include "AnimationTimeline.h"
 #include "UtilityAIEditor.h"
@@ -43,14 +42,8 @@ void RegisterEditorToolPanels(EditorPanelRegistry &registry, EditorToolServices 
     registry.Add({"terrain", "Terrain tools", "World", author, &EditorPanelState::showTerrain},
                  [tools](auto &c) {
                      if (!tools.terrain)
-                         tools.terrain = std::make_unique<TerrainEditor>();
+                         tools.terrain = std::make_unique<TerrainV2Editor>();
                      tools.terrain->Panel(c.document, c.panels, c.requests);
-                 });
-    registry.Add({"volume", "Volumetric terrain", "World", author, &EditorPanelState::showVolumeTerrain},
-                 [tools](auto &c) {
-                     if (!tools.volume)
-                         tools.volume = std::make_unique<VolumeTerrainEditor>();
-                     tools.volume->Panel(c.document, c.panels, c.requests);
                  });
     registry.Add({"mods", "Local mods", "Project", author, &EditorPanelState::showMods}, [tools](auto &c) {
         if (!tools.mods)

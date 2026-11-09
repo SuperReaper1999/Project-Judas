@@ -18,7 +18,7 @@ export default class GraffitiWorkshop {
     restore(){this.bind();}
     bind(){
         this.player=entity('2');this.emitters=[10,11,12,13].map(i=>entity(String(i)));
-        this.doc=ui.get('graffiti');this.doc.modal=false;ui.debugOverlayVisible=false;
+        this.doc=ui.get('graffiti');this.doc.modal=false;
         this.view=this.state.viewId?players.get(this.state.viewId):null;
         if(!this.view?.valid){this.view=players.create('Graffiti artist');this.state.viewId=this.view.id;}
         this.paused=false;input.pointerCapture=true;

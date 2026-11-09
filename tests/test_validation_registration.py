@@ -33,7 +33,11 @@ class ValidationRegistrationTests(unittest.TestCase):
                 declarations += [f'add_custom_target({target})',
                     f'set_property(TARGET {target} PROPERTY JUDAS_HAS_VALIDATION_ENTRY TRUE)']
             implementation = source / 'registration.cmake'
-            implementation.write_text(MODULE.read_text(encoding="utf-8") if module is None else module, encoding="utf-8")
+            manifest_path=source/'registration-manifest.json'
+            manifest_path.write_text(json.dumps(MANIFEST),encoding='utf-8')
+            implementation_text=MODULE.read_text(encoding="utf-8") if module is None else module
+            implementation_text=implementation_text.replace('${CMAKE_SOURCE_DIR}/tools/validation/suites.json',manifest_path.as_posix())
+            implementation.write_text(implementation_text,encoding="utf-8")
             (source / 'CMakeLists.txt').write_text('\n'.join([
                 'cmake_minimum_required(VERSION 3.20)',
                 'project(JudasGateContract NONE)',
@@ -84,8 +88,7 @@ class ValidationRegistrationTests(unittest.TestCase):
                 'judas_game_water_runtime_tests', 'judas_game_water_script_tests',
                 'judas_water_workshop_tests',
                 'judas_water_visual_tests',
-                'judas_origin_environment_tests', 'judas_liquid_surface_tests',
-                'judas_fluid_cadence_motion_tests', 'judas_material_application_tests'}
+}
             labels = ['prealpha', *entry['groups']]
             if unavailable:
                 labels.append('unavailable-in-channel')
@@ -140,7 +143,7 @@ class ValidationRegistrationTests(unittest.TestCase):
         # it unavailable, while Experimental must continue to execute it.
         alpha = self.configure(channel='Alpha')
         experimental = self.configure()
-        for name in ('fluid-cadence-motion', 'material-application'):
+        for name in ('game-water-runtime', 'water-workshop-controls'):
             with self.subTest(gate=name):
                 case = alpha['prealpha.' + name]
                 original = list(case['properties'])
@@ -172,8 +175,17 @@ class ValidationRegistrationTests(unittest.TestCase):
             'if(NOT manual_error AND manual AND NOT JUDAS_INCLUDE_KNOWN_FAILURES)',
             'if(FALSE)', 1)
         self.assertNotEqual(module, MODULE.read_text(encoding="utf-8"))
-        with self.assertRaises(AssertionError):
-            self.assert_contract(self.configure(module=module))
+        # Production has no intentionally failing historical cases. Exercise the
+        # generic manual-case admission rule with a scoped synthetic declaration.
+        first=MANIFEST['tests'][0]
+        previous=first.get('manual')
+        first['manual']=True
+        try:
+            with self.assertRaises(AssertionError):
+                self.assert_contract(self.configure(module=module))
+        finally:
+            if previous is None:first.pop('manual')
+            else:first['manual']=previous
 
 
 if __name__ == '__main__':

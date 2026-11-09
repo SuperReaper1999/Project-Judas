@@ -25,14 +25,12 @@
 #include "BoxVolume.h"
 #include "FaithfulGravity.h"
 #include "RadialTerrain.h"
-#include "ProductionFluidCoupling.h"
 #include "fluid/GameWaterRuntime.h"
 #include "RadicalGravity.h"
 #include "OrientedGravityVolume.h"
 #include "ResourceManager.h"
 #include "SceneFingerprint.h"
 #include "SphericalVolume.h"
-#include "TerrainLibrary.h"
 #include "UniformGravity.h"
 
 namespace {
@@ -58,7 +56,7 @@ RuntimeWorld::~RuntimeWorld() {
 }
 
 bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
-    if (o.vehicle || o.combustible || o.characterMotor || o.wheel || o.powertrain || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
+    if (o.combustible || o.characterMotor || o.wheel || o.powertrain || o.deformable || !o.scripts.empty()) return true;
     if (o.body && (o.body->shape == SceneShape::Compound||o.body->shape==SceneShape::Planar)) return true;
     if (o.body && o.body->motion != SceneBodyMotion::Dynamic) return true;
     return false;
@@ -68,7 +66,6 @@ bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error
     if(!TerrainV2::ValidateOwner(o,m_assets?m_assets->Assets():nullptr,error))return false;
     if(!ValidatePlanarDefinition(o,error))return false;
     const bool planar=o.body&&o.body->shape==SceneShape::Planar;
-    if(planar&&legacyGameplay){error="Native 2D bodies require project-owned controls; disable legacy-gameplay in the project settings";return false;}
     if(planar||m_hasPlanarPhysics){
         for(const auto& [id,existing]:m_scriptDefinitions){if(id==o.id||!RuntimeBody(id).IsValid())continue;
             if((planar&&HasSpatialMotionProducer(existing))||
@@ -95,9 +92,7 @@ bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error
         return true;
     }
     if(o.deformable){const auto* db=m_assets?m_assets->Assets():nullptr;auto* record=db?db->Find(o.deformable->asset):nullptr;if(!record||record->missing||record->type!=AssetType::Deformable){error="missing/wrong-type deformable asset";return false;}}
-    if(m_advancedFluids&&(o.liquidBasin||o.liquidContainer)){const auto* db=m_assets?m_assets->Assets():nullptr;for(auto id:o.liquidBasin?std::vector<std::string>{o.liquidBasin->geometry,o.liquidBasin->asset}:std::vector<std::string>{o.liquidContainer->geometry}){const auto* a=db?db->Find(id):nullptr;LiquidResource resource;if(!a||a->missing||a->type!=AssetType::Liquid){error="missing/wrong-type liquid asset";return false;}std::ifstream file(a->path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(file),{}};if(!DecodeLiquidResource(bytes,resource,error))return false;}}
 
-    if(m_advancedFluids&&o.liquidContainer){const auto* db=m_assets?m_assets->Assets():nullptr;const auto* a=db?db->Find(o.liquidContainer->geometry):nullptr;LiquidGeometry geometry;if(!a||!LoadLiquidGeometry(a->path,geometry,error))return false;double capacity=0;for(auto& t:geometry.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;if(o.liquidContainer->initialVolume>capacity){error="initial container volume exceeds physical capacity";return false;}}
     if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
     const AssetDatabase* db = m_assets->Assets();
     const auto check = [&](const AssetId& id, AssetType type) {
@@ -180,7 +175,6 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
             handle = m_physics.CreateDynamicCompoundBoxes(state.position, b.compoundBoxes, b.mass, b.friction,
                                                           b.restitution);
             break;
-        case SceneShape::Terrain:
         case SceneShape::Mesh:
         case SceneShape::Sprite:
             break;
@@ -243,7 +237,7 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
     dv.compoundBoxes = b.compoundBoxes;
     dv.scale = o.transform.scale;
     dv.initialLinearVelocity = b.initialLinearVelocity;
-    dv.pickable = b.pickable;
+
     if (!RequestVisualAssets(o, outError)) return false;
 
     EntityRecord record;
@@ -290,7 +284,6 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     else if (!ResolvePrefabs(authored, resources ? resources->Assets() : nullptr, resolved, outError) ||
         !FlattenHierarchy(resolved, scene, outError)) return false;
     bool hasPlanar=false;if(!ValidatePlanarScene(scene,hasPlanar,outError))return false;
-    if(hasPlanar&&legacyGameplay){outError="Native 2D bodies require project-owned controls; disable legacy-gameplay in the project settings";return false;}
     const ProjectClassification selected=categories?*categories:ProjectClassification{};
     if(!ValidateSceneClassification(scene,selected,outError))return false;
     const auto navConfig=navigation?*navigation:ProjectNavigation{};if(!navConfig.Validate(outError))return false;
@@ -303,7 +296,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
             const auto& c = *o.renderCamera;
             if (!ValidCameraLens(c.lens) || c.width < 1 || c.width > 4096 || c.height < 1 || c.height > 4096 ||
                 c.updateEveryFrames < 1 || !(c.verticalFovDegrees > 0 && c.verticalFovDegrees < 179) ||
-                !(c.nearPlane > 0 && c.farPlane > c.nearPlane) || o.door || o.lightSwitch) {
+                !(c.nearPlane > 0 && c.farPlane > c.nearPlane) ) {
                 outError = "invalid render-camera configuration"; return false;
             }
         }
@@ -357,11 +350,8 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     {std::string terrainSources;if(!TerrainV2::SourceFingerprint(scene,resources?resources->Assets():nullptr,terrainSources,outError))return false;if(!terrainSources.empty())fingerprint=SceneFingerprintSha256(fingerprint+terrainSources);}
     if(resources&&resources->Assets()){std::string navBytes="Judas.NavSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.navigationSurface){has=true;auto* asset=resources->Assets()->Find(o.navigationSurface->asset);if(asset){std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();navBytes+=asset->id+SceneFingerprintSha256(contents.str());}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+navBytes);}
     if(resources&&resources->Assets()){bool localized=std::any_of(resources->Assets()->Records().begin(),resources->Assets()->Records().end(),[](const auto& p){return p.second.type==AssetType::Catalog;});if(auto control=SceneControl())localized|=!control->Localization(resources).Configuration().fonts.empty();if(localized){std::string bytes="Judas.LocalizationSources.1";for(auto& p:resources->Assets()->Records())if(p.second.type==AssetType::Catalog||p.second.type==AssetType::Font){std::ifstream f(p.second.path,std::ios::binary);if(!f){outError="cannot fingerprint localization dependency "+p.first;return false;}std::string content(std::istreambuf_iterator<char>(f),{});bytes+=p.first+SceneFingerprintSha256(content);}if(auto control=SceneControl())bytes+=control->Localization(resources).Configuration().Encode();fingerprint=SceneFingerprintSha256(fingerprint+bytes);}}
-    if(m_advancedFluids&&resources&&resources->Assets()){std::string liquidBytes="Judas.LiquidSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.liquidBasin||o.liquidContainer){has=true;std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){auto* asset=resources->Assets()->Find(id);if(!asset||asset->missing||asset->type!=AssetType::Liquid){outError="missing/wrong-type liquid asset";return false;}std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();liquidBytes+=id+SceneFingerprintSha256(contents.str());}if(o.liquidBasin&&!runtimeSnapshot){LiquidBasinData data;auto* asset=resources->Assets()->Find(o.liquidBasin->asset);if(!LoadLiquidBasin(asset->path,data,outError)||LiquidSourceFingerprint(scene,o,*resources->Assets(),outError)!=data.fingerprint){outError="stale/invalid liquid bake: "+outError;return false;}}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+liquidBytes);}
-    for(const auto& o:scene.Objects())if(!ValidateLiquidComponents(o,outError))return false;
     Destroy();
     m_restoreConstruction=runtimeSnapshot;
-    m_liquid=std::make_unique<LiquidSystem>(m_advancedFluids);
     m_categories=selected;
     m_navigation=std::make_unique<NavigationSystem>(navigation?*navigation:ProjectNavigation{});
     m_assets = resources;
@@ -399,20 +389,6 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     for(const auto& o:scene.Objects())if(o.powertrain)for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);
     for(const auto& o:scene.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
 
-    if (!(m_settings.fluidScale > 0.0f)) {
-        outError = "settings: fluid-scale must be positive";
-        Destroy();
-        return false;
-    }
-    m_fluidSettings.updateRateHz = m_settings.fluidUpdateRateHz;
-    m_fluidSettings.hydrostaticDragRate = m_settings.fluidHydrostaticDragRate;
-    m_fluidSettings.particleRadius *= m_settings.fluidScale;
-    m_fluidSettings.smoothingRadius *= m_settings.fluidScale;
-    m_fluidSettings.maxDensityCorrection *= m_settings.fluidScale;
-    if(m_advancedFluids&&std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& object){
-        return object.fluidVolume&&object.fluidVolume->backend==SceneFluidBackend::Particles;
-    }))m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
-
     if (m_settings.fidelityPolicy == SceneFidelityPolicy::Distance) {
         m_policy = std::make_unique<DistanceFidelityPolicy>(m_settings.fidelityFullRadius,
                                                             m_settings.fidelityCoarseRadius);
@@ -422,27 +398,23 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     // all — a large world does not wake everything up just to put most of
     // it back to sleep.
     FidelityPolicyContext loadContext;
-    for (const SceneObject& o : scene.Objects()) {
-        if (o.playerStart) loadContext.focus = o.transform.position;
-    }
 
     auto restoredPolicy=runtimeSnapshot?std::move(m_policy):std::unique_ptr<FidelityPolicy>{};
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.landscape||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid)||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.landscape||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||(m_advancedFluids&&o.fluidVolume)||(o.particleEmitter&&o.particleEmitter->impacts==ParticleImpactDelivery::Reliable)||!NavigationProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         // A validated cold snapshot contains scene-authored global owners too.
         // Runtime-spawn restrictions must not omit their saved state records.
-        const bool gridOwner=m_advancedFluids&&o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Grid;
+        const bool gridOwner=m_advancedFluids&&o.fluidVolume;
         if(!runtimeSnapshot&&o.scripts.empty()&&!gridOwner&&!o.landscape&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
         e.state=StateFromDefinition(o);e.slot=std::numeric_limits<std::size_t>::max();m_extraEntities.push_back(e);
     }
     if(!BuildGridWater(scene,outError)){Destroy();return false;}
     m_composed=m_sceneControl&&m_sceneControl->ComposedProject();
-    m_baselineFingerprint = legacyGameplay ? std::move(fingerprint)
-        : SceneFingerprintSha256("Judas.ScriptedRuntime.1:" + fingerprint);
+    m_baselineFingerprint = SceneFingerprintSha256("Judas.ScriptedRuntime.1:" + fingerprint);
     return true;
 }
 
@@ -469,7 +441,6 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         return false;
     };
 
-    const bool particleWater=m_advancedFluids&&(!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.fluidVolume&&o.fluidVolume->backend==SceneFluidBackend::Particles;}));
     // Geographic terrain references do not depend on authored object order.
     // Planet construction creates no collision bodies; ordinary body ordering
     // remains unchanged until explicit physical-interest preparation.
@@ -479,18 +450,16 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
             m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
     }
     for (const SceneObject& o : scene.Objects()) {
-        if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
+        if(!ValidateCollisionPlacement(o,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
         m_hasScripts|=!o.scripts.empty();
         if(o.deformable){if(o.body||o.animation||o.ragdoll||o.characterMotor||o.transform.scale!=glm::vec3(1))return fail(o,"deformable owns node motion; owner cannot have another motion producer or nonunit scale");std::string error;if(!ValidDeformableSettings(*o.deformable,error)||!ValidateVisualAssets(o,error))return fail(o,error);if(m_assets){m_assets->AddRef(o.deformable->asset);m_referencedAssets.push_back(o.deformable->asset);m_assets->RequestDeformable(o.deformable->asset);}}
-        m_hasLiquid|=m_advancedFluids&&!LiquidProperties(o).empty();
         if(o.basicWater){
             if(!ValidateBasicWater(*o.basicWater,outError))return fail(o,outError);
             if(o.transform.scale!=glm::vec3(1))return fail(o,"basic water uses explicit extents; scale must be one");
             m_basicWaterOwners.insert(o.id);
         }
         if(o.body&&m_assets){std::vector<std::string> ids;if(!o.body->collisionAsset.empty())ids.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestCollision(id,JobPriority::High);}}
-        if(m_advancedFluids&&(o.liquidBasin||o.liquidContainer)&&m_assets){std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestLiquid(id);}}
         m_hasNavigation|=o.navigationSurface.has_value()||o.navigationAgent.has_value()||o.navigationObstacle.has_value()||o.navigationLink.has_value()||o.navigationModifier.has_value();
         m_scriptDefinitions[o.id]=o;
         if(!RegisterWeather(o,outError))return fail(o,outError);
@@ -516,24 +485,6 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
                     case SceneShape::Sphere:
                         bodyHandle = m_physics.CreateStaticSphere(position, b.radius, b.friction, b.restitution);
                         break;
-                    case SceneShape::Terrain: {
-                        std::shared_ptr<const RadialTerrain> surface = CreateTerrainSurface(b.terrainSurface);
-                        if (!surface) return fail(o, "unknown terrain surface '" + b.terrainSurface + "'");
-                        bodyHandle = m_physics.CreateStaticTerrain(position, rotation, surface, b.friction, b.restitution);
-                        Terrain terrain;
-                        terrain.id = o.id;
-                        terrain.handle = bodyHandle;
-                        terrain.surface = surface;
-                        terrain.identifier = b.terrainSurface;
-                        terrain.position = position;
-                        terrain.rotation = rotation;
-                        if (o.render) {
-                            terrain.color = o.render->color;
-                            if (m_assets) terrain.mesh = m_assets->GetTerrainMesh(b.terrainSurface, *surface);
-                        }
-                        m_terrains.push_back(terrain);
-                        break;
-                    }
                     case SceneShape::Planar:
                     case SceneShape::Compound:
                     case SceneShape::ConvexHull:
@@ -545,7 +496,7 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
                     case SceneShape::Sprite:
                         return fail(o, "a body cannot use the mesh shape");
                 }
-                if (b.shape != SceneShape::Terrain) {
+                {
                     StaticBody sb;
                     sb.id = o.id;
                     sb.handle = bodyHandle;
@@ -557,7 +508,6 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
                     m_staticBodies.push_back(sb);
                 }
             } else {
-                if (b.shape == SceneShape::Terrain) return fail(o, "terrain bodies must be static");
                 if (b.shape == SceneShape::Mesh) return fail(o, "a body cannot use the mesh shape");
                 isDynamic = true;
                 const EntityPhysicalState state = StateFromDefinition(o);
@@ -574,7 +524,7 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
                 if (!AppendEntitySlot(o, /*authored=*/authored, state, fidelity, &entityError)) return fail(o, entityError);
                 bodyHandle = m_dynamicBodies[dynamicIndex].Handle();
             }
-        } else if (o.render && (o.render->shape == SceneShape::Compound || o.render->shape == SceneShape::Terrain)) {
+        } else if (o.render && (o.render->shape == SceneShape::Compound)) {
             return fail(o, "compound/terrain rendering needs a body");
         }
 
@@ -595,7 +545,7 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
             m_assets->AddRef(asset->id);m_referencedAssets.push_back(asset->id);m_assets->RequestNavigation(asset->id);
         }
         // --- Renderable without a dynamic body ---
-        if (o.render && !isDynamic && o.render->shape != SceneShape::Terrain && !o.door && !o.lightSwitch) {
+        if (o.render && !isDynamic) {
             StaticRenderable sr;
             sr.id = o.id;
             sr.render = *o.render;
@@ -671,40 +621,6 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
             m_staticLights.push_back(light);
         }
 
-        // --- Door / switch ---
-        if (o.door) {
-            if (!o.render) return fail(o, "door needs a render component");
-            m_doors.emplace_back(m_physics, position, rotation, o.render->halfExtents, o.door->localHingeAxis,
-                                 glm::radians(o.door->openAngleDegrees),
-                                 glm::radians(o.door->angularSpeedDegreesPerSecond), o.render->color);
-            const auto handle=m_doors.back().Handle();
-            m_physics.SetCollisionFilter(handle,o.door->collisionLayer,o.door->collisionMask);
-            m_physics.SetBodyTags(handle,o.tags);m_entityCategories[o.id].body=handle;
-            m_doorIds.push_back(o.id);
-        }
-        if (o.lightSwitch) {
-            if (!o.render) return fail(o, "light switch needs a render component");
-            const SceneLightSwitchComponent& s = *o.lightSwitch;
-            m_lightSwitches.emplace_back(position, rotation, o.render->halfExtents, s.localHingeAxis,
-                                         glm::radians(s.toggleAngleDegrees),
-                                         glm::radians(s.angularSpeedDegreesPerSecond), o.render->color,
-                                         position + rotation * s.lampLocalOffset, s.lampColor, s.lampRange);
-            m_lightSwitchIds.push_back(o.id);
-        }
-
-        // --- Vehicle ---
-        if (o.vehicle) {
-            if (!isDynamic || o.body->shape != SceneShape::Box) return fail(o, "vehicle needs a dynamic box body");
-            if (m_vehicle) return fail(o, "M28 supports one vehicle per scene");
-            Vehicle v;
-            v.id = o.id;
-            v.handle = bodyHandle;
-            v.dynamicIndex = dynamicIndex;
-            v.component = *o.vehicle;
-            v.halfExtents = o.body->halfExtents;
-            m_vehicle = v;
-        }
-
         // --- Celestial ---
         if (o.celestial) {
             if (!o.body) return fail(o, "celestial needs a body");
@@ -732,10 +648,7 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
             parameters.oxidizerMassFraction = a.oxidizerMassFraction;
             parameters.referenceTemperatureKelvin = a.referenceTemperatureKelvin;
             const RadialTerrain* solid = nullptr;
-            if (!m_terrains.empty() && m_terrains.back().id == o.id) {
-                m_atmosphereTerrain = m_terrains.back().surface;
-                solid = m_atmosphereTerrain.get();
-            }
+
             m_atmosphere.emplace(Atmosphere{o.id, o.name, AtmosphereField(parameters, solid),
                                             ReferenceFrame{position, rotation, glm::vec3(0.0f), glm::vec3(0.0f)},
                                             o.celestial->gravitationalParameter});
@@ -753,25 +666,7 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
             m_combustibles.push_back(c);
         }
 
-        // --- Fluid volume ---
-        if (m_advancedFluids && o.fluidVolume && o.fluidVolume->backend==SceneFluidBackend::Particles) {
-            FluidVolume fv;
-            fv.id = o.id;
-            fv.component = *o.fluidVolume;
-            fv.position = position;
-            fv.rotation = rotation;
-            const float s = o.fluidVolume->spacing;
-            fv.particleMass = m_fluidSettings.restDensity * s * s * s;
-            m_fluidVolumes.push_back(fv);
-        }
 
-        // --- Player start ---
-        if (o.playerStart) {
-            m_physics.SetPlayerCollisionFilter(o.playerStart->collisionLayer,o.playerStart->collisionMask);
-            if (m_playerStart) return fail(o, "more than one player-start");
-            m_playerStart = PlayerStart{position, o.playerStart->yawDegrees, o.playerStart->view,
-                o.playerStart->density, o.playerStart->fluidDrag, o.playerStart->swimAcceleration};
-        }
     }
 
     // Graph registration can refer to bodies that already existed in a
@@ -807,11 +702,8 @@ if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o
     }
 
     RebuildCelestialParticipants();
-    if (m_assets && !m_fluidVolumes.empty() && m_assets->GetRenderer() && !m_fluidMesh.IsValid()) {
-        m_fluidMesh = m_assets->GetRenderer()->CreateMesh(MeshData{});
-    }
+
     for(const auto& o:scene.Objects())ReconcileRenderResources(o.id);
-    if (authored) PopulateFluid();
     return true;
 }
 
@@ -821,77 +713,18 @@ void RuntimeWorld::RebuildCelestialParticipants() {
     // Coarse celestial entities contribute through CoarseSimulation and
     // Simulation's coarse-to-live pass instead.
     m_celestialParticipants.clear();
-    m_operatorThrusts.clear();
-    bool anyCelestial = false;
     for (const EntityRecord& e : m_entities) {
         if (e.lifecycle == EntityLifecycle::Destroyed || !e.definition.celestial) continue;
-        anyCelestial = true;
         if (e.fidelity == SimulationFidelity::Full) {
             const BodyHandle handle = m_dynamicBodies[e.slot].Handle();
             m_celestialParticipants.push_back(handle);
             // Operator forces belong to the entity definition, but their
             // physics handle belongs to this live incarnation. Rebuild both
             // inventories after creation, destruction or fidelity transitions.
-            if (e.definition.celestial->operatorThrustForce > 0.0f)
-                m_operatorThrusts.push_back({handle, e.definition.celestial->operatorThrustForce});
         }
     }
-    if (m_vehicle && m_vehicle->component.gravity == SceneVehicleGravity::Local && anyCelestial) {
-        // A vehicle may also explicitly carry the celestial component. It is
-        // still one physical participant, not a second copy of every pair.
-        const auto present = std::find_if(m_celestialParticipants.begin(), m_celestialParticipants.end(),
-            [&](BodyHandle handle) { return handle.id == m_vehicle->handle.id; });
-        if (present == m_celestialParticipants.end()) m_celestialParticipants.push_back(m_vehicle->handle);
-    }
+
     m_celestial = std::make_unique<CelestialGravity>(m_celestialParticipants);
-}
-
-std::vector<BodyHandle> RuntimeWorld::PickableBodies() const {
-    std::vector<BodyHandle> handles;
-    for (const EntityRecord& e : m_entities) {
-        if (e.lifecycle == EntityLifecycle::Destroyed || e.fidelity != SimulationFidelity::Full) continue;
-        if (e.definition.body && e.definition.body->pickable) handles.push_back(m_dynamicBodies[e.slot].Handle());
-    }
-    return handles;
-}
-
-void RuntimeWorld::PopulateFluid() {
-    if(!m_advancedFluids || !m_fluid)return;
-    if (!m_fluidVolumes.empty()) m_fluidCoupling = std::make_unique<ProductionFluidCoupling>();
-    else m_fluidCoupling.reset();
-    m_fluid->Clear();
-    m_emittedParticles = 0;
-    for (const FluidVolume& fv : m_fluidVolumes) {
-        const SceneFluidVolumeComponent& c = fv.component;
-        const float s = c.spacing;
-        const float x0 = -0.5f * static_cast<float>(c.countX - 1);
-        const float z0 = -0.5f * static_cast<float>(c.countZ - 1);
-        for (int y = 0; y < c.countY; ++y) {
-            for (int z = 0; z < c.countZ; ++z) {
-                for (int x = 0; x < c.countX; ++x) {
-                    const glm::vec3 local((x0 + static_cast<float>(x)) * s, static_cast<float>(y) * s,
-                                          (z0 + static_cast<float>(z)) * s);
-                    m_fluid->AddParticle(fv.position + fv.rotation * local, glm::vec3(0.0f), fv.particleMass);
-                }
-            }
-        }
-    }
-}
-
-bool RuntimeWorld::EmitFluidParticle() {
-    for (const FluidVolume& fv : m_fluidVolumes) {
-        const SceneFluidVolumeComponent& c = fv.component;
-        if (!c.emitter) continue;
-        if (static_cast<int>(m_fluid->Particles().size()) >= c.maxParticles) continue;
-        const int column = static_cast<int>(m_emittedParticles % 9);
-        const glm::vec3 spread(static_cast<float>(column % 3 - 1) * 0.3f, 0.0f,
-                               static_cast<float>(column / 3 - 1) * 0.3f);
-        m_fluid->AddParticle(fv.position + fv.rotation * (c.emitterLocalOffset + spread), glm::vec3(0.0f),
-                             fv.particleMass);
-        ++m_emittedParticles;
-        return true;
-    }
-    return false;
 }
 
 void RuntimeWorld::RestoreAuthoredState() {
@@ -961,8 +794,6 @@ void RuntimeWorld::RestoreAuthoredState() {
     ++m_entityVersion;
     RebuildCelestialParticipants();
     m_combustion.Reset();
-    m_liquid=std::make_unique<LiquidSystem>(m_advancedFluids);
-    PopulateFluid();
     if(m_gridWater){Scene reset;for(const auto& object:ScriptObjects())reset.InsertObject(object);
         std::string error;if(!BuildGridWater(reset,error))throw std::runtime_error(error);}
     // Weather is reconstructed after authored owner poses and hierarchy have
@@ -1148,9 +979,9 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
         return false;
     }
     const bool ownedComponent = e->slot == std::numeric_limits<std::size_t>::max() &&
-        (e->definition.door || e->definition.lightSwitch || e->definition.gravity || e->definition.atmosphere ||
-         e->definition.fluidVolume || e->definition.playerStart || e->definition.audioListener);
-    if (e->definition.vehicle || e->definition.combustible || ownedComponent) {
+        (e->definition.gravity || e->definition.atmosphere ||
+         e->definition.fluidVolume || e->definition.audioListener);
+    if (e->definition.combustible || ownedComponent) {
         error = "entity " + std::to_string(id) + " (" + e->name + ") cannot be destroyed at runtime";
         return false;
     }
@@ -1166,7 +997,6 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);
-    m_liquid->Remove(m_liquid->Handle(id));
     LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);m_balances.erase(id);
     EntityRecord* e = FindEntity(id);
     if (e->lifecycle == EntityLifecycle::Destroyed) return true;
@@ -1212,7 +1042,7 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     const auto singleLine = [](const std::string& value) {
         return value.find_first_of("\r\n") == std::string::npos && value.find('\0') == std::string::npos;
     };
-    if (!singleLine(definition.name) || (definition.body && !singleLine(definition.body->terrainSurface)) ||
+    if (!singleLine(definition.name) ||
         (definition.render && (!singleLine(definition.render->meshAsset) || !singleLine(definition.render->textureAsset)))) {
         error = "runtime entity strings must be single-line and contain no NUL bytes";
         return false;
@@ -1240,9 +1070,9 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     validation.InsertObject(copy);
     std::string fingerprint;
     if (!ComputeSceneFingerprint(validation, fingerprint, error)) return false;
-    if (definition.vehicle || definition.combustible || definition.atmosphere || definition.fluidVolume ||
-        definition.audioListener || definition.playerStart || definition.door || definition.lightSwitch || definition.gravity ||
-        (definition.body && (definition.body->shape==SceneShape::Terrain || definition.body->shape==SceneShape::Mesh))) {
+    if (definition.combustible || definition.atmosphere || definition.fluidVolume ||
+        definition.audioListener || definition.gravity ||
+        (definition.body && (definition.body->shape==SceneShape::Mesh))) {
         error="runtime creation supports prop bodies/render/light/audio-emitter/render-camera/celestial components; scene-global and gameplay ownership components remain scene-authored";
         return false;
     }
@@ -1264,7 +1094,7 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     for (const auto& box : b.compoundBoxes) {
         if (box.type==ShapeType::Box&&!positive(box.halfExtents)) { error = "compound half-extents must be positive"; return false; }
     }
-    if (definition.render && (definition.render->shape == SceneShape::Terrain ||
+    if (definition.render && (
         (definition.render->shape == SceneShape::Compound && b.shape != SceneShape::Compound))) {
         error = "render geometry is incompatible with the runtime body";
         return false;
@@ -1274,7 +1104,7 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
 
 bool RuntimeWorld::ValidateEntityCreation(const SceneObject& definition, std::string& error) const {
     if (!m_built) { error = "no world"; return false; }
-    if(!ValidateCollisionPlacement(definition,error)||!ValidateCollisionFluid(definition,!m_fluidVolumes.empty(),error))return false;
+    if(!ValidateCollisionPlacement(definition,error))return false;
     if(definition.ui&&definition.ui->enabled){
         const auto* db=m_assets?m_assets->Assets():nullptr;const auto* asset=db?db->Find(definition.ui->asset):nullptr;UIDocument doc;
         if(!asset||asset->missing||asset->type!=AssetType::UI){error="missing UI document asset";return false;}
@@ -1372,7 +1202,7 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
     // ordinary data; runtime state and saved creations never depend on a live source.
     for(auto& o:flat.Objects()){
         o.prefabAsset.clear();o.prefabRoot=o.prefabSource=0;o.prefabIds.clear();o.prefabOverrides.clear();
-        if(!ValidateCollisionPlacement(o,error)||!ValidateCollisionFluid(o,!m_fluidVolumes.empty(),error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
+        if(!ValidateCollisionPlacement(o,error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
     }
     for(const auto& o:instance.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
     for(const auto& o:instance.Objects())if(o.powertrain)for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);
@@ -1491,19 +1321,9 @@ RuntimeWorld::LifecycleCounts RuntimeWorld::CountLifecycle() const {
     return counts;
 }
 
-Door* RuntimeWorld::FindDoor(SceneObjectId id) {
-    for (std::size_t i = 0; i < m_doorIds.size(); ++i) {
-        if (m_doorIds[i] == id) return &m_doors[i];
-    }
-    return nullptr;
-}
 
-LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
-    for (std::size_t i = 0; i < m_lightSwitchIds.size(); ++i) {
-        if (m_lightSwitchIds[i] == id) return &m_lightSwitches[i];
-    }
-    return nullptr;
-}
+
+
 
 void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
@@ -1516,7 +1336,7 @@ void RuntimeWorld::Destroy() {
     ClearCharacters();
     m_spriteAnimationOwners.clear();m_spriteSteps.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
-    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
+    m_runtimeTerrain.reset();m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
     EndAudio();
     ShutdownParticleEmitter(0);
     m_particleEmitters.clear();
@@ -1529,18 +1349,10 @@ void RuntimeWorld::Destroy() {
     // body/joint. Individual DestroyBody calls would repeatedly wake the same
     // dense contact island just before deleting it. Ordinary in-game removal
     // still uses DestroyBody and keeps its normal wake/invalidation semantics.
-    if (m_assets && m_assets->GetRenderer() && m_fluidMesh.IsValid()) {
-        m_assets->GetRenderer()->DestroyMesh(m_fluidMesh);
-    }
-    m_fluidMesh = MeshHandle{};
+
     m_gridWater.reset();
-    m_fluidSurfaceRevision = ~std::uint64_t{0};
     m_physics.Shutdown();
 
-    m_doors.clear();
-    m_doorIds.clear();
-    m_lightSwitches.clear();
-    m_lightSwitchIds.clear();
     m_dynamicBodies.clear();
     m_dynamicVisuals.clear();
     m_entities.clear();
@@ -1551,29 +1363,18 @@ void RuntimeWorld::Destroy() {
     m_transitionsThisStep = 0;
     m_simulationTime = 0.0;
     m_staticBodies.clear();
-    m_terrains.clear();
     m_staticRenderables.clear();
     m_staticLights.clear();
     m_gravityMap = GravityContextMap();
     m_gravityFields.clear();
     m_gravityVolumes.clear();
     m_gravityRegions.clear();
-    m_vehicle.reset();
     m_celestial.reset();
     m_celestialParticipants.clear();
     m_pointMassSources.clear();
-    m_operatorThrusts.clear();
     m_atmosphere.reset();
-    m_atmosphereTerrain.reset();
     m_combustion.Clear();
     m_combustibles.clear();
-    m_fluidCoupling.reset();
-    m_fluid.reset();
-    m_fluidSettings = FluidSettings{};
-    m_fluidVolumes.clear();
-    m_emittedParticles = 0;
-    m_playerStart.reset();
-    m_pickableBodies.clear();
     if (m_assets) {
         for (const AssetId& id : m_referencedAssets) m_assets->ReleaseRef(id);
     }

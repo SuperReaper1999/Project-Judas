@@ -110,4 +110,4 @@ samples and geometry/count acceptance conditions remain required.
 See [machine-readable qualification](evidence/v2-upload-hitch/qualification.json).
 Complete rejected prototypes, binaries, trace and logs are retained in
 `.cache/v2-upload-hitch/`. The preceding
-[fluid comparison](FLUID_RENDER_V2_COMPARISON.md) remains frozen before-fix evidence.
+[fluid comparison](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_RENDER_V2_COMPARISON.md) remains frozen before-fix evidence.

@@ -74,7 +74,7 @@ int main() {
               "cancelled preparation preserves a previous complete product");
         ResourceManager resources(nullptr, &assets, &jobs);
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         Check(world.Build(Scene{}, &resources, error), "build empty authoritative world");
         auto object = [&] {
             SceneObject owner;
@@ -150,7 +150,7 @@ int main() {
               "save actual regional source");
         for (bool pendingBudget : {true, false}) {
             RuntimeWorld budgetWorld;
-            budgetWorld.legacyGameplay = false;
+
             Check(budgetWorld.Build(Scene{}, &resources, error), "build budget world");
             WorldManifest manifest;
             manifest.pendingBytes = pendingBudget ? 4096 : 16 * 1024 * 1024;

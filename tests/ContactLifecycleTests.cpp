@@ -1,3 +1,4 @@
+#include "WorldPersistence.h"
 // FTFT4A: first-step contact through ordinary scene/lifecycle/persistence paths.
 // Original FTFT4A cases have no temporal-impact acceptance: all fixture surfaces are independently shown
 // to touch exactly (canonical axes) or overlap slightly (represented oblique
@@ -11,16 +12,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "ContactSolver.h"
 #include "Contacts.h"
-#include "GameSession.h"
 #include "RigidBody.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "Simulation.h"
 #include "SimulationTiming.h"
 #include "Window.h"
-#include "WorldState.h"
 
 namespace {
 int g_checks = 0;
@@ -59,14 +57,14 @@ struct Fixture {
 };
 struct World {
     RuntimeWorld world;
-    GameSession session;
+
     Window window;
     bool Begin(const Scene& scene, std::string& error) {
         window.SetTestInputMode(true);
-        return world.Build(scene, nullptr, error) && session.Begin(world, error);
+        return world.Build(scene, nullptr, error) && world.IsBuilt();
     }
     void Step() {
-        StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
+        StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep);
         ++g_steps;
     }
 };
@@ -112,7 +110,7 @@ Scene MakeScene(const Fixture& f, bool sphere, const glm::vec3& offset, EntityId
     body.body->managed=false;
     SceneObject& player=scene.CreateObject("player start");
     player.transform.position=offset+glm::vec3(2000.0f);
-    player.playerStart=ScenePlayerStartComponent{};
+
     return scene;
 }
 
@@ -167,13 +165,12 @@ void InspectStep(World& w, EntityId id, const char* phase) {
     const float speed=glm::length(after.linearVelocity);
     const float spin=glm::length(after.angularVelocity);
     const float displacement=glm::length(after.position-before.position);
-    const WorldState delta=CaptureWorldState(w.world);
     std::printf("  STEP %s contacts=%zu position=(%.9g,%.9g,%.9g) velocity=(%.9g,%.9g,%.9g) "
-                "angular=(%.9g,%.9g,%.9g) speed=%.9g displacement=%.9g delta_entities=%zu\n",
+                "angular=(%.9g,%.9g,%.9g) speed=%.9g displacement=%.9g\n",
                 phase,contacts,after.position.x,after.position.y,after.position.z,
                 after.linearVelocity.x,after.linearVelocity.y,after.linearVelocity.z,
                 after.angularVelocity.x,after.angularVelocity.y,after.angularVelocity.z,
-                speed,displacement,delta.entities.size());
+                speed,displacement);
     Check(contacts>0,"supported surface has first-step contact");
     // Fixed before executing the new test: much stricter than persistence's
     // existing 0.02 m/s / 0.01 m policy, and far below the 0.1635 m/s gravity
@@ -182,7 +179,6 @@ void InspectStep(World& w, EntityId id, const char* phase) {
     Check(std::isfinite(speed) && speed<1.0e-4f,"no first-step gravity velocity spike (<1e-4 m/s)");
     Check(std::isfinite(spin) && spin<1.0e-4f,"no artificial first-step angular velocity (<1e-4 rad/s)");
     Check(std::isfinite(displacement) && displacement<1.0e-5f,"no first-step gravity position spike (<1e-5 m)");
-    Check(delta.entities.empty(),"unchanged supported entity produces no moved delta under unmodified persistence policy");
 }
 
 // Public convenience queries omit sphere orientation because sphere geometry
@@ -190,49 +186,6 @@ void InspectStep(World& w, EntityId id, const char* phase) {
 // correctly when passed to the ordinary solver with a rotated rigid body.
 // Exact touching and central normal impulses isolate this API/frame contract;
 // these are not separated-impact timing tests or a second contact mechanism.
-void TestSphereConvenience(const char* name, const glm::quat& rotation, bool spherePair) {
-    RigidBody a, b;
-    a.position=glm::vec3(0,1,0);
-    a.orientation=rotation;
-    a.inverseMass=0.5f; // 2 kg
-    a.inverseInertiaLocal=SolidSphereInverseInertia(2.0f,0.5f);
-    a.linearVelocity=glm::vec3(0,-1,0);
-    b.position=glm::vec3(0);
-    b.orientation=spherePair ? glm::conjugate(rotation) : glm::quat(1,0,0,0);
-    if (spherePair) {
-        b.inverseMass=1.0f/3.0f; // 3 kg
-        b.inverseInertiaLocal=SolidSphereInverseInertia(3.0f,0.5f);
-    }
-    const Contact contact=spherePair ? SphereVsSphere(a.position,0.5f,b.position,0.5f) :
-        SphereVsBox(a.position,0.5f,b.position,b.orientation,glm::vec3(5.0f,0.5f,5.0f));
-    Check(contact.hit,"sphere convenience query retains exact touching");
-    Check(contact.signedSeparation==0.0,"sphere convenience query reports exact zero separation");
-    ContactSolver solver;
-    solver.AddContact(a,b,contact,0.0f,0.0f); // no tangential impulse or restitution
-    solver.Prepare(SimulationTiming::kFixedTimestep);
-    solver.SolveVelocities();
-    // Independent 1-D mechanics: J = 1 / (1/mA + 1/mB).
-    // Static floor: J=2, vA'=0. Two spheres: J=6/5, vA'=vB'=-2/5.
-    const double expectedImpulse=spherePair ? 1.2 : 2.0;
-    const glm::vec3 expectedA(0,spherePair ? -0.4f : 0.0f,0);
-    const glm::vec3 expectedB(0,spherePair ? -0.4f : 0.0f,0);
-    const float impulse=solver.Constraints().empty() ? -1.0f : solver.Constraints().front().normalImpulse;
-    std::printf("  CONVENIENCE %s %s impulse=%.9g expected=%.17g "
-                "velocityA=(%.9g,%.9g,%.9g) velocityB=(%.9g,%.9g,%.9g) "
-                "angularA=(%.9g,%.9g,%.9g) angularB=(%.9g,%.9g,%.9g)\n",
-                name,spherePair?"sphere-sphere":"sphere-box",impulse,expectedImpulse,
-                a.linearVelocity.x,a.linearVelocity.y,a.linearVelocity.z,b.linearVelocity.x,b.linearVelocity.y,b.linearVelocity.z,
-                a.angularVelocity.x,a.angularVelocity.y,a.angularVelocity.z,b.angularVelocity.x,b.angularVelocity.y,b.angularVelocity.z);
-    Check(std::abs(double(impulse)-expectedImpulse)<1.0e-6,"central normal impulse agrees with independent two-mass mechanics");
-    Check(glm::length(a.linearVelocity-expectedA)<1.0e-6f && glm::length(b.linearVelocity-expectedB)<1.0e-6f,
-          "sphere orientation does not change central post-impact linear velocities");
-    Check(glm::length(a.angularVelocity)<1.0e-7f && glm::length(b.angularVelocity)<1.0e-7f,
-          "central normal impulse creates no angular velocity in either body");
-}
-
-// M78: completed physical observations must not be solver warm-start storage.
-// This ordinary box/floor fixture receives an actual incoming sphere TOI;
-// no controller, animation, query-generated contacts or gain retuning is used.
 struct SolvedSupport {
     PhysicsWorld physics;
     BodyHandle floor,body,ball,second;
@@ -396,19 +349,10 @@ void Run(const Fixture& f, bool sphere, const glm::vec3& offset) {
           reconstructed.rotation==retained.rotation,"reconstruction preserves exact retained pose and velocities");
     InspectStep(w,id,"reconstructed");
 
-    // Capture and reload through the real FTFT1 compatibility/atomicity path.
-    // No fabricated compatibility header or scene-name-only shortcut.
-    const WorldState captured=CaptureWorldState(w.world);
-    std::string saved;
-    Check(SaveWorldStateToString(captured,saved),"valid baseline delta serializes");
-    WorldState parsed;
-    Check(LoadWorldStateFromString(saved,parsed,error),"valid baseline delta parses: "+error);
+    std::map<std::string,SaveChunk> snapshot;Scene saved;
+    Check(WorldPersistence::Capture(w.world,snapshot,error)&&WorldPersistence::SceneFrom(snapshot,saved,error),"current snapshot captures resolved contact continuation");
     World restored;
-    if (!restored.Begin(scene,error)) { Check(false,"reload runtime begins: "+error); return; }
-    Check(parsed.compatibility.baselineFingerprint==restored.world.BaselineFingerprint(),
-          "saved delta carries the actual matching authored content fingerprint");
-    Check(ApplyWorldState(restored.world,parsed,error),"real FTFT1 preflight accepts valid baseline: "+error);
-    Check(CaptureWorldState(restored.world).entities.empty(),"reload introduces no artificial moved records");
+    Check(restored.world.Build(saved,nullptr,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored.world,error)&&WorldPersistence::Restore(restored.world,snapshot,error),"current snapshot restores real contact continuation: "+error);
     InspectStep(restored,id,"persisted-reload");
     std::printf("CASE_RESULT %s %s %s\n",f.name,sphere?"sphere":"box",g_failures==failuresBefore?"PASS":"FAIL");
 }
@@ -434,15 +378,8 @@ int main() {
             ++fixtures;
         }
     }
-    const glm::quat quarter=glm::normalize(glm::quat(1,0,0,1));
-    const glm::quat oblique=glm::normalize(glm::quat(3,1,2,-1));
-    for (bool spherePair:{false,true}) {
-        TestSphereConvenience("identity",glm::quat(1,0,0,0),spherePair);
-        TestSphereConvenience("quarter_z",quarter,spherePair);
-        TestSphereConvenience("oblique",oblique,spherePair);
-    }
     TestCompletedSupportObservations();
-    std::printf("FTFT4A contact lifecycle: %d fixtures, %d fixed steps, 6 convenience contacts, %d checks, %d failures\n",
+    std::printf("FTFT4A contact lifecycle: %d fixtures, %d fixed steps, %d checks, %d failures\n",
                 fixtures,g_steps,g_checks,g_failures);
     return g_failures==0?0:1;
 }

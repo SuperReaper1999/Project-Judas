@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
         Project project;
         check(Project::CreateNew((output / "My First Game").string(), "My First Game", project, error),
               "ordinary new project creates project/assets/scenes/save directories: " + error);
-        check(!project.Settings().legacyGameplay && !project.Settings().saveIdentity.empty(),
+        check(!project.Settings().saveIdentity.empty(),
               "modern project has explicit identity and no implicit gameplay controller");
         const auto source = Read(fs::path(__FILE__).parent_path().parent_path() / "docs/judasjs/examples/first-project.js");
         Scene starter;
@@ -80,7 +80,6 @@ int main(int argc, char** argv) {
               "saved first project reopens without private fixtures");
         ResourceManager resources(nullptr, &assets);
         RuntimeWorld world;
-        world.legacyGameplay = reopened.Settings().legacyGameplay;
         check(world.Build(loaded, &resources, error, &reopened.Settings().classification, &reopened.Settings().navigation),
               "normal runtime world builds headlessly: " + error);
         InputSystem input;

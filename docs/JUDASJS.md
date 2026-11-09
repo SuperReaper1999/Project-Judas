@@ -5,7 +5,7 @@
 [Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
 
 Judas provides engine primitives. Project JavaScript supplies game behaviour.
-[Source version](../engine-version.json) · [Current patch notes](ALPHA_V1_0_4_NOTES.md)
+[Source version](../engine-version.json) · [Current patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_4_NOTES.md)
 
 This reference describes the current repository implementation, including the public
 module developed through M100 and the preceding accepted Pre-Alpha corrections. It is not an
@@ -43,7 +43,7 @@ Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor t
 | Powertrain sources, shafts, gears, clutches, differentials | [Powertrains](judasjs/powertrains.md) |
 | Fracture, physical parts, interface failure, plastic observations | [Fracture](judasjs/fracture.md) |
 | Deformable, cloth/solid forces, attachments, current-surface picking | [Deformables](judasjs/deformables.md) |
-| liquid, LiquidVolume, conserved reservoirs, dynamic surfaces | [Liquid](judasjs/liquid.md) |
+| liquid, LiquidVolume, conserved reservoirs, dynamic surfaces | [Liquid (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/judasjs/liquid.md) |
 | Terrain add/remove/smooth, asynchronous collision/navigation publication | [Runtime volumetric terrain](judasjs/terrain.md) |
 | world.origin, requestOrigin, Planet terrain, collision interest | [Planetary terrain and local origins](judasjs/planetary-terrain.md) |
 | Weather, profiles, spatial wind, transitions, storms | [Weather](judasjs/weather.md) |
@@ -84,13 +84,13 @@ Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor t
   timers or a general asynchronous callback scheduler. They are not a malicious-code
   security sandbox. The internal `__judas` dispatcher is unsupported.
 - Editor breakpoints, stepping, inspection and deliberate VM reload are described
-  in [developer tools](M94_DEVELOPER_TOOLS.md). Source edits do not trigger automatic
+  in [developer tools](SCRIPT_DEBUGGING.md). Source edits do not trigger automatic
   hot reload, and arbitrary closures/native handles are not reloadable save state.
 
 Capabilities have explicit composition limits. Origin shifting, region suspension,
 modern saves and online replication support different subsets; a method's existence
 is not proof that every component combination is supported. Consult each subsystem
-page and the [current Pre-Alpha support/issue guide](PREALPHA.md).
+page and the [current Pre-Alpha support/issue guide](CURRENT_STATUS.md).
 
 ## Authority, verification and history
 
@@ -121,10 +121,10 @@ compares a fresh actual-VM enumeration. This is not full behavioural certificati
 Milestone reports and `docs/evidence/` preserve the requirements, failures and
 acceptance scope at those checkpoints. They are historical records; use this
 reference for current scripting behaviour. M98/M99 combined human acceptance is
-[recorded separately](evidence/m99/HUMAN_VALIDATION.md). Later automated checks do
+[recorded separately (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m99/HUMAN_VALIDATION.md). Later automated checks do
 not invent human, controller, hardware or platform acceptance. Current portability
 and outstanding qualification are tracked in [building/onboarding](FIRST_PROJECT.md),
-[Windows](WINDOWS.md), [Android](ANDROID.md) and [Pre-Alpha](PREALPHA.md).
+[Windows](WINDOWS.md), [Android](ANDROID.md) and [Pre-Alpha](CURRENT_STATUS.md).
 
 ## Human developer review
 

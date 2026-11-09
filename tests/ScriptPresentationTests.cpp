@@ -2,7 +2,6 @@
 // project scripts at partial fixed-step presentation times. No solver changes.
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
-#include "GameSession.h"
 #include "Simulation.h"
 #include "Project.h"
 #include "SceneSerialization.h"
@@ -41,11 +40,11 @@ export default class {
   Check(host.Assets().Track((root/"Assets/probe.js").string(),probe,error),"probe uses normal registered JS asset");
   Scene scene;Check(LoadSceneFromFile(flight?project.Resolve("Scenes/flight.judas"):project.StartupScenePath(),scene,error),"actual project scene loads");
   scene.Find(10)->scripts.push_back({99,probe.id,true,"{}"});window.Input().SetMap(project.Settings().input,error);
-  RuntimeWorld world;world.legacyGameplay=false;GameSession game;
+  RuntimeWorld world;
   world.SetSceneControl(std::make_shared<SceneSession>(project,flight?project.Resolve("Scenes/flight.judas"):project.StartupScenePath()));
-  Check(world.Build(scene,&host.Resources(),error,&project.Settings().classification,&project.Settings().navigation)&&game.Begin(world,error),"ordinary runtime builds");if(failures){std::puts(error.c_str());return 1;}
+  Check(world.Build(scene,&host.Resources(),error,&project.Settings().classification,&project.Settings().navigation)&&world.IsBuilt(),"ordinary runtime builds");if(failures){std::puts(error.c_str());return 1;}
   auto update=[&](){world.UpdateScripts(&window.Input(),1.f/60);};
-  auto fixed=[&](){window.Input().BeginFixedStep();StepPlayedWorld(game,window,1.f/60);window.Input().BeginFrame();};
+  auto fixed=[&](){window.Input().BeginFixedStep();StepPlayedWorld(world,window,1.f/60);window.Input().BeginFrame();};
   auto probeState=[&](){for(const auto& s:world.Scripts()->Capture())if(s.entity==10&&s.slot==99)return s.json;return std::string{};};
   update();host.Resources().WaitForAll();update();
   if(flight){auto t=world.RuntimeDefinition(70)->transform;t.position={0,1.8f,3};world.SetRuntimeTransform(70,t);window.Input().SetPhysical("key:F",1);update();window.Input().SetPhysical("key:F",0);window.Input().BeginFrame();
@@ -78,7 +77,7 @@ export default class {
   update();Check(Number(probeState(),"outside")<1e-6,"presented getter outside presentation is authoritative");
   if(!flight&&!baseline){auto beforeRotation=world.view->pose.rotation;window.Input().AddDelta("mouse:dx",18);update();world.PresentationScripts(&window.Input(),1.f/144,.75f);
    Check(std::abs(glm::dot(beforeRotation,world.view->pose.rotation))<.99999f,"mouse look updates even without a new physics step");}
-  Check(world.Scripts()->Diagnostics().empty(),"project and probe callbacks are fault-free");window.Input().SetPhysical("key:W",0);window.Input().BeginFrame();game.End();world.Destroy();world.PresentationScripts(&window.Input(),0,.5f);
+  Check(world.Scripts()->Diagnostics().empty(),"project and probe callbacks are fault-free");window.Input().SetPhysical("key:W",0);window.Input().BeginFrame();world.Destroy();world.PresentationScripts(&window.Input(),0,.5f);
   Check(!world.Scripts()&&!world.view,"Stop removes presentation callbacks and view state");
  }
  host.Shutdown();std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;

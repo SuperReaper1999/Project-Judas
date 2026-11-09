@@ -72,9 +72,6 @@ void DrawSceneSettingsPanel(EditorDocument &doc, EditorPanelState &state) {
     ImGui::TextDisabled(
         "Background is independent of lighting. Colour factors are linear; UI ignores world exposure.");
     if (!state.project || state.project->Settings().advancedFluidDynamics) {
-        DragScalar(doc, "Fluid scale", s.fluidScale, 0.1f, 0.01f, 1000.0f);
-        DragScalar(doc, "Fluid updates (Hz)", s.fluidUpdateRateHz, 1.0f, 0.1f, 1000.0f);
-        DragScalar(doc, "Fluid drag (1/s)", s.fluidHydrostaticDragRate, 0.05f, 0.0f, 1000.0f);
     } else
         ImGui::TextDisabled("Advanced fluid controls disabled in Project Settings > Experimental.");
     static const char *const kPolicyNames[] = {"none (everything Full)", "distance"};

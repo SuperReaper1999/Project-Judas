@@ -74,7 +74,7 @@ export default class {
  settings.shafts={rotor,axle};PowertrainSource source;source.name="engine";source.shaft=0;source.maxTorque=200;settings.sources={source};
  PowertrainLink gear;gear.name="gear";gear.input=0;gear.output=1;gear.ratio=.5;settings.links={gear};settings.brakes={{"axleBrake",1,200}};
  owner.scripts={{1,script.id,true,"{}"}};
- ResourceManager resources(nullptr,&db);RuntimeWorld world;world.legacyGameplay=false;
+ ResourceManager resources(nullptr,&db);RuntimeWorld world;
  Check(world.Build(scene,&resources,error),"normal runtime builds powertrain and wheel entities");
  InputSystem input;world.UpdateScripts(&input,1.f/60);Step(world,input);
  auto* power=world.RuntimePowertrain(4);
@@ -87,13 +87,13 @@ export default class {
  fixedUpdate(){if(!this.power.valid){let read=false,write=false;try{this.power.state;}catch(e){read=e instanceof ReferenceError;}try{this.power.set({});}catch(e){write=e instanceof ReferenceError;}if(!read||!write)throw Error('stale handle');this.state.stale=true;}}
 })JS";
  AssetRecord lifetime;Check(db.Track((root/"Assets/lifetime.js").string(),lifetime,error),"registered retained-handle negative probe");
- Scene lifeScene=scene;lifeScene.Find(4)->scripts.clear();lifeScene.Find(2)->scripts={{1,lifetime.id,true,"{}"}};RuntimeWorld life;life.legacyGameplay=false;
+ Scene lifeScene=scene;lifeScene.Find(4)->scripts.clear();lifeScene.Find(2)->scripts={{1,lifetime.id,true,"{}"}};RuntimeWorld life;
  Check(life.Build(lifeScene,&resources,error),"independent mechanical lifetime world");Step(life,input);
  Check(life.DestroyEntity(4),"normal destruction removes powertrain owner");Step(life,input);
  Check(life.Scripts()->Diagnostics().empty()&&State(life).value("stale",false),"stale public component read and write throw ReferenceError");life.Destroy();
  fs::copy_file("docs/judasjs/examples/powertrain.js",root/"Assets/example.js",fs::copy_options::overwrite_existing);AssetRecord example;
  Check(db.Track((root/"Assets/example.js").string(),example,error),"exact documented cookbook registered");
- Scene cookbookScene=scene;cookbookScene.Find(4)->scripts={{1,example.id,true,"{}"}};cookbookScene.Find(4)->powertrain->sources[0].kind=PowertrainSourceKind::Electric;RuntimeWorld cookbook;cookbook.legacyGameplay=false;
+ Scene cookbookScene=scene;cookbookScene.Find(4)->scripts={{1,example.id,true,"{}"}};cookbookScene.Find(4)->powertrain->sources[0].kind=PowertrainSourceKind::Electric;RuntimeWorld cookbook;
  Check(cookbook.Build(cookbookScene,&resources,error),"ordinary cookbook world");InputMap map;map.Add("drive",true);map.AddBinding("drive",{"key:W"});map.Add("brake",false);map.AddBinding("brake",{"key:Space"});
  Check(input.SetMap(map,error),"project logical input map");input.SetPhysical("key:W",.5f);Step(cookbook,input);
  Check(cookbook.Scripts()->Diagnostics().empty()&&cookbook.RuntimePowertrain(4)->command.sources[0].input==.5&&cookbook.RuntimePowertrain(4)->state.sourceTorque[0]==100&&cookbook.Physics().GetLinearVelocity(cookbook.RuntimeBody(2)).z<0,"exact cookbook controls actual source and traction through logical input");
@@ -101,7 +101,7 @@ export default class {
  Check(cookbook.RuntimePowertrain(4)->command.brakes[0].engagement==1,"exact cookbook commands mechanical brake");cookbook.Destroy();
  fs::copy_file("docs/judasjs/examples/surface.js",root/"Assets/surface.js",fs::copy_options::overwrite_existing);AssetRecord enumeration;
  Check(db.Track((root/"Assets/surface.js").string(),enumeration,error),"live public API enumeration registered");Scene surfaceScene=scene;surfaceScene.Find(4)->scripts={{1,enumeration.id,true,"{}"}};
- RuntimeWorld surface;surface.legacyGameplay=false;Check(surface.Build(surfaceScene,&resources,error),"live public API enumeration world");surface.UpdateScripts(&input,1.f/60);
+ RuntimeWorld surface;Check(surface.Build(surfaceScene,&resources,error),"live public API enumeration world");surface.UpdateScripts(&input,1.f/60);
  const auto published=State(surface);std::ofstream(root/"surface.json")<<published.dump(2)<<'\n';const auto& names=published.at("surface");
  Check(surface.Scripts()->Diagnostics().empty()&&std::find(names.begin(),names.end(),"Powertrain.set")!=names.end()&&std::find(names.begin(),names.end(),"Entity.powertrain")!=names.end(),"real module exposes typed powertrain surface");
  surface.Destroy();world.Destroy();resources.Shutdown();std::printf("M82 powertrain JS %u PASS\n",checks);return 0;

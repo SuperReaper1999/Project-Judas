@@ -158,7 +158,7 @@ class PreflightTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root=Path(self.temp.name)
         self.project=self.root/'project/game.judasproj';self.project.parent.mkdir()
-        self.project.write_text('legacy-gameplay "false"\nadvanced-fluid-dynamics "false"\n')
+        self.project.write_text('advanced-fluid-dynamics "false"\n')
         self.args=compiler.parse_args(['-ExpBrowserSupport=1','--project',str(self.project),'--output',str(self.root/'web'),
            '--build',str(self.root/'cache'),'--emsdk',str(self.root/'sdk'),'--exporter',str(self.root/'exporter'),'--desktop-runtime',str(self.root/'runtime'),'--check'])
 
@@ -188,7 +188,7 @@ class PreflightTests(unittest.TestCase):
 
     def test_wrong_sdk_and_unsupported_project(self):
         self.tools();(self.root/'sdk/upstream/emscripten/emscripten-version.txt').write_text('"5.0.0"')
-        self.project.write_text('legacy-gameplay "true"\n')
+        self.project.write_text('advanced-fluid-dynamics "true"\n')
         with patch.object(compiler.shutil,'which',return_value='/tool'),patch.object(compiler,'probe',return_value={'version':'invalid'}):
             report=compiler.preflight(self.args)
         self.assertFalse(report['ready']);self.assertFalse(next(c for c in report['checks'] if c['name']=='Saved project')['ok'])

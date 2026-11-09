@@ -5,8 +5,7 @@ heightfields, local excavation, materials, collision, navigation and persistence
 Fine-grained source/collision paging and independent GPU residency are now
 implemented and automatically qualified, including the matching SDK, relocated
 exports and completed Experimental/Alpha CI. Exact scopes and exclusions are in
-the qualification record. Human terrain
-acceptance is pending. Existing project assets are not replaced automatically.
+the qualification record. Terrain V2 has passed operator hands-on review; editor performance is a future optimisation opportunity. Existing project assets are not replaced automatically.
 
 The current architecture and budgets are described in
 [Terrain V2 residency](TERRAIN_V2_RESIDENCY.md). The consolidated checkpoint,
@@ -112,10 +111,10 @@ GIS/GeoTIFF pipeline. The text-source budget remains 64 MiB.
   full-model/full-collision cook remains available for the first-slice workflow.
 
 Source commands in `judas_terrain_author` are `v2-validate SOURCE`,
-`v2-native SOURCE OUTPUT.judasmodel`, `v2-pack SOURCE OUTPUT.judasterrain`,
-`v2-cook SOURCE OUTPUT.judasmodel`, and `v2-import V1_SOURCE NEW_SOURCE`.
-Import preserves the original and rejects unsupported resampling or material
-tiling explicitly. Do not overwrite an old project to try V2.
+`v2-native SOURCE OUTPUT.judasmodel` and `v2-pack SOURCE OUTPUT.judasterrain`.
+The separate full-mesh bootstrap and V1 migration commands are retired. Native
+terrain owns live chunk rendering/collision; generated preview meshes are editor
+and resource previews, not a second terrain runtime.
 
 Additional source-generation commands:
 

@@ -7,9 +7,6 @@ settings
   ambient 0.16 0.17 0.19
   sun-enabled false
   background-color 0.047 0.071 0.082
-  fluid-scale 1
-  fluid-update-rate-hz 30
-  fluid-hydrostatic-drag-rate 2
   fidelity-policy none
   next-id 1000
 end
@@ -324,15 +321,12 @@ object 220 "Stone garden wall"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.4,-1.55],[0.4,-1.55],[0.4,1.55],[-0.4,1.55]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 221 "Watch-post barricade"
@@ -353,15 +347,12 @@ object 221 "Watch-post barricade"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-2.25,-0.25],[2.25,-0.25],[2.25,0.25],[-2.25,0.25]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 301 "Mara - needs-based citizen"
@@ -382,15 +373,12 @@ object 301 "Mara - needs-based citizen"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.23,-0.23],[0.23,-0.23],[0.23,0.23],[-0.23,0.23]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 302 "Eli - damage-driven guard"
@@ -411,15 +399,12 @@ object 302 "Eli - damage-driven guard"
   body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0,\"lockRotation\":true,\"vertices\":[[-0.23,-0.23],[0.23,-0.23],[0.23,0.23],[-0.23,0.23]]}"
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
-  body.terrain ""
   body.mass 5
   body.friction 0
   body.restitution 0
   body.initial-velocity 0 0 0
-  body.pickable false
   body.managed false
   body.compound-count 0
-  body.fluid-cavity-count 0
 end
 
 object 400 "Garden tree"

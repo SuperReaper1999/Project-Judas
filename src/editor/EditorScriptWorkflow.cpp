@@ -161,7 +161,6 @@ SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument& doc, Project& projec
     try {
     if(doc.EditInProgress()){error="Finish the current inspector edit before creating a player.";return 0;}
     if(!project.IsLoaded()){error="Open or create a project before adding a player.";return 0;}
-    if(project.Settings().legacyGameplay){error="Disable legacy gameplay in Project Settings before adding a script-owned player.";return 0;}
     if(parent&&!doc.GetScene().Find(parent)){error="The chosen parent no longer exists.";return 0;}
     for(const auto* name:{"move_x","move_y","look_x","look_y","jump","pause","view_toggle"}){
         const auto* entry=project.Settings().input.Find(name);

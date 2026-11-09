@@ -24,9 +24,6 @@
         0.34,
         0.39
       ],
-      "fluid-scale": 1,
-      "fluid-update-rate-hz": 30,
-      "fluid-hydrostatic-drag-rate": 2,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"
@@ -156,7 +153,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -168,14 +164,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -229,7 +223,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -241,14 +234,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -302,7 +293,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -314,14 +304,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -375,7 +363,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -387,14 +374,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -448,7 +433,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -460,14 +444,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -981,7 +963,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -993,14 +974,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1100,7 +1079,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1112,14 +1090,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1173,7 +1149,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1185,14 +1160,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1292,7 +1265,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1304,14 +1276,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1365,7 +1335,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1377,14 +1346,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1484,7 +1451,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1496,14 +1462,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1557,7 +1521,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1569,14 +1532,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1676,7 +1637,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1688,14 +1648,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1881,7 +1839,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1893,14 +1850,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -1954,7 +1909,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -1966,14 +1920,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2027,7 +1979,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2039,14 +1990,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2100,7 +2049,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2112,14 +2060,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2173,7 +2119,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2185,14 +2130,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2246,7 +2189,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2258,14 +2200,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2319,7 +2259,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2331,14 +2270,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2392,7 +2329,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2404,14 +2340,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2465,7 +2399,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2477,14 +2410,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2538,7 +2469,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2550,14 +2480,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2611,7 +2539,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2623,14 +2550,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {
@@ -2684,7 +2609,6 @@
           "body.mass": 6,
           "body.friction": 0.65,
           "body.restitution": 0.05,
-          "body.pickable": false,
           "body.managed": false,
           "render.radius": 0.5,
           "render.secondary-color": [
@@ -2696,14 +2620,12 @@
           "render.mesh-asset": "",
           "render.texture-asset": "",
           "body.radius": 0.5,
-          "body.terrain": "",
           "body.initial-velocity": [
             0,
             0,
             0
           ],
-          "body.compound-count": 0,
-          "body.fluid-cavity-count": 0
+          "body.compound-count": 0
         }
       },
       {

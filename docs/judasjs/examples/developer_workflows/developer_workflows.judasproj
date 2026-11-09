@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Developer Workflows",
-    "legacyGameplay": false,
     "saveIdentity": "ff4776c876172dd33613f22309d853f05d6f6d039a81158fe7555beca3ad7df1",
     "iconAsset": "",
     "worldManifest": "68543e4d3ced9f926db7e54dc40ea1ae",

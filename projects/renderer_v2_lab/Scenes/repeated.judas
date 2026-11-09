@@ -26,7 +26,6 @@
       ],
       "linear-rendering": true,
       "next-id": 50000,
-      "fluid-scale": 1,
       "fidelity-policy": {
         "mode": {
           "symbol": "none"

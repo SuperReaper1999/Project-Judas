@@ -9,16 +9,7 @@ bool ResolveBodyCollision(const SceneBodyComponent& b,ResourceManager* resources
  error="body is not a cooked/compound shape";return false;
 }
 
-bool ValidateCollisionFluid(const SceneObject& o,bool legacyParticleWater,std::string& error){
- if(!o.body)return true;
- const auto& b=*o.body;
- bool unsupported=b.shape==SceneShape::TriangleMesh||b.shape==SceneShape::ConvexHull||b.shape==SceneShape::Planar;
- for(auto& child:b.compoundBoxes)unsupported|=child.type!=ShapeType::Box;
- if(unsupported&&(legacyParticleWater||o.liquidContainer||!b.fluidCavities.empty())){
-  error="cooked/mixed collision has no legacy particle-fluid volume/contact proxy; use supported primitive geometry";return false;
- }
- return true;
-}
+
 
 // Cooked coordinates are already physical metres. Until instance-scale baking
 // is provided, rejecting unsupported placement prevents visual/physical mismatch.

@@ -91,8 +91,6 @@ if(o.socket)ref(o.id,o.socket->target,"socket");
 if(o.render)ref(o.id,o.render->textureCamera,"textureCamera");
 if(o.joint){ref(o.id,o.joint->bodyA,"bodyA");
 ref(o.id,o.joint->bodyB,"bodyB");
-}if(o.liquidConnection){ref(o.id,o.liquidConnection->source,"source");
-ref(o.id,o.liquidConnection->destination,"destination");
 }if(o.deformable)for(auto& a:o.deformable->attachments)ref(o.id,a.target,"attachment");
 for(auto& slot:o.scripts)for(auto target:ScriptSystem::PropertyEntities(slot.properties))ref(o.id,target,"script");
 }return 0;
@@ -118,7 +116,7 @@ SaveSceneToString(s,legacy);
 }
                 else if(kind=="project"){ProjectSettings p;
 p.name="New project";
-p.legacyGameplay=false;
+
 legacy=Project::SerializeToString(p);
 }
                 else if(kind=="ui"){UIDocument d;

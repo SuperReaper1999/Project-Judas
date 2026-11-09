@@ -1,9 +1,9 @@
+#include "WorldPersistence.h"
 #include "Prefab.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
 #include "SceneFingerprint.h"
-#include "WorldState.h"
 #include <filesystem>
 #include <cstdio>
 int checks=0,failures=0;void Check(bool v,const char* s){++checks;failures+=!v;std::printf("%s %s\n",v?"PASS":"FAIL",s);}
@@ -20,7 +20,7 @@ int main(){
  ResourceManager resources(nullptr,&assets);RuntimeWorld world;Check(world.Build(scene,&resources,error),"joint prefab actual world build");auto h=world.RuntimeJoint(c);JointState state;Check(h.IsValid()&&world.Physics().GetJoint(h,state)&&!state.active,"runtime joint respects authored override");
  auto spawned=world.SpawnPrefab(asset.id,place,error);EntityId jointOwner=0;for(const auto& o:world.ScriptObjects())if(o.parent==spawned&&o.joint)jointOwner=o.id;
  Check(spawned&&jointOwner&&world.RuntimeJoint(jointOwner).IsValid(),"runtime spawned participant hierarchy creates joint");
- auto saved=CaptureWorldState(world);RuntimeWorld restored;restored.Build(scene,&resources,error);Check(ApplyWorldState(restored,saved,error)&&restored.RuntimeJoint(jointOwner).IsValid(),"created joint hierarchy persistence");
+ std::map<std::string,SaveChunk> saved;Scene savedScene;RuntimeWorld restored;Check(WorldPersistence::Capture(world,saved,error)&&WorldPersistence::SceneFrom(saved,savedScene,error)&&restored.Build(savedScene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,saved,error)&&restored.RuntimeJoint(jointOwner).IsValid(),"created joint hierarchy current snapshot persistence");
  auto retained=world.RuntimeJoint(jointOwner);world.DestroyHierarchy(spawned,error);Check(!world.Physics().GetJoint(retained,state),"hierarchy destruction invalidates joint");
  Scene invalid=source;invalid.Find(child)->joint->bodyA=999;SaveSceneToString(invalid,text);Check(!LoadSceneFromString(text,round,error),"missing participant rejected atomically");
  source.DestroyObject(root);Check(source.Objects().empty(),"hierarchy deletion clears joint references");

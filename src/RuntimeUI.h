@@ -87,7 +87,6 @@ public:
     std::uint64_t Player(std::uint32_t handle)const;
     void PlayerViewport(std::uint64_t player,glm::vec4 rect);
     void RemovePlayer(std::uint64_t player);
-    bool debugOverlayVisible=true; // Engine diagnostics remain independent of project controls.
     bool QuitRequested()const{return m_quit;}void RequestQuit(){m_quit=true;}
     bool OwnsInput()const;bool Empty()const{return m_documents.empty();}
     const UIStats& Stats()const{return m_stats;}

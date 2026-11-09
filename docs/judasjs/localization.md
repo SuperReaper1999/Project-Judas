@@ -102,7 +102,7 @@ UI supports font metrics/mark extents, reference scaling and normal container cl
 Direction does not automatically mirror images, icons, cameras or input axes. An
 authored horizontal container may explicitly enable `mirrorRow` for RTL locale.
 Focus order stays authored order. UI remains after tone mapping, independent of
-world exposure. See [UI](ui.md) and [font/layout implementation](../M58.md).
+world exposure. See [UI](ui.md) and [font/layout implementation](../LOCALIZATION.md).
 
 ## Scope / tooling
 
@@ -115,4 +115,4 @@ Supplementary decoding is supported independently of font coverage. Demo transla
 have not received native-speaker review. No process-global locale mutation.
 
 [Executed example](examples/localization.js) · [API inventory](API_INVENTORY.md) ·
-[Text lab](../../projects/text_lab/text_lab.judasproj) · [Lifecycle](lifecycle.md)
+[Text lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/text_lab/text_lab.judasproj) · [Lifecycle](lifecycle.md)

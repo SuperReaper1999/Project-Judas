@@ -37,7 +37,7 @@ prepare/retry diagnostic; a no-op origin request still succeeds. This prevents
 liquid-only actors from bypassing geometry bounds during asynchronous startup.
 Analytic atmosphere translates its frame; combustion retains its thermal scalars
 and carrier handles. This does not add regional liquid suspension or modern-slot
-atmosphere/combustion persistence. See the [composition matrix](../PREALPHA.md).
+atmosphere/combustion persistence. See the [composition matrix](../CURRENT_STATUS.md).
 
 **Remaining exclusions:** legacy PBF and emitted legacy fluid reject shifts.
 An in-flight M59 residency transaction defers the shift
@@ -87,7 +87,7 @@ M59 retained records preserve capture origins and decode kinematic targets,
 deformed nodes and owned material sections in the new chart before publication.
 Powertrain spin/commands are scalar and are not translated. Derived contact and
 presentation data reconstruct through their existing lifecycle. See the
-[M90 implementation and limitations](../M90_ASSEMBLY_TRAVEL.md).
+[M90 implementation and limitations](../ASSEMBLY_TRAVEL.md).
 
 ## Entity planet methods
 
@@ -128,10 +128,10 @@ export default class {
 ```
 
 Game-side traversal/camera policy is shown in the ordinary
-[planetary lab](../../projects/planetary_terrain_lab/README.md). See also
+[planetary lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/planetary_terrain_lab/README.md). See also
 [CharacterMotor](character.md), [physics/gravity](physics.md),
 [streaming](streaming.md), [saves](saves.md) and the
-[representation, authoring and measured limits](../M85_PLANETARY_TERRAIN.md).
+[representation, authoring and measured limits](../PLANETARY_TERRAIN.md).
 
 ## M92 multi-view render selection
 

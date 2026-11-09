@@ -150,4 +150,4 @@ No main promotion, release tag, publication or Advanced Fluid policy change.
 5. Save with K, quit/reopen and load with L; inspect progress and physical positions.
 6. Try the relocated standalone and your own two-action NPC script.
 
-[Raw evidence and reproduction](evidence/utility-ai-20261101/README.txt).
+[Raw evidence and reproduction (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/utility-ai-20261101/README.txt).

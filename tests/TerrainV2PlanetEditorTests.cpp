@@ -3,7 +3,7 @@
 #include "RuntimeWorld.h"
 #include "ScreenshotWriter.h"
 #include "editor/TerrainPlanetPreview.h"
-#include "editor/TerrainTools.h"
+#include "editor/TerrainV2Editor.h"
 #include "editor/TerrainV2Editor.h"
 #include "editor/TerrainV2Inspector.h"
 #include "imgui.h"
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
         state.importJobs = &host.Jobs();
         state.showTerrain = true;
         EditorRequests requests;
-        TerrainEditor tools;
+        TerrainV2Editor tools;
         auto frame = [&] {
             ImGui::NewFrame();
             ImGui::SetNextWindowPos({0, 0}, ImGuiCond_Always);
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
         auto wait = [&] {
             for (unsigned i = 0; i < 10000; ++i) {
                 frame();
-                if (!tools.v2->Busy())
+                if (!tools.Busy())
                     return;
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
         };
         frame();
         frame();
-        click("Create Terrain V2 landscape");
+        click("New landscape");
         frame();
         combo("Landscape type", "Planetary patch", 1);
         click("Create landscape");
@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
         const auto *owner = document.GetScene().Find(id);
         check(id != 1 && owner && owner->landscape && owner->landscape->planet == 1,
               "normal project UI creates a geographic native owner: " + state.status);
-        check(tools.v2->Loaded() && tools.v2->Preview() && tools.v2->Sources().size() == 1,
+        check(tools.Loaded() && tools.Preview() && tools.Sources().size() == 1,
               "new planetary source opens directly in the existing terrain tools");
         check(TerrainV2::ValidatePlanetTerrains(document.GetScene(), state.assets, error), error);
         const auto pose = owner->transform;
@@ -117,11 +117,11 @@ int main(int argc, char **argv) {
         };
         const auto a = point({0, 8, 0}), b = point({0, -8, 0});
         combo("Tool", "Excavate", 5);
-        check(tools.v2->Stroke(document.GetScene(), id, a, glm::normalize(b - a), true, true, false,
+        check(tools.Stroke(document.GetScene(), id, a, glm::normalize(b - a), true, true, false,
                                true, error),
               "actual planetary viewport excavation: " + error);
         wait();
-        tools.v2->Stroke(document.GetScene(), id, a, glm::normalize(b - a), false, false, false,
+        tools.Stroke(document.GetScene(), id, a, glm::normalize(b - a), false, false, false,
                          true, error);
         check(!tools.Guard(state), "unpublished source changes cannot silently enter Play");
         click("Save and update playable terrain");
@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
               "Inspector enables source-owned navigation on projected terrain");
         check(document.SaveAs((root / "Scenes/main.judas").string(), error), error);
         RuntimeWorld world;
-        world.legacyGameplay = false;
+
         check(world.Build(document.GetScene(), &host.Resources(), error), error);
         check(world.LiveTerrain().Status(id)->navigation,
               "Inspector-authored coverage builds actual projected navigation");
@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
             renderer.SetLighting(pose.rotation * glm::normalize(glm::vec3(.2f, 1, .3f)), {1, 1, 1},
                                  {.25f, .25f, .25f});
             if (native)
-                tools.v2->Draw(renderer, scene, host.Resources());
+                tools.Draw(renderer, scene, host.Resources());
             error.clear();
             preview.Draw(renderer, scene, host.Resources(), error);
             check(error.empty(), error);

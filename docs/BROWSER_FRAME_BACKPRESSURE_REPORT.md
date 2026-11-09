@@ -106,7 +106,7 @@ Their outputs remain available with the other failed attempts.
 
 ## Reproduction and evidence
 
-See [the raw evidence](evidence/browser-frame-backpressure-20261031/SUMMARY.json)
+See [the raw evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/browser-frame-backpressure-20261031/SUMMARY.json)
 and its `SHA256SUMS.txt`. It includes source/binary hashes, package receipts,
 bounded reproduction scripts, original OOM lines, raw logs and browser results.
 Fresh browser profiles and generated binaries are deliberately excluded.

@@ -39,7 +39,6 @@ struct ProjectSettings {
     bool advancedFluidDynamics = false;
     unsigned visualBudgetMiB=0; // opt-in cooked visual working set; 0 preserves pinned legacy demand
     // Missing field preserves historical projects; newly created projects opt out.
-    bool legacyGameplay = true;
     std::string modContract; // optional immutable game-authored JSON; absent = no mod service
     InputMap input = InputMap::Defaults();
     ProjectClassification classification;
@@ -99,8 +98,6 @@ public:
     // The project-relative form of a path under the root (generic slashes),
     // or the input unchanged when it is outside the project.
     std::string MakeRelative(const std::string& path) const;
-    // Where a scene's M29 world-state delta lives: <saves-dir>/<stem>.judasstate.
-    std::string WorldStatePathForScene(const std::string& scenePath) const;
 
     // Runtime-only save root; never serialized into authored project data.
     void SetRuntimeSaveDirectory(const std::string& path) { m_runtimeSaveDirectory = path; }

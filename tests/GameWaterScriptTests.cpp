@@ -68,13 +68,13 @@ export default class {
     auto &owner = scene.CreateObject("Scripted water");
     owner.fluidVolume = SceneFluidVolumeComponent{};
     auto &f = *owner.fluidVolume;
-    f.backend = SceneFluidBackend::Grid;
+
     f.spacing = .5f;
     f.countX = f.countY = f.countZ = 8;
     f.fillHeight = 1;
     owner.scripts.push_back({1, record.id, true, "{}"});
     ProjectSettings settings;
-    settings.legacyGameplay = false;
+
     settings.advancedFluidDynamics = true;
     RuntimeWorld world;
     world.ConfigureProject(settings);

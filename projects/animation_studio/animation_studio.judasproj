@@ -3,7 +3,6 @@
   "schema": 1,
   "data": {
     "name": "Judas / Motion Studio",
-    "legacyGameplay": false,
     "saveIdentity": "3d1487f5c9b8697a58ee0f92c01c4586103348e279ebd622516a32b5c4a4e21f",
     "iconAsset": "",
     "worldManifest": "",

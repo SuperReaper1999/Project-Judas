@@ -4,10 +4,8 @@ Implementation map for the current Alpha source.
 [Engine version](../engine-version.json) and [release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
 identify source and published packages separately.
 This describes ownership and integration boundaries, not universal certification.
-See [current status](PREALPHA.md), [documentation index](README.md), and
-[JudasJS](JUDASJS.md). The former 10,248-line milestone chronology is preserved
-verbatim after the archive banner in [Architecture history](ARCHITECTURE_HISTORY.md).
-Old limits and pending-review labels there do not override this reference.
+See [current status](CURRENT_STATUS.md), [documentation index](README.md), and
+[JudasJS](JUDASJS.md). Historical architecture and milestone reports remain in Git history.
 Source links require the matching checkout/source archive; SDK/runtime packages
 do not contain every project, native source or historical evidence artifact.
 
@@ -42,23 +40,21 @@ Projects own input mappings, camera policy and game rules through trusted
 JavaScript. A query is not a weapon; a hinge is not a target. CharacterMotor,
 camera and skeleton remain separate.
 
-Native compatibility controllers remain for older projects. New scripted projects
-use `legacyGameplay: false`. Historical `PlayerController` and demo controls are
-not the modern gameplay API.
+There is no engine-owned demonstration gameplay. Project scripts own controls, cameras, menus and interaction. CharacterMotor and reusable physical queries remain native primitives.
 
 | Responsibility | Owner and source |
 |---|---|
 | Authored definitions | [Scene](../src/Scene.h), named serializers and project assets |
 | Live component state | [RuntimeWorld](../src/RuntimeWorld.h) and subsystem implementations |
-| Session/scene replacement | [GameSession](../src/GameSession.h), [SceneSession](../src/SceneSession.h) |
+| Session/scene replacement | [SceneSession](../src/SceneSession.h) |
 | Frame/fixed ordering | [InteractivePlay](../src/InteractivePlay.cpp), [Simulation](../src/Simulation.cpp) |
 | VM, instances and callbacks | [ScriptSystem](../src/ScriptSystem.h), [world script bridge](../src/WorldScripts.cpp) |
 | Rigid simulation/queries | [PhysicsWorld](../src/PhysicsWorld.h), [private module map](../src/physics/WorldModules.md) |
 | Graphics/GPU objects | [Renderer](../src/Renderer.h), [presentation](../src/WorldPresentation.cpp) |
-| Resource preparation/residency | [ResourceManager](../src/ResourceManager.h), [asset pipeline](M93_ASSET_PIPELINE.md) |
-| Durable restoration | [WorldPersistence](../src/WorldPersistence.h), [save evolution](M98_SAVE_EVOLUTION.md) |
-| Regional state | [WorldStreaming](../src/WorldStreaming.h), [living worlds](M97_LIVING_WORLD.md) |
-| Network authority | [NetworkSession](../src/NetworkSession.h), [replication scope](M99_NETWORK.md) |
+| Resource preparation/residency | [ResourceManager](../src/ResourceManager.h), [asset pipeline](ASSET_PIPELINE.md) |
+| Durable restoration | [WorldPersistence](../src/WorldPersistence.h), [save evolution](SAVE_EVOLUTION.md) |
+| Regional state | [WorldStreaming](../src/WorldStreaming.h), [living worlds (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md) |
+| Network authority | [NetworkSession](../src/NetworkSession.h), [replication scope](NETWORKING.md) |
 
 ## Identity, handles and publication
 
@@ -74,7 +70,7 @@ prepare private products; the owning world/resource/render thread validates and
 publishes them. Failed replacement retains the last good product.
 
 Rendering support does not establish regional suspension, cold-save or replication
-support. The [integration matrix](PREALPHA.md#ownership-and-integration-contracts)
+support. The [integration matrix](CURRENT_STATUS.md)
 states these independently guarded contracts.
 
 ## Simulation ordering
@@ -135,7 +131,7 @@ as per-step warm impulses.
 
 Bounded CCD sampling, sidedness and deep initial overlap remain limitations.
 Dense-contact cost is workload dependent and universal 60 Hz performance is not
-established; see [current measured limits](PREALPHA.md#remaining-readiness-concerns)
+established; see [current measured limits](CURRENT_STATUS.md)
 and the MK2 architecture's timing tables. The pre-alpha support-continuity and
 CCD-query follow-up reports describe the retired MK1 pipeline.
 
@@ -157,8 +153,8 @@ Gravity is sampled at the consumer's current position. Faithful/uniform and
 name. Optional scripted entity selection uses the resolver and defaults to
 normal authored behavior. Support normal is separate from gravity; world-Y is
 not universal up. See [gravity selection](GRAVITY_SELECTION.md),
-[CharacterMotor](judasjs/character.md), [planetary terrain](M85_PLANETARY_TERRAIN.md)
-and [assembly travel](M90_ASSEMBLY_TRAVEL.md).
+[CharacterMotor](judasjs/character.md), [planetary terrain](PLANETARY_TERRAIN.md)
+and [assembly travel](ASSEMBLY_TRAVEL.md).
 
 ## Physical assemblies and liquids
 
@@ -170,14 +166,14 @@ material deformation have different practical cost envelopes.
 
 Navigation supplies guidance; it does not own motor movement. Resolved skeleton
 poses, physical contributions, IK and sockets share their pose authority.
-References are grouped under [physics and worlds](README.md#physics-and-worlds).
+References are grouped under [physics and worlds](README.md#gameplay-and-content).
 
 M54 reservoirs/containers own quantity; optional M55 surfaces evolve distribution.
 Owner-local storage survives supported shifts/restoration. Legacy PBF and
 protected independent research are separate representations. A passing ledger
 is not general fluid-fidelity or exterior-momentum certification. FLU-001 and
-the half-turn grid-query identity limitation remain. See [reservoirs](LIQUID_RESERVOIRS.md),
-[surfaces](LIQUID_SURFACES.md) and [current limits](PREALPHA.md).
+the half-turn grid-query identity limitation remain. See [reservoirs (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/LIQUID_RESERVOIRS.md),
+[surfaces (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/LIQUID_SURFACES.md) and [current limits](CURRENT_STATUS.md).
 
 ## Rendering, cameras and resources
 
@@ -198,7 +194,7 @@ Compatible opaque geometry uses pass-scoped instancing. Each view selects its ow
 lights/shadows; planetary LOD considers active interests within shared budgets.
 Secondary/local views do not step another world. Cooked mip chains and whole-resource
 residency exist; independent mip residency and universal material/pose instancing
-do not. See [rendering](judasjs/rendering.md), [assets](M93_ASSET_PIPELINE.md) and
+do not. See [rendering](judasjs/rendering.md), [assets](ASSET_PIPELINE.md) and
 [scalability](SCALABILITY.md).
 
 Weather is a prescribed optional field, not atmospheric CFD. Graphics quality
@@ -212,13 +208,13 @@ Cold restore prepares a private candidate. Identities, ordered migrations,
 backups and rejection paths preserve originals. The engine does not automatically
 merge newly authored content or rewrite unknown native topology. Regional
 suspension retains supported state/edited terrain; unsupported dependencies pin
-regions with reasons. See [saves](M98_SAVE_EVOLUTION.md) and [living worlds](M97_LIVING_WORLD.md).
+regions with reasons. See [saves](SAVE_EVOLUTION.md) and [living worlds (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md).
 
 Online sessions are optional and host-authoritative. Their entity subset is narrower
 than offline simulation: vehicles, articulation, liquids, terrain and arbitrary
 spawned identities are not universally replicated. Local player identity is
-independent of devices and controlled entities. See [network/security boundaries](M99_NETWORK.md)
-and [local multiplayer](M89_LOCAL_MULTIPLAYER.md).
+independent of devices and controlled entities. See [network/security boundaries](NETWORKING.md)
+and [local multiplayer](LOCAL_MULTIPLAYER.md).
 
 ## Editor V2 ownership (Experimental)
 
@@ -272,7 +268,7 @@ CMake separates subsystem targets under `cmake/targets/`, shares test helpers an
 finalizes SDK/validation after declarations. Build identity records version,
 channel and exact source inputs; archives can carry provenance without Git.
 See [build identity](BUILD_RELEASES.md), [distribution](DISTRIBUTION.md) and
-[focused checks](PREALPHA.md#focused-validation-from-a-clean-checkout).
+[focused checks](CURRENT_STATUS.md).
 
 Linux is the acceptance reference. Windows VM/Android receipts have individual
 version/hardware scope. Main is human-tested release lineage; Experimental is
@@ -293,8 +289,8 @@ swimming/optical queries. It does not own conserved quantity or rigid-body force
 RuntimeWorld indexes authored/streamed owners; `WorldWater.cpp` samples their
 existing entity poses. Alpha distributions reject advanced-fluid project activation before world construction
 and export due to contact-stability issues; Experimental/local builds retain the
-opt-in implementation for repair. See [restriction](M100_FLUID_CONTACT_STABILITY.md).
-Advanced FluidWorld/LiquidSystem updates and allocations
+opt-in implementation for repair. See [restriction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M100_FLUID_CONTACT_STABILITY.md).
+Advanced Game Water V2 updates and allocations
 are gated by explicit project opt-in. No fluid numerical solver, MK2 contact
 solver or physical balance policy is redesigned by this separation.
 
@@ -324,7 +320,7 @@ without post-step clamps or three extra bilateral constraints per body.
 use the existing joint solver. Scene descriptors and modern physical save
 participants retain geometry, mass, inertia and fixed plane; legacy world deltas
 reject them. Player movement/cameras remain ordinary editable project JavaScript.
-See [Stage 2](2D_STAGE2.md) and [2D API/boundaries](judasjs/physics-2d.md).
+See [Stage 2 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE2.md) and [2D API/boundaries](judasjs/physics-2d.md).
 
 Sprite sheets and frame clips are optional typed CPU resources. `SpriteAnimation`
 owns content validation/sampling; `WorldSpriteAnimation` owns fixed-boundary
@@ -332,12 +328,12 @@ instance clocks and observations. Skeletal and sprite markers share interval
 traversal, while preview/render passes never advance gameplay. Existing scene
 definitions, prefab/stream snapshots, resource generations and modern saves own
 their normal lifetime; conditional content hashes prevent silent clip reinterpretation.
-See [Stage 3](2D_STAGE3.md) and [the sprite animation API](judasjs/sprite-animation.md).
+See [Stage 3 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE3.md) and [the sprite animation API](judasjs/sprite-animation.md).
 
 `authoring/Tilemap` compiles bounded editor-owned sparse grid recipes to ordinary
 sprites and chunk-merged static planar boxes. `editor/TilemapEditor` owns palette
 selection, ray/grid painting and draft strokes; `EditorDocument` owns publication
 and Undo. Existing scene recipes retain source metadata; runtime physics, saves,
 streaming and exports use the compiled ordinary entities. There is no additional
-tile simulation or runtime clock. See [Stage 4](2D_STAGE4.md) and the
+tile simulation or runtime clock. See [Stage 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE4.md) and the
 [tile authoring guide](judasjs/tilemaps-2d.md) for limits and ownership.
