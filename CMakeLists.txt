@@ -446,6 +446,9 @@ endif()
 # Host editor, import/bake tools and test executables remain desktop-only.
 if(ANDROID)
     target_sources(judas_engine PRIVATE src/AndroidPlatform.cpp)
+    # The engine source fragments below are normally included after this early return.
+    include(cmake/JudasGameWaterSources.cmake)
+    include(cmake/JudasTerrainSources.cmake)
     target_include_directories(judas_engine SYSTEM PRIVATE third_party/cgltf)
     target_link_libraries(judas_engine PUBLIC judas_quickjs judas_unicode judas_profiler judas_jobs android log)
     add_library(main SHARED src/main.cpp src/Application.cpp src/RuntimeOptions.cpp
