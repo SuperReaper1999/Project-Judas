@@ -1,5 +1,6 @@
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
+#include "EnginePaths.h"
 #include "Simulation.h"
 #include "InputSystem.h"
 #include <algorithm>
@@ -12,7 +13,7 @@ constexpr float dt=1.f/60;
 unsigned checks=0;
 Scene Fixture(bool oldAxles,float slope) {
     Scene scene;std::string error;
-    if(!LoadSceneFromFile("projects/vehicle_v2_workshop/Scenes/workshop.judas",scene,error))
+    if(!LoadSceneFromFile(ResolveEngineDataPath("projects/vehicle_v2_workshop/Scenes/workshop.judas"),scene,error))
         throw std::runtime_error(error);
     // Real Workshop chassis, wheels, masses and powertrain. Isolate the flat
     // support and articulation from rendering, other vehicles and course props.
