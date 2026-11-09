@@ -115,3 +115,16 @@ that correction and successful qualification; no second human test is implied.
 See [the towing follow-up](VEHICLES_V2_TOWING.md) for the reproduced mechanism,
 current controls, regression gates, measurements and qualification scope.
 The original measurements above remain scoped to their recorded checkpoints.
+
+### Conditional acceptance completed — 2026-11-09
+
+The operator's delegated towing-correction acceptance condition is fulfilled.
+Correction `6274ecdb` plus isolated-path test repair `b9c5223e` passed the completed
+[required CI](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42714296052):
+178 Experimental cases, 174 Alpha cases with four correctly unavailable locked-fluid
+cases, and both Ubuntu 24.04 SDK qualifications. Linux native/editor/script checks,
+real GTX 970 execution, package-only SDK workflows and relocated cold saves are
+reported in the towing follow-up, including the additional failed 1 mm rest-pose
+probe (2.16 mm re-settling). No second hands-on test of the correction is claimed.
+Vehicles V2 is accepted under that explicit operator authorization; main promotion
+and V2 publication remain unauthorized. Deformables V2 remains investigation only.

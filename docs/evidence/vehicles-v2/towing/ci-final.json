@@ -1,0 +1,35 @@
+{
+  "source_revision": "b9c5223ed7cbe69e5d5b33769f6b5d6476769f9e",
+  "run": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/42714296052",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "linux (Experimental)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "linux (Alpha)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "promotion",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "scope": "Full engine gates and Ubuntu 24.04 SDK ABI/loader qualification on code checkpoint b9c5223e. Subsequent handover changes are documentation only.",
+  "case_scope": {
+    "Experimental": {
+      "executed": 178,
+      "failed": 0
+    },
+    "Alpha": {
+      "executed": 174,
+      "unavailable_in_channel_policy_checks": 4,
+      "failed": 0
+    }
+  }
+}

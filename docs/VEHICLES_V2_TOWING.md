@@ -87,8 +87,9 @@ Correction implementation: `6274ecdb651a955de39a092de2a33672c229a1bf`.
 Test-path correction: `b9c5223ed7cbe69e5d5b33769f6b5d6476769f9e`.
 The [required engine qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42714296052)
 is tied to the latter exact commit; later documentation-only changes do not alter
-its engine/project/test code. Consult the actual completed result before treating
-a build as qualified.
+its engine/project/test code. The run completed successfully: 178 Experimental cases and 174 Alpha cases,
+with four correctly unavailable locked-fluid cases; both Ubuntu 24.04 SDK
+qualifications passed. [Compact CI receipt](https://github.com/SuperReaper1999/Project-Judas/blob/Experimental/docs/evidence/vehicles-v2/towing/ci-final.json).
 
 The first CI attempt at the correction ran 177/178 Experimental cases successfully;
 the new towing test then failed to find its scene from the validator's isolated
@@ -118,7 +119,7 @@ remain unchanged. No broad persistence change is bundled into the towing correct
 
 ## Evidence and handover
 
-[Raw checks, timings, scope and rejected experiment](evidence/vehicles-v2/towing/).
+[Raw checks, timings, scope and rejected experiment](https://github.com/SuperReaper1999/Project-Judas/tree/42db53a1fb7831aace7b887965457fa79c0024b9/docs/evidence/vehicles-v2/towing/).
 Live logs and screenshots remain in `.cache/vehicles-v2/towing`.
 
 Open `projects/vehicle_v2_workshop/Vehicle_V2_Workshop.judasproj`, Play, press 4.

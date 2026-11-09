@@ -97,7 +97,7 @@ A quiet patch attached to a truly sleeping dynamic body never sleeps:
 The source treats any dynamic attachment as moving regardless of actual motion.
 This makes stationary attached material unnecessarily active.
 
-[Probe sources, raw output, source hashes and existing-gate results](evidence/deformables-v2-investigation/)
+[Probe sources, raw output, source hashes and existing-gate results](https://github.com/SuperReaper1999/Project-Judas/tree/42db53a1fb7831aace7b887965457fa79c0024b9/docs/evidence/deformables-v2-investigation/)
 are retained. These findings have **not** been fixed during the investigation.
 
 ## Architectural limitations and coverage gaps
