@@ -2,6 +2,8 @@
 
 Experimental engineering qualification, 2026-11-09. Baseline:
 `f243e8320779db45892cb77fa4ce0c7639de11e6`.
+Engine checkpoints: `85367d5e` (visibility/presentation ownership) and
+`d47f154d` (preview LOD and evidence).
 This work is awaiting operator review; it is not a main promotion, SDK update,
 release or change to the Advanced Fluids lock.
 
@@ -128,3 +130,18 @@ Human checklist:
 Main, the operator's saved terrain edits, RPG SDK and Advanced Fluids lock are
 outside this checkpoint's modification set. No new Windows/Android hardware
 qualification is claimed by these desktop measurements.
+
+### Registered gate result
+
+At engine checkpoint `d47f154d`, 11/12 selected registered gates passed on their
+first run. `terrain-v2-height-shadow` failed its initial default-framebuffer
+coverage assertion, then passed an unchanged targeted retest. This matches the
+class of unresolved first-capture observations already recorded in
+[the purge qualification](ARCHITECTURAL_PURGE.md). The cause is not established;
+no shader, tolerance or assertion was changed, and no repair is claimed.
+The initial failure and retest are retained under `.cache/terrain-editor-gap/`.
+The new preview, viewports, cameras, planetary authoring and cold-persistence
+gates passed. Validation runner tests: 19 passed. Registration tests: 11 ran,
+2 environment-specific skips. Current-document tests: 10 passed; the actual
+current-document audit also passed. This is focused qualification, not a new
+full-suite or platform release certificate.

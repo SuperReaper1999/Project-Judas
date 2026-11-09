@@ -622,5 +622,21 @@
     "terrain_lod_checks": 339,
     "terrain_world_checks": 96,
     "gpu_paging_checks": 177
+  },
+  "engine_checkpoints": [
+    "85367d5ef62be0591a506872de8172cc4ca97e95",
+    "d47f154dcee67ad2219c989d6049bde0fe5aabbf"
+  ],
+  "registered_gates": {
+    "engine_checkpoint": "d47f154dcee67ad2219c989d6049bde0fe5aabbf",
+    "initial_passed": 11,
+    "initial_total": 12,
+    "initial_failure": "terrain-v2-height-shadow: default-framebuffer coverage",
+    "unchanged_targeted_retest": "passed",
+    "classification": "Unresolved intermittent first-capture observation; no shader, assertion or tolerance changes.",
+    "validation_runner_passed": 19,
+    "registration_ran": 11,
+    "registration_skipped": 2,
+    "current_docs_passed": 10
   }
 }
