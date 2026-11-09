@@ -44,7 +44,11 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world,
 // or composites local-player views. Runtime behavior remains the default.
 // A destination is opened only after auxiliary passes; it receives the final
 // main/split-screen composition. No nesting of renderer target passes occurs.
-enum class WorldRenderPurpose { Runtime, Observer };
+// Auxiliary updates authored camera textures without drawing the hidden main
+// or split-screen display. ObserverFrame owns cadence and the visual clock
+// when Scene is the only visible display. A secondary Observer never advances
+// either. Simulation remains owned by InteractivePlay.
+enum class WorldRenderPurpose { Runtime, Observer, Auxiliary, ObserverFrame };
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const glm::mat4& view, const glm::mat4& projection,
                       const glm::vec3& shadowFocus, float presentationAlpha,float frameSeconds=1.f/60,

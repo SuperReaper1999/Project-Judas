@@ -585,13 +585,14 @@ void EditorSceneViewport::EndObservation(EditorContext &context) {
 
 // A live Scene camera is a read-only presentation of the same authoritative
 // world. It never advances simulation, scripts, audio or save publication.
-void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySession &session, float dt) {
+void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySession &session, float dt, bool primaryPresentation) {
     if (!session.world)
         return;
     SynchronizeObservationOrigin(context, session.world->Settings().worldOrigin);
     auto &renderer = context.host.GetRenderer();
     const auto size = renderer.RenderTargetSize(target);
-    if (size.x < 1 || size.y < 1 || !renderer.BeginRenderTarget(target))
+    if (size.x < 1 || size.y < 1 ||
+        (!primaryPresentation && !renderer.BeginRenderTarget(target)))
         return;
     const auto &io = ImGui::GetIO();
     auto *sceneWindow = ImGui::FindWindowByName("Scene###Judas.Scene");
@@ -626,7 +627,10 @@ void EditorSceneViewport::RenderLive(EditorContext &context, const EditorPlaySes
         camera.Dolly(io.MouseWheel);
     RenderWorldFrame(renderer, size.x, size.y, *session.world, camera.ViewMatrix(),
                      camera.ProjectionMatrix(float(size.x) / size.y), camera.Position(), session.lastAlpha,
-                     dt, WorldRenderPurpose::Observer);
+                     dt, primaryPresentation ? WorldRenderPurpose::ObserverFrame : WorldRenderPurpose::Observer,
+                     primaryPresentation ? &target : nullptr);
+    if (primaryPresentation && !renderer.BeginRenderTarget(target, true))
+        return;
     if (context.panels.debug.AnyEnabled()) {
         debugLines.Clear();
         BuildWorldDebugLines(*session.world, session.lastAlpha,

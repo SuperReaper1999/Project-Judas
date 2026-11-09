@@ -47,9 +47,10 @@ public:
     const FixedStepMeasurements& LastMeasurements() const { return m_measurements; }
 
     // Route input, run fixed steps unless authored UI pauses/owns input, then
-    // present the world and project UI. Rendering can be skipped for service waits.
+    // present the world and project UI. A hidden display can retain authored
+    // camera updates; auxiliary=false delegates those to the sole Scene view.
     float Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render = true,
-                const RenderTargetHandle* destination = nullptr);
+                const RenderTargetHandle* destination = nullptr, bool auxiliary = false);
 
     bool QuitRequested() const;
     bool IsPaused() const;

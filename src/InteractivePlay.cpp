@@ -51,7 +51,7 @@ void InteractivePlay::SetFixedStepMeasurementFlags(bool fire, bool fluid) {
 
 
 
-float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render, const RenderTargetHandle* destination) {
+float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render, const RenderTargetHandle* destination, bool auxiliary) {
     JUDAS_PROFILE_SCOPE("Play frame");
     RuntimeWorld& world = *m_world;
     world.PumpNetwork(std::chrono::duration<double>(Clock::now().time_since_epoch()).count());
@@ -128,14 +128,20 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     if(world.Scripts())world.Scripts()->SetView(view);
     world.UpdateAudio(view,presentationAlpha,frameDeltaTime);
     // Audio publication is a runtime service, independent of drawing/capture.
-    if (!render) return presentationAlpha;
+    if (!render && (!auxiliary || world.PresentationCameras().empty())) {
+        m_lastSceneMilliseconds = m_lastSurfaceMilliseconds = 0;
+        return presentationAlpha;
+    }
     const auto surfaceStart = Clock::now();
     m_lastSurfaceMilliseconds = MillisecondsSince(surfaceStart);
     const auto sceneStart = Clock::now();
     RenderWorldFrame(renderer, window.InputWidth(), window.InputHeight(), world, view,
                      BuildCameraFrame(glm::vec3(0),glm::quat(1,0,0,0),60,.1f,1000,CameraLens{},window.InputWidth(),height).projection, glm::vec3(glm::inverse(view)[3]),
-                     presentationAlpha,frameDeltaTime,WorldRenderPurpose::Runtime,destination);
+                     presentationAlpha,frameDeltaTime,
+                     render ? WorldRenderPurpose::Runtime : WorldRenderPurpose::Auxiliary,
+                     render ? destination : nullptr);
     m_lastSceneMilliseconds = MillisecondsSince(sceneStart);
+    if (!render) return presentationAlpha;
     // Auxiliary cameras have finished. Resume the display image without clearing
     // or starting another HDR pass; overlays remain identical to desktop play.
     if(destination&&!renderer.BeginRenderTarget(*destination, /*preserveContents=*/true))return presentationAlpha;

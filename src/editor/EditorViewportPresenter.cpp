@@ -195,7 +195,8 @@ void EditorViewportPresenter::ConfigureInput(Window &window, bool playing) {
 }
 
 bool EditorViewportPresenter::BeginGameTarget(Renderer &renderer, bool renderHidden) {
-    return (game.visible || renderHidden) && gameTarget.IsValid() && renderer.BeginRenderTarget(gameTarget);
+    return (ShouldRenderGame() || (renderHidden && gameTarget.IsValid())) &&
+           renderer.BeginRenderTarget(gameTarget);
 }
 void EditorViewportPresenter::EndGameTarget(Renderer &renderer) {
     renderer.EndRenderTarget();

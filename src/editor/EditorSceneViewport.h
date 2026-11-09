@@ -27,7 +27,7 @@ struct EditorSceneViewport {
     void UpdateCameraNavigation(EditorContext &, const EditorCameraGestureInput &, int, int, float, bool);
     void FrameEditMode(EditorContext &, float, TerrainV2Editor *, TilemapEditor *);
     void Destroy(Renderer &);
-    void RenderLive(EditorContext &, const EditorPlaySession &, float);
+    void RenderLive(EditorContext &, const EditorPlaySession &, float, bool primaryPresentation = false);
     void BeginObservation(glm::dvec3 authoredOrigin);
     void EndObservation(EditorContext &);
     EditorCamera camera;

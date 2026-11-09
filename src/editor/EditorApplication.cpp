@@ -410,15 +410,16 @@ int EditorApplication::Run(int argc, char **argv) {
         editorBuildScope.End();
         m_shell.views.ConfigureInput(window, m_panels.mode == EditorMode::Play);
         if (m_panels.mode == EditorMode::Play) {
-            const bool render = m_shell.views.GameTarget().IsValid();
+            const bool render = m_shell.views.ShouldRenderGame();
+            const bool sceneVisible = m_shell.views.Scene().visible;
             const bool capture = m_shell.views.Game().focused &&
                                  (m_shell.views.Game().hovered || window.IsMouseCaptured()) &&
                                  !io.WantTextInput && !(m_panels.showProfiler && m_panels.profilerInspect);
             const bool resumed = m_playSession.Frame(context, m_scriptTools, deltaSeconds, render, capture,
-                                                     &m_shell.views.GameTarget());
-            if (m_shell.views.Scene().visible) {
+                                                     &m_shell.views.GameTarget(), render || !sceneVisible);
+            if (sceneVisible) {
                 auto liveContext = Context(requests);
-                m_sceneViewport.RenderLive(liveContext, m_playSession, deltaSeconds);
+                m_sceneViewport.RenderLive(liveContext, m_playSession, deltaSeconds, !render);
             }
             if (resumed) {
                 previousCounter = SDL_GetPerformanceCounter();

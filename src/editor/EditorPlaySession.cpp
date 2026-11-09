@@ -131,7 +131,7 @@ void EditorPlaySession::StopPlay(EditorContext &context, EditorSceneViewport &vi
 
 bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTools> &scriptTools,
                               float deltaSeconds, bool render, bool allowCapture,
-                              const RenderTargetHandle *destination) {
+                              const RenderTargetHandle *destination, bool auxiliary) {
     auto &window = context.host.GetWindow();
     auto &renderer = context.host.GetRenderer();
     auto &host = context.host;
@@ -144,7 +144,7 @@ bool EditorPlaySession::Frame(EditorContext &context, std::unique_ptr<ScriptTool
     play->SetPointerCaptureAllowed(allowCapture);
     // The identical frame the runtime runs. Escape opens the M13
     // pause menu, which releases the mouse for the editor panels.
-    lastAlpha = play->Frame(window, renderer, deltaSeconds, render, destination);
+    lastAlpha = play->Frame(window, renderer, deltaSeconds, render, destination, auxiliary);
     if (scriptTools->clockReset) {
         clockReset = true;
         scriptTools->clockReset = false;

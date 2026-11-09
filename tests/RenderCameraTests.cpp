@@ -176,6 +176,17 @@ int main(int argc,char**argv){
  Check(WriteRgbPng((out/"main.png").string(),320,240,mainPixels),"actual main framebuffer screenshot recorded");
  Check(std::count_if(mainPixels.begin(),mainPixels.end(),[](unsigned char v){return v>100;})>100,"main framebuffer renders after secondary passes");
  Check(renderer.RenderTargetDiagnostics().defaultFramebuffer&&renderer.RenderTargetDiagnostics().viewport==glm::ivec4(0,0,320,240),"main pass restores its own viewport/default framebuffer");
+ const auto auxiliaryUpdates=world.PresentationCameras()[0].updates;
+ renderer.ResetStats();
+ RenderWorldFrame(renderer,320,240,world,View(),Projection(),{0,1,0},1,1.f/60,
+                  WorldRenderPurpose::Auxiliary);
+ std::vector<unsigned char> hiddenPixels;renderer.CaptureFrame(320,240,hiddenPixels);
+ Check(world.PresentationCameras()[0].updates==auxiliaryUpdates+1&&renderer.Stats().offscreenPasses==2,
+       "hidden display still updates authored camera textures exactly once");
+ Check(hiddenPixels==mainPixels,"auxiliary-only presentation never clears or draws the main framebuffer");
+ world.GetEntityState(1,after);
+ Check(after.position==before.position&&after.linearVelocity==before.linearVelocity,
+       "hidden-display camera updates never advance simulation");
  EntityPhysicalState moved=before;moved.position.z+=1;
  Check(world.SetEntityState(1,moved),"ordinary runtime body motion supplied");Frame(renderer,world);TextureData movedPixels;renderer.ReadTextureForDiagnostics(westHandle,movedPixels);
  Check(movedPixels.pixels!=west.pixels,"secondary texture observes the same authoritative body motion");

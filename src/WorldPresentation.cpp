@@ -363,7 +363,10 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, float alph
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const glm::mat4& view, const glm::mat4& projection,
                       const glm::vec3& shadowFocus, float alpha,float frameSeconds,WorldRenderPurpose purpose,const RenderTargetHandle* destination) {
-    const bool observer=purpose==WorldRenderPurpose::Observer;
+    const bool observer=purpose==WorldRenderPurpose::Observer || purpose==WorldRenderPurpose::ObserverFrame;
+    const bool advancePresentation=purpose!=WorldRenderPurpose::Observer;
+    const bool mainView=purpose!=WorldRenderPurpose::Auxiliary;
+    const bool gameInterest=purpose==WorldRenderPurpose::Runtime || purpose==WorldRenderPurpose::Observer;
     JUDAS_PROFILE_SCOPE("World render submission");
     renderer.ClearWeather();
     // Existing runtime statistics may accumulate across frames. Observe this
@@ -379,23 +382,23 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         planetViews.push_back({origin+glm::dvec3(eye),2*std::atan(1./double(projection[1][1])),unsigned(std::max(1,height)),orthographic?2./std::abs(double(projection[1][1])):0});
     }
 
-    if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){
+    if(auto* players=world.PlayersIfLoaded();gameInterest&&players&&players->HasViews()){
         for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);planetViews.push_back({origin+glm::dvec3(p.view->position),glm::radians(double(p.fov)),unsigned(std::max(1,size.y)),p.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(p.lens):0});}
-    }else planetViews.push_back({origin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height)),world.view&&world.view->lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(world.view->lens):0});
+    }else if(gameInterest)planetViews.push_back({origin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height)),world.view&&world.view->lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(world.view->lens):0});
     for(const auto& camera:world.PresentationCameras())if(camera.settings.enabled&&world.IsPublished(camera.id)){
         auto pose=world.PresentedTransform(camera.id,camera.transform,alpha);double fov=glm::radians(double(camera.settings.verticalFovDegrees));
         if(camera.hasFrustum)fov=2*std::atan(double(camera.frustum.w-camera.frustum.z)/(2*camera.settings.nearPlane));
         planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height),camera.settings.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(camera.settings.lens):0});
     }
-    world.PreparePlanets(renderer,planetViews,observer?0:frameSeconds);
-    world.PrepareRuntimeTerrain(planetViews,observer?0:frameSeconds);
+    world.PreparePlanets(renderer,planetViews,advancePresentation?frameSeconds:0);
+    world.PrepareRuntimeTerrain(planetViews,advancePresentation?frameSeconds:0);
     }
     if(auto* assets=world.Resources();assets&&assets->VisualStreaming()){
         struct Interest {Frustum frustum;CategoryMask mask;};std::vector<Interest> interests;
         auto addView=[&](glm::vec3 position,glm::quat rotation,float fov,int vw,int vh,float nearPlane,float farPlane,CategoryMask mask,const CameraLens& lens){auto frame=BuildCameraFrame(position,rotation,fov,nearPlane,farPlane,lens,vw,vh);interests.push_back({Frustum(frame.projection*frame.view),mask});};
-        if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);addView(p.view->position,p.view->rotation,p.fov,size.x,size.y,p.nearPlane,p.farPlane,p.renderMask,p.lens);}}
-        else if(world.view){auto& v=*world.view;addView(v.pose.position,v.pose.rotation,v.fov,width,height,v.nearPlane,v.farPlane,world.Settings().mainCameraRenderMask,v.lens);}
-        else interests.push_back({Frustum(projection*view),world.Settings().mainCameraRenderMask});
+        if(auto* players=world.PlayersIfLoaded();gameInterest&&players&&players->HasViews()){for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);addView(p.view->position,p.view->rotation,p.fov,size.x,size.y,p.nearPlane,p.farPlane,p.renderMask,p.lens);}}
+        else if(gameInterest&&world.view){auto& v=*world.view;addView(v.pose.position,v.pose.rotation,v.fov,width,height,v.nearPlane,v.farPlane,world.Settings().mainCameraRenderMask,v.lens);}
+        else if(gameInterest)interests.push_back({Frustum(projection*view),world.Settings().mainCameraRenderMask});
         if(observer)interests.push_back({Frustum(projection*view),world.Settings().mainCameraRenderMask});
         for(const auto& c:world.PresentationCameras())if(c.settings.enabled&&world.IsPublished(c.id)){auto pose=world.PresentedTransform(c.id,c.transform,alpha);auto v=glm::lookAt(pose.position,pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0));auto plane=c.hasClipPlane?ViewSpacePlane(v,c.clipNormal,c.clipPoint):glm::vec4(0);auto frame=BuildCameraFrame(pose.position,pose.rotation,c.settings.verticalFovDegrees,c.settings.nearPlane,c.settings.farPlane,c.settings.lens,c.settings.width,c.settings.height);if(c.hasFrustum||c.hasClipPlane)frame.projection=SecondaryCameraProjection(c.settings.verticalFovDegrees,float(frame.content.z)/frame.content.w,c.settings.nearPlane,c.settings.farPlane,c.hasFrustum?&c.frustum:nullptr,c.hasClipPlane?&plane:nullptr);interests.push_back({Frustum(frame.projection*frame.view),c.settings.renderMask});}
         // Use the same presentation owners as DrawWorldGeometry. Entities()
@@ -514,7 +517,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     };
     (void)shadowFocus;
     // Secondary views are presentation passes only; shadow maps above are shared.
-    if (!observer && !world.PresentationCameras().empty()) {
+    if (advancePresentation && !world.PresentationCameras().empty()) {
         world.BindCameraRenderer(renderer);
         const auto frame = world.NextCameraFrame();
         for (auto& camera : world.PresentationCameras()) {
@@ -563,6 +566,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.EndRenderTarget(); ++camera.updates;
         }
     }
+    if(mainView) {
     if(auto* players=world.PlayersIfLoaded();!observer&&players&&players->HasViews()){
         players->BindRenderer(renderer);
         // Each view borrows the same immutable presented world and shadow maps.
@@ -601,6 +605,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.EndFrame();
     }
     if(destination)renderer.EndRenderTarget(/*restoreCamera=*/false);
+    }
     const auto& stats=renderer.Stats();
     JUDAS_PROFILE_COUNTER("Instanced draw submissions",stats.instancedDraws-beforeStats.instancedDraws,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Instances submitted",stats.instances-beforeStats.instances,ProfileCounterMode::Sum);

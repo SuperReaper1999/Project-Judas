@@ -27,6 +27,7 @@ class EditorViewportPresenter {
     void RequestGameFocus() {
         focusGame = true;
     }
+    bool ShouldRenderGame() const { return game.visible && gameTarget.IsValid(); }
     bool BeginGameTarget(Renderer &, bool renderHidden = false);
     void EndGameTarget(Renderer &);
     void Destroy(Renderer &);

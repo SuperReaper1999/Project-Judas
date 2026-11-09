@@ -440,7 +440,7 @@ int main(int argc, char **argv) try {
     panels.showGameView = false;
     frame();
     views.ConfigureInput(window, true);
-    Check(!views.Game().visible && !views.BeginGameTarget(renderer) && !window.IsMouseCaptured(),
+    Check(!views.Game().visible && !views.ShouldRenderGame() && !views.BeginGameTarget(renderer) && !window.IsMouseCaptured(),
           "hidden Game releases capture and performs no target presentation");
     Check(session.world->Physics().GetTransform(body).position == original.position &&
               session.world->Physics().GetLinearVelocity(body) == glm::vec3(1, 0, 0),
@@ -510,6 +510,18 @@ int main(int argc, char **argv) try {
     runtimeFrame();
     Check(session.world->PresentationCameras().front().updates == 2,
           "next ordinary runtime cadence boundary still updates its camera");
+    const auto beforePrimary = session.world->PresentationCameras().front().updates;
+    const auto beforePrimaryTarget = renderer.RenderTargetDiagnostics();
+    scene.RenderLive(context, session, 1.f / 60, true);
+    Check(session.world->PresentationCameras().front().updates == beforePrimary,
+          "sole Scene view respects the authored two-frame camera cadence");
+    scene.RenderLive(context, session, 1.f / 60, true);
+    const auto afterPrimaryTarget = renderer.RenderTargetDiagnostics();
+    Check(session.world->PresentationCameras().front().updates == beforePrimary + 1 &&
+              afterPrimaryTarget.defaultFramebuffer == beforePrimaryTarget.defaultFramebuffer &&
+              afterPrimaryTarget.viewport == beforePrimaryTarget.viewport && !afterPrimaryTarget.passActive,
+          "sole Scene view owns camera cadence and restores framebuffer without nested passes");
+
 
     // Exercise the other multi-target path in a real Game destination: two
     // independent local-player cameras must render before the final composite.
