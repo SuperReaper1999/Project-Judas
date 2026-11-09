@@ -96,7 +96,7 @@ The exact post-commit byte receipt accompanies the handover.
 
 | Measure | Before | Consolidated working snapshot |
 | --- | ---: | ---: |
-| Tracked files | 74,367 | approximately 5,580 |
+| Tracked files | 74,367 | approximately 5,582 |
 | Tracked apparent material | 4,130,630,845 bytes | approximately 264.2 MB |
 | Files under src | 821 | 735 |
 | C/C++ source/header lines under src | 120,051 | approximately 104,200 |
@@ -151,7 +151,10 @@ Qualification found and corrected real current defects:
    documentation, use `Judas-ModKit-1`, and have self-contained qualification.
    `judas_mod registries PROJECT` exposes the existing registry identity needed
    to author the explicit contract; ordinary projects remain opted out.
-4. Several fixtures depended on the process working directory. They now locate
+4. Two original OBJ fixtures were initially hidden by the compiler-object ignore
+   rule after relocation. Their exact original bytes are committed and the rule
+   now admits authored OBJ files throughout the fixture tree.
+5. Several fixtures depended on the process working directory. They now locate
    their committed inputs explicitly. No private user data path is required.
 
 The single changed UI vertex-shader golden is backed by a byte comparison:
@@ -168,7 +171,7 @@ Local evidence is under `.cache/architectural-purge/`:
 - `ctest-current-2.log`: original full run, 165/173 passed; retained failures.
 - `fixed-gates.log`: all eight failures plus the new cold-camera case, 9/9 pass.
 - `persistence-after-camera/RESULTS.json`: modern persistence and save exclusion.
-- `sdk-workflow-4/COMPLETE.json`: packaged project creation, Play/Stop, 39 tool
+- `sdk-workflow-5/COMPLETE.json`: packaged project creation, Play/Stop, 39 tool
   operations, unchanged SDK checksums and two genuinely relocated rendered games.
 - `docs-current-qualification.json`, `api-qualification.log`: current reference
   links, declaration/binding consistency, 279 callables, 25 structured results and

@@ -1,11 +1,10 @@
 build/
 *.o
 *.obj
-# Milestone 9: *.obj above is meant for stray compiler object files (an
-# MSVC-style artifact this Linux/GCC toolchain doesn't actually produce),
-# not this project's own imported 3D models — un-ignore the one place
-# real .obj model assets live.
+# Authored meshes are assets; .obj elsewhere remains a compiler artifact.
 !assets/**/*.obj
+!projects/*/Assets/**/*.obj
+!tests/fixtures/**/*.obj
 compile_commands.json
 .cache/
 __pycache__/
@@ -16,25 +15,9 @@ __pycache__/
 # see the file itself for what it's for.
 Project_Persistent_Memory.md
 
-# Milestone 29: runtime world-state deltas written by F6 (saves/<scene>.judasstate)
+# Local runtime saves are generated data, independent of save format.
 saves/
-
-# Milestone 30: per-project world-state deltas
-projects/*/Saves/*.judasstate
-
-# Imported meshes are project content, not compiler object files.
-!projects/*/Assets/**/*.obj
-
-# M66 authored OBJ sources/fixtures are models, not compiler outputs.
-!projects/import_lab/Sources/**/*.obj
-!tests/fixtures/m66/**/*.obj
-!tests/fixtures/m66/*.obj
+projects/*/Saves/
 
 # Showcase production files are independent of engine milestones.
 /video_work/
-
-# M93 source artwork uses OBJ meshes, not compiler object files.
-!projects/asset_lab/SourceArt/*.obj
-
-# Isolated Pre-Alpha project-settings/water review build.
-/build-water/
