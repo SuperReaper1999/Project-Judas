@@ -2,6 +2,9 @@
 #include "Scene.h"
 #include "AssetDatabase.h"
 #include <map>
+#include <optional>
+
+struct SpriteSheet;
 
 // Editor-authored sparse grids compile to ordinary scene sprites and static MK2
 // planar boxes. No second runtime world, collision clock or save representation.
@@ -32,6 +35,15 @@ bool ValidateTilemap(const TilemapRecipe&,std::string& error);
 // Inclusive grid rectangle; atomic rejection before changing the caller's draft.
 bool PaintTilemap(TilemapRecipe&,const std::string& layer,glm::ivec2 from,
                   glm::ivec2 to,const std::string& frame,bool erase,bool flipX,bool flipY,std::string& error);
+struct TilemapEditScope { std::string layer; glm::ivec2 cell; };
+struct CompiledTilemapObject { std::string key; SceneObject object; };
+// Shared by whole-map authoring and incremental runtime edits. A scoped compile
+// emits one visual and only the edited layer's 16x16 collision chunk. The caller
+// owns identities, asset admission and transactional publication.
+bool CompileTilemapObjects(const SceneObject& root,const TilemapRecipe&,const SpriteSheet&,
+                          const std::optional<TilemapEditScope>&,
+                          std::vector<CompiledTilemapObject>&,std::string& error);
+std::string TilemapObjectFingerprint(const SceneObject&);
 // Pure CPU, transactional. Existing managed edits/missing children reject rather
 // than silently deleting user work. Stable keys retain IDs unless the caller
 // requests fresh IDs for changed children so it can stage runtime replacements.

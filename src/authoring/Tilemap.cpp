@@ -81,6 +81,86 @@ bool PaintTilemap(TilemapRecipe& r,const std::string& layer,glm::ivec2 from,glm:
     if(!ValidateTilemap(next,error))return false;
     r=std::move(next);return true;
 }
+std::string TilemapObjectFingerprint(const SceneObject& object) { return Hash(object); }
+
+bool CompileTilemapObjects(const SceneObject& root, const TilemapRecipe& recipe,
+                          const SpriteSheet& sheet, const std::optional<TilemapEditScope>& scope,
+                          std::vector<CompiledTilemapObject>& output, std::string& error) {
+    std::map<std::string, const SpriteFrame*> frames;
+    for (const auto& frame : sheet.frames) frames.emplace(frame.id, &frame);
+    std::vector<CompiledTilemapObject> objects;
+    auto publish = [&](const std::string& key, SceneObject object) {
+        object.parent = recipe.root;
+        object.authoringFolder = root.name;
+        objects.push_back({key, std::move(object)});
+    };
+    for (const auto& layer : recipe.layers) {
+        if (scope && scope->layer != layer.id) continue;
+        std::map<std::pair<int, int>, std::array<bool, 256>> chunks;
+        for (const auto& cell : recipe.cells) {
+            if (cell.layer != layer.id) continue;
+            const bool visual = !scope || glm::ivec2(cell.x, cell.y) == scope->cell;
+            const bool collision = layer.collision && (!scope ||
+                (Chunk(cell.x) == Chunk(scope->cell.x) && Chunk(cell.y) == Chunk(scope->cell.y)));
+            if (visual) {
+                auto found = frames.find(cell.frame);
+                if (found == frames.end()) return Fail(error, "palette frame removed: " + cell.frame);
+                const auto& frame = *found->second;
+                SceneObject object;
+                object.name = "Tile " + layer.name + " (" + std::to_string(cell.x) + "," + std::to_string(cell.y) + ")";
+                object.transform.position = {recipe.cellSize * glm::vec2(cell.x + .5f, cell.y + .5f), 0};
+                object.render = SceneRenderComponent{};
+                auto& render = *object.render;
+                render.shape = SceneShape::Sprite;
+                render.color = {1, 1, 1};
+                render.textureAsset = sheet.texture;
+                render.sprite.size = recipe.cellSize;
+                render.sprite.pivot = {.5f, .5f};
+                render.sprite.rect = glm::vec4(frame.pixels) / glm::vec4(sheet.width, sheet.height, sheet.width, sheet.height);
+                render.sprite.flipX = cell.flipX;
+                render.sprite.flipY = cell.flipY;
+                render.sprite.sortingLayer = layer.sortingLayer;
+                render.sprite.order = layer.order;
+                object.renderLayer = root.renderLayer;
+                object.tags = root.tags;
+                publish("tile/" + layer.id + "/" + std::to_string(cell.x) + "/" + std::to_string(cell.y), std::move(object));
+            }
+            if (collision) {
+                const auto cx = Chunk(cell.x), cy = Chunk(cell.y);
+                chunks[{cx, cy}][(cell.y - cy * 16) * 16 + cell.x - cx * 16] = true;
+            }
+        }
+        for (auto& [chunk, grid] : chunks) {
+            for (int y = 0; y < 16; ++y) for (int x = 0; x < 16; ++x) {
+                if (!grid[y * 16 + x]) continue;
+                int width = 1, height = 1;
+                while (x + width < 16 && grid[y * 16 + x + width]) ++width;
+                for (; y + height < 16; ++height) {
+                    bool full = true;
+                    for (int dx = 0; dx < width; ++dx) full &= grid[(y + height) * 16 + x + dx];
+                    if (!full) break;
+                }
+                for (int dy = 0; dy < height; ++dy) for (int dx = 0; dx < width; ++dx)
+                    grid[(y + dy) * 16 + x + dx] = false;
+                const int gx = chunk.first * 16 + x, gy = chunk.second * 16 + y;
+                SceneObject object;
+                object.name = "Tile collision " + layer.name;
+                object.transform.position = {recipe.cellSize * glm::vec2(gx + width * .5f, gy + height * .5f), 0};
+                object.body = SceneBodyComponent{};
+                object.body->shape = SceneShape::Planar;
+                object.body->planar = PlanarBox(glm::dvec2(recipe.cellSize) * glm::dvec2(width, height) * .5);
+                object.body->motion = SceneBodyMotion::Static;
+                object.body->friction = .7f;
+                object.tags = root.tags;
+                publish("collision/" + layer.id + "/" + std::to_string(gx) + "/" + std::to_string(gy) +
+                        "/" + std::to_string(width) + "/" + std::to_string(height), std::move(object));
+            }
+        }
+    }
+    output = std::move(objects);
+    error.clear();
+    return true;
+}
 bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase& assets,Scene& output,TilemapRecipe& baked,std::string& error,bool replaceChanged){try{
     if(!ValidateTilemap(r,error))return false;
     if(!ValidateHierarchy(source,error))return false;
@@ -98,7 +178,6 @@ bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase&
     for(const auto& g:r.generated){const auto* o=source.Find(g.entity);if(!o||o->parent!=r.root||Hash(*o)!=g.hash)return Fail(error,"managed tile changed/removed outside painter; undo that edit or Detach grid to retain ordinary objects");
         for(const auto& child:source.Objects())if(child.parent==g.entity)return Fail(error,"managed tile has user children; Detach grid before editing them");
         old.emplace(g.key,g);}
-    std::map<std::string,const SpriteFrame*> frames;for(const auto& f:sheet.frames)frames.emplace(f.id,&f);
     auto scene=source;auto recipe=r;recipe.generated.clear();
     auto publish=[&](const std::string& key,SceneObject o){
         o.parent=r.root;
@@ -112,25 +191,9 @@ bool BakeTilemap(const Scene& source,const TilemapRecipe& r,const AssetDatabase&
         *scene.Find(o.id)=o;
         recipe.generated.push_back({key,Hash(o),o.id});
     };
-    for(const auto& layer:r.layers){
-        std::map<std::pair<int,int>,std::array<bool,256>> chunks;
-        for(const auto& cell:r.cells)if(cell.layer==layer.id){
-            auto found=frames.find(cell.frame);if(found==frames.end())return Fail(error,"palette frame removed: "+cell.frame);
-            const auto& f=*found->second;SceneObject o;o.name="Tile "+layer.name+" ("+std::to_string(cell.x)+","+std::to_string(cell.y)+")";
-            o.transform.position={r.cellSize*glm::vec2(cell.x+.5f,cell.y+.5f),0};o.render=SceneRenderComponent{};auto& render=*o.render;
-            render.shape=SceneShape::Sprite;render.color={1,1,1};render.textureAsset=sheet.texture;render.sprite.size=r.cellSize;render.sprite.pivot={.5f,.5f};render.sprite.rect=glm::vec4(f.pixels)/glm::vec4(sheet.width,sheet.height,sheet.width,sheet.height);render.sprite.flipX=cell.flipX;render.sprite.flipY=cell.flipY;render.sprite.sortingLayer=layer.sortingLayer;render.sprite.order=layer.order;o.renderLayer=root->renderLayer;o.tags=root->tags;
-            publish("tile/"+layer.id+"/"+std::to_string(cell.x)+"/"+std::to_string(cell.y),o);
-            if(layer.collision){auto cx=Chunk(cell.x),cy=Chunk(cell.y);chunks[{cx,cy}][(cell.y-cy*16)*16+cell.x-cx*16]=true;}
-        }
-        for(auto& [chunk,grid]:chunks)for(int y=0;y<16;++y)for(int x=0;x<16;++x)if(grid[y*16+x]){
-            int width=1,height=1;while(x+width<16&&grid[y*16+x+width])++width;
-            for(;y+height<16;++height){bool full=true;for(int dx=0;dx<width;++dx)full&=grid[(y+height)*16+x+dx];if(!full)break;}
-            for(int dy=0;dy<height;++dy)for(int dx=0;dx<width;++dx)grid[(y+dy)*16+x+dx]=false;
-            const int gx=chunk.first*16+x,gy=chunk.second*16+y;SceneObject o;o.name="Tile collision "+layer.name;
-            o.transform.position={r.cellSize*glm::vec2(gx+width*.5f,gy+height*.5f),0};o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;o.body->planar=PlanarBox(glm::dvec2(r.cellSize)*glm::dvec2(width,height)*.5);o.body->motion=SceneBodyMotion::Static;o.body->friction=.7f;o.tags=root->tags;
-            publish("collision/"+layer.id+"/"+std::to_string(gx)+"/"+std::to_string(gy)+"/"+std::to_string(width)+"/"+std::to_string(height),o);
-        }
-    }
+    std::vector<CompiledTilemapObject> objects;
+    if(!CompileTilemapObjects(*root,r,sheet,std::nullopt,objects,error))return false;
+    for(auto& compiled:objects)publish(compiled.key,std::move(compiled.object));
     for(const auto& [key,g]:old){for(const auto& o:scene.Objects())if(o.joint&&(o.joint->bodyA==g.entity||o.joint->bodyB==g.entity))return Fail(error,"removed tile is a joint anchor; detach the grid before changing this assembly");scene.DestroyObject(g.entity);}
     const auto key=TilemapKey(r.root);
     if(auto it=source.Settings().authoringRecipes.find(key);it!=source.Settings().authoringRecipes.end()){TilemapRecipe prior;if(!ParseTilemap(it->second,prior,error)||prior.root!=r.root)return Fail(error,"recipe key belongs to another authoring operation");}

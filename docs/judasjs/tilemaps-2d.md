@@ -1,7 +1,7 @@
 # Tilemap authoring
 
-Experimental development toward v1.1.0. This is an editor workflow, not a new
-JudasJS runtime subsystem. See [sprites](sprites-2d.md), [sprite sheets](sprite-animation.md)
+Tilemaps compile to ordinary engine objects and support authored and runtime
+cell edits. See [sprites](sprites-2d.md), [sprite sheets](sprite-animation.md)
 and [planar physics](physics-2d.md) for the underlying public components.
 
 ## Make and paint a level
@@ -59,7 +59,7 @@ Current bounds are **2,048 occupied cells per grid, eight layers**, coordinates
 −512…512, and cell dimensions 0.01…100 metres. Each cell is a normal sprite entity;
 this is a practical bounded level editor, not an infinite-world tile renderer.
 Frame pivots are centered and art fills the cell. Animated tiles, slopes,
-one-way platforms, moving grids and gameplay cell-edit APIs are not provided.
+one-way collision tiles and moving grids are not provided by the tile painter.
 These limits do not change existing 3D or small sprite projects.
 
 Try [Tilemap Workshop](../../projects/tilemap_workshop/Tilemap_Workshop.judasproj).
@@ -77,17 +77,27 @@ grid.setTile('ground', 10, 0, null); // erase
 
 The first argument is the authored layer ID. X and Y are integer cell
 coordinates from −512 to 512. Use a frame ID from the grid's registered
-sprite sheet. Optional flip flags default to false. A solid layer rebuilds
-native planar collision as part of the edit. A decorative layer changes
-presentation only. Each call completes synchronously before returning.
-Use it for discrete gameplay changes since the edit validates and
-compiles the bounded grid (up to 2,048 cells).
+sprite sheet. Optional flip flags default to false. Each call updates only the
+edited sprite. A solid-layer edit recompiles only that layer's affected 16×16
+collision chunk; unchanged colliders retain their actual physics handles. A
+decorative-layer edit does not rebuild collision. The runtime and editor share
+the same sprite and merged-collider compiler.
+
+Each call completes synchronously before returning. It no longer copies the
+world, flattens its hierarchy, rebuilds the entire map or roundtrips the scene
+through serialization. The bounded recipe is still parsed/validated/encoded,
+palette/image admission is checked, and live references are scanned without
+copying definitions. Calls are therefore not constant-cost or free; avoid
+rewriting every tile every frame. See the [measured qualification](../TILEMAP_INCREMENTAL_EDITS.md).
 
 Normal world saves retain the updated recipe and generated entities.
 Unchanged generated children keep their IDs. Replacement children get
 new IDs, so gameplay should identify a tile by grid, layer and cell.
 The authored scene on disk stays intact. An invalid edit leaves the
 previous recipe and collision in place.
+Touched managed children must still match their recorded fingerprints. User
+children and joint anchors prevent unsafe replacement. Unrelated customized
+children are left alone; a full editor rebuild still validates the entire map.
 
 This path supports scene-owned grids with an unparented, unrotated,
 unit-scale root and cell positions that round-trip in the world's local

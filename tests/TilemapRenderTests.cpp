@@ -29,5 +29,14 @@ int main(int argc,char** argv){try{
  auto layered=baked;layered.layers.push_back({"front","Foreground",0,10,false});layered.cells.push_back({"front","green",0,0});Scene front;TilemapRecipe frontRecipe;Check(BakeTilemap(scene,layered,assets,front,frontRecipe,error),"decorative layer overlaps without adding physical collision");
  auto second=capture(front);Check(color(second,175,75,1),"layer sort order changes actual framebuffer result");
  auto erased=frontRecipe;Check(PaintTilemap(erased,"front",{0,0},{0,0},"",true,false,false,error),"erase foreground");Scene restored;TilemapRecipe again;Check(BakeTilemap(front,erased,assets,restored,again,error),"rebuild erased layer");auto third=capture(restored);Check(color(third,175,75,0),"erasing foreground reveals original lower layer");
+ RuntimeWorld live;Check(live.Build(scene,&resources,error),"build ordinary runtime-edit render fixture");
+ auto captureLive=[&](){RenderWorldFrame(renderer,320,240,live,camera.view,camera.projection,{0,0,5},1);std::vector<unsigned char> pixels;renderer.CaptureFrame(320,240,pixels);return pixels;};
+ Check(live.EditTilemapCell(owner,"ground",{0,0},"green",false,false,error),"incremental runtime frame change");
+ auto changed=captureLive();Check(color(changed,175,75,1)&&color(changed,235,75,1),"runtime edit changes actual framebuffer while preserving the neighbouring sprite");
+ Check(live.EditTilemapCell(owner,"ground",{0,0},"",false,false,error),"incremental runtime erasure");
+ auto empty=captureLive();bool black=true;for(int y=75;y<105;++y)for(int x=175;x<205;++x)for(int c=0;c<3;++c)black&=empty[(y*320+x)*3+c]==0;
+ Check(black&&color(empty,235,75,1),"runtime erasure removes actual rendered geometry without hiding the neighbour");
+ WriteRgbPng((root/"runtime-erased.png").string(),320,240,empty);
+ live.Destroy();
  resources.Shutdown();std::printf("TILEMAP_PIXELS checks=%u failures=0\n",checks);return 0;
 }catch(const std::exception& e){std::fprintf(stderr,"FAIL %s\n",e.what());return 1;}}

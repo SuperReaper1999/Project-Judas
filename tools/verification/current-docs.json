@@ -2,6 +2,7 @@
   "schema": 1,
   "scope": "Current V2 reference links and managed source/publication/finding summaries. Historical evidence is preserved in Git.",
   "documents": [
+    "README.md",
     "docs/2D_GAME_WORKFLOW.md",
     "docs/2D_QUICKSTART.md",
     "docs/2D_TRAVERSAL.md",
@@ -107,6 +108,7 @@
     "docs/TERRAIN_V2_QUALIFICATION.md",
     "docs/TERRAIN_V2_RESIDENCY.md",
     "docs/TEST_HARNESS.md",
+    "docs/TILEMAP_INCREMENTAL_EDITS.md",
     "docs/UI_MENU_PASS_REPORT.md",
     "docs/UI_TRANSFERS_AND_PREVIEWS.md",
     "docs/V2_BREAKING_CHANGES.md",
@@ -162,7 +164,6 @@
     "docs/judasjs/water.md",
     "docs/judasjs/weather.md",
     "docs/judasjs/wheels.md",
-    "README.md",
     "src/physics/WorldModules.md"
   ],
   "historical_exclusions": []
