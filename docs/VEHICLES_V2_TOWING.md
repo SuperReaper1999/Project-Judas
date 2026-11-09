@@ -81,6 +81,41 @@ Therefore the increased full-run median is not an equal-active-work comparison,
 and the small tail difference is not claimed as a speedup. These are CPU simulation
 costs, excluding rendering and JS. No new native per-wheel algorithm is shipped.
 
+## Exact checkpoint and CI scope
+
+Correction implementation: `6274ecdb651a955de39a092de2a33672c229a1bf`.
+Test-path correction: `b9c5223ed7cbe69e5d5b33769f6b5d6476769f9e`.
+The [required engine qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42714296052)
+is tied to the latter exact commit; later documentation-only changes do not alter
+its engine/project/test code. Consult the actual completed result before treating
+a build as qualified.
+
+The first CI attempt at the correction ran 177/178 Experimental cases successfully;
+the new towing test then failed to find its scene from the validator's isolated
+working directory. The old failure is retained, not suppressed. The fixture now
+uses the existing `ResolveEngineDataPath`; both an invocation from `/tmp` and the
+actual registered validator pass with all assertions unchanged. The first run's
+remaining Alpha job was cancelled by the normal newer-commit concurrency policy.
+
+## Additional SDK/export checks and precision limitation
+
+The clean local SDK was rebuilt at the towing checkpoint and passed its 15-tool,
+39-command, eight-stage project/editor/export workflow with the development checkout
+hidden and SDK read-only. A separate relocated Workshop export ran writer/reader
+processes with the SDK, source project and engine checkout hidden. Holding S after
+load retained braking and the rig returned to rest; its runtime hash matches the SDK.
+An actual GTX 970 OpenGL 4.6 run also displayed the corrected, sleeping tow rig.
+No Windows/Android/browser execution is claimed for this correction.
+
+**Known precision limitation:** that additional relocated articulated-rest probe
+settled 2.16 mm from the uninterrupted pose, so its extra-strict 1 mm trajectory
+comparison did **not** pass. This is recorded separately from successful restoration
+and brake-state checks; it is not relabelled as a pass. The unchanged wheel restore
+path invalidates derived contacts, so the first support query wakes/re-equilibrates
+a saved sleeping rig. The independent game-copy cold comparison above was 0.033 mm;
+results are fixture-dependent. All inherited save/trajectory regression expectations
+remain unchanged. No broad persistence change is bundled into the towing correction.
+
 ## Evidence and handover
 
 [Raw checks, timings, scope and rejected experiment](evidence/vehicles-v2/towing/).

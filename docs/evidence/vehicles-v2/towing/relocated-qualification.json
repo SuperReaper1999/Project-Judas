@@ -1,0 +1,14 @@
+{
+  "export_and_cold_brake_behavior_passed": true,
+  "source_revision": "6274ecdb651a955de39a092de2a33672c229a1bf",
+  "runtime_hash_matches_sdk": true,
+  "source_project_hidden": true,
+  "sdk_hidden": true,
+  "engine_checkout_hidden": true,
+  "separate_writer_reader": true,
+  "held_S_after_restore_speed_mps": 0.0,
+  "restored_vs_uninterrupted_settled_position_difference_m": 0.0021597763773131737,
+  "additional_strict_1mm_trajectory_probe_passed": false,
+  "softwareGraphics": true,
+  "known_limitation": "Derived wheel contacts are rebuilt and wake the saved sleeping support before re-settling. 2.16mm settled difference in this fixture; not fixed or represented as a passing 1mm probe. Native persistence and physical solvers unchanged by towing correction."
+}

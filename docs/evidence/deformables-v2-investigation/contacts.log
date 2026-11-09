@@ -1,0 +1,5 @@
+STATIC_CONTACT kind=capsule contacts=0 displacement=1.33367e-16 error=
+STATIC_CONTACT kind=sphere contacts=358 displacement=2.11882 error=
+INSERT_STATIC sleeping=1 contacts=0 displacement=0
+EXPLICIT_WAKE contacts=358
+QUIET_DYNAMIC_ATTACHMENT body_sleeping=1 cloth_sleeping=0 cloth_quiet_seconds=0 body_speed=0

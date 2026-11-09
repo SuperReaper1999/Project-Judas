@@ -1,0 +1,18 @@
+{
+  "source_checkpoint": "6274ecdb651a955de39a092de2a33672c229a1bf",
+  "deformables_implementation_changes": false,
+  "compiler": "GCC 15.2 Release, existing engine build",
+  "host": "Ryzen 5 5600, Linux",
+  "cpu_affinity": "CPU 2 for correctness and existing benchmark executions",
+  "measurement_scope": "Short existing CPU fixtures; no rendered crash-car or portable-platform qualification claimed",
+  "sources": {
+    "src/Deformable.cpp": "4f6af4073afd55aaea1b4d48860b443063c780543b3c1c705866f15b73c99545",
+    "src/DeformableAsset.cpp": "ba530e448a6cc96e0b94c29841e84e76cce64dfd326602c54eeb9a9ba978a758",
+    "src/WorldDeformables.cpp": "f45fa8118b1323e11d4d255724b1ed7d256152b746129afb1d203bf6c6e8820f",
+    "src/WorldFracture.cpp": "0287255dd52de2f87558da682016044bc73927727cf76708f60d231cabf44252",
+    "src/Fracture.cpp": "d440d35d445343263b83a7c4343b638dd2e6aa32969001c41889424a9744f96c",
+    "src/JointSolver.cpp": "45707397b791ca67d24b16847e361e6733a0cea87812489cc19c9888f85f4c15",
+    "src/Simulation.cpp": "f57bfb68c1089ad6539685dd876c743617b9f65592c99070d5db025b9b8dedf5",
+    "src/Renderer.cpp": "00c3a5f4f912f12dbbc5ee36429792b24cf66d277450463a8fbc2074319117ab"
+  }
+}

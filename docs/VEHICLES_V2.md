@@ -6,7 +6,7 @@ Experimental implementation; automated and human qualification are reported sepa
 
 Open a project, then use **Create → Vehicles** (also available in hierarchy creation) to add a car, truck, bus or unpowered trailer. The root is a dynamic compound chassis. Wheel children own suspension and scalar rotational state; their tread children are presentation meshes. Powered presets attach an editable `Assets/Scripts/VehicleDriver*.js` and add logical throttle, steering and brake bindings if absent. Existing bindings are preserved. Creation rejects scaled parent chains; dimensions belong in the assembly/component settings rather than inherited non-unit scale.
 
-W/S drives forward/reverse, A/D steers, Space brakes. These defaults are project JavaScript, not engine behaviour. The exact unmodified project-starter camera is disabled when adding a powered preset; custom cameras remain yours to manage. Multiple attached drivers can compete for camera/input: disable their `driving`/`camera` properties or supply a project-owned vehicle-selection controller.
+W/S drives; the opposing pedal brakes until released, then a new press selects reverse. A/D steers and Space brakes. These defaults are project JavaScript, not engine behaviour. The exact unmodified project-starter camera is disabled when adding a powered preset; custom cameras remain yours to manage. Multiple attached drivers can compete for camera/input: disable their `driving`/`camera` properties or supply a project-owned vehicle-selection controller.
 
 The editable example is `projects/vehicle_v2_workshop/Vehicle_V2_Workshop.judasproj`. Its selection controller demonstrates a combustion/clutch/gear/differential car, independent electric multi-axle drives and an ordinary MK2 ball-joint trailer. The generator refuses to overwrite an existing project.
 
@@ -49,7 +49,7 @@ not a change to native torque APIs or a hidden velocity/yaw constraint.
 A freely following utility trailer needs an appropriate axle layout. The Workshop
 uses a rear tandem at local Z=0.175 and 0.825 m, rather than a fixed car wheelbase
 at ±0.95 m; service brake torque is sized separately for its 900 kg and the tractor's
-700 kg. The editor's unpowered trailer preset uses one axle. Widely separated fixed
+700 kg. The editor's unpowered trailer preset uses one axle; an unhitched single-axle trailer needs a drawbar support to stand independently. Widely separated fixed
 trailer axles scrub strongly in turns; use a steerable bogie if that layout is needed.
 Real jackknifing remains possible under excessive reversing or insufficient grip;
 no artificial articulation limit or anti-jackknife rotation lock is applied.

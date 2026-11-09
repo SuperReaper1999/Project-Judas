@@ -1,0 +1,12 @@
+{
+  "source_revision": "6274ecdb651a955de39a092de2a33672c229a1bf",
+  "workflow_passed": true,
+  "engine_checkout_hidden_by_tmpfs": true,
+  "sdk_read_only": true,
+  "host_root_read_only": true,
+  "software_offscreen_graphics": true,
+  "tools": 15,
+  "tool_operation_commands": 39,
+  "workflow_stages": 8,
+  "note": "The existing qualifier packageOnlyNamespaces field only detects its rootfs option; this external bwrap isolation is recorded separately."
+}

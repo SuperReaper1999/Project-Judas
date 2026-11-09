@@ -1,0 +1,47 @@
+[
+  {
+    "target": "judas_deformable_tests",
+    "exit": 0,
+    "seconds": 0.313029042998096
+  },
+  {
+    "target": "judas_fracture_tests",
+    "exit": 0,
+    "seconds": 0.048699316997954156
+  },
+  {
+    "target": "judas_structural_tests",
+    "exit": 0,
+    "seconds": 0.016386097002396127
+  },
+  {
+    "target": "judas_bending_tests",
+    "exit": 0,
+    "seconds": 1.4721840669990343
+  },
+  {
+    "target": "judas_section_material_tests",
+    "exit": 0,
+    "seconds": 0.02364428299915744
+  },
+  {
+    "target": "judas_mechanical_connection_tests",
+    "exit": 0,
+    "seconds": 0.030819522999081528
+  },
+  {
+    "target": "judas_mechanical_damage_tests",
+    "exit": 0,
+    "seconds": 0.012310563000937691
+  },
+  {
+    "target": "judas_deformable_performance_tests",
+    "exit": 0,
+    "seconds": 0.5456681930008926
+  },
+  {
+    "target": "judas_fracture_performance_tests",
+    "exit": 0,
+    "seconds": 0.5337701290009136
+  }
+]

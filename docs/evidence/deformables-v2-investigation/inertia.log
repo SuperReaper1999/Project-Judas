@@ -1,0 +1,2 @@
+CUBE mass=1 exact_uniform_Ixx=0.166667 actual_Ixx=0.5 Ixy=-0.0833333 Ixz=-0.0833333 Iyz=-0.0833333 diagonal_ratio=3
+UNIT_X_ANGULAR_IMPULSE expected_spin=6,0,0 actual_spin=2.14286,0.428571,0.428571

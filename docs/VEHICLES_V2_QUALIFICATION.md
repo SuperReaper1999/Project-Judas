@@ -3,8 +3,13 @@
 Work begins at Experimental `cd4cb87e41f0fc6bc1b7928f6649de3274ba94a4`.
 Finite-width contact checkpoint: `a896950554688699c51fa47b7ce179d6d8a67a6d`.
 MK2 coupling / support lifecycle / authoring checkpoint: `da4678d2dcef240b2b56d154ace3e96294c21d16`.
-Final tested engine implementation: `1afc3ff23833c72ede30e86d2d8ae1a9b70d7adb`. Subsequent handover documentation changes do not alter that implementation.
-This is source-preview engineering, not a release or operator acceptance.
+Original five-stage implementation: `1afc3ff23833c72ede30e86d2d8ae1a9b70d7adb`.
+Towing correction: `6274ecdb651a955de39a092de2a33672c229a1bf`;
+isolated-working-directory test correction: `b9c5223ed7cbe69e5d5b33769f6b5d6476769f9e`.
+The measurements in the original sections below retain their recorded scope.
+This is an unsupported source-build preview, not a published V2 release.
+The operator's later human review and conditional correction acceptance are recorded
+at the end and in [the towing follow-up](VEHICLES_V2_TOWING.md).
 Main and the Advanced Fluids lock remain unchanged. The existing Terrain Workshop edits and RPG SDK are excluded.
 
 ## Confirmed physical corrections

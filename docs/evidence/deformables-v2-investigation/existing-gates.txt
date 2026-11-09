@@ -1,0 +1,9 @@
+judas_bending_tests.log: M80 numerical: 40 checks 0 failures
+judas_deformable_performance_tests.log: PERFORMANCE mode=no-deformable nodes=0 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=0.003216 p95_ms=0.003416 max_ms=0.003416 hot_allocations=0 hot_bytes=0 contacts=0 candidates=0 sleeping=1/1 slowest= 0.000000ms
+judas_deformable_tests.log: SUMMARY 68 checks 0 failures
+judas_fracture_performance_tests.log: CPU mode=no-fracture parts=90 nodes=720 tets=540 interfaces=89 broken=6 median_ms=0.000601 p95_ms=0.000962 max_ms=0.005200 allocations=0 allocated_bytes=0 retained_numeric_bytes=125435 selfContact=false
+judas_fracture_tests.log: M63 core: 33 checks passed
+judas_mechanical_connection_tests.log: M83 mechanical connections checks=37 failures=0
+judas_mechanical_damage_tests.log: M83 material-attachment checks=33 failures=0
+judas_section_material_tests.log: SUMMARY 27 checks 0 failures
+judas_structural_tests.log: M79 section checks=32 PASS

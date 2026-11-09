@@ -23,3 +23,12 @@ Current portability and CPU particle fallbacks, MK2, flat/radial gravity,
 planetary precision, input, audio, joints, deformables, animation and modern
 persistence are legitimate capabilities and remain. No V2 release, main promotion
 or fluid unlock is implied by this purge.
+
+## Vehicle template input policy
+
+New vehicle templates and the Workshop use opposing W/S pedals as service brakes
+while moving in the other direction. Release and re-press to select reverse. This
+is an intentional change to the copyable project driver, not a JudasJS or native
+torque API break. Existing project-owned controllers remain yours to manage. The
+unpowered trailer preset now has one axle; the Workshop uses a rear tandem.
+See [towing correction and limits](VEHICLES_V2_TOWING.md).

@@ -33,7 +33,7 @@ Check the release page for subsequently published packages.
 [drag/drop and 3D previews](UI_TRANSFERS_AND_PREVIEWS.md) · [audio](AUDIO_STREAMING.md) ·
 [physics queries](PHYSICS_QUERIES.md) · [collision](COLLISION_AUTHORING.md) ·
 [joints](JOINTS.md) · [gravity](GRAVITY_SELECTION.md) · [Vehicles V2](VEHICLES_V2.md) ·
-[powertrains](POWERTRAINS.md) · [deformables](DEFORMABLES.md) · [fracture](FRACTURE.md) ·
+[powertrains](POWERTRAINS.md) · [deformables](DEFORMABLES.md) · [Deformables V2 investigation/proposal](DEFORMABLES_V2_INVESTIGATION.md) · [fracture](FRACTURE.md) ·
 [weather](WEATHER.md) · [streaming](WORLD_STREAMING.md) · [persistence](PERSISTENCE.md) ·
 [save evolution](SAVE_EVOLUTION.md) · [mods](MODDING.md) · [networking](NETWORKING.md).
 
