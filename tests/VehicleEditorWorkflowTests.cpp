@@ -32,5 +32,7 @@ int main(){unsigned checks=0;auto check=[&](bool value,const std::string& messag
  }
  document.GetScene().Find(parent)->transform.scale={2,1,1};const auto before=document.GetScene();
  check(!CreateEditorVehicle(document,project,assets,"vehicle-car",{},parent,error)&&ScenesEqual(before,document.GetScene()),"scaled parent rejects without changing scene");
+ project.Settings().input.Find("vehicle_throttle")->axis=false;
+ check(!CreateEditorVehicle(document,project,assets,"vehicle-car",{},0,error)&&ScenesEqual(before,document.GetScene())&&error.find("vehicle_throttle")!=std::string::npos,"conflicting logical input types reject atomically with an actionable message");
  std::filesystem::remove_all(root);std::cout<<"SUMMARY "<<checks<<" checks\n";return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

@@ -10,7 +10,7 @@ Main and the Advanced Fluids lock remain unchanged. The existing Terrain Worksho
 
 - Wall/floor selection: 11 native contact checks, including both surfaces inside one concave collider, finite tread width, filters and authored identity.
 - Production reversed component registration: 0 m trajectory difference after ten seconds. Independent deliberately unsorted/reversed constraint sweeps: 0.00327 m versus the investigation's 2.532117 m one-pass discrepancy. This is host reproducibility within the declared 1 cm control, not universal bit-identical determinism.
-- 74 dynamics/integration checks: natural MK2 sleeping, torque wake, removed/moved/new supports, six/eight-wheel loads and drive, prefab authoring, passive energy, articulation, rolling speeds, overflow rejection, native terrain, excavation and origin shifts.
+- 81 dynamics/integration checks: natural MK2 sleeping, torque wake, removed/moved/new supports, six/eight-wheel loads and drive, prefab authoring, passive energy, articulation, rolling speeds, overflow rejection, native terrain, excavation and origin shifts.
 - Passive control: 6937.5 J initial and maximum, 6123.94 J final. Damping/friction dissipate energy; there is no artificial energy clamp.
 - Actual articulated towing: maximum ball-hitch separation 0.000558079 m, with unpowered trailer travel.
 - 5/15/30/50 m/s level rolling controls retain support and independently expected distance.
@@ -21,7 +21,7 @@ Main and the Advanced Fluids lock remain unchanged. The existing Terrain Worksho
 
 ## Authoring and actual game checks
 
-The 14-check editor workflow creates a fresh project and real vehicle, compiles its script, verifies one-step Undo/Redo, persists bindings, authors a prefab, creates child truck/bus/trailer layouts and rejects scaled parents atomically. The exact unmodified starter camera is superseded; user scripts are preserved.
+The 15-check editor workflow creates a fresh project and real vehicle, compiles its script, verifies one-step Undo/Redo, persists bindings, authors a prefab, creates child truck/bus/trailer layouts and rejects scaled parents atomically. The exact unmodified starter camera is superseded; user scripts are preserved.
 
 The GTX 970/OpenGL 4.6 Workshop runs ordinary project scripts. Car/truck/bus/tow rig each accelerate and steer; measured four-second driven distances are 21.32 / 32.41 / 24.18 / 18.93 m. After two seconds of braking their speeds are 0.0014 / 0.1432 / 0.0034 / 0.0017 m/s. Initial shared 600 N m brakes were underpowered for heavy layouts; the game-side recipe now scales effort with supported weight/radius. Native friction limits remain unchanged. These are automated input/capture results, not human acceptance.
 
@@ -29,7 +29,7 @@ A separate rendered process restores the saved tow rig and trailer through SaveS
 
 ## Runtime cost
 
-Ryzen 5 5600, GCC 15 Release, 60 Hz. Three fresh processes, each 300 settling steps and 1200 workload steps, first 120 excluded: 1080 measured samples per case/run. No compilation ran during these measurements. Numbers below are the median of per-run percentiles, with the largest observed worst. Profiler enabled; whole-step times include capture overhead and ordinary world orchestration, not rendering.
+Ryzen 5 5600, GCC 15 Release, 60 Hz. Three fresh processes, each 300 settling steps and 1200 workload steps, first 120 excluded: 1080 measured samples per case/run. No compilation ran during these measurements. Reproduce with `cmake --build build --target judas_vehicle_benchmark` followed by `build/judas_vehicle_benchmark` after other compiler jobs finish. Numbers below are the median of per-run percentiles, with the largest observed worst. Profiler enabled; whole-step times include capture overhead and ordinary world orchestration, not rendering.
 
 | Workload | p50 ms | p95 ms | p99 ms | Worst ms |
 | --- | ---: | ---: | ---: | ---: |
@@ -44,7 +44,9 @@ The investigation's original direct wheel/rigid phase timings remain historical 
 
 ## Qualification completion
 
-Coordinated engine gates, exact-source SDK/export and final CI: pending. No pending result is counted as passing. Raw local evidence is retained in `.cache/vehicles-v2/`; investigation evidence remains in `.cache/vehicles-v2-investigation-20261109/`.
+The final handover is accompanied by generated qualification receipts in `.cache/vehicles-v2/`: coordinated native `RESULTS.json`, SDK `BUILD_INFO.json` and verification/workflow receipts, rendered gameplay captures, raw performance rows and CI run links. Read those exact-source results rather than inferring a pass from this document or from an intermediate checkpoint. Investigation evidence remains in `.cache/vehicles-v2-investigation-20261109/`.
+
+The extended controls also include head-on vehicle collisions and 20 seconds of driven travel over 316 m with an actual 512 m origin recenter: absolute trajectory error 0.0000626 m. A deliberately opposite-direction shift moving a near-origin car to −1024 m quantized tiny lateral float increments and differed by 0.0256 m over 20 seconds; a proposed local-lever rewrite did not repair that and was rejected. This is a precision-chart limitation, not a justified vehicle rewrite. The recenter test respects the existing 512 m anchor contract and retains its original 2 cm tolerance. Failed experiments are preserved.
 
 ## Human checklist
 

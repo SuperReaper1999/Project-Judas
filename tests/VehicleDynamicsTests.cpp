@@ -239,6 +239,39 @@ void TerrainAndIntervals() {
     }
     profiler.Enable(false);
 }
+void TrafficAndTravel() {
+    auto scene=VehicleFixture::Create();const auto first=scene.Objects();
+    for(auto object:first)if(object.id>=3){object.id+=10;if(object.parent)object.parent+=10;
+        if(object.wheel)object.wheel->chassis+=10;
+        scene.Objects().push_back(object);}
+    scene.SetNextId(18);scene.Find(3)->transform.position.z=-4;scene.Find(13)->transform.position.z=4;
+    RuntimeWorld traffic;Build(traffic,scene);VehicleFixture::Tick(traffic,300);
+    traffic.Physics().SetLinearVelocity(traffic.RuntimeBody(3),{0,0,8});
+    traffic.Physics().SetLinearVelocity(traffic.RuntimeBody(13),{0,0,-8});
+    for(unsigned n=4;n<=7;++n){traffic.RuntimeWheel(n)->state.angularVelocity=-8/.35f;traffic.RuntimeWheel(n+10)->state.angularVelocity=8/.35f;}
+    VehicleFixture::Tick(traffic,120);
+    const auto a=traffic.Physics().GetTransform(traffic.RuntimeBody(3)).position;
+    const auto b=traffic.Physics().GetTransform(traffic.RuntimeBody(13)).position;
+    Check(glm::distance(a,b)>2&&a.z<b.z&&a.y>.6f&&b.y>.6f,
+          "two real wheel-supported chassis collide without crossing or losing support");
+    Check(glm::length(traffic.Physics().GetLinearVelocity(traffic.RuntimeBody(3)))<1&&
+          glm::length(traffic.Physics().GetLinearVelocity(traffic.RuntimeBody(13)))<1,
+          "head-on vehicle impact settles through MK2 rather than a separate vehicle collision response");
+    RuntimeWorld local,shifted;Build(local,VehicleFixture::Create());Build(shifted,VehicleFixture::Create());
+    VehicleFixture::Tick(local,300);VehicleFixture::Tick(shifted,300);
+    VehicleFixture::Drive(local,60);VehicleFixture::Drive(shifted,60);
+    glm::vec3 delta{0};std::string error;
+    for(unsigned step=0;step<1200;++step){
+        if(step==1100){delta=glm::round(shifted.Physics().GetTransform(shifted.RuntimeBody(3)).position/512.f)*512.f;
+            Check(glm::length(delta)>0&&shifted.RequestOrigin(delta,error)&&shifted.CommitOrigin(),"recenter origin on the vehicle during sustained driven travel");}
+        VehicleFixture::Tick(local);VehicleFixture::Tick(shifted);
+    }
+    const auto expected=local.Physics().GetTransform(local.RuntimeBody(3)).position;
+    const auto actual=shifted.Physics().GetTransform(shifted.RuntimeBody(3)).position+delta;
+    std::cout<<"TRAVEL expected="<<expected.x<<","<<expected.y<<","<<expected.z<<" actual="<<actual.x<<","<<actual.y<<","<<actual.z<<" origin_shift_trajectory_error_m="<<glm::distance(actual,expected)<<'\n';
+    Check(glm::distance(actual,expected)<.02f&&expected.z<-30,
+          "twenty-second driven travel preserves trajectory through origin shift");
+}
 void Cold(const std::string& mode,const std::filesystem::path& root) {
     std::filesystem::create_directories(root);std::string error;
     SaveStorage storage(root.string());GameSnapshot saved;
@@ -290,7 +323,7 @@ void Cold(const std::string& mode,const std::filesystem::path& root) {
 }
 int main(int argc,char** argv) {
     try {
-        if(argc==3)Cold(argv[1],argv[2]);else {SleepingAndOrder();UnorderedConstraints();PassiveEnergy();AuthoredAssemblies();TrailerAndSpeed();TerrainAndIntervals();if(argc==2)Cold("write",argv[1]);}
+        if(argc==3)Cold(argv[1],argv[2]);else {SleepingAndOrder();UnorderedConstraints();PassiveEnergy();AuthoredAssemblies();TrailerAndSpeed();TerrainAndIntervals();TrafficAndTravel();if(argc==2)Cold("write",argv[1]);}
         std::cout<<"SUMMARY "<<checks<<" checks\n";return 0;
     }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
 }

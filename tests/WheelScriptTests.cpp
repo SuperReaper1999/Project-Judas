@@ -51,11 +51,14 @@ export default class {
    this.rejects(()=>this.wheel.set({driveTorque:Infinity}),TypeError);
    this.rejects(()=>this.wheel.set({gear:2}),TypeError);
    this.rejects(()=>this.wheel.set([]),TypeError);
-   this.wheel.configure({friction:.7,damping:1800,rollingResistance:.03});
+   this.wheel.configure({friction:.7,damping:1800,rollingResistance:.03,reboundRatio:1.2,longitudinalStiffness:14,lateralStiffness:9});
+   this.rejects(()=>this.wheel.configure({reboundRatio:NaN}),TypeError);
+   this.rejects(()=>this.wheel.configure({lateralStiffness:0}),TypeError);
    this.rejects(()=>this.wheel.configure({friction:.2,springStiffness:-1}),TypeError);
    this.rejects(()=>this.wheel.configure({chassis:'2'}),TypeError);
    this.rejects(()=>this.wheel.configure([]),TypeError);
    const settings=this.wheel.settings;if(Math.abs(settings.friction-.7)>1e-6||settings.springStiffness!==20000)throw Error('atomic setting validation');
+   if(Math.abs(settings.reboundRatio-1.2)>1e-6||settings.longitudinalStiffness!==14||settings.lateralStiffness!==9)throw Error('V2 configuration readback');
    this.wheel.enabled=false;if(this.wheel.enabled)throw Error('disable');
    this.wheel.enabled=true;if(!this.wheel.enabled)throw Error('enable');
    this.state.configured=true;
@@ -63,6 +66,8 @@ export default class {
   if(this.state.steps===2){
    const s=this.wheel.state;
    if(!s.available||!s.contact||s.contactEntity.id!=='1'||s.normal.y<.99||s.normalForce<=0||!Number.isFinite(s.angularVelocity))throw Error('physical contact snapshot');
+   if(typeof s.sleeping!=='boolean'||typeof s.diagnostic!=='string')throw Error('V2 support diagnostics');
+   for(const key of ['slipRatio','slipAngle','gripUtilization'])if(!Number.isFinite(s[key]))throw Error('V2 finite telemetry '+key);
    s.normal.y=99;if(this.wheel.state.normal.y===99)throw Error('mutable native state');
    this.state.contact=true;
   }

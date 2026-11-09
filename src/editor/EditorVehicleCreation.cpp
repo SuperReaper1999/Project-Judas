@@ -19,6 +19,11 @@ SceneObjectId CreateEditorVehicle(EditorDocument& document,Project& project,Asse
         error="Unknown vehicle assembly preset.";return 0;
     }
     error.clear();
+    if(kind!="vehicle-trailer")for(const auto* name:{"vehicle_throttle","vehicle_steer","vehicle_brake"}) {
+        const auto* action=project.Settings().input.Find(name);
+        const bool axis=std::string(name)!="vehicle_brake";
+        if(action&&action->axis!=axis){error=std::string("Correct the input type for '")+name+"' in Project Settings before creating a powered vehicle.";return 0;}
+    }
     for(auto id=parent;id;) {
         const auto* object=document.GetScene().Find(id);
         if(!object||object->transform.scale!=glm::vec3(1)){error="Create vehicles under unit-scale parents, or at the scene root.";return 0;}
