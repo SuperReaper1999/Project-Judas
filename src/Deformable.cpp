@@ -82,6 +82,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     if(data->nodes.size()!=data->measures.size()||data->nodes.size()!=data->massWeights.size()||data->neighbors.size()!=data->nodes.size())throw std::invalid_argument("deformable topology is not prepared");
     if(!validMasses(*data,config.material.density))throw std::invalid_argument("deformable derived mass is not finite and positive");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
+    panelBending.reset();
     asset=std::move(data);
     settings=config;
     generation=epoch;
@@ -111,6 +112,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
 }
 void DeformableInstance::Reset(const glm::dmat4& transform){
     initial=transform;
+    if(panelBending)panelBending->Reset();
     selfCandidatesValid=false;
     error.clear();
     for(size_t i=0;i<positions.size();++i){positions[i]=previous[i]=start[i]=target(transform,asset->nodes[i]);
@@ -234,7 +236,8 @@ void DeformableInstance::Internal(double h){
         stats.minimumJacobian=std::min(stats.minimumJacobian,J);
         scalar(positions,inverseMass,ids,gradients,4,J-1,m.volumeCompliance/t.volume,h,volumeLambda[index]);
     }
-    for(auto b:asset->bends){unsigned ids[2]={b.a,b.b};
+    if(panelBending)panelBending->Solve(positions,inverseMass,h);
+    else for(auto b:asset->bends){unsigned ids[2]={b.a,b.b};
         V delta=positions[b.a]-positions[b.b];
         double len=glm::length(delta);
         if(len>1e-12){V gradients[2]={delta/len,-delta/len};
@@ -264,7 +267,7 @@ void DeformableInstance::Plastic(double h){
         if(extent<=m.maximumPlasticStrain)plasticRest[i]=next;
     }
 }
-void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,const std::vector<DeformableTarget>& targets){
+void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,const std::vector<DeformableTarget>& targets,std::array<BodyHandle,64>& awakened,unsigned& awakenedCount){
     JUDAS_PROFILE_SCOPE("Deformable attachments");
     for(size_t a=0;a<settings.attachments.size();++a){const auto& attachment=settings.attachments[a];
         if(released[a]||!attachment.enabled||a>=targets.size()||!targets[a].valid)continue;
@@ -272,6 +275,8 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
         if(group==asset->groups.end())continue;
         const auto& t=targets[a];
         const bool dynamicTarget=t.body.IsValid()&&physics.IsDynamicBody(t.body);
+        bool targetWoken=false;
+        for(unsigned i=0;i<awakenedCount;++i)targetWoken|=awakened[i].id==t.body.id&&awakened[i].world==t.body.world;
         // Keep the moment origin inside the patch, independently of its world
         // placement. A pure couple must remain a torque when its net force is
         // zero; summing per-node impulse magnitudes would invent a force.
@@ -311,8 +316,17 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 // rounding an absolute world point to float before subtracting
                 // the COM would alter a small patch's torque at large origins.
                 const V arm=point-V(physics.GetCenterOfMass(t.body));
-                physics.ApplyLinearImpulse(t.body,glm::vec3(reaction));
-                physics.ApplyAngularImpulse(t.body,glm::vec3(glm::cross(arm,reaction)));
+                const auto linear=glm::vec3(reaction),angular=glm::vec3(glm::cross(arm,reaction));
+                // Waking propagates through the entire MK2 connection graph.
+                // No topology/settling update occurs inside a material Step.
+                // Its local cache retires at that boundary; each physical target
+                // is awakened by its first real reaction, never by a zero row.
+                if(!targetWoken&&(glm::length(linear)>1e-8f||glm::length(angular)>1e-8f)){
+                    physics.Wake(t.body);targetWoken=true;awakened.at(awakenedCount++)=t.body;
+                    JUDAS_PROFILE_COUNTER("Deformable attachment wake traversals",1,ProfileCounterMode::Sum);
+                }
+                physics.ApplyLinearImpulse(t.body,linear,false);
+                physics.ApplyAngularImpulse(t.body,angular,false);
                 attachmentImpulse[a]+=reaction;
                 attachmentMoment[a]+=glm::cross(point-centre,reaction);
             }
@@ -570,7 +584,9 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
         if(group!=asset->groups.end())for(auto n:group->second)inverseMass[n]=0;
         }
     bool targetMoving=false;
-    for(auto& t:targets)if(t.valid){double d=0;
+    for(size_t targetIndex=0;targetIndex<targets.size();++targetIndex){
+        if(targetIndex>=settings.attachments.size()||released[targetIndex]||!settings.attachments[targetIndex].enabled)continue;
+        const auto& t=targets[targetIndex];if(!t.valid)continue;double d=0;
         for(int k=0;k<4;++k)d+=glm::length(t.current[k]-t.previous[k]);
         targetMoving|=d>1e-8||(t.body.IsValid()&&physics.IsDynamicBody(t.body));
         }
@@ -588,6 +604,7 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
         }
     previous=positions;
     double h=dt/settings.substeps;
+    std::array<BodyHandle,64> awakened{};unsigned awakenedCount=0;
     for(unsigned sub=0;sub<settings.substeps;++sub){
         std::fill(attachmentImpulse.begin(),attachmentImpulse.end(),V(0));
         std::fill(attachmentMoment.begin(),attachmentMoment.end(),V(0));
@@ -602,6 +619,7 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
                 positions[n]+=velocities[n]*h;
                 }}
         if(asset->fracture)fracture.BeginSubstep();
+        if(panelBending)panelBending->BeginSubstep();
         std::fill(lambda.begin(),lambda.end(),0);
         std::fill(volumeLambda.begin(),volumeLambda.end(),0);
         double fraction=double(sub+1)/settings.substeps;
@@ -612,8 +630,9 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
         for(unsigned iteration=0;iteration<settings.iterations;++iteration){Internal(h);Cohesive(h);
             RigidContacts(h,fraction,physics);
             SurfaceContacts(*this,*this,h);
-            Attach(h,fraction,physics,targets);
+            Attach(h,fraction,physics,targets,awakened,awakenedCount);
             }
+        if(panelBending)panelBending->Plastic(positions,h);
         for(size_t a=0;a<settings.attachments.size();++a){auto& state=attachmentState[a];
             state.force=attachmentImpulse[a]/h;state.moment=attachmentMoment[a]/h;
             const double force=glm::length(state.force),torque=glm::length(state.moment);

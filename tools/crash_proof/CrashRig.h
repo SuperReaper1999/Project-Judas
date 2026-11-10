@@ -2,6 +2,7 @@
 #include "Deformable.h"
 #include "Scene.h"
 #include "StructuralSkin.h"
+#include "WheelAssembly.h"
 #include <array>
 #include <filesystem>
 struct CrashRig {
@@ -13,4 +14,4 @@ struct CrashRig {
 };
 DeformableAsset MakeCrashStructure(unsigned longitudinal = 8, unsigned layers = 2, unsigned columns = 2);
 CrashRig AddCrashRig(Scene &, const DeformableAsset &, const std::string &assetId, glm::vec3 position,
-                     const MeshData &exterior);
+                     const MeshData &exterior, const std::array<CrashWheelMount,4>* mounts=nullptr, bool panelSeams=false);

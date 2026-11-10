@@ -4,6 +4,8 @@
 #include "MeshData.h"
 #include "PhysicsWorld.h"
 #include "GravityField.h"
+#include "deformables/PanelBending.h"
+#include <optional>
 #include <array>
 #include <map>
 #include <memory>
@@ -106,6 +108,8 @@ public:
     std::vector<glm::dmat3> plasticRest;
     std::vector<uint8_t> released;
     std::vector<DeformableAttachmentState> attachmentState;
+    // Native proof opt-in; owner must persist this optional material participant.
+    std::optional<PanelBending> panelBending;
     bool sleeping=false;double quietSeconds=0;
     std::string error;
     DeformableStats stats;
@@ -151,7 +155,7 @@ private:
     std::vector<BodyHandle> rigidCandidates;
     void Internal(double);
     void Plastic(double);
-    void Attach(double,double,PhysicsWorld&,const std::vector<DeformableTarget>&);
+    void Attach(double,double,PhysicsWorld&,const std::vector<DeformableTarget>&,std::array<BodyHandle,64>&,unsigned&);
     void RigidContacts(double,double,PhysicsWorld&);
     void BuildSurfaceTree();
     void SurfaceCandidates(glm::dvec3,glm::dvec3,bool,const std::vector<unsigned>* exclusions=nullptr,unsigned minimum=0);

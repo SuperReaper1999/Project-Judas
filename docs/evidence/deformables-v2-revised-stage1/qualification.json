@@ -1,0 +1,360 @@
+{
+  "baseline_commit": "3697bb4f91025b6f8b766ec5cbaab869dcca1107",
+  "scope": "Revised native Stage 1 proof; awaiting human visual acceptance, not full Deformables V2",
+  "hardware": "Ryzen 5 5600; desktop GTX 970 NVIDIA 580.178.04",
+  "native_regression_checks": 672,
+  "native_executables": 11,
+  "cmake_contract_tests": 27,
+  "real_model_runs": [
+    {
+      "case": "quiet",
+      "args": [
+        "--speed=0",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1585.571898 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.741280799 p50_ms=1.705046 p95_ms=1.99845 p99_ms=2.11484 worst_ms=2.863943",
+        "PANELS count=900 mean_ms=0.3235661189 p50_ms=0.320084 p95_ms=0.343598 p99_ms=0.401998 worst_ms=0.46636",
+        "TOTAL_PHYSICS count=900 mean_ms=2.064846918 p50_ms=2.026493 p95_ms=2.32179 p99_ms=2.448519 worst_ms=3.268386",
+        "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 595952"
+      ],
+      "raw_log_sha256": "5dcd9c29fd4c4ead5331ed862b9157d55660d2e1f9582d5343e8ae0639f4b597"
+    },
+    {
+      "case": "course",
+      "args": [
+        "--wheel-course",
+        "--frames=600"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1570.716813 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=600 mean_ms=1.834791642 p50_ms=1.777463 p95_ms=2.393014 p99_ms=3.035457 worst_ms=3.209895",
+        "PANELS count=600 mean_ms=0.366647065 p50_ms=0.356672 p95_ms=0.431885 p99_ms=0.547052 worst_ms=0.555819",
+        "TOTAL_PHYSICS count=600 mean_ms=2.201438707 p50_ms=2.139756 p95_ms=2.8101 p99_ms=3.581667 worst_ms=3.765714",
+        "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 595832"
+      ],
+      "raw_log_sha256": "0bf633dcbb678e3821b2b50dfc5cfb5b37d7f707d6bbb9bc418553f474b3a30c"
+    },
+    {
+      "case": "frontal8",
+      "args": [
+        "--case=frontal",
+        "--speed=8",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1665.62284 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.777418217 p50_ms=1.771282 p95_ms=1.95592 p99_ms=2.063122 worst_ms=3.052479",
+        "PANELS count=900 mean_ms=0.3691216478 p50_ms=0.354739 p95_ms=0.436012 p99_ms=0.578481 worst_ms=0.733153",
+        "TOTAL_PHYSICS count=900 mean_ms=2.146539864 p50_ms=2.149656 p95_ms=2.360132 p99_ms=2.550692 worst_ms=3.595644",
+        "PANEL_RESULT plastic=0.5815195239 released=000 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 595884"
+      ],
+      "raw_log_sha256": "689e655c28d8a8515841563ec25e51edaba83b165ffef7f6b5653b5a641e1f4a"
+    },
+    {
+      "case": "frontal16",
+      "args": [
+        "--case=frontal",
+        "--speed=16",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1565.650445 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.986220251 p50_ms=1.843739 p95_ms=1.95641 p99_ms=2.032043 worst_ms=79.72156",
+        "PANELS count=900 mean_ms=0.5049994822 p50_ms=0.538706 p95_ms=0.566519 p99_ms=0.63639 worst_ms=0.730729",
+        "TOTAL_PHYSICS count=900 mean_ms=2.491219733 p50_ms=2.383056 p95_ms=2.522609 p99_ms=2.597821 worst_ms=80.40503",
+        "PANEL_RESULT plastic=0.8673317945 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596048"
+      ],
+      "raw_log_sha256": "b27a53f32c6b0efca14de7b2a60125926027949995e69c16f293a20b6a753074"
+    },
+    {
+      "case": "frontal24",
+      "args": [
+        "--case=frontal",
+        "--speed=24",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1547.762277 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=2.086493598 p50_ms=1.790518 p95_ms=2.640612 p99_ms=3.081964 worst_ms=112.190986",
+        "PANELS count=900 mean_ms=0.5175077167 p50_ms=0.53493 p95_ms=0.64672 p99_ms=0.723064 worst_ms=0.923873",
+        "TOTAL_PHYSICS count=900 mean_ms=2.604001314 p50_ms=2.323744 p95_ms=3.102052 p99_ms=3.77956 worst_ms=113.018096",
+        "PANEL_RESULT plastic=0.9911323303 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596064"
+      ],
+      "raw_log_sha256": "c8309cb93fffa70c38094bd1a3fdee53bfb5d15abeacc0f958f3b7065e2c537d"
+    },
+    {
+      "case": "offset8",
+      "args": [
+        "--case=offset",
+        "--speed=8",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1603.32462 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.790960979 p50_ms=1.780309 p95_ms=1.880558 p99_ms=2.606156 worst_ms=3.032661",
+        "PANELS count=900 mean_ms=0.4419247278 p50_ms=0.451061 p95_ms=0.584593 p99_ms=0.613747 worst_ms=0.71583",
+        "TOTAL_PHYSICS count=900 mean_ms=2.232885707 p50_ms=2.22098 p95_ms=2.442819 p99_ms=3.018615 worst_ms=3.617574",
+        "PANEL_RESULT plastic=0.9614144842 released=000 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 595856"
+      ],
+      "raw_log_sha256": "198316cfc9a0bd23e3964e92d221f1a66c0a3a98c43ab1da5ab9d28801e991d9"
+    },
+    {
+      "case": "offset16",
+      "args": [
+        "--case=offset",
+        "--speed=16",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1596.733235 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.826543811 p50_ms=1.784526 p95_ms=1.964726 p99_ms=2.787279 worst_ms=12.669973",
+        "PANELS count=900 mean_ms=0.4961452133 p50_ms=0.52488 p95_ms=0.576268 p99_ms=0.684311 worst_ms=0.768149",
+        "TOTAL_PHYSICS count=900 mean_ms=2.322689024 p50_ms=2.311611 p95_ms=2.550131 p99_ms=3.398963 worst_ms=13.345367",
+        "PANEL_RESULT plastic=0.7591991911 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 595968"
+      ],
+      "raw_log_sha256": "811fa888b78bc9cace7b8a15a2352f5def1d8d8665260ec00bc3c228ffe520a6"
+    },
+    {
+      "case": "offset24",
+      "args": [
+        "--case=offset",
+        "--speed=24",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1547.923021 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.930853661 p50_ms=1.857684 p95_ms=2.030761 p99_ms=2.365352 worst_ms=33.699406",
+        "PANELS count=900 mean_ms=0.4917682244 p50_ms=0.523768 p95_ms=0.552653 p99_ms=0.703367 worst_ms=0.90633",
+        "TOTAL_PHYSICS count=900 mean_ms=2.422621886 p50_ms=2.381563 p95_ms=2.57665 p99_ms=3.012834 worst_ms=34.605736",
+        "PANEL_RESULT plastic=0.8875464508 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596072"
+      ],
+      "raw_log_sha256": "55180992108b25704816dfeff1eb02373b2b23728d059ba20999bc53c95c4186"
+    },
+    {
+      "case": "repeat",
+      "args": [
+        "--case=frontal",
+        "--speed=12",
+        "--repeat",
+        "--frames=1200"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1593.187345 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=1200 mean_ms=2.040787008 p50_ms=1.830955 p95_ms=2.002658 p99_ms=2.489026 worst_ms=67.208844",
+        "PANELS count=1200 mean_ms=0.4916142567 p50_ms=0.541191 p95_ms=0.583821 p99_ms=0.703868 worst_ms=0.828143",
+        "TOTAL_PHYSICS count=1200 mean_ms=2.532401264 p50_ms=2.35364 p95_ms=2.574577 p99_ms=3.170652 worst_ms=67.884138",
+        "PANEL_RESULT plastic=1.428953696 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596120"
+      ],
+      "raw_log_sha256": "6e0b9ef10b8d805f4797a55b795cabb4d9245270321ea4d7d055f14d83ad3f6b"
+    },
+    {
+      "case": "four",
+      "args": [
+        "--case=cars",
+        "--count=4",
+        "--speed=12",
+        "--frames=900"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1948.101775 vehicles=4 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=14.11989752 p50_ms=14.28028 p95_ms=14.489606 p99_ms=19.491342 worst_ms=21.36716",
+        "PANELS count=900 mean_ms=2.03232368 p50_ms=1.825543 p95_ms=1.992459 p99_ms=10.874065 worst_ms=16.554421",
+        "TOTAL_PHYSICS count=900 mean_ms=16.1522212 p50_ms=16.137044 p95_ms=17.247247 p99_ms=28.461584 worst_ms=37.136571",
+        "PANEL_RESULT plastic=0.06133620593 released=100 panel_nodes=36 sleeping=0",
+        "PANEL_RESULT plastic=0.05463430245 released=100 panel_nodes=36 sleeping=0",
+        "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+        "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 723064"
+      ],
+      "raw_log_sha256": "c999cb9a740306b908e5a67e01da296a39da1fc13fdb73e7848196f80896b766"
+    },
+    {
+      "case": "cold",
+      "args": [
+        "--case=offset",
+        "--speed=16",
+        "--frames=300",
+        "--save-at=299"
+      ],
+      "exit": 0,
+      "measurements": [
+        "PREPARATION ms=1551.665431 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=300 mean_ms=1.852322963 p50_ms=1.791439 p95_ms=2.011315 p99_ms=2.64514 worst_ms=12.625519",
+        "PANELS count=300 mean_ms=0.45115387 p50_ms=0.526163 p95_ms=0.603578 p99_ms=0.687848 worst_ms=0.794779",
+        "TOTAL_PHYSICS count=300 mean_ms=2.303476833 p50_ms=2.317351 p95_ms=2.559799 p99_ms=3.217771 worst_ms=13.300282",
+        "PANEL_RESULT plastic=0.7591991911 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596152"
+      ],
+      "raw_log_sha256": "280c3f863aa596bf36de83cb5c26e95d827872fc6aee1bdb950e0cc6096d6ef8"
+    },
+    {
+      "case": "cold",
+      "args": [
+        "--case=offset",
+        "--speed=16",
+        "--frames=30",
+        "--load"
+      ],
+      "exit": 0,
+      "measurements": [
+        "COLD_SHAPE_VERIFIED b99fa706ef81ecffa1bfe47691739ce6b72764781dd7f8dc272d50c591d2ad24",
+        "PREPARATION ms=1579.480346 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=30 mean_ms=1.833095 p50_ms=1.798423 p95_ms=2.055588 p99_ms=2.069364 worst_ms=2.069364",
+        "PANELS count=30 mean_ms=0.5383223 p50_ms=0.53543 p95_ms=0.557051 p99_ms=0.563473 worst_ms=0.563473",
+        "TOTAL_PHYSICS count=30 mean_ms=2.3714173 p50_ms=2.328693 p95_ms=2.609934 p99_ms=2.611988 worst_ms=2.611988",
+        "PANEL_RESULT plastic=0.7591991911 released=100 panel_nodes=36 sleeping=0",
+        "PEAK_RSS_KIB 596088"
+      ],
+      "raw_log_sha256": "6b6ef7c5f0f2dca4e34ccd9923059bf51c72b4728d17d808f0adafc749f8b3c8"
+    }
+  ],
+  "wake_reference_comparison": [
+    {
+      "variant": "reference4",
+      "returncode": 0,
+      "metadata": "{\"shape\":\"1633127ed624afb5d5ef147df7b3c2bc2282b93368d4f9b002cb21b08a672210\"}",
+      "log": "body-compare-reference4.log"
+    },
+    {
+      "variant": "step4",
+      "returncode": 0,
+      "metadata": "{\"shape\":\"1633127ed624afb5d5ef147df7b3c2bc2282b93368d4f9b002cb21b08a672210\"}",
+      "log": "body-compare-step4.log"
+    },
+    {
+      "variant": "reference-impact",
+      "returncode": 0,
+      "metadata": "{\"shape\":\"27acc1c1f01f6f93ca883f9ff7a22570918186712276af480b91c7c14435016a\"}",
+      "log": "body-compare-reference-impact.log"
+    },
+    {
+      "variant": "step-impact",
+      "returncode": 0,
+      "metadata": "{\"shape\":\"27acc1c1f01f6f93ca883f9ff7a22570918186712276af480b91c7c14435016a\"}",
+      "log": "body-compare-step-impact.log"
+    }
+  ],
+  "fixed_geometry_reference_performance": {
+    "frozen-reference4.log": [
+      "PREPARATION ms=1894.406681 vehicles=4 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=900 mean_ms=14.58061168 p50_ms=14.471866 p95_ms=14.606731 p99_ms=15.267869 worst_ms=131.164089",
+      "PANELS count=900 mean_ms=37.39356359 p50_ms=35.009558 p95_ms=50.420777 p99_ms=50.829679 worst_ms=57.749376",
+      "TOTAL_PHYSICS count=900 mean_ms=51.97417527 p50_ms=49.508817 p95_ms=63.723818 p99_ms=65.491804 worst_ms=185.124174",
+      "PANEL_RESULT plastic=0.9683631331 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9406866694 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9132385079 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9387343476 released=100 panel_nodes=36 sleeping=0",
+      "PEAK_RSS_KIB 772828"
+    ],
+    "frozen-step4.log": [
+      "PREPARATION ms=1902.767898 vehicles=4 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=900 mean_ms=14.54305878 p50_ms=14.443032 p95_ms=14.540827 p99_ms=14.681662 worst_ms=130.360513",
+      "PANELS count=900 mean_ms=2.055911719 p50_ms=2.148795 p95_ms=2.225699 p99_ms=2.698773 worst_ms=2.848655",
+      "TOTAL_PHYSICS count=900 mean_ms=16.5989705 p50_ms=16.601475 p95_ms=16.74279 p99_ms=17.351741 worst_ms=133.004471",
+      "PANEL_RESULT plastic=0.9683631331 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9406866694 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9132385079 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9387343476 released=100 panel_nodes=36 sleeping=0",
+      "PEAK_RSS_KIB 770656"
+    ],
+    "frozen-runtime-one.log": [
+      "PREPARATION ms=1574.078076 vehicles=1 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=900 mean_ms=2.00660212 p50_ms=1.840543 p95_ms=1.957915 p99_ms=2.899841 worst_ms=83.045225",
+      "PANELS count=900 mean_ms=0.5062779789 p50_ms=0.537153 p95_ms=0.558073 p99_ms=0.702486 worst_ms=0.72597",
+      "TOTAL_PHYSICS count=900 mean_ms=2.512880099 p50_ms=2.37429 p95_ms=2.549971 p99_ms=3.461571 worst_ms=83.723966",
+      "PANEL_RESULT plastic=0.905757035 released=100 panel_nodes=36 sleeping=0",
+      "PEAK_RSS_KIB 596144"
+    ],
+    "frozen-runtime-four.log": [
+      "PREPARATION ms=1914.69911 vehicles=4 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=900 mean_ms=14.64576372 p50_ms=14.397827 p95_ms=15.290912 p99_ms=18.774805 worst_ms=128.428446",
+      "PANELS count=900 mean_ms=2.096647087 p50_ms=2.20987 p95_ms=2.286224 p99_ms=2.769726 worst_ms=2.946029",
+      "TOTAL_PHYSICS count=900 mean_ms=16.74241081 p50_ms=16.598188 p95_ms=17.495141 p99_ms=21.020322 worst_ms=131.065813",
+      "PANEL_RESULT plastic=0.9683631331 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9406866694 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9132385079 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9387343476 released=100 panel_nodes=36 sleeping=0",
+      "PEAK_RSS_KIB 723448"
+    ]
+  },
+  "desktop_gpu_diagnostics": {
+    "gpu-one.log": [
+      "PREPARATION ms=1754.758503 vehicles=1 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=300 mean_ms=2.703143997 p50_ms=2.202425 p95_ms=2.414173 p99_ms=3.012663 worst_ms=87.148115",
+      "PANELS count=300 mean_ms=0.7850812 p50_ms=0.83742 p95_ms=0.887754 p99_ms=1.005336 worst_ms=1.120774",
+      "PANEL_MAPPING_UPLOAD count=491 mean_ms=0.3031727251 p50_ms=0.293934 p95_ms=0.352455 p99_ms=0.363326 worst_ms=0.368205",
+      "TOTAL_PHYSICS count=300 mean_ms=3.488225197 p50_ms=3.032088 p95_ms=3.242275 p99_ms=4.047545 worst_ms=88.111221",
+      "PANEL_RESULT plastic=0.905757035 released=100 panel_nodes=36 sleeping=0",
+      "RENDER_CPU count=491 mean_ms=0.8508893992 p50_ms=0.802864 p95_ms=0.976422 p99_ms=0.997702 worst_ms=8.412117",
+      "RENDER_GPU count=490 mean_ms=1.239433992 p50_ms=1.180992 p95_ms=1.397536 p99_ms=1.751232 worst_ms=7.195552",
+      "PEAK_RSS_KIB 612580"
+    ],
+    "gpu-four.log": [
+      "PREPARATION ms=2061.585505 vehicles=4 sections=24 bonds=40 body_triangles=71687 skin_numeric_payload_bytes=24949764",
+      "SIMULATION count=300 mean_ms=14.88466309 p50_ms=14.541097 p95_ms=14.779557 p99_ms=18.923252 worst_ms=130.775733",
+      "PANELS count=300 mean_ms=5.186734867 p50_ms=4.990674 p95_ms=5.704069 p99_ms=6.423125 worst_ms=7.335386",
+      "PANEL_MAPPING_UPLOAD count=59 mean_ms=1.140643983 p50_ms=1.14491 p95_ms=1.193801 p99_ms=1.221454 worst_ms=1.221454",
+      "TOTAL_PHYSICS count=300 mean_ms=20.07139796 p50_ms=19.411503 p95_ms=20.471803 p99_ms=24.954748 worst_ms=137.544439",
+      "PANEL_RESULT plastic=0.9683631331 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9406866694 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9132385079 released=100 panel_nodes=36 sleeping=0",
+      "PANEL_RESULT plastic=0.9387343476 released=100 panel_nodes=36 sleeping=0",
+      "RENDER_CPU count=59 mean_ms=2.70907078 p50_ms=2.527948 p95_ms=3.67967 p99_ms=10.286362 worst_ms=10.286362",
+      "RENDER_GPU count=58 mean_ms=2.212957793 p50_ms=1.961088 p95_ms=2.693536 p99_ms=8.89888 worst_ms=8.89888",
+      "PEAK_RSS_KIB 1486256"
+    ],
+    "recipe-visual-frontal.log": [
+      "PREPARATION ms=1960.10518 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=220 mean_ms=2.126592986 p50_ms=2.110521 p95_ms=2.288949 p99_ms=2.440064 worst_ms=2.998878",
+      "PANELS count=220 mean_ms=0.4560273955 p50_ms=0.384615 p95_ms=0.66764 p99_ms=0.727021 worst_ms=0.783689",
+      "PANEL_MAPPING_UPLOAD count=373 mean_ms=0.3107492145 p50_ms=0.303252 p95_ms=0.348688 p99_ms=0.37097 worst_ms=0.382171",
+      "TOTAL_PHYSICS count=220 mean_ms=2.582620382 p50_ms=2.563376 p95_ms=2.890523 p99_ms=3.071244 worst_ms=3.724867",
+      "PANEL_RESULT plastic=0.5815195239 released=000 panel_nodes=36 sleeping=0",
+      "RENDER_CPU count=373 mean_ms=0.8715049517 p50_ms=0.830236 p95_ms=0.957847 p99_ms=1.019713 worst_ms=8.985903",
+      "RENDER_GPU count=372 mean_ms=1.14102486 p50_ms=1.09984 p95_ms=1.176256 p99_ms=1.392096 worst_ms=7.75632",
+      "PEAK_RSS_KIB 611376"
+    ],
+    "recipe-portable.log": [
+      "PREPARATION ms=1738.173752 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=60 mean_ms=2.0591082 p50_ms=2.031803 p95_ms=2.166427 p99_ms=2.179391 worst_ms=2.179391",
+      "PANELS count=60 mean_ms=0.36422065 p50_ms=0.359769 p95_ms=0.39234 p99_ms=0.399344 worst_ms=0.399344",
+      "PANEL_MAPPING_UPLOAD count=105 mean_ms=0.3208682095 p50_ms=0.309083 p95_ms=0.372573 p99_ms=0.384435 worst_ms=0.38666",
+      "TOTAL_PHYSICS count=60 mean_ms=2.42332885 p50_ms=2.392994 p95_ms=2.529421 p99_ms=2.547266 worst_ms=2.547266",
+      "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+      "RENDER_CPU count=105 mean_ms=0.9387769714 p50_ms=0.833282 p95_ms=0.998745 p99_ms=1.222026 worst_ms=9.146495",
+      "PEAK_RSS_KIB 603316"
+    ]
+  },
+  "limitations": [
+    "Native proof only; no general editor/JudasJS/SDK panel authoring",
+    "Only bonnet has local material; remaining body follows physical sections",
+    "Bonnet excludes its own overlapping coarse frame proxy; detailed engine-bay self-collision unqualified",
+    "Front latch release is not evidence of complete bonnet detachment or general sheet tearing",
+    "Four-car CPU cost and severe impact spikes remain significant",
+    "GPU measurements have different sample counts; not equal-duration benchmark distributions",
+    "No Windows or Android execution for this revised proof",
+    "No downloaded models or derived geometry/images distributed"
+  ],
+  "human_accepted": false
+}

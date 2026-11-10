@@ -1,4 +1,5 @@
 #include "StructuralSkin.h"
+#include "PanelIslands.h"
 #include "Deformable.h"
 #include "PerformanceProfiler.h"
 #include "SkeletalAnimation.h"
@@ -13,7 +14,7 @@ glm::dmat3 Basis(glm::dvec3 a, glm::dvec3 b, glm::dvec3 c) {
     return {x, glm::cross(z, x), z};
 }
 } // namespace
-bool StructuralSkin::Bind(const DeformableAsset &asset, const MeshData &mesh, std::string &error) {
+bool StructuralSkin::Bind(const DeformableAsset &asset, const MeshData &mesh, std::string &error, bool panelSeams) {
     if (!asset.fracture || !asset.fracture->rigid || asset.fracture->parts.empty() ||
         asset.fracture->parts.size() > 256 || mesh.indices.empty() || mesh.indices.size() % 3 ||
         mesh.indices.size() > 3000000) {
@@ -57,6 +58,18 @@ bool StructuralSkin::Bind(const DeformableAsset &asset, const MeshData &mesh, st
         }
         return best;
     };
+    std::vector<unsigned> panelGroups;
+    std::map<unsigned,glm::dvec3> panelCenters;
+    std::map<unsigned,double> panelAreas;
+    if(panelSeams){
+        panelGroups=CrashPanelIslands(mesh);
+        for(unsigned t=0;t<mesh.indices.size();t+=3){auto p=glm::dvec3(mesh.vertices[mesh.indices[t]].position),q=glm::dvec3(mesh.vertices[mesh.indices[t+1]].position),r=glm::dvec3(mesh.vertices[mesh.indices[t+2]].position);
+            auto group=panelGroups[t/3];double area=glm::length(glm::cross(q-p,r-p));
+            if(!panelCenters.count(group))panelCenters[group]=glm::dvec3(0);
+            panelCenters[group]+=(p+q+r)*(area/3);panelAreas[group]+=area;
+        }
+        for(auto& [group,center]:panelCenters)if(panelAreas[group]>0)center/=panelAreas[group];
+    }
     for (size_t face = 0; face < mesh.indices.size(); face += 3) {
         glm::dvec3 centroid(0);
         for (unsigned k = 0; k < 3; ++k) {
@@ -66,7 +79,7 @@ bool StructuralSkin::Bind(const DeformableAsset &asset, const MeshData &mesh, st
             }
             centroid += glm::dvec3(mesh.vertices[mesh.indices[face + k]].position) / 3.;
         }
-        const auto owner = nearest(centroid);
+        const auto owner = nearest(panelSeams ? panelCenters.at(panelGroups[face/3]) : centroid);
         for (unsigned k = 0; k < 3; ++k) {
             const auto vertex = mesh.vertices[mesh.indices[face + k]];
             if (!std::isfinite(vertex.position.x) || !std::isfinite(vertex.position.y) ||

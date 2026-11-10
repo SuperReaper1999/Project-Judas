@@ -88,7 +88,7 @@ DeformableAsset MakeCrashStructure(unsigned longitudinal, unsigned layers, unsig
     return a;
 }
 CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::string &assetId,
-                     glm::vec3 position, const MeshData &exterior) {
+                     glm::vec3 position, const MeshData &exterior, const std::array<CrashWheelMount,4>* mounts, bool panelSeams) {
     auto &object = scene.CreateObject("Deforming vehicle");
     const auto owner = object.id;
     object.transform.position = position;
@@ -105,7 +105,7 @@ CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::stri
     CrashRig rig;
     rig.owner = owner;
     std::string error;
-    if (!rig.skin.Bind(asset, exterior, error))
+    if (!rig.skin.Bind(asset, exterior, error, panelSeams))
         throw std::runtime_error(error);
     auto nearest = [&](glm::dvec3 p) {
         unsigned part = 0;
@@ -125,6 +125,13 @@ CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::stri
     for (double z : {-1.48, 1.48})
         for (double x : {-.94, .94}) {
             glm::dvec3 mount{x, -.12, z};
+            if(mounts){
+                // Author nominal loaded ride height, not an unrelated mesh offset.
+                // Each spring supports one quarter of 1500 kg at uniform gravity.
+                const double loadedLength=.30-1500.*9.81/(4*35000.);
+                const auto& m=mounts->at(index);
+                mount=glm::dvec3(m.center)+glm::dvec3(m.axleFrame*glm::vec3(0,float(loadedLength),0));
+            }
             auto part = nearest(mount);
             auto &wheel = scene.CreateObject("Physical wheel");
             rig.wheels[index++] = wheel.id;
@@ -133,8 +140,9 @@ CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::stri
             s.chassis = owner;
             s.part = asset.fracture->parts[part].key;
             s.mount = glm::vec3(mount - asset.fracture->parts[part].proxyCenter);
-            s.radius = .35f;
-            s.width = .25f;
+            if(mounts)s.orientation=mounts->at(index-1).axleFrame;
+            s.radius = mounts ? mounts->at(index-1).radius : .35f;
+            s.width = mounts ? mounts->at(index-1).width : .25f;
             s.restLength = .30f;
             s.maxLength = .50f;
             s.minLength = .04f;

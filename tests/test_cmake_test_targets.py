@@ -75,7 +75,7 @@ class CMakeTestTargets(unittest.TestCase):
             self.assertEqual(records[target], {
                 "sources": [f"tests/{main}.cpp"] + (APPLICATION_SOURCES if application else []) +
                     (["tests/VehicleTowingTests.cpp"] if target=="judas_vehicle_dynamics_tests" else []) +
-                    (["tests/StructuralCrashChecks.cpp", "tools/crash_proof/CrashRig.cpp", "tools/crash_proof/StructuralSkin.cpp"] if target=="judas_structural_tests" else []),
+                    (["tests/StructuralCrashChecks.cpp", "tools/crash_proof/CrashRig.cpp", "tools/crash_proof/StructuralSkin.cpp", "tests/CrashWheelAssemblyChecks.cpp", "tools/crash_proof/WheelAssembly.cpp", "tools/crash_proof/CrashPanels.cpp", "tests/PanelBendingChecks.cpp"] if target=="judas_structural_tests" else []),
                 "links": ["PRIVATE", "judas_engine"], "warnings": ["-Wpedantic"]}, target)
 
     def test_exact_sources_links_warnings_and_order(self):
@@ -85,7 +85,7 @@ class CMakeTestTargets(unittest.TestCase):
     def test_missing_structural_crash_regression_detected(self):
         module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
         with self.assertRaises(AssertionError):
-            self.assert_contract(self.declarations(module=module.replace(" SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp", "", 1)))
+            self.assert_contract(self.declarations(module=module.replace(" SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp tests/CrashWheelAssemblyChecks.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp tests/PanelBendingChecks.cpp", "", 1)))
 
     def test_missing_towing_regression_detected(self):
         module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
@@ -94,7 +94,7 @@ class CMakeTestTargets(unittest.TestCase):
 
     def test_missing_target_detected(self):
         module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
-        module = module.replace("judas_add_engine_test(judas_structural_tests tests/StructuralTests.cpp SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp WARNINGS -Wpedantic)", "", 1)
+        module = module.replace("judas_add_engine_test(judas_structural_tests tests/StructuralTests.cpp SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp tests/CrashWheelAssemblyChecks.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp tests/PanelBendingChecks.cpp WARNINGS -Wpedantic)", "", 1)
         with self.assertRaises(AssertionError):
             self.assert_contract(self.declarations(module=module))
 

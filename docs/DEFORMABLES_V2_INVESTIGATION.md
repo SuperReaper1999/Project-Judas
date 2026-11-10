@@ -1,6 +1,7 @@
 # Deformables V2 — investigation and proposed scope
 
-Current follow-up: [Stage 1 physical crash proof and failed fidelity gate](DEFORMABLES_V2_STAGE1.md).
+Current revised follow-up: [physical panels and wheel assembly](DEFORMABLES_V2_REVISED_STAGE1.md).
+Previous follow-up: [Stage 1 physical crash proof and failed fidelity gate](DEFORMABLES_V2_STAGE1.md).
 The observations below describe the pinned investigation baseline, not a live fix-status register.
 
 **Investigation only, 2026-11-09.** Source checkpoint

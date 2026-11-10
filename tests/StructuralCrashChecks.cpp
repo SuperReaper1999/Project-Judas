@@ -1,4 +1,6 @@
 #include "../tools/crash_proof/CrashRig.h"
+#include "../tools/crash_proof/CrashPanels.h"
+#include "SaveArchive.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "Simulation.h"
@@ -156,6 +158,43 @@ unsigned RunStructuralCrashChecks() {
               kind + " restored graph continues through MK2");
         std::cout << "CRASH_CONTROL " << kind << " plastic_work_j=" << peak
                   << " restored_shape_error_m=" << maximum << '\n';
+    }
+    {
+        Scene scene;
+        auto& ground=scene.CreateObject("Panel fixture ground");ground.body=SceneBodyComponent{};
+        ground.body->halfExtents={30,.5f,30};ground.transform.position={0,-.5f,0};
+        auto& gravity=scene.CreateObject("Gravity");gravity.gravity=SceneGravityComponent{};
+        gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->regionRadius=1000;
+        auto rig=AddCrashRig(scene,asset,record.id,{0,.665f,0},exterior);
+        auto& config=*scene.Find(rig.owner)->deformable;config.material.density*=1475./1500.;config.collisionLayer=8;
+        auto& obstacle=scene.CreateObject("Panel fixture wall");obstacle.body=SceneBodyComponent{};
+        obstacle.body->halfExtents={3,1,.4f};obstacle.transform.position={0,1,-5};
+        ProjectClassification categories;categories.collision.names.emplace(8,"Frame");categories.collision.nextId=9;
+        RuntimeWorld world;check(world.Build(scene,&resources,error,&categories),"physical panel fixture builds");world.UpdateDeformables(1./60);
+        MeshData hood;
+        for(auto p:{glm::vec3(-.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-.95f),glm::vec3(-.7f,.1f,-.95f)}){MeshVertex v;v.position=p;v.normal={0,1,0};hood.vertices.push_back(v);}
+        hood.indices={0,2,1,0,3,2};
+        CrashPanel panel;panel.Initialize(world,rig,hood);
+        double mass=panel.material.Mass();for(unsigned p=0;p<asset.fracture->parts.size();++p)mass+=world.Physics().GetMass(world.RuntimeBody(world.FracturePartEntity(rig.owner,p)));
+        check(std::abs(mass-1500)<.01,"physical panel and structural frame count total mass once");
+        check(panel.material.settings.attachments.size()==3,"physical panel has two real hinges and a finite front latch");
+        for(unsigned step=0;step<180;++step){StepAuthoritativeWorld(world,input,1.f/60);panel.Step(world,rig,1./60);}
+        check(panel.PlasticExtent()<1e-6,"supported procedural bonnet does not plastically sag under ordinary gravity");
+        for(unsigned p=0;p<asset.fracture->parts.size();++p)world.Physics().SetLinearVelocity(world.RuntimeBody(world.FracturePartEntity(rig.owner,p)),{0,0,-12});
+        for(auto& v:panel.material.velocities)v={0,0,-12};
+        unsigned contacts=0;double peakPlastic=0;
+        for(unsigned step=0;step<240;++step){StepAuthoritativeWorld(world,input,1.f/60);panel.Step(world,rig,1./60);contacts+=unsigned(panel.material.stats.contacts);peakPlastic=std::max(peakPlastic,panel.PlasticExtent());}
+        check(contacts>0,"physical panel receives real collision samples during barrier impact");
+        check(peakPlastic>1e-5,"barrier impact produces internal permanent panel bending");
+        SaveArchive stored;panel.Persist(stored);
+        std::map<std::string,SaveChunk> chunks;check(WorldPersistence::Capture(world,chunks,error),"damaged frame and panel capture through current persistence");
+        Scene restoredScene;check(WorldPersistence::SceneFrom(chunks,restoredScene,error),"panel fixture snapshot reconstructs native scene");
+        RuntimeWorld restored;check(restored.Build(restoredScene,&resources,error,&categories,nullptr,true),"panel fixture restores with current categories");
+        check(WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error),"panel fixture restores actual MK2 structural state");WorldPersistence::Published(restored);
+        CrashPanel restoredPanel;restoredPanel.Initialize(restored,rig,hood);SaveArchive reader(stored.bytes);restoredPanel.Persist(reader);reader.Finish();
+        SaveArchive again;restoredPanel.Persist(again);check(again.bytes==stored.bytes,"panel positions velocities plastic volume rest and physical mounts restore exactly");
+        for(unsigned step=0;step<10;++step){StepAuthoritativeWorld(restored,input,1.f/60);restoredPanel.Step(restored,rig,1./60);}
+        check(restoredPanel.material.error.empty(),"restored panel continues physical coupling");
     }
     return checks;
 }

@@ -1,5 +1,7 @@
 #include "BuildIdentity.h"
 #include "CrashRig.h"
+#include "CrashPanels.h"
+#include "WheelAssembly.h"
 #include "EngineHost.h"
 #include "ModelLoader.h"
 #include "PerformanceProfiler.h"
@@ -36,7 +38,8 @@ void Require(bool ok, const std::string &error) {
 struct VehicleModel {
     MeshData body;
     std::array<MeshData, 4> wheels;
-    std::array<glm::vec3, 4> wheelCenters{};
+    std::array<MeshData, 4> brakes;
+    std::array<CrashWheelMount,4> mounts;
 };
 VehicleModel LoadVehicle(const std::string &path) {
     MeshData source;
@@ -87,30 +90,41 @@ VehicleModel LoadVehicle(const std::string &path) {
         v.tangent.z = -v.tangent.z;
     }
     VehicleModel result;
-    std::array<std::map<int, int>, 5> slots;
+    std::array<std::map<int, int>, 9> slots;
     for (const auto &p : source.primitives) {
         auto name = p.part;
         std::transform(name.begin(), name.end(), name.begin(),
                        [](unsigned char c) { return char(std::tolower(c)); });
+        if (std::getenv("JUDAS_CRASH_GEOMETRY_LOG")) {
+            glm::vec3 lo(1e20), hi(-1e20);
+            for (unsigned t=p.first;t<p.first+p.count;++t) {
+                auto v=source.vertices[source.indices[t]].position;
+                lo=glm::min(lo,v); hi=glm::max(hi,v);
+            }
+            std::cout << "PART " << p.part << " bounds " << lo.x << "," << lo.y << "," << lo.z
+                      << " : " << hi.x << "," << hi.y << "," << hi.z << '\n';
+        }
         bool wheel = name.find("wheel") != std::string::npos || name.find("tyre") != std::string::npos ||
                      name.find("tire") != std::string::npos || name.find("/rim") != std::string::npos ||
                      name.find("_rim") != std::string::npos || name.find("spoke") != std::string::npos;
-        std::array<unsigned, 5> first{};
-        for (unsigned i = 0; i < 5; ++i)
-            first[i] = unsigned(i ? result.wheels[i - 1].indices.size() : result.body.indices.size());
+        bool brake = name.find("calliperexotic") != std::string::npos || name.find("calliperbadge") != std::string::npos || name.find("caliper_body") != std::string::npos;
+        auto meshAt = [&](unsigned i)->MeshData& {return i==0 ? result.body : i<=4 ? result.wheels[i-1] : result.brakes[i-5];};
+        std::array<unsigned, 9> first{};
+        for (unsigned i = 0; i < 9; ++i)
+            first[i] = unsigned(meshAt(i).indices.size());
         for (unsigned t = p.first; t < p.first + p.count; t += 3) {
             glm::vec3 mean(0);
             for (unsigned k = 0; k < 3; ++k)
                 mean += source.vertices[source.indices[t + k]].position / 3.f;
-            unsigned destination = wheel ? 1 + (mean.z > 0 ? 2u : 0u) + (mean.x > 0 ? 1u : 0u) : 0;
-            auto &mesh = destination ? result.wheels[destination - 1] : result.body;
+            unsigned destination = wheel ? (brake ? 5u : 1u) + (mean.z > 0 ? 2u : 0u) + (mean.x > 0 ? 1u : 0u) : 0;
+            auto &mesh = meshAt(destination);
             for (unsigned k = 0; k < 3; ++k) {
                 mesh.indices.push_back(unsigned(mesh.vertices.size()));
                 mesh.vertices.push_back(source.vertices[source.indices[t + k]]);
             }
         }
-        for (unsigned i = 0; i < 5; ++i) {
-            auto &mesh = i ? result.wheels[i - 1] : result.body;
+        for (unsigned i = 0; i < 9; ++i) {
+            auto &mesh = meshAt(i);
             auto n = unsigned(mesh.indices.size()) - first[i];
             if (!n)
                 continue;
@@ -136,17 +150,12 @@ VehicleModel LoadVehicle(const std::string &path) {
             mesh.primitives.push_back({first[i], n, material, p.part, p.node});
         }
     }
-    for (unsigned i = 0; i < 4; ++i) {
-        auto &m = result.wheels[i];
-        low = glm::vec3(1e20);
-        high = -low;
-        for (auto &v : m.vertices) {
-            low = glm::min(low, v.position);
-            high = glm::max(high, v.position);
-        }
-        result.wheelCenters[i] = m.indices.empty() ? glm::vec3(0) : (low + high) * .5f;
-        for (auto &v : m.vertices)
-            v.position -= result.wheelCenters[i];
+    for (unsigned i=0;i<4;++i) {
+        result.mounts[i]=PrepareCrashWheel(result.wheels[i],result.brakes[i]);
+        const auto& m=result.mounts[i];
+        std::cout << "WHEEL_FIT " << i << " center=" << m.center.x << "," << m.center.y << "," << m.center.z
+                  << " radius=" << m.radius << " width=" << m.width << " axle=" << (m.axleFrame*glm::vec3(1,0,0)).x
+                  << "," << (m.axleFrame*glm::vec3(1,0,0)).y << "," << (m.axleFrame*glm::vec3(1,0,0)).z << '\n';
     }
     return result;
 }
@@ -170,7 +179,7 @@ void Summary(const char *name, std::vector<double> values) {
               << " p50_ms=" << q(.5) << " p95_ms=" << q(.95) << " p99_ms=" << q(.99)
               << " worst_ms=" << values.back() << '\n';
 }
-std::string DurableShapeHash(RuntimeWorld &world, const std::vector<CrashRig> &rigs) {
+std::string DurableShapeHash(RuntimeWorld &world, const std::vector<CrashRig> &rigs, std::vector<CrashPanel>* panels=nullptr) {
     SaveArchive evidence;
     for (const auto &rig : rigs) {
         std::string error;
@@ -179,15 +188,22 @@ std::string DurableShapeHash(RuntimeWorld &world, const std::vector<CrashRig> &r
         evidence(state->positions, state->velocities, state->fracture.plasticTranslation,
                  state->fracture.plasticRotation, state->fracture.plasticWork, state->fracture.broken,
                  state->fracture.removed);
-        for (auto wheelId : rig.wheels) {
-            auto *wheel = world.RuntimeWheel(wheelId);
-            evidence(wheel->state.angularVelocity, wheel->state.angle);
+        for(unsigned part=0;part<state->asset->fracture->parts.size();++part){
+            auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,part));
+            bool enabled=world.Physics().IsBodyEnabled(body);evidence(enabled);
+            if(enabled){
+                auto pose=world.Physics().GetTransform(body);auto velocity=world.Physics().GetLinearVelocity(body),spin=world.Physics().GetAngularVelocity(body);
+                bool sleeping=world.Physics().IsSleeping(body);auto mass=world.Physics().GetMass(body);
+                evidence(pose.position,pose.rotation,velocity,spin,sleeping,mass);
+            }
         }
+        for (auto wheelId : rig.wheels)world.RuntimeWheel(wheelId)->Persist(evidence);
         auto *train = world.RuntimePowertrain(rig.owner);
         evidence(train->absoluteSpin);
         for (bool initialized : train->internalInitialized)
             evidence(initialized);
     }
+    if(panels)for(auto& panel:*panels)panel.Persist(evidence);
     return SceneFingerprintSha256(evidence.bytes);
 }
 } // namespace
@@ -200,15 +216,22 @@ int main(int argc, char **argv) {
                          "[--case=frontal|offset|side|rear|cars] [--count=N] [--load] [--save-at=N]\n";
             return 64;
         }
-        std::string modelPath = argv[1], kind = "frontal";
+        std::string modelPath = argv[1], kind = "frontal", panelRecipe;
         std::filesystem::path root = std::filesystem::absolute(argv[2]);
         unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8;
         float speed = 12;
+        int wheelView=-1;
+        bool wheelCourse=false, captureSteps=false;
         bool headless = false, load = false, profile = false, drive = false, cpuSkin = false, repeat = false,
-             postDrive = false, xray = false;
+             postDrive = false, xray = false, panelsEnabled=false;
         for (int i = 3; i < argc; ++i) {
             std::string arg = argv[i];
-            if (arg.rfind("--segments=", 0) == 0)
+            if(arg=="--panels") panelsEnabled=true;
+            else if(arg.rfind("--panel-parts=",0)==0)panelRecipe=arg.substr(14);
+            else if(arg=="--wheel-course")wheelCourse=true;
+            else if(arg=="--capture-steps")captureSteps=true;
+            else if(arg.rfind("--wheel-view=",0)==0)wheelView=std::stoi(arg.substr(13));
+            else if (arg.rfind("--segments=", 0) == 0)
                 segments = unsigned(std::stoul(arg.substr(11)));
             else if (arg == "--xray")
                 xray = true;
@@ -254,10 +277,33 @@ int main(int argc, char **argv) {
         std::filesystem::create_directories(root / "Assets");
         auto preparation = Clock::now();
         auto model = LoadVehicle(modelPath);
+        std::vector<std::string> panelParts;
+        std::string recipeHash;
+        if(!panelRecipe.empty()){
+            std::ifstream input(panelRecipe);Require(bool(input),"cannot open private panel membership recipe");
+            std::string line;while(std::getline(input,line)){
+                auto first=line.find_first_not_of(" \t\r"),last=line.find_last_not_of(" \t\r");
+                if(first==std::string::npos||line[first]=='#')continue;
+                panelParts.push_back(line.substr(first,last-first+1));
+            }
+            std::string recipeError;Require(SceneFingerprintSha256File(panelRecipe,recipeHash,recipeError),recipeError);
+        }
+        MeshData hood; if(panelsEnabled)hood=ExtractCrashHood(model.body,panelParts);
         Require(layers == 1 || layers == 2, "layers must be 1 or 2");
         Require(columns == 2 || columns == 3, "columns must be 2 or 3");
         Require(segments == 8 || segments == 12, "segments must be 8 or 12");
         auto asset = MakeCrashStructure(segments, layers, columns);
+        if(panelsEnabled){
+            for(auto& bond:asset.fracture->bonds){
+                auto& m=bond.material;
+                if(bond.centroid.z>-.9 && bond.centroid.z<1.3){
+                    // Finite stronger occupant cage, distinct from front crush rails.
+                    m.stiffness*=2.5f;m.angularStiffness*=2.5f;
+                    m.yieldForce*=4;m.yieldTorque*=4;m.maximumTranslation=.15f;m.maximumAngle=.45f;
+                }else if(bond.centroid.z<=-.9){m.stiffness*=.65f;m.angularStiffness*=.65f;m.yieldForce*=.6f;m.yieldTorque*=.6f;}
+            }
+            std::string preparationError;Require(PrepareDeformableAsset(asset,preparationError),preparationError);
+        }
         {
             std::ofstream out(root / "Assets/structure.judasdeform", std::ios::binary);
             out << EncodeDeformableAsset(asset);
@@ -293,17 +339,27 @@ int main(int argc, char **argv) {
         gravity.gravity = SceneGravityComponent{};
         gravity.gravity->kind = SceneGravityKind::Uniform;
         gravity.gravity->regionRadius = 10000;
+        float rideHeight=0;for(const auto& mount:model.mounts)rideHeight+=(mount.radius-mount.center.y)*.25f;
         std::vector<CrashRig> rigs;
         for (unsigned i = 0; i < count; ++i) {
-            glm::vec3 p{float(i) * 7, 1.02f, 0};
+            glm::vec3 p{float(i) * 7, rideHeight, 0};
             if (kind == "cars" && i == 1)
-                p = {0, 1.02f, -12};
-            rigs.push_back(AddCrashRig(scene, asset, record.id, p, model.body));
+                p = {0, rideHeight, -12};
+            rigs.push_back(AddCrashRig(scene, asset, record.id, p, model.body, &model.mounts, panelsEnabled));
             if (kind == "cars" && i == 1)
                 scene.Find(rigs.back().owner)->transform.rotation =
                     glm::angleAxis(glm::pi<float>(), glm::vec3(0, 1, 0));
         }
-        if (kind != "cars")
+        if(panelsEnabled)for(unsigned i=0;i<rigs.size();++i){
+            auto* d=scene.Find(rigs[i].owner);d->deformable->collisionLayer=8+i;
+            d->deformable->material.density*=1475./1500.;
+        }
+        Require(wheelView>=-1&&wheelView<4,"wheel view must be 0..3");
+        if(wheelCourse){
+            auto ramp=box("Uneven wheel course",{-.5f,.06f,-4},{.6f,.06f,1.2f});
+            scene.Find(ramp)->transform.rotation=glm::angleAxis(.08f,glm::vec3(1,0,0));
+        }
+        if (kind != "cars" && !wheelCourse)
             for (unsigned i = 0; i < count; ++i) {
                 float x = float(i) * 7;
                 if (kind == "side")
@@ -311,17 +367,23 @@ int main(int argc, char **argv) {
                 else if (kind == "rear")
                     box("Rear wall", {x, 1, 7}, {3, 1, .4f});
                 else
-                    box("Front wall", {x + (kind == "offset" ? 1.2f : 0), 1, -7},
-                        {kind == "offset" ? .7f : 3.f, 1, .4f});
+                    box("Front wall", {x + (kind == "offset" ? .55f : 0), 1, -7},
+                        {kind == "offset" ? .14f : 3.f, 1, kind == "offset" ? .14f : .4f});
             }
         Require(SaveSceneToFile(scene, (root / "crash-proof.judas").string(), error), error);
+        ProjectClassification categories;
+        if(panelsEnabled){for(unsigned i=0;i<rigs.size();++i)categories.collision.names.emplace(8+i,"Structural frame "+std::to_string(i));categories.collision.nextId=8+unsigned(rigs.size());}
         RuntimeWorld world;
-        Require(world.Build(scene, &resources, error), error);
+        Require(world.Build(scene, &resources, error, &categories), error);
         world.UpdateDeformables(1. / 60);
+        std::vector<CrashPanel> panels(panelsEnabled?rigs.size():0);
+        for(unsigned i=0;i<panels.size();++i)panels[i].Initialize(world,rigs[i],hood);
         std::string modelHash;
         Require(SceneFingerprintSha256File(modelPath, modelHash, error), error);
+        std::string authoredSceneHash;
+        Require(SceneFingerprintSha256File((root/"crash-proof.judas").string(),authoredSceneHash,error),error);
         const auto content =
-            SceneFingerprintSha256(EncodeDeformableAsset(asset) + kind + std::to_string(count) + modelHash);
+            SceneFingerprintSha256(EncodeDeformableAsset(asset) + authoredSceneHash + modelHash + recipeHash + (panelsEnabled?"dihedral-panel-v3":"frame-only"));
         SaveStorage storage((root / "Saves").string());
         if (load) {
             GameSnapshot snapshot;
@@ -331,11 +393,12 @@ int main(int argc, char **argv) {
                                                  "rig/case; retain it and use its matching configuration");
             Scene restored;
             Require(WorldPersistence::SceneFrom(snapshot.participants, restored, error), error);
-            Require(world.Build(restored, &resources, error, nullptr, nullptr, true), error);
+            Require(world.Build(restored, &resources, error, &categories, nullptr, true), error);
             Require(WorldPersistence::Prepare(world, error), error);
             Require(WorldPersistence::Restore(world, snapshot.participants, error), error);
             WorldPersistence::Published(world);
-            const auto hash = DurableShapeHash(world, rigs);
+            if(panelsEnabled){auto it=snapshot.participants.find("crash-panels");Require(it!=snapshot.participants.end(),"saved physical hood is missing");SaveArchive a(it->second.data);for(auto& p:panels)p.Persist(a);}
+            const auto hash = DurableShapeHash(world, rigs, &panels);
             Require(snapshot.metadata == "{\"shape\":\"" + hash + "\"}",
                     "cold restoration changed durable deformation/wheel/rotor state");
             std::cout << "COLD_SHAPE_VERIFIED " << hash << '\n';
@@ -345,7 +408,8 @@ int main(int argc, char **argv) {
                   << " bonds=" << asset.fracture->bonds.size()
                   << " body_triangles=" << model.body.indices.size() / 3
                   << " skin_numeric_payload_bytes=" << rigs[0].skin.Bytes() << '\n';
-        std::array<MeshHandle, 4> wheelMeshes{};
+        std::array<MeshHandle, 4> wheelMeshes{}, brakeMeshes{};
+        std::vector<MeshHandle> panelMeshes;
         std::vector<MeshHandle> bodyMeshes;
         std::vector<uint64_t> meshRevisions;
         std::vector<glm::mat4> palette;
@@ -367,8 +431,11 @@ int main(int argc, char **argv) {
             for (unsigned i = 0; i < 4; ++i)
                 if (!model.wheels[i].indices.empty())
                     wheelMeshes[i] = r.CreateMesh(model.wheels[i]);
+            for(unsigned i=0;i<4;++i) if(!model.brakes[i].indices.empty())brakeMeshes[i]=r.CreateMesh(model.brakes[i]);
+            for(auto& p:panels){p.Map();panelMeshes.push_back(r.CreateMesh(p.mapped));}
             std::cout << "INITIAL_GPU_RESOURCES_CPU_MS " << Elapsed(initialGpuResources) << '\n';
         }
+        std::vector<double> panelTimes, panelMapTimes;
         std::vector<double> stepTimes, mapTimes, renderTimes, gpuTimes;
         std::deque<uint64_t> gpuFrames;
         unsigned minimumVisible = count, maximumVisible = 0;
@@ -379,6 +446,7 @@ int main(int argc, char **argv) {
         unsigned tick = 0;
         bool paused = false, launchRequested = false;
         float orbit = .45f, cameraDistance = 6;
+        unsigned nextPanelCapture=110;
         if (host)
             host->GetWindow().SetEventHook([&](const SDL_Event &event) {
                 if (event.type == SDL_MOUSEWHEEL)
@@ -386,15 +454,18 @@ int main(int argc, char **argv) {
             });
         double accumulator = 0;
         auto previousTime = Clock::now();
+        std::string statusMessage=load?"Cold save restored.":"Ready. Drive normally or use Enter for a diagnostic impact.";
         auto save = [&]() {
             GameSnapshot snapshot;
             snapshot.project = "local-crash-proof";
             snapshot.scene = "crash-proof.judas";
             snapshot.content = content;
-            snapshot.metadata = "{\"shape\":\"" + DurableShapeHash(world, rigs) + "\"}";
+            snapshot.metadata = "{\"shape\":\"" + DurableShapeHash(world, rigs, &panels) + "\"}";
             Require(WorldPersistence::Capture(world, snapshot.participants, error), error);
+            if(panelsEnabled){SaveArchive a;for(auto& p:panels)p.Persist(a);snapshot.participants["crash-panels"]={1,a.bytes};}
             Require(storage.Write("crash", snapshot, error), error);
-            std::cout << "SAVE tick=" << tick << '\n';
+            statusMessage="Saved physical damage and vehicle state.";
+            std::cout << "SAVE tick=" << tick << " metadata=" << snapshot.metadata << '\n';
         };
         while (!frames || tick < frames) {
             double dt = 1. / 60;
@@ -408,13 +479,14 @@ int main(int argc, char **argv) {
                 dt = std::min(.1, std::chrono::duration<double>(Clock::now() - previousTime).count());
                 previousTime = Clock::now();
                 static bool lastP = false, lastF = false, lastR = false, lastT = false;
-                bool reset = keys[SDL_SCANCODE_R], launch = keys[SDL_SCANCODE_RETURN];
+                bool reset = !frames && keys[SDL_SCANCODE_R], launch = !frames && keys[SDL_SCANCODE_RETURN];
                 if (reset && !lastR) {
-                    Require(world.Build(scene, &resources, error), error);
+                    Require(world.Build(scene, &resources, error, &categories), error);
                     world.UpdateDeformables(1. / 60);
+                    for(unsigned i=0;i<panels.size();++i)panels[i].Initialize(world,rigs[i],hood);
                     tick = 0;
                     meshRevisions.assign(rigs.size(), ~uint64_t(0));
-                    paused = false;
+                    paused = false;statusMessage="Fixture rebuilt; damage reset. Saved slots are retained.";
                 }
                 if (launch && !lastT)
                     launchRequested = true;
@@ -422,8 +494,9 @@ int main(int argc, char **argv) {
                 lastT = launch;
                 orbit += float(dt) * (int(keys[SDL_SCANCODE_Q]) - int(keys[SDL_SCANCODE_E]));
                 bool p = keys[SDL_SCANCODE_P], f = keys[SDL_SCANCODE_F6];
-                if (p && !lastP)
-                    paused = !paused;
+                if (p && !lastP){
+                    paused = !paused;statusMessage=paused?"Paused. Orbit and inspect the physical damage.":"Simulation resumed.";
+                }
                 if (f && !lastF)
                     save();
                 lastP = p;
@@ -431,7 +504,7 @@ int main(int argc, char **argv) {
             }
             accumulator += dt;
             while (!paused && accumulator >= 1. / 60 && (!frames || tick < frames)) {
-                const auto *keys = host ? SDL_GetKeyboardState(nullptr) : nullptr;
+                const auto *keys = host && !frames ? SDL_GetKeyboardState(nullptr) : nullptr;
                 for (auto &rig : rigs) {
                     if (auto *train = world.RuntimePowertrain(rig.owner)) {
                         train->command.sources[0].input = (drive && tick > 60) ||
@@ -440,42 +513,61 @@ int main(int argc, char **argv) {
                                                               ? 1
                                                           : keys && keys[SDL_SCANCODE_S] ? -1
                                                                                          : 0;
+                        if(wheelCourse){
+                            unsigned phase=tick%600;
+                            train->command.sources[0].input=phase<60?0:phase<180? .45f:phase<240?0:phase<360?-.45f:.35f;
+                        }
                         for (auto &brake : train->command.brakes)
-                            brake.engagement = keys && keys[SDL_SCANCODE_SPACE] ? 1 : 0;
+                            brake.engagement = (keys && keys[SDL_SCANCODE_SPACE]) || (wheelCourse && tick%600>=180 && tick%600<240) ? 1 : 0;
                     }
                     for (unsigned i = 0; i < rig.wheels.size(); ++i)
                         if (auto *wheel = world.RuntimeWheel(rig.wheels[i]))
                             wheel->command.steeringAngle =
                                 i < 2 && postDrive && tick >= 300 ? .3f
+                                : i<2 && wheelCourse && tick%600>=360 ? (tick%600<480?.4f:-.4f)
                                 : i < 2 && keys
                                     ? .4f * (int(keys[SDL_SCANCODE_A]) - int(keys[SDL_SCANCODE_D]))
-                                    : 0;
+                                    : wheelCourse && i<2 && tick%600>=360 ? (tick%600<480?.4f:-.4f) : 0;
                 }
                 // Controlled crash launch is a declared initial condition, never a
                 // contact-triggered animation/velocity reset. Manual W/S uses wheels.
                 if (launchRequested || ((tick == 120 || (repeat && tick > 120 && (tick - 120) % 300 == 0)) &&
-                                        !load && !drive && (frames || headless)))
-                    for (unsigned i = 0; i < rigs.size(); ++i)
+                                        !load && !drive && !wheelCourse && (frames || headless)))
+                    for (unsigned i = 0; i < rigs.size(); ++i) {
+                        auto velocity = kind == "side" ? glm::vec3(speed,0,0) : kind == "rear" ? glm::vec3(0,0,speed)
+                            : glm::vec3(0,0,kind=="cars"&&i==1 ? speed : -speed);
+                        auto* frame=world.RuntimeDeformable(rigs[i].owner,error);
                         for (unsigned p = 0; p < asset.fracture->parts.size(); ++p) {
-                            auto body = world.RuntimeBody(world.FracturePartEntity(rigs[i].owner, p));
-                            auto velocity = kind == "side" ? glm::vec3(speed, 0, 0)
-                                            : kind == "rear"
-                                                ? glm::vec3(0, 0, speed)
-                                                : glm::vec3(0, 0, kind == "cars" && i == 1 ? speed : -speed);
-                            world.Physics().SetLinearVelocity(body, velocity);
+                            if(frame->fracture.component[p]!=frame->fracture.component[rigs[i].referencePart])continue;
+                            auto body=world.RuntimeBody(world.FracturePartEntity(rigs[i].owner,p));
+                            world.Physics().SetLinearVelocity(body,velocity);
                         }
+                        if(i<panels.size()&&panels[i].AttachedTo(*frame,rigs[i].referencePart))for(auto& v:panels[i].material.velocities)v=glm::dvec3(velocity);
+                    }
                 launchRequested = false;
                 auto t = Clock::now();
                 {
                     ProfileFrame frame("Crash proof fixed step");
                     StepAuthoritativeWorld(world, input, 1.f / 60);
-                }
                 stepTimes.push_back(Elapsed(t));
+                auto panelStart=Clock::now();
+                for(unsigned i=0;i<panels.size();++i)panels[i].Step(world,rigs[i],1./60);
+                // Reuse the engine's mass-balanced material/material contacts;
+                // the private owners are intentionally outside scene authoring.
+                for(unsigned a=0;a<panels.size();++a)for(unsigned b=a+1;b<panels.size();++b){
+                    auto& x=panels[a].material;auto& y=panels[b].material;
+                    const glm::dvec3 thickness(x.settings.material.thickness+y.settings.material.thickness);
+                    if(glm::any(glm::lessThan(x.Maximum()+thickness,y.Minimum()))||glm::any(glm::lessThan(y.Maximum()+thickness,x.Minimum())))continue;
+                    DeformableInstance::SurfaceContacts(x,y,1./60);
+                    DeformableInstance::SurfaceContacts(y,x,1./60);
+                }
+                if(!panels.empty())panelTimes.push_back(Elapsed(panelStart));
+                }
                 if (profile) {
-                    auto history = PerformanceProfiler::Get().History();
-                    if (!history.empty()) {
+                    auto snapshot = PerformanceProfiler::Get().Snapshot(PerformanceProfiler::Get().FrameId());
+                    if (snapshot.id) {
                         std::map<std::string, double> totals;
-                        for (const auto &scope : history.back().scopes)
+                        for (const auto &scope : snapshot.scopes)
                             totals[scope.name.c_str()] += double(scope.end - scope.start) * 1e-6;
                         for (auto &[name, ms] : totals)
                             phaseTimes[name].push_back(ms);
@@ -564,6 +656,12 @@ int main(int argc, char **argv) {
                 const float distance = cameraDistance * float(count);
                 auto eye = target + glm::vec3(distance * std::sin(.78f + orbit), 3 + float(count - 1) * 1.5f,
                                               -distance * std::cos(.78f + orbit));
+                if(wheelView>=0){
+                    auto* wheel=world.RuntimeWheel(rigs[0].wheels[unsigned(wheelView)]);
+                    target=wheel->state.center;
+                    const float nearDistance=cameraDistance*(2.2f/6.f),nearOrbit=orbit-.45f;
+                    eye=target+glm::vec3((wheelView%2?1.f:-1.f)*nearDistance*std::cos(nearOrbit),.5f,-.4f+nearDistance*std::sin(nearOrbit));
+                }
                 auto t = Clock::now();
                 r.ResetStats();
                 r.BeginFrame(window.Width(), window.Height());
@@ -576,6 +674,16 @@ int main(int argc, char **argv) {
                                   o.name == "Ground" ? glm::vec3(.25f, .28f, .29f)
                                                      : glm::vec3(.65f, .68f, .68f),
                                   xray && o.name != "Ground" ? .22f : 1.f);
+                // Painted floor references make ride height and rolling motion
+                // readable; these markings deliberately have no collision body.
+                for(int z=-20;z<=10;z+=2)r.DrawBox({0,.003f,float(z)},{1,0,0,0},{2,.003f,.015f},{.42f,.45f,.47f});
+                auto panelMapStart=Clock::now();
+                for(unsigned i=0;i<panels.size();++i){
+                    panels[i].Map();
+                    r.UpdateMeshVertices(panelMeshes[i],panels[i].mapped.vertices);
+                    r.DrawMesh(panelMeshes[i],{0,0,0},{1,0,0,0},{1,1,1},{},{1,1,1});
+                }
+                if(!panels.empty())panelMapTimes.push_back(Elapsed(panelMapStart));
                 unsigned visibleModels = 0;
                 for (unsigned i = 0; i < rigs.size(); ++i) {
                     auto &rig = rigs[i];
@@ -604,17 +712,22 @@ int main(int argc, char **argv) {
                     for (unsigned w = 0; w < 4; ++w)
                         if (auto *wheel = world.RuntimeWheel(rig.wheels[w]);
                             wheel && wheel->state.available && wheelMeshes[w].IsValid())
-                            r.DrawMesh(wheelMeshes[w], wheel->state.center, wheel->state.rotation, {1, 1, 1},
-                                       {}, {1, 1, 1});
+                        {
+                            r.DrawMesh(wheelMeshes[w], wheel->state.center, wheel->state.rotation, {1,1,1}, {}, {1,1,1});
+                            // Undo only spin: calipers follow the actual steered unsprung axle.
+                            if(brakeMeshes[w].IsValid())r.DrawMesh(brakeMeshes[w],wheel->state.center,
+                                wheel->state.rotation*glm::angleAxis(wheel->state.angle,glm::vec3(1,0,0)),{1,1,1},{},{1,1,1});
+                        }
                 }
                 minimumVisible = std::min(minimumVisible, visibleModels);
                 maximumVisible = std::max(maximumVisible, visibleModels);
                 r.EndFrame();
                 r.BeginUIFrame(window.Width(), window.Height());
-                r.DrawUIRect({15, 15}, {1200, 110}, {.02f, .03f, .04f, .9f});
+                r.DrawUIRect({15, 15}, {1200, 140}, {.02f, .03f, .04f, .9f});
                 r.DrawUIText("DEFORMABLES V2 | LOCAL CRASH PROOF | " + kind, {30, 25}, .8f, {1, 1, 1, 1});
                 r.DrawUIText("W/S drive | A/D steer | Space brake | Enter test impact | P pause | F6 save",
                              {30, 60}, .65f, {.5f, 1, 1, 1});
+                r.DrawUIText(statusMessage,{30,120},.55f,{.8f,.9f,.9f,1});
                 r.DrawUIText(
                     "Q/E orbit | Wheel zoom | R restart | Esc quit | Physical damage, no scripted animation",
                     {30, 90}, .6f, {1, 1, 1, 1});
@@ -623,6 +736,11 @@ int main(int argc, char **argv) {
                 renderTimes.push_back(Elapsed(t));
                 if (frames && tick >= frames)
                     Snapshot(r, root / "final.ppm", window.Width(), window.Height());
+                if(wheelCourse && tick && tick%60==0)
+                    Snapshot(r,root/("wheel-course-"+std::to_string(tick)+".ppm"),window.Width(),window.Height());
+                if(captureSteps && panelsEnabled && tick>=nextPanelCapture && tick<=210){
+                    Snapshot(r,root/("panel-step-"+std::to_string(tick)+".ppm"),window.Width(),window.Height());nextPanelCapture=tick+4;
+                }
                 window.SwapBuffers();
                 renderProfile.End();
                 if (profile) {
@@ -650,6 +768,14 @@ int main(int argc, char **argv) {
         for (auto &[name, values] : phaseTimes)
             Summary(("PHASE " + name).c_str(), values);
         Summary("SIMULATION", stepTimes);
+        Summary("PANELS",panelTimes);
+        Summary("PANEL_MAPPING_UPLOAD",panelMapTimes);
+        std::vector<double> combined=stepTimes;
+        for(unsigned i=0;i<panelTimes.size();++i)combined[i]+=panelTimes[i];
+        Summary("TOTAL_PHYSICS",combined);
+        std::ofstream timings(root/"timings.csv");timings<<"step,world_ms,panel_ms,total_physics_ms\n";
+        for(unsigned i=0;i<stepTimes.size();++i)timings<<i<<","<<std::setprecision(12)<<stepTimes[i]<<","<<(i<panelTimes.size()?panelTimes[i]:0)<<","<<combined[i]<<"\n";
+        for(auto& p:panels){std::cout<<"PANEL_RESULT plastic="<<p.PlasticExtent()<<" released=";for(auto r:p.material.released)std::cout<<int(r);std::cout<<" panel_nodes="<<p.material.positions.size()<<" sleeping="<<p.material.sleeping<<'\n';}
         Summary("SKIN_MAPPING", mapTimes);
         Summary("RENDER_CPU", renderTimes);
         Summary("RENDER_GPU", gpuTimes);
@@ -664,8 +790,11 @@ int main(int argc, char **argv) {
 
         if (host) {
             host->GetWindow().SetEventHook({});
+            for(auto mesh:panelMeshes)host->GetRenderer().DestroyMesh(mesh);
             for (auto mesh : bodyMeshes)
                 host->GetRenderer().DestroyMesh(mesh);
+            for (auto mesh : brakeMeshes)
+                if(mesh.IsValid()) host->GetRenderer().DestroyMesh(mesh);
             for (auto mesh : wheelMeshes)
                 if (mesh.IsValid())
                     host->GetRenderer().DestroyMesh(mesh);

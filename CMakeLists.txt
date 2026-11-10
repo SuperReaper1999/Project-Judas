@@ -267,6 +267,7 @@ add_library(judas_engine STATIC
     src/modding/ModRuntime.cpp
     src/WorldFracture.cpp
     src/StructuralMass.cpp
+    src/deformables/PanelBending.cpp
     src/Fracture.cpp
     src/DeformableAsset.cpp
     src/Deformable.cpp
@@ -1674,6 +1675,6 @@ include(cmake/JudasValidation.cmake)
 # Stage-1 local structural fidelity harness. No external model is bundled;
 # callers supply their own non-distributed model and writable scratch directory.
 add_executable(judas_crash_proof EXCLUDE_FROM_ALL
-    tools/crash_proof/CrashProof.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp)
+    tools/crash_proof/CrashProof.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp)
 target_link_libraries(judas_crash_proof PRIVATE judas_engine)
 judas_warnings(judas_crash_proof)

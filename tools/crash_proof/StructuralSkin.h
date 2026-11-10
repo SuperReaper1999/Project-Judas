@@ -11,7 +11,7 @@ struct DeformableInstance;
 // Map/Palette require a live instance of the prepared partition used by Bind.
 class StructuralSkin {
   public:
-    bool Bind(const DeformableAsset &, const MeshData &, std::string &error);
+    bool Bind(const DeformableAsset &, const MeshData &, std::string &error, bool panelSeams=false);
     void Map(const DeformableInstance &, double alpha, MeshData &) const;
     void BuildGpuMesh(const DeformableInstance &, MeshData &) const;
     void Palette(const DeformableInstance &, double alpha, std::vector<glm::mat4> &) const;

@@ -1,5 +1,8 @@
 # Deformables V2 Stage 1 — physical crash proof and fidelity stop
 
+Follow-up: [revised physical-panel and wheel proof](DEFORMABLES_V2_REVISED_STAGE1.md).
+The failed section-only findings below remain the original evidence.
+
 **2026-11-10. Experimental investigation/implementation checkpoint; Stage 1 is not
 complete or human-accepted. Stages 2–4 have not begun.** The baseline is
 `b6a4fedc3f66d75d2917601663d6873ea72da016`. Main and the Advanced Fluids lock are unchanged.
