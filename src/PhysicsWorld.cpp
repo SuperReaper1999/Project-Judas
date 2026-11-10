@@ -727,6 +727,12 @@ const PhysicsWorld::StepStats &PhysicsWorld::LastStepStats() const {
     return m_impl->stats;
 }
 
+void PhysicsWorld::SetCollisionSearchObserver(std::function<void(const CollisionSearchSample&)> observer) {
+    if (!m_impl || m_impl->stepping || m_impl->coupledStep)
+        throw std::logic_error("collision observer requires a completed step boundary");
+    m_impl->searchObserver=std::move(observer);
+}
+
 void PhysicsWorld::ShiftOrigin(glm::dvec3 delta) {
     if (!OriginLimits::ValidTranslation(delta))
         throw std::invalid_argument("invalid origin translation");

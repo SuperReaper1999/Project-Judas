@@ -203,6 +203,39 @@ int main() {
     const auto withdrawnHit=sw.ImpactTime(ms,ws,0,0,0,1,0);
     Check(withdrawnHit>1 && sw.work.searchMemoReuses==1,
           "a last-second trajectory reversal cannot reuse the old collision prediction");
+    // Diagnostics must observe the same exact answer and restore transient
+    // state even when the tool callback throws. They never own solver state.
+    unsigned observed=0;
+    sweepPhysics.SetCollisionSearchObserver([&](const auto& sample){
+        ++observed;Check(sample.a==mover.id && sample.b==wall.id && sample.cacheHit,
+            "observer identifies exact cached root without rescheduling physics");
+    });
+    Check(sw.ImpactTime(ms,ws,0,0,0,1,0)==withdrawnHit && observed==1,
+        "optional observation preserves exact result");
+    sweepPhysics.SetCollisionSearchObserver([](const auto&){throw std::runtime_error("observer control");});
+    bool threw=false;try{sw.ImpactTime(ms,ws,0,0,0,1,0);}catch(const std::runtime_error&){threw=true;}
+    Check(threw && sw.work.searchDetail==nullptr,"observer exception cannot leave a dangling detail pointer");
+    threw=false;try{sw.ImpactTime(ms,ws,0,0,2,3,0);}catch(const std::out_of_range&){threw=true;}
+    Check(threw && sw.work.searchDetail==nullptr,"failed geometry query restores the transient diagnostic scope");
+    sweepPhysics.SetCollisionSearchObserver({});
+    // Two different exact keys coexist in a set; touching one protects it
+    // from least-recent replacement. An epoch never supplies old observations.
+    struct Entry {std::uint64_t epoch=0,lastUse=0;unsigned key=0;};
+    std::vector<Entry> entries(2);std::uint64_t clock=0;
+    const auto get=[&](unsigned key,std::uint64_t epoch)->Entry& {
+        return JudasPhysicsDetail::SelectImpactMemo(entries,0,epoch,clock,
+            [&](const auto& entry){return entry.key==key;});
+    };
+    auto& zero=get(0,1);zero.key=0;zero.epoch=1;
+    auto& one=get(1,1);one.key=1;one.epoch=1;
+    const auto touched=get(0,1).lastUse;
+    auto& replacement=get(2,1);
+    Check(replacement.key==1 && get(0,1).lastUse>touched,
+        "bounded set retention keeps the exact recently used key");
+    replacement.key=2;replacement.epoch=1;
+    auto& fresh=get(0,2);
+    Check(fresh.epoch!=2,"new epoch cannot match an old set member");
+    std::printf("Exact memo storage bytes: %zu\n",4096*(sizeof(World::ImpactGeometryMemo)+sizeof(World::ImpactSearchMemo)));
     sw.impactGeometryMemoActive=false;
     std::printf("CCD anchor reuse: %u checks, %u failures\n",checks,failures);
     return failures?1:0;

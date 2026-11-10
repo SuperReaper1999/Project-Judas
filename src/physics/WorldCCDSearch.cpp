@@ -2,6 +2,18 @@
 
 using namespace JudasPhysicsDetail;
 
+namespace {
+ShapeType CCDPrimitiveType(const Shape& shape,const RigidBody& pose,int part) {
+    if(shape.type!=ShapeType::CompoundBoxes)return shape.type;
+    const auto type=shape.boxes[std::size_t(part)].type;
+    // Reading a primitive descriptor needs neither a world pose nor an
+    // owning Shape. Keep cooked/unusual children on the existing resolver.
+    if(type==ShapeType::Box || type==ShapeType::Sphere)return type;
+    return PrimitiveAt(shape,pose,part).shape.type;
+}
+}
+
+
 auto PhysicsWorld::Impl::CCDQuery::RemainingImpactBound(unsigned slot, double start, double finish)
     -> const Aabb & {
     EnsureImpactPoseStorage();
@@ -362,6 +374,12 @@ auto PhysicsWorld::Impl::PrimitiveFeature(unsigned slot, int part) const -> doub
     }
     if (shape.type == ShapeType::Box)
         return double(std::min({shape.halfExtents.x, shape.halfExtents.y, shape.halfExtents.z}));
+    if(shape.type==ShapeType::CompoundBoxes) {
+        const auto& child=shape.boxes[std::size_t(part)];
+        if(child.type==ShapeType::Sphere)return double(child.radius);
+        if(child.type==ShapeType::Box)
+            return double(std::min({child.halfExtents.x,child.halfExtents.y,child.halfExtents.z}));
+    }
     auto primitive = PrimitiveAt(shape, bodies[slot].rigidBody, part);
     if (primitive.shape.type == ShapeType::Sphere)
         return double(primitive.shape.radius);
@@ -385,9 +403,7 @@ auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned
     };
     const auto type = [&](unsigned slot, unsigned part) {
         const auto& body = bodies[slot];
-        return body.shape.type != ShapeType::CompoundBoxes
-                   ? body.shape.type
-                   : PrimitiveAt(body.shape, body.rigidBody, int(part)).shape.type;
+        return CCDPrimitiveType(body.shape,body.rigidBody,int(part));
     };
     const auto typeA = type(key[0], key[2]);
     const auto typeB = type(key[1], key[3]);
@@ -470,6 +486,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
                                     double finish, double target, bool absoluteTarget, const MeshFeatureBudget* episode) -> double {
     PhysicsWorkTimer timer(work.toi, work.active);
     ++stats.impactQueries;
+    struct SearchDepth { unsigned& depth; bool active; SearchDepth(unsigned& d,bool enabled):depth(d),active(enabled){if(active)++depth;} ~SearchDepth(){if(active)--depth;} } depth(work.searchDepth,work.searchDetail!=nullptr);
     const auto &ba = bodies[a];
     const auto &bb = bodies[b];
     const auto simpleRadius = [](const Body &body) {
@@ -507,8 +524,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     }
     const auto posa = ImpactPoseAt(a, start).pose, posb = ImpactPoseAt(b, start).pose;
     const auto type = [](const Body& body, const RigidBody& pose, int part) {
-        return body.shape.type != ShapeType::CompoundBoxes
-            ? body.shape.type : PrimitiveAt(body.shape, pose, part).shape.type;
+        return CCDPrimitiveType(body.shape,pose,part);
     };
     const auto firstType = type(ba, posa, pa), secondType = type(bb, posb, pb);
     const bool firstMesh = firstType == ShapeType::TriangleMesh && !ba.HasMotion();
@@ -546,7 +562,10 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     // above. With no accepted start contact their global penetration is zero.
     if (target > 0 && !meshAdvance && !absoluteTarget)
         target += PairPenetration(a, b, pa, pb, start);
-    if (target == 0 && !meshContinuation && PairTouches(a,b,pa,pb,start) &&
+    const bool startTouches=target==0 && !meshContinuation && PairTouches(a,b,pa,pb,start);
+    if(work.searchDepth==1 && work.searchDetail && target==0 && !meshContinuation)
+        work.searchDetail->startContact=startTouches?1:0;
+    if (startTouches &&
         SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start))
         return ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}));
     // Integrator knots are NOT new contact episodes. Carry the original
@@ -558,14 +577,25 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     // stack depth no longer grows with trajectory resolution. Contact episodes,
     // absolute targets, search arithmetic and earliest-hit ordering are retained.
     std::vector<double> knots;
+    {
+    PhysicsWorkTimer preparation(work.preparation,work.active);
     for (auto slot : {a,b})
         if (bodies[slot].isKinematic || bodies[slot].isDynamic)
             for (const auto& segment : bodies[slot].motion.Segments())
-                if (segment.end > start && segment.end < finish) knots.push_back(segment.end);
+                { ++work.segmentVisits;
+                  if (segment.end > start && segment.end < finish) {
+                      if(knots.size()==knots.capacity())++work.segmentAllocations;
+                      knots.push_back(segment.end);++work.segmentKnots;
+                  }
+                }
     if (!knots.empty()) {
+        if(knots.size()==knots.capacity())++work.segmentAllocations;
         knots.push_back(finish);
         std::sort(knots.begin(), knots.end());
         knots.erase(std::unique(knots.begin(), knots.end()), knots.end());
+    }
+    }
+    if (!knots.empty()) {
         const auto* anchor = meshAdvance ? &meshBudget : nullptr;
         double begin = start;
         for (double end : knots) {
@@ -631,6 +661,8 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     // contact normal bounds the approach of every feature; go straight to
     // the bounded sampling below.
     const int advanceIterations = target > 0 || meshContinuation ? 0 : 64;
+    {
+    PhysicsWorkTimer advancement(work.advance,work.active);
     for (int iteration = 0; iteration < advanceIterations; ++iteration) {
         ++stats.impactSearchIterations;
         stats.impactPeakIterations =
@@ -726,6 +758,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
             break;
         }
     }
+    }
     if (stalled)
         ++stats.impactSearchStalls;
     else if (!uncertifiedAdvance && target == 0 && !meshContinuation)
@@ -736,6 +769,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     // sampling approximation, never by applying an impulse across a gap.
     // Intersections shorter than the reported sampling interval can be
     // missed; this is deliberately not a complete continuous-CCD proof.
+    PhysicsWorkTimer sampling(work.sampling,work.active);
     auto firstContact = [&](double lo, double hi) {
         for (int k = 0; k < 32; ++k) {
             const double mid = (lo + hi) * .5;
@@ -802,6 +836,7 @@ auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key,
 }
 
 auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target) -> double {
+    const auto evaluate=[&]() -> double {
     CCDQuery query(*this);
     if(!impactGeometryMemoActive)return query.ImpactTime(a,b,pa,pb,start,finish,target);
     ++work.searchMemoRequests;
@@ -817,13 +852,58 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     // Fold high floating-point bits before indexing the power-of-two table.
     hash^=hash>>33;hash*=0xff51afd7ed558ccdull;
     hash^=hash>>33;hash*=0xc4ceb9fe1a85ec53ull;hash^=hash>>33;
-    auto& memo=impactSearchMemo[hash%impactSearchMemo.size()];
+    auto& memo=SelectImpactMemo(impactSearchMemo,hash,impactGeometryEpoch,impactMemoClock,[&](const auto& entry){
+        return entry.pair==pair && entry.trajectories==trajectories &&
+            std::memcmp(entry.interval.data(),interval.data(),sizeof(interval))==0;
+    });
     if(memo.epoch==impactGeometryEpoch && memo.pair==pair && memo.trajectories==trajectories &&
        std::memcmp(memo.interval.data(),interval.data(),sizeof(interval))==0) {
         ++work.searchMemoReuses;
         return memo.hit;
     }
     const double hit=query.ImpactTime(a,b,pa,pb,start,finish,target);
-    memo={pair,trajectories,interval,impactGeometryEpoch,hit};
+    if(memo.epoch==impactGeometryEpoch)++work.searchMemoEvictions;
+    memo={pair,trajectories,interval,impactGeometryEpoch,memo.lastUse,hit};
     return hit;
+    };
+    if(!searchObserver)return evaluate();
+    const auto before=stats;const auto workBefore=work;
+    const auto workBeforePose=impactPoseEvaluations,workBeforeOrientation=impactOrientationBuilds;
+    CollisionSearchSample detail;
+    detail.a=MakeHandle(a).id;detail.b=MakeHandle(b).id;detail.partA=unsigned(pa);detail.partB=unsigned(pb);
+    detail.compoundA=bodies[a].shape.type==ShapeType::CompoundBoxes;
+    detail.compoundB=bodies[b].shape.type==ShapeType::CompoundBoxes;
+    detail.typeA=CCDPrimitiveType(bodies[a].shape,bodies[a].rigidBody,pa);
+    detail.typeB=CCDPrimitiveType(bodies[b].shape,bodies[b].rigidBody,pb);
+    detail.start=start;detail.finish=finish;detail.target=target;
+    detail.revisionA=bodies[a].impactTrajectoryRevision;detail.revisionB=bodies[b].impactTrajectoryRevision;
+    struct DetailScope {
+        WorkDiagnostics& work;CollisionSearchSample* previous;
+        ~DetailScope(){work.searchDetail=previous;}
+    } detailScope{work,work.searchDetail};
+    work.searchDetail=&detail;
+    const auto began=Clock::now();
+    const double result=evaluate();
+    detail.milliseconds=MillisecondsBetween(began,Clock::now());
+    work.searchDetail=workBefore.searchDetail;
+    detail.hit=result;detail.cacheHit=work.searchMemoReuses!=workBefore.searchMemoReuses;
+    detail.queries=stats.impactQueries-before.impactQueries;
+    detail.iterations=stats.impactSearchIterations-before.impactSearchIterations;
+    detail.samplingTests=stats.impactSamplingTests-before.impactSamplingTests;
+    detail.fallbacks=stats.impactSamplingFallbacks-before.impactSamplingFallbacks;
+    detail.geometryCalls=work.geometry.calls-workBefore.geometry.calls;
+    detail.advanceMs=double(work.advance.nanoseconds-workBefore.advance.nanoseconds)*1e-6;
+    detail.samplingMs=double(work.sampling.nanoseconds-workBefore.sampling.nanoseconds)*1e-6;
+    detail.preparationMs=double(work.preparation.nanoseconds-workBefore.preparation.nanoseconds)*1e-6;
+    detail.poseEvaluations=impactPoseEvaluations-workBeforePose;
+    detail.orientationPreparations=impactOrientationBuilds-workBeforeOrientation;
+    detail.segmentVisits=work.segmentVisits-workBefore.segmentVisits;
+    detail.segmentKnots=work.segmentKnots-workBefore.segmentKnots;
+    detail.segmentAllocations=work.segmentAllocations-workBefore.segmentAllocations;
+    detail.geometryHits=work.geometryMemoReuses-workBefore.geometryMemoReuses;
+    detail.geometryRequests=work.geometryMemoRequests-workBefore.geometryMemoRequests;
+    detail.geometryEvictions=work.geometryMemoEvictions-workBefore.geometryMemoEvictions;
+    detail.searchEvictions=work.searchMemoEvictions-workBefore.searchMemoEvictions;
+    searchObserver(detail);
+    return result;
 }

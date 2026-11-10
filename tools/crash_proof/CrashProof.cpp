@@ -1,3 +1,4 @@
+#include "CollisionSearchTrace.h"
 #include "BuildIdentity.h"
 #include "CrashRig.h"
 #include "CrashPanels.h"
@@ -5,6 +6,7 @@
 #include "WheelAssembly.h"
 #include "EngineHost.h"
 #include "ModelLoader.h"
+#include "JobSystem.h"
 #include "ModelArchive.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
@@ -218,7 +220,7 @@ int main(int argc, char **argv) {
         }
         std::string modelPath = argv[1], kind = "frontal", panelRecipe, partRolePath, environmentPath, saveRelease;
         std::filesystem::path root = std::filesystem::absolute(argv[2]);
-        unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8;
+        unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8, collisionWorkers=0;
         float speed = 12;
         int wheelView=-1;
         bool wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false,authorProject=false;
@@ -226,7 +228,8 @@ int main(int argc, char **argv) {
              postDrive = false, xray = false, panelsEnabled=false;
         for (int i = 3; i < argc; ++i) {
             std::string arg = argv[i];
-            if(arg=="--panels") panelsEnabled=true;
+            if(arg.rfind("--collision-workers=",0)==0)collisionWorkers=unsigned(std::stoul(arg.substr(20)));
+            else if(arg=="--panels") panelsEnabled=true;
             else if(arg.rfind("--panel-parts=",0)==0)panelRecipe=arg.substr(14);
             else if(arg.rfind("--part-roles=",0)==0)partRolePath=arg.substr(13);
             else if(arg.rfind("--environment=",0)==0)environmentPath=arg.substr(14);
@@ -309,6 +312,8 @@ int main(int argc, char **argv) {
         Require(layers == 1 || layers == 2, "layers must be 1 or 2");
         Require(columns == 2 || columns == 3, "columns must be 2 or 3");
         Require(segments == 8 || segments == 12, "segments must be 8 or 12");
+        Require(collisionWorkers==0 || collisionWorkers==1 || collisionWorkers==2 || collisionWorkers==4,
+            "collision worker count must be 1, 2 or 4");
         auto asset = MakeCrashStructure(segments, layers, columns);
         if(panelsEnabled){
             for(auto& bond:asset.fracture->bonds){
@@ -419,8 +424,11 @@ int main(int argc, char **argv) {
         if(authorProject)AuthorCrashProject(root,scene,rigs,model.wheels,model.brakes,db);
         Require(SaveSceneToFile(scene, (root / "crash-proof.judas").string(), error), error);
         ProjectClassification categories;
+        std::unique_ptr<JobSystem> collisionJobs;
+        if(collisionWorkers)collisionJobs=std::make_unique<JobSystem>(collisionWorkers);
         RuntimeWorld world;
         Require(world.Build(scene, &resources, error, &categories), error);
+        if(collisionJobs)world.Physics().SetJobSystem(collisionJobs.get(),collisionWorkers);
         world.PrepareDeformableMechanics();
         for(auto& panel:panels)panel.Bind(world);
         std::string modelHash;
@@ -499,6 +507,9 @@ int main(int argc, char **argv) {
         unsigned truncatedProfileFrames=0;
         if (profile)
             PerformanceProfiler::Get().Enable(true);
+        CrashCollisionSearchTrace searchTrace;
+        const bool pairProfile=profile && std::getenv("JUDAS_CCD_PAIR_PROFILE");
+        if(pairProfile)world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});
         std::ofstream stepProfile;
         if (profile) {
             stepProfile.open(root / "step-profile.jsonl");
@@ -610,6 +621,7 @@ int main(int argc, char **argv) {
                         if(i<panels.size()&&panels[i].AttachedTo(*frame,rigs[i].referencePart))for(auto& v:panels[i].Material().velocities)v=glm::dvec3(velocity);
                     }
                 launchRequested = false;
+                if(pairProfile)searchTrace.Clear();
                 auto t = Clock::now();
                 {
                     ProfileFrame frame("Crash proof fixed step");
@@ -642,6 +654,7 @@ int main(int argc, char **argv) {
                         row["exclusive_ms"]=exclusive;
                         for(const auto& counter:snapshot.counters)
                             row["counters"][counter.name.c_str()]=counter.value;
+                        if(pairProfile)row["collisionSearch"]=searchTrace.Encode();
                         stepProfile<<row.dump()<<'\n';
                     }
                 }
@@ -879,6 +892,11 @@ int main(int argc, char **argv) {
         Summary("SKIN_MAPPING", mapTimes);
         Summary("RENDER_CPU", renderTimes);
         Summary("RENDER_GPU", gpuTimes);
+        if(collisionJobs) {
+            const auto jobs=collisionJobs->Stats();
+            std::cout<<"COLLISION_WORKERS lanes="<<collisionWorkers<<" submitted="<<jobs.submitted
+                     <<" completed="<<jobs.completed<<" busy_seconds="<<jobs.workerBusySeconds<<'\n';
+        }
         if (host&&!panelsEnabled&&!authorProject)
             std::cout << "FRUSTUM_VISIBLE_VEHICLES min=" << minimumVisible << " max=" << maximumVisible
                       << '\n';

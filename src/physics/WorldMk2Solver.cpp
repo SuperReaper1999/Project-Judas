@@ -1653,12 +1653,12 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char>* requir
     std::vector<unsigned>* arrivalCounts, unsigned* eventCount) {
     stepDuration = dt;
     if(impactGeometryMemo.empty()) {
-        impactGeometryMemo.resize(1024);
+        impactGeometryMemo.resize(4096);
         ++cacheCounters.allocations;
         cacheCounters.allocatedBytes+=impactGeometryMemo.capacity()*sizeof(ImpactGeometryMemo);
     }
     if(impactSearchMemo.empty()) {
-        impactSearchMemo.resize(1024);
+        impactSearchMemo.resize(4096);
         ++cacheCounters.allocations;
         cacheCounters.allocatedBytes+=impactSearchMemo.capacity()*sizeof(ImpactSearchMemo);
     }

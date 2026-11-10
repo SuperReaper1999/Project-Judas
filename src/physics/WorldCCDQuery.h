@@ -1,6 +1,29 @@
 #pragma once
 #include "WorldInternal.h"
 
+// Bounded exact observations: associativity changes retention, never keys or
+// contact/search semantics. Tiny diagnostic tables remain valid too.
+namespace JudasPhysicsDetail {
+template<class Entry, class Match>
+Entry& SelectImpactMemo(std::vector<Entry>& entries, std::uint64_t hash,
+                        std::uint64_t epoch, std::uint64_t& clock, Match match) {
+    constexpr std::size_t ways=2;
+    const auto width=std::min(ways,entries.size());
+    const auto buckets=entries.size()/width;
+    const auto begin=(hash%buckets)*width;
+    auto* victim=&entries[begin];
+    for(std::size_t i=0;i<width;++i) {
+        auto& candidate=entries[begin+i];
+        if(candidate.epoch==epoch && match(candidate)) {
+            candidate.lastUse=++clock;return candidate;
+        }
+        if(candidate.epoch!=epoch ||
+           (victim->epoch==epoch && candidate.lastUse<victim->lastUse))victim=&candidate;
+    }
+    victim->lastUse=++clock;return *victim;
+}
+}
+
 // Private CCD observations. No body, motion ledger, contact history, event
 // frontier or solver state is owned or published by a query. A lane borrows a
 // frozen world and owns its derived samples and diagnostics until joined.
@@ -96,9 +119,13 @@ struct PhysicsWorld::Impl::CCDQuery {
         // Fold high floating-point bits before indexing the power-of-two table.
         hash^=hash>>33;hash*=0xff51afd7ed558ccdull;
         hash^=hash>>33;hash*=0xc4ceb9fe1a85ec53ull;hash^=hash>>33;
-        auto& memo=serialWorld->impactGeometryMemo[hash%serialWorld->impactGeometryMemo.size()];
+        auto& memo=JudasPhysicsDetail::SelectImpactMemo(serialWorld->impactGeometryMemo,hash,
+            serialWorld->impactGeometryEpoch,serialWorld->impactMemoClock,[&](const auto& entry){
+                return entry.pair==pair && std::memcmp(entry.geometry.data(),geometry.data(),sizeof(geometry))==0;
+            });
         if(memo.epoch!=serialWorld->impactGeometryEpoch || memo.pair!=pair ||
            std::memcmp(memo.geometry.data(),geometry.data(),sizeof(geometry))!=0) {
+            if(memo.epoch==serialWorld->impactGeometryEpoch)++work.geometryMemoEvictions;
             memo.epoch=serialWorld->impactGeometryEpoch;memo.pair=pair;memo.geometry=geometry;
             memo.hasManifold=memo.hasTruth=false;
         }

@@ -296,6 +296,26 @@ public:
     };
     const StepStats& LastStepStats() const;
 
+    // Optional read-only native diagnostics. The observer runs on the owner
+    // after each root CCD search; it must not mutate/re-enter this world.
+    // Search timing excludes the observer. No observations are save state.
+    struct CollisionSearchSample {
+        unsigned a=0,b=0,partA=0,partB=0;
+        ShapeType typeA=ShapeType::Sphere,typeB=ShapeType::Sphere;
+        bool compoundA=false,compoundB=false,cacheHit=false;
+        int startContact=-1; // -1 not needed/unknown, 0 separated, 1 touching/overlapping
+        std::uint64_t revisionA=0,revisionB=0;
+        double start=0,finish=0,target=0,hit=0,milliseconds=0;
+        double advanceMs=0,samplingMs=0,preparationMs=0;
+        std::size_t queries=0,iterations=0,samplingTests=0,fallbacks=0;
+        std::size_t geometryCalls=0,poseEvaluations=0,orientationPreparations=0;
+        std::size_t segmentVisits=0,segmentKnots=0,segmentAllocations=0;
+        std::size_t geometryHits=0,geometryRequests=0,geometryEvictions=0;
+        std::size_t searchEvictions=0;
+    };
+    void SetCollisionSearchObserver(std::function<void(const CollisionSearchSample&)> observer);
+
+
     // Milestone 32: the one spatial query the broadphase exposes — every
     // body whose broadphase bound overlaps the box. Conservative (bounds are
     // grown by a margin); callers still test real geometry. Results are in

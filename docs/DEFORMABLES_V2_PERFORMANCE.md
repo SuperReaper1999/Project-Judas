@@ -2,7 +2,7 @@
 
 The operator human-accepted Stages 1–4 at Experimental
 `69677c8c66d57149b6ee7fb02c08d9820d20f27c`. This separate optimisation pass
-**awaits human acceptance**. The accepted private-model quality and physical
+**was human accepted at `f0990a9ea00e6a769853d392136776ea28b80682`**. The accepted private-model quality and physical
 behaviour remain the baseline. Ural window/door authoring, follow-camera suspension
 bounce and missing mouse orbit are accepted demo limitations, not work for this pass.
 
@@ -263,5 +263,6 @@ The accepted 69677c8c project and executables remain separate.
 5. Open `Edit-Challenger.sh`, Play/Stop and inspect normal components/diagnostics.
 
 Known private camera/door authoring limitations remain deliberately untouched.
-The optimisation is ready for operator review, **not human accepted by automation**.
+The operator explicitly accepted this first optimisation pass at `f0990a9e`.
+A separately authorised [second collision-search pass](MK2_COLLISION_SEARCH_OPTIMISATION.md) is now in progress.
 Main promotion and publication are outside this task.

@@ -318,7 +318,7 @@ struct PhysicsWorld::Impl {
     struct ImpactGeometryMemo {
         std::array<unsigned,4> pair{};
         std::array<float,15> geometry{};
-        std::uint64_t epoch=0;
+        std::uint64_t epoch=0, lastUse=0;
         bool hasManifold=false,hasTruth=false,truth=false;
         ContactManifold manifold;
     };
@@ -326,12 +326,12 @@ struct PhysicsWorld::Impl {
         std::array<unsigned,4> pair{};
         std::array<std::uint64_t,2> trajectories{};
         std::array<double,3> interval{};
-        std::uint64_t epoch=0;
+        std::uint64_t epoch=0, lastUse=0;
         double hit=0;
     };
     std::vector<ImpactSearchMemo> impactSearchMemo;
     std::vector<ImpactGeometryMemo> impactGeometryMemo;
-    std::uint64_t impactGeometryEpoch=0;
+    std::uint64_t impactGeometryEpoch=0, impactMemoClock=0;
     bool impactGeometryMemoActive=false;
     std::vector<ImpactPoseSample> impactPoseSamples, impactAnchorSamples;
     double impactQueryAnchorTime = 0;
@@ -340,12 +340,17 @@ struct PhysicsWorld::Impl {
     std::size_t impactActualBoundsRejected = 0;
     struct WorkDiagnostics {
         bool active = false;
-        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation, wake;
+        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation, wake, advance, sampling, preparation;
         std::size_t geometryMemoRequests=0,geometryMemoReuses=0,
                     searchMemoRequests=0,searchMemoReuses=0,
-                    wakeScratchBytes=0,wakeGraphEdges=0;
+                    wakeScratchBytes=0,wakeGraphEdges=0,
+                    geometryMemoEvictions=0,searchMemoEvictions=0,
+                    segmentVisits=0,segmentKnots=0,segmentAllocations=0;
+        unsigned searchDepth=0;
+        PhysicsWorld::CollisionSearchSample* searchDetail=nullptr;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
     } work;
+    std::function<void(const PhysicsWorld::CollisionSearchSample&)> searchObserver;
     // Indexed output only: workers never mutate physics bodies, geometry
     // caches, solver rows, touches, warm starts or event scheduling.
     struct InitialContactGeometry {
