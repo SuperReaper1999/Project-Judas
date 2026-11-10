@@ -3,9 +3,10 @@
 Experimental follow-up to the [wheel/panel proof](DEFORMABLES_V2_REVISED_STAGE1.md),
 whose baseline is `c9959714eb5bd7023436cbc8918edb63a7a0123f`.
 The operator accepted the improved wheels and local bending, but reported that the
-bonnet never detached. This correction awaits their final visual review. Main,
+bonnet never detached. The operator human-accepted this correction at `6a1d49b2` and authorised
+[Stages 2–4 implementation](DEFORMABLES_V2_IMPLEMENTATION.md). Main,
 the Advanced Fluids lock, RPG SDK and third-party originals remain unchanged.
-Stages 2–4 have not begun.
+Stages 2–4 are now in development; the results below remain the Stage 1 baseline.
 
 ## Cause and correction
 

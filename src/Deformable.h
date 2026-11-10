@@ -5,6 +5,7 @@
 #include "PhysicsWorld.h"
 #include "GravityField.h"
 #include "deformables/PanelBending.h"
+#include "deformables/SleepContacts.h"
 #include <optional>
 #include <array>
 #include <map>
@@ -138,6 +139,7 @@ public:
     // exclusions. Both participants receive the same mass-weighted projection.
     static void SurfaceContacts(DeformableInstance&,DeformableInstance&,double);
 private:
+    JudasDeformables::SleepContacts sleepingContacts;
     std::vector<double> inverseMass,mass,lambda,volumeLambda;
     std::vector<glm::dvec3> start,forces,lastGravity;
     std::vector<glm::dvec3> attachmentImpulse,attachmentMoment;

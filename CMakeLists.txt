@@ -268,6 +268,8 @@ add_library(judas_engine STATIC
     src/WorldFracture.cpp
     src/StructuralMass.cpp
     src/deformables/PanelBending.cpp
+    src/deformables/MaterialContacts.cpp
+    src/deformables/SleepContacts.cpp
     src/Fracture.cpp
     src/DeformableAsset.cpp
     src/Deformable.cpp
@@ -1153,7 +1155,7 @@ judas_add_engine_test(judas_consumer_lifecycle_audit_tests tests/ConsumerLifecyc
 judas_add_engine_test(judas_save_streaming_tests tests/SaveStreamingTests.cpp APPLICATION WARNINGS -Wpedantic)
 judas_add_engine_test(judas_save_performance_tests tests/SavePerformanceTests.cpp APPLICATION WARNINGS -Wpedantic)
 
-add_executable(judas_deformable_tests tests/DeformableTests.cpp)
+add_executable(judas_deformable_tests tests/DeformableTests.cpp tests/DeformableV2Contacts.cpp)
 target_link_libraries(judas_deformable_tests PRIVATE judas_engine)
 
 # M62 generic immutable topology preparation; no GL or alternate solver.

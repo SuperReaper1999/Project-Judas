@@ -1,4 +1,5 @@
 #include "Deformable.h"
+#include "deformables/RigidResponse.h"
 #include "CollisionGeometry.h"
 #include "Narrowphase.h"
 #include "SaveArchive.h"
@@ -66,22 +67,15 @@ void scalar(std::vector<V>& x,const std::vector<double>& w,const unsigned* ids,c
         lambda+=dl;
         for(unsigned k=0;k<n;++k)x[ids[k]]+=w[ids[k]]*dl*gradients[k];
 }
-double effective(PhysicsWorld& p,BodyHandle b,V point,V normal){
-    if(!p.IsDynamicBody(b))return 0;
-        double m=p.GetMass(b);
-        if(m<=0)return 0;
-        V r=point-V(p.GetCenterOfMass(b)),rn=glm::cross(r,normal);
-        return 1/m+glm::dot(rn,M(glm::inverse(p.GetInertiaWorld(b)))*rn);
 }
-V pointVelocity(PhysicsWorld& p,BodyHandle b,V point){return V(p.GetLinearVelocity(b))+glm::cross(V(p.GetAngularVelocity(b)),point-V(p.GetCenterOfMass(b)));
-        }
-}
+
 void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,const DeformableSettings& config,const glm::dmat4& transform,uint64_t epoch){
     std::string e;
     if(!data||!ValidDeformableSettings(config,e))throw std::invalid_argument(e.empty()?"missing deformable asset":e);
     if(data->nodes.size()!=data->measures.size()||data->nodes.size()!=data->massWeights.size()||data->neighbors.size()!=data->nodes.size())throw std::invalid_argument("deformable topology is not prepared");
     if(!validMasses(*data,config.material.density))throw std::invalid_argument("deformable derived mass is not finite and positive");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
+    sleepingContacts.Invalidate();
     panelBending.reset();
     asset=std::move(data);
     settings=config;
@@ -112,6 +106,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
 }
 void DeformableInstance::Reset(const glm::dmat4& transform){
     initial=transform;
+    sleepingContacts.Invalidate();
     if(panelBending)panelBending->Reset();
     selfCandidatesValid=false;
     error.clear();
@@ -126,6 +121,7 @@ void DeformableInstance::Reset(const glm::dmat4& transform){
     Wake();
 }
 void DeformableInstance::ShiftOrigin(glm::dvec3 delta){
+    sleepingContacts.Invalidate();
     for(auto* points:{&positions,&previous,&start,&contactReference,&contactStartReference})for(auto& p:*points)p-=delta;
     initial[3]-=glm::dvec4(delta,0);
     for(auto* tree:{&faceTree,&edgeTree})for(auto& node:*tree){node.low-=delta;node.high-=delta;}
@@ -305,8 +301,8 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
             // The drift bias still pulls the node back to its anchor.
             const V point=start[n];
             for(int axis=0;axis<3;++axis){V normal(0);normal[axis]=1;
-                V relative=(positions[n]-start[n])/h-pointVelocity(physics,t.body,point);
-                double den=inverseMass[n]+effective(physics,t.body,point,normal);
+                V relative=(positions[n]-start[n])/h-JudasDeformables::PointVelocity(physics,t.body,point);
+                double den=inverseMass[n]+JudasDeformables::EffectiveMass(physics,t.body,point,normal);
                 if(den<=0)continue;
                 double impulse=-(relative[axis]+.1*(start[n]-priorDestination)[axis]/h)/den;
                 positions[n]+=normal*inverseMass[n]*impulse*h;
@@ -331,86 +327,6 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 attachmentMoment[a]+=glm::cross(point-centre,reaction);
             }
         }
-    }
-}
-void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& physics){
-    JUDAS_PROFILE_SCOPE("Deformable rigid contacts");
-    double thickness=settings.material.thickness;
-    // One tree query per patch, then actual authoritative primitive shapes. Fat
-    // bounds are only candidates. Samples include vertices, edge midpoints and
-    // face centroids, bounding the supported thin-surface sampling envelope.
-    stats.candidates+=rigidCandidates.size();
-    auto sample=[&](glm::uvec3 nodes,V weights,BodyHandle body,const Shape& shape,const BodyTransform& pose){
-        if(asset->fracture&&fracture.removed[asset->fracture->nodePart[nodes.x]])return;
-        V p(0),old(0);
-        for(int k=0;k<3;++k){p+=positions[nodes[k]]*weights[k];
-            old+=start[nodes[k]]*weights[k];
-            }
-        auto contact=[&](V center,glm::dquat q,V half,double radius,const PrimitivePose* geometry=nullptr){V normal,point;
-            double depth=0;
-            V local(0);
-            if(!geometry)local=glm::inverse(q)*(p-center);
-            if(geometry){auto result=SegmentGeometry(p,p,thickness,*geometry,thickness);if(!result.valid||result.gap>=0)return;normal=result.normal;point=result.point;depth=-result.gap;}
-            else if(radius>0){double len=glm::length(local);
-                if(len>=radius+thickness)return;
-                normal=len>1e-10?q*(local/len):q*V(1,0,0);
-                point=center+normal*radius;
-                depth=radius+thickness-len;
-                }
-            else{V nearest=glm::clamp(local,-half,half),d=local-nearest;
-                double len=glm::length(d);
-                if(len>=thickness)return;
-                if(len>1e-10){normal=q*(d/len);
-                    point=center+q*nearest;
-                    depth=thickness-len;
-                    }else{V gap=half-glm::abs(local);
-                    unsigned axis=gap.x<gap.y?(gap.x<gap.z?0:2):(gap.y<gap.z?1:2);
-                    V n(0);
-                    n[axis]=local[axis]>=0?1:-1;
-                    normal=q*n;
-                    nearest=local;
-                    nearest[axis]=n[axis]*half[axis];
-                    point=center+q*nearest;
-                    depth=gap[axis]+thickness;
-                    }}
-            double w=0;
-            for(int k=0;k<3;++k)w+=inverseMass[nodes[k]]*weights[k]*weights[k];
-            double rigid=effective(physics,body,point,normal),den=w+rigid;
-            if(den<1e-20)return;
-            double dl=depth/den;
-            for(int k=0;k<3;++k)positions[nodes[k]]+=normal*dl*inverseMass[nodes[k]]*weights[k];
-            // This projection's velocity change IS the particle impulse. The
-            // equal opposite impulse is submitted once, including lever arm.
-            if(rigid>0)physics.ApplyImpulseAtPoint(body,glm::vec3(-normal*dl/h),glm::vec3(point));
-            V velocity=(p-old)/h-pointVelocity(physics,body,point);
-            V tangent=velocity-normal*glm::dot(velocity,normal);
-            double speed=glm::length(tangent);
-            if(speed>1e-10){V dir=tangent/speed;
-                double tangentialMass=w+effective(physics,body,point,dir);
-                double frictionImpulse=std::min(speed/tangentialMass,settings.material.friction*dl/h);
-                for(int k=0;k<3;++k)positions[nodes[k]]-=dir*frictionImpulse*h*inverseMass[nodes[k]]*weights[k];
-                if(rigid>0)physics.ApplyImpulseAtPoint(body,glm::vec3(dir*frictionImpulse),glm::vec3(point));
-                }++stats.contacts;
-        };
-        if(shape.type==ShapeType::Sphere)contact(V(pose.position),glm::dquat(pose.rotation),V(0),shape.radius);
-        else if(shape.type==ShapeType::Box)contact(V(pose.position),glm::dquat(pose.rotation),V(shape.halfExtents),0);
-        else if(shape.type==ShapeType::CompoundBoxes||shape.asset){RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
-            for(int i=0;i<PrimitiveCount(shape);++i){auto primitive=PrimitiveAt(shape,parent,i);if(primitive.shape.asset)contact({}, {}, {},0,&primitive);else contact(PrimitiveCenter(primitive),glm::dquat(primitive.body.orientation),V(primitive.shape.halfExtents),primitive.shape.type==ShapeType::Sphere?primitive.shape.radius:0);}
-        }
-    };
-    for(auto body:rigidCandidates){unsigned layer;
-        CategoryMask mask;
-        if(!physics.GetCollisionFilter(body,layer,mask)||(mask&CategoryBit(settings.collisionLayer))==0||physics.IsBodySensor(body))continue;
-        Shape shape;
-        BodyTransform pose;
-        if(!physics.GetBodyShape(body,shape,pose))continue;
-        auto prev=physics.GetPreviousTransform(body);
-        prev.position+=prev.rotation*shape.pivotOffset;
-        pose.position=glm::mix(prev.position,pose.position,float(fraction));
-        pose.rotation=glm::slerp(prev.rotation,pose.rotation,float(fraction));
-        for(unsigned n=0;n<positions.size();++n)sample(glm::uvec3(n),V(1,0,0),body,shape,pose);
-        for(auto edge:asset->edges)sample({edge.x,edge.y,edge.y},V(.5,.5,0),body,shape,pose);
-        for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);
     }
 }
 // Balanced trees use rest-space primitive centres only to choose topology. Refit
@@ -588,7 +504,7 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
         if(targetIndex>=settings.attachments.size()||released[targetIndex]||!settings.attachments[targetIndex].enabled)continue;
         const auto& t=targets[targetIndex];if(!t.valid)continue;double d=0;
         for(int k=0;k<4;++k)d+=glm::length(t.current[k]-t.previous[k]);
-        targetMoving|=d>1e-8||(t.body.IsValid()&&physics.IsDynamicBody(t.body));
+        targetMoving|=d>1e-8||(t.body.IsValid()&&glm::length(physics.GetLinearVelocity(t.body))+glm::length(physics.GetAngularVelocity(t.body))>1e-5f);
         }
     bool gravityChanged=false;
     for(size_t i=0;i<positions.size();++i){V g=gravity.Sample(glm::vec3(positions[i]));
@@ -596,12 +512,11 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
         lastGravity[i]=g;
         }
     if(targetMoving||gravityChanged||settings.material.airDrag>0)Wake();
-    if(sleeping){PhysicsQueryFilter f;
-        f.includeLayers=settings.collisionMask;
-        physics.QueryBodiesInAabbInto(glm::vec3(Minimum()-V(settings.material.thickness)),glm::vec3(Maximum()+V(settings.material.thickness)),rigidCandidates,f);
-        for(auto b:rigidCandidates)if(glm::length(physics.GetLinearVelocity(b))+glm::length(physics.GetAngularVelocity(b))>1e-5)Wake();
+    if(sleeping){
+        bool moving=false;
+        if(sleepingContacts.Refresh(physics,Minimum()-V(settings.material.thickness+asset->cellSize),Maximum()+V(settings.material.thickness+asset->cellSize),settings.collisionLayer,settings.collisionMask,moving)||moving)Wake();
         if(sleeping)return;
-        }
+    }
     previous=positions;
     double h=dt/settings.substeps;
     std::array<BodyHandle,64> awakened{};unsigned awakenedCount=0;
@@ -682,7 +597,10 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
     for(auto v:velocities)speed=std::max(speed,glm::length(v));
     if(speed<.015&&!targetMoving&&settings.material.airDrag==0)quietSeconds+=dt;
     else quietSeconds=0;
-    if(quietSeconds>1)sleeping=true;
+    if(quietSeconds>1){
+        sleeping=true;bool moving=false;
+        sleepingContacts.Refresh(physics,Minimum()-V(settings.material.thickness+asset->cellSize),Maximum()+V(settings.material.thickness+asset->cellSize),settings.collisionLayer,settings.collisionMask,moving);
+    }
     JUDAS_PROFILE_COUNTER("Deformable nodes",double(stats.nodes),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Deformable contacts",double(stats.contacts),ProfileCounterMode::Sum);
 }
@@ -769,7 +687,7 @@ void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame,bool attachm
         ar.Require(glm::determinant(reference)>0,"invalid saved deformable material orientation");
         if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);
     }
-    if(ar.reading){selfCandidatesValid=false;previous=start=positions;
+    if(ar.reading){sleepingContacts.Invalidate();selfCandidatesValid=false;previous=start=positions;
         attachmentState.assign(settings.attachments.size(),{});attachmentPending.clear();attachmentImpulse.clear();attachmentMoment.clear();
         forces.assign(positions.size(),V(0));
         lastGravity.assign(positions.size(),V(0));
