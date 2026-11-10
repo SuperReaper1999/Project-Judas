@@ -3,55 +3,58 @@
 using namespace JudasPhysicsDetail;
 
 auto PhysicsWorld::Impl::Wake(unsigned slot) -> void {
+    PhysicsWorkTimer timer(work.wake,work.active);
     if (slot >= bodies.size() || !bodies[slot].alive)
         return;
-    std::set<unsigned> visited;
-    std::vector<unsigned> queue{slot};
-    for (size_t i = 0; i < queue.size(); ++i) {
-        auto n = queue[i];
-        if (!visited.insert(n).second)
-            continue;
-        auto &b = bodies[n];
-        b.sleeping = false;
-        b.quietSeconds = 0;
-        if (n != slot && b.rigidBody.IsStatic())
-            continue;
-        for (const auto &j : joints)
-            if (j.state.settings.enabled) {
-                const auto a = j.state.settings.bodyA, c = j.state.settings.bodyB;
-                if (!Get(a))
-                    continue;
-                if ((a.id & kSlotMask) == n && Get(c))
-                    queue.push_back(c.id & kSlotMask);
-                else if (Get(c) && (c.id & kSlotMask) == n)
-                    queue.push_back(a.id & kSlotMask);
-            }
-        for (const auto &[_, e] : previousTouches)
-            if (!e.sensor && Get(e.a) && Get(e.b)) {
-                auto a = e.a.id & kSlotMask, c = e.b.id & kSlotMask;
-                if (a == n && !bodies[c].rigidBody.IsStatic())
-                    queue.push_back(c);
-                if (c == n && !bodies[a].rigidBody.IsStatic())
-                    queue.push_back(a);
-            }
-        // Speculative resting rows may have a positive gap and therefore
-        // no touch callback. They still connect the sleeping contact island.
-        for (const auto &c : contactCache)
-            if (c.normalImpulse > 0) {
-                const auto a = c.key.slotA, b = c.key.slotB;
-                if (a >= bodies.size() || b >= bodies.size() || !bodies[a].alive ||
-                    !bodies[b].alive || bodies[a].generation != c.key.generationA ||
-                    bodies[b].generation != c.key.generationB)
-                    continue;
-                if (a == n && !bodies[b].rigidBody.IsStatic())
-                    queue.push_back(b);
-                if (b == n && !bodies[a].rigidBody.IsStatic())
-                    queue.push_back(a);
-            }
-        for(const auto& edge:constraintSupports)if(Get(edge.body)&&Get(edge.support)) {
-            const auto a=edge.body.id&kSlotMask,b=edge.support.id&kSlotMask;
-            if(a==n&&bodies[b].isDynamic)queue.push_back(b);
-            if(b==n&&bodies[a].isDynamic)queue.push_back(a);
+    // Snapshot the current wake graph once. The previous traversal scanned
+    // every joint/contact again for every reached body (and allocated a set
+    // node for each visit). Topology can change between calls, so rebuild this
+    // bounded adjacency rather than retaining a stale sleeping-island graph.
+    std::vector<std::pair<unsigned,unsigned>> edges;
+    edges.reserve(2*(joints.size()+previousTouches.size()+contactCache.size()+constraintSupports.size()));
+    const auto link=[&](unsigned from,unsigned to){edges.emplace_back(from,to);};
+    for(const auto& j:joints)if(j.state.settings.enabled) {
+        const auto a=j.state.settings.bodyA,b=j.state.settings.bodyB;
+        if(!Get(a)||!Get(b))continue;
+        const auto x=a.id&kSlotMask,y=b.id&kSlotMask;
+        link(x,y);if(x!=y)link(y,x);
+    }
+    for(const auto& [_,e]:previousTouches)if(!e.sensor&&Get(e.a)&&Get(e.b)) {
+        const auto a=e.a.id&kSlotMask,b=e.b.id&kSlotMask;
+        if(!bodies[b].rigidBody.IsStatic())link(a,b);
+        if(!bodies[a].rigidBody.IsStatic())link(b,a);
+    }
+    for(const auto& c:contactCache)if(c.normalImpulse>0) {
+        const auto a=c.key.slotA,b=c.key.slotB;
+        if(a>=bodies.size()||b>=bodies.size()||!bodies[a].alive||!bodies[b].alive||
+           bodies[a].generation!=c.key.generationA||bodies[b].generation!=c.key.generationB)continue;
+        if(!bodies[b].rigidBody.IsStatic())link(a,b);
+        if(!bodies[a].rigidBody.IsStatic())link(b,a);
+    }
+    for(const auto& edge:constraintSupports)if(Get(edge.body)&&Get(edge.support)) {
+        const auto a=edge.body.id&kSlotMask,b=edge.support.id&kSlotMask;
+        if(bodies[b].isDynamic)link(a,b);
+        if(bodies[a].isDynamic)link(b,a);
+    }
+    std::vector<std::size_t> offsets(bodies.size()+1,0);
+    for(auto [from,to]:edges)++offsets[from+1];
+    for(std::size_t n=1;n<offsets.size();++n)offsets[n]+=offsets[n-1];
+    auto cursor=offsets;
+    std::vector<unsigned> neighbours(edges.size());
+    for(auto [from,to]:edges)neighbours[cursor[from]++]=to;
+    std::vector<unsigned char> visited(bodies.size(),0);
+    std::vector<unsigned> queue;queue.reserve(bodies.size());queue.push_back(slot);visited[slot]=1;
+    work.wakeGraphEdges=std::max(work.wakeGraphEdges,edges.size());
+    work.wakeScratchBytes=std::max(work.wakeScratchBytes,
+        edges.capacity()*sizeof(edges[0])+(offsets.capacity()+cursor.capacity())*sizeof(std::size_t)+
+        (neighbours.capacity()+queue.capacity())*sizeof(unsigned)+visited.capacity()*sizeof(unsigned char));
+    for(std::size_t i=0;i<queue.size();++i) {
+        const auto n=queue[i];auto& body=bodies[n];
+        body.sleeping=false;body.quietSeconds=0;
+        if(n!=slot&&body.rigidBody.IsStatic())continue;
+        for(std::size_t e=offsets[n];e<offsets[n+1];++e) {
+            const auto other=neighbours[e];
+            if(!visited[other]){visited[other]=1;queue.push_back(other);}
         }
     }
 }

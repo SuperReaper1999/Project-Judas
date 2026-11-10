@@ -473,13 +473,22 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     const auto &ba = bodies[a];
     const auto &bb = bodies[b];
     const auto simpleRadius = [](const Body &body) {
+        if (!(std::isfinite(body.boundingRadius) && body.boundingRadius > 0))
+            return false;
+        if (body.shape.type == ShapeType::CompoundBoxes)
+            return std::all_of(body.shape.boxes.begin(), body.shape.boxes.end(),
+                [](const CompoundBox& child) {
+                    return child.rotation == glm::quat(1, 0, 0, 0) &&
+                        (child.type == ShapeType::Box || child.type == ShapeType::Sphere);
+                });
         return (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere) &&
-               body.shape.pivotOffset == glm::vec3(0) && std::isfinite(body.boundingRadius) &&
-               body.boundingRadius > 0;
+               body.shape.pivotOffset == glm::vec3(0);
     };
-    // Restrict this rejection to the existing outward-proven primitive
-    // radius/bounds. Compound, cooked and terrain shapes retain the full
-    // old query until their radius enclosure is independently established.
+    // Identity-child primitive compounds use the same outward radius proof:
+    // each represented local offset plus the child's enclosing radius is
+    // bounded by ShapeBoundingRadius. No child rotation or cooked geometry
+    // is admitted by this fast rejection. It only skips disjoint enclosures;
+    // intersecting bounds retain the complete chronological contact search.
     if (simpleRadius(ba) && simpleRadius(bb)) {
         const auto &boundA = RemainingImpactBound(a, start, finish);
         const auto &boundB = RemainingImpactBound(b, start, finish);
@@ -794,5 +803,27 @@ auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key,
 
 auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target) -> double {
     CCDQuery query(*this);
-    return query.ImpactTime(a, b, pa, pb, start, finish, target);
+    if(!impactGeometryMemoActive)return query.ImpactTime(a,b,pa,pb,start,finish,target);
+    ++work.searchMemoRequests;
+    const std::array<unsigned,4> pair{a,b,unsigned(pa),unsigned(pb)};
+    const std::array<std::uint64_t,2> trajectories{
+        bodies[a].impactTrajectoryRevision,bodies[b].impactTrajectoryRevision};
+    const std::array<double,3> interval{start,finish,target};
+    std::uint64_t hash=14695981039346656037ull;
+    const auto add=[&](std::uint64_t word){hash=(hash^word)*1099511628211ull;};
+    for(auto word:pair)add(word);
+    for(auto word:trajectories)add(word);
+    for(double value:interval){std::uint64_t word;std::memcpy(&word,&value,8);add(word);}
+    // Fold high floating-point bits before indexing the power-of-two table.
+    hash^=hash>>33;hash*=0xff51afd7ed558ccdull;
+    hash^=hash>>33;hash*=0xc4ceb9fe1a85ec53ull;hash^=hash>>33;
+    auto& memo=impactSearchMemo[hash%impactSearchMemo.size()];
+    if(memo.epoch==impactGeometryEpoch && memo.pair==pair && memo.trajectories==trajectories &&
+       std::memcmp(memo.interval.data(),interval.data(),sizeof(interval))==0) {
+        ++work.searchMemoReuses;
+        return memo.hit;
+    }
+    const double hit=query.ImpactTime(a,b,pa,pb,start,finish,target);
+    memo={pair,trajectories,interval,impactGeometryEpoch,hit};
+    return hit;
 }

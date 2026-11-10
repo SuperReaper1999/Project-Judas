@@ -1652,6 +1652,23 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
 void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char>* required,
     std::vector<unsigned>* arrivalCounts, unsigned* eventCount) {
     stepDuration = dt;
+    if(impactGeometryMemo.empty()) {
+        impactGeometryMemo.resize(1024);
+        ++cacheCounters.allocations;
+        cacheCounters.allocatedBytes+=impactGeometryMemo.capacity()*sizeof(ImpactGeometryMemo);
+    }
+    if(impactSearchMemo.empty()) {
+        impactSearchMemo.resize(1024);
+        ++cacheCounters.allocations;
+        cacheCounters.allocatedBytes+=impactSearchMemo.capacity()*sizeof(ImpactSearchMemo);
+    }
+    if(++impactGeometryEpoch==0) {
+        for(auto& memo:impactGeometryMemo)memo.epoch=0;
+        for(auto& memo:impactSearchMemo)memo.epoch=0;
+        ++impactGeometryEpoch;
+    }
+    impactGeometryMemoActive=true;
+    struct MemoScope { bool& active; ~MemoScope(){active=false;} } memoScope{impactGeometryMemoActive};
     mk2ContinuousAwakened = false;
     impactQueryAnchorTime = 0;
     for (auto slot : aliveSlots) {
@@ -1813,6 +1830,10 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char>* requir
     // The earliest arrival on a mover's path from `from`.
     const auto sweep = [&](Mover &m) {
         const unsigned slot = m.slot;
+        // Every pair in this sweep shares the current event frontier. Keep
+        // that represented pose separate from trial/bisection samples, just
+        // as the initial time-zero sweep does. Retiming invalidates both.
+        impactQueryAnchorTime = m.from;
         m.found = false;
         const auto &found = ImpactCandidates(slot, RemainingImpactBound(slot, m.from, dt));
         candidates.assign(found.begin(), found.end());

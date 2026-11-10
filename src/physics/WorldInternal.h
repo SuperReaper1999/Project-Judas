@@ -162,6 +162,7 @@ struct PhysicsWorld::Impl {
         // AddBody replaces the entire cache on slot reuse. Explicit static
         // geometry replacement invalidates shape-derived bounds in place.
         float boundingRadius = 0;
+        std::uint64_t impactTrajectoryRevision = 0;
         std::optional<ContactPreparedOrientation> orientationCache;
         std::optional<PreparedShapeBounds> boundPreparation;
         bool boundPreparationValid = false;
@@ -311,6 +312,27 @@ struct PhysicsWorld::Impl {
         double boundStart = std::numeric_limits<double>::quiet_NaN(), boundFinish = 0;
         unsigned boundGeneration = 0;
     };
+    // Bounded, derived observations valid only during one continuous pass.
+    // Geometry is immutable there; exact represented poses and primitive IDs
+    // key every observation. Neither event order nor a response is cached.
+    struct ImpactGeometryMemo {
+        std::array<unsigned,4> pair{};
+        std::array<float,15> geometry{};
+        std::uint64_t epoch=0;
+        bool hasManifold=false,hasTruth=false,truth=false;
+        ContactManifold manifold;
+    };
+    struct ImpactSearchMemo {
+        std::array<unsigned,4> pair{};
+        std::array<std::uint64_t,2> trajectories{};
+        std::array<double,3> interval{};
+        std::uint64_t epoch=0;
+        double hit=0;
+    };
+    std::vector<ImpactSearchMemo> impactSearchMemo;
+    std::vector<ImpactGeometryMemo> impactGeometryMemo;
+    std::uint64_t impactGeometryEpoch=0;
+    bool impactGeometryMemoActive=false;
     std::vector<ImpactPoseSample> impactPoseSamples, impactAnchorSamples;
     double impactQueryAnchorTime = 0;
     std::size_t impactPoseEvaluations = 0, impactPoseReuses = 0, impactOrientationBuilds = 0,
@@ -318,7 +340,10 @@ struct PhysicsWorld::Impl {
     std::size_t impactActualBoundsRejected = 0;
     struct WorkDiagnostics {
         bool active = false;
-        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation;
+        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation, wake;
+        std::size_t geometryMemoRequests=0,geometryMemoReuses=0,
+                    searchMemoRequests=0,searchMemoReuses=0,
+                    wakeScratchBytes=0,wakeGraphEdges=0;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry

@@ -16,20 +16,31 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     // bounds are only candidates. Samples include vertices, edge midpoints and
     // face centroids, bounding the supported thin-surface sampling envelope.
     stats.candidates+=rigidCandidates.size();
+    // Rigid poses are frozen for this projection call. Reactions alter
+    // velocity, not this call's collision geometry. Prepare each candidate's
+    // primitives once rather than rebuilding them for every surface sample.
+    struct PreparedContact {
+        PrimitivePose geometry;
+        V center;
+        glm::dquat rotation,inverse;
+    };
+    std::vector<PreparedContact> contactPrimitives;
+    glm::dquat bodyRotation,bodyInverse;
     auto sample=[&](glm::uvec3 nodes,V weights,BodyHandle body,const Shape& shape,const BodyTransform& pose){
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[nodes.x]])return;
         V p(0),old(0);
         for(int k=0;k<3;++k){p+=positions[nodes[k]]*weights[k];
             old+=start[nodes[k]]*weights[k];
             }
-        auto contact=[&](V center,glm::dquat q,V half,double radius,const PrimitivePose* geometry=nullptr){V normal,point;
+        auto contact=[&](V center,glm::dquat q,glm::dquat inverse,V half,double radius,const PrimitivePose* geometry=nullptr){V normal,point;
             double depth=0;
             V local(0);
-            if(!geometry)local=glm::inverse(q)*(p-center);
+            if(!geometry)local=inverse*(p-center);
             if(geometry){
                 auto result=geometry->shape.type==ShapeType::Terrain?PointGeometry(p,*geometry):SegmentGeometry(p,p,thickness,*geometry,thickness);
                 if(geometry->shape.type==ShapeType::Terrain&&result.valid)result.gap=(result.contains?-result.gap:result.gap)-thickness;
-                if(!result.valid||result.gap>=0)return;normal=result.normal;point=result.point;depth=-result.gap;
+                if(!result.valid||result.gap>=0)return;
+                normal=result.normal;point=result.point;depth=-result.gap;
             }
             else if(radius>0){double len=glm::length(local);
                 if(len>=radius+thickness)return;
@@ -76,14 +87,17 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             for(unsigned k=0;k<3;++k){materialMinimum=glm::min(materialMinimum,positions[nodes[k]]);materialMaximum=glm::max(materialMaximum,positions[nodes[k]]);}
             ++stats.contacts;
         };
-        if(shape.type==ShapeType::Sphere)contact(V(pose.position),glm::dquat(pose.rotation),V(0),shape.radius);
-        else if(shape.type==ShapeType::Box)contact(V(pose.position),glm::dquat(pose.rotation),V(shape.halfExtents),0);
-        else if(shape.type==ShapeType::Capsule||shape.type==ShapeType::Terrain){
-            RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
-            auto primitive=PrimitiveAt(shape,parent,0);contact({}, {}, {},0,&primitive);
-        }
-        else if(shape.type==ShapeType::CompoundBoxes||shape.asset){RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
-            for(int i=0;i<PrimitiveCount(shape);++i){auto primitive=PrimitiveAt(shape,parent,i);if(primitive.shape.asset)contact({}, {}, {},0,&primitive);else contact(PrimitiveCenter(primitive),glm::dquat(primitive.body.orientation),V(primitive.shape.halfExtents),primitive.shape.type==ShapeType::Sphere?primitive.shape.radius:0);}
+        if(shape.type==ShapeType::Sphere)contact(V(pose.position),bodyRotation,bodyInverse,V(0),shape.radius);
+        else if(shape.type==ShapeType::Box)contact(V(pose.position),bodyRotation,bodyInverse,V(shape.halfExtents),0);
+        else {
+            for(const auto& prepared:contactPrimitives) {
+                const auto& primitive=prepared.geometry;
+                if(primitive.shape.asset || primitive.shape.type==ShapeType::Terrain ||
+                   primitive.shape.type==ShapeType::Capsule)
+                    contact({}, {}, {}, {},0,&primitive);
+                else contact(prepared.center,prepared.rotation,prepared.inverse,
+                    V(primitive.shape.halfExtents),primitive.shape.type==ShapeType::Sphere?primitive.shape.radius:0);
+            }
         }
     };
     for(auto body:rigidCandidates){
@@ -108,6 +122,19 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         const V allowance(thickness+16*std::numeric_limits<float>::epsilon()*magnitude);
         if(glm::any(glm::lessThan(materialMaximum+allowance,V(bounds.min)))||glm::any(glm::greaterThan(materialMinimum-allowance,V(bounds.max))))continue;
         shape.asset=AcquireCollision(shape.asset);
+        contactPrimitives.clear();
+        bodyRotation=glm::dquat(pose.rotation);bodyInverse=glm::inverse(bodyRotation);
+        if(shape.type!=ShapeType::Sphere && shape.type!=ShapeType::Box) {
+            RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
+            const int count=PrimitiveCount(shape);
+            contactPrimitives.reserve(count);
+            for(int i=0;i<count;++i) {
+                auto primitive=PrimitiveAt(shape,parent,i);
+                const auto center=PrimitiveCenter(primitive);
+                const auto rotation=glm::dquat(primitive.body.orientation);
+                contactPrimitives.push_back({std::move(primitive),center,rotation,glm::inverse(rotation)});
+            }
+        }
         for(unsigned n=0;n<positions.size();++n)sample(glm::uvec3(n),V(1,0,0),body,shape,pose);
         for(auto edge:asset->edges)sample({edge.x,edge.y,edge.y},V(.5,.5,0),body,shape,pose);
         for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);

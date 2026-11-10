@@ -64,6 +64,8 @@ auto PhysicsWorld::Impl::CacheBytes() const -> std::size_t {
         if (body.boundPreparation)
             bytes += body.boundPreparation->children.capacity() * sizeof(PreparedBoxBound);
     bytes += initialContactGeometry.capacity() * sizeof(InitialContactGeometry);
+    bytes += impactGeometryMemo.capacity()*sizeof(ImpactGeometryMemo) +
+             impactSearchMemo.capacity()*sizeof(ImpactSearchMemo);
     bytes += CCDQueryBytes() + overlapPairs.StorageBytes();
     return bytes +
            (impactPoseSamples.capacity() + impactAnchorSamples.capacity()) *

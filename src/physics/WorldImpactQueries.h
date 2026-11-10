@@ -69,6 +69,15 @@ inline auto PhysicsWorld::Impl::CCDQuery::ActualImpactBound(unsigned slot, const
             PreparedShapeBounds prepared;
             PrepareShapeBounds(shape, *pose.orientation, prepared);
             sample.tightBound = ShapeAabb(prepared, pose.pose.position);
+        } else if (shape.type == ShapeType::CompoundBoxes && shape.boxes.size() == 1 &&
+                   shape.boxes[0].type == ShapeType::Box &&
+                   shape.boxes[0].rotation == glm::quat(1, 0, 0, 0)) {
+            const auto& child = shape.boxes[0];
+            PreparedShapeBounds prepared;
+            prepared.type = ShapeType::Box;
+            prepared.box = PrepareOffsetBoxBounds(child.localCenter-shape.pivotOffset,
+                                                 child.halfExtents,*pose.orientation);
+            sample.tightBound = ShapeAabb(prepared, pose.pose.position);
         } else
             sample.tightBound = ShapeAabb(shape, pose.pose.position, pose.pose.orientation);
         sample.tightPosition = pose.pose.position;
@@ -82,8 +91,11 @@ inline auto PhysicsWorld::Impl::CCDQuery::SimpleImpactBoundsSeparated(unsigned a
                                                             const ImpactPoseSample &aa,
                                                             const ImpactPoseSample &bb) -> bool {
     const auto simple = [](const Shape &shape) {
-        return (shape.type == ShapeType::Box || shape.type == ShapeType::Sphere) &&
-               shape.pivotOffset == glm::vec3(0);
+        return ((shape.type == ShapeType::Box || shape.type == ShapeType::Sphere) &&
+                shape.pivotOffset == glm::vec3(0)) ||
+               (shape.type == ShapeType::CompoundBoxes && shape.boxes.size() == 1 &&
+                shape.boxes[0].type == ShapeType::Box &&
+                shape.boxes[0].rotation == glm::quat(1, 0, 0, 0));
     };
     if (!simple(bodies[a].shape) || !simple(bodies[b].shape))
         return false;
@@ -101,6 +113,9 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairAt(unsigned a, unsigned b, int pa,
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
     const auto &bb = ImpactPoseAt(b, time);
+    auto* memo=GeometryMemo(a,b,pa,pb,aa,bb,margin);
+    if(memo && memo->hasManifold){++work.geometryMemoReuses;return memo->manifold;}
+    const auto calculate=[&]() -> ContactManifold {
     if (margin == 0 && SimpleImpactBoundsSeparated(a, b, aa, bb))
         return {};
     // Single boxes/spheres already use identity-child primitive arithmetic.
@@ -118,6 +133,10 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairAt(unsigned a, unsigned b, int pa,
     return ComputeContacts(PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation),
                            PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation), margin,
                            &*aa.orientation, &*bb.orientation, true);
+    };
+    const auto result=calculate();
+    if(memo){memo->hasManifold=true;memo->manifold=result;}
+    return result;
 }
 
 inline auto PhysicsWorld::Impl::CCDQuery::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time)
@@ -153,6 +172,9 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairTouches(unsigned a, unsigned b, in
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
     const auto &bb = ImpactPoseAt(b, time);
+    auto* memo=GeometryMemo(a,b,pa,pb,aa,bb,0);
+    if(memo && memo->hasTruth){++work.geometryMemoReuses;return memo->truth;}
+    const auto calculate=[&]() -> bool {
     if (SimpleImpactBoundsSeparated(a, b, aa, bb))
         return false;
     if (!bodies[a].shape.asset && !bodies[b].shape.asset &&
@@ -172,6 +194,10 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairTouches(unsigned a, unsigned b, in
             posb.shape, {posb.parentPosition, posb.parentOrientation, posb.parentLocalCenter}, 0,
             &*aa.orientation, &*bb.orientation);
     return ComputeContacts(posa, posb, 0, &*aa.orientation, &*bb.orientation).count > 0;
+    };
+    const auto result=calculate();
+    if(memo){memo->hasTruth=true;memo->truth=result;}
+    return result;
 }
 
 inline auto PhysicsWorld::Impl::CCDQuery::EnsureImpactPoseStorage() -> void {

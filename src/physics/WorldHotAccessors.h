@@ -8,6 +8,7 @@ inline auto PhysicsWorld::Impl::JointActive(const JointRecord &joint) const -> b
 }
 
 inline auto PhysicsWorld::Impl::InvalidateImpactPose(unsigned slot) -> void {
+    ++bodies[slot].impactTrajectoryRevision;
     if (slot < impactPoseSamples.size()) {
         impactPoseSamples[slot].time = std::numeric_limits<double>::quiet_NaN();
         impactAnchorSamples[slot].time = std::numeric_limits<double>::quiet_NaN();

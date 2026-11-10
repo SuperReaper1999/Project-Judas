@@ -79,6 +79,31 @@ struct PhysicsWorld::Impl::CCDQuery {
           stats(scratch.stats),
           work(scratch.work),
           cacheCounters(scratch.cacheCounters) {}
+    Impl::ImpactGeometryMemo* GeometryMemo(unsigned a,unsigned b,int pa,int pb,
+        const ImpactPoseSample& aa,const ImpactPoseSample& bb,float margin) {
+        if(!serialWorld || !serialWorld->impactGeometryMemoActive)return nullptr;
+        ++work.geometryMemoRequests;
+        const std::array<unsigned,4> pair{a,b,unsigned(pa),unsigned(pb)};
+        const auto& x=aa.pose;const auto& y=bb.pose;
+        const std::array<float,15> geometry{x.position.x,x.position.y,x.position.z,
+            x.orientation.w,x.orientation.x,x.orientation.y,x.orientation.z,
+            y.position.x,y.position.y,y.position.z,y.orientation.w,y.orientation.x,
+            y.orientation.y,y.orientation.z,margin};
+        std::uint64_t hash=14695981039346656037ull;
+        const auto add=[&](std::uint32_t word){hash=(hash^word)*1099511628211ull;};
+        for(auto word:pair)add(word);
+        for(float value:geometry){std::uint32_t word;std::memcpy(&word,&value,4);add(word);}
+        // Fold high floating-point bits before indexing the power-of-two table.
+        hash^=hash>>33;hash*=0xff51afd7ed558ccdull;
+        hash^=hash>>33;hash*=0xc4ceb9fe1a85ec53ull;hash^=hash>>33;
+        auto& memo=serialWorld->impactGeometryMemo[hash%serialWorld->impactGeometryMemo.size()];
+        if(memo.epoch!=serialWorld->impactGeometryEpoch || memo.pair!=pair ||
+           std::memcmp(memo.geometry.data(),geometry.data(),sizeof(geometry))!=0) {
+            memo.epoch=serialWorld->impactGeometryEpoch;memo.pair=pair;memo.geometry=geometry;
+            memo.hasManifold=memo.hasTruth=false;
+        }
+        return &memo;
+    }
     RigidBody GeometryPoseAt(unsigned slot, double time) const {
         return world.GeometryPoseAt(slot, time);
     }

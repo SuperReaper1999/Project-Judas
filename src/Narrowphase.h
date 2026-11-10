@@ -55,6 +55,11 @@ ContactManifold ComputeContacts(const Shape& shapeA, const RigidBody& bodyA,
 Aabb ShapeAabb(const Shape& shape, const glm::vec3& position, const glm::quat& orientation);
 // Callers rebuild after an exact shape/orientation change. The original
 // uncached overload remains the independent arithmetic/cache comparison path.
+// Same outward offset arithmetic as compound primitive contacts. The offset
+// is the represented child.localCenter - shape.pivotOffset, not a rounded
+// world-space child center. No allocation or child orientation preparation.
+PreparedBoxBound PrepareOffsetBoxBounds(const glm::vec3& offset, const glm::vec3& half,
+                                        const ContactPreparedOrientation& orientation);
 PreparedShapeBounds PrepareShapeBounds(const Shape& shape,
                                       const ContactPreparedOrientation& orientation);
 // Rebuild invalid contents while retaining child storage; caller owns lifetime.

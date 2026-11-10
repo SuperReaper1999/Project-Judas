@@ -256,6 +256,21 @@ Aabb ShapeAabb(const Shape& shape, const glm::vec3& position, const glm::quat& o
     return {position,position};
 }
 
+PreparedBoxBound PrepareOffsetBoxBounds(const glm::vec3& offset, const glm::vec3& half,
+                                    const ContactPreparedOrientation& orientation) {
+    PreparedBoxBound box;
+    for (int k=0;k<3;++k) {
+        Iv extent(0);
+        for (int j=0;j<3;++j) {
+            const Iv entry=orientation.normalizedInterval[j][k];
+            box.offsetTerms[k][j]=entry*Iv(double(offset[j]));
+            extent=extent+Abs(entry)*Iv(double(half[j]));
+        }
+        box.extent[k]=extent;
+    }
+    return box;
+}
+
 PreparedShapeBounds PrepareShapeBounds(const Shape& shape,
                                       const ContactPreparedOrientation& orientation) {
     PreparedShapeBounds prepared;
@@ -270,17 +285,7 @@ void PrepareShapeBounds(const Shape& shape, const ContactPreparedOrientation& or
     prepared.box={};
     prepared.children.clear();
     const auto prepareBox=[&](const glm::vec3& offset,const glm::vec3& half) {
-        PreparedBoxBound box;
-        for (int k=0;k<3;++k) {
-            Iv extent(0);
-            for (int j=0;j<3;++j) {
-                const Iv entry=orientation.normalizedInterval[j][k];
-                box.offsetTerms[k][j]=entry*Iv(double(offset[j]));
-                extent=extent+Abs(entry)*Iv(double(half[j]));
-            }
-            box.extent[k]=extent;
-        }
-        return box;
+        return PrepareOffsetBoxBounds(offset,half,orientation);
     };
     switch (shape.type) {
         case ShapeType::Planar: {

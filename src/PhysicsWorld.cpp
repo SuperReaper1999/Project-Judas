@@ -447,6 +447,15 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                                  w.candidateScratch.stack.capacity() * sizeof(std::pair<int, int>) +
                                  w.candidateProxies.capacity() * sizeof(int)),
                           ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics wake traversal ms",double(w.work.wake.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics wake peak graph edges",double(w.work.wakeGraphEdges),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics wake scratch peak bytes",double(w.work.wakeScratchBytes),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics wake traversal calls",double(w.work.wake.calls),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics contact memo requests",double(w.work.geometryMemoRequests),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics contact memo reuses",double(w.work.geometryMemoReuses),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics search memo requests",double(w.work.searchMemoRequests),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics search memo reuses",double(w.work.searchMemoReuses),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics impact memo bytes",double(w.impactGeometryMemo.capacity()*sizeof(PhysicsWorld::Impl::ImpactGeometryMemo)+w.impactSearchMemo.capacity()*sizeof(PhysicsWorld::Impl::ImpactSearchMemo)),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics CCD search inclusive ms", double(w.work.toi.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD geometry inclusive ms",

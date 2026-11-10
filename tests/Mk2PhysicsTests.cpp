@@ -633,6 +633,27 @@ void TestSupportAndImpactOwnership() {
     }
 }
 
+// Waking one contact island must not wake another through their shared
+// static floor; explicitly waking that floor must reach both islands.
+static void TestWakeIsolation() {
+    PhysicsWorld w;w.Init();
+    const auto floor=w.CreateStaticBox({0,-.5f,0},{30,.5f,30},.5f,0);
+    std::vector<BodyHandle> boxes;
+    for(float x:{0.f,10.f})for(float y:{.5f,1.5f})
+        boxes.push_back(w.CreateDynamicBox({x,y,0},{.5f,.5f,.5f},2,.5f,0));
+    for(unsigned step=0;step<360;++step)StepWithGravity(w,boxes,{0,-9.81f,0});
+    bool settled=true;for(auto body:boxes)settled &= w.IsSleeping(body);
+    Check(settled,"both independent contact stacks are asleep before wake control");
+    w.Wake(boxes[0]);
+    Check(!w.IsSleeping(boxes[0])&&!w.IsSleeping(boxes[1]),
+          "wake traverses the complete dynamic contact island");
+    Check(w.IsSleeping(boxes[2])&&w.IsSleeping(boxes[3]),
+          "shared static ground does not transmit a dynamic-island wake");
+    w.Wake(floor);
+    bool awake=true;for(auto body:boxes)awake &= !w.IsSleeping(body);
+    Check(awake,"explicit static-ground wake reaches both supported islands");
+}
+
 int main() {
     TestInitializationLifecycle();
     TestColumns();
@@ -646,6 +667,7 @@ int main() {
     TestSupportedPendulumEnergy();
     TestWeakSwingEnergy();
     TestSupportAndImpactOwnership();
+    TestWakeIsolation();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }
