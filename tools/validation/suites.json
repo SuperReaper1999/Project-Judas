@@ -2,6 +2,42 @@
   "format": 1,
   "tests": [
     {
+      "name": "deformables-v2-native",
+      "target": "judas_deformable_tests",
+      "groups": [
+        "physics",
+        "lifecycle",
+        "persistence",
+        "streaming"
+      ]
+    },
+    {
+      "name": "deformables-v2-structural",
+      "target": "judas_structural_tests",
+      "groups": [
+        "physics",
+        "vehicles",
+        "rendering",
+        "persistence"
+      ]
+    },
+    {
+      "name": "deformables-v2-bending",
+      "target": "judas_bending_tests",
+      "groups": [
+        "physics",
+        "persistence"
+      ]
+    },
+    {
+      "name": "deformables-v2-material-sleep",
+      "target": "judas_section_material_tests",
+      "groups": [
+        "physics",
+        "lifecycle"
+      ]
+    },
+    {
       "name": "terrain-v2-sustained-residency",
       "target": "judas_terrain_v2_streaming_tests",
       "groups": [

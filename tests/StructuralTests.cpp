@@ -5,6 +5,8 @@
 #include <cmath>
 #include <stdexcept>
 #include <fstream>
+#include <cstdlib>
+#include <filesystem>
 static unsigned checks=0;
 static void check(bool value,const char* name){++checks;if(!value)throw std::runtime_error(name);}
 static bool close(double a,double b){return std::abs(a-b)<1e-8*std::max(1.,std::abs(b));}
@@ -50,6 +52,7 @@ int main(){try{
     auto rectangular=MakeFractureBlock({2,1,1},{2,.2,4},true);rectangular.fracture->structural=true;check(PrepareDeformableAsset(rectangular,error),"slender non-square section");s.Initialize(*rectangular.fracture);s.ObserveSection(*rectangular.fracture,0,{0,0,0},{0,0,1});check(close(s.tensionDemand[0],37.5),"small bending dimension governs capacity");
     auto small=MakeFractureBlock({2,1,1},{.02,.02,.04},true);small.fracture->structural=true;check(PrepareDeformableAsset(small,error),"section conditioning is independent of world unit scale");s.Initialize(*small.fracture);s.ObserveSection(*small.fracture,0,{0,0,0},{0,0,.00008});check(close(s.tensionDemand[0],30),"scaled moment produces equal section stress");
     check(!DecodeDeformableAsset({bytes.begin(),bytes.end()-1},restored,error),"truncated structural cook rejected transactionally");
-    std::ifstream input("tests/fixtures/fracture/irregular.source");std::string source{std::istreambuf_iterator<char>(input),{}};auto end=source.rfind("end");check(input.good()&&end!=std::string::npos,"existing irregular partition source available");source.insert(end,"structural 1\nstrength \"import-bond-0\" 11 22 33\n");check(ImportFracturePartition(source,restored,error)&&restored.fracture->structural&&restored.fracture->bonds[0].tension==11&&restored.fracture->bonds[0].compression==33,"explicit irregular source opts in with stable-key interface strengths");auto unknown=source;unknown.replace(unknown.find("import-bond-0",unknown.find("strength")),13,"no-such-key");check(!ImportFracturePartition(unknown,restored,error),"unknown authored strength key fails cleanly");
+    const char* engineRoot=std::getenv("JUDAS_ENGINE_ROOT");
+    std::ifstream input(std::filesystem::path(engineRoot?engineRoot:".")/"tests/fixtures/fracture/irregular.source");std::string source{std::istreambuf_iterator<char>(input),{}};auto end=source.rfind("end");check(input.good()&&end!=std::string::npos,"existing irregular partition source available");source.insert(end,"structural 1\nstrength \"import-bond-0\" 11 22 33\n");check(ImportFracturePartition(source,restored,error)&&restored.fracture->structural&&restored.fracture->bonds[0].tension==11&&restored.fracture->bonds[0].compression==33,"explicit irregular source opts in with stable-key interface strengths");auto unknown=source;unknown.replace(unknown.find("import-bond-0",unknown.find("strength")),13,"no-such-key");check(!ImportFracturePartition(unknown,restored,error),"unknown authored strength key fails cleanly");
     std::printf("M79 section checks=%u PASS\n",checks);return 0;
 }catch(const std::exception& e){std::fprintf(stderr,"M79 check %u FAILED: %s\n",checks,e.what());return 1;}}
