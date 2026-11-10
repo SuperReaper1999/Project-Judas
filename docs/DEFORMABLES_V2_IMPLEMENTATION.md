@@ -1,5 +1,10 @@
 # Deformables V2 — Stages 2–4 implementation record
 
+This is a chronological engineering record. Early "remaining work" and "in
+progress" sections refer to the checkpoint being described, not a current backlog.
+Use [the qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for the current
+implementation, measured limitations, private launch instructions and review scope.
+
 The operator human-accepted revised Stage 1 at
 `6a1d49b2add0e45bab6933f544797a8faa6e3d21`: imported Challenger wheels,
 local bonnet bending, progressive mounting-sheet failure and physical detachment.

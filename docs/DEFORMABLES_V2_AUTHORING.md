@@ -1,8 +1,10 @@
 # Authoring Deformables V2
 
-Stages 2–4 are being qualified on Experimental. The Challenger Stage 1 proof is
-human accepted; the complete milestone still awaits its final review. This is an
-unsupported V2 source preview, not a published SDK upgrade.
+Stages 2–4 are implemented on Experimental. The Challenger Stage 1 proof is human
+accepted; the complete milestone still awaits its final review. See the
+[qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for the exact automated
+scope and CI evidence. This is an unsupported V2 source preview, not a published
+SDK upgrade.
 
 ## Choose the physical representation
 
@@ -120,5 +122,6 @@ blocking by arbitrary soft sheets, soft-material buoyancy and per-render-polygon
 particle collisions are not implied by this milestone. Actual MK2 structural
 section geometry remains available to existing world integrations.
 
-See [implementation and qualification](DEFORMABLES_V2_IMPLEMENTATION.md) for the
-measured scope, remaining costs and platform evidence.
+See [the qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for measured
+costs, platform evidence and review instructions, and [the implementation
+record](DEFORMABLES_V2_IMPLEMENTATION.md) for preserved checkpoint history.
