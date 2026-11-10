@@ -10,11 +10,24 @@ bool RuntimeWorld::BeginDeformableStep(){
         // This first coupling qualification moves physical body/world panels;
         // skeletal phase unification is explicitly not claimed by this slice.
         if(std::any_of(material->settings.attachments.begin(),material->settings.attachments.end(),[](const auto& a){return a.enabled&&a.kind==DeformableAttachment::Kind::Bone;}))continue;
+        PrepareDeformableTerrain(id);
         if(!SampleDeformableTargets(id))continue;
         UpdatePanelCollisionExclusions(*material);
         active|=material->BeginPhysicalStep();
     }
     return active;
+}
+void RuntimeWorld::PrepareDeformableTerrain(EntityId id){
+    auto found=m_deformables.find(id);if(found==m_deformables.end())return;
+    auto& material=found->second.simulation;
+    std::vector<DeformableInstance::TerrainRegion> regions;
+    if(m_runtimeTerrain)for(auto& solid:m_runtimeTerrain->Solids(glm::vec3(material.Minimum()),glm::vec3(material.Maximum()))){
+        DeformableInstance::TerrainRegion region;region.solid=std::move(solid);region.bodies=OwnedCollisionBodies(region.solid.owner);regions.push_back(std::move(region));
+    }
+    bool changed=regions.size()!=material.terrainRegions.size();
+    for(unsigned n=0;!changed&&n<regions.size();++n)changed=!regions[n].solid.SameGeometry(material.terrainRegions[n].solid);
+    if(changed)material.Wake();
+    material.terrainRegions=std::move(regions);
 }
 void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCoupling::Substep& interval){
     if(interval.iteration!=0)return;

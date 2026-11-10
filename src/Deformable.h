@@ -6,6 +6,7 @@
 #include "GravityField.h"
 #include "deformables/PanelBending.h"
 #include "deformables/SleepContacts.h"
+#include "terrain/TerrainSolid.h"
 #include <optional>
 #include <array>
 #include <map>
@@ -129,6 +130,10 @@ public:
     // Instance-owned signed-dihedral material; persisted with the physical state.
     std::optional<PanelBending> panelBending;
     bool sleeping=false;double quietSeconds=0;
+    struct TerrainRegion {TerrainV2::SolidSnapshot solid;std::vector<BodyHandle> bodies;};
+    // Derived current-world collision publication; never persisted as ownership.
+    std::vector<TerrainRegion> terrainRegions;
+    void RecoverTerrainContacts(double,PhysicsWorld&);
     std::string error;
     DeformableStats stats;
     // Derived exclusions for attached structural carriers; never saved handles.

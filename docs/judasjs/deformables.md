@@ -35,6 +35,7 @@ throws `TypeError`. Reading state/picking is allowed outside fixed updates.
 | `release(group)` | Release that attachment, retaining actual motion; returns false if absent |
 | `attach(group, options)` | Replace/create a group attachment and wake |
 | `setMaterial(options)` | Change supplied material fields, validate ranges, wake |
+| `setPanelMaterial(options)` | Change authored panel stiffness, yield moment and hardening without clearing plastic damage |
 
 Unknown force/impulse groups return false. `force` also returns false for disabled
 or failed simulations, preventing queued-force accumulation. Invalid ordinary
@@ -42,6 +43,12 @@ force/impulse vectors, materials and attachment targets throw; invalid
 `impulseAt` locations/vectors return false.
 `attach` options: `kind: "world" | "body" | "bone"`, `target: Entity` for body/bone,
 `joint: stable skeleton key` for bone, and optional local-metre `offset`.
+For a physical structural carrier, `part` selects its stable section key; the
+actual MK2 section body owns the reaction. `forceLimit` (N) and `torqueLimit`
+(N m) require a dynamic body/section; zero means unlimited. For an authored
+physical panel, `tearWork` (J) is its local mounting-sheet plastic-work capacity,
+separate from the hardware limits. It does not depend on vehicle speed or impact
+count. Use consistent source-local frames when authoring panels on a carrier.
 World pins use the owner's current transform as the prescribed frame. Body/bone targets transform each
 group's rest node plus offset in their local frame. Body targets exchange reaction;
 world/static/bone targets prescribe motion. Bone targets consume the existing final
@@ -145,3 +152,23 @@ with unlimited historical strength; no absent strength history is invented.
 A [Powertrain connection prerequisite](powertrains.md#physical-connection-prerequisite)
 can require this patch and an intact M79 material path. The next mechanical fixed
 interval observes committed release/fracture. See [M83 model and bounds](../MECHANICAL_DAMAGE.md).
+
+## V2 physical panels and failure events
+
+`state.panel` is null for ordinary cloth/solids. Authored physical panels report
+`stiffness`, `yieldMoment`, `hardening`, `maximumPlasticAngle` and `plasticWork`.
+`setPanelMaterial({stiffness,yieldMoment,hardening})` changes only supplied fields
+and retains existing rest angles and irreversible work; it cannot turn an
+unprepared asset into a physical panel.
+
+`onAttachmentFailure({attachments:[{group,cause}]})` runs on the owning script at
+the completed fixed boundary. Causes are `force`, `torque`, `mount-tear`,
+`target-lost` or `explicit`. Save restoration retains release state without
+replaying old events. A remaining mount continues to constrain the panel; after
+complete release it retains actual mass, momentum and collision, including against
+its former structural carrier.
+
+Detailed structural exterior binding uses the ordinary immutable asset/resource
+pipeline and physical section palettes. Local panel meshes use independent coarse
+physical sheets. Neither path simulates every detailed render polygon.
+See [Deformables V2 implementation and qualification](../DEFORMABLES_V2_IMPLEMENTATION.md).

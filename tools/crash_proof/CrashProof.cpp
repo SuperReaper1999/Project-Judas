@@ -397,7 +397,7 @@ int main(int argc, char **argv) {
         ProjectClassification categories;
         RuntimeWorld world;
         Require(world.Build(scene, &resources, error, &categories), error);
-        world.MechanicalSubsteps();
+        world.PrepareDeformableMechanics();
         for(auto& panel:panels)panel.Bind(world);
         std::string modelHash;
         Require(SceneFingerprintSha256File(modelPath, modelHash, error), error);
@@ -644,6 +644,14 @@ int main(int argc, char **argv) {
                             if (!s->fracture.removed[part])
                                 components.insert(s->fracture.component[part]);
                         std::cout << "COMPONENTS " << components.size() << '\n';
+                        double maximumLinear=0,maximumAngular=0;unsigned sleepingParts=0;
+                        for(unsigned part=0;part<asset.fracture->parts.size();++part){
+                            auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,part));if(!body.IsValid())continue;
+                            maximumLinear=std::max(maximumLinear,double(glm::length(world.Physics().GetLinearVelocity(body))));
+                            maximumAngular=std::max(maximumAngular,double(glm::length(world.Physics().GetAngularVelocity(body))));
+                            sleepingParts+=world.Physics().IsSleeping(body);
+                        }
+                        std::cout<<"RIGID_REST sleeping_parts="<<sleepingParts<<" maximum_linear_speed="<<maximumLinear<<" maximum_angular_speed="<<maximumAngular<<'\n';
                         std::cout << "MOUNTS max_angle_rad=" << mountAngle
                                   << " connected_drive_links=" << connected << '\n';
                         std::cout << "STATE x=" << reference.position.x << " y=" << reference.position.y

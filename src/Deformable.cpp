@@ -77,7 +77,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     if(!validMasses(*data,config.material.density))throw std::invalid_argument("deformable derived mass is not finite and positive");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return !a.part.empty();}))throw std::invalid_argument("structural section mounts belong to independent deformable panels, not rigid frame supports");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
-    sleepingContacts.Invalidate();
+    sleepingContacts.Invalidate();terrainRegions.clear();
     panelBending.reset();
     asset=std::move(data);
     settings=config;
@@ -116,7 +116,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
 void DeformableInstance::Reset(const glm::dmat4& transform){
     initial=transform;
     integrating=false;
-    sleepingContacts.Invalidate();
+    sleepingContacts.Invalidate();terrainRegions.clear();
     if(panelBending)panelBending->Reset();
     selfCandidatesValid=false;
     error.clear();
@@ -132,7 +132,7 @@ void DeformableInstance::Reset(const glm::dmat4& transform){
     Wake();
 }
 void DeformableInstance::ShiftOrigin(glm::dvec3 delta){
-    sleepingContacts.Invalidate();
+    sleepingContacts.Invalidate();terrainRegions.clear();
     for(auto* points:{&positions,&previous,&start,&contactReference,&contactStartReference})for(auto& p:*points)p-=delta;
     initial[3]-=glm::dvec4(delta,0);
     for(auto* tree:{&faceTree,&edgeTree})for(auto& node:*tree){node.low-=delta;node.high-=delta;}
@@ -582,7 +582,7 @@ void DeformableInstance::Persist(SaveArchive& ar){
         ar.Require(glm::determinant(reference)>0,"invalid saved deformable material orientation");
         if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);
     }
-    if(ar.reading){attachmentEvents.clear();sleepingContacts.Invalidate();selfCandidatesValid=false;previous=start=positions;
+    if(ar.reading){attachmentEvents.clear();sleepingContacts.Invalidate();terrainRegions.clear();selfCandidatesValid=false;previous=start=positions;
         attachmentState.assign(settings.attachments.size(),{});attachmentPending.clear();attachmentImpulse.clear();attachmentMoment.clear();
         forces.assign(positions.size(),V(0));
         lastGravity.assign(positions.size(),V(0));

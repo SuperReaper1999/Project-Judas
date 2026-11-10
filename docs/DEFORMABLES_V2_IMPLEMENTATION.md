@@ -231,3 +231,57 @@ topology-change frames (render CPU worst 104.55 ms). This is not the final
 one/four-car qualification. Global structural cadence, skeletal target phase,
 full authoring usability, broader model fixtures, SDK and platform qualification
 remain ongoing. Main, public releases, fluid lock and the RPG SDK are unchanged.
+
+## Native cadence, terrain recovery and retained render resources
+
+`PrepareDeformableMechanics` creates actual MK2 structural bodies/joints without
+changing whole-world chronology. Soft material quality refines only that material;
+MK2 keeps its own chronological intervals and rigid constraint budget. Vehicle
+mechanics run on those same intervals. The earlier rejected outer-step shortcut
+remains historical evidence; this implementation also includes the subsequently
+qualified native soft/rigid reaction path. Its crash trajectories are not claimed
+bit-identical to the old post-step solver. An unrelated freely spinning rigid
+body has identical motion intervals and final pose at structural qualities 2 and
+16. Native deformable tests now pass **143/143**, structural **174/174**, vehicles
+**97/97**.
+
+Terrain V2's published solid snapshot supplies containment; ordinary triangle
+meshes still have no invented inside. A material node newly buried by a terrain
+edit resolves against the nearest actual cooked terrain boundary. Existing
+collision filters and static-contact friction apply, and the normal projection
+contributes velocity through the ordinary material integration. Instantaneously
+raising geometry through an object can therefore impart a contact impulse; no
+velocity reset or damping hides that supplied work. The native test covers a
+landed/sleeping panel, a .35 m sculpt, wake/contact, and an origin shift.
+The first fixture accidentally used radial gravity; its failed raw output is
+retained separately from the corrected uniform-gravity control.
+
+Detailed structural fracture now updates only skin weights, visible indices and
+primitive ranges. It retains the renderer mesh handle, rest vertices and material
+resources. Ordinary motion still updates only the physical-section palette.
+Per-instance presentation drops embedded image copies after initial upload; the
+shared immutable source retains them. Actual NVIDIA pixel controls cover changed
+weights, transactional rejection, complete removal, restoration and stale handles:
+**28/28 renderer submission checks**.
+
+A separate physical negative control reproduced permanent material joints failing
+to sleep because the generic rigid-weld check required their original anchor pose.
+Finite material connections now use actual island motion/support instead; the
+existing speed thresholds and normal force/impulse/configuration wake semantics
+are preserved. Both orientations now sleep at their plastic equilibrium and
+wake for the next severe impact: **29/29 section-material checks**.
+
+The current real-car native cadence has completed 900-step frontal tests with one
+and four Challengers, each retaining permanent panel deformation and releasing
+all three mounts. Four-car measurement: fixed-step p50 **10.162 ms**, p95
+**13.734 ms**, p99 **23.583 ms**, worst **165.430 ms**, peak RSS **642980 KiB**.
+This preceded the plastic-equilibrium sleep correction and final render-topology
+benchmark, and is not the final performance claim. It preserves physical solver
+resolution; there are still significant severe-impact spikes to report.
+
+The panel baker now accepts an optional source-part key after its optional source
+asset ID. An empty asset ID is allowed for local, self-contained testing. Four
+actual Ural regions (hood, roof and both doors) cook using the normal panel path,
+with 36 physical nodes each and retained detailed geometry. All downloaded models
+and derivatives remain outside Git and public packaging. This cook evidence is
+not a claim that the Ural has a complete authored/drivable crash rig.

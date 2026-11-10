@@ -3,6 +3,7 @@
 #include "EngineHost.h"
 #include "GraphicsApi.h"
 #include "ScreenshotWriter.h"
+#include "SkeletalAnimation.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -211,6 +212,27 @@ int main(int argc, char **argv) {
     Check(r.Stats().drawCalls > 0 && Pixel(Capture(r)).x > 200,
           "replacement mesh positive control draws using its new live generation");
     r.DestroyMesh(replacement);
+    {
+        auto data=Triangle();data.indices={0,1,2};data.primitives={{0,3,-1}};
+        auto skeleton=std::make_shared<SkeletalAsset>();auto& s=skeleton->skeleton;
+        s.names={"first","second"};s.parents={-1,-1};s.order={0,1};s.rest.local.resize(2);s.skinNodes={0,1};s.inverseBind.assign(2,glm::mat4(1));
+        data.skeletal=skeleton;data.skinVertices.resize(data.vertices.size());
+        for(auto& v:data.skinVertices){v.joints=glm::uvec4(0);v.weights={1,0,0,0};v.joints1=glm::uvec4(0);v.weights1=glm::vec4(0);}
+        const auto handle=r.CreateMesh(data);Check(handle.IsValid(),"original detailed-skin topology fixture uploads");
+        std::vector<glm::mat4> palette={glm::mat4(1),glm::translate(glm::mat4(1),glm::vec3(4,0,0))};
+        auto draw=[&](){Begin(r);r.DrawMesh(handle,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&palette);r.EndFrame();return Capture(r);};
+        Check(Pixel(draw()).x>200,"original physical section palette renders at the authored location");
+        for(auto& v:data.skinVertices)v.joints=glm::uvec4(1);
+        Check(r.UpdateMeshSkinTopology(handle,data.indices,data.skinVertices,data.primitives),"physical tearing updates skin weights without replacing the mesh handle or materials");
+        Check(Near(Pixel(draw()),{0,0,0}),"actual GPU pixels follow updated section weights instead of stale pre-fracture bindings");
+        auto invalid=data.skinVertices;invalid[0].joints.x=99;
+        Check(!r.UpdateMeshSkinTopology(handle,data.indices,invalid,data.primitives)&&Near(Pixel(draw()),{0,0,0}),"invalid topology update rejects transactionally and preserves the previous GPU state");
+        Check(r.UpdateMeshSkinTopology(handle,{}, {},{}),"complete physical removal can publish an empty indexed skin without resurrecting nonindexed triangles");
+        Check(Near(Pixel(draw()),{0,0,0}),"fully removed physical exterior produces no stale GPU geometry");
+        Check(r.UpdateMeshSkinTopology(handle,data.indices,data.skinVertices,data.primitives),"cold-restored visible topology can reuse the same resident exterior");
+        r.DestroyMesh(handle);
+        Check(!r.UpdateMeshSkinTopology(handle,data.indices,data.skinVertices,data.primitives),"retired skin handles cannot modify later mesh generations");
+    }
 
     const auto target = r.CreateRenderTarget(320, 180, error);
     Check(target.IsValid(), "independent secondary render target is created");

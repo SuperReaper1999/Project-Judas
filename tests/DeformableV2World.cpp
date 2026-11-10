@@ -9,6 +9,8 @@
 #include "deformables/StructuralSkin.h"
 #include "ModelArchive.h"
 #include "SceneFingerprint.h"
+#include "Simulation.h"
+#include "terrain/TerrainBrush.h"
 #include <chrono>
 #include <fstream>
 #include <filesystem>
@@ -82,6 +84,34 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     RuntimeWorld rejected;
     if(!rejected.Build(restoredScene,&resources,error,nullptr,nullptr,true)||!WorldPersistence::Prepare(rejected,error))throw std::runtime_error(error);
     check(!WorldPersistence::Restore(rejected,retired,error),"retired incomplete material snapshot is explicitly rejected rather than inventing panel history");
+    {
+        JobSystem jobs(2);ResourceManager terrainResources(nullptr,&database,&jobs);
+        terrainResources.RequestDeformable(panelRecord.id);terrainResources.WaitForAll();
+        Scene terrainScene;auto& ground=terrainScene.CreateObject("Editable Terrain V2 support");ground.body=SceneBodyComponent{};auto terrainId=ground.id;
+        auto& falling=terrainScene.CreateObject("Native physical panel");auto materialId=falling.id;
+        falling.transform.position={0,1,0};falling.deformable=DeformableSettings{};falling.deformable->asset=panelRecord.id;falling.deformable->panel.enabled=true;falling.deformable->selfContact=false;
+        falling.deformable->material.stretchCompliance=falling.deformable->material.shearCompliance=1e-9;
+        auto& gravity=terrainScene.CreateObject("Gravity");gravity.gravity=SceneGravityComponent{};gravity.gravity->kind=SceneGravityKind::Uniform;
+        RuntimeWorld terrainWorld;if(!terrainWorld.Build(terrainScene,&terrainResources,error))throw std::runtime_error(error);
+        if(!terrainWorld.LiveTerrain().CreateLandscape(terrainId,TerrainV2::Create(17,17,.5f),error)||!terrainWorld.LiveTerrain().Wait(terrainId,error))throw std::runtime_error(error);
+        InputSystem input;for(unsigned step=0;step<240;++step)StepAuthoritativeWorld(terrainWorld,input,1.f/60);
+        auto* patch=terrainWorld.RuntimeDeformable(materialId,error);
+        double restSpeed=0;for(auto v:patch->velocities)restSpeed=std::max(restSpeed,glm::length(v));
+        std::printf("TERRAIN_PANEL_REST min=%.9g max=%.9g speed=%.9g sleeping=%d contacts=%zu\n",patch->Minimum().y,patch->Maximum().y,restSpeed,int(patch->sleeping),patch->stats.contacts);
+        check(patch&&patch->error.empty()&&patch->Minimum().y>0&&patch->Maximum().y<.1,"native physical panel lands on actual Terrain V2 collision instead of falling through");
+        check(patch&&patch->sleeping,"material supported by quiet Terrain V2 can naturally sleep");
+        TerrainV2::SurfaceBrush brush;brush.radius=2;brush.strength=.35f;
+        if(!terrainWorld.LiveTerrain().Surface(terrainId,{0,0,0},brush,error)||!terrainWorld.LiveTerrain().Wait(terrainId,error))throw std::runtime_error(error);
+        StepAuthoritativeWorld(terrainWorld,input,1.f/60);
+        std::printf("TERRAIN_PANEL_EDIT min=%.9g max=%.9g sleeping=%d contacts=%zu error=%s\n",patch->Minimum().y,patch->Maximum().y,int(patch->sleeping),patch->stats.contacts,patch->error.c_str());
+        check(!patch->sleeping&&patch->stats.contacts>0&&patch->Maximum().y>.2,"edited Terrain V2 wakes sleeping material and publishes real changed contacts");
+        auto before=patch->positions;
+        if(!terrainWorld.RequestOrigin({512,0,0},error)||!terrainWorld.CommitOrigin())throw std::runtime_error(error);
+        bool shifted=patch->positions.size()==before.size();for(unsigned n=0;n<before.size();++n)shifted&=glm::length(patch->positions[n]-(before[n]-glm::dvec3(512,0,0)))<1e-9;
+        check(shifted,"terrain and physical panel origin shift preserves every deformed node in the new local frame");
+        StepAuthoritativeWorld(terrainWorld,input,1.f/60);
+        check(patch->error.empty()&&patch->Minimum().y>0,"shifted Terrain V2 continues supporting the physical material");
+    }
     {std::ofstream out(root/"body.judasmodel",std::ios::app|std::ios::binary);out<<"changed";}
     ResourceManager stale(nullptr,&database);stale.RequestDeformable(frameRecord.id);stale.WaitForAll();
     check(!stale.GetDeformable(frameRecord.id,error)&&error.find("stale deformable")!=std::string::npos,"source changes reject a structural binding before publication instead of rendering stale damage geometry");

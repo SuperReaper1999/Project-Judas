@@ -275,6 +275,7 @@ add_library(judas_engine STATIC
     src/deformables/WorldMaterialCoupling.cpp
     src/deformables/MaterialIntegration.cpp
     src/deformables/MaterialContacts.cpp
+    src/deformables/TerrainContacts.cpp
     src/deformables/SleepContacts.cpp
     src/Fracture.cpp
     src/DeformableAsset.cpp

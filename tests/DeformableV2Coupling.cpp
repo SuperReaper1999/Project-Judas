@@ -61,4 +61,28 @@ void RunDeformableV2CouplingChecks(void(*check)(bool,const char*)){
         check(quiet&&quiet->sleeping&&resting.Physics().IsSleeping(resting.RuntimeBody(bodyId)),"a naturally stationary coupled material and its dynamic mount both reach sleep");
 
     }
+    // A remote structural asset's local quality must not alter the clock or
+    // trajectory of unrelated MK2 bodies anywhere else in the world.
+    auto structure=MakeFractureBlock({2,1,1},{1,.2,.4},true);
+    for(auto& connection:structure.fracture->bonds)connection.material.enabled=true;
+    if(!PrepareDeformableAsset(structure,error))throw std::runtime_error(error);
+    {std::ofstream file(assets/"structure.judasdeform",std::ios::binary);file<<EncodeDeformableAsset(structure);}
+    AssetRecord structuralAsset;if(!db.Track((assets/"structure.judasdeform").string(),structuralAsset,error))throw std::runtime_error(error);
+    resources.RequestDeformable(structuralAsset.id);resources.WaitForAll();
+    std::vector<PhysicsWorld::BodyMotionSegment> reference;BodyTransform referencePose;
+    for(unsigned quality:{2u,16u}){
+        Scene scene;auto& frame=scene.CreateObject("Remote physical structure");frame.transform.position={100,0,0};
+        frame.deformable=DeformableSettings{};frame.deformable->asset=structuralAsset.id;frame.deformable->substeps=quality;frame.deformable->iterations=quality;
+        auto& independent=scene.CreateObject("Unrelated freely spinning body");auto id=independent.id;
+        independent.body=SceneBodyComponent{};independent.body->motion=SceneBodyMotion::Dynamic;independent.body->halfExtents={.2,.3,.4};
+        RuntimeWorld world;if(!world.Build(scene,&resources,error))throw std::runtime_error(error);
+        auto body=world.RuntimeBody(id);world.Physics().SetLinearVelocity(body,{1,2,3});world.Physics().SetAngularVelocity(body,{4,5,6});
+        InputSystem input;StepAuthoritativeWorld(world,input,1.f/60);
+        auto segments=world.Physics().GetBodyMotionSegments(body);auto pose=world.Physics().GetTransform(body);
+        if(quality==2){reference=segments;referencePose=pose;}
+        bool same=segments.size()==reference.size()&&pose.position==referencePose.position&&pose.rotation==referencePose.rotation;
+        for(unsigned n=0;same&&n<segments.size();++n)same=segments[n].begin==reference[n].begin&&segments[n].end==reference[n].end;
+        check(!segments.empty()&&same,"remote deformable quality cannot change native MK2 motion intervals or unrelated rigid trajectories");
+    }
+
 }

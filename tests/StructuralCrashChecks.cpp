@@ -180,7 +180,7 @@ unsigned RunStructuralCrashChecks() {
         for(auto p:{glm::vec3(-.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-.95f),glm::vec3(-.7f,.1f,-.95f)}){MeshVertex v;v.position=p;v.normal={0,1,0};hood.vertices.push_back(v);}
         hood.indices={0,2,1,0,3,2};
         CrashPanel panel;panel.Author(scene,asset,rig,database,resources,hood);
-        check(world.Build(scene,&resources,error,&categories),"ordinary scene panel and physical frame build");world.MechanicalSubsteps();panel.Bind(world);
+        check(world.Build(scene,&resources,error,&categories),"ordinary scene panel and physical frame build");world.PrepareDeformableMechanics();panel.Bind(world);
         double mass=panel.Material().Mass();for(unsigned p=0;p<asset.fracture->parts.size();++p)mass+=world.Physics().GetMass(world.RuntimeBody(world.FracturePartEntity(rig.owner,p)));
         check(std::abs(mass-1500)<.01,"physical panel and structural frame count total mass once");
         check(panel.Material().settings.attachments.size()==3,"physical panel has two real hinges and a finite front latch");
@@ -215,7 +215,7 @@ unsigned RunStructuralCrashChecks() {
         RuntimeWorld world;
         MeshData hood;for(auto p:{glm::vec3(-.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-.95f),glm::vec3(-.7f,.1f,-.95f)}){MeshVertex v;v.position=p;hood.vertices.push_back(v);}hood.indices={0,2,1,0,3,2};
         CrashPanel panel;panel.Author(scene,asset,rig,database,resources,hood);
-        check(world.Build(scene,&resources,error,&categories),"ordinary scene panel and physical frame build");world.MechanicalSubsteps();panel.Bind(world);
+        check(world.Build(scene,&resources,error,&categories),"ordinary scene panel and physical frame build");world.PrepareDeformableMechanics();panel.Bind(world);
         auto& hinges=panel.Material().panelBending->hinges;
         auto localHinge=[&](unsigned mount){
             const auto& group=panel.Material().asset->groups.at(panel.Material().settings.attachments[mount].group);

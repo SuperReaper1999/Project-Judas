@@ -150,6 +150,12 @@ auto PhysicsWorld::Impl::Settle(float dt) -> void {
             island.anchored |= !b || b->rigidBody.IsStatic();
             if (island.first == kNoSleepMember)
                 continue;
+            // Finite material connections are not rigid welds. Their current
+            // equilibrium includes elastic deflection and permanent rest strain;
+            // requiring the original anchor/angle keeps a damaged assembly awake
+            // forever. Actual body motion and support still gate the entire
+            // island below, and forces/configuration changes retain normal wake.
+            if(j.state.constitutive.material.enabled)continue;
             auto pa = a->rigidBody.position +
                       a->rigidBody.orientation * (s.anchorA - a->shape.pivotOffset);
             auto pb = b ? b->rigidBody.position +

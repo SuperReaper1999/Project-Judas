@@ -448,8 +448,8 @@ public:
     void PersistRigidFracture(EntityId,SaveArchive&,const std::map<EntityId,EntityId>* remap=nullptr,glm::dvec3 capturedOriginDelta={});
     void PersistFractureBundle(EntityId,SaveArchive&,bool staged=false,const std::map<EntityId,EntityId>& remap={},glm::dvec3 capturedOriginDelta={});
     EntityId FracturePartOwner(EntityId)const;
-    unsigned MechanicalSubsteps();
-    unsigned MechanicalIterations();
+    void PrepareDeformableMechanics();
+    void PrepareDeformableTerrain(EntityId);
     void DispatchDeformableEvents();
     bool LoadFracturePart(EntityId,unsigned,glm::vec3,bool impulse);
     EntityId FracturePartEntity(EntityId,unsigned,bool includeDisabled=false)const;

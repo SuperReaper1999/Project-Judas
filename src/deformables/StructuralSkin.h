@@ -14,6 +14,9 @@ class StructuralSkin {
     bool Bind(const DeformableAsset &, const MeshData &, std::string &error, bool panelSeams=false);
     void Map(const DeformableInstance &, double alpha, MeshData &) const;
     void BuildGpuMesh(const DeformableInstance &, MeshData &) const;
+    // Update an exterior previously built by this binding, preserving immutable
+    // vertices/material payload. False requests a rebuild after complete removal.
+    bool UpdateGpuTopology(const DeformableInstance &, MeshData &) const;
     void Palette(const DeformableInstance &, double alpha, std::vector<glm::mat4> &) const;
     // Retained numeric and image payload, excluding allocator overhead.
     size_t Bytes() const;

@@ -112,7 +112,7 @@ void RuntimeWorld::UpdateDeformables(double dt){
             if(!record.rigid.initialized&&!m_restoreConstruction){std::string prepareError;if(!PrepareRigidFracture(id,prepareError)){simulation->error=prepareError;continue;}}
             if(record.rigid.initialized)UpdateRigidFracture(id,dt);
         }else if(simulation->PhysicalStepActive()){simulation->EndPhysicalStep(dt,m_physics);integrated.insert(id);}
-        else simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);
+        else {PrepareDeformableTerrain(id);simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);}
         if(simulation->asset->fracture&&!simulation->asset->fracture->rigid&&simulation->settings.enabled)simulation->fracture.Commit(*simulation->asset->fracture);
         UpdatePanelCollisionExclusions(*simulation);
         if(!wasSleeping||!simulation->sleeping)++record.revision;
@@ -136,14 +136,20 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
         std::vector<glm::mat4> palette;
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha){
             if(sim.asset->structuralSkin){
-                if(!record.mesh.IsValid()||record.meshTopology!=sim.fracture.revision)
-                    sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
+                if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
+                else if(record.meshTopology!=sim.fracture.revision&&!sim.asset->structuralSkin->UpdateGpuTopology(sim,record.presentation))sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
             }else sim.MapRender(materialAlpha,record.presentation);
             if(!record.mesh.IsValid())record.mesh=renderer.CreateMesh(record.presentation);
+            else if(sim.asset->structuralSkin){
+                if(record.meshTopology!=sim.fracture.revision&&!renderer.UpdateMeshSkinTopology(record.mesh,record.presentation.indices,record.presentation.skinVertices,record.presentation.primitives))throw std::runtime_error("invalid prepared structural skin topology");
+            }
             else if(sim.asset->fracture&&record.meshTopology!=sim.fracture.revision){renderer.DestroyMesh(record.mesh);record.mesh=renderer.CreateMesh(record.presentation);}
             else if(!sim.asset->structuralSkin)renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
             record.meshTopology=sim.fracture.revision;
             record.mappedRevision=record.revision;record.mappedAlpha=materialAlpha;
+            // Immutable assets retain source images for resource rebuilding;
+            // per-instance dynamic geometry does not need another image copy.
+            for(auto& material:record.presentation.materials)for(auto& map:material.maps){map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}
         }
         if(sim.asset->structuralSkin)sim.asset->structuralSkin->Palette(sim,materialAlpha,palette);
         renderer.SetRenderLayer(RenderLayerOf(id));
@@ -202,6 +208,11 @@ bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::s
 
 void RuntimeWorld::SetDeformableEnabled(EntityId id,bool enabled){auto it=m_deformables.find(id);if(it==m_deformables.end())return;auto& s=it->second.simulation;if(s.settings.enabled==enabled)return;s.settings.enabled=enabled;s.Wake();for(auto child:it->second.rigid.parts)if(RuntimeDefinition(child))SetColliderEnabled(child,enabled);}
 
-// Bounded native mechanical intervals. Legacy content retains its original single step.
-unsigned RuntimeWorld::MechanicalSubsteps(){unsigned count=1;for(auto id:m_deformableOwners)if(IsPublished(id)){std::string error;auto* s=RuntimeDeformable(id,error);if(s&&s->asset->fracture&&s->asset->fracture->HasMaterials()&&s->settings.enabled&&s->error.empty()){if(!m_restoreConstruction&&!m_deformables.at(id).rigid.initialized&&!PrepareRigidFracture(id,error)){s->error=error;continue;}count=std::max(count,s->settings.substeps);}}return count;}
-unsigned RuntimeWorld::MechanicalIterations(){unsigned count=0;for(const auto& [_,r]:m_deformables){const auto& s=r.simulation;if(s.asset->fracture&&s.asset->fracture->HasMaterials()&&s.settings.enabled&&s.error.empty())count=std::max(count,s.settings.iterations);}return count;}
+// Prepare native MK2 material joints without changing unrelated body cadence.
+void RuntimeWorld::PrepareDeformableMechanics(){
+    for(auto id:m_deformableOwners)if(IsPublished(id)){
+        std::string error;auto* material=RuntimeDeformable(id,error);
+        if(!material||!material->asset->fracture||!material->asset->fracture->rigid||!material->settings.enabled||!material->error.empty())continue;
+        if(!m_restoreConstruction&&!m_deformables.at(id).rigid.initialized&&!PrepareRigidFracture(id,error))material->error=error;
+    }
+}

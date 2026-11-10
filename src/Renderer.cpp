@@ -16,6 +16,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+#include <limits>
 
 #include <SDL2/SDL.h>
 
@@ -733,6 +734,29 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
     mesh->vertexCount = static_cast<GLsizei>(vertices.size());
     if(!mesh->lods.empty())mesh->lodPixels=0; // changed geometry invalidates offline error estimates
     mesh->bounds={};for(const auto& v:vertices)mesh->bounds.Include(v.position);
+    return true;
+}
+
+bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32_t>& indices,
+                                     const std::vector<MeshSkinVertex>& skin,const std::vector<MeshPrimitive>& primitives){
+    auto* mesh=GetMesh(handle);
+    if(!mesh||!mesh->skinVbo||!mesh->ebo||!mesh->lods.empty()||indices.size()%3||indices.size()>size_t(std::numeric_limits<GLsizei>::max()))return false;
+    if(!indices.empty()&&skin.size()!=size_t(mesh->vertexCount))return false;
+    for(auto i:indices)if(i>=unsigned(mesh->vertexCount))return false;
+    for(const auto& p:primitives)if(p.first%3||p.count%3||p.first>indices.size()||p.count>indices.size()-p.first||p.material>=int(mesh->materials.size())||p.material< -1)return false;
+    for(const auto& v:skin){float sum=0;
+        for(unsigned k=0;k<4;++k){if(v.joints[k]>=mesh->restSkin.size()||v.joints1[k]>=mesh->restSkin.size()||!std::isfinite(v.weights[k])||!std::isfinite(v.weights1[k])||v.weights[k]<0||v.weights1[k]<0)return false;sum+=v.weights[k]+v.weights1[k];}
+        if(std::abs(sum-1)>1e-4f)return false;
+    }
+    JUDAS_PROFILE_SCOPE("Structural topology upload");
+    GLint previousVao=0,previousArray=0;glGetIntegerv(GL_VERTEX_ARRAY_BINDING,&previousVao);glGetIntegerv(GL_ARRAY_BUFFER_BINDING,&previousArray);
+    glBindVertexArray(mesh->vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh->ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,GLsizeiptr(indices.size()*sizeof(uint32_t)),indices.empty()?nullptr:indices.data(),GL_DYNAMIC_DRAW);
+    if(!skin.empty()){glBindBuffer(GL_ARRAY_BUFFER,mesh->skinVbo);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(skin.size()*sizeof(MeshSkinVertex)),skin.data(),GL_DYNAMIC_DRAW);}
+    glBindVertexArray(GLuint(previousVao));glBindBuffer(GL_ARRAY_BUFFER,GLuint(previousArray));
+    mesh->indexCount=GLsizei(indices.size());mesh->primitives=primitives;mesh->partOrientation.clear();
+    for(const auto& p:primitives)mesh->partOrientation.push_back(p.count?skin[indices[p.first]]:MeshSkinVertex{});
     return true;
 }
 

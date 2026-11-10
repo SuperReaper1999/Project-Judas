@@ -219,6 +219,10 @@ public:
     // Used for a surface derived each presentation frame from simulated
     // fluid positions. Returns false for indexed or invalid handles.
     bool UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices);
+    // Deforming detailed exteriors retain rest vertices and materials. Only
+    // section weights and visible topology change when connections tear.
+    bool UpdateMeshSkinTopology(MeshHandle,const std::vector<uint32_t>& indices,
+                                const std::vector<MeshSkinVertex>&,const std::vector<MeshPrimitive>&);
     void DestroyMesh(MeshHandle handle);
 
     // Uploads `data` as a 2D RGBA texture (linear filtering, mipmapped,

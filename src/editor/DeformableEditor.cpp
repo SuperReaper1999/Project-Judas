@@ -21,9 +21,12 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     Checkbox(doc,"Enabled",d.enabled);Checkbox(doc,"Cloth self-contact",d.selfContact);
     AssetField(doc,"Simulation / render binding",d.asset,AssetType::Deformable,false,state);
     int substeps=int(d.substeps),iterations=int(d.iterations);
-    if(DragInt(doc,"Substeps",substeps,1,16))d.substeps=unsigned(substeps);
-    if(DragInt(doc,"Iterations",iterations,1,16))d.iterations=unsigned(iterations);
-    if(state.project){DrawCategoryLayer(doc,"Collision layer",d.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",d.collisionMask,state.project->Settings().classification.collision);}
+    if(ImGui::CollapsingHeader("Simulation quality and collision filtering")){
+        if(DragInt(doc,"Local material substeps",substeps,1,16))d.substeps=unsigned(substeps);
+        if(DragInt(doc,"Local constraint iterations",iterations,1,16))d.iterations=unsigned(iterations);
+        ImGui::TextWrapped("These settings refine soft material locally. Rigid structural sections use MK2's own solver budget.");
+        if(state.project){DrawCategoryLayer(doc,"Collision layer",d.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",d.collisionMask,state.project->Settings().classification.collision);}
+    }
     if(ImGui::Button("Woven cloth preset")){
         doc.BeginEdit();d.material=DeformableMaterial{};d.panel.enabled=false;
         for(auto& attachment:d.attachments)attachment.tearWork=0;
@@ -37,11 +40,14 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     }
     auto& m=d.material;
     NonnegativeNumber(doc,"Density (kg/m2 cloth; kg/m3 solid)",m.density);
+    NonnegativeNumber(doc,"Contact thickness (m)",m.thickness);NonnegativeNumber(doc,"Friction",m.friction);
+    if(ImGui::CollapsingHeader("Advanced material response")){
     NonnegativeNumber(doc,"Stretch compliance",m.stretchCompliance);NonnegativeNumber(doc,"Shear compliance",m.shearCompliance);
     NonnegativeNumber(doc,"Bend compliance",m.bendCompliance);NonnegativeNumber(doc,"Volume compliance",m.volumeCompliance);
-    NonnegativeNumber(doc,"Damping (1/s)",m.damping);NonnegativeNumber(doc,"Contact thickness (m)",m.thickness);NonnegativeNumber(doc,"Friction",m.friction);
+    NonnegativeNumber(doc,"Damping (1/s)",m.damping);
     NonnegativeNumber(doc,"Air drag (1/s)",m.airDrag);glm::vec3 air(m.airVelocity);if(DragVec3(doc,"World air velocity",air))m.airVelocity=air;
     NonnegativeNumber(doc,"Yield strain (0 disables)",m.yieldStrain);NonnegativeNumber(doc,"Plastic rate (1/s)",m.plasticRate);NonnegativeNumber(doc,"Maximum plastic strain",m.maximumPlasticStrain);
+    }
     Checkbox(doc,"Physical panel bending / plasticity",d.panel.enabled);
     if(d.panel.enabled){
         NonnegativeNumber(doc,"Bending stiffness (N m / rad)",d.panel.stiffness);
@@ -111,7 +117,7 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
         if(a.forceLimit>0||a.torqueLimit>0){
             const auto* target=doc.GetScene().Find(a.target);
             if(a.kind!=DeformableAttachment::Kind::Body||!target||!target->body||target->body->motion!=SceneBodyMotion::Dynamic)
-                ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Finite strength requires a dynamic Body target.");
+                if(a.part.empty())ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Finite strength requires a dynamic body or a physical structural section.");
             ImGui::TextWrapped("Limits measure the actual signed patch reaction, including moment about its centroid. Exceeding either releases after the completed step; no position or velocity reset.");
         }
         if(state.runtime){std::string diagnostic;if(const auto* runtime=state.runtime->RuntimeDeformable(o.id,diagnostic))if(i<runtime->attachmentState.size()){

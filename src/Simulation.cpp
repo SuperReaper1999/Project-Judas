@@ -60,9 +60,9 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     world.PreparePhysicalBalances(fixedDeltaTime);
     PhysicsWorld& physics = world.Physics();
     const GravityField& gravity = world.Gravity();
-    const unsigned structuralIntervals=world.MechanicalSubsteps();
+    world.PrepareDeformableMechanics();
     const bool coupledMaterials=world.BeginDeformableStep();
-    if(structuralIntervals==1)PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
+    PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
                                 BodyHandle{},[&world](size_t slot,glm::vec3 position){
                                     return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);
                                 });
@@ -82,35 +82,18 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     // axle load back into the same rotational network before rigid integration.
     if(world.HasVehicleMechanics()) {
         world.BeginVehicleStep(fixedDeltaTime);
-        const unsigned materialRounds=(world.MechanicalIterations()+3)/4;
-        auto coupling=PhysicsWorld::VelocityCoupling::ForEachSubstep(std::max(4u,materialRounds),
+        auto coupling=PhysicsWorld::VelocityCoupling::ForEachSubstep(4,
             [&](const auto& interval){world.SolveVehicleSubstep(interval);world.AdvanceDeformablesSubstep(interval);},
-            [&](const auto& interval){world.CompleteVehicleSubstep(interval);});
-        physics.StepCoupled(fixedDeltaTime,structuralIntervals,
-            [&](float h,unsigned){
-                if(structuralIntervals>1)PrepareDynamicBodiesForStep(world.DynamicBodies(),gravity,physics,h,
-                    BodyHandle{},[&world,&physics](size_t slot,glm::vec3){
-                        return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,
-                            physics.GetTransform(world.DynamicBodies()[slot].Handle()).position);
-                    });
-            },[&](float,unsigned){world.PublishPowertrainConnections();},&coupling);
-    }else if(world.MechanicalIterations()==0){
+            [&](const auto& interval){world.CompleteVehicleSubstep(interval);world.PublishPowertrainConnections();});
+        physics.Step(fixedDeltaTime,&coupling);
+    }else {
         world.UpdatePowertrains(fixedDeltaTime);
         world.UpdateWheels(fixedDeltaTime);
         world.ResolvePowertrainLoads(fixedDeltaTime);
-        if(coupledMaterials){auto materialPhase=PhysicsWorld::VelocityCoupling::ForEachSubstep(1,[&](const auto& interval){world.AdvanceDeformablesSubstep(interval);});physics.Step(fixedDeltaTime,&materialPhase);}
+        // MK2 owns chronological integration. Material substeps/iterations are
+        // local accuracy budgets, never whole-world time or rigid solve budgets.
+        if(coupledMaterials){auto phase=PhysicsWorld::VelocityCoupling::ForEachSubstep(1,[&](const auto& interval){world.AdvanceDeformablesSubstep(interval);});physics.Step(fixedDeltaTime,&phase);}
         else physics.Step(fixedDeltaTime);
-    }else {
-        std::map<EntityId,WheelState> wheelPrevious;
-        for(const auto& object:world.ScriptObjects(false))if(object.wheel)if(auto* wheel=world.RuntimeWheel(object.id))wheelPrevious.emplace(object.id,wheel->state);
-        auto materialPhase=PhysicsWorld::VelocityCoupling::ForEachSubstep(std::max(1u,(world.MechanicalIterations()+3)/4),[&](const auto& interval){world.AdvanceDeformablesSubstep(interval);});
-        physics.StepCoupled(fixedDeltaTime,structuralIntervals,
-        [&](float h,unsigned){
-            if(structuralIntervals>1)PrepareDynamicBodiesForStep(world.DynamicBodies(),gravity,physics,h,
-                BodyHandle{},[&world,&physics](size_t slot,glm::vec3){const auto position=physics.GetTransform(world.DynamicBodies()[slot].Handle()).position;return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);});
-            world.UpdatePowertrains(h);world.UpdateWheels(h);world.ResolvePowertrainLoads(h);
-        },[&](float,unsigned){world.PublishPowertrainConnections();},&materialPhase);
-        for(const auto& [id,state]:wheelPrevious)if(auto* wheel=world.RuntimeWheel(id))wheel->previous=state;
     }
 
 

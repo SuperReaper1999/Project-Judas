@@ -94,6 +94,7 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
             }
         for(unsigned iteration=0;iteration<settings.iterations;++iteration){Internal(h);Cohesive(h);
             RigidContacts(h,fraction,physics);
+            RecoverTerrainContacts(h,physics);
             SurfaceContacts(*this,*this,h);
             Attach(h,fraction,physics,targets,awakened,awakenedCount);
             }

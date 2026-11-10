@@ -228,6 +228,11 @@ void StructuralSkin::BuildGpuMesh(const DeformableInstance &simulation, MeshData
         skeleton.inverseBind.emplace_back(1);
     }
     mesh.skeletal = std::move(asset);
+    UpdateGpuTopology(simulation,mesh);
+}
+bool StructuralSkin::UpdateGpuTopology(const DeformableInstance& simulation,MeshData& mesh)const{
+    if(!mesh.skeletal||mesh.vertices.size()!=rest.vertices.size()||mesh.skinVertices.size()!=corners.size())return false;
+    if(!simulation.asset->fracture||simulation.asset->fracture->parts.size()!=frames.size())throw std::invalid_argument("structural skin partition changed");
     for (size_t i = 0; i < corners.size(); ++i) {
         const auto &corner = corners[i];
         auto &skin = mesh.skinVertices[i];
@@ -265,4 +270,5 @@ void StructuralSkin::BuildGpuMesh(const DeformableInstance &simulation, MeshData
         mesh.skinVertices.clear();
         mesh.skeletal.reset();
     }
+    return true;
 }
