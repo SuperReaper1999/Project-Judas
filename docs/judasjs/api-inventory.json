@@ -843,6 +843,11 @@
       "maximum": 1
     },
     {
+      "symbol": "Deformable.setPanelMaterial",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "Entity.addTag",
       "minimum": 1,
       "maximum": 1
@@ -2751,6 +2756,17 @@
         "deformableMaterial"
       ],
       "type": "docs/judas.d.ts:Deformable.setMaterial",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.setPanelMaterial",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformablePanelMaterial"
+      ],
+      "type": "docs/judas.d.ts:Deformable.setPanelMaterial",
       "reference": "docs/judasjs/deformables.md"
     },
     {
@@ -7712,6 +7728,7 @@
     "deformableHitImpulse",
     "deformableImpulse",
     "deformableMaterial",
+    "deformablePanelMaterial",
     "deformableRaycast",
     "deformableRelease",
     "deformableReset",

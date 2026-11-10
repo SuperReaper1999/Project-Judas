@@ -74,6 +74,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Deformable.release` | `deformableRelease` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Deformable.reset` | `deformableReset` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Deformable.setMaterial` | `deformableMaterial` | [declaration](../judas.d.ts) | [reference](deformables.md) |
+| `Deformable.setPanelMaterial` | `deformablePanelMaterial` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Deformable.state` | `deformableState` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Deformable.valid` | `deformableValid` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
