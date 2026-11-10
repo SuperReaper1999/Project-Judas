@@ -8,6 +8,14 @@ preview, not a published release. Main, the Advanced
 Fluids lock and the RPG project/SDK remain unchanged. All downloaded vehicles and
 derivatives remain private and are absent from the repository and public SDK.
 
+## Post-acceptance optimisation
+
+The accepted physical milestone remains `69677c8c`. A separate focused
+[performance pass](DEFORMABLES_V2_PERFORMANCE.md) at `1481c831` substantially
+reduces impact/search and wake costs, preserves matched physical outcomes and
+awaits its own human review. The historical timings below describe the accepted
+pre-optimisation baseline, not the latest optimisation results.
+
 ## Authoritative implementation
 
 The implementation and native integration checks are checkpointed at
