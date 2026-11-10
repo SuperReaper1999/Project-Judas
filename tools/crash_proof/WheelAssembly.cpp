@@ -1,7 +1,60 @@
 #include "WheelAssembly.h"
 #include <algorithm>
 #include <cmath>
+#include <cctype>
 #include <stdexcept>
+#include "../../third_party/nlohmann/json.hpp"
+
+bool ParseCrashPartRoles(const std::string& text, CrashPartRoles& result, std::string& error) {
+    try {
+        const auto document = nlohmann::json::parse(text);
+        if (!document.is_object() || document.value("schema", 0) != 1 ||
+            !document.contains("parts") || !document.at("parts").is_object() ||
+            document.at("parts").empty())
+            throw std::runtime_error("part roles require schema 1 and a nonempty parts object");
+        CrashPartRoles next;
+        for (const auto& entry : document.at("parts").items()) {
+            if (entry.key().empty() || !entry.value().is_string())
+                throw std::runtime_error("part roles require nonempty identities and string roles");
+            const auto role = entry.value().get<std::string>();
+            if (role != "body" && role != "wheel" && role != "caliper")
+                throw std::runtime_error("unknown part role: " + role);
+            next.emplace(entry.key(), role == "body" ? CrashPartRole::Body :
+                         role == "wheel" ? CrashPartRole::Wheel : CrashPartRole::Caliper);
+        }
+        result = std::move(next);
+        error.clear();
+        return true;
+    } catch (const std::exception& e) {
+        error = e.what();
+        return false;
+    }
+}
+
+CrashPartRole ResolveCrashPartRole(const std::string& part, const CrashPartRoles& roles) {
+    if (!roles.empty()) {
+        const auto found = roles.find(part);
+        if (found == roles.end()) throw std::runtime_error("missing authored part role: " + part);
+        return found->second;
+    }
+    auto name = part;
+    std::transform(name.begin(), name.end(), name.begin(),
+                   [](unsigned char c) { return char(std::tolower(c)); });
+    const bool caliper = name.find("calliperexotic") != std::string::npos ||
+                         name.find("calliperbadge") != std::string::npos ||
+                         name.find("caliper_body") != std::string::npos ||
+                         name.find("_caliper_") != std::string::npos;
+    if (caliper) return CrashPartRole::Caliper;
+    const bool rotating = name.find("wheel") != std::string::npos ||
+                          name.find("tyre") != std::string::npos ||
+                          name.find("tire") != std::string::npos ||
+                          name.find("/rim") != std::string::npos ||
+                          name.find("_rim") != std::string::npos ||
+                          name.find("spoke") != std::string::npos ||
+                          name.find("_brake_") != std::string::npos ||
+                          name.find("_brakedisc_") != std::string::npos;
+    return rotating ? CrashPartRole::Wheel : CrashPartRole::Body;
+}
 CrashWheelMount PrepareCrashWheel(MeshData& rotating, MeshData& brakes) {
     using V=glm::dvec3; using M=glm::dmat3;
     if(rotating.indices.empty())throw std::runtime_error("wheel has no rotating geometry");

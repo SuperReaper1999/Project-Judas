@@ -34,5 +34,21 @@ unsigned RunCrashWheelAssemblyChecks(){
     }
     bool rejected=false;try{MeshData a,b;PrepareCrashWheel(a,b);}catch(const std::runtime_error&){rejected=true;}
     check(rejected,"missing rotating geometry is rejected rather than inventing an axle");
+    check(ResolveCrashPartRole("Vehicle_M_Caliper_High/material/metal", {}) == CrashPartRole::Caliper,
+          "stationary caliper is identified even without wheel in its source name");
+    check(ResolveCrashPartRole("Vehicle_M_Brake_High/material/disc", {}) == CrashPartRole::Wheel,
+          "brake discs rotate with their wheel rather than remaining on the chassis");
+    CrashPartRoles roles;std::string error;
+    check(ParseCrashPartRoles(R"({"schema":1,"parts":{"opaque-name":"wheel","other-name":"caliper","cabin":"body"}})",roles,error),
+          "explicit source identity authoring accepts all three assembly roles");
+    check(ResolveCrashPartRole("opaque-name", roles)==CrashPartRole::Wheel &&
+          ResolveCrashPartRole("other-name", roles)==CrashPartRole::Caliper &&
+          ResolveCrashPartRole("cabin", roles)==CrashPartRole::Body,
+          "authored roles override source naming without removing cabin geometry");
+    rejected=false;try{ResolveCrashPartRole("unmapped",roles);}catch(const std::runtime_error&){rejected=true;}
+    check(rejected,"incomplete authored assembly fails instead of silently misclassifying a part");
+    const auto previous=roles;
+    check(!ParseCrashPartRoles(R"({"schema":1,"parts":{"cabin":"ignore"}})",roles,error)&&roles==previous,
+          "invalid role cannot discard geometry or replace a valid assembly map");
     return checks;
 }

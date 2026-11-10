@@ -13,7 +13,8 @@ void AuthorCrashProject(const std::filesystem::path& root,Scene& scene,const std
     if(!Project::CreateNew(root.string(),"Deformables V2 Native Crash Project",project,error))throw std::runtime_error(error);
     scene.Settings().name="Deformables V2 Native Crash Project";
     scene.Settings().linearRendering=true;scene.Settings().backgroundColor={.15f,.19f,.24f};
-    scene.Settings().sunDirection={-.4f,1,.3f};scene.Settings().sunColor={2,1.9f,1.8f};scene.Settings().ambientColor={.7f,.75f,.8f};
+    // Preserve the caller's authored lighting/environment. The normal runtime
+    // owns shadows and transparent passes; source fidelity needs the same scene.
     for(auto& object:scene.Objects())if(object.body&&!object.render){
         object.render=SceneRenderComponent{};object.render->halfExtents=object.body->halfExtents;
         object.render->color=object.name=="Ground"?glm::vec3(.25f,.28f,.29f):glm::vec3(.65f,.68f,.68f);

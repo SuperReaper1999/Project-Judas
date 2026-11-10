@@ -1,5 +1,7 @@
 # Deformables V2 — final engineering qualification
 
+**Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Full human acceptance remains pending.
+
 This is an Experimental source-preview handover, not a release or human acceptance
 of Stages 2–4. Revised Stage 1 was human accepted at `6a1d49b2`. Main, the Advanced
 Fluids lock and the RPG project/SDK remain unchanged. All downloaded vehicles and

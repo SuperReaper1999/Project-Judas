@@ -66,9 +66,13 @@ void Image(const ufbx_material_map& src,MaterialMap& target,const std::string& s
  target.sampler.wrapS=t->wrap_u==UFBX_WRAP_CLAMP?33071:10497;target.sampler.wrapT=t->wrap_v==UFBX_WRAP_CLAMP?33071:10497;
  if(t->has_uv_transform){auto transform=t->uv_to_texture;glm::vec2 x(transform.m00,transform.m10),y(transform.m01,transform.m11);if(glm::length(x)<1e-8f||glm::length(y)<1e-8f||std::abs(glm::dot(glm::normalize(x),glm::normalize(y)))>1e-5f)throw std::runtime_error("UV shear/singular texture transform requires material remap");target.rotation=std::atan2(x.y,x.x);target.scale={glm::length(x),glm::length(y)*(glm::determinant(glm::mat2(x,y))<0?-1.f:1.f)};target.offset={transform.m03,transform.m13};}
  if(t->type!=UFBX_TEXTURE_FILE)throw std::runtime_error("FBX layered/procedural texture requires explicit material remap: "+S(t->name));
- std::string error;if(t->content.size){target.encodedImage.assign(static_cast<const uint8_t*>(t->content.data),static_cast<const uint8_t*>(t->content.data)+t->content.size);if(!DecodeTextureFromMemory(static_cast<const uint8_t*>(t->content.data),t->content.size,S(t->name),target.embedded,error))throw std::runtime_error(error);return;}
- std::string name=S(t->relative_filename);if(name.empty())name=S(t->filename);std::replace(name.begin(),name.end(),'\\','/');auto root=std::filesystem::weakly_canonical(std::filesystem::path(source).parent_path());std::filesystem::path path;
- auto remap=settings.dependencyRemaps.find(name);if(remap!=settings.dependencyRemaps.end())path=std::filesystem::weakly_canonical(remap->second);else {path=std::filesystem::weakly_canonical(root/name);auto relative=path.lexically_relative(root);if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("texture outside approved source root; remap required: "+name);}
+ std::string name=S(t->relative_filename);if(name.empty())name=S(t->filename);std::replace(name.begin(),name.end(),'\\','/');
+ const auto remap=settings.dependencyRemaps.find(name);
+ // Explicit authoring intent also replaces embedded content. This permits a
+ // bounded texture derivative without round-tripping or altering the geometry.
+ std::string error;if(t->content.size&&remap==settings.dependencyRemaps.end()){target.encodedImage.assign(static_cast<const uint8_t*>(t->content.data),static_cast<const uint8_t*>(t->content.data)+t->content.size);if(!DecodeTextureFromMemory(static_cast<const uint8_t*>(t->content.data),t->content.size,S(t->name),target.embedded,error))throw std::runtime_error(error);return;}
+ auto root=std::filesystem::weakly_canonical(std::filesystem::path(source).parent_path());std::filesystem::path path;
+ if(remap!=settings.dependencyRemaps.end())path=std::filesystem::weakly_canonical(remap->second);else {path=std::filesystem::weakly_canonical(root/name);auto relative=path.lexically_relative(root);if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("texture outside approved source root; remap required: "+name);}
  if(std::filesystem::file_size(path)>64*1024*1024)throw std::runtime_error("texture exceeds 64 MiB");
  std::vector<uint8_t> bytes;if(!ReadWholeFile(path.string(),bytes,error)||!DecodeTextureFromMemory(bytes.data(),bytes.size(),name,target.embedded,error))throw std::runtime_error("texture "+name+": "+error);target.encodedImage=std::move(bytes);report.dependencies.push_back(path.string());
 }
@@ -170,7 +174,17 @@ bool ImportCompatibleMotion(const std::string& path,const ModelImportSettings& s
 
 bool GatherModelDependencies(const std::string& source,std::vector<std::string>& paths,std::string& error,const ModelImportSettings* settings){
  try {auto extension=std::filesystem::path(source).extension().string();if(extension==".gltf"||extension==".glb")return GatherGltfDependencies(source,paths,error,settings?&settings->dependencyRemaps:nullptr);if(extension==".obj"||extension==".OBJ")return GatherObjDependencies(source,paths,error);if(extension!=".fbx"&&extension!=".FBX")return true;
-  ModelImportSettings settings;auto scene=Load(source,settings);auto root=std::filesystem::weakly_canonical(std::filesystem::path(source).parent_path());std::set<std::string> distinct;
-  for(auto* texture:scene->textures){if(texture->type!=UFBX_TEXTURE_FILE||texture->content.size)continue;auto name=S(texture->relative_filename);if(name.empty())name=S(texture->filename);std::replace(name.begin(),name.end(),'\\','/');auto path=std::filesystem::weakly_canonical(root/name);auto relative=path.lexically_relative(root);if(relative.empty()||relative.is_absolute()||*relative.begin()==".."||!std::filesystem::is_regular_file(path)){error="Unresolved source texture requires an explicit project-owned dependency remap: "+name;continue;}distinct.insert(path.string());}paths.assign(distinct.begin(),distinct.end());return true;
+  const ModelImportSettings defaults;const auto& options=settings?*settings:defaults;
+  auto scene=Load(source,options);auto root=std::filesystem::weakly_canonical(std::filesystem::path(source).parent_path());std::set<std::string> distinct;
+  for(auto* texture:scene->textures){
+   if(texture->type!=UFBX_TEXTURE_FILE)continue;
+   auto name=S(texture->relative_filename);if(name.empty())name=S(texture->filename);std::replace(name.begin(),name.end(),'\\','/');
+   const auto remap=options.dependencyRemaps.find(name);
+   if(texture->content.size&&remap==options.dependencyRemaps.end())continue;
+   auto path=std::filesystem::weakly_canonical(remap!=options.dependencyRemaps.end()?std::filesystem::path(remap->second):root/name);
+   auto relative=path.lexically_relative(root);
+   if((remap==options.dependencyRemaps.end()&&(relative.empty()||relative.is_absolute()||*relative.begin()==".."))||!std::filesystem::is_regular_file(path)){error="Unresolved source texture requires an explicit project-owned dependency remap: "+name;continue;}
+   distinct.insert(path.string());
+  }paths.assign(distinct.begin(),distinct.end());return true;
  }catch(const std::exception& e){error=e.what();return false;}
 }

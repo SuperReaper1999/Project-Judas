@@ -43,7 +43,7 @@ struct VehicleModel {
     std::array<MeshData, 4> brakes;
     std::array<CrashWheelMount,4> mounts;
 };
-VehicleModel LoadVehicle(const std::string &path) {
+VehicleModel LoadVehicle(const std::string &path, const CrashPartRoles& roles) {
     MeshData source;
     std::string error;
     Require(LoadModelMesh(path, source, error), error);
@@ -94,9 +94,6 @@ VehicleModel LoadVehicle(const std::string &path) {
     VehicleModel result;
     std::array<std::map<int, int>, 9> slots;
     for (const auto &p : source.primitives) {
-        auto name = p.part;
-        std::transform(name.begin(), name.end(), name.begin(),
-                       [](unsigned char c) { return char(std::tolower(c)); });
         if (std::getenv("JUDAS_CRASH_GEOMETRY_LOG")) {
             glm::vec3 lo(1e20), hi(-1e20);
             for (unsigned t=p.first;t<p.first+p.count;++t) {
@@ -106,10 +103,9 @@ VehicleModel LoadVehicle(const std::string &path) {
             std::cout << "PART " << p.part << " bounds " << lo.x << "," << lo.y << "," << lo.z
                       << " : " << hi.x << "," << hi.y << "," << hi.z << '\n';
         }
-        bool wheel = name.find("wheel") != std::string::npos || name.find("tyre") != std::string::npos ||
-                     name.find("tire") != std::string::npos || name.find("/rim") != std::string::npos ||
-                     name.find("_rim") != std::string::npos || name.find("spoke") != std::string::npos;
-        bool brake = name.find("calliperexotic") != std::string::npos || name.find("calliperbadge") != std::string::npos || name.find("caliper_body") != std::string::npos;
+        const auto role = ResolveCrashPartRole(p.part, roles);
+        const bool wheel = role != CrashPartRole::Body;
+        const bool brake = role == CrashPartRole::Caliper;
         auto meshAt = [&](unsigned i)->MeshData& {return i==0 ? result.body : i<=4 ? result.wheels[i-1] : result.brakes[i-5];};
         std::array<unsigned, 9> first{};
         for (unsigned i = 0; i < 9; ++i)
@@ -142,6 +138,16 @@ VehicleModel LoadVehicle(const std::string &path) {
             mesh.primitives.push_back({first[i], n, material, p.part, p.node});
         }
     }
+    for (const auto& entry : roles)
+        Require(std::any_of(source.primitives.begin(), source.primitives.end(),
+                           [&](const auto& p) { return p.part == entry.first; }),
+                "authored role refers to an absent source part: " + entry.first);
+    size_t assembledIndices = result.body.indices.size();
+    for (unsigned i=0;i<4;++i)
+        assembledIndices += result.wheels[i].indices.size() + result.brakes[i].indices.size();
+    Require(assembledIndices == source.indices.size(), "vehicle assembly lost source geometry");
+    std::cout << "ASSEMBLY_TRIANGLES source=" << source.indices.size()/3
+              << " assembled=" << assembledIndices/3 << " body=" << result.body.indices.size()/3 << '\n';
     for (unsigned i=0;i<4;++i) {
         result.mounts[i]=PrepareCrashWheel(result.wheels[i],result.brakes[i]);
         const auto& m=result.mounts[i];
@@ -208,7 +214,7 @@ int main(int argc, char **argv) {
                          "[--case=frontal|offset|side|rear|cars] [--count=N] [--load] [--save-at=N]\n";
             return 64;
         }
-        std::string modelPath = argv[1], kind = "frontal", panelRecipe, saveRelease;
+        std::string modelPath = argv[1], kind = "frontal", panelRecipe, partRolePath, environmentPath, saveRelease;
         std::filesystem::path root = std::filesystem::absolute(argv[2]);
         unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8;
         float speed = 12;
@@ -220,6 +226,8 @@ int main(int argc, char **argv) {
             std::string arg = argv[i];
             if(arg=="--panels") panelsEnabled=true;
             else if(arg.rfind("--panel-parts=",0)==0)panelRecipe=arg.substr(14);
+            else if(arg.rfind("--part-roles=",0)==0)partRolePath=arg.substr(13);
+            else if(arg.rfind("--environment=",0)==0)environmentPath=arg.substr(14);
             else if(arg=="--wheel-course")wheelCourse=true;
             else if(arg.rfind("--save-release=",0)==0)saveRelease=arg.substr(15);
             else if(arg=="--paused")startPaused=true;
@@ -275,7 +283,15 @@ int main(int argc, char **argv) {
             count = std::max(count, 2u);
         std::filesystem::create_directories(root / "Assets");
         auto preparation = Clock::now();
-        auto model = LoadVehicle(modelPath);
+        CrashPartRoles partRoles;
+        if (!partRolePath.empty()) {
+            std::ifstream file(partRolePath);
+            Require(bool(file), "cannot open source part roles");
+            const std::string text{std::istreambuf_iterator<char>(file), {}};
+            std::string roleError;
+            Require(ParseCrashPartRoles(text, partRoles, roleError), roleError);
+        }
+        auto model = LoadVehicle(modelPath, partRoles);
         std::vector<std::string> panelParts;
         std::string recipeHash;
         if(!panelRecipe.empty()){
@@ -341,8 +357,17 @@ int main(int argc, char **argv) {
         Scene scene;
         scene.Settings().linearRendering=true;
         scene.Settings().sunDirection={-.4f,1,.3f};
-        scene.Settings().sunColor={2,1.9f,1.8f};
-        scene.Settings().ambientColor={.7f,.75f,.8f};
+        scene.Settings().sunColor={3,2.9f,2.7f};
+        scene.Settings().ambientColor={.12f,.13f,.15f};
+        if (!environmentPath.empty()) {
+            const auto destination = root / "Assets/proof-environment.judasenv";
+            std::filesystem::copy_file(environmentPath, destination, std::filesystem::copy_options::overwrite_existing);
+            AssetRecord environment;
+            Require(db.Track(destination.string(), environment, error), error);
+            scene.Settings().environmentAsset = environment.id;
+            scene.Settings().environmentIntensity = .3f;
+            if (host) { resources.RequestEnvironment(environment.id); resources.WaitForAll(); }
+        }
         auto box = [&](const std::string &name, glm::vec3 position, glm::vec3 half) {
             auto &o = scene.CreateObject(name);
             o.transform.position = position;
@@ -437,7 +462,7 @@ int main(int argc, char **argv) {
             const auto& appearance=scene.Settings();
             r.SetLighting(appearance.sunDirection,appearance.sunColor*appearance.sunIntensity,
                 appearance.ambientColor);
-            r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,{},
+            r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,resources.TryGetEnvironment(appearance.environmentAsset),
                 appearance.environmentIntensity,appearance.environmentRotation,false,
                 appearance.backgroundColor);
             for (auto &rig : rigs) {
@@ -705,7 +730,7 @@ int main(int argc, char **argv) {
                 auto t = Clock::now();
                 r.ResetStats();
                 const auto& appearance=scene.Settings();
-                r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,{},
+                r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,resources.TryGetEnvironment(appearance.environmentAsset),
                     appearance.environmentIntensity,appearance.environmentRotation,false,
                     appearance.backgroundColor);
                 r.SetLighting(appearance.sunDirection,appearance.sunColor*appearance.sunIntensity,

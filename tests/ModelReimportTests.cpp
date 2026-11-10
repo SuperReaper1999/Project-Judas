@@ -1,4 +1,5 @@
 #include "ModelCook.h"
+#include "BuildIdentity.h"
 #include "PoseComposition.h"
 #include "ModelArchive.h"
 #include "ModelLoader.h"
@@ -11,6 +12,7 @@
 #include <thread>
 #include <chrono>
 #include <glm/gtc/matrix_transform.hpp>
+#include <algorithm>
 using Json=nlohmann::json;namespace fs=std::filesystem;
 namespace {
 int checks=0,failures=0;void Check(bool ok,const char* label){++checks;failures+=!ok;std::cout<<(ok?"PASS ":"FAIL ")<<label<<'\n';}
@@ -18,11 +20,62 @@ Json Read(const fs::path& p){std::ifstream f(p);return Json::parse(f);}void Writ
 bool Cook(const std::string& recipe,ModelCookTask& t){std::string error;bool ok=CookModelRecipe(recipe,t)&&PublishModelImport(t,error);if(!ok)std::cout<<"DIAGNOSTIC "<<t.error<<" "<<error<<'\n';return ok;}
 }
 int main(int argc,char** argv){try{
+ if(HandleBuildIdentityArguments(argc,argv,"model_reimport_tests"))return 0;
  // Recipe creation refuses existing owned sources: the default build-tree root is test-owned and recreated;
  // an explicit root must be fresh.
  fs::path root=argc>1?argv[1]:"build/m66-reimport";if(argc<=1)fs::remove_all(root);
  else if(fs::exists(root)&&!fs::is_empty(root)){std::cerr<<"reimport root must be a fresh directory: "<<root.string()<<"\n";return 2;}
  fs::create_directories(root);std::string recipe,error;Check(CreateModelRecipe(root.string(),"tests/fixtures/m66/external.gltf","Assets/model.judasmodel",recipe,error),"recipe copies approved external image and buffer into owned sources");if(recipe.empty()){std::cerr<<error;return 1;}
+ // Explicit embedded-texture replacement must not require a geometry exporter.
+ {
+  const auto fixture=fs::path("tests/fixtures/m66/embedded-material.fbx");
+  MeshData embedded,replaced;ModelImportReport embeddedReport,replacedReport;ModelImportSettings options;
+  const bool original=ImportModelSource(fixture.string(),options,embedded,embeddedReport,error);
+  Check(original&&!embedded.materials.empty()&&embedded.materials[0].maps[0].embedded.pixels.size()==4&&
+        embedded.materials[0].maps[0].embedded.pixels[0]==255&&embedded.materials[0].maps[0].embedded.pixels[1]==0,
+        "original owned FBX fixture decodes its embedded red texel");
+  const auto replacement=fs::absolute(root/"replacement.ppm");
+  {std::ofstream image(replacement,std::ios::binary);image<<"P6\n1 1\n255\n";const char blue[3]={0,0,char(255)};image.write(blue,3);}
+  options.dependencyRemaps["embedded.png"]=replacement.string();
+  const bool remapped=ImportModelSource(fixture.string(),options,replaced,replacedReport,error);
+  Check(remapped&&!replaced.materials.empty()&&replaced.materials[0].maps[0].embedded.pixels.size()==4&&
+        replaced.materials[0].maps[0].embedded.pixels[0]==0&&replaced.materials[0].maps[0].embedded.pixels[2]==255,
+        "explicit project-owned replacement overrides an embedded FBX image");
+  const bool sameVertices=embedded.vertices.size()==replaced.vertices.size()&&
+        std::equal(embedded.vertices.begin(),embedded.vertices.end(),replaced.vertices.begin(),[](const auto& a,const auto& b){
+         return a.position==b.position&&a.normal==b.normal&&a.uv==b.uv&&a.uv1==b.uv1&&a.tangent==b.tangent;
+        });
+  Check(original&&remapped&&embedded.indices==replaced.indices&&sameVertices&&
+        embedded.sourceVertexIds==replaced.sourceVertexIds&&embedded.skeletal&&replaced.skeletal&&
+        embedded.skeletal->skeleton.names==replaced.skeletal->skeleton.names,
+        "image replacement preserves source geometry, topology and hierarchy");
+  std::vector<std::string> dependencies;
+  Check(GatherModelDependencies(fixture.string(),dependencies,error,&options)&&
+        std::find(dependencies.begin(),dependencies.end(),replacement.string())!=dependencies.end()&&
+        std::find(replacedReport.dependencies.begin(),replacedReport.dependencies.end(),replacement.string())!=replacedReport.dependencies.end(),
+        "dependency discovery and import both retain the embedded-image replacement");
+  options.dependencyRemaps["embedded.png"]=(root/"missing-replacement.png").string();
+  MeshData sentinel=embedded;ModelImportReport failed;
+  Check(!ImportModelSource(fixture.string(),options,sentinel,failed,error)&&
+        sentinel.materials.size()==embedded.materials.size()&&sentinel.materials[0].maps[0].embedded.pixels==embedded.materials[0].maps[0].embedded.pixels,
+        "missing explicit replacement fails without falling back or changing the accepted model");
+  std::string embeddedRecipe;
+  Check(CreateModelRecipe(root.string(),fixture.string(),"Assets/embedded.judasmodel",embeddedRecipe,error),
+        "embedded FBX enters the ordinary project import workflow");
+  auto authored=Read(embeddedRecipe);authored["settings"]["dependencyRemaps"]["embedded.png"]="replacement.ppm";
+  Write(embeddedRecipe,authored);ModelCookTask blue;
+  Check(Cook(embeddedRecipe,blue),"embedded-image replacement cooks and publishes normally");
+  const auto blueHash=Hash(blue.output);
+  {std::ofstream image(replacement,std::ios::binary);image<<"P6\n1 1\n255\n";const char green[3]={0,char(255),0};image.write(green,3);}
+  ModelCookTask green;
+  Check(Cook(embeddedRecipe,green)&&!green.unchanged&&Hash(green.output)!=blueHash,
+        "changed replacement image invalidates the cooked generation without changing the source FBX");
+  ModelCookTask staged;authored["settings"]["sampleRate"]=61;Write(embeddedRecipe,authored);
+  const bool prepared=CookModelRecipe(embeddedRecipe,staged);const auto acceptedHash=Hash(green.output);
+  {std::ofstream image(replacement,std::ios::binary);image<<"P6\n1 1\n255\n";const char red[3]={char(255),0,0};image.write(red,3);}
+  Check(prepared&&!PublishModelImport(staged,error)&&Hash(green.output)==acceptedHash,
+        "replacement changed after preparation cannot publish stale data over an accepted generation");
+ }
  ModelCookTask first;Check(Cook(recipe,first),"initial coherent generation publishes");if(!first.success)return 1;auto initial=Hash(first.output);auto settings=Read(recipe);auto owned=root/settings.at("source").get<std::string>();MeshData model;Check(LoadModelMesh(first.output,model,error),"normal runtime loader reads cooked asset without source parser");auto materialKeys=model.materialKeys;std::vector<std::string> parts;for(auto& p:model.primitives)parts.push_back(p.part);
  ModelCookTask same;Check(Cook(recipe,same)&&same.unchanged&&Hash(first.output)==initial,"unchanged recipe preserves output bytes and asset identity");
  auto source=Read(owned);std::swap(source["nodes"][1],source["nodes"][2]); // exchange node records and explicitly repair every index

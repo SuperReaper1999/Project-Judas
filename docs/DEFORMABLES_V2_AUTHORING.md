@@ -1,5 +1,7 @@
 # Authoring Deformables V2
 
+**Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Full human acceptance remains pending.
+
 Stages 2–4 are implemented on Experimental. The Challenger Stage 1 proof is human
 accepted; the complete milestone still awaits its final review. See the
 [qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for the exact automated

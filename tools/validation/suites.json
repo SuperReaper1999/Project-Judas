@@ -629,6 +629,14 @@
       ]
     },
     {
+      "name": "model-reimport",
+      "target": "judas_model_reimport_tests",
+      "groups": [
+        "assets",
+        "persistence"
+      ]
+    },
+    {
       "name": "model-import-scale",
       "target": "judas_model_import_scale_tests",
       "groups": [

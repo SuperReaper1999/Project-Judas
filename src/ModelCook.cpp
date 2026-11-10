@@ -18,7 +18,7 @@
 #include "PlatformServices.h"
 namespace fs=std::filesystem;using Json=nlohmann::json;
 namespace {
-constexpr const char* Revision="M66-ufbx-0.23.1-cgltf-1.15-cook-11-M74-retarget-1-model-1-M95-events-1";
+constexpr const char* Revision="M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1";
 void Require(bool b,const std::string& e){if(!b)throw std::runtime_error(e);}
 Json ReadJson(const fs::path& path){JUDAS_PROFILE_SCOPE("Model recipe/receipt parsing");std::ifstream f(path);Require(bool(f),"cannot read recipe: "+path.string());Require(fs::file_size(path)<=4*1024*1024,"recipe/report exceeds 4 MiB");return Json::parse(f,[](int depth,Json::parse_event_t,const Json&){Require(depth<48,"recipe nesting bound");return true;},true,false);}
 void Write(const fs::path& p,const void* data,size_t size){fs::create_directories(p.parent_path());std::ofstream f(p,std::ios::binary);f.write(static_cast<const char*>(data),size);Require(bool(f),"write failed: "+p.string());}
