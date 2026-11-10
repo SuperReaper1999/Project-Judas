@@ -27,6 +27,8 @@ struct DeformableMaterial {
 struct DeformableAttachment {
     enum class Kind { World, Body, Bone };
     std::string group,joint;
+    // Stable authored structural section key; empty addresses an ordinary body.
+    std::string part;
     Kind kind=Kind::World;
     uint64_t target=0;
     glm::dvec3 offset{0};
@@ -35,6 +37,12 @@ struct DeformableAttachment {
     // the legacy unlimited connection. Limits are resultant N and N m, not
     // per-node thresholds or a gameplay damage counter.
     double forceLimit=0,torqueLimit=0;
+    double tearWork=0; // J of irreversible local mounting-sheet work; zero disables this failure mode.
+    void Save(SaveArchive&);
+};
+struct DeformablePanelMaterial {
+    bool enabled=false;
+    double stiffness=2000,yieldMoment=80,hardening=80;
     void Save(SaveArchive&);
 };
 struct DeformableSettings {
@@ -43,6 +51,7 @@ struct DeformableSettings {
     unsigned substeps=4,iterations=4,collisionLayer=0;
     CategoryMask collisionMask=kAllCategories;
     DeformableMaterial material;
+    DeformablePanelMaterial panel;
     std::vector<DeformableAttachment> attachments;
 };
 bool ValidDeformableSettings(const DeformableSettings&,std::string&);
@@ -70,6 +79,7 @@ struct DeformableAsset {
     std::vector<glm::uvec3> triangles;
     std::vector<glm::uvec4> tetrahedra;
     std::map<std::string,std::vector<unsigned>> groups;
+    bool panelBinding=false; // Detailed rest offsets and smooth source shading follow local sheet frames.
     MeshData render;
     std::vector<DeformableBinding> binding;
     std::string sourceAsset,sourceFingerprint;
@@ -109,11 +119,13 @@ public:
     std::vector<glm::dmat3> plasticRest;
     std::vector<uint8_t> released;
     std::vector<DeformableAttachmentState> attachmentState;
-    // Native proof opt-in; owner must persist this optional material participant.
+    // Instance-owned signed-dihedral material; persisted with the physical state.
     std::optional<PanelBending> panelBending;
     bool sleeping=false;double quietSeconds=0;
     std::string error;
     DeformableStats stats;
+    // Derived exclusions for attached structural carriers; never saved handles.
+    std::vector<BodyHandle> carrierCollisionExclusions;
     FractureState fracture;
     double NodeMass(unsigned n)const{return mass.at(n);}
     bool PartLoad(unsigned part,glm::dvec3 value,bool impulse);
@@ -131,7 +143,9 @@ public:
     void Step(double dt,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&);
     void MapRender(double alpha,MeshData&)const;
     DeformableHit Raycast(glm::dvec3 origin,glm::dvec3 direction,double maximum)const;
-    void Persist(SaveArchive&,bool materialFrame=true,bool attachmentLimits=true);
+    void Persist(SaveArchive&);
+    double AttachmentWork(unsigned)const;
+    bool CommitPanelFailures();
     glm::dvec3 Minimum()const;
     glm::dvec3 Maximum()const;
     double Mass()const;

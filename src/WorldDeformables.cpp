@@ -11,9 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 namespace {
 std::atomic<uint64_t> epochs{1};
-constexpr const char* stateHeader="Judas.DeformableState.1\n";
-constexpr const char* materialStateHeader="Judas.DeformableState.4\n";
-constexpr const char* strengthStateHeader="Judas.DeformableState.2\n";
+constexpr const char* stateHeader="Judas.DeformableState.5\n";
 glm::dmat4 matrix(const SceneTransform& t){return glm::translate(glm::dmat4(1),glm::dvec3(t.position))*glm::mat4_cast(glm::dquat(t.rotation));
         }
 }
@@ -71,8 +69,10 @@ void RuntimeWorld::UpdateDeformables(double dt){
         if(!simulation)continue;
         auto& record=m_deformables.at(id);
         record.targets.resize(simulation->settings.attachments.size());
+        bool loadingTarget=false;
         for(size_t i=0;i<simulation->settings.attachments.size();++i){auto& a=simulation->settings.attachments[i];
             auto& t=record.targets[i];
+            if(simulation->released[i]||!a.enabled){t.valid=false;t.body={};continue;}
             glm::dmat4 current(1);
             bool valid=true;
             if(a.kind==DeformableAttachment::Kind::World){t.body={};current=matrix(RuntimeDefinition(id)->transform);
@@ -80,8 +80,13 @@ void RuntimeWorld::UpdateDeformables(double dt){
             else{auto* d=RuntimeDefinition(a.target);
                 if(!d||!IsPublished(a.target))valid=false;
                 else{current=matrix(PresentedTransform(a.target,d->transform,1));
-                    if(a.kind==DeformableAttachment::Kind::Body){t.body=RuntimeBody(a.target);
+                    if(a.kind==DeformableAttachment::Kind::Body){std::string targetError;
+                        if(!a.part.empty()&&a.target==id){simulation->error="structural panel cannot attach to itself";valid=false;}
+                        else t.body=DeformableAttachmentBody(a,targetError);
+                        if(targetError=="loading"){loadingTarget=true;break;}
+                        if(!targetError.empty())simulation->error=targetError;
                         valid=m_physics.IsBodyEnabled(t.body);
+                        if(valid&&!a.part.empty()){auto pose=m_physics.GetTransform(t.body);current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));}
                         }else{t.body={};
                         auto* animation=RuntimeAnimation(a.target);
                         if(!animation||!animation->asset||!d->animation->enabled)valid=false;
@@ -97,33 +102,40 @@ void RuntimeWorld::UpdateDeformables(double dt){
             if(!valid&&!simulation->released[i])simulation->released[i]=true;
              // lost target releases, never aliases a new body
         }
+        if(loadingTarget)continue;
+        const bool wasSleeping=simulation->sleeping;
+        UpdatePanelCollisionExclusions(*simulation);
         if(simulation->asset->fracture&&simulation->asset->fracture->rigid){
             if(!record.rigid.initialized&&!m_restoreConstruction){std::string prepareError;if(!PrepareRigidFracture(id,prepareError)){simulation->error=prepareError;continue;}}
             if(record.rigid.initialized)UpdateRigidFracture(id,dt);
         }else simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);
         if(simulation->asset->fracture&&!simulation->asset->fracture->rigid&&simulation->settings.enabled)simulation->fracture.Commit(*simulation->asset->fracture);
-        ++record.revision;
+        UpdatePanelCollisionExclusions(*simulation);
+        if(!wasSleeping||!simulation->sleeping)++record.revision;
     }
     for(auto a=m_deformables.begin();a!=m_deformables.end();++a)for(auto b=std::next(a);b!=m_deformables.end();++b){auto& x=a->second.simulation;
         auto& y=b->second.simulation;
         if((x.asset->fracture&&x.asset->fracture->rigid)||(y.asset->fracture&&y.asset->fracture->rigid)||!x.settings.enabled||!y.settings.enabled||!x.error.empty()||!y.error.empty()||!IsPublished(a->first)||!IsPublished(b->first))continue;
+        if(x.sleeping&&y.sleeping)continue;
         double thickness=x.settings.material.thickness+y.settings.material.thickness;
         if(glm::any(glm::lessThan(x.Maximum()+glm::dvec3(thickness),y.Minimum()))||glm::any(glm::lessThan(y.Maximum()+glm::dvec3(thickness),x.Minimum())))continue;
         DeformableInstance::SurfaceContacts(x,y,dt);
         DeformableInstance::SurfaceContacts(y,x,dt);
+        ++a->second.revision;++b->second.revision;
         }
 }
 void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
     for(auto& [id,record]:m_deformables){const auto* d=RuntimeDefinition(id);
         if(!d||!d->deformable||!IsPublished(id)||!RenderVisible(id)||!record.simulation.settings.enabled)continue;
         auto& sim=record.simulation;
-        if(record.mappedRevision!=record.revision||record.mappedAlpha!=alpha){
-            sim.MapRender(alpha,record.presentation);
+        const float materialAlpha=sim.sleeping?1.f:alpha;
+        if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha){
+            sim.MapRender(materialAlpha,record.presentation);
             if(!record.mesh.IsValid())record.mesh=renderer.CreateMesh(record.presentation);
             else if(sim.asset->fracture&&record.meshTopology!=sim.fracture.revision){renderer.DestroyMesh(record.mesh);record.mesh=renderer.CreateMesh(record.presentation);}
             else renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
             record.meshTopology=sim.fracture.revision;
-            record.mappedRevision=record.revision;record.mappedAlpha=alpha;
+            record.mappedRevision=record.revision;record.mappedAlpha=materialAlpha;
         }
         renderer.SetRenderLayer(RenderLayerOf(id));
         renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render):std::vector<MaterialBinding>{});
@@ -155,24 +167,22 @@ bool RuntimeWorld::CaptureDeformable(EntityId id,std::string& bytes,std::string&
     if(!s)return false;
     try{SaveArchive a;
         const bool materials=s->asset->fracture&&s->asset->fracture->HasMaterials();
-        const bool strengths=std::any_of(s->settings.attachments.begin(),s->settings.attachments.end(),[](const auto& attachment){return attachment.forceLimit>0||attachment.torqueLimit>0;});
-        s->Persist(a,true,strengths||materials);
+        s->Persist(a);
         if(materials)PersistFractureBundle(id,a);else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
-        bytes=(materials?materialStateHeader:strengths?strengthStateHeader:stateHeader)+std::move(a.bytes);
+        bytes=stateHeader+std::move(a.bytes);
         return true;
         }catch(const std::exception& e){error=e.what();
         return false;
         }}
 bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged,const std::map<EntityId,EntityId>& remap,glm::dvec3 capturedOriginDelta){auto* s=RuntimeDeformable(id,error,staged);
     if(!s)return false;
-    try{const bool materials=bytes.rfind(materialStateHeader,0)==0;
-        if(s->asset->fracture&&s->asset->fracture->HasMaterials()&&!materials)throw std::runtime_error("material partition requires retained state4");
-        const bool strengths=materials||bytes.rfind(strengthStateHeader,0)==0;
-        const bool framed=strengths||bytes.rfind(stateHeader,0)==0;
-        if(bytes.rfind("Judas.DeformableState.",0)==0&&!framed)throw std::runtime_error("unsupported deformable state version");
-        SaveArchive a(framed?bytes.substr(std::char_traits<char>::length(stateHeader)):bytes);
-        s->Persist(a,framed,strengths);s->ShiftOrigin(capturedOriginDelta);
-        if(materials){for(auto& attachment:s->settings.attachments)if(remap.count(attachment.target))attachment.target=remap.at(attachment.target);PersistFractureBundle(id,a,staged,remap,capturedOriginDelta);}else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a,nullptr,capturedOriginDelta);
+    try{
+        if(bytes.rfind(stateHeader,0)!=0)throw std::runtime_error("unsupported deformable state version; current V2 requires State.5");
+        const bool materials=s->asset->fracture&&s->asset->fracture->HasMaterials();
+        SaveArchive a(bytes.substr(std::char_traits<char>::length(stateHeader)));
+        s->Persist(a);s->ShiftOrigin(capturedOriginDelta);
+        for(auto& attachment:s->settings.attachments)if(remap.count(attachment.target))attachment.target=remap.at(attachment.target);
+        if(materials){PersistFractureBundle(id,a,staged,remap,capturedOriginDelta);}else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a,nullptr,capturedOriginDelta);
         a.Finish();
         ++m_deformables.at(id).revision;m_deformables.at(id).meshTopology=~uint64_t(0);
         for(auto& t:m_deformables.at(id).targets)t.valid=false;

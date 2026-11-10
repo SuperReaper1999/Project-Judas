@@ -28,9 +28,6 @@ private:
     std::vector<DeformableTarget> targets;
     std::vector<unsigned> carrierParts;
     std::shared_ptr<DeformableAsset> shell;
-    MeshData exterior;
-    std::vector<DeformableBinding> exteriorBinding;
-    std::vector<double> normalOffset;
 public:
     void Map();
 };

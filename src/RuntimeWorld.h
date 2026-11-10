@@ -439,6 +439,8 @@ public:
     DeformableInstance* RuntimeDeformable(EntityId,std::string& error,bool staged=false);
     void UpdateDeformables(double dt);
     bool PrepareRigidFracture(EntityId,std::string&);
+    BodyHandle DeformableAttachmentBody(const DeformableAttachment&,std::string&);
+    void UpdatePanelCollisionExclusions(DeformableInstance&);
     void UpdateRigidFracture(EntityId,double);
     void PersistRigidFracture(EntityId,SaveArchive&,const std::map<EntityId,EntityId>* remap=nullptr,glm::dvec3 capturedOriginDelta={});
     void PersistFractureBundle(EntityId,SaveArchive&,bool staged=false,const std::map<EntityId,EntityId>& remap={},glm::dvec3 capturedOriginDelta={});

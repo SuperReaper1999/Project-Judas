@@ -181,6 +181,9 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
                 JS_SetPropertyStr(c, item, "released", JS_NewBool(c, released));
                 JS_SetPropertyStr(c, item, "active",
                                   JS_NewBool(c, d->settings.enabled && a.enabled && !released));
+                JS_SetPropertyStr(c, item, "part", JS_NewString(c, a.part.c_str()));
+                JS_SetPropertyStr(c, item, "tearWork", JS_NewFloat64(c, a.tearWork));
+                JS_SetPropertyStr(c, item, "plasticWork", JS_NewFloat64(c, d->AttachmentWork(unsigned(i))));
                 JS_SetPropertyStr(c, item, "forceLimit", JS_NewFloat64(c, a.forceLimit));
                 JS_SetPropertyStr(c, item, "torqueLimit", JS_NewFloat64(c, a.torqueLimit));
                 JS_SetPropertyStr(c, item, "force", Vec(c, glm::vec3(observed.force)));
@@ -346,11 +349,15 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
                  entity = JS_GetPropertyStr(c, arg(4), "targetId"),
                  joint = JS_GetPropertyStr(c, arg(4), "joint"),
                  offset = JS_GetPropertyStr(c, arg(4), "offset");
+            auto part = JS_GetPropertyStr(c, arg(4), "part");
+            if(!JS_IsUndefined(part))a.part=String(c,part);
+            JS_FreeValue(c,part);
             auto name = String(c, kind);
             bool ok = name == "world" || name == "body" || name == "bone";
             a.kind = name == "body"   ? DeformableAttachment::Kind::Body
                      : name == "bone" ? DeformableAttachment::Kind::Bone
                                       : DeformableAttachment::Kind::World;
+            BodyHandle targetBody;
             if (a.kind != DeformableAttachment::Kind::World) {
                 try {
                     a.target = std::stoull(String(c, entity));
@@ -358,8 +365,10 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
                     ok = false;
                 }
                 ok = ok && world.RuntimeDefinition(a.target);
-                if (a.kind == DeformableAttachment::Kind::Body)
-                    ok = ok && world.Physics().IsBodyEnabled(world.RuntimeBody(a.target));
+                if (a.kind == DeformableAttachment::Kind::Body){
+                    targetBody=world.DeformableAttachmentBody(a,error);
+                    ok = ok && a.target!=id && error.empty() && world.Physics().IsBodyEnabled(targetBody);
+                }
                 if (a.kind == DeformableAttachment::Kind::Bone) {
                     a.joint = String(c, joint);
                     auto *animation = world.RuntimeAnimation(a.target);
@@ -377,7 +386,7 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             JS_FreeValue(c, joint);
             JS_FreeValue(c, offset);
             for (auto field : {std::pair<const char *, double *>{"forceLimit", &a.forceLimit},
-                               {"torqueLimit", &a.torqueLimit}}) {
+                               {"torqueLimit", &a.torqueLimit}, {"tearWork", &a.tearWork}}) {
                 auto number = JS_GetPropertyStr(c, arg(4), field.first);
                 if (!JS_IsUndefined(number))
                     ok = ok && JS_IsNumber(number) && JS_ToFloat64(c, field.second, number) == 0;
@@ -385,7 +394,7 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             }
             if (a.forceLimit > 0 || a.torqueLimit > 0)
                 ok = ok && a.kind == DeformableAttachment::Kind::Body &&
-                     world.Physics().IsDynamicBody(world.RuntimeBody(a.target));
+                     world.Physics().IsDynamicBody(targetBody);
             if (!ok)
                 return JS_ThrowTypeError(
                     c,

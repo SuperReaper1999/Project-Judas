@@ -79,7 +79,9 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             for(int i=0;i<PrimitiveCount(shape);++i){auto primitive=PrimitiveAt(shape,parent,i);if(primitive.shape.asset)contact({}, {}, {},0,&primitive);else contact(PrimitiveCenter(primitive),glm::dquat(primitive.body.orientation),V(primitive.shape.halfExtents),primitive.shape.type==ShapeType::Sphere?primitive.shape.radius:0);}
         }
     };
-    for(auto body:rigidCandidates){unsigned layer;
+    for(auto body:rigidCandidates){
+        if(std::any_of(carrierCollisionExclusions.begin(),carrierCollisionExclusions.end(),[&](auto other){return other.id==body.id&&other.world==body.world;}))continue;
+        unsigned layer;
         CategoryMask mask;
         if(!physics.GetCollisionFilter(body,layer,mask)||(mask&CategoryBit(settings.collisionLayer))==0||physics.IsBodySensor(body))continue;
         Shape shape;

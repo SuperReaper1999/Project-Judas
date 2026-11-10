@@ -190,6 +190,17 @@ bool EditorAutomation::Initialize() {
                          imported ? "PASS" : "FAIL", app.m_panels.status.c_str());
         }
     }
+    if(autotest)if(const char* source=std::getenv("JUDAS_EDITOR_AUTOTEST_PANEL_SOURCE")){
+        SceneObjectId owner=0;for(const auto& object:app.m_document.GetScene().Objects())if(object.deformable){owner=object.id;break;}
+        if(const char* selected=std::getenv("JUDAS_EDITOR_AUTOTEST_SELECT"))owner=std::strtoull(selected,nullptr,10);
+        app.m_panels.deformableSource=source;app.m_panels.deformableSourcePart.clear();
+        app.m_panels.deformableColumns=6;app.m_panels.deformableRows=6;app.m_panels.deformableNormalAxis=1;
+        app.m_panels.deformableDestination="deformables/editor-panel.judasdeform";
+        bool baked=BakeEditorDeformable(app.m_document,owner,app.m_panels,8);
+        const auto* object=app.m_document.GetScene().Find(owner);
+        bool native=baked&&object&&object->deformable&&object->deformable->panel.enabled;
+        std::fprintf(stderr,"[editor autotest] native panel import authoring: %s: %s\n",native?"PASS":"FAIL",app.m_panels.status.c_str());
+    }
     if (autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_FRACTURE")) {
         app.m_panels.deformableColumns = 3;
         app.m_panels.deformableRows = 1;

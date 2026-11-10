@@ -1,4 +1,5 @@
 #include "CrashPanels.h"
+#include "deformables/PanelCook.h"
 #include "PanelIslands.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
@@ -53,49 +54,13 @@ void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshDa
     using V=glm::dvec3;
     V lo(1e20),hi(-1e20);for(const auto& v:hood.vertices){lo=glm::min(lo,V(v.position));hi=glm::max(hi,V(v.position));}
     lo-=V(.001,0,.001);hi+=V(.001,0,.001);
-    auto a=MakeDeformableSheet(6,6,hi.x-lo.x,hi.z-lo.z,1);
-    for(auto& n:a.nodes){
-        double x=n.x+(hi.x+lo.x)*.5,z=n.y+lo.z;
-        double nearest=1e100,y=0;
-        for(const auto& v:hood.vertices){double d=(v.position.x-x)*(v.position.x-x)+(v.position.z-z)*(v.position.z-z);if(d<nearest){nearest=d;y=v.position.y;}}
-        bool found=false;double surface=-1e20;
-        for(unsigned t=0;t<hood.indices.size();t+=3){
-            V p=hood.vertices[hood.indices[t]].position,q=hood.vertices[hood.indices[t+1]].position,r=hood.vertices[hood.indices[t+2]].position;
-            glm::dmat2 e(glm::dvec2(q.x-p.x,q.z-p.z),glm::dvec2(r.x-p.x,r.z-p.z));
-            if(std::abs(glm::determinant(e))<1e-12)continue;
-            auto w=glm::inverse(e)*glm::dvec2(x-p.x,z-p.z);
-            if(w.x>=0&&w.y>=0&&w.x+w.y<=1){surface=std::max(surface,p.y*(1-w.x-w.y)+q.y*w.x+r.y*w.y);found=true;}
-        }
-        n={x,found?surface:y,z};
-    }
+    DeformableAsset a;std::string cookError;
+    if(!CookDeformablePanel(hood,{6,6,1,.001},a,cookError))throw std::runtime_error("physical panel cook: "+cookError);
     a.groups.clear();
     for(unsigned n=0;n<a.nodes.size();++n){const auto p=a.nodes[n];
         if(p.z>hi.z-.01 && p.x<-.4)a.groups["hinge-left"].push_back(n);
         if(p.z>hi.z-.01 && p.x>.4)a.groups["hinge-right"].push_back(n);
         if(p.z<lo.z+.01 && std::abs(p.x)<.4)a.groups["front-latch"].push_back(n);
-    }
-    a.render={};a.binding.clear();
-    // Rebuild the solver's original grid render after curving the rest surface.
-    for(unsigned n=0;n<a.nodes.size();++n){MeshVertex v;v.position=glm::vec3(a.nodes[n]);a.render.vertices.push_back(v);a.binding.push_back({glm::uvec4(n),{1,0,0,0}});}
-    for(auto t:a.triangles)for(int k=0;k<3;++k)a.render.indices.push_back(t[k]);
-    exterior=hood;exteriorBinding.clear();normalOffset.clear();
-    for(const auto& vertex:hood.vertices){
-        bool bound=false;
-        for(const auto& t:a.triangles){
-            auto p=a.nodes[t.x],q=a.nodes[t.y],r=a.nodes[t.z];
-            glm::dmat2 edges(glm::dvec2(q.x-p.x,q.z-p.z),glm::dvec2(r.x-p.x,r.z-p.z));
-            auto w=glm::inverse(edges)*glm::dvec2(vertex.position.x-p.x,vertex.position.z-p.z);
-            glm::dvec3 bary(1-w.x-w.y,w.x,w.y);
-            if(glm::all(glm::greaterThanEqual(bary,glm::dvec3(-1e-8)))){
-                auto normal=glm::normalize(glm::cross(q-p,r-p));
-                auto projected=p*bary.x+q*bary.y+r*bary.z;
-                exteriorBinding.push_back({{t.x,t.y,t.z,t.z},{bary,0}});
-                // Store the FULL rest offset in the local triangle frame below.
-                normalOffset.push_back(glm::dot(V(vertex.position)-projected,normal));
-                bound=true;break;
-            }
-        }
-        if(!bound)throw std::runtime_error("hood vertex lies outside physical shell");
     }
     std::string error;if(!PrepareDeformableAsset(a,error))throw std::runtime_error(error);
     auto* frame=world.RuntimeDeformable(rig.owner,error);
@@ -116,18 +81,16 @@ void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshDa
         carrierParts.push_back(part);
         auto entity=world.FracturePartEntity(rig.owner,part);auto body=world.RuntimeBody(entity);auto pose=world.Physics().GetTransform(body);
         DeformableAttachment mount;mount.group=group;mount.kind=DeformableAttachment::Kind::Body;
-        mount.target=entity;mount.offset=-frame->asset->fracture->parts[part].proxyCenter;
-        mount.forceLimit=group=="front-latch"?8000:20000;mount.torqueLimit=8000;s.attachments.push_back(mount);
+        mount.target=rig.owner;mount.part=frame->asset->fracture->parts[part].key;mount.offset=-frame->asset->fracture->parts[part].proxyCenter;
+        mount.tearWork=MountTearWork;mount.forceLimit=group=="front-latch"?8000:20000;mount.torqueLimit=8000;s.attachments.push_back(mount);
         DeformableTarget target;target.valid=true;target.body=body;
         target.current=glm::translate(glm::dmat4(1),V(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));target.previous=target.current;targets.push_back(target);
     }
     auto parent=world.RuntimeDefinition(rig.owner)->transform;
     auto transform=glm::translate(glm::dmat4(1),V(parent.position))*glm::mat4_cast(glm::dquat(parent.rotation));
     shell=std::make_shared<DeformableAsset>(std::move(a));
+    s.panel.enabled=true;
     material.Initialize(shell,s,transform,1);
-    material.panelBending.emplace();
-    material.panelBending->stiffness=2000;material.panelBending->yieldMoment=80;material.panelBending->hardening=80;
-    material.panelBending->Initialize(shell->nodes,shell->triangles);
     maximumSpeed=maximumKineticEnergy=0;
     peakForces.assign(targets.size(),0);peakMoments.assign(targets.size(),0);
     Map();
@@ -146,7 +109,7 @@ void CrashPanel::Step(RuntimeWorld& world,const CrashRig& rig,double dt){
     auto gravity=world.GravityForEntity(rig.owner);
     material.Step(dt,world.Physics(),gravity,targets);
     if(!material.error.empty())throw std::runtime_error("physical hood: "+material.error);
-    for(unsigned i=0;i<material.released.size();++i)if(material.released[i]&&!previouslyReleased[i])std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<" reason=hardware-capacity force="<<material.attachmentState[i].peakForce<<" moment="<<material.attachmentState[i].peakTorque<<'\n';
+    for(unsigned i=0;i<material.released.size();++i)if(material.released[i]&&!previouslyReleased[i])std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<(material.settings.attachments[i].tearWork>0&&material.AttachmentWork(i)>=material.settings.attachments[i].tearWork?" reason=mounting-sheet-tear force=":" reason=hardware-capacity force=")<<material.attachmentState[i].peakForce<<" moment="<<material.attachmentState[i].peakTorque<<'\n';
     double kinetic=0;for(unsigned n=0;n<material.velocities.size();++n){double speed2=glm::dot(material.velocities[n],material.velocities[n]);maximumSpeed=std::max(maximumSpeed,std::sqrt(speed2));kinetic+=.5*material.NodeMass(n)*speed2;}maximumKineticEnergy=std::max(maximumKineticEnergy,kinetic);
     for(unsigned i=0;i<material.attachmentState.size();++i){peakForces[i]=std::max(peakForces[i],material.attachmentState[i].peakForce);peakMoments[i]=std::max(peakMoments[i],material.attachmentState[i].peakTorque);}
     CommitMountFailures();
@@ -169,30 +132,9 @@ void CrashPanel::RefreshCollisionMask(){
     // Independent debris collides with its former car as well as the world.
     material.settings.collisionMask=detached?kAllCategories:attachedCollisionMask;
 }
-void CrashPanel::Persist(SaveArchive& a){material.Persist(a);material.panelBending->Persist(a);for(auto& t:targets)a(t.previous,t.current,t.valid);if(a.reading)RefreshCollisionMask();}
+void CrashPanel::Persist(SaveArchive& a){material.Persist(a);for(auto& t:targets)a(t.previous,t.current,t.valid);if(a.reading)RefreshCollisionMask();}
 double CrashPanel::PlasticExtent()const{double peak=0;for(const auto& h:material.panelBending->hinges)peak=std::max(peak,h.plastic);return peak;}
-void CrashPanel::Map(){
-    if(mapped.vertices.size()!=exterior.vertices.size())mapped=exterior;
-    for(unsigned i=0;i<mapped.vertices.size();++i){const auto& b=exteriorBinding[i];
-        auto p=material.positions[b.nodes.x],q=material.positions[b.nodes.y],r=material.positions[b.nodes.z];
-        auto normal=glm::normalize(glm::cross(q-p,r-p));
-        auto position=p*b.weights.x+q*b.weights.y+r*b.weights.z+normal*normalOffset[i];
-        // Preserve the exact imported rest position using its barycentric
-        // in-plane residual rotated by the current physical triangle frame.
-        auto rp=shell->nodes[b.nodes.x],rq=shell->nodes[b.nodes.y],rr=shell->nodes[b.nodes.z];
-        auto rn=glm::normalize(glm::cross(rq-rp,rr-rp));
-        auto restPoint=rp*b.weights.x+rq*b.weights.y+rr*b.weights.z+rn*normalOffset[i];
-        auto restX=glm::normalize(rq-rp),nowX=glm::normalize(q-p);
-        auto restY=glm::cross(rn,restX),nowY=glm::cross(normal,nowX);
-        auto offset=glm::dvec3(exterior.vertices[i].position)-restPoint;
-        position+=nowX*glm::dot(offset,restX)+nowY*glm::dot(offset,restY);
-        mapped.vertices[i].position=glm::vec3(position);
-        auto tangent=glm::dvec3(glm::vec3(exterior.vertices[i].tangent));
-        mapped.vertices[i].tangent=glm::vec4(glm::vec3(nowX*glm::dot(tangent,restX)+nowY*glm::dot(tangent,restY)+normal*glm::dot(tangent,rn)),exterior.vertices[i].tangent.w);
-        auto n=glm::dvec3(exterior.vertices[i].normal);
-        mapped.vertices[i].normal=glm::vec3(nowX*glm::dot(n,restX)+nowY*glm::dot(n,restY)+normal*glm::dot(n,rn));
-    }
-}
+void CrashPanel::Map(){material.MapRender(1,mapped);}
 
 bool CrashPanel::AttachedTo(const DeformableInstance& frame,unsigned referencePart)const{
     if(referencePart>=frame.fracture.component.size()||frame.fracture.removed[referencePart])return false;
@@ -203,13 +145,7 @@ bool CrashPanel::AttachedTo(const DeformableInstance& frame,unsigned referencePa
 // Partition the existing physical bending work by the material nodes belonging
 // to the attachment patch. No remote panel work, elapsed time or impact count.
 double CrashPanel::MountWork(unsigned index) const {
-    const auto& group=shell->groups.at(material.settings.attachments.at(index).group);
-    double work=0;
-    for(const auto& hinge:material.panelBending->hinges){
-        unsigned owners=0;for(unsigned k=0;k<4;++k)owners+=std::find(group.begin(),group.end(),hinge.nodes[k])!=group.end();
-        work+=hinge.work*(double(owners)/4);
-    }
-    return work;
+    return material.AttachmentWork(index);
 }
 
 glm::dvec3 CrashPanel::Center() const {

@@ -1,6 +1,7 @@
 #include "Deformable.h"
 #include "SaveArchive.h"
 #include "Scene.h"
+#include "ModelArchive.h"
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
@@ -54,8 +55,9 @@ void payload(SaveArchive& ar,DeformableAsset& a){
 }
 void DeformableMaterial::Save(SaveArchive& a){a(density,stretchCompliance,shearCompliance,bendCompliance,volumeCompliance,damping,thickness,friction,airDrag,yieldStrain,plasticRate,maximumPlasticStrain,airVelocity);
     }
-void DeformableAttachment::Save(SaveArchive& a){a(group,joint,kind,target,offset,enabled);
+void DeformableAttachment::Save(SaveArchive& a){a(group,joint,kind,target,offset,enabled,part,forceLimit,torqueLimit,tearWork);
     }
+void DeformablePanelMaterial::Save(SaveArchive& a){a(enabled,stiffness,yieldMoment,hardening);}
 void DeformableBinding::Save(SaveArchive& a){a(nodes,weights);
     }
 bool ValidDeformableSettings(const DeformableSettings& s,std::string& error){
@@ -69,8 +71,9 @@ bool ValidDeformableSettings(const DeformableSettings& s,std::string& error){
     if(m.density<=0||m.thickness<=0||m.thickness>1||m.friction>2||m.damping>20||m.airDrag>20||m.plasticRate>10||m.maximumPlasticStrain>0.8||!finite(m.airVelocity)){error="deformable material outside supported range";
         return false;
         }
+    if(!std::isfinite(s.panel.stiffness)||s.panel.stiffness<=0||!std::isfinite(s.panel.yieldMoment)||s.panel.yieldMoment<=0||!std::isfinite(s.panel.hardening)||s.panel.hardening<0){error="invalid panel bending material";return false;}
     std::set<std::string> groups;
-    for(auto& a:s.attachments)if(a.group.empty()||!groups.insert(a.group).second||int(a.kind)<0||int(a.kind)>2||!finite(a.offset)||(a.kind!=DeformableAttachment::Kind::World&&!a.target)||(a.kind==DeformableAttachment::Kind::Bone&&a.joint.empty())||!std::isfinite(a.forceLimit)||!std::isfinite(a.torqueLimit)||a.forceLimit<0||a.torqueLimit<0||((a.forceLimit>0||a.torqueLimit>0)&&a.kind!=DeformableAttachment::Kind::Body)){error="invalid/duplicate deformable attachment or finite strength";
+    for(auto& a:s.attachments)if(a.group.empty()||!groups.insert(a.group).second||int(a.kind)<0||int(a.kind)>2||!finite(a.offset)||(a.kind!=DeformableAttachment::Kind::World&&!a.target)||(a.kind==DeformableAttachment::Kind::Bone&&a.joint.empty())||!std::isfinite(a.forceLimit)||!std::isfinite(a.torqueLimit)||a.forceLimit<0||a.torqueLimit<0||!std::isfinite(a.tearWork)||a.tearWork<0||(!a.part.empty()&&a.kind!=DeformableAttachment::Kind::Body)||(a.tearWork>0&&!s.panel.enabled)||((a.forceLimit>0||a.torqueLimit>0)&&a.kind!=DeformableAttachment::Kind::Body)){error="invalid/duplicate deformable attachment or finite strength";
         return false;
         }
     return true;
@@ -110,13 +113,16 @@ std::map<std::string,std::string> DeformableProperties(const SceneObject& o){
         for(const auto& x:s.attachments)if(x.forceLimit>0||x.torqueLimit>0)limits<<' '<<std::quoted(x.group)<<' '<<x.forceLimit<<' '<<x.torqueLimit;
         p["deformable.attachmentLimits"]=limits.str();
     }
+    if(s.panel.enabled)p["deformable.panelMaterial"]=text(s.panel.stiffness)+" "+text(s.panel.yieldMoment)+" "+text(s.panel.hardening);
+    unsigned mountCount=0;for(const auto& x:s.attachments)if(!x.part.empty()||x.tearWork>0)++mountCount;
+    if(mountCount){std::ostringstream mounts;mounts<<std::setprecision(17)<<mountCount;for(const auto& x:s.attachments)if(!x.part.empty()||x.tearWork>0)mounts<<' '<<std::quoted(x.group)<<' '<<std::quoted(x.part)<<' '<<x.tearWork;p["deformable.attachmentMounts"]=mounts.str();}
     return p;
 }
 bool ApplyDeformableProperties(const std::map<std::string,std::string>& p,SceneObject& o,std::string& error){
     if(p.empty()){o.deformable.reset();
         return true;
         }DeformableSettings s;
-    SceneObject probe;probe.deformable=s;auto known=DeformableProperties(probe);known["deformable.attachmentLimits"]={};for(const auto& [key,value]:p){(void)value;if(!known.count(key)){error="unknown deformable property: "+key;return false;}}
+    SceneObject probe;probe.deformable=s;auto known=DeformableProperties(probe);known["deformable.attachmentLimits"]={};known["deformable.panelMaterial"]={};known["deformable.attachmentMounts"]={};for(const auto& [key,value]:p){(void)value;if(!known.count(key)){error="unknown deformable property: "+key;return false;}}
     auto read=[&](const char* key,auto& v){auto it=p.find(key);
         if(it==p.end()){error=std::string("missing ")+key;
             return false;
@@ -177,11 +183,27 @@ bool ApplyDeformableProperties(const std::map<std::string,std::string>& p,SceneO
         }
         values>>std::ws;if(!values.eof()){error="trailing material attachment strength fields";return false;}
     }
+    if(auto panel=p.find("deformable.panelMaterial");panel!=p.end()){
+        std::istringstream values(panel->second);s.panel.enabled=true;
+        if(!(values>>s.panel.stiffness>>s.panel.yieldMoment>>s.panel.hardening)){error="invalid panel material fields";return false;}
+        values>>std::ws;if(!values.eof()){error="trailing panel material fields";return false;}
+    }
+    if(auto mounts=p.find("deformable.attachmentMounts");mounts!=p.end()){
+        std::istringstream values(mounts->second);unsigned count=0;std::set<std::string> seen;
+        if(!(values>>count)||count==0||count>s.attachments.size()){error="invalid attachment mount count";return false;}
+        for(unsigned i=0;i<count;++i){std::string group,part;double work=0;
+            if(!(values>>std::quoted(group)>>std::quoted(part)>>work)||!seen.insert(group).second){error="invalid/duplicate attachment mount";return false;}
+            auto found=std::find_if(s.attachments.begin(),s.attachments.end(),[&](const auto& a){return a.group==group;});
+            if(found==s.attachments.end()){error="attachment mount names an unknown group";return false;}
+            found->part=part;found->tearWork=work;
+        }
+        values>>std::ws;if(!values.eof()){error="trailing attachment mount fields";return false;}
+    }
     if(!ValidDeformableSettings(s,error))return false;
-    o.deformable=s;
-    if(DeformableProperties(o).size()!=p.size()){error="unknown deformable property";
+    SceneObject candidate;candidate.deformable=s;
+    if(DeformableProperties(candidate).size()!=p.size()){error="unknown deformable property";
         return false;
-        }return true;
+        }o.deformable=std::move(s);return true;
 }
 bool PrepareDeformableAsset(DeformableAsset& a,std::string& error){
     auto fail=[&](const char* s){error=s;
@@ -267,6 +289,7 @@ bool PrepareDeformableAsset(DeformableAsset& a,std::string& error){
         std::set<unsigned> seenIds;
         for(auto id:ids)if(id>=a.nodes.size()||!seenIds.insert(id).second)return fail("invalid/duplicate group node");
         }
+    if(a.panelBinding&&(a.kind!=DeformableKind::Cloth||a.fracture))return fail("detailed panel binding requires independent sheet topology");
     if(a.render.vertices.empty())renderBoundary(a);
     if(a.render.vertices.size()>65536||a.render.indices.size()>65536||a.binding.size()!=a.render.vertices.size()||a.render.indices.size()%3)return fail("render binding/triangle count exceeds payload bounds or is invalid");
     for(const auto& vertex:a.render.vertices){
@@ -275,7 +298,8 @@ bool PrepareDeformableAsset(DeformableAsset& a,std::string& error){
            !std::isfinite(vertex.uv.x)||!std::isfinite(vertex.uv.y))return fail("nonfinite deformable render vertex");
     }
     for(auto i:a.render.indices)if(i>=a.render.vertices.size())return fail("render index out of range");
-    for(auto b:a.binding){double sum=0;
+    for(auto b:a.binding){if(a.panelBinding&&(b.nodes.x==b.nodes.y||b.nodes.x==b.nodes.z||b.nodes.y==b.nodes.z||std::abs(b.weights.w)>1e-12))return fail("panel binding requires a physical triangle");
+        double sum=0;
         for(int k=0;k<4;++k){if(b.nodes[k]>=a.nodes.size()||!std::isfinite(b.weights[k])||b.weights[k]<-1e-8)return fail("invalid render binding");
             sum+=b.weights[k];
             }if(std::abs(sum-1)>1e-8)return fail("render binding must sum to one");
@@ -288,19 +312,35 @@ std::string EncodeDeformableAsset(const DeformableAsset& input){auto a=input;
     if(!PrepareDeformableAsset(a,error))throw std::invalid_argument(error);
     SaveArchive ar;
     payload(ar,a);
+    if(a.panelBinding){
+        std::vector<uint8_t> model;if(!EncodeModelArchive(a.render,model,error))throw std::invalid_argument("panel exterior: "+error);
+        // Reuse the authoritative model codec, including source materials/images.
+        // Chunking respects the archive's bounded field/allocation contracts.
+        if(model.size()>48*1024*1024)throw std::invalid_argument("panel exterior exceeds 48 MiB");
+        std::vector<std::string> chunks;for(size_t i=0;i<model.size();i+=1024*1024)chunks.emplace_back(reinterpret_cast<const char*>(model.data()+i),std::min(size_t(1024*1024),model.size()-i));
+        ar(chunks);return "JudasDeformable6\n"+ar.bytes;
+    }
     if(a.fracture&&a.fracture->HasMaterials()){a.fracture->Save(ar);a.fracture->SaveStructural(ar);a.fracture->SaveMaterials(ar);return "JudasDeformable5\n"+ar.bytes;}
     if(a.fracture){a.fracture->Save(ar);if(a.fracture->structural){a.fracture->SaveStructural(ar);return "JudasDeformable3\n"+ar.bytes;}return "JudasDeformable2\n"+ar.bytes;}
     return "JudasDeformable1\n"+ar.bytes;
     }
 bool DecodeDeformableAsset(const std::vector<unsigned char>& bytes,DeformableAsset& out,std::string& error){try{std::string b(bytes.begin(),bytes.end());
         const std::string magic="JudasDeformable1\n";
+        bool panel=b.rfind("JudasDeformable6\n",0)==0;
         bool material=b.rfind("JudasDeformable5\n",0)==0;
         bool structural=material||b.rfind("JudasDeformable3\n",0)==0;
         bool fracture=structural||b.rfind("JudasDeformable2\n",0)==0;
-        if(!fracture&&b.rfind(magic,0)!=0)throw std::runtime_error("invalid deformable asset version");
+        if(!panel&&!fracture&&b.rfind(magic,0)!=0)throw std::runtime_error("invalid deformable asset version");
         DeformableAsset a;
         SaveArchive ar(b.substr(magic.size()));
         payload(ar,a);
+        if(panel){
+            std::vector<std::string> chunks;ar(chunks);std::vector<uint8_t> model;
+            for(const auto& chunk:chunks){ar.Require(chunk.size()<=1024*1024&&model.size()+chunk.size()<=48*1024*1024,"panel exterior budget exceeded");model.insert(model.end(),chunk.begin(),chunk.end());}
+            MeshData exterior;if(!DecodeModelArchive(model.data(),model.size(),exterior,error))throw std::runtime_error("panel exterior: "+error);
+            ar.Require(exterior.vertices.size()==a.render.vertices.size()&&exterior.indices==a.render.indices,"panel exterior does not match physical binding");
+            a.render=std::move(exterior);a.panelBinding=true;
+        }
         if(fracture){a.fracture=std::make_shared<FractureCook>();a.fracture->Save(ar);if(structural)a.fracture->SaveStructural(ar);if(material)a.fracture->SaveMaterials(ar);}
         ar.Finish();
         if(!PrepareDeformableAsset(a,error))return false;

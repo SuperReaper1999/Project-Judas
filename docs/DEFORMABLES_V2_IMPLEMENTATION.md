@@ -23,7 +23,7 @@ operator's RPG SDK remain protected. Third-party assets stay private.
   every dynamic body as permanently moving. Genuine target impulses still wake.
   The accepted released-target wake correction is preserved.
 
-The current soft test executable passes **86 checks**, including 18 new controls.
+The contact/sleep checkpoint soft test executable passed **86 checks**, including 18 new controls.
 Vehicle dynamics (97) and structural/crash controls (174) also pass with the accepted
 rigid cadence restored. The build-registration controls pass 27 tests.
 The new tests cover static/rotated capsule contact, analytic radial contact, local
@@ -47,7 +47,7 @@ as an accepted improvement or permission to reduce fidelity.
 
 The accepted cadence is restored while native coupling/local scheduling is developed.
 Raw private results and the tested source are retained under
-`/tmp/deformables-v2-stage2/` during development and must be included in the durable
+`.cache/deformables-v2-stages234-evidence/` (with SHA-256 manifest); include them in the final durable
 final qualification evidence before cleanup. The original accepted private binary
 and assets remain unchanged.
 
@@ -58,3 +58,78 @@ references and physical tearing; normal editor presets/visual authoring; scripti
 prefabs and persistence; correct soft/rigid scheduling without unrelated whole-world
 subdivision; sustained terrain/streaming/origin/platform/SDK qualification and actual
 performance/visual checks. These are not yet reported complete.
+
+## Native local panels — integration in progress
+
+`deformables/PanelCook.*` fits a bounded coarse physical sheet to a selected
+single-surface imported region. Its detailed render mesh is separate from the
+solver resolution. Full local rest offsets, smooth source normals, tangents,
+material slots and embedded images survive baking using the existing model codec.
+Closed shells/overhangs must be split into sensible panel regions; the fitted
+rectangular physical envelope does not claim exact per-polygon collision.
+
+`DeformableSettings::panel` owns signed-dihedral stiffness, yield moment and
+hardening. `DeformableAttachment::tearWork` is a mounting-sheet energy capacity
+in joules, independently of hardware force/moment limits. Local irreversible
+hinge work is apportioned by physical group membership. Completed-step release
+adds no velocity, transform correction or ejection force. Different scene panels
+have independent mass, connections, material state and detailed visual binding.
+
+Body attachments may name a stable structural `part` on their target entity.
+Offsets are in that actual section body's local COM frame. Runtime body handles
+are resolved, never persisted as authored IDs. An attached panel excludes the
+coarse carrier's connected component, not every vehicle sharing a collision
+layer. Complete detachment clears those derived exclusions. Independent rigid
+frame supports do not accept panel section mounts; they continue to use ordinary
+world/body supports.
+
+Editor implementation lives in `editor/DeformableEditor.*`, registered through
+the existing component table. It owns presets, source/region selection, panel
+fitting, material controls, attachment patches and diagnostics; no frame-loop
+change is required. The CLI shares the cooker:
+
+```sh
+judas_deformable_bake panel output.judasdeform source.judasmodel 6 6 1 sourceAssetId
+```
+
+Normal axis is `0=X`, `1=Y`, `2=Z`. Select an imported part in the editor before
+fitting a closed vehicle. The CLI consumes the supplied mesh region as a whole.
+
+Scene additions: `deformable.panelMaterial="stiffness yieldMoment hardening"` and
+`deformable.attachmentMounts='count "group" "part" tearWork ...'`. Both are
+optional authoring capabilities. JudasJS attachment options expose `part` and
+`tearWork`; attachment state exposes local `plasticWork`, capacities and release.
+
+**Intentional preview-format break:** current material snapshots use whole-world
+participant **7** and per-region **Judas.DeformableState.5**. They store complete
+attachment fields, panel constitutive state and permanent work. Earlier material
+snapshot schemas are rejected, not migrated or silently repaired. The accepted
+Stage 1 binary and its private saved evidence remain separately preserved.
+Panel exterior assets use **JudasDeformable6**. Distinct current cloth/solid and
+structural asset representations remain supported; no source-asset conversion
+is performed automatically.
+
+Current native checks: **109/109**, including detailed curved binding/material
+round trips, transformed rest geometry, local failure and unchanged momentum,
+fresh-instance continuation, two-panel normal-scene integration, section target
+resolution, independent collision exclusions and fresh-world restoration.
+Mechanical attachment checks: **32/32**; solid bending checks: **39/39**. Dedicated
+old snapshot-layout assertions were retired with the formats; current strength,
+corruption, material-frame and continuation assertions remain. This is not yet
+cold-process, full SDK, platform or final visual qualification.
+
+Additional scoped checks: existing fracture core **33/33**, Vehicles V2 dynamics
+**97/97**, real-VM mechanical damage/authoring examples **18/18**, CMake registration
+**27/27**, and current-doc link validation passed. Finite desktop editor automation
+on GTX 970 / OpenGL 4.6 imported an original procedural panel through action 8,
+then passed duplicate/undo, Play/Stop authored-state identity and save, with no
+resource/job failures. Its default Game camera did not frame the panel: those
+captures prove workflow execution, **not** final visual acceptance. A correctly
+framed playable demonstration remains required.
+
+The Challenger now consumes the native panel cooker, material, mounting-sheet
+work and detailed mapper. A 900-step 30 m/s frontal run retained four drive links,
+released all three bonnet mounts and accumulated permanent panel plasticity.
+Its outcome is close to the accepted reference, not bit-identical; no performance
+improvement is claimed from that integration run. Full collision/coupling and
+sustained multi-model qualification remains outstanding.

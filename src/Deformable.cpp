@@ -1,5 +1,6 @@
 #include "Deformable.h"
 #include "deformables/RigidResponse.h"
+#include "deformables/PanelCook.h"
 #include "CollisionGeometry.h"
 #include "Narrowphase.h"
 #include "SaveArchive.h"
@@ -74,6 +75,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     if(!data||!ValidDeformableSettings(config,e))throw std::invalid_argument(e.empty()?"missing deformable asset":e);
     if(data->nodes.size()!=data->measures.size()||data->nodes.size()!=data->massWeights.size()||data->neighbors.size()!=data->nodes.size())throw std::invalid_argument("deformable topology is not prepared");
     if(!validMasses(*data,config.material.density))throw std::invalid_argument("deformable derived mass is not finite and positive");
+    if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return !a.part.empty();}))throw std::invalid_argument("structural section mounts belong to independent deformable panels, not rigid frame supports");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
     sleepingContacts.Invalidate();
     panelBending.reset();
@@ -102,6 +104,12 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     selfFacePairs.reserve(std::min<size_t>(524288,asset->nodes.size()*64));selfEdgePairs.reserve(std::min<size_t>(524288,asset->edges.size()*64));
     rigidCandidates.reserve(256);
     if(asset->fracture)fracture.Initialize(*asset->fracture);
+    if(settings.panel.enabled){
+        if(asset->kind!=DeformableKind::Cloth||asset->fracture)throw std::invalid_argument("local panel material requires an independent sheet asset");
+        panelBending.emplace();panelBending->stiffness=settings.panel.stiffness;
+        panelBending->yieldMoment=settings.panel.yieldMoment;panelBending->hardening=settings.panel.hardening;
+        panelBending->Initialize(asset->nodes,asset->triangles);
+    }
     Reset(transform);
 }
 void DeformableInstance::Reset(const glm::dmat4& transform){
@@ -592,6 +600,7 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
     // step boundary. Both material and body retain their already solved real
     // velocities; release adds no impulse, transform correction or reset.
     for(size_t a=0;a<released.size();++a)if(attachmentPending[a])released[a]=1;
+    CommitPanelFailures();
     std::fill(forces.begin(),forces.end(),V(0));
     double speed=0;
     for(auto v:velocities)speed=std::max(speed,glm::length(v));
@@ -606,6 +615,7 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
 }
 void DeformableInstance::MapRender(double alpha,MeshData& mesh)const{
     JUDAS_PROFILE_SCOPE("Deformable render mapping");
+    if(asset->panelBinding){MapDeformablePanel(*this,alpha,mesh);return;}
     if(mesh.vertices.size()!=asset->render.vertices.size())mesh=asset->render;
     alpha=std::clamp(alpha,0.,1.);
     if(asset->fracture){mesh.indices.clear();mesh.primitives.clear();for(int material=0;material<2;++material){unsigned first=unsigned(mesh.indices.size());for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f)&&(asset->fracture->faceBond[f]<0?0:1)==material)for(unsigned k=0;k<3;++k)mesh.indices.push_back(f*3+k);unsigned count=unsigned(mesh.indices.size())-first;if(count)mesh.primitives.push_back({first,count,material});}}
@@ -660,7 +670,7 @@ DeformableHit DeformableInstance::Raycast(V origin,V direction,double maximum)co
         hit.location={generation,t,V(1-u-v,u,v),asset->fracture?fracture.revision:0};
     }return hit;
 }
-void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame,bool attachmentLimits){
+void DeformableInstance::Persist(SaveArchive& ar){
     if(asset->fracture)fracture.Persist(ar,*asset->fracture);
     ar(settings.enabled,sleeping,quietSeconds);
     settings.material.Save(ar);
@@ -668,11 +678,15 @@ void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame,bool attachm
     ar.Require(ValidDeformableSettings(settings,validation),"invalid saved deformable material");
     ar.Require(validMasses(*asset,settings.material.density),"invalid saved deformable derived mass");
     ar(settings.attachments,positions,velocities,plasticRest,released);
-    // Attachment::Save deliberately retains its original field layout. Only
-    // State.2 / participant.4 carries optional strength fields; legacy formats
-    // keep unlimited connections rather than inventing historical strength.
-    if(attachmentLimits)for(auto& attachment:settings.attachments)ar(attachment.forceLimit,attachment.torqueLimit);
-    else if(ar.reading)for(auto& attachment:settings.attachments)attachment.forceLimit=attachment.torqueLimit=0;
+    settings.panel.Save(ar);
+    bool panel=bool(panelBending);ar(panel);
+    ar.Require(panel==settings.panel.enabled,"saved panel ownership does not match material configuration");
+    if(panel){
+        ar.Require(asset->kind==DeformableKind::Cloth&&!asset->fracture,"saved local panel requires sheet topology");
+        if(!panelBending){panelBending.emplace();panelBending->Initialize(asset->nodes,asset->triangles);}
+        panelBending->Persist(ar);
+        ar.Require(panelBending->stiffness==settings.panel.stiffness&&panelBending->yieldMoment==settings.panel.yieldMoment&&panelBending->hardening==settings.panel.hardening,"saved panel material disagrees with its solver");
+    }else if(ar.reading)panelBending.reset();
     ar.Require(ValidDeformableSettings(settings,validation),"invalid saved deformable attachments");
     for(const auto& attachment:settings.attachments)ar.Require(asset->groups.count(attachment.group),"saved attachment group missing");
     ar.Require(positions.size()==asset->nodes.size()&&velocities.size()==positions.size()&&plasticRest.size()==asset->solids.size()&&released.size()==settings.attachments.size(),"deformable snapshot topology mismatch");
@@ -682,7 +696,7 @@ void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame,bool attachm
     // Logical owner transforms may move prescribed supports without replacing
     // the simulated material. Its original constitutive/plastic reference must
     // survive cold reconstruction from the CURRENT owner transform.
-    if(materialFrame){M reference(initial);ar(reference);
+    {M reference(initial);ar(reference);
         for(int a=0;a<3;++a)for(int b=0;b<3;++b)ar.Require(std::abs(glm::dot(reference[a],reference[b])-(a==b?1.:0.))<1e-5,"invalid saved deformable material frame");
         ar.Require(glm::determinant(reference)>0,"invalid saved deformable material orientation");
         if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);

@@ -712,6 +712,7 @@ declare module "judas" {
   export interface DeformableHit {point:Vec3;normal:Vec3;distance:number;location:DeformableLocation}
   export interface DeformableAttachmentState {
     group:string;enabled:boolean;released:boolean;active:boolean;
+    part:string;tearWork:number;plasticWork:number;
     forceLimit:number;torqueLimit:number;
     /** Last substep actual reaction in world/simulation space: N and N m. */
     force:Vec3;moment:Vec3;
@@ -722,6 +723,7 @@ declare module "judas" {
   export interface DeformableAttachmentOptions {
     kind:'world'|'body'|'bone';target?:Entity;joint?:string;offset?:Vec3;
     /** Dynamic Body targets only. Zero/omitted = unlimited; N and N m. */
+    part?:string;tearWork?:number;
     forceLimit?:number;torqueLimit?:number;
   }
   export interface FracturePartState {key:string;index:number;component:number|null;removed:boolean;entity:Entity|null;mass:number}

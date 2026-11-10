@@ -172,8 +172,6 @@ int main(){try{
     double changedOwnerError=0;for(unsigned n=0;n<reference.positions.size();++n)changedOwnerError=std::max(changedOwnerError,glm::length(reference.positions[n]-shiftedOwnerRestore.positions[n]));
     std::printf("CHANGED_OWNER_CONTINUATION position_error=%.9g\n",changedOwnerError);
     check(reference.error.empty()&&shiftedOwnerRestore.error.empty()&&changedOwnerError<1e-12,"cold continuation retains original material basis after logical-owner rotation");
-    SaveArchive legacy;reference.Persist(legacy,false);DeformableInstance legacyRestore;legacyRestore.Initialize(cube,settings,glm::dmat4(1),78);SaveArchive legacyRead(legacy.bytes);legacyRestore.Persist(legacyRead,false);legacyRead.Finish();
-    check(legacyRestore.positions==reference.positions&&legacyRestore.plasticRest==reference.plasticRest,"legacy material records still decode without inventing historical reference data");
     auto badFrame=shiftedOwnerSave.bytes;badFrame.replace(badFrame.size()-9*sizeof(double),9*sizeof(double),9*sizeof(double),'\0');
     bool rejected=false;try{SaveArchive invalid(badFrame);shiftedOwnerRestore.Persist(invalid);}catch(const std::exception&){rejected=true;}
     check(rejected,"invalid saved material reference frame is rejected");

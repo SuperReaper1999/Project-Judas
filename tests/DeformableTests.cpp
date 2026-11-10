@@ -8,9 +8,13 @@
 #include <limits>
 #include <glm/gtc/matrix_transform.hpp>
 namespace {int failures=0,checks=0;void check(bool ok,const char* message){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",message);} }
+void RunDeformableV2WorldChecks(void(*)(bool,const char*));
+void RunDeformableV2PanelChecks(void(*)(bool,const char*));
 void RunDeformableV2ContactChecks(void(*)(bool,const char*));
 int main(){
     RunDeformableV2ContactChecks(check);
+    RunDeformableV2PanelChecks(check);
+    RunDeformableV2WorldChecks(check);
     std::string error;auto sheet=std::make_shared<DeformableAsset>(MakeDeformableSheet(5,5,1,1,2));auto block=std::make_shared<DeformableAsset>(MakeDeformableBlock({2,2,2},{1,1,1}));
     check(sheet->nodes.size()==25&&sheet->render.vertices.size()==81,"denser cloth render binding");check(block->solids.size()==48,"block six tetrahedra per cell");
     double volume=0;for(auto& t:block->solids)volume+=t.volume;check(std::abs(volume-1)<1e-12,"independent unit cube volume reference");

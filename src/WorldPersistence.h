@@ -40,6 +40,6 @@ private:
  static void PhysicalAnimation(RuntimeWorld&,SaveArchive&);
  static void PhysicalBalance(RuntimeWorld&,SaveArchive&);
  static void Navigation(RuntimeWorld&,SaveArchive&);
- static void Deformables(RuntimeWorld&,SaveArchive&,bool materialFrame=true,bool attachmentLimits=true);
+ static void Deformables(RuntimeWorld&,SaveArchive&);
  static void Audio(RuntimeWorld&,SaveArchive&);
 };

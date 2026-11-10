@@ -107,15 +107,14 @@ int main(){try{
     check(cold.material.attachmentState[0].peakForce==0,"cold restore reconstructs reaction observations instead of persisting solver diagnostics");
     weak.Step();cold.Step();
     check(maximumPositionError(weak,cold)<1e-12,"restored disconnected material reaches the same subsequent physical endpoint");
-    SaveArchive legacy;strong.material.Persist(legacy,true,false);Patch oldFormat(1);SaveArchive legacyRead(legacy.bytes);oldFormat.material.Persist(legacyRead,true,false);legacyRead.Finish();
-    check(oldFormat.material.settings.attachments[0].forceLimit==0&&oldFormat.material.positions==strong.material.positions,"old participant layout decodes unchanged with explicitly unlimited historical strength");
-    auto attachment=strong.settings.attachments[0];SaveArchive legacyAttachment;attachment.Save(legacyAttachment);attachment.forceLimit=attachment.torqueLimit=0;SaveArchive defaultAttachment;attachment.Save(defaultAttachment);
-    check(legacyAttachment.bytes==defaultAttachment.bytes,"legacy attachment field bytes are independent of new optional limits");
+    auto attachment=strong.settings.attachments[0];SaveArchive encodedAttachment;attachment.Save(encodedAttachment);
+    DeformableAttachment decoded;SaveArchive readAttachment(encodedAttachment.bytes);decoded.Save(readAttachment);readAttachment.Finish();
+    check(decoded.forceLimit==attachment.forceLimit&&decoded.torqueLimit==attachment.torqueLimit,"current attachment codec owns its physical limits");
     auto malformed=saved.bytes;
-    // State.2 appends exactly one force/torque pair before its historical 3x3
-    // material reference. Replace the force field with +infinity, not a
-    // hand-authored weakened acceptance threshold.
-    const size_t forceField=malformed.size()-9*sizeof(double)-2*sizeof(double);
+    SaveArchive savedAttachment;weak.material.settings.attachments[0].Save(savedAttachment);
+    const size_t attachmentStart=malformed.find(savedAttachment.bytes);
+    if(attachmentStart==std::string::npos)throw std::runtime_error("test attachment record missing");
+    const size_t forceField=attachmentStart+savedAttachment.bytes.size()-3*sizeof(double);
     for(unsigned i=0;i<8;++i)malformed[forceField+i]=char((uint64_t(0x7ff0000000000000)>>(8*i))&255);
     bool rejected=false;try{Patch bad(1);SaveArchive input(malformed);bad.material.Persist(input);}catch(const std::runtime_error&){rejected=true;}
     check(rejected,"nonfinite saved finite strength is rejected rather than silently restoring a connection");
