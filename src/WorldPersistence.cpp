@@ -433,7 +433,12 @@ for(auto name:{"scripts","contacts"}){auto it=chunks.find(name);if(it==chunks.en
  w.Physics().PersistTouches(a,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);});
  if(it->second.version>=2)w.Physics().PersistCompletedContactObservations(a,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);});
 }else {std::vector<ScriptStateRecord> scripts;std::set<std::pair<EntityId,uint32_t>> seen;auto n=count(a,0,4096);for(uint32_t i=0;i<n;++i){ScriptStateRecord r;a(r.entity,r.slot,r.json);const auto* d=w.RuntimeDefinition(r.entity);a.Require(d&&std::any_of(d->scripts.begin(),d->scripts.end(),[&](const auto& s){return s.id==r.slot&&s.enabled;})&&seen.emplace(r.entity,r.slot).second,"saved script slot unavailable/duplicate");scripts.push_back(std::move(r));}for(const auto& o:w.ScriptObjects())if(!w.IsTransientEntity(o.id))for(const auto& slot:o.scripts)if(slot.enabled)a.Require(seen.count({o.id,slot.id}),"required restored script slot missing: entity "+std::to_string(o.id)+" slot "+std::to_string(slot.id));a.Require(w.RestoreScriptState(scripts,error,true),"saved script state invalid");}a.Finish();}if(auto it=chunks.find("view-projection");it!=chunks.end()){if((it->second.version!=1&&it->second.version!=2)||!w.view)throw std::runtime_error("invalid view-projection participant");SaveArchive v(it->second.data);float nearPlane=0,farPlane=0;CameraLens lens;v(nearPlane,farPlane);if(it->second.version>=2)v(lens);v.Require(w.SetRuntimeView(w.view->pose,w.view->fov,nearPlane,farPlane,lens),"invalid saved projection");v.Finish();}return true;}catch(const std::exception& e){error=e.what();return false;}}
-void WorldPersistence::Published(RuntimeWorld& w){w.m_restoreConstruction=false;w.ResetAudioMotion();w.m_touchEntityHistory.clear();for(const auto& o:w.ScriptObjects()){auto b=w.RuntimeBody(o.id);if(b.IsValid())w.m_touchEntityHistory[b.id]=o.id;}}
+void WorldPersistence::Published(RuntimeWorld& w){w.m_restoreConstruction=false;
+ // Wheels restore before deformable participants create their physical carriers.
+ // Publish derived presentation only after every restored body is available,
+ // including a paused cold load that will not run a physics step yet.
+ w.PublishWheels();for(auto id:w.m_wheelOwners)if(auto* wheel=w.RuntimeWheel(id))wheel->previous=wheel->state;
+ w.ResetAudioMotion();w.m_touchEntityHistory.clear();for(const auto& o:w.ScriptObjects()){auto b=w.RuntimeBody(o.id);if(b.IsValid())w.m_touchEntityHistory[b.id]=o.id;}}
 
 bool WorldPersistence::PrepareAudio(RuntimeWorld& w,std::string& error){
  for(auto& source:w.m_audioEmitters){auto it=w.m_audioResume.find(source.id);if(it==w.m_audioResume.end()||!source.settings.enabled)continue;

@@ -216,12 +216,12 @@ int main(int argc, char **argv) {
                          "[--case=frontal|offset|side|rear|cars] [--count=N] [--load] [--save-at=N]\n";
             return 64;
         }
-        std::string modelPath = argv[1], kind = "frontal", panelRecipe;
+        std::string modelPath = argv[1], kind = "frontal", panelRecipe, saveRelease;
         std::filesystem::path root = std::filesystem::absolute(argv[2]);
         unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8;
         float speed = 12;
         int wheelView=-1;
-        bool wheelCourse=false, captureSteps=false;
+        bool wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false;
         bool headless = false, load = false, profile = false, drive = false, cpuSkin = false, repeat = false,
              postDrive = false, xray = false, panelsEnabled=false;
         for (int i = 3; i < argc; ++i) {
@@ -229,6 +229,9 @@ int main(int argc, char **argv) {
             if(arg=="--panels") panelsEnabled=true;
             else if(arg.rfind("--panel-parts=",0)==0)panelRecipe=arg.substr(14);
             else if(arg=="--wheel-course")wheelCourse=true;
+            else if(arg.rfind("--save-release=",0)==0)saveRelease=arg.substr(15);
+            else if(arg=="--paused")startPaused=true;
+            else if(arg=="--bonnet-view")bonnetView=true;
             else if(arg=="--capture-steps")captureSteps=true;
             else if(arg.rfind("--wheel-view=",0)==0)wheelView=std::stoi(arg.substr(13));
             else if (arg.rfind("--segments=", 0) == 0)
@@ -266,6 +269,9 @@ int main(int argc, char **argv) {
             else
                 throw std::runtime_error("unknown argument " + arg);
         }
+        Require(saveRelease.empty()||(panelsEnabled&&saveRelease.size()==3&&saveRelease.find_first_not_of("01")==std::string::npos),"save-release needs three attachment bits and --panels");
+        Require(!headless||!startPaused,"--paused requires an interactive desktop window");
+        bool releaseSaved=false;
         if (headless && !frames)
             frames = 600;
         Require(kind == "frontal" || kind == "offset" || kind == "side" || kind == "rear" || kind == "cars",
@@ -383,7 +389,7 @@ int main(int argc, char **argv) {
         std::string authoredSceneHash;
         Require(SceneFingerprintSha256File((root/"crash-proof.judas").string(),authoredSceneHash,error),error);
         const auto content =
-            SceneFingerprintSha256(EncodeDeformableAsset(asset) + authoredSceneHash + modelHash + recipeHash + (panelsEnabled?"dihedral-panel-v3":"frame-only"));
+            SceneFingerprintSha256(EncodeDeformableAsset(asset) + authoredSceneHash + modelHash + recipeHash + (panelsEnabled?"dihedral-panel-mount-tear-v4":"frame-only"));
         SaveStorage storage((root / "Saves").string());
         if (load) {
             GameSnapshot snapshot;
@@ -444,7 +450,7 @@ int main(int argc, char **argv) {
             PerformanceProfiler::Get().Enable(true);
         InputSystem input;
         unsigned tick = 0;
-        bool paused = false, launchRequested = false;
+        bool paused = startPaused, launchRequested = false;
         float orbit = .45f, cameraDistance = 6;
         unsigned nextPanelCapture=110;
         if (host)
@@ -478,7 +484,7 @@ int main(int argc, char **argv) {
                     break;
                 dt = std::min(.1, std::chrono::duration<double>(Clock::now() - previousTime).count());
                 previousTime = Clock::now();
-                static bool lastP = false, lastF = false, lastR = false, lastT = false;
+                static bool lastP = false, lastF = false, lastR = false, lastT = false, lastC=false;
                 bool reset = !frames && keys[SDL_SCANCODE_R], launch = !frames && keys[SDL_SCANCODE_RETURN];
                 if (reset && !lastR) {
                     Require(world.Build(scene, &resources, error, &categories), error);
@@ -499,9 +505,12 @@ int main(int argc, char **argv) {
                 }
                 if (f && !lastF)
                     save();
+                bool c=keys[SDL_SCANCODE_C];if(c&&!lastC)bonnetView=!bonnetView;lastC=c;
                 lastP = p;
                 lastF = f;
             }
+            // Diagnostic photography presents the exact restored state once before advancing.
+            if(load&&captureSteps&&renderTimes.empty())dt=0;
             accumulator += dt;
             while (!paused && accumulator >= 1. / 60 && (!frames || tick < frames)) {
                 const auto *keys = host && !frames ? SDL_GetKeyboardState(nullptr) : nullptr;
@@ -574,10 +583,15 @@ int main(int argc, char **argv) {
                     }
                 }
                 ++tick;
+                if(!releaseSaved&&!saveRelease.empty()&&!panels.empty()){
+                    std::string bits;for(auto r:panels[0].material.released)bits+=r?'1':'0';
+                    if(bits==saveRelease){save();releaseSaved=true;std::cout<<"RELEASE_SAVE state="<<bits<<" tick="<<tick<<'\n';}
+                }
                 accumulator -= 1. / 60;
                 if (tick == saveAt)
                     save();
                 if (tick % 60 == 0) {
+                    for(const auto& panel:panels){auto c=panel.Center(),p=panel.Momentum();std::cout<<"PANEL_STATE tick="<<tick<<" released=";for(auto r:panel.material.released)std::cout<<int(r);std::cout<<" center="<<c.x<<","<<c.y<<","<<c.z<<" momentum="<<p.x<<","<<p.y<<","<<p.z<<" contacts="<<panel.material.stats.contacts<<" mask="<<panel.material.settings.collisionMask<<'\n';}
                     for (auto &rig : rigs) {
                         for (auto wid : rig.wheels) {
                             auto *wheel = world.RuntimeWheel(wid);
@@ -653,6 +667,7 @@ int main(int argc, char **argv) {
                                       .position /
                                   float(count);
                 }
+                if(bonnetView&&!panels.empty())target=glm::vec3(panels[0].Center());
                 const float distance = cameraDistance * float(count);
                 auto eye = target + glm::vec3(distance * std::sin(.78f + orbit), 3 + float(count - 1) * 1.5f,
                                               -distance * std::cos(.78f + orbit));
@@ -723,17 +738,22 @@ int main(int argc, char **argv) {
                 maximumVisible = std::max(maximumVisible, visibleModels);
                 r.EndFrame();
                 r.BeginUIFrame(window.Width(), window.Height());
-                r.DrawUIRect({15, 15}, {1200, 140}, {.02f, .03f, .04f, .9f});
+                r.DrawUIRect({15, 15}, {1200, 165}, {.02f, .03f, .04f, .9f});
                 r.DrawUIText("DEFORMABLES V2 | LOCAL CRASH PROOF | " + kind, {30, 25}, .8f, {1, 1, 1, 1});
                 r.DrawUIText("W/S drive | A/D steer | Space brake | Enter test impact | P pause | F6 save",
                              {30, 60}, .65f, {.5f, 1, 1, 1});
                 r.DrawUIText(statusMessage,{30,120},.55f,{.8f,.9f,.9f,1});
                 r.DrawUIText(
-                    "Q/E orbit | Wheel zoom | R restart | Esc quit | Physical damage, no scripted animation",
+                    "Q/E orbit | Wheel zoom | C follow bonnet/car | R restart | Esc quit",
                     {30, 90}, .6f, {1, 1, 1, 1});
+                if(!panels.empty()){
+                    std::string mounts="Bonnet: ";for(unsigned i=0;i<panels[0].material.released.size();++i)mounts+=panels[0].material.settings.attachments[i].group+(panels[0].material.released[i]?" BROKEN   ":" attached   ");
+                    r.DrawUIText(mounts,{30,147},.55f,{.8f,.9f,.9f,1});
+                }
                 r.EndUIFrame();
                 r.EndProfilePass(gpuPass);
                 renderTimes.push_back(Elapsed(t));
+                if(captureSteps&&load&&renderTimes.size()==1)Snapshot(r,root/"restored.ppm",window.Width(),window.Height());
                 if (frames && tick >= frames)
                     Snapshot(r, root / "final.ppm", window.Width(), window.Height());
                 if(wheelCourse && tick && tick%60==0)
@@ -765,6 +785,7 @@ int main(int argc, char **argv) {
                 }
             }
         }
+        Require(saveRelease.empty()||releaseSaved,"requested attachment state was not reached for save");
         for (auto &[name, values] : phaseTimes)
             Summary(("PHASE " + name).c_str(), values);
         Summary("SIMULATION", stepTimes);
@@ -775,7 +796,8 @@ int main(int argc, char **argv) {
         Summary("TOTAL_PHYSICS",combined);
         std::ofstream timings(root/"timings.csv");timings<<"step,world_ms,panel_ms,total_physics_ms\n";
         for(unsigned i=0;i<stepTimes.size();++i)timings<<i<<","<<std::setprecision(12)<<stepTimes[i]<<","<<(i<panelTimes.size()?panelTimes[i]:0)<<","<<combined[i]<<"\n";
-        for(auto& p:panels){std::cout<<"PANEL_RESULT plastic="<<p.PlasticExtent()<<" released=";for(auto r:p.material.released)std::cout<<int(r);std::cout<<" panel_nodes="<<p.material.positions.size()<<" sleeping="<<p.material.sleeping<<'\n';}
+        for(auto& p:panels){std::cout<<"PANEL_RESULT plastic="<<p.PlasticExtent()<<" released=";for(auto r:p.material.released)std::cout<<int(r);std::cout<<" panel_nodes="<<p.material.positions.size()<<" max_speed="<<p.maximumSpeed<<" peak_ke_j="<<p.maximumKineticEnergy<<" sleeping="<<p.material.sleeping<<'\n';}
+        for(const auto& p:panels)for(unsigned i=0;i<p.peakForces.size();++i)std::cout<<"MOUNT_PEAK group="<<p.material.settings.attachments[i].group<<" force="<<p.peakForces[i]<<" moment="<<p.peakMoments[i]<<" work_j="<<p.MountWork(i)<<" released="<<int(p.material.released[i])<<"\n";
         Summary("SKIN_MAPPING", mapTimes);
         Summary("RENDER_CPU", renderTimes);
         Summary("RENDER_GPU", gpuTimes);

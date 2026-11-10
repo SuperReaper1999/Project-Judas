@@ -34,7 +34,7 @@ Check the release page for subsequently published packages.
 [physics queries](PHYSICS_QUERIES.md) · [collision](COLLISION_AUTHORING.md) ·
 [joints](JOINTS.md) · [gravity](GRAVITY_SELECTION.md) · [Vehicles V2](VEHICLES_V2.md) ·
 [powertrains](POWERTRAINS.md) · [deformables](DEFORMABLES.md) · [Deformables V2 investigation/proposal](DEFORMABLES_V2_INVESTIGATION.md) · [Stage 1 crash proof/fidelity stop](DEFORMABLES_V2_STAGE1.md) · [fracture](FRACTURE.md) ·
-- [Deformables V2 revised Stage 1 — physical panels and wheel assembly](DEFORMABLES_V2_REVISED_STAGE1.md)
+- [Deformables V2 revised Stage 1 — physical panels and wheel assembly](DEFORMABLES_V2_REVISED_STAGE1.md) · [bonnet attachment correction](DEFORMABLES_V2_BONNET_ATTACHMENTS.md)
 [weather](WEATHER.md) · [streaming](WORLD_STREAMING.md) · [persistence](PERSISTENCE.md) ·
 [save evolution](SAVE_EVOLUTION.md) · [mods](MODDING.md) · [networking](NETWORKING.md).
 

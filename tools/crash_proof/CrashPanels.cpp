@@ -107,6 +107,7 @@ void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshDa
     // Stage-1 test deliberately excludes the coarse inner frame, whose volume
     // overlaps the shell. Each proof vehicle has a distinct registered layer, so other vehicles remain collidable.
     s.collisionMask=kAllCategories&~CategoryBit(frame->settings.collisionLayer);
+    attachedCollisionMask=s.collisionMask;
     carrierParts.clear();targets.clear();
     for(const auto& [group,nodes]:a.groups){
         V centroid(0);for(auto n:nodes)centroid+=a.nodes[n]/double(nodes.size());
@@ -127,11 +128,16 @@ void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshDa
     material.panelBending.emplace();
     material.panelBending->stiffness=2000;material.panelBending->yieldMoment=80;material.panelBending->hardening=80;
     material.panelBending->Initialize(shell->nodes,shell->triangles);
+    maximumSpeed=maximumKineticEnergy=0;
+    peakForces.assign(targets.size(),0);peakMoments.assign(targets.size(),0);
     Map();
     std::cout<<"PANEL_INITIALIZED nodes="<<material.positions.size()<<" tets="<<material.asset->solids.size()<<" mass="<<material.Mass()<<" triangles="<<hood.indices.size()/3<<'\n';
 }
 void CrashPanel::Step(RuntimeWorld& world,const CrashRig& rig,double dt){
+    std::array<uint8_t,64> previouslyReleased{};
+    std::copy(material.released.begin(),material.released.end(),previouslyReleased.begin());
     for(unsigned i=0;i<targets.size();++i){
+        if(material.released[i]){targets[i].valid=false;targets[i].body={};continue;}
         auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,carrierParts[i]));
         auto& t=targets[i];t.previous=t.current;t.body=body;t.valid=world.Physics().IsBodyEnabled(body);
         if(t.valid){auto pose=world.Physics().GetTransform(body);t.current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));}
@@ -140,8 +146,30 @@ void CrashPanel::Step(RuntimeWorld& world,const CrashRig& rig,double dt){
     auto gravity=world.GravityForEntity(rig.owner);
     material.Step(dt,world.Physics(),gravity,targets);
     if(!material.error.empty())throw std::runtime_error("physical hood: "+material.error);
+    for(unsigned i=0;i<material.released.size();++i)if(material.released[i]&&!previouslyReleased[i])std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<" reason=hardware-capacity force="<<material.attachmentState[i].peakForce<<" moment="<<material.attachmentState[i].peakTorque<<'\n';
+    double kinetic=0;for(unsigned n=0;n<material.velocities.size();++n){double speed2=glm::dot(material.velocities[n],material.velocities[n]);maximumSpeed=std::max(maximumSpeed,std::sqrt(speed2));kinetic+=.5*material.NodeMass(n)*speed2;}maximumKineticEnergy=std::max(maximumKineticEnergy,kinetic);
+    for(unsigned i=0;i<material.attachmentState.size();++i){peakForces[i]=std::max(peakForces[i],material.attachmentState[i].peakForce);peakMoments[i]=std::max(peakMoments[i],material.attachmentState[i].peakTorque);}
+    CommitMountFailures();
 }
-void CrashPanel::Persist(SaveArchive& a){material.Persist(a);material.panelBending->Persist(a);for(auto& t:targets)a(t.previous,t.current,t.valid);}
+bool CrashPanel::CommitMountFailures(){
+    bool changed=false;
+    // The fasteners and the sheet they pass through are different failure paths.
+    // Existing force/moment limits protect the hardware. Local irreversible
+    // bending work tears the surrounding sheet, including under repeated loads.
+    // Publish release at the completed material step, without changing momentum.
+    for(unsigned i=0;i<targets.size();++i)if(!material.released[i]&&MountWork(i)>=MountTearWork){
+        std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<" reason=mounting-sheet-tear work_j="<<MountWork(i)<<'\n';
+        material.Release(material.settings.attachments[i].group);changed=true;
+    }
+    RefreshCollisionMask();
+    return changed;
+}
+void CrashPanel::RefreshCollisionMask(){
+    const bool detached=std::all_of(material.released.begin(),material.released.end(),[](auto r){return r!=0;});
+    // Independent debris collides with its former car as well as the world.
+    material.settings.collisionMask=detached?kAllCategories:attachedCollisionMask;
+}
+void CrashPanel::Persist(SaveArchive& a){material.Persist(a);material.panelBending->Persist(a);for(auto& t:targets)a(t.previous,t.current,t.valid);if(a.reading)RefreshCollisionMask();}
 double CrashPanel::PlasticExtent()const{double peak=0;for(const auto& h:material.panelBending->hinges)peak=std::max(peak,h.plastic);return peak;}
 void CrashPanel::Map(){
     if(mapped.vertices.size()!=exterior.vertices.size())mapped=exterior;
@@ -170,4 +198,23 @@ bool CrashPanel::AttachedTo(const DeformableInstance& frame,unsigned referencePa
     if(referencePart>=frame.fracture.component.size()||frame.fracture.removed[referencePart])return false;
     for(unsigned i=0;i<carrierParts.size();++i)if(!material.released[i]&&!frame.fracture.removed[carrierParts[i]]&&frame.fracture.component[carrierParts[i]]==frame.fracture.component[referencePart])return true;
     return false;
+}
+
+// Partition the existing physical bending work by the material nodes belonging
+// to the attachment patch. No remote panel work, elapsed time or impact count.
+double CrashPanel::MountWork(unsigned index) const {
+    const auto& group=shell->groups.at(material.settings.attachments.at(index).group);
+    double work=0;
+    for(const auto& hinge:material.panelBending->hinges){
+        unsigned owners=0;for(unsigned k=0;k<4;++k)owners+=std::find(group.begin(),group.end(),hinge.nodes[k])!=group.end();
+        work+=hinge.work*(double(owners)/4);
+    }
+    return work;
+}
+
+glm::dvec3 CrashPanel::Center() const {
+    glm::dvec3 value(0);for(unsigned n=0;n<material.positions.size();++n)value+=material.NodeMass(n)*material.positions[n];return value/material.Mass();
+}
+glm::dvec3 CrashPanel::Momentum() const {
+    glm::dvec3 value(0);for(unsigned n=0;n<material.velocities.size();++n)value+=material.NodeMass(n)*material.velocities[n];return value;
 }

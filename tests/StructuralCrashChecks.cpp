@@ -5,6 +5,8 @@
 #include "RuntimeWorld.h"
 #include "Simulation.h"
 #include "WorldPersistence.h"
+#include <algorithm>
+#include <cmath>
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -145,6 +147,9 @@ unsigned RunStructuralCrashChecks() {
                   WorldPersistence::Restore(restored, chunks, error),
               kind + " damaged physical family restores: " + error);
         WorldPersistence::Published(restored);
+        bool wheelsPublished=true;
+        for(auto id:rigs[0].wheels){auto* wheel=restored.RuntimeWheel(id);wheelsPublished&=wheel&&wheel->state.available;}
+        check(wheelsPublished,kind+" restored structural wheel visuals publish before the first physics step");
         auto *copy = restored.RuntimeDeformable(rigs[0].owner, error);
         double maximum = 0;
         for (unsigned n = 0; n < reference.size(); ++n)
@@ -195,6 +200,55 @@ unsigned RunStructuralCrashChecks() {
         SaveArchive again;restoredPanel.Persist(again);check(again.bytes==stored.bytes,"panel positions velocities plastic volume rest and physical mounts restore exactly");
         for(unsigned step=0;step<10;++step){StepAuthoritativeWorld(restored,input,1.f/60);restoredPanel.Step(restored,rig,1./60);}
         check(restoredPanel.material.error.empty(),"restored panel continues physical coupling");
+    }
+    {
+        // Isolate publication of physical material history from its already
+        // independently tested return mapping and real crash generation.
+        Scene scene;auto& ground=scene.CreateObject("Detached panel ground");ground.body=SceneBodyComponent{};
+        ground.body->halfExtents={150,.5f,150};ground.transform.position={0,-.5f,0};
+        auto& gravity=scene.CreateObject("Gravity");gravity.gravity=SceneGravityComponent{};
+        gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->regionRadius=1000;
+        auto rig=AddCrashRig(scene,asset,record.id,{0,.665f,0},exterior);
+        scene.Find(rig.owner)->deformable->collisionLayer=8;
+        ProjectClassification categories;categories.collision.names.emplace(8,"Frame");categories.collision.nextId=9;
+        RuntimeWorld world;check(world.Build(scene,&resources,error,&categories),"mount-tear ownership fixture builds");world.UpdateDeformables(1./60);
+        MeshData hood;for(auto p:{glm::vec3(-.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-2.35f),glm::vec3(.7f,.1f,-.95f),glm::vec3(-.7f,.1f,-.95f)}){MeshVertex v;v.position=p;hood.vertices.push_back(v);}hood.indices={0,2,1,0,3,2};
+        CrashPanel panel;panel.Initialize(world,rig,hood);
+        auto& hinges=panel.material.panelBending->hinges;
+        auto localHinge=[&](unsigned mount){
+            const auto& group=panel.material.asset->groups.at(panel.material.settings.attachments[mount].group);
+            for(unsigned h=0;h<hinges.size();++h){unsigned own=0,other=0;for(unsigned k=0;k<4;++k){auto n=hinges[h].nodes[k];own+=std::find(group.begin(),group.end(),n)!=group.end();for(unsigned a=0;a<3;++a)if(a!=mount){const auto& g=panel.material.asset->groups.at(panel.material.settings.attachments[a].group);other+=std::find(g.begin(),g.end(),n)!=g.end();}}if(own&&!other)return std::pair<unsigned,unsigned>{h,own};}
+            throw std::runtime_error("no isolated attachment ligament");
+        };
+        auto history=[&](unsigned index,double work){
+            auto& hinge=hinges[index];const auto& law=*panel.material.panelBending;
+            hinge.work=work;
+            // Admissible accumulated plastic history: W = Y p + H p²/2.
+            hinge.plastic=2*work/(law.yieldMoment+std::sqrt(law.yieldMoment*law.yieldMoment+2*law.hardening*work));
+        };
+        auto left=localHinge(1);history(left.first,(CrashPanel::MountTearWork-.1)*4/left.second);
+        check(!panel.CommitMountFailures()&&!panel.material.released[1],"subcritical local plastic work does not tear the attachment");
+        const auto positions=panel.material.positions,velocities=panel.material.velocities;const double mass=panel.material.Mass();
+        history(left.first,(CrashPanel::MountTearWork+.1)*4/left.second);
+        check(panel.CommitMountFailures()&&panel.material.released==std::vector<uint8_t>({0,1,0}),"local left mounting-sheet work tears only that physical connection");
+        check(panel.material.positions==positions&&panel.material.velocities==velocities&&panel.material.Mass()==mass,"publishing a tear preserves positions momentum and finite mass");
+        check(!panel.CommitMountFailures(),"already published damage cannot release a connection twice");
+        check(panel.material.settings.collisionMask!=kAllCategories,"a remaining attachment retains its authored coarse-frame contact filter");
+        SaveArchive partial;panel.Persist(partial);CrashPanel restored;restored.Initialize(world,rig,hood);SaveArchive readPartial(partial.bytes);restored.Persist(readPartial);readPartial.Finish();
+        SaveArchive againPartial;restored.Persist(againPartial);
+        check(partial.bytes==againPartial.bytes&&restored.material.released==panel.material.released,"partially failed mounts and local work restore exactly");
+        for(unsigned i:{0u,2u}){auto h=localHinge(i);history(h.first,(CrashPanel::MountTearWork+.1)*4/h.second);}
+        check(panel.CommitMountFailures()&&panel.material.released==std::vector<uint8_t>({1,1,1}),"each remaining mounting sheet must reach its own failure work");
+        auto* frame=world.RuntimeDeformable(rig.owner,error);
+        check(!panel.AttachedTo(*frame,rig.referencePart)&&panel.material.settings.collisionMask==kAllCategories,"fully detached bonnet has no chassis attachment and collides with its former vehicle");
+        auto centre=panel.Center();
+        for(unsigned part=0;part<asset.fracture->parts.size();++part){auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,part));auto pose=world.Physics().GetTransform(body);world.Physics().ResetBody(body,pose.position+glm::vec3(100,0,0),pose.rotation);}
+        panel.Step(world,rig,1./60);
+        check(std::abs(panel.Center().x-centre.x)<1e-6&&panel.material.Mass()==mass,"moving former carrier frames cannot move or duplicate detached material");
+        unsigned contacts=0;for(unsigned step=0;step<120;++step){panel.Step(world,rig,1./60);contacts+=unsigned(panel.material.stats.contacts);}
+        check(panel.material.error.empty()&&contacts>0&&panel.Center().y>-.1,"independent finite-mass bonnet falls onto and collides with real ground");
+        SaveArchive full;panel.Persist(full);CrashPanel fullCopy;fullCopy.Initialize(world,rig,hood);SaveArchive readFull(full.bytes);fullCopy.Persist(readFull);readFull.Finish();SaveArchive againFull;fullCopy.Persist(againFull);
+        check(full.bytes==againFull.bytes&&fullCopy.material.settings.collisionMask==kAllCategories,"fully detached material restores its physical state and former-car collision policy");
     }
     return checks;
 }

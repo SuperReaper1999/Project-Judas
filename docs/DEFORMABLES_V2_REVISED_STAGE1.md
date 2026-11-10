@@ -1,5 +1,9 @@
 # Deformables V2 — revised Stage 1 crash proof
 
+Current follow-up: [physical bonnet attachment failure](DEFORMABLES_V2_BONNET_ATTACHMENTS.md).
+The measurements below describe the accepted wheel/bending baseline; full release
+and detached collision are qualified separately in that follow-up.
+
 This is an **Experimental native physical proof awaiting human review**, not a
 published Deformables V2 release. Stages 2–4, normal scene/editor authoring and SDK
 exposure have not begun. Main, the Advanced Fluids lock and the operator's RPG SDK

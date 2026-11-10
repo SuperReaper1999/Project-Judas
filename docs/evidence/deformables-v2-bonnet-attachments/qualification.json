@@ -1,0 +1,439 @@
+{
+  "baseline": "c9959714eb5bd7023436cbc8918edb63a7a0123f",
+  "scope": "Revised Stage 1 bonnet attachments; awaiting human review",
+  "method": "Existing fastener load limits unchanged; local physical material plastic-work tear capacity 20 J; no speed/count trigger",
+  "tests": {
+    "affected_native_checks": 689,
+    "structural_checks": 174,
+    "executables": [
+      {
+        "test": "judas_structural_tests",
+        "returncode": 0,
+        "log": "judas_structural_tests-final.log"
+      },
+      {
+        "test": "judas_deformable_tests",
+        "returncode": 0,
+        "log": "judas_deformable_tests-final.log"
+      },
+      {
+        "test": "judas_fracture_tests",
+        "returncode": 0,
+        "log": "judas_fracture_tests-final.log"
+      },
+      {
+        "test": "judas_bending_tests",
+        "returncode": 0,
+        "log": "judas_bending_tests-final.log"
+      },
+      {
+        "test": "judas_section_material_tests",
+        "returncode": 0,
+        "log": "judas_section_material_tests-final.log"
+      },
+      {
+        "test": "judas_mechanical_connection_tests",
+        "returncode": 0,
+        "log": "judas_mechanical_connection_tests-final.log"
+      },
+      {
+        "test": "judas_mechanical_damage_tests",
+        "returncode": 0,
+        "log": "judas_mechanical_damage_tests-final.log"
+      },
+      {
+        "test": "judas_powertrain_tests",
+        "returncode": 0,
+        "log": "judas_powertrain_tests-final.log"
+      },
+      {
+        "test": "judas_powertrain_lifecycle_tests",
+        "returncode": 0,
+        "log": "judas_powertrain_lifecycle_tests-final.log"
+      },
+      {
+        "test": "judas_powertrain_script_tests",
+        "returncode": 0,
+        "log": "judas_powertrain_script_tests-final.log"
+      },
+      {
+        "test": "judas_vehicle_dynamics_tests",
+        "returncode": 0,
+        "log": "judas_vehicle_dynamics_tests-final.log"
+      }
+    ],
+    "fresh_script_test_note": "Initial reused output rejected existing asset metadata; untouched test passed with its supported fresh-directory argument. Initial log preserved privately.",
+    "cmake_contract_controls": 27,
+    "current_document_controls": 10
+  },
+  "baseline_loads": {
+    "course": [
+      "PREPARATION ms=1670.972831 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=600 mean_ms=1.783052807 p50_ms=1.773625 p95_ms=1.862242 p99_ms=2.234765 worst_ms=3.013634",
+      "PANELS count=600 mean_ms=0.3627416817 p50_ms=0.358647 p95_ms=0.406737 p99_ms=0.421295 worst_ms=0.464666",
+      "TOTAL_PHYSICS count=600 mean_ms=2.145794488 p50_ms=2.139987 p95_ms=2.227862 p99_ms=2.599452 worst_ms=3.415482",
+      "PANEL_RESULT plastic=0 released=000 panel_nodes=36 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=314.855361 moment=23.62430746 released=0",
+      "MOUNT_PEAK group=hinge-left force=186.3912782 moment=25.60670022 released=0",
+      "MOUNT_PEAK group=hinge-right force=287.7912208 moment=19.09920913 released=0",
+      "PEAK_RSS_KIB 596036"
+    ],
+    "wall8": [
+      "PREPARATION ms=1570.586623 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=600 mean_ms=1.808901397 p50_ms=1.809452 p95_ms=1.905985 p99_ms=2.17945 worst_ms=2.670367",
+      "PANELS count=600 mean_ms=0.4066136667 p50_ms=0.408871 p95_ms=0.586987 p99_ms=0.619248 worst_ms=0.691023",
+      "TOTAL_PHYSICS count=600 mean_ms=2.215515063 p50_ms=2.214567 p95_ms=2.42282 p99_ms=2.694342 worst_ms=3.240402",
+      "PANEL_RESULT plastic=0.5815195239 released=000 panel_nodes=36 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=2781.940986 moment=299.3756512 released=0",
+      "MOUNT_PEAK group=hinge-left force=8986.285281 moment=947.6462269 released=0",
+      "MOUNT_PEAK group=hinge-right force=11013.83761 moment=426.8117805 released=0",
+      "PEAK_RSS_KIB 596268"
+    ],
+    "wall30": [
+      "PREPARATION ms=1570.517843 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=900 mean_ms=2.043218559 p50_ms=1.811717 p95_ms=1.958463 p99_ms=2.79377 worst_ms=116.356299",
+      "PANELS count=900 mean_ms=0.5015325856 p50_ms=0.521965 p95_ms=0.554776 p99_ms=0.667819 worst_ms=0.839343",
+      "TOTAL_PHYSICS count=900 mean_ms=2.544751144 p50_ms=2.335866 p95_ms=2.488394 p99_ms=3.416985 worst_ms=117.119188",
+      "PANEL_RESULT plastic=1.229515331 released=100 panel_nodes=36 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=22381.6788 moment=1228.308627 released=1",
+      "MOUNT_PEAK group=hinge-left force=10219.21198 moment=1264.54204 released=0",
+      "MOUNT_PEAK group=hinge-right force=13681.68495 moment=1242.779517 released=0",
+      "PEAK_RSS_KIB 596340"
+    ],
+    "pole30": [
+      "PREPARATION ms=1545.117155 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=900 mean_ms=1.867751717 p50_ms=1.743358 p95_ms=1.856451 p99_ms=2.567583 worst_ms=60.88264",
+      "PANELS count=900 mean_ms=0.4857806278 p50_ms=0.516925 p95_ms=0.543395 p99_ms=0.716471 worst_ms=1.045241",
+      "TOTAL_PHYSICS count=900 mean_ms=2.353532344 p50_ms=2.263268 p95_ms=2.39622 p99_ms=2.998896 worst_ms=61.726662",
+      "PANEL_RESULT plastic=0.9039478376 released=100 panel_nodes=36 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=19238.19423 moment=762.7327612 released=1",
+      "MOUNT_PEAK group=hinge-left force=6259.270699 moment=871.2501794 released=0",
+      "MOUNT_PEAK group=hinge-right force=16796.32642 moment=1619.533126 released=0",
+      "PEAK_RSS_KIB 596060"
+    ],
+    "repeat": [
+      "PREPARATION ms=1561.537345 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=1800 mean_ms=1.96577303 p50_ms=1.298469 p95_ms=2.012155 p99_ms=12.727476 worst_ms=162.268092",
+      "PANELS count=1800 mean_ms=0.5319897683 p50_ms=0.53548 p95_ms=0.706483 p99_ms=0.788928 worst_ms=0.955993",
+      "TOTAL_PHYSICS count=1800 mean_ms=2.497762798 p50_ms=1.879004 p95_ms=2.542105 p99_ms=13.623014 worst_ms=163.068141",
+      "PANEL_RESULT plastic=1.915247482 released=100 panel_nodes=36 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=18612.4611 moment=2170.944134 released=1",
+      "MOUNT_PEAK group=hinge-left force=9169.767499 moment=1139.408005 released=0",
+      "MOUNT_PEAK group=hinge-right force=10442.83443 moment=1654.863674 released=0",
+      "PEAK_RSS_KIB 596172"
+    ]
+  },
+  "final_matrix": [
+    {
+      "case": "final-intact",
+      "exit": 0,
+      "cold_shape": "57f2bc48cd3bad24b5ca0fe89598e7abb829ff9a1376bf078b42ddff3642d885"
+    },
+    {
+      "case": "final-latch",
+      "exit": 0,
+      "cold_shape": "f9ebf9268a720a7a7ae195f74ae38e123386ef5607bd10b0538f5d13ba771dea"
+    },
+    {
+      "case": "final-one-hinge",
+      "exit": 0,
+      "cold_shape": "bd3a5b5a03393ff0c0b8549e1677679671824d8da85dc1f70a87979fb88872b2"
+    },
+    {
+      "case": "final-detached",
+      "exit": 0,
+      "cold_shape": "078c9bed7dbb6be1f78575503282d351f1c79e105fb6a1c0afd5afc1b06f7fdd"
+    },
+    {
+      "case": "final-pole8",
+      "exit": 0
+    },
+    {
+      "case": "final-repeat",
+      "exit": 0
+    },
+    {
+      "case": "final-course",
+      "exit": 0
+    },
+    {
+      "case": "final-four",
+      "exit": 0
+    }
+  ],
+  "final_case_measurements": {
+    "final-intact": [
+      "PREPARATION ms=1610.352063 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=900 mean_ms=1.735749938 p50_ms=1.723439 p95_ms=1.799644 p99_ms=1.863654 worst_ms=2.088238",
+      "PANELS count=900 mean_ms=0.3505808844 p50_ms=0.324261 p95_ms=0.527534 p99_ms=0.559495 worst_ms=0.609148",
+      "TOTAL_PHYSICS count=900 mean_ms=2.086330822 p50_ms=2.04719 p95_ms=2.295949 p99_ms=2.385038 worst_ms=2.674794",
+      "PANEL_RESULT plastic=0.2273838821 released=000 panel_nodes=36 max_speed=3.908510342 peak_ke_j=186.609414 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=3078.641202 moment=197.1114122 work_j=1.201804663 released=0",
+      "MOUNT_PEAK group=hinge-left force=4625.738235 moment=513.1336842 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=5441.191325 moment=234.3511857 work_j=2.187816736 released=0",
+      "PEAK_RSS_KIB 596288"
+    ],
+    "final-latch": [
+      "PREPARATION ms=1647.886885 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=10142.48956 moment=615.848905",
+      "RELEASE_SAVE state=100 tick=137",
+      "SIMULATION count=900 mean_ms=1.948891132 p50_ms=1.816015 p95_ms=1.870507 p99_ms=1.913228 worst_ms=78.828302",
+      "PANELS count=900 mean_ms=0.5036154767 p50_ms=0.539136 p95_ms=0.556188 p99_ms=0.619959 worst_ms=0.732431",
+      "TOTAL_PHYSICS count=900 mean_ms=2.452506609 p50_ms=2.356464 p95_ms=2.412359 p99_ms=2.580476 worst_ms=79.551446",
+      "PANEL_RESULT plastic=0.8673317945 released=100 panel_nodes=36 max_speed=19.47405908 peak_ke_j=3137.053722 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=10142.48956 moment=615.848905 work_j=25.65395663 released=1",
+      "MOUNT_PEAK group=hinge-left force=10263.52826 moment=1082.949 work_j=9.131688763 released=0",
+      "MOUNT_PEAK group=hinge-right force=10738.07095 moment=534.2173251 work_j=15.00004456 released=0",
+      "PEAK_RSS_KIB 596044"
+    ],
+    "final-one-hinge": [
+      "PREPARATION ms=1580.756932 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=19238.19423 moment=762.7327612",
+      "MOUNT_FAILURE group=hinge-right reason=mounting-sheet-tear work_j=31.43144602",
+      "RELEASE_SAVE state=101 tick=131",
+      "MOUNT_FAILURE group=hinge-left reason=mounting-sheet-tear work_j=20.88744471",
+      "SIMULATION count=1200 mean_ms=1.825012342 p50_ms=1.734771 p95_ms=1.839359 p99_ms=2.490075 worst_ms=61.141779",
+      "PANELS count=1200 mean_ms=0.42290088 p50_ms=0.411706 p95_ms=0.472221 p99_ms=0.66809 worst_ms=11.043365",
+      "TOTAL_PHYSICS count=1200 mean_ms=2.247913222 p50_ms=2.129977 p95_ms=2.265793 p99_ms=2.985169 worst_ms=61.985289",
+      "PANEL_RESULT plastic=1.624226165 released=111 panel_nodes=36 max_speed=59.94518909 peak_ke_j=11538.43655 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=19238.19423 moment=762.7327612 work_j=253.9491751 released=1",
+      "MOUNT_PEAK group=hinge-left force=6947.808716 moment=1423.756824 work_j=33.64121588 released=1",
+      "MOUNT_PEAK group=hinge-right force=16796.32642 moment=1619.533126 work_j=86.21781728 released=1",
+      "PEAK_RSS_KIB 596300"
+    ],
+    "final-detached": [
+      "PREPARATION ms=1642.006185 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=22381.6788 moment=1228.308627",
+      "MOUNT_FAILURE group=hinge-left reason=mounting-sheet-tear work_j=20.29430621",
+      "MOUNT_FAILURE group=hinge-right reason=mounting-sheet-tear work_j=20.56283799",
+      "RELEASE_SAVE state=111 tick=136",
+      "SIMULATION count=1200 mean_ms=1.99154763 p50_ms=1.831394 p95_ms=1.905604 p99_ms=2.559066 worst_ms=115.359451",
+      "PANELS count=1200 mean_ms=1.063847928 p50_ms=1.229388 p95_ms=1.352721 p99_ms=1.582074 worst_ms=8.008111",
+      "TOTAL_PHYSICS count=1200 mean_ms=3.055395558 p50_ms=3.03842 p95_ms=3.339888 p99_ms=4.140889 worst_ms=116.128632",
+      "PANEL_RESULT plastic=1.748926414 released=111 panel_nodes=36 max_speed=29.8802211 peak_ke_j=11112.28248 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=22381.6788 moment=1228.308627 work_j=88.23442732 released=1",
+      "MOUNT_PEAK group=hinge-left force=10219.21198 moment=1264.54204 work_j=76.81680827 released=1",
+      "MOUNT_PEAK group=hinge-right force=13681.68495 moment=1242.779517 work_j=50.45610373 released=1",
+      "PEAK_RSS_KIB 596148"
+    ],
+    "final-pole8": [
+      "PREPARATION ms=1546.78025 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=mounting-sheet-tear work_j=26.21893096",
+      "MOUNT_FAILURE group=hinge-right reason=mounting-sheet-tear work_j=32.21242981",
+      "MOUNT_FAILURE group=hinge-left reason=mounting-sheet-tear work_j=26.61381832",
+      "SIMULATION count=900 mean_ms=1.752071212 p50_ms=1.749149 p95_ms=1.824721 p99_ms=1.863925 worst_ms=1.945077",
+      "PANELS count=900 mean_ms=0.56377991 p50_ms=0.512707 p95_ms=0.542412 p99_ms=3.711539 worst_ms=9.816842",
+      "TOTAL_PHYSICS count=900 mean_ms=2.315851122 p50_ms=2.251095 p95_ms=2.364599 p99_ms=5.550667 worst_ms=11.665478",
+      "PANEL_RESULT plastic=1.332734007 released=111 panel_nodes=36 max_speed=20.8072175 peak_ke_j=2062.82072 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=4829.715081 moment=195.0775282 work_j=54.11595142 released=1",
+      "MOUNT_PEAK group=hinge-left force=4038.757472 moment=542.962321 work_j=117.2039399 released=1",
+      "MOUNT_PEAK group=hinge-right force=9827.764537 moment=597.5263296 work_j=95.5371525 released=1",
+      "PEAK_RSS_KIB 596232"
+    ],
+    "final-repeat": [
+      "PREPARATION ms=1561.555924 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=10142.48956 moment=615.848905",
+      "MOUNT_FAILURE group=hinge-right reason=mounting-sheet-tear work_j=27.57070138",
+      "MOUNT_FAILURE group=hinge-left reason=mounting-sheet-tear work_j=46.60784664",
+      "SIMULATION count=1800 mean_ms=1.850443997 p50_ms=1.396072 p95_ms=2.07358 p99_ms=2.71003 worst_ms=98.854407",
+      "PANELS count=1800 mean_ms=2.636648272 p50_ms=0.662289 p95_ms=6.541055 p99_ms=39.413134 worst_ms=58.299419",
+      "TOTAL_PHYSICS count=1800 mean_ms=4.487092268 p50_ms=2.372885 p95_ms=7.988203 p99_ms=48.468751 worst_ms=101.539149",
+      "PANEL_RESULT plastic=2.10234537 released=111 panel_nodes=36 max_speed=42.12606821 peak_ke_j=4367.920225 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=10142.48956 moment=615.848905 work_j=385.0565345 released=1",
+      "MOUNT_PEAK group=hinge-left force=10263.52826 moment=1082.949 work_j=167.3158775 released=1",
+      "MOUNT_PEAK group=hinge-right force=10738.07095 moment=534.2173251 work_j=195.1100978 released=1",
+      "PEAK_RSS_KIB 595964"
+    ],
+    "final-course": [
+      "PREPARATION ms=1560.390356 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "SIMULATION count=600 mean_ms=1.767412967 p50_ms=1.767793 p95_ms=1.819481 p99_ms=1.854527 worst_ms=2.06803",
+      "PANELS count=600 mean_ms=0.3599028667 p50_ms=0.355511 p95_ms=0.405044 p99_ms=0.414041 worst_ms=0.426724",
+      "TOTAL_PHYSICS count=600 mean_ms=2.127315833 p50_ms=2.131169 p95_ms=2.209527 p99_ms=2.245674 worst_ms=2.472283",
+      "PANEL_RESULT plastic=0 released=000 panel_nodes=36 max_speed=2.780162377 peak_ke_j=86.62840804 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=314.855361 moment=23.62430746 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-left force=186.3912782 moment=25.60670022 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=287.7912208 moment=19.09920913 work_j=0 released=0",
+      "PEAK_RSS_KIB 596148"
+    ],
+    "final-four": [
+      "PREPARATION ms=1877.935052 vehicles=4 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=8723.289099 moment=352.6900431",
+      "MOUNT_FAILURE group=front-latch reason=hardware-capacity force=8666.694047 moment=332.8081693",
+      "SIMULATION count=900 mean_ms=14.22588816 p50_ms=14.441393 p95_ms=14.583531 p99_ms=19.278915 worst_ms=21.419051",
+      "PANELS count=900 mean_ms=2.028252156 p50_ms=1.82975 p95_ms=1.978651 p99_ms=10.710197 worst_ms=16.798458",
+      "TOTAL_PHYSICS count=900 mean_ms=16.25414031 p50_ms=16.293556 p95_ms=16.546703 p99_ms=28.737964 worst_ms=37.742213",
+      "PANEL_RESULT plastic=0.06133620593 released=100 panel_nodes=36 max_speed=12.54775984 peak_ke_j=1755.004062 sleeping=0",
+      "PANEL_RESULT plastic=0.05463430245 released=100 panel_nodes=36 max_speed=12.65585155 peak_ke_j=1755.022116 sleeping=0",
+      "PANEL_RESULT plastic=0 released=000 panel_nodes=36 max_speed=11.90022679 peak_ke_j=1755.034115 sleeping=0",
+      "PANEL_RESULT plastic=0 released=000 panel_nodes=36 max_speed=11.89983866 peak_ke_j=1754.919838 sleeping=0",
+      "MOUNT_PEAK group=front-latch force=8723.289099 moment=352.6900431 work_j=4.871971974 released=1",
+      "MOUNT_PEAK group=hinge-left force=3722.962126 moment=407.6367537 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=6497.29683 moment=186.1170338 work_j=0.1834403079 released=0",
+      "MOUNT_PEAK group=front-latch force=8666.694047 moment=332.8081693 work_j=5.63542893 released=1",
+      "MOUNT_PEAK group=hinge-left force=3783.951728 moment=426.2471265 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=6670.468321 moment=188.4062105 work_j=0.144271937 released=0",
+      "MOUNT_PEAK group=front-latch force=338.4357088 moment=27.39233268 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-left force=216.1788805 moment=26.87884185 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=142.5801121 moment=22.93578096 work_j=0 released=0",
+      "MOUNT_PEAK group=front-latch force=338.2698441 moment=27.38614314 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-left force=216.2870296 moment=26.87722628 work_j=0 released=0",
+      "MOUNT_PEAK group=hinge-right force=142.4859419 moment=22.93220004 work_j=0 released=0",
+      "PEAK_RSS_KIB 723388"
+    ]
+  },
+  "matched_performance": [
+    {
+      "count": 1,
+      "version": "before",
+      "measurements": [
+        "PREPARATION ms=1657.831326 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.754675536 p50_ms=1.765418 p95_ms=1.822406 p99_ms=1.891487 worst_ms=9.038473",
+        "PANELS count=900 mean_ms=0.3649116467 p50_ms=0.351443 p95_ms=0.417737 p99_ms=0.576046 worst_ms=0.667439",
+        "TOTAL_PHYSICS count=900 mean_ms=2.119587182 p50_ms=2.114808 p95_ms=2.247989 p99_ms=2.473384 worst_ms=9.404904",
+        "PEAK_RSS_KIB 595764"
+      ]
+    },
+    {
+      "count": 1,
+      "version": "after",
+      "measurements": [
+        "PREPARATION ms=1550.782067 vehicles=1 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=1.738696048 p50_ms=1.752184 p95_ms=1.810885 p99_ms=1.913157 worst_ms=2.499854",
+        "PANELS count=900 mean_ms=0.3657247056 p50_ms=0.353647 p95_ms=0.41871 p99_ms=0.568451 worst_ms=0.670263",
+        "TOTAL_PHYSICS count=900 mean_ms=2.104420753 p50_ms=2.112654 p95_ms=2.236196 p99_ms=2.388674 worst_ms=3.149729",
+        "PEAK_RSS_KIB 595984"
+      ]
+    },
+    {
+      "count": 4,
+      "version": "before",
+      "measurements": [
+        "PREPARATION ms=1888.911885 vehicles=4 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=14.18110894 p50_ms=14.360127 p95_ms=14.513716 p99_ms=19.555964 worst_ms=21.482236",
+        "PANELS count=900 mean_ms=2.031937133 p50_ms=1.827085 p95_ms=1.984382 p99_ms=10.816165 worst_ms=16.905136",
+        "TOTAL_PHYSICS count=900 mean_ms=16.21304608 p50_ms=16.219743 p95_ms=16.502086 p99_ms=28.898519 worst_ms=37.747215",
+        "PEAK_RSS_KIB 722360"
+      ]
+    },
+    {
+      "count": 4,
+      "version": "after",
+      "measurements": [
+        "PREPARATION ms=1886.274722 vehicles=4 sections=24 bonds=40 body_triangles=71636 skin_numeric_payload_bytes=24932016",
+        "SIMULATION count=900 mean_ms=14.05024731 p50_ms=14.270698 p95_ms=14.397687 p99_ms=18.867897 worst_ms=20.904206",
+        "PANELS count=900 mean_ms=2.025756307 p50_ms=1.824771 p95_ms=1.977659 p99_ms=10.856961 worst_ms=16.442243",
+        "TOTAL_PHYSICS count=900 mean_ms=16.07600362 p50_ms=16.11711 p95_ms=16.358876 p99_ms=28.33115 worst_ms=36.956724",
+        "PEAK_RSS_KIB 723248"
+      ]
+    }
+  ],
+  "untorn_car_and_wheel_telemetry": "identical before/after in both matched one-car and four-car runs",
+  "raw_log_sha256": {
+    "judas_vehicle_dynamics_tests-final.log": "1a143d316367c2e8cf86632ed91be632be0fbc9c270060db20e2bfecc8edd157",
+    "judas_powertrain_script_tests-final.log": "e35086fe9cfd6f624805d35baebf2a014848b009318c3d3a96bfb1a90b862f6e",
+    "judas_powertrain_lifecycle_tests-final.log": "653dd3ed5fef92500d2311beb69ce6a21baa02dcc717094a694eda50165e4f2b",
+    "judas_powertrain_tests-final.log": "7ea11bed3f233192fd7112d838467d256df696a9d3eff4d58329395901c13f73",
+    "judas_mechanical_damage_tests-final.log": "e1e0bea6aac7ddf4d3611cbe71ee5390dd83827e3c73539d16fe0148edf56a02",
+    "judas_mechanical_connection_tests-final.log": "fcf91abe838b72976ee5ab6da9d1aa4126e0f0b660e5fe2a23d8b2dea06e5735",
+    "judas_section_material_tests-final.log": "fb5d69c4fa9a042b8a7b6d21c69cb77675417868502bf26ee2960ed52bf49950",
+    "judas_bending_tests-final.log": "fe905beb39a17eeb7bc05e88107acc5d3acb3c3767a15d283f2f95571b9479b5",
+    "judas_fracture_tests-final.log": "a618be906a168f88b6a5a346cd25dae2d22e50060cfaa877c0b5e4f9405f28f1",
+    "judas_deformable_tests-final.log": "ad45829f5e0e04e82883b69530a54ecc147f9128950b33ddf010d57afd6357af",
+    "judas_structural_tests-final.log": "f75569e8c18c1700cad80310be605a29f117cf458780b41b66e730d362d71efa",
+    "visual-partial-published.log": "8af0ece9a8210fd39567a596172fa070c89930382ab752452cc6ce3fb6d6949d",
+    "relink-final.log": "1bf72e4c32fe616ddd36084d8eb033439f49513cb2e10fc0d5101ed44738ff1d",
+    "wheel-publication-before.log": "8f179a321f775a8b0b0a9598695000d2688ebc635594294c2397dfd6069f4195",
+    "doc-controls.log": "69d3092e799b33eb7dca64bf94a3536ab4fa9fc5969f0629675edb863629b707",
+    "cmake-controls.log": "19cf97f2e39c68e3654009e2b1b7cc92771ec6e16570336655f90d7d43a78236",
+    "visual-debris.log": "0c6277a0ef3d60436a0651b5838991960d549d35ceae5e876b9ea15f1460bdf4",
+    "visual-partial.log": "dc7f9f22e99ef9358c740b287c208b7e5434dec334c6fef79992ed1a864324d3",
+    "visual-detach.log": "a4b26adf72dfdc3281c0065bb18d5943960f3acf1c7adf5ffb26681cf513be83",
+    "gpu-after.log": "171983cc04ee1b8fc5a01232492ac4009361f4aa39102d2c5ad3aa47438029c6",
+    "gpu-before.log": "c0884f988c57f206a9e66cd7fcf104650f7f2b5af2fe3852c2b4fd4544cc4def",
+    "perf-after-4.log": "e74f9cb525c5264971b529cefbef09c9569eb4a9e7e30f9779e53c285bdb805f",
+    "perf-before-4.log": "9ceb59bd74bc6d5fcebbd7854f22b025222a9a34888ae70c157efb264a8f8328",
+    "perf-after-1.log": "1c6de44e59ff7eda4765e18f52d67beb1a7000abe1421ca5c0f15d0c410add31",
+    "perf-before-1.log": "51bfe661e57af23ed6f915267e32ad6ed6a9aa2fdcf5ee06ac6ece56d937f6ff",
+    "judas_vehicle_dynamics_tests.log": "1a143d316367c2e8cf86632ed91be632be0fbc9c270060db20e2bfecc8edd157",
+    "judas_powertrain_script_tests-fresh.log": "e35086fe9cfd6f624805d35baebf2a014848b009318c3d3a96bfb1a90b862f6e",
+    "judas_powertrain_script_tests.log": "60d72977ac4db9ef9ee8c0f11e532fae513212616456240d65f703a178a90ad1",
+    "judas_powertrain_lifecycle_tests.log": "653dd3ed5fef92500d2311beb69ce6a21baa02dcc717094a694eda50165e4f2b",
+    "judas_powertrain_tests.log": "3988f18f0213b49fd4a15723bbe4dde8dac66186d4810e578d7eaf31980f41ef",
+    "judas_mechanical_damage_tests.log": "e1e0bea6aac7ddf4d3611cbe71ee5390dd83827e3c73539d16fe0148edf56a02",
+    "judas_mechanical_connection_tests.log": "fcf91abe838b72976ee5ab6da9d1aa4126e0f0b660e5fe2a23d8b2dea06e5735",
+    "judas_section_material_tests.log": "fb5d69c4fa9a042b8a7b6d21c69cb77675417868502bf26ee2960ed52bf49950",
+    "judas_bending_tests.log": "140e8a16c89d2b19d27471e55d73228633f3bf00c3a9405b4f8fd88485b3b3c2",
+    "judas_fracture_tests.log": "a618be906a168f88b6a5a346cd25dae2d22e50060cfaa877c0b5e4f9405f28f1",
+    "judas_deformable_tests.log": "ad45829f5e0e04e82883b69530a54ecc147f9128950b33ddf010d57afd6357af",
+    "judas_structural_tests.log": "f75569e8c18c1700cad80310be605a29f117cf458780b41b66e730d362d71efa",
+    "final-four.log": "3e260c1427a96eed9ccb29b41e389efdaa579c01f333ad1bff61a883bba530d8",
+    "final-course.log": "729a239fe53eddaab9f2d160e842ae5c7394a1f4ac938548d5595cf72b533df1",
+    "final-repeat.log": "1973190cf7b50448f805bc261ce28bb2cd3a156cde94930d406dd58049e6af6c",
+    "final-pole8.log": "1c1d82df68d3572851d61947464e86d3df0fed42b1d8ed81749f660393c97bd2",
+    "final-detached-cold.log": "985c1d6b0cad731b9dcc345638fbd0b6505a31da001642a42fedb7b4ba9d0f33",
+    "final-detached.log": "5107e92e4409b54b3edd9c57caad07059302b8ed5500565554c866e315b117bd",
+    "final-one-hinge-cold.log": "f0bbc05239a1b39a3a2dc52ed89f9d1799523a6cef95505ebd17510e5d3620d9",
+    "final-one-hinge.log": "1892a12cf1cd782ee088aee34ffaae0d22b3d87a64391a1035cd4fdfd74a3054",
+    "final-latch-cold.log": "e52ff9beb444b46a2ff4b0cce80f3d374eb481a8833688205cf3880b7e126892",
+    "final-latch.log": "3a912ae97f46215bb4dbefab4b2be373d12816ca4c16f06ae80432fb3749a780",
+    "final-intact-cold.log": "2ccf2573f983611199fd0b7fbee4485f978e258ced5924880a14abef4b3d9fdb",
+    "final-intact.log": "f2fbf120d2a8e4f8228ee194d07a021146e6fa63c81e8c2db938f9e11bbfb6eb",
+    "structural.log": "0f602e8a730986d78e17053fce685d2ba622f37f4f502f474e36e40504cd48e1",
+    "observed-wall-partial.log": "747198b1af2539fe18708cb2be9a60e532236c95f206ea8beb5e131baaa5fd4b",
+    "observed-pole30.log": "a8aa538226ecf755c64c580d4f53195e3c22f170266dd66d742ee211b71b8752",
+    "observed-wall30.log": "a2d695ebde41cd80792b74bf7bb7df72ca9be0b87cf1265642ae0d41b751221c",
+    "tear-repeat.log": "c4e1a105c5019b12ba43084c420a83d463dbb4c4845972f04de03f5653757eab",
+    "tear-pole30.log": "39c3d535cb1e8924cc8a148888ddf51d515ff5cfb95da1969910aed62ba6b8f6",
+    "tear-wall30.log": "7a84158e73651e5c950a2b1a169663e0cb713b066dd0c2b1871e10edec3440cb",
+    "tear-wall16.log": "7a6bdad5a277a090a5c47b15ef92643050817d038d24a24fa76ce3fc6fc9f0b1",
+    "tear-wall8.log": "af294cc9ed393860147bfde5f01274a69d273e9d24d8001dadd900d8b166d2c8",
+    "tear-wall4.log": "8935ed88492d719e5d4b4bea4f126b004241f65bd94eb2f88704e45ec8010882",
+    "tear-course.log": "42370fc771ce3c11c588a10ca314ff5ae3ed175c83286fca24207d3c4304e28a",
+    "work-repeat.log": "b74577f2daeabb13d6242aa67e5afbdbc024483e32152df0a8a4c75adcad6a87",
+    "work-pole30.log": "c1f2022a8c3423fb1c12629f2b94c6eb4533ec10b40403745e7747a6ee50872f",
+    "work-wall30.log": "10e151f01c927c9c9fa901c3839d4ce45e81271568ed3cc62ea8944b7745b050",
+    "work-wall16.log": "1dba3fb1287514e10f1ef0c06a6e052da080122544e44980bb40794e977a6032",
+    "work-wall8.log": "0b42e76886a172c5df311c0927bd27d5cc4bee45fbd51a400a65b93bd37e4cd6",
+    "work-quiet.log": "5f0bf1bed8b51bc5bda01ac19c1220f8e66aadaa0bc8fb6601791d1d4846765f",
+    "repeat.log": "488e6a667a5f13c6ed012daa891aa69cc1b8194667d6bca3ee601e690b33f99b",
+    "pole30.log": "a9d9da5f1693e0ae50ceef3ef6eec485e87db92667079791ddad834973d28710",
+    "wall30.log": "c36765b149442b38d00a3a3f10f569999da03a27a095beb6e3bd858ea130c4d6",
+    "wall8.log": "854ffbab0eaf6bdcd7d387d9cb7dacfc4fe7f078f0edc5152e50fe1c45549071",
+    "course.log": "093adeb6415da1257698324716c7fe2e06bf6a177e732deb5f6588f03a71fc3d"
+  },
+  "limitations": [
+    "Effective mounting-sheet toughness is a game calibration, not manufacturer data",
+    "Attached and partly attached bonnet still excludes overlapping coarse inner frame; detailed engine-bay contact unqualified",
+    "Only bonnet has local material; no general sheet tearing or production authoring",
+    "Severe structural impact spikes and four-car CPU limits remain",
+    "No Windows or Android execution of the revised local proof",
+    "Original third-party assets and visual evidence stay private"
+  ],
+  "human_accepted": false,
+  "wheel_publication": {
+    "cause": "Wheel caches restored before structural carrier bodies; missing wheels until simulation resumed",
+    "before": "wheel-publication-before.log: reproduced failure before first physics step",
+    "after": "Five structural crash cold restore controls pass; exact initial restored screenshot shows wheels",
+    "fix": "Final WorldPersistence::Published derived wheel-pose refresh; no physics step"
+  },
+  "exploratory_unreached_state": {
+    "case": "observed-wall-partial",
+    "requested": "110",
+    "result": "nonzero exit because both hinges failed in the same fixed step; not counted as a partial-state pass. Offset-pole 101 supplies the successful one-hinge proof."
+  },
+  "desktop_gpu": {
+    "gpu-before": [
+      "PANEL_MAPPING_UPLOAD count=502 mean_ms=0.2938608247 p50_ms=0.275911 p95_ms=0.343528 p99_ms=0.348177 worst_ms=0.371481",
+      "RENDER_CPU count=502 mean_ms=0.8712364323 p50_ms=0.75791 p95_ms=0.914175 p99_ms=0.936878 worst_ms=37.906706",
+      "RENDER_GPU count=501 mean_ms=1.270749701 p50_ms=1.148352 p95_ms=1.395296 p99_ms=1.44656 worst_ms=36.487712",
+      "PEAK_RSS_KIB 609160"
+    ],
+    "gpu-after": [
+      "PANEL_MAPPING_UPLOAD count=505 mean_ms=0.2972834832 p50_ms=0.276481 p95_ms=0.344761 p99_ms=0.355811 worst_ms=0.379997",
+      "RENDER_CPU count=505 mean_ms=0.8246220495 p50_ms=0.762809 p95_ms=0.928702 p99_ms=0.986291 worst_ms=8.918757",
+      "RENDER_GPU count=504 mean_ms=0.9855752381 p50_ms=0.96064 p95_ms=1.007296 p99_ms=1.174272 worst_ms=7.431168",
+      "PEAK_RSS_KIB 610972"
+    ]
+  },
+  "gpu_timing_limit": "Single paired diagnostic, different counts and normal clock/cache variance; no GPU optimization claimed"
+}
