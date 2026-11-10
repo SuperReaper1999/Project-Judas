@@ -61,6 +61,7 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     PhysicsWorld& physics = world.Physics();
     const GravityField& gravity = world.Gravity();
     const unsigned structuralIntervals=world.MechanicalSubsteps();
+    const bool coupledMaterials=world.BeginDeformableStep();
     if(structuralIntervals==1)PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
                                 BodyHandle{},[&world](size_t slot,glm::vec3 position){
                                     return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);
@@ -83,7 +84,7 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
         world.BeginVehicleStep(fixedDeltaTime);
         const unsigned materialRounds=(world.MechanicalIterations()+3)/4;
         auto coupling=PhysicsWorld::VelocityCoupling::ForEachSubstep(std::max(4u,materialRounds),
-            [&](const auto& interval){world.SolveVehicleSubstep(interval);},
+            [&](const auto& interval){world.SolveVehicleSubstep(interval);world.AdvanceDeformablesSubstep(interval);},
             [&](const auto& interval){world.CompleteVehicleSubstep(interval);});
         physics.StepCoupled(fixedDeltaTime,structuralIntervals,
             [&](float h,unsigned){
@@ -97,11 +98,12 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
         world.UpdatePowertrains(fixedDeltaTime);
         world.UpdateWheels(fixedDeltaTime);
         world.ResolvePowertrainLoads(fixedDeltaTime);
-        physics.Step(fixedDeltaTime);
+        if(coupledMaterials){auto materialPhase=PhysicsWorld::VelocityCoupling::ForEachSubstep(1,[&](const auto& interval){world.AdvanceDeformablesSubstep(interval);});physics.Step(fixedDeltaTime,&materialPhase);}
+        else physics.Step(fixedDeltaTime);
     }else {
         std::map<EntityId,WheelState> wheelPrevious;
         for(const auto& object:world.ScriptObjects(false))if(object.wheel)if(auto* wheel=world.RuntimeWheel(object.id))wheelPrevious.emplace(object.id,wheel->state);
-        PhysicsWorld::VelocityCoupling materialPhase;materialPhase.iterations=world.MechanicalIterations();
+        auto materialPhase=PhysicsWorld::VelocityCoupling::ForEachSubstep(std::max(1u,(world.MechanicalIterations()+3)/4),[&](const auto& interval){world.AdvanceDeformablesSubstep(interval);});
         physics.StepCoupled(fixedDeltaTime,structuralIntervals,
         [&](float h,unsigned){
             if(structuralIntervals>1)PrepareDynamicBodiesForStep(world.DynamicBodies(),gravity,physics,h,
@@ -144,7 +146,7 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     world.AdvanceSimulationTime(fixedDeltaTime);
 
     world.DispatchPhysicsEvents(&input,fixedDeltaTime);
-    world.DispatchFractureEvents();
+    world.DispatchDeformableEvents();
     if(world.Scripts())world.Scripts()->DrainSignals(&input,fixedDeltaTime,false);
     world.NetworkAfterFixed(fixedDeltaTime);
 

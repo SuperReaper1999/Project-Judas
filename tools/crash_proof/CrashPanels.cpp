@@ -1,6 +1,6 @@
 #include "CrashPanels.h"
 #include "deformables/PanelCook.h"
-#include "PanelIslands.h"
+#include "deformables/PanelIslands.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
 #include "GravityField.h"
@@ -17,7 +17,7 @@ MeshData ExtractCrashHood(MeshData& body,const std::vector<std::string>& additio
     MeshData hood=body, remaining=body;
     hood.vertices.clear();hood.indices.clear();hood.primitives.clear();
     remaining.vertices.clear();remaining.indices.clear();remaining.primitives.clear();
-    const auto islands=CrashPanelIslands(body);
+    const auto islands=MeshPanelIslands(body);
     struct Bounds{glm::vec3 lo{1e20},hi{-1e20};};std::map<unsigned,Bounds> bounds;
     for(unsigned t=0;t<body.indices.size();t+=3){auto& b=bounds[islands[t/3]];for(unsigned k=0;k<3;++k){auto v=body.vertices[body.indices[t+k]].position;b.lo=glm::min(b.lo,v);b.hi=glm::max(b.hi,v);}}
     for(const auto& p:body.primitives){

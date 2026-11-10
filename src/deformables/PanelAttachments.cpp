@@ -19,8 +19,17 @@ bool DeformableInstance::CommitPanelFailures(){
     if(!panelBending)return false;
     bool changed=false;
     for(unsigned i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];
-        if(a.enabled&&!released[i]&&a.tearWork>0&&AttachmentWork(i)>=a.tearWork){released[i]=1;changed=true;}
+        if(a.enabled&&!released[i]&&a.tearWork>0&&AttachmentWork(i)>=a.tearWork){released[i]=1;attachmentEvents[a.group]="mount-tear";changed=true;}
     }
     if(changed)Wake();
     return changed;
+}
+
+bool DeformableInstance::SetPanelMaterial(const DeformablePanelMaterial& material,std::string& error){
+    if(!panelBending||!settings.panel.enabled||!material.enabled){error="panel material must be authored before runtime editing";return false;}
+    auto candidate=settings;candidate.panel=material;
+    if(!ValidDeformableSettings(candidate,error))return false;
+    settings.panel=material;panelBending->stiffness=material.stiffness;
+    panelBending->yieldMoment=material.yieldMoment;panelBending->hardening=material.hardening;
+    Wake();error.clear();return true;
 }

@@ -438,6 +438,9 @@ public:
     struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
     DeformableInstance* RuntimeDeformable(EntityId,std::string& error,bool staged=false);
     void UpdateDeformables(double dt);
+    bool SampleDeformableTargets(EntityId,bool currentRigidPose=false);
+    bool BeginDeformableStep();
+    void AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCoupling::Substep&);
     bool PrepareRigidFracture(EntityId,std::string&);
     BodyHandle DeformableAttachmentBody(const DeformableAttachment&,std::string&);
     void UpdatePanelCollisionExclusions(DeformableInstance&);
@@ -447,7 +450,7 @@ public:
     EntityId FracturePartOwner(EntityId)const;
     unsigned MechanicalSubsteps();
     unsigned MechanicalIterations();
-    void DispatchFractureEvents();
+    void DispatchDeformableEvents();
     bool LoadFracturePart(EntityId,unsigned,glm::vec3,bool impulse);
     EntityId FracturePartEntity(EntityId,unsigned,bool includeDisabled=false)const;
     void DrawDeformables(Renderer&,float alpha)const;

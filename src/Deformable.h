@@ -34,7 +34,7 @@ struct DeformableAttachment {
     glm::dvec3 offset{0};
     bool enabled=true;
     // Optional finite strength of a physical body/material patch. Zero keeps
-    // the legacy unlimited connection. Limits are resultant N and N m, not
+    // an unbreakable authored connection. Limits are resultant N and N m, not
     // per-node thresholds or a gameplay damage counter.
     double forceLimit=0,torqueLimit=0;
     double tearWork=0; // J of irreversible local mounting-sheet work; zero disables this failure mode.
@@ -103,8 +103,9 @@ struct DeformableLocation {uint64_t generation=0;unsigned triangle=0;glm::dvec3 
 struct DeformableHit {bool hit=false;double distance=0;glm::dvec3 point{0},normal{0};DeformableLocation location;};
 struct DeformableStats {size_t nodes=0,triangles=0,tets=0,contacts=0,candidates=0;unsigned substeps=0,iterations=0;double minimumJacobian=1,maximumStrain=0;bool capacityExceeded=false;};
 
-// Targets are sampled by RuntimeWorld AFTER ordinary pose resolution, once per
-// fixed step. Prescribed targets never receive reaction; Body targets do.
+// RuntimeWorld samples physical Body targets at native mechanical boundaries.
+// Prescribed skeletal targets currently use the final animation phase.
+// Prescribed targets never receive reaction; Body targets do.
 struct DeformableTarget {bool valid=false;glm::dmat4 previous{1},current{1};BodyHandle body;};
 struct DeformableAttachmentState {
     glm::dvec3 force{0},moment{0}; // Last substep's actual body reaction, world-space.
@@ -119,6 +120,8 @@ public:
     std::vector<glm::dmat3> plasticRest;
     std::vector<uint8_t> released;
     std::vector<DeformableAttachmentState> attachmentState;
+    // Bounded transient completed releases. Restoring state never replays events.
+    std::map<std::string,std::string> attachmentEvents;
     // Instance-owned signed-dihedral material; persisted with the physical state.
     std::optional<PanelBending> panelBending;
     bool sleeping=false;double quietSeconds=0;
@@ -134,6 +137,7 @@ public:
     void Initialize(std::shared_ptr<const DeformableAsset>,const DeformableSettings&,const glm::dmat4&,uint64_t);
     void Reset(const glm::dmat4&);
     bool SetMaterial(const DeformableMaterial&,std::string&);
+    bool SetPanelMaterial(const DeformablePanelMaterial&,std::string&);
     bool Impulse(const std::string& group,glm::dvec3 impulse);
     bool Impulse(const DeformableLocation&,glm::dvec3 impulse);
     bool Force(const std::string& group,glm::dvec3 force);
@@ -141,6 +145,12 @@ public:
     void Wake(){sleeping=false;quietSeconds=0;}
     void ShiftOrigin(glm::dvec3 delta);
     void Step(double dt,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&);
+    // Owner-thread chronological coupling. Forces and irreversible publication
+    // belong to the whole fixed step, not each rigid interval.
+    bool BeginPhysicalStep();
+    void AdvancePhysicalInterval(double dt,unsigned subdivisions,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&,bool rigidPoseIsCurrent);
+    void EndPhysicalStep(double dt,PhysicsWorld&);
+    bool PhysicalStepActive()const{return integrating;}
     void MapRender(double alpha,MeshData&)const;
     DeformableHit Raycast(glm::dvec3 origin,glm::dvec3 direction,double maximum)const;
     void Persist(SaveArchive&);
@@ -153,6 +163,10 @@ public:
     // exclusions. Both participants receive the same mass-weighted projection.
     static void SurfaceContacts(DeformableInstance&,DeformableInstance&,double);
 private:
+    bool integrating=false,integrationTargetMoving=false,currentRigidContactPose=false;
+    unsigned integrationSubsteps=1;
+    double integrationDeltaTime=0;
+    std::vector<glm::dvec3> intervalReference;
     JudasDeformables::SleepContacts sleepingContacts;
     std::vector<double> inverseMass,mass,lambda,volumeLambda;
     std::vector<glm::dvec3> start,forces,lastGravity;

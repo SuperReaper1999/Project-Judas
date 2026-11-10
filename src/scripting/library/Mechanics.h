@@ -69,6 +69,9 @@ export class Deformable {
             targetId: options.target?.id
         });
     }
+    setPanelMaterial(options) {
+        return call("deformablePanelMaterial", this.id, this.epoch, options);
+    }
     setMaterial(options) {
         return call("deformableMaterial", this.id, this.epoch, options);
     }

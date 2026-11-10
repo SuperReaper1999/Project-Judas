@@ -1,4 +1,5 @@
 #include "PanelCook.h"
+#include "SkeletalAnimation.h"
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -6,14 +7,41 @@
 #include <map>
 namespace {
 using V=glm::dvec3;
+MeshVertex RestVertex(const MeshData& source,unsigned index,const std::vector<glm::mat4>& palette,float& orientation){
+    auto vertex=source.vertices.at(index);orientation=1;
+    if(palette.empty())return vertex;
+    const auto& weights=source.skinVertices.at(index);glm::mat4 transform(0);
+    for(unsigned k=0;k<4;++k){transform+=palette.at(weights.joints[k])*weights.weights[k];transform+=palette.at(weights.joints1[k])*weights.weights1[k];}
+    auto linear=glm::mat3(transform);float determinant=glm::determinant(linear);
+    if(!std::isfinite(determinant)||std::abs(determinant)<1e-12f)throw std::invalid_argument("singular imported panel rest frame");
+    auto unit=[](glm::vec3 p){float length=glm::length(p);return length>1e-12f?p/length:glm::vec3(0);};
+    orientation=determinant<0?-1.f:1.f;vertex.position=glm::vec3(transform*glm::vec4(vertex.position,1));
+    vertex.normal=unit(glm::transpose(glm::inverse(linear))*vertex.normal);
+    vertex.tangent=glm::vec4(unit(linear*glm::vec3(vertex.tangent)),vertex.tangent.w*orientation);
+    return vertex;
+}
+std::vector<glm::mat4> RestPalette(const MeshData& source){
+    if(!source.skeletal)return {};
+    if(source.skinVertices.size()!=source.vertices.size())throw std::invalid_argument("incomplete imported panel rest-skin stream");
+    return ResolveSkinMatrices(source.skeletal->skeleton,source.skeletal->skeleton.rest);
+}
+MeshData FlattenRest(const MeshData& source){
+    auto output=source;auto palette=RestPalette(source);std::vector<float> orientation(source.vertices.size(),1);
+    for(unsigned i=0;i<output.vertices.size();++i)output.vertices[i]=RestVertex(source,i,palette,orientation[i]);
+    for(size_t t=0;t+2<output.indices.size();t+=3)if(orientation.at(output.indices[t])+orientation.at(output.indices[t+1])+orientation.at(output.indices[t+2])<0)std::swap(output.indices[t+1],output.indices[t+2]);
+    output.skeletal.reset();output.skinVertices.clear();return output;
+}
+
 glm::dvec3 Barycentric(const V& p,const V& a,const V& b,const V& c,unsigned u,unsigned v){
     glm::dmat2 e(glm::dvec2(b[u]-a[u],b[v]-a[v]),glm::dvec2(c[u]-a[u],c[v]-a[v]));
     if(std::abs(glm::determinant(e))<1e-14)return V(-1);
     auto w=glm::inverse(e)*glm::dvec2(p[u]-a[u],p[v]-a[v]);return {1-w.x-w.y,w.x,w.y};
 }
 }
-bool CookDeformablePanel(const MeshData& mesh,const PanelCookSettings& settings,DeformableAsset& output,std::string& error){
+bool CookDeformablePanel(const MeshData& source,const PanelCookSettings& settings,DeformableAsset& output,std::string& error){
     try{
+        MeshData flattened;if(source.skeletal)flattened=FlattenRest(source);
+        const auto& mesh=source.skeletal?flattened:source;
         if(!std::isfinite(settings.padding)||settings.padding<0||settings.padding>1||settings.normalAxis>2||settings.columns<2||settings.rows<2||settings.columns>32||settings.rows>32)throw std::invalid_argument("panel grid requires 2..32 rows/columns and normal axis X/Y/Z");
         if(mesh.vertices.empty()||mesh.vertices.size()>65536||mesh.indices.empty()||mesh.indices.size()>65536||mesh.indices.size()%3)throw std::invalid_argument("select a bounded panel region (at most 65536 vertices/indices)");
         const unsigned n=settings.normalAxis,u=n==0?1:0,v=n==2?1:2;
@@ -75,9 +103,12 @@ void MapDeformablePanel(const DeformableInstance& material,double alpha,MeshData
     }
 }
 bool SelectDeformablePanelRegion(const MeshData& source,const std::string& part,MeshData& output,std::string& error){
-    if(part.empty()){output=source;error.clear();return true;}
+    try{
+    if(part.empty()){output=FlattenRest(source);error.clear();return true;}
+    auto palette=RestPalette(source);
     MeshData selected;selected.sourceNodes=source.sourceNodes;
     std::map<unsigned,unsigned> vertices;std::map<int,int> materials;
+    std::vector<float> orientation;
     for(const auto& primitive:source.primitives)if(primitive.part==part){
         if(primitive.first>source.indices.size()||primitive.count>source.indices.size()-primitive.first||primitive.count%3){error="invalid source panel primitive";return false;}
         int slot=-1;
@@ -90,11 +121,13 @@ bool SelectDeformablePanelRegion(const MeshData& source,const std::string& part,
         for(unsigned i=primitive.first;i<primitive.first+primitive.count;++i){auto sourceIndex=source.indices[i];
             if(sourceIndex>=source.vertices.size()){error="source panel index out of range";return false;}
             auto [v,added]=vertices.emplace(sourceIndex,unsigned(selected.vertices.size()));
-            if(added)selected.vertices.push_back(source.vertices[sourceIndex]);
+            if(added){float sign=1;selected.vertices.push_back(RestVertex(source,sourceIndex,palette,sign));orientation.push_back(sign);}
             selected.indices.push_back(v->second);
         }
         selected.primitives.emplace_back(first,primitive.count,slot,primitive.part,primitive.node);
     }
     if(selected.indices.empty()){error="imported panel part not found: "+part;return false;}
+    for(size_t t=0;t<selected.indices.size();t+=3)if(orientation[selected.indices[t]]+orientation[selected.indices[t+1]]+orientation[selected.indices[t+2]]<0)std::swap(selected.indices[t+1],selected.indices[t+2]);
     output=std::move(selected);error.clear();return true;
+    }catch(const std::exception& exception){error=exception.what();return false;}
 }

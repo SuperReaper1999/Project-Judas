@@ -133,3 +133,59 @@ released all three bonnet mounts and accumulated permanent panel plasticity.
 Its outcome is close to the accepted reference, not bit-identical; no performance
 improvement is claimed from that integration run. Full collision/coupling and
 sustained multi-model qualification remains outstanding.
+
+## Chronological material coupling — qualification in progress
+
+`MaterialIntegration.*` separates whole-fixed-step preparation/publication from
+chronological material advancement. Forces last the entire fixed step and are
+consumed once; interpolation history is captured once. Attachment failure and
+its events publish only at the completed boundary. Saving a half-solved interval
+is rejected. The standalone wrapper retains its existing solve path.
+
+Body/world-attached material now participates through MK2's existing native
+velocity callback, before its authoritative pose advance. MK2 remains the only
+rigid solver. Current skeletal-target material still uses the established final
+animation phase; its phase unification is outstanding. Structural owners still
+retain the accepted outer cadence in this checkpoint slice: removing global
+quality-driven subdivisions is **not yet claimed complete**.
+
+The coupling's known-answer free mount is 2 kg, attached to 2 kg of material,
+initial total momentum 2 kg m/s. Both local qualities (4 and 16) preserve momentum
+to within 1.6e-6 kg m/s and advance the rigid mount about 0.008333 m during 1/60 s,
+as expected for their shared velocity about 0.5 m/s. Reactions now affect that
+interval's actual pose, not just the following frame. A rejected first run at
+quality 16 advanced 0.011276 m: it incorrectly measured legitimate inner-step
+motion against a stationary boundary. Native drift now uses the interval's
+initial material reference and duration, and target poses come directly from MK2
+rather than stale presentation records. The existing drift gain is unchanged;
+no damping, velocity reset or rotation lock was introduced.
+
+`setPanelMaterial({stiffness,yieldMoment,hardening})` edits an authored panel in
+fixed callbacks without clearing its accumulated work or permanent rest angles.
+State readback includes panel parameters, maximum plastic angle and total work.
+`onAttachmentFailure({attachments:[{group,cause}]})` reports `force`, `torque`,
+`mount-tear`, `target-lost` or `explicit`. Native world events share one runtime
+lifecycle/error boundary in `scripting/WorldEvents.cpp`; existing `onFracture`
+payload and semantics are preserved. Restore does not replay historical releases.
+
+Imported hierarchy/rest-skin transforms are now applied exactly once before panel
+fitting, including negative scale and triangle handedness. A panel's renderer does
+not apply the original skeleton again. Original synthetic 100x/mirrored hierarchy
+controls cover both selected-region authoring and direct CLI cooking.
+
+Sustained native controls now pass at both tested local qualities: after 121
+intervals of shared free motion, momentum error is below 2.5e-6 kg m/s, attachment
+COM drift below 5e-8 m, and kinetic energy about 0.499999 J versus initial 1 J
+(the attachment's expected inelastic velocity matching). Both initially resting
+participants naturally sleep. Pure material worlds also advance without rigid
+actors. The combined native deformable suite passes **132/132**; real-VM mechanics
+**20/20**, shared-runtime module acceptance **8/8**, attachment **32/32**, solid
+bending **39/39**, structural/crash **174/174**, and vehicle dynamics **97/97** pass.
+These scoped passes do not replace the remaining real-car/coupled impact,
+skeletal-phase, performance, SDK, cold-process or platform qualification.
+
+The accepted detailed structural skin and its imported-surface island preparation
+now live in `src/deformables/StructuralSkin.*` and `PanelIslands.h`, linked once by
+the engine. The crash proof and original structural tests use that implementation;
+there are no forwarding headers at their former tool paths. Imported UV/material
+islands are preparation hints, not a universal semantic panel classifier.

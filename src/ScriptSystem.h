@@ -40,6 +40,7 @@ public:
     void UIFrame(const InputSystem* input,float dt);
     void Presentation(const InputSystem* input,float dt,float alpha);
     void FractureEvent(SceneObjectId,uint64_t,const std::vector<std::string>&,const std::vector<unsigned>&);
+    void AttachmentEvent(SceneObjectId,const std::map<std::string,std::string>&);
     void PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse,SceneObjectId selfBody=0,const std::string& selfJoint="",SceneObjectId otherArticulation=0,const std::string& otherJoint="");
     void UIEvents(const InputSystem* input,float dt);
     void DrainSignals(const InputSystem* input,float dt,bool ui);

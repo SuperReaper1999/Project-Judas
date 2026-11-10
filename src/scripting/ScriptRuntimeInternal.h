@@ -1,7 +1,7 @@
 #pragma once
 
-// Private shared VM/session representation. Only the runtime coordinator and
-// metadata implementation include this; subsystem bindings use BindingContext.
+// Private shared VM/session representation. Only runtime-owned lifecycle, metadata
+// and event implementations include this; subsystem bindings use BindingContext.
 #include "../../third_party/nlohmann/json.hpp"
 #include "../AssetDatabase.h"
 #include "../NetworkSession.h"

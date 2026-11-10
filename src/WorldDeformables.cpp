@@ -8,6 +8,7 @@
 #include <atomic>
 #include <algorithm>
 #include <fstream>
+#include <set>
 #include <glm/gtc/matrix_transform.hpp>
 namespace {
 std::atomic<uint64_t> epochs{1};
@@ -60,14 +61,9 @@ DeformableInstance* RuntimeWorld::RuntimeDeformable(EntityId id,std::string& err
     error.clear();
     return &record.simulation;
 }
-void RuntimeWorld::UpdateDeformables(double dt){
-    if(m_deformableOwners.empty())return;
-    JUDAS_PROFILE_SCOPE("World deformables");
-    for(auto id:m_deformableOwners){if(!IsPublished(id))continue;
-        std::string error;
-        auto* simulation=RuntimeDeformable(id,error);
-        if(!simulation)continue;
-        auto& record=m_deformables.at(id);
+bool RuntimeWorld::SampleDeformableTargets(EntityId id,bool currentRigidPose){
+    std::string error;auto* simulation=RuntimeDeformable(id,error);if(!simulation)return false;
+    auto& record=m_deformables.at(id);
         record.targets.resize(simulation->settings.attachments.size());
         bool loadingTarget=false;
         for(size_t i=0;i<simulation->settings.attachments.size();++i){auto& a=simulation->settings.attachments[i];
@@ -86,7 +82,7 @@ void RuntimeWorld::UpdateDeformables(double dt){
                         if(targetError=="loading"){loadingTarget=true;break;}
                         if(!targetError.empty())simulation->error=targetError;
                         valid=m_physics.IsBodyEnabled(t.body);
-                        if(valid&&!a.part.empty()){auto pose=m_physics.GetTransform(t.body);current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));}
+                        if(valid&&(currentRigidPose||!a.part.empty())){auto pose=m_physics.GetTransform(t.body);current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));}
                         }else{t.body={};
                         auto* animation=RuntimeAnimation(a.target);
                         if(!animation||!animation->asset||!d->animation->enabled)valid=false;
@@ -96,19 +92,31 @@ void RuntimeWorld::UpdateDeformables(double dt){
                             else{current=glm::dmat4(animation->recentWorld[joint]);
                                 }}}}
             }
-            if(valid){t.previous=t.valid?t.current:current;
+            if(valid){t.previous=currentRigidPose&&a.kind==DeformableAttachment::Kind::Body?current:(t.valid?t.current:current);
                 t.current=current;
                 }t.valid=valid;
-            if(!valid&&!simulation->released[i])simulation->released[i]=true;
+            if(!valid&&!simulation->released[i]){simulation->released[i]=true;simulation->attachmentEvents[a.group]="target-lost";simulation->Wake();}
              // lost target releases, never aliases a new body
         }
-        if(loadingTarget)continue;
+        return !loadingTarget;
+}
+void RuntimeWorld::UpdateDeformables(double dt){
+    if(m_deformableOwners.empty())return;
+    JUDAS_PROFILE_SCOPE("World deformables");
+    std::set<EntityId> integrated;
+    for(auto id:m_deformableOwners){if(!IsPublished(id))continue;
+        std::string error;
+        auto* simulation=RuntimeDeformable(id,error);
+        if(!simulation)continue;
+        auto& record=m_deformables.at(id);
+        if(!SampleDeformableTargets(id)){if(!simulation->PhysicalStepActive())continue;simulation->error="required material target unavailable during physical interval";}
         const bool wasSleeping=simulation->sleeping;
         UpdatePanelCollisionExclusions(*simulation);
         if(simulation->asset->fracture&&simulation->asset->fracture->rigid){
             if(!record.rigid.initialized&&!m_restoreConstruction){std::string prepareError;if(!PrepareRigidFracture(id,prepareError)){simulation->error=prepareError;continue;}}
             if(record.rigid.initialized)UpdateRigidFracture(id,dt);
-        }else simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);
+        }else if(simulation->PhysicalStepActive()){simulation->EndPhysicalStep(dt,m_physics);integrated.insert(id);}
+        else simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);
         if(simulation->asset->fracture&&!simulation->asset->fracture->rigid&&simulation->settings.enabled)simulation->fracture.Commit(*simulation->asset->fracture);
         UpdatePanelCollisionExclusions(*simulation);
         if(!wasSleeping||!simulation->sleeping)++record.revision;
@@ -116,7 +124,7 @@ void RuntimeWorld::UpdateDeformables(double dt){
     for(auto a=m_deformables.begin();a!=m_deformables.end();++a)for(auto b=std::next(a);b!=m_deformables.end();++b){auto& x=a->second.simulation;
         auto& y=b->second.simulation;
         if((x.asset->fracture&&x.asset->fracture->rigid)||(y.asset->fracture&&y.asset->fracture->rigid)||!x.settings.enabled||!y.settings.enabled||!x.error.empty()||!y.error.empty()||!IsPublished(a->first)||!IsPublished(b->first))continue;
-        if(x.sleeping&&y.sleeping)continue;
+        if((x.sleeping&&y.sleeping)||(integrated.count(a->first)&&integrated.count(b->first)))continue;
         double thickness=x.settings.material.thickness+y.settings.material.thickness;
         if(glm::any(glm::lessThan(x.Maximum()+glm::dvec3(thickness),y.Minimum()))||glm::any(glm::lessThan(y.Maximum()+glm::dvec3(thickness),x.Minimum())))continue;
         DeformableInstance::SurfaceContacts(x,y,dt);

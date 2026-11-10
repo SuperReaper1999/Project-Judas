@@ -6,7 +6,7 @@
 #include <numeric>
 // Imported UV/material seams define visible panel islands. This is preparation
 // metadata, not a fracture criterion: physical connections decide separation.
-inline std::vector<unsigned> CrashPanelIslands(const MeshData& mesh){
+inline std::vector<unsigned> MeshPanelIslands(const MeshData& mesh){
     std::vector<unsigned> groups(mesh.indices.size()/3,~0u);unsigned next=0;
     auto primitives=mesh.primitives;
     if(primitives.empty())primitives.push_back({0,unsigned(mesh.indices.size()),-1});

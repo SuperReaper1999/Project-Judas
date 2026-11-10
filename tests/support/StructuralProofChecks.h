@@ -1,7 +1,7 @@
 #pragma once
 #include "Deformable.h"
 #include "StructuralMass.h"
-#include "../../tools/crash_proof/StructuralSkin.h"
+#include "deformables/StructuralSkin.h"
 #include <iostream>
 #include <stdexcept>
 inline unsigned RunStructuralProofChecks() {

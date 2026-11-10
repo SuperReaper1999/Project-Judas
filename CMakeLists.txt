@@ -268,9 +268,12 @@ add_library(judas_engine STATIC
     src/WorldFracture.cpp
     src/StructuralMass.cpp
     src/deformables/WorldPanelBindings.cpp
+    src/deformables/StructuralSkin.cpp
     src/deformables/PanelCook.cpp
     src/deformables/PanelAttachments.cpp
     src/deformables/PanelBending.cpp
+    src/deformables/WorldMaterialCoupling.cpp
+    src/deformables/MaterialIntegration.cpp
     src/deformables/MaterialContacts.cpp
     src/deformables/SleepContacts.cpp
     src/Fracture.cpp
@@ -313,6 +316,7 @@ add_library(judas_engine STATIC
     src/UtilityAI.cpp
     src/ScriptUtilityAI.cpp
     src/ScriptSystem.cpp
+    src/scripting/WorldEvents.cpp
     src/scripting/ScriptMetadata.cpp
     src/Classification.cpp
     src/GamePackage.cpp
@@ -1159,7 +1163,7 @@ judas_add_engine_test(judas_consumer_lifecycle_audit_tests tests/ConsumerLifecyc
 judas_add_engine_test(judas_save_streaming_tests tests/SaveStreamingTests.cpp APPLICATION WARNINGS -Wpedantic)
 judas_add_engine_test(judas_save_performance_tests tests/SavePerformanceTests.cpp APPLICATION WARNINGS -Wpedantic)
 
-add_executable(judas_deformable_tests tests/DeformableTests.cpp tests/DeformableV2Contacts.cpp tests/DeformableV2Panels.cpp tests/DeformableV2World.cpp)
+add_executable(judas_deformable_tests tests/DeformableTests.cpp tests/DeformableV2Contacts.cpp tests/DeformableV2Panels.cpp tests/DeformableV2World.cpp tests/DeformableV2Coupling.cpp)
 target_link_libraries(judas_deformable_tests PRIVATE judas_engine)
 
 # M62 generic immutable topology preparation; no GL or alternate solver.
@@ -1681,6 +1685,6 @@ include(cmake/JudasValidation.cmake)
 # Stage-1 local structural fidelity harness. No external model is bundled;
 # callers supply their own non-distributed model and writable scratch directory.
 add_executable(judas_crash_proof EXCLUDE_FROM_ALL
-    tools/crash_proof/CrashProof.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp)
+    tools/crash_proof/CrashProof.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp)
 target_link_libraries(judas_crash_proof PRIVATE judas_engine)
 judas_warnings(judas_crash_proof)

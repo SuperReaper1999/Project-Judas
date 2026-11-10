@@ -20,12 +20,12 @@ namespace {
 unsigned checks=0;
 void Check(bool value,const char* label){++checks;std::printf("%s %s\n",value?"PASS":"FAIL",label);if(!value)throw std::runtime_error(label);}
 Json State(RuntimeWorld& world){auto states=world.Scripts()->Capture();if(states.size()!=1)throw std::runtime_error("one probe script required");return Json::parse(states.front().json);}
-void Step(RuntimeWorld& world,InputSystem& input){input.BeginFixedStep();world.FixedScripts(&input,1.f/60);world.UpdatePowertrains(1.f/60);world.ResolvePowertrainLoads(1.f/60);world.Physics().Step(1.f/60);world.PublishPowertrains(1.f/60);world.UpdateDeformables(1./60);world.PublishPowertrainConnections();}
+void Step(RuntimeWorld& world,InputSystem& input){input.BeginFixedStep();world.FixedScripts(&input,1.f/60);world.UpdatePowertrains(1.f/60);world.ResolvePowertrainLoads(1.f/60);world.Physics().Step(1.f/60);world.PublishPowertrains(1.f/60);world.UpdateDeformables(1./60);world.PublishPowertrainConnections();world.DispatchDeformableEvents();}
 Scene Fixture(const AssetId& material,const AssetId& script){
  Scene scene;
  auto& fixed=scene.CreateObject("Prescribed negative control");fixed.id=1;fixed.body=SceneBodyComponent{};fixed.body->collisionMask=0;fixed.transform.position={5,0,0};
  auto& mount=scene.CreateObject("Ordinary physical mount");mount.id=2;mount.body=SceneBodyComponent{};mount.body->motion=SceneBodyMotion::Dynamic;mount.body->mass=2;mount.body->halfExtents={.2f,.2f,.05f};mount.body->collisionMask=0;
- auto& owner=scene.CreateObject("Physical material");owner.id=3;owner.deformable=DeformableSettings{};auto& d=*owner.deformable;d.asset=material;d.selfContact=false;d.collisionMask=0;d.material.density=10;d.material.damping=0;d.substeps=4;d.iterations=6;DeformableAttachment attachment;attachment.group="patch";attachment.kind=DeformableAttachment::Kind::Body;attachment.target=2;d.attachments={attachment};owner.scripts={{1,script,true,"{}"}};
+ auto& owner=scene.CreateObject("Physical material");owner.id=3;owner.deformable=DeformableSettings{};auto& d=*owner.deformable;d.asset=material;d.panel.enabled=true;d.selfContact=false;d.collisionMask=0;d.material.density=10;d.material.damping=0;d.substeps=4;d.iterations=6;DeformableAttachment attachment;attachment.group="patch";attachment.kind=DeformableAttachment::Kind::Body;attachment.target=2;d.attachments={attachment};owner.scripts={{1,script,true,"{}"}};
  auto& machine=scene.CreateObject("Generic transmission");machine.id=4;machine.powertrain=PowertrainSettings{};auto& p=*machine.powertrain;
  PowertrainShaft rotor;rotor.name="rotor";PowertrainShaft output;output.name="output";p.shafts={rotor,output};
  PowertrainSource source;source.name="source";source.maxTorque=100;p.sources={source};
@@ -44,7 +44,12 @@ int main(int argc,char** argv){try{
  std::ofstream(root/"Assets/patch.judasdeform")<<EncodeDeformableAsset(asset);
  std::ofstream(root/"Assets/probe.js")<<R"JS(import {world,Deformable} from 'judas';
 export default class {
- constructor({entity}){this.entity=entity;this.state={steps:0};}
+ constructor({entity}){this.entity=entity;this.state={steps:0,failureEvents:0};}
+ onFracture(event){this.state.fractureRevision=event.revision;this.state.fractureKey=event.interfaces[0].key;this.state.fractureCause=event.interfaces[0].cause;}
+ onAttachmentFailure(event){
+  if(event.attachments.length!==1||event.attachments[0].group!=='patch'||event.attachments[0].cause!=='force')throw Error('attachment event payload');
+  this.state.failureEvents++;
+ }
  rejects(fn,kind){let caught=false;try{fn();}catch(e){caught=e instanceof kind;}if(!caught)throw Error('expected '+kind.name);}
  start(){
   this.material=this.entity.deformable;this.power=world.entity('4').powertrain;
@@ -54,15 +59,22 @@ export default class {
  }
  update(){
   this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('2'),forceLimit:1}),TypeError);
+  this.rejects(()=>this.material.setPanelMaterial({stiffness:3000}),TypeError);
   this.state.phase=true;
  }
  fixedUpdate(){
   this.state.steps++;
   if(this.state.steps===1){
+   this.material.setPanelMaterial({stiffness:2500,yieldMoment:90,hardening:100});
+   const panel=this.material.state.panel;if(!panel||panel.stiffness!==2500||panel.yieldMoment!==90||panel.hardening!==100)throw Error('panel readback');
+   for(const stiffness of [-1,Infinity,NaN,'1'])this.rejects(()=>this.material.setPanelMaterial({stiffness}),TypeError);
+   if(this.material.state.panel.stiffness!==2500)throw Error('failed mutation changed panel');
    this.material.attach('patch',{kind:'body',target:world.entity('2'),forceLimit:1,torqueLimit:0});
    const before=JSON.stringify(this.material.state.attachments);
    for(const forceLimit of [-1,NaN,Infinity,'1'])this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('2'),forceLimit}),TypeError);
    this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('2'),torqueLimit:-1}),TypeError);
+   this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('2'),part:'missing'}),TypeError);
+   this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('2'),tearWork:-1}),TypeError);
    this.rejects(()=>this.material.attach('patch',{kind:'world',forceLimit:1}),TypeError);
    this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('1'),forceLimit:1}),TypeError);
    this.rejects(()=>this.material.attach('patch',{kind:'body',target:world.entity('99999'),forceLimit:1}),TypeError);
@@ -97,6 +109,9 @@ export default class {
  Check(built,"ordinary runtime builds material, dynamic mount and conditional transmission");
  InputSystem input;world.UpdateScripts(&input,1.f/60);Step(world,input);
  auto* d=world.RuntimeDeformable(3,error);auto* power=world.RuntimePowertrain(4);
+ world.Scripts()->FractureEvent(3,7,{"original-interface"},{1});
+ const auto eventProbe=State(world);
+ Check(eventProbe.value("fractureRevision",0)==7&&eventProbe.value("fractureKey",std::string())=="original-interface"&&eventProbe.value("fractureCause",std::string())=="physical","shared native event lifecycle preserves the existing onFracture callback payload");
  Check(d&&d->settings.attachments.size()==1&&d->settings.attachments[0].forceLimit==1&&!d->released[0],"real VM authors finite dynamic material connection while unloaded negative stays intact");
  Check(power&&power->state.links[0].connected&&power->state.links[0].active&&power->state.shafts[1].angularVelocity>0,"connected material path transmits actual generic rotational source motion");
  world.Physics().SetLinearVelocity(world.RuntimeBody(2),{1,0,0});Step(world,input);
@@ -105,6 +120,7 @@ export default class {
  Step(world,input);world.UpdateScripts(&input,1.f/60);
  const auto observed=State(world);
  Check(world.Scripts()->Diagnostics().empty()&&observed.value("started",false)&&observed.value("phase",false)&&observed.value("negatives",false)&&observed.value("snapshot",false)&&observed.value("released",false),"public VM validates finite options, update phase, value snapshots and physical disconnect");
+ Check(observed.value("failureEvents",0)==1,"real physical failure dispatches exactly one typed JudasJS event after solving");
  Check(!power->state.links[0].connected&&power->command.links[0].enabled,"ordinary enable command cannot bypass a broken physical load path");
 
  std::ofstream(root/"Assets/lifetime.js")<<R"JS(import {world} from 'judas';export default class {

@@ -685,69 +685,6 @@ void ScriptSystem::Presentation(const InputSystem *input, float dt, float alpha)
     m->inPresentation = false;
 }
 
-void ScriptSystem::FractureEvent(SceneObjectId owner, uint64_t revision,
-                                 const std::vector<std::string> &keys,
-                                 const std::vector<unsigned> &causes) {
-    m->CheckThread();
-    m->fixed = true;
-    const auto *d = m->world->RuntimeDefinition(owner);
-    if (!d)
-        return;
-    auto slots = d->scripts;
-    for (auto &slot : slots) {
-        if (!m->world->RuntimeDefinition(owner))
-            return;
-        auto *live = m->world->RuntimeDefinition(owner);
-        if (!live || std::none_of(live->scripts.begin(), live->scripts.end(),
-                                  [&](const auto &s) { return s.id == slot.id && s.enabled; }))
-            continue;
-        auto it = m->instances.find({owner, slot.id});
-        if (!slot.enabled || it == m->instances.end() || it->second.fault)
-            continue;
-        auto &i = it->second;
-        if (!i.started) {
-            i.started = true;
-            m->Callback(i, i.loaded ? "restore" : "start");
-        }
-        if (!m->world->RuntimeDefinition(owner) || i.fault)
-            continue;
-        Impl::Invocation invocation(*m, i);
-        ProfileScope assetScope(m->AssetLabel(i));
-        m->polls = 0;
-        m->currentOwner = owner;
-        m->currentSlot = slot.id;
-        auto fn = JS_GetPropertyStr(m->ctx, i.value, "onFracture");
-        if (JS_IsException(fn)) {
-            m->Error(i, "onFracture");
-            JS_FreeValue(m->ctx, fn);
-            continue;
-        }
-        if (JS_IsFunction(m->ctx, fn)) {
-            auto event = JS_NewObject(m->ctx);
-            JS_SetPropertyStr(m->ctx, event, "revision", JS_NewFloat64(m->ctx, double(revision)));
-            auto interfaces = JS_NewArray(m->ctx);
-            for (unsigned b = 0; b < keys.size(); ++b) {
-                auto v = JS_NewObject(m->ctx);
-                JS_SetPropertyStr(m->ctx, v, "key", JS_NewString(m->ctx, keys[b].c_str()));
-                JS_SetPropertyStr(m->ctx, v, "cause",
-                                  JS_NewString(m->ctx, causes[b] == 1 ? "physical" : "explicit"));
-                JS_SetPropertyUint32(m->ctx, interfaces, b, v);
-            }
-            JS_SetPropertyStr(m->ctx, event, "interfaces", interfaces);
-            auto result = JS_Call(m->ctx, fn, i.value, 1, &event);
-            if (JS_IsException(result))
-                m->Error(i, "onFracture");
-            else if (JS_PromiseState(m->ctx, result) != JS_PROMISE_NOT_A_PROMISE) {
-                JS_ThrowTypeError(m->ctx, "async fracture callbacks unsupported");
-                m->Error(i, "onFracture");
-            }
-            JS_FreeValue(m->ctx, result);
-            JS_FreeValue(m->ctx, event);
-        }
-        JS_FreeValue(m->ctx, fn);
-    }
-}
-
 void ScriptSystem::DrainSignals(const InputSystem *input, float dt, bool ui) {
     m->CheckThread();
     m->input = input;

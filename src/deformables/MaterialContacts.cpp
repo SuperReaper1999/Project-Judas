@@ -87,10 +87,12 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         Shape shape;
         BodyTransform pose;
         if(!physics.GetBodyShape(body,shape,pose))continue;
+        if(!currentRigidContactPose){
         auto prev=physics.GetPreviousTransform(body);
         prev.position+=prev.rotation*shape.pivotOffset;
         pose.position=glm::mix(prev.position,pose.position,float(fraction));
         pose.rotation=glm::slerp(prev.rotation,pose.rotation,float(fraction));
+        }
         for(unsigned n=0;n<positions.size();++n)sample(glm::uvec3(n),V(1,0,0),body,shape,pose);
         for(auto edge:asset->edges)sample({edge.x,edge.y,edge.y},V(.5,.5,0),body,shape,pose);
         for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);

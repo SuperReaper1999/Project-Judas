@@ -2,7 +2,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/../JudasTestTargets.cmake")
 
 # M79–M83 mechanisms retain their original entry points, sources and warnings.
 # Gameplay and authoring policies remain in their ordinary project fixtures.
-judas_add_engine_test(judas_structural_tests tests/StructuralTests.cpp SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tools/crash_proof/StructuralSkin.cpp tests/CrashWheelAssemblyChecks.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp tests/PanelBendingChecks.cpp WARNINGS -Wpedantic)
+judas_add_engine_test(judas_structural_tests tests/StructuralTests.cpp SOURCES tests/StructuralCrashChecks.cpp tools/crash_proof/CrashRig.cpp tests/CrashWheelAssemblyChecks.cpp tools/crash_proof/WheelAssembly.cpp tools/crash_proof/CrashPanels.cpp tests/PanelBendingChecks.cpp WARNINGS -Wpedantic)
 
 judas_add_engine_test(judas_bending_tests tests/BendingTests.cpp WARNINGS -Wpedantic)
 

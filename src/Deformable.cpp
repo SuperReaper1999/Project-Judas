@@ -87,6 +87,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     positions.resize(n);
     previous.resize(n);
     start.resize(n);
+    intervalReference.resize(n);
     velocities.resize(n);
     forces.resize(n);
     lastGravity.resize(n);
@@ -114,6 +115,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
 }
 void DeformableInstance::Reset(const glm::dmat4& transform){
     initial=transform;
+    integrating=false;
     sleepingContacts.Invalidate();
     if(panelBending)panelBending->Reset();
     selfCandidatesValid=false;
@@ -126,6 +128,7 @@ void DeformableInstance::Reset(const glm::dmat4& transform){
     for(size_t i=0;i<plasticRest.size();++i)plasticRest[i]=M(transform)*asset->solids[i].rest;
     std::fill(released.begin(),released.end(),false);
     attachmentState.assign(settings.attachments.size(),{});
+    attachmentEvents.clear();
     Wake();
 }
 void DeformableInstance::ShiftOrigin(glm::dvec3 delta){
@@ -177,7 +180,7 @@ bool DeformableInstance::Impulse(const DeformableLocation& hit,V impulse){if(hit
     return true;
     }
 bool DeformableInstance::Release(const std::string& group){bool found=false;
-    for(size_t i=0;i<settings.attachments.size();++i)if(settings.attachments[i].group==group){released[i]=true;
+    for(size_t i=0;i<settings.attachments.size();++i)if(settings.attachments[i].group==group){if(!released[i])attachmentEvents[group]="explicit";released[i]=true;
         found=true;
         }if(found)Wake();
     return found;
@@ -299,7 +302,7 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
             // again after each impulse; no repeated reaction against a frozen
             // infinite-mass target. A bounded positional drift bias follows the
             // prior sampled anchor, independently of prescribed target motion.
-            double priorFraction=fraction-1./settings.substeps;
+            double priorFraction=fraction-1./integrationSubsteps;
             V priorDestination=target(t.previous,local)*(1-priorFraction)+target(t.current,local)*priorFraction;
             // Action and reaction share one point. Applying the body's
             // reaction at the anchor while the node lags it made every drifted
@@ -312,7 +315,14 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 V relative=(positions[n]-start[n])/h-JudasDeformables::PointVelocity(physics,t.body,point);
                 double den=inverseMass[n]+JudasDeformables::EffectiveMass(physics,t.body,point,normal);
                 if(den<=0)continue;
-                double impulse=-(relative[axis]+.1*(start[n]-priorDestination)[axis]/h)/den;
+                // In native coupling the rigid pose is the current interval
+                // boundary, not the end of every local material subdivision.
+                // Measure drift once in that same boundary frame. Otherwise
+                // advancing a well-attached sheet invents growing anchor error
+                // while MK2 is legitimately still solving its one pose advance.
+                const V drift=currentRigidContactPose?intervalReference[n]-target(t.current,local):start[n]-priorDestination;
+                const double driftTime=currentRigidContactPose?integrationDeltaTime:h;
+                double impulse=-(relative[axis]+.1*drift[axis]/driftTime)/den;
                 positions[n]+=normal*inverseMass[n]*impulse*h;
                 const V reaction=-normal*impulse;
                 // The constraint denominator and point velocity use a double
@@ -483,136 +493,6 @@ void DeformableInstance::SurfaceContacts(DeformableInstance& a,DeformableInstanc
     // contact is substepped. Apply the same positional delta to velocity once.
     (void)h;
 }
-void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField& gravity,const std::vector<DeformableTarget>& targets){
-    if(!asset||!settings.enabled||!error.empty()||dt<=0){std::fill(forces.begin(),forces.end(),V(0));return;}
-    // A prescribed world/bone/static frame has no finite dynamic reaction in
-    // this solver. Refuse a finite-strength claim rather than silently treating
-    // such a target as an infinite-strength connection. Unlimited legacy roots
-    // continue through exactly the original prescribed-target path.
-    for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];
-        if(!released[i]&&a.enabled&&(a.forceLimit>0||a.torqueLimit>0)&&i<targets.size()&&targets[i].valid&&!physics.IsDynamicBody(targets[i].body)){
-            error="finite attachment strength requires a dynamic body target";std::fill(forces.begin(),forces.end(),V(0));return;
-        }
-    }
-    JUDAS_PROFILE_SCOPE("Deformable fixed step");
-    attachmentState.assign(settings.attachments.size(),{});
-    attachmentImpulse.resize(settings.attachments.size());attachmentMoment.resize(settings.attachments.size());attachmentPending.assign(settings.attachments.size(),0);
-    stats={};
-    stats.nodes=positions.size();
-    stats.triangles=asset->triangles.size();
-    stats.tets=asset->solids.size();
-    stats.substeps=settings.substeps;
-    stats.iterations=settings.iterations;
-    for(size_t n=0;n<inverseMass.size();++n)inverseMass[n]=1/mass[n];
-    for(size_t i=0;i<settings.attachments.size();++i)if(!released[i]&&settings.attachments[i].enabled&&i<targets.size()&&targets[i].valid&&!targets[i].body.IsValid()){auto group=asset->groups.find(settings.attachments[i].group);
-        if(group!=asset->groups.end())for(auto n:group->second)inverseMass[n]=0;
-        }
-    bool targetMoving=false;
-    for(size_t targetIndex=0;targetIndex<targets.size();++targetIndex){
-        if(targetIndex>=settings.attachments.size()||released[targetIndex]||!settings.attachments[targetIndex].enabled)continue;
-        const auto& t=targets[targetIndex];if(!t.valid)continue;double d=0;
-        for(int k=0;k<4;++k)d+=glm::length(t.current[k]-t.previous[k]);
-        targetMoving|=d>1e-8||(t.body.IsValid()&&glm::length(physics.GetLinearVelocity(t.body))+glm::length(physics.GetAngularVelocity(t.body))>1e-5f);
-        }
-    bool gravityChanged=false;
-    for(size_t i=0;i<positions.size();++i){V g=gravity.Sample(glm::vec3(positions[i]));
-        gravityChanged|=glm::length(g-lastGravity[i])>1e-5;
-        lastGravity[i]=g;
-        }
-    if(targetMoving||gravityChanged||settings.material.airDrag>0)Wake();
-    if(sleeping){
-        bool moving=false;
-        if(sleepingContacts.Refresh(physics,Minimum()-V(settings.material.thickness+asset->cellSize),Maximum()+V(settings.material.thickness+asset->cellSize),settings.collisionLayer,settings.collisionMask,moving)||moving)Wake();
-        if(sleeping)return;
-    }
-    previous=positions;
-    double h=dt/settings.substeps;
-    std::array<BodyHandle,64> awakened{};unsigned awakenedCount=0;
-    for(unsigned sub=0;sub<settings.substeps;++sub){
-        std::fill(attachmentImpulse.begin(),attachmentImpulse.end(),V(0));
-        std::fill(attachmentMoment.begin(),attachmentMoment.end(),V(0));
-        {JUDAS_PROFILE_SCOPE("Deformable force prediction");
-            start=positions;
-            for(size_t n=0;n<positions.size();++n){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[n]]){velocities[n]=V(0);continue;}V g=gravity.Sample(glm::vec3(positions[n]));
-                V acceleration=g+forces[n]/mass[n];
-                velocities[n]+=acceleration*h;
-                double air=1-std::exp(-settings.material.airDrag*h);
-                velocities[n]+=air*(settings.material.airVelocity-velocities[n]);
-                velocities[n]*=std::exp(-settings.material.damping*h);
-                positions[n]+=velocities[n]*h;
-                }}
-        if(asset->fracture)fracture.BeginSubstep();
-        if(panelBending)panelBending->BeginSubstep();
-        std::fill(lambda.begin(),lambda.end(),0);
-        std::fill(volumeLambda.begin(),volumeLambda.end(),0);
-        double fraction=double(sub+1)/settings.substeps;
-        {PhysicsQueryFilter filter;
-            filter.includeLayers=settings.collisionMask;
-            physics.QueryBodiesInAabbInto(glm::vec3(Minimum()-V(settings.material.thickness+asset->cellSize)),glm::vec3(Maximum()+V(settings.material.thickness+asset->cellSize)),rigidCandidates,filter);
-            }
-        for(unsigned iteration=0;iteration<settings.iterations;++iteration){Internal(h);Cohesive(h);
-            RigidContacts(h,fraction,physics);
-            SurfaceContacts(*this,*this,h);
-            Attach(h,fraction,physics,targets,awakened,awakenedCount);
-            }
-        if(panelBending)panelBending->Plastic(positions,h);
-        for(size_t a=0;a<settings.attachments.size();++a){auto& state=attachmentState[a];
-            state.force=attachmentImpulse[a]/h;state.moment=attachmentMoment[a]/h;
-            const double force=glm::length(state.force),torque=glm::length(state.moment);
-            if(!std::isfinite(force)||!std::isfinite(torque)){error="nonfinite material attachment reaction; instance stopped";return;}
-            state.peakForce=std::max(state.peakForce,force);state.peakTorque=std::max(state.peakTorque,torque);
-            const auto& setting=settings.attachments[a];
-            if((setting.forceLimit>0&&force>setting.forceLimit)||(setting.torqueLimit>0&&torque>setting.torqueLimit))attachmentPending[a]=1;
-        }
-        for(size_t i=0;i<asset->solids.size();++i){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[asset->solids[i].nodes.x]])continue;double J=glm::determinant(columns(positions,asset->solids[i].nodes)*glm::inverse(plasticRest[i]));if(!std::isfinite(J)||J<=0){error="deformable element inversion; outside supported deformation envelope; instance stopped";return;}}
-        if(asset->fracture){const auto& c=*asset->fracture;
-            for(unsigned b=0;b<c.bonds.size();++b){const auto& bond=c.bonds[b];
-                if(fracture.broken[b]||fracture.removed[bond.a]||fracture.removed[bond.b])continue;
-                const auto& part=c.parts[bond.a];M rotation(0);double volume=0;
-                // A volume-weighted material frame avoids attributing an
-                // entire bent section to one arbitrarily chosen tetrahedron.
-                if(c.structural){for(auto index:part.tets){const auto& tet=asset->solids[index];rotation+=columns(positions,tet.nodes)*tet.inverseRest*tet.volume;volume+=tet.volume;}rotation/=volume;}
-                else{const auto& tet=asset->solids[part.tets.front()];rotation=columns(positions,tet.nodes)*tet.inverseRest;}
-                for(int k=0;k<(c.structural?8:5);++k)rotation=.5*(rotation+glm::transpose(glm::inverse(rotation)));
-                bool valid=true;for(int k=0;k<3;++k)valid&=finite(rotation[k]);
-                if(!valid||glm::determinant(rotation)<=0){error="invalid cohesive material frame; instance stopped";return;}
-                V normal=glm::normalize(rotation*bond.normal),force(0),moment(0),centroid(0);
-                if(c.structural){auto first=bond.pairs.front();V origin=(positions[first.x]+positions[first.y])*.5;centroid=origin;
-                    for(unsigned pair=0;pair<bond.pairs.size();++pair){auto nodes=bond.pairs[pair];centroid+=((positions[nodes.x]+positions[nodes.y])*.5-origin)*bond.sectionWeights[pair];}}
-                for(unsigned pair=0;pair<bond.pairs.size();++pair){V demand=-fracture.multipliers[b*16+pair]/(h*h);force+=demand;
-                    if(c.structural){auto nodes=bond.pairs[pair];moment+=glm::cross((positions[nodes.x]+positions[nodes.y])*.5-centroid,demand);}
-                    else fracture.Observe(c,b,demand*double(bond.pairs.size()),normal);
-                }
-                if(c.structural){M inverse=glm::transpose(rotation);fracture.ObserveSection(c,b,inverse*force,inverse*moment);}
-                else fracture.Observe(c,b,force,normal);
-            }
-        }
-        Plastic(h);
-        for(size_t n=0;n<positions.size();++n){if(!finite(positions[n])){error="nonfinite deformable solve; instance stopped";
-                return;
-                }velocities[n]=(positions[n]-start[n])/h;
-            }
-        if(stats.capacityExceeded){error="deformable surface candidate capacity exceeded; instance stopped";
-            return;
-            }
-    }
-    // Failure is an irreversible change of connection ownership at the fixed
-    // step boundary. Both material and body retain their already solved real
-    // velocities; release adds no impulse, transform correction or reset.
-    for(size_t a=0;a<released.size();++a)if(attachmentPending[a])released[a]=1;
-    CommitPanelFailures();
-    std::fill(forces.begin(),forces.end(),V(0));
-    double speed=0;
-    for(auto v:velocities)speed=std::max(speed,glm::length(v));
-    if(speed<.015&&!targetMoving&&settings.material.airDrag==0)quietSeconds+=dt;
-    else quietSeconds=0;
-    if(quietSeconds>1){
-        sleeping=true;bool moving=false;
-        sleepingContacts.Refresh(physics,Minimum()-V(settings.material.thickness+asset->cellSize),Maximum()+V(settings.material.thickness+asset->cellSize),settings.collisionLayer,settings.collisionMask,moving);
-    }
-    JUDAS_PROFILE_COUNTER("Deformable nodes",double(stats.nodes),ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Deformable contacts",double(stats.contacts),ProfileCounterMode::Sum);
-}
 void DeformableInstance::MapRender(double alpha,MeshData& mesh)const{
     JUDAS_PROFILE_SCOPE("Deformable render mapping");
     if(asset->panelBinding){MapDeformablePanel(*this,alpha,mesh);return;}
@@ -671,6 +551,7 @@ DeformableHit DeformableInstance::Raycast(V origin,V direction,double maximum)co
     }return hit;
 }
 void DeformableInstance::Persist(SaveArchive& ar){
+    ar.Require(!integrating,"cannot snapshot an incomplete material interval");
     if(asset->fracture)fracture.Persist(ar,*asset->fracture);
     ar(settings.enabled,sleeping,quietSeconds);
     settings.material.Save(ar);
@@ -701,7 +582,7 @@ void DeformableInstance::Persist(SaveArchive& ar){
         ar.Require(glm::determinant(reference)>0,"invalid saved deformable material orientation");
         if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);
     }
-    if(ar.reading){sleepingContacts.Invalidate();selfCandidatesValid=false;previous=start=positions;
+    if(ar.reading){attachmentEvents.clear();sleepingContacts.Invalidate();selfCandidatesValid=false;previous=start=positions;
         attachmentState.assign(settings.attachments.size(),{});attachmentPending.clear();attachmentImpulse.clear();attachmentMoment.clear();
         forces.assign(positions.size(),V(0));
         lastGravity.assign(positions.size(),V(0));

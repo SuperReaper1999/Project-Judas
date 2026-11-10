@@ -164,6 +164,17 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             JS_SetPropertyStr(c, v, "contacts", JS_NewUint32(c, unsigned(d->stats.contacts)));
             JS_SetPropertyStr(c, v, "minimumJacobian", JS_NewFloat64(c, d->stats.minimumJacobian));
             JS_SetPropertyStr(c, v, "maximumStrain", JS_NewFloat64(c, d->stats.maximumStrain));
+            auto panel=JS_NULL;
+            if(d->panelBending){
+                panel=JS_NewObject(c);
+                JS_SetPropertyStr(c,panel,"stiffness",JS_NewFloat64(c,d->panelBending->stiffness));
+                JS_SetPropertyStr(c,panel,"yieldMoment",JS_NewFloat64(c,d->panelBending->yieldMoment));
+                JS_SetPropertyStr(c,panel,"hardening",JS_NewFloat64(c,d->panelBending->hardening));
+                double plastic=0,work=0;for(const auto& hinge:d->panelBending->hinges){plastic=std::max(plastic,hinge.plastic);work+=hinge.work;}
+                JS_SetPropertyStr(c,panel,"maximumPlasticAngle",JS_NewFloat64(c,plastic));
+                JS_SetPropertyStr(c,panel,"plasticWork",JS_NewFloat64(c,work));
+            }
+            JS_SetPropertyStr(c,v,"panel",panel);
             auto groups = JS_NewArray(c);
             uint32_t n = 0;
             for (auto &[name, _] : d->asset->groups)
@@ -336,6 +347,16 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
             if (has)
                 m.airVelocity = air;
             return d->SetMaterial(m, error) ? JS_TRUE : JS_ThrowTypeError(c, "%s", error.c_str());
+        }
+        if(op=="deformablePanelMaterial"){
+            auto material=d->settings.panel;bool ok=JS_IsObject(arg(3));
+            for(auto field:{std::pair<const char*,double*>{"stiffness",&material.stiffness},{"yieldMoment",&material.yieldMoment},{"hardening",&material.hardening}}){
+                auto value=JS_GetPropertyStr(c,arg(3),field.first);
+                if(!JS_IsUndefined(value))ok=ok&&JS_IsNumber(value)&&JS_ToFloat64(c,field.second,value)==0;
+                JS_FreeValue(c,value);
+            }
+            if(!ok||!d->SetPanelMaterial(material,error))return JS_ThrowTypeError(c,"panel material: %s",error.empty()?"finite numeric settings required":error.c_str());
+            return JS_TRUE;
         }
         if (op == "deformableAttach") {
             if (d->asset->fracture && d->asset->fracture->rigid)
@@ -749,7 +770,7 @@ void RegisterMechanicsBindings(BindingRegistry &registry) {
          "fractureRelease",      "fractureForce",      "fractureImpulse",   "deformableExists",
          "deformableValid",      "deformableState",    "deformableRaycast", "deformableEnabled",
          "deformableReset",      "deformableRelease",  "deformableForce",   "deformableImpulse",
-         "deformableHitImpulse", "deformableMaterial", "deformableAttach",  "powertrainExists",
+         "deformableHitImpulse", "deformableMaterial", "deformablePanelMaterial", "deformableAttach",  "powertrainExists",
          "powertrainValid",      "powertrainEnabled",  "powertrainSet",     "powertrainSettings",
          "powertrainState",      "wheelExists",        "wheelValid",        "wheelSet",
          "wheelConfigure",       "wheelEnabled",       "wheelSettings",     "wheelState"},

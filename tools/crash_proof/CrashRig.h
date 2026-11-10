@@ -1,7 +1,7 @@
 #pragma once
 #include "Deformable.h"
 #include "Scene.h"
-#include "StructuralSkin.h"
+#include "deformables/StructuralSkin.h"
 #include "WheelAssembly.h"
 #include <array>
 #include <filesystem>

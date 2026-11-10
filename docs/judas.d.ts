@@ -719,7 +719,10 @@ declare module "judas" {
     /** Maximum signed resultant demand in the last evaluated step; partial on error. */
     peakForce:number;peakTorque:number;
   }
-  export interface DeformableState {enabled:boolean;sleeping:boolean;error:string;mass:number;minimum:Vec3;maximum:Vec3;nodes:number;contacts:number;minimumJacobian:number;maximumStrain:number;groups:string[];attachments:DeformableAttachmentState[]}
+  export interface PanelMaterialOptions {stiffness?:number;yieldMoment?:number;hardening?:number}
+  export interface PanelMaterialState {stiffness:number;yieldMoment:number;hardening:number;maximumPlasticAngle:number;plasticWork:number}
+  export interface AttachmentFailureEvent {attachments:{group:string;cause:"explicit"|"force"|"torque"|"mount-tear"|"target-lost"}[]}
+  export interface DeformableState {panel:PanelMaterialState|null;enabled:boolean;sleeping:boolean;error:string;mass:number;minimum:Vec3;maximum:Vec3;nodes:number;contacts:number;minimumJacobian:number;maximumStrain:number;groups:string[];attachments:DeformableAttachmentState[]}
   export interface DeformableAttachmentOptions {
     kind:'world'|'body'|'bone';target?:Entity;joint?:string;offset?:Vec3;
     /** Dynamic Body targets only. Zero/omitted = unlimited; N and N m. */
@@ -747,6 +750,8 @@ declare module "judas" {
     reset():boolean;force(value:Vec3,group?:string):boolean;impulse(value:Vec3,group?:string):boolean;
     impulseAt(location:DeformableLocation,value:Vec3):boolean;
     release(group:string):boolean;attach(group:string,options:DeformableAttachmentOptions):boolean;
+    /** Edit an authored physical panel without clearing its permanent damage. Fixed callbacks only. */
+    setPanelMaterial(options:PanelMaterialOptions):boolean;
     setMaterial(options:DeformableMaterialOptions):boolean;
     raycast(origin:Vec3,direction:Vec3,maximum:number):DeformableHit|null;
   }
@@ -1312,6 +1317,7 @@ declare module "judas" {
     onSignal?(event:SignalEvent):void;
     onUI?(event: UIEvent): void;
     onFracture?(event:FractureEvent):void;
+    onAttachmentFailure?(event:AttachmentFailureEvent):void;
     /** After a successful chart publication, before fixedUpdate. Subtract delta from owned local-space position caches. */
     onOriginShift?(event:OriginShiftEvent):void;
     onCollisionEnter?(event: ContactEvent): void;

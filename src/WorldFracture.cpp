@@ -121,4 +121,19 @@ void RuntimeWorld::PersistFractureBundle(EntityId owner,SaveArchive& a,bool stag
 }
 
 bool RuntimeWorld::LoadFracturePart(EntityId owner,unsigned part,glm::vec3 value,bool impulse){auto it=m_deformables.find(owner);if(it==m_deformables.end())return false;auto& sim=it->second.simulation;if(!sim.asset->fracture||part>=sim.asset->fracture->parts.size()||sim.fracture.removed[part]||!sim.settings.enabled)return false;if(!sim.asset->fracture->rigid)return sim.PartLoad(part,value,impulse);auto id=FracturePartEntity(owner,part);auto body=RuntimeBody(id);if(!body.IsValid())return false;if(impulse)m_physics.ApplyLinearImpulse(body,value);else m_physics.ApplyForce(body,value);return true;}
-void RuntimeWorld::DispatchFractureEvents(){if(!m_scripts)return;struct Event {EntityId id;uint64_t revision;std::vector<std::string> keys;std::vector<unsigned> causes;};std::vector<Event> events;for(auto& [id,record]:m_deformables){auto& s=record.simulation;if(!s.asset->fracture||s.fracture.committed.empty())continue;Event e{id,s.fracture.revision,{},{}};for(auto b:s.fracture.committed){e.keys.push_back(s.asset->fracture->bonds[b].key);e.causes.push_back(s.fracture.broken[b]);}s.fracture.committed.clear();events.push_back(std::move(e));}for(auto& e:events)if(RuntimeDefinition(e.id))m_scripts->FractureEvent(e.id,e.revision,e.keys,e.causes);}
+void RuntimeWorld::DispatchDeformableEvents(){
+    if(!m_scripts)return;
+    struct Event {EntityId id;uint64_t revision;std::vector<std::string> keys;std::vector<unsigned> causes;std::map<std::string,std::string> attachments;};
+    std::vector<Event> events;
+    for(auto& [id,record]:m_deformables){auto& s=record.simulation;
+        if(s.fracture.committed.empty()&&s.attachmentEvents.empty())continue;
+        Event event{id,s.fracture.revision,{},{},std::move(s.attachmentEvents)};s.attachmentEvents.clear();
+        if(s.asset->fracture)for(auto bond:s.fracture.committed){event.keys.push_back(s.asset->fracture->bonds[bond].key);event.causes.push_back(s.fracture.broken[bond]);}
+        s.fracture.committed.clear();events.push_back(std::move(event));
+    }
+    // Snapshot all physical events before callbacks may mutate or destroy owners.
+    for(const auto& event:events){
+        if(!event.keys.empty()&&RuntimeDefinition(event.id))m_scripts->FractureEvent(event.id,event.revision,event.keys,event.causes);
+        if(!event.attachments.empty()&&RuntimeDefinition(event.id))m_scripts->AttachmentEvent(event.id,event.attachments);
+    }
+}

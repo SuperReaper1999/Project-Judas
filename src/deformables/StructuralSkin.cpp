@@ -62,7 +62,7 @@ bool StructuralSkin::Bind(const DeformableAsset &asset, const MeshData &mesh, st
     std::map<unsigned,glm::dvec3> panelCenters;
     std::map<unsigned,double> panelAreas;
     if(panelSeams){
-        panelGroups=CrashPanelIslands(mesh);
+        panelGroups=MeshPanelIslands(mesh);
         for(unsigned t=0;t<mesh.indices.size();t+=3){auto p=glm::dvec3(mesh.vertices[mesh.indices[t]].position),q=glm::dvec3(mesh.vertices[mesh.indices[t+1]].position),r=glm::dvec3(mesh.vertices[mesh.indices[t+2]].position);
             auto group=panelGroups[t/3];double area=glm::length(glm::cross(q-p,r-p));
             if(!panelCenters.count(group))panelCenters[group]=glm::dvec3(0);
