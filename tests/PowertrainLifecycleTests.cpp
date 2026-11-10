@@ -1,3 +1,4 @@
+#include "support/PowertrainCarrierChecks.h"
 #include "RuntimeWorld.h"
 #include "WorldPersistence.h"
 #include "PowertrainAuthoring.h"
@@ -97,6 +98,7 @@ void StreamQualifiedReferences(){
  }
 }
 int main(){try{
+ checks+=RunPowertrainCarrierChecks();
  std::string error,text,fingerprint,changed;auto scene=Fixture();Scene round;SaveSceneToString(scene,text);Check(LoadSceneFromString(text,round,error)&&ScenesEqual(scene,round),"graph component round-trips exactly through ordinary scene authoring");Check(ComputeSceneFingerprint(scene,fingerprint,error),"physical graph contributes an authored fingerprint");round.Find(2)->powertrain->links[0].ratio=.25;Check(ComputeSceneFingerprint(round,changed,error)&&changed!=fingerprint,"gear ratio changes scene fingerprint");
  const auto encoded=EncodePowertrainSettings(*scene.Find(2)->powertrain);PowertrainSettings decoded;Check(DecodePowertrainSettings(encoded,decoded,error)&&PowertrainSettingsEqual(decoded,*scene.Find(2)->powertrain),"canonical bounded graph codec retains every setting");const auto original=decoded;Check(!DecodePowertrainSettings(encoded.substr(0,encoded.size()-1)+",\"phantom\":true}",decoded,error)&&PowertrainSettingsEqual(decoded,original),"unknown graph field fails without partial mutation");
  auto malformed=scene;malformed.Find(2)->powertrain->shafts[1].target=999;Check(!ComputeSceneFingerprint(malformed,changed,error),"missing physical terminal is rejected");malformed=scene;malformed.Find(1)->powertrain=malformed.Find(2)->powertrain;Check(!ComputeSceneFingerprint(malformed,changed,error),"competing physical terminal ownership is rejected");

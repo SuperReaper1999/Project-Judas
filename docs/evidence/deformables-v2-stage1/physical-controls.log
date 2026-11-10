@@ -1,0 +1,92 @@
+PASS original procedural crash asset tracks
+PASS frontal real MK2 structure builds: 
+PASS frontal quiet support does not create permanent damage
+PASS frontal physical graph owns the full vehicle mass exactly once
+PASS frontal actual collision produces finite irreversible plastic work
+PASS frontal current snapshot captures damaged vehicle: 
+PASS frontal snapshot reconstructs its scene
+PASS frontal damaged physical family restores: 
+PASS frontal restoration preserves shape and permanent damage
+PASS frontal restored graph continues through MK2
+CRASH_CONTROL frontal plastic_work_j=49976.4 restored_shape_error_m=0
+PASS offset real MK2 structure builds: 
+PASS offset quiet support does not create permanent damage
+PASS offset physical graph owns the full vehicle mass exactly once
+PASS offset actual collision produces finite irreversible plastic work
+PASS offset current snapshot captures damaged vehicle: 
+PASS offset snapshot reconstructs its scene
+PASS offset damaged physical family restores: 
+PASS offset restoration preserves shape and permanent damage
+PASS offset restored graph continues through MK2
+CRASH_CONTROL offset plastic_work_j=46365.3 restored_shape_error_m=0
+PASS side real MK2 structure builds: 
+PASS side quiet support does not create permanent damage
+PASS side physical graph owns the full vehicle mass exactly once
+PASS side actual collision produces finite irreversible plastic work
+PASS side current snapshot captures damaged vehicle: 
+PASS side snapshot reconstructs its scene
+PASS side damaged physical family restores: 
+PASS side restoration preserves shape and permanent damage
+PASS side restored graph continues through MK2
+CRASH_CONTROL side plastic_work_j=32819.5 restored_shape_error_m=0
+PASS rear real MK2 structure builds: 
+PASS rear quiet support does not create permanent damage
+PASS rear physical graph owns the full vehicle mass exactly once
+PASS rear actual collision produces finite irreversible plastic work
+PASS rear current snapshot captures damaged vehicle: 
+PASS rear snapshot reconstructs its scene
+PASS rear damaged physical family restores: 
+PASS rear restoration preserves shape and permanent damage
+PASS rear restored graph continues through MK2
+CRASH_CONTROL rear plastic_work_j=50076.1 restored_shape_error_m=0
+PASS cars real MK2 structure builds: 
+PASS cars quiet support does not create permanent damage
+PASS cars quiet support does not create permanent damage
+PASS cars physical graph owns the full vehicle mass exactly once
+PASS cars actual collision produces finite irreversible plastic work
+PASS cars current snapshot captures damaged vehicle: 
+PASS cars snapshot reconstructs its scene
+PASS cars damaged physical family restores: 
+PASS cars restoration preserves shape and permanent damage
+PASS cars restored graph continues through MK2
+CRASH_CONTROL cars plastic_work_j=49677.2 restored_shape_error_m=0
+PASS uniform cube mass
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube mass
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS uniform cube exact inertia tensor
+PASS rectangular volume analytic tensor
+PASS mass properties translation invariance
+PASS simplex analytic mass and centroid
+PASS non-box simplex preserves true off-diagonal inertia
+PASS affine rigid velocity integrates true volume angular momentum
+PASS detailed skin binds independent geometry
+PASS skin rest shape preserved
+PASS skin follows actual material frame
+PASS torn face cannot stretch across disconnected frames
+PASS GPU palette agrees with CPU torn skin
+PASS GPU palette agrees with CPU torn skin
+PASS GPU palette agrees with CPU torn skin
+PASS invalid skin rejected transactionally
+PASS rejected rebind retains published skin
+PASS indexed skin without explicit material ranges binds
+PASS implicit primitive retains real indexed faces
+PASS out-of-bounds material range rejects transactionally
+PASS removed physical owners cannot reappear as nonindexed CPU geometry
+PASS removed physical owners cannot reappear in GPU geometry
+M79 section checks=118 PASS

@@ -15,7 +15,7 @@ struct PowertrainShaft {
     std::string name;
     PowertrainShaftKind kind=PowertrainShaftKind::Internal;
     double inertia=.2, initialAngularVelocity=0, viscousDrag=0;
-    uint64_t target=0, bearing=0;
+    uint64_t target=0, bearing=0; // bearing: rigid entity, or a wheel's physical carrier (including structural parts)
     glm::vec3 axis{1,0,0}; // internal/body: bearing-local, or world if no bearing
 };
 struct PowertrainTorquePoint { double rpm=0, torque=0; };

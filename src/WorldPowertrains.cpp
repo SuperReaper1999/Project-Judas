@@ -25,12 +25,17 @@ double AxialSpeed(PhysicsWorld& physics,BodyHandle body,const glm::vec3& axis,fl
 std::vector<ShaftRow> Rows(RuntimeWorld& world,PowertrainInstance& train,float dt=0){
  auto& physics=world.Physics();std::vector<ShaftRow> rows(train.settings.shafts.size());
  for(size_t i=0;i<rows.size();++i){auto& row=rows[i];const auto& shaft=train.settings.shafts[i];
-  const auto bearing=world.RuntimeBody(shaft.bearing);const bool bearingPresent=!shaft.bearing||physics.IsBodyEnabled(bearing);
+  // A wheel already owns a stable authored reference to its physical carrier.
+  // Resolve that frame, not the spinning wheel DOF or an invented chassis body.
+  auto bearingEntity=shaft.bearing;
+  if(const auto* definition=world.RuntimeDefinition(bearingEntity);definition&&definition->wheel)
+      bearingEntity=world.WheelChassisEntity(*definition->wheel);
+  const auto bearing=world.RuntimeBody(bearingEntity);const bool bearingPresent=!shaft.bearing||physics.IsBodyEnabled(bearing);
   row.axis=glm::normalize(shaft.axis);if(shaft.bearing&&bearingPresent)row.axis=physics.GetTransform(bearing).rotation*row.axis;
   if(shaft.kind==PowertrainShaftKind::Wheel){row.wheel=world.RuntimeWheel(shaft.target);if(!row.wheel)continue;const auto chassis=world.RuntimeBody(world.WheelChassisEntity(row.wheel->settings));row.available=row.wheel->settings.enabled&&physics.IsBodyEnabled(chassis)&&physics.IsDynamicBody(chassis);if(!row.available)continue;
    row.axis=glm::normalize(physics.GetTransform(chassis).rotation*row.wheel->settings.orientation*glm::angleAxis(row.wheel->command.steeringAngle,glm::vec3(0,1,0)))*glm::vec3(-1,0,0);
    row.ownInverse=1.0/row.wheel->settings.spinInertia;row.velocity=row.wheel->state.angularVelocity-glm::dot(physics.GetAngularVelocity(chassis),row.axis);Add(row,chassis,-row.axis);
-  }else if(shaft.kind==PowertrainShaftKind::Body){const auto rotor=world.RuntimeBody(shaft.target);row.available=bearingPresent&&physics.IsBodyEnabled(rotor)&&physics.IsDynamicBody(rotor);if(!row.available)continue;row.velocity=glm::dot(physics.GetAngularVelocity(rotor),row.axis)-AxialSpeed(physics,bearing,row.axis,dt);Add(row,rotor,row.axis);Add(row,bearing,-row.axis);
+  }else if(shaft.kind==PowertrainShaftKind::Body){const auto rotor=world.RuntimeBody(shaft.target);row.available=bearingPresent&&physics.IsBodyEnabled(rotor)&&physics.IsDynamicBody(rotor)&&(!bearing.IsValid()||rotor.id!=bearing.id);if(!row.available)continue;row.velocity=glm::dot(physics.GetAngularVelocity(rotor),row.axis)-AxialSpeed(physics,bearing,row.axis,dt);Add(row,rotor,row.axis);Add(row,bearing,-row.axis);
   }else{row.available=bearingPresent;if(!row.available)continue;const double bearingSpeed=AxialSpeed(physics,bearing,row.axis,dt);if(!train.internalInitialized[i]){train.absoluteSpin[i]+=bearingSpeed;train.internalInitialized[i]=true;}row.ownInverse=1.0/shaft.inertia;row.velocity=train.absoluteSpin[i]-bearingSpeed;Add(row,bearing,-row.axis);}
  }
  return rows;

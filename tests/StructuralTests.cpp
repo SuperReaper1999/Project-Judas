@@ -1,4 +1,5 @@
 #include "Deformable.h"
+#include "support/StructuralProofChecks.h"
 #include "SaveArchive.h"
 #include <cstdio>
 #include <cmath>
@@ -7,7 +8,10 @@
 static unsigned checks=0;
 static void check(bool value,const char* name){++checks;if(!value)throw std::runtime_error(name);}
 static bool close(double a,double b){return std::abs(a-b)<1e-8*std::max(1.,std::abs(b));}
+unsigned RunStructuralCrashChecks();
 int main(){try{
+    checks+=RunStructuralCrashChecks();
+    checks+=RunStructuralProofChecks();
     auto a=MakeFractureBlock({2,1,1},{2,2,4},true);a.fracture->structural=true;
     a.fracture->tension=100;a.fracture->shear=100;std::string error;
     check(PrepareDeformableAsset(a,error),"prepare actual rectangular section");

@@ -1,0 +1,183 @@
+{
+  "profile-car-one": {
+    "SIMULATION": {
+      "count": 900.0,
+      "mean_ms": 1.774578697,
+      "p50_ms": 1.773525,
+      "p95_ms": 1.814442,
+      "p99_ms": 2.488644,
+      "worst_ms": 2.741311
+    },
+    "scope": "900 fixed steps including settling, CPU2 pinned"
+  },
+  "profile-car-four": {
+    "SIMULATION": {
+      "count": 900.0,
+      "mean_ms": 13.84972775,
+      "p50_ms": 14.099543,
+      "p95_ms": 14.212767,
+      "p99_ms": 18.379916,
+      "worst_ms": 19.673426
+    },
+    "scope": "900 fixed steps including settling, CPU2 pinned"
+  },
+  "profile-car-repeat": {
+    "SIMULATION": {
+      "count": 900.0,
+      "mean_ms": 2.096239532,
+      "p50_ms": 1.805506,
+      "p95_ms": 2.427799,
+      "p99_ms": 2.723777,
+      "worst_ms": 103.81838
+    },
+    "scope": "900 fixed steps including settling, CPU2 pinned"
+  },
+  "profile-car-severe": {
+    "SIMULATION": {
+      "count": 900.0,
+      "mean_ms": 1.947525789,
+      "p50_ms": 1.691631,
+      "p95_ms": 2.034057,
+      "p99_ms": 2.855265,
+      "worst_ms": 55.237012
+    },
+    "scope": "900 fixed steps including settling, CPU2 pinned"
+  },
+  "fine-cpu-final": {
+    "SIMULATION": {
+      "count": 900.0,
+      "mean_ms": 4.961092851,
+      "p50_ms": 3.815547,
+      "p95_ms": 5.770825,
+      "p99_ms": 9.732557,
+      "worst_ms": 196.793948
+    },
+    "scope": "900 fixed steps including settling, CPU2 pinned"
+  },
+  "render-one-final": {
+    "SIMULATION": {
+      "count": 360.0,
+      "mean_ms": 2.274625489,
+      "p50_ms": 2.220117,
+      "p95_ms": 2.927001,
+      "p99_ms": 3.111489,
+      "worst_ms": 3.29254
+    },
+    "SKIN_MAPPING": {
+      "count": 608.0,
+      "mean_ms": 0.004199495066,
+      "p50_ms": 0.004037,
+      "p95_ms": 0.004849,
+      "p99_ms": 0.00551,
+      "worst_ms": 0.007674
+    },
+    "RENDER_CPU": {
+      "count": 608.0,
+      "mean_ms": 0.5073252155,
+      "p50_ms": 0.481428,
+      "p95_ms": 0.569434,
+      "p99_ms": 0.598078,
+      "worst_ms": 7.532337
+    },
+    "RENDER_GPU": {
+      "count": 607.0,
+      "mean_ms": 1.102906728,
+      "p50_ms": 1.082592,
+      "p95_ms": 1.140864,
+      "p99_ms": 1.146816,
+      "worst_ms": 6.759456
+    },
+    "scope": "desktop render; sample counts and scopes differ from CPU-only runs"
+  },
+  "render-four-final": {
+    "SIMULATION": {
+      "count": 360.0,
+      "mean_ms": 13.99434053,
+      "p50_ms": 13.858929,
+      "p95_ms": 17.790635,
+      "p99_ms": 18.700261,
+      "worst_ms": 20.243202
+    },
+    "SKIN_MAPPING": {
+      "count": 1080.0,
+      "mean_ms": 0.003929940741,
+      "p50_ms": 0.003657,
+      "p95_ms": 0.005671,
+      "p99_ms": 0.006622,
+      "worst_ms": 0.009989
+    },
+    "RENDER_CPU": {
+      "count": 270.0,
+      "mean_ms": 1.752091567,
+      "p50_ms": 1.291937,
+      "p95_ms": 1.458731,
+      "p99_ms": 3.351642,
+      "worst_ms": 109.189615
+    },
+    "RENDER_GPU": {
+      "count": 269.0,
+      "mean_ms": 6670155921.0,
+      "p50_ms": 2.004096,
+      "p95_ms": 2.242144,
+      "p99_ms": 2.876928,
+      "worst_ms": 1794271942000.0,
+      "qualified": false
+    },
+    "scope": "desktop render; sample counts and scopes differ from CPU-only runs",
+    "gpu_limitation": "Impossible timestamp interval retained; mean/worst are not valid hardware timings."
+  },
+  "review-cpu-skin": {
+    "SIMULATION": {
+      "count": 190.0,
+      "mean_ms": 1.921450463,
+      "p50_ms": 1.818269,
+      "p95_ms": 2.589604,
+      "p99_ms": 2.69338,
+      "worst_ms": 2.838273
+    },
+    "SKIN_MAPPING": {
+      "count": 231.0,
+      "mean_ms": 11.64712921,
+      "p50_ms": 11.62178,
+      "p95_ms": 11.79115,
+      "p99_ms": 12.797708,
+      "worst_ms": 13.239712
+    },
+    "RENDER_CPU": {
+      "count": 231.0,
+      "mean_ms": 12.11693254,
+      "p50_ms": 12.041301,
+      "p95_ms": 12.24182,
+      "p99_ms": 13.80115,
+      "worst_ms": 19.705697
+    },
+    "scope": "desktop render; sample counts and scopes differ from CPU-only runs"
+  },
+  "review-frontal": {
+    "SIMULATION": {
+      "count": 190.0,
+      "mean_ms": 2.191697042,
+      "p50_ms": 2.112254,
+      "p95_ms": 2.959542,
+      "p99_ms": 3.034784,
+      "worst_ms": 3.183314
+    },
+    "SKIN_MAPPING": {
+      "count": 323.0,
+      "mean_ms": 0.003941959752,
+      "p50_ms": 0.003707,
+      "p95_ms": 0.004308,
+      "p99_ms": 0.00523,
+      "worst_ms": 0.012233
+    },
+    "RENDER_CPU": {
+      "count": 323.0,
+      "mean_ms": 0.5049781393,
+      "p50_ms": 0.466249,
+      "p95_ms": 0.550037,
+      "p99_ms": 0.571488,
+      "worst_ms": 7.610624
+    },
+    "scope": "desktop render; sample counts and scopes differ from CPU-only runs"
+  }
+}

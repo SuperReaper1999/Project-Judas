@@ -18,10 +18,10 @@ component that connects those existing degrees of freedom.
 An assembly owns bounded arrays of named **shafts**, **sources**, **links** and
 **brakes**. It may belong to any ordinary entity. Shafts can be:
 
-- **Internal:** explicit finite scalar inertia, optional ordinary rigid bearing.
+- **Internal:** explicit finite scalar inertia, optional rigid bearing or wheel-carrier reference.
 - **Wheel:** the existing M81 wheel spin degree of freedom and chassis reaction.
 - **Body:** angular motion of an ordinary rigid body about an authored axis,
-  optionally measured relative to another ordinary bearing body.
+  optionally measured relative to another rigid bearing or wheel carrier.
 
 Internal rotors retain their momentum coordinate. External terminals never own
 an extra copy of wheel/body inertia. RuntimeWorld constructs the effective
@@ -99,7 +99,12 @@ PhysicsWorld capabilities.
 
 Internal/body shaft axes are bearing-local when a bearing exists, otherwise
 world-space. Wheel terminals use the existing authored M81 axle convention.
-The bearing body's actual orientation rotates the mechanical axis. Neither the
+A bearing ID may name an ordinary rigid entity or a wheel entity. A wheel reference
+resolves its physical carrier, including a stable structural `wheel.part`; it does
+not use wheel spin or create another chassis. This is an authored reference, not a
+runtime topology-editing exception. Missing/disabled carrier bodies make the shaft
+unavailable. Wheel terminals still supply their own carrier and do not accept a
+separate bearing. The bearing body's actual orientation rotates the mechanical axis. Neither the
 graph nor its solver assumes global Y, a car chassis, or a suspension direction.
 Gravity remains the existing Judas field resolver acting on normal bodies.
 

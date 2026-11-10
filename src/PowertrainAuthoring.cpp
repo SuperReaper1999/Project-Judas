@@ -51,7 +51,8 @@ bool ValidateScenePowertrains(const Scene& scene,std::string& error){
  std::set<std::pair<PowertrainShaftKind,uint64_t>> terminals;
  for(const auto& o:scene.Objects())if(o.powertrain){if(!ValidatePowertrainSettings(*o.powertrain,error))return false;
   for(const auto& shaft:o.powertrain->shafts){const auto* target=scene.Find(shaft.target);const auto* bearing=scene.Find(shaft.bearing);
-   if(shaft.bearing&&(!bearing||!bearing->body||bearing->characterMotor||bearing->deformable)){error="powertrain bearing must reference an ordinary rigid body";return false;}
+   if(shaft.bearing&&(!bearing||(!bearing->wheel&&(!bearing->body||bearing->characterMotor||bearing->deformable)))){error="powertrain bearing must reference a rigid body or a wheel carrier";return false;}
+   if(shaft.kind==PowertrainShaftKind::Body&&bearing&&bearing->wheel&&bearing->wheel->part.empty()&&bearing->wheel->chassis==shaft.target){error="powertrain rotor and bearing resolve to the same physical body";return false;}
    if(shaft.kind==PowertrainShaftKind::Wheel&&(shaft.bearing||!target||!target->wheel)){error="powertrain wheel terminal must reference a wheel component";return false;}
    if(shaft.kind==PowertrainShaftKind::Body&&(!target||!target->body||target->body->motion!=SceneBodyMotion::Dynamic||target->characterMotor||target->deformable)){error="powertrain body terminal must reference an ordinary dynamic body";return false;}
    if(shaft.kind!=PowertrainShaftKind::Internal&&!terminals.emplace(shaft.kind,shaft.target).second){error="powertrain terminal has competing assembly ownership";return false;}

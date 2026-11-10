@@ -1,4 +1,5 @@
 #include "OriginTranslation.h"
+#include "StructuralMass.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
 #include "SceneSerialization.h"
@@ -10,7 +11,8 @@
 namespace {
 using V=glm::dvec3;using M=glm::dmat3;
 V center(const DeformableAsset& a,const FracturePart& p){V sum(0);double mass=0;for(auto n:p.nodes){sum+=a.nodes[n]*a.measures[n];mass+=a.measures[n];}return sum/mass;}
-M inertia(const DeformableInstance& s,const FracturePart& p,V com){M tensor(0);for(auto n:p.nodes){V r=s.asset->nodes[n]-com;double mass=s.NodeMass(n);tensor+=mass*(M(glm::dot(r,r))-glm::outerProduct(r,r));}return tensor;}
+M inertia(const DeformableInstance& s,const FracturePart& p,V){return IntegrateStructuralMass(*s.asset,p,s.settings.material.density).inertia;}
+
 }
 EntityId RuntimeWorld::FracturePartEntity(EntityId owner,unsigned part,bool includeDisabled)const{auto it=m_deformables.find(owner);if(it==m_deformables.end()||part>=it->second.rigid.parts.size()||it->second.simulation.fracture.removed[part])return 0;auto id=it->second.rigid.parts[part];return RuntimeDefinition(id)&&(includeDisabled||m_physics.IsBodyEnabled(RuntimeBody(id)))?id:0;}
 bool RuntimeWorld::PrepareRigidFracture(EntityId owner,std::string& error){
@@ -22,11 +24,11 @@ bool RuntimeWorld::PrepareRigidFracture(EntityId owner,std::string& error){
     std::vector<SceneObject> children;std::vector<EntityPhysicalState> motion;
     for(unsigned part=0;part<c.parts.size();++part){auto& p=c.parts[part];V com=center(*sim.asset,p);SceneObject d;d.name="Fracture part "+p.key;d.tags=definition.tags;d.renderLayer=definition.renderLayer;d.body=SceneBodyComponent{};auto& b=*d.body;
         b.enabled=sim.settings.enabled;b.motion=SceneBodyMotion::Dynamic;b.shape=SceneShape::Compound;b.compoundBoxes={{glm::vec3(p.proxyCenter-com),glm::vec3(p.proxyHalf)}};
-        b.mass=0;for(auto n:p.nodes)b.mass+=float(sim.NodeMass(n));b.friction=float(sim.settings.material.friction);b.collisionLayer=sim.settings.collisionLayer;b.collisionMask=sim.settings.collisionMask;
-        EntityPhysicalState state;state.rotation=definition.transform.rotation;V current(0),velocity(0);for(auto n:p.nodes){current+=sim.positions[n]*sim.NodeMass(n);velocity+=sim.velocities[n]*sim.NodeMass(n);}state.position=glm::vec3(current/double(b.mass));state.linearVelocity=glm::vec3(velocity/double(b.mass));
-        // Fit angular momentum to the actual lumped nodal distribution. No
+        const auto volumeMass=IntegrateStructuralMass(*sim.asset,p,sim.settings.material.density).mass;b.mass=float(volumeMass);b.friction=float(sim.settings.material.friction);b.collisionLayer=sim.settings.collisionLayer;b.collisionMask=sim.settings.collisionMask;
+        EntityPhysicalState state;state.rotation=definition.transform.rotation;V current(0),velocity(0);for(auto n:p.nodes){current+=sim.positions[n]*sim.NodeMass(n);velocity+=sim.velocities[n]*sim.NodeMass(n);}state.position=glm::vec3(current/volumeMass);state.linearVelocity=glm::vec3(velocity/volumeMass);
+        // Fit angular momentum to the uniform tetrahedral volume. No
         // repeated impact, rest-shape swap, or copied whole-parent mass.
-        M worldInertia=glm::mat3_cast(glm::dquat(state.rotation))*inertia(sim,p,com)*glm::transpose(glm::mat3_cast(glm::dquat(state.rotation)));V angular(0);for(auto n:p.nodes)angular+=glm::cross(sim.positions[n]-V(state.position),(sim.velocities[n]-V(state.linearVelocity))*sim.NodeMass(n));state.angularVelocity=glm::vec3(glm::inverse(worldInertia)*angular);
+        M worldInertia=glm::mat3_cast(glm::dquat(state.rotation))*inertia(sim,p,com)*glm::transpose(glm::mat3_cast(glm::dquat(state.rotation)));V angular=IntegrateStructuralAngularMomentum(*sim.asset,p,sim.settings.material.density,sim.positions,sim.velocities,V(state.position),V(state.linearVelocity));state.angularVelocity=glm::vec3(glm::inverse(worldInertia)*angular);
         if(!ValidateEntityCreation(d,error))return false;
         children.push_back(d);motion.push_back(state);
     }
@@ -79,7 +81,7 @@ void RuntimeWorld::PersistRigidFracture(EntityId owner,SaveArchive& a,const std:
     auto& record=m_deformables.at(owner);auto& s=record.simulation;const auto& c=*s.asset->fracture;
     if(!a.reading){a.Require(record.rigid.initialized,"required fracture family not published");a.Require(!IsTransientEntity(owner),"required fracture owner cannot be omitted as transient");}
     a(record.rigid.parts);if(a.reading&&remap)for(auto& id:record.rigid.parts)if(remap->count(id))id=remap->at(id);a.Require(record.rigid.parts.size()==c.parts.size(),"fracture part ownership count differs");
-    for(unsigned p=0;p<c.parts.size();++p){auto id=record.rigid.parts[p];a.Require(s.fracture.removed[p]||(resolveBody(id).IsValid()&&!IsTransientEntity(id)),"required fracture body missing/transient");if(a.reading&&!s.fracture.removed[p]){FindEntity(id)->requiresFull=true;a.Require(m_physics.SetMassDistribution(resolveBody(id),float([&](){double m=0;for(auto n:c.parts[p].nodes)m+=s.NodeMass(n);return m;}()),glm::mat3(inertia(s,c.parts[p],center(*s.asset,c.parts[p])))),"invalid restored fragment inertia");}}
+    for(unsigned p=0;p<c.parts.size();++p){auto id=record.rigid.parts[p];a.Require(s.fracture.removed[p]||(resolveBody(id).IsValid()&&!IsTransientEntity(id)),"required fracture body missing/transient");if(a.reading&&!s.fracture.removed[p]){FindEntity(id)->requiresFull=true;a.Require(m_physics.SetMassDistribution(resolveBody(id),float(IntegrateStructuralMass(*s.asset,c.parts[p],s.settings.material.density).mass),glm::mat3(inertia(s,c.parts[p],center(*s.asset,c.parts[p])))),"invalid restored fragment inertia");}}
     auto saveJoint=[&](JointHandle& handle,const JointMaterial* material=nullptr){bool exists=handle.IsValid();a(exists);EntityId first=0,second=0;JointSettings settings;
         if(exists){if(!a.reading){JointState state;a.Require(m_physics.GetJoint(handle,state),"stale owned fracture joint");settings=state.settings;first=EntityIdOfBody(settings.bodyA);second=EntityIdOfBody(settings.bodyB);}a(first,second,settings.anchorA,settings.anchorB,settings.frameA,settings.frameB);
             if(a.reading){if(remap){if(remap->count(first))first=remap->at(first);if(remap->count(second))second=remap->at(second);}settings.bodyA=resolveBody(first);settings.bodyB=resolveBody(second);if(!second)TranslateOriginPoint(settings.anchorB,capturedOriginDelta);a.Require(settings.bodyA.IsValid()&&(!second||settings.bodyB.IsValid()),"fracture attached body missing");handle=m_physics.CreateJoint(settings);a.Require(handle.IsValid(),"fracture constraint recreation failed");if(material&&material->enabled)a.Require(m_physics.ConfigureJointMaterial(handle,*material),"fracture material recreation failed");}m_physics.PersistJointSolverState(a,handle);if(material&&material->enabled)m_physics.PersistJointMaterial(a,handle);

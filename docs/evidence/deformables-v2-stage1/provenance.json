@@ -1,0 +1,21 @@
+{
+  "baseline": "b6a4fedc3f66d75d2917601663d6873ea72da016",
+  "date": "2026-11-10",
+  "branch": "Experimental",
+  "stage1_complete": false,
+  "human_accepted": false,
+  "visual_gate": "FAILED: coarse cell-based tearing and missing within-section deformation",
+  "external_assets_in_repository": false,
+  "windows_android_qualification": false,
+  "source_sha256": {
+    "src/StructuralMass.cpp": "8cd779c25a1b39a7da2a4f1be8c2ba3568b94ca61e0d40adf7c696a0a2d8595a",
+    "src/StructuralMass.h": "16f40edfba116b2299f3c9c571fe11ac07cdbce39656e52666ba3ad585dc42b4",
+    "src/WorldFracture.cpp": "d54af84fb70fb3f0abaf102b1786209ccce9235ecf625c14ee4368d099d5b805",
+    "src/WorldPowertrains.cpp": "eaecffabec9842bfe9246a52602bbbb467fa86eaa8f2fa12d07b8313654635ca",
+    "src/PowertrainAuthoring.cpp": "2c434eb0bf0db583ca049a544f682a204009497585b454bf108e633a08f141d0",
+    "tools/crash_proof/StructuralSkin.cpp": "5f8ef89ab575149fdc93e58e52d5b76380621e09a1a6cc6070a33cf10d9ee803",
+    "tools/crash_proof/CrashRig.cpp": "f7f0a71ad73a6d7cd12f70ba4765620bc7e5f2b30cb533f86921c29516df9401",
+    "tools/crash_proof/CrashProof.cpp": "d4c35a5c98c84bf9703542ecff7144a14493f1d06b6805fbace71ae917eb5935",
+    "tests/StructuralCrashChecks.cpp": "3e452bab0945a08ef144d77352daa74788cfab3aafbd51259386f507f2867815"
+  }
+}

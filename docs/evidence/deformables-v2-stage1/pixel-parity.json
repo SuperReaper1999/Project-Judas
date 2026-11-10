@@ -1,0 +1,14 @@
+{
+  "physical_steps": 190,
+  "pixels": 1296000,
+  "cpu_vs_gpu": {
+    "max_rgb_difference": 1,
+    "mean_absolute_channel_difference": 2.0061728395061728e-05,
+    "pixels_above_2": 0
+  },
+  "forced_portable_vs_modern": {
+    "max_rgb_difference": 0
+  },
+  "visual_fidelity_accepted": false,
+  "scope": "One matched frontal view, not a universal geometry/render acceptance"
+}

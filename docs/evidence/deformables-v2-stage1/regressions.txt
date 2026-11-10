@@ -1,0 +1,12 @@
+qualified-judas_bending_tests.log: M80 numerical: 40 checks 0 failures
+qualified-judas_deformable_tests.log: SUMMARY 68 checks 0 failures
+qualified-judas_fracture_tests.log: M63 core: 33 checks passed
+qualified-judas_mechanical_connection_tests.log: M83 mechanical connections checks=37 failures=0
+qualified-judas_mechanical_damage_tests.log: M83 material-attachment checks=33 failures=0
+qualified-judas_powertrain_lifecycle_tests.log: SUMMARY 105 checks 0 failures
+qualified-judas_powertrain_script_tests-fresh.log: M82 powertrain JS 17 PASS
+qualified-judas_powertrain_tests.log: SUMMARY 58 checks 0 failures
+qualified-judas_section_material_tests.log: SUMMARY 27 checks 0 failures
+qualified-judas_structural_tests.log: M79 section checks=118 PASS
+qualified-judas_vehicle_dynamics_tests.log: SUMMARY 97 checks
+CMake contract: 27 checks passed, including omitted crash-source negative control.
