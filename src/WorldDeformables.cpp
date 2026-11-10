@@ -5,6 +5,7 @@
 #include "SceneFingerprint.h"
 #include "PerformanceProfiler.h"
 #include "WorldPresentation.h"
+#include "deformables/StructuralSkin.h"
 #include <atomic>
 #include <algorithm>
 #include <fstream>
@@ -31,13 +32,8 @@ DeformableInstance* RuntimeWorld::RuntimeDeformable(EntityId id,std::string& err
         return nullptr;
         }auto asset=m_assets->GetDeformable(definition->deformable->asset,error);
     if(!asset)return nullptr;
-    if(!asset->sourceAsset.empty()){
-        const auto* source=m_assets->Assets()->Find(asset->sourceAsset);
-        std::string digest;
-        if(!source||!SceneFingerprintSha256File(source->path,digest,error)||digest!=asset->sourceFingerprint){error="stale deformable binding: rebake source "+asset->sourceAsset;
-            return nullptr;
-            }
-    }
+    // Resource preparation validates source identity once, asynchronously.
+    // Instances must not re-read a detailed model on the simulation thread.
     // A bone resource may publish after the cloth. Defer construction instead
     // of mistaking asynchronous startup for a permanently destroyed target.
     for(const auto& attachment:definition->deformable->attachments)if(attachment.enabled&&attachment.kind==DeformableAttachment::Kind::Bone){
@@ -52,7 +48,7 @@ DeformableInstance* RuntimeWorld::RuntimeDeformable(EntityId id,std::string& err
         const bool physicalParts=asset->fracture&&asset->fracture->HasMaterials();
         // Lazy resource publication must use the current physical parent frame,
         // not a stale authored world transform after that parent has moved.
-        auto pose=physicalParts?PresentedTransform(id,definition->transform,1):definition->transform;
+        auto pose=PresentedTransform(id,definition->transform,1);
         record.simulation.Initialize(asset,*definition->deformable,matrix(pose),epochs.fetch_add(1));
         if(physicalParts)if(const auto* local=m_hierarchy.Find(id);local&&local->parent){auto body=RuntimeBody(local->parent);if(m_physics.IsBodyEnabled(body))for(size_t n=0;n<record.simulation.positions.size();++n)record.simulation.velocities[n]=glm::dvec3(m_physics.GetPointVelocity(body,glm::vec3(record.simulation.positions[n])));}
     }
@@ -137,18 +133,23 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
         if(!d||!d->deformable||!IsPublished(id)||!RenderVisible(id)||!record.simulation.settings.enabled)continue;
         auto& sim=record.simulation;
         const float materialAlpha=sim.sleeping?1.f:alpha;
+        std::vector<glm::mat4> palette;
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha){
-            sim.MapRender(materialAlpha,record.presentation);
+            if(sim.asset->structuralSkin){
+                if(!record.mesh.IsValid()||record.meshTopology!=sim.fracture.revision)
+                    sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
+            }else sim.MapRender(materialAlpha,record.presentation);
             if(!record.mesh.IsValid())record.mesh=renderer.CreateMesh(record.presentation);
             else if(sim.asset->fracture&&record.meshTopology!=sim.fracture.revision){renderer.DestroyMesh(record.mesh);record.mesh=renderer.CreateMesh(record.presentation);}
-            else renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
+            else if(!sim.asset->structuralSkin)renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
             record.meshTopology=sim.fracture.revision;
             record.mappedRevision=record.revision;record.mappedAlpha=materialAlpha;
         }
+        if(sim.asset->structuralSkin)sim.asset->structuralSkin->Palette(sim,materialAlpha,palette);
         renderer.SetRenderLayer(RenderLayerOf(id));
         renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render):std::vector<MaterialBinding>{});
         auto texture=d->render&&m_assets?m_assets->TryGetTexture(d->render->textureAsset):TextureHandle{};
-        renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f),d->render?d->render->alpha:1.f,nullptr,d->render?&d->render->hiddenParts:nullptr);
+        renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f),d->render?d->render->alpha:1.f,sim.asset->structuralSkin?&palette:nullptr,d->render?&d->render->hiddenParts:nullptr);
     }
 }
 void RuntimeWorld::RemoveDeformable(EntityId id){auto it=m_deformables.find(id);

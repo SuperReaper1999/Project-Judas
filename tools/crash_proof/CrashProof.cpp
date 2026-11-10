@@ -4,6 +4,7 @@
 #include "WheelAssembly.h"
 #include "EngineHost.h"
 #include "ModelLoader.h"
+#include "ModelArchive.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
@@ -324,11 +325,25 @@ int main(int argc, char **argv) {
         db.Scan(root.string(), (root / "Assets").string());
         AssetRecord record;
         std::string error;
+        // Private normalized derivative: the ordinary engine resource owns
+        // detailed structural presentation, including in this saved scene.
+        // This stays exclusively beneath the caller's local work directory.
+        if(panelsEnabled){
+            std::vector<uint8_t> encoded;Require(EncodeModelArchive(model.body,encoded,error),error);
+            auto bodyPath=root/"Assets/structural-exterior.judasmodel";
+            {std::ofstream out(bodyPath,std::ios::binary);out.write(reinterpret_cast<const char*>(encoded.data()),std::streamsize(encoded.size()));Require(bool(out),"cannot write private structural exterior");}
+            AssetRecord source;
+            if(auto* existing=db.FindByRelativePath("Assets/structural-exterior.judasmodel"))source=*existing;
+            else Require(db.Track(bodyPath.string(),source,error),error);
+            asset.sourceAsset=source.id;
+            asset.sourceFingerprint=SceneFingerprintSha256(std::string_view(reinterpret_cast<const char*>(encoded.data()),encoded.size()));
+            {std::ofstream out(root/"Assets/structure.judasdeform",std::ios::binary);out<<EncodeDeformableAsset(asset);Require(bool(out),"cannot write private bound structure");}
+        }
         if (auto *existing = db.FindByRelativePath("Assets/structure.judasdeform"))
             record = *existing;
         else
             Require(db.Track((root / "Assets/structure.judasdeform").string(), record, error), error);
-        ResourceManager resources(nullptr, &db);
+        ResourceManager resources(host?&host->GetRenderer():nullptr, &db);
         resources.RequestDeformable(record.id);
         resources.WaitForAll();
         Scene scene;
@@ -357,7 +372,7 @@ int main(int argc, char **argv) {
                     glm::angleAxis(glm::pi<float>(), glm::vec3(0, 1, 0));
         }
         if(panelsEnabled)for(unsigned i=0;i<rigs.size();++i){
-            auto* d=scene.Find(rigs[i].owner);d->deformable->collisionLayer=8+i;
+            auto* d=scene.Find(rigs[i].owner);
             d->deformable->material.density*=1475./1500.;
         }
         Require(wheelView>=-1&&wheelView<4,"wheel view must be 0..3");
@@ -376,20 +391,20 @@ int main(int argc, char **argv) {
                     box("Front wall", {x + (kind == "offset" ? .55f : 0), 1, -7},
                         {kind == "offset" ? .14f : 3.f, 1, kind == "offset" ? .14f : .4f});
             }
+        std::vector<CrashPanel> panels(panelsEnabled?rigs.size():0);
+        for(unsigned i=0;i<panels.size();++i)panels[i].Author(scene,asset,rigs[i],db,resources,hood);
         Require(SaveSceneToFile(scene, (root / "crash-proof.judas").string(), error), error);
         ProjectClassification categories;
-        if(panelsEnabled){for(unsigned i=0;i<rigs.size();++i)categories.collision.names.emplace(8+i,"Structural frame "+std::to_string(i));categories.collision.nextId=8+unsigned(rigs.size());}
         RuntimeWorld world;
         Require(world.Build(scene, &resources, error, &categories), error);
-        world.UpdateDeformables(1. / 60);
-        std::vector<CrashPanel> panels(panelsEnabled?rigs.size():0);
-        for(unsigned i=0;i<panels.size();++i)panels[i].Initialize(world,rigs[i],hood);
+        world.MechanicalSubsteps();
+        for(auto& panel:panels)panel.Bind(world);
         std::string modelHash;
         Require(SceneFingerprintSha256File(modelPath, modelHash, error), error);
         std::string authoredSceneHash;
         Require(SceneFingerprintSha256File((root/"crash-proof.judas").string(),authoredSceneHash,error),error);
         const auto content =
-            SceneFingerprintSha256(EncodeDeformableAsset(asset) + authoredSceneHash + modelHash + recipeHash + (panelsEnabled?"dihedral-panel-mount-tear-v4":"frame-only"));
+            SceneFingerprintSha256(EncodeDeformableAsset(asset) + authoredSceneHash + modelHash + recipeHash + (panelsEnabled?"native-scene-panel-mount-tear-v5":"frame-only"));
         SaveStorage storage((root / "Saves").string());
         if (load) {
             GameSnapshot snapshot;
@@ -403,7 +418,7 @@ int main(int argc, char **argv) {
             Require(WorldPersistence::Prepare(world, error), error);
             Require(WorldPersistence::Restore(world, snapshot.participants, error), error);
             WorldPersistence::Published(world);
-            if(panelsEnabled){auto it=snapshot.participants.find("crash-panels");Require(it!=snapshot.participants.end(),"saved physical hood is missing");SaveArchive a(it->second.data);for(auto& p:panels)p.Persist(a);}
+            for(auto& panel:panels)panel.Bind(world);
             const auto hash = DurableShapeHash(world, rigs, &panels);
             Require(snapshot.metadata == "{\"shape\":\"" + hash + "\"}",
                     "cold restoration changed durable deformation/wheel/rotor state");
@@ -426,6 +441,7 @@ int main(int argc, char **argv) {
             r.SetSceneAppearance(true, 1, {}, 1, {1, 0, 0, 0}, false, {.15f, .19f, .24f});
             for (auto &rig : rigs) {
                 auto *sim = world.RuntimeDeformable(rig.owner, error);
+                if(sim->asset->structuralSkin){bodyMeshes.emplace_back();meshRevisions.push_back(sim->fracture.revision);continue;}
                 if (cpuSkin)
                     rig.skin.Map(*sim, 1, rig.mapped);
                 else
@@ -438,7 +454,6 @@ int main(int argc, char **argv) {
                 if (!model.wheels[i].indices.empty())
                     wheelMeshes[i] = r.CreateMesh(model.wheels[i]);
             for(unsigned i=0;i<4;++i) if(!model.brakes[i].indices.empty())brakeMeshes[i]=r.CreateMesh(model.brakes[i]);
-            for(auto& p:panels){p.Map();panelMeshes.push_back(r.CreateMesh(p.mapped));}
             std::cout << "INITIAL_GPU_RESOURCES_CPU_MS " << Elapsed(initialGpuResources) << '\n';
         }
         std::vector<double> panelTimes, panelMapTimes;
@@ -446,6 +461,7 @@ int main(int argc, char **argv) {
         std::deque<uint64_t> gpuFrames;
         unsigned minimumVisible = count, maximumVisible = 0;
         std::map<std::string, std::vector<double>> phaseTimes;
+        unsigned truncatedProfileFrames=0;
         if (profile)
             PerformanceProfiler::Get().Enable(true);
         InputSystem input;
@@ -468,7 +484,7 @@ int main(int argc, char **argv) {
             snapshot.content = content;
             snapshot.metadata = "{\"shape\":\"" + DurableShapeHash(world, rigs, &panels) + "\"}";
             Require(WorldPersistence::Capture(world, snapshot.participants, error), error);
-            if(panelsEnabled){SaveArchive a;for(auto& p:panels)p.Persist(a);snapshot.participants["crash-panels"]={1,a.bytes};}
+
             Require(storage.Write("crash", snapshot, error), error);
             statusMessage="Saved physical damage and vehicle state.";
             std::cout << "SAVE tick=" << tick << " metadata=" << snapshot.metadata << '\n';
@@ -489,7 +505,7 @@ int main(int argc, char **argv) {
                 if (reset && !lastR) {
                     Require(world.Build(scene, &resources, error, &categories), error);
                     world.UpdateDeformables(1. / 60);
-                    for(unsigned i=0;i<panels.size();++i)panels[i].Initialize(world,rigs[i],hood);
+                    for(auto& panel:panels)panel.Bind(world);
                     tick = 0;
                     meshRevisions.assign(rigs.size(), ~uint64_t(0));
                     paused = false;statusMessage="Fixture rebuilt; damage reset. Saved slots are retained.";
@@ -551,7 +567,7 @@ int main(int argc, char **argv) {
                             auto body=world.RuntimeBody(world.FracturePartEntity(rigs[i].owner,p));
                             world.Physics().SetLinearVelocity(body,velocity);
                         }
-                        if(i<panels.size()&&panels[i].AttachedTo(*frame,rigs[i].referencePart))for(auto& v:panels[i].material.velocities)v=glm::dvec3(velocity);
+                        if(i<panels.size()&&panels[i].AttachedTo(*frame,rigs[i].referencePart))for(auto& v:panels[i].Material().velocities)v=glm::dvec3(velocity);
                     }
                 launchRequested = false;
                 auto t = Clock::now();
@@ -560,38 +576,31 @@ int main(int argc, char **argv) {
                     StepAuthoritativeWorld(world, input, 1.f / 60);
                 stepTimes.push_back(Elapsed(t));
                 auto panelStart=Clock::now();
-                for(unsigned i=0;i<panels.size();++i)panels[i].Step(world,rigs[i],1./60);
-                // Reuse the engine's mass-balanced material/material contacts;
-                // the private owners are intentionally outside scene authoring.
-                for(unsigned a=0;a<panels.size();++a)for(unsigned b=a+1;b<panels.size();++b){
-                    auto& x=panels[a].material;auto& y=panels[b].material;
-                    const glm::dvec3 thickness(x.settings.material.thickness+y.settings.material.thickness);
-                    if(glm::any(glm::lessThan(x.Maximum()+thickness,y.Minimum()))||glm::any(glm::lessThan(y.Maximum()+thickness,x.Minimum())))continue;
-                    DeformableInstance::SurfaceContacts(x,y,1./60);
-                    DeformableInstance::SurfaceContacts(y,x,1./60);
-                }
+                for(auto& panel:panels)panel.Observe();
                 if(!panels.empty())panelTimes.push_back(Elapsed(panelStart));
                 }
                 if (profile) {
                     auto snapshot = PerformanceProfiler::Get().Snapshot(PerformanceProfiler::Get().FrameId());
                     if (snapshot.id) {
                         std::map<std::string, double> totals;
+                        if(snapshot.capReached||snapshot.incomplete||snapshot.diagnostics.droppedEvents)++truncatedProfileFrames;
                         for (const auto &scope : snapshot.scopes)
                             totals[scope.name.c_str()] += double(scope.end - scope.start) * 1e-6;
                         for (auto &[name, ms] : totals)
                             phaseTimes[name].push_back(ms);
+                        for(const auto& counter:snapshot.counters)if(counter.name=="Deformable interval CPU ms")phaseTimes["COUNTER native material CPU ms"].push_back(counter.value);
                     }
                 }
                 ++tick;
                 if(!releaseSaved&&!saveRelease.empty()&&!panels.empty()){
-                    std::string bits;for(auto r:panels[0].material.released)bits+=r?'1':'0';
+                    std::string bits;for(auto r:panels[0].Material().released)bits+=r?'1':'0';
                     if(bits==saveRelease){save();releaseSaved=true;std::cout<<"RELEASE_SAVE state="<<bits<<" tick="<<tick<<'\n';}
                 }
                 accumulator -= 1. / 60;
                 if (tick == saveAt)
                     save();
                 if (tick % 60 == 0) {
-                    for(const auto& panel:panels){auto c=panel.Center(),p=panel.Momentum();std::cout<<"PANEL_STATE tick="<<tick<<" released=";for(auto r:panel.material.released)std::cout<<int(r);std::cout<<" center="<<c.x<<","<<c.y<<","<<c.z<<" momentum="<<p.x<<","<<p.y<<","<<p.z<<" contacts="<<panel.material.stats.contacts<<" mask="<<panel.material.settings.collisionMask<<'\n';}
+                    for(const auto& panel:panels){auto c=panel.Center(),p=panel.Momentum();std::cout<<"PANEL_STATE tick="<<tick<<" released=";for(auto r:panel.Material().released)std::cout<<int(r);std::cout<<" center="<<c.x<<","<<c.y<<","<<c.z<<" momentum="<<p.x<<","<<p.y<<","<<p.z<<" contacts="<<panel.Material().stats.contacts<<" mask="<<panel.Material().settings.collisionMask<<'\n';}
                     for (auto &rig : rigs) {
                         for (auto wid : rig.wheels) {
                             auto *wheel = world.RuntimeWheel(wid);
@@ -693,17 +702,16 @@ int main(int argc, char **argv) {
                 // readable; these markings deliberately have no collision body.
                 for(int z=-20;z<=10;z+=2)r.DrawBox({0,.003f,float(z)},{1,0,0,0},{2,.003f,.015f},{.42f,.45f,.47f});
                 auto panelMapStart=Clock::now();
-                for(unsigned i=0;i<panels.size();++i){
-                    panels[i].Map();
-                    r.UpdateMeshVertices(panelMeshes[i],panels[i].mapped.vertices);
-                    r.DrawMesh(panelMeshes[i],{0,0,0},{1,0,0,0},{1,1,1},{},{1,1,1});
-                }
+                if(panelsEnabled)world.DrawDeformables(r,1);
                 if(!panels.empty())panelMapTimes.push_back(Elapsed(panelMapStart));
                 unsigned visibleModels = 0;
                 for (unsigned i = 0; i < rigs.size(); ++i) {
                     auto &rig = rigs[i];
                     auto mapping = Clock::now();
                     auto *sim = world.RuntimeDeformable(rig.owner, error);
+                    const bool nativeExterior=bool(sim->asset->structuralSkin);
+                    const auto beforeVisible = r.Stats().renderablesVisible;
+                    if(!nativeExterior){
                     if (meshRevisions[i] != sim->fracture.revision) {
                         if (cpuSkin)
                             rig.skin.Map(*sim, 1, rig.mapped);
@@ -720,9 +728,9 @@ int main(int argc, char **argv) {
                     } else
                         rig.skin.Palette(*sim, 1, palette);
                     mapTimes.push_back(Elapsed(mapping));
-                    const auto beforeVisible = r.Stats().renderablesVisible;
                     r.DrawMesh(bodyMeshes[i], {0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1}, {}, {1, 1, 1}, 1, &palette);
-                    if (r.Stats().renderablesVisible > beforeVisible)
+                    }
+                    if (!nativeExterior&&r.Stats().renderablesVisible > beforeVisible)
                         ++visibleModels;
                     for (unsigned w = 0; w < 4; ++w)
                         if (auto *wheel = world.RuntimeWheel(rig.wheels[w]);
@@ -747,7 +755,7 @@ int main(int argc, char **argv) {
                     "Q/E orbit | Wheel zoom | C follow bonnet/car | R restart | Esc quit",
                     {30, 90}, .6f, {1, 1, 1, 1});
                 if(!panels.empty()){
-                    std::string mounts="Bonnet: ";for(unsigned i=0;i<panels[0].material.released.size();++i)mounts+=panels[0].material.settings.attachments[i].group+(panels[0].material.released[i]?" BROKEN   ":" attached   ");
+                    std::string mounts="Bonnet: ";for(unsigned i=0;i<panels[0].Material().released.size();++i)mounts+=panels[0].Material().settings.attachments[i].group+(panels[0].Material().released[i]?" BROKEN   ":" attached   ");
                     r.DrawUIText(mounts,{30,147},.55f,{.8f,.9f,.9f,1});
                 }
                 r.EndUIFrame();
@@ -786,22 +794,23 @@ int main(int argc, char **argv) {
             }
         }
         Require(saveRelease.empty()||releaseSaved,"requested attachment state was not reached for save");
-        for (auto &[name, values] : phaseTimes)
+        std::cout<<"TIMING_CONTRACT native_world_includes_material=1 panel_telemetry_is_not_simulation=1 truncated_profile_frames="<<truncatedProfileFrames<<'\n';
+        for (auto &[name, values] : phaseTimes)if(!truncatedProfileFrames||name.rfind("COUNTER ",0)==0)
             Summary(("PHASE " + name).c_str(), values);
         Summary("SIMULATION", stepTimes);
-        Summary("PANELS",panelTimes);
+        Summary("PANEL_TELEMETRY",panelTimes);
         Summary("PANEL_MAPPING_UPLOAD",panelMapTimes);
         std::vector<double> combined=stepTimes;
         for(unsigned i=0;i<panelTimes.size();++i)combined[i]+=panelTimes[i];
-        Summary("TOTAL_PHYSICS",combined);
-        std::ofstream timings(root/"timings.csv");timings<<"step,world_ms,panel_ms,total_physics_ms\n";
+        Summary("TOTAL_FIXED_STEP",combined);
+        std::ofstream timings(root/"timings.csv");timings<<"step,native_world_ms,panel_telemetry_ms,total_fixed_step_ms\n";
         for(unsigned i=0;i<stepTimes.size();++i)timings<<i<<","<<std::setprecision(12)<<stepTimes[i]<<","<<(i<panelTimes.size()?panelTimes[i]:0)<<","<<combined[i]<<"\n";
-        for(auto& p:panels){std::cout<<"PANEL_RESULT plastic="<<p.PlasticExtent()<<" released=";for(auto r:p.material.released)std::cout<<int(r);std::cout<<" panel_nodes="<<p.material.positions.size()<<" max_speed="<<p.maximumSpeed<<" peak_ke_j="<<p.maximumKineticEnergy<<" sleeping="<<p.material.sleeping<<'\n';}
-        for(const auto& p:panels)for(unsigned i=0;i<p.peakForces.size();++i)std::cout<<"MOUNT_PEAK group="<<p.material.settings.attachments[i].group<<" force="<<p.peakForces[i]<<" moment="<<p.peakMoments[i]<<" work_j="<<p.MountWork(i)<<" released="<<int(p.material.released[i])<<"\n";
+        for(auto& p:panels){std::cout<<"PANEL_RESULT plastic="<<p.PlasticExtent()<<" released=";for(auto r:p.Material().released)std::cout<<int(r);std::cout<<" panel_nodes="<<p.Material().positions.size()<<" max_speed="<<p.maximumSpeed<<" peak_ke_j="<<p.maximumKineticEnergy<<" sleeping="<<p.Material().sleeping<<'\n';}
+        for(const auto& p:panels)for(unsigned i=0;i<p.peakForces.size();++i)std::cout<<"MOUNT_PEAK group="<<p.Material().settings.attachments[i].group<<" force="<<p.peakForces[i]<<" moment="<<p.peakMoments[i]<<" work_j="<<p.MountWork(i)<<" released="<<int(p.Material().released[i])<<"\n";
         Summary("SKIN_MAPPING", mapTimes);
         Summary("RENDER_CPU", renderTimes);
         Summary("RENDER_GPU", gpuTimes);
-        if (host)
+        if (host&&!panelsEnabled)
             std::cout << "FRUSTUM_VISIBLE_VEHICLES min=" << minimumVisible << " max=" << maximumVisible
                       << '\n';
 #if defined(__linux__)

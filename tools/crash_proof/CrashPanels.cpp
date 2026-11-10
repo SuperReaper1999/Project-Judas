@@ -3,6 +3,12 @@
 #include "deformables/PanelIslands.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
+#include "ResourceManager.h"
+#include "AssetDatabase.h"
+#include "StructuralMass.h"
+#include "SceneFingerprint.h"
+#include <filesystem>
+#include <fstream>
 #include "GravityField.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
@@ -50,7 +56,7 @@ MeshData ExtractCrashHood(MeshData& body,const std::vector<std::string>& additio
     compact(hood);compact(remaining);
     body=std::move(remaining);return hood;
 }
-void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshData& hood){
+void CrashPanel::Author(Scene& scene,const DeformableAsset& frame,const CrashRig& rig,AssetDatabase& database,ResourceManager& resources,const MeshData& hood){
     using V=glm::dvec3;
     V lo(1e20),hi(-1e20);for(const auto& v:hood.vertices){lo=glm::min(lo,V(v.position));hi=glm::max(hi,V(v.position));}
     lo-=V(.001,0,.001);hi+=V(.001,0,.001);
@@ -63,94 +69,75 @@ void CrashPanel::Initialize(RuntimeWorld& world,const CrashRig& rig,const MeshDa
         if(p.z<lo.z+.01 && std::abs(p.x)<.4)a.groups["front-latch"].push_back(n);
     }
     std::string error;if(!PrepareDeformableAsset(a,error))throw std::runtime_error(error);
-    auto* frame=world.RuntimeDeformable(rig.owner,error);
-    if(!frame||!frame->error.empty())throw std::runtime_error("frame is unavailable for panel mount authoring");
-    DeformableSettings s;s.substeps=4;s.iterations=6;s.selfContact=true;
-    double area=0;for(auto t:a.cloth)area+=t.area;
-    s.material.density=25/area;s.material.stretchCompliance=1e-9;s.material.shearCompliance=1e-9;
-    s.material.damping=.4;s.material.thickness=.012;
-    // Stage-1 test deliberately excludes the coarse inner frame, whose volume
-    // overlaps the shell. Each proof vehicle has a distinct registered layer, so other vehicles remain collidable.
-    s.collisionMask=kAllCategories&~CategoryBit(frame->settings.collisionLayer);
-    attachedCollisionMask=s.collisionMask;
-    carrierParts.clear();targets.clear();
+    if(!frame.fracture||!frame.fracture->rigid)throw std::runtime_error("panel authoring requires a physical structural carrier");
+    DeformableSettings settings;settings.substeps=4;settings.iterations=6;settings.panel.enabled=true;
+    double area=0;for(const auto& triangle:a.cloth)area+=triangle.area;
+    settings.material.density=25/area;settings.material.stretchCompliance=settings.material.shearCompliance=1e-9;
+    settings.material.damping=.4;settings.material.thickness=.012;
     for(const auto& [group,nodes]:a.groups){
         V centroid(0);for(auto n:nodes)centroid+=a.nodes[n]/double(nodes.size());
-        unsigned part=0;double best=1e100;
-        for(unsigned p=0;p<frame->asset->fracture->parts.size();++p){auto d=frame->asset->fracture->parts[p].proxyCenter-centroid;if(glm::dot(d,d)<best){best=glm::dot(d,d);part=p;}}
-        carrierParts.push_back(part);
-        auto entity=world.FracturePartEntity(rig.owner,part);auto body=world.RuntimeBody(entity);auto pose=world.Physics().GetTransform(body);
+        unsigned part=0;double distance=1e100;
+        for(unsigned i=0;i<frame.fracture->parts.size();++i){auto delta=frame.fracture->parts[i].proxyCenter-centroid;double next=glm::dot(delta,delta);if(next<distance){distance=next;part=i;}}
         DeformableAttachment mount;mount.group=group;mount.kind=DeformableAttachment::Kind::Body;
-        mount.target=rig.owner;mount.part=frame->asset->fracture->parts[part].key;mount.offset=-frame->asset->fracture->parts[part].proxyCenter;
-        mount.tearWork=MountTearWork;mount.forceLimit=group=="front-latch"?8000:20000;mount.torqueLimit=8000;s.attachments.push_back(mount);
-        DeformableTarget target;target.valid=true;target.body=body;
-        target.current=glm::translate(glm::dmat4(1),V(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));target.previous=target.current;targets.push_back(target);
+        mount.target=rig.owner;mount.part=frame.fracture->parts[part].key;
+        mount.offset=-IntegrateStructuralMass(frame,frame.fracture->parts[part],1).center;
+        mount.tearWork=MountTearWork;mount.forceLimit=group=="front-latch"?8000:20000;mount.torqueLimit=8000;
+        settings.attachments.push_back(mount);
     }
-    auto parent=world.RuntimeDefinition(rig.owner)->transform;
-    auto transform=glm::translate(glm::dmat4(1),V(parent.position))*glm::mat4_cast(glm::dquat(parent.rotation));
-    shell=std::make_shared<DeformableAsset>(std::move(a));
-    s.panel.enabled=true;
-    material.Initialize(shell,s,transform,1);
-    maximumSpeed=maximumKineticEnergy=0;
-    peakForces.assign(targets.size(),0);peakMoments.assign(targets.size(),0);
-    Map();
-    std::cout<<"PANEL_INITIALIZED nodes="<<material.positions.size()<<" tets="<<material.asset->solids.size()<<" mass="<<material.Mass()<<" triangles="<<hood.indices.size()/3<<'\n';
+    auto bytes=EncodeDeformableAsset(a);auto digest=SceneFingerprintSha256(bytes);
+    auto path=std::filesystem::path(database.AssetsDir())/("physical-panel-"+digest+".judasdeform");
+    if(!std::filesystem::exists(path)){std::ofstream file(path,std::ios::binary);file.write(bytes.data(),std::streamsize(bytes.size()));file.close();if(!file)throw std::runtime_error("cannot preserve private panel derivative");}
+    AssetRecord record;
+    const auto relative="Assets/"+path.filename().generic_string();
+    if(auto* existing=database.FindByRelativePath(relative))record=*existing;
+    else if(!database.Track(path.string(),record,error))throw std::runtime_error(error);
+    resources.RequestDeformable(record.id);resources.WaitForAll();settings.asset=record.id;
+    auto transform=scene.Find(rig.owner)->transform;
+    auto& object=scene.CreateObject("Physically deformable bonnet");owner=object.id;
+    object.transform=transform;object.deformable=std::move(settings);
+    object.render=SceneRenderComponent{};object.render->color={1,1,1};
 }
-void CrashPanel::Step(RuntimeWorld& world,const CrashRig& rig,double dt){
-    std::array<uint8_t,64> previouslyReleased{};
-    std::copy(material.released.begin(),material.released.end(),previouslyReleased.begin());
-    for(unsigned i=0;i<targets.size();++i){
-        if(material.released[i]){targets[i].valid=false;targets[i].body={};continue;}
-        auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,carrierParts[i]));
-        auto& t=targets[i];t.previous=t.current;t.body=body;t.valid=world.Physics().IsBodyEnabled(body);
-        if(t.valid){auto pose=world.Physics().GetTransform(body);t.current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));}
-        else material.released[i]=1;
+void CrashPanel::Bind(RuntimeWorld& runtime,SceneObjectId existing){
+    world=&runtime;if(existing)owner=existing;
+    auto& material=Material();world->UpdatePanelCollisionExclusions(material);observedRelease=material.released;
+    peakForces.assign(material.settings.attachments.size(),0);peakMoments.assign(peakForces.size(),0);
+    maximumSpeed=maximumKineticEnergy=0;Map();
+    std::cout<<"PANEL_INITIALIZED owner="<<owner<<" nodes="<<material.positions.size()<<" mass="<<material.Mass()<<" triangles="<<material.asset->render.indices.size()/3<<'\n';
+}
+DeformableInstance& CrashPanel::Material()const{
+    if(!world||!owner)throw std::logic_error("panel fixture is not bound to its native owner");
+    std::string error;auto* material=world->RuntimeDeformable(owner,error);
+    if(!material)throw std::runtime_error("native panel: "+error);
+    return *material;
+}
+void CrashPanel::Observe(){
+    auto& material=Material();if(!material.error.empty())throw std::runtime_error("native panel: "+material.error);
+    for(unsigned i=0;i<material.released.size();++i)if(material.released[i]&&!observedRelease[i]){
+        const auto event=material.attachmentEvents.find(material.settings.attachments[i].group);
+        std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<" reason="<<(event==material.attachmentEvents.end()?"completed-release":event->second)<<" force="<<material.attachmentState[i].peakForce<<" moment="<<material.attachmentState[i].peakTorque<<'\n';
     }
-    auto gravity=world.GravityForEntity(rig.owner);
-    material.Step(dt,world.Physics(),gravity,targets);
-    if(!material.error.empty())throw std::runtime_error("physical hood: "+material.error);
-    for(unsigned i=0;i<material.released.size();++i)if(material.released[i]&&!previouslyReleased[i])std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<(material.settings.attachments[i].tearWork>0&&material.AttachmentWork(i)>=material.settings.attachments[i].tearWork?" reason=mounting-sheet-tear force=":" reason=hardware-capacity force=")<<material.attachmentState[i].peakForce<<" moment="<<material.attachmentState[i].peakTorque<<'\n';
-    double kinetic=0;for(unsigned n=0;n<material.velocities.size();++n){double speed2=glm::dot(material.velocities[n],material.velocities[n]);maximumSpeed=std::max(maximumSpeed,std::sqrt(speed2));kinetic+=.5*material.NodeMass(n)*speed2;}maximumKineticEnergy=std::max(maximumKineticEnergy,kinetic);
-    for(unsigned i=0;i<material.attachmentState.size();++i){peakForces[i]=std::max(peakForces[i],material.attachmentState[i].peakForce);peakMoments[i]=std::max(peakMoments[i],material.attachmentState[i].peakTorque);}
-    CommitMountFailures();
+    observedRelease=material.released;
+    double kinetic=0;for(unsigned n=0;n<material.velocities.size();++n){double speed2=glm::dot(material.velocities[n],material.velocities[n]);maximumSpeed=std::max(maximumSpeed,std::sqrt(speed2));kinetic+=.5*material.NodeMass(n)*speed2;}
+    maximumKineticEnergy=std::max(maximumKineticEnergy,kinetic);
+    for(unsigned i=0;i<peakForces.size();++i){peakForces[i]=std::max(peakForces[i],material.attachmentState[i].peakForce);peakMoments[i]=std::max(peakMoments[i],material.attachmentState[i].peakTorque);}
 }
-bool CrashPanel::CommitMountFailures(){
-    bool changed=false;
-    // The fasteners and the sheet they pass through are different failure paths.
-    // Existing force/moment limits protect the hardware. Local irreversible
-    // bending work tears the surrounding sheet, including under repeated loads.
-    // Publish release at the completed material step, without changing momentum.
-    for(unsigned i=0;i<targets.size();++i)if(!material.released[i]&&MountWork(i)>=MountTearWork){
-        std::cout<<"MOUNT_FAILURE group="<<material.settings.attachments[i].group<<" reason=mounting-sheet-tear work_j="<<MountWork(i)<<'\n';
-        material.Release(material.settings.attachments[i].group);changed=true;
-    }
-    RefreshCollisionMask();
-    return changed;
+bool CrashPanel::CommitMountFailures(){auto& material=Material();bool changed=material.CommitPanelFailures();world->UpdatePanelCollisionExclusions(material);return changed;}
+void CrashPanel::Persist(SaveArchive& archive){
+    if(archive.reading)throw std::logic_error("native panels restore through WorldPersistence");
+    Material().Persist(archive);
 }
-void CrashPanel::RefreshCollisionMask(){
-    const bool detached=std::all_of(material.released.begin(),material.released.end(),[](auto r){return r!=0;});
-    // Independent debris collides with its former car as well as the world.
-    material.settings.collisionMask=detached?kAllCategories:attachedCollisionMask;
-}
-void CrashPanel::Persist(SaveArchive& a){material.Persist(a);for(auto& t:targets)a(t.previous,t.current,t.valid);if(a.reading)RefreshCollisionMask();}
-double CrashPanel::PlasticExtent()const{double peak=0;for(const auto& h:material.panelBending->hinges)peak=std::max(peak,h.plastic);return peak;}
-void CrashPanel::Map(){material.MapRender(1,mapped);}
-
+double CrashPanel::PlasticExtent()const{double extent=0;for(const auto& hinge:Material().panelBending->hinges)extent=std::max(extent,hinge.plastic);return extent;}
+void CrashPanel::Map(){Material().MapRender(1,mapped);}
+double CrashPanel::MountWork(unsigned index)const{return Material().AttachmentWork(index);}
 bool CrashPanel::AttachedTo(const DeformableInstance& frame,unsigned referencePart)const{
     if(referencePart>=frame.fracture.component.size()||frame.fracture.removed[referencePart])return false;
-    for(unsigned i=0;i<carrierParts.size();++i)if(!material.released[i]&&!frame.fracture.removed[carrierParts[i]]&&frame.fracture.component[carrierParts[i]]==frame.fracture.component[referencePart])return true;
+    const auto& material=Material();const auto& parts=frame.asset->fracture->parts;
+    for(unsigned i=0;i<material.settings.attachments.size();++i)if(!material.released[i]){
+        const auto& key=material.settings.attachments[i].part;
+        auto part=std::find_if(parts.begin(),parts.end(),[&](const auto& p){return p.key==key;});
+        if(part!=parts.end()){auto index=unsigned(part-parts.begin());if(!frame.fracture.removed[index]&&frame.fracture.component[index]==frame.fracture.component[referencePart])return true;}
+    }
     return false;
 }
-
-// Partition the existing physical bending work by the material nodes belonging
-// to the attachment patch. No remote panel work, elapsed time or impact count.
-double CrashPanel::MountWork(unsigned index) const {
-    return material.AttachmentWork(index);
-}
-
-glm::dvec3 CrashPanel::Center() const {
-    glm::dvec3 value(0);for(unsigned n=0;n<material.positions.size();++n)value+=material.NodeMass(n)*material.positions[n];return value/material.Mass();
-}
-glm::dvec3 CrashPanel::Momentum() const {
-    glm::dvec3 value(0);for(unsigned n=0;n<material.velocities.size();++n)value+=material.NodeMass(n)*material.velocities[n];return value;
-}
+glm::dvec3 CrashPanel::Center()const{const auto& material=Material();glm::dvec3 value(0);for(unsigned n=0;n<material.positions.size();++n)value+=material.NodeMass(n)*material.positions[n];return value/material.Mass();}
+glm::dvec3 CrashPanel::Momentum()const{const auto& material=Material();glm::dvec3 value(0);for(unsigned n=0;n<material.velocities.size();++n)value+=material.NodeMass(n)*material.velocities[n];return value;}

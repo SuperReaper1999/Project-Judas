@@ -135,6 +135,10 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
         int axis=state.deformableNormalAxis;if(ImGui::Combo("Panel normal",&axis,axes,3))state.deformableNormalAxis=axis;
         ImGui::TextWrapped("Select a separated imported part. The panel grid uses rows/columns above; its render detail remains unchanged. Split closed or folded shells into regions.");
         if(ImGui::Button("Fit physical panel to imported region"))action=8;
+        if(asset&&asset->fracture&&asset->fracture->rigid){
+            ImGui::TextWrapped("Detailed exterior: the selected mesh follows physical sections and tears at authored mesh islands. Use separate physical panels for local sheet-metal bends.");
+            if(ImGui::Button("Bind detailed exterior to current structure"))action=9;
+        }
         if(action)BakeEditorDeformable(doc,o.id,state,action);
     }
     if(!ValidDeformableSettings(d,error))ImGui::TextWrapped("Invalid configuration: %s",error.c_str());
@@ -146,7 +150,7 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
 
 bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState& state,int action){
     auto* object=doc.GetScene().Find(id);std::string error;
-    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>8){state.status="Select a deformable and an open project.";return false;}
+    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>9){state.status="Select a deformable and an open project.";return false;}
     try{
             auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableDestination;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()==".."||path.extension()!=".judasdeform")throw std::runtime_error("Choose a .judasdeform path inside project assets.");
             if(std::filesystem::exists(path))throw std::runtime_error("Destination exists; choose a new name.");
@@ -155,6 +159,14 @@ bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState&
             else if(action==2)baked=MakeDeformableBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize));
             else if(action==4||action==5||action==7){baked=MakeFractureBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize),action==5);if(action==7){baked.fracture->structural=true;if(!PrepareDeformableAsset(baked,error))throw std::runtime_error(error);}}
             else if(action==6){auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableSource;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("Partition source must be inside project assets.");std::ifstream input(path);std::string text{std::istreambuf_iterator<char>(input),{}};if(!input||!ImportFracturePartition(text,baked,error))throw std::runtime_error("Partition import: "+error);}
+            else if(action==9){
+                auto current=state.resources?state.resources->GetDeformable(object->deformable->asset,error):nullptr;
+                auto* source=state.assets->Find(state.deformableSource);
+                if(!current||!current->fracture||!current->fracture->rigid)throw std::runtime_error("Choose a physical structural asset first.");
+                if(!source||source->type!=AssetType::Mesh)throw std::runtime_error("Choose an imported detailed mesh asset.");
+                baked=*current;baked.structuralSkin.reset();baked.sourceAsset=source->id;
+                if(!SceneFingerprintSha256File(source->path,baked.sourceFingerprint,error))throw std::runtime_error(error);
+            }
             else if(action==8){
                 auto* source=state.assets->Find(state.deformableSource);MeshData mesh,region;
                 if(!source||source->type!=AssetType::Mesh)throw std::runtime_error("Choose an imported mesh asset.");

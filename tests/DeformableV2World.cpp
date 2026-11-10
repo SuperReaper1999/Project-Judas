@@ -6,6 +6,9 @@
 #include "SceneSerialization.h"
 #include <cstdlib>
 #include "deformables/PanelCook.h"
+#include "deformables/StructuralSkin.h"
+#include "ModelArchive.h"
+#include "SceneFingerprint.h"
 #include <chrono>
 #include <fstream>
 #include <filesystem>
@@ -24,6 +27,12 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     {std::ofstream out(root/"panel.judasdeform",std::ios::binary);out<<EncodeDeformableAsset(panel);}
     AssetDatabase database;database.Scan(scratch.path.string(),root.string());AssetRecord frameRecord,panelRecord;
     if(!database.Track((root/"frame.judasdeform").string(),frameRecord,error)||!database.Track((root/"panel.judasdeform").string(),panelRecord,error))throw std::runtime_error(error);
+    // Original engine-owned detail, loaded through the ordinary resource path.
+    std::vector<uint8_t> sourceBytes;if(!EncodeModelArchive(frame.render,sourceBytes,error))throw std::runtime_error(error);
+    {std::ofstream out(root/"body.judasmodel",std::ios::binary);out.write(reinterpret_cast<const char*>(sourceBytes.data()),std::streamsize(sourceBytes.size()));}
+    AssetRecord bodyRecord;if(!database.Track((root/"body.judasmodel").string(),bodyRecord,error))throw std::runtime_error(error);
+    frame.sourceAsset=bodyRecord.id;frame.sourceFingerprint=SceneFingerprintSha256(std::string_view(reinterpret_cast<const char*>(sourceBytes.data()),sourceBytes.size()));
+    {std::ofstream out(root/"frame.judasdeform",std::ios::binary);out<<EncodeDeformableAsset(frame);}
     ResourceManager resources(nullptr,&database);resources.RequestDeformable(frameRecord.id);resources.RequestDeformable(panelRecord.id);resources.WaitForAll();
     Scene scene;auto& assembly=scene.CreateObject("Physical structural carrier");const auto carrier=assembly.id;
     assembly.deformable=DeformableSettings{};assembly.deformable->asset=frameRecord.id;assembly.deformable->material.density=1000;
@@ -44,6 +53,14 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     if(!world.Build(scene,&resources,error))throw std::runtime_error(error);
     world.UpdateDeformables(1./60);
     auto* first=world.RuntimeDeformable(owners[0],error);auto* second=world.RuntimeDeformable(owners[1],error);
+    auto* chassis=world.RuntimeDeformable(carrier,error);
+    check(chassis&&chassis->asset->structuralSkin,"ordinary structural asset loads its shared detailed skin through ResourceManager");
+    if(chassis&&chassis->asset->structuralSkin){
+        MeshData mapped;chassis->asset->structuralSkin->BuildGpuMesh(*chassis,mapped);
+        std::vector<glm::mat4> palette;chassis->asset->structuralSkin->Palette(*chassis,1,palette);
+        check(!mapped.indices.empty()&&mapped.skinVertices.size()==mapped.vertices.size()&&palette.size()==frame.fracture->parts.size(),"native structural presentation uses the physical section palette and detailed source topology");
+        check(resources.BytesOf(frameRecord.id)>=chassis->asset->structuralSkin->Bytes(),"shared detailed structural payload is included in resource residency accounting");
+    }
     check(first&&second&&first->error.empty()&&second->error.empty()&&!first->released[0]&&!second->released[0],"multiple ordinary scene panels resolve stable mounts on the same structural assembly");
     check(first->carrierCollisionExclusions.size()==2&&second->carrierCollisionExclusions.size()==2,"attached panel excludes only its physically connected coarse carrier, without per-car collision layers");
     const auto& attachment=first->settings.attachments[0];auto body=world.DeformableAttachmentBody(attachment,error);
@@ -65,4 +82,7 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     RuntimeWorld rejected;
     if(!rejected.Build(restoredScene,&resources,error,nullptr,nullptr,true)||!WorldPersistence::Prepare(rejected,error))throw std::runtime_error(error);
     check(!WorldPersistence::Restore(rejected,retired,error),"retired incomplete material snapshot is explicitly rejected rather than inventing panel history");
+    {std::ofstream out(root/"body.judasmodel",std::ios::app|std::ios::binary);out<<"changed";}
+    ResourceManager stale(nullptr,&database);stale.RequestDeformable(frameRecord.id);stale.WaitForAll();
+    check(!stale.GetDeformable(frameRecord.id,error)&&error.find("stale deformable")!=std::string::npos,"source changes reject a structural binding before publication instead of rendering stale damage geometry");
 }

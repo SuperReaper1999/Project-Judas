@@ -189,3 +189,45 @@ now live in `src/deformables/StructuralSkin.*` and `PanelIslands.h`, linked once
 the engine. The crash proof and original structural tests use that implementation;
 there are no forwarding headers at their former tool paths. Imported UV/material
 islands are preparation hints, not a universal semantic panel classifier.
+
+## Native project integration checkpoint (Stages 2–4 in progress)
+
+The Challenger proof now authors its bonnet as an ordinary scene deformable,
+using stable structural-section mounts. It no longer advances a separate
+proof-owned panel solver. Whole-world persistence owns the physical panel; the
+proof's extra panel save participant is retired. The old accepted private binary
+and its launchers remain unchanged.
+
+Rigid structural assets may reference a detailed model through `sourceAsset` and
+`sourceFingerprint`. ResourceManager validates the source and prepares one shared
+immutable structural skin on its normal CPU worker. Instances retain their own
+physical damage; the world renderer uses section palettes, rebuilding exterior
+topology only when connection/removal topology changes. Detailed source polygons
+do not become physical solver elements. Missing or changed sources fail before
+publication. The Editor's **Bind detailed exterior to current structure** writes
+a new physical asset at the chosen destination; local bending still uses separate
+physical panels. Imported islands define presentation seams, not inferred hinges.
+
+Native deformable checks: **136/136**. Structural/crash checks: **174/174**.
+A fresh process restored the real Challenger's 900-step damaged state with exact
+durable hash `c1349efc56b6192b7ebc77d72229a060141491d4ffca88fff75926336ac2929d`,
+including all three released bonnet mounts. This is automated cold-process
+evidence, not human acceptance of the complete milestone.
+
+A conservative actual-shape AABB rejection avoids evaluating material samples
+against impossible fat-broadphase candidates. The envelope expands after contact
+projection; paged collision geometry is acquired only for plausible contacts.
+In a matched 900-step 30 m/s native-panel Challenger comparison, saved physical
+state remained identical. Fixed-step p50 fell **6.5758 → 3.8238 ms**, p95
+**8.1731 → 4.1966 ms**, p99 **12.0859 → 5.4197 ms**; worst remained
+**198.5824 → 194.9213 ms**. RSS was approximately 596 MiB in both runs.
+No constraints, samples, iterations, material constants or time intervals were
+removed. The remaining impact spike is not solved by this optimization.
+
+The first native-renderer GTX 970 desktop run exercised the real Challenger,
+normal world rendering and physical detachment. Its 180-step diagnostic run had
+render CPU p50/p95 **0.844/0.945 ms** and GPU **1.133/1.193 ms**, with expensive
+topology-change frames (render CPU worst 104.55 ms). This is not the final
+one/four-car qualification. Global structural cadence, skeletal target phase,
+full authoring usability, broader model fixtures, SDK and platform qualification
+remain ongoing. Main, public releases, fluid lock and the RPG SDK are unchanged.

@@ -180,9 +180,14 @@ void StructuralSkin::Map(const DeformableInstance &simulation, double alpha, Mes
         mesh.vertices.clear();
 }
 size_t StructuralSkin::Bytes() const {
-    return rest.vertices.size() * sizeof(MeshVertex) + rest.indices.size() * sizeof(unsigned) +
+    size_t bytes=rest.vertices.size() * sizeof(MeshVertex) + rest.indices.size() * sizeof(unsigned) +
            corners.size() * sizeof(Corner) + frames.size() * sizeof(Frame) +
            centers.size() * sizeof(glm::dvec3);
+    for(const auto& material:rest.materials)for(const auto& map:material.maps){
+        bytes+=map.encodedImage.size()+map.embedded.pixels.size();
+        for(const auto& level:map.embedded.levels)bytes+=level.bytes.size();
+    }
+    return bytes;
 }
 
 void StructuralSkin::Palette(const DeformableInstance &simulation, double alpha,

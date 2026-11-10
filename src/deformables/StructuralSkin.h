@@ -15,7 +15,7 @@ class StructuralSkin {
     void Map(const DeformableInstance &, double alpha, MeshData &) const;
     void BuildGpuMesh(const DeformableInstance &, MeshData &) const;
     void Palette(const DeformableInstance &, double alpha, std::vector<glm::mat4> &) const;
-    // Numeric payload only, excluding images/materials and allocator overhead.
+    // Retained numeric and image payload, excluding allocator overhead.
     size_t Bytes() const;
 
   private:

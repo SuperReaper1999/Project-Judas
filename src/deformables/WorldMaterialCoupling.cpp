@@ -19,6 +19,7 @@ bool RuntimeWorld::BeginDeformableStep(){
 void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCoupling::Substep& interval){
     if(interval.iteration!=0)return;
     JUDAS_PROFILE_SCOPE("Coupled material interval");
+    const auto measuredStart=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
     for(auto& [id,record]:m_deformables){auto& material=record.simulation;
         if(!material.PhysicalStepActive()||!IsPublished(id))continue;
         if(!SampleDeformableTargets(id,true)){material.error="required material target unavailable during physical interval";continue;}
@@ -33,4 +34,5 @@ void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCouplin
         DeformableInstance::SurfaceContacts(y,x,interval.deltaTime);
         ++a->second.revision;++b->second.revision;
     }
+    if(measuredStart)JUDAS_PROFILE_COUNTER("Deformable interval CPU ms",double(PerformanceProfiler::Now()-measuredStart)*1e-6,ProfileCounterMode::Sum);
 }

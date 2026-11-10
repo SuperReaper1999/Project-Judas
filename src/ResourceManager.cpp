@@ -6,6 +6,8 @@
 #include <fstream>
 #include <cstring>
 #include "SceneFingerprint.h"
+#include "deformables/PanelCook.h"
+#include "deformables/StructuralSkin.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -130,7 +132,23 @@ void ResourceManager::RunLoadTask(LoadTask& task, const JobContext* context) {
     } else if(task.type==AssetType::Collision){task.collision=std::make_shared<CollisionAsset>();task.succeeded=DecodeCollisionAsset(bytes,*task.collision,task.error);
         if(task.succeeded&&!task.collision->sourceAsset.empty()){auto found=task.texturePaths.find(task.collision->sourceAsset);if(found==task.texturePaths.end()||CollisionAssetStale(*task.collision,found->second,task.error)){task.succeeded=false;task.error="stale/missing collision source; recook "+task.collision->sourceAsset;}}
     } else if(task.type==AssetType::Deformable){task.deformable=std::make_shared<DeformableAsset>();task.succeeded=DecodeDeformableAsset(bytes,*task.deformable,task.error);
-
+        if(task.succeeded&&!task.deformable->sourceAsset.empty()){
+            const auto& asset=*task.deformable;
+            auto found=task.texturePaths.find(asset.sourceAsset);
+            std::vector<uint8_t> sourceBytes;
+            if(found==task.texturePaths.end()){
+                task.succeeded=false;task.error="missing/wrong-type deformable source "+asset.sourceAsset;
+            }else if(!ReadWholeFile(found->second,sourceBytes,task.error,context,&cancelled)){
+                task.cancelled=cancelled;task.succeeded=false;
+            }else if(SceneFingerprintSha256(std::string_view(reinterpret_cast<const char*>(sourceBytes.data()),sourceBytes.size()))!=asset.sourceFingerprint){
+                task.succeeded=false;task.error="stale deformable binding: rebake source "+asset.sourceAsset;
+            }else if(asset.fracture&&asset.fracture->rigid){
+                MeshData source,rest;auto skin=std::make_shared<StructuralSkin>();
+                task.succeeded=ParseModelMesh(reinterpret_cast<const char*>(sourceBytes.data()),sourceBytes.size(),found->second,source,task.error)
+                    &&SelectDeformablePanelRegion(source,"",rest,task.error)&&skin->Bind(asset,rest,task.error,true);
+                if(task.succeeded)task.deformable->structuralSkin=std::move(skin);
+            }
+        }
     } else if (task.type == AssetType::Navigation) {
         task.navigation=std::make_shared<NavigationData>();task.succeeded=DecodeNavigation(bytes,*task.navigation,task.error);
     } else if(task.type==AssetType::AudioEffect){task.audioEnvironment=std::make_shared<AudioEnvironmentSettings>();task.succeeded=ParseAudioEnvironment(std::string(bytes.begin(),bytes.end()),*task.audioEnvironment,task.error);
@@ -177,7 +195,7 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
     if(std::filesystem::path(path).extension()==".judasmesh"){
         std::ifstream f(path,std::ios::binary);unsigned char header[40];if(f.read(reinterpret_cast<char*>(header),40)&&!std::memcmp(header,"JMS1",4)){auto u=[&](unsigned p){uint32_t v=0;for(unsigned k=0;k<4;++k)v|=uint32_t(header[p+k])<<(k*8);return v;};auto vertices=u(32),indices=u(36);if(vertices<=2000000&&indices<=12000000)task->admissionBytes=std::max(task->admissionBytes,uint64_t(vertices)*56+uint64_t(indices)*4);}
     }
-    if(expected==AssetType::Collision&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Mesh&&!record.missing)task->texturePaths.emplace(key,record.path);
+    if((expected==AssetType::Collision||expected==AssetType::Deformable)&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Mesh&&!record.missing)task->texturePaths.emplace(key,record.path);
     if((expected==AssetType::Material||expected==AssetType::SpriteSheet)&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Texture&&!record.missing)task->texturePaths.emplace(key,record.path);
     task->requested = std::chrono::steady_clock::now();
     task->trace = m_trace;
@@ -259,6 +277,7 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
             +a.edges.size()*sizeof(glm::uvec2)+a.bends.size()*sizeof(DeformableBend)+a.binding.size()*sizeof(DeformableBinding);
         for(const auto& rows:{&a.neighbors,&a.excludedFaces,&a.excludedEdges}){entry.bytes+=rows->size()*sizeof(std::vector<unsigned>);for(const auto& row:*rows)entry.bytes+=row.size()*sizeof(unsigned);}
         for(const auto& [name,nodes]:a.groups)entry.bytes+=name.size()+nodes.size()*sizeof(unsigned);
+        if(a.structuralSkin)entry.bytes+=a.structuralSkin->Bytes();
 
     } else if (task->type == AssetType::Navigation) {
         entry.navigation=task->navigation;entry.bytes=0;for(auto& layer:entry.navigation->layers)entry.bytes+=layer.size();

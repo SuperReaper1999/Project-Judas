@@ -71,6 +71,7 @@ struct DeformableTet {
     glm::uvec4 nodes{0};glm::dmat3 rest{1},inverseRest{1};double volume=0;
 };
 struct DeformableBend {unsigned a=0,b=0;double rest=0;};
+class StructuralSkin;
 struct DeformableAsset {
     DeformableKind kind=DeformableKind::Cloth;
     std::shared_ptr<FractureCook> fracture;
@@ -83,6 +84,9 @@ struct DeformableAsset {
     MeshData render;
     std::vector<DeformableBinding> binding;
     std::string sourceAsset,sourceFingerprint;
+    // Shared immutable detailed exterior, prepared by the resource worker.
+    // Physical topology and per-instance damage remain separate.
+    std::shared_ptr<const StructuralSkin> structuralSkin;
     // Derived, validated once during preparation. Not mutable instance state.
     std::vector<double> measures;
     std::vector<DeformableTriangle> cloth;

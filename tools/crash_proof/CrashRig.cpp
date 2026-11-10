@@ -94,6 +94,7 @@ CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::stri
     object.transform.position = position;
     object.deformable = DeformableSettings{};
     object.deformable->asset = assetId;
+    object.render=SceneRenderComponent{};object.render->color={1,1,1};
     object.deformable->substeps = 2;
     object.deformable->iterations = 4;
     object.deformable->selfContact = false;
@@ -105,7 +106,7 @@ CrashRig AddCrashRig(Scene &scene, const DeformableAsset &asset, const std::stri
     CrashRig rig;
     rig.owner = owner;
     std::string error;
-    if (!rig.skin.Bind(asset, exterior, error, panelSeams))
+    if (asset.sourceAsset.empty()&&!rig.skin.Bind(asset, exterior, error, panelSeams))
         throw std::runtime_error(error);
     auto nearest = [&](glm::dvec3 p) {
         unsigned part = 0;

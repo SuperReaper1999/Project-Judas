@@ -1,14 +1,17 @@
 #include "Deformable.h"
 #include "deformables/RigidResponse.h"
 #include "CollisionGeometry.h"
+#include "CollisionAsset.h"
 #include "Narrowphase.h"
 #include "PerformanceProfiler.h"
 #include <algorithm>
 #include <cmath>
+#include <limits>
 using V=glm::dvec3;
 void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& physics){
     JUDAS_PROFILE_SCOPE("Deformable rigid contacts");
     double thickness=settings.material.thickness;
+    V materialMinimum=Minimum(),materialMaximum=Maximum();
     // One tree query per patch, then actual authoritative primitive shapes. Fat
     // bounds are only candidates. Samples include vertices, edge midpoints and
     // face centroids, bounding the supported thin-surface sampling envelope.
@@ -67,7 +70,11 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
                 double frictionImpulse=std::min(speed/tangentialMass,settings.material.friction*dl/h);
                 for(int k=0;k<3;++k)positions[nodes[k]]-=dir*frictionImpulse*h*inverseMass[nodes[k]]*weights[k];
                 if(rigid>0)JudasDeformables::ApplyReaction(physics,body,dir*frictionImpulse,point);
-                }++stats.contacts;
+                }
+            // Keep the rejection envelope conservative as preceding contacts
+            // project nodes. A once-per-call frozen box could miss a later body.
+            for(unsigned k=0;k<3;++k){materialMinimum=glm::min(materialMinimum,positions[nodes[k]]);materialMaximum=glm::max(materialMaximum,positions[nodes[k]]);}
+            ++stats.contacts;
         };
         if(shape.type==ShapeType::Sphere)contact(V(pose.position),glm::dquat(pose.rotation),V(0),shape.radius);
         else if(shape.type==ShapeType::Box)contact(V(pose.position),glm::dquat(pose.rotation),V(shape.halfExtents),0);
@@ -86,13 +93,21 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         if(!physics.GetCollisionFilter(body,layer,mask)||(mask&CategoryBit(settings.collisionLayer))==0||physics.IsBodySensor(body))continue;
         Shape shape;
         BodyTransform pose;
-        if(!physics.GetBodyShape(body,shape,pose))continue;
+        if(!physics.GetBodyShape(body,shape,pose,false))continue;
         if(!currentRigidContactPose){
         auto prev=physics.GetPreviousTransform(body);
         prev.position+=prev.rotation*shape.pivotOffset;
         pose.position=glm::mix(prev.position,pose.position,float(fraction));
         pose.rotation=glm::slerp(prev.rotation,pose.rotation,float(fraction));
         }
+        // Broadphase fat/swept padding is not a reason to evaluate every
+        // surface sample against a body whose actual shape cannot touch it.
+        // Bounds are available without faulting paged terrain geometry in.
+        const auto bounds=ShapeAabb(shape,pose.position,pose.rotation);
+        double magnitude=1;for(unsigned k=0;k<3;++k)magnitude=std::max({magnitude,std::abs(double(bounds.min[k])),std::abs(double(bounds.max[k]))});
+        const V allowance(thickness+16*std::numeric_limits<float>::epsilon()*magnitude);
+        if(glm::any(glm::lessThan(materialMaximum+allowance,V(bounds.min)))||glm::any(glm::greaterThan(materialMinimum-allowance,V(bounds.max))))continue;
+        shape.asset=AcquireCollision(shape.asset);
         for(unsigned n=0;n<positions.size();++n)sample(glm::uvec3(n),V(1,0,0),body,shape,pose);
         for(auto edge:asset->edges)sample({edge.x,edge.y,edge.y},V(.5,.5,0),body,shape,pose);
         for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);

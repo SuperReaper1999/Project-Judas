@@ -2,34 +2,32 @@
 #include "CrashRig.h"
 #include "Deformable.h"
 class RuntimeWorld;
+class ResourceManager;
+class AssetDatabase;
 class SaveArchive;
-// Bounded Stage-1 physical hood experiment. Uses the existing finite-mass
-// deformable material/contact kernel; no independent rigid chassis is created.
+// Private acceptance-fixture authoring/telemetry. Physics is an ordinary scene
+// deformable, integrated and persisted by RuntimeWorld, never a second owner.
 class CrashPanel {
 public:
-    DeformableInstance material;
+    SceneObjectId owner=0;
     MeshData mapped;
     std::vector<double> peakForces,peakMoments;
-    void Initialize(RuntimeWorld&, const CrashRig&, const MeshData& hood);
-    void Step(RuntimeWorld&, const CrashRig&, double);
-    void Persist(SaveArchive&);
-    double PlasticExtent() const;
-    double MountWork(unsigned) const;
+    void Author(Scene&,const DeformableAsset&,const CrashRig&,AssetDatabase&,ResourceManager&,const MeshData&);
+    void Bind(RuntimeWorld&,SceneObjectId existing=0);
+    DeformableInstance& Material()const;
+    void Observe();
+    void Persist(SaveArchive&); // diagnostic/hash capture only; restoration is WorldPersistence
+    double PlasticExtent()const;
+    double MountWork(unsigned)const;
     bool CommitMountFailures();
-    // Effective mounting-sheet tear capacity, J. Physical work, not crash count.
     static constexpr double MountTearWork=20;
-    glm::dvec3 Center() const;
-    glm::dvec3 Momentum() const;
+    glm::dvec3 Center()const;
+    glm::dvec3 Momentum()const;
     double maximumSpeed=0,maximumKineticEnergy=0;
-    bool AttachedTo(const DeformableInstance&,unsigned referencePart) const;
-private:
-    CategoryMask attachedCollisionMask=kAllCategories;
-    void RefreshCollisionMask();
-    std::vector<DeformableTarget> targets;
-    std::vector<unsigned> carrierParts;
-    std::shared_ptr<DeformableAsset> shell;
-public:
+    bool AttachedTo(const DeformableInstance&,unsigned referencePart)const;
     void Map();
+private:
+    RuntimeWorld* world=nullptr;
+    std::vector<uint8_t> observedRelease;
 };
-// Explicit authored panel region, not automatic arbitrary tetrahedron tearing.
 MeshData ExtractCrashHood(MeshData& body,const std::vector<std::string>& additionalParts={});
