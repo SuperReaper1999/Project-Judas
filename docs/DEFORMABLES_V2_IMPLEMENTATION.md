@@ -337,3 +337,13 @@ This is host-Linux qualification (glibc 2.43); the completed CI for `01c70969`
 separately passed both Alpha/Experimental gates and the Ubuntu 24.04 SDK checks.
 The matching Windows MinGW build and PE dependency/provenance checks passed;
 native Windows execution, Android and browser execution are not claimed here.
+
+## Material-review follow-up
+
+The intact-model review exposed diagnostic-tool paint/opacity overrides and an
+inverted light direction. The tool now preserves imported materials and uses the
+authored lighting contract. Legacy FBX glass and opaque body material modes are
+explicitly authored in private derivatives using existing material capabilities.
+No generic renderer, importer or physics behaviour is changed. The final
+qualification report records updated render timings and a matched, cold-restored
+physical-state A/B; original and rejected visual evidence is preserved.

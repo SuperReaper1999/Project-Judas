@@ -137,16 +137,6 @@ VehicleModel LoadVehicle(const std::string &path) {
                 if (added) {
                     mesh.materials.push_back(source.materials.at(p.material));
                     mesh.materialKeys.push_back(source.materialKeys.at(p.material));
-                    auto &material = mesh.materials.back();
-                    if (i) {
-                        material.alpha = MaterialAlpha::Opaque;
-                        material.baseColor.a = 1;
-                    } else if (name.find("carpaint") != std::string::npos ||
-                               name.find("paintwork") != std::string::npos) {
-                        material.baseColor = {.18f, .4f, .7f, 1};
-                        material.metallic = .25f;
-                        material.roughness = .35f;
-                    }
                 }
             }
             mesh.primitives.push_back({first[i], n, material, p.part, p.node});
@@ -349,6 +339,10 @@ int main(int argc, char **argv) {
         resources.RequestDeformable(record.id);
         resources.WaitForAll();
         Scene scene;
+        scene.Settings().linearRendering=true;
+        scene.Settings().sunDirection={-.4f,1,.3f};
+        scene.Settings().sunColor={2,1.9f,1.8f};
+        scene.Settings().ambientColor={.7f,.75f,.8f};
         auto box = [&](const std::string &name, glm::vec3 position, glm::vec3 half) {
             auto &o = scene.CreateObject(name);
             o.transform.position = position;
@@ -440,8 +434,12 @@ int main(int argc, char **argv) {
         auto initialGpuResources = Clock::now();
         if (host) {
             auto &r = host->GetRenderer();
-            r.SetLighting({.4f, -1, -.3f}, {2, 1.9f, 1.8f}, {.7f, .75f, .8f});
-            r.SetSceneAppearance(true, 1, {}, 1, {1, 0, 0, 0}, false, {.15f, .19f, .24f});
+            const auto& appearance=scene.Settings();
+            r.SetLighting(appearance.sunDirection,appearance.sunColor*appearance.sunIntensity,
+                appearance.ambientColor);
+            r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,{},
+                appearance.environmentIntensity,appearance.environmentRotation,false,
+                appearance.backgroundColor);
             for (auto &rig : rigs) {
                 auto *sim = world.RuntimeDeformable(rig.owner, error);
                 if(sim->asset->structuralSkin){bodyMeshes.emplace_back();meshRevisions.push_back(sim->fracture.revision);continue;}
@@ -706,6 +704,12 @@ int main(int argc, char **argv) {
                 }
                 auto t = Clock::now();
                 r.ResetStats();
+                const auto& appearance=scene.Settings();
+                r.SetSceneAppearance(appearance.linearRendering,appearance.exposure,{},
+                    appearance.environmentIntensity,appearance.environmentRotation,false,
+                    appearance.backgroundColor);
+                r.SetLighting(appearance.sunDirection,appearance.sunColor*appearance.sunIntensity,
+                    appearance.ambientColor);
                 r.BeginFrame(window.Width(), window.Height());
                 r.SetCamera(glm::lookAt(eye, target, glm::vec3(0, 1, 0)),
                             glm::perspective(glm::radians(55.f), float(window.Width()) / window.Height(), .1f,

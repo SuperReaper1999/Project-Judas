@@ -50,6 +50,17 @@ metres. A panel region must contain at most 65536 vertices/indices; split large,
 closed or overhanging shells into appropriate regions. The physical envelope is
 an approximation, not collision for every detailed polygon.
 
+## Check imported appearance
+
+The importer retains material slots and reports unsupported FBX shader graphs.
+Inspect the source alpha mode as well as texture RGB. A solid body authored Blend
+can have incorrect self-overdraw even when all its opacity values are one; use an
+Opaque part/material override for that solid surface. Retain transparency on glass,
+lights and decals where it is actually needed. Zero-opacity legacy glass requires
+an explicitly authored Judas glass material; source shader graphs are not recreated.
+The private vehicle examples include their material recipes and original-source
+hashes. These are ordinary material settings, not deformable-specific shading.
+
 ## Attach panels and author failure
 
 Use the panel's **Groups** list, or preview a local selection box and bake a named

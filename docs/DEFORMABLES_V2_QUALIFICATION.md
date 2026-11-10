@@ -56,7 +56,9 @@ mechanical connections 37, mechanical scripting 20, shared scripting modules 8,
 Inspector workflow 74, vehicle dynamics 97, wheel contact 11 and vehicle authoring
 16 checks. The final full engine/SDK run, including the four new suites, is
 [CI 42865178610](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42865178610)
-at 2ce87594; the final handover records its completed result. Renderer
+at 2ce87594 passed both channels and the Ubuntu SDK checks. The subsequent
+presentation-tool correction and final documentation checks are identified
+separately in the final handover receipt. Renderer
 submission also passes **28/28** on both actual NVIDIA OpenGL 4.6 and forced
 portable OpenGL 3.3. The real native deforming Challenger additionally completes
 240 fixed steps on GL 3.3 with permanent bending and all bonnet mounts released.
@@ -126,15 +128,16 @@ hash: p50 6.576 → 3.824 ms, p95 8.173 → 4.197, p99 12.086 → 5.420. Its wor
 changes deliberately change integration, so their absolute timings above are not
 claimed as matched-trajectory speedups against Stage 1.
 
-GTX 970 / NVIDIA 580.178.04, modern GL 4.6, 300 fixed-step 20 m/s desktop runs:
+GTX 970 / NVIDIA 580.178.04, modern GL 4.6, 300 fixed-step 20 m/s desktop runs using the corrected source-material/glass
+setup and authored lighting:
 
 | Rendering | One car p50/p95/p99/worst ms | Four cars p50/p95/p99/worst ms |
 |---|---|---|
-| CPU submission | 0.882 / 0.928 / 1.109 / 17.305 | 2.580 / 2.729 / 3.573 / 7.849 |
-| GPU query | 1.050 / 1.109 / 1.180 / 17.661 | 1.917 / 1.971 / 2.953 / 8.541 |
+| CPU submission | 0.890 / 0.941 / 1.104 / 6.621 | 2.635 / 2.701 / 2.810 / 7.672 |
+| GPU query | 1.064 / 1.118 / 1.188 / 7.006 | 1.886 / 1.951 / 2.563 / 8.378 |
 
-Cold first-resource preparation is reported separately: **130.74 ms** one car,
-**424.81 ms** four cars, including initial native mesh/material submission and an
+Cold first-resource preparation is reported separately: **126.49 ms** one car,
+**421.75 ms** four cars, including initial native mesh/material submission and an
 explicit completion wait. It is not silently removed from startup cost. Physics
 running beside rendering differs in host contention from the headless rows.
 
@@ -167,6 +170,29 @@ Esc pause. `Controlled-Crash.sh frontal|offset|side|rear|cars` supplies controll
 impacts: Enter launch, P pause, Q/E orbit, C bonnet follow, F6 save. The other model
 launchers are named consistently. Ural: 1–4 select, B impulse, X explicit release,
 K/L save/load; close camera views follow the selected panel.
+
+## Material presentation correction
+
+The crash preparation tool previously repainted named paintwork blue and forced
+wheel opacity. Those overrides are removed; imported factors, maps, metallic,
+roughness and opacity are retained. Its diagnostic lighting now uses the authored
+surface-to-light direction consistently with the normal project renderer.
+
+The three legacy FBX cars also needed explicit private material authoring: their
+windows imported with zero opacity, while several opaque body/rim materials were
+marked Blend even with unit opacity and fully opaque texture alpha. Private
+recipes retain RGB/UV data, author the truly opaque surfaces Opaque, and provide
+standard translucent PBR glass (RGB .12/.17/.22, alpha .26, roughness .12,
+metallic 0, double-sided). Genuine transparent decals and lights retain their
+source settings. This is an authored approximation of unsupported legacy shader
+graphs, not automatic recreation of another game's materials. The original files
+are unchanged; recipes, derivatives and pre-correction projects remain private.
+
+A same-root 600-step 20 m/s A/B, with a separate cold read for each variant,
+produced the identical complete durable physical hash before/after the tool
+correction: `11855fd35dc402aadad7414efff4c86e4d42bbb208f52034ff97e1b75b9cc54d`.
+The render timings above were remeasured after correcting materials/lighting;
+the earlier visual/timing evidence is retained with its earlier scope.
 
 ## Remaining limitations and review
 
