@@ -1,6 +1,10 @@
 # Deformables V2 — revised Stage 1 crash proof
 
-Current follow-up: [physical bonnet attachment failure](DEFORMABLES_V2_BONNET_ATTACHMENTS.md).
+Current status: revised Stage 1, including the
+[bonnet attachment correction](DEFORMABLES_V2_BONNET_ATTACHMENTS.md), was human
+accepted at `6a1d49b2`. Stages 2–4 are implemented; see the current
+[qualification and review handover](DEFORMABLES_V2_QUALIFICATION.md).
+The original checkpoint's pending-review statements below are historical.
 The measurements below describe the accepted wheel/bending baseline; full release
 and detached collision are qualified separately in that follow-up.
 

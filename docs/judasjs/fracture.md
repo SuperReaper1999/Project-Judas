@@ -38,7 +38,8 @@ M79 additionally offers an opt-in rigid **structural section stress** cook with
 geometry-integrated bending, combined axial/bending stress and approximate torsion.
 Per-interface strengths can be authored in the editor or partition source; the
 state's top-level strength fields remain family defaults. Existing methods,
-callbacks, safe handles and legacy asset behaviour are unchanged. See
+callbacks and safe handles are reused by the current V2 representations. This
+does not promise compatibility with retired asset or snapshot formats. See
 [structural authoring, equations, limitations and lab](../STRUCTURES.md).
 
 Assets/strengths are authored offline. Elastic compliance and plastic yield are

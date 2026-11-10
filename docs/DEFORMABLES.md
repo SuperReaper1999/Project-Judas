@@ -1,5 +1,10 @@
 # M62 — Cloth and volumetric deformables
 
+For current physical panels, structural carriers, editor authoring and the native
+V2 lifecycle, start with [Deformables V2 authoring](DEFORMABLES_V2_AUTHORING.md)
+and [qualification](DEFORMABLES_V2_QUALIFICATION.md). The numerical reference and
+original review state below retain their historical cloth/solid scope.
+
 **Status through M69:** M62 is operator-accepted and checkpointed. Candidate/pending
 statements and measurements below record the original milestone review state,
 not a current outstanding acceptance gate. Later contracts take precedence;
