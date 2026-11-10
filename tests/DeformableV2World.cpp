@@ -2,6 +2,8 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "WorldPersistence.h"
+#include "WorldStreaming.h"
+#include "Prefab.h"
 #include "Project.h"
 #include "SceneSerialization.h"
 #include <cstdlib>
@@ -16,6 +18,8 @@
 #include <fstream>
 #include <filesystem>
 #include <stdexcept>
+#include <thread>
+#include <array>
 
 void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     {
@@ -42,7 +46,8 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     AssetRecord bodyRecord;if(!database.Track((root/"body.judasmodel").string(),bodyRecord,error))throw std::runtime_error(error);
     frame.sourceAsset=bodyRecord.id;frame.sourceFingerprint=SceneFingerprintSha256(std::string_view(reinterpret_cast<const char*>(sourceBytes.data()),sourceBytes.size()));
     {std::ofstream out(root/"frame.judasdeform",std::ios::binary);out<<EncodeDeformableAsset(frame);}
-    ResourceManager resources(nullptr,&database);resources.RequestDeformable(frameRecord.id);resources.RequestDeformable(panelRecord.id);resources.WaitForAll();
+    JobSystem resourceJobs(2);
+    ResourceManager resources(nullptr,&database,&resourceJobs);resources.RequestDeformable(frameRecord.id);resources.RequestDeformable(panelRecord.id);resources.WaitForAll();
     Scene scene;auto& assembly=scene.CreateObject("Physical structural carrier");const auto carrier=assembly.id;
     assembly.deformable=DeformableSettings{};assembly.deformable->asset=frameRecord.id;assembly.deformable->material.density=1000;
     std::vector<uint64_t> owners;
@@ -91,6 +96,58 @@ void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
     RuntimeWorld rejected;
     if(!rejected.Build(restoredScene,&resources,error,nullptr,nullptr,true)||!WorldPersistence::Prepare(rejected,error))throw std::runtime_error(error);
     check(!WorldPersistence::Restore(rejected,retired,error),"retired incomplete material snapshot is explicitly rejected rather than inventing panel history");
+    {
+        Scene source=scene;
+        for(auto owner:owners)source.Find(owner)->parent=carrier;
+        Scene prefab;
+        if(!CreatePrefab(source,carrier,prefab,error))throw std::runtime_error(error);
+        const auto path=root/"panels.judasprefab";
+        if(!SaveSceneToFile(prefab,path.string(),error))throw std::runtime_error(error);
+        AssetRecord record;if(!database.Track(path.string(),record,error))throw std::runtime_error(error);
+        Scene instances;SceneTransform placement;SceneObjectId a=0,b=0;
+        if(!InstantiatePrefab(instances,prefab,record.id,placement,a,error))throw std::runtime_error(error);
+        placement.position.x=8;
+        if(!InstantiatePrefab(instances,prefab,record.id,placement,b,error))throw std::runtime_error(error);
+        const auto pa=instances.Find(a)->prefabIds.at(owners[0]);
+        const auto pb=instances.Find(b)->prefabIds.at(owners[0]);
+        check(instances.Find(pa)->deformable->attachments[0].target==a&&instances.Find(pb)->deformable->attachments[0].target==b,
+              "independent multi-panel prefabs remap mounts to their own physical carrier");
+        RuntimeWorld prefabWorld;if(!prefabWorld.Build(instances,&resources,error))throw std::runtime_error(error);
+        prefabWorld.UpdateDeformables(1./60);
+        auto* panelA=prefabWorld.RuntimeDeformable(pa,error);auto* panelB=prefabWorld.RuntimeDeformable(pb,error);
+        check(panelA&&panelB&&panelA->error.empty()&&panelB->error.empty()&&
+              prefabWorld.DeformableAttachmentBody(panelA->settings.attachments[0],error).id!=prefabWorld.DeformableAttachmentBody(panelB->settings.attachments[0],error).id,
+              "instanced native panel mounts resolve distinct MK2 structural bodies");
+
+        Project project;if(!Project::CreateNew(scratch.path.string(),"Panel residency",project,error))throw std::runtime_error(error);
+        if(!SaveSceneToFile(source,(scratch.path/"Scenes/panels.judas").string(),error))throw std::runtime_error(error);
+        RuntimeWorld streamingWorld;Scene empty;if(!streamingWorld.Build(empty,&resources,error))throw std::runtime_error(error);
+        WorldManifest manifest;WorldRegion region;region.id="panels";region.scene="Scenes/panels.judas";
+        manifest.regions.emplace(region.id,region);manifest.retainedBytes=8*1024*1024;
+        WorldStreaming stream(streamingWorld,resources,project,manifest);
+        auto pump=[&](const auto& done){for(unsigned n=0;n<4000;++n){stream.Advance(false);if(done())return true;std::this_thread::sleep_for(std::chrono::milliseconds(1));}return false;};
+        auto lease=stream.Request("panels",false,error);
+        if(!pump([&]{auto row=stream.Status(lease);return row&&row->state=="active";}))throw std::runtime_error("panel region activation: "+stream.Regions().front().error);
+        auto owner=stream.Resolve("panels",owners[0]);auto oldCarrier=stream.Resolve("panels",carrier);
+        auto* live=streamingWorld.RuntimeDeformable(owner,error);
+        live->Impulse("left",{0,2,1});live->Release("left");streamingWorld.UpdateDeformables(1./60);
+        const auto positions=live->positions,velocities=live->velocities;
+        auto plasticState=[](const DeformableInstance& panel){std::vector<std::array<double,3>> result;if(panel.panelBending)for(const auto& hinge:panel.panelBending->hinges)result.push_back({hinge.rest,hinge.plastic,hinge.work});return result;};
+        const auto plastic=plasticState(*live);
+        stream.Release(lease);
+        check(pump([&]{return stream.Regions().front().state=="unloaded";}),"native structural carrier and released panel really evict as one region");
+        check(!streamingWorld.RuntimeDefinition(owner),"eviction removes the old physical panel identity");
+        lease=stream.Request("panels",false,error);
+        if(!pump([&]{auto row=stream.Status(lease);return row&&row->state=="active";}))throw std::runtime_error("panel region reactivation: "+stream.Regions().front().error);
+        auto returned=stream.Resolve("panels",owners[0]);live=streamingWorld.RuntimeDeformable(returned,error);
+        check(returned!=owner&&live&&live->positions==positions&&live->velocities==velocities&&live->released[0],
+              "region reload retains actual deformed panel geometry, momentum and release");
+        check(live&&plasticState(*live)==plastic,"region reload retains every panel hinge plastic rest, accumulated deformation and irreversible work");
+        check(live->settings.attachments[0].target==stream.Resolve("panels",carrier)&&live->settings.attachments[0].target!=oldCarrier,
+              "region restoration remaps retained panel mounts instead of retaining stale carrier identities");
+        streamingWorld.UpdateDeformables(1./60);
+        check(live->error.empty()&&live->carrierCollisionExclusions.empty(),"released panel continues independently after streaming restoration");
+    }
     {
         JobSystem jobs(2);ResourceManager terrainResources(nullptr,&database,&jobs);
         terrainResources.RequestDeformable(panelRecord.id);terrainResources.WaitForAll();

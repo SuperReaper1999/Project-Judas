@@ -312,3 +312,23 @@ not native Android/browser or Windows execution. The existing Windows VM was
 inspected but left shut down: its 6 GiB guest allocation exceeds the approximately
 5 GiB currently available on this 8 GiB host. No VM configuration was changed.
 Final SDK, sustained integration and human handover qualification remain in progress.
+
+## Native prefab and region-residency qualification
+
+The material suite now passes **152/152** checks. New original procedural fixtures
+instantiate the complete structural-carrier/panel hierarchy twice, verify each
+panel resolves its own MK2 carrier, then really unload and reload a streamed region.
+Reloading preserves node positions, velocities, every hinge's plastic rest/work,
+and release state while remapping retained attachment targets to fresh carrier IDs.
+The released panel continues independently after restoration. These exercise the
+current native lifecycle, rather than keeping private vehicle assets in tests.
+
+The matching `01c70969` local SDK passed all 15 current tool probes and the standard
+project/editor/import/cook/export workflows with the development checkout hidden
+and the SDK read-only. A real private crash project also exported and cold-loaded
+from a relocated standalone package with neither SDK nor development tree visible.
+Persistent user data was explicitly retained between those isolated processes.
+This is host-Linux qualification (glibc 2.43); the completed CI for `01c70969`
+separately passed both Alpha/Experimental gates and the Ubuntu 24.04 SDK checks.
+The matching Windows MinGW build and PE dependency/provenance checks passed;
+native Windows execution, Android and browser execution are not claimed here.
