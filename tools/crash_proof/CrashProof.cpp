@@ -1,6 +1,7 @@
 #include "BuildIdentity.h"
 #include "CrashRig.h"
 #include "CrashPanels.h"
+#include "ProjectAuthoring.h"
 #include "WheelAssembly.h"
 #include "EngineHost.h"
 #include "ModelLoader.h"
@@ -222,7 +223,7 @@ int main(int argc, char **argv) {
         unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8;
         float speed = 12;
         int wheelView=-1;
-        bool wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false;
+        bool wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false,authorProject=false;
         bool headless = false, load = false, profile = false, drive = false, cpuSkin = false, repeat = false,
              postDrive = false, xray = false, panelsEnabled=false;
         for (int i = 3; i < argc; ++i) {
@@ -232,6 +233,7 @@ int main(int argc, char **argv) {
             else if(arg=="--wheel-course")wheelCourse=true;
             else if(arg.rfind("--save-release=",0)==0)saveRelease=arg.substr(15);
             else if(arg=="--paused")startPaused=true;
+            else if(arg=="--author-project")authorProject=true;
             else if(arg=="--bonnet-view")bonnetView=true;
             else if(arg=="--capture-steps")captureSteps=true;
             else if(arg.rfind("--wheel-view=",0)==0)wheelView=std::stoi(arg.substr(13));
@@ -328,7 +330,7 @@ int main(int argc, char **argv) {
         // Private normalized derivative: the ordinary engine resource owns
         // detailed structural presentation, including in this saved scene.
         // This stays exclusively beneath the caller's local work directory.
-        if(panelsEnabled){
+        if(panelsEnabled||authorProject){
             std::vector<uint8_t> encoded;Require(EncodeModelArchive(model.body,encoded,error),error);
             auto bodyPath=root/"Assets/structural-exterior.judasmodel";
             {std::ofstream out(bodyPath,std::ios::binary);out.write(reinterpret_cast<const char*>(encoded.data()),std::streamsize(encoded.size()));Require(bool(out),"cannot write private structural exterior");}
@@ -393,6 +395,7 @@ int main(int argc, char **argv) {
             }
         std::vector<CrashPanel> panels(panelsEnabled?rigs.size():0);
         for(unsigned i=0;i<panels.size();++i)panels[i].Author(scene,asset,rigs[i],db,resources,hood);
+        if(authorProject)AuthorCrashProject(root,scene,rigs,model.wheels,model.brakes,db);
         Require(SaveSceneToFile(scene, (root / "crash-proof.judas").string(), error), error);
         ProjectClassification categories;
         RuntimeWorld world;
@@ -454,6 +457,13 @@ int main(int argc, char **argv) {
                 if (!model.wheels[i].indices.empty())
                     wheelMeshes[i] = r.CreateMesh(model.wheels[i]);
             for(unsigned i=0;i<4;++i) if(!model.brakes[i].indices.empty())brakeMeshes[i]=r.CreateMesh(model.brakes[i]);
+            if(panelsEnabled||authorProject){
+                // Account cold exterior/material creation as preparation, not a
+                // fracture update. Complete the one cold GPU submission before
+                // starting fixed-step/render distributions; report its full cost.
+                r.BeginFrame(host->GetWindow().Width(),host->GetWindow().Height());
+                world.DrawDeformables(r,1);r.EndFrame();glFinish();
+            }
             std::cout << "INITIAL_GPU_RESOURCES_CPU_MS " << Elapsed(initialGpuResources) << '\n';
         }
         std::vector<double> panelTimes, panelMapTimes;
@@ -710,7 +720,7 @@ int main(int argc, char **argv) {
                 // readable; these markings deliberately have no collision body.
                 for(int z=-20;z<=10;z+=2)r.DrawBox({0,.003f,float(z)},{1,0,0,0},{2,.003f,.015f},{.42f,.45f,.47f});
                 auto panelMapStart=Clock::now();
-                if(panelsEnabled)world.DrawDeformables(r,1);
+                if(panelsEnabled||authorProject)world.DrawDeformables(r,1);
                 if(!panels.empty())panelMapTimes.push_back(Elapsed(panelMapStart));
                 unsigned visibleModels = 0;
                 for (unsigned i = 0; i < rigs.size(); ++i) {
@@ -818,7 +828,7 @@ int main(int argc, char **argv) {
         Summary("SKIN_MAPPING", mapTimes);
         Summary("RENDER_CPU", renderTimes);
         Summary("RENDER_GPU", gpuTimes);
-        if (host&&!panelsEnabled)
+        if (host&&!panelsEnabled&&!authorProject)
             std::cout << "FRUSTUM_VISIBLE_VEHICLES min=" << minimumVisible << " max=" << maximumVisible
                       << '\n';
 #if defined(__linux__)

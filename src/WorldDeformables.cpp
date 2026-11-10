@@ -153,7 +153,7 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
         }
         if(sim.asset->structuralSkin)sim.asset->structuralSkin->Palette(sim,materialAlpha,palette);
         renderer.SetRenderLayer(RenderLayerOf(id));
-        renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render):std::vector<MaterialBinding>{});
+        renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render,&record.presentation.primitives):std::vector<MaterialBinding>{});
         auto texture=d->render&&m_assets?m_assets->TryGetTexture(d->render->textureAsset):TextureHandle{};
         renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f),d->render?d->render->alpha:1.f,sim.asset->structuralSkin?&palette:nullptr,d->render?&d->render->hiddenParts:nullptr);
     }

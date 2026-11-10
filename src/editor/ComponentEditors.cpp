@@ -9,6 +9,7 @@
 #include "TerrainV2Inspector.h"
 #include "ParticleEmitterEditor.h"
 #include "DeformableEditor.h"
+#include "deformables/StructuralSkin.h"
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -556,9 +557,12 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
         }
         ImGui::PopID();
     }
-    if(r.shape==SceneShape::Mesh&&state.resources) {
-        state.resources->RequestMesh(r.meshAsset);
-        if(const auto* parts=state.resources->TryGetModelParts(r.meshAsset)) {
+    if((r.shape==SceneShape::Mesh||o.deformable)&&state.resources) {
+        std::shared_ptr<const DeformableAsset> material;
+        if(o.deformable){std::string error;material=state.resources->GetDeformable(o.deformable->asset,error);}
+        else state.resources->RequestMesh(r.meshAsset);
+        const auto* parts=material?(material->structuralSkin?&material->structuralSkin->Parts():&material->render.primitives):state.resources->TryGetModelParts(r.meshAsset);
+        if(parts) {
             ImGui::TextWrapped("Imported render parts (stable identities)");
             for(size_t index=0;index<parts->size();++index) {
                 const auto& part=parts->at(index);ImGui::PushID(part.part.c_str());
@@ -576,7 +580,10 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
                     } else {
                         auto& slot=found->second;AssetField(doc,"Shared material",slot.asset,AssetType::Material,true,state);
                         MaterialDefinition source=wholeBase;
-                        if(slot.asset.empty()){if(auto imported=state.resources->TryGetMeshMaterial(r.meshAsset,unsigned(index)))source=MaterialSettings(*imported);}
+                        if(slot.asset.empty()){
+                            if(material){const auto& materials=material->structuralSkin?material->structuralSkin->Materials():material->render.materials;if(part.material>=0&&size_t(part.material)<materials.size())source=MaterialSettings(materials[part.material]);}
+                            else if(auto imported=state.resources->TryGetMeshMaterial(r.meshAsset,unsigned(index)))source=MaterialSettings(*imported);
+                        }
                         else if(state.assets){if(auto* record=state.assets->Find(slot.asset)){std::string error;LoadMaterial(record->path,source,error);}}
                         publish(slot.overrides,ApplyMaterialOverride(source,r.instanceOverrides));
                         if(ImGui::Button("Remove part material binding")){doc.BeginEdit();r.partMaterials.erase(part.part);doc.CommitEdit();}

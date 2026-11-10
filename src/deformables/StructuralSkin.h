@@ -20,6 +20,8 @@ class StructuralSkin {
     void Palette(const DeformableInstance &, double alpha, std::vector<glm::mat4> &) const;
     // Retained numeric and image payload, excluding allocator overhead.
     size_t Bytes() const;
+    const std::vector<MeshPrimitive>& Parts()const{return rest.primitives;}
+    const std::vector<MaterialDefinition>& Materials()const{return rest.materials;}
 
   private:
     struct Corner {

@@ -12,11 +12,13 @@ class Scene;
 class ResourceManager;
 struct SceneRenderComponent;
 struct MaterialBinding;
+struct MeshPrimitive;
 struct RenderTargetHandle;
 
 // Resolves durable instance intent to borrowed immutable GPU resources. Pending
 // or failed texture replacements keep the inherited map until a valid publish.
-std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager*,const SceneRenderComponent&);
+std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager*,const SceneRenderComponent&,
+                                                       const std::vector<MeshPrimitive>* derivedParts=nullptr);
 
 // Presentation reads interpolated RuntimeWorld poses and submits geometry,
 // lights, shadows and water without advancing simulation or owning gameplay.

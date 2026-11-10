@@ -1,6 +1,8 @@
 #include "SceneSerialization.h"
 #include "AssetDatabase.h"
 #include "Project.h"
+#include "ResourceManager.h"
+#include "editor/ComponentEditors.h"
 #include "editor/EditorDocument.h"
 #include "editor/EditorPanels.h"
 #include "editor/EditorScriptWorkflow.h"
@@ -570,6 +572,37 @@ void ReadOnlyDisclosureNavigation() {
               !ui.doc.EditInProgress(),
           "disabled Remove menu and other Play pointers preserve exact authored bytes/history");
 }
+void NativeDeformableAuthoring(){
+    namespace fs=std::filesystem;
+    const auto root=fs::temp_directory_path()/("judas-inspector-native-material-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+    struct Cleanup{fs::path path;~Cleanup(){std::error_code error;fs::remove_all(path,error);}} cleanup{root};
+    Project project;std::string error;if(!Project::CreateNew(root.string(),"Native material authoring",project,error))throw std::runtime_error(error);
+    AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());ResourceManager resources(nullptr,&assets);
+    InspectorFrames ui;ui.state.project=&project;ui.state.assets=&assets;ui.state.resources=&resources;
+    ui.Object().deformable=DeformableSettings{};
+    ui.state.deformableColumns=2;ui.state.deformableRows=2;ui.state.deformableSubdivision=6;ui.state.deformableSize={2,1.2f,5};ui.state.deformableDestination="frame.judasdeform";
+    Check(BakeEditorDeformable(ui.doc,ui.Object().id,ui.state,10),"fresh-object workflow creates a physical vehicle frame without native solver arrays");
+    const auto frameId=ui.Object().deformable->asset;resources.RequestDeformable(frameId);resources.WaitForAll();
+    auto frame=resources.GetDeformable(frameId,error);
+    Check(frame&&frame->fracture&&frame->fracture->rigid&&frame->fracture->parts.size()==24&&frame->fracture->HasMaterials()&&frame->fracture->filterNeighbours,"structural preset owns 24 real MK2 sections with finite material connections");
+    double volume=0;if(frame)for(const auto& element:frame->solids)volume+=element.volume;
+    Check(std::abs(volume*ui.Object().deformable->material.density-1500)<1e-8&&!ui.Object().deformable->panel.enabled,"physical frame preset assigns coherent total mass and does not activate sheet material on rigid cells");
+    const auto source=root/"Assets/source.obj";{std::ofstream out(source);out<<"v -1 0 -2\nv 1 0 -2\nv 1 0 2\nv -1 0 2\nf 1 3 2\nf 1 4 3\n";}
+    AssetRecord sourceAsset;if(!assets.Track(source.string(),sourceAsset,error))throw std::runtime_error(error);
+    ui.state.deformableSource=sourceAsset.id;ui.state.deformableDestination="bound-frame.judasdeform";
+    Check(BakeEditorDeformable(ui.doc,ui.Object().id,ui.state,9),"ordinary inspector workflow binds a detailed source to an existing physical structure");
+    const auto boundId=ui.Object().deformable->asset;resources.RequestDeformable(boundId);resources.WaitForAll();auto bound=resources.GetDeformable(boundId,error);
+    Check(bound&&bound->structuralSkin&&bound->sourceAsset==sourceAsset.id,"inspector-created detailed binding passes the actual normal resource preparation path");
+    ui.doc.Undo();const bool undone=ui.Object().deformable->asset==frameId;ui.doc.Redo();
+    Check(undone&&ui.Object().deformable->asset==boundId,"structural source binding participates in ordinary authored undo and redo");
+    Check(!BakeEditorDeformable(ui.doc,ui.Object().id,ui.state,9)&&ui.Object().deformable->asset==boundId,"existing destination rejects without replacing the current physical binding");
+    auto& panel=ui.doc.GetScene().CreateObject("Separately authored physical panel");const auto panelId=panel.id;panel.deformable=DeformableSettings{};
+    ui.state.deformableColumns=6;ui.state.deformableRows=6;ui.state.deformableNormalAxis=1;ui.state.deformableDestination="panel.judasdeform";
+    Check(BakeEditorDeformable(ui.doc,panelId,ui.state,8),"normal authoring fits a detailed single-surface panel on a fresh scene object");
+    const auto* authored=ui.doc.GetScene().Find(panelId);
+    Check(authored&&authored->deformable&&authored->deformable->panel.enabled,"fitted panel uses native physical panel material rather than a cosmetic mesh");
+}
+
 } // namespace
 
 int main() {
@@ -585,6 +618,7 @@ int main() {
         ScriptPropertyLayoutAndUndo();
         ModelInspectionShortcut();
         ReadOnlyDisclosureNavigation();
+        NativeDeformableAuthoring();
     } catch (const std::exception &error) {
         Check(false, error.what());
     }

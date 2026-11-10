@@ -2,6 +2,7 @@
 #include "EditorPanels.h"
 #include "ComponentEditors.h"
 #include "RuntimeWorld.h"
+#include "deformables/StructuralSkin.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include <algorithm>
@@ -213,6 +214,8 @@ void DrawRuntimeRenderPreview(EditorDocument &doc, SceneObjectId id, EditorPanel
     }
     const auto *parts =
         state.resources ? state.resources->TryGetModelParts(render.meshAsset) : nullptr;
+    std::shared_ptr<const DeformableAsset> physical;
+    if(definition->deformable){std::string error;if(auto* material=state.runtime->RuntimeDeformable(id,error)){physical=material->asset;parts=physical->structuralSkin?&physical->structuralSkin->Parts():&physical->render.primitives;}}
     if (ImGui::BeginCombo("Material target##runtime", history.materialKey.c_str())) {
         if (ImGui::Selectable("Whole renderable (*)", history.materialKey == "*"))
             history.materialKey = "*";

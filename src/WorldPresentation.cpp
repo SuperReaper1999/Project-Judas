@@ -24,8 +24,8 @@
 #include "PlanetTerrain.h"
 #include "render/ShadowPassCache.h"
 
-std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render) {
-    const auto* parts=resources?resources->TryGetModelParts(render.meshAsset):nullptr;
+std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render,const std::vector<MeshPrimitive>* derivedParts) {
+    const auto* parts=derivedParts?derivedParts:resources?resources->TryGetModelParts(render.meshAsset):nullptr;
     const size_t count=parts&&!parts->empty()?parts->size():1;
     std::vector<MaterialBinding> bindings;bindings.reserve(count);
     for(size_t i=0;i<count;++i){

@@ -109,6 +109,9 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
                 if(data&&data->fracture&&data->fracture->rigid)for(const auto& p:data->fracture->parts)parts.push_back(p.key);
             }
             StringCombo(doc,"Structural section (empty = whole body)",a.part,parts,true);
+            if(ImGui::Button("Hinge / seam mount preset")){doc.BeginEdit();a.forceLimit=20000;a.torqueLimit=8000;a.tearWork=d.panel.enabled?20:0;doc.CommitEdit();}
+            ImGui::SameLine();if(ImGui::Button("Latch mount preset")){doc.BeginEdit();a.forceLimit=8000;a.torqueLimit=8000;a.tearWork=d.panel.enabled?20:0;doc.CommitEdit();}
+            ImGui::TextWrapped("Use an edge group for a hinge or seam, and a small patch for a latch. These example capacities must be tuned to your panel and carrier; motion follows the actual constrained nodes.");
         }
         if(d.panel.enabled)NonnegativeNumber(doc,"Mounting-sheet tear energy J (0 = disabled)",a.tearWork);
         glm::vec3 offset(a.offset);if(DragVec3(doc,"Target-local offset",offset))a.offset=offset;
@@ -130,10 +133,12 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::CollapsingHeader("Create/import deformable asset")){
         TextField(doc,"Assets-relative destination",state.deformableDestination);DragInt(doc,"Sheet columns / block X",state.deformableColumns,1,48);DragInt(doc,"Sheet rows / block Y",state.deformableRows,1,48);DragInt(doc,"Render subdivision / block Z",state.deformableSubdivision,1,8);DragVec3(doc,"Size (metres)",state.deformableSize);AssetField(doc,"Source mesh",state.deformableSource,AssetType::Mesh,true,state);
         int action=0;if(ImGui::Button("Create sheet"))action=1;ImGui::SameLine();if(ImGui::Button("Create tetrahedral block"))action=2;if(ImGui::Button("Import indexed cloth mesh"))action=3;
+        if(ImGui::Button("Create 24-section physical vehicle frame")){state.deformableColumns=2;state.deformableRows=2;state.deformableSubdivision=6;state.deformableSize={2,1.2f,5};action=10;}
         if(ImGui::Button("Create cohesive fracture block"))action=4;
         if(ImGui::Button("Create bendable structural block"))action=7;
         ImGui::SameLine();if(ImGui::Button("Create rigid fracture block"))action=5;TextField(doc,"Partition source (assets-relative path)",state.deformableSource);if(ImGui::Button("Import explicit volumetric partition"))action=6;
         if(state.resources&&!state.deformableSource.empty()){
+            if(auto* source=state.assets->Find(state.deformableSource);source&&source->type==AssetType::Mesh)state.resources->RequestMesh(source->id);
             const auto* parts=state.resources->TryGetModelParts(state.deformableSource);
             if(parts){std::vector<std::string> names;for(const auto& part:*parts)if(!part.part.empty()&&std::find(names.begin(),names.end(),part.part)==names.end())names.push_back(part.part);StringCombo(doc,"Imported panel region",state.deformableSourcePart,names,true);}
         }
@@ -148,7 +153,22 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
         if(action)BakeEditorDeformable(doc,o.id,state,action);
     }
     if(!ValidDeformableSettings(d,error))ImGui::TextWrapped("Invalid configuration: %s",error.c_str());
-    if(state.runtime){auto* runtime=state.runtime->RuntimeDeformable(o.id,error);if(runtime)ImGui::Text("Runtime: %s | %zu contacts | min J %.3f | %s",runtime->sleeping?"sleeping":"active",runtime->stats.contacts,runtime->stats.minimumJacobian,runtime->error.c_str());else ImGui::TextWrapped("Runtime: %s",error.c_str());}
+    if(state.runtime){auto* runtime=state.runtime->RuntimeDeformable(o.id,error);if(runtime){
+        ImGui::Text("Runtime: %s | %.3g kg | %zu contacts | strain %.4g | min J %.3f",runtime->sleeping?"sleeping":"active",runtime->Mass(),runtime->stats.contacts,runtime->stats.maximumStrain,runtime->stats.minimumJacobian);
+        if(!runtime->error.empty())ImGui::TextWrapped("Stopped: %s",runtime->error.c_str());
+        if(ImGui::Checkbox("Live physical mesh, mounts and collision proxies",&state.deformableLivePreview)&&!state.deformableLivePreview)state.deformablePreview.Clear();
+        if(state.deformableLivePreview){auto& lines=state.deformablePreview;lines.Clear();
+            for(auto edge:runtime->asset->edges)lines.Line(glm::vec3(runtime->positions[edge.x]),glm::vec3(runtime->positions[edge.y]),{.1f,.7f,1});
+            for(unsigned a=0;a<runtime->settings.attachments.size();++a){auto group=runtime->asset->groups.find(runtime->settings.attachments[a].group);if(group!=runtime->asset->groups.end())for(auto n:group->second)lines.Cross(glm::vec3(runtime->positions[n]),.035f,runtime->released[a]?glm::vec3(1,.2f,.2f):glm::vec3(1,.7f,.1f));}
+            if(runtime->asset->fracture&&runtime->asset->fracture->rigid)for(unsigned part=0;part<runtime->asset->fracture->parts.size();++part){
+                auto body=state.runtime->RuntimeBody(state.runtime->FracturePartEntity(o.id,part));Shape shape;BodyTransform pose;
+                if(state.runtime->Physics().GetBodyShape(body,shape,pose,false)){
+                    if(shape.type==ShapeType::Box)lines.Box(pose.position,pose.rotation,shape.halfExtents,{.6f,1,.3f});
+                    else if(shape.type==ShapeType::Sphere)lines.Sphere(pose.position,shape.radius,{.6f,1,.3f});
+                }
+            }
+        }
+    }else ImGui::TextWrapped("Runtime: %s",error.c_str());}
     ImGui::TextWrapped("Nodes simulate in world space; root is initial placement. Explicit reset moves the entire state. Bone pins consume the fixed-step resolved pose. Render materials use normal Render slots.");
 }
 
@@ -156,12 +176,17 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
 
 bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState& state,int action){
     auto* object=doc.GetScene().Find(id);std::string error;
-    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>9){state.status="Select a deformable and an open project.";return false;}
+    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>10){state.status="Select a deformable and an open project.";return false;}
     try{
             auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableDestination;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()==".."||path.extension()!=".judasdeform")throw std::runtime_error("Choose a .judasdeform path inside project assets.");
             if(std::filesystem::exists(path))throw std::runtime_error("Destination exists; choose a new name.");
             DeformableAsset baked;
-            if(action==1)baked=MakeDeformableSheet(unsigned(state.deformableColumns),unsigned(state.deformableRows),state.deformableSize.x,state.deformableSize.y,unsigned(state.deformableSubdivision));
+            if(action==10){
+                baked=MakeFractureBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize),true);baked.fracture->structural=true;baked.fracture->filterNeighbours=true;
+                for(auto& connection:baked.fracture->bonds)connection.material.enabled=true;
+                if(!PrepareDeformableAsset(baked,error))throw std::runtime_error(error);
+            }
+            else if(action==1)baked=MakeDeformableSheet(unsigned(state.deformableColumns),unsigned(state.deformableRows),state.deformableSize.x,state.deformableSize.y,unsigned(state.deformableSubdivision));
             else if(action==2)baked=MakeDeformableBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize));
             else if(action==4||action==5||action==7){baked=MakeFractureBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize),action==5);if(action==7){baked.fracture->structural=true;if(!PrepareDeformableAsset(baked,error))throw std::runtime_error(error);}}
             else if(action==6){auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableSource;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("Partition source must be inside project assets.");std::ifstream input(path);std::string text{std::istreambuf_iterator<char>(input),{}};if(!input||!ImportFracturePartition(text,baked,error))throw std::runtime_error("Partition import: "+error);}
@@ -180,7 +205,7 @@ bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState&
                 baked.sourceAsset=source->id;if(!SceneFingerprintSha256File(source->path,baked.sourceFingerprint,error))throw std::runtime_error(error);
             }
             else{auto* source=state.assets->Find(state.deformableSource);MeshData mesh;if(!source||source->type!=AssetType::Mesh||!LoadModelMesh(source->path,mesh,error)||!ImportDeformableCloth(mesh,baked,error))throw std::runtime_error("Cloth import: "+error);baked.sourceAsset=source->id;if(!SceneFingerprintSha256File(source->path,baked.sourceFingerprint,error))throw std::runtime_error(error);}
-            auto bytes=EncodeDeformableAsset(baked);std::filesystem::create_directories(path.parent_path());std::ofstream output(path,std::ios::binary);output.write(bytes.data(),std::streamsize(bytes.size()));output.close();if(!output)throw std::runtime_error("Failed to write deformable asset.");AssetRecord record;if(!state.assets->Track(path.string(),record,error))throw std::runtime_error(error);doc.BeginEdit();object->deformable->asset=record.id;if(action==8){object->deformable->panel.enabled=true;object->deformable->material.stretchCompliance=object->deformable->material.shearCompliance=1e-9;}auto& attachments=object->deformable->attachments;size_t before=attachments.size();attachments.erase(std::remove_if(attachments.begin(),attachments.end(),[&](const auto& a){return !baked.groups.count(a.group);}),attachments.end());doc.CommitEdit();state.status="Deformable created and assigned: "+record.relativePath;if(before!=attachments.size())state.status+="; removed attachments to groups absent from the new topology.";
+            auto bytes=EncodeDeformableAsset(baked);std::filesystem::create_directories(path.parent_path());std::ofstream output(path,std::ios::binary);output.write(bytes.data(),std::streamsize(bytes.size()));output.close();if(!output)throw std::runtime_error("Failed to write deformable asset.");AssetRecord record;if(!state.assets->Track(path.string(),record,error))throw std::runtime_error(error);doc.BeginEdit();object->deformable->asset=record.id;if(action==10){object->deformable->panel.enabled=false;double volume=0;for(const auto& element:baked.solids)volume+=element.volume;object->deformable->material.density=1500/volume;}if(action==8){object->deformable->panel.enabled=true;object->deformable->material.stretchCompliance=object->deformable->material.shearCompliance=1e-9;}auto& attachments=object->deformable->attachments;size_t before=attachments.size();attachments.erase(std::remove_if(attachments.begin(),attachments.end(),[&](const auto& a){return !baked.groups.count(a.group);}),attachments.end());doc.CommitEdit();state.status="Deformable created and assigned: "+record.relativePath;if(before!=attachments.size())state.status+="; removed attachments to groups absent from the new topology.";
         return true;
     }catch(const std::exception& e){state.status=e.what();return false;}
 }

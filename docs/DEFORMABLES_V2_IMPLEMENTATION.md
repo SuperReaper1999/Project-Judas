@@ -285,3 +285,30 @@ actual Ural regions (hood, roof and both doors) cook using the normal panel path
 with 36 physical nodes each and retained detailed geometry. All downloaded models
 and derivatives remain outside Git and public packaging. This cook evidence is
 not a claim that the Ural has a complete authored/drivable crash rig.
+
+## Normal editor/game authoring checkpoint
+
+[The authoring guide](DEFORMABLES_V2_AUTHORING.md) describes the native frame/panel
+workflow, source-local mount convention, material presets, live coarse mesh/mount/
+proxy overlay and explicit support envelope. The fresh-object Inspector workflow
+passes **74/74**, including the 24-section/1500 kg preset, detailed source binding,
+panel fitting, undo/redo and existing-destination rejection. Named material/part
+intent now resolves against the physical exterior's own primitives without loading
+a duplicate undeformed model. Native deformation checks pass **144/144**.
+
+The private crash authoring tool's `--author-project` writes a real `.judasproj`,
+ordinary scene, normalized wheel/caliper derivatives, project-owned JudasJS input/
+camera/save code and runtime UI into a fresh caller-owned directory. It refuses
+an existing project. Normal Editor/SDK gameplay requires no diagnostic executable
+or manual material update loop. A desktop application run exercised steering,
+driving, braking and ordinary SaveService save/load with no script failures; its
+ground, barriers and linear lighting are normal authored scene content. The
+separate diagnostic tool retains controlled-impact/orbit keys for measurement.
+No third-party model data is present in the committed authoring implementation.
+
+Actual portable **OpenGL 3.3** NVIDIA submission checks also pass **28/28**, in
+addition to the modern **OpenGL 4.6** run. These are desktop portable-path controls,
+not native Android/browser or Windows execution. The existing Windows VM was
+inspected but left shut down: its 6 GiB guest allocation exceeds the approximately
+5 GiB currently available on this 8 GiB host. No VM configuration was changed.
+Final SDK, sustained integration and human handover qualification remain in progress.

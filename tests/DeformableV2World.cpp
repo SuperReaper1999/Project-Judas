@@ -9,6 +9,7 @@
 #include "deformables/StructuralSkin.h"
 #include "ModelArchive.h"
 #include "SceneFingerprint.h"
+#include "WorldPresentation.h"
 #include "Simulation.h"
 #include "terrain/TerrainBrush.h"
 #include <chrono>
@@ -17,6 +18,12 @@
 #include <stdexcept>
 
 void RunDeformableV2WorldChecks(void(*check)(bool,const char*)){
+    {
+        SceneRenderComponent render;render.partMaterials["paint"].overrides.baseColor=glm::vec4(0,1,0,1);
+        std::vector<MeshPrimitive> parts={{0,3,-1,"glass"},{3,3,-1,"paint"}};
+        auto bindings=BuildRenderMaterialBindings(nullptr,render,&parts);
+        check(bindings.size()==2&&!bindings[0].overrides.baseColor&&bindings[1].overrides.baseColor==glm::vec4(0,1,0,1),"derived physical exteriors preserve named per-part material intent without loading a duplicate undeformed mesh");
+    }
     struct Scratch {std::filesystem::path path=std::filesystem::temp_directory_path()/("judas-v2-panels-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));~Scratch(){std::error_code error;std::filesystem::remove_all(path,error);}} scratch;
     auto root=scratch.path/"Assets";std::filesystem::create_directories(root);
     auto frame=MakeFractureBlock({2,1,1},{2,.2,1},true);frame.fracture->structural=true;

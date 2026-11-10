@@ -183,6 +183,7 @@ struct EditorPanelState {
     DebugLineList recipePreview;
     DebugLineList navigationPreview;
     DebugLineList deformablePreview;
+    bool deformableLivePreview=false;
     DebugLineList collisionPreview;
     std::string deformableDestination = "deformable.judasdeform", deformableSource,
                 deformableGroup = "selection", fractureInterface, deformableSourcePart;
