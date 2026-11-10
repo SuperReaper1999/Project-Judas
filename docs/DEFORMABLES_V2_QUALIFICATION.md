@@ -1,9 +1,10 @@
 # Deformables V2 — final engineering qualification
 
-**Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Full human acceptance remains pending.
+**Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Stages 1–4 were human accepted at Experimental 69677c8c.
 
-This is an Experimental source-preview handover, not a release or human acceptance
-of Stages 2–4. Revised Stage 1 was human accepted at `6a1d49b2`. Main, the Advanced
+Stages 1–4 were human accepted by the operator at Experimental
+`69677c8c66d57149b6ee7fb02c08d9820d20f27c`. This remains an unsupported source
+preview, not a published release. Main, the Advanced
 Fluids lock and the RPG project/SDK remain unchanged. All downloaded vehicles and
 derivatives remain private and are absent from the repository and public SDK.
 
@@ -220,4 +221,4 @@ the earlier visual/timing evidence is retained with its earlier scope.
 Human review: drive/reverse/brake/steer; inspect intact wheels and panels; perform
 frontal, offset, side, rear and repeated crashes; inspect partial/full separation;
 save, close, reopen and load damage; author a fresh panel/frame with live diagnostics;
-inspect both split Ural doors. Full milestone acceptance remains the operator's.
+inspect both split Ural doors. Full milestone acceptance was recorded at 69677c8c; the performance pass requires separate human review.

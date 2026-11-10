@@ -8,8 +8,9 @@ implementation, measured limitations, private launch instructions and review sco
 The operator human-accepted revised Stage 1 at
 `6a1d49b2add0e45bab6933f544797a8faa6e3d21`: imported Challenger wheels,
 local bonnet bending, progressive mounting-sheet failure and physical detachment.
-Stages 2–4 are now authorised on Experimental. This record is **work in progress**,
-not full-milestone qualification or human acceptance. Main, the fluid lock and the
+Stages 1–4 were subsequently human accepted at Experimental 69677c8c. The
+entries below are chronological implementation evidence; pending-work statements
+inside them describe their historical checkpoints. Main, the fluid lock and the
 operator's RPG SDK remain protected. Third-party assets stay private.
 
 ## Contact and sleep correction

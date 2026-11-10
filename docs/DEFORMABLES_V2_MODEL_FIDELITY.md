@@ -2,8 +2,10 @@
 
 This follow-up supersedes the material-fidelity claims and intact-model images at
 `aacdfc2d`. Automated crash qualification did not establish that the private imported
-models visually matched their source references. Full Deformables V2 human
-acceptance remains pending; accepted Stage 1 is preserved separately.
+models visually matched their source references. The operator subsequently human-accepted Deformables V2 Stages 1–4 at
+69677c8c, including these material corrections. Ural window/door authoring and
+the demonstration follow camera are accepted asset/script limitations, not
+requirements for further private-asset polishing.
 
 ## Confirmed causes and corrections
 

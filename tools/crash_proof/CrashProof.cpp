@@ -14,6 +14,7 @@
 #include "Simulation.h"
 #include "SkeletalAnimation.h"
 #include "WorldPersistence.h"
+#include "../../third_party/nlohmann/json.hpp"
 #include <SDL2/SDL.h>
 #include <algorithm>
 #include <chrono>
@@ -208,6 +209,7 @@ std::string DurableShapeHash(RuntimeWorld &world, const std::vector<CrashRig> &r
 int main(int argc, char **argv) {
     if (HandleBuildIdentityArguments(argc, argv, "crash_proof"))
         return 0;
+    ProfileRun profileRun("Crash proof");
     try {
         if (argc < 3) {
             std::cerr << "usage: judas_crash_proof LOCAL_MODEL LOCAL_WORK [--headless] [--frames=N] "
@@ -497,6 +499,11 @@ int main(int argc, char **argv) {
         unsigned truncatedProfileFrames=0;
         if (profile)
             PerformanceProfiler::Get().Enable(true);
+        std::ofstream stepProfile;
+        if (profile) {
+            stepProfile.open(root / "step-profile.jsonl");
+            Require(bool(stepProfile), "cannot open step profile");
+        }
         InputSystem input;
         unsigned tick = 0;
         bool paused = startPaused, launchRequested = false;
@@ -622,6 +629,20 @@ int main(int argc, char **argv) {
                         for (auto &[name, ms] : totals)
                             phaseTimes[name].push_back(ms);
                         for(const auto& counter:snapshot.counters)if(counter.name=="Deformable interval CPU ms")phaseTimes["COUNTER native material CPU ms"].push_back(counter.value);
+                        // Diagnostic output stays outside measured simulation.
+                        // Inclusive categories overlap; bounded profiler events
+                        // can truncate while aggregate physics counters remain.
+                        nlohmann::json row={{"step",tick},{"simulation_ms",stepTimes.back()},
+                            {"truncated",snapshot.capReached||snapshot.incomplete||snapshot.diagnostics.droppedEvents},
+                            {"inclusive_ms",totals},{"exclusive_ms",nlohmann::json::object()},
+                            {"counters",nlohmann::json::object()}};
+                        std::map<std::string,double> exclusive;
+                        for(const auto& scope:snapshot.scopes)
+                            exclusive[scope.name.c_str()]+=double(scope.exclusive)*1e-6;
+                        row["exclusive_ms"]=exclusive;
+                        for(const auto& counter:snapshot.counters)
+                            row["counters"][counter.name.c_str()]=counter.value;
+                        stepProfile<<row.dump()<<'\n';
                     }
                 }
                 ++tick;
@@ -841,6 +862,7 @@ int main(int argc, char **argv) {
             }
         }
         Require(saveRelease.empty()||releaseSaved,"requested attachment state was not reached for save");
+        if (profile) Require(bool(stepProfile), "step profile write failed");
         std::cout<<"TIMING_CONTRACT native_world_includes_material=1 panel_telemetry_is_not_simulation=1 truncated_profile_frames="<<truncatedProfileFrames<<'\n';
         for (auto &[name, values] : phaseTimes)if(!truncatedProfileFrames||name.rfind("COUNTER ",0)==0)
             Summary(("PHASE " + name).c_str(), values);
