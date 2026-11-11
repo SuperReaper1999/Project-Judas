@@ -654,6 +654,68 @@ static void TestWakeIsolation() {
     Check(awake,"explicit static-ground wake reaches both supported islands");
 }
 
+// Original procedural OBB fixture: widening a manifold by 1 mm changes its
+// contact points despite retaining the same normal. Responding only at those
+// proximity points left the actual surface approaching, replaying hundreds of
+// zero-time arrivals without moving the body.
+void TestActualContactResponse() {
+    PhysicsWorld world;world.Init();
+    world.CreateStaticBox({0,0,0},{.5f,.3f,.6f},0,0);
+    const auto body=world.CreateShape(Shape::Box({.4f,.2f,.7f}),
+        {{.864261746f,-.133106038f,-.188278347f},
+         {.984378338f,-.158642858f,-.0310237557f,.0697801411f}},true,1,0,0);
+    world.SetLinearVelocity(body,{3.50530632f,0,0});
+    world.SetAngularVelocity(body,{-49.474781f,-4.30499315f,-14.1868706f});
+    const auto before=world.GetTransform(body);
+    bool completed=true;
+    for(unsigned step=0;step<10;++step){
+        world.Step(kDt);
+        const auto& stats=world.LastStepStats();
+        completed &= stats.impactStepCapHolds==0 && stats.impactBodyCapHolds==0 &&
+                     stats.impactResponseHolds==0 && stats.impactEvents<16;
+    }
+    Check(completed,"actual contact features resolve without a zero-time arrival cycle");
+    Check(glm::length(world.GetTransform(body).position-before.position)>.05f,
+          "a resolved rotating contact continues its physical trajectory");
+}
+
+void TestRedirectedFutures() {
+    // Two independent elastic impacts launch previously stationary recipients
+    // into crossing paths. Neither recipient's old proxy covers the crossing.
+    // Checking only the world index misses their collision entirely.
+    for(float separation:{.2f,.4f,1.f})for(float speed:{200.f,300.f,1000.f})
+        for(bool reverse:{false,true})for(float angle:{0.f,.37f}){
+            PhysicsWorld world;world.Init();
+            const auto rotation=glm::angleAxis(angle,glm::normalize(glm::vec3(1,2,3)));
+            const std::vector<glm::vec3> positions{{-2*separation,0,-separation},
+                {-separation,0,-separation},{0,0,0},{0,0,separation}};
+            std::vector<BodyHandle> bodies(4);
+            for(unsigned n=0;n<4;++n){const unsigned i=reverse?3-n:n;
+                bodies[i]=world.CreateDynamicSphere(rotation*positions[i],.025f,1,0,1);
+            }
+            world.SetLinearVelocity(bodies[0],rotation*glm::vec3(speed,0,0));
+            world.SetLinearVelocity(bodies[3],rotation*glm::vec3(0,0,-speed));
+            world.Step(kDt);
+            bool crossing=false;
+            for(const auto& event:world.LastStepTouchEvents())
+                crossing |= (event.a.id==bodies[1].id&&event.b.id==bodies[2].id)||
+                            (event.a.id==bodies[2].id&&event.b.id==bodies[1].id);
+            Check(crossing,"newly accelerated recipients collide beyond their old proxies");
+            const auto b=glm::conjugate(rotation)*world.GetLinearVelocity(bodies[1]);
+            const auto c=glm::conjugate(rotation)*world.GetLinearVelocity(bodies[2]);
+            Check(glm::length(b-glm::vec3(0,0,-speed))<speed*1e-4f &&
+                  glm::length(c-glm::vec3(speed,0,0))<speed*1e-4f,
+                  "redirected elastic collision matches the independent scattering solution");
+            glm::dvec3 momentum(0);double energy=0;
+            for(auto body:bodies){const glm::dvec3 v(world.GetLinearVelocity(body));
+                momentum+=v;energy+=.5*glm::dot(v,v);
+            }
+            Check(glm::length(momentum-glm::dvec3(rotation*glm::vec3(speed,0,-speed)))<speed*1e-4 &&
+                  std::abs(energy/(double(speed)*speed)-1)<1e-4,
+                  "redirected arrivals preserve total momentum and elastic energy");
+        }
+}
+
 int main() {
     TestInitializationLifecycle();
     TestColumns();
@@ -668,6 +730,8 @@ int main() {
     TestWeakSwingEnergy();
     TestSupportAndImpactOwnership();
     TestWakeIsolation();
+    TestActualContactResponse();
+    TestRedirectedFutures();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }

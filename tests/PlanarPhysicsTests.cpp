@@ -192,4 +192,9 @@ void FrictionCovariance(){
 }
 
 }
-int main(){try{Check(PlanarStage0Trajectory3D()==0xf67106f8392d2826ULL,"accepted 3D physical trajectory remains bit-identical to Stage 0 control");Geometry();Dynamics();QueriesAndChains();MomentumAndFrames();SensorsAndKinematics();JointControls();SpinAndPersistence();FrictionCovariance();std::printf("SUMMARY %u checks 0 failures\n",checks);return 0;}catch(const std::exception& e){std::fprintf(stderr,"FAIL %s\n",e.what());return 1;}}
+// The pre-frontier control was f67106f8392d2826. MK2's pair-owned arrival
+// correction intentionally changes its first impact at step 31 (old: 22
+// arrivals/two holds; current: eight/one), initially by 2.8 micrometres.
+// Retain an exact current 3D control so planar work cannot silently change it;
+// the old trace and physical comparison are preserved with the MK2 report.
+int main(){try{Check(PlanarStage0Trajectory3D()==0xcba95a924ae713f1ULL,"current MK2 3D physical trajectory remains bit-identical to its control");Geometry();Dynamics();QueriesAndChains();MomentumAndFrames();SensorsAndKinematics();JointControls();SpinAndPersistence();FrictionCovariance();std::printf("SUMMARY %u checks 0 failures\n",checks);return 0;}catch(const std::exception& e){std::fprintf(stderr,"FAIL %s\n",e.what());return 1;}}

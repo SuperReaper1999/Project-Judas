@@ -72,6 +72,41 @@ int main(){
             check(intersection.Contains(actual),"dynamic rotation intersection misses outward interior bound");
         }
     }
+    std::size_t offsetAccepted=0;
+    for(unsigned test=0;test<1200;++test){
+        CompoundBox child;child.localCenter={unit(rng)*2,unit(rng)*2,unit(rng)*2};
+        child.halfExtents={positive(rng),positive(rng),positive(rng)};
+        auto compound=Shape::Compound({child});compound.pivotOffset={unit(rng),unit(rng),unit(rng)};
+        RigidMotionSegment leaf;leaf.begin=0;leaf.end=.016;leaf.inverseMass=1;
+        leaf.orientation=glm::normalize(glm::quat(unit(rng),unit(rng),unit(rng),unit(rng)));
+        leaf.position=glm::vec3(unit(rng),unit(rng),unit(rng))*std::pow(10.f,float(test%9)*3);
+        leaf.linearVelocity={unit(rng)*100,unit(rng)*100,unit(rng)*100};
+        leaf.driftAngularVelocity=glm::vec3(unit(rng),unit(rng),unit(rng))*std::pow(10.f,float(test%7)-3);
+        const double start=.016*double(test%13)/14.;
+        auto firstGeometry=leaf.EvaluateGeometry(start),lastGeometry=leaf.EvaluateGeometry(.016);
+        RigidBody from,to;from.position=firstGeometry.position;from.orientation=firstGeometry.orientation;to.position=lastGeometry.position;to.orientation=lastGeometry.orientation;
+        const auto bound=TryDynamicBoxSweepBound(compound,leaf,from,to,start,.016);
+        if(!bound)continue;++offsetAccepted;
+        for(unsigned sample=0;sample<=64;++sample){
+            const auto pose=leaf.EvaluateGeometry(sample==64?.016:start+(.016-start)*double(sample)/64.);
+            const auto rotation=ContactRotation(pose.orientation);
+            for(unsigned corner=0;corner<8;++corner){
+                const glm::dvec3 local=glm::dvec3(child.localCenter-compound.pivotOffset)+glm::dvec3(child.halfExtents)*glm::dvec3(corner&1?1:-1,corner&2?1:-1,corner&4?1:-1);
+                const auto vertex=glm::dvec3(pose.position)+rotation*local;
+                check(glm::all(glm::greaterThanEqual(vertex,glm::dvec3(bound->min)))&&glm::all(glm::lessThanEqual(vertex,glm::dvec3(bound->max))),"offset rotating compound enclosure misses actual represented vertex");
+            }
+        }
+        auto still=leaf;still.driftAngularVelocity={0,0,0};
+        const auto x=still.EvaluateGeometry(start),y=still.EvaluateGeometry(.016);
+        from.position=x.position;from.orientation=x.orientation;to.position=y.position;to.orientation=y.orientation;
+        const auto translation=TryTranslationSweepBound(compound,still,from,to,start,.016);
+        if(translation)check(translation->Contains(ShapeAabb(compound,from.position,from.orientation))&&translation->Contains(ShapeAabb(compound,to.position,to.orientation)),"offset translating compound misses endpoint enclosure");
+    }
+    check(offsetAccepted>1000,"offset compound controls actually exercise certified bounds");
+    CompoundBox rotatedChild;rotatedChild.halfExtents={.2f,.3f,.4f};rotatedChild.rotation=glm::angleAxis(.2f,glm::vec3(0,1,0));
+    check(!BoxEnvelope(Shape::Compound({rotatedChild})),"rotated compound child must retain full fallback");
+    rotatedChild.rotation={1,0,0,0};
+    check(!BoxEnvelope(Shape::Compound({rotatedChild,rotatedChild})),"multi-child compound must retain full fallback");
     check(!TryDynamicBoxSweepBound(shape,stop.Segments().front(),stop.EvaluateAfterEvents(0),stop.EvaluateAfterEvents(.016),0,.016),"dynamic bound accepted prescribed segment");
     auto offset=shape;offset.pivotOffset={.1f,0,0};
     check(!TryDynamicBoxSweepBound(offset,a.Segments().back(),first,first,0,.016),"dynamic bound accepted unsupported pivot offset");

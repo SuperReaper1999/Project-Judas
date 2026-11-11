@@ -70,6 +70,13 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
     currentRigidContactPose=rigidPoseIsCurrent;
     double h=dt/subdivisions;
     std::array<BodyHandle,64> awakened{};unsigned awakenedCount=0;
+    const bool measured=PerformanceProfiler::Get().Active();
+    std::array<uint64_t,4> phaseNanoseconds{};
+    const auto measure=[&](unsigned phase,auto&& operation){
+        const auto began=measured?PerformanceProfiler::Now():0;
+        operation();
+        if(measured)phaseNanoseconds[phase]+=PerformanceProfiler::Now()-began;
+    };
     for(unsigned sub=0;sub<subdivisions;++sub){
         std::fill(attachmentImpulse.begin(),attachmentImpulse.end(),V(0));
         std::fill(attachmentMoment.begin(),attachmentMoment.end(),V(0));
@@ -92,11 +99,11 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
             filter.includeLayers=settings.collisionMask;
             physics.QueryBodiesInAabbInto(glm::vec3(Minimum()-V(settings.material.thickness+asset->cellSize)),glm::vec3(Maximum()+V(settings.material.thickness+asset->cellSize)),rigidCandidates,filter);
             }
-        for(unsigned iteration=0;iteration<settings.iterations;++iteration){Internal(h);Cohesive(h);
-            RigidContacts(h,fraction,physics);
-            RecoverTerrainContacts(h,physics);
-            SurfaceContacts(*this,*this,h);
-            Attach(h,fraction,physics,targets,awakened,awakenedCount);
+        for(unsigned iteration=0;iteration<settings.iterations;++iteration){
+            measure(0,[&]{Internal(h);Cohesive(h);});
+            measure(1,[&]{RigidContacts(h,fraction,physics,awakened,awakenedCount);RecoverTerrainContacts(h,physics);});
+            measure(2,[&]{SurfaceContacts(*this,*this,h);});
+            measure(3,[&]{Attach(h,fraction,physics,targets,awakened,awakenedCount);});
             }
         if(panelBending)panelBending->Plastic(positions,h);
         for(size_t a=0;a<settings.attachments.size();++a){auto& state=attachmentState[a];
@@ -138,6 +145,12 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
         if(stats.capacityExceeded){error="deformable surface candidate capacity exceeded; instance stopped";
             return;
             }
+    }
+    if(measured){
+        JUDAS_PROFILE_COUNTER("Deformable internal constraints CPU ms",double(phaseNanoseconds[0])*1e-6,ProfileCounterMode::Sum);
+        JUDAS_PROFILE_COUNTER("Deformable rigid/terrain contacts CPU ms",double(phaseNanoseconds[1])*1e-6,ProfileCounterMode::Sum);
+        JUDAS_PROFILE_COUNTER("Deformable self contacts CPU ms",double(phaseNanoseconds[2])*1e-6,ProfileCounterMode::Sum);
+        JUDAS_PROFILE_COUNTER("Deformable attachment solve CPU ms",double(phaseNanoseconds[3])*1e-6,ProfileCounterMode::Sum);
     }
 }
 void DeformableInstance::EndPhysicalStep(double dt,PhysicsWorld& physics){

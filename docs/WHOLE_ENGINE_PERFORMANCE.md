@@ -818,3 +818,16 @@ the final local SDK is rebuilt with their exact clean identity and reverified.
 Documentation controls pass 10/10, metric/state controls 7/7, and the current
 reference checker covers 174 documents and 2,242 local links. These link checks
 are not an API or platform qualification substitute.
+
+
+## Subsequent MK2 collision architecture work
+
+The measured C2/82f results above remain the whole-engine baseline, not a claim
+that its severe collision tail is resolved. The subsequent Experimental
+[pair-owned collision architecture report](MK2_COLLISION_ARCHITECTURE_PERFORMANCE.md)
+records the replacement scheduler, actual-contact and redirected-future defects,
+matched cold four-way trials, current native/whole-frame costs, rejected worker
+experiments and remaining latency failures. It preserves the prior public
+vehicle/fleet/combined workload identities. The new report also retains a
+separate combined presentation-stall outlier rather than calling a relative
+p99 pass an absolute performance pass.

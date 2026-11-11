@@ -204,7 +204,7 @@ private:
     void Internal(double);
     void Plastic(double);
     void Attach(double,double,PhysicsWorld&,const std::vector<DeformableTarget>&,std::array<BodyHandle,64>&,unsigned&);
-    void RigidContacts(double,double,PhysicsWorld&);
+    void RigidContacts(double,double,PhysicsWorld&,std::array<BodyHandle,64>&,unsigned&);
     void BuildSurfaceTree();
     void SurfaceCandidates(glm::dvec3,glm::dvec3,bool,const std::vector<unsigned>* exclusions=nullptr,unsigned minimum=0);
 };

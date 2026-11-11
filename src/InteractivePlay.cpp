@@ -84,7 +84,10 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         m_wasPauseMenuOpen = IsPaused();
         m_captureInitialized = true;
     }
+    const float incomingFrameDeltaTime=frameDeltaTime;
     frameDeltaTime = std::min(frameDeltaTime, SimulationTiming::kMaxFrameDeltaTime);
+    JUDAS_PROFILE_COUNTER("Play incoming frame seconds",double(incomingFrameDeltaTime),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Play incoming delta clipped seconds",double(incomingFrameDeltaTime)-double(frameDeltaTime),ProfileCounterMode::Sum);
 
     // Milestone 13 pause policy: while the menu is open nothing advances —
     // no input, no accumulator, no steps.

@@ -447,10 +447,37 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                                  w.candidateScratch.stack.capacity() * sizeof(std::pair<int, int>) +
                                  w.candidateProxies.capacity() * sizeof(int)),
                           ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD continuous inclusive ms",double(w.work.ccdTotal.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD frontier sweep inclusive ms",double(w.work.ccdSweep.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD trajectory retiming ms",double(w.work.ccdRetime.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival closure discovery ms",double(w.work.arrivalDiscovery.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival coupled solve ms",double(w.work.arrivalSolve.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival coupled batches",double(w.work.arrivalBatches),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival coupled patches",double(w.work.arrivalPatches),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival coupled participants",double(w.work.arrivalBodies),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival coupled sweeps",double(w.work.arrivalSweeps),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival residual approaching rows",double(w.work.arrivalResidualRows),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival residual approach mps",w.work.arrivalResidualApproach,ProfileCounterMode::Maximum);
+    JUDAS_PROFILE_COUNTER("Physics arrival truth residual rows",double(w.work.arrivalTruthResidualRows),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival truth residual mps",w.work.arrivalTruthResidualApproach,ProfileCounterMode::Maximum);
+    JUDAS_PROFILE_COUNTER("Physics arrival unchanged batches",double(w.work.arrivalUnchanged),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics arrival energy retries",double(w.work.arrivalRetries),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule passes",double(w.work.ccdPasses),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD pair evaluations",double(w.work.ccdSweeps),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule candidate pairs",double(w.work.ccdCandidatePairs),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule primitive pairs",double(w.work.ccdPrimitivePairs),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD incident pair visits",double(w.work.ccdResweepVisits),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD invalidated pair requests",double(w.work.ccdAffectedSweeps),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule trajectory retimings",double(w.work.ccdRetimings),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule frontier events",double(w.work.ccdEvents),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD schedule same-time events",double(w.work.ccdRepeatedEventTimes),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD active bodies",double(w.work.ccdPeakMovers),ProfileCounterMode::Maximum);
     JUDAS_PROFILE_COUNTER("Physics wake traversal ms",double(w.work.wake.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics wake peak graph edges",double(w.work.wakeGraphEdges),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics wake scratch peak bytes",double(w.work.wakeScratchBytes),ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics wake traversal calls",double(w.work.wake.calls),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics wake requests",double(w.work.wake.calls),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics wake traversal calls",double(w.work.wakeGraphTraversals),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics wake no-op publications",double(w.work.wakeNoops),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics contact memo requests",double(w.work.geometryMemoRequests),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics contact memo reuses",double(w.work.geometryMemoReuses),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics search memo requests",double(w.work.searchMemoRequests),ProfileCounterMode::Sum);

@@ -8,6 +8,7 @@ set(JUDAS_PHYSICS_WORLD_SOURCES
     src/physics/WorldCCDSearch.cpp
     src/physics/WorldConstraintBatch.cpp
     src/physics/WorldContacts.cpp
+    src/physics/WorldMk2Continuous.cpp
     src/physics/WorldMk2Solver.cpp
     src/physics/WorldJoints.cpp
     src/physics/WorldPersistence.cpp

@@ -285,6 +285,8 @@ struct PhysicsWorld::Impl {
     void Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling *coupling = nullptr);
     void Mk2Continuous(float dt, const std::vector<char>* required = nullptr,
         std::vector<unsigned>* arrivalCounts = nullptr, unsigned* eventCount = nullptr);
+    bool Mk2ResolveArrivalBatch(unsigned fast,unsigned other,int partFast,int partOther,double hit,std::vector<unsigned>& changed,
+                               const DynamicAabbTree& futureIndex);
     bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
                     float dt);
@@ -340,15 +342,22 @@ struct PhysicsWorld::Impl {
     std::size_t impactActualBoundsRejected = 0;
     struct WorkDiagnostics {
         bool active = false;
-        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation, wake, advance, sampling, preparation;
+        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation, wake, advance, sampling, preparation, arrivalDiscovery, arrivalSolve, ccdTotal, ccdSweep, ccdRetime;
         std::size_t geometryMemoRequests=0,geometryMemoReuses=0,
                     searchMemoRequests=0,searchMemoReuses=0,
-                    wakeScratchBytes=0,wakeGraphEdges=0,
+                    wakeScratchBytes=0,wakeGraphEdges=0,wakeGraphTraversals=0,wakeNoops=0,
                     geometryMemoEvictions=0,searchMemoEvictions=0,
                     segmentVisits=0,segmentKnots=0,segmentAllocations=0;
         unsigned searchDepth=0;
         PhysicsWorld::CollisionSearchSample* searchDetail=nullptr;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
+        std::size_t ccdPasses=0,ccdSweeps=0,ccdCandidatePairs=0,ccdPrimitivePairs=0,
+                    ccdResweepVisits=0,ccdAffectedSweeps=0,ccdRetimings=0,
+                    ccdEvents=0,ccdRepeatedEventTimes=0,ccdPeakMovers=0,
+                    arrivalBatches=0,arrivalPatches=0,arrivalBodies=0,arrivalSweeps=0,arrivalRetries=0,arrivalResidualRows=0,arrivalTruthResidualRows=0,arrivalUnchanged=0;
+        double arrivalResidualApproach=0,arrivalTruthResidualApproach=0;
+        unsigned ccdActiveMover=0;
+        bool ccdInitialSweep=false;
     } work;
     std::function<void(const PhysicsWorld::CollisionSearchSample&)> searchObserver;
     // Indexed output only: workers never mutate physics bodies, geometry

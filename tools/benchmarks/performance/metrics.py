@@ -3,6 +3,18 @@ import math
 import statistics
 
 
+def simulation_loss(rows, profiled=True):
+    """Keep unobserved historical clock loss unknown, not a zero-loss pass."""
+    discarded = sum(row['discarded_seconds'] for row in rows) if profiled else None
+    complete = profiled and bool(rows) and all(
+        row.get('incoming_delta_clipped_seconds') is not None for row in rows)
+    clipped = sum(row['incoming_delta_clipped_seconds'] for row in rows) if complete else None
+    return {'physics_discarded_seconds': discarded,
+            'physics_cap_frames': sum(bool(row['cap_reached']) for row in rows) if profiled else None,
+            'incoming_delta_clipped_seconds': clipped,
+            'total_simulation_time_lost_seconds': discarded + clipped if complete else None}
+
+
 def percentile(values, fraction):
     if not values:
         raise ValueError('no samples')

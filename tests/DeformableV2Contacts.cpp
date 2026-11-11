@@ -3,6 +3,7 @@
 #include "RadialTerrain.h"
 #include "CollisionAsset.h"
 #include <cmath>
+#include <algorithm>
 #include <glm/gtc/matrix_transform.hpp>
 
 void RunDeformableV2ContactChecks(void(*check)(bool,const char*)){
@@ -10,6 +11,26 @@ void RunDeformableV2ContactChecks(void(*check)(bool,const char*)){
     auto sheet=std::make_shared<DeformableAsset>(MakeDeformableSheet(3,3,.3,.3));
     DeformableSettings config;config.selfContact=false;config.material.damping=0;
     UniformGravity zero({0,0,0});
+    {
+        // More reacting bodies than the bounded interval wake publication can
+        // retain. Opposing thin plates exercise real projection and reactions;
+        // overflow must keep waking, including a later attachment recipient.
+        PhysicsWorld world;world.Init();std::vector<BodyHandle> plates;
+        for(unsigned i=0;i<70;++i){auto body=world.CreateDynamicBox({0,0,i%2?-.11f:.11f},{2,2,.1f},10000,0,0);
+            world.SetCollisionFilter(body,0,CategoryBit(1));plates.push_back(body);}
+        auto mount=world.CreateDynamicBox({0,0,10},{.1f,.1f,.1f},10000,0,0);
+        world.SetCollisionFilter(mount,0,CategoryBit(1));
+        for(unsigned step=0;step<120;++step)world.Step(1.f/60);
+        check(std::all_of(plates.begin(),plates.end(),[&](auto b){return world.IsSleeping(b);})&&world.IsSleeping(mount),"overflow fixture starts with sleeping independent rigid recipients");
+        auto settings=config;settings.collisionLayer=1;settings.collisionMask=CategoryBit(0);settings.substeps=1;settings.iterations=2;
+        DeformableAttachment pin;pin.group="top";pin.kind=DeformableAttachment::Kind::Body;pin.target=1;settings.attachments={pin};
+        DeformableInstance material;material.Initialize(sheet,settings,glm::dmat4(1),701);
+        DeformableTarget target;target.valid=true;target.body=mount;
+        material.Step(1./60,world,zero,{target});
+        check(material.error.empty()&&material.stats.contacts>=70,"dense material contacts survive bounded wake-publication overflow");
+        check(std::all_of(plates.begin(),plates.end(),[&](auto b){return !world.IsSleeping(b);})&&!world.IsSleeping(mount),"every reacting body and the later attachment wake despite full publication storage");
+        check(glm::length(world.GetLinearVelocity(plates.back()))>0&&glm::length(world.GetLinearVelocity(mount))>0,"overflow fallback preserves collision and attachment impulses");
+    }
     for(bool rotated:{false,true}){
         PhysicsWorld world;check(world.Init(),"V2 capsule contact world initializes");
         auto rotation=rotated?glm::angleAxis(.7f,glm::vec3(0,0,1)):glm::quat(1,0,0,0);

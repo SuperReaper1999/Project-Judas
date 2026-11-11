@@ -13,7 +13,7 @@ struct CrashCollisionSearchTrace {
     using Json=nlohmann::json;
     struct Pair {
         Sample last{};
-        std::size_t calls=0,hits=0,updates=0;
+        std::size_t calls=0,hits=0,updates=0,unchanged=0,unchangedUncached=0,containedMiss=0,changedStart=0,changedFinish=0;
         double milliseconds=0,advance=0,sampling=0,preparation=0,maximum=0;
         std::size_t queries=0,iterations=0,samples=0,fallbacks=0,geometry=0,
             visits=0,knots=0,allocations=0,geometryHits=0,geometryRequests=0,
@@ -39,7 +39,18 @@ struct CrashCollisionSearchTrace {
             it=pairs.emplace(key,Pair{}).first;
         }
         auto& p=it->second;
-        if(p.calls && (p.last.revisionA!=s.revisionA || p.last.revisionB!=s.revisionB))++p.updates;
+        if(p.calls) {
+            const bool same=p.last.revisionA==s.revisionA && p.last.revisionB==s.revisionB;
+            if(!same)++p.updates;
+            else {
+                ++p.unchanged;p.unchangedUncached+=!s.cacheHit;
+                p.changedStart+=p.last.start!=s.start;p.changedFinish+=p.last.finish!=s.finish;
+                // Diagnostic opportunity count only: sampled negatives are NOT
+                // promoted to certificates and this never skips a query.
+                p.containedMiss+=p.last.target==s.target && p.last.hit>p.last.finish &&
+                    s.start>=p.last.start && s.finish<=p.last.finish;
+            }
+        }
         ++p.calls;p.hits+=s.cacheHit;p.milliseconds+=s.milliseconds;
         p.advance+=s.advanceMs;p.sampling+=s.samplingMs;p.preparation+=s.preparationMs;
         p.maximum=std::max(p.maximum,s.milliseconds);++p.contact[unsigned(s.startContact+1)];
@@ -54,6 +65,7 @@ struct CrashCollisionSearchTrace {
     static Json Describe(const Sample& s) {
         return {{"a",s.a},{"b",s.b},{"pa",s.partA},{"pb",s.partB},
             {"typeA",int(s.typeA)},{"typeB",int(s.typeB)},
+            {"pass",s.pass},{"sweep",s.sweep},{"event",s.event},{"mover",s.mover},{"initialSweep",s.initialSweep},
             {"compoundA",s.compoundA},{"compoundB",s.compoundB},
             {"start",s.start},{"finish",s.finish},{"target",s.target},
             {"hit",s.hit},{"startContact",s.startContact},{"cacheHit",s.cacheHit},
@@ -68,6 +80,8 @@ struct CrashCollisionSearchTrace {
         Json rows=Json::array(),slow=Json::array();
         for(const auto& [_,p]:pairs){auto j=Describe(p.last);
             j["calls"]=p.calls;j["cacheHits"]=p.hits;j["trajectoryUpdates"]=p.updates;
+            j["unchangedTrajectoryCalls"]=p.unchanged;j["unchangedUncachedCalls"]=p.unchangedUncached;
+            j["containedPreviousMiss"]=p.containedMiss;j["unchangedChangedStart"]=p.changedStart;j["unchangedChangedFinish"]=p.changedFinish;
             j["totalMs"]=p.milliseconds;j["maximumMs"]=p.maximum;
             j["advanceMs"]=p.advance;j["samplingMs"]=p.sampling;j["preparationMs"]=p.preparation;
             j["queries"]=p.queries;j["iterations"]=p.iterations;j["samples"]=p.samples;

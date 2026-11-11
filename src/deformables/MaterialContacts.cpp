@@ -8,7 +8,7 @@
 #include <cmath>
 #include <limits>
 using V=glm::dvec3;
-void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& physics){
+void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& physics,std::array<BodyHandle,64>& awakened,unsigned& awakenedCount){
     JUDAS_PROFILE_SCOPE("Deformable rigid contacts");
     double thickness=settings.material.thickness;
     V materialMinimum=Minimum(),materialMaximum=Maximum();
@@ -26,12 +26,24 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     };
     std::vector<PreparedContact> contactPrimitives;
     glm::dquat bodyRotation,bodyInverse;
+    // This projection only updates node positions and rigid velocities. No
+    // topology, contacts, sleep assessment or time advance occurs between its
+    // samples. Publish wake propagation once per candidate body in this call,
+    // sharing the existing interval publication set with dynamic attachments.
+    // Overflow retains ordinary wake propagation rather than dropping it.
+    bool candidateWoken=false;
+    bool pointBoundsEligible=false;
+    std::size_t rejectedPoints=0;
+    Aabb pointBounds;
+    V pointAllowance(0);
     auto sample=[&](glm::uvec3 nodes,V weights,BodyHandle body,const Shape& shape,const BodyTransform& pose){
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[nodes.x]])return;
         V p(0),old(0);
         for(int k=0;k<3;++k){p+=positions[nodes[k]]*weights[k];
             old+=start[nodes[k]]*weights[k];
             }
+        if(pointBoundsEligible&&(glm::any(glm::lessThan(p+pointAllowance,V(pointBounds.min)))||
+                                 glm::any(glm::greaterThan(p-pointAllowance,V(pointBounds.max))))){++rejectedPoints;return;}
         auto contact=[&](V center,glm::dquat q,glm::dquat inverse,V half,double radius,const PrimitivePose* geometry=nullptr){V normal,point;
             double depth=0;
             V local(0);
@@ -72,7 +84,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             for(int k=0;k<3;++k)positions[nodes[k]]+=normal*dl*inverseMass[nodes[k]]*weights[k];
             // This projection's velocity change IS the particle impulse. The
             // equal opposite impulse is submitted once, including lever arm.
-            if(rigid>0)JudasDeformables::ApplyReaction(physics,body,-normal*dl/h,point);
+            if(rigid>0)JudasDeformables::ApplyReaction(physics,body,-normal*dl/h,point,&candidateWoken);
             V velocity=(p-old)/h-JudasDeformables::PointVelocity(physics,body,point);
             V tangent=velocity-normal*glm::dot(velocity,normal);
             double speed=glm::length(tangent);
@@ -80,7 +92,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
                 double tangentialMass=w+JudasDeformables::EffectiveMass(physics,body,point,dir);
                 double frictionImpulse=std::min(speed/tangentialMass,settings.material.friction*dl/h);
                 for(int k=0;k<3;++k)positions[nodes[k]]-=dir*frictionImpulse*h*inverseMass[nodes[k]]*weights[k];
-                if(rigid>0)JudasDeformables::ApplyReaction(physics,body,dir*frictionImpulse,point);
+                if(rigid>0)JudasDeformables::ApplyReaction(physics,body,dir*frictionImpulse,point,&candidateWoken);
                 }
             // Keep the rejection envelope conservative as preceding contacts
             // project nodes. A once-per-call frozen box could miss a later body.
@@ -101,6 +113,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         }
     };
     for(auto body:rigidCandidates){
+        candidateWoken=false;
         if(std::any_of(carrierCollisionExclusions.begin(),carrierCollisionExclusions.end(),[&](auto other){return other.id==body.id&&other.world==body.world;}))continue;
         unsigned layer;
         CategoryMask mask;
@@ -121,6 +134,14 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         double magnitude=1;for(unsigned k=0;k<3;++k)magnitude=std::max({magnitude,std::abs(double(bounds.min[k])),std::abs(double(bounds.max[k]))});
         const V allowance(thickness+16*std::numeric_limits<float>::epsilon()*magnitude);
         if(glm::any(glm::lessThan(materialMaximum+allowance,V(bounds.min)))||glm::any(glm::greaterThan(materialMinimum-allowance,V(bounds.max))))continue;
+        // Reuse the actual primitive enclosure for each current sample, not
+        // merely the whole patch. Terrain and cooked/recovery paths retain
+        // their full queries. The existing thickness/roundoff allowance keeps
+        // boundary samples; no vertex, edge or face coverage is reduced.
+        pointBoundsEligible=!shape.asset&&
+            (shape.type==ShapeType::Box||shape.type==ShapeType::Sphere||
+             (shape.type==ShapeType::CompoundBoxes&&std::all_of(shape.boxes.begin(),shape.boxes.end(),[](const auto& child){return !child.asset&&(child.type==ShapeType::Box||child.type==ShapeType::Sphere);})));
+        pointBounds=bounds;pointAllowance=allowance;
         shape.asset=AcquireCollision(shape.asset);
         contactPrimitives.clear();
         bodyRotation=glm::dquat(pose.rotation);bodyInverse=glm::inverse(bodyRotation);
@@ -135,8 +156,15 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
                 contactPrimitives.push_back({std::move(primitive),center,rotation,glm::inverse(rotation)});
             }
         }
+        // Reuse the interval-owned attachment wake publication. All these
+        // projections share unchanged rigid connectivity and no sleep boundary.
+        // Overflow retains ordinary wake propagation, never drops reactions.
+        const bool alreadyTracked=std::any_of(awakened.begin(),awakened.begin()+awakenedCount,[&](auto target){return target.id==body.id&&target.world==body.world;});
+        candidateWoken=alreadyTracked;
         for(unsigned n=0;n<positions.size();++n)sample(glm::uvec3(n),V(1,0,0),body,shape,pose);
         for(auto edge:asset->edges)sample({edge.x,edge.y,edge.y},V(.5,.5,0),body,shape,pose);
         for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);
+        if(candidateWoken&&!alreadyTracked&&awakenedCount<awakened.size())awakened[awakenedCount++]=body;
     }
+    JUDAS_PROFILE_COUNTER("Deformable rigid point bound rejections",double(rejectedPoints),ProfileCounterMode::Sum);
 }

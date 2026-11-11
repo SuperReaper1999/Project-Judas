@@ -44,7 +44,48 @@ auto PhysicsWorld::Impl::CCDQuery::RemainingImpactBound(unsigned slot, double st
         auto segment =
             std::upper_bound(segments.begin(), segments.end(), start,
                              [](double time, const auto &value) { return time < value.begin; });
-        if (segment != segments.begin()) {
+        std::optional<Aabb> temporalBound;
+        {
+            bool complete = true;
+            unsigned leaves = 0;
+            double covered = start;
+            for (const auto &leaf : segments) {
+                if (leaf.end <= start || leaf.begin >= finish)
+                    continue;
+                if (++leaves > 64) {
+                    complete = false;
+                    break;
+                } // preparation budget; full CCD remains the fallback
+                const double lo = std::max(start, leaf.begin), hi = std::min(finish, leaf.end);
+                if (lo > covered) {
+                    complete = false;
+                    break;
+                }
+                auto first = body.rigidBody, last = body.rigidBody;
+                const auto x = leaf.EvaluateGeometry(lo), y = leaf.EvaluateGeometry(hi);
+                first.position = x.position;
+                first.orientation = x.orientation;
+                last.position = y.position;
+                last.orientation = y.orientation;
+                auto bound = rigid_motion_bounds::TryTranslationSweepBound(body.shape, leaf, first,
+                                                                           last, lo, hi);
+                if (!bound)
+                    bound = rigid_motion_bounds::TryDynamicBoxSweepBound(body.shape, leaf, first,
+                                                                         last, lo, hi);
+                if (!bound) {
+                    complete = false;
+                    break;
+                }
+                temporalBound = temporalBound ? temporalBound->Union(*bound) : *bound;
+                covered = hi;
+            }
+            if (!complete || covered < finish)
+                temporalBound.reset();
+        }
+        if (temporalBound)
+            sample.remainingBound = rigid_motion_bounds::IntersectConservativeBounds(
+                sample.remainingBound, *temporalBound);
+        else if (segment != segments.begin()) {
             --segment;
             auto tighter = rigid_motion_bounds::TryTranslationSweepBound(
                 body.shape, *segment, fromPose, toPose, start, finish);
@@ -870,6 +911,8 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     const auto before=stats;const auto workBefore=work;
     const auto workBeforePose=impactPoseEvaluations,workBeforeOrientation=impactOrientationBuilds;
     CollisionSearchSample detail;
+    detail.pass=work.ccdPasses;detail.sweep=work.ccdSweeps;detail.event=work.ccdEvents;
+    detail.mover=work.ccdActiveMover;detail.initialSweep=work.ccdInitialSweep;
     detail.a=MakeHandle(a).id;detail.b=MakeHandle(b).id;detail.partA=unsigned(pa);detail.partB=unsigned(pb);
     detail.compoundA=bodies[a].shape.type==ShapeType::CompoundBoxes;
     detail.compoundB=bodies[b].shape.type==ShapeType::CompoundBoxes;

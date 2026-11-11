@@ -741,6 +741,7 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
 
 bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32_t>& indices,
                                      const std::vector<MeshSkinVertex>& skin,const std::vector<MeshPrimitive>& primitives){
+    const auto validationStart=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
     auto* mesh=GetMesh(handle);
     if(!mesh||!mesh->skinVbo||!mesh->ebo||!mesh->lods.empty()||indices.size()%3||indices.size()>size_t(std::numeric_limits<GLsizei>::max()))return false;
     if(!indices.empty()&&skin.size()!=size_t(mesh->vertexCount))return false;
@@ -750,13 +751,16 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
         for(unsigned k=0;k<4;++k){if(v.joints[k]>=mesh->restSkin.size()||v.joints1[k]>=mesh->restSkin.size()||!std::isfinite(v.weights[k])||!std::isfinite(v.weights1[k])||v.weights[k]<0||v.weights1[k]<0)return false;sum+=v.weights[k]+v.weights1[k];}
         if(std::abs(sum-1)>1e-4f)return false;
     }
+    if(validationStart)JUDAS_PROFILE_COUNTER("Structural topology validation CPU ms",double(PerformanceProfiler::Now()-validationStart)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_SCOPE("Structural topology upload");
+    const auto submissionStart=validationStart?PerformanceProfiler::Now():0;
     GLint previousVao=0,previousArray=0;glGetIntegerv(GL_VERTEX_ARRAY_BINDING,&previousVao);glGetIntegerv(GL_ARRAY_BUFFER_BINDING,&previousArray);
     glBindVertexArray(mesh->vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,GLsizeiptr(indices.size()*sizeof(uint32_t)),indices.empty()?nullptr:indices.data(),GL_DYNAMIC_DRAW);
     if(!skin.empty()){glBindBuffer(GL_ARRAY_BUFFER,mesh->skinVbo);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(skin.size()*sizeof(MeshSkinVertex)),skin.data(),GL_DYNAMIC_DRAW);}
     glBindVertexArray(GLuint(previousVao));glBindBuffer(GL_ARRAY_BUFFER,GLuint(previousArray));
+    if(submissionStart)JUDAS_PROFILE_COUNTER("Structural topology GL submission CPU ms",double(PerformanceProfiler::Now()-submissionStart)*1e-6,ProfileCounterMode::Sum);
     mesh->indexCount=GLsizei(indices.size());mesh->primitives=primitives;mesh->partOrientation.clear();
     for(const auto& p:primitives)mesh->partOrientation.push_back(p.count?skin[indices[p.first]]:MeshSkinVertex{});
     return true;

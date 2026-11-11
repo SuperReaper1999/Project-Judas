@@ -39,6 +39,7 @@ void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCouplin
         const unsigned subdivisions=std::max(1u,(material.settings.substeps+interval.count-1)/interval.count);
         material.AdvancePhysicalInterval(interval.deltaTime,subdivisions,m_physics,GravityForEntity(id),record.targets,true);
     }
+    const auto crossStart=measuredStart?PerformanceProfiler::Now():0;
     for(auto a=m_deformables.begin();a!=m_deformables.end();++a)for(auto b=std::next(a);b!=m_deformables.end();++b){auto& x=a->second.simulation;auto& y=b->second.simulation;
         if(!x.PhysicalStepActive()||!y.PhysicalStepActive()||!x.error.empty()||!y.error.empty()||(x.sleeping&&y.sleeping))continue;
         double thickness=x.settings.material.thickness+y.settings.material.thickness;
@@ -47,5 +48,8 @@ void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCouplin
         DeformableInstance::SurfaceContacts(y,x,interval.deltaTime);
         ++a->second.revision;++b->second.revision;
     }
-    if(measuredStart)JUDAS_PROFILE_COUNTER("Deformable interval CPU ms",double(PerformanceProfiler::Now()-measuredStart)*1e-6,ProfileCounterMode::Sum);
+    if(measuredStart){
+        JUDAS_PROFILE_COUNTER("Deformable cross-material contacts CPU ms",double(PerformanceProfiler::Now()-crossStart)*1e-6,ProfileCounterMode::Sum);
+        JUDAS_PROFILE_COUNTER("Deformable interval CPU ms",double(PerformanceProfiler::Now()-measuredStart)*1e-6,ProfileCounterMode::Sum);
+    }
 }

@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools' / 'benchmarks'))
-from performance.metrics import percentile, summarize
+from performance.metrics import percentile, summarize, simulation_loss
 from performance.timeline import merge_intervals, clock_mapping, frame_completion
 from performance.comparison import compare
 import copy
@@ -13,6 +13,24 @@ from run_matrix import verify_state
 
 
 class WholeFrameMetricsTests(unittest.TestCase):
+    def test_clock_loss_includes_both_discard_policies(self):
+        rows = [{'discarded_seconds': .02, 'cap_reached': True,
+                 'incoming_delta_clipped_seconds': .3},
+                {'discarded_seconds': 0, 'cap_reached': False,
+                 'incoming_delta_clipped_seconds': 0}]
+        result = simulation_loss(rows)
+        self.assertAlmostEqual(result['total_simulation_time_lost_seconds'], .32)
+        self.assertEqual(result['physics_cap_frames'], 1)
+        self.assertEqual(simulation_loss(rows, profiled=False)['total_simulation_time_lost_seconds'], None)
+
+    def test_historical_or_partial_clock_capture_cannot_claim_zero_loss(self):
+        rows = [{'discarded_seconds': .02, 'cap_reached': True}]
+        self.assertEqual(simulation_loss(rows)['physics_discarded_seconds'], .02)
+        self.assertIsNone(simulation_loss(rows)['total_simulation_time_lost_seconds'])
+        rows += [{'discarded_seconds': 0, 'cap_reached': False,
+                  'incoming_delta_clipped_seconds': 0}]
+        self.assertIsNone(simulation_loss(rows)['total_simulation_time_lost_seconds'])
+
     def test_workload_state_rejects_static_or_incomplete_content(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
@@ -59,6 +77,20 @@ class WholeFrameMetricsTests(unittest.TestCase):
         self.assertEqual(frame_completion(frames,gpu,metadata)['p99_ms'],5)
         with self.assertRaises(ValueError):
             frame_completion(frames,[],metadata)
+
+    def test_regression_gate_rejects_changed_loading_policy(self):
+        identity = dict(workload_sha256='content', project_sha256='project', controls={},
+                        duration_seconds=20, resolution='1280x720', graphics_policy='4.6',
+                        cpu_model='reference', gpu_model='reference', gpu_driver='same',
+                        cap_hz=0, capture_policy='none', profile=True)
+        sample = dict(identity=identity, summary=dict(samples=2000, p99_ms=4, worst_ms=5))
+        old = [copy.deepcopy(sample) for _ in range(3)]
+        new = [copy.deepcopy(sample) for _ in range(3)]
+        for row in new: row['identity']['warmup_seconds'] = 10
+        with self.assertRaisesRegex(ValueError, 'warm-up policy'):
+            compare(old, new)
+        for row in old: row['identity']['warmup_seconds'] = 10
+        self.assertTrue(compare(old, new)['regression_pass'])
 
     def test_regression_gate_rejects_unmatched_or_incomplete_evidence(self):
         identity = dict(workload_sha256='content', project_sha256='project', controls={},

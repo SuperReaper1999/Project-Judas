@@ -12,11 +12,13 @@ inline double EffectiveMass(PhysicsWorld& world,BodyHandle body,glm::dvec3 point
 inline glm::dvec3 PointVelocity(PhysicsWorld& world,BodyHandle body,glm::dvec3 point){
     return glm::dvec3(world.GetLinearVelocity(body))+glm::cross(glm::dvec3(world.GetAngularVelocity(body)),point-glm::dvec3(world.GetCenterOfMass(body)));
 }
-inline void ApplyReaction(PhysicsWorld& world,BodyHandle body,glm::dvec3 impulse,glm::dvec3 point){
+inline void ApplyReaction(PhysicsWorld& world,BodyHandle body,glm::dvec3 impulse,glm::dvec3 point,bool* alreadyWoken=nullptr){
     // Preserve the local lever arm before crossing the binary32 MK2 impulse API.
     const auto moment=glm::cross(point-glm::dvec3(world.GetCenterOfMass(body)),impulse);
     const auto linear=glm::vec3(impulse),angular=glm::vec3(moment);
-    if(glm::length(linear)>1e-8f||glm::length(angular)>1e-8f)world.Wake(body);
+    if((glm::length(linear)>1e-8f||glm::length(angular)>1e-8f)&&(!alreadyWoken||!*alreadyWoken)){
+        world.Wake(body);if(alreadyWoken)*alreadyWoken=true;
+    }
     world.ApplyLinearImpulse(body,linear,false);world.ApplyAngularImpulse(body,angular,false);
 }
 }

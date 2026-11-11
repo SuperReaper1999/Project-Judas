@@ -129,33 +129,41 @@ void RuntimeWorld::UpdateDeformables(double dt){
         }
 }
 void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
+    auto& profiler=PerformanceProfiler::Get();
+    const bool measured=profiler.Active();
     for(auto& [id,record]:m_deformables){const auto* d=RuntimeDefinition(id);
         if(!d||!d->deformable||!IsPublished(id)||!RenderVisible(id)||!record.simulation.settings.enabled)continue;
         auto& sim=record.simulation;
         const float materialAlpha=sim.sleeping?1.f:alpha;
         std::vector<glm::mat4> palette;
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha){
+            const auto mapStart=measured?profiler.Now():0;
             if(sim.asset->structuralSkin){
                 if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
                 else if(record.meshTopology!=sim.fracture.revision&&!sim.asset->structuralSkin->UpdateGpuTopology(sim,record.presentation))sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
             }else sim.MapRender(materialAlpha,record.presentation);
+            const auto uploadStart=measured?profiler.Now():0;
+            if(measured)JUDAS_PROFILE_COUNTER("Deformable render mapping CPU ms",double(uploadStart-mapStart)*1e-6,ProfileCounterMode::Sum);
             if(!record.mesh.IsValid())record.mesh=renderer.CreateMesh(record.presentation);
             else if(sim.asset->structuralSkin){
                 if(record.meshTopology!=sim.fracture.revision&&!renderer.UpdateMeshSkinTopology(record.mesh,record.presentation.indices,record.presentation.skinVertices,record.presentation.primitives))throw std::runtime_error("invalid prepared structural skin topology");
             }
             else if(sim.asset->fracture&&record.meshTopology!=sim.fracture.revision){renderer.DestroyMesh(record.mesh);record.mesh=renderer.CreateMesh(record.presentation);}
             else if(!sim.asset->structuralSkin)renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
+            if(measured)JUDAS_PROFILE_COUNTER("Deformable geometry preparation/upload CPU ms",double(profiler.Now()-uploadStart)*1e-6,ProfileCounterMode::Sum);
             record.meshTopology=sim.fracture.revision;
             record.mappedRevision=record.revision;record.mappedAlpha=materialAlpha;
             // Immutable assets retain source images for resource rebuilding;
             // per-instance dynamic geometry does not need another image copy.
             for(auto& material:record.presentation.materials)for(auto& map:material.maps){map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}
         }
+        const auto drawStart=measured?profiler.Now():0;
         if(sim.asset->structuralSkin)sim.asset->structuralSkin->Palette(sim,materialAlpha,palette);
         renderer.SetRenderLayer(RenderLayerOf(id));
         renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render,&record.presentation.primitives):std::vector<MaterialBinding>{});
         auto texture=d->render&&m_assets?m_assets->TryGetTexture(d->render->textureAsset):TextureHandle{};
         renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f),d->render?d->render->alpha:1.f,sim.asset->structuralSkin?&palette:nullptr,d->render?&d->render->hiddenParts:nullptr);
+        if(measured)JUDAS_PROFILE_COUNTER("Deformable draw preparation CPU ms",double(profiler.Now()-drawStart)*1e-6,ProfileCounterMode::Sum);
     }
 }
 void RuntimeWorld::RemoveDeformable(EntityId id){auto it=m_deformables.find(id);

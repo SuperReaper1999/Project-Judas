@@ -336,7 +336,7 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 // Its local cache retires at that boundary; each physical target
                 // is awakened by its first real reaction, never by a zero row.
                 if(!targetWoken&&(glm::length(linear)>1e-8f||glm::length(angular)>1e-8f)){
-                    physics.Wake(t.body);targetWoken=true;awakened.at(awakenedCount++)=t.body;
+                    physics.Wake(t.body);targetWoken=true;if(awakenedCount<awakened.size())awakened[awakenedCount++]=t.body;
                     JUDAS_PROFILE_COUNTER("Deformable attachment wake traversals",1,ProfileCounterMode::Sum);
                 }
                 physics.ApplyLinearImpulse(t.body,linear,false);

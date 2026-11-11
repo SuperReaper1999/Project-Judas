@@ -301,6 +301,9 @@ public:
     // Search timing excludes the observer. No observations are save state.
     struct CollisionSearchSample {
         unsigned a=0,b=0,partA=0,partB=0;
+        std::size_t pass=0,sweep=0,event=0;
+        unsigned mover=0;
+        bool initialSweep=false;
         ShapeType typeA=ShapeType::Sphere,typeB=ShapeType::Sphere;
         bool compoundA=false,compoundB=false,cacheHit=false;
         int startContact=-1; // -1 not needed/unknown, 0 separated, 1 touching/overlapping

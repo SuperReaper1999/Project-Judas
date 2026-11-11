@@ -25,6 +25,24 @@ inline bool SameQuat(const glm::quat& a,const glm::quat& b) {
 inline bool FiniteBound(const Aabb& b) {
     return Finite3(b.min)&&Finite3(b.max)&&b.min.x<=b.max.x&&b.min.y<=b.max.y&&b.min.z<=b.max.z;
 }
+struct NativeBoxEnvelope {
+    glm::vec3 center{0},half{0};
+};
+// A structural section is commonly one offset box in a compound. Keep its
+// actual parent-local centre: treating it as a centred box loses rotational
+// displacement. Unsupported descriptors retain the complete existing path.
+inline std::optional<NativeBoxEnvelope> BoxEnvelope(const Shape& shape) {
+    if(shape.asset)return std::nullopt;
+    NativeBoxEnvelope box;
+    if(shape.type==ShapeType::Box && shape.pivotOffset==glm::vec3(0))box.half=shape.halfExtents;
+    else if(shape.type==ShapeType::CompoundBoxes && shape.boxes.size()==1){
+        const auto& child=shape.boxes.front();
+        if(child.type!=ShapeType::Box || child.asset || child.rotation!=glm::quat(1,0,0,0))return std::nullopt;
+        box.center=child.localCenter-shape.pivotOffset;box.half=child.halfExtents;
+    }else return std::nullopt;
+    if(!Finite3(box.center)||!Finite3(box.half)||glm::any(glm::lessThanEqual(box.half,glm::vec3(0))))return std::nullopt;
+    return box;
+}
 // This deliberately covers only one segment. A future prescribed stop or
 // an impulse is a real trajectory discontinuity, not an interpolated endpoint.
 // `from` and `to` must be the segment's existing Evaluate(start/finish) poses.
@@ -36,14 +54,13 @@ inline std::optional<Aabb> TryTranslationSweepBound(const Shape& shape,
        !std::isfinite(float(finish-segment.begin)) ||
        !Finite3(segment.position)||!Finite3(segment.linearVelocity) ||
        !Finite3(from.position)||!Finite3(to.position) ||
-       shape.pivotOffset!=glm::vec3(0))return std::nullopt;
+       (shape.type!=ShapeType::CompoundBoxes && shape.pivotOffset!=glm::vec3(0)))return std::nullopt;
     if(shape.type==ShapeType::Sphere) {
         if(!(shape.radius>0)||!std::isfinite(shape.radius))return std::nullopt;
         // The centred sphere's orientation cannot change its geometry.
-    } else if(shape.type==ShapeType::Box) {
+    } else if(BoxEnvelope(shape)) {
         if(segment.driftAngularVelocity!=glm::vec3(0)||
-           !Finite4(segment.orientation)||!Finite3(shape.halfExtents)||
-           glm::any(glm::lessThanEqual(shape.halfExtents,glm::vec3(0))))return std::nullopt;
+           !Finite4(segment.orientation))return std::nullopt;
         // For dynamic zero drift, RigidMotion skips normalization only when
         // the advanced quaternion has exactly the anchor's bits. In particular,
         // a signed-zero component can otherwise trigger normalization of a
@@ -132,15 +149,19 @@ inline std::optional<contact_geometry::M<Iv>> TryDynamicRotationInterval(
 }
 inline std::optional<Aabb> TryDynamicBoxSweepBound(const Shape& shape,const RigidMotionSegment& segment,
         const RigidBody& from,const RigidBody& to,double start,double finish){
-    if(shape.type!=ShapeType::Box||shape.pivotOffset!=glm::vec3(0)||!Finite3(segment.position)||
-       !Finite3(segment.linearVelocity)||!Finite3(from.position)||!Finite3(to.position)||
-       !Finite3(shape.halfExtents)||glm::any(glm::lessThanEqual(shape.halfExtents,glm::vec3(0))))return std::nullopt;
+    const auto box=BoxEnvelope(shape);
+    if(!box||!Finite3(segment.position)||!Finite3(segment.linearVelocity)||
+       !Finite3(from.position)||!Finite3(to.position))return std::nullopt;
     const auto rotation=TryDynamicRotationInterval(segment,start,finish);if(!rotation)return std::nullopt;
     try{
         Aabb bound;
         for(unsigned k=0;k<3;++k){
-            Iv extent(0);for(unsigned j=0;j<3;++j)extent=extent+contact_geometry::Abs((*rotation)[j][k])*Iv(double(shape.halfExtents[j]));
-            const Iv center(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])));
+            Iv extent(0);for(unsigned j=0;j<3;++j)extent=extent+contact_geometry::Abs((*rotation)[j][k])*Iv(double(box->half[j]));
+            Iv center(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])));
+            if(box->center!=glm::vec3(0)){
+                Iv offset(0);for(unsigned j=0;j<3;++j)offset=offset+(*rotation)[j][k]*Iv(double(box->center[j]));
+                center=center+offset;
+            }
             bound.min[k]=LoFloat((center-extent).lo);bound.max[k]=HiFloat((center+extent).hi);
         }
         return FiniteBound(bound)?std::optional<Aabb>(bound):std::nullopt;

@@ -14,8 +14,12 @@ open gaps are historical, not the current runtime contract.
 
 `src/PhysicsWorld.cpp` coordinates one world. The implementation map is
 [src/physics/WorldModules.md](../src/physics/WorldModules.md).
-`src/physics/WorldMk2Solver.cpp` owns the simultaneous solve and bounded continuous
-pass. The same implementation handles ordinary steps, coupled intervals and
+`src/physics/WorldMk2Solver.cpp` owns the simultaneous constraint response;
+`src/physics/WorldMk2Continuous.cpp` owns pair-local chronological searches and
+trajectory publication. Recurrent same-time contacts reuse the existing row
+kernels through `WorldMk2ArrivalBatch.inl`. The old mover-wide frontier is removed.
+See [collision architecture and measured performance](MK2_COLLISION_ARCHITECTURE_PERFORMANCE.md).
+The same implementation handles ordinary steps, coupled intervals and
 velocity-coupling participants; there is no old-solver path for coupled work.
 
 A normal rigid step has four chronological substeps. Contact blocks use two

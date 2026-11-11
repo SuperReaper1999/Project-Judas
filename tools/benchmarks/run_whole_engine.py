@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
-from performance.metrics import summarize
+from performance.metrics import summarize, simulation_loss
 
 
 def sample_process(pid):
@@ -36,6 +36,8 @@ def main():
     parser.add_argument('--project', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--seconds', type=float, default=20)
+    parser.add_argument('--warmup-seconds', type=float, default=2,
+                        help='loading exclusion; verify readiness separately for cold-restored workloads')
     parser.add_argument('--resolution', default='1280x720')
     parser.add_argument('--cap', type=int, default=0)
     parser.add_argument('--key')
@@ -44,6 +46,8 @@ def main():
     parser.add_argument('--workload-manifest', type=Path,
                         help='verify every frozen input before running; emitted by prepare_workloads.py')
     args = parser.parse_args()
+    if not 0 <= args.warmup_seconds <= 30:
+        parser.error('warmup must be finite and between 0 and 30 seconds')
     workload_sha256 = None
     if args.workload_manifest:
         manifest = json.loads(args.workload_manifest.read_text())
@@ -68,7 +72,7 @@ def main():
     env = os.environ.copy()
     env.update(SDL_AUDIODRIVER='dummy', JUDAS_WINDOW_SIZE=args.resolution)
     command = [str(args.binary.resolve()), '--project', str(args.project.resolve()), '--out', str(run.resolve()),
-               '--seconds', str(args.seconds), '--warmup-seconds', '2', '--cap', str(args.cap)]
+               '--seconds', str(args.seconds), '--warmup-seconds', str(args.warmup_seconds), '--cap', str(args.cap)]
     for option in ['key', 'pulse']:
         if getattr(args, option):
             command += ['--' + option, getattr(args, option)]
@@ -115,8 +119,10 @@ def main():
                 'gpu_model': hardware.get('name', 'unavailable'),
                 'gpu_driver': hardware.get('driver_version', 'unavailable'),
                 'cap_hz': args.cap, 'capture_policy': cap_policy, 'profile': not args.no_profile,
-                'duration_seconds': args.seconds, 'controls': {'key': args.key, 'pulse': args.pulse,
-                             'environment': {name: env[name] for name in ['JUDAS_ANIMATION_LANES', 'JUDAS_PROFILE_DEPTH'] if name in env}},
+                'duration_seconds': args.seconds, 'warmup_seconds': args.warmup_seconds, 'controls': {'key': args.key, 'pulse': args.pulse,
+                             'environment': {name: value for name, value in sorted(env.items())
+                                             if name.startswith('JUDAS_MK2_') or name in
+                                             ['JUDAS_ANIMATION_LANES', 'JUDAS_PROFILE_DEPTH', 'JUDAS_CCD_PAIR_PROFILE']}},
                 'cpu_model': next((line.split(':', 1)[1].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), 'unknown'),
                 'memory_total': Path('/proc/meminfo').read_text().splitlines()[0],
                 'binary_sha256': hashlib.sha256(args.binary.read_bytes()).hexdigest(),
@@ -130,8 +136,7 @@ def main():
         raise RuntimeError(f'workload failed; see {args.out / "application.log"}')
     rows = [json.loads(line) for line in (run / 'frames.jsonl').open()]
     report = summarize([row['interval_ms'] for row in rows])
-    report['physics_discarded_seconds'] = None if args.no_profile else sum(row['discarded_seconds'] for row in rows)
-    report['physics_cap_frames'] = None if args.no_profile else sum(bool(row['cap_reached']) for row in rows)
+    report.update(simulation_loss(rows, profiled=not args.no_profile))
     if not args.no_profile:
         report['diagnostic_dropped_events'] = rows[-1]['scope_dropped_total'] - rows[0]['scope_dropped_total']
         report['diagnostic_truncated_records'] = rows[-1]['records_truncated_total'] - rows[0]['records_truncated_total']

@@ -207,6 +207,24 @@ std::string DurableShapeHash(RuntimeWorld &world, const std::vector<CrashRig> &r
     if(panels)for(auto& panel:*panels)panel.Persist(evidence);
     return SceneFingerprintSha256(evidence.bytes);
 }
+nlohmann::json CaptureNumericalState(RuntimeWorld& world,const std::vector<CrashRig>& rigs,std::vector<CrashPanel>& panels){
+    using Json=nlohmann::json;Json result={{"rigs",Json::array()},{"panels",Json::array()},{"touches",Json::array()}};
+    const auto vector=[](const auto& v){return Json::array({v.x,v.y,v.z});};
+    for(const auto& rig:rigs){std::string error;auto* material=world.RuntimeDeformable(rig.owner,error);Require(material!=nullptr,error);
+        Json item={{"owner",rig.owner},{"positions",Json::array()},{"velocities",Json::array()},{"parts",Json::array()},{"broken",material->fracture.broken},{"removed",material->fracture.removed}};
+        for(auto v:material->positions){item["positions"].push_back(vector(v));}
+        for(auto v:material->velocities){item["velocities"].push_back(vector(v));}
+        for(unsigned part=0;part<material->asset->fracture->parts.size();++part){auto body=world.RuntimeBody(world.FracturePartEntity(rig.owner,part));Json state={{"part",part},{"enabled",world.Physics().IsBodyEnabled(body)}};
+            if(state["enabled"].get<bool>()){const auto pose=world.Physics().GetTransform(body);const auto v=world.Physics().GetLinearVelocity(body),w=world.Physics().GetAngularVelocity(body);const auto mass=world.Physics().GetMass(body);
+                const double energy=.5*mass*glm::dot(glm::dvec3(v),glm::dvec3(v))+.5*glm::dot(glm::dvec3(w),glm::dmat3(world.Physics().GetInertiaWorld(body))*glm::dvec3(w));
+                state.update({{"position",vector(pose.position)},{"rotation",Json::array({pose.rotation.w,pose.rotation.x,pose.rotation.y,pose.rotation.z})},{"velocity",vector(v)},{"spin",vector(w)},{"mass",mass},{"kinetic",energy},{"sleeping",world.Physics().IsSleeping(body)}});
+            }item["parts"].push_back(std::move(state));
+        }result["rigs"].push_back(std::move(item));
+    }
+    for(auto& panel:panels){Json item={{"positions",Json::array()},{"velocities",Json::array()},{"released",panel.Material().released}};for(auto v:panel.Material().positions)item["positions"].push_back(vector(v));for(auto v:panel.Material().velocities)item["velocities"].push_back(vector(v));result["panels"].push_back(std::move(item));}
+    for(const auto& e:world.Physics().LastStepTouchEvents())result["touches"].push_back({{"a",e.a.id},{"b",e.b.id},{"phase",int(e.phase)},{"sensor",e.sensor},{"point",vector(e.point)},{"normal",vector(e.normal)},{"impulse",e.normalImpulse},{"impulseAvailable",e.impulseAvailable}});
+    return result;
+}
 } // namespace
 int main(int argc, char **argv) {
     if (HandleBuildIdentityArguments(argc, argv, "crash_proof"))
@@ -654,6 +672,8 @@ int main(int argc, char **argv) {
                         row["exclusive_ms"]=exclusive;
                         for(const auto& counter:snapshot.counters)
                             row["counters"][counter.name.c_str()]=counter.value;
+                        if(std::getenv("JUDAS_PHYSICAL_STEP_HASHES"))row["physicalHash"]=DurableShapeHash(world,rigs,&panels);
+                        if(const auto* selected=std::getenv("JUDAS_NUMERICAL_STATE_STEP");selected && unsigned(std::stoul(selected))==tick){std::ofstream snapshotFile(root/"numerical-state.json");snapshotFile<<CaptureNumericalState(world,rigs,panels).dump();Require(bool(snapshotFile),"cannot publish numerical comparison state");}
                         if(pairProfile)row["collisionSearch"]=searchTrace.Encode();
                         stepProfile<<row.dump()<<'\n';
                     }

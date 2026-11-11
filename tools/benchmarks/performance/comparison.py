@@ -23,6 +23,9 @@ def compare(baseline, candidate, p99_regression_fraction=.10):
         if not identity[key] or identity[key] in ('unknown', 'unavailable'):
             raise ValueError('unverified reference identity')
     for run in baseline + candidate:
+        # Earlier capture scripts had a fixed two-second warm-up.
+        if run['identity'].get('warmup_seconds', 2) != identity.get('warmup_seconds', 2):
+            raise ValueError('loading/warm-up policy differs')
         if any(run['identity'].get(key) != identity[key] for key in keys):
             raise ValueError('workload, hardware or measurement policy differs')
         if run['summary']['samples'] < 1000:

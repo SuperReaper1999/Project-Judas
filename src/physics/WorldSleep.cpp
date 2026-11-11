@@ -6,6 +6,17 @@ auto PhysicsWorld::Impl::Wake(unsigned slot) -> void {
     PhysicsWorkTimer timer(work.wake,work.active);
     if (slot >= bodies.size() || !bodies[slot].alive)
         return;
+    // If every live body already has exactly the state this publication can
+    // produce, graph discovery cannot change any physical or sleeping state.
+    // Inspect authoritative state rather than retaining an invalidatable
+    // "already awake" cache: Settle, restore and new bodies remain visible.
+    if (std::all_of(aliveSlots.begin(), aliveSlots.end(), [&](unsigned i) {
+            return !bodies[i].sleeping && bodies[i].quietSeconds == 0;
+        })) {
+        ++work.wakeNoops;
+        return;
+    }
+    ++work.wakeGraphTraversals;
     // Snapshot the current wake graph once. The previous traversal scanned
     // every joint/contact again for every reached body (and allocated a set
     // node for each visit). Topology can change between calls, so rebuild this

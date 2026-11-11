@@ -6,6 +6,7 @@
 #include "InteractivePlay.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
+#include "../crash_proof/CollisionSearchTrace.h"
 #include "ScriptSystem.h"
 #include "ScreenshotWriter.h"
 #include "../../third_party/nlohmann/json.hpp"
@@ -36,19 +37,32 @@ int main(int argc,char** argv){try{
  if(!std::getenv("JUDAS_PROFILE_DEPTH"))SDL_setenv("JUDAS_PROFILE_DEPTH","4",1);
  auto& p=PerformanceProfiler::Get();std::ofstream data(std::filesystem::path(out)/"frames.jsonl"),gpuData(std::filesystem::path(out)/"gpu.jsonl");unsigned samples=0;
  unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
+ CrashCollisionSearchTrace searchTrace;const bool pairProfile=profile&&std::getenv("JUDAS_CCD_PAIR_PROFILE");PhysicsWorld* tracedPhysics=nullptr;
+ std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
  ApplicationControl control;
  control.hostReady=[&](EngineHost& h){swapResult=SDL_GL_SetSwapInterval(0);swapInterval=SDL_GL_GetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);h.GetWindow().SetTestInputMode(true);if(profile&&glGetInteger64v){GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();calibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};}};
- control.worldReady=[&](EngineHost& h,RuntimeWorld&,InteractivePlay& play){play.SetPointerCaptureAllowed(false);first=h.Jobs().Stats();};
+ control.worldReady=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay& play){if(pairProfile){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();}play.SetPointerCaptureAllowed(false);first=h.Jobs().Stats();};
  control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){const auto now=p.Now();if(!begin)begin=now;
+  // A genuine cold load publishes a different world. Observe its physics,
+  // rather than silently continuing to profile the destroyed startup world.
+  if(pairProfile&&tracedPhysics!=&world.Physics()){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();searchTrace.Clear();}
   if(!sampleStart&&now-lastResourceCheck>100000000){const auto loading=h.Resources().Stats().loading;if(loading)quietSince=0;else if(!quietSince)quietSince=now;resourcesReady=quietSince&&now-quietSince>=1000000000;lastResourceCheck=now;}
   const bool ready=screenshotDone&&resourcesReady&&(warmupSeconds>0?double(now-begin)/1e9>=warmupSeconds:count>warmup);const bool starting=ready&&!sampleStart;if(starting){sampleStart=now;first=h.Jobs().Stats();}const bool done=seconds>0?(sampleStart&&double(now-sampleStart)/1e9>=seconds):samples>=frames;
   if(previous&&ready&&!done&&!starting){if(!completedGameplayFrame)++inactiveSampleFrames;Json row={{"index",samples},{"interval_ms",double(now-previous)/1e6}};
    if(profile){const auto f=p.Snapshot(p.FrameId()-1);row["frame_id"]=f.id;row["outer_ms"]=double(f.end-f.start)/1e6;row["waiting_ms"]=double(f.waiting)/1e6;row["collection_ms"]=double(f.collectionNanoseconds)/1e6;row["rss_bytes"]=f.processResidentBytes;row["steps"]=f.fixed.size();row["discarded_seconds"]=f.discardedSeconds;row["cap_reached"]=f.capReached;row["scope_dropped_total"]=f.diagnostics.droppedEvents;row["records_truncated_total"]=f.diagnostics.truncatedFrames;row["cpu_start_ns"]=f.start;row["cpu_end_ns"]=f.end;Json phases=Json::object();
     for(const auto& s:f.scopes)if(s.thread==f.mainThread){auto name=std::string(s.name.c_str());double ms=double(s.end-s.start)/1e6;phases[name]=phases.value(name,0.)+ms;}
     row["phases_ms"]=std::move(phases);
+    Json counters=Json::object();for(const auto& c:f.counters)counters[c.name.c_str()]=c.value;
+    row["incoming_delta_clipped_seconds"]=counters.contains("Play incoming delta clipped seconds")?counters["Play incoming delta clipped seconds"]:Json(nullptr);
+    row["counters"]=std::move(counters);Json fixed=Json::array();
+    for(const auto& step:f.fixed)fixed.push_back(double(step.end-step.start)/1e6);
+    row["fixed_step_ms"]=std::move(fixed);
     if(p.FrameId()>10){auto old=p.Snapshot(p.FrameId()-8);Json passes=Json::array();for(const auto& g:old.gpu)passes.push_back({{"name",g.pass.c_str()},{"pending",g.pending},{"ms",g.milliseconds},{"submitted_cpu_ns",g.submitted},{"gpu_start_ns",g.gpuStart},{"gpu_end_ns",g.gpuEnd}});gpuData<<Json({{"frame_id",old.id},{"passes",passes}}).dump()<<'\n';}
-   }data<<row.dump()<<'\n';++samples;
+   }
+   if(pairProfile && double(now-previous)/1e6>30)pairData<<Json({{"index",samples},{"frame_ms",double(now-previous)/1e6},{"collisionSearch",searchTrace.Encode()}}).dump()<<'\n';
+   data<<row.dump()<<'\n';++samples;
   }
+  if(pairProfile)searchTrace.Clear();
   completedGameplayFrame=false;previous=now;++count;if(done){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}
   // Queue at the existing input boundary rather than setting state before
   // BeginFrame clears frame edges. Feed both ordinary and player-device input.
