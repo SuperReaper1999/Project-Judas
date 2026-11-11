@@ -237,3 +237,24 @@ environment rotation/reflections. Scoped HDR pass checks pass 29/29; terrain
 material checks pass 86/86 with zero analytic-normal pixel difference. These are
 NVIDIA desktop results; portable policy is not a claim of testing another GPU.
 Final broader workloads, SDK, editor and CI qualification remain outstanding.
+
+## Capsule projection: exact fixed-point work elimination
+
+The closest segment/box query retains its eight-iteration result and ceiling.
+It now stops only when the segment point is unchanged **bit for bit**, including
+signed zero. Since the next iteration is the same deterministic function of that
+same input, both output points would repeat identically. There is no convergence
+epsilon, reduced coverage, changed precision or shortened unconverged search.
+
+The retained original sequence still executes all eight unprepared projections
+in 100,020 exact-output controls, including added floor/degenerate/signed-zero
+cases; all pass. Character motor 32/32, publication 144/144 and geometry 823/823
+also pass. Three interleaved crowd pairs against material-state reuse alone gave
+179.47 to 190.05 average FPS and 8.40 to 7.28 ms p99. Median p50 changed from
+4.23 to 4.58 ms; median p95 improved from 8.27 to 7.09 ms. Fixed-step/render
+cadence produces a mixed frame distribution; report all of these metrics rather
+than claiming every percentile improves. This case now meets the p99 120-FPS
+budget, while its observed maximum still slightly exceeds 8.33 ms.
+
+These are incremental experiment results. Final matched original/current runs,
+broader workloads and qualification remain required.

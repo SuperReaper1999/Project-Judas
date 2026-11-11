@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -765,8 +766,9 @@ glm::vec3& outBoxPoint) {
     // between the two points) -- a handful of iterations is more than
     // enough at this engine's scale.
     // The box frame is invariant throughout the projection. Retain the exact
-    // double-precision projection and all eight iterations, but prepare its
-    // rotation, transpose and converted inputs only once per query.
+    // double-precision projection, preparing its frame once per query. Keep
+    // the eight-iteration result, but stop repeating an exact bitwise fixed
+    // point: the next box projection and segment point would be identical.
     const auto rotation = ContactRotation(boxOrientation);
     const auto inverseRotation = glm::transpose(rotation);
     const auto center = glm::dvec3(boxCenter);
@@ -774,9 +776,12 @@ glm::vec3& outBoxPoint) {
     glm::vec3 segmentPoint = (segA + segB) * 0.5f;
     glm::vec3 boxPoint = boxCenter;
     for (int i = 0; i < 8; ++i) {
+        const glm::vec3 previous = segmentPoint;
         const auto local = glm::clamp(inverseRotation * (glm::dvec3(segmentPoint) - center), -half, half);
         boxPoint = glm::vec3(center + rotation * local);
         segmentPoint = ClosestPointOnSegment(boxPoint, segA, segB);
+        if (std::memcmp(&previous, &segmentPoint, 3 * sizeof(float)) == 0)
+            break;
     }
 
     outSegmentPoint = segmentPoint;
