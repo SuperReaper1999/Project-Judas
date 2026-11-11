@@ -9,8 +9,8 @@
     },
     {
       "id": "TERRAIN-EDITOR",
-      "status": "accepted limitation",
-      "disposition": "Terrain V2 standalone performance was human accepted; editor optimisation remains a future opportunity."
+      "status": "scoped measured improvement",
+      "disposition": "Hidden Game rendering and editing-preview LOD were corrected. Current whole-frame SDK editor/standalone observations are recorded in docs/WHOLE_ENGINE_PERFORMANCE.md; different viewport sizes and workloads do not establish universal editor/runtime parity."
     },
     {
       "id": "BALANCE-RECOVERY",
@@ -25,7 +25,7 @@
     {
       "id": "GPU-FALLBACKS",
       "status": "required",
-      "disposition": "Portable rendering and non-collision CPU particle kernels remain legitimate capability fallbacks, not historical compatibility."
+      "disposition": "Portable rendering and CPU particle simulation/collision remain legitimate capability fallbacks, not historical compatibility. The whole-engine audit qualifies a real 5,000-particle CPU fallback separately from unsupported required-GPU authoring."
     },
     {
       "id": "MK2-BOUNDS",
@@ -34,8 +34,8 @@
     },
     {
       "id": "PURGE",
-      "status": "awaiting human review",
-      "disposition": "Approved architectural removals are implemented. Automated qualification results and explicit limitations accompany the purge handover; no human acceptance or main promotion is implied."
+      "status": "human accepted",
+      "disposition": "The operator accepted the architectural purge before the Vehicles/Wheels V2 milestone. This records that decision; it does not promote main or publish a V2 release."
     },
     {
       "id": "GPU-CAPTURE-REPEATABILITY",
@@ -46,6 +46,16 @@
       "id": "MOD-TERRAIN",
       "status": "unsupported",
       "disposition": "The current mod format does not admit native Terrain V2 assets; ordinary cooked mesh/scene mods and base-game terrain remain. Retired M75 fork/cook workflows are not retained."
+    },
+    {
+      "id": "WHOLE-FRAME-BUDGET",
+      "status": "measured limitations",
+      "disposition": "Whole-engine audit improved ordinary gameplay without changing accepted physical outcomes. Severe CCD impacts, IK tails and queue-inclusive completion still miss defined 120/60 FPS or 5 ms goals; see docs/WHOLE_ENGINE_PERFORMANCE.md. Functional or relative p99 passes are not universal performance qualification."
+    },
+    {
+      "id": "PRIVATE-ASSET-FOOTPRINT",
+      "status": "measured limitation",
+      "disposition": "The local four-model yard retains about 3.12 GiB process RSS plus swap, including decoded images needed for resource recreation. Active pinned assets exceed the cache target. This is a footprint follow-up, not proof of unbounded growth; private models remain outside Git and SDKs."
     }
   ]
 }
