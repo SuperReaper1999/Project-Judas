@@ -616,8 +616,20 @@ renderer portability were reused, not replaced merely to increase utilisation.
 Severe CCD remains dominant. The genuine four-way junction has an approximately
 319.91 ms frame (original 322.97 ms), eleven consecutive hitch frames spanning
 about 1,067 ms, and four >100 ms frames spanning about 730 ms. That frame grouped
-five existing fixed steps and discarded 0.171 s at the catch-up cap. Individual
-fixed-step physical-state controls, rather than wall-clock grouping, establish
+five existing fixed steps and discarded **no** accumulator time in that frame.
+The following two capped frames each ran eight steps and discarded 0.128489 s
+and 0.042806 s respectively (0.171295 s across the run). The same current trial
+averages 117.56 FPS, p50 3.135 / p95 13.716 / p99 14.902 ms, but its 1% / 0.1%
+lows are only 18.56 / 4.81 FPS. A passing p99 minimum is not a hitch pass.
+
+The existing interactive loop also clamps incoming simulation delta to 0.25 s
+before accumulation. Profiler `discarded_seconds` measures only accumulator
+backlog dropped at the eight-step catch-up cap; it does **not** include wall time
+excluded by that earlier clamp. Therefore the reported discarded values are not
+total lost wall-clock simulation time in very long stalls. Neither timing policy
+was changed for the audit. Interval/frame timings remain the actual wall-clock
+measurement; profiler-off discarded counters remain unknown, not invented zero.
+Individual fixed-step physical-state controls, rather than wall-clock grouping, establish
 physics equivalence. The native matched nine-case suite retains **all nine exact
 accepted crash state hashes**. Frontal, four-car and debris cold restorations
 also pass. Improved render mapping does not fix the remaining continuous-search
