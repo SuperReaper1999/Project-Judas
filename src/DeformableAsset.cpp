@@ -2,6 +2,7 @@
 #include "SaveArchive.h"
 #include "Scene.h"
 #include "ModelArchive.h"
+#include "deformables/PanelCook.h"
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
@@ -305,6 +306,7 @@ bool PrepareDeformableAsset(DeformableAsset& a,std::string& error){
             }if(std::abs(sum-1)>1e-8)return fail("render binding must sum to one");
         }
     for(auto p:a.render.primitives)if(p.first>a.render.indices.size()||p.count>a.render.indices.size()-p.first||p.count%3)return fail("invalid render material range");
+    PreparePanelRenderGroups(a);
     return PrepareFractureCook(a,error);
 }
 std::string EncodeDeformableAsset(const DeformableAsset& input){auto a=input;

@@ -84,6 +84,15 @@ struct DeformableAsset {
     bool panelBinding=false; // Detailed rest offsets and smooth source shading follow local sheet frames.
     MeshData render;
     std::vector<DeformableBinding> binding;
+    // Immutable derived presentation data, rebuilt during asset preparation.
+    // Many detailed vertices share one physical triangle. Keep their original
+    // vertex indices; neither render topology nor physical state is changed.
+    struct PanelRenderGroup {
+        glm::uvec3 nodes{0};
+        glm::dvec3 restX{0},restY{0},restNormal{0};
+        std::vector<unsigned> vertices;
+    };
+    std::vector<PanelRenderGroup> panelRenderGroups;
     std::string sourceAsset,sourceFingerprint;
     // Shared immutable detailed exterior, prepared by the resource worker.
     // Physical topology and per-instance damage remain separate.

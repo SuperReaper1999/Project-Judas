@@ -1689,7 +1689,13 @@
     {
       "name": "independent-animation-ik-batches",
       "target": "judas_animation_ik_batch_tests",
+      "args": ["{root}"],
       "groups": ["animation", "performance"]
+    },
+    {
+      "name": "prepared-panel-render-frames",
+      "target": "judas_panel_render_preparation_tests",
+      "groups": ["rendering", "physics", "performance"]
     }
   ],
   "known_findings": [

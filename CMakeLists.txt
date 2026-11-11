@@ -1686,6 +1686,7 @@ judas_add_engine_test(judas_whole_engine_benchmark tools/benchmarks/WholeEngineB
 judas_add_engine_test(judas_prepared_capsule_query_tests tests/PreparedCapsuleQueryTests.cpp)
 judas_add_engine_test(judas_material_uniform_batch_tests tests/MaterialUniformBatchTests.cpp)
 judas_add_engine_test(judas_animation_ik_batch_tests tests/AnimationIKBatchTests.cpp)
+judas_add_engine_test(judas_panel_render_preparation_tests tests/PanelRenderPreparationTests.cpp)
 
 include(cmake/JudasValidation.cmake)
 

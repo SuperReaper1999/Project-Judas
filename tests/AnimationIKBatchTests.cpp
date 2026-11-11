@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <atomic>
 #include <vector>
+#include <filesystem>
 
 namespace {
 int failures=0,checks=0;
@@ -23,7 +24,8 @@ bool SamePose(const SkeletalPose& a,const SkeletalPose& b){
 }
 struct Endpoint {SkeletalPose reference,solved,final;FullBodyIKResult ik;float clock;std::string error;};
 }
-int main(){
+int main(int argc,char** argv){
+ const auto root=argc>1?std::filesystem::path(argv[1]):std::filesystem::current_path();
  JobSystem jobs(3);
  for(unsigned lanes:{1u,2u,4u}){std::vector<unsigned> seen(10003);
   auto stats=jobs.ParallelFor(seen.size(),7,lanes,[&](size_t i){++seen[i];},"Independent outputs");
@@ -41,9 +43,10 @@ int main(){
   Check(stats.ownerItems==output.size()&&stats.workerItems==0,"stopped pool completes data on owner");
  }
  EngineHost host;std::string error;Check(host.Init("Independent IK exactness",320,240,false,error),"normal resource host");
- Project project;Check(project.Load("projects/animation_studio/animation_studio.judasproj",error),"current animation project");
+ Project project;const bool loaded=project.Load((root/"projects/animation_studio/animation_studio.judasproj").string(),error);Check(loaded,"current animation project");
+ if(!loaded){std::puts(error.c_str());host.Shutdown();return 1;}
  host.OpenProjectAssets(project.RootDir(),project.AssetsDir());Scene source,configuration;
- Check(LoadSceneFromFile(project.StartupScenePath(),source,error)&&LoadSceneFromFile("tests/fixtures/ik/configuration.judas",configuration,error),"current performer and IK configuration load");
+ Check(LoadSceneFromFile(project.StartupScenePath(),source,error)&&LoadSceneFromFile((root/"tests/fixtures/ik/configuration.judas").string(),configuration,error),"current performer and IK configuration load");
  if(!source.Find(10)||!configuration.Find(10)||!configuration.Find(10)->animation->fullBodyIK)return 1;
  Scene scene;auto actor=*source.Find(10);actor.characterMotor.reset();actor.ragdoll.reset();actor.scripts.clear();actor.socket.reset();actor.parent=0;
  for(int i=0;i<40;++i){auto copy=actor;copy.id=100+i;copy.transform.position={float(i)*3,0,0};copy.animation->fullBodyIK=configuration.Find(10)->animation->fullBodyIK;copy.animation->fullBodyIK->targets.clear();scene.InsertObject(copy);}

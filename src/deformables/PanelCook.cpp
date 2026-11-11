@@ -5,6 +5,7 @@
 #include <limits>
 #include <stdexcept>
 #include <map>
+#include <array>
 namespace {
 using V=glm::dvec3;
 MeshVertex RestVertex(const MeshData& source,unsigned index,const std::vector<glm::mat4>& palette,float& orientation){
@@ -83,23 +84,48 @@ bool CookDeformablePanel(const MeshData& source,const PanelCookSettings& setting
         output=std::move(a);error.clear();return true;
     }catch(const std::exception& e){error=e.what();return false;}
 }
+void PreparePanelRenderGroups(DeformableAsset& asset){
+    asset.panelRenderGroups.clear();
+    if(!asset.panelBinding)return;
+    std::map<std::array<unsigned,3>,unsigned> groups;
+    for(unsigned i=0;i<asset.binding.size();++i){
+        const auto& b=asset.binding[i];const std::array<unsigned,3> key={b.nodes.x,b.nodes.y,b.nodes.z};
+        auto [it,added]=groups.emplace(key,unsigned(asset.panelRenderGroups.size()));
+        if(added){
+            DeformableAsset::PanelRenderGroup group;group.nodes=glm::uvec3(b.nodes);
+            const V rp=asset.nodes[b.nodes.x],rq=asset.nodes[b.nodes.y],rr=asset.nodes[b.nodes.z];
+            group.restNormal=glm::normalize(glm::cross(rq-rp,rr-rp));
+            group.restX=glm::normalize(rq-rp);group.restY=glm::cross(group.restNormal,group.restX);
+            asset.panelRenderGroups.push_back(std::move(group));
+        }
+        asset.panelRenderGroups[it->second].vertices.push_back(i);
+    }
+}
 void MapDeformablePanel(const DeformableInstance& material,double alpha,MeshData& mesh){
     const auto& asset=*material.asset;
     if(mesh.vertices.size()!=asset.render.vertices.size())mesh=asset.render;
     alpha=std::clamp(alpha,0.,1.);
-    for(unsigned i=0;i<mesh.vertices.size();++i){const auto& b=asset.binding[i];
-        V p=glm::mix(material.previous[b.nodes.x],material.positions[b.nodes.x],alpha),q=glm::mix(material.previous[b.nodes.y],material.positions[b.nodes.y],alpha),r=glm::mix(material.previous[b.nodes.z],material.positions[b.nodes.z],alpha);
-        V rp=asset.nodes[b.nodes.x],rq=asset.nodes[b.nodes.y],rr=asset.nodes[b.nodes.z];
+    // Each output vertex is independent. Grouping changes visit order only;
+    // interpolation, weighted sums and frame rotations retain their operations.
+    // No per-frame map, temporary frame arrays or GPU readback is needed.
+    for(const auto& group:asset.panelRenderGroups){
+        const auto nodes=group.nodes;
+        V p=glm::mix(material.previous[nodes.x],material.positions[nodes.x],alpha),q=glm::mix(material.previous[nodes.y],material.positions[nodes.y],alpha),r=glm::mix(material.previous[nodes.z],material.positions[nodes.z],alpha);
+        V rp=asset.nodes[nodes.x],rq=asset.nodes[nodes.y],rr=asset.nodes[nodes.z];
         auto normal=glm::cross(q-p,r-p);double area=glm::length(normal);
-        // Degenerate instantaneous triangles have no meaningful local frame.
-        // Keep a finite weighted surface, and let physical diagnostics report it.
-        if(area<1e-14){mesh.vertices[i].position=glm::vec3(p*b.weights.x+q*b.weights.y+r*b.weights.z);continue;}
-        normal/=area;V rn=glm::normalize(glm::cross(rq-rp,rr-rp)),restX=glm::normalize(rq-rp),nowX=glm::normalize(q-p),restY=glm::cross(rn,restX),nowY=glm::cross(normal,nowX);
-        auto rotate=[&](V value){return nowX*glm::dot(value,restX)+nowY*glm::dot(value,restY)+normal*glm::dot(value,rn);};
-        const auto& source=asset.render.vertices[i];
-        V residual=V(source.position)-(rp*b.weights.x+rq*b.weights.y+rr*b.weights.z);
-        auto& mapped=mesh.vertices[i];mapped.position=glm::vec3(p*b.weights.x+q*b.weights.y+r*b.weights.z+rotate(residual));
-        mapped.normal=glm::vec3(rotate(V(source.normal)));mapped.tangent=glm::vec4(glm::vec3(rotate(V(glm::vec3(source.tangent)))),source.tangent.w);
+        if(area<1e-14){
+            // Preserve the previous mapped shading for degenerate triangles,
+            // exactly as the original per-vertex path did.
+            for(auto i:group.vertices){const auto& b=asset.binding[i];mesh.vertices[i].position=glm::vec3(p*b.weights.x+q*b.weights.y+r*b.weights.z);}
+            continue;
+        }
+        normal/=area;const V nowX=glm::normalize(q-p),nowY=glm::cross(normal,nowX);
+        const auto rotate=[&](V value){return nowX*glm::dot(value,group.restX)+nowY*glm::dot(value,group.restY)+normal*glm::dot(value,group.restNormal);};
+        for(auto i:group.vertices){const auto& b=asset.binding[i];const auto& source=asset.render.vertices[i];
+            V residual=V(source.position)-(rp*b.weights.x+rq*b.weights.y+rr*b.weights.z);
+            auto& mapped=mesh.vertices[i];mapped.position=glm::vec3(p*b.weights.x+q*b.weights.y+r*b.weights.z+rotate(residual));
+            mapped.normal=glm::vec3(rotate(V(source.normal)));mapped.tangent=glm::vec4(glm::vec3(rotate(V(glm::vec3(source.tangent)))),source.tangent.w);
+        }
     }
 }
 bool SelectDeformablePanelRegion(const MeshData& source,const std::string& part,MeshData& output,std::string& error){
