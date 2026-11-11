@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const source=fs.readFileSync(new URL('../tools/benchmarks/playable_combined/explorer.js',import.meta.url),'utf8');
+const capsule={id:'64',radius:.3,halfHeight:.6,offset:{x:0,y:0,z:0},skin:.02};
+const position={x:0,y:.92,z:0};
+const entity={id:'64',transform:{position,rotation:{w:1,x:0,y:0,z:0}},presentedTransform:{position},character:{up:{x:0,y:1,z:0},state:{supported:true}}};
+const edits=[],pressed=new Set();let view,cast;
+const terrain={state:{ready:true,busy:false},brush:(point,options)=>{edits.push({point,options});return true}};
+const world={entity:id=>id==='1'?{id:'1',terrain}:entity,setView:pose=>view=pose,get viewRay(){return {origin:view.position,direction:{x:0,y:-1,z:0}}}};
+const input={pressed:k=>pressed.has(k),axis:()=>0};
+let target={x:0,y:0,z:0};
+const physics={raycast:(origin,direction)=>{cast={origin,direction};return {entity:{id:'1'},point:target}}};
+const body=source.replace(/^import[^\n]*\n/,'').replace('const BUILD_CAPSULES = [];','const BUILD_CAPSULES = '+JSON.stringify([capsule])+';').replace('export default class','class Driver');
+const Driver=new Function('input','ui','world','scenes','saves','physics',body+'\nreturn Driver;')(input,{},world,{}, {},physics);
+const d=new Driver({entity});d.owner={id:'1',terrain};d.update(1/60);
+assert.equal(view,undefined,'no hidden camera move until presentation or an aiming action');
+d.presentationUpdate();assert.deepEqual(view.position,{x:0,y:1.57,z:0},'normal eye height, not the benchmark overview');
+assert.equal(d.canAdd({x:0,y:0,z:0},1.35),false,'new solid cannot enclose feet');
+assert.equal(d.canAdd({x:0,y:1.8,z:0},1.35),false,'whole capsule including upper cap is protected');
+assert.equal(d.canAdd({x:8,y:0,z:0},1.35),true,'distant building remains available');
+pressed.add('build');d.update(1/60);assert.equal(edits.length,0);assert.match(d.state.notice,/character/);assert.deepEqual(cast.origin,view.position,'brush begins at the actual camera');assert.deepEqual(cast.direction,world.viewRay.direction);
+target={x:8,y:0,z:0};d.update(1/60);assert.equal(edits.length,1);assert.equal(edits[0].options.kind,'add');
+pressed.clear();pressed.add('dig');target={x:8,y:0,z:0};d.update(1/60);assert.equal(edits.length,2);assert.equal(edits[1].options.kind,'remove');
+// Movement while an edit is queued must revalidate at publication time.
+pressed.clear();d.state.queue.push({point:{x:0,y:0,z:0},kind:'add',radius:1.35});d.update(1/60);assert.equal(edits.length,2);assert.equal(d.state.queue.length,0);
+assert.deepEqual(entity.transform.position,position,'placement policy never teleports the motor');
+console.log('Playable combined project: eye-level/view-ray, near/far placement, capsule caps, queued revalidation and dig controls PASS');
