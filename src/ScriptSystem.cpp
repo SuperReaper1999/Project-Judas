@@ -317,6 +317,17 @@ void ScriptSystem::RemoveEntities(const std::vector<SceneObjectId> &ids) {
         else
             ++it;
 }
+void ScriptSystem::Start(const InputSystem* input) {
+    m->CheckThread();m->input=input;m->delta=0;m->fixed=false;
+    // Snapshot authored order: a callback may add/remove an entity. Newly
+    // attached scripts join the next preparation pass, exactly once.
+    for(auto key:m->world->ScriptKeys()){
+        auto it=m->instances.find(key);
+        if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;
+        auto& instance=it->second;
+        if(!instance.started){instance.started=true;m->Callback(instance,instance.loaded?"restore":"start");}
+    }
+}
 void ScriptSystem::Frame(const InputSystem *input, float dt) {
     JUDAS_PROFILE_SCOPE("JavaScript update");
     m->CheckThread();

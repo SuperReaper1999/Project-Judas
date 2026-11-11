@@ -26,6 +26,38 @@
 #include "WorldCoordinates.h"
 #include "WorldPresentation.h"
 #include "ScreenshotWriter.h"
+#include "StartupScreen.h"
+
+namespace {
+bool PrepareFirstFrame(EngineHost& host,RuntimeWorld& world,StartupScreen& splash,
+                       ApplicationControl* control,std::string& error){
+    const auto begin=SDL_GetPerformanceCounter();unsigned stable=0,frames=0;bool presented=false;
+    host.Audio().SetApplicationSuspended(true);
+    while(!host.GetWindow().ShouldClose()){
+        host.PumpResources();bool ready=false;
+        if(!world.PrepareStartup(host.GetRenderer(),host.GetWindow().Width(),host.GetWindow().Height(),ready,error))return false;
+        bool scriptsStable=true;
+        if(ready){
+            const auto before=world.ScriptKeys();world.StartScripts(nullptr);
+            if(before!=world.ScriptKeys()){stable=0;presented=false;scriptsStable=false;}
+            if(!presented){world.PresentationScripts(nullptr,0,1);presented=true;}
+            if(before!=world.ScriptKeys()){scriptsStable=false;presented=false;}
+            if(!world.PrepareStartup(host.GetRenderer(),host.GetWindow().Width(),host.GetWindow().Height(),ready,error))return false;
+        }
+        ++frames;
+        if(!splash.Present("Loading game assets",false,[&]{if(control&&control->loadingFrame)control->loadingFrame(host,world);}))return false;
+        if(ready&&scriptsStable){if(++stable>=2)break;}else stable=0;
+        SDL_Delay(1);
+    }
+    splash.Finish();
+    if(host.GetWindow().ShouldClose())return false;
+    host.GetWindow().ClearPendingRequests();
+    host.Audio().SetApplicationSuspended(!host.GetWindow().ApplicationActive());
+    const double seconds=double(SDL_GetPerformanceCounter()-begin)/SDL_GetPerformanceFrequency();
+    std::fprintf(stderr,"[Startup] Ready before gameplay; %.3f seconds, %u preparation passes, no simulation steps.\n",seconds,frames);
+    return !host.GetWindow().ShouldClose();
+}
+}
 
 int Application::Run(int argc, char** argv, ApplicationControl* control) {
     ProfileRun profileRun("standalone");
@@ -71,6 +103,8 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     }
     Window& window = host.GetWindow();
     Renderer& renderer = host.GetRenderer();
+    std::unique_ptr<StartupScreen> splash;
+    if(!options.IsTestRun())splash=std::make_unique<StartupScreen>(host);
     // Milestone 30: the project's assets are the only ones a scene can
     // reference; a scene outside any project resolves nothing.
     if (options.project.IsLoaded()) {
@@ -93,8 +127,8 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         }
     }
 
-    // Milestone 31: assets load asynchronously and presentation shows a
-    // placeholder until they are Ready. The scripted harness and
+    // Assets load asynchronously behind startup presentation. Later runtime
+    // streaming retains its normal asynchronous behaviour. The scripted harness and
     // JUDAS_RESOURCE_MODE=blocking use the synchronous path instead (a
     // deterministic screenshot, and the M31 synchronous-versus-asynchronous
     // measurement).
@@ -112,11 +146,13 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     if(options.project.IsLoaded())worldOwner->ConfigureProject(options.project.Settings());
     worldOwner->SetSceneControl(sceneControl);
     RuntimeWorld& world=*worldOwner;
+    if(splash)world.SetPreparationYield([&]{splash->Present("Preparing world");});
     if (!world.Build(scene, &host.Resources(), error, options.project.IsLoaded()?&options.project.Settings().classification:nullptr, options.project.IsLoaded()?&options.project.Settings().navigation:nullptr)) {
         std::fprintf(stderr, "Scene '%s' could not be instantiated: %s\n", options.scenePath.c_str(),
                      error.c_str());
         return 1;
     }
+    world.SetPreparationYield({});
     if(!options.networkMode.empty())world.Network().SetLaunch(options.networkMode,options.networkAddress,options.networkPort,false);
     InteractivePlay play;
     if (!play.Begin(world, worldCoordinates, error)) {
@@ -146,6 +182,11 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     }
 
     if (control && control->worldReady) control->worldReady(host, world, play);
+    if(splash&&!PrepareFirstFrame(host,world,*splash,control,error)){
+        if(!error.empty())std::fprintf(stderr,"Startup preparation: %s\n",error.c_str());
+        return window.ShouldClose()?0:1;
+    }
+
 
     RuntimeDiagnostics diagnostics(options.fluidDiagnostics,
                                    options.fireDiagnostics, options.liveTelemetry);

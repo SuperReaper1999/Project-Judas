@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     if(exported){
       check(fs::exists(temp/"game/judas")&&fs::exists(temp/"game/engine/assets/fonts/DejaVuSans.ttf")&&result.assetCount==3,"package runtime/font and transitive registered assets");
       check(!fs::exists(temp/"game/Assets/development.log")&&!fs::exists(temp/"game/src"),"unregistered development junk excluded");
+      check(fs::exists(temp/"game/engine/assets/branding/judas-startup.jsplash"),"startup animation included at package-relative engine path");
       GamePackage launch; check(ReadGamePackage((temp/"game").string(),launch,error)&&launch.projectFile=="game.judasproj","explicit package launch record");
       Project shipped; check(shipped.Load((temp/"game/game.judasproj").string(),error)&&shipped.Settings().startupScene==project.Settings().startupScene&&shipped.Settings().input.Serialize()==project.Settings().input.Serialize(),"startup and project input map retained");
       AssetDatabase before,after;before.Scan(project.RootDir(),project.AssetsDir());after.Scan(shipped.RootDir(),shipped.AssetsDir());

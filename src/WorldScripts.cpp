@@ -161,6 +161,11 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
     }
     ++m_entityVersion;return true;
 }
+void RuntimeWorld::StartScripts(const InputSystem* input){
+    if(!m_scripts){if(!m_hasScripts)return;m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
+    for(auto id:m_characterOwners)RuntimeCharacter(id);
+    m_scripts->Synchronize(ScriptSlots());m_scripts->Start(input);
+}
 void RuntimeWorld::UpdateScripts(const InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;
         m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}

@@ -33,6 +33,9 @@ export default class {
     std::string text;Scene copy;SaveSceneToString(scene,text);Check(LoadSceneFromString(text,copy,error)&&ScenesEqual(scene,copy),"script slots scene round-trip");
     ResourceManager resources(nullptr,&db);RuntimeWorld world;Check(world.Build(scene,&resources,error),"ordinary runtime constructs scripted world");
     Check(!world.Scripts()||world.Scripts()->InspectPhase(id,4)!=ScriptInstancePhase::Running,"inspection does not start callbacks");
+    world.StartScripts(nullptr);world.StartScripts(nullptr);
+    auto initial=world.Scripts()->Capture();
+    Check(initial.size()==2&&initial[0].json.find("\"start\":1")!=std::string::npos&&initial[0].json.find("\"frames\":0")!=std::string::npos&&initial[0].json.find("\"steps\":0")!=std::string::npos,"startup invokes lifecycle exactly once without gameplay clocks");
     InputSystem input;input.SetPhysical("key:E",1);world.UpdateScripts(&input,.02f);world.FixedScripts(&input,1.f/60);world.FixedScripts(&input,1.f/60);
     Check(world.Scripts()&&world.Scripts()->Diagnostics().empty(),"real VM runs callbacks without faults");
     Check(world.Scripts()->InspectPhase(id,999)==ScriptInstancePhase::Absent,"missing slot is not ready");

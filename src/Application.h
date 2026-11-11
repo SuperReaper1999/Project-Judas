@@ -16,6 +16,8 @@ struct ApplicationControl {
     bool hidden = false;
     std::function<void(EngineHost&)> hostReady;
     std::function<void(EngineHost&, RuntimeWorld&, InteractivePlay&)> worldReady;
+    // Startup-only observation, after drawing the splash, before swap; gameplay is frozen.
+    std::function<void(EngineHost&, RuntimeWorld&)> loadingFrame;
     std::function<void(EngineHost&, RuntimeWorld&, InteractivePlay&)> beforeFrame;
     // Runs after rendering, before buffer swap (readback sees this frame).
     std::function<void(EngineHost&, RuntimeWorld&, InteractivePlay&)> afterFrame;

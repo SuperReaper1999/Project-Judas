@@ -39,10 +39,16 @@ int main(int argc,char** argv){try{
  unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
  CrashCollisionSearchTrace searchTrace;const bool pairProfile=profile&&std::getenv("JUDAS_CCD_PAIR_PROFILE");PhysicsWorld* tracedPhysics=nullptr;
  std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
+ unsigned loadingFrames=0;uint64_t loadingBegin=0;bool loadingScreenshot=false;
  ApplicationControl control;
+ control.loadingFrame=[&](EngineHost& h,RuntimeWorld&){
+  ++loadingFrames;const auto now=p.Now();if(!loadingBegin)loadingBegin=now;
+  if(!loadingScreenshot&&now-loadingBegin>=1500000000){std::vector<unsigned char> image;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),image);loadingScreenshot=WriteRgbPng((std::filesystem::path(out)/"startup.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),image);}
+ };
+
  control.hostReady=[&](EngineHost& h){swapResult=SDL_GL_SetSwapInterval(0);swapInterval=SDL_GL_GetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);h.GetWindow().SetTestInputMode(true);if(profile&&glGetInteger64v){GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();calibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};}};
  control.worldReady=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay& play){if(pairProfile){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();}play.SetPointerCaptureAllowed(false);first=h.Jobs().Stats();};
- control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){const auto now=p.Now();if(!begin)begin=now;
+ control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){const auto now=p.Now();if(!begin){begin=now;std::ofstream(std::filesystem::path(out)/"startup.json")<<Json{{"loading_frames",loadingFrames},{"preparation_display_seconds",loadingBegin?double(now-loadingBegin)/1e9:0.},{"simulation_started_after_loading",true}}.dump(2);}
   // A genuine cold load publishes a different world. Observe its physics,
   // rather than silently continuing to profile the destroyed startup world.
   if(pairProfile&&tracedPhysics!=&world.Physics()){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();searchTrace.Clear();}

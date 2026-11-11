@@ -1,0 +1,9 @@
+{
+  "source_sha256": "101acf9c7d0962531531e3adb7c0d95b0f0a7a4ec11bb078aec66e2e71a2290f",
+  "frames": 240,
+  "width": 512,
+  "height": 512,
+  "fps": 30,
+  "source": "Operator supplied Judas vortex MP4; original remains unchanged.",
+  "runtime": "One JPEG frame decoded at a time with the existing Judas image decoder; no runtime FFmpeg dependency."
+}

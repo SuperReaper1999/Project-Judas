@@ -307,6 +307,9 @@ add_library(judas_engine STATIC
     src/WorldStreaming.cpp
     src/WorldRegions.cpp
     src/WorldScripts.cpp
+    src/WorldStartup.cpp
+    src/StartupMovie.cpp
+    src/StartupScreen.cpp
     src/RuntimeUI.cpp
     src/RuntimeUIControls.cpp
     src/RuntimeUIDrag.cpp
@@ -1694,6 +1697,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
     target_link_libraries(judas_present_capture PRIVATE SDL2::SDL2 ${CMAKE_DL_LIBS})
     judas_warnings(judas_present_capture)
 endif()
+
+judas_add_engine_test(judas_startup_movie_tests tests/StartupMovieTests.cpp)
 
 include(cmake/JudasValidation.cmake)
 

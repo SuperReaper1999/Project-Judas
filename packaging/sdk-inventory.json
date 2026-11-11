@@ -36,7 +36,9 @@
     "engine-version.json",
     "tools/release_manifest.py",
     "docs/RELEASE_STATUS.json",
-    "tools/validation/qualify_terrain_v2.py"
+    "tools/validation/qualify_terrain_v2.py",
+    "assets/branding/judas-startup.jsplash",
+    "assets/branding/judas-startup.json"
   ],
   "directories": [
     "assets/fonts",

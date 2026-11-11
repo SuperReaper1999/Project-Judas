@@ -115,6 +115,11 @@ struct Fixture {
         }
         auto bp=b/"Assets/7.obj";Mesh(bp,9);std::string error;
         if(!AssetDatabase::WriteMeta(bp.string()+".judasmeta",Id(7),AssetType::Mesh,"FTFT2 other project",error))throw std::runtime_error(error);
+        if(name=="shared-progress"){
+            const auto path=a/"Assets/disabled.wav";std::ofstream(path,std::ios::binary)<<"not decoded: disabled audio";
+            std::string error;if(!AssetDatabase::WriteMeta(path.string()+".judasmeta",Id(20),AssetType::Audio,"original disabled fixture",error))throw std::runtime_error(error);
+            auto& audio=scene.CreateObject("Disabled audio retains asset ownership");audio.audioEmitter=SceneAudioEmitterComponent{};audio.audioEmitter->enabled=false;audio.audioEmitter->asset=Id(20);
+        }
         scene.Settings().name="FTFT2 async application";
         auto& start=scene.CreateObject("Start");start.transform.position=glm::vec3(0,2,6);
         for(int i=0;i<2;++i){auto& object=scene.CreateObject("Shared asset consumer");object.transform.position=glm::vec3(float(i*2),0,-2);object.render=SceneRenderComponent{};object.render->shape=SceneShape::Mesh;object.render->meshAsset=Id(1);}
@@ -174,7 +179,7 @@ int RunCase(const std::string& name,const fs::path& output) {
     auto journal=std::make_shared<Journal>(output/(name+".events.tsv"));ApplicationControl control;
     control.hidden=true;control.resourceTrace=[journal](const auto& e){journal->Observe(e);};
     control.frameSeconds=[](float){return 1.0f/60.0f;};
-    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0;bool done=false;float initialX=0;unsigned int retainedHandle=0,retainedGeneration=0;std::uint64_t uploads=0;
+    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0,loadingFrames=0,runtimeBegin=0;bool done=false;float initialX=0;unsigned int retainedHandle=0,retainedGeneration=0;std::uint64_t uploads=0;
     control.hostReady=[&](EngineHost& host){
         Check(!host.Resources().BlockingMode()&&host.Resources().Jobs()==&host.Jobs()&&host.Jobs().WorkerCount()>0&&host.Resources().GetRenderer()==&host.GetRenderer(),"normal application has async workers and real renderer (no headless residency)");
         std::printf("ASYNC enabled=%d workers=%u renderer_present=%d\n",!host.Resources().BlockingMode(),host.Jobs().WorkerCount(),host.Resources().GetRenderer()!=nullptr);
@@ -184,7 +189,7 @@ int RunCase(const std::string& name,const fs::path& output) {
         if(name=="missing-recovery")fs::remove(fixture.Asset(8)); // DB was scanned; force actual fread path failure.
         if(name=="corrupt-recovery"){std::ofstream(fixture.Asset(9))<<"not an OBJ";std::ofstream(fixture.Asset(10))<<"not a PNG";}
     };
-    control.worldReady=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
+    control.worldReady=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
         SceneTransform view;view.position={0,2,6};world.SetRuntimeView(view,60);
         if(name=="shared-progress"){
             gate->Wait();Check(host.Resources().RefCount(Id(1))==2,"two real authored consumers share demand");
@@ -193,6 +198,17 @@ int RunCase(const std::string& name,const fs::path& output) {
             EntityPhysicalState s;world.GetEntityState(fixture.moving,s);initialX=s.position.x;
             host.GetWindow().SetEventHook([&](const SDL_Event& e){if(e.type==SDL_KEYDOWN&&e.key.keysym.scancode==SDL_SCANCODE_V)++phase;});ToggleView();
         }else{host.Jobs().WaitAll();host.Resources().Pump();VerifyMesh(host,1,1);}
+    };
+    control.loadingFrame=[&](EngineHost& host,RuntimeWorld& world){
+        if(name!="shared-progress")return;
+        if(++loadingFrames==4){
+            EntityPhysicalState state;world.GetEntityState(fixture.moving,state);
+            Check(phase==1,"SDL input remains responsive during initial loading");
+            Check(state.position.x==initialX,"startup does not advance physics while assets are blocked");
+            Check(host.Resources().StateOf(Id(1))==ResourceState::Loading,"startup still waits for held authored resource");
+            Check(host.GetRenderer().Stats().drawCalls>0,"loading screen submits real presentation");
+            gate->Open();
+        }
     };
     control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
         if(done)return;
@@ -240,20 +256,21 @@ int RunCase(const std::string& name,const fs::path& output) {
         auto& rm=host.Resources();
         if(done)return;
         if(name=="shared-progress"){
-            if(frames==4){
-                EntityPhysicalState s;world.GetEntityState(fixture.moving,s);
-                Check(phase==1&&host.GetWindow().Input().Action("view_toggle").held,"normal SDL events reach logical project input while IO remains outstanding");
-                Check(!play.IsPaused()&&play.FixedStepsSinceReset()>=4&&s.position.x>initialX,"normal fixed-step scene advances physically while IO is held");
+            if(!runtimeBegin){
+                Check(loadingFrames>=4&&Ready(rm,1),"first gameplay frame waits for initial authored resources");
+                VerifyMesh(host,1,1);
+                Check(journal->Count(Point::DecodeBegin,1)==1,"shared authored demand decoded exactly once");
+                Check(play.FixedStepsSinceReset()<=2,"loading time does not become simulation catch-up");
+                gate=journal->Hold(18,Point::FileReadChunk);Request(rm,18);gate->Wait();
+                EntityPhysicalState state;world.GetEntityState(fixture.moving,state);initialX=state.position.x;runtimeBegin=frames;
+            }else if(frames==runtimeBegin+4){
+                EntityPhysicalState state;world.GetEntityState(fixture.moving,state);
+                Check(state.position.x>initialX&&rm.StateOf(Id(18))==ResourceState::Loading,"runtime physics continues during later asynchronous asset loading");
                 std::vector<unsigned char> pixels;host.GetRenderer().CaptureFrame(host.GetWindow().Width(),host.GetWindow().Height(),pixels);
-                bool varied=false;
-                for(std::size_t i=3;i+2<pixels.size();i+=3)
-                    varied|=pixels[i]!=pixels[0]||pixels[i+1]!=pixels[1]||pixels[i+2]!=pixels[2];
-                Check(host.GetRenderer().Stats().drawCalls>0&&host.GetRenderer().Stats().triangles>0&&varied&&rm.StateOf(Id(1))==ResourceState::Loading,"normal rendering produces framebuffer content while the real read remains pending");
-                std::printf("PROGRESS frames=%d fixed_steps=%llu body_x_before=%.9g body_x_after=%.9g draw_calls=%u triangles=%u spatial_pixels=%d outstanding_state=%s\n",frames,
-                    (unsigned long long)play.FixedStepsSinceReset(),initialX,s.position.x,host.GetRenderer().Stats().drawCalls,host.GetRenderer().Stats().triangles,varied,ResourceStateName(rm.StateOf(Id(1))));
+                bool varied=false;for(std::size_t i=3;i+2<pixels.size();i+=3)varied|=pixels[i]!=pixels[0]||pixels[i+1]!=pixels[1]||pixels[i+2]!=pixels[2];
+                Check(host.GetRenderer().Stats().triangles>0&&varied,"runtime scene keeps rendering while later IO is blocked");
                 gate->Open();
-            }
-            if(frames>4&&Ready(rm,1)){VerifyMesh(host,1,1);Check(journal->Count(Point::DecodeBegin,1)==1,"shared authored demand decoded exactly once");done=true;}
+            }else if(frames>runtimeBegin+4&&Ready(rm,18)){VerifyMesh(host,18,1);rm.ReleaseRef(Id(18));done=true;}
         }else if(name=="queued-cancel"||name=="read-cancel"||name=="cpu-ready-cancel"){
             const int id=name=="queued-cancel"?4:name=="read-cancel"?5:6;
             Check(rm.StateOf(Id(id))==ResourceState::Cancelled&&!rm.TryGetMesh(Id(id)).IsValid(),"last demand cancellation cannot resurrect or upload resource");
@@ -309,6 +326,7 @@ int RunCase(const std::string& name,const fs::path& output) {
     };
     control.hostReady=safeHook(control.hostReady);
     control.worldReady=safeHook(control.worldReady);
+    control.loadingFrame=safeHook(control.loadingFrame);
     control.beforeFrame=safeHook(control.beforeFrame);
     control.afterFrame=safeHook(control.afterFrame);
     control.beforeShutdown=safeHook(control.beforeShutdown);

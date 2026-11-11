@@ -1696,7 +1696,9 @@
       "name": "prepared-panel-render-frames",
       "target": "judas_panel_render_preparation_tests",
       "groups": ["rendering", "physics", "performance"]
-    }
+    },
+    {"name": "async-application-startup", "target": "judas_async_application_tests", "groups": ["rendering", "lifecycle"]},
+    {"name": "startup-movie", "target": "judas_startup_movie_tests", "groups": ["rendering", "lifecycle"]}
   ],
   "known_findings": [
     {

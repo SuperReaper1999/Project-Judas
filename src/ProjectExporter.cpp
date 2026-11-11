@@ -356,6 +356,10 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         // still rejects incompatible authored baselines. Not an absolute path.
         const auto saveId = packagedSettings.saveIdentity;
         write(kGamePackageMarker, "JudasPackage 1\nproject \"game.judasproj\"\nsave-id \"" + saveId + "\"\n");
+        // Engine presentation is package-relative, just like its font. Older
+        // hand-built fixture roots can use the functional text loading fallback.
+        const auto splash=engineRoot / "assets/branding/judas-startup.jsplash";
+        if(fs::is_regular_file(splash))Copy(splash,staging / "engine/assets/branding/judas-startup.jsplash");
         Copy(engineRoot / "assets/fonts/DejaVuSans.ttf", staging / "engine/assets/fonts/DejaVuSans.ttf");
         Copy(engineRoot / "assets/fonts/DejaVuSans-LICENSE.txt", staging / "engine/licenses/DejaVuSans.txt");
         Copy(engineRoot / "third_party/RUNTIME_NOTICES.txt", staging / "engine/third_party/RUNTIME_NOTICES.txt");

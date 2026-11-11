@@ -279,6 +279,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!ValidateAdvancedFluidDynamicsRequest(m_advancedFluidsRequested, outError)) return false;
     if(!ValidateAppearance(authored.Settings(),outError))return false;
  JUDAS_PROFILE_SCOPE("World build"); PerformanceProfiler::Get().Boundary("World build");
+    if(m_preparationYield)m_preparationYield();
     Scene resolved, scene;
     if(runtimeSnapshot){resolved=scene=authored;} // already resolved world-space definitions, source content validated by save service
     else if (!ResolvePrefabs(authored, resources ? resources->Assets() : nullptr, resolved, outError) ||
@@ -324,6 +325,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
         if(appearanceDependencies){
             std::string content="Judas.MaterialSources.1";
             for(const auto& [id,record]:resources->Assets()->Records()){
+                if(m_preparationYield)m_preparationYield();
                 if(record.type!=AssetType::Material&&record.type!=AssetType::Environment&&record.type!=AssetType::Texture&&record.type!=AssetType::Mesh)continue;
                 if(record.missing){outError="missing appearance asset "+record.relativePath;return false;}
                 std::ifstream file(record.path,std::ios::binary);
@@ -344,7 +346,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if(std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.ui.has_value()||!o.scripts.empty();})&&resources&&resources->Assets()&&std::any_of(resources->Assets()->Records().begin(),resources->Assets()->Records().end(),[](const auto& p){return p.second.type==AssetType::UI;})){
         if(!resources||!resources->Assets()){outError="UI scene requires project assets";return false;}
         std::string bytes="Judas.UISources.1";
-        for(const auto& p:resources->Assets()->Records())if(p.second.type==AssetType::UI){std::ifstream file(p.second.path);std::ostringstream contents;contents<<file.rdbuf();bytes+=p.first+SceneFingerprintSha256(contents.str());}
+        for(const auto& p:resources->Assets()->Records())if(p.second.type==AssetType::UI){if(m_preparationYield)m_preparationYield();std::ifstream file(p.second.path);std::ostringstream contents;contents<<file.rdbuf();bytes+=p.first+SceneFingerprintSha256(contents.str());}
         fingerprint=SceneFingerprintSha256(fingerprint+SceneFingerprintSha256(bytes));
     }
     {std::string terrainSources;if(!TerrainV2::SourceFingerprint(scene,resources?resources->Assets():nullptr,terrainSources,outError))return false;if(!terrainSources.empty())fingerprint=SceneFingerprintSha256(fingerprint+terrainSources);}
@@ -445,11 +447,13 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     // Planet construction creates no collision bodies; ordinary body ordering
     // remains unchanged until explicit physical-interest preparation.
     for(const auto& o:scene.Objects()) {
-if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o,e);
+        if(m_preparationYield)m_preparationYield();
+        if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o,e);
             if(o.body||o.characterMotor||o.deformable||o.ragdoll||o.wheel||o.parent||o.transform.position!=glm::vec3(0)||o.transform.rotation!=glm::quat(1,0,0,0)||o.transform.scale!=glm::vec3(1))return fail(o,"planet uses an absolute descriptor frame; owner must be an unparented identity transform without another physical producer");
             m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
     }
     for (const SceneObject& o : scene.Objects()) {
+        if(m_preparationYield)m_preparationYield();
         if(!ValidateCollisionPlacement(o,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
         m_hasScripts|=!o.scripts.empty();

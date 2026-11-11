@@ -4,6 +4,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 #include <set>
 #include <optional>
 #include <string>
@@ -319,6 +320,10 @@ public:
 
 
     // Shared project scripting lifecycle; gameplay policy stays in project modules.
+    void StartScripts(const InputSystem* input);
+    // Owner-thread startup preparation only; no physics or gameplay update.
+    bool PrepareStartup(Renderer&,int width,int height,bool& ready,std::string& error);
+    void SetPreparationYield(std::function<void()> callback){m_preparationYield=std::move(callback);}
     void UpdateScripts(const InputSystem* input,float dt);
     void PresentationScripts(const InputSystem* input,float dt,float alpha);
     void DispatchPhysicsEvents(const InputSystem* input,float dt);
@@ -617,6 +622,7 @@ private:
     friend class WorldPersistence;
     friend class RuntimeTerrain;
     friend class TerrainV2::Runtime;
+    std::function<void()> m_preparationYield;
     bool m_restoreConstruction=false;
     bool m_composed=false;
     std::set<EntityId> m_regionPending;

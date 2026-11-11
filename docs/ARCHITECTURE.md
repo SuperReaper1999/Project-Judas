@@ -337,3 +337,11 @@ and Undo. Existing scene recipes retain source metadata; runtime physics, saves,
 streaming and exports use the compiled ordinary entities. There is no additional
 tile simulation or runtime clock. See [Stage 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE4.md) and the
 [tile authoring guide](judasjs/tilemaps-2d.md) for limits and ownership.
+
+## Initial game readiness
+
+`StartupScreen` owns the game loading display; `StartupMovie` decodes its cooked
+animation through the existing image loader. `WorldStartup` discovers readiness
+through normal resource and presentation paths without advancing simulation.
+The application coordinates this boundary before beginning its gameplay clock.
+See [startup loading](STARTUP_LOADING.md) for lifecycle, packaging and limits.
