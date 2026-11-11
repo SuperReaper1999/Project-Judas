@@ -168,3 +168,30 @@ The first new PBR-workshop capture reached 377.14 FPS, p50/p95/p99
 of it inside swap waiting, and 0.126924 s discarded simulation time. There was
 no kernel GPU fault in the capture window. This is **not** a clean no-hitch pass;
 repeat measurement and final combined-workload qualification remain required.
+
+Stage 4 integration now includes neighbouring editor-preview casters before
+shadow planning and a real rendered authored-shadow/moved-occluder control.
+The original workshop is explicitly inventoried in SDK packaging. The bounded
+WebGL2 production-owner proof passed 33 checks with a fixed 32 MiB heap and
+explicit context destruction (Chromium 1.64 driver, existing browser revision
+1248, software WebGL). Its first independent control still declared nine charts;
+that failed fixture and source are preserved. The corrected control verifies
+slot 53 and the complete 3,600-byte transport. This is scoped browser-renderer
+qualification, not a complete browser-game or Android-device certification.
+
+The first full native run completed in 255.77 s: 190/192 passed. One failure was
+the intentionally changed mesh-fragment fingerprint; its reviewed identity was
+updated after independent native/WebGL pixel controls passed. The other colour
+control coincided exactly with an NVIDIA Xid 13 exception in that process at
+22:08:50 UTC on 2026-11-11. No engine workaround was applied. An independent
+SDL/OpenGL control passed both 54-element and single-matrix cases; the original
+native control then passed five consecutive launches and portable GL3.3, with
+no further kernel fault in that repeat window. The isolated fault is retained
+and unexplained, not claimed repaired. Both previously failed gates now pass;
+a final clean integrated run and CI remain required.
+
+Live QuickJS enumeration matches all 524 public symbols, 353 registered native
+operations and 281 callable signatures. The API checker also passes 26 structured
+result contracts, 58 examples and eight negative drift controls. The exposure
+binding is owned locally by the existing Rendering module; the central
+registration dispatcher was not edited.

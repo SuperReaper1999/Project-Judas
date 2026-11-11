@@ -146,10 +146,10 @@ uniform mat4 uProjection;
 void main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2)*2.0-1.0;gl_Position=uProjection*uView*vec4(p,0,1);}
 )GLSL";
 constexpr char KnownFragment[] = R"GLSL(#version 330 core
-uniform mat4 uLightSpaceMatrix[9];
+uniform mat4 uLightSpaceMatrix[54];
 uniform vec3 uEmission,uCameraPosition;
 out vec4 colour;
-void main(){colour=vec4(vec3(uCameraPosition.x*.1,uLightSpaceMatrix[8][3].y*.1,uProjection[0][0]*.5)+uEmission,1);}
+void main(){colour=vec4(vec3(uCameraPosition.x*.1,uLightSpaceMatrix[53][3].y*.1,uProjection[0][0]*.5)+uEmission,1);}
 )GLSL";
 constexpr char StreamVertex[] = R"GLSL(#version 330 core
 layout(location=0) in vec4 inputColour;
@@ -171,7 +171,7 @@ void Qualify(Target &target, const GraphicsCapabilities &caps) {
     Check(mesh != 0, "actual canonical mesh stages compile and link through ES300 with their view block");
     if (mesh) {
         glUseProgram(mesh);
-        Check(view.Bind(mesh, error), "actual canonical mesh reflects and binds the 720-byte std140 block");
+        Check(view.Bind(mesh, error), "actual canonical mesh reflects and binds the 3600-byte std140 block");
         const auto identity = glm::mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(mesh, "uModel"), 1, GL_FALSE, glm::value_ptr(identity));
         const auto normal = glm::mat3(1);
@@ -251,14 +251,14 @@ void Qualify(Target &target, const GraphicsCapabilities &caps) {
         projection[0][0] = .5f;
         projection[3] = {1,3,4,1};
         shadow[3][1] = 3;
-        Check(view.SetCamera(camera, projection) && view.SetShadow(8, shadow) && view.Bind(known, error),
+        Check(view.SetCamera(camera, projection) && view.SetShadow(53, shadow) && view.Bind(known, error),
               "camera, projection and final shadow slot publish through the production UBO owner");
         target.Clear();
         glUseProgram(known);
         glBindVertexArray(target.vao);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         Check(Near(target.Pixel(), {51,77,64,255}) && glGetError() == GL_NO_ERROR,
-              "camera red, ninth-shadow green and projection blue agree with independent numeric answers");
+              "camera red, final-shadow green and projection blue agree with independent numeric answers");
         const auto uploaded = view.Stats().bytesUploaded;
         glBindBufferBase(GL_UNIFORM_BUFFER, JudasRender::ViewUniforms::BindingPoint, 0);
         const bool rebound = view.Bind(known, error);
@@ -267,11 +267,11 @@ void Qualify(Target &target, const GraphicsCapabilities &caps) {
         Check(rebound && Near(target.Pixel(), {51,77,64,255}) && view.Stats().bytesUploaded == uploaded,
               "view binding recovers from another pass without a redundant unchanged upload");
         shadow[3][1] = 7;
-        const bool changed = view.SetShadow(8, shadow) && view.Bind(known, error);
+        const bool changed = view.SetShadow(53, shadow) && view.Bind(known, error);
         target.Clear();
         glDrawArrays(GL_TRIANGLES, 0, 3);
         Check(changed && Near(target.Pixel(), {51,179,64,255}) &&
-                  view.Stats().bytesUploaded == uploaded + 720,
+                  view.Stats().bytesUploaded == uploaded + 3600,
               "changing the last shadow updates only the expected known-answer channel with one upload");
     }
     Check(view.Shutdown(&error), "view UBO is explicitly retired while its WebGL2 context still exists");

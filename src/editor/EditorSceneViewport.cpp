@@ -490,19 +490,6 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
         renderer.SetWeatherShelter({});
     }
 
-    JudasLighting::PrepareShadows(renderer,appearance,BuildAuthoredLights(scene),
-        JudasLighting::AuthoredShadowScene(scene,context.host.Resources()),[&]{
-            if(terrain)terrain->Draw(renderer,scene,context.host.Resources());
-            std::string shadowPlanetError;
-            planetPreview.Draw(renderer,scene,context.host.Resources(),shadowPlanetError);
-            DrawAuthoredScene(renderer,scene,context.host.Resources(),false);
-        });
-    if (terrain)
-        terrain->Draw(renderer, scene, context.host.Resources());
-    std::string planetError;
-    planetPreview.Draw(renderer, scene, context.host.Resources(), planetError);
-    if (!planetError.empty()) context.panels.status = planetError;
-    DrawAuthoredScene(renderer, scene, context.host.Resources(), false);
     if (context.panels.worldPreview && !context.project.Settings().worldManifest.empty()) {
         auto key = context.project.ProjectFile() + context.document.Path() +
                    std::to_string(context.panels.worldPreviewRevision);
@@ -540,12 +527,31 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
                 }
             }
         }
-        for (auto &region : regionPreview)
-            DrawAuthoredScene(renderer, region, context.host.Resources(), false);
     } else {
         regionPreview.clear();
         regionPreviewKey.clear();
     }
+    auto shadowScene=JudasLighting::AuthoredShadowScene(scene,context.host.Resources());
+    for(const auto& region:regionPreview){
+        auto snapshot=JudasLighting::AuthoredShadowScene(region,context.host.Resources());
+        shadowScene.volatileContent|=snapshot.volatileContent;
+        for(auto& caster:snapshot.casters)shadowScene.casters.push_back(std::move(caster));
+    }
+    JudasLighting::PrepareShadows(renderer,appearance,BuildAuthoredLights(scene),
+        shadowScene,[&]{
+            if(terrain)terrain->Draw(renderer,scene,context.host.Resources());
+            std::string shadowPlanetError;
+            planetPreview.Draw(renderer,scene,context.host.Resources(),shadowPlanetError);
+            DrawAuthoredScene(renderer,scene,context.host.Resources(),false);
+            for(auto& region:regionPreview)DrawAuthoredScene(renderer,region,context.host.Resources(),false);
+        });
+    if (terrain)
+        terrain->Draw(renderer, scene, context.host.Resources());
+    std::string planetError;
+    planetPreview.Draw(renderer, scene, context.host.Resources(), planetError);
+    if (!planetError.empty()) context.panels.status = planetError;
+    DrawAuthoredScene(renderer, scene, context.host.Resources(), false);
+    for(auto& region:regionPreview)DrawAuthoredScene(renderer,region,context.host.Resources(),false);
     {
         DrawAuthoredWaterSurfaces(renderer, scene, context.host.Resources(),context.project.Settings().basicWater);
         for (const auto &region : regionPreview)

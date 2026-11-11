@@ -204,6 +204,7 @@ void NativeControls() {
                        glm::value_ptr(shadow));
     glUniform3f(glGetUniformLocation(classic, "uCameraPosition"), 2, 3, 4);
     const auto reference = Pixel(classic);
+    std::printf("CLASSIC_CONTROL program=%u shadowLocation=%d rgba=%u,%u,%u,%u\n",classic,glGetUniformLocation(classic,"uLightSpaceMatrix[53]"),reference[0],reference[1],reference[2],reference[3]);
     Check(std::abs(int(reference[0]) - 64) <= 1 && std::abs(int(reference[1]) - 89) <= 1 &&
               std::abs(int(reference[2]) - 115) <= 1 && reference[3] == 255,
           "traditional shader independently produces the analytic camera/shadow colour");
@@ -215,6 +216,7 @@ void NativeControls() {
               view.Stats().lastUploadBytes == 3600,
           "first consumer uploads exactly one complete 3600-byte block");
     const auto actual = Pixel(block);
+    std::printf("BLOCK_CONTROL program=%u rgba=%u,%u,%u,%u\n",block,actual[0],actual[1],actual[2],actual[3]);
     Check(actual == reference,
           "actual GPU std140 result is pixel-identical to the traditional uniforms");
     GLint buffer = 0;

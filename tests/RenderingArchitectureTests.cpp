@@ -9,6 +9,7 @@
 #include "PlanetTiles.h"
 #include "ScreenshotWriter.h"
 #include "ShadowTransforms.h"
+#include "lighting/ShadowSystem.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <filesystem>
 #include <cstdio>
@@ -72,5 +73,16 @@ int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesys
  Scene edit;edit.Settings().sunDirection={0,1,0};edit.Settings().sunColor={1,1,1};edit.Settings().ambientColor={0,0,0};auto& receiver=edit.CreateObject("Edit-only receiver");receiver.render=SceneRenderComponent{};receiver.render->halfExtents={6,.1f,6};receiver.render->color={1,1,1};
  r.SetMaterialBindings({});r.BeginShadowPass(0,ComputeDirectionalShadowMatrix({0,0,0},{0,1,0},25,40));r.DrawBox({0,1,0},{1,0,0,0},{1,1,1},{1,1,1});r.EndShadowPass();
  auto authoredImage=[&](){r.BeginFrame(640,360);r.SetCamera(view,projection);r.SetDynamicLights({});DrawAuthoredScene(r,edit,host.Resources());r.EndFrame();Pixels p;r.CaptureFrame(640,360,p);return p;};auto inherited=authoredImage();r.InvalidateShadowSlot(0);auto cleanEdit=authoredImage();Check(Diff(inherited,cleanEdit)<.02,"authored edit view cannot inherit a previous runtime camera's directional shadow map");
+ // Edit preview uses the same planner and exact caster ownership as runtime.
+ edit.Settings().sunEnabled=false;edit.Settings().ambientColor={.02f,.02f,.02f};
+ auto& editBlocker=edit.CreateObject("Authored moving occluder");const auto editBlockerId=editBlocker.id;editBlocker.transform.position={0,1,0};editBlocker.render=SceneRenderComponent{};editBlocker.render->halfExtents={.6f,1,.6f};
+ auto& editLamp=edit.CreateObject("Authored spot");editLamp.light=*cast.Find(sunId)->light;editLamp.transform=cast.Find(sunId)->transform;
+ auto editPreview=[&](unsigned budget){r.ResetStats();r.SetShadowBudget(budget);r.BeginFrame(640,360);r.SetCamera(view,projection);JudasLighting::PrepareShadows(r,edit.Settings(),BuildAuthoredLights(edit),JudasLighting::AuthoredShadowScene(edit,host.Resources()),[&]{DrawAuthoredScene(r,edit,host.Resources());});DrawAuthoredScene(r,edit,host.Resources());r.EndFrame();Pixels pixels;r.CaptureFrame(640,360,pixels);return pixels;};
+ const auto authoredShadowed=editPreview(1),authoredUnshadowed=editPreview(0);
+ Check(Diff(authoredShadowed,authoredUnshadowed)>.15,"shared Edit-preview planner produces real authored spotlight occlusion");
+ editPreview(1);edit.Find(editBlockerId)->transform.position.x+=2;
+ const auto authoredMoved=editPreview(1);
+ Check(r.Stats().shadowPasses==1&&Diff(authoredMoved,authoredShadowed)>.15,"authored geometry edits redraw their shadow in the immediately consuming preview");
+ WriteRgbPng((out/"edit-shadow.png").string(),640,360,authoredShadowed);
  Check(glGetError()==GL_NO_ERROR,"no graphics errors after instancing, tiled lighting, shadows and target teardown");host.Shutdown();std::printf("SUMMARY %u checks %u failures\n",checks,failures);return failures?1:0;
 }
