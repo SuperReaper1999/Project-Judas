@@ -171,7 +171,8 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             bool evaluated = false, found = false, queued = false;
         };
         using Entry = std::tuple<double, Key, std::size_t, std::uint64_t>;
-        std::priority_queue<Entry, std::vector<Entry>, std::greater<Entry>> queue;
+        using ArrivalQueue = std::priority_queue<Entry, std::vector<Entry>, std::greater<Entry>>;
+        ArrivalQueue queue;
         std::vector<PendingPair> pairs;
         std::map<Key, std::size_t> lookup;
         std::vector<char> eligible(bodies.size(), 0);
@@ -529,7 +530,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             // Retire stale heap observations without changing event order. Storage
             // stays proportional to the current pair set, not the event history.
             if (queue.size() > 4 * pairs.size() + 64) {
-                decltype(queue) fresh;
+                ArrivalQueue fresh;
                 for (std::size_t n = 0; n < pairs.size(); ++n) {
                     const auto &p = pairs[n];
                     if (p.found && active(p))
