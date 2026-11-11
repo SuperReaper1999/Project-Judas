@@ -75,7 +75,7 @@ void main() {
 })GLSL");
         const auto fragment = Compile(GL_FRAGMENT_SHADER, std::string(R"GLSL(#version 330 core
 uniform sampler2DArray uShadowMaps;
-uniform mat4 uLightSpaceMatrix[9];
+uniform mat4 uLightSpaceMatrix[54];
 uniform vec3 plane;
 uniform bool tiled, fixedPoint;
 uniform vec3 point;
@@ -274,7 +274,21 @@ void main() {
         std::printf("MEASURE corner_max_error=%.9g\n", cornerError);
         Check(cornerError < 1e-4f, "two-axis shadow-corner coverage matches analytic intersection area");
 
-        for (const int slot : {-1, 9}) {
+        // Nine was the old atlas limit. It is now a valid chart, so exercise
+        // both it and the last V2 chart against real depth before testing the
+        // first out-of-range index. Out-of-bounds uniform reads are undefined
+        // and happened to look lit on one native driver in the old harness.
+        atlas.assign(kSize * kSize * 54, .25f);
+        glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_DEPTH_COMPONENT32F, kSize, kSize, 54,
+                     0, GL_DEPTH_COMPONENT, GL_FLOAT, atlas.data());
+        for (const int slot : {9, 53}) {
+            const auto name = "uLightSpaceMatrix[" + std::to_string(slot) + "]";
+            glUniformMatrix4fv(uniform(name.c_str()), 1, GL_FALSE, glm::value_ptr(identity));
+            glUniform1i(uniform("requestedSlot"), slot);
+            draw();
+            Check(std::abs(pixels[0]) < 1e-5f, "valid V2 shadow chart " + std::to_string(slot) + " remains occluded");
+        }
+        for (const int slot : {-1, 54}) {
             glUniform1i(uniform("requestedSlot"), slot);
             draw();
             Check(std::abs(pixels[0] - 1) < 1e-5f, "unassigned/out-of-range shadow slot remains lit");

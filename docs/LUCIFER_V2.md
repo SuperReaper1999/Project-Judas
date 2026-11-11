@@ -212,6 +212,17 @@ was 5.551 ms at 1080p and 3.299 ms at 720p respectively.
   passed, followed by the clean 192-gate run. The isolated fault is unexplained,
   **not claimed repaired**. Earlier artifact-upload infrastructure failures and
   the obsolete nine-chart WebGL test fixture are also preserved.
+- The later `b388944` full native run passed 191/192 gates in 235.96 seconds:
+  the independent GPU-particle control failed alongside another NVIDIA Xid 13
+  at 23:02:22 UTC. Three subsequent actual native 63-check runs passed. This
+  does not erase the failure or establish a repair. That control creates its
+  own SDL/GL context without initialising Lucifer; driver, hardware and software
+  attribution remains unresolved. Final hardware qualification is not clean.
+- Software Mesa CI exposed another stale nine-slot sampling fixture: its
+  purported invalid slot 9 is now valid, and exceeded the fixture's own uniform
+  array. The fixture now declares 54 charts, proves real occlusion at slots 9
+  and 53, and rejects slot 54. Production sampling is unchanged. The original
+  failed Alpha/Experimental CI evidence is retained, not classified as a pass.
 - Native Windows qualification exposed MSVC's reference interpretation of a
   captured queue's `decltype` in existing MK2 code. An explicit `ArrivalQueue`
   type preserves the algorithm. All 17 executable sections of the native GCC
