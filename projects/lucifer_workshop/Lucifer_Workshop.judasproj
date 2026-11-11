@@ -1,0 +1,8 @@
+JudasProject 1
+name "Lucifer / Night Watch"
+advanced-fluid-dynamics "false"
+startup-scene "Scenes/night.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+input-map "1 13 \"move_x\" 1 2 \"key:D\" 1 0 \"key:A\" -1 0 \"move_y\" 1 2 \"key:W\" 1 0 \"key:S\" -1 0 \"look_x\" 1 1 \"mouse:x\" 1 0 \"look_y\" 1 1 \"mouse:y\" 1 0 \"jump\" 0 1 \"key:Space\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"torch\" 0 1 \"key:F\" 1 0 \"patrol\" 0 1 \"key:E\" 1 0 \"emergency\" 0 1 \"key:Q\" 1 0 \"save\" 0 1 \"key:K\" 1 0 \"load\" 0 1 \"key:L\" 1 0 \"reset\" 0 1 \"key:R\" 1 0 \"fire\" 0 1 \"mouse:Left\" 1 0"

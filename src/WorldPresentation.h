@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "Light.h"
+#include "lighting/LightingWorld.h"
 
 class Renderer;
 class RuntimeWorld;
@@ -35,10 +36,6 @@ void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world,
 void DrawWorldTransparents(Renderer& renderer, const RuntimeWorld& world,
                            float presentationAlpha);
 
-// Authored dynamic lights in world space from presented poses.
-std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world,
-                                           float presentationAlpha);
-
 // One complete presented frame: shadow passes, colour pass, transparents.
 // `shadowFocus` centres the directional shadow frustum (the player when
 // playing, the editor camera otherwise).
@@ -65,7 +62,7 @@ void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& 
 // For composed editor views: submit all scenes with basicWater=false, then draw
 // their water surfaces after all opaque terrain/region geometry is complete.
 void DrawAuthoredWaterSurfaces(Renderer& renderer, const Scene& scene, ResourceManager& resources,bool basicWater=true);
-std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);
+
 
 struct WeatherSample;
 WeatherSample SampleAuthoredWeather(const Scene&,glm::dvec3 absoluteEye);

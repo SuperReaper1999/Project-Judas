@@ -1,0 +1,9 @@
+JudasUI 1
+1280 720 1 1 1 7
+"canvas" "" 0 0 1 1 0 0 1 0 0 0 0 0 0 1280 720 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0.95 1 1 8 18 0 0 1 "" "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"panel" "canvas" 1 0 1 1 0 0 1 0 0 0 0 20 20 800 150 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0.025 0.04 0.88 0.9 0.95 1 1 8 18 0 0 1 "" "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"title" "canvas" 2 0 1 1 0 0 1 0 0 0 0 36 30 600 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 1 0.85 1 8 24 0 0 1 "LUCIFER / NIGHT WATCH" "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"controls" "canvas" 2 0 1 1 0 0 1 0 0 0 0 36 67 600 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0.95 1 1 8 18 0 0 1 "WASD + mouse | Space jump | F flashlight | LMB shoot lamp" "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"controls2" "canvas" 2 0 1 1 0 0 1 0 0 0 0 36 94 600 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0.95 1 1 8 17 0 0 1 "E patrol | Q emergency lights | K/L save/load | R restart | Esc pointer" "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"status" "canvas" 2 0 1 1 0 0 1 0 0 0 0 36 126 770 25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0.75 0.45 1 8 16 0 0 1 "Explore the lit courtyard. Aim at a hanging bulb and shoot." "" "4cf5b441ffacd3fae8d34c80c97b2cec"
+"crosshair" "canvas" 2 0 1 1 0 0 1 0 0 0 0 630 348 20 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0.95 1 1 8 20 0 0 1 "+" "" "4cf5b441ffacd3fae8d34c80c97b2cec"

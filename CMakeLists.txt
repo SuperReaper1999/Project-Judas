@@ -396,6 +396,7 @@ add_library(judas_engine STATIC
     src/Simulation.cpp
     src/BasicWater.cpp
     src/WorldWater.cpp
+    src/lighting/LightingWorld.cpp
     src/WorldPresentation.cpp
     src/EngineHost.cpp
     src/ScriptFaultNotice.cpp

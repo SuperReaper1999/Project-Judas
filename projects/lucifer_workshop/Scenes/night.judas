@@ -1,0 +1,2170 @@
+JudasScene 3
+settings
+ name "Lucifer / Night Watch"
+ world-origin 0 0 0
+ sun-enabled false
+ sun-direction -0.3 0.8 0.5
+ sun-color 0.12 0.16 0.3
+ ambient 0.015 0.02 0.035
+ background-color 0.008 0.012 0.025
+ linear-rendering true
+ exposure 1
+ fidelity-policy none
+ next-id 10000
+end
+object 1 "Gravity"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ gravity uniform 9.81
+ gravity.region sphere 10000
+end
+object 2 "Courtyard"
+ position 0 -0.2 -4
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 24 0.2 25
+ render.color 0.18 0.2 0.23
+ body static box
+ body.half-extents 24 0.2 25
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 3 "Road"
+ position 0 0.012 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 3.5 0.012 24
+ render.color 0.055 0.065 0.075
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 10 "Road marking"
+ position 0 0.03 -26
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 11 "Road marking"
+ position 0 0.03 -22
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 12 "Road marking"
+ position 0 0.03 -18
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 13 "Road marking"
+ position 0 0.03 -14
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 14 "Road marking"
+ position 0 0.03 -10
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 15 "Road marking"
+ position 0 0.03 -6
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 16 "Road marking"
+ position 0 0.03 -2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 17 "Road marking"
+ position 0 0.03 2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 18 "Road marking"
+ position 0 0.03 6
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 19 "Road marking"
+ position 0 0.03 10
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 20 "Road marking"
+ position 0 0.03 14
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 21 "Road marking"
+ position 0 0.03 18
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.06 0.012 0.8
+ render.color 0.65 0.68 0.62
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 30 "Boundary"
+ position -24 2 -4
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.25 2 25
+ render.color 0.25 0.28 0.34
+ body static box
+ body.half-extents 0.25 2 25
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 31 "Boundary"
+ position 24 2 -4
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.25 2 25
+ render.color 0.25 0.28 0.34
+ body static box
+ body.half-extents 0.25 2 25
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 32 "Back wall"
+ position 0 2 -29
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 24 2 0.3
+ render.color 0.28 0.32 0.38
+ body static box
+ body.half-extents 24 2 0.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 40 "Room left wall"
+ position -13 2 -15
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.2 2 6
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 0.2 2 6
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 41 "Room right wall"
+ position -5 2 -15
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.2 2 6
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 0.2 2 6
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 42 "Room back wall"
+ position -9 2 -21
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 4 2 0.2
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 4 2 0.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 43 "Doorway left"
+ position -12 2 -9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1 2 0.2
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 1 2 0.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 44 "Doorway right"
+ position -6 2 -9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1 2 0.2
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 1 2 0.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 45 "Door lintel"
+ position -9 3.6 -9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 2 0.4 0.2
+ render.color 0.42 0.33 0.26
+ body static box
+ body.half-extents 2 0.4 0.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 46 "Room roof"
+ position -9 4.2 -15
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 4.3 0.2 6.3
+ render.color 0.24 0.29 0.32
+ body static box
+ body.half-extents 4.3 0.2 6.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 200 "Breakable bulb 1"
+ position -10 3.7 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 .70 .37
+ light.intensity 65
+ light.range 13
+ light.shadows true
+ render sphere
+ render.radius .23
+ render.color 1 .75 .35
+ body static sphere
+ body.radius .3
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.half-extents .5 .5 .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 210 "Lamp post"
+ position -9.4 1.8 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.075 1.8 0.075
+ render.color 0.12 0.14 0.17
+ body static box
+ body.half-extents 0.075 1.8 0.075
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 220 "Lamp arm"
+ position -9.7 3.8 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.07 0.07
+ render.color 0.12 0.14 0.17
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 201 "Breakable bulb 2"
+ position 9 3.7 -2
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 .70 .37
+ light.intensity 65
+ light.range 13
+ light.shadows true
+ render sphere
+ render.radius .23
+ render.color 1 .75 .35
+ body static sphere
+ body.radius .3
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.half-extents .5 .5 .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 211 "Lamp post"
+ position 9.6 1.8 -2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.075 1.8 0.075
+ render.color 0.12 0.14 0.17
+ body static box
+ body.half-extents 0.075 1.8 0.075
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 221 "Lamp arm"
+ position 9.3 3.8 -2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.07 0.07
+ render.color 0.12 0.14 0.17
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 202 "Breakable bulb 3"
+ position -9 3.7 -15
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 .70 .37
+ light.intensity 65
+ light.range 13
+ light.shadows true
+ render sphere
+ render.radius .23
+ render.color 1 .75 .35
+ body static sphere
+ body.radius .3
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.half-extents .5 .5 .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 203 "Breakable bulb 4"
+ position 12 3.7 -19
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 .70 .37
+ light.intensity 65
+ light.range 13
+ light.shadows true
+ render sphere
+ render.radius .23
+ render.color 1 .75 .35
+ body static sphere
+ body.radius .3
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.half-extents .5 .5 .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 213 "Lamp post"
+ position 12.6 1.8 -19
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.075 1.8 0.075
+ render.color 0.12 0.14 0.17
+ body static box
+ body.half-extents 0.075 1.8 0.075
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 223 "Lamp arm"
+ position 12.3 3.8 -19
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.07 0.07
+ render.color 0.12 0.14 0.17
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 230 "Courtyard light 1"
+ position 8 2.8 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 231 "Courtyard light 2"
+ position -8 2.8 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 232 "Courtyard light 3"
+ position 8 2.8 7
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 233 "Courtyard light 4"
+ position -8 2.8 7
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 234 "Courtyard light 5"
+ position 15 2.8 2
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 235 "Courtyard light 6"
+ position -15 2.8 2
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 236 "Courtyard light 7"
+ position 15 2.8 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 237 "Courtyard light 8"
+ position -15 2.8 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 238 "Courtyard light 9"
+ position 8 2.8 -8
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 239 "Courtyard light 10"
+ position -8 2.8 -8
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 240 "Courtyard light 11"
+ position 8 2.8 -13
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 241 "Courtyard light 12"
+ position -8 2.8 -13
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 242 "Courtyard light 13"
+ position 15 2.8 -18
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 243 "Courtyard light 14"
+ position -15 2.8 -18
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 244 "Courtyard light 15"
+ position 15 2.8 -23
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.25 0.55 1
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 245 "Courtyard light 16"
+ position -15 2.8 -23
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.35 0.17
+ light.intensity 12
+ light.range 7
+ light.cone 14 25
+ light.shadows false
+end
+object 60 "Shadow test column"
+ position 5 1.3 -12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.3 1.3 0.3
+ render.color 0.45 0.47 0.5
+ body static box
+ body.half-extents 0.3 1.3 0.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 70 "Planter"
+ position -18 0.35 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.35 1.2
+ render.color 0.29 0.32 0.36
+ body static box
+ body.half-extents 1.2 0.35 1.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 80 "Foliage"
+ position -18 1.3 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.radius 1.2
+ render.color .10 .28 .13
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 61 "Shadow test column"
+ position 7 1.3 -12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.3 1.3 0.3
+ render.color 0.45 0.47 0.5
+ body static box
+ body.half-extents 0.3 1.3 0.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 71 "Planter"
+ position -18 0.35 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.35 1.2
+ render.color 0.29 0.32 0.36
+ body static box
+ body.half-extents 1.2 0.35 1.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 81 "Foliage"
+ position -18 1.3 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.radius 1.2
+ render.color .10 .28 .13
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 62 "Shadow test column"
+ position 9 1.3 -12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.3 1.3 0.3
+ render.color 0.45 0.47 0.5
+ body static box
+ body.half-extents 0.3 1.3 0.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 72 "Planter"
+ position -18 0.35 -8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.35 1.2
+ render.color 0.29 0.32 0.36
+ body static box
+ body.half-extents 1.2 0.35 1.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 82 "Foliage"
+ position -18 1.3 -8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.radius 1.2
+ render.color .10 .28 .13
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 63 "Shadow test column"
+ position 11 1.3 -12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.3 1.3 0.3
+ render.color 0.45 0.47 0.5
+ body static box
+ body.half-extents 0.3 1.3 0.3
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 73 "Planter"
+ position -18 0.35 -16
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.35 1.2
+ render.color 0.29 0.32 0.36
+ body static box
+ body.half-extents 1.2 0.35 1.2
+ body.friction .8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 83 "Foliage"
+ position -18 1.3 -16
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.radius 1.2
+ render.color .10 .28 .13
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 300 "Pedestrian 1"
+ position -5 0.95 6.5
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.2 0.25 0.48
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 301 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 300
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 302 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 300
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 303 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 300
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 304 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 300
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 305 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 300
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 310 "Pedestrian 2"
+ position -0.092220391 0.95 6.1941257
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.25 0.25 0.455
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 311 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 310
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 312 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 310
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 313 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 310
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 314 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 310
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 315 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 310
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 320 "Pedestrian 3"
+ position 4.4453373 0.95 5.4012482
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.3 0.25 0.43
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 321 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 320
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 322 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 320
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 323 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 320
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 324 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 320
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 325 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 320
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 330 "Pedestrian 4"
+ position 8.3934396 0.95 4.4447288
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.35 0.25 0.405
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 331 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 330
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 332 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 330
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 333 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 330
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 334 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 330
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 335 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 330
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 340 "Pedestrian 5"
+ position -4.2267479 0.95 -7.2853331
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.4 0.25 0.38
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 341 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 340
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 342 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 340
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 343 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 340
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 344 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 340
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 345 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 340
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 350 "Pedestrian 6"
+ position -1.1622927 0.95 -7.4911945
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.45 0.25 0.355
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 351 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 350
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 352 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 350
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 353 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 350
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 354 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 350
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 355 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 350
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 360 "Pedestrian 7"
+ position 1.9683508 0.95 -7.0888985
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.5 0.25 0.33
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 361 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 360
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 362 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 360
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 363 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 360
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 364 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 360
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 365 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 360
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 370 "Pedestrian 8"
+ position 5.5197342 0.95 -6.2425143
+ rotation 1 0 0 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .3 .9 .25
+ render box
+ render.half-extents .28 .35 .19
+ render.color 0.55 0.25 0.305
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 371 "Head"
+ position 0 0.58 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 370
+ render sphere
+ render.radius .18
+ render.color .61 .40 .28
+ render.half-extents .5 .5 .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 372 "Arm"
+ position -0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 370
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 373 "Arm"
+ position 0.37 -0.04 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 370
+ render box
+ render.half-extents 0.075 0.32 0.075
+ render.color 0.25 0.32 0.44
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 374 "Leg"
+ position -0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 370
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 375 "Leg"
+ position 0.14 -0.6 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 370
+ render box
+ render.half-extents 0.095 0.3 0.1
+ render.color 0.06 0.08 0.11
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 500 "Patrol cruiser"
+ position 7 0.68 1
+ rotation 0.70710678 0 -0.70710678 0
+ scale 1 1 1
+ body kinematic box
+ body.half-extents .9 .45 2.1
+ render box
+ render.half-extents .88 .25 2.1
+ render.color .025 .035 .05
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body.radius .5
+ body.mass 1
+ body.friction .8
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 501 "White cabin"
+ position 0 0.42 0.15
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.75 0.25 0.95
+ render.color 0.72 0.76 0.8
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 502 "Windscreen"
+ position 0 0.43 -0.82
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.67 0.18 0.02
+ render.color 0.05 0.12 0.17
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 503 "Door stripe"
+ position -0.89 0.05 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.015 0.18 1
+ render.color 0.8 0.83 0.86
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 504 "Door stripe"
+ position 0.89 0.05 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.015 0.18 1
+ render.color 0.8 0.83 0.86
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 510 "Wheel"
+ position -0.93 -0.25 -1.3
+ rotation 0.70710678 0 0 0.70710678
+ scale 0.65 0.13 0.65
+ parent 500
+ render mesh
+ render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
+ render.color .035 .045 .055
+ render.half-extents .5 .5 .5
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.texture-asset ""
+end
+object 511 "Wheel"
+ position 0.93 -0.25 -1.3
+ rotation 0.70710678 0 0 0.70710678
+ scale 0.65 0.13 0.65
+ parent 500
+ render mesh
+ render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
+ render.color .035 .045 .055
+ render.half-extents .5 .5 .5
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.texture-asset ""
+end
+object 512 "Wheel"
+ position -0.93 -0.25 1.3
+ rotation 0.70710678 0 0 0.70710678
+ scale 0.65 0.13 0.65
+ parent 500
+ render mesh
+ render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
+ render.color .035 .045 .055
+ render.half-extents .5 .5 .5
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.texture-asset ""
+end
+object 513 "Wheel"
+ position 0.93 -0.25 1.3
+ rotation 0.70710678 0 0 0.70710678
+ scale 0.65 0.13 0.65
+ parent 500
+ render mesh
+ render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
+ render.color .035 .045 .055
+ render.half-extents .5 .5 .5
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.texture-asset ""
+end
+object 520 "Headlight"
+ position -0.64 0.08 -2.12
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ light spot
+ light.color 1 0.91 0.7
+ light.intensity 75
+ light.range 22
+ light.cone 14 25
+ light.shadows true
+end
+object 522 "Headlight lens"
+ position -0.64 0.08 -2.13
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.21 0.1 0.02
+ render.color 1 0.9 0.55
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 521 "Headlight"
+ position 0.64 0.08 -2.12
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ light spot
+ light.color 1 0.91 0.7
+ light.intensity 75
+ light.range 22
+ light.cone 14 25
+ light.shadows true
+end
+object 523 "Headlight lens"
+ position 0.64 0.08 -2.13
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.21 0.1 0.02
+ render.color 1 0.9 0.55
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 530 "Emergency light"
+ position -0.4 0.82 0.15
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ light point
+ light.color 1 0.025 0.02
+ light.intensity 30
+ light.range 11
+ light.cone 14 25
+ light.shadows true
+end
+object 532 "Emergency lens"
+ position -0.4 0.82 0.15
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.25 0.09 0.18
+ render.color 1 0.025 0.02
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 531 "Emergency light"
+ position 0.4 0.82 0.15
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ light point
+ light.color 0.025 0.18 1
+ light.intensity 30
+ light.range 11
+ light.cone 14 25
+ light.shadows true
+end
+object 533 "Emergency lens"
+ position 0.4 0.82 0.15
+ rotation 1 0 0 0
+ scale 1 1 1
+ parent 500
+ render box
+ render.half-extents 0.25 0.09 0.18
+ render.color 0.025 0.18 1
+ render.radius .5
+ render.alpha 1
+ render.secondary-color .8 .8 .8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 100 "Handheld flashlight"
+ position 0 2 7
+ rotation 1 0 0 0
+ scale 1 1 1
+ light spot
+ light.color 1 0.94 0.79
+ light.intensity 70
+ light.range 20
+ light.cone 14 25
+ light.shadows true
+end
+object 101 "Player"
+ position 0 1.05 11
+ rotation 1 0 0 0
+ scale 1 1 1
+ motor.enabled true
+ motor.radius .3
+ motor.halfHeight .6
+ motor.stepHeight .35
+ motor.supportDistance .15
+ motor.skin .02
+ motor.gravityScale 1
+ scripts 1
+ script.0.id 1
+ script.0.asset "42fd735499a01a137755fcde9dd9f9fb"
+ script.0.enabled true
+ script.0.properties "{}"
+ ui.asset "088e719333fb8bc941513d0a3fdbdf0f"
+ ui.name "night"
+ motor.offset 0 0 0
+ motor.maxSlopeDegrees 50
+ motor.reorientationDegreesPerSecond 120
+ motor.interactionMass 80
+ motor.maxPushImpulse 20
+ motor.collisionLayer 0
+ motor.collisionMask 18446744073709551615
+ motor.requiredTags 0
+ motor.excludedTags 0
+ ui.enabled true
+end
