@@ -20,6 +20,7 @@ struct CollisionBody {
     glm::vec3 linearVelocity{0}, angularVelocity{0};
     std::vector<PhysicsWorld::BodyMotionSegment> motion;
     float boundingRadius = 0;
+    bool stationary = true; // derived once from the immutable captured trajectory
 };
 
 struct CollisionCollider {
@@ -30,6 +31,8 @@ struct CollisionCollider {
     float radius = 0, halfHeight = 0;
     glm::vec3 halfExtents{0}, localCenter{0}; // relative to body's COM
     glm::quat localRotation{1, 0, 0, 0};
+    // Conservative static candidate bounds; narrowphase remains authoritative.
+    glm::dvec3 queryMinimum{0}, queryMaximum{0};
     std::shared_ptr<const CollisionAsset> asset; // immutable asset-local BVH/vertices
     std::shared_ptr<const RadialTerrain> terrain; // CPU callback; not silently evaluated on GPU
 };

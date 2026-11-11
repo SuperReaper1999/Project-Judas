@@ -231,6 +231,10 @@ export default class {
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source / relative, destination)
             shutil.copy2(source / (relative + '.judasmeta'), str(destination) + '.judasmeta')
+        # Keep the borrowed engine-owned model editable/exportable through the
+        # normal importer contract, not merely loadable from its cooked payload.
+        for directory in ('Imports', 'Sources'):
+            shutil.copytree(args.out / 'animation_studio' / directory, combined / directory)
         project = combined / 'terrain_v2_workshop.judasproj'
         text = project.read_text()
         original = 'startup-scene "Scenes/highlands.judas"'

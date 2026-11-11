@@ -2,6 +2,9 @@
 
 #include "CollisionAsset.h"
 #include "Narrowphase.h"
+#include "PhysicsCastGeometry.h"
+#include "CollisionGeometry.h"
+#include <random>
 #include "RadialTerrain.h"
 
 #include <cmath>
@@ -146,6 +149,81 @@ void FiniteMeshAndReplacement() {
           "failed capture is transactional and retains the previous accepted collision sample");
     Check(snapshot.CaptureToken() == token, "failed capture cannot replace the published sharing identity");
 }
+// Differential broadphase control: exhaustive native finite-feature queries,
+// without the snapshot's candidate rejection. Seed, geometry and tie order are fixed.
+void StaticCandidates() {
+    PhysicsWorld world;
+    world.Init();
+    for (int i = 0; i < 24; ++i) {
+        const auto rotation = glm::angleAxis(float(.071 * i), glm::normalize(glm::vec3(1, 2, 3)));
+        Shape shape;
+        switch (i % 5) {
+        case 0: shape = Shape::Cooked(Triangle(0, true), ""); break;
+        case 1: shape = Shape::Box({.3f, .6f, .2f}); break;
+        case 2: shape = Shape::Capsule(.2f, .7f); break;
+        case 3: {
+            CompoundBox child({1.1f, -.2f, .4f}, {.3f, .5f, .2f});
+            child.rotation = glm::angleAxis(.63f, glm::normalize(glm::vec3(2, -1, 3)));
+            child.key = 37;
+            shape = Shape::Compound({child});
+            shape.pivotOffset = {-.2f, .1f, .05f};
+            break;
+        }
+        default: shape = Shape::Sphere(.4f); break;
+        }
+        world.CreateShape(shape, {glm::vec3((i % 6) * 3 - 8, (i / 6) * 3 - 4, i % 2), rotation},
+                          false, 0, 0, 0);
+    }
+    CollisionSnapshot snapshot;
+    Capture(snapshot, world, 1);
+    std::mt19937 random(73481);
+    std::uniform_real_distribution<double> coordinate(-14, 14);
+    bool exact = true;
+    unsigned hits = 0, misses = 0;
+    for (int query = 0; query < 4096; ++query) {
+        const glm::dvec3 from(coordinate(random), coordinate(random), coordinate(random));
+        const glm::dvec3 to(coordinate(random), coordinate(random), coordinate(random));
+        const auto direction = to - from;
+        const double length = glm::length(direction), radius = (query % 5) * .025;
+        PrimitiveCastHit expected;
+        BodyHandle expectedBody;
+        std::uint32_t expectedChild = 0;
+        double fraction = 1;
+        for (const auto& c : snapshot.Colliders()) {
+            const auto& body = snapshot.Bodies()[c.bodyIndex];
+            Shape shape;
+            shape.type = c.kind; shape.radius = c.radius; shape.halfHeight = c.halfHeight;
+            shape.halfExtents = c.halfExtents; shape.asset = c.asset; shape.terrain = c.terrain;
+            RigidBody rigid;
+            rigid.position = glm::vec3(glm::dvec3(body.pose.position) +
+                ContactRotation(body.pose.rotation) * glm::dvec3(c.localCenter));
+            rigid.orientation = glm::normalize(body.pose.rotation * c.localRotation);
+            PrimitivePose primitive{shape, rigid, body.pose.position, body.pose.rotation,
+                c.localCenter, c.localRotation, c.childKey};
+            const auto hit = CastAgainstPrimitive(Shape::Sphere(float(radius)),
+                {glm::vec3(from), {1, 0, 0, 0}}, glm::vec3(direction / length), length, primitive, false);
+            if (!hit.hit) continue;
+            const double t = hit.distance / length;
+            if (!expected.hit || t < fraction || (t == fraction &&
+                std::make_pair(body.handle.id, c.childKey) < std::make_pair(expectedBody.id, expectedChild))) {
+                expected = hit; fraction = t; expectedBody = body.handle; expectedChild = c.childKey;
+            }
+        }
+        const auto actual = snapshot.SweepSphere(from, to, radius);
+        if (expected.hit) {
+            ++hits;
+            exact &= actual.status == CollisionQueryStatus::Hit && actual.fraction == fraction &&
+                actual.body.id == expectedBody.id && actual.childKey == expectedChild &&
+                actual.point == glm::dvec3(expected.point) && actual.normal == glm::dvec3(expected.normal) &&
+                actual.feature == expected.feature && actual.initialOverlap == expected.initialOverlap;
+        } else {
+            ++misses;
+            exact &= actual.status == CollisionQueryStatus::Miss;
+        }
+    }
+    Check(exact && hits > 100 && misses > 100,
+        "4096 seeded static candidate searches exactly match exhaustive native casts across rotated boxes, capsules, spheres, offset compounds and finite meshes");
+}
 void Moving() {
     PhysicsWorld world;
     world.Init();
@@ -233,6 +311,7 @@ int main() {
     try {
         Analytic();
         FiniteMeshAndReplacement();
+        StaticCandidates();
         Moving();
         FilteringAndFrames();
     } catch (const std::exception& error) {

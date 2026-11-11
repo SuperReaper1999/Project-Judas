@@ -4,6 +4,7 @@
 #include "CollisionGeometry.h"
 #include "Narrowphase.h"
 #include "PhysicsCastGeometry.h"
+#include "RadialTerrain.h"
 
 #include <algorithm>
 #include <cmath>
@@ -171,6 +172,7 @@ bool CollisionSnapshot::Capture(const PhysicsWorld& physics, const Aabb& domain,
                 error = "particle collision body/motion budget exceeded; previous snapshot retained";
                 return false;
             }
+            body.stationary = Stationary(body);
             body.entity = mapper ? mapper(handle) : 0;
             const auto bodyIndex = bodies.size();
             stats.motionSegments += body.motion.size();
@@ -204,6 +206,28 @@ bool CollisionSnapshot::Capture(const PhysicsWorld& physics, const Aabb& domain,
                     }
                 }
                 unsupported |= !Supported(c);
+                if (bodies.back().stationary && Supported(c)) {
+                    const auto prepared = Primitive(c, bodies.back().pose);
+                    glm::dvec3 center(0), half(0);
+                    if (c.asset) {
+                        center = (c.asset->minimum + c.asset->maximum) * .5;
+                        half = (c.asset->maximum - c.asset->minimum) * .5;
+                    } else if (c.kind == ShapeType::Box) {
+                        half = c.halfExtents;
+                    } else if (c.kind == ShapeType::Terrain) {
+                        half = glm::dvec3(c.terrain->BoundRadius());
+                    } else {
+                        half = glm::dvec3(c.radius);
+                        if (c.kind == ShapeType::Capsule) half.y += c.halfHeight;
+                    }
+                    const auto rotation = PrimitiveRotation(prepared);
+                    const auto worldCenter = PrimitiveCenter(prepared) + rotation * center;
+                    glm::dvec3 extent(0);
+                    for (int axis = 0; axis < 3; ++axis)
+                        extent += glm::abs(rotation[axis]) * half[axis];
+                    c.queryMinimum = worldCenter - extent;
+                    c.queryMaximum = worldCenter + extent;
+                }
                 const auto previous = previousGeometry.find((std::uint64_t(handle.id) << 32) | c.childKey);
                 c.geometryRevision = previous != previousGeometry.end() && SameGeometry(*previous->second, c)
                                          ? previous->second->geometryRevision : next++;
@@ -251,7 +275,7 @@ BodyTransform CollisionSnapshot::PoseAt(std::size_t index, double fraction) cons
 }
 
 bool CollisionSnapshot::IsStationary(std::size_t body) const {
-    return Stationary(m_bodies.at(body));
+    return m_bodies.at(body).stationary;
 }
 
 ParticleCollisionHit CollisionSnapshot::SweepSphere(glm::dvec3 from, glm::dvec3 to, double radius,
@@ -318,12 +342,23 @@ ParticleCollisionHit CollisionSnapshot::SweepSphere(glm::dvec3 from, glm::dvec3 
         // Concave finite-feature casts are already supported by the native
         // static kernel. A moving concave union / arbitrary terrain callback
         // needs its own certified motion query, never a frozen-pose substitute.
-        const bool stationary = Stationary(body);
+        const bool stationary = body.stationary;
         if ((c.kind == ShapeType::TriangleMesh || c.kind == ShapeType::Terrain) && !stationary) {
             best.status = CollisionQueryStatus::Unsupported;
             return best;
         }
         if (stationary) {
+            // Reject only disjoint candidates. Include native float cast rounding
+            // and convergence skins; grazing/contact decisions still use the
+            // unchanged finite-feature kernel, in the original collider order.
+            // Moving and unsupported geometry deliberately retain their policy.
+            const auto scale = glm::max(glm::max(glm::abs(from), glm::abs(to)),
+                glm::max(glm::abs(c.queryMinimum), glm::abs(c.queryMaximum)));
+            const auto padding = glm::dvec3(radius + 2 * std::max(tolerance, 1e-5)) +
+                16. * std::numeric_limits<float>::epsilon() * glm::max(scale, glm::dvec3(1));
+            if (glm::any(glm::lessThan(glm::max(from, to) + padding, c.queryMinimum)) ||
+                glm::any(glm::greaterThan(glm::min(from, to) - padding, c.queryMaximum)))
+                continue;
             const auto displacement = to - from;
             const double length = glm::length(displacement);
             try {
