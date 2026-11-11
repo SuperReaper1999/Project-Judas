@@ -1333,7 +1333,7 @@ void Renderer::PollProfileGPU(){
     for(auto& q:m_profileQueries){if(!q.pending||!q.ended||q.frame==p.FrameId())continue;
         GLint available=0;glGetQueryObjectiv(q.end,GL_QUERY_RESULT_AVAILABLE,&available);if(!available)continue;
         GLuint64 a=0,b=0;glGetQueryObjectui64v(q.begin,GL_QUERY_RESULT,&a);glGetQueryObjectui64v(q.end,GL_QUERY_RESULT,&b);
-        p.GPUComplete(q.frame,q.record,double(b>=a?b-a:0)/1e6);q.pending=q.ended=false;
+        p.GPUComplete(q.frame,q.record,double(b>=a?b-a:0)/1e6,a,b);q.pending=q.ended=false;
     }
 }
 

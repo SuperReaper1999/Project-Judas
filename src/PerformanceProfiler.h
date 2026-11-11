@@ -35,7 +35,7 @@ struct ProfileScopeRecord {
 struct ProfileCounterRecord {ProfileName name;double value=0;std::uint64_t observed=0;ProfileCounterMode mode=ProfileCounterMode::Latest;};
 struct ProfileThreadRecord {std::uint64_t id=0;ProfileName name;};
 struct ProfileFixedRecord {std::uint64_t id=0,start=0,end=0;double simulationSeconds=0;};
-struct ProfileGPURecord {std::uint64_t token=0,frame=0,camera=0;ProfileName pass;bool pending=true;double milliseconds=0;};
+struct ProfileGPURecord {std::uint64_t token=0,frame=0,camera=0;ProfileName pass;bool pending=true;double milliseconds=0;std::uint64_t submitted=0,gpuStart=0,gpuEnd=0;};
 struct ProfileLimits {
     static constexpr unsigned Threads=32,Labels=2048,Nodes=4096,Depth=64,LaneEvents=4096;
     static constexpr unsigned Frames=120,FrameEvents=2048,Counters=256,Steps=64,GPU=64,Spikes=8;
@@ -90,7 +90,7 @@ public:
     void Boundary(std::string_view);
     void GPUAvailability(bool,std::string_view reason);
     std::uint64_t GPUPending(std::string_view pass,std::uint64_t camera);
-    void GPUComplete(std::uint64_t frame,std::uint64_t token,double milliseconds);
+    void GPUComplete(std::uint64_t frame,std::uint64_t token,double milliseconds,std::uint64_t gpuStart=0,std::uint64_t gpuEnd=0);
     void DropGPU();
     std::vector<ProfileFrameSnapshot> History()const;
     std::vector<ProfileFrameSnapshot> Spikes()const;

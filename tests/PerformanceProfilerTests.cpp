@@ -25,7 +25,7 @@ int main(){unsigned checks=0,failed=0;auto check=[&](bool v,const char* msg){++c
  p.Clear();p.BeginFrame("startup",true,1000);{ProfileScope startup(a,false,1010);startup.End(40'001'000);}p.EndFrame(40'001'100);auto frozenSpike=p.Spikes().back();
  for(unsigned i=0;i<130;++i){p.BeginFrame("wrap",false,50'000'000+i*1000);{ProfileScope scope(a,false,50'000'010+i*1000);scope.End(50'000'500+i*1000);}p.EndFrame(50'000'800+i*1000);}
  check(p.History().size()==ProfileLimits::Frames,"frame history is bounded and wraps");check(p.Startup().startup&&p.Startup().scopes.size()==1,"startup is retained separately after ordinary history wraps");check(p.Spikes().back().id==frozenSpike.id&&frozenSpike.scopes.size()==1,"spike owns its data after ring wrapping");check(p.Summary().frames==120&&p.Summary().maximum>0,"bounded statistical window is explicit");
- p.Clear();p.BeginFrame("gpu",false,200'000'000);p.GPUAvailability(true,"synthetic test only");auto source=p.FrameId();auto token=p.GPUPending("camera",42);p.EndFrame(200'000'100);p.BeginFrame("later",false,200'001'000);p.EndFrame(200'001'100);p.GPUComplete(source,token,1.25);auto h=p.History();check(!h[0].gpu[0].pending&&h[0].gpu[0].frame==source&&h[1].gpu.empty(),"delayed GPU result updates its original frame only");p.Freeze(true);p.GPUComplete(source,token,2);check(p.History()[0].gpu[0].milliseconds==1.25,"GPU arrival cannot mutate frozen capture");p.Freeze(false);p.GPUAvailability(false,"headless");
+ p.Clear();p.BeginFrame("gpu",false,200'000'000);p.GPUAvailability(true,"synthetic test only");auto source=p.FrameId();auto token=p.GPUPending("camera",42);p.EndFrame(200'000'100);p.BeginFrame("later",false,200'001'000);p.EndFrame(200'001'100);p.GPUComplete(source,token,1.25,7000,1257000);auto h=p.History();check(!h[0].gpu[0].pending&&h[0].gpu[0].frame==source&&h[1].gpu.empty(),"delayed GPU result updates its original frame only");check(h[0].gpu[0].submitted>0&&h[0].gpu[0].gpuStart==7000&&h[0].gpu[0].gpuEnd==1257000,"GPU submission and device-clock endpoints retain independent timeline provenance");p.Freeze(true);p.GPUComplete(source,token,2);check(p.History()[0].gpu[0].milliseconds==1.25,"GPU arrival cannot mutate frozen capture");p.Freeze(false);p.GPUAvailability(false,"headless");
  std::mutex mutex;std::condition_variable cv;bool started=false,finish=false;
  p.Clear();p.BeginFrame("worker start");std::thread worker([&](){p.RegisterThread("Worker test");{ProfileScope scope(a);{std::lock_guard<std::mutex> l(mutex);started=true;}cv.notify_one();{std::unique_lock<std::mutex> l(mutex);cv.wait(l,[&](){return finish;});}}p.ReleaseThread();});{std::unique_lock<std::mutex> l(mutex);cv.wait(l,[&](){return started;});}auto workerFrame=p.FrameId();p.EndFrame();p.BeginFrame("worker completion");{std::lock_guard<std::mutex> l(mutex);finish=true;}cv.notify_one();worker.join();p.EndFrame();auto work=p.History().back();check(work.scopes.size()==1&&work.scopes[0].originFrame==workerFrame&&work.scopes[0].thread!=work.mainThread,"cross-frame workers retain lane/time/source frame rather than main nesting");
  p.Clear();p.BeginFrame("hot allocation");{ProfileScope warm(a);{ProfileScope warmChild(b);}}allocations=0;countAllocations=true;for(unsigned i=0;i<1000;++i){ProfileScope warm(a);{ProfileScope child(b);}}countAllocations=false;p.EndFrame();check(allocations==0,"warmed hot native scopes allocate no heap memory");
@@ -45,6 +45,19 @@ int main(){unsigned checks=0,failed=0;auto check=[&](bool v,const char* msg){++c
   double elapsed=double(PerformanceProfiler::Now()-begin)/1e6;std::printf("M56 native trial %u enabled %u: %.6f ms/frame including collection; %.3f ns/scope including collection (400 scopes/frame)\n",trial,unsigned(enabled),elapsed/160,elapsed*1e6/(160*400));
  }
  p.Enable(true);
+#ifdef _WIN32
+ _putenv_s("JUDAS_PROFILE", "1");_putenv_s("JUDAS_PROFILE_DEPTH", "2");
+#else
+ setenv("JUDAS_PROFILE", "1", 1);setenv("JUDAS_PROFILE_DEPTH", "2", 1);
+#endif
+ p.ConfigureEnvironment("bounded whole-frame capture");p.Clear();auto beforeDepth=p.Diagnostics();p.BeginFrame("coarse",false,100);{ProfileScope root(a,false,110);{ProfileScope child(b,false,120);{ProfileScope omitted(c,false,130);omitted.End(140);}child.End(150);}root.End(180);}p.EndFrame(200);
+ auto coarse=p.History().back();check(coarse.scopes.size()==2&&coarse.coverage==70&&p.Diagnostics().droppedEvents==beforeDepth.droppedEvents,"explicit coarse depth preserves enclosing timing without overflowing or unbalancing scopes");
+#ifdef _WIN32
+ _putenv_s("JUDAS_PROFILE_DEPTH", "");
+#else
+ unsetenv("JUDAS_PROFILE_DEPTH");
+#endif
+ p.ConfigureEnvironment("full capture");
  unsigned exhausted=0;for(unsigned i=0;i<ProfileLimits::Labels+10;++i)if(!p.Intern("synthetic bounded "+std::to_string(i)))++exhausted;check(exhausted>0&&p.Diagnostics().exhaustedLabels>0,"unique script-like labels cannot grow storage indefinitely");
  p.Enable(false);std::printf("M56 profiler %u checks %u failures; reserved %zu bytes\n",checks,failed,p.ReservedBytes());return failed?1:0;
 }

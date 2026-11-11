@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <chrono>
 #include <exception>
+#if defined(__linux__) && !defined(__ANDROID__)
+#include <pthread.h>
+#endif
 
 namespace {
 unsigned int DeriveWorkerCount(unsigned int requested) {
@@ -190,6 +193,10 @@ JobSystem::JobPtr JobSystem::TakeNextJobLocked() {
 }
 
 void JobSystem::WorkerLoop(unsigned int workerIndex) {
+#if defined(__linux__) && !defined(__ANDROID__)
+    const auto osName = "JudasWorker" + std::to_string(workerIndex);
+    pthread_setname_np(pthread_self(), osName.c_str());
+#endif
     auto& profiler=PerformanceProfiler::Get();
     profiler.RegisterThread("Resource worker " + std::to_string(workerIndex));
     struct ReleaseLane { ~ReleaseLane(){PerformanceProfiler::Get().ReleaseThread();} } releaseLane;
