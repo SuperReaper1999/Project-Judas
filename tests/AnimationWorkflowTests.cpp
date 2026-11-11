@@ -19,6 +19,8 @@
 #include <cstdio>
 #include <limits>
 #include <algorithm>
+#include <cstring>
+#include <glm/gtc/matrix_transform.hpp>
 static int checks=0,failures=0;
 void Check(bool ok,const char* label){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",label);}
 bool Near(glm::vec3 a,glm::vec3 b,float e=.003f){return glm::length(a-b)<e;}
@@ -61,6 +63,29 @@ int main(){namespace fs=std::filesystem;std::string error;bool overflow=false;
  Scene ikScene;bool ikLoaded=LoadSceneFromFile("tests/fixtures/ik/configuration.judas",ikScene,error);auto ik=ikLoaded&&ikScene.Find(10)&&ikScene.Find(10)->animation?ikScene.Find(10)->animation->fullBodyIK:std::optional<FullBodyIKSettings>{};FullBodyIKTarget pinned;pinned.id="root-clock";pinned.chain="palmB";pinned.space=IKTargetSpace::World;SceneTransform hand;world.JointPose(10,"PalmB","world",1,hand);pinned.position=glm::dvec3(hand.position+glm::vec3(-.08f,.04f,0));if(ik)ik->targets={pinned};bool configured=ik&&world.ConfigureFullBodyIK(10,ik,error);Check(configured,"existing M70 shared IK mapping composes with extracted-motion performer");
  if(configured){bool advanced=world.AdvanceAnimation(10,.05f,error);float phase=a->playback.time;auto* m=world.RuntimeCharacter(10);m->velocity={0,0,0};m->displacementIntent=a->step.motion.translation;world.UpdateCharacters(.05f,true,false);world.PrepareAnimationReferences(.05f);world.UpdateAnimations(.05f);Check(advanced&&a->playback.time==phase&&a->finalPose.local.size()==a->asset->skeleton.rest.local.size(),"manual animation, pre-physics IK references and final pose advance exactly once");SceneTransform actual;bool held=world.JointPose(10,"PalmB","world",1,actual);float distance=glm::length(actual.position-glm::vec3(pinned.position));std::printf("ROOT_IK shared_world_error=%.9f\n",distance);Check(held&&distance<.01f,"shared world-space IK is resolved after root-motion motor movement");world.ConfigureFullBodyIK(10,std::nullopt,error);}
  auto disabledScene=scene;for(auto& o:disabledScene.Objects()){o.scripts.clear();o.ui.reset();if(o.animation)o.animation->enabled=false;}RuntimeWorld disabled;Check(disabled.Build(disabledScene,&resources,error)&&!disabled.AdvanceAnimation(10,.1f,error),"disabled animation refuses explicit advancement");disabled.Destroy();
+ // Exercise shared hierarchy preparation through real world instances. Reconstruct
+ // each result with the former two independent hierarchy evaluations, checking
+ // raw float components rather than a loose visual tolerance.
+ {
+  Scene crowd;auto definition=*scene.Find(10);definition.characterMotor.reset();definition.scripts.clear();
+  for(int i=0;i<32;++i){auto copy=definition;copy.id=2000+i;copy.animation->clip="Walk";crowd.InsertObject(copy);}
+  {
+   RuntimeWorld batch;bool exact=batch.Build(crowd,&resources,error);batch.UpdateAnimations(0);
+   for(int step=0;step<30&&exact;++step){
+    batch.UpdateAnimations(1.f/60);
+    for(int i=0;i<32&&exact;++i){auto* actor=batch.RuntimeAnimation(2000+i);if(!actor||!actor->asset){exact=false;break;}
+     const auto skin=ResolveSkinMatrices(actor->asset->skeleton,actor->finalPose);
+     auto joints=ResolveJointMatrices(actor->asset->skeleton,actor->finalPose);
+     const auto& t=crowd.Find(2000+i)->transform;
+     const auto model=glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);
+     for(auto& joint:joints)joint=model*joint;
+     const auto same=[](const auto& a,const auto& b){if(a.size()!=b.size())return false;for(size_t n=0;n<a.size();++n)for(int c=0;c<4;++c)for(int r=0;r<4;++r)if(std::memcmp(&a[n][c][r],&b[n][c][r],sizeof(float)))return false;return true;};
+     exact=same(skin,actor->skin)&&same(joints,actor->recentWorld);
+    }
+   }
+   Check(exact,"real crowd shared hierarchy skin and joint motion match original independent evaluations bit-for-bit");batch.Destroy();
+  }
+ }
  for(int n:{1,32,100}){
   Scene workload;auto definition=*scene.Find(10);definition.characterMotor.reset();definition.scripts.clear();for(int i=0;i<n;++i){auto copy=definition;copy.id=1000+i;copy.animation->clip="Walk";workload.InsertObject(copy);}
   RuntimeWorld benchmark;Check(benchmark.Build(workload,&resources,error),"animation scale workload uses normal world instances");benchmark.UpdateAnimations(0);

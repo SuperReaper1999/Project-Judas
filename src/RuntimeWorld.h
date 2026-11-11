@@ -465,7 +465,7 @@ public:
     bool SetPoseContribution(EntityId,const std::string&,const PoseContribution&,std::string& error);
     void RemovePoseContribution(EntityId,const std::string&);
     bool SetAnimationLayer(EntityId,const AnimationLayerSettings&,bool remove,std::string& error);
-    void ResolveAnimationPose(AnimationInstance&,float dt);
+    void ResolveAnimationPose(AnimationInstance&,float dt,bool prepareSkin=true);
     bool AdvanceAnimation(EntityId,float seconds,std::string& error);
 
     struct RagdollMappedBody {int node=-1,parent=-1;EntityId entity=0;BodyHandle body;glm::vec3 offset{0},scale{1};glm::quat orientation{1,0,0,0};};

@@ -30,9 +30,12 @@ std::vector<glm::mat4> ResolveJointMatrices(const Skeleton& s,const SkeletalPose
  for(int i:s.order){const auto& p=pose.local[i];auto local=glm::translate(glm::mat4(1),p.translation)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale);if(!s.affine.empty())local=s.affine.at(i)*local;global[i]=s.parents[i]<0?local:global[s.parents[i]]*local;}
  return global;
 }
-std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton& s,const SkeletalPose& pose){
- auto global=ResolveJointMatrices(s,pose);
+std::vector<glm::mat4> ResolveSkinMatricesFromGlobals(const Skeleton& s,const std::vector<glm::mat4>& global){
+ if(global.size()!=s.parents.size())throw std::invalid_argument("global matrices do not match skeleton");
  std::vector<glm::mat4> skin;skin.reserve(s.skinNodes.size());for(size_t i=0;i<s.skinNodes.size();++i)skin.push_back(global[s.skinNodes[i]]*s.inverseBind[i]);return skin;
+}
+std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton& s,const SkeletalPose& pose){
+ return ResolveSkinMatricesFromGlobals(s,ResolveJointMatrices(s,pose));
 }
 SkeletalPose AnimationPlayback::Evaluate(const SkeletalAsset& asset,float dt){
  if(stopped)return asset.skeleton.rest;

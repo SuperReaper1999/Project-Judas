@@ -61,7 +61,7 @@ const std::vector<glm::mat4>* RuntimeWorld::AnimationSkin(EntityId id,float alph
  if(alpha>=1||!a.preparedM70||!a.asset||a.previousFinalPose.local.size()!=a.finalPose.local.size())return &a.skin;
  a.presentedSkin=ResolveSkinMatrices(a.asset->skeleton,PresentedAnimationPose(id,alpha));return &a.presentedSkin;
 }
-void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
+void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt,bool prepareSkin){
  JUDAS_PROFILE_SCOPE("Final pose resolution");if(!instance.asset)return;
  const auto& skeleton=instance.asset->skeleton;
  // M70 references are evaluated exactly once at the fixed boundary. Physical
@@ -90,7 +90,7 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
  std::vector<std::pair<std::string,const PoseContribution*>> physical;for(const auto& [key,c]:instance.external)if(c.order>=1000)physical.push_back({key,&c});
  std::stable_sort(physical.begin(),physical.end(),[](const auto& a,const auto& b){return std::tie(a.second->order,a.first)<std::tie(b.second->order,b.first);});
  for(const auto& source:physical)instance.finalPose=ResolvePose(skeleton,instance.finalPose,{*source.second});
- instance.skin=ResolveSkinMatrices(skeleton,instance.finalPose);
+ if(prepareSkin)instance.skin=ResolveSkinMatrices(skeleton,instance.finalPose);
 }
 void RuntimeWorld::PrepareAnimationReferences(float dt){
  for(auto id:m_animationOwners){const auto* d=RuntimeDefinition(id);if(!d||!d->animation||!d->animation->enabled)continue;
@@ -107,14 +107,29 @@ void RuntimeWorld::PrepareAnimationReferences(float dt){
   auto* a=RuntimeAnimation(id);if(!a||!a->asset)continue;a->previousFinalPose=a->finalPose;if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}a->preparedM70=false;ResolveAnimationPose(*a,dt);a->preparedM70=true;
  }
 }
-void RuntimeWorld::UpdateAnimations(float dt){
-    JUDAS_PROFILE_SCOPE("Animation instances");
- for(auto id:m_animationOwners){const auto* definition=RuntimeDefinition(id);if(!definition){m_animationInstances.erase(id);continue;}
-  auto* instance=RuntimeAnimation(id);if(instance&&instance->asset&&definition->animation->enabled){ResolveAnimationPose(*instance,(instance->preparedM70||instance->scriptAdvanced)?0:dt);
-   if(dt>0){instance->previousWorld=instance->recentWorld;auto transform=PresentedTransform(id,definition->transform,1);auto model=glm::translate(glm::mat4(1),transform.position)*glm::mat4_cast(transform.rotation)*glm::scale(glm::mat4(1),transform.scale);instance->recentWorld=PoseGlobalMatrices(instance->asset->skeleton,instance->finalPose);for(auto& m:instance->recentWorld)m=model*m;instance->motionDt=dt;}
-   if(instance->scriptAdvanced)instance->preparedM70=true;
-   instance->scriptAdvanced=false;
+void RuntimeWorld::UpdateAnimations(float dt) {
+ JUDAS_PROFILE_SCOPE("Animation instances");
+ for (auto id : m_animationOwners) {
+  const auto* definition = RuntimeDefinition(id);
+  if (!definition) { m_animationInstances.erase(id); continue; }
+  auto* instance = RuntimeAnimation(id);
+  if (!instance || !instance->asset || !definition->animation->enabled) continue;
+  // Joint motion and skinning consume the same final pose. Evaluate the
+  // hierarchy once, retaining the original owner order and all IK decisions.
+  ResolveAnimationPose(*instance, (instance->preparedM70 || instance->scriptAdvanced) ? 0 : dt, dt <= 0);
+  if (dt > 0) {
+   instance->previousWorld = instance->recentWorld;
+   const auto transform = PresentedTransform(id, definition->transform, 1);
+   const auto model = glm::translate(glm::mat4(1), transform.position) *
+                      glm::mat4_cast(transform.rotation) * glm::scale(glm::mat4(1), transform.scale);
+   auto globals = ResolveJointMatrices(instance->asset->skeleton, instance->finalPose);
+   instance->skin = ResolveSkinMatricesFromGlobals(instance->asset->skeleton, globals);
+   for (auto& matrix : globals) matrix = model * matrix;
+   instance->recentWorld = std::move(globals);
+   instance->motionDt = dt;
   }
+  if (instance->scriptAdvanced) instance->preparedM70 = true;
+  instance->scriptAdvanced = false;
  }
 }
 bool RuntimeWorld::AdvanceAnimation(EntityId id,float seconds,std::string& error){

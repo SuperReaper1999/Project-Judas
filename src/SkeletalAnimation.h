@@ -28,6 +28,8 @@ struct SkeletalAsset {Skeleton skeleton;std::vector<AnimationClip> clips;};
 SkeletalPose SampleClip(const Skeleton&,const AnimationClip&,float time);
 std::vector<glm::mat4> ResolveJointMatrices(const Skeleton&,const SkeletalPose&);
 std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton&,const SkeletalPose&);
+// Reuse one validated hierarchy evaluation for skinning and joint-motion data.
+std::vector<glm::mat4> ResolveSkinMatricesFromGlobals(const Skeleton&,const std::vector<glm::mat4>&);
 // Instance playback is one pose producer. RuntimeWorld composes copied pose
 // contributions; Renderer depends only on the final resolved pose, not this player.
 struct AnimationPlayback {
