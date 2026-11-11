@@ -79,7 +79,7 @@ speedometer, launch settings and obstacles make follow-up reproduction explicit.
   exactly. The damaged truck had 11 broken connections and detached panels.
   A diagnostic copy serialized its expected values; the delivered ordinary
   gameplay script has no test oracle or synthetic damage logic.
-- Clean private export: 48 assets, one scene, 310274413 packaged bytes; moved
+- Clean private export: 55 assets, one scene, 650781428 packaged bytes; moved
   and executed with the complete engine checkout and private source collection
   hidden. All four selections and truck driving/orbit ran without diagnostics.
   This uses the already-qualified local engine/SDK at `94907829`; the follow-up
@@ -102,3 +102,39 @@ and moving; try progressively stronger launches against the different obstacles;
 check that detached debris stays independent; save damaged state, exit and load.
 The Ural driving rig and controls await this review. The reported minor-impact
 bonnet behaviour remains a follow-up reproduction item, not a claimed fix.
+
+
+## Corrected asset selection and removal of superseded projects
+
+The first yard at `a094db0b` incorrectly assembled the pre-fidelity sibling
+projects, rather than the accepted `Stage234-Acceptance/Fidelity-Projects` sources.
+Its visual checks were insufficient: the Shelby's white tyre/specular diffuse
+input and the Blazer's transparent interior materials reappeared. This was a
+private project assembly regression, not a new renderer or importer defect.
+The earlier statement that accepted model presentation was preserved is withdrawn.
+
+The yard now copies the corrected Challenger, Shelby and Blazer inputs directly
+from `Fidelity-Projects`; 75 copied asset/metadata files are hash-checked against
+those sources in the private `ASSET_PROVENANCE.json`. The Shelby includes its
+corrected direct-source geometry, calipers and interior; corrected opaque
+interior/rubber, glass and normal/material maps are retained. Close-up native
+1600x900 captures verify the restored wheels and visible interiors on both cars.
+The supplied model downloads have not been modified or redistributed.
+
+The assembler now has one explicit corrected source set, records provenance,
+fails on conflicting asset identities and refuses to overwrite an editable yard.
+It no longer imports the source projects' obsolete test-wall objects.
+
+Per operator instruction, the three pre-fidelity sibling project directories and
+the superseded yard/prototype/export/test copies were deleted after replacement
+qualification. Eight generated directories were removed (1,823,948,800 allocated
+bytes); the corrected yard/export occupy the existing canonical launcher paths.
+The private removal receipt lists every path and measured size. Accepted source
+projects, original downloads, performance fixtures, logs and current user data
+remain. No compatibility paths or substitute broken copies were retained.
+
+Cold-process damage-state comparison and relocated standalone qualification were
+repeated against the corrected content. Earlier visual captures of the defective
+yard are superseded by `corrected-shelby-close.png` and
+`corrected-blazer-close.png` in the private review folder. Automated checks do
+not constitute human acceptance of the corrected yard.
