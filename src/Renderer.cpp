@@ -428,6 +428,7 @@ void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int han
 }
 
 void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
+    JUDAS_PROFILE_SCOPE("Pose palette upload");
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if(!m_poseTexture)glGenTextures(1,&m_poseTexture);
     glActiveTexture(GL_TEXTURE15);glBindTexture(GL_TEXTURE_2D,m_poseTexture);

@@ -120,3 +120,51 @@ This is a modest real whole-frame improvement, not achievement of 120 FPS or the
 quality were not reduced. Other audit/optimisation work and full qualification
 remain in progress. Raw trials and exact controls are under
 `.cache/whole-engine-performance/` and are not public model assets.
+
+## Animation preparation experiment (ongoing qualification)
+
+The runtime computed the final joint hierarchy twice per animation update:
+once for the skin palette, then again for world-space joint motion. Sharing that
+evaluation preserves the exact matrix operations and actor publication order.
+The simplified serial implementation is undergoing affected regression checks.
+
+A bounded helper on the existing worker pool was tested and **removed**. Pure
+matrix work fell from about 0.79 to 0.44 ms per fixed step with four lanes, but
+three interleaved 30-second whole-application pairs gave these median results:
+
+| Same shared calculation | Average FPS | p95 ms | p99 ms |
+|---|---:|---:|---:|
+| One lane | 121.11 | 10.38 | 11.14 |
+| Four lanes | 120.10 | 10.38 | 11.54 |
+
+The worker version therefore did not establish a net whole-game improvement.
+Its runtime integration and helper API were removed, rather than retained for
+CPU-utilisation figures. Raw captures, tested source patch and negative result
+remain in ignored audit evidence. These numbers are experiment results, not
+qualification of the final simplified implementation or a 120-FPS p99 pass.
+
+## Reproduction and future regression checks
+
+`tools/benchmarks/prepare_workloads.py --revision COMMIT --out NEW_DIRECTORY`
+extracts tracked benchmark projects at an exact revision, without copying local
+terrain edits or private models. It creates the populated renderer case, a
+129-performer crowd and the authored 100,000-particle stress case. The normal
+terrain copy is explicitly the small workshop, not a terrain-heavy workload.
+`WORKLOADS.json` records file hashes; pass it as `--workload-manifest` to the runner
+to reject modified inputs before measurement. Private crash projects and the
+large-terrain fixture remain separate declared workloads.
+
+`tools/benchmarks/report_capture.py CAPTURE_DIRECTORY` reports actual frame
+statistics, per-thread CPU use, memory, phase observations and GPU command
+intervals. Calibrated CPU/GPU traces are exported where available. The reports
+explicitly prohibit summing nested scopes or overlapping processors.
+
+`performance/comparison.py` requires three matched captures per revision and
+checks the median p99 against a declared regression allowance (default 10%). It
+rejects mismatched content, resolution, hardware, driver, graphics policy,
+profiling policy, short captures and dropped diagnostic records. Absolute frame
+budgets and exceptional worst frames are separate from regression acceptance.
+The metric and comparison logic runs in focused CI; hardware performance results
+still require actual reference-desktop execution and are not certified by a
+generic CI runner. Broader workload coverage and final SDK/CI qualification are
+still outstanding.

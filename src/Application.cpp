@@ -163,6 +163,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         ProfileFrame outerProfile("standalone");
         RuntimeWorld& world=*worldOwner;
         if (control && control->beforeFrame) control->beforeFrame(host, world, play);
+        RendererProfileScope wholeGPU(renderer,"Whole runtime frame");
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
         if(window.ShouldClose())break;
         if(window.ConsumeLifecycleClockReset())previousCounter=SDL_GetPerformanceCounter();
