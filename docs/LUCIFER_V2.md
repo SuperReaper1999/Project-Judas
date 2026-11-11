@@ -31,7 +31,7 @@ handover; this document does not establish human acceptance.
   relevance selection, the 1024-source/128-per-tile limits and observable overflow
   are preserved. GPU packing retains exact CPU record/index ordering. Three
   reusable input/output pairs have a 96 MiB allocation ceiling. Small lists use
-  CPU packing; auto chooses compute at 128 authored entries. This is a measured
+  CPU packing; auto chooses compute at 128 submitted entries. This is a measured
   heuristic, not a claim that GPU work is always faster.
 - Light-list shaders are statically specialised. Failed compute preparation falls
   back to CPU-filled SSBOs. Failed publication on both paths is reported rather
