@@ -49,7 +49,7 @@ of total CPU time. No diagnostic callback runs unless explicitly installed.
 
 ## Controlled changes and decisions
 
-- **Retained provisionally:** 4,096 exact geometry observations and 4,096 exact
+- **Retained:** 4,096 exact geometry observations and 4,096 exact
   root-search observations per world, two-way sets with least-recent replacement.
   Existing exact keys, pass epochs, participating trajectory revisions and
   owner-thread event ordering are unchanged. No interval widening, sampled-negative
@@ -94,12 +94,46 @@ relabelled as a mathematically complete continuous-contact proof. Existing
 near-miss, grazing, fast-spin, large-origin, trajectory-reversal and contact
 negative controls remain required.
 
-## Qualification status
+## Qualification
 
-The extended anchor/cache/observer controls currently pass **28 checks**. All
-nine matched candidate cases retain their accepted exact physical-state hashes.
-Full gates, CI, fresh SDK and final playable handover are still being completed;
-this paragraph is not a passing receipt for pending work.
+Engine implementation: **`d07e22363f385089156fa43b4ba71ba021e39b5e`**.
+The final documentation checkpoint and matching refreshed Linux SDK are identified
+in the handover receipt; subsequent documentation changes do not change engine code.
+
+- **184/184 native Experimental gates passed**, zero failures, 242.98 seconds.
+  This covers current editor/scripting/rendering/portable paths, MK2, vehicles,
+  terrain, particles, water policy, networking and persistence.
+- New exact-cache/observer controls: **28 passed**, now a registered focused CI
+  gate. Independent rotating/motion bounds: **470,408 passed**; existing
+  deterministic parallel narrowphase controls: **55 passed**.
+- [Engine CI 42923650169](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42923650169)
+  completed successfully: Experimental **184 passed**; Alpha **180 passed plus
+  four expected locked-water skips**. Both channel jobs completed; no pending
+  job is counted as passing. The Ubuntu 24.04 SDK checks passed.
+- [Tooling CI 42923650159](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42923650159)
+  and [documentation CI 42923650223](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42923650223)
+  passed at the implementation checkpoint.
+- Linux SDK: **15 public tools**, **39 tool operations**, eight orchestration
+  checks; fresh editor project creation, Play/Stop, integrity before/after and
+  moved editor/CLI exports passed. An outer read-only mount namespace hid the
+  checkout and private projects. The orchestrator's `packageOnlyNamespaces` flag
+  is false because its separate `--rootfs` option was not used; do not confuse
+  that flag with the actual outer isolation.
+- An additional real private car export used only SDK tools, was moved, then ran
+  in separate source-hidden write/read processes. Permanent bonnet bend
+  **1.5111538670469509 radians** and all three released mounts restored exactly.
+  No private vehicle data is in Git or the public SDK.
+- Windows MinGW/GNU 13: all **16 public Windows tools**, the new CCD controls,
+  MK2, parallel-query and motion-bound controls compile. Static SDK integrity and
+  **26 PE/dependency/export contracts pass**. No Windows executable was run on
+  Linux. This is not native Windows/MSVC qualification.
+- No new Android, browser, controller, audio-hardware or clean-machine execution
+  is claimed. The local Linux SDK uses host glibc 2.43 and remains an unsupported
+  preview; CI's separate Ubuntu SDK establishes its own baseline.
+- The post-commit nine-case rerun also matches all nine exact hashes. Two cold
+  continuations, each another 900 steps in fresh accepted/candidate processes,
+  match full final hashes. No gameplay/API break or physical simplification was
+  introduced. The native observer is an optional diagnostic addition.
 
 ## Matched measurements
 
@@ -194,3 +228,120 @@ This supplements the nine original hashes; it does not replace SDK/export checks
 Remaining hitches are real. Neither a 130-ms debris step nor a 95-ms four-car step
 is a 60-Hz result. Continuous advancement and contact response remain dominant;
 this pass does not claim to have eliminated severe-impact hitching.
+
+## Individual pairs and resweeps
+
+Representative accepted-baseline worst steps; IDs are physics body handles, not
+scene entity IDs. All these pairs are offset compound Box/Box sections.
+Unknown classifications include exact root-cache hits and early bound rejections;
+no extra contact evaluation was introduced solely to fill a diagnostic category.
+
+| Workload / step | Pair | Calls / cache hits | Trajectory-key changes | Cumulative search ms | Known separated / touching-or-overlapping |
+| --- | --- | ---: | ---: | ---: | ---: |
+| frontal / 130 | 3 / 7 | 435 / 221 | 127 | 13.348 | 97 / 117 |
+| four-car / 134 | 1 / 25 | 542 / 166 | 173 | 20.670 | 372 / 4 |
+| debris / 426 | 14 / 15 | 482 / 272 | 11 | 9.695 | 210 / 0 |
+
+The slowest frontal root queried bodies 2/8 over
+`[0.001895693305414172, 0.003316348986118103]` seconds, starting separated;
+29 advancement iterations and 36 sampling tests cost 0.199 ms. The slowest debris
+root queried 1/10 over `[0, 0.004166666883975267]`, starting touching/overlapping;
+59 iterations and zero sampling tests cost 0.216 ms. The all-query time-interval
+and cost histograms and the 32 slowest roots per step remain in raw JSONL.
+Repeated actual trajectory changes explain why retaining old pair results across
+arbitrary later searches would be incorrect.
+
+## Cold-restored continuation timings
+
+The same saved input bytes were restored before each executable, then 900 further
+steps ran without concurrent build/test jobs. These are continuations of damaged
+vehicles, not a claim that a fresh severe impact was added to each restored case.
+Both initial and final full physical hashes agree. Milliseconds:
+
+| Workload | p50 | p95 | p99 | Maximum |
+| --- | ---: | ---: | ---: | ---: |
+| frontal-30 | 1.587 → 1.583 | 2.203 → 2.204 | 2.347 → 2.357 | 2.408 → 2.412 |
+| debris-four | 4.530 → 4.560 | 6.043 → 6.050 | 6.274 → 6.277 | 6.546 → 6.318 |
+
+All four continuations have zero steps above 16.7, 33.3, 50 or 100 ms. Per-step CSVs
+are retained. Cold restoration remains correct; no meaningful speedup is claimed
+for these already quiet continuations.
+
+## Presentation, genuine four-way and memory
+
+Actual desktop: GTX 970, 4,096 MiB, NVIDIA 580.178.04, OpenGL 4.6; CPU confirmed
+Ryzen 5 5600, 12 logical lanes. A bounded private SDL swap interposer measured
+end-to-end presented-frame intervals in identical accepted/candidate runs.
+These include compositor/swap waiting and multiple fixed steps when catching up;
+they are not GPU execution time. GPU timestamps were disabled in these unprofiled
+runs, so no new GPU-time improvement is claimed. Render CPU and mapping/upload
+summaries remain available separately.
+
+The first frontal presented maximum was **69.050 → 62.439 ms**, and four-car
+**235.913 → 215.864 ms**. The four-car p99 initially worsened **12.282 → 15.823 ms**;
+that result was retained and prompted alternating repeats, rather than being hidden.
+
+| Four-car repeat | Presented p50 | p95 | p99 | Maximum |
+| --- | ---: | ---: | ---: | ---: |
+| candidate-a | 9.996 | 10.801 | 12.244 | 214.988 |
+| accepted-a | 9.996 | 10.758 | 12.250 | 235.059 |
+| accepted-b | 9.996 | 10.783 | 12.070 | 234.084 |
+| candidate-b | 9.995 | 10.906 | 14.824 | 220.407 |
+
+Accepted repeats have 7–8 frames above 16.7 ms and five above 33.3 ms; candidate
+repeats have 7–10 and 3–4 respectively. Longest above-33.3 sequences reduce from
+four to three frames, while all four runs still contain three frames above 50 ms
+and one above 100 ms. Therefore **lower severe maxima do not imply uniformly
+better rendered p99 or removal of visible hitches**. No renderer change is claimed.
+
+The genuine four-way fixture uses four approaching physical cars. Its complete
+96-part/interface/panel state and captured PNG are **exactly identical**. The
+fixed-step harness intentionally renders only requested captures and does not
+swap: the initial frame-recorder assertion failed because it expected swaps;
+that failed attempt is preserved, not called an engine failure. Its existing
+profiler's completed fixed-step clocks cover the same **119 steps, IDs 42–160**,
+including the collisions, rather than the first 41 quiet steps:
+
+| Genuine four-way, captured fixed steps | p50 | p95 | p99 | Maximum |
+| --- | ---: | ---: | ---: | ---: |
+| accepted → candidate | 7.924 → 8.089 | 33.955 → 32.581 | 78.168 → 63.157 | 103.237 → 84.036 |
+
+Both captures report 3,797 truncated nested scope records, but no incomplete
+fixed-step clock. These are diagnostic-window statistics, not a complete 160-step
+phase census or presented-frame measurement. The headline nine-case tables remain
+unprofiled. No missing individual scope was invented or treated as zero work.
+
+Whole-process headless peak RSS spans **988,348–989,804 KiB** accepted and
+**988,716–990,292 KiB** in the committed candidate rerun. Loading/cooking the large
+private model dominates the high-water mark; it masks the independently measured
++2,670,592-byte per-world cache increase. No RSS reduction or asset-size reduction
+is claimed. No new asset format or cooked data was needed.
+
+## Human acceptance handover
+
+Local review project:
+`/home/conner/Projects/Judas_Deformables_V2_Crash_Proof/Performance2-d07e2236-Acceptance/`.
+Its `REVIEW_READY.json` records exact final code/documentation/SDK/artifact identities.
+The earlier accepted projects and executables remain separate. Downloaded models
+and local packages remain private and must not be redistributed.
+
+1. Run `Play-Challenger.sh`. Drive/reverse/steer/brake normally, then make severe,
+   offset and repeated impacts. Compare local bending, mounts, detachment and debris
+   with the accepted build; assess hitching honestly rather than only the FPS average.
+2. Run `Controlled-Crash.sh frontal 30 1`, then `Controlled-Crash.sh cars 20 4`.
+   `P` pauses, Enter launches the declared controlled condition, Q/E orbit,
+   F6 saves; ordinary W/S, A/D and Space use actual wheels/powertrain.
+3. Run `Watch-Four-Way.sh` to inspect four actual approaching vehicles. `1`–`4`
+   select a vehicle; the fixture supplies only the declared initial impulse.
+4. In the normal editable project, **K** saves, close the process, reopen and **L**
+   loads. Inspect permanent damage, detached parts, wheel behaviour and driving.
+5. Run `Edit-Challenger.sh` for the matching SDK editor and normal Play/Stop.
+   The separate automated cold export uses its own test-only physical launch input;
+   it is not the normal human driving project.
+
+Known camera-follow bobbing and private component/window authoring imperfections
+remain deliberately accepted demo limitations. No asset polishing, Lucifer work,
+main promotion, release tag, publication or RPG SDK update is part of this pass.
+Further collision-search improvements remain possible, especially carefully proved
+offset sweeps and deterministic independent work; neither is being sold as completed.
+**This second optimisation pass stops awaiting the operator's human acceptance.**

@@ -264,5 +264,5 @@ The accepted 69677c8c project and executables remain separate.
 
 Known private camera/door authoring limitations remain deliberately untouched.
 The operator explicitly accepted this first optimisation pass at `f0990a9e`.
-A separately authorised [second collision-search pass](MK2_COLLISION_SEARCH_OPTIMISATION.md) is now in progress.
+A separately authorised [second collision-search pass](MK2_COLLISION_SEARCH_OPTIMISATION.md) is complete and awaits its own human review.
 Main promotion and publication are outside this task.
