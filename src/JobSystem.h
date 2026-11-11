@@ -48,9 +48,10 @@
 // are asked to cancel and are waited for, workers are joined. This is
 // deterministic and never returns with a worker alive.
 //
-// Waiting: Wait/WaitAll block the caller on a condition variable — for
-// tests, tools and shutdown. The runtime never has to: it polls state or
-// consumes results at its own frame boundary.
+// Waiting: resource consumers poll or publish at a frame boundary. Independent
+// frame-critical data batches may use ParallelFor: the caller works alongside
+// helpers and joins before ordered publication. Wait/WaitAll remain available
+// for tools, tests and shutdown.
 enum class JobPriority { High = 0, Normal = 1, Low = 2 };
 enum class JobState { Unknown, Queued, Running, Completed, Failed, Cancelled };
 
@@ -98,8 +99,19 @@ struct JobStats {
     double elapsedSeconds = 0.0;
 };
 
+struct JobBatchStats {
+    std::size_t ownerItems=0,workerItems=0;
+    unsigned submitted=0;
+};
+
 class JobSystem {
 public:
+    // Independent DATA outputs only. The caller participates, joins every job
+    // and then publishes in its own order. This also works inside a pool job:
+    // queued helpers are cancelled after the owner exhausts the range, avoiding
+    // a nested-worker starvation deadlock. Exceptions join before propagating.
+    JobBatchStats ParallelFor(std::size_t count,std::size_t grain,unsigned lanes,
+                              const std::function<void(std::size_t)>&,const std::string& name);
     // `workerCount` 0 derives a count from the hardware: concurrency - 1
     // (one core is left for the simulation/render thread), at least 1,
     // at most kMaxWorkers.

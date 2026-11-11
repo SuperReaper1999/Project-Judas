@@ -258,3 +258,70 @@ budget, while its observed maximum still slightly exceeds 8.33 ms.
 
 These are incremental experiment results. Final matched original/current runs,
 broader workloads and qualification remain required.
+
+## Coarse independent full-body IK: useful worker batching
+
+The rejected matrix-only worker experiment is not the final word on animation
+parallelism. Profiling the actual crowd plus 16 four-contact IK actors identified
+about 8 ms of serial pose preparation per fixed boundary. The retained candidate
+batches **pure full-body solves**, not authoritative world mutation. The owner
+samples animation, converts world targets and prepares mappings; workers read
+immutable inputs and produce separate results. The owner publishes in original
+order before physics. Parent/socket consumers flush preceding work first.
+Batches contain at most 32 actors and borrow at most three existing workers;
+the owner participates. Queued helpers are cancelled and running helpers joined
+before inputs expire, including exceptions and nested single-worker calls.
+No new pool, asynchronous pose latency or worker-ordered physics was introduced.
+`JUDAS_ANIMATION_LANES=1|2|3|4` is a bounded diagnostic override; default is four.
+
+Actual NVIDIA whole-application captures, 1280x720, VSync off, same frozen
+129-character/16-IK project, three interleaved 30-second runs per lane count:
+
+| Lanes including owner | Median average FPS | p50 ms | p95 ms | p99 ms | Median run maximum ms |
+|---|---:|---:|---:|---:|---:|
+| 1 | 78.87 | 15.03 | 15.79 | 17.26 | 53.31 |
+| 2 | 128.21 | 4.34 | 11.91 | 12.50 | 21.37 |
+| 4 | 150.63 | 4.44 | 10.44 | 11.00 | 15.11 |
+
+The one-lane runs had differing unrelated host activity (about 0.15–0.97 core
+equivalents), which is retained in the evidence. Even the quietest one-lane
+run was 83.57 FPS versus 149.65–151.20 with four lanes. This supports a useful
+whole-game gain, not an exact universal percentage. The four-lane p99 meets
+60 FPS but **does not meet 120 FPS**. Its worst observed frame was 19.52 ms,
+including a three-frame 54.59 ms hitch sequence in the first run. No simulation
+backlog was discarded and no profiler events were lost.
+
+Process CPU use rose from about 1.00 to 1.43 core equivalents, while device-wide
+GPU activity including warmup rose from about 41–45% to 77–79%. Workers recorded
+13.55–13.65 seconds inside their solve callables per 30-second capture. This
+is useful overlap, not a claim that all cores are continuously busy. Peak
+sampled RSS rose from about 140 MiB to 157–158 MiB; longer memory qualification
+remains outstanding. Source output packet storage is bounded; platform allocator
+and active worker overhead are included in those measured resident figures.
+
+New native controls pass **135/135**: one/two/four-lane exact pose bits, clocks,
+residuals, rejected stale mappings, parent/socket dependencies, nested batches,
+exceptions and pool shutdown. Existing animation workflow passes 60/60 and
+multi-target IK 38/38. Worker, skeletal, pose and physical-animation regressions also pass; separate-process
+animation cold write/read pass 8/8 each. Full-engine/SDK/editor and final CI
+qualification remain outstanding. These results do not claim human acceptance.
+Raw lane trials, timelines and decision data: `.cache/whole-engine-performance/ik-batch-experiment/`.
+
+## Workload validity corrections
+
+The first broad exploration is evidence, not a complete benchmark qualification.
+Its 30-second public-vehicle forward-only runs left the authored driving area;
+their low late-run costs must not certify normal supported driving. A bounded
+project-owned drive/brake/reverse cycle now keeps each leg on the existing map,
+with position/support telemetry and final screenshots required for review.
+Likewise, historical four-way crash scripts auto-launched during warmup. A
+private disposable copy moves those same 20 m/s impulses to the first measured
+drive input; original project/model files remain unchanged and private.
+
+The native capture now rejects resource failures and sampled backgrounded frames,
+and captures the final presented image after timing. Same-frame completion is
+`max(CPU end, calibrated GPU end) - CPU start`, including inherited queueing;
+it is never CPU+GPU sum or converted into throughput FPS. Uncapped crowd traces
+show roughly two frames of GPU queueing. Neither that latency nor separate
+processor durations establishes the 5 ms active critical-work goal by itself.
+Capped and profiler-off controls remain part of final qualification.

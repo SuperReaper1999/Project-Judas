@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <chrono>
 #include <exception>
+#include <array>
+#include <stdexcept>
 #if defined(__linux__) && !defined(__ANDROID__)
 #include <pthread.h>
 #endif
@@ -257,4 +259,80 @@ void JobSystem::PruneFinishedLocked() {
             m_records.erase(it);
         }
     }
+}
+
+JobBatchStats JobSystem::ParallelFor(std::size_t count, std::size_t grain, unsigned lanes,
+                                    const std::function<void(std::size_t)>& item,
+                                    const std::string& name) {
+    if (!grain || !lanes || !item)
+        throw std::invalid_argument("parallel range needs grain, lanes and a callable");
+    JobBatchStats result;
+    if (!count) return result;
+    const auto chunks = unsigned(std::min<std::size_t>(1 + (count - 1) / grain, kMaxWorkers + 1));
+    lanes = std::min({lanes, kMaxWorkers + 1, chunks});
+    if (lanes == 1 || IsShutDown()) {
+        for (std::size_t i = 0; i < count; ++i) item(i);
+        result.ownerItems = count;
+        return result;
+    }
+
+    std::atomic<std::size_t> next{0};
+    std::atomic<bool> failed{false};
+    std::array<std::size_t, kMaxWorkers + 1> completed{};
+    std::array<std::exception_ptr, kMaxWorkers + 1> errors{};
+    std::array<JobHandle, kMaxWorkers> handles{};
+    const auto label = PerformanceProfiler::Get().Intern(name);
+    const auto run = [&](unsigned lane) {
+        ProfileScope scope(label);
+        std::size_t done = 0;
+        try {
+            while (!failed.load(std::memory_order_acquire)) {
+                auto first = next.load(std::memory_order_relaxed);
+                while (first < count && !next.compare_exchange_weak(
+                    first, first + std::min(grain, count - first), std::memory_order_relaxed)) {}
+                if (first >= count) break;
+                const auto end = first + std::min(grain, count - first);
+                for (auto i = first; i < end; ++i) {
+                    item(i);
+                    ++done;
+                }
+            }
+        } catch (...) {
+            errors[lane] = std::current_exception();
+            failed.store(true, std::memory_order_release);
+        }
+        completed[lane] = done;
+    };
+    try {
+        for (unsigned lane = 1; lane < lanes; ++lane) {
+            const auto handle = Submit([&, lane](JobContext& context) {
+                run(lane);
+                if (errors[lane]) context.SetError("parallel data item failed");
+            }, JobPriority::High, name);
+            if (handle.IsValid()) handles[result.submitted++] = handle;
+        }
+    } catch (...) {
+        errors[0] = std::current_exception();
+        failed.store(true, std::memory_order_release);
+    }
+    if (!failed.load(std::memory_order_acquire)) run(0);
+
+    // The owner exhausted the cursor (or the batch failed). Cancel queued
+    // helpers, and join running helpers before any captured data expires.
+    // This also lets a nested batch complete on a fully occupied worker pool.
+    for (unsigned n = 0; n < result.submitted; ++n) Cancel(handles[n]);
+    std::string failure;
+    for (unsigned n = 0; n < result.submitted; ++n) {
+        const auto state = Wait(handles[n]);
+        if (state == JobState::Failed && failure.empty()) failure = ErrorOf(handles[n]);
+        Forget(handles[n]);
+    }
+    for (const auto& error : errors)
+        if (error) std::rethrow_exception(error);
+    if (!failure.empty()) throw std::runtime_error(failure);
+    result.ownerItems = completed[0];
+    for (unsigned n = 1; n < lanes; ++n) result.workerItems += completed[n];
+    if (result.ownerItems + result.workerItems != count)
+        throw std::runtime_error("parallel data batch did not complete every item");
+    return result;
 }

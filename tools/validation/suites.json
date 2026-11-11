@@ -1685,6 +1685,11 @@
       "name": "material-uniform-publication",
       "target": "judas_material_uniform_batch_tests",
       "groups": ["rendering", "performance"]
+    },
+    {
+      "name": "independent-animation-ik-batches",
+      "target": "judas_animation_ik_batch_tests",
+      "groups": ["animation", "performance"]
     }
   ],
   "known_findings": [

@@ -2,6 +2,7 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include <set>
+#include <cstdlib>
 #include "Ragdoll.h"
 #include <cmath>
 #include <algorithm>
@@ -61,7 +62,7 @@ const std::vector<glm::mat4>* RuntimeWorld::AnimationSkin(EntityId id,float alph
  if(alpha>=1||!a.preparedM70||!a.asset||a.previousFinalPose.local.size()!=a.finalPose.local.size())return &a.skin;
  a.presentedSkin=ResolveSkinMatrices(a.asset->skeleton,PresentedAnimationPose(id,alpha));return &a.presentedSkin;
 }
-void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt,bool prepareSkin){
+void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt,bool prepareSkin,std::vector<AnimationIKWork>* pendingIK){
  JUDAS_PROFILE_SCOPE("Final pose resolution");if(!instance.asset)return;
  const auto& skeleton=instance.asset->skeleton;
  // M70 references are evaluated exactly once at the fixed boundary. Physical
@@ -80,10 +81,17 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt,boo
   instance.solvedReferencePose=instance.referencePose;
   if(!deferWorldIK&&instance.fullBodyIK&&instance.fullBodyIK->settings.enabled){auto& ik=*instance.fullBodyIK;if(!ik.prepared)ik.prepared=PrepareFullBodyIK(skeleton,ik.settings,ik.mapping,instance.error);
    if(ik.prepared&&ik.hasSample){const auto* d=RuntimeDefinition(instance.owner);if(d){auto transform=PresentedTransform(instance.owner,d->transform,1);std::vector<FullBodyIKTarget> modelTargets;
-    if(FullBodyIKTargetsToModel(ik.sampledTargets,glm::dvec3(transform.position),transform.rotation,transform.scale,modelTargets,instance.error)&&SolveFullBodyIK(skeleton,instance.referencePose,ik.mapping,modelTargets,ik.result,instance.error))instance.solvedReferencePose=ik.result.pose;
+    if(FullBodyIKTargetsToModel(ik.sampledTargets,glm::dvec3(transform.position),transform.rotation,transform.scale,modelTargets,instance.error)){
+     if(pendingIK){AnimationIKWork work;work.instance=&instance;work.targets=std::move(modelTargets);work.error=instance.error;pendingIK->push_back(std::move(work));return;}
+     if(SolveFullBodyIK(skeleton,instance.referencePose,ik.mapping,modelTargets,ik.result,instance.error))instance.solvedReferencePose=ik.result.pose;
+    }
    }}
   }
  }
+ CompleteAnimationPose(instance,prepareSkin);
+}
+void RuntimeWorld::CompleteAnimationPose(AnimationInstance& instance,bool prepareSkin){
+ const auto& skeleton=instance.asset->skeleton;
  // Physical authority is a final contributor. A target solve never overrides
  // the actual dynamic-body result, and never feeds it back into its reference.
  instance.finalPose=instance.solvedReferencePose;
@@ -93,19 +101,53 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt,boo
  if(prepareSkin)instance.skin=ResolveSkinMatrices(skeleton,instance.finalPose);
 }
 void RuntimeWorld::PrepareAnimationReferences(float dt){
+ // Prepare world-dependent inputs on the owner. Only independent root poses
+ // may wait for an IK batch; flush before any parent/socket consumer so its
+ // transform observes exactly the same preceding poses as the ordered path.
+ // Batches are bounded independently of the number of actors in the world.
+ unsigned lanes=4;
+ if(const char* value=std::getenv("JUDAS_ANIMATION_LANES")){
+  char* end=nullptr;const auto parsed=std::strtol(value,&end,10);
+  if(end!=value&&!*end&&parsed>=1&&parsed<=4)lanes=unsigned(parsed);
+ }
+ auto* jobs=m_assets?m_assets->Jobs():nullptr;
+ std::vector<AnimationIKWork> pending;
+ const auto flush=[&]{
+  if(pending.empty())return;
+  JUDAS_PROFILE_SCOPE("Independent IK batch");
+  const auto solve=[&](size_t i){auto& work=pending[i];const auto& a=*work.instance;
+   work.solved=SolveFullBodyIK(a.asset->skeleton,a.referencePose,a.fullBodyIK->mapping,
+                              work.targets,work.result,work.error);
+  };
+  if(jobs&&pending.size()>=4&&lanes>1){
+   const auto work=jobs->ParallelFor(pending.size(),1,lanes,solve,"Independent full-body IK");
+   JUDAS_PROFILE_COUNTER("IK worker items",double(work.workerItems),ProfileCounterMode::Sum);
+   JUDAS_PROFILE_COUNTER("IK owner items",double(work.ownerItems),ProfileCounterMode::Sum);
+  }else for(size_t i=0;i<pending.size();++i)solve(i);
+  // Workers never mutate world state, pose clocks, callbacks or physics.
+  for(auto& work:pending){auto& a=*work.instance;a.error=std::move(work.error);
+   if(work.solved){a.fullBodyIK->result=std::move(work.result);a.solvedReferencePose=a.fullBodyIK->result.pose;}
+   CompleteAnimationPose(a,true);
+  }
+  pending.clear();
+ };
  for(auto id:m_animationOwners){const auto* d=RuntimeDefinition(id);if(!d||!d->animation||!d->animation->enabled)continue;
+  const bool dependent=d->parent||(d->socket&&d->socket->enabled);
+  if(dependent||pending.size()==32)flush();
+  auto* batch=jobs&&lanes>1&&!dependent?&pending:nullptr;
   bool enabled=(d->ragdoll&&d->ragdoll->balance&&d->ragdoll->balance->enabled)||(d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);
   auto scripted=m_animationInstances.find(id);if(scripted!=m_animationInstances.end()&&scripted->second.scriptAdvanced){
    auto& a=scripted->second;const bool worldIK=(a.fullBodyIK&&a.fullBodyIK->settings.enabled)||std::any_of(d->animation->limbs.begin(),d->animation->limbs.end(),[](const auto& k){return k.enabled;});
    a.preparedM70=!worldIK;
-   if(worldIK&&enabled){if(a.fullBodyIK){a.fullBodyIK->sampledTargets=a.fullBodyIK->settings.targets;a.fullBodyIK->hasSample=true;}ResolveAnimationPose(a,0);a.preparedM70=true;}
+   if(worldIK&&enabled){if(a.fullBodyIK){a.fullBodyIK->sampledTargets=a.fullBodyIK->settings.targets;a.fullBodyIK->hasSample=true;}ResolveAnimationPose(a,0,true,batch);a.preparedM70=true;}
    // Ordinary motors move later. Their legacy world-space limbs are recomposed
    // in UpdateAnimations; M70 references resolve here after the pre-step motor.
    continue;
   }
   if(!enabled){auto found=m_animationInstances.find(id);if(found!=m_animationInstances.end())found->second.preparedM70=false;continue;}
-  auto* a=RuntimeAnimation(id);if(!a||!a->asset)continue;a->previousFinalPose=a->finalPose;if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}a->preparedM70=false;ResolveAnimationPose(*a,dt);a->preparedM70=true;
+  auto* a=RuntimeAnimation(id);if(!a||!a->asset)continue;a->previousFinalPose=a->finalPose;if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}a->preparedM70=false;ResolveAnimationPose(*a,dt,true,batch);a->preparedM70=true;
  }
+ flush();
 }
 void RuntimeWorld::UpdateAnimations(float dt) {
  JUDAS_PROFILE_SCOPE("Animation instances");
