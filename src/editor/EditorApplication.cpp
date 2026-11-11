@@ -353,6 +353,7 @@ int EditorApplication::Run(int argc, char **argv) {
     startupProfile.End();
     while (!window.ShouldClose() && !m_quit) {
         ProfileFrame outerProfile(m_panels.mode == EditorMode::Play ? "editor Play" : "editor edit");
+        RendererProfileScope wholeGPU(renderer, "Whole editor frame");
         // Last frame's UI focus decides whether the engine's own key/mouse
         // reading is suppressed this frame (a text field must not walk the
         // player or fly the camera).

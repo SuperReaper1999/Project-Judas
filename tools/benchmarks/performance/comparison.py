@@ -15,7 +15,7 @@ def compare(baseline, candidate, p99_regression_fraction=.10):
         raise ValueError('at least three independent captures per revision required')
     keys = ('workload_sha256', 'project_sha256', 'controls', 'duration_seconds',
             'resolution', 'graphics_policy', 'cpu_model', 'gpu_model', 'gpu_driver',
-            'cap_hz', 'profile')
+            'cap_hz', 'capture_policy', 'profile')
     identity = baseline[0]['identity']
     if any(key not in identity for key in keys):
         raise ValueError('incomplete reference workload/hardware identity')

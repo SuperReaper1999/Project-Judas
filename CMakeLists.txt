@@ -1687,6 +1687,13 @@ judas_add_engine_test(judas_prepared_capsule_query_tests tests/PreparedCapsuleQu
 judas_add_engine_test(judas_material_uniform_batch_tests tests/MaterialUniformBatchTests.cpp)
 judas_add_engine_test(judas_animation_ik_batch_tests tests/AnimationIKBatchTests.cpp)
 judas_add_engine_test(judas_panel_render_preparation_tests tests/PanelRenderPreparationTests.cpp)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
+    # Opt-in observation of shipping editor/export frame boundaries. This
+    # interposer is never linked into the engine or included in the SDK.
+    add_library(judas_present_capture SHARED EXCLUDE_FROM_ALL tools/benchmarks/PresentCapture.cpp)
+    target_link_libraries(judas_present_capture PRIVATE SDL2::SDL2 ${CMAKE_DL_LIBS})
+    judas_warnings(judas_present_capture)
+endif()
 
 include(cmake/JudasValidation.cmake)
 

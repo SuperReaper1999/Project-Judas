@@ -19,3 +19,12 @@
 - The two primary branches are `main` for accepted releases and `Experimental` for development. Keep development on `Experimental`; do not update `main` automatically or promote unreviewed implementation through it.
 - Preserve protected historical evidence, independent research and unrelated assets. Document actual failures and limitations rather than weakening fixtures to obtain a pass.
 - GitHub protects main against force pushes and deletion, including administrator actions. Human-test acceptance is an operator workflow requirement; GitHub does not independently prove that testing occurred.
+
+## Real-time performance qualification
+
+- Performance-relevant milestones must include measured whole-game evidence, not only functional tests or isolated subsystem timings. Reuse valid evidence for unchanged systems and run representative affected workloads plus a combined gameplay workload.
+- Reference gameplay budgets are 120 FPS / 8.33 ms target, 60 FPS / 16.67 ms minimum in explicitly defined workloads, and an aggressive 5 ms combined-engine critical-path goal. These are not per-subsystem allowances or promises for arbitrary scenes.
+- Record exact executable/source/input identities, hardware, resolution, rendering policy, VSync/cap settings, p50/p95/p99/max, exceptional hitch sequences, memory and any discarded simulation backlog. Separate loading, steady gameplay, exceptional impacts and editor overhead.
+- CPU and GPU work overlap. Do not add their durations or nested scopes as frame time. Increased worker utilisation is useful only when whole-frame latency improves without reducing fidelity or changing authoritative ordering.
+- Use the reproducible capture and relative-regression tools described in `docs/WHOLE_ENGINE_PERFORMANCE.md`. Inspect actual rendered content and simulation counts: a fast empty, stale, off-map or backgrounded scene is not qualification.
+- Keep negative experiments and unresolved budget failures explicit. A passing relative p99 regression gate does not certify absolute performance, platform coverage or human acceptance. Experimental checkpoints may remain explicitly unqualified; do not present them as accepted releases.

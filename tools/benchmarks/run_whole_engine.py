@@ -74,6 +74,7 @@ def main():
             command += ['--' + option, getattr(args, option)]
     if args.no_profile:
         command += ['--no-profile']
+    process = None
     with (args.out / 'gpu.csv').open('w') as gpu, (args.out / 'application.log').open('w') as log, \
             (args.out / 'os.jsonl').open('w') as os_log:
         gpu_process = subprocess.Popen(['nvidia-smi', '--query-gpu=timestamp,name,driver_version,utilization.gpu,utilization.memory,memory.used,clocks.current.graphics,power.draw',
@@ -95,22 +96,34 @@ def main():
                     pass
                 time.sleep(.2)
         finally:
+            if process is not None and process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait(timeout=10)
             gpu_process.terminate()
             gpu_process.wait(timeout=10)
     with (args.out / 'gpu.csv').open() as source:
         rows = list(csv.DictReader(source))
     hardware = {key.strip(): value.strip() for key, value in rows[0].items()} if rows else {}
+    native = json.loads((run / 'run.json').read_text()) if (run / 'run.json').exists() else {}
+    cap_policy = native.get('cap_policy', 'legacy-millisecond-floor-delay' if args.cap else 'none')
     metadata = {'command': command, 'exit': process.returncode, 'clock_ticks': os.sysconf('SC_CLK_TCK'),
                 'resolution': args.resolution, 'graphics_policy': env.get('JUDAS_GL_PROFILE', 'auto'),
                 'gpu_model': hardware.get('name', 'unavailable'),
                 'gpu_driver': hardware.get('driver_version', 'unavailable'),
-                'cap_hz': args.cap, 'profile': not args.no_profile,
-                'duration_seconds': args.seconds, 'controls': {'key': args.key, 'pulse': args.pulse},
+                'cap_hz': args.cap, 'capture_policy': cap_policy, 'profile': not args.no_profile,
+                'duration_seconds': args.seconds, 'controls': {'key': args.key, 'pulse': args.pulse,
+                             'environment': {name: env[name] for name in ['JUDAS_ANIMATION_LANES', 'JUDAS_PROFILE_DEPTH'] if name in env}},
                 'cpu_model': next((line.split(':', 1)[1].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), 'unknown'),
                 'memory_total': Path('/proc/meminfo').read_text().splitlines()[0],
                 'binary_sha256': hashlib.sha256(args.binary.read_bytes()).hexdigest(),
                 'project_sha256': hashlib.sha256(args.project.read_bytes()).hexdigest(),
                 'workload_sha256': workload_sha256,
+                'native_renderer': native.get('renderer'),
+                'native_capture_schema': native.get('schema'),
                 'gpu_utilization_scope': 'whole device including the desktop; process CPU sampled independently'}
     (args.out / 'invocation.json').write_text(json.dumps(metadata, indent=2))
     if process.returncode:

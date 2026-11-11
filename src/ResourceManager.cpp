@@ -275,6 +275,8 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
         entry.bytes=EstimateMeshBytes(a.render)+a.nodes.size()*sizeof(glm::dvec3)+a.solids.size()*sizeof(DeformableTet)+a.cloth.size()*sizeof(DeformableTriangle)
             +(a.massWeights.size()+a.measures.size())*sizeof(double)+a.triangles.size()*sizeof(glm::uvec3)+a.tetrahedra.size()*sizeof(glm::uvec4)
             +a.edges.size()*sizeof(glm::uvec2)+a.bends.size()*sizeof(DeformableBend)+a.binding.size()*sizeof(DeformableBinding);
+        entry.bytes+=a.panelRenderGroups.capacity()*sizeof(DeformableAsset::PanelRenderGroup);
+        for(const auto& group:a.panelRenderGroups)entry.bytes+=group.vertices.capacity()*sizeof(unsigned);
         for(const auto& rows:{&a.neighbors,&a.excludedFaces,&a.excludedEdges}){entry.bytes+=rows->size()*sizeof(std::vector<unsigned>);for(const auto& row:*rows)entry.bytes+=row.size()*sizeof(unsigned);}
         for(const auto& [name,nodes]:a.groups)entry.bytes+=name.size()+nodes.size()*sizeof(unsigned);
         if(a.structuralSkin)entry.bytes+=a.structuralSkin->Bytes();

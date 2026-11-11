@@ -322,10 +322,13 @@ JobBatchStats JobSystem::ParallelFor(std::size_t count, std::size_t grain, unsig
     // This also lets a nested batch complete on a fully occupied worker pool.
     for (unsigned n = 0; n < result.submitted; ++n) Cancel(handles[n]);
     std::string failure;
-    for (unsigned n = 0; n < result.submitted; ++n) {
-        const auto state = Wait(handles[n]);
-        if (state == JobState::Failed && failure.empty()) failure = ErrorOf(handles[n]);
-        Forget(handles[n]);
+    {
+        JUDAS_PROFILE_WAIT("Independent data helper join");
+        for (unsigned n = 0; n < result.submitted; ++n) {
+            const auto state = Wait(handles[n]);
+            if (state == JobState::Failed && failure.empty()) failure = ErrorOf(handles[n]);
+            Forget(handles[n]);
+        }
     }
     for (const auto& error : errors)
         if (error) std::rethrow_exception(error);

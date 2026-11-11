@@ -325,3 +325,170 @@ it is never CPU+GPU sum or converted into throughput FPS. Uncapped crowd traces
 show roughly two frames of GPU queueing. Neither that latency nor separate
 processor durations establishes the 5 ms active critical-work goal by itself.
 Capped and profiler-off controls remain part of final qualification.
+
+## Wake scratch experiment: rejected
+
+A genuine four-way presented-frame spike took 319.91 ms, with five fixed steps.
+It recorded 13,301 wake calls totalling 48.20 ms and 494,271 CCD geometry requests.
+The first low-risk experiment reused six temporary wake buffers while rebuilding
+the same graph and traversal every call. It eliminated 60,000 allocations over
+10,000 targeted calls, but that control took 19.13 ms before / 19.36 ms after;
+allocation counts alone did not establish a latency win.
+
+All nine native crash outcomes exactly match the preserved accepted physical
+hashes and their paired reference outputs. Three interleaved repetitions of the
+heavy cases produced these median run maxima (native physics step, **not frame**):
+
+| Case | Current retained engine ms | Scratch candidate ms |
+|---|---:|---:|
+| Severe frontal | 51.464 | 52.124 |
+| Four cars | 94.517 | 94.060 |
+| Dense debris | 130.537 | 130.566 |
+
+Small average/p50 gains did not meaningfully reduce hitch costs. The scratch
+implementation and dedicated allocation test were removed. Its patch, native
+source, raw CSVs, exact outcomes and decision remain under
+`.cache/whole-engine-performance/wake-scratch-experiment/`. This is a negative
+engineering result, not a claimed fix or an invitation to skip wake propagation.
+
+## Ongoing qualification commands
+
+This is an **engine developer/source-checkout workflow**, not a requirement to
+install benchmark instrumentation in consumer games. Normal SDK/exported games
+remain unchanged. No private model is part of the public workload generator.
+
+```sh
+cmake --build build --target judas_whole_engine_benchmark judas_present_capture -j2
+python3 tools/benchmarks/prepare_workloads.py --revision BASELINE_COMMIT \
+  --out NEW_INPUT_DIRECTORY --large-terrain-tool build/judas_terrain_author \
+  --scene-tool build/judas_scene_author
+python3 tools/benchmarks/run_matrix.py --baseline OLD_CAPTURE_BINARY \
+  --candidate NEW_CAPTURE_BINARY --workloads NEW_INPUT_DIRECTORY --out NEW_RESULTS_DIRECTORY
+```
+
+Run captures serially on the actual desktop, without concurrent builds or other
+benchmarks. The matrix freezes its executables, verifies the manifest before
+launches, alternates order, uses at least three repetitions, and detects relative
+p99 regressions. Select affected `--cases` for ordinary follow-ups. The full
+matrix covers the lightweight scene, town gameplay, populated rendering,
+animation/IK, 100k GPU particles, Basic Water, terrain, vehicles and a combined
+terrain/32-character/5000-particle workload. Missing optional prepared inputs
+fail explicitly rather than silently skipping coverage.
+
+The report separately retains absolute-budget misses, exceptional worst frames
+and discarded physics time. Relative-regression success is **not** acceptance.
+Frame-cap policy is part of comparison identity; older millisecond-floor caps
+must not be compared as if they were the newer high-resolution pacing policy.
+Uncapped runs retain the same no-cap policy. Profiler-off measurements report
+unavailable simulation-discard counters as unknown rather than zero.
+
+`observe_editor.py` uses an opt-in Linux SDL presentation interposer to observe
+an otherwise unmodified editor on X11, with fresh preferences and a disposable
+project. It verifies the requested Edit/Play mode and closes only its launched
+window. Native editor screenshots remain the visual reference where compositor
+screen readback is unavailable. Editor chrome/viewport resolution differs from
+a full-window export: label that limitation rather than claiming GPU equivalence.
+The interposer is not linked into the engine or distributed in the SDK.
+
+### Corrected terrain benchmark inputs
+
+The first large-terrain editor timing was rejected after its native screenshot
+showed sky. The generator had updated only the runtime native terrain, leaving a
+stale small editor preview and an unsimulated player high above it. Current
+preparation cooks the complete native/preview product set and places the player
+above the bilinear surface. A new native screenshot confirms visible landscape;
+old invalid timings remain labelled as such in their evidence directory.
+Do not call a closed-source baked-preview measurement active sculpting, nor
+claim streaming eviction unless its actual counters demonstrate it.
+
+## Prepared detailed-panel frames
+
+A fresh user-space profile after the earlier optimisations attributed 12.86% of
+measured owner-thread samples in the four-model yard to `MapDeformablePanel`.
+This was ordinary presentation work, not the dominant severe-impact search.
+Many detailed vertices recomputed the same physical triangle's rest/current
+basis. Asset preparation now derives shared triangle groups and immutable rest
+frames; presentation interpolates each group's physical frame once and retains
+the original per-vertex arithmetic. GPU structural skins, collision topology,
+physical solving and render-upload policy are unchanged. Derived data is not
+serialized and requires no format migration.
+
+The independent original per-vertex oracle passes 38 checks, including raw float
+bits for positions/normals/tangents/UVs over 32 motion/origin/degeneracy cases and
+eight interpolation values. A 2209-vertex fixture uses 50 prepared groups and
+19,968 additional shared resident bytes; its 425,346 cooked bytes are unchanged.
+The current deformable suite also passes 152 checks.
+
+Three alternating 20-second NVIDIA desktop whole-application pairs per case,
+1280x720, identical private yard and controls; medians of independent trials:
+
+| Workload / metric | Previous retained engine | Prepared panel frames |
+|---|---:|---:|
+| Parked yard average FPS | 308.71 | 366.71 |
+| Parked p50 / p95 / p99 ms | 1.829 / 8.874 / 9.678 | 1.551 / 8.604 / 9.045 |
+| Selected frontal impact average FPS | 303.16 | 334.21 |
+| Impact p50 / p95 / p99 ms | 1.765 / 9.218 / 10.114 | 1.512 / 9.336 / 9.809 |
+| Median impact maximum ms | 166.25 | 166.37 |
+
+This is a useful ordinary whole-game gain, **not a collision-hitch fix**. Parked
+maximum across trials increased from 18.20 to 23.22 ms; impact maximum across
+trials was 167.17 versus 170.58 ms. The captured launch still discards accumulated
+physics time under the existing catch-up policy. No claim of a 60-FPS exceptional
+impact guarantee follows from its passing p99. Fixed-clock physical outcomes
+are validated separately from wall-clock gameplay, whose grouping changes with
+frame scheduling. Raw evidence: `.cache/whole-engine-performance/panel-frame-experiment/`.
+
+### CI fixture-path correction
+
+The first independent-IK checkpoint's engine CI failed because its new test used
+relative project paths while the gate correctly ran it from a disposable results
+directory. Both channels failed that same fixture setup. The test now receives
+an explicit source-root argument and reports a failed project load cleanly. Its
+135 physical/output assertions are unchanged. That failed run is retained as
+failure evidence; a later completed CI run is required before qualification.
+
+### Input and mixed-scene truth checks
+
+The first `terrain-excavation` timing was rejected: its final HUD still showed
+revision 1 and zero excavated chunks. Directly setting physical state before
+ordinary input polling loses update-loop pressed edges at `BeginFrame`.
+Fixed-loop launch inputs did execute (their crash event logs prove the 25 m/s
+impulse), so this does not invalidate independently observed crash controls.
+The capture now uses the **existing** queued physical and player-device input
+boundary. No production input API or simulation clock was replaced. A real
+10-second control completes all cuts: revision 20, eight volume chunks and zero
+queued cuts. An attempted external X11 pulse did not repair the controlled game
+input and was removed; its negative captures remain labelled.
+
+The initial mixed fixture correctly failed engine validation because a borrowed
+emitter's project tag registry was absent. After copying its registry through
+normal project authoring, a further physical check exposed actors sliding off
+the steep hill and falling below the map. Those cheap captures cannot certify
+mixed gameplay. Current preparation cooks a real flat terrain courtyard with
+smooth surrounding transitions, places actors on its heightfield and uses an
+elevated follow camera. All 32 animated CharacterMotors remain physically
+supported and visible; 5,000 GPU particles originate above terrain and record
+actual contacts. There are no position/velocity resets, artificial support
+bodies, disabled motors or reduced particle counts.
+
+Prepared inputs now publish bounded game-owned state telemetry. Matrix gates
+reject an unexcavated or unfinished tunnel, missing actors, lost support,
+out-of-world actor heights, missing particles, a wrong particle backend or zero
+particle contacts. Seven Python metric/negative-control tests pass. Final
+repeated hardware trials and SDK qualification remain in progress.
+
+The first independent-IK CI failure is corrected at `d8d87f8d`; [engine CI
+42981229173](https://github.com/SuperReaper1999/Project-Judas/actions/runs/42981229173)
+completed successfully for Alpha and Experimental, including their Ubuntu 24.04
+SDK checks. Later uncommitted measurement refinements require their own checks.
+
+### Counter and memory-accounting refinements
+
+Runtime renderer statistics accumulate while the editor may reset them. World
+submission now publishes transfer/material **deltas** after transparent work,
+rather than mislabelling lifetime totals as a frame's work. Actual rendering
+controls pass 16/16 on both modern NVIDIA GL and the forced 3.3 portable path,
+including consecutive accumulated and reset-statistics frames. OS RSS samples
+also remain available in profiler-off reports; unavailable profiler fields are
+not fabricated as zero. Derived panel-frame storage is charged to resource
+residency estimates; cooked asset bytes remain unchanged.

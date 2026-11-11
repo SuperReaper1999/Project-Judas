@@ -608,6 +608,15 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     }
     const auto& stats=renderer.Stats();
     JUDAS_PROFILE_COUNTER("Instanced draw submissions",stats.instancedDraws-beforeStats.instancedDraws,ProfileCounterMode::Sum);
+    // Renderer statistics accumulate in the runtime, while the editor may
+    // reset them. Publish deltas for this complete world submission in either
+    // case, after transparent/material work has finished. Do not reset shared
+    // statistics or label lifetime transfer totals as per-frame work.
+    JUDAS_PROFILE_COUNTER("Presentation upload bytes (view/light/instances/billboards)",double(stats.uploadedBytes-beforeStats.uploadedBytes),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Presentation upload calls",double(stats.uploadCalls-beforeStats.uploadCalls),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Material applications",double(stats.materialApplications-beforeStats.materialApplications),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Material uniform publishes",double(stats.materialUniformPublishes-beforeStats.materialUniformPublishes),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Material uniform reuses",double(stats.materialUniformReuses-beforeStats.materialUniformReuses),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Instances submitted",stats.instances-beforeStats.instances,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Light tile overflow",stats.lightTileOverflow-beforeStats.lightTileOverflow,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Light grid GPU bytes",stats.lightBytes,ProfileCounterMode::Latest);

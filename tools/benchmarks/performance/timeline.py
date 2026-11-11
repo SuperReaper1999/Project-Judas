@@ -1,5 +1,7 @@
 """Cross-clock timeline export; durations are never added across processors."""
 import json
+import statistics
+from .metrics import percentile
 
 
 def merge_intervals(intervals):
@@ -26,6 +28,45 @@ def clock_mapping(start, end):
     uncertainty = max(start['cpu_after_ns'] - start['cpu_before_ns'],
                       end['cpu_after_ns'] - end['cpu_before_ns']) / 2
     return lambda gpu: cpu0 + (gpu - gpu0) * slope, uncertainty
+
+
+def frame_completion(frames, gpu_rows, metadata):
+    """Observed same-frame completion, not CPU+GPU sum or throughput FPS.
+
+    Includes inherited GPU queueing and diagnostic work. Presentation/compositor
+    and physical scanout latency are outside this boundary.
+    """
+    convert, uncertainty = clock_mapping(metadata['gpu_clock_calibration'],
+                                         metadata['gpu_clock_calibration_end'])
+    roots = {}
+    for row in gpu_rows:
+        for item in row['passes']:
+            if item['name'] != 'Whole runtime frame' or item['pending']:
+                continue
+            if row['frame_id'] in roots:
+                raise ValueError('ambiguous same-frame GPU completion marker')
+            roots[row['frame_id']] = item
+    latency, queue = [], []
+    for frame in frames:
+        root = roots.get(frame.get('frame_id'))
+        if root is None:
+            continue
+        if root['gpu_end_ns'] < root['gpu_start_ns']:
+            raise ValueError('reversed GPU interval')
+        gpu_end = convert(root['gpu_end_ns'])
+        latency.append((max(frame['cpu_end_ns'], gpu_end) - frame['cpu_start_ns']) / 1e6)
+        queue.append((convert(root['gpu_start_ns']) - root['submitted_cpu_ns']) / 1e6)
+    if not latency:
+        raise ValueError('no matched CPU/GPU completion records')
+    return dict(matched_frames=len(latency), total_frames=len(frames),
+                mean_ms=statistics.mean(latency), p50_ms=percentile(latency, .5),
+                p95_ms=percentile(latency, .95), p99_ms=percentile(latency, .99),
+                worst_ms=max(latency), p99_completion_within_5ms=percentile(latency, .99) <= 5,
+                gpu_start_queue_lead_median_ms=statistics.median(queue),
+                calibration_half_bracket_ns=uncertainty,
+                note='max(CPU end, calibrated GPU end) minus CPU frame start. '
+                     'Includes queueing and diagnostics; excludes compositor/scanout. '
+                     'Latency is not inverted to report FPS.')
 
 
 def export_trace(run, destination):

@@ -1,5 +1,8 @@
 #include "EngineHost.h"
 #include "render/MaterialUniformBatch.h"
+#include "RuntimeWorld.h"
+#include "WorldPresentation.h"
+#include "PerformanceProfiler.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <cstdio>
 #include <cmath>
@@ -86,7 +89,35 @@ int main() {
           "identical uniform state still binds each draw's actual texture");
     Check(glGetError()==GL_NO_ERROR,"publication and frame restoration produce no GL errors");
     renderer.DestroyTexture(redTexture);renderer.DestroyTexture(greenTexture);renderer.DestroyMaterial(white);
-    renderer.DestroyMaterial(green);renderer.DestroyMaterial(blue);host.Shutdown();
+    renderer.DestroyMaterial(green);renderer.DestroyMaterial(blue);
+    Scene scene;SceneObject box;box.id=1;box.name="Counter fixture";box.render=SceneRenderComponent{};
+    scene.InsertObject(box);RuntimeWorld world;
+    const bool built=world.Build(scene,&host.Resources(),error);
+    Check(built,"ordinary world for frame counter validation");
+    if(!built){std::puts(error.c_str());host.Shutdown();return 1;}
+    auto& profiler=PerformanceProfiler::Get();profiler.Enable(true);
+    for(unsigned frame=0;frame<3;++frame){
+        // Runtime leaves statistics accumulated; editor explicitly resets.
+        // Both must publish just this world's work, including queued draws.
+        if(frame==2)renderer.ResetStats();
+        const auto before=renderer.Stats();profiler.BeginFrame("counter fixture");
+        const auto id=profiler.FrameId();
+        RenderWorldFrame(renderer,384,128,world,
+            glm::lookAt(glm::vec3(0,0,8),glm::vec3(0),glm::vec3(0,1,0)),
+            glm::ortho(-3.f,3.f,-1.f,1.f,.1f,20.f),glm::vec3(0),1);
+        profiler.EndFrame();const auto snapshot=profiler.Snapshot(id);const auto after=renderer.Stats();
+        auto counter=[&](const char* name){
+            for(const auto& value:snapshot.counters){
+                if(std::string(value.name.c_str())==name)return value.value;
+            }
+            return -1.;
+        };
+        Check(counter("Material applications")==double(after.materialApplications-before.materialApplications)&&
+              counter("Presentation upload calls")==double(after.uploadCalls-before.uploadCalls)&&
+              counter("Presentation upload bytes (view/light/instances/billboards)")==double(after.uploadedBytes-before.uploadedBytes),
+              "world counters measure this submission with accumulated or reset renderer statistics");
+    }
+    profiler.Enable(false);world.Destroy();host.Shutdown();
     std::printf("SUMMARY %u checks %u failures\n",checks,failures);
     return failures?1:0;
 }
