@@ -74,6 +74,7 @@ jobs:
           python3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/ci/distribution.json
           node tests/TypeScriptToolingTests.mjs
           node tests/CrashDrivingProjectTests.mjs
+          node tests/PlayableCombinedProjectTests.mjs
           python3 -m unittest discover -s tests -p test_whole_engine_metrics.py
           node scripts/check_judasjs_api.mjs
       - name: Configure an explicitly identified build
