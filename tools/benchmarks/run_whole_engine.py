@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--cap', type=int, default=0)
     parser.add_argument('--key')
     parser.add_argument('--pulse')
+    parser.add_argument('--sequence',type=Path,help='ordered physical control events, relative to measured gameplay start')
     parser.add_argument('--no-profile', action='store_true')
     parser.add_argument('--workload-manifest', type=Path,
                         help='verify every frozen input before running; emitted by prepare_workloads.py')
@@ -76,6 +77,8 @@ def main():
     for option in ['key', 'pulse']:
         if getattr(args, option):
             command += ['--' + option, getattr(args, option)]
+    if args.sequence:
+        command += ['--sequence',str(args.sequence.resolve())]
     if args.no_profile:
         command += ['--no-profile']
     process = None
@@ -120,9 +123,10 @@ def main():
                 'gpu_driver': hardware.get('driver_version', 'unavailable'),
                 'cap_hz': args.cap, 'capture_policy': cap_policy, 'profile': not args.no_profile,
                 'duration_seconds': args.seconds, 'warmup_seconds': args.warmup_seconds, 'controls': {'key': args.key, 'pulse': args.pulse,
+                             'sequence_sha256': hashlib.sha256(args.sequence.read_bytes()).hexdigest() if args.sequence else None,
                              'environment': {name: value for name, value in sorted(env.items())
                                              if name.startswith('JUDAS_MK2_') or name in
-                                             ['JUDAS_ANIMATION_LANES', 'JUDAS_PROFILE_DEPTH', 'JUDAS_CCD_PAIR_PROFILE']}},
+                                             ['JUDAS_ANIMATION_LANES', 'JUDAS_PROFILE_DEPTH', 'JUDAS_CCD_PAIR_PROFILE', 'JUDAS_LIGHT_LISTS', 'JUDAS_SHADOW_REUSE']}},
                 'cpu_model': next((line.split(':', 1)[1].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), 'unknown'),
                 'memory_total': Path('/proc/meminfo').read_text().splitlines()[0],
                 'binary_sha256': hashlib.sha256(args.binary.read_bytes()).hexdigest(),

@@ -16,6 +16,7 @@
 #include "../../CameraProjection.h"
 #include "../../PowertrainAuthoring.h"
 #include "../../WorldStreaming.h"
+#include "../../lighting/LightingQueries.h"
 
 using namespace ScriptBindingValues;
 namespace ScriptBindings {
@@ -68,6 +69,46 @@ JSValue HandleRendering(BindingContext &context, const std::string &op, int argc
         }
         return valid;
     };
+
+    if(op=="lightExposure"){
+        glm::vec3 point;JudasLighting::ExposureOptions options;
+        if(!ReadVec(c,arg(1),point))return JS_ThrowTypeError(c,"finite local exposure position required");
+        const auto settings=arg(2);
+        if(!JS_IsUndefined(settings)){
+            if(!KnownOptions(c,settings,{"maxSources","maxLights","maxOcclusionQueries","sunOcclusionDistance","normal","occlusionLayers","ignored"}))return JS_ThrowTypeError(c,"unknown exposure option");
+            for(auto [name,target]:{std::pair<const char*,unsigned*>{"maxSources",&options.maxSources},{"maxLights",&options.maxLights},{"maxOcclusionQueries",&options.maxOcclusionQueries}}){
+                auto v=JS_GetPropertyStr(c,settings,name);const bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);
+                float count=0;if(present){if(!Number(c,settings,name,count)||count<0||std::floor(count)!=count||count>4096)return JS_ThrowTypeError(c,"bounded integer exposure budget required");*target=unsigned(count);}
+            }
+            auto distance=JS_GetPropertyStr(c,settings,"sunOcclusionDistance");const bool hasDistance=!JS_IsUndefined(distance);JS_FreeValue(c,distance);
+            if(hasDistance&&!Number(c,settings,"sunOcclusionDistance",options.sunOcclusionDistance))return JS_ThrowTypeError(c,"finite sun occlusion distance required");
+            auto normal=JS_GetPropertyStr(c,settings,"normal");bool valid=true;
+            if(!JS_IsUndefined(normal)){glm::vec3 n;valid=ReadVec(c,normal,n);if(valid)options.normal=n;}JS_FreeValue(c,normal);
+            auto layers=JS_GetPropertyStr(c,settings,"occlusionLayers");valid=valid&&(JS_IsUndefined(layers)||namedLayerMask(layers,world.Categories().collision,options.filter.includeLayers));JS_FreeValue(c,layers);
+            auto ignored=JS_GetPropertyStr(c,settings,"ignored");
+            if(!JS_IsUndefined(ignored)){
+                uint32_t count=0;auto length=JS_GetPropertyStr(c,ignored,"length");valid=valid&&JS_IsArray(ignored)&&JS_ToUint32(c,&count,length)==0&&count<=64;JS_FreeValue(c,length);
+                for(uint32_t i=0;valid&&i<count;++i){auto item=JS_GetPropertyUint32(c,ignored,i),id=JS_GetPropertyStr(c,item,"id");
+                    try{const auto text=String(c,id);size_t used=0;auto identity=std::stoull(text,&used);valid=used==text.size()&&world.RuntimeDefinition(identity)&&world.IsPublished(identity);if(valid){const auto owned=world.OwnedCollisionBodies(identity);options.filter.ignoredBodies.insert(options.filter.ignoredBodies.end(),owned.begin(),owned.end());}}catch(...){valid=false;}
+                    JS_FreeValue(c,id);JS_FreeValue(c,item);
+                }
+            }JS_FreeValue(c,ignored);
+            if(!valid)return JS_ThrowTypeError(c,"valid normal, collision layers and up to 64 published ignored entities required");
+        }
+        JudasLighting::ExposureSample sample;std::string error;
+        if(!JudasLighting::SampleExposure(world,point,options,sample,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+        auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"color",Vec(c,sample.color));
+        JS_SetPropertyStr(c,result,"relativeIlluminance",JS_NewFloat64(c,sample.relativeIlluminance));
+        JS_SetPropertyStr(c,result,"upperBound",sample.upperBoundKnown?JS_NewFloat64(c,sample.upperIlluminance):JS_NULL);
+        JS_SetPropertyStr(c,result,"complete",JS_NewBool(c,sample.complete));JS_SetPropertyStr(c,result,"stale",JS_NewBool(c,sample.stale));
+        JS_SetPropertyStr(c,result,"sampledAtSeconds",JS_NewFloat64(c,sample.sampledAtSeconds));JS_SetPropertyStr(c,result,"ageSeconds",JS_NewFloat64(c,sample.ageSeconds));
+        JS_SetPropertyStr(c,result,"sourcesExamined",JS_NewUint32(c,sample.sourcesExamined));JS_SetPropertyStr(c,result,"occlusionQueries",JS_NewUint32(c,sample.queries));
+        JS_SetPropertyStr(c,result,"unresolvedSources",JS_NewUint32(c,sample.unresolvedSources));JS_SetPropertyStr(c,result,"unit",JS_NewString(c,"relative"));
+        auto contributors=JS_NewArray(c);unsigned i=0;for(const auto& value:sample.contributors){auto entry=JS_NewObject(c);
+            JS_SetPropertyStr(c,entry,"entityId",JS_NewString(c,std::to_string(value.source).c_str()));JS_SetPropertyStr(c,entry,"potential",Vec(c,value.potential));JS_SetPropertyStr(c,entry,"visible",Vec(c,value.visible));
+            JS_SetPropertyStr(c,entry,"occlusionKnown",JS_NewBool(c,value.occlusionKnown));JS_SetPropertyStr(c,entry,"occluded",JS_NewBool(c,value.occluded));JS_SetPropertyUint32(c,contributors,i++,entry);
+        }JS_SetPropertyStr(c,result,"contributors",contributors);return result;
+    }
 
     if (op == "appearanceReset")
         return JS_NewBool(c, world.ResetAppearance());
@@ -878,7 +919,8 @@ JSValue HandleRendering(BindingContext &context, const std::string &op, int argc
 } // namespace
 void RegisterRenderingBindings(BindingRegistry &registry) {
     registry.Add("Rendering",
-                 {"appearanceReset",
+                 {"lightExposure",
+                  "appearanceReset",
                   "appearanceInfo",
                   "appearanceSet",
                   "setView",

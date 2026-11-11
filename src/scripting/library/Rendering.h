@@ -98,6 +98,7 @@ extendEntity({
     }
 });
 extendWorld({
+    lightExposure: (position,options = {}) => call("lightExposure",position,options),
     get appearance() {
         return call("appearanceInfo");
     },

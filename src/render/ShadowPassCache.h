@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <vector>
 
 namespace JudasRender {
 struct ShadowPassKey {
@@ -28,9 +29,11 @@ class ShadowPassCache {
     bool Remember(const ShadowPassKey &);
     void Clear();
     void Forget(unsigned slot);
-    int LocalSlotForSource(std::uint64_t source)const;
+    void AssignLocalSlots(std::vector<DynamicLight>& selected);
 
   private:
     std::array<std::optional<ShadowPassKey>, kShadowMapCount> slots;
+    std::array<std::uint64_t,8> sourceIds{},lastUse{};
+    std::uint64_t useClock=0;
 };
 } // namespace JudasRender

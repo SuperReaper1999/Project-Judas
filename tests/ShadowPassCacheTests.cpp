@@ -2,6 +2,7 @@
 #include "RuntimeWorld.h"
 #include "ScreenshotWriter.h"
 #include "WorldPresentation.h"
+#include "ShadowTransforms.h"
 #include "render/ShadowPassCache.h"
 #include <algorithm>
 #include <cmath>
@@ -30,6 +31,19 @@ void Reuse(bool enabled) {
 }
 void Pure() {
     using namespace JudasRender;
+    const auto stable=ComputeStableDirectionalShadowMatrix({0,0,0},{0,1,0},16,48,1024);
+    const auto subtexel=ComputeStableDirectionalShadowMatrix({.001f,.001f,.001f},{0,1,0},16,48,1024);
+    const auto travelled=ComputeStableDirectionalShadowMatrix({1,0,0},{0,1,0},16,48,1024);
+    Check(stable==subtexel,"sub-texel camera motion preserves an identical directional chart");
+    Check(stable!=travelled,"meaningful camera travel advances the stabilized directional chart");
+    ShadowPassCache allocation;
+    auto group=[](std::initializer_list<unsigned> ids){std::vector<DynamicLight> result;for(auto id:ids){DynamicLight light;light.identity=id;light.shadowMapIndex=kLocalShadowBase;result.push_back(light);}return result;};
+    auto first=group({1,2}),other=group({3,4});allocation.AssignLocalSlots(first);allocation.AssignLocalSlots(other);
+    Check(first[0].shadowMapIndex==6&&first[1].shadowMapIndex==12&&other[0].shadowMapIndex==18&&other[1].shadowMapIndex==24,"distinct views retain independent local-source allocations within the shared pool");
+    auto again=group({1,2});allocation.AssignLocalSlots(again);
+    Check(again[0].shadowMapIndex==first[0].shadowMapIndex&&again[1].shadowMapIndex==first[1].shadowMapIndex,"returning camera retains its unchanged depth slots after another view");
+    auto fill=group({5,6,7,8});allocation.AssignLocalSlots(fill);auto replacement=group({9});allocation.AssignLocalSlots(replacement);
+    Check(replacement[0].shadowMapIndex==18,"pool pressure evicts the least-recent inactive source, not a current-view source");
     ShadowPassCache cache;
     ShadowPassKey key;
     key.slot = 1;

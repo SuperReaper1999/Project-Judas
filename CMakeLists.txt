@@ -397,6 +397,8 @@ add_library(judas_engine STATIC
     src/BasicWater.cpp
     src/WorldWater.cpp
     src/lighting/ShadowSystem.cpp
+    src/lighting/LightLists.cpp
+    src/lighting/LightingQueries.cpp
     src/lighting/LightingWorld.cpp
     src/WorldPresentation.cpp
     src/EngineHost.cpp
@@ -1658,6 +1660,8 @@ judas_add_engine_test(judas_editor_design_tests tests/EditorDesignTests.cpp LIBR
 judas_add_engine_test(judas_graphics_capabilities_tests tests/GraphicsCapabilitiesTests.cpp)
 judas_add_engine_test(judas_shader_library_tests tests/ShaderLibraryTests.cpp)
 judas_add_engine_test(judas_view_uniforms_tests tests/ViewUniformsTests.cpp)
+judas_add_engine_test(judas_lighting_lists_tests tests/LightingListsTests.cpp)
+judas_add_engine_test(judas_lighting_exposure_tests tests/LightingExposureTests.cpp)
 judas_add_engine_test(judas_shadow_pass_cache_tests tests/ShadowPassCacheTests.cpp)
 judas_add_engine_test(judas_render_pass_state_tests tests/RenderPassStateTests.cpp)
 judas_add_engine_test(judas_submission_queue_tests tests/SubmissionQueueTests.cpp)

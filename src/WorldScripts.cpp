@@ -99,7 +99,6 @@ bool RuntimeWorld::SetRuntimePlacement(EntityId id,const SceneTransform& t,bool 
         o->transform=local;
     }
     for(auto& r:m_staticRenderables)if(r.id==id){r.position=transform.position;r.rotation=transform.rotation;r.scale=transform.scale;}
-    for(auto& l:m_staticLights)if(l.id==id){l.position=transform.position;l.direction=transform.rotation*glm::vec3(0,0,-1);}
     for(auto& e:m_audioEmitters)if(e.id==id)e.transform=transform;
     for(auto& e:m_particleEmitters)if(e.id==id)e.transform=transform;
     for(auto& c:m_renderCameras)if(c.id==id)c.transform=transform;

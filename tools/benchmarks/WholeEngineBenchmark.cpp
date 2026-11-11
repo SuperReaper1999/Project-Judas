@@ -21,11 +21,22 @@
 #include <chrono>
 using Json=nlohmann::json;
 int main(int argc,char** argv){try{
- std::string project,out;unsigned frames=1800,warmup=240;bool profile=true;std::string key,pulse;double seconds=0,warmupSeconds=0,cap=0;
+ std::string project,out;unsigned frames=1800,warmup=240;bool profile=true;std::string key,pulse,sequencePath;double seconds=0,warmupSeconds=0,cap=0;
  for(int i=1;i<argc;++i){std::string a=argv[i];auto value=[&](){if(++i==argc)throw std::runtime_error("missing option value");return std::string(argv[i]);};
-  if(a=="--project")project=value();else if(a=="--out")out=value();else if(a=="--frames")frames=std::stoul(value());else if(a=="--warmup")warmup=std::stoul(value());else if(a=="--key")key=value();else if(a=="--pulse")pulse=value();else if(a=="--seconds")seconds=std::stod(value());else if(a=="--warmup-seconds")warmupSeconds=std::stod(value());else if(a=="--cap")cap=std::stod(value());else if(a=="--no-profile")profile=false;else throw std::runtime_error("unknown option "+a);
+  if(a=="--project")project=value();else if(a=="--out")out=value();else if(a=="--frames")frames=std::stoul(value());else if(a=="--warmup")warmup=std::stoul(value());else if(a=="--key")key=value();else if(a=="--pulse")pulse=value();else if(a=="--sequence")sequencePath=value();else if(a=="--seconds")seconds=std::stod(value());else if(a=="--warmup-seconds")warmupSeconds=std::stod(value());else if(a=="--cap")cap=std::stod(value());else if(a=="--no-profile")profile=false;else throw std::runtime_error("unknown option "+a);
  }
  if(project.empty()||out.empty()||frames<120||frames>100000||warmup>10000||seconds<0||seconds>300||warmupSeconds<0||warmupSeconds>30||cap<0||cap>1000||!std::isfinite(seconds)||!std::isfinite(warmupSeconds)||!std::isfinite(cap))throw std::runtime_error("--project FILE --out NEW_DIR [--frames 1800 --warmup 240 --key key:W --no-profile]");
+ Json sequence=Json::array();std::size_t sequenceIndex=0;
+ if(!sequencePath.empty()){
+  std::ifstream input(sequencePath);if(!input)throw std::runtime_error("cannot open benchmark input sequence");input>>sequence;
+  if(!sequence.is_array()||sequence.size()>4096)throw std::runtime_error("input sequence must be a bounded array");
+  double previousTime=-1;
+  for(const auto& event:sequence){
+   if(!event.is_object()||event.size()!=3||!event.contains("time")||!event.contains("control")||!event.contains("value"))throw std::runtime_error("sequence events require time/control/value");
+   const auto time=event.at("time").get<double>();const auto control=event.at("control").get<std::string>();const auto value=event.at("value").get<float>();
+   if(!std::isfinite(time)||time<0||time>300||time<previousTime||control.empty()||control.size()>64||!std::isfinite(value)||std::abs(value)>10000)throw std::runtime_error("invalid ordered input sequence event");previousTime=time;
+  }
+ }
  if(std::filesystem::exists(out))throw std::runtime_error("output directory already exists");
  std::filesystem::create_directories(out);
  SDL_setenv("JUDAS_PROFILE",profile?"1":"0",1);
@@ -77,6 +88,9 @@ int main(int argc,char** argv){try{
    if(control.rfind("key:",0)==0)h.GetWindow().QueueTestDevice("keyboard",control,value);
    else if(control.rfind("mouse:",0)==0)h.GetWindow().QueueTestDevice("mouse",control,value);
   };
+  if(ready)while(sequenceIndex<sequence.size()&&sequence[sequenceIndex].at("time").get<double>()<=double(now-sampleStart)/1e9){
+   const auto& event=sequence[sequenceIndex++];queue(event.at("control").get<std::string>(),event.at("value").get<float>());
+  }
   if(!key.empty())queue(key,ready?1:0);
   if(!pulse.empty()){queue(pulse,ready&&!pulsed?1:0);if(ready)pulsed=true;}
   if(auto* scripts=world.Scripts();scripts&&!scripts->Diagnostics().empty())fault=true;
@@ -107,7 +121,7 @@ int main(int argc,char** argv){try{
  };
 
  std::vector<std::string> args={"whole-engine-benchmark",project};std::vector<char*> av;for(auto& a:args)av.push_back(a.data());int result=Application{}.Run(int(av.size()),av.data(),&control);
- std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",2},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
+ std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",2},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
  std::string error;if(profile&&!p.Export((std::filesystem::path(out)/"timeline-last120.json").string(),error))throw std::runtime_error(error);
  if(!data.good()||!gpuData.good()||!meta.good()||result||fault||resourceFailures||inactiveSampleFrames||(seconds==0?samples!=frames:samples<120)||swapInterval!=0)throw std::runtime_error("invalid run: exit, script/resource fault, inactive frame, sample count or swap interval");
  return 0;

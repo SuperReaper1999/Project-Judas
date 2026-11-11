@@ -86,17 +86,14 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
     JUDAS_PROFILE_SCOPE("Lighting shadow planning");
     const auto view=renderer.ViewMatrix(),projection=renderer.ProjectionMatrix();
     auto selected=SelectShadowLights(lights,view,projection,renderer.ShadowBudget());
-    // Importance decides which lights qualify, not which unchanged depth
-    // allocation they own. Retain source slots when relevance order changes.
-    std::array<bool,8> used{};
-    for(auto& light:selected)if(light.shadowMapIndex>=0){
-        const int old=renderer.ShadowCache().LocalSlotForSource(light.identity);
-        if(old>=kLocalShadowBase&&!used[unsigned(old-kLocalShadowBase)/6]){light.shadowMapIndex=old;used[unsigned(old-kLocalShadowBase)/6]=true;}
-        else light.shadowMapIndex=-2;
-    }
-    for(auto& light:selected)if(light.shadowMapIndex==-2){
-        for(unsigned n=0;n<used.size();++n)if(!used[n]){used[n]=true;light.shadowMapIndex=kLocalShadowBase+int(n)*6;break;}
-    }
+    // Per-view importance selects lights; a bounded context-owned LRU retains
+    // inactive charts for other cameras instead of thrashing the first slots.
+    renderer.ShadowCache().AssignLocalSlots(selected);
+    const auto requested=std::count_if(lights.begin(),lights.end(),[](const auto& l){return l.castsShadow||l.shadowMapIndex>=1;});
+    const auto chosen=std::count_if(selected.begin(),selected.end(),[](const auto& l){return l.shadowMapIndex>=0;});
+    JUDAS_PROFILE_COUNTER("Shadow sources requested",requested,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Shadow sources selected",chosen,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Shadow requests not selected",requested-chosen,ProfileCounterMode::Sum);
     unsigned layers=settings.sunEnabled?3:0;
     for(const auto& l:selected)if(l.shadowMapIndex>=0)layers=std::max(layers,unsigned(l.shadowMapIndex+(l.kind==LightKind::Point?6:1)));
     renderer.ReserveShadowLayers(layers);
@@ -121,7 +118,7 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
         if(settings.sunEnabled){
             const auto eye=glm::vec3(glm::inverse(view)[3]);
             for(int cascade=0;cascade<3;++cascade){const float extent=cascade==0?16.f:cascade==1?48.f:144.f;
-                render(cascade,0,ComputeDirectionalShadowMatrix(eye,settings.sunDirection,extent,extent*3));}
+                render(cascade,0,ComputeStableDirectionalShadowMatrix(eye,settings.sunDirection,extent,extent*3,kDefaultShadowResolution));}
         }
         for(const auto& l:selected)if(l.shadowMapIndex>=0){
             if(l.kind==LightKind::Spot)render(l.shadowMapIndex,l.identity,ComputeSpotShadowMatrix(l.position,l.direction,l.outerConeDegrees,l.range));

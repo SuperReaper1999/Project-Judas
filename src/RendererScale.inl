@@ -2,12 +2,30 @@
 void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights){
  JUDAS_PROFILE_SCOPE("Light tile selection/upload");
  GLint viewport[4];glGetIntegerv(GL_VIEWPORT,viewport);
- m_lightGrid.Build(lights,m_view,m_projection,unsigned(std::max(1,viewport[2])),unsigned(std::max(1,viewport[3])));
+ const auto* policy=std::getenv("JUDAS_LIGHT_LISTS");
+ const bool storage=m_render->lightStorageVariant;
+ const bool gpuBins=storage&&!m_render->lightStorageUnavailable&&((policy&&std::strcmp(policy,"compute")==0)||((!policy||std::strcmp(policy,"auto")==0)&&lights.size()>=128));
+ m_lightGrid.Build(lights,m_view,m_projection,unsigned(std::max(1,viewport[2])),unsigned(std::max(1,viewport[3])),!gpuBins);
  glUseProgram(m_shaderProgram);glUniform4f(glGetUniformLocation(m_shaderProgram,"uLightViewport"),float(viewport[0]),float(viewport[1]),float(viewport[2]),float(viewport[3]));
  glUniform1i(glGetUniformLocation(m_shaderProgram,"uHasDynamicLights"),m_lightGrid.visible!=0);
- m_stats.lightBytes=size_t(m_lightTextureRows)*1024*sizeof(glm::vec4);m_stats.shadowBytes=m_shadowsEnabled?size_t(m_shadowLayers)*kShadowMapResolution*kShadowMapResolution*4:0;
+ m_render->lightStorageReady=false;glUniform1i(glGetUniformLocation(m_shaderProgram,"uUseLightStorage"),0);
+ m_stats.shadowBytes=m_shadowsEnabled?size_t(m_shadowLayers)*kShadowMapResolution*kShadowMapResolution*4:0;
  if(!m_lightGrid.visible){m_stats.dynamicLights=0;m_stats.lightRejected+=m_lightGrid.rejected;return;}
  m_stats.dynamicLights=m_lightGrid.visible;m_stats.lightRejected+=m_lightGrid.rejected;m_stats.lightTileOverflow+=m_lightGrid.overflow;m_stats.maxTileLights=std::max(m_stats.maxTileLights,m_lightGrid.maxPerTile);
+ if(storage){
+  std::string error;
+  if(m_render->lightLists.Upload(m_lightGrid,gpuBins,m_capabilities,error)){
+   m_render->lightStorageReady=true;glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uUseLightStorage"),1);
+   m_stats.lightBytes=m_render->lightLists.AllocatedBytes();m_stats.uploadedBytes+=m_lightGrid.texels.size()*sizeof(glm::vec4);++m_stats.uploadCalls;return;
+  }
+  m_render->lightStorageUnavailable=true;
+  std::fprintf(stderr,"Lighting storage fallback: %s\n",error.c_str());
+  if(gpuBins){
+   m_lightGrid.Build(lights,m_view,m_projection,unsigned(std::max(1,viewport[2])),unsigned(std::max(1,viewport[3])));
+   if(m_render->lightLists.Upload(m_lightGrid,false,m_capabilities,error)){m_render->lightStorageReady=true;m_stats.lightBytes=m_render->lightLists.AllocatedBytes();return;}
+  }
+  throw std::runtime_error("Lighting storage publication failed: "+error);
+ }
  const unsigned rows=std::max(1u,unsigned((m_lightGrid.texels.size()+1023)/1024));m_lightGrid.texels.resize(size_t(rows)*1024);
  if(!m_lightTexture)glGenTextures(1,&m_lightTexture);
  glActiveTexture(GL_TEXTURE14);glBindTexture(GL_TEXTURE_2D,m_lightTexture);
@@ -77,7 +95,7 @@ void Renderer::ReserveShadowLayers(unsigned layers){
  
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  const bool cubeViews=m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16;
- if(cubeViews){layers=std::min(unsigned(kShadowMapCount),((layers+5)/6)*6);glTexStorage3D(GL_TEXTURE_2D_ARRAY,1,GL_DEPTH_COMPONENT24,kShadowMapResolution,kShadowMapResolution,GLsizei(layers));}
+ if(cubeViews){if(layers>kLocalShadowBase)layers=std::min(unsigned(kShadowMapCount),((layers+5)/6)*6);glTexStorage3D(GL_TEXTURE_2D_ARRAY,1,GL_DEPTH_COMPONENT24,kShadowMapResolution,kShadowMapResolution,GLsizei(layers));}
  else
 #endif
  glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_DEPTH_COMPONENT24,kShadowMapResolution,kShadowMapResolution,GLsizei(layers),0,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT,nullptr);

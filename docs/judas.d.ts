@@ -508,6 +508,18 @@ declare module "judas" {
   export interface OriginState {readonly pending:boolean;readonly revision:number;readonly error:string}
   export interface PlanetState {readonly radius:number;readonly center:Vec3;readonly leaves:number;readonly resident:number;readonly triangles:number;readonly colliders:number;readonly maximumPixelError:number;readonly prepareMs:number;readonly collisionMs:number;readonly collisionReady:boolean;readonly budgetLimited:boolean;readonly error:string}
   export interface PlanetSample {readonly position:Vec3;readonly normal:Vec3;readonly height:number;readonly distance:number}
+  export interface LightExposureOptions {
+    maxSources?:number; maxLights?:number; maxOcclusionQueries?:number;
+    sunOcclusionDistance?:number; normal?:Vec3; occlusionLayers?:string[]|null; ignored?:Entity[];
+  }
+  export interface LightExposure {
+    readonly unit:"relative"; readonly color:Vec3; readonly relativeIlluminance:number;
+    /** Null when the source scan budget cannot bound unexamined illumination. */
+    readonly upperBound:number|null; readonly complete:boolean; readonly stale:boolean;
+    readonly sampledAtSeconds:number; readonly ageSeconds:number;
+    readonly sourcesExamined:number; readonly occlusionQueries:number; readonly unresolvedSources:number;
+    readonly contributors:ReadonlyArray<{entityId:string;potential:Vec3;visible:Vec3;occlusionKnown:boolean;occluded:boolean}>;
+  }
   export const world: {
     /** Absolute binary64 origin; all ordinary transform/query positions remain local. */
     readonly origin:Vec3;
@@ -517,6 +529,8 @@ declare module "judas" {
     /** Queue a 512-m quantized origin at the next authoritative boundary. Throws if unsupported. */
     requestOrigin(absolute:Vec3):boolean;
     entity: typeof entity;
+    /** Current published simulation geometry; independent of camera, shadow quality and GPU readback. */
+    lightExposure(position:Vec3,options?:LightExposureOptions):LightExposure;
     readonly appearance:Appearance;
     setAppearance(settings:Partial<AppearanceSettings>):boolean;
     resetAppearance():boolean;

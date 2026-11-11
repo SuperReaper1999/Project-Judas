@@ -2,10 +2,10 @@
 #include <algorithm>
 #include <cmath>
 #include <glm/gtc/matrix_inverse.hpp>
-void RenderLightGrid::Build(const std::vector<DynamicLight>& lights,const glm::mat4& view,const glm::mat4& projection,unsigned width,unsigned height){
+void RenderLightGrid::Build(const std::vector<DynamicLight>& lights,const glm::mat4& view,const glm::mat4& projection,unsigned width,unsigned height,bool buildBins){
  if(lights.empty()){columns=rows=1;visible=rejected=overflow=maxPerTile=0;texels={{1,1,2,0},{2,0,0,0}};return;}
  columns=std::max(1u,(std::min(width,7680u)+TileSize-1)/TileSize);rows=std::max(1u,(std::min(height,7680u)+TileSize-1)/TileSize);
- visible=rejected=overflow=maxPerTile=0;texels.clear();texels.resize(1+columns*rows);std::vector<std::vector<unsigned>> bins(columns*rows);
+ visible=rejected=overflow=maxPerTile=0;texels.clear();texels.resize(1+columns*rows);std::vector<std::vector<unsigned>> bins(buildBins?columns*rows:0);std::vector<unsigned> counts(buildBins?0:columns*rows);std::vector<glm::vec4> bounds;
  struct Candidate{unsigned index;float score;};std::vector<Candidate> candidates;const auto eye=glm::vec3(glm::inverse(view)[3]);
  for(unsigned i=0;i<lights.size();++i){const auto& l=lights[i];float energy=std::max({l.color.x,l.color.y,l.color.z});if(!(std::isfinite(l.range)&&l.range>0&&std::isfinite(energy)&&std::isfinite(glm::length(l.color))&&energy>0&&std::isfinite(glm::length(l.position)))){++rejected;continue;}candidates.push_back({i,energy/(1+glm::dot(l.position-eye,l.position-eye))});}
  // Stable deterministic relevance selection, never registration-order truncation.
@@ -20,9 +20,11 @@ void RenderLightGrid::Build(const std::vector<DynamicLight>& lights,const glm::m
   auto cell=[](float x,unsigned n){return std::min(n-1,unsigned(std::max(0.f,std::floor((x*.5f+.5f)*n))));};auto x0=cell(lo.x,columns),x1=cell(hi.x,columns),y0=cell(lo.y,rows),y1=cell(hi.y,rows);
   unsigned index=visible++;const auto direction=glm::length(l.direction)>1e-6f?glm::normalize(l.direction):glm::vec3(0,0,-1);
   texels.emplace_back(l.position,l.range);texels.emplace_back(l.color,float(l.kind==LightKind::Spot));texels.emplace_back(direction,std::cos(glm::radians(std::min(l.innerConeDegrees,l.outerConeDegrees))));texels.emplace_back(std::cos(glm::radians(l.outerConeDegrees)),float(l.shadowMapIndex),0,0);
-  for(unsigned y=y0;y<=y1;++y)for(unsigned x=x0;x<=x1;++x){auto& bin=bins[y*columns+x];if(bin.size()<MaxPerTile)bin.push_back(index);else ++overflow;}
+  if(!buildBins)bounds.emplace_back(float(x0),float(y0),float(x1),float(y1));
+  for(unsigned y=y0;y<=y1;++y)for(unsigned x=x0;x<=x1;++x){if(buildBins){auto& bin=bins[y*columns+x];if(bin.size()<MaxPerTile)bin.push_back(index);else ++overflow;}else{auto& count=counts[y*columns+x];if(count<MaxPerTile)++count;else ++overflow;}}
  }
- texels[0]={float(columns),float(rows),float(1+columns*rows),0};
+ texels[0]={float(columns),float(rows),float(1+columns*rows),float(visible)};
+ if(!buildBins){const unsigned prefix=unsigned(texels.size());for(unsigned t=0;t<counts.size();++t){maxPerTile=std::max(maxPerTile,counts[t]);texels[1+t]={float(prefix+t*MaxPerTile),float(counts[t]),0,0};}texels.insert(texels.end(),bounds.begin(),bounds.end());return;}
  for(unsigned t=0;t<bins.size();++t){auto& bin=bins[t];maxPerTile=std::max(maxPerTile,unsigned(bin.size()));texels[1+t]={float(texels.size()),float(bin.size()),0,0};for(auto i:bin)texels.emplace_back(float(i),0,0,0);}
 }
 std::vector<DynamicLight> SelectShadowLights(const std::vector<DynamicLight>& input,const glm::mat4& view,const glm::mat4& projection,unsigned budget){

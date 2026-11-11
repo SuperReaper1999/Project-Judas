@@ -310,7 +310,7 @@ public:
     //
     // Renders depth-only, from one shadow-casting light's own point of
     // view, into that light's dedicated depth texture (see src/Light.h's
-    // kDirectionalShadowSlot/kTorchShadowSlot/kShipHeadlightShadowSlot).
+    // directional cascades and aligned local-source groups).
     // Call once per shadow-casting light, BEFORE the frame's normal
     // BeginFrame/SetCamera/color-pass sequence: BeginShadowPass, then the
     // SAME drawScene-style sequence of DrawMesh/DrawBox/DrawSphere calls

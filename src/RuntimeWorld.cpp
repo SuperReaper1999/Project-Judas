@@ -620,8 +620,6 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             StaticLight light;
             light.id = o.id;
             light.light = *o.light;
-            light.position = position;
-            light.direction = glm::normalize(rotation * glm::vec3(0.0f, 0.0f, -1.0f));
             m_staticLights.push_back(light);
         }
 
@@ -889,7 +887,6 @@ bool RuntimeWorld::SetEntityState(EntityId id, const EntityPhysicalState& state)
         for(auto& b:m_staticBodies)if(b.id==id){m_physics.ResetBody(b.handle,state.position,state.rotation);b.position=state.position;b.rotation=state.rotation;}
         for(auto& a:m_audioEmitters)if(a.id==id){a.transform.position=state.position;a.transform.rotation=state.rotation;}
         for(auto& c:m_renderCameras)if(c.id==id){c.transform.position=state.position;c.transform.rotation=state.rotation;}
-        for(auto& l:m_staticLights)if(l.id==id){l.position=state.position;l.direction=state.rotation*glm::vec3(0,0,-1);}
         return true;
     }
     e->coarseMotion = glm::length(state.linearVelocity) < kSettledLinearSpeed &&
@@ -1232,7 +1229,13 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
 }
 
 SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTransform& fallback,float alpha) const {
-    if(m_network){auto t=fallback;if(m_network->Presentation(id,t))return t;}
+    return ResolveTransform(id,fallback,alpha,true);
+}
+SceneTransform RuntimeWorld::SimulationTransform(SceneObjectId id,const SceneTransform& fallback) const {
+    return ResolveTransform(id,fallback,1,false);
+}
+SceneTransform RuntimeWorld::ResolveTransform(SceneObjectId id,const SceneTransform& fallback,float alpha,bool remotePresentation) const {
+    if(remotePresentation&&m_network){auto t=fallback;if(m_network->Presentation(id,t))return t;}
     if(auto wheel=m_wheels.find(id);wheel!=m_wheels.end()&&wheel->second.state.available){
         const auto& v=wheel->second;auto t=fallback;const float fraction=std::clamp(alpha,0.f,1.f);
         t.position=glm::mix(v.previous.center,v.state.center,fraction);t.rotation=glm::normalize(glm::slerp(v.previous.rotation,v.state.rotation,fraction));return t;
@@ -1241,7 +1244,7 @@ SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTran
         const auto& socket=*d->socket;auto it=m_animationInstances.find(socket.target);
         if(it!=m_animationInstances.end()&&it->second.asset){const auto& s=it->second.asset->skeleton;int n=FindSkeletonJoint(s,socket.joint);
             if(n>=0&&size_t(n)<it->second.finalPose.local.size())if(const auto* target=RuntimeDefinition(socket.target)){
-                auto root=PresentedTransform(socket.target,target->transform,alpha);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*PoseGlobalMatrices(s,PresentedAnimationPose(socket.target,alpha))[n];JointTransform joint;std::string error;
+                auto root=ResolveTransform(socket.target,target->transform,alpha,remotePresentation);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*PoseGlobalMatrices(s,PresentedAnimationPose(socket.target,alpha))[n];JointTransform joint;std::string error;
                 if(DecomposeRigidPose(matrix,joint,error)){SceneTransform t;t.position=joint.translation+joint.rotation*(joint.scale*socket.offset.position);t.rotation=glm::normalize(joint.rotation*socket.offset.rotation);t.scale=joint.scale*socket.offset.scale;return t;}
             }
         }
@@ -1269,7 +1272,7 @@ SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTran
     const auto* local=m_hierarchy.Find(id);
     if(local&&local->parent){
         const auto* parent=m_hierarchy.Find(local->parent);
-        if(parent){auto p=PresentedTransform(parent->id,parent->transform,alpha);auto t=local->transform;
+        if(parent){auto p=ResolveTransform(parent->id,parent->transform,alpha,remotePresentation);auto t=local->transform;
             t.position=p.position+p.rotation*(p.scale*t.position);t.rotation=glm::normalize(p.rotation*t.rotation);t.scale=p.scale*t.scale;return t;}
     }
     if(const auto* e=FindEntity(id)){auto t=fallback;t.position=e->state.position;t.rotation=e->state.rotation;return t;}

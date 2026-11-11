@@ -1698,7 +1698,9 @@
       "groups": ["rendering", "physics", "performance"]
     },
     {"name": "async-application-startup", "target": "judas_async_application_tests", "groups": ["rendering", "lifecycle"]},
-    {"name": "startup-movie", "target": "judas_startup_movie_tests", "groups": ["rendering", "lifecycle"]}
+    {"name": "startup-movie", "target": "judas_startup_movie_tests", "groups": ["rendering", "lifecycle"]},
+    {"name": "lighting-exposure", "target": "judas_lighting_exposure_tests", "groups": ["rendering", "scripting"]},
+    {"name": "lighting-lists", "target": "judas_lighting_lists_tests", "groups": ["rendering"]}
   ],
   "known_findings": [
     {

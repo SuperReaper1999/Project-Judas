@@ -57,3 +57,12 @@ glm::mat4 ComputePointShadowMatrix(glm::vec3 position,float range,unsigned face)
     face=std::min(face,5u);
     return glm::perspective(glm::radians(90.f),1.f,.02f,std::max(.021f,range))*glm::lookAt(position,position+directions[face],ups[face]);
 }
+
+glm::mat4 ComputeStableDirectionalShadowMatrix(glm::vec3 focus,glm::vec3 direction,float extent,float distance,unsigned resolution){
+    if(!resolution||!(extent>0))return ComputeDirectionalShadowMatrix(focus,direction,extent,distance);
+    const auto toLight=glm::length(direction)>1e-6f?glm::normalize(direction):glm::vec3(0,1,0);
+    const auto right=glm::normalize(glm::cross(-toLight,ChooseShadowUpHint(toLight)));
+    const auto up=glm::cross(right,-toLight);const float step=2*extent/float(resolution);
+    const auto snapped=right*(std::round(glm::dot(right,focus)/step)*step)+up*(std::round(glm::dot(up,focus)/step)*step)+toLight*(std::round(glm::dot(toLight,focus)/step)*step);
+    return ComputeDirectionalShadowMatrix(snapped,toLight,extent,distance);
+}

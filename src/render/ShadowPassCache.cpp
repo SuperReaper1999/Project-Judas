@@ -42,14 +42,24 @@ bool ShadowPassCache::Remember(const ShadowPassKey &key) {
     slots[unsigned(key.slot)] = key;
     return true;
 }
-int ShadowPassCache::LocalSlotForSource(std::uint64_t source)const{
-    if(!source)return -1;
-    for(unsigned slot=kLocalShadowBase;slot<slots.size();slot+=6)
-        if(slots[slot]&&slots[slot]->source==source)return int(slot);
-    return -1;
+void ShadowPassCache::AssignLocalSlots(std::vector<DynamicLight>& selected){
+    std::array<bool,8> used{};
+    for(auto& light:selected)if(light.shadowMapIndex>=0){
+        int found=-1;
+        for(unsigned n=0;n<sourceIds.size();++n)if(light.identity&&sourceIds[n]==light.identity&&!used[n]){found=int(n);break;}
+        if(found>=0){used[unsigned(found)]=true;lastUse[unsigned(found)]=++useClock;light.shadowMapIndex=kLocalShadowBase+found*6;}
+        else light.shadowMapIndex=-2;
+    }
+    for(auto& light:selected)if(light.shadowMapIndex==-2){
+        unsigned best=unsigned(sourceIds.size());
+        for(unsigned n=0;n<sourceIds.size();++n)if(!used[n]&&(!sourceIds[n]||best==sourceIds.size()||lastUse[n]<lastUse[best])){best=n;if(!sourceIds[n])break;}
+        if(best==sourceIds.size()){light.shadowMapIndex=-1;continue;}
+        used[best]=true;sourceIds[best]=light.identity;lastUse[best]=++useClock;light.shadowMapIndex=kLocalShadowBase+int(best)*6;
+    }
 }
 void ShadowPassCache::Forget(unsigned slot){if(slot<slots.size())slots[slot].reset();}
 void ShadowPassCache::Clear() {
+    sourceIds.fill(0);lastUse.fill(0);useClock=0;
     for (auto &slot : slots)
         slot.reset();
 }

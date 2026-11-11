@@ -189,8 +189,6 @@ public:
     struct StaticLight {
         SceneObjectId id = kInvalidSceneObjectId;
         SceneLightComponent light;
-        glm::vec3 position{0.0f};
-        glm::vec3 direction{0.0f, 0.0f, -1.0f};
     };
 
     // Static Newtonian source acting on Celestial-gravity vehicles.
@@ -568,6 +566,7 @@ public:
     EntityId CreateEntity(const SceneObject& definition, const EntityPhysicalState* state,
                           std::string* outError = nullptr);
     SceneTransform PresentedTransform(SceneObjectId id, const SceneTransform& fallback, float alpha) const;
+    SceneTransform SimulationTransform(SceneObjectId id,const SceneTransform& fallback) const;
     struct PrefabScriptInit {SceneObjectId source=0;uint64_t slot=0;std::string properties,state="null";};
     struct PrefabSpawnOptions {std::optional<glm::vec3> velocity,angularVelocity;std::vector<PrefabScriptInit> scripts;};
     EntityId SpawnPrefab(const AssetId& asset, const SceneTransform& placement, std::string& error,const PrefabSpawnOptions& options={});
@@ -618,6 +617,7 @@ public:
     void SetCompositionFingerprint(const std::string& hash) { m_baselineFingerprint=hash;m_composed=true; }
     bool IsComposed() const { return m_composed; }
 private:
+    SceneTransform ResolveTransform(SceneObjectId,const SceneTransform&,float alpha,bool remotePresentation) const;
     bool SetRuntimePlacement(EntityId,const SceneTransform&,bool includePrivate);
     friend class WorldPersistence;
     friend class RuntimeTerrain;

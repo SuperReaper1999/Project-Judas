@@ -80,6 +80,10 @@ class ComputeDevice {
     bool UpdateBuffer(ComputeBuffer, std::size_t offset, const void *data, std::size_t bytes,
                       std::string &error);
     bool BindStorage(ComputeBuffer, unsigned binding, ComputeAccess, std::string &error);
+    // Publish a completed read-only storage buffer to a graphics shader.
+    // Unlike BindStorage (dispatch preparation), this immediately binds the
+    // indexed SSBO and generic storage target. Call again after foreign draws.
+    bool BindGraphicsStorage(ComputeBuffer,unsigned binding,std::string& error);
     bool BindVertex(ComputeBuffer, std::string &error);
     bool BindIndirect(ComputeBuffer, std::string &error);
 

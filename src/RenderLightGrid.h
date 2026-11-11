@@ -7,7 +7,7 @@ struct RenderLightGrid {
  static constexpr unsigned TileSize=64,MaxLights=1024,MaxPerTile=128;
  unsigned columns=0,rows=0,visible=0,rejected=0,overflow=0,maxPerTile=0;
  std::vector<glm::vec4> texels;
- void Build(const std::vector<DynamicLight>&,const glm::mat4& view,const glm::mat4& projection,unsigned width,unsigned height);
+ void Build(const std::vector<DynamicLight>&,const glm::mat4& view,const glm::mat4& projection,unsigned width,unsigned height,bool buildBins=true);
 };
 // Returns a copy with shadow slots assigned by per-view relevance. Point lights
 // remain unshadowed; budget exhaustion is a quality choice, not missing light.

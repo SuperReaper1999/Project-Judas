@@ -289,6 +289,14 @@ bool ComputeDevice::BindStorage(ComputeBuffer handle, unsigned binding, ComputeA
     return true;
 }
 
+bool ComputeDevice::BindGraphicsStorage(ComputeBuffer handle,unsigned binding,std::string& error){
+    if(!Current(error))return false;
+    auto* entry=state->Buffer(handle,error);if(!entry)return false;
+    if(!(entry->uses&unsigned(ComputeBufferUse::Storage))||binding>=state->bindings.size())return Fail(error,"graphics storage binding requires storage use and a valid binding");
+    if(entry->pending&unsigned(ComputeBarrier::Storage))return Fail(error,"graphics storage consumer requires a Storage barrier");
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER,binding,entry->name);return true;
+}
+
 bool ComputeDevice::BindVertex(ComputeBuffer handle, std::string &error) {
     if (!Current(error))
         return false;
@@ -644,6 +652,7 @@ bool ComputeDevice::UpdateBuffer(ComputeBuffer, std::size_t, const void *, std::
 bool ComputeDevice::BindStorage(ComputeBuffer, unsigned, ComputeAccess, std::string &e) {
     return Current(e);
 }
+bool ComputeDevice::BindGraphicsStorage(ComputeBuffer,unsigned,std::string& e){return Current(e);}
 bool ComputeDevice::BindVertex(ComputeBuffer, std::string &e) { return Current(e); }
 bool ComputeDevice::BindIndirect(ComputeBuffer, std::string &e) { return Current(e); }
 ComputeKernel ComputeDevice::CreateKernel(const char *, const char *, std::string &e) {

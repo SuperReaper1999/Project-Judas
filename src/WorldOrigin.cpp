@@ -225,8 +225,6 @@ bool RuntimeWorld::CommitOrigin() {
         shift(b.position);
     for (auto &r : m_staticRenderables)
         shift(r.position);
-    for (auto &l : m_staticLights)
-        shift(l.position);
     for (auto &c : m_renderCameras) {
         shift(c.transform.position);
         if (c.hasClipPlane)

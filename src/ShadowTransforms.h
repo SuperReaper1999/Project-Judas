@@ -59,3 +59,6 @@ glm::mat4 ComputeSpotShadowMatrix(const glm::vec3& lightPosition, const glm::vec
 
 // Standard cubemap face order +X,-X,+Y,-Y,+Z,-Z.
 glm::mat4 ComputePointShadowMatrix(glm::vec3 position,float range,unsigned face);
+
+// Render-only stabilization; every dirty caster still updates immediately.
+glm::mat4 ComputeStableDirectionalShadowMatrix(glm::vec3 focus,glm::vec3 direction,float extent,float distance,unsigned resolution);

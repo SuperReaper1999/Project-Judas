@@ -163,6 +163,7 @@ int main(int argc, char **argv) {
           "known-answer arithmetic kernel executes on the GPU");
     Check(!device.ReadForDiagnostics(numbers, 0, values.data(), sizeof(values), error),
           "CPU diagnostic consumer cannot bypass the required publication barrier");
+    Check(!device.BindGraphicsStorage(numbers,6,error),"graphics storage cannot bypass the required shader-write publication barrier");
     Check(!device.Dispatch(kernel, {{8, 1, 1}}, error),
           "a second storage writer cannot bypass a write-after-write barrier");
     Check(!device.Barrier(static_cast<ComputeBarrier>(0), error) &&
@@ -171,6 +172,9 @@ int main(int argc, char **argv) {
     Check(device.Barrier(ComputeBarrier::Storage | ComputeBarrier::BufferUpdate, error) &&
               device.ReadForDiagnostics(numbers, 0, values.data(), sizeof(values), error),
           "explicit storage and buffer-update barriers publish diagnostic results");
+    Check(device.BindGraphicsStorage(numbers,6,error),"completed compute data publishes to an actual graphics SSBO binding");
+    GLint graphicsBinding=0;glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_BINDING,6,&graphicsBinding);
+    Check(graphicsBinding!=0&&!device.BindGraphicsStorage(numbers,unsigned(caps.limits.storageBufferBindings),error),"graphics publication names a native buffer and rejects out-of-range binding points");
     bool correct = true;
     for (unsigned i = 0; i < values.size(); ++i)
         correct &= values[i] == i * 3u + 7u;

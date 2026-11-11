@@ -143,7 +143,12 @@ uniform mat4 uLightSpaceMatrix[54];
 uniform sampler2D uLightGrid;
 uniform bool uHasDynamicLights;
 uniform vec4 uLightViewport;
+#ifdef JUDAS_LIGHT_STORAGE
+layout(std430,binding=6) readonly buffer JudasLightLists {vec4 judasLightData[];};
+vec4 lightTexel(int i){return judasLightData[i];}
+#else
 vec4 lightTexel(int i){return texelFetch(uLightGrid,ivec2(i%1024,i/1024),0);}
+#endif
 ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clamp(ivec2((gl_FragCoord.xy-uLightViewport.xy)/uLightViewport.zw*meta.xy),ivec2(0),n-1);return ivec2(tile.y*n.x+tile.x,int(meta.z));}
 // Capture geometric derivatives in uniform flow before material/light branches.
 vec3 shadowWorldDx, shadowWorldDy;
@@ -188,7 +193,7 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
             float receiver=projected.z+dot(slope,offset);
             float stored;
 #ifdef JUDAS_CUBE_ARRAY
-            if(samplingPointShadow)stored=texture(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,(vec2(pixel)+0.5)/vec2(size)),float((slot-6)/6))).r;
+            if(samplingPointShadow)stored=textureLod(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,(vec2(pixel)+0.5)/vec2(size)),float((slot-6)/6)),0.0).r;
             else
 #endif
             stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
@@ -258,7 +263,7 @@ vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
  for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
  vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
  vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
- float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;float shadow=1.0;shadow=LocalShadow(shadowSlot,isSpot,lightPosition,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
+ float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;if(attenuation<=0.0||spot<=0.0||dot(n,l)<=0.0)continue;float shadow=1.0;shadow=LocalShadow(shadowSlot,isSpot,lightPosition,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
  float ao=(uHasOcclusion&&!uTerrain)?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
@@ -316,6 +321,7 @@ void main() {
 
         float lightDiffuse = max(dot(normal, lightDir), 0.0);
 
+        if(attenuation<=0.0||spotFactor<=0.0||lightDiffuse<=0.0)continue;
         float shadow = 1.0;
         int shadowIndex = shadowSlot;
         shadow=LocalShadow(shadowIndex,isSpot,lightPosition,vWorldPos,lightDiffuse);

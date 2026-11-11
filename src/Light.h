@@ -51,5 +51,11 @@ struct DynamicLight {
 
 // Three directional cascades. Local charts occupy aligned six-layer groups:
 // spots use their first face; points use all six. Bounded to eight sources.
-constexpr int kDirectionalShadowSlot=0,kTorchShadowSlot=1,kShipHeadlightShadowSlot=2;
+constexpr int kDirectionalShadowSlot=0;
 constexpr int kLocalShadowBase=6,kShadowMapCount=54;
+
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+constexpr unsigned kDefaultShadowResolution=512;
+#else
+constexpr unsigned kDefaultShadowResolution=1024;
+#endif

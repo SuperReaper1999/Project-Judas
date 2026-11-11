@@ -514,6 +514,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.fluidSample` | `fluidSample` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.gridWaterRegions` | `gridWaterOwners` | [declaration](../judas.d.ts) | [reference](water.md) |
+| `world.lightExposure` | `lightExposure` | [declaration](../judas.d.ts) | [reference](lighting.md) |
 | `world.origin` | `worldOrigin` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.originState` | `worldOriginState` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |

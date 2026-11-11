@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <vector>
 #include <limits>
+#include <stdexcept>
 
 #include <SDL2/SDL.h>
 
@@ -142,9 +143,9 @@ constexpr int kSphereLongitudeSegments = 24;
 // excessive) for this demo's world scale, for all three shadow slots
 // alike (no separate resolution per light).
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
-constexpr int kShadowMapResolution = 512;
+constexpr int kShadowMapResolution = kDefaultShadowResolution;
 #else
-constexpr int kShadowMapResolution = 1024;
+constexpr int kShadowMapResolution = kDefaultShadowResolution;
 #endif
 
 // Milestone 13: the UI overlay's own tiny shader — deliberately separate
@@ -183,14 +184,24 @@ bool Renderer::CompileShader(GLenum type, const char* source, GLuint& result) co
         if(source==kFragmentShaderSource&&m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16)
             transformed.insert(transformed.find('\n')+1,"#define JUDAS_CUBE_ARRAY 1\n");
 #endif
+        if(source==kFragmentShaderSource&&m_render->lightStorageVariant)
+            transformed.insert(transformed.find('\n')+1,"#define JUDAS_LIGHT_STORAGE 1\n");
         return JudasRender::Shaders::CompileShader(type,transformed.c_str(),result,profile,"mesh-view-block");
     }
     return JudasRender::Shaders::CompileShader(type, source, result, profile);
 }
 
 bool Renderer::Init() {
+    m_render->lightStorageReady=false;m_render->lightStorageUnavailable=false;
+    m_shadowContentValid.fill(false);
     m_render->shadowCache.Clear();
     m_capabilities = QueryGraphicsCapabilities();
+    const char* lightPolicy=std::getenv("JUDAS_LIGHT_LISTS");
+    if(lightPolicy&&std::strcmp(lightPolicy,"auto")&&std::strcmp(lightPolicy,"texture")&&std::strcmp(lightPolicy,"cpu")&&std::strcmp(lightPolicy,"compute")){
+        std::fprintf(stderr,"Unknown JUDAS_LIGHT_LISTS policy; use auto, texture, cpu or compute\n");return false;
+    }
+    m_render->lightStorageVariant=m_capabilities.modernTier&&m_capabilities.storageBuffers&&(!lightPolicy||
+        std::strcmp(lightPolicy,"texture")!=0);
     m_render->persistentUploads=true;
     if(const char* setting=std::getenv("JUDAS_PERSISTENT_UPLOADS"))m_render->persistentUploads=std::strcmp(setting,"0")!=0;
     if(const char* batching=std::getenv("JUDAS_RENDER_BATCHING"))m_batchingEnabled=std::strcmp(batching,"0")!=0;
@@ -455,6 +466,8 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 #endif
 }
 void Renderer::Shutdown() {
+    m_render->lightStorageReady=false;
+    std::string lightingError;if(!m_render->lightLists.Shutdown(lightingError))std::fprintf(stderr,"Lighting shutdown: %s\n",lightingError.c_str());
     m_render->submission.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
     if(m_lightTexture)glDeleteTextures(1,&m_lightTexture);
     m_lightTexture=0;m_lightTextureRows=0;
@@ -1058,6 +1071,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     glActiveTexture(GL_TEXTURE14);glBindTexture(GL_TEXTURE_2D,m_lightTexture);
     glActiveTexture(GL_TEXTURE0);  // restore the default active unit other calls (UI, texture creation) assume
 
+    if(m_render->lightStorageReady){std::string lightError;if(!m_render->lightLists.Bind(lightError))std::fprintf(stderr,"Lighting bind: %s\n",lightError.c_str());}
     submit(false);
 }
 

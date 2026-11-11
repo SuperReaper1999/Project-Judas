@@ -2,19 +2,21 @@
 #include "../RuntimeWorld.h"
 #include "../Scene.h"
 
-std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, float alpha) {
+std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, float alpha,unsigned maximumSources,bool simulation) {
     std::vector<DynamicLight> lights;
 
 
 
+    unsigned examined=0;
     for (const RuntimeWorld::StaticLight& s : world.StaticLights()) {
+        if(examined++>=maximumSources)break;
         if(!world.IsPublished(s.id))continue;
         DynamicLight light;
         light.kind = s.light.kind == SceneLightKind::Spot ? LightKind::Spot : LightKind::Point;
-        const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,glm::quat(1,0,0,0),glm::vec3(1)},alpha);
+        const auto* definition=world.RuntimeDefinition(s.id);if(!definition)continue;
+        const auto t=simulation?world.SimulationTransform(s.id,definition->transform):world.PresentedTransform(s.id,definition->transform,alpha);
         light.position = t.position;
         light.direction = t.rotation*glm::vec3(0,0,-1);
-        if(t.rotation==glm::quat(1,0,0,0))light.direction=s.direction;
         if(!s.light.enabled)continue;
         light.identity=s.id;light.castsShadow=s.light.castsShadow;light.shadowPriority=s.light.shadowPriority;
         light.color = s.light.color*s.light.intensity;

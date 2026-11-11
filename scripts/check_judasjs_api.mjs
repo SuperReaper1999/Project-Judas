@@ -116,6 +116,7 @@ const referenceOverrides = {
  'Entity.weather': 'weather.md', 'Entity.wheel': 'wheels.md',
  'Entity.spriteAnimation':'sprite-animation.md', 'Entity.setSpriteAnimation':'sprite-animation.md', 'Entity.body2D':'physics-2d.md', 'physics.cast2D':'physics-2d.md', 'Entity.sprite':'sprites-2d.md', 'Entity.setSprite':'sprites-2d.md', 'world.unproject':'sprites-2d.md',
  'Entity.camera': 'effects-camera.md', 'Entity.setCameraTargetSize': 'effects-camera.md', 'Entity.setCameraPresentation': 'effects-camera.md', 'Entity.setCameraProjection': 'effects-camera.md',
+ 'world.lightExposure': 'lighting.md',
  'world.appearance': 'materials.md', 'world.setAppearance': 'materials.md',
  'world.resetAppearance': 'materials.md', 'world.setView': 'effects-camera.md',
  'world.clearView': 'effects-camera.md', 'world.viewRay': 'effects-camera.md',
@@ -219,6 +220,7 @@ const resultShapes=[
  {binding:'Wheel.settings',declaration:'WheelSettings',fields:['part'],nativeFile:'src/scripting/modules/Mechanics.cpp',needles:['JS_SetPropertyStr(c,result,"part"'],reference:'docs/judasjs/wheels.md'},
  {binding:'Powertrain.settings.links[].connection',declaration:'PowertrainConnection',fields:['groups'],nativeFile:'src/PowertrainAuthoring.cpp',needles:['connection["groups"]'],reference:'docs/judasjs/powertrains.md'}
 ];
+resultShapes.push({"binding": "world.lightExposure", "declaration": "LightExposure", "fields": ["unit", "color", "relativeIlluminance", "upperBound", "complete", "stale", "sampledAtSeconds", "ageSeconds", "sourcesExamined", "occlusionQueries", "unresolvedSources", "contributors"], "nativeFile": "src/scripting/modules/Rendering.cpp", "needles": ["JS_SetPropertyStr(c,result,\"unit\"", "JS_SetPropertyStr(c,result,\"color\"", "JS_SetPropertyStr(c,result,\"relativeIlluminance\"", "JS_SetPropertyStr(c,result,\"upperBound\"", "JS_SetPropertyStr(c,result,\"complete\"", "JS_SetPropertyStr(c,result,\"stale\"", "JS_SetPropertyStr(c,result,\"sampledAtSeconds\"", "JS_SetPropertyStr(c,result,\"ageSeconds\"", "JS_SetPropertyStr(c,result,\"sourcesExamined\"", "JS_SetPropertyStr(c,result,\"occlusionQueries\"", "JS_SetPropertyStr(c,result,\"unresolvedSources\"", "JS_SetPropertyStr(c,result,\"contributors\""], "reference": "docs/judasjs/lighting.md"});
 // Compare C++ tokens rather than formatting; keep literal contents intact so a
 // renamed/removed result key still fails after ordinary source formatting.
 const compactCpp = source => source.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\/\/[^\n]*|\/\*[\s\S]*?\*\/|\s+/g,

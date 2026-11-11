@@ -29,6 +29,7 @@ object 2 "Courtyard"
  body static box
  body.half-extents 24 0.2 25
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -49,6 +50,7 @@ object 3 "Road"
  render box
  render.half-extents 3.5 0.012 24
  render.color 0.055 0.065 0.075
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -63,6 +65,7 @@ object 10 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -77,6 +80,7 @@ object 11 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -91,6 +95,7 @@ object 12 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -105,6 +110,7 @@ object 13 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -119,6 +125,7 @@ object 14 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -133,6 +140,7 @@ object 15 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -147,6 +155,7 @@ object 16 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -161,6 +170,7 @@ object 17 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -175,6 +185,7 @@ object 18 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -189,6 +200,7 @@ object 19 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -203,6 +215,7 @@ object 20 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -217,6 +230,7 @@ object 21 "Road marking"
  render box
  render.half-extents 0.06 0.012 0.8
  render.color 0.65 0.68 0.62
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -234,6 +248,7 @@ object 30 "Boundary"
  body static box
  body.half-extents 0.25 2 25
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -257,6 +272,7 @@ object 31 "Boundary"
  body static box
  body.half-extents 0.25 2 25
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -280,6 +296,7 @@ object 32 "Back wall"
  body static box
  body.half-extents 24 2 0.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -303,6 +320,7 @@ object 40 "Room left wall"
  body static box
  body.half-extents 0.2 2 6
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -326,6 +344,7 @@ object 41 "Room right wall"
  body static box
  body.half-extents 0.2 2 6
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -349,6 +368,7 @@ object 42 "Room back wall"
  body static box
  body.half-extents 4 2 0.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -372,6 +392,7 @@ object 43 "Doorway left"
  body static box
  body.half-extents 1 2 0.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -395,6 +416,7 @@ object 44 "Doorway right"
  body static box
  body.half-extents 1 2 0.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -418,6 +440,7 @@ object 45 "Door lintel"
  body static box
  body.half-extents 2 0.4 0.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -441,6 +464,7 @@ object 46 "Room roof"
  body static box
  body.half-extents 4.3 0.2 6.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -468,6 +492,7 @@ object 200 "Breakable bulb 1"
  render.color 1 .75 .35
  body static sphere
  body.radius .3
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -492,6 +517,7 @@ object 210 "Lamp post"
  body static box
  body.half-extents 0.075 1.8 0.075
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -512,6 +538,7 @@ object 220 "Lamp arm"
  render box
  render.half-extents 0.4 0.07 0.07
  render.color 0.12 0.14 0.17
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -533,6 +560,7 @@ object 201 "Breakable bulb 2"
  render.color 1 .75 .35
  body static sphere
  body.radius .3
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -557,6 +585,7 @@ object 211 "Lamp post"
  body static box
  body.half-extents 0.075 1.8 0.075
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -577,6 +606,7 @@ object 221 "Lamp arm"
  render box
  render.half-extents 0.4 0.07 0.07
  render.color 0.12 0.14 0.17
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -598,6 +628,7 @@ object 202 "Breakable bulb 3"
  render.color 1 .75 .35
  body static sphere
  body.radius .3
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -626,6 +657,7 @@ object 203 "Breakable bulb 4"
  render.color 1 .75 .35
  body static sphere
  body.radius .3
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -650,6 +682,7 @@ object 213 "Lamp post"
  body static box
  body.half-extents 0.075 1.8 0.075
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -670,6 +703,7 @@ object 223 "Lamp arm"
  render box
  render.half-extents 0.4 0.07 0.07
  render.color 0.12 0.14 0.17
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -863,6 +897,7 @@ object 60 "Shadow test column"
  body static box
  body.half-extents 0.3 1.3 0.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -886,6 +921,7 @@ object 70 "Planter"
  body static box
  body.half-extents 1.2 0.35 1.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -906,6 +942,7 @@ object 80 "Foliage"
  render sphere
  render.radius 1.2
  render.color .10 .28 .13
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -923,6 +960,7 @@ object 61 "Shadow test column"
  body static box
  body.half-extents 0.3 1.3 0.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -946,6 +984,7 @@ object 71 "Planter"
  body static box
  body.half-extents 1.2 0.35 1.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -966,6 +1005,7 @@ object 81 "Foliage"
  render sphere
  render.radius 1.2
  render.color .10 .28 .13
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -983,6 +1023,7 @@ object 62 "Shadow test column"
  body static box
  body.half-extents 0.3 1.3 0.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1006,6 +1047,7 @@ object 72 "Planter"
  body static box
  body.half-extents 1.2 0.35 1.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1026,6 +1068,7 @@ object 82 "Foliage"
  render sphere
  render.radius 1.2
  render.color .10 .28 .13
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1043,6 +1086,7 @@ object 63 "Shadow test column"
  body static box
  body.half-extents 0.3 1.3 0.3
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1066,6 +1110,7 @@ object 73 "Planter"
  body static box
  body.half-extents 1.2 0.35 1.2
  body.friction .8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1086,6 +1131,7 @@ object 83 "Foliage"
  render sphere
  render.radius 1.2
  render.color .10 .28 .13
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1102,6 +1148,7 @@ object 300 "Pedestrian 1"
  render box
  render.half-extents .28 .35 .19
  render.color 0.2 0.25 0.48
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1124,6 +1171,7 @@ object 301 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1139,6 +1187,7 @@ object 302 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1154,6 +1203,7 @@ object 303 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1169,6 +1219,7 @@ object 304 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1184,6 +1235,7 @@ object 305 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1200,6 +1252,7 @@ object 310 "Pedestrian 2"
  render box
  render.half-extents .28 .35 .19
  render.color 0.25 0.25 0.455
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1222,6 +1275,7 @@ object 311 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1237,6 +1291,7 @@ object 312 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1252,6 +1307,7 @@ object 313 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1267,6 +1323,7 @@ object 314 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1282,6 +1339,7 @@ object 315 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1298,6 +1356,7 @@ object 320 "Pedestrian 3"
  render box
  render.half-extents .28 .35 .19
  render.color 0.3 0.25 0.43
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1320,6 +1379,7 @@ object 321 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1335,6 +1395,7 @@ object 322 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1350,6 +1411,7 @@ object 323 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1365,6 +1427,7 @@ object 324 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1380,6 +1443,7 @@ object 325 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1396,6 +1460,7 @@ object 330 "Pedestrian 4"
  render box
  render.half-extents .28 .35 .19
  render.color 0.35 0.25 0.405
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1418,6 +1483,7 @@ object 331 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1433,6 +1499,7 @@ object 332 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1448,6 +1515,7 @@ object 333 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1463,6 +1531,7 @@ object 334 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1478,6 +1547,7 @@ object 335 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1494,6 +1564,7 @@ object 340 "Pedestrian 5"
  render box
  render.half-extents .28 .35 .19
  render.color 0.4 0.25 0.38
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1516,6 +1587,7 @@ object 341 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1531,6 +1603,7 @@ object 342 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1546,6 +1619,7 @@ object 343 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1561,6 +1635,7 @@ object 344 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1576,6 +1651,7 @@ object 345 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1592,6 +1668,7 @@ object 350 "Pedestrian 6"
  render box
  render.half-extents .28 .35 .19
  render.color 0.45 0.25 0.355
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1614,6 +1691,7 @@ object 351 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1629,6 +1707,7 @@ object 352 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1644,6 +1723,7 @@ object 353 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1659,6 +1739,7 @@ object 354 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1674,6 +1755,7 @@ object 355 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1690,6 +1772,7 @@ object 360 "Pedestrian 7"
  render box
  render.half-extents .28 .35 .19
  render.color 0.5 0.25 0.33
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1712,6 +1795,7 @@ object 361 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1727,6 +1811,7 @@ object 362 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1742,6 +1827,7 @@ object 363 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1757,6 +1843,7 @@ object 364 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1772,6 +1859,7 @@ object 365 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1788,6 +1876,7 @@ object 370 "Pedestrian 8"
  render box
  render.half-extents .28 .35 .19
  render.color 0.55 0.25 0.305
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1810,6 +1899,7 @@ object 371 "Head"
  render sphere
  render.radius .18
  render.color .61 .40 .28
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1825,6 +1915,7 @@ object 372 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1840,6 +1931,7 @@ object 373 "Arm"
  render box
  render.half-extents 0.075 0.32 0.075
  render.color 0.25 0.32 0.44
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1855,6 +1947,7 @@ object 374 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1870,6 +1963,7 @@ object 375 "Leg"
  render box
  render.half-extents 0.095 0.3 0.1
  render.color 0.06 0.08 0.11
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1886,6 +1980,7 @@ object 500 "Patrol cruiser"
  render box
  render.half-extents .88 .25 2.1
  render.color .025 .035 .05
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1908,6 +2003,7 @@ object 501 "White cabin"
  render box
  render.half-extents 0.75 0.25 0.95
  render.color 0.72 0.76 0.8
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1923,6 +2019,7 @@ object 502 "Windscreen"
  render box
  render.half-extents 0.67 0.18 0.02
  render.color 0.05 0.12 0.17
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1938,6 +2035,7 @@ object 503 "Door stripe"
  render box
  render.half-extents 0.015 0.18 1
  render.color 0.8 0.83 0.86
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1953,6 +2051,7 @@ object 504 "Door stripe"
  render box
  render.half-extents 0.015 0.18 1
  render.color 0.8 0.83 0.86
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -1968,6 +2067,7 @@ object 510 "Wheel"
  render mesh
  render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
  render.color .035 .045 .055
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.radius .5
  render.alpha 1
@@ -1983,6 +2083,7 @@ object 511 "Wheel"
  render mesh
  render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
  render.color .035 .045 .055
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.radius .5
  render.alpha 1
@@ -1998,6 +2099,7 @@ object 512 "Wheel"
  render mesh
  render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
  render.color .035 .045 .055
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.radius .5
  render.alpha 1
@@ -2013,6 +2115,7 @@ object 513 "Wheel"
  render mesh
  render.mesh-asset "2c1c48c491cfb4f3881fcb181e9f6bc5"
  render.color .035 .045 .055
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.half-extents .5 .5 .5
  render.radius .5
  render.alpha 1
@@ -2040,6 +2143,7 @@ object 522 "Headlight lens"
  render box
  render.half-extents 0.21 0.1 0.02
  render.color 1 0.9 0.55
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -2067,6 +2171,7 @@ object 523 "Headlight lens"
  render box
  render.half-extents 0.21 0.1 0.02
  render.color 1 0.9 0.55
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -2094,6 +2199,7 @@ object 532 "Emergency lens"
  render box
  render.half-extents 0.25 0.09 0.18
  render.color 1 0.025 0.02
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8
@@ -2121,6 +2227,7 @@ object 533 "Emergency lens"
  render box
  render.half-extents 0.25 0.09 0.18
  render.color 0.025 0.18 1
+ render.materials "1 \"6aed7fe307c8e9c5977beabf2b32abcf\" 0"
  render.radius .5
  render.alpha 1
  render.secondary-color .8 .8 .8

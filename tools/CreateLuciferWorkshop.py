@@ -13,10 +13,13 @@ def asset(path,kind,text=None):
  id=hashlib.md5(('Lucifer-owned/'+path).encode()).hexdigest()
  if text is not None:write(path,text)
  write(path+'.judasmeta',f'JudasAssetMeta 1\nid "{id}"\ntype {kind}\nsource "Original Judas Lucifer Workshop"\n');return id
-for path in ['Assets/Fonts','Assets/Models','Assets/scripts','Assets/ui']:(OUT/path).mkdir(parents=True,exist_ok=True)
+for path in ['Assets/Fonts','Assets/Models','Assets/Materials','Assets/scripts','Assets/ui']:(OUT/path).mkdir(parents=True,exist_ok=True)
 shutil.copyfile(ROOT/'assets/fonts/DejaVuSans.ttf',OUT/'Assets/Fonts/DejaVuSans.ttf')
 shutil.copyfile(ROOT/'assets/fonts/DejaVuSans-LICENSE.txt',OUT/'Assets/Fonts/LICENSE.txt')
 font=asset('Assets/Fonts/DejaVuSans.ttf','font')
+materialText='JudasMaterial 1\nmodel 1\nalpha 0\nbase 1 1 1 1\nmetallic 0\nroughness .65\nemissive 0 0 0\nemission 1\nnormal 1\nocclusion 1\ncutoff .5\ndoubleSided 0\nflipV 0\nuv 1 1 0 0\n'+''.join(f'map {i} "" 10497 10497 9987 9729\n' for i in range(5))
+surfaceMaterial=asset('Assets/Materials/surface.judasmat','material',materialText)
+
 wheel=asset('Assets/Models/tread.obj','mesh',(ROOT/'projects/vehicle_v2_workshop/Assets/Models/tread.obj').read_text())
 asset('Assets/scripts/player.js','script',(ROOT/'docs/judasjs/examples/first-person-player.js').read_text()+'\nexport {add,mul,qm,axis,rotate};\n')
 script=asset('Assets/scripts/night.js','script',(ROOT/'tools/lucifer_workshop/night.js').read_text())
@@ -26,11 +29,12 @@ def element(id,kind=2,text='',pos=(0,0),size=(600,28),fontSize=18,color=(.9,.95,
  fields=[id,parent,kind,0,1,1,0,0,1,0,0,0,0,*pos,*size,0,0,0,0,0,0,0,0,0,0,0,0,0,0,*bg,*color,8,fontSize,0,0,1,text,'',font]
  elements.append(' '.join(json.dumps(v) if isinstance(v,str) else str(v) for v in fields))
 element('canvas',0,parent='',size=(1280,720))
-element('panel',1,pos=(20,20),size=(800,150),bg=(.015,.025,.04,.88))
+element('panel',1,pos=(20,20),size=(980,180),bg=(.015,.025,.04,.88))
 element('title',text='LUCIFER / NIGHT WATCH',pos=(36,30),fontSize=24,color=(.2,1,.85,1))
 element('controls',text='WASD + mouse | Space jump | F flashlight | LMB shoot lamp',pos=(36,67),fontSize=18)
-element('controls2',text='E patrol | Q emergency lights | K/L save/load | R restart | Esc pointer',pos=(36,94),fontSize=17)
+element('controls2',text='E patrol | Q emergency lights | N day/night | K/L save/load | R restart | Esc pointer',pos=(36,94),fontSize=17)
 element('status',text='Explore the lit courtyard. Aim at a hanging bulb and shoot.',pos=(36,126),size=(770,25),fontSize=16,color=(1,.75,.45,1))
+element('exposure',text='Exposure: waiting for physical sample',pos=(36,154),size=(940,25),fontSize=16,color=(.3,.9,.8,1))
 element('crosshair',text='+',pos=(630,348),size=(20,24),fontSize=20)
 ui=asset('Assets/ui/night.judasui','ui','JudasUI 1\n1280 720 1 1 1 '+str(len(elements))+'\n'+'\n'.join(elements)+'\n')
 lines=['JudasScene 3','settings',' name "Lucifer / Night Watch"',' world-origin 0 0 0',' sun-enabled false',' sun-direction -0.3 0.8 0.5',' sun-color 0.12 0.16 0.3',' ambient 0.015 0.02 0.035',' background-color 0.008 0.012 0.025',' linear-rendering true',' exposure 1',' fidelity-policy none',' next-id 10000','end']
@@ -40,6 +44,7 @@ def obj(id,name,pos=(0,0,0),fields=None,parent=None,rot=(1,0,0,0),scale=(1,1,1))
  if parent is not None:lines.append(' parent '+str(parent))
  f=dict(fields or {})
  if 'render' in f:
+  f.setdefault('render.materials',json.dumps('1 '+json.dumps(surfaceMaterial)+' 0'))
   for k,v in {'render.half-extents':'.5 .5 .5','render.radius':'.5','render.color':'1 1 1','render.alpha':'1','render.secondary-color':'.8 .8 .8','render.secondary-alpha':'1','render.mesh-asset':'""','render.texture-asset':'""'}.items():f.setdefault(k,v)
  if 'body' in f:
   for k,v in {'body.half-extents':'.5 .5 .5','body.radius':'.5','body.mass':'1','body.friction':'.8','body.restitution':'0','body.initial-velocity':'0 0 0','body.managed':'false','body.compound-count':'0'}.items():f.setdefault(k,v)
@@ -107,8 +112,8 @@ light(100,'Handheld flashlight',(0,2,7),(1,.94,.79),70,20,'spot')
 obj(101,'Player',(0,1.05,11),{'motor.enabled':'true','motor.radius':'.3','motor.halfHeight':'.6','motor.stepHeight':'.35','motor.supportDistance':'.15','motor.skin':'.02','motor.gravityScale':'1','scripts':'1','script.0.id':'1','script.0.asset':json.dumps(script),'script.0.enabled':'true','script.0.properties':'"{}"','ui.asset':json.dumps(ui),'ui.name':'"night"'})
 write('Scenes/night.judas','\n'.join(lines)+'\n')
 actions=[('move_x',True,[('key:D',1),('key:A',-1)]),('move_y',True,[('key:W',1),('key:S',-1)]),('look_x',True,[('mouse:x',1)]),('look_y',True,[('mouse:y',1)])]
-for name,key in [('jump','Space'),('pause','Escape'),('torch','F'),('patrol','E'),('emergency','Q'),('save','K'),('load','L'),('reset','R'),('fire','MouseLeft')]:actions.append((name,False,[('mouse:Left' if key=='MouseLeft' else 'key:'+key,1)]))
+for name,key in [('jump','Space'),('pause','Escape'),('torch','F'),('day','N'),('patrol','E'),('emergency','Q'),('save','K'),('load','L'),('reset','R'),('fire','MouseLeft')]:actions.append((name,False,[('mouse:Left' if key=='MouseLeft' else 'key:'+key,1)]))
 inputmap='1 '+str(len(actions))+' '+' '.join(json.dumps(name)+' '+str(int(axis))+' '+str(len(bindings))+' '+' '.join(json.dumps(key)+' '+str(scale)+' 0' for key,scale in bindings) for name,axis,bindings in actions)
 write('Lucifer_Workshop.judasproj','JudasProject 1\nname "Lucifer / Night Watch"\nadvanced-fluid-dynamics "false"\nstartup-scene "Scenes/night.judas"\nassets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\ninput-map '+json.dumps(inputmap)+'\n')
-write('README.md','# Lucifer / Night Watch\n\nOriginal editable lighting acceptance courtyard. WASD/mouse, Space jump, F flashlight, LMB shoot bulbs, E patrol motion, Q emergency lights, K/L save/load, R restart, Esc pointer.\n\nThe patrol cruiser and pedestrians are project-scripted kinematic assemblies; this fixture tests moving light/caster interaction. Native Vehicles V2 integration is qualified separately. All geometry is original Judas content; DejaVu licence is in Assets/Fonts.\n')
+write('README.md','# Lucifer / Night Watch\n\nOriginal editable lighting acceptance courtyard. WASD/mouse, Space jump, F flashlight, LMB shoot bulbs, E patrol motion, Q emergency lights, N day/night, K/L save/load, R restart, Esc pointer.\n\nThe patrol cruiser and pedestrians are project-scripted kinematic assemblies; this fixture tests moving light/caster interaction. Native Vehicles V2 integration is qualified separately. All geometry is original Judas content; DejaVu licence is in Assets/Fonts.\n')
 print(OUT)

@@ -639,6 +639,40 @@
         "connection[\"groups\"]"
       ],
       "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "binding": "world.lightExposure",
+      "declaration": "LightExposure",
+      "fields": [
+        "unit",
+        "color",
+        "relativeIlluminance",
+        "upperBound",
+        "complete",
+        "stale",
+        "sampledAtSeconds",
+        "ageSeconds",
+        "sourcesExamined",
+        "occlusionQueries",
+        "unresolvedSources",
+        "contributors"
+      ],
+      "nativeFile": "src/scripting/modules/Rendering.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"unit\"",
+        "JS_SetPropertyStr(c,result,\"color\"",
+        "JS_SetPropertyStr(c,result,\"relativeIlluminance\"",
+        "JS_SetPropertyStr(c,result,\"upperBound\"",
+        "JS_SetPropertyStr(c,result,\"complete\"",
+        "JS_SetPropertyStr(c,result,\"stale\"",
+        "JS_SetPropertyStr(c,result,\"sampledAtSeconds\"",
+        "JS_SetPropertyStr(c,result,\"ageSeconds\"",
+        "JS_SetPropertyStr(c,result,\"sourcesExamined\"",
+        "JS_SetPropertyStr(c,result,\"occlusionQueries\"",
+        "JS_SetPropertyStr(c,result,\"unresolvedSources\"",
+        "JS_SetPropertyStr(c,result,\"contributors\""
+      ],
+      "reference": "docs/judasjs/lighting.md"
     }
   ],
   "callables": [
@@ -1994,6 +2028,11 @@
       "symbol": "world.fluidSample",
       "minimum": 5,
       "maximum": 5
+    },
+    {
+      "symbol": "world.lightExposure",
+      "minimum": 1,
+      "maximum": 2
     },
     {
       "symbol": "world.overlap",
@@ -7484,6 +7523,17 @@
       "reference": "docs/judasjs/water.md"
     },
     {
+      "symbol": "world.lightExposure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "lightExposure"
+      ],
+      "type": "docs/judas.d.ts:world.lightExposure",
+      "reference": "docs/judasjs/lighting.md"
+    },
+    {
       "symbol": "world.origin",
       "kinds": [
         "get"
@@ -7781,6 +7831,7 @@
     "kinematicTarget",
     "kinematicVelocity",
     "lifecycleBusy",
+    "lightExposure",
     "lightInfo",
     "lightSettings",
     "localeChoose",
