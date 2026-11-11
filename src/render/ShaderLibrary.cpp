@@ -126,7 +126,20 @@ float weatherCloud(vec3 p){return texture(uWeatherNoise,p/262144.0).r*.65+textur
 
 // M92: one depth array; world-position projection selects the assigned layer.
 uniform sampler2DArray uShadowMaps;
-uniform mat4 uLightSpaceMatrix[9];
+uniform int uSunCascadeCount;
+#ifdef JUDAS_CUBE_ARRAY
+uniform samplerCubeArray uPointShadowMaps;
+#endif
+vec3 cubeDirection(int face,vec2 uv){
+    vec2 p=uv*2.0-1.0;
+    if(face==0)return vec3(1.0,-p.y,-p.x);
+    if(face==1)return vec3(-1.0,-p.y,p.x);
+    if(face==2)return vec3(p.x,1.0,p.y);
+    if(face==3)return vec3(p.x,-1.0,-p.y);
+    if(face==4)return vec3(p.x,-p.y,1.0);
+    return vec3(-p.x,-p.y,-1.0);
+}
+uniform mat4 uLightSpaceMatrix[54];
 uniform sampler2D uLightGrid;
 uniform bool uHasDynamicLights;
 uniform vec4 uLightViewport;
@@ -134,11 +147,12 @@ vec4 lightTexel(int i){return texelFetch(uLightGrid,ivec2(i%1024,i/1024),0);}
 ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clamp(ivec2((gl_FragCoord.xy-uLightViewport.xy)/uLightViewport.zw*meta.xy),ivec2(0),n-1);return ivec2(tile.y*n.x+tile.x,int(meta.z));}
 // Capture geometric derivatives in uniform flow before material/light branches.
 vec3 shadowWorldDx, shadowWorldDy;
+bool samplingPointShadow=false;
 
 // A sloped receiver has a different depth at each shadow texel. Correct that
 // depth across the PCF footprint instead of hiding acne with more bias.
 float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
-    if(slot<0||slot>=9)return 1.0;
+    if(slot<0||slot>=54)return 1.0;
     vec4 clip=uLightSpaceMatrix[slot]*vec4(worldPosition,1.0);
     if(clip.w<=0.0)return 1.0;
     vec3 ndc=clip.xyz/clip.w;
@@ -163,7 +177,7 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     vec2 texel=projected.xy*vec2(size)-0.5;
     ivec2 center=ivec2(floor(texel));
     vec2 phase=fract(texel);
-    float bias=max(0.006*(1.0-ndotl),0.0015); // Existing numerical bias, unchanged.
+    float bias=slot>=6?max(0.00004*(1.0-ndotl),0.00001):max(0.006*(1.0-ndotl),0.0015); // Existing numerical bias, unchanged.
     float lit=0.0;
     for(int x=-1;x<=2;++x){
         float wx=x==-1?1.0-phase.x:(x==2?phase.x:1.0);
@@ -172,11 +186,43 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
             ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
             vec2 offset=(vec2(pixel)+0.5)/vec2(size)-projected.xy;
             float receiver=projected.z+dot(slope,offset);
-            float stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
+            float stored;
+#ifdef JUDAS_CUBE_ARRAY
+            if(samplingPointShadow)stored=texture(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,(vec2(pixel)+0.5)/vec2(size)),float((slot-6)/6))).r;
+            else
+#endif
+            stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
             lit+=wx*wy*(receiver-bias<=stored?1.0:0.0);
         }
     }
     return lit/9.0;
+}
+
+int PointFace(vec3 direction){
+    vec3 a=abs(direction);
+    if(a.x>=a.y&&a.x>=a.z)return direction.x>=0.0?0:1;
+    if(a.y>=a.z)return direction.y>=0.0?2:3;
+    return direction.z>=0.0?4:5;
+}
+float LocalShadow(int slot,int isSpot,vec3 lightPosition,vec3 position,float ndotl){
+    samplingPointShadow=slot>=6&&isSpot==0;
+    if(samplingPointShadow)slot+=PointFace(position-lightPosition);
+    float result=ComputeShadowFactor(slot,position,ndotl);
+    samplingPointShadow=false;return result;
+}
+float SunShadow(vec3 position,float ndotl){
+    for(int i=0;i<3;++i){
+        if(i>=uSunCascadeCount)break;
+        vec4 clip=uLightSpaceMatrix[i]*vec4(position,1.0);
+        if(clip.w<=0.0)continue;
+        vec3 p=clip.xyz/clip.w;
+        float edge=max(abs(p.x),abs(p.y));
+        if(edge<=1.0&&abs(p.z)<=1.0){
+            float value=ComputeShadowFactor(i,position,ndotl);
+            if(i+1<uSunCascadeCount&&edge>.85)value=mix(value,ComputeShadowFactor(i+1,position,ndotl),smoothstep(.85,1.0,edge));
+            return value;
+        }
+    }return 1.0;
 }
 
 
@@ -207,12 +253,12 @@ vec3 BRDF(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
  return ((vec3(1.0)-f)*(1.0-metal)*base/PI+D*visibility*f)*nl;
 }
 vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
- vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*ComputeShadowFactor(0,vWorldPos,max(dot(n,uLightDirection),0.0));
+ vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*SunShadow(vWorldPos,max(dot(n,uLightDirection),0.0));
  ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
  for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
  vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
  vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
- float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;float shadow=1.0;shadow=ComputeShadowFactor(shadowSlot,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
+ float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;float shadow=1.0;shadow=LocalShadow(shadowSlot,isSpot,lightPosition,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
  float ao=(uHasOcclusion&&!uTerrain)?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
@@ -240,7 +286,7 @@ void main() {
     // loop below; Unlit needs neither light loop. Geometric derivatives above
     // remain outside all branches, and weather still uses diffuseFactor.
     if (uMaterialModel == 0) {
-    float dirShadow = ComputeShadowFactor(0, vWorldPos, diffuseFactor);
+    float dirShadow = SunShadow(vWorldPos, diffuseFactor);
     lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
 
     ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
@@ -272,7 +318,7 @@ void main() {
 
         float shadow = 1.0;
         int shadowIndex = shadowSlot;
-        shadow=ComputeShadowFactor(shadowIndex,vWorldPos,lightDiffuse);
+        shadow=LocalShadow(shadowIndex,isSpot,lightPosition,vWorldPos,lightDiffuse);
 
         lighting += lightColor * lightDiffuse * attenuation * spotFactor * shadow;
     }

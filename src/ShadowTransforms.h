@@ -56,3 +56,6 @@ glm::mat4 ComputeDirectionalShadowMatrix(const glm::vec3& focusPosition,
 // plane; the near plane is a small fixed constant.
 glm::mat4 ComputeSpotShadowMatrix(const glm::vec3& lightPosition, const glm::vec3& lightDirection,
                                    float outerConeDegrees, float range);
+
+// Standard cubemap face order +X,-X,+Y,-Y,+Z,-Z.
+glm::mat4 ComputePointShadowMatrix(glm::vec3 position,float range,unsigned face);

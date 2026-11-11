@@ -74,12 +74,26 @@ void Renderer::ReserveShadowLayers(unsigned layers){
  // layers are copied, so low-level callers can add a layer after rendering one.
  GLint draw=0,read=0;glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&draw);glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&read);
  GLuint next=0;glGenTextures(1,&next);glBindTexture(GL_TEXTURE_2D_ARRAY,next);
+ 
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+ const bool cubeViews=m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16;
+ if(cubeViews){layers=std::min(unsigned(kShadowMapCount),((layers+5)/6)*6);glTexStorage3D(GL_TEXTURE_2D_ARRAY,1,GL_DEPTH_COMPONENT24,kShadowMapResolution,kShadowMapResolution,GLsizei(layers));}
+ else
+#endif
  glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_DEPTH_COMPONENT24,kShadowMapResolution,kShadowMapResolution,GLsizei(layers),0,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT,nullptr);
  glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
  GLuint temporary=0;glGenFramebuffers(1,&temporary);glBindFramebuffer(GL_FRAMEBUFFER,temporary);const GLenum none=GL_NONE;glDrawBuffers(1,&none);glReadBuffer(GL_NONE);
  for(unsigned i=0;i<m_shadowLayers;++i){glBindFramebuffer(GL_READ_FRAMEBUFFER,m_shadowFbo[i]);glReadBuffer(GL_NONE);glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(i));glBlitFramebuffer(0,0,kShadowMapResolution,kShadowMapResolution,0,0,kShadowMapResolution,kShadowMapResolution,GL_DEPTH_BUFFER_BIT,GL_NEAREST);}
  glDeleteFramebuffers(1,&temporary);
  for(unsigned i=0;i<layers;++i){if(!m_shadowFbo[i])glGenFramebuffers(1,&m_shadowFbo[i]);glBindFramebuffer(GL_FRAMEBUFFER,m_shadowFbo[i]);glFramebufferTextureLayer(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(i));glDrawBuffers(1,&none);glReadBuffer(GL_NONE);}
+ if(m_pointShadowView){glDeleteTextures(1,&m_pointShadowView);m_pointShadowView=0;}
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+ if(cubeViews&&layers>kLocalShadowBase){
+  glGenTextures(1,&m_pointShadowView);glTextureView(m_pointShadowView,GL_TEXTURE_CUBE_MAP_ARRAY,next,GL_DEPTH_COMPONENT24,0,1,kLocalShadowBase,layers-kLocalShadowBase);
+  glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_R,GL_CLAMP_TO_EDGE);
+  glActiveTexture(GL_TEXTURE16);glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glActiveTexture(GL_TEXTURE0);
+ }
+#endif
  if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
  m_shadowArray=next;m_shadowLayers=layers;glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));glBindTexture(GL_TEXTURE_2D_ARRAY,0);
 }
@@ -154,3 +168,7 @@ bool Renderer::ReuseShadowChart(int slot,const glm::mat4& matrix) {
     ++m_stats.reusedShadowPasses;
     return true;
 }
+
+JudasRender::ShadowPassCache& Renderer::ShadowCache(){return m_render->shadowCache;}
+
+void Renderer::SetDirectionalCascadeCount(unsigned n){glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uSunCascadeCount"),GLint(std::min(n,3u)));}

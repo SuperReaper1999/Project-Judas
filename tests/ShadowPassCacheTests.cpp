@@ -196,6 +196,33 @@ void Native(const std::filesystem::path &output) {
     Check(before.position == after.position && before.linearVelocity == after.linearVelocity &&
               before.rotation == after.rotation,
           "view/shadow reuse never advances or changes the physical sample");
+    frame(true);
+    Check(renderer.Stats().shadowPasses==0&&renderer.Stats().reusedShadowPasses==2,
+          "unchanged exact casters persist across presented frames without a redraw");
+    auto moved=scene.Find(objectId)->transform;moved.position.x+=1.5f;
+    Check(world.SetRuntimeTransform(objectId,moved),"move physical caster through the current runtime contract");
+    const auto movingFrame=frame(true);
+    Check(renderer.Stats().shadowPasses==1&&renderer.Stats().reusedShadowPasses==1&&movingFrame!=baseline,
+          "moving character/body invalidates its affected shadow in the same presented frame");
+    world.SetRuntimeTransform(objectId,scene.Find(objectId)->transform);
+    frame(true);
+    auto lightSettings=*scene.Objects().back().light;
+    lightSettings.intensity=2;
+    Check(world.SetLight(scene.Objects().back().id,lightSettings),"change light radiance through authoritative state");
+    frame(true);
+    Check(renderer.Stats().shadowPasses==0,"radiance changes reuse depth while changing the consuming light immediately");
+    lightSettings.intensity=1;world.SetLight(scene.Objects().back().id,lightSettings);
+    lightSettings.enabled=false;world.SetLight(scene.Objects().back().id,lightSettings);
+    frame(true);
+    Check(renderer.Stats().shadowPasses==0&&renderer.Stats().dynamicLights==0,"destroyed/disabled illumination disappears immediately without a stale chart source");
+    lightSettings.enabled=true;world.SetLight(scene.Objects().back().id,lightSettings);
+    frame(true);
+    lightSettings.kind=SceneLightKind::Point;world.SetLight(scene.Objects().back().id,lightSettings);
+    const auto pointShadowed=frame(true);
+    Check(renderer.Stats().shadowPasses==6&&renderer.Stats().reusedShadowPasses==6,"point light renders all six occlusion directions and shares them across views");
+    renderer.SetShadowBudget(0);const auto pointUnshadowed=frame(true);
+    Check(pointShadowed!=pointUnshadowed,"point shadow-off negative control changes real rendered pixels");
+    renderer.SetShadowBudget(1);lightSettings.kind=SceneLightKind::Spot;world.SetLight(scene.Objects().back().id,lightSettings);frame(true);
     renderer.SetShadowBudget(0);
     const auto unshadowed = frame(true);
     unsigned changed = 0;

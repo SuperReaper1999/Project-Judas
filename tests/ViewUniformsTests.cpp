@@ -26,11 +26,11 @@ using JudasRender::ViewUniforms;
 void PureControls() {
     ViewUniforms view;
     const auto &data = view.Data();
-    Check(sizeof(data) == 720 && offsetof(ViewUniformData, projection) == 64 &&
-              offsetof(ViewUniformData, shadows) == 128 && offsetof(ViewUniformData, camera) == 704,
-          "CPU view block has the explicit 720-byte std140 offsets independent of GLM alignment");
+    Check(sizeof(data) == 3600 && offsetof(ViewUniformData, projection) == 64 &&
+              offsetof(ViewUniformData, shadows) == 128 && offsetof(ViewUniformData, camera) == 3584,
+          "CPU view block has the explicit 3600-byte std140 offsets independent of GLM alignment");
     Check(data.view[0] == 1 && data.view[5] == 1 && data.projection[15] == 1 &&
-              data.shadows[8][10] == 1 && data.camera == std::array<float, 4>{0, 0, 0, 1},
+              data.shadows[53][10] == 1 && data.camera == std::array<float, 4>{0, 0, 0, 1},
           "CPU construction initializes both camera matrices, every shadow and camera homogeneous "
           "component");
     glm::mat4 camera(1), projection(1);
@@ -47,11 +47,11 @@ void PureControls() {
     for (unsigned column = 0; column < 4; ++column)
         for (unsigned row = 0; row < 4; ++row)
             shadow[column][row] = float(column * 10 + row) + .25f;
-    Check(view.SetShadow(8, shadow) && view.Data().shadows[8][13] == 31.25f &&
-              view.Data().shadows[8][7] == 13.25f,
+    Check(view.SetShadow(53, shadow) && view.Data().shadows[53][13] == 31.25f &&
+              view.Data().shadows[53][7] == 13.25f,
           "last shadow slot retains nonsymmetric column-major coefficients without transposition");
     const auto before = view.Data();
-    Check(!view.SetShadow(9, glm::mat4(1)) &&
+    Check(!view.SetShadow(54, glm::mat4(1)) &&
               !view.SetShadow(std::numeric_limits<unsigned>::max(), shadow) &&
               std::memcmp(&before, &view.Data(), sizeof(before)) == 0,
           "invalid shadow slots reject without changing any published CPU value");
@@ -77,11 +77,11 @@ void PureControls() {
           "arithmetic");
     const auto preparedFragment = JudasRender::MakeViewBlockSource(fragment, error);
     Check(!preparedFragment.empty() && error.empty() &&
-              preparedFragment.find("mat4 uLightSpaceMatrix[9];") != std::string::npos &&
+              preparedFragment.find("mat4 uLightSpaceMatrix[54];") != std::string::npos &&
               preparedFragment.find("#define uCameraPosition judasViewCamera.xyz") !=
                   std::string::npos &&
               preparedFragment.find("uniform vec3 uEmission;\n") != std::string::npos,
-          "actual fragment keeps nine shadows and maps the vec3 camera onto its explicit vec4 storage");
+          "actual fragment keeps all 54 shadow charts and maps the vec3 camera onto its explicit vec4 storage");
     Check(vertex == shaders::Source(shaders::Builtin::MeshVertex) &&
               fragment == shaders::Source(shaders::Builtin::MeshFragment),
           "block preparation never mutates canonical shader storage");
@@ -96,7 +96,7 @@ void PureControls() {
               !error.empty(),
           "unrelated shader declarations are rejected instead of broadly rewritten");
     auto wrongCount = fragment;
-    wrongCount.replace(wrongCount.find("uLightSpaceMatrix[9]"), std::strlen("uLightSpaceMatrix[9]"),
+    wrongCount.replace(wrongCount.find("uLightSpaceMatrix[54]"), std::strlen("uLightSpaceMatrix[54]"),
                        "uLightSpaceMatrix[8]");
     Check(
         JudasRender::MakeViewBlockSource(wrongCount, error).empty() && !error.empty(),
@@ -116,11 +116,11 @@ void main() {
 }
 )GLSL";
 constexpr char KnownFragment[] = R"GLSL(#version 330 core
-uniform mat4 uLightSpaceMatrix[9];
+uniform mat4 uLightSpaceMatrix[54];
 uniform vec3 uEmission,uCameraPosition;
 out vec4 result;
 void main() {
-    result=vec4(uCameraPosition*.1+vec3(uLightSpaceMatrix[8][3].y*.01)+uEmission,1);
+    result=vec4(uCameraPosition*.1+vec3(uLightSpaceMatrix[53][3].y*.01)+uEmission,1);
 }
 )GLSL";
 
@@ -200,7 +200,7 @@ void NativeControls() {
     glUniformMatrix4fv(glGetUniformLocation(classic, "uView"), 1, GL_FALSE, glm::value_ptr(camera));
     glUniformMatrix4fv(glGetUniformLocation(classic, "uProjection"), 1, GL_FALSE,
                        glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(classic, "uLightSpaceMatrix[8]"), 1, GL_FALSE,
+    glUniformMatrix4fv(glGetUniformLocation(classic, "uLightSpaceMatrix[53]"), 1, GL_FALSE,
                        glm::value_ptr(shadow));
     glUniform3f(glGetUniformLocation(classic, "uCameraPosition"), 2, 3, 4);
     const auto reference = Pixel(classic);
@@ -209,11 +209,11 @@ void NativeControls() {
           "traditional shader independently produces the analytic camera/shadow colour");
 
     ViewUniforms view;
-    Check(view.SetCamera(camera, projection) && view.SetShadow(8, shadow) && view.Bind(block, error),
+    Check(view.SetCamera(camera, projection) && view.SetShadow(53, shadow) && view.Bind(block, error),
           "view values configure and bind the actual standard uniform block");
-    Check(view.Stats().uploads == 1 && view.Stats().bytesUploaded == 720 &&
-              view.Stats().lastUploadBytes == 720,
-          "first consumer uploads exactly one complete 720-byte block");
+    Check(view.Stats().uploads == 1 && view.Stats().bytesUploaded == 3600 &&
+              view.Stats().lastUploadBytes == 3600,
+          "first consumer uploads exactly one complete 3600-byte block");
     const auto actual = Pixel(block);
     Check(actual == reference,
           "actual GPU std140 result is pixel-identical to the traditional uniforms");
@@ -237,11 +237,11 @@ void NativeControls() {
     if (allActive) {
         GLint offsets[4]{};
         glGetActiveUniformsiv(block, 4, indices, GL_UNIFORM_OFFSET, offsets);
-        Check(offsets[0] == 0 && offsets[1] == 64 && offsets[2] == 128 && offsets[3] == 704,
+        Check(offsets[0] == 0 && offsets[1] == 64 && offsets[2] == 128 && offsets[3] == 3584,
               "native std140 reflection independently agrees with all declared CPU offsets");
     }
     glBindBufferBase(GL_UNIFORM_BUFFER, ViewUniforms::BindingPoint, 0);
-    Check(view.SetCamera(camera, projection) && view.SetShadow(8, shadow) && view.Bind(block, error) &&
+    Check(view.SetCamera(camera, projection) && view.SetShadow(53, shadow) && view.Bind(block, error) &&
               view.Stats().uploads == 1 && view.Stats().lastUploadBytes == 0,
           "unchanged values rebind after foreign presentation state without uploading again");
     Check(Pixel(block) == reference, "recovering a clobbered indexed binding preserves actual output");
@@ -255,8 +255,8 @@ void NativeControls() {
     Check(rejectedThread && view.Stats().uploads == 1,
           "a thread without the owning context cannot issue a view upload");
     shadow[3][1] = 4;
-    Check(view.SetShadow(8, shadow) && view.Bind(block, error) && view.Stats().uploads == 2 &&
-              view.Stats().bytesUploaded == 1440,
+    Check(view.SetShadow(53, shadow) && view.Bind(block, error) && view.Stats().uploads == 2 &&
+              view.Stats().bytesUploaded == 7200,
           "a changed shadow uploads one new block at its next consumer");
     const auto changed = Pixel(block);
     Check(changed != reference && std::abs(int(changed[0]) - 61) <= 1 &&
@@ -265,7 +265,7 @@ void NativeControls() {
     const auto wrong = Program("#version 330 core\nlayout(std140) uniform JudasView{vec4 wrong;};\n"
                                "void main(){gl_Position=wrong;}\n",
                                "#version 330 core\nout vec4 result;void main(){result=vec4(1);}\n");
-    Check(wrong && !view.Configure(wrong, error) && error.find("720-byte") != std::string::npos &&
+    Check(wrong && !view.Configure(wrong, error) && error.find("3600-byte") != std::string::npos &&
               !view.Configure(0, error),
           "wrong block layout and invalid programs are rejected instead of receiving mismatched data");
     const auto uploads = view.Stats().uploads;

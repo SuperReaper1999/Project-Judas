@@ -1,3 +1,4 @@
+#include "../lighting/ShadowSystem.h"
 #include "EditorPlaySession.h"
 #include "InteractivePlay.h"
 #include "EditorSceneViewport.h"
@@ -489,11 +490,13 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
         renderer.SetWeatherShelter({});
     }
 
-    // Clear runtime-view shadow history before terrain and authored previews.
-    // Edit mode has no matching shadow pass for this camera.
-    for (int slot = 0; slot < kShadowMapCount; ++slot)
-        renderer.InvalidateShadowSlot(slot);
-    renderer.SetDynamicLights(BuildAuthoredLights(scene));
+    JudasLighting::PrepareShadows(renderer,appearance,BuildAuthoredLights(scene),
+        JudasLighting::AuthoredShadowScene(scene,context.host.Resources()),[&]{
+            if(terrain)terrain->Draw(renderer,scene,context.host.Resources());
+            std::string shadowPlanetError;
+            planetPreview.Draw(renderer,scene,context.host.Resources(),shadowPlanetError);
+            DrawAuthoredScene(renderer,scene,context.host.Resources(),false);
+        });
     if (terrain)
         terrain->Draw(renderer, scene, context.host.Resources());
     std::string planetError;

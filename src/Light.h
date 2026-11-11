@@ -49,10 +49,7 @@ struct DynamicLight {
     unsigned long long identity = 0;
 };
 
-// One directional layer and up to eight selected spot layers. Historical
-// torch/ship indices remain valid for low-level callers; runtime selection is
-// generic. Point-light cubemap shadows are not part of this representation.
+// Three directional cascades. Local charts occupy aligned six-layer groups:
+// spots use their first face; points use all six. Bounded to eight sources.
 constexpr int kDirectionalShadowSlot=0,kTorchShadowSlot=1,kShipHeadlightShadowSlot=2;
-constexpr int kShadowMapCount=9;
-// Historical M14 constant retained for source compatibility, NOT a runtime cap.
-constexpr int kMaxDynamicLights=5;
+constexpr int kLocalShadowBase=6,kShadowMapCount=54;

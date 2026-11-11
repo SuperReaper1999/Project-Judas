@@ -13,13 +13,13 @@ namespace JudasRender {
 // Plain floats keep packing independent of GLM's optional aligned-type flags.
 struct alignas(16) ViewUniformData {
     std::array<float, 16> view{}, projection{};
-    std::array<std::array<float, 16>, 9> shadows{};
+    std::array<std::array<float, 16>, 54> shadows{};
     std::array<float, 4> camera{};
 };
 static_assert(offsetof(ViewUniformData, projection) == 64);
 static_assert(offsetof(ViewUniformData, shadows) == 128);
-static_assert(offsetof(ViewUniformData, camera) == 704);
-static_assert(sizeof(ViewUniformData) == 720 && alignof(ViewUniformData) == 16);
+static_assert(offsetof(ViewUniformData, camera) == 3584);
+static_assert(sizeof(ViewUniformData) == 3600 && alignof(ViewUniformData) == 16);
 
 struct ViewUniformStats {
     std::uint64_t uploads = 0, bytesUploaded = 0, binds = 0, configurations = 0;
@@ -32,7 +32,7 @@ struct ViewUniformStats {
 // Call Shutdown while that context still exists. Destruction never calls GL.
 class ViewUniforms {
   public:
-    static constexpr unsigned BindingPoint = 0, ShadowCount = 9;
+    static constexpr unsigned BindingPoint = 0, ShadowCount = 54;
     ViewUniforms();
     ~ViewUniforms();
     ViewUniforms(const ViewUniforms &) = delete;

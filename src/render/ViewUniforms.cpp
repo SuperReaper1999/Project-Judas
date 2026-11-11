@@ -15,7 +15,7 @@ constexpr char BlockName[] = "JudasView";
 constexpr char BlockSource[] = R"GLSL(layout(std140) uniform JudasView {
     mat4 uView;
     mat4 uProjection;
-    mat4 uLightSpaceMatrix[9];
+    mat4 uLightSpaceMatrix[54];
     vec4 judasViewCamera;
 };
 #define uCameraPosition judasViewCamera.xyz
@@ -125,7 +125,7 @@ bool ViewUniforms::Configure(unsigned program, std::string &error) {
     GLint bytes = 0;
     glGetActiveUniformBlockiv(program, index, GL_UNIFORM_BLOCK_DATA_SIZE, &bytes);
     if (bytes != GLint(sizeof(ViewUniformData))) {
-        error = "JudasView shader block must use the canonical 720-byte std140 layout; observed " +
+        error = "JudasView shader block must use the canonical 3600-byte std140 layout; observed " +
                 std::to_string(bytes) + " bytes.";
         return false;
     }
@@ -162,7 +162,7 @@ bool ViewUniforms::Bind(unsigned program, std::string &error) {
         if (bytes != GLint(sizeof(ViewUniformData))) {
             glDeleteBuffers(1, &storage->buffer);
             storage->buffer = 0;
-            error = "Cannot allocate the 720-byte view uniform buffer.";
+            error = "Cannot allocate the 3600-byte view uniform buffer.";
             return false;
         }
         storage->dirty = true;
@@ -207,7 +207,7 @@ ViewUniformStats ViewUniforms::Stats() const { return storage->stats; }
 std::string MakeViewBlockSource(std::string_view canonical, std::string &error) {
     error.clear();
     constexpr std::string_view cameraMatrices = "uniform mat4 uView;\nuniform mat4 uProjection;\n";
-    constexpr std::string_view shadows = "uniform mat4 uLightSpaceMatrix[9];\n";
+    constexpr std::string_view shadows = "uniform mat4 uLightSpaceMatrix[54];\n";
     constexpr std::string_view camera = "uniform vec3 uEmission,uCameraPosition;\n";
     const bool vertex = ExactlyOnce(canonical, cameraMatrices) &&
                         canonical.find(shadows) == std::string_view::npos &&

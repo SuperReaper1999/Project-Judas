@@ -8,6 +8,7 @@
 #include "ViewUniforms.h"
 #include "GpuParticlePass.h"
 #include "WaterPass.h"
+#include "ShadowPassCache.h"
 
 namespace JudasRender {
 struct RendererInfrastructure {
@@ -17,6 +18,7 @@ struct RendererInfrastructure {
     ParticlePass particlePass;
     GpuParticlePass gpuParticlePass;
     WaterPass waterPass;
+    ShadowPassCache shadowCache;
     bool persistentUploads=true, orderedInstances=false;
 };
 } // namespace JudasRender

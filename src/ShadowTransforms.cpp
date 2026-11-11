@@ -50,3 +50,10 @@ glm::mat4 ComputeSpotShadowMatrix(const glm::vec3& lightPosition, const glm::vec
         glm::perspective(glm::radians(fovyDegrees), 1.0f, kSpotNearPlane, std::max(range, 1.0f));
     return projection * view;
 }
+
+glm::mat4 ComputePointShadowMatrix(glm::vec3 position,float range,unsigned face){
+    const glm::vec3 directions[]={{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}};
+    const glm::vec3 ups[]={{0,-1,0},{0,-1,0},{0,0,1},{0,0,-1},{0,-1,0},{0,-1,0}};
+    face=std::min(face,5u);
+    return glm::perspective(glm::radians(90.f),1.f,.02f,std::max(.021f,range))*glm::lookAt(position,position+directions[face],ups[face]);
+}

@@ -22,7 +22,7 @@
 #include "Scene.h"
 #include "ShadowTransforms.h"
 #include "PlanetTerrain.h"
-#include "render/ShadowPassCache.h"
+#include "lighting/ShadowSystem.h"
 
 std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render,const std::vector<MeshPrimitive>* derivedParts) {
     const auto* parts=derivedParts?derivedParts:resources?resources->TryGetModelParts(render.meshAsset):nullptr;
@@ -422,76 +422,11 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     PresentedObjects presentedObjects;
     presentedObjects.statics.resize(world.StaticRenderables().size());
     presentedObjects.dynamics.resize(world.DynamicBodies().size());
-    // This cache never survives the immutable presented sample. Camera-backed
-    // alpha textures can change between auxiliary passes, so those worlds keep
-    // the original redraw path instead of assuming identical caster content.
-    const auto* shadowReuse = std::getenv("JUDAS_SHADOW_REUSE");
-    const bool multipleViews = !observer && [&]() {
-        for (const auto& camera : world.PresentationCameras())
-            if (camera.settings.enabled && world.IsPublished(camera.id)) return true;
-        if (const auto* players=world.PlayersIfLoaded()) {
-            unsigned views=0;
-            for (const auto& [_,player] : players->All())
-                if (player.view && ++views>1) return true;
-        }
-        return false;
-    }();
-    const bool reuseEligible = multipleViews && renderer.ShadowsEnabled() &&
-                              !(shadowReuse && std::strcmp(shadowReuse,"0")==0);
-    const bool cameraTextureCasters = [&]() {
-        if (!reuseEligible) return false;
-        for (const auto& object : world.StaticRenderables())
-            if (object.render.textureCamera && object.render.visible &&
-                world.IsPublished(object.id) && world.RenderVisible(object.id)) return true;
-        for (const auto& object : world.DynamicVisuals())
-            if (object.hasRender && object.render.textureCamera && object.render.visible &&
-                world.IsPublished(object.id) && world.RenderVisible(object.id)) return true;
-        return false;
-    }();
-    const bool reuseShadows = reuseEligible && !cameraTextureCasters;
-    JudasRender::ShadowPassCache shadowCache;
+    const auto shadowScene=JudasLighting::RuntimeShadowScene(world,alpha);
     auto lightPass = [&]() {
-        const auto cameraView = renderer.ViewMatrix(), cameraProjection = renderer.ProjectionMatrix();
-        const bool viewDependentLod = reuseShadows && renderer.HasViewDependentMeshLods();
-        const auto viewport = viewDependentLod ? renderer.RenderTargetDiagnostics().viewport : glm::ivec4(0);
-        auto selected = SelectShadowLights(lights,cameraView,cameraProjection,renderer.ShadowBudget());
-        unsigned layers = 1;
-        for (const auto& light : selected)
-            if (light.shadowMapIndex>0) layers = std::max(layers,unsigned(light.shadowMapIndex+1));
-        renderer.ReserveShadowLayers(layers);
-        for (int slot=0;slot<kShadowMapCount;++slot) renderer.InvalidateShadowSlot(slot);
-        if (renderer.ShadowsEnabled()) {
-            static ProfileLabel shadowLabel("Shadow pass submission");
-            ProfileScope shadowScope(shadowLabel);
-            const auto drawShadow = [&](int slot,std::uint64_t identity,const glm::mat4& chart,
-                                        const WorldDrawOptions& options) {
-                JudasRender::ShadowPassKey key;
-                key.slot=slot;key.source=identity;key.lightViewProjection=chart;
-                key.viewDependentLod=viewDependentLod;
-                if (viewDependentLod) {
-                    key.cameraView=cameraView;key.cameraProjection=cameraProjection;key.viewport=viewport;
-                }
-                if (reuseShadows && shadowCache.Matches(key) && renderer.ReuseShadowChart(slot,chart)) return;
-                renderer.BeginShadowPass(slot,chart);
-                DrawWorldGeometry(renderer,world,alpha,options,&presentedObjects);
-                renderer.EndShadowPass();
-                if (reuseShadows) shadowCache.Remember(key);
-            };
-            const auto eye = glm::vec3(glm::inverse(cameraView)[3]);
-            if (settings.sunEnabled)
-                drawShadow(kDirectionalShadowSlot,0,
-                    ComputeDirectionalShadowMatrix(eye,settings.sunDirection,kDirShadowHalfExtent,kDirShadowDistance),
-                    WorldDrawOptions{});
-            for (size_t source=0;source<selected.size();++source) {
-                const auto& light=selected[source];
-                if (light.shadowMapIndex<=0) continue;
-                WorldDrawOptions options;
-
-                drawShadow(light.shadowMapIndex,light.identity,
-                    ComputeSpotShadowMatrix(light.position,light.direction,light.outerConeDegrees,light.range),options);
-            }
-        }
-        renderer.SetDynamicLights(selected);
+        JudasLighting::PrepareShadows(renderer,settings,lights,shadowScene,[&]{
+            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects);
+        });
     };
     (void)shadowFocus;
     // Secondary views are presentation passes only; shadow maps above are shared.
@@ -658,9 +593,6 @@ void DrawAuthoredScene(Renderer& r,const Scene& scene,ResourceManager& assets){
 }
 void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets, bool basicWater) {
     JUDAS_PROFILE_SCOPE("Editor authored submission");
-    // Authored previews do not render shadow maps of their own. Never sample
-    // maps generated for a previous runtime camera or Play session.
-    for(int slot=0;slot<kShadowMapCount;++slot)r.InvalidateShadowSlot(slot);
     r.BeginMeshBatch();
     SetAuthoredSceneAppearance(r, scene, assets);
     for (const SceneObject& o : scene.Objects()) {

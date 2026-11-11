@@ -27,7 +27,7 @@
 #include "render/GraphicsCapabilities.h"
 #include "render/MaterialUniformBatch.h"
 
-namespace JudasRender {struct RendererInfrastructure;struct MeshInstance;}
+namespace JudasRender {class ShadowPassCache;struct RendererInfrastructure;struct MeshInstance;}
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {struct SurfaceField;}
 
@@ -200,6 +200,9 @@ public:
     void SetShadowBudget(unsigned n){m_shadowBudget=std::min(n,8u);}
     unsigned ShadowBudget()const{return m_shadowBudget;}
     void ReserveShadowLayers(unsigned layers);
+    void SetDirectionalCascadeCount(unsigned);
+    JudasRender::ShadowPassCache& ShadowCache();
+    std::uint64_t ShadowResourceRevision()const{return m_shadowResourceRevision;}
     bool HasViewDependentMeshLods() const;
     bool ReuseShadowChart(int slot,const glm::mat4&);
 
@@ -481,6 +484,7 @@ private:
 
     void TraceResourceOperation(ResourceTracePoint point, unsigned int handle = 0, std::size_t bytes = 0) const;
     ResourceTrace m_resourceTrace;
+    mutable std::uint64_t m_shadowResourceRevision=0;
 
     GpuMesh* GetMesh(MeshHandle handle);
     GLuint ResolveTexture(TextureHandle handle) const;
@@ -568,7 +572,7 @@ private:
     GLint m_uAmbientColor = -1;
 
     RenderLightGrid m_lightGrid;
-    GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0;
+    GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0,m_pointShadowView=0;
     unsigned m_lightTextureRows=0,m_shadowBudget=4,m_shadowLayers=0;
     GLint m_uInstanced=-1,m_uShadowInstanced=-1;
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;

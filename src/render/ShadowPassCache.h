@@ -4,10 +4,13 @@
 #include <array>
 #include <cstdint>
 #include <optional>
+#include <string>
 
 namespace JudasRender {
 struct ShadowPassKey {
     int slot = -1;
+    std::uint64_t resourceRevision = 0;
+    std::string content;
     std::uint64_t source = 0;
     glm::mat4 lightViewProjection{1};
     bool viewDependentLod = false;
@@ -15,16 +18,17 @@ struct ShadowPassKey {
     glm::ivec4 viewport{0};
 };
 
-// A RenderWorldFrame-local observation of the latest content in each physical
-// shadow slot. It owns no depth textures and never spans simulation/render
-// samples. Callers must keep caster geometry/material inputs immutable while
-// consulting it, and must still ask Renderer to validate the actual depth slot.
+// Context-owned exact observations of bounded physical slots. Callers supply
+// complete relevant caster content and a resource revision, then still validate
+// the owning depth allocation. A dirty chart is never reused by age alone.
 class ShadowPassCache {
   public:
     bool Matches(const ShadowPassKey &) const;
     // Publish only after a real completed shadow pass, never after a cache hit.
     bool Remember(const ShadowPassKey &);
     void Clear();
+    void Forget(unsigned slot);
+    int LocalSlotForSource(std::uint64_t source)const;
 
   private:
     std::array<std::optional<ShadowPassKey>, kShadowMapCount> slots;

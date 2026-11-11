@@ -23,7 +23,8 @@ bool Valid(const ShadowPassKey &key) {
                                       key.viewport.z > 0 && key.viewport.w > 0));
 }
 bool Equal(const ShadowPassKey &a, const ShadowPassKey &b) {
-    return a.slot == b.slot && a.source == b.source &&
+    return a.resourceRevision == b.resourceRevision && a.content == b.content &&
+           a.slot == b.slot && a.source == b.source &&
            a.viewDependentLod == b.viewDependentLod &&
            Equal(a.lightViewProjection, b.lightViewProjection) &&
            (!a.viewDependentLod ||
@@ -32,14 +33,22 @@ bool Equal(const ShadowPassKey &a, const ShadowPassKey &b) {
 }
 } // namespace
 bool ShadowPassCache::Matches(const ShadowPassKey &key) const {
-    return Valid(key) && slots[unsigned(key.slot)] && Equal(*slots[unsigned(key.slot)], key);
+    return key.content.size()<=256*1024 && Valid(key) && slots[unsigned(key.slot)] && Equal(*slots[unsigned(key.slot)], key);
 }
 bool ShadowPassCache::Remember(const ShadowPassKey &key) {
     if (!Valid(key))
         return false;
+    if(key.content.size()>256*1024){Forget(unsigned(key.slot));return false;}
     slots[unsigned(key.slot)] = key;
     return true;
 }
+int ShadowPassCache::LocalSlotForSource(std::uint64_t source)const{
+    if(!source)return -1;
+    for(unsigned slot=kLocalShadowBase;slot<slots.size();slot+=6)
+        if(slots[slot]&&slots[slot]->source==source)return int(slot);
+    return -1;
+}
+void ShadowPassCache::Forget(unsigned slot){if(slot<slots.size())slots[slot].reset();}
 void ShadowPassCache::Clear() {
     for (auto &slot : slots)
         slot.reset();

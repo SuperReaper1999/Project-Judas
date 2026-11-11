@@ -179,12 +179,17 @@ bool Renderer::CompileShader(GLenum type, const char* source, GLuint& result) co
     if(source==kVertexShaderSource || source==kFragmentShaderSource) {
         auto transformed=JudasRender::MakeViewBlockSource(source,error);
         if(transformed.empty()){std::fprintf(stderr,"View shader: %s\n",error.c_str());return false;}
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+        if(source==kFragmentShaderSource&&m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16)
+            transformed.insert(transformed.find('\n')+1,"#define JUDAS_CUBE_ARRAY 1\n");
+#endif
         return JudasRender::Shaders::CompileShader(type,transformed.c_str(),result,profile,"mesh-view-block");
     }
     return JudasRender::Shaders::CompileShader(type, source, result, profile);
 }
 
 bool Renderer::Init() {
+    m_render->shadowCache.Clear();
     m_capabilities = QueryGraphicsCapabilities();
     m_render->persistentUploads=true;
     if(const char* setting=std::getenv("JUDAS_PERSISTENT_UPLOADS"))m_render->persistentUploads=std::strcmp(setting,"0")!=0;
@@ -414,11 +419,15 @@ bool Renderer::Init() {
         m_render->viewUniforms.SetShadow(unsigned(slot),alwaysOutOfRangeMatrix);
     }
 
+    glUseProgram(m_shaderProgram);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uPointShadowMaps"),16);
+    SetDirectionalCascadeCount(1);
     m_render->viewUniforms.SetCamera(m_view,m_projection);
     return true;
 }
 
 void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int handle, std::size_t bytes) const {
+    ++m_shadowResourceRevision;
     if (!m_resourceTrace) return;
     ResourceTraceEvent event{point, {}, {}};
     event.handle = handle;
@@ -487,6 +496,7 @@ void Renderer::Shutdown() {
         m_shaderProgram = 0;
     }
 
+    if(m_pointShadowView){glDeleteTextures(1,&m_pointShadowView);m_pointShadowView=0;}
     for (int slot = 0; slot < kShadowMapCount; ++slot) {
         if (m_shadowFbo[slot]) {
             glDeleteFramebuffers(1, &m_shadowFbo[slot]);
@@ -606,6 +616,7 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     if(!m_render->viewUniforms.SetShadow(unsigned(shadowSlot),lightViewProjection)){
         std::fprintf(stderr,"Shadow chart rejected: matrix must be finite\n");return;
     }
+    m_render->shadowCache.Forget(unsigned(shadowSlot));
     ReserveShadowLayers(unsigned(shadowSlot+1));
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
@@ -733,6 +744,7 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(MeshVertex)),
                  vertices.empty() ? nullptr : vertices.data(), GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    ++m_shadowResourceRevision;
     mesh->vertexCount = static_cast<GLsizei>(vertices.size());
     if(!mesh->lods.empty())mesh->lodPixels=0; // changed geometry invalidates offline error estimates
     mesh->bounds={};for(const auto& v:vertices)mesh->bounds.Include(v.position);
@@ -761,6 +773,7 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
     if(!skin.empty()){glBindBuffer(GL_ARRAY_BUFFER,mesh->skinVbo);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(skin.size()*sizeof(MeshSkinVertex)),skin.data(),GL_DYNAMIC_DRAW);}
     glBindVertexArray(GLuint(previousVao));glBindBuffer(GL_ARRAY_BUFFER,GLuint(previousArray));
     if(submissionStart)JUDAS_PROFILE_COUNTER("Structural topology GL submission CPU ms",double(PerformanceProfiler::Now()-submissionStart)*1e-6,ProfileCounterMode::Sum);
+    ++m_shadowResourceRevision;
     mesh->indexCount=GLsizei(indices.size());mesh->primitives=primitives;mesh->partOrientation.clear();
     for(const auto& p:primitives)mesh->partOrientation.push_back(p.count?skin[indices[p.first]]:MeshSkinVertex{});
     return true;
@@ -1039,6 +1052,9 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     }
     glBindTexture(GL_TEXTURE_2D, ResolveTexture(texture));
     glActiveTexture(GL_TEXTURE1);glBindTexture(GL_TEXTURE_2D_ARRAY,m_shadowArray);
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    if(m_pointShadowView){glActiveTexture(GL_TEXTURE16);glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glBindSampler(16,0);}
+#endif
     glActiveTexture(GL_TEXTURE14);glBindTexture(GL_TEXTURE_2D,m_lightTexture);
     glActiveTexture(GL_TEXTURE0);  // restore the default active unit other calls (UI, texture creation) assume
 

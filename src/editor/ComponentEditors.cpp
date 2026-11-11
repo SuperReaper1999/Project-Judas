@@ -927,7 +927,7 @@ void DrawLight(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     DragScalar(doc,"Intensity##light",l.intensity,.1f,0,10000);
     Checkbox(doc,"Request shadow##light",l.castsShadow);
     DragScalar(doc,"Shadow priority##light",l.shadowPriority,.1f,-10000,10000);
-    ImGui::TextDisabled("Spot shadows use a per-view relevance budget; points remain unshadowed.");
+    ImGui::TextDisabled("Point and spot shadows share a bounded per-view source budget. Dirty selected shadows update immediately.");
     ColorEdit(doc, "Color##light", l.color);
     DragScalar(doc, "Range", l.range, 0.1f, 0.0f, 10000.0f);
     if (l.kind == SceneLightKind::Spot) {

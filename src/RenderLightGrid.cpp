@@ -27,11 +27,11 @@ void RenderLightGrid::Build(const std::vector<DynamicLight>& lights,const glm::m
 }
 std::vector<DynamicLight> SelectShadowLights(const std::vector<DynamicLight>& input,const glm::mat4& view,const glm::mat4& projection,unsigned budget){
  auto result=input;const glm::vec3 eye=glm::vec3(glm::inverse(view)[3]);std::vector<std::pair<float,unsigned>> requests;
- for(unsigned i=0;i<result.size();++i){auto& l=result[i];bool request=l.castsShadow||l.shadowMapIndex>=1;l.shadowMapIndex=-1;if(!request||l.kind!=LightKind::Spot)continue;
+ for(unsigned i=0;i<result.size();++i){auto& l=result[i];bool request=l.castsShadow||l.shadowMapIndex>=1;l.shadowMapIndex=-1;if(!request)continue;
   RenderLightGrid test;test.Build({l},view,projection,64,64);if(!test.visible)continue;
   float energy=std::max({l.color.x,l.color.y,l.color.z});float score=l.shadowPriority+energy/(1+glm::dot(eye-l.position,eye-l.position));requests.emplace_back(score,i);
  }
  std::stable_sort(requests.begin(),requests.end(),[&](auto a,auto b){return a.first!=b.first?a.first>b.first:result[a.second].identity<result[b.second].identity;});
- for(unsigned n=0;n<std::min({budget,8u,unsigned(requests.size())});++n)result[requests[n].second].shadowMapIndex=int(n+1);
+ for(unsigned n=0;n<std::min({budget,8u,unsigned(requests.size())});++n)result[requests[n].second].shadowMapIndex=kLocalShadowBase+int(n)*6;
  return result;
 }
