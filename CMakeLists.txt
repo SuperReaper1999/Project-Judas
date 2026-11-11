@@ -1681,6 +1681,10 @@ include(cmake/JudasGameWater.cmake)
 include(cmake/JudasTerrain.cmake)
 
 # Finalize after every native test has declared its authoritative entry point.
+# Whole-engine throughput uses the actual shipping application boundary.
+judas_add_engine_test(judas_whole_engine_benchmark tools/benchmarks/WholeEngineBenchmark.cpp APPLICATION)
+judas_add_engine_test(judas_prepared_capsule_query_tests tests/PreparedCapsuleQueryTests.cpp)
+
 include(cmake/JudasValidation.cmake)
 
 # Stage-1 local structural fidelity harness. No external model is bundled;
@@ -1690,5 +1694,3 @@ add_executable(judas_crash_proof EXCLUDE_FROM_ALL
 target_link_libraries(judas_crash_proof PRIVATE judas_engine)
 judas_warnings(judas_crash_proof)
 
-# Whole-engine throughput uses the actual shipping application boundary.
-judas_add_engine_test(judas_whole_engine_benchmark tools/benchmarks/WholeEngineBenchmark.cpp APPLICATION)

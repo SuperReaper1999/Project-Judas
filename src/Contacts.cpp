@@ -764,10 +764,18 @@ glm::vec3& outBoxPoint) {
     // convex shapes (each step can only reduce or hold the distance
     // between the two points) -- a handful of iterations is more than
     // enough at this engine's scale.
+    // The box frame is invariant throughout the projection. Retain the exact
+    // double-precision projection and all eight iterations, but prepare its
+    // rotation, transpose and converted inputs only once per query.
+    const auto rotation = ContactRotation(boxOrientation);
+    const auto inverseRotation = glm::transpose(rotation);
+    const auto center = glm::dvec3(boxCenter);
+    const auto half = glm::dvec3(halfExtents);
     glm::vec3 segmentPoint = (segA + segB) * 0.5f;
     glm::vec3 boxPoint = boxCenter;
     for (int i = 0; i < 8; ++i) {
-        boxPoint = ClosestPointOnOBB(segmentPoint, boxCenter, boxOrientation, halfExtents);
+        const auto local = glm::clamp(inverseRotation * (glm::dvec3(segmentPoint) - center), -half, half);
+        boxPoint = glm::vec3(center + rotation * local);
         segmentPoint = ClosestPointOnSegment(boxPoint, segA, segB);
     }
 

@@ -1672,6 +1672,14 @@
         "collision",
         "performance"
       ]
+    },
+    {
+      "name": "prepared-capsule-query",
+      "target": "judas_prepared_capsule_query_tests",
+      "groups": [
+        "physics",
+        "character"
+      ]
     }
   ],
   "known_findings": [

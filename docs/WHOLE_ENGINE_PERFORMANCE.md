@@ -84,3 +84,39 @@ parked four-model yard also performs repeated wake traversals. These findings
 justify targeted experiments, not an immediate scheduler or physics replacement.
 Final before/after results, accepted/rejected optimisations, supported workloads,
 remaining failures and qualification are still outstanding.
+
+## Controlled experiments so far
+
+The shadow-uniform-location cache was **rejected and reverted**. Three interleaved
+populated-rendering pairs and three crowd pairs, plus profiler-off controls,
+showed no meaningful net whole-frame improvement. Its deterministic populated
+scene capture was pixel-identical; correctness alone did not justify retention.
+
+User-space CPU sampling is now available after the operator temporarily set
+`kernel.perf_event_paranoid=2`. Recording explicitly excludes kernel call chains
+and disables build-ID-cache writes. One diagnostic crowd capture attributed about
+48% of samples to the executable and 34% to NVIDIA's driver, with the rest mainly
+C/C++ libraries. A saturated main thread is therefore not synonymous with useful
+engine computation. These instrumented samples are diagnostic, not FPS evidence.
+
+Sampling found repeated box-frame preparation in capsule projection. The retained
+small correction prepares rotation/transpose/converted box inputs once per query
+instead of eight times; all eight original projection iterations remain. Original
+procedural controls compare 100,000 cases bit-for-bit against the previous call
+sequence. Motor controls pass 32/32, character publication 144/144, contact
+geometry 823/823, and profiler controls 29/29.
+
+Three interleaved 10-second whole-game pairs on the same 129-character project,
+1280x720, uncapped, with matching resource-quiet readiness, gave these medians:
+
+| Metric | Original | Prepared capsule query |
+|---|---:|---:|
+| Average FPS | 112.12 | 114.64 |
+| p50 frame ms | 10.94 | 10.62 |
+| p99 frame ms | 12.04 | 11.69 |
+
+This is a modest real whole-frame improvement, not achievement of 120 FPS or the
+5 ms critical-path goal. The workload, iterations, collision coverage and render
+quality were not reduced. Other audit/optimisation work and full qualification
+remain in progress. Raw trials and exact controls are under
+`.cache/whole-engine-performance/` and are not public model assets.
