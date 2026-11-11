@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 struct DeformableAsset;
-struct DeformableInstance;
+class DeformableInstance;
 
 // Presentation only. Every corner has an owning section for tears, with a
 // compact smooth blend of nearby physical frames while those sections connect.

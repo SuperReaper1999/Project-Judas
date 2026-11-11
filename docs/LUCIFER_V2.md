@@ -229,6 +229,11 @@ was 5.551 ms at 1080p and 3.299 ms at 720p respectively.
   object are byte-identical; only profiler source-line strings moved. Focused
   collision/rotation and lighting gates passed. Final MSVC build results must
   come from the accompanying exact-candidate CI receipt, not this Linux evidence.
+- The next Windows link exposed an existing `StructuralSkin` forward declaration
+  calling `DeformableInstance` a struct despite its class definition. MSVC emitted
+  different linkage names for GPU mesh/palette methods. The declaration now
+  matches the definition; no deformation or rendering algorithm changed. All
+  26 executable sections of the native GCC object remain byte-identical.
 
 Raw executable/input identities, complete frame/GPU timelines, operating-system
 samples, images and failed attempts are retained under `.cache/lucifer-v2`.
