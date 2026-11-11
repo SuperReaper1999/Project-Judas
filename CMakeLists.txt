@@ -1684,6 +1684,7 @@ include(cmake/JudasTerrain.cmake)
 # Whole-engine throughput uses the actual shipping application boundary.
 judas_add_engine_test(judas_whole_engine_benchmark tools/benchmarks/WholeEngineBenchmark.cpp APPLICATION)
 judas_add_engine_test(judas_prepared_capsule_query_tests tests/PreparedCapsuleQueryTests.cpp)
+judas_add_engine_test(judas_material_uniform_batch_tests tests/MaterialUniformBatchTests.cpp)
 
 include(cmake/JudasValidation.cmake)
 

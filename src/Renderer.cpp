@@ -547,6 +547,7 @@ void Renderer::DrawDebugLines(const std::vector<DebugLine>& lines, bool depthTes
 }
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
+    InvalidateMaterialUniformState();
     PollProfileGPU();
     glViewport(0, 0, windowWidth, windowHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1091,6 +1092,8 @@ void Renderer::EndFrame() {
     JUDAS_PROFILE_COUNTER("Presentation upload bytes (view/light/instances/billboards)",double(m_stats.uploadedBytes),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Presentation upload calls",double(m_stats.uploadCalls),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Material applications",double(m_stats.materialApplications),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Material uniform publishes",double(m_stats.materialUniformPublishes),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Material uniform reuses",double(m_stats.materialUniformReuses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Reused shadow passes",double(m_stats.reusedShadowPasses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Instance arena bytes",double(m_render->instanceArena.AllocatedBytes()),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Billboard arena bytes",double(m_render->particlePass.Stats().arenaBytes),ProfileCounterMode::Latest);

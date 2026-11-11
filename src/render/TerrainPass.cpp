@@ -33,6 +33,7 @@ void Renderer::SetTerrainWeightPage(TextureHandle weights, glm::vec4 sourceRect)
 void Renderer::BindTerrainMaterial() {
     if (!m_terrainMaterial)
         return;
+    InvalidateMaterialUniformState();
     glUniform1i(MaterialUniform("uTerrain"), true);
     const char *names[] = {"uMR", "uNormal", "uOcclusion", "uEmissive"};
     // These units normally carry optional material maps, which terrain replaces

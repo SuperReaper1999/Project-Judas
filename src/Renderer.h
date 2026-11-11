@@ -25,6 +25,7 @@
 #include "VisualParticles.h"
 #include "GraphicsApi.h"
 #include "render/GraphicsCapabilities.h"
+#include "render/MaterialUniformBatch.h"
 
 namespace JudasRender {struct RendererInfrastructure;struct MeshInstance;}
 namespace JudasParticles {class GpuParticles;}
@@ -59,6 +60,7 @@ struct RenderStats {
     // Actual bytes/calls for view, light, mesh-instance and billboard uploads.
     // This excludes asset residency, UI, skin palettes and transient water meshes.
     std::uint64_t uploadedBytes=0, uploadCalls=0, materialApplications=0;
+    std::uint64_t materialUniformPublishes=0, materialUniformReuses=0;
     unsigned reusedShadowPasses=0;
     // Indirect draws are exact; live samples are delayed GPU observations, not
     // a fabricated current-frame triangle/submission count.
@@ -502,8 +504,10 @@ private:
     std::vector<GpuMaterial> m_materials;std::vector<GpuEnvironment> m_environments;
     std::vector<MaterialBinding> m_materialBindings;
     MaterialDefinition m_fallbackMaterial;
-    std::map<std::string,GLint> m_materialUniforms;
+    std::map<std::string,GLint,std::less<>> m_materialUniforms;
     GLint MaterialUniform(const char* name);
+    std::array<JudasRender::MaterialUniformCache,2> m_materialUniformState;
+    void InvalidateMaterialUniformState() { for(auto& state:m_materialUniformState)state.Invalidate(); }
     TextureHandle ColourTexture(TextureHandle);
     bool m_terrainMaterial=false;
     TextureHandle m_terrainWeights;

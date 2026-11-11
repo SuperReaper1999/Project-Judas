@@ -1680,6 +1680,11 @@
         "physics",
         "character"
       ]
+    },
+    {
+      "name": "material-uniform-publication",
+      "target": "judas_material_uniform_batch_tests",
+      "groups": ["rendering", "performance"]
     }
   ],
   "known_findings": [

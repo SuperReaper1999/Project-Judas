@@ -168,3 +168,72 @@ The metric and comparison logic runs in focused CI; hardware performance results
 still require actual reference-desktop execution and are not certified by a
 generic CI runner. Broader workload coverage and final SDK/CI qualification are
 still outstanding.
+
+## Initial reference captures and coverage limits
+
+These are 20-second resource-quiet standalone captures on the desktop at
+1280x720, uncapped, not a claim of complete workload qualification:
+
+| Workload | Average FPS | p99 ms | Worst ms | Process RSS peak MiB |
+|---|---:|---:|---:|---:|
+| 129 performers with character motors | 112.2 | 11.41 | 21.17 | 137.8 |
+| Populated renderer lab, 1,096 objects | 194.2 | 5.52 | 7.97 | 184.1 |
+| Four private vehicle models, parked | 292.7 | 9.07 | 22.95 | 3200.9 |
+| Selected Challenger launch in that yard | 257.8 | 10.63 | 168.55 | 3198.5 |
+| Small terrain workshop traversal | 2306.0 | 0.99 | 5.29 | 157.3 |
+| Ordinary particle workshop | 1275.2 | 1.51 | 2.61 | 132.5 |
+
+The ordinary particle workshop is **not** the 100,000-particle stress scene.
+The small terrain workshop is **not** a representative large streaming world.
+The selected-car launch is **not** the four-way junction or debris qualification.
+Average FPS conceals the severe crash failure: that capture contains a 168.55 ms
+frame and six consecutive frames over 16.67 ms, totalling about 461 ms, including
+catch-up capping and discarded simulation time. It fails the exceptional minimum
+budget even though its p99 and average look much better.
+
+The crowd used essentially one CPU-core equivalent and no resource-worker time
+after loading. Its average render submission was 6.12 ms per rendered frame;
+character motors averaged 1.82 ms per rendered frame. These observations nest
+inside larger scopes and must not be summed. The parked yard also used roughly
+one core equivalent. This motivates CPU-side preparation/submission analysis;
+it does not prove that the GPU or all existing worker paths are unused.
+
+Process RSS includes driver mappings and diagnostics. Device-wide sampled VRAM
+in the yard reached about 2445 MiB, including the desktop; the evidence does not
+establish VRAM exhaustion. No hardware fault is inferred from these costs.
+
+## Material submission: measured critical-path improvement
+
+Inclusive user-space samples attributed about 34% of crowd CPU cycles to
+`BindMaterial`, including about 13% to uniform-name lookup and its string work.
+Those percentages overlap and must not be added. Allocation-free `string_view`
+lookup in the existing cache provided a modest improvement in matched runs.
+
+The next candidate describes material-owned uniform writes as one bounded
+packet. Renderer owns two last-published states, one for its main shader and one
+for its shadow shader. Only exact program/name/type/value matches skip writes.
+Commands carry their own names; there are no borrowed resource references,
+per-object history, approximate comparisons or additional GPU allocations.
+Texture/sampler bindings and raster state are always applied. Frame start,
+shutdown and terrain's shared-uniform writer explicitly invalidate state.
+The command packet itself is both the comparison key and the publication source,
+so new material fields cannot accidentally omit a separate dirty-key list.
+
+Three interleaved 10-second pairs, against allocation-free lookup with the same
+assets, resolution and settings, gave these median whole-application results:
+
+| Workload | Before FPS | After FPS | Before p99 ms | After p99 ms |
+|---|---:|---:|---:|---:|
+| 129 performers and motors | 124.74 | 180.81 | 10.34 | 8.39 |
+| 1,096-object renderer lab | 198.36 | 199.18 | 5.51 | 5.15 |
+
+The crowd improves substantially as a complete application; its p99 still misses
+8.33 ms. The already-batched renderer lab gains little throughput. This is not
+a universal FPS guarantee or full performance qualification.
+
+GPU controls pass under modern and portable policies: 12 publication/colour/
+texture/frame-restoration checks and 44 material checks including baked HDR
+environment rotation/reflections. Scoped HDR pass checks pass 29/29; terrain
+material checks pass 86/86 with zero analytic-normal pixel difference. These are
+NVIDIA desktop results; portable policy is not a claim of testing another GPU.
+Final broader workloads, SDK, editor and CI qualification remain outstanding.
