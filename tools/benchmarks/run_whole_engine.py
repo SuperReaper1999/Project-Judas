@@ -40,6 +40,8 @@ def main():
                         help='loading exclusion; verify readiness separately for cold-restored workloads')
     parser.add_argument('--resolution', default='1280x720')
     parser.add_argument('--cap', type=int, default=0)
+    parser.add_argument('--shadow-budget', type=int, choices=range(9),
+                        help='explicit local-shadow quality policy (0..8 sources)')
     parser.add_argument('--key')
     parser.add_argument('--pulse')
     parser.add_argument('--sequence',type=Path,help='ordered physical control events, relative to measured gameplay start')
@@ -77,6 +79,8 @@ def main():
     for option in ['key', 'pulse']:
         if getattr(args, option):
             command += ['--' + option, getattr(args, option)]
+    if args.shadow_budget is not None:
+        command += ['--shadow-budget', str(args.shadow_budget)]
     if args.sequence:
         command += ['--sequence',str(args.sequence.resolve())]
     if args.no_profile:

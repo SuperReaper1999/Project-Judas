@@ -119,9 +119,11 @@ MeshData GenerateUnitSphereMeshData(int latitudeSegments, int longitudeSegments)
             const glm::vec3 p10 = pointOnSphere(v1, u0);
             const glm::vec3 p11 = pointOnSphere(v1, u1);
 
-            const glm::vec3 positions[6] = {p00, p10, p11, p00, p11, p01};
-            const glm::vec2 uvs[6] = {{u0, 1.0f - v0}, {u0, 1.0f - v1}, {u1, 1.0f - v1},
-                                       {u0, 1.0f - v0}, {u1, 1.0f - v1}, {u1, 1.0f - v0}};
+            // Winding must agree with the outward normals. Reversed faces make
+            // a point light inside a single-sided PBR bulb shadow itself.
+            const glm::vec3 positions[6] = {p00, p11, p10, p00, p01, p11};
+            const glm::vec2 uvs[6] = {{u0, 1.0f - v0}, {u1, 1.0f - v1}, {u0, 1.0f - v1},
+                                       {u0, 1.0f - v0}, {u1, 1.0f - v0}, {u1, 1.0f - v1}};
             for (int i = 0; i < 6; ++i) {
                 MeshVertex vertex;
                 vertex.position = positions[i];

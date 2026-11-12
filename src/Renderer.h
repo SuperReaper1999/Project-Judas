@@ -573,7 +573,7 @@ private:
 
     RenderLightGrid m_lightGrid;
     GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0,m_pointShadowView=0;
-    unsigned m_lightTextureRows=0,m_shadowBudget=4,m_shadowLayers=0;
+    unsigned m_lightTextureRows=0,m_shadowBudget=8,m_shadowLayers=0;
     GLint m_uInstanced=-1,m_uShadowInstanced=-1;
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
     using Instance=JudasRender::MeshInstance;

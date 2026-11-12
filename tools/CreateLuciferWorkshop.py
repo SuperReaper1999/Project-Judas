@@ -79,9 +79,10 @@ for n,(x,z) in enumerate([(-10,1),(9,-2),(-9,-15),(12,-19)]):
  if n!=2:
   box(210+n,'Lamp post',(x+.6,1.8,z),(.075,1.8,.075),(.12,.14,.17),physical=True)
   box(220+n,'Lamp arm',(x+.3,3.8,z),(.4,.07,.07),(.12,.14,.17))
-# Additional low-cost illumination across the route, plus window signs.
-for n in range(16):
- x=(-1 if n%2 else 1)*(8+(n//4)%2*7);z=12-(n//2)*5
+# Keep the accepted decorative lighting on the open right-hand route. The left
+# room/lamps have no invisible non-shadowing fill sources leaking through walls.
+for n in range(0,16,2):
+ x=8+(n//4)%2*7;z=12-(n//2)*5
  light(230+n,'Courtyard light '+str(n+1),(x,2.8,z),(.25,.55,1) if n%3 else (1,.35,.17),12,7,shadow=False)
 for n in range(4):
  box(60+n,'Shadow test column',(5+n*2,1.3,-12),(.3,1.3,.3),(.45,.47,.50),physical=True)

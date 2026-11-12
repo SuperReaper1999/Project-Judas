@@ -243,6 +243,12 @@ samples, images and failed attempts are retained under `.cache/lucifer-v2`.
 trials. Final handover records the exact SDK/CI identities independently of these
 historical benchmark executables. No private downloaded assets are used.
 
+## Human-review correction: visible bulb illumination
+
+Human review found that built-in sphere triangles were wound inward despite outward normals. A single-sided PBR bulb therefore blocked its own point source in the shadow pass. Corrected winding and matching UV order restore outward faces without disabling sphere shadows or changing shooting logic. The rendered regression compares a bulb with an independent no-enclosure reference, preserves opaque double-sided and light-off negative controls, and checks that destroying one source does not brighten unrelated surfaces or disable its neighbour.
+
+The normal local-shadow budget is now eight sources (the existing supported maximum), covering all concurrently active Workshop bulbs, flashlight, headlights and alternating strobe. The eight invisible non-shadowing fill lights on the left, including inside the room, were removed from both the editable scene and its generator. Accepted decorative lighting on the open right route is retained. This is a correctness/presentation change; earlier four-source performance evidence does not certify its new cost. The whole-frame benchmark now records an explicit `--shadow-budget` quality policy for matched cost controls; qualify the corrected eight-source path separately.
+
 ## Authoring and human acceptance
 
 Launch from the checkout:

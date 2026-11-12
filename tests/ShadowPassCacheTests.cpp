@@ -4,6 +4,7 @@
 #include "WorldPresentation.h"
 #include "ShadowTransforms.h"
 #include "render/ShadowPassCache.h"
+#include "lighting/ShadowSystem.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -121,6 +122,120 @@ void Pure() {
     Check(!cache.Matches(key), "explicit clear retires every physical slot");
     ShadowPassCache nextFrame;
     Check(!nextFrame.Matches(key), "a new render sample cannot inherit last frame's moving casters");
+}
+
+
+// A visible emitter is not the same thing as illumination of a receiving surface.
+// Compare against an independent no-enclosure reference, not a golden image.
+void EmitterContracts(const std::filesystem::path& output) {
+    EngineHost host;
+    std::string error;
+    if (!host.Init("Point-emitter lighting contracts", 320, 240, false, error)) {
+        Check(false, error.c_str());
+        return;
+    }
+    auto& renderer = host.GetRenderer();
+    Check(renderer.ShadowBudget() == 8,
+          "default shadow capacity covers the Workshop's eight concurrent sources");
+    renderer.SetShadowBudget(1);
+    Scene scene;
+    scene.Settings().sunEnabled = false;
+    auto& floor = scene.CreateObject("Receiving floor");
+    floor.render = SceneRenderComponent{};
+    floor.render->halfExtents = {5, .15f, 5};
+    floor.transform.position = {0, -.15f, 0};
+    auto& bulb = scene.CreateObject("Point source inside a rendered bulb");
+    bulb.render = SceneRenderComponent{};
+    bulb.render->shape = SceneShape::Sphere;
+    bulb.render->radius = .23f;
+    bulb.transform.position = {0, 3.7f, 0};
+    bulb.light = SceneLightComponent{};
+    bulb.light->castsShadow = true;
+    bulb.light->intensity = 65;
+    bulb.light->range = 13;
+    const auto bulbId = bulb.id;
+    MaterialDefinition material;
+    material.model = MaterialModel::PBR;
+    material.roughness = .65f;
+    MaterialBinding surface, emission, glass;
+    surface.handle = renderer.CreateMaterial(material);
+    material.emissive = {2, 1.2f, .35f};
+    emission.handle = renderer.CreateMaterial(material);
+    material.alpha = MaterialAlpha::Blend;
+    material.baseColor.a = .8f;
+    glass.handle = renderer.CreateMaterial(material);
+    const auto view = glm::lookAt(glm::vec3(0, 3, 8), glm::vec3(0), glm::vec3(0, 1, 0));
+    const auto projection = glm::perspective(glm::radians(60.f), 320.f / 240, .1f, 50.f);
+    auto frame = [&](bool enclosure, bool enabled, bool singleSided, bool transparent) {
+        scene.Find(bulbId)->light->enabled = enabled;
+        renderer.ResetStats();
+        renderer.SetSceneAppearance(true, 1, {}, 1, {1, 0, 0, 0}, false);
+        renderer.BeginFrame(320, 240);
+        renderer.SetCamera(view, projection);
+        renderer.SetLighting({0, 1, 0}, {0, 0, 0}, {.015f, .02f, .035f});
+        auto draw = [&]() {
+            renderer.SetMaterialBindings({surface});
+            renderer.DrawBox({0, -.15f, 0}, {1, 0, 0, 0}, {5, .15f, 5}, {.65f, .65f, .65f});
+            if (enclosure) {
+                renderer.SetMaterialBindings(singleSided ? std::vector<MaterialBinding>{transparent ? glass : emission}
+                                                        : std::vector<MaterialBinding>{});
+                renderer.DrawSphere({0, 3.7f, 0}, .23f, {1, .75f, .35f});
+            }
+        };
+        auto casters = JudasLighting::AuthoredShadowScene(scene, host.Resources());
+        casters.volatileContent = true; // Each independent control must actually redraw.
+        JudasLighting::PrepareShadows(renderer, scene.Settings(), BuildAuthoredLights(scene), casters, draw);
+        draw();
+        renderer.EndFrame();
+        std::vector<unsigned char> image;
+        renderer.CaptureFrame(320, 240, image);
+        return image;
+    };
+    std::filesystem::create_directories(output);
+    double means[5]{};
+    for (int mode = 0; mode < 5; ++mode) {
+        const auto image = frame(mode != 1, mode != 2, mode != 3, mode == 4);
+        Check(image.size() == 320 * 240 * 3, "point-emitter control captures the actual framebuffer");
+        if (image.empty()) return;
+        double energy = 0;
+        for (auto channel : image) energy += channel;
+        means[mode] = energy / image.size();
+        std::printf("EMITTER mode=%d mean=%f\n", mode, means[mode]);
+        WriteRgbPng((output / ("emitter-" + std::to_string(mode) + ".png")).string(), 320, 240, image);
+    }
+    Check(means[1] > means[2] + 20,
+          "independent unobstructed point light visibly illuminates the receiving floor");
+    Check(means[0] > means[2] + 20 && std::abs(means[0] - means[1]) < 2,
+          "outward-facing PBR bulb does not shadow its own point source");
+    Check(means[3] < means[1] - 20,
+          "double-sided opaque enclosure remains an independent blocking negative control");
+    Check(means[4] > means[2] + 20,
+          "transmissive bulb material preserves emitted floor illumination");
+
+    renderer.SetShadowBudget(8);
+    auto& second = scene.CreateObject("Independent neighbouring source");
+    second.transform.position = {-3, 3.7f, -2};
+    second.light = SceneLightComponent{};
+    second.light->castsShadow = true;
+    second.light->color = {35, 25, 15};
+    second.light->range = 13;
+    const auto both = frame(true, true, true, false);
+    const auto remaining = frame(true, false, true, false);
+    unsigned brighter = 0, darker = 0;
+    for (std::size_t i = 0; i < both.size(); ++i) {
+        brighter += int(remaining[i]) > int(both[i]) + 1;
+        darker += int(both[i]) > int(remaining[i]) + 1;
+    }
+    Check(brighter == 0 && darker > 100,
+          "destroying a bulb removes light without brightening unrelated surfaces after list compaction");
+    Check(renderer.Stats().shadowPasses == 6 && renderer.Stats().dynamicLights == 1,
+          "the other point source retains illumination and its six correct shadow faces after destruction");
+    WriteRgbPng((output / "two-sources.png").string(), 320, 240, both);
+    WriteRgbPng((output / "one-source.png").string(), 320, 240, remaining);
+    Check(glGetError() == GL_NO_ERROR, "emitter and multi-light shutoff controls complete without graphics errors");
+    renderer.DestroyMaterial(glass.handle);
+    renderer.DestroyMaterial(emission.handle);
+    renderer.DestroyMaterial(surface.handle);
 }
 
 void Native(const std::filesystem::path &output) {
@@ -294,8 +409,12 @@ void Native(const std::filesystem::path &output) {
 } // namespace
 int main(int argc, char **argv) {
     Pure();
-    if (argc < 2 || std::strcmp(argv[1], "--pure") != 0)
-        Native(argc > 1 ? std::filesystem::path(argv[1]) : std::filesystem::path{});
+    if(argc>1&&std::strcmp(argv[1],"--emitter-probe")==0){EmitterContracts(argc>2?argv[2]:".cache/emitter-probe");return failures?1:0;}
+    if (argc < 2 || std::strcmp(argv[1], "--pure") != 0) {
+        const auto output = argc > 1 ? std::filesystem::path(argv[1]) : std::filesystem::path(".cache/shadow-reuse");
+        EmitterContracts(output / "emitters");
+        Native(output);
+    }
     std::printf("Shadow pass cache: %u checks, %u failures\n", checks, failures);
     return failures ? 1 : 0;
 }

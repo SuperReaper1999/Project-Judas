@@ -722,17 +722,6 @@ object 230 "Courtyard light 1"
  light.cone 14 25
  light.shadows false
 end
-object 231 "Courtyard light 2"
- position -8 2.8 12
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
 object 232 "Courtyard light 3"
  position 8 2.8 7
  rotation 1 0 0 0
@@ -744,30 +733,8 @@ object 232 "Courtyard light 3"
  light.cone 14 25
  light.shadows false
 end
-object 233 "Courtyard light 4"
- position -8 2.8 7
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 1 0.35 0.17
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
 object 234 "Courtyard light 5"
  position 15 2.8 2
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
-object 235 "Courtyard light 6"
- position -15 2.8 2
  rotation 1 0 0 0
  scale 1 1 1
  light point
@@ -788,17 +755,6 @@ object 236 "Courtyard light 7"
  light.cone 14 25
  light.shadows false
 end
-object 237 "Courtyard light 8"
- position -15 2.8 -3
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
 object 238 "Courtyard light 9"
  position 8 2.8 -8
  rotation 1 0 0 0
@@ -810,30 +766,8 @@ object 238 "Courtyard light 9"
  light.cone 14 25
  light.shadows false
 end
-object 239 "Courtyard light 10"
- position -8 2.8 -8
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 1 0.35 0.17
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
 object 240 "Courtyard light 11"
  position 8 2.8 -13
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
-object 241 "Courtyard light 12"
- position -8 2.8 -13
  rotation 1 0 0 0
  scale 1 1 1
  light point
@@ -854,34 +788,12 @@ object 242 "Courtyard light 13"
  light.cone 14 25
  light.shadows false
 end
-object 243 "Courtyard light 14"
- position -15 2.8 -18
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
 object 244 "Courtyard light 15"
  position 15 2.8 -23
  rotation 1 0 0 0
  scale 1 1 1
  light point
  light.color 0.25 0.55 1
- light.intensity 12
- light.range 7
- light.cone 14 25
- light.shadows false
-end
-object 245 "Courtyard light 16"
- position -15 2.8 -23
- rotation 1 0 0 0
- scale 1 1 1
- light point
- light.color 1 0.35 0.17
  light.intensity 12
  light.range 7
  light.cone 14 25
