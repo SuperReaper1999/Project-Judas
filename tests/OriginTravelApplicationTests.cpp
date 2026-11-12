@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -22,7 +23,7 @@ int main(int argc,char** argv){
  const bool cameraOnly=argc>3&&std::string(argv[3])=="--camera-only";
  const auto out=std::filesystem::absolute(argv[2]);std::filesystem::create_directories(out);unsigned frame=0,phase=0,phaseFrame=0;bool frozen=false,done=false;Window* window=nullptr;RuntimeWorld* old=nullptr;uint64_t request=0;EntityId roverId=0;glm::dvec3 savedPosition;glm::vec3 savedVelocity;std::string savedSpin;std::vector<double> fixed,render,originTimes,frames;std::chrono::steady_clock::time_point frameStart;uint64_t revision=0,maximumShifts=0;double distance=0,beforeYaw=0,beforePitch=0;std::string error;
  auto key=[&](const char* name,bool down){window->QueueTestPhysical(std::string("key:")+name,down?1.f:0.f);};
- ApplicationControl control;control.hidden=true;control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};control.hostReady=[&](EngineHost& h){window=&h.GetWindow();window->SetTestInputMode(true);SDL_GL_SetSwapInterval(0);h.Audio().Init(error,true);};
+ ApplicationControl control;control.hidden=true;control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};control.hostReady=[&](EngineHost& h){window=&h.GetWindow();window->SetTestInputMode(true);GraphicsSetSwapInterval(0);h.Audio().Init(error,true);};
  control.beforeFrame=[&](EngineHost&,RuntimeWorld&,InteractivePlay&){frameStart=std::chrono::steady_clock::now();++frame;++phaseFrame;if(frame==20){window->QueueTestPhysical("mouse:dx",120);window->QueueTestPhysical("mouse:dy",-60);}if(frame==24){window->QueueTestPhysical("mouse:dx",-90);window->QueueTestPhysical("mouse:dy",30);}if(frame==50){window->QueueTestPhysical("mouse:dx",80);window->QueueTestPhysical("mouse:dy",25);}if(frame==70)key("Escape",true);if(frame==71)key("Escape",false);if(frame==74){window->QueueTestPhysical("mouse:dx",120);window->QueueTestPhysical("mouse:dy",120);}if(frame==76)key("Escape",true);if(frame==77)key("Escape",false);if(frame==80){window->QueueTestPhysical("mouse:dx",15);window->QueueTestPhysical("mouse:dy",-10);}if(frame==35)key("T",true);if(frame==37)key("T",false);if(phase==1)key("Space",true);};
  control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
   if(frame>22000){Check(false,"bounded end-to-end travel finishes");done=true;world.UI().RequestQuit();return;}

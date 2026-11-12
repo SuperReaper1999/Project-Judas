@@ -1,6 +1,7 @@
 // M87: measure the ordinary rendered project through its real application loop.
 // CSV inspection/export runs outside the recorded fixed-step span. Explicit
 // synthetic frame cadence is a reproducibility mode, never a displayed-FPS claim.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -91,7 +92,7 @@ int main(int argc,char** argv){
  Environment("JUDAS_WORLD_STATE","none");
  unsigned frame=0,step=0;auto origin=Clock::now(),begin=origin,previous=origin;bool started=false;double currentInterval=0;bool finishRequested=false;
  ApplicationControl control;control.hidden=hidden;control.frameSeconds=[&](float measured){return finishRequested?0.f:(frameSeconds>0?frameSeconds:measured);};
- control.hostReady=[&](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(swap);std::cerr<<"diagnostic swap="<<SDL_GL_GetSwapInterval()<<" hidden="<<hidden<<" tour="<<tour<<" frame_seconds="<<frameSeconds<<" profile="<<profile<<" periodic_export="<<periodicExport<<"\n";};
+ control.hostReady=[&](EngineHost& host){host.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(swap);std::cerr<<"diagnostic swap="<<SDL_GL_GetSwapInterval()<<" hidden="<<hidden<<" tour="<<tour<<" frame_seconds="<<frameSeconds<<" profile="<<profile<<" periodic_export="<<periodicExport<<"\n";};
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
   const auto now=Clock::now();if(!started){origin=now;previous=now;started=true;
    play.SetFixedStepObserver([&](const FixedStepMeasurements&,double){const auto& s=world.Physics().LastStepStats();const auto d=digest(world.Physics());steps<<++step<<','<<frame<<','<<ms(Clock::now()-origin)<<','<<play.LastFixedStepMilliseconds()<<','<<s.bodies<<','<<s.awakeBodies<<','<<s.sleepingBodies<<','<<s.candidatePairs<<','<<s.contactPoints<<','<<s.impactEvents<<','<<s.impactQueries<<','<<s.impactSearchIterations<<','<<s.impactPeakIterations<<','<<s.totalMilliseconds<<','<<s.broadphaseMilliseconds<<','<<s.narrowphaseMilliseconds<<','<<s.solverMilliseconds<<','<<d.hex()<<','<<d.maxSpeed<<','<<d.maxSpin<<','<<d.nonfinite<<'\n';steps.flush();});

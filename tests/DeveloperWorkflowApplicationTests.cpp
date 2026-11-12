@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "ToolProcess.h"
 #include "EngineHost.h"
@@ -44,7 +45,7 @@ int main(int argc,char** argv){
  std::filesystem::create_directories(proof);
  unsigned frame=0,phase=0,wait=0;uint64_t request=0;bool done=false,aimApplied=false,layoutChecked=false,restoreBoundaryObserved=false;EntityId lastBlue=0;glm::vec3 start{};Json expected;std::vector<std::string> pulse,held;
  ApplicationControl control;control.hidden=true;
- control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string error;host.Audio().Init(error,true);};
+ control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);std::string error;host.Audio().Init(error,true);};
  control.frameSeconds=[](float){return 1.f/90;};
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
   for(auto& entry:host.GetWindow().Input().Map().entries)for(auto& binding:entry.bindings){float value=0;if(binding.scale>0&&(std::find(pulse.begin(),pulse.end(),entry.name)!=pulse.end()||std::find(held.begin(),held.end(),entry.name)!=held.end()))value=1;host.GetWindow().QueueTestPhysical(binding.control,value);}

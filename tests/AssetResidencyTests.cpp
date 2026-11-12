@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "AssetCook.h"
 #include "EngineHost.h"
 #include "ModelLoader.h"
@@ -44,7 +45,7 @@ int main(int argc, char **argv) {
     puts(error.c_str());
     return 1;
   }
-  SDL_GL_SetSwapInterval(0);
+  GraphicsSetSwapInterval(0);
   host.OpenProjectAssets(root.string(), (root / "Assets").string());
   auto &assets = host.Resources();
   assets.ConfigureVisualStreaming(1);

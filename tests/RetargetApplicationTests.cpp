@@ -1,4 +1,5 @@
 // M74 ordinary-runtime proof. No authoring retarget library links into this app.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -64,7 +65,7 @@ int main(int argc,char** argv){
  std::string project=argv[1],mode=argv[2],error,suspended;fs::path out=argv[3];fs::create_directories(out);
  const bool performance=mode=="performance"||mode=="performance-native"||mode=="performance-baked";
  bool freeze=false,ready=false,done=false;unsigned frame=0,at=0,phase=0,prefabAt=0;uint64_t request=0,demand=0,coldStart=0,steadyUploads=0;EntityId old=0,prefab=0;RuntimeWorld* before=nullptr;Json expected,performanceRecord;
- ApplicationControl c;c.hidden=true;c.hostReady=[&](EngineHost& h){coldStart=PerformanceProfiler::Now();SDL_GL_SetSwapInterval(0);h.GetWindow().SetTestInputMode(true);std::string e;h.Audio().Init(e,true);PerformanceProfiler::Get().Enable(true);};c.frameSeconds=[&](float){return freeze?0.f:1.f/60;};
+ ApplicationControl c;c.hidden=true;c.hostReady=[&](EngineHost& h){coldStart=PerformanceProfiler::Now();GraphicsSetSwapInterval(0);h.GetWindow().SetTestInputMode(true);std::string e;h.Audio().Init(e,true);PerformanceProfiler::Get().Enable(true);};c.frameSeconds=[&](float){return freeze?0.f:1.f/60;};
  auto fingerprint=[&](RuntimeWorld& w){auto* a=w.RuntimeAnimation(11);Json layers=Json::array();for(const auto& layer:a->layers)layers.push_back(Json{{"id",layer.settings.id},{"clip",layer.settings.clip},{"mask",layer.settings.mask},{"weight",layer.settings.weight},{"enabled",layer.settings.enabled},{"additive",layer.settings.additive}});return Json{{"clip",a->playback.clip},{"time",a->playback.time},{"fade",a->mixer.elapsed},{"layers",std::move(layers)},{"otherTime",w.RuntimeAnimation(13)->playback.time}};};
  c.beforeFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){
   if(mode=="probe"&&ready&&phase==0){unsigned n=frame-at;for(auto [f,key]:{std::pair<unsigned,SDL_Scancode>{1,SDL_SCANCODE_G},{5,SDL_SCANCODE_L},{9,SDL_SCANCODE_I},{29,SDL_SCANCODE_I},{35,SDL_SCANCODE_P},{80,SDL_SCANCODE_P},{95,SDL_SCANCODE_1},{100,SDL_SCANCODE_M},{115,SDL_SCANCODE_SPACE},{120,SDL_SCANCODE_RIGHT}})if(n==f||n==f+1)QueueTestKey(h.GetWindow(),key,n==f);}

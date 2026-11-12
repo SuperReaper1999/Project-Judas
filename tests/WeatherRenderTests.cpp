@@ -1,5 +1,6 @@
 // M86 actual GL output and same-workload timestamps. No weather/native policy
 // shortcuts: all images use the public renderer and the shared CPU field sample.
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "Weather.h"
 #include "PerformanceProfiler.h"
@@ -72,7 +73,7 @@ int main(int argc,char** argv){
  std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:"/tmp/judas-m86-render";std::filesystem::create_directories(out);
  const bool correctnessOnly=argc>2&&std::string(argv[2])=="--correctness-only";
  EngineHost host;std::string error;Check(host.Init("M86 weather rendering",Width,Height,false,error),"native GL3.3 weather renderer starts");if(failures){std::printf("%s\n",error.c_str());return 1;}
- SDL_GL_SetSwapInterval(0);auto& r=host.GetRenderer();View view;auto sunny=Sample("sunny");sunny.profile.cloudCoverage=0;sunny.profile.rain=sunny.profile.snow=sunny.profile.fog=sunny.profile.tornado=0;
+ GraphicsSetSwapInterval(0);auto& r=host.GetRenderer();View view;auto sunny=Sample("sunny");sunny.profile.cloudCoverage=0;sunny.profile.rain=sunny.profile.snow=sunny.profile.fog=sunny.profile.tornado=0;
  Frame(r,sunny,0,view);auto off=Capture(r);Check(!r.WeatherStats().enabled&&r.WeatherStats().bytes==0,"weather-off has no weather GPU allocation or pass");
  const auto baseline=correctnessOnly?Measurement{}:Measure(host,sunny,0,out,"off");
  Frame(r,sunny,1,view);auto clear=Capture(r);Image(r,out,"sunny.png");Check(r.WeatherStats().ready&&r.WeatherStats().error.empty(),"all lazy weather shaders compile and link");Check(Difference(off,clear,0,240)>12,"sunny weather actually draws a lit sky");

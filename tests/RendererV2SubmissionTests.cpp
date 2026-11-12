@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;
     }
-    SDL_GL_SetSwapInterval(0);
+    GraphicsSetSwapInterval(0);
     auto &r = host.GetRenderer();
     TextureData white;
     white.width = white.height = 1;

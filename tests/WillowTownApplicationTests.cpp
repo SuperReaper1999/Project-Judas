@@ -1,5 +1,6 @@
 // A real consumer game through Application, native utility decisions and MK2.
 // UI clicks use published hit rectangles; world clicks use the actual camera.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "CameraLens.h"
 #include "EngineHost.h"
@@ -143,7 +144,7 @@ int main(int argc, char** argv) try {
         Check(host.GetWindow().Width() == 640 && host.GetWindow().Height() == 480,
             "software-renderable fixture uses its actual supported 640x480 viewport");
         host.GetWindow().SetTestInputMode(true);
-        SDL_GL_SetSwapInterval(0);
+        GraphicsSetSwapInterval(0);
         std::string ignored;
         host.Audio().Init(ignored, true);
     };

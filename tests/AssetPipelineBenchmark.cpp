@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "PerformanceProfiler.h"
 #include "ScreenshotWriter.h"
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
     puts(error.c_str());
     return 1;
   }
-  SDL_GL_SetSwapInterval(0);
+  GraphicsSetSwapInterval(0);
   host.OpenProjectAssets(root.string(), (root / "Assets").string());
   auto &db = host.Assets();
   AssetRecord mesh, texture;

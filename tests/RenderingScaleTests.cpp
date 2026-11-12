@@ -1,4 +1,5 @@
 // Same native workloads are linked against baseline and candidate renderers.
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "PerformanceProfiler.h"
 #include "ScreenshotWriter.h"
@@ -14,7 +15,7 @@ using Clock=std::chrono::steady_clock;
 static double Q(std::vector<double> v,double q){if(v.empty())return -1;std::sort(v.begin(),v.end());return v[size_t(q*(v.size()-1))];}
 int main(int argc,char** argv){
  std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:"/tmp/m92-render";std::filesystem::create_directories(out);
- EngineHost host;std::string error;if(!host.Init("Rendering scale measurements",960,540,false,error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}SDL_GL_SetSwapInterval(0);auto& r=host.GetRenderer();
+ EngineHost host;std::string error;if(!host.Init("Rendering scale measurements",960,540,false,error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}GraphicsSetSwapInterval(0);auto& r=host.GetRenderer();
  std::ofstream csv(out/"samples.csv");csv<<"objects,lights,views,frame,cpu_ms,draws,triangles\n";
  for(unsigned objects:{256u,2048u})for(unsigned lightCount:{0u,5u,128u})for(unsigned views:{1u,2u}){
   std::vector<DynamicLight> lights;for(unsigned i=0;i<lightCount;++i){DynamicLight l;l.position={float(int(i%16)*4-30),3,float(int(i/16)*4-16)};l.range=7;l.color={4,2,1};lights.push_back(l);}

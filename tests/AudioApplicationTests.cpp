@@ -1,5 +1,6 @@
 // M60 normal rendered project frames, actual device startup, public JS controls,
 // scene replacement and ordinary exporter. Listening acceptance belongs to the operator.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "TestInput.h"
 #include "EngineHost.h"
@@ -17,7 +18,7 @@
 #include <algorithm>
 namespace {int checks=0,failures=0;void Check(bool b,const char* s){++checks;failures+=!b;std::printf("%s %s\n",b?"PASS":"FAIL",s);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
 int main(int argc,char** argv){std::string project=argc>1?argv[1]:"projects/audio_lab/audio_lab.judasproj";std::filesystem::path out=argc>2?argv[2]:"build/m60-app";bool device=argc>3&&std::string(argv[3])=="device";bool doorCheck=argc>3&&std::string(argv[3]).rfind("door",0)==0;bool isolateDoor=doorCheck&&std::string(argv[3])=="door-isolate";std::filesystem::create_directories(out);std::string error;int frames=0;AudioVoiceHandle oldMusic;double cursor=0;bool pendingReload=false;std::vector<double> work;auto start=std::chrono::steady_clock::now();ApplicationControl c;c.hidden=true;c.frameSeconds=[](float){return 1.f/60;};
- c.hostReady=[&](EngineHost& h){SDL_GL_SetSwapInterval(0);h.GetWindow().SetTestInputMode(true);Check(h.Audio().Init(error,!device),device?"actual desktop audio backend initialized":"production PCM graph without device");};
+ c.hostReady=[&](EngineHost& h){GraphicsSetSwapInterval(0);h.GetWindow().SetTestInputMode(true);Check(h.Audio().Init(error,!device),device?"actual desktop audio backend initialized":"production PCM graph without device");};
  c.beforeFrame=[&](EngineHost& h,RuntimeWorld&,InteractivePlay&){start=std::chrono::steady_clock::now();if(frames==60||frames==61||frames==95||frames==96)QueueTestKey(h.GetWindow(),SDL_SCANCODE_ESCAPE,frames==60||frames==95);if(frames==110||frames==111)QueueTestKey(h.GetWindow(),SDL_SCANCODE_P,frames==110);if(frames==120||frames==121)QueueTestKey(h.GetWindow(),SDL_SCANCODE_B,frames==120);if(frames==130||frames==131)QueueTestKey(h.GetWindow(),SDL_SCANCODE_E,frames==130);};
  c.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){++frames;work.push_back(std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count());if(!device)h.Audio().AdvanceWithoutDevice(800);else std::this_thread::sleep_for(std::chrono::milliseconds(16));
   AudioVoiceHandle music;for(auto& e:w.AudioEmitters())if(e.id==20)music=e.voice;AudioVoiceSnapshot s;h.Audio().Snapshot(music,s);

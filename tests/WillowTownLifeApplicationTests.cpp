@@ -1,6 +1,7 @@
 // Consumer-life integration through the real application, UI and modern saves.
 // Inputs establish game conditions; native utility choices and physical arrivals
 // must produce employment and service effects. No test writes published state.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -157,7 +158,7 @@ int main(int argc, char** argv) try {
     control.hostReady = [](EngineHost& host) {
         Check(host.GetWindow().Width() == 640 && host.GetWindow().Height() == 480,
             "software-renderable fixture uses its actual supported 640x480 viewport");
-        host.GetWindow().SetTestInputMode(true); SDL_GL_SetSwapInterval(0);
+        host.GetWindow().SetTestInputMode(true); GraphicsSetSwapInterval(0);
         std::string ignored; host.Audio().Init(ignored, true);
     };
     control.beforeFrame = [&](EngineHost&, RuntimeWorld& world, InteractivePlay&) {

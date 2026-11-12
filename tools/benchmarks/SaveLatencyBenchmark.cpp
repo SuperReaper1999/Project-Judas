@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
@@ -25,7 +26,7 @@ int main(int argc,char** argv){
  if(argc!=2)return 2;
  unsigned frame=0,sample=0,requestFrame=0;uint64_t request=0;std::string state;bool failed=false;Clock::time_point requested;
  ApplicationControl c;c.hidden=true;c.frameSeconds=[](float){return 1.f/60;};
- c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
+ c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
  const auto start=Clock::now();
  c.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay& play){
   ++frame;auto quit=[](){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);};

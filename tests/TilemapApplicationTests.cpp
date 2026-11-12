@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -21,7 +22,7 @@ int main(int argc,char** argv){
  std::ofstream csv(out/"frames.csv");csv<<"frame,phase,frame_ms,step_ms,bodies,draw_calls\n";
  ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};unsigned frame=0,villageAt=0,resumedAt=0,phase=0;uint64_t request=0;RuntimeWorld* prior=nullptr;glm::vec3 expected;std::vector<double> ordinary;bool complete=false;
  using Clock=std::chrono::steady_clock;Clock::time_point began;std::string error;
- control.hostReady=[](EngineHost& h){std::string e;h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);h.Audio().Init(e,true);};
+ control.hostReady=[](EngineHost& h){std::string e;h.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);h.Audio().Init(e,true);};
  control.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){prior=&w;};
  control.beforeFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){
   began=Clock::now();if(frame==10)QueueTestKey(h.GetWindow(),SDL_SCANCODE_D,true);if(frame==70)QueueTestKey(h.GetWindow(),SDL_SCANCODE_D,false);

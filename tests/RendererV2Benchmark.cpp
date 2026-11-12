@@ -376,7 +376,7 @@ int main(int argc, char **argv) {
             throw std::runtime_error(error);
         const double hostInit = Milliseconds(initialization);
         host.GetWindow().SetTestInputMode(true);
-        SDL_GL_SetSwapInterval(0);
+        GraphicsSetSwapInterval(0);
         auto &r = host.GetRenderer();
         auto &profiler = PerformanceProfiler::Get();
         profiler.Enable(false);

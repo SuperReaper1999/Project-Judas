@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "../third_party/nlohmann/json.hpp"
 #include "Application.h"
 #include "EngineHost.h"
@@ -86,7 +87,7 @@ int main(int argc, char** argv) {
         control.frameSeconds = [](float) { return 1.f / 60; };
         control.hostReady = [](EngineHost& host) {
             host.GetWindow().SetTestInputMode(true);
-            SDL_GL_SetSwapInterval(0);
+            GraphicsSetSwapInterval(0);
         };
         control.beforeFrame = [&](EngineHost& host, RuntimeWorld&, InteractivePlay&) {
             if (!release.empty()) {

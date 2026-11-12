@@ -1,5 +1,6 @@
 // Identical geometry/lights/shadows on baseline GL3.3 and M92. Baseline compiles
 // with frozen baseline headers; candidate enables only pass-scoped instancing.
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "PerformanceProfiler.h"
 #include "ShadowTransforms.h"
@@ -13,7 +14,7 @@
 #include <cstdio>
 using Clock=std::chrono::steady_clock;
 static double Q(std::vector<double> v,double q){if(v.empty())return -1;std::sort(v.begin(),v.end());return v[size_t(q*(v.size()-1))];}
-int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:".cache/m92/shadow-measure";std::filesystem::create_directories(out);EngineHost host;std::string error;if(!host.Init("Shadow scale",960,540,false,error)){std::puts(error.c_str());return 1;}SDL_GL_SetSwapInterval(0);auto& r=host.GetRenderer();std::ofstream csv(out/"samples.csv");csv<<"objects,shadowed,views,sample,cpu_ms,draws,triangles\n";
+int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:".cache/m92/shadow-measure";std::filesystem::create_directories(out);EngineHost host;std::string error;if(!host.Init("Shadow scale",960,540,false,error)){std::puts(error.c_str());return 1;}GraphicsSetSwapInterval(0);auto& r=host.GetRenderer();std::ofstream csv(out/"samples.csv");csv<<"objects,shadowed,views,sample,cpu_ms,draws,triangles\n";
  for(unsigned objects:{256u,2048u})for(unsigned shadowed:{0u,2u})for(unsigned views:{1u,2u}){
   auto target=r.CreateRenderTarget(480,270,error);auto& profiler=PerformanceProfiler::Get();profiler.Enable(false);std::vector<double> cpu,processCpu;std::vector<DynamicLight> lights(2);
   for(unsigned i=0;i<2;++i){auto& l=lights[i];l.kind=LightKind::Spot;l.position={i?14.f:-14.f,15,10};l.direction=glm::normalize(-l.position);l.color={25,22,20};l.range=65;l.innerConeDegrees=30;l.outerConeDegrees=48;l.shadowMapIndex=shadowed?int(i+1):-1;}

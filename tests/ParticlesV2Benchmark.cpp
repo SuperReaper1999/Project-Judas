@@ -1,6 +1,7 @@
 // Compile the identical observer against each revision's OWN headers/library.
 // CPU free flight uses the pre-existing VisualParticlePool API, including its
 // actual simulation and presentation work. GPU is an explicit candidate path.
+#include "GraphicsApi.h"
 #include "../third_party/nlohmann/json.hpp"
 #include "BuildIdentity.h"
 #include "EngineHost.h"
@@ -149,7 +150,7 @@ int main(int argc, char** argv) {
         if (!host.Init("Particles V2 matched observer", width, height, false, error))
             throw std::runtime_error(error);
         const double hostInit = Milliseconds(clock);
-        SDL_GL_SetSwapInterval(0);
+        GraphicsSetSwapInterval(0);
         auto& renderer = host.GetRenderer();
         const auto setupStart = Clock::now();
         ParticleEmitterSettings settings;

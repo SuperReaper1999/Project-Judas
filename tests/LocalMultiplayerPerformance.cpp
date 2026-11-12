@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
@@ -10,7 +11,7 @@
 #include <sys/resource.h>
 using Clock=std::chrono::steady_clock;using J=nlohmann::json;
 int main(int argc,char** argv){const unsigned count=argc>1?unsigned(std::stoi(argv[1])):4;const bool split=argc>2&&std::string(argv[2])=="split";if((count!=2&&count!=4)||argc<4)return 2;Application app;ApplicationControl c;c.hidden=true;unsigned frame=0,maxBodies=0;bool observer=false,measuring=false;std::vector<double> frames,steps;const auto start=Clock::now();auto previous=start;J state;
- c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);};
+ c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);};
  c.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){++frame;if(frame==5)h.GetWindow().QueueTestPhysical(count==4?"key:F4":"key:F2",1);if(frame==7)h.GetWindow().QueueTestPhysical(count==4?"key:F4":"key:F2",0);if(split&&frame==9)h.GetWindow().QueueTestPhysical("key:V",1);if(split&&frame==11)h.GetWindow().QueueTestPhysical("key:V",0);
   static const char* keys[4][5]={{"W","S","A","D","Space"},{"Up","Down","Left","Right","Right Shift"},{"I","K","J","L","O"},{"T","G","F","H","Y"}};const double t=std::chrono::duration<double>(Clock::now()-start).count();unsigned i=0;if(auto* players=world.PlayersIfLoaded())for(auto& pair:players->All()){if(i>=4)break;const auto body=world.RuntimeBody(pair.second.entity);const auto p=world.Physics().GetTransform(body).position;const auto dx=std::cos(t+i)*7-p.x,dz=std::sin(t+i)*7-p.z;for(int j=0;j<5;++j){const float value=j==0?dz<-.3:j==1?dz>.3:j==2?dx<-.3:j==3?dx>.3:frame%180==0;h.GetWindow().QueueTestDevice("keyboard",std::string("key:")+keys[i][j],value);}++i;}
  };

@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -72,7 +73,7 @@ int main(int argc,char** argv){
  Window* window=nullptr;
  auto key=[&](bool down){window->QueueTestPhysical("key:W",down?1.f:0.f);};
  ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
- control.hostReady=[&](EngineHost& host){window=&host.GetWindow();window->SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string ignored;host.Audio().Init(ignored,true);};
+ control.hostReady=[&](EngineHost& host){window=&host.GetWindow();window->SetTestInputMode(true);GraphicsSetSwapInterval(0);std::string ignored;host.Audio().Init(ignored,true);};
  control.beforeFrame=[&](EngineHost&,RuntimeWorld&,InteractivePlay&){frameStart=std::chrono::steady_clock::now();};
  control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
   ++frame;bool resourcesReady=true;std::string error;

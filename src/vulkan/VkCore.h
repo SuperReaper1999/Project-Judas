@@ -303,6 +303,8 @@ struct Submission {
     VkFence fence = VK_NULL_HANDLE;
     std::uint64_t serial = 0;
     std::vector<VkDescriptorPool> pools;
+    // Swapchain acquire semaphore this submission waited on; reusable once it completes.
+    VkSemaphore acquireSemaphore = VK_NULL_HANDLE;
 };
 
 struct Retired {
@@ -344,7 +346,11 @@ struct Context {
     VkExtent2D swapchainExtent{};
     std::vector<VkImage> swapchainImages;
     std::vector<VkImageLayout> swapchainLayouts;
-    VkSemaphore acquireSemaphore = VK_NULL_HANDLE, presentSemaphore = VK_NULL_HANDLE;
+    // A semaphore waited on by a submission (acquire) may be reused only after that
+    // submission completes; one waited on by vkQueuePresentKHR only after its image is
+    // acquired again. Hence a pool of acquire semaphores and one present semaphore
+    // per swapchain image (kept across swapchain recreation).
+    std::vector<VkSemaphore> acquireSemaphores, freeAcquireSemaphores, presentSemaphores;
     int swapInterval = 1;
     bool swapchainDirty = true;
     VkFormat depth24Format = VK_FORMAT_D32_SFLOAT;

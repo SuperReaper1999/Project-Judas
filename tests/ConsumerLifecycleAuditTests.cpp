@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "AssetDatabase.h"
 #include "EngineHost.h"
@@ -242,7 +243,7 @@ int main(int argc, char** argv) {
     };
     ApplicationControl control; control.hidden = true;
     control.hostReady = [](EngineHost& host) {
-        host.GetWindow().SetTestInputMode(true); SDL_GL_SetSwapInterval(0);
+        host.GetWindow().SetTestInputMode(true); GraphicsSetSwapInterval(0);
         std::string detail; host.Audio().Init(detail, true);
     };
     // Frame callbacks/resources/services are real. Zero dt deliberately isolates

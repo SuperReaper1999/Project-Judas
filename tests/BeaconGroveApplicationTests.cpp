@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -33,7 +34,7 @@ int main(int argc,char** argv){try{
  SceneObjectId gateId=0;for(const auto& o:authored.Objects())if(o.name=="Beacon gate - real static collider")gateId=o.id;
  std::chrono::steady_clock::time_point began;std::vector<double> timings;
  ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
- control.hostReady=[](EngineHost& h){std::string e;h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);h.Audio().Init(e,true);};
+ control.hostReady=[](EngineHost& h){std::string e;h.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);h.Audio().Init(e,true);};
  control.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){prior=&w;};
  auto quit=[](){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);};
  control.beforeFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){

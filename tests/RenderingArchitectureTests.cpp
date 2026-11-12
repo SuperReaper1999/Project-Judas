@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "RenderLightGrid.h"
 #include "WorldPresentation.h"
@@ -30,7 +31,7 @@ int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesys
  Scene scene;scene.Settings().name="M92 light ownership";auto& owner=scene.CreateObject("Lamp");auto id=owner.id;owner.light=SceneLightComponent{};owner.light->castsShadow=true;owner.light->intensity=2;std::string text;SaveSceneToString(scene,text);Scene round;Check(LoadSceneFromString(text,round,error)&&ScenesEqual(scene,round),"new light settings serialize through ordinary scene authoring");
  RuntimeWorld world;Check(world.Build(scene,nullptr,error),"headless light world builds");auto setting=*owner.light;setting.enabled=false;setting.intensity=6;Check(world.SetLight(id,setting)&&BuildWorldLights(world,1).empty(),"disabled runtime lamp is absent from world light submission");setting.enabled=true;Check(world.SetLight(id,setting)&&BuildWorldLights(world,1).at(0).color.x==6,"runtime intensity affects the actual submitted source");auto bad=setting;bad.range=-1;Check(!world.SetLight(id,bad)&&world.RuntimeDefinition(id)->light->range==setting.range,"invalid patch does not partly mutate runtime state");
  std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error)&&WorldPersistence::SceneFrom(chunks,round,error)&&round.Find(id)->light->intensity==6,"modern durable snapshot contains changed light state, no GPU handle");world.DestroyEntity(id);Check(!world.SetLight(id,setting),"destroyed light safely rejects mutation");world.Destroy();
- EngineHost host;Check(host.Init("M92 renderer contracts",640,360,false,error),"real native GL renderer compiles all revised shaders");if(failures){std::puts(error.c_str());return 1;}SDL_GL_SetSwapInterval(0);auto& r=host.GetRenderer();
+ EngineHost host;Check(host.Init("M92 renderer contracts",640,360,false,error),"real native GL renderer compiles all revised shaders");if(failures){std::puts(error.c_str());return 1;}GraphicsSetSwapInterval(0);auto& r=host.GetRenderer();
  auto probeRoot=std::filesystem::absolute(out/"api");std::filesystem::create_directories(probeRoot/"Assets");
  std::ofstream(probeRoot/"Assets/probe.js")<<R"JS(import {entity} from 'judas';
  export default class {constructor(){this.state={};}start(){const l=entity('1');

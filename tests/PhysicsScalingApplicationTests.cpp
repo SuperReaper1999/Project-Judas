@@ -1,6 +1,7 @@
 // M87: exercise the actual ordinary lab through logical input and the normal
 // application loop. This is a correctness/lifecycle fixture, not a performance
 // benchmark. It neither substitutes a solver nor changes the authored physics.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -117,7 +118,7 @@ int main(int argc,char** argv){try{
         Check(WriteRgbPng((output/name).string(),window->Width(),window->Height(),pixels),"capture actual rendered lab frame");
     };
     control.hostReady=[&](EngineHost& host){
-        window=&host.GetWindow();window->SetTestInputMode(true);SDL_GL_SetSwapInterval(0);
+        window=&host.GetWindow();window->SetTestInputMode(true);GraphicsSetSwapInterval(0);
         std::string ignored;host.Audio().Init(ignored,true);
     };
     control.beforeFrame=[&](EngineHost&,RuntimeWorld& world,InteractivePlay&){

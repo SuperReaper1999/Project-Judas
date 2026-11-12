@@ -1,4 +1,5 @@
 // Short owner-thread/worker measurements, using the real outer application loop.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -18,7 +19,7 @@ int main(int argc,char** argv){
  std::string project=argv[1],out=argv[2];std::filesystem::create_directories(out);
  unsigned frame=0,phase=0,samples=0;uint64_t request=0;bool failed=false,resume=false;Clock::time_point before;
  ApplicationControl control;control.hidden=true;
- control.hostReady=[](EngineHost& host){std::string error;host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);host.Audio().Init(error,true);};
+ control.hostReady=[](EngineHost& host){std::string error;host.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);host.Audio().Init(error,true);};
  control.frameSeconds=[&](float){return resume?1.f/60:0.f;};
  control.beforeFrame=[&](EngineHost&,RuntimeWorld&,InteractivePlay&){before=Clock::now();};
  control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){

@@ -431,6 +431,7 @@ void PollCompleted(bool wait, std::uint64_t untilSerial) {
         VK_CHECK(vkResetFences(g->device, 1, &oldest.fence));
         g->freeFences.push_back(oldest.fence);
         g->freeCommandBuffers.push_back(oldest.cmd);
+        if (oldest.acquireSemaphore) g->freeAcquireSemaphores.push_back(oldest.acquireSemaphore);
         for (VkDescriptorPool pool : oldest.pools) {
             VK_CHECK(vkResetDescriptorPool(g->device, pool, 0));
             g->freePools.push_back(pool);
@@ -468,6 +469,7 @@ void Submit(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore) {
     submit.commandBufferCount = 1;
     submit.pCommandBuffers = &g->cmd;
     const VkPipelineStageFlags waitStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+    submission.acquireSemaphore = waitSemaphore;
     if (waitSemaphore) {
         submit.waitSemaphoreCount = 1;
         submit.pWaitSemaphores = &waitSemaphore;
@@ -653,6 +655,13 @@ void CreateSwapchain() {
     g->swapchainImages.resize(count);
     vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, g->swapchainImages.data());
     g->swapchainLayouts.assign(count, VK_IMAGE_LAYOUT_UNDEFINED);
+    // The previous swapchain is destroyed, releasing its presents' semaphore waits.
+    while (g->presentSemaphores.size() < count) {
+        VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+        VkSemaphore semaphore = VK_NULL_HANDLE;
+        VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &semaphore));
+        g->presentSemaphores.push_back(semaphore);
+    }
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessage(VkDebugUtilsMessageSeverityFlagBitsEXT severity,
@@ -972,9 +981,6 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
     poolInfo.queueFamilyIndex = g->queueFamily;
     VK_CHECK(vkCreateCommandPool(g->device, &poolInfo, nullptr, &g->commandPool));
-    VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
-    VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &g->acquireSemaphore));
-    VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &g->presentSemaphore));
     VkQueryPoolCreateInfo queryInfo{VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO};
     queryInfo.queryType = VK_QUERY_TYPE_TIMESTAMP;
     queryInfo.queryCount = Context::kQuerySlots;
@@ -1088,8 +1094,8 @@ void Shutdown() {
         g->imageBlocks.clear();
         DestroySwapchain();
         if (g->queryPool) vkDestroyQueryPool(g->device, g->queryPool, nullptr);
-        if (g->acquireSemaphore) vkDestroySemaphore(g->device, g->acquireSemaphore, nullptr);
-        if (g->presentSemaphore) vkDestroySemaphore(g->device, g->presentSemaphore, nullptr);
+        for (VkSemaphore semaphore : g->acquireSemaphores) vkDestroySemaphore(g->device, semaphore, nullptr);
+        for (VkSemaphore semaphore : g->presentSemaphores) vkDestroySemaphore(g->device, semaphore, nullptr);
         if (g->commandPool) vkDestroyCommandPool(g->device, g->commandPool, nullptr);
         vkDestroyDevice(g->device, nullptr);
     }
@@ -1133,9 +1139,21 @@ void Present() {
     bool presented = false;
     if (g->swapchain) {
         std::uint32_t index = 0;
+        VkSemaphore acquireSemaphore = VK_NULL_HANDLE;
+        if (!g->freeAcquireSemaphores.empty()) {
+            acquireSemaphore = g->freeAcquireSemaphores.back();
+            g->freeAcquireSemaphores.pop_back();
+        } else {
+            VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+            VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &acquireSemaphore));
+            g->acquireSemaphores.push_back(acquireSemaphore);
+        }
         VkResult acquired = vkAcquireNextImageKHR(g->device, g->swapchain, UINT64_MAX,
-                                                  g->acquireSemaphore, VK_NULL_HANDLE, &index);
+                                                  acquireSemaphore, VK_NULL_HANDLE, &index);
+        if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR)
+            g->freeAcquireSemaphores.push_back(acquireSemaphore); // not signalled
         if (acquired == VK_SUCCESS || acquired == VK_SUBOPTIMAL_KHR) {
+            VkSemaphore presentSemaphore = g->presentSemaphores[index];
             Transition(*g->defaultColor, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
             VkImageMemoryBarrier barrier{VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER};
             barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -1165,10 +1183,10 @@ void Present() {
             vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
                                  VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1,
                                  &barrier);
-            Submit(g->acquireSemaphore, g->presentSemaphore);
+            Submit(acquireSemaphore, presentSemaphore);
             VkPresentInfoKHR present{VK_STRUCTURE_TYPE_PRESENT_INFO_KHR};
             present.waitSemaphoreCount = 1;
-            present.pWaitSemaphores = &g->presentSemaphore;
+            present.pWaitSemaphores = &presentSemaphore;
             present.swapchainCount = 1;
             present.pSwapchains = &g->swapchain;
             present.pImageIndices = &index;

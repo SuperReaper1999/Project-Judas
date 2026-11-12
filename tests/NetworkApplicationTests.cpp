@@ -1,4 +1,5 @@
 // Real renderer/input/UI/outer lifecycle over the ordinary Connected Workshop.
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -27,7 +28,7 @@ int main(int argc,char** argv){
  const auto output=std::filesystem::absolute(argc>2?argv[2]:".cache/m99/application");
  const std::string port=argc>3?argv[3]:"29899";std::filesystem::create_directories(output);
  ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
- control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string error;host.Audio().Init(error,true);};
+ control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);std::string error;host.Audio().Init(error,true);};
  unsigned frame=0,phase=0,at=0;bool completed=false,rehosted=false;RuntimeWorld* previous=nullptr;glm::vec3 initial;float initialCrateX=0;
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
   auto& window=host.GetWindow();auto key=[&](const char* name,float value){window.QueueTestPhysical(std::string("key:")+name,value);};

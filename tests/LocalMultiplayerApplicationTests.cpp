@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
@@ -13,7 +14,7 @@ using J=nlohmann::json;
 int checks=0,failures=0;void Check(bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);fflush(stdout);}
 J State(RuntimeWorld& w){if(w.Scripts())for(auto& s:w.Scripts()->Capture())if(s.entity==950)return J::parse(s.json);return J::object();}
 int main(){std::filesystem::create_directories(".cache/m89/application");Application app;ApplicationControl c;c.hidden=true;c.frameSeconds=[](float){return 1.f/60;};unsigned f=0;uint64_t a=0,b=0,old=0,scored=0,recoveredPlayer=0,recoveredBody=0;float az=0,bz=0,stopA=0,moveB=0;RuntimeWorld* original=nullptr;bool reloaded=false,saved=false,restored=false,reloadRequested=false;uint64_t request=0;unsigned reloadFrame=0;std::vector<EntityId> savedBots;std::map<EntityId,glm::vec3> savedPositions;J savedState;std::string pad;
- c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
+ c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);GraphicsSetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
  c.beforeFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay& play){++f;auto& window=h.GetWindow();auto* players=w.PlayersIfLoaded();auto key=[&](const char* name,float value){window.QueueTestDevice("keyboard",std::string("key:")+name,value);};
  if(f==8&&players)pad=players->devices->Connect("gamepad","M89 game policy fixture");
  if(f==10){Check(players&&!pad.empty()&&players->All().begin()->second.devices.front().device==pad,"new gamepad becomes an independent game seat");window.QueueTestPhysical("key:Escape",1);}

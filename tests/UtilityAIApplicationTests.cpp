@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Application.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -113,7 +114,7 @@ int main(int argc, char** argv) try {
     control.frameSeconds = [&](float) { return holdPhysics ? 0.f : 1.f / 60; };
     control.hostReady = [](EngineHost& host) {
         host.GetWindow().SetTestInputMode(true);
-        SDL_GL_SetSwapInterval(0);
+        GraphicsSetSwapInterval(0);
         std::string ignored;
         host.Audio().Init(ignored, true);
     };
