@@ -750,6 +750,11 @@ std::uint64_t BindingSignature(const Program &program) {
             hash = (hash ^ value) * 1099511628211ull;
         }
     }
+    for (const auto index : program.texelUniforms) {
+        const GLint unit = program.uniforms[index].units[0];
+        const std::uint64_t value = unit >= 0 && unit < kTextureUnits ? gl.textures[std::size_t(unit)][SlotBuffer] : ~0ull;
+        hash = (hash ^ value) * 1099511628211ull;
+    }
     return hash;
 }
 DrawCache &Cache() {
@@ -809,6 +814,36 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
     for (const auto &block : program.uniformBlocks) addBlock(block, false, true);
     for (const auto &block : program.storageBlocks) addBlock(block, true, true);
     for (const auto &block : program.inactiveBlocks) addBlock(block, block.storage, false);
+    for (const auto index : program.texelUniforms) {
+        // Float table of the buffer texture bound to the sampler's unit.
+        const Uniform &uniform = program.uniforms[index];
+        const GLint unit = uniform.units[0];
+        Texture *texture = unit >= 0 && unit < kTextureUnits ? GetTexture(gl.textures[std::size_t(unit)][SlotBuffer]) : nullptr;
+        Buffer *buffer = texture ? GetBuffer(texture->buffer) : nullptr;
+        VkDescriptorBufferInfo info{};
+        std::uint32_t offset = 0;
+        if (buffer && buffer->storage && buffer->size >= 16) {
+            if (texture->bufferFormat != GL_RGBA32F) {
+                static bool warned = false;
+                if (!warned) { warned = true; Warn("a samplerBuffer read as a float table is bound to a non-RGBA32F buffer texture"); }
+            }
+            info.buffer = buffer->storage.block->buffer;
+            info.range = buffer->size / 16 * 16;
+            offset = std::uint32_t(buffer->storage.offset);
+            buffer->lastUse = g->serial;
+        } else {
+            const Range zero = RingAllocate(64, g->bufferAlignment);
+            std::memset(zero.Data(), 0, 64);
+            info.buffer = zero.block->buffer;
+            info.range = 64;
+            offset = std::uint32_t(zero.offset);
+        }
+        work.bufferInfos.push_back(info);
+        bufferWrites.push_back({uniform.binding, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, work.bufferInfos.size() - 1});
+        dynamic.emplace_back(uniform.binding, offset);
+        mix(std::uint64_t(info.buffer));
+        mix(info.range);
+    }
     for (const auto &image : work.images) {
         mix(std::uint64_t(image.view));
         mix(std::uint64_t(image.sampler));

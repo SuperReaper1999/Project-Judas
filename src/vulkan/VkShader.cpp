@@ -33,6 +33,8 @@ int ModuleIndex(GLenum type) { return type == GL_VERTEX_SHADER ? 0 : type == GL_
 // every vertex shader's result is remapped after its unmodified main() has
 // run: clipping and window depth are then mathematically identical to
 // OpenGL's, differing only in floating-point rounding.
+constexpr const char *kTexelBlockPrefix = "JudasTexel_";
+
 std::string AdaptSource(const std::string &source, GLenum type) {
     std::string text = source;
     static const std::regex version(R"(^\s*#version[^\n]*)");
@@ -40,6 +42,33 @@ std::string AdaptSource(const std::string &source, GLenum type) {
         text = std::regex_replace(text, version, "#version 450 core", std::regex_constants::format_first_only);
     else
         text = "#version 450 core\n" + text;
+    // A float buffer texture read only with texelFetch (bone palettes) becomes a
+    // storage block. Streaming a new table is then a new dynamic offset in an
+    // existing descriptor set; a texel buffer view would need a new view and a
+    // new set for every upload. Other uses keep the texel buffer path.
+    {
+        static const std::regex declaration(R"(\buniform\s+samplerBuffer\s+([A-Za-z_][A-Za-z0-9_]*)\s*;)");
+        std::smatch match;
+        std::string rest = text, rewritten;
+        std::vector<std::string> names;
+        while (std::regex_search(rest, match, declaration)) {
+            names.push_back(match[1].str());
+            rest = match.suffix().str();
+        }
+        for (const std::string &name : names) {
+            const std::regex word("\\b" + name + "\\b");
+            const std::regex fetch("\\btexelFetch\\s*\\(\\s*" + name + "\\s*,");
+            const auto count = [&](const std::regex &pattern) {
+                return std::distance(std::sregex_iterator(text.begin(), text.end(), pattern), std::sregex_iterator());
+            };
+            if (count(word) != count(fetch) + 1) continue; // used some other way
+            const std::regex own("\\buniform\\s+samplerBuffer\\s+" + name + "\\s*;");
+            text = std::regex_replace(text, own,
+                                      "layout(std430) readonly buffer " + std::string(kTexelBlockPrefix) + name + " { vec4 judasTexels_" + name +
+                                          "[]; }; vec4 judasFetch_" + name + "(int i){return judasTexels_" + name + "[i];}");
+            text = std::regex_replace(text, fetch, "judasFetch_" + name + "(");
+        }
+    }
     if (type == GL_VERTEX_SHADER) {
         // The unmodified main() runs first. OpenGL rasterizes points at size 1
         // unless the shader's own size is enabled; Vulkan requires the vertex
@@ -497,6 +526,23 @@ void ReflectStage(const std::vector<std::uint32_t> &code, GLenum stage, Program 
                 program.defaults.resize(std::max<std::size_t>(program.defaults.size(), TypeBytes(m, pointee, 0)));
                 continue;
             }
+            if (storage && blockName.rfind(kTexelBlockPrefix, 0) == 0) {
+                const std::string sampler = blockName.substr(std::strlen(kTexelBlockPrefix));
+                bool known = false;
+                for (const auto &existing : program.uniforms) known |= existing.texelBlock && existing.name == sampler;
+                if (known) continue;
+                Uniform uniform;
+                uniform.name = sampler;
+                uniform.base = UniformBase::Sampler;
+                uniform.glType = GL_SAMPLER_BUFFER;
+                uniform.samplerTarget = GL_TEXTURE_BUFFER;
+                uniform.samplerBuffer = true;
+                uniform.texelBlock = true;
+                uniform.binding = binding;
+                uniform.units.assign(1, 0);
+                AddUniform(program, std::move(uniform));
+                continue;
+            }
             const auto declared = declaredBindings.find(blockName);
             const bool active = declared != declaredBindings.end();
             auto &list = !active ? program.inactiveBlocks : storage ? program.storageBlocks : program.uniformBlocks;
@@ -565,6 +611,7 @@ void FinishReflection(Program &program) {
     program.locations.clear();
     program.locationTable.clear();
     program.samplerUniforms.clear();
+    program.texelUniforms.clear();
     for (std::uint32_t index = 0; index < program.uniforms.size(); ++index) {
         Uniform &uniform = program.uniforms[index];
         uniform.location = next;
@@ -575,7 +622,7 @@ void FinishReflection(Program &program) {
                 program.locations[uniform.name + "[" + std::to_string(element) + "]"] = uniform.location + GLint(element);
         }
         program.locations[uniform.name] = uniform.location;
-        if (uniform.base == UniformBase::Sampler) program.samplerUniforms.push_back(index);
+        if (uniform.base == UniformBase::Sampler) (uniform.texelBlock ? program.texelUniforms : program.samplerUniforms).push_back(index);
     }
 }
 
@@ -611,6 +658,10 @@ bool BuildLayouts(Program &program, std::string &error) {
     for (const auto &block : program.inactiveBlocks) {
         ok &= add(block.binding, block.storage ? VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC : VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1);
         program.dynamicBindings.push_back(block.binding);
+    }
+    for (const auto index : program.texelUniforms) {
+        ok &= add(program.uniforms[index].binding, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1);
+        program.dynamicBindings.push_back(program.uniforms[index].binding);
     }
     for (const auto index : program.samplerUniforms) {
         const Uniform &uniform = program.uniforms[index];
@@ -972,7 +1023,7 @@ void SetUniform(Program *program, GLint location, int kind, int components, GLsi
             else unit = static_cast<const GLint *>(data)[i * components];
             if (uniform.units[element + i] != unit) {
                 uniform.units[element + i] = unit;
-                MarkDirty(DirtyTextures);
+                MarkDirty(DirtyTextures | DirtyBuffers);
             }
         }
         return;

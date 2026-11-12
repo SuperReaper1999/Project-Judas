@@ -179,6 +179,10 @@ struct Uniform {
     std::uint32_t binding = 0;     // Vulkan binding
     GLenum samplerTarget = 0;      // GL_TEXTURE_2D ...
     bool samplerBuffer = false, samplerShadow = false;
+    // A float buffer texture the backend reads through a dynamic-offset storage
+    // block instead of a texel buffer view (see AdaptSource). The application
+    // still sees an ordinary samplerBuffer uniform; `binding` is the block's.
+    bool texelBlock = false;
     std::vector<GLint> units;      // per array element
 };
 struct BlockInfo {
@@ -218,6 +222,7 @@ struct Program {
     std::vector<BlockInfo> inactiveBlocks;
     std::vector<AttributeInfo> attributes;
     std::vector<std::uint32_t> samplerUniforms; // indices into uniforms
+    std::vector<std::uint32_t> texelUniforms;   // samplerBuffer uniforms served by storage blocks
     std::uint32_t outputMask = 0;
     std::array<int, 3> localSize{0, 0, 0};
     // glTransformFeedbackVaryings request and the linked interleaved stride.
