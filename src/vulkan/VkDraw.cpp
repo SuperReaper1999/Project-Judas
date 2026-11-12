@@ -204,6 +204,11 @@ void GLAD_API_PTR CopyBufferSubData(GLenum readTarget, GLenum writeTarget, GLint
     destination->lastUse = destination->lastGpuWrite = g->serial;
 }
 void BindIndexed(GLenum target, GLuint index, GLuint name, VkDeviceSize offset, VkDeviceSize size) {
+    if (target == GL_TRANSFORM_FEEDBACK_BUFFER && index == 0) {
+        g->gl.feedbackBinding = {name, offset, size};
+        BindBuffer(target, name);
+        return;
+    }
     auto *list = target == GL_UNIFORM_BUFFER ? &g->gl.uniformBindings : target == GL_SHADER_STORAGE_BUFFER ? &g->gl.storageBindings : nullptr;
     if (!list || index >= list->size()) return;
     (*list)[index] = {name, offset, size};
@@ -265,7 +270,34 @@ void GLAD_API_PTR VertexAttribIPointer(GLuint index, GLint size, GLenum type, GL
 }
 void GLAD_API_PTR VertexAttribDivisor(GLuint index, GLuint divisor) { if (index < 16) CurrentVao().attribs[index].divisor = divisor; }
 void GLAD_API_PTR VertexAttribI4ui(GLuint, GLuint, GLuint, GLuint, GLuint) {}
-void GLAD_API_PTR VertexAttrib4f(GLuint, GLfloat, GLfloat, GLfloat, GLfloat) {}
+void GLAD_API_PTR VertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+    if (index >= 16) return;
+    float *value = g->gl.genericAttrib[index];
+    value[0] = x; value[1] = y; value[2] = z; value[3] = w;
+}
+void GLAD_API_PTR VertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z) { VertexAttrib4f(index, x, y, z, 1.0f); }
+void GLAD_API_PTR VertexAttrib2f(GLuint index, GLfloat x, GLfloat y) { VertexAttrib4f(index, x, y, 0.0f, 1.0f); }
+void GLAD_API_PTR VertexAttrib1f(GLuint index, GLfloat x) { VertexAttrib4f(index, x, 0.0f, 0.0f, 1.0f); }
+void GLAD_API_PTR VertexAttrib4fv(GLuint index, const GLfloat *v) { VertexAttrib4f(index, v[0], v[1], v[2], v[3]); }
+void GLAD_API_PTR VertexAttrib3fv(GLuint index, const GLfloat *v) { VertexAttrib4f(index, v[0], v[1], v[2], 1.0f); }
+void GLAD_API_PTR GetVertexAttribiv(GLuint index, GLenum pname, GLint *value) {
+    if (index >= 16 || !value) return;
+    const VertexAttrib &attribute = CurrentVao().attribs[index];
+    switch (pname) {
+    case GL_VERTEX_ATTRIB_ARRAY_ENABLED: *value = attribute.enabled; break;
+    case GL_VERTEX_ATTRIB_ARRAY_SIZE: *value = attribute.size; break;
+    case GL_VERTEX_ATTRIB_ARRAY_TYPE: *value = GLint(attribute.type); break;
+    case GL_VERTEX_ATTRIB_ARRAY_NORMALIZED: *value = attribute.normalized; break;
+    case GL_VERTEX_ATTRIB_ARRAY_STRIDE: *value = attribute.stride; break;
+    case GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING: *value = GLint(attribute.buffer); break;
+    case GL_VERTEX_ATTRIB_ARRAY_INTEGER: *value = attribute.integer; break;
+    case GL_VERTEX_ATTRIB_ARRAY_DIVISOR: *value = GLint(attribute.divisor); break;
+    default: *value = 0; break;
+    }
+}
+void GLAD_API_PTR GetVertexAttribPointerv(GLuint index, GLenum, void **pointer) {
+    if (index < 16 && pointer) *pointer = reinterpret_cast<void *>(CurrentVao().attribs[index].offset);
+}
 // Direct-state vertex buffer binding: binding index i feeds attribute i, the
 // association every caller in the engine uses.
 void GLAD_API_PTR VertexArrayVertexBuffer(GLuint vao, GLuint binding, GLuint buffer, GLintptr offset, GLsizei stride) {
@@ -417,6 +449,13 @@ bool BuildVertexSetup(Program &program, VertexSetup &setup) {
                                                                   : VK_FORMAT_R32G32B32A32_SFLOAT;
             setup.buffers[index] = g->dummyVertex.block->buffer;
             setup.offsets[index] = g->dummyVertex.offset + (integer ? 16 : 0);
+            const float *generic = g->gl.genericAttrib[input.location];
+            if (!integer && (generic[0] != 0.0f || generic[1] != 0.0f || generic[2] != 0.0f || generic[3] != 1.0f)) {
+                const Range value = RingAllocate(16, 16);
+                std::memcpy(value.Data(), generic, 16);
+                setup.buffers[index] = value.block->buffer;
+                setup.offsets[index] = value.offset;
+            }
         }
         mix(description.location); mix(std::uint64_t(description.format)); mix(binding.stride); mix(std::uint64_t(binding.inputRate));
     }
@@ -452,6 +491,7 @@ VkPipeline GetPipeline(Program &program, const VertexSetup &setup, VkPrimitiveTo
     stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
     stages[1].module = program.modules[1];
     stages[1].pName = "main";
+    const std::uint32_t stageCount = program.modules[1] ? 2u : 1u; // vertex-only programs capture or write depth
     VkPipelineVertexInputStateCreateInfo vertexInput{VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO};
     vertexInput.vertexBindingDescriptionCount = setup.count;
     vertexInput.pVertexBindingDescriptions = setup.bindings.data();
@@ -462,6 +502,9 @@ VkPipeline GetPipeline(Program &program, const VertexSetup &setup, VkPrimitiveTo
     VkPipelineViewportStateCreateInfo viewport{VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO};
     viewport.viewportCount = 1;
     viewport.scissorCount = 1;
+    VkPipelineViewportDepthClipControlCreateInfoEXT clipControl{VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT};
+    clipControl.negativeOneToOne = VK_TRUE;
+    if (g->depthClipControl) viewport.pNext = &clipControl;
     VkPipelineRasterizationStateCreateInfo raster{VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO};
     raster.polygonMode = key.polygonMode ? VK_POLYGON_MODE_LINE : VK_POLYGON_MODE_FILL;
     raster.lineWidth = 1.0f;
@@ -490,7 +533,8 @@ VkPipeline GetPipeline(Program &program, const VertexSetup &setup, VkPrimitiveTo
     const VkDynamicState dynamicStates[] = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_CULL_MODE,
                                             VK_DYNAMIC_STATE_FRONT_FACE, VK_DYNAMIC_STATE_DEPTH_TEST_ENABLE,
                                             VK_DYNAMIC_STATE_DEPTH_WRITE_ENABLE, VK_DYNAMIC_STATE_DEPTH_COMPARE_OP,
-                                            VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY, VK_DYNAMIC_STATE_DEPTH_BIAS};
+                                            VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY, VK_DYNAMIC_STATE_DEPTH_BIAS,
+                                            VK_DYNAMIC_STATE_RASTERIZER_DISCARD_ENABLE};
     VkPipelineDynamicStateCreateInfo dynamic{VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO};
     dynamic.dynamicStateCount = std::uint32_t(std::size(dynamicStates));
     dynamic.pDynamicStates = dynamicStates;
@@ -503,7 +547,7 @@ VkPipeline GetPipeline(Program &program, const VertexSetup &setup, VkPrimitiveTo
     if (AspectOf(g->pass.depthFormat) & VK_IMAGE_ASPECT_STENCIL_BIT) rendering.stencilAttachmentFormat = g->pass.depthFormat;
     VkGraphicsPipelineCreateInfo info{VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO};
     info.pNext = &rendering;
-    info.stageCount = 2;
+    info.stageCount = stageCount;
     info.pStages = stages;
     info.pVertexInputState = &vertexInput;
     info.pInputAssemblyState = &assembly;
@@ -636,6 +680,10 @@ struct DescriptorWork {
     std::vector<VkDescriptorBufferInfo> bufferInfos;
     std::vector<VkWriteDescriptorSet> writes;
     std::vector<std::uint32_t> dynamicOffsets;
+    // Reused per draw to avoid heap traffic in the submission path.
+    struct BufferWrite { std::uint32_t binding; VkDescriptorType type; std::size_t info; };
+    std::vector<BufferWrite> bufferWrites;
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> dynamic; // binding -> offset
 };
 
 // Builds (or reuses) the descriptor set for the current bindings and binds it.
@@ -647,9 +695,10 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
     work.bufferInfos.clear();
     work.imageInfos.clear();
     work.writes.clear();
-    std::vector<std::pair<std::uint32_t, std::uint32_t>> dynamic; // binding -> offset
-    struct BufferWrite { std::uint32_t binding; VkDescriptorType type; std::size_t info; };
-    std::vector<BufferWrite> bufferWrites;
+    auto &dynamic = work.dynamic;
+    auto &bufferWrites = work.bufferWrites;
+    dynamic.clear();
+    bufferWrites.clear();
     if (program.hasDefaultBlock) {
         if (program.defaultsDirty || program.defaultsSerial != g->serial || !program.defaultsRange) {
             program.defaultsRange = RingAllocate(std::max<std::size_t>(program.defaults.size(), 16), g->bufferAlignment);
@@ -790,6 +839,8 @@ void ApplyDynamicState(VkPrimitiveTopology topology) {
         dynamic.depthBiasConstant = gl.polygonOffsetUnits;
         dynamic.depthBiasSlope = gl.polygonOffsetFactor;
     }
+    const VkBool32 discard = gl.rasterizerDiscard ? VK_TRUE : VK_FALSE;
+    if (all || dynamic.rasterizerDiscard != discard) { vkCmdSetRasterizerDiscardEnable(g->cmd, discard); dynamic.rasterizerDiscard = discard; }
     dynamic.valid = true;
 }
 
@@ -838,8 +889,30 @@ bool BindIndices(GLenum type, const void *indices, VkDeviceSize &firstIndexBytes
 
 void GLAD_API_PTR DrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei instances, GLuint baseInstance) {
     if (count <= 0 || instances <= 0 || !PrepareDraw(mode)) return;
+    Program *program = CurrentProgram();
+    Buffer *capture = g->gl.feedbackActive && program->feedbackStride ? GetBuffer(g->gl.feedbackBinding.buffer) : nullptr;
+    if (capture && capture->storage) {
+        // Captured vertices append after those of earlier draws in this capture.
+        const VkDeviceSize offset = capture->storage.offset + g->gl.feedbackBinding.offset + g->gl.feedbackWritten;
+        const VkDeviceSize bytes = VkDeviceSize(count) * VkDeviceSize(instances) * program->feedbackStride;
+        const VkDeviceSize limit = g->gl.feedbackBinding.size ? g->gl.feedbackBinding.size : capture->size - g->gl.feedbackBinding.offset;
+        if (g->gl.feedbackWritten + bytes <= limit) {
+            g->bindFeedbackBuffers(g->cmd, 0, 1, &capture->storage.block->buffer, &offset, &bytes);
+            g->beginFeedback(g->cmd, 0, 0, nullptr, nullptr);
+            vkCmdDraw(g->cmd, std::uint32_t(count), std::uint32_t(instances), std::uint32_t(first), baseInstance);
+            g->endFeedback(g->cmd, 0, 0, nullptr, nullptr);
+            g->gl.feedbackWritten += bytes;
+            capture->lastUse = capture->lastGpuWrite = g->serial;
+            return;
+        }
+    }
     vkCmdDraw(g->cmd, std::uint32_t(count), std::uint32_t(instances), std::uint32_t(first), baseInstance);
 }
+void GLAD_API_PTR BeginTransformFeedback(GLenum) {
+    g->gl.feedbackActive = true;
+    g->gl.feedbackWritten = 0;
+}
+void GLAD_API_PTR EndTransformFeedback() { g->gl.feedbackActive = false; }
 void GLAD_API_PTR DrawArrays(GLenum mode, GLint first, GLsizei count) { DrawArraysInstancedBaseInstance(mode, first, count, 1, 0); }
 void GLAD_API_PTR DrawArraysInstanced(GLenum mode, GLint first, GLsizei count, GLsizei instances) {
     DrawArraysInstancedBaseInstance(mode, first, count, instances, 0);
@@ -1066,6 +1139,13 @@ void InstallDrawEntries(std::unordered_map<std::string, void (*)(void)> &table) 
     table["glVertexAttribDivisor"] = Erase(&VertexAttribDivisor);
     table["glVertexAttribI4ui"] = Erase(&VertexAttribI4ui);
     table["glVertexAttrib4f"] = Erase(&VertexAttrib4f);
+    table["glVertexAttrib3f"] = Erase(&VertexAttrib3f);
+    table["glVertexAttrib2f"] = Erase(&VertexAttrib2f);
+    table["glVertexAttrib1f"] = Erase(&VertexAttrib1f);
+    table["glVertexAttrib4fv"] = Erase(&VertexAttrib4fv);
+    table["glVertexAttrib3fv"] = Erase(&VertexAttrib3fv);
+    table["glGetVertexAttribiv"] = Erase(&GetVertexAttribiv);
+    table["glGetVertexAttribPointerv"] = Erase(&GetVertexAttribPointerv);
     table["glVertexArrayVertexBuffer"] = Erase(&VertexArrayVertexBuffer);
     table["glVertexArrayAttribFormat"] = Erase(&VertexArrayAttribFormat);
     table["glVertexArrayAttribIFormat"] = Erase(&VertexArrayAttribIFormat);
@@ -1084,6 +1164,8 @@ void InstallDrawEntries(std::unordered_map<std::string, void (*)(void)> &table) 
     table["glMultiDrawArraysIndirect"] = Erase(&MultiDrawArraysIndirect);
     table["glMultiDrawElementsIndirect"] = Erase(&MultiDrawElementsIndirect);
     table["glClear"] = Erase(&Clear);
+    table["glBeginTransformFeedback"] = Erase(&BeginTransformFeedback);
+    table["glEndTransformFeedback"] = Erase(&EndTransformFeedback);
     table["glDispatchCompute"] = Erase(&DispatchCompute);
     table["glMemoryBarrier"] = Erase(&MemoryBarrier);
 }

@@ -486,6 +486,22 @@ add_library(judas_imgui STATIC
 )
 target_include_directories(judas_imgui PUBLIC third_party/imgui third_party/imgui/backends ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
+if(JUDAS_VULKAN_ENABLED)
+    # The editor UI renderer must resolve its graphics entry points through the
+    # same GLAD table as the engine, so that it draws through whichever backend
+    # filled that table (OpenGL driver or the Vulkan backend) instead of loading
+    # the OpenGL library on its own.
+    set_property(SOURCE third_party/imgui/backends/imgui_impl_opengl3.cpp APPEND PROPERTY
+        COMPILE_DEFINITIONS IMGUI_IMPL_OPENGL_LOADER_CUSTOM)
+    if(MSVC)
+        set_property(SOURCE third_party/imgui/backends/imgui_impl_opengl3.cpp APPEND PROPERTY
+            COMPILE_OPTIONS "/FIglad/gl.h")
+    else()
+        set_property(SOURCE third_party/imgui/backends/imgui_impl_opengl3.cpp APPEND PROPERTY
+            COMPILE_OPTIONS "-include;glad/gl.h")
+    endif()
+    target_link_libraries(judas_imgui PUBLIC judas_glad)
+endif()
 
 # Judas-owned presentation controls share ImGui input/layout, not its default
 # widget painting. This layer is editor-only and does not link into games.

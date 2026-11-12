@@ -9,6 +9,7 @@
 #include "EngineHost.h"
 #include "Window.h"
 #include "glad/gl.h"
+#include "vulkan/VulkanBackend.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include <SDL2/SDL.h>
@@ -95,9 +96,13 @@ void EditorShell::DrawStopped(EditorContext &context, EditorPreferences &prefere
 }
 void EditorShell::Present(EngineHost &host) {
     auto &window = host.GetWindow();
-    SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
     int width = 1, height = 1;
-    SDL_GL_GetDrawableSize(window.NativeWindow(), &width, &height);
+    if (window.UsesVulkan())
+        JudasVulkan::DrawableSize(width, height);
+    else {
+        SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+        SDL_GL_GetDrawableSize(window.NativeWindow(), &width, &height);
+    }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, width, height);
     const auto background = ImGui::GetStyleColorVec4(ImGuiCol_WindowBg);

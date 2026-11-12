@@ -249,7 +249,10 @@ int EditorApplication::Run(int argc, char **argv) {
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     const char *driver = SDL_GetCurrentVideoDriver();
-    if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows"))
+    // Detached editor windows are additional OpenGL contexts; the experimental
+    // Vulkan backend presents to the main window only.
+    if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows") &&
+        !host.GetWindow().UsesVulkan())
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     m_shell.RegisterPanels(m_sceneViewport, m_playSession,
@@ -480,7 +483,7 @@ void EditorApplication::Shutdown(bool savePreferences) {
     auto &host = *m_host;
     auto &window = host.GetWindow();
     auto &renderer = host.GetRenderer();
-    SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+    if (!window.UsesVulkan()) SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
     if (m_playSession.world)
         StopPlay();
     else

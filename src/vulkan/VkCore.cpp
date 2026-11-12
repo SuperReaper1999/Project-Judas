@@ -107,7 +107,8 @@ std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated) {
     auto block = std::make_unique<MemBlock>();
     VkBufferCreateInfo info{VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO};
     info.size = size;
-    info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT |
+    info.usage = (g->transformFeedback ? VK_BUFFER_USAGE_TRANSFORM_FEEDBACK_BUFFER_BIT_EXT : 0) |
+                 VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT |
                  VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
                  VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT |
                  VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT | VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT;
@@ -902,6 +903,47 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     queueInfo.pQueuePriorities = &priority;
     std::vector<const char *> deviceExtensions;
     if (g->surface) deviceExtensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+    // Prefer the device's own OpenGL-convention depth transform: it reproduces
+    // OpenGL's depth arithmetic exactly. Without it every vertex shader remaps
+    // z after main(), which is equivalent up to floating-point rounding.
+    VkPhysicalDeviceDepthClipControlFeaturesEXT clipControl{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT};
+    VkPhysicalDeviceTransformFeedbackFeaturesEXT feedback{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT};
+    {
+        std::uint32_t count = 0;
+        vkEnumerateDeviceExtensionProperties(g->physical, nullptr, &count, nullptr);
+        std::vector<VkExtensionProperties> available(count);
+        vkEnumerateDeviceExtensionProperties(g->physical, nullptr, &count, available.data());
+        bool present = false;
+        for (const auto &extension : available)
+            present |= std::strcmp(extension.extensionName, VK_EXT_DEPTH_CLIP_CONTROL_EXTENSION_NAME) == 0;
+        bool feedbackPresent = false;
+        for (const auto &extension : available)
+            feedbackPresent |= std::strcmp(extension.extensionName, VK_EXT_TRANSFORM_FEEDBACK_EXTENSION_NAME) == 0;
+        if (feedbackPresent) {
+            VkPhysicalDeviceFeatures2 query{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2};
+            query.pNext = &feedback;
+            vkGetPhysicalDeviceFeatures2(g->physical, &query);
+            if (feedback.transformFeedback) {
+                g->transformFeedback = true;
+                deviceExtensions.push_back(VK_EXT_TRANSFORM_FEEDBACK_EXTENSION_NAME);
+                feedback.geometryStreams = VK_FALSE;
+                feedback.pNext = nullptr;
+                enable13.pNext = &feedback;
+            }
+        }
+        const char *force = std::getenv("JUDAS_VULKAN_SHADER_DEPTH");
+        if (present && !(force && std::strcmp(force, "1") == 0)) {
+            VkPhysicalDeviceFeatures2 query{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2};
+            query.pNext = &clipControl;
+            vkGetPhysicalDeviceFeatures2(g->physical, &query);
+            if (clipControl.depthClipControl) {
+                g->depthClipControl = true;
+                deviceExtensions.push_back(VK_EXT_DEPTH_CLIP_CONTROL_EXTENSION_NAME);
+                clipControl.pNext = const_cast<void *>(enable13.pNext);
+                enable13.pNext = &clipControl;
+            }
+        }
+    }
     VkDeviceCreateInfo deviceInfo{VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO};
     deviceInfo.pNext = &enable;
     deviceInfo.queueCreateInfoCount = 1;
@@ -911,6 +953,16 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     result = vkCreateDevice(g->physical, &deviceInfo, nullptr, &g->device);
     if (result != VK_SUCCESS) return fail("vkCreateDevice failed (" + std::to_string(int(result)) + ")");
     vkGetDeviceQueue(g->device, g->queueFamily, 0, &g->queue);
+    if (g->transformFeedback) {
+        // Extension commands are not exported by the loader library.
+        g->bindFeedbackBuffers = reinterpret_cast<PFN_vkCmdBindTransformFeedbackBuffersEXT>(
+            vkGetDeviceProcAddr(g->device, "vkCmdBindTransformFeedbackBuffersEXT"));
+        g->beginFeedback = reinterpret_cast<PFN_vkCmdBeginTransformFeedbackEXT>(
+            vkGetDeviceProcAddr(g->device, "vkCmdBeginTransformFeedbackEXT"));
+        g->endFeedback = reinterpret_cast<PFN_vkCmdEndTransformFeedbackEXT>(
+            vkGetDeviceProcAddr(g->device, "vkCmdEndTransformFeedbackEXT"));
+        g->transformFeedback = g->bindFeedbackBuffers && g->beginFeedback && g->endFeedback;
+    }
 
     VkCommandPoolCreateInfo poolInfo{VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO};
     poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
@@ -977,7 +1029,9 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
                  g->properties.deviceName, VK_API_VERSION_MAJOR(g->properties.apiVersion),
                  VK_API_VERSION_MINOR(g->properties.apiVersion),
                  VK_API_VERSION_PATCH(g->properties.apiVersion), g->properties.driverVersion,
-                 g->depth24Format == VK_FORMAT_X8_D24_UNORM_PACK32 ? "D24" : "D32F",
+                 g->depth24Format == VK_FORMAT_X8_D24_UNORM_PACK32
+                     ? (g->depthClipControl ? "D24, device clip control" : "D24, shader clip remap")
+                     : (g->depthClipControl ? "D32F, device clip control" : "D32F, shader clip remap"),
                  int(g->bcSupported), g->validation ? ", validation on" : "");
     return true;
 }

@@ -81,6 +81,9 @@ void GLAD_API_PTR PolygonOffset(GLfloat factor, GLfloat units) { g->gl.polygonOf
 void GLAD_API_PTR LineWidth(GLfloat width) { g->gl.lineWidth = width; }
 void GLAD_API_PTR PointSize(GLfloat) {}
 void GLAD_API_PTR Hint(GLenum, GLenum) {}
+void GLAD_API_PTR ClipControl(GLenum origin, GLenum depth) {
+    if (origin != 0x8CA1 || depth != 0x935E) Warn("glClipControl: only the OpenGL default clip convention is implemented");
+}
 void GLAD_API_PTR StencilMask(GLuint) {}
 void GLAD_API_PTR StencilFunc(GLenum, GLint, GLuint) {}
 void GLAD_API_PTR StencilOp(GLenum, GLenum, GLenum) {}
@@ -203,6 +206,8 @@ int GetIntegers(GLenum pname, GLint64 *v) {
     case 0x0D57: v[0] = 0; return 1;  // GL_STENCIL_BITS (compatibility query)
     case 0x0D56: v[0] = 24; return 1; // GL_DEPTH_BITS (compatibility query)
     case GL_SAMPLES: case GL_SAMPLE_BUFFERS: v[0] = 0; return 1;
+    case 0x935C: v[0] = 0x8CA1; return 1; // GL_CLIP_ORIGIN -> GL_LOWER_LEFT
+    case 0x935D: v[0] = 0x935E; return 1; // GL_CLIP_DEPTH_MODE -> GL_NEGATIVE_ONE_TO_ONE
     case 0x8256: v[0] = 0x8261; return 1; // GL_RESET_NOTIFICATION_STRATEGY -> GL_NO_RESET_NOTIFICATION
     case 0x84FF: v[0] = GLint64(g->anisotropy ? limits.maxSamplerAnisotropy : 1.0f); return 1;
     default: return 0;
@@ -244,8 +249,20 @@ void GLAD_API_PTR GetIntegeri_v(GLenum pname, GLuint index, GLint *value) {
     *value = 0;
     if (pname == GL_MAX_COMPUTE_WORK_GROUP_COUNT && index < 3) *value = GLint(std::min<std::uint32_t>(limits.maxComputeWorkGroupCount[index], 65535));
     else if (pname == GL_MAX_COMPUTE_WORK_GROUP_SIZE && index < 3) *value = GLint(limits.maxComputeWorkGroupSize[index]);
+    else if (pname == GL_SAMPLER_BINDING && index < kTextureUnits) *value = GLint(g->gl.samplers[index]);
+    else if (pname == GL_TEXTURE_BINDING_2D && index < kTextureUnits) *value = GLint(g->gl.textures[index][Slot2D]);
+    else if (pname == GL_TEXTURE_BINDING_2D_ARRAY && index < kTextureUnits) *value = GLint(g->gl.textures[index][Slot2DArray]);
+    else if (pname == GL_TEXTURE_BINDING_3D && index < kTextureUnits) *value = GLint(g->gl.textures[index][Slot3D]);
+    else if (pname == GL_TEXTURE_BINDING_CUBE_MAP && index < kTextureUnits) *value = GLint(g->gl.textures[index][SlotCube]);
+    else if (pname == GL_TRANSFORM_FEEDBACK_BUFFER_BINDING && index == 0) *value = GLint(g->gl.feedbackBinding.buffer);
     else if (pname == GL_UNIFORM_BUFFER_BINDING && index < g->gl.uniformBindings.size()) *value = GLint(g->gl.uniformBindings[index].buffer);
     else if (pname == GL_SHADER_STORAGE_BUFFER_BINDING && index < g->gl.storageBindings.size()) *value = GLint(g->gl.storageBindings[index].buffer);
+    else {
+        // Non-indexed state queried through the indexed entry point.
+        GLint64 wide[16] = {};
+        if (GetIntegers(pname, wide) > 0) *value = GLint(wide[0]);
+        else Warn("glGetIntegeri_v(0x%x, %u) is not implemented", pname, index);
+    }
 }
 const GLubyte *GLAD_API_PTR GetString(GLenum name) {
     switch (name) {
@@ -273,10 +290,7 @@ void GLAD_API_PTR DeleteQueries(GLsizei count, const GLuint *names) {
         if (Lookup(g->queries, names[i])) g->queries[names[i]] = Query{};
 }
 GLboolean GLAD_API_PTR IsQuery(GLuint name) { return Lookup(g->queries, name) != nullptr; }
-void GLAD_API_PTR QueryCounter(GLuint name, GLenum target) {
-    Query *query = Lookup(g->queries, name);
-    if (!query || target != GL_TIMESTAMP) return;
-    // Slots are recycled only after the submission which wrote them completed.
+std::uint32_t TimestampSlot() {
     std::uint32_t slot = g->queryCursor;
     for (std::uint32_t attempt = 0; attempt < Context::kQuerySlots; ++attempt) {
         slot = (g->queryCursor + attempt) % Context::kQuerySlots;
@@ -286,9 +300,33 @@ void GLAD_API_PTR QueryCounter(GLuint name, GLenum target) {
     vkResetQueryPool(g->device, g->queryPool, slot, 1);
     vkCmdWriteTimestamp(g->cmd, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, g->queryPool, slot);
     g->querySlotSerial[slot] = g->serial;
+    return slot;
+}
+void GLAD_API_PTR QueryCounter(GLuint name, GLenum target) {
+    Query *query = Lookup(g->queries, name);
+    if (!query || target != GL_TIMESTAMP) return;
+    const std::uint32_t slot = TimestampSlot();
+    query->elapsed = false;
     query->slot = slot;
     query->serial = g->serial;
     query->issued = true;
+}
+// GL_TIME_ELAPSED is the interval between two timestamps in command order.
+void GLAD_API_PTR BeginQuery(GLenum target, GLuint name) {
+    Query *query = Lookup(g->queries, name);
+    if (!query || target != GL_TIME_ELAPSED) return;
+    query->beginSlot = TimestampSlot();
+    query->elapsed = true;
+    query->issued = false;
+    g->gl.elapsedQuery = name;
+}
+void GLAD_API_PTR EndQuery(GLenum target) {
+    Query *query = Lookup(g->queries, g->gl.elapsedQuery);
+    if (!query || target != GL_TIME_ELAPSED) return;
+    query->slot = TimestampSlot();
+    query->serial = g->serial;
+    query->issued = true;
+    g->gl.elapsedQuery = 0;
 }
 bool QueryAvailable(const Query &query) {
     if (!query.issued) return false;
@@ -301,8 +339,12 @@ std::uint64_t QueryResult(Query &query) {
         if (query.serial >= g->serial) Flush(true);
         else PollCompleted(true, query.serial);
     }
-    std::uint64_t ticks = 0;
+    std::uint64_t ticks = 0, begin = 0;
     vkGetQueryPoolResults(g->device, g->queryPool, query.slot, 1, sizeof(ticks), &ticks, sizeof(ticks), VK_QUERY_RESULT_64_BIT);
+    if (query.elapsed) {
+        vkGetQueryPoolResults(g->device, g->queryPool, query.beginSlot, 1, sizeof(begin), &begin, sizeof(begin), VK_QUERY_RESULT_64_BIT);
+        ticks = ticks >= begin ? ticks - begin : 0;
+    }
     return std::uint64_t(double(ticks) * double(g->properties.limits.timestampPeriod));
 }
 void GLAD_API_PTR GetQueryObjectui64v(GLuint name, GLenum pname, GLuint64 *value) {
@@ -414,6 +456,9 @@ void InstallStateEntries(std::unordered_map<std::string, void (*)(void)> &table)
     table["glDeleteQueries"] = Erase(&DeleteQueries);
     table["glIsQuery"] = Erase(&IsQuery);
     table["glQueryCounter"] = Erase(&QueryCounter);
+    table["glBeginQuery"] = Erase(&BeginQuery);
+    table["glEndQuery"] = Erase(&EndQuery);
+    table["glClipControl"] = Erase(&ClipControl);
     table["glGetQueryObjectui64v"] = Erase(&GetQueryObjectui64v);
     table["glGetQueryObjecti64v"] = Erase(&GetQueryObjecti64v);
     table["glGetQueryObjectiv"] = Erase(&GetQueryObjectiv);

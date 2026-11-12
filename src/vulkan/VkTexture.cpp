@@ -656,6 +656,32 @@ void GLAD_API_PTR GetTexImage(GLenum target, GLint level, GLenum format, GLenum 
     Image &image = *texture->image;
     const std::uint32_t mip = std::uint32_t(level) + texture->viewBaseLevel;
     Readback readback;
+    if (InfoForVk(image.format).channel == Channel::BC) {
+        // OpenGL returns decoded texels for a compressed texture: decode on the
+        // device by blitting the level into an uncompressed image of the same
+        // colour encoding, then read that.
+        const bool srgb = image.format == VK_FORMAT_BC1_RGB_SRGB_BLOCK || image.format == VK_FORMAT_BC1_RGBA_SRGB_BLOCK ||
+                          image.format == VK_FORMAT_BC2_SRGB_BLOCK || image.format == VK_FORMAT_BC3_SRGB_BLOCK;
+        const int width = int(LevelSize(image.width, mip)), height = int(LevelSize(image.height, mip));
+        auto decoded = CreateImage(VK_IMAGE_TYPE_2D, srgb ? VK_FORMAT_R8G8B8A8_SRGB : VK_FORMAT_R8G8B8A8_UNORM,
+                                   std::uint32_t(width), std::uint32_t(height), 1, 1, 1, true);
+        EndPass();
+        Transition(image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
+        Transition(*decoded, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+        VkImageBlit blit{};
+        blit.srcSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, mip, texture->viewBaseLayer, 1};
+        blit.dstSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
+        blit.srcOffsets[1] = blit.dstOffsets[1] = {width, height, 1};
+        vkCmdBlitImage(g->cmd, image.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, decoded->image,
+                       VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit, VK_FILTER_NEAREST);
+        image.lastUse = g->serial;
+        if (ReadImage(*decoded, VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 0, 0, width, height, readback)) {
+            ConvertReadback(readback.staging.Data(), readback.info, readback.width, readback.height, format, type, pixels);
+            RetireRange(readback.staging, g->completedSerial);
+        }
+        RetireImage(decoded);
+        return;
+    }
     const VkImageAspectFlags aspect = IsDepthFormat(image.format) ? VkImageAspectFlags(VK_IMAGE_ASPECT_DEPTH_BIT)
                                                                   : VkImageAspectFlags(VK_IMAGE_ASPECT_COLOR_BIT);
     if (!ReadImage(image, aspect, mip, texture->viewBaseLayer, 0, 0, int(LevelSize(image.width, mip)),

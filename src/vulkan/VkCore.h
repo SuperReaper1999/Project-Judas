@@ -215,6 +215,11 @@ struct Program {
     std::vector<std::uint32_t> samplerUniforms; // indices into uniforms
     std::uint32_t outputMask = 0;
     std::array<int, 3> localSize{0, 0, 0};
+    // glTransformFeedbackVaryings request and the linked interleaved stride.
+    std::vector<std::string> feedbackVaryings;
+    std::uint32_t feedbackStride = 0;
+    // Members of named uniform blocks, for introspection only (no locations).
+    std::vector<Uniform> blockUniforms;
     // Dynamic descriptor order: bindings sorted ascending among dynamic buffers.
     std::vector<std::uint32_t> dynamicBindings;
 };
@@ -225,8 +230,8 @@ enum TexSlot { Slot2D, Slot2DArray, SlotCube, SlotCubeArray, Slot3D, SlotBuffer,
 int SlotForTarget(GLenum target);
 
 struct Query {
-    bool alive = false, issued = false;
-    std::uint32_t slot = 0;
+    bool alive = false, issued = false, elapsed = false;
+    std::uint32_t slot = 0, beginSlot = 0;
     std::uint64_t serial = 0;
 };
 struct Sync {
@@ -240,7 +245,10 @@ struct GlState {
            queryBuffer = 0, dispatchIndirect = 0, atomicBuffer = 0, feedbackBuffer = 0;
     struct Indexed { GLuint buffer = 0; VkDeviceSize offset = 0, size = 0; };
     std::array<Indexed, 96> uniformBindings{}, storageBindings{};
-    GLuint vao = 0, program = 0, drawFbo = 0, readFbo = 0, renderbuffer = 0;
+    Indexed feedbackBinding;
+    bool feedbackActive = false;
+    VkDeviceSize feedbackWritten = 0;
+    GLuint vao = 0, program = 0, drawFbo = 0, readFbo = 0, renderbuffer = 0, elapsedQuery = 0;
     int activeUnit = 0;
     std::array<std::array<GLuint, SlotCount>, kTextureUnits> textures{};
     std::array<GLuint, kTextureUnits> samplers{};
@@ -267,6 +275,9 @@ struct GlState {
           unpackImageHeight = 0, unpackSkipImages = 0;
     GLint packAlignment = 4, packRowLength = 0, packSkipRows = 0, packSkipPixels = 0;
     GLenum error = GL_NO_ERROR;
+    // Current generic vertex attribute values (used when no array is enabled).
+    float genericAttrib[16][4];
+    GlState() { for (auto &value : genericAttrib) { value[0] = value[1] = value[2] = 0.0f; value[3] = 1.0f; } }
 };
 
 struct PipelineKey {
@@ -335,6 +346,13 @@ struct Context {
     bool swapchainDirty = true;
     VkFormat depth24Format = VK_FORMAT_D32_SFLOAT;
     bool bcSupported = false, anisotropy = false;
+    // VK_EXT_depth_clip_control: the device applies OpenGL's [-w, w] clip volume itself.
+    bool depthClipControl = false;
+    // VK_EXT_transform_feedback (used by diagnostic captures of shader outputs).
+    bool transformFeedback = false;
+    PFN_vkCmdBindTransformFeedbackBuffersEXT bindFeedbackBuffers = nullptr;
+    PFN_vkCmdBeginTransformFeedbackEXT beginFeedback = nullptr;
+    PFN_vkCmdEndTransformFeedbackEXT endFeedback = nullptr;
     int glMajor = 3, glMinor = 3;
     std::string versionString, rendererString, vendorString;
     std::vector<std::string> extensions;
@@ -404,6 +422,7 @@ struct Context {
         VkPrimitiveTopology topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
         VkPipeline pipeline = VK_NULL_HANDLE;
         float depthBiasConstant = 0, depthBiasSlope = 0;
+        VkBool32 rasterizerDiscard = 0;
     } dynamic;
 
     // Statistics.

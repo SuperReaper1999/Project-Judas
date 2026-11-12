@@ -28,9 +28,11 @@ EShLanguage StageOf(GLenum type) {
 int ModuleIndex(GLenum type) { return type == GL_VERTEX_SHADER ? 0 : type == GL_FRAGMENT_SHADER ? 1 : 2; }
 
 // Vulkan clip space has z in [0, w]; OpenGL has z in [-w, w]. The renderer's
-// matrices and shaders are written for OpenGL, so every vertex shader's result
-// is remapped after its unmodified main() has run. Clipping and the resulting
-// window depth are mathematically identical to OpenGL's.
+// matrices and shaders are written for OpenGL. Devices with
+// VK_EXT_depth_clip_control apply OpenGL's convention themselves. Otherwise
+// every vertex shader's result is remapped after its unmodified main() has
+// run: clipping and window depth are then mathematically identical to
+// OpenGL's, differing only in floating-point rounding.
 std::string AdaptSource(const std::string &source, GLenum type) {
     std::string text = source;
     static const std::regex version(R"(^\s*#version[^\n]*)");
@@ -39,9 +41,15 @@ std::string AdaptSource(const std::string &source, GLenum type) {
     else
         text = "#version 450 core\n" + text;
     if (type == GL_VERTEX_SHADER) {
+        // The unmodified main() runs first. OpenGL rasterizes points at size 1
+        // unless the shader's own size is enabled; Vulkan requires the vertex
+        // shader to write it.
         static const std::regex entry(R"(\bvoid\s+main\s*\(\s*(void)?\s*\))");
         text = std::regex_replace(text, entry, "void judas_gl_main()");
-        text += "\nvoid main(){judas_gl_main();gl_Position.z=(gl_Position.z+gl_Position.w)*0.5;}\n";
+        text += "\nvoid main(){judas_gl_main();";
+        if (text.find("gl_PointSize") == std::string::npos) text += "gl_PointSize=1.0;";
+        if (!g->depthClipControl) text += "gl_Position.z=(gl_Position.z+gl_Position.w)*0.5;";
+        text += "}\n";
     }
     return text;
 }
@@ -397,6 +405,48 @@ void UnifyBindings(std::vector<std::uint32_t> &code, BindingPlan &plan) {
     }
 }
 
+// Transform feedback capture: decorate the requested vertex outputs with an
+// interleaved layout in buffer 0 and declare the Xfb execution mode.
+std::uint32_t PatchTransformFeedback(std::vector<std::uint32_t> &code, const std::vector<std::string> &names) {
+    SpvModule m;
+    ParseSpirv(code, m);
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> captured; // id, offset
+    std::uint32_t stride = 0;
+    for (const auto &name : names)
+        for (const auto &variable : m.variables) {
+            const auto found = m.names.find(variable.id);
+            if (variable.storage != 3 || found == m.names.end() || found->second != name) continue;
+            Basic basic;
+            if (!BasicOf(m, m.types.at(variable.type).element, basic)) continue;
+            captured.emplace_back(variable.id, stride);
+            stride += 4u * basic.rows * basic.columns;
+        }
+    if (captured.empty()) return 0;
+    std::size_t cursor = 5, entryEnd = 0, firstDecoration = 0;
+    std::uint32_t entry = 0;
+    while (cursor < code.size()) {
+        const std::uint32_t count = code[cursor] >> 16, op = code[cursor] & 0xFFFF;
+        if (!count) break;
+        if (op == 15) { entry = code[cursor + 2]; entryEnd = cursor + count; }
+        if ((op == 71 || op == 72) && !firstDecoration) firstDecoration = cursor;
+        cursor += count;
+    }
+    if (!entryEnd || !firstDecoration) return 0;
+    std::vector<std::uint32_t> decorations;
+    for (const auto &[id, offset] : captured) {
+        decorations.insert(decorations.end(), {(4u << 16) | 71u, id, 36u, 0u});      // XfbBuffer 0
+        decorations.insert(decorations.end(), {(4u << 16) | 71u, id, 37u, stride});  // XfbStride
+        decorations.insert(decorations.end(), {(4u << 16) | 71u, id, 35u, offset});  // Offset
+    }
+    code.insert(code.begin() + std::ptrdiff_t(firstDecoration), decorations.begin(), decorations.end());
+    const std::uint32_t mode[] = {(3u << 16) | 16u, entry, 11u}; // OpExecutionMode Xfb
+    code.insert(code.begin() + std::ptrdiff_t(entryEnd), mode, mode + 3);
+    // TransformFeedback capability (53) must precede the other sections.
+    const std::uint32_t capability[] = {(2u << 16) | 17u, 53u};
+    code.insert(code.begin() + 5, capability, capability + 2);
+    return stride;
+}
+
 void ReflectStage(const std::vector<std::uint32_t> &code, GLenum stage, Program &program,
                   const std::unordered_map<std::string, int> &declaredBindings) {
     SpvModule m;
@@ -429,6 +479,15 @@ void ReflectStage(const std::vector<std::uint32_t> &code, GLenum stage, Program 
             bool known = false;
             for (const auto &existing : list) known |= existing.name == blockName;
             if (known) continue;
+            if (!storage) {
+                // Introspection of named-block members (glGetUniformIndices).
+                Program members;
+                FlattenBlock(m, members, "", pointee, 0, 0);
+                for (auto &member : members.uniforms) {
+                    member.binding = std::uint32_t(list.size()); // owning block index
+                    program.blockUniforms.push_back(std::move(member));
+                }
+            }
             BlockInfo info;
             info.name = blockName;
             info.binding = binding;
@@ -579,6 +638,8 @@ void ResetLink(Program &program) {
     program.locations.clear();
     program.locationTable.clear();
     program.uniformBlocks.clear();
+    program.blockUniforms.clear();
+    program.feedbackStride = 0;
     program.storageBlocks.clear();
     program.attributes.clear();
     program.samplerUniforms.clear();
@@ -655,6 +716,13 @@ bool Link(Program &program) {
         }
         UnifyBindings(code, plan);
         UnifyVaryings(code, types[i], plan);
+        if (types[i] == GL_VERTEX_SHADER && !program.feedbackVaryings.empty()) {
+            if (!g->transformFeedback) {
+                program.log = "transform feedback capture needs VK_EXT_transform_feedback on this device";
+                return false;
+            }
+            program.feedbackStride = PatchTransformFeedback(code, program.feedbackVaryings);
+        }
         VkShaderModuleCreateInfo info{VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO};
         info.codeSize = code.size() * sizeof(std::uint32_t);
         info.pCode = code.data();
@@ -989,19 +1057,26 @@ void GLAD_API_PTR GetUniformIndices(GLuint program, GLsizei count, const GLchar 
         if (name.size() > 3 && name.compare(name.size() - 3, 3, "[0]") == 0) name.resize(name.size() - 3);
         for (std::size_t u = 0; u < object->uniforms.size(); ++u)
             if (object->uniforms[u].name == name) indices[i] = GLuint(u);
+        for (std::size_t u = 0; u < object->blockUniforms.size(); ++u)
+            if (object->blockUniforms[u].name == name) indices[i] = GLuint(object->uniforms.size() + u);
     }
 }
 void GLAD_API_PTR GetActiveUniformsiv(GLuint program, GLsizei count, const GLuint *indices, GLenum pname, GLint *values) {
     Program *object = Lookup(g->programs, program);
     for (GLsizei i = 0; i < count; ++i) {
         values[i] = 0;
-        if (!object || indices[i] >= object->uniforms.size()) continue;
-        const Uniform &uniform = object->uniforms[indices[i]];
+        if (!object || indices[i] >= object->uniforms.size() + object->blockUniforms.size()) continue;
+        const bool inBlock = indices[i] >= object->uniforms.size();
+        const Uniform &uniform = inBlock ? object->blockUniforms[indices[i] - object->uniforms.size()]
+                                         : object->uniforms[indices[i]];
         switch (pname) {
         case GL_UNIFORM_TYPE: values[i] = GLint(uniform.glType); break;
         case GL_UNIFORM_SIZE: values[i] = GLint(uniform.arraySize); break;
-        case GL_UNIFORM_OFFSET: values[i] = uniform.base == UniformBase::Sampler ? -1 : GLint(uniform.offset); break;
-        case GL_UNIFORM_BLOCK_INDEX: values[i] = -1; break;
+        // Default-block uniforms have no block offset in OpenGL.
+        case GL_UNIFORM_OFFSET: values[i] = inBlock ? GLint(uniform.offset) : -1; break;
+        case GL_UNIFORM_BLOCK_INDEX: values[i] = inBlock ? GLint(uniform.binding) : -1; break;
+        case GL_UNIFORM_ARRAY_STRIDE: values[i] = inBlock ? GLint(uniform.arrayStride) : -1; break;
+        case GL_UNIFORM_MATRIX_STRIDE: values[i] = inBlock ? GLint(uniform.matrixStride) : -1; break;
         case GL_UNIFORM_NAME_LENGTH: values[i] = GLint(uniform.name.size() + 1); break;
         default: break;
         }
@@ -1057,6 +1132,47 @@ void GLAD_API_PTR GetProgramResourceiv(GLuint program, GLenum interface, GLuint 
     if (length) *length = written;
 }
 GLint GLAD_API_PTR GetFragDataLocation(GLuint, const GLchar *) { return 0; }
+void GLAD_API_PTR TransformFeedbackVaryings(GLuint program, GLsizei count, const GLchar *const *names, GLenum mode) {
+    Program *object = Lookup(g->programs, program);
+    if (!object) return;
+    object->feedbackVaryings.clear();
+    if (mode != GL_INTERLEAVED_ATTRIBS) {
+        Warn("only interleaved transform feedback is implemented");
+        return;
+    }
+    for (GLsizei i = 0; i < count; ++i) object->feedbackVaryings.emplace_back(names[i]);
+}
+// Reads one uniform element back from the program's default block.
+void GetUniform(GLuint name, GLint location, bool wantFloat, void *out) {
+    Program *program = Lookup(g->programs, name);
+    if (!program || location < 0 || std::size_t(location) >= program->locationTable.size() || !out) return;
+    const auto [index, element] = program->locationTable[std::size_t(location)];
+    const Uniform &uniform = program->uniforms[index];
+    if (uniform.base == UniformBase::Sampler) {
+        if (wantFloat) *static_cast<GLfloat *>(out) = GLfloat(uniform.units[element]);
+        else *static_cast<GLint *>(out) = uniform.units[element];
+        return;
+    }
+    const std::uint32_t columnStride = uniform.matrixStride ? uniform.matrixStride : 4u * uniform.rows;
+    const std::uint32_t stride = uniform.arrayStride ? uniform.arrayStride : columnStride * uniform.columns;
+    const std::size_t base = uniform.offset + std::size_t(element) * stride;
+    int written = 0;
+    for (int column = 0; column < uniform.columns; ++column)
+        for (int row = 0; row < uniform.rows; ++row, ++written) {
+            const std::size_t at = base + std::size_t(column) * columnStride + std::size_t(row) * 4;
+            if (at + 4 > program->defaults.size()) return;
+            std::uint32_t bits;
+            std::memcpy(&bits, program->defaults.data() + at, 4);
+            float f;
+            std::memcpy(&f, &bits, 4);
+            const bool isFloat = uniform.base == UniformBase::Float;
+            if (wantFloat) static_cast<GLfloat *>(out)[written] = isFloat ? f : GLfloat(GLint(bits));
+            else static_cast<GLint *>(out)[written] = isFloat ? GLint(f) : GLint(bits);
+        }
+}
+void GLAD_API_PTR GetUniformfv(GLuint program, GLint location, GLfloat *values) { GetUniform(program, location, true, values); }
+void GLAD_API_PTR GetUniformiv(GLuint program, GLint location, GLint *values) { GetUniform(program, location, false, values); }
+void GLAD_API_PTR GetUniformuiv(GLuint program, GLint location, GLuint *values) { GetUniform(program, location, false, values); }
 
 template <class F> void (*Erase(F function))(void) { return reinterpret_cast<void (*)(void)>(function); }
 } // namespace
@@ -1148,6 +1264,10 @@ void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table
     table["glGetProgramResourceIndex"] = Erase(&GetProgramResourceIndex);
     table["glGetProgramResourceiv"] = Erase(&GetProgramResourceiv);
     table["glGetFragDataLocation"] = Erase(&GetFragDataLocation);
+    table["glTransformFeedbackVaryings"] = Erase(&TransformFeedbackVaryings);
+    table["glGetUniformfv"] = Erase(&GetUniformfv);
+    table["glGetUniformiv"] = Erase(&GetUniformiv);
+    table["glGetUniformuiv"] = Erase(&GetUniformuiv);
 }
 
 } // namespace JudasVulkan::detail
