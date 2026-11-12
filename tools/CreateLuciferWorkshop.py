@@ -111,7 +111,7 @@ for n,(x,col) in enumerate([(-.4,(1,.025,.02)),(.4,(.025,.18,1))]):
 light(100,'Handheld flashlight',(0,2,7),(1,.94,.79),70,20,'spot')
 obj(101,'Player',(0,1.05,11),{'motor.enabled':'true','motor.radius':'.3','motor.halfHeight':'.6','motor.stepHeight':'.35','motor.supportDistance':'.15','motor.skin':'.02','motor.gravityScale':'1','scripts':'1','script.0.id':'1','script.0.asset':json.dumps(script),'script.0.enabled':'true','script.0.properties':'"{}"','ui.asset':json.dumps(ui),'ui.name':'"night"'})
 write('Scenes/night.judas','\n'.join(lines)+'\n')
-actions=[('move_x',True,[('key:D',1),('key:A',-1)]),('move_y',True,[('key:W',1),('key:S',-1)]),('look_x',True,[('mouse:x',1)]),('look_y',True,[('mouse:y',1)])]
+actions=[('move_x',True,[('key:D',1),('key:A',-1)]),('move_y',True,[('key:W',1),('key:S',-1)]),('look_x',True,[('mouse:dx',1)]),('look_y',True,[('mouse:dy',1)])]
 for name,key in [('jump','Space'),('pause','Escape'),('torch','F'),('day','N'),('patrol','E'),('emergency','Q'),('save','K'),('load','L'),('reset','R'),('fire','MouseLeft')]:actions.append((name,False,[('mouse:Left' if key=='MouseLeft' else 'key:'+key,1)]))
 inputmap='1 '+str(len(actions))+' '+' '.join(json.dumps(name)+' '+str(int(axis))+' '+str(len(bindings))+' '+' '.join(json.dumps(key)+' '+str(scale)+' 0' for key,scale in bindings) for name,axis,bindings in actions)
 write('Lucifer_Workshop.judasproj','JudasProject 1\nname "Lucifer / Night Watch"\nadvanced-fluid-dynamics "false"\nstartup-scene "Scenes/night.judas"\nassets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\ninput-map '+json.dumps(inputmap)+'\n')
