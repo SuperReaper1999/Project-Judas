@@ -35,7 +35,6 @@ jobs:
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
       CCACHE_DIR: /home/runner/.cache/ccache
-      CCACHE_BASEDIR: ${{ github.workspace }}
       CCACHE_COMPILERCHECK: content
       CCACHE_MAXSIZE: 1G
     steps:
@@ -71,13 +70,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ccache
-          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-${{ inputs.candidate }}-candidate
-          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-${{ inputs.candidate }}-candidate
+          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-
       - name: Reuse Linux ICU
         uses: actions/cache@v4
         with:
           path: build/unicode
-          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v1-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v2-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
       - name: Configure exact Linux release candidate
         run: |
           ccache --zero-stats

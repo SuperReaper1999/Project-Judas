@@ -24,6 +24,14 @@ def path_patterns(workflow, key):
     return ast.literal_eval(match.group(1))
 
 
+class CompilerCachePolicy(unittest.TestCase):
+    def test_native_fixture_source_paths_are_not_rewritten(self):
+        # Source-relative project/font fixtures must work from isolated test cwd.
+        for name in ('prealpha.yml', 'release-candidate.yml'):
+            text = (ROOT/'.github/workflows'/name).read_text(encoding='utf-8')
+            self.assertNotIn('CCACHE_BASEDIR:', text, name)
+
+
 class Promotion(unittest.TestCase):
     def setUp(self):
         self.repository = 'owner/engine'

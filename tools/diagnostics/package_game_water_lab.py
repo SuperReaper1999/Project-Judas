@@ -52,8 +52,8 @@ This is a relocated native-lab package, not clean-machine certification.
 WASD/mouse fly; Space/Ctrl vertical; B throw a real box; G gate/vent.
 F5 save; F9 load; Tab cursor; F12 screenshot. Saves stay in this folder.
 
-The Alpha fluid lock remains unchanged. This separate native preview uses the
-new optional C++ grid, real Judas MK2 and Renderer V2. This package is the native diagnostic only. The normal editable project is
+Advanced Fluids V2 requires explicit project opt-in in ordinary games. This
+separate native preview uses the C++ grid, real Judas MK2 and Renderer V2. This package is the native diagnostic only. The normal editable project is
 projects/water_v2_workshop; use judas_export for that game. See current scene,
 JudasJS, shape, gravity and presentation support in the guide. Source and detailed limitations:
 docs/GAME_WATER_PREVIEW.md in Project-Judas.

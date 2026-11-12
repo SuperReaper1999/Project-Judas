@@ -8,7 +8,7 @@ V2 development remains on Experimental; main is not automatically updated. Alpha
 
 The validation manifest owns the two scheduling decisions: `releaseOnly` excludes a case only from routine feedback; `parallel` allows an audited independent case to overlap. Both require actual JSON booleans. All other native cases remain serial. Every case gets its own scratch and user-data directory. Test arguments, binary identities, numerical tolerances, collision coverage and scene complexity are unchanged. Different invocations of one target (cold restoration, portable mode, loss recovery) remain distinct when they catch different failures.
 
-Compiler caches validate actual compiler inputs; dependency cache keys include toolchain/dependency identities. Source/channel identity is regenerated and SDKs are freshly staged/verified. Cache hits are not qualification. Record restore/save time and compiler statistics before claiming a speedup.
+Compiler caches preserve source-path semantics (no `CCACHE_BASEDIR` rewriting, because current native fixture loaders use `__FILE__`). They validate actual compiler inputs; dependency cache keys include toolchain/dependency identities. Source/channel identity is regenerated and SDKs are freshly staged/verified. Cache hits are not qualification. Record restore/save time and compiler statistics before claiming a speedup.
 
 ## Complete candidate qualification
 

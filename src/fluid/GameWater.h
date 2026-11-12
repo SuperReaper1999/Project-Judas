@@ -11,7 +11,7 @@ class SaveArchive;
 struct CollisionAsset;
 
 // Optional game-resolution water. The grid owns quantity; no render particle
-// contributes mass. This backend is not selected by the Alpha fluid policy.
+// contributes mass. Runtime use requires explicit project opt-in in every build channel.
 namespace JudasWater {
 struct Settings {
     glm::ivec3 cells{32, 12, 24};

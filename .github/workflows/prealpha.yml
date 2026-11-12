@@ -55,7 +55,6 @@ jobs:
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
       CCACHE_DIR: /home/runner/.cache/ccache
-      CCACHE_BASEDIR: ${{ github.workspace }}
       CCACHE_COMPILERCHECK: content
       CCACHE_MAXSIZE: 1G
     steps:
@@ -84,13 +83,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ccache
-          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-${{ github.sha }}
-          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-${{ github.sha }}
+          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-
       - name: Reuse immutable ICU build
         uses: actions/cache@v4
         with:
           path: build/unicode
-          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v1-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v2-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
       - name: Tooling positive and negative controls
         run: |
           python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
