@@ -1,6 +1,11 @@
 // Vulkan backend core: instance/device/swapchain ownership, memory, command
 // submission and presentation. See VulkanBackend.h for the backend contract.
 #include "VkCore.h"
+#include <chrono>
+#include <system_error>
+#include <iterator>
+#include <fstream>
+#include <filesystem>
 #include "VulkanBackend.h"
 
 #include <SDL2/SDL.h>
@@ -595,6 +600,69 @@ VkDescriptorSet AllocateSet(VkDescriptorSetLayout layout) {
     return VK_NULL_HANDLE;
 }
 
+// ---------------------------------------------------------- disk caches ---
+namespace {
+std::string PipelineCachePath() {
+    if (g->cacheDirectory.empty()) return {};
+    char name[96];
+    std::snprintf(name, sizeof(name), "/pipelines-%04x-%04x-%08x.bin", g->properties.vendorID, g->properties.deviceID,
+                  g->properties.driverVersion);
+    return g->cacheDirectory + name;
+}
+void LoadPipelineCache() {
+    g->cacheDirectory.clear();
+    if (g->diskCache) {
+        std::string base;
+        if (const char *xdg = std::getenv("XDG_CACHE_HOME"); xdg && *xdg) base = xdg;
+        else if (const char *home = std::getenv("HOME"); home && *home) base = std::string(home) + "/.cache";
+        if (!base.empty()) {
+            std::error_code error;
+            const std::filesystem::path directory = std::filesystem::path(base) / "judas-engine" / "vulkan";
+            std::filesystem::create_directories(directory, error);
+            if (!error) g->cacheDirectory = directory.string();
+        }
+    }
+    std::vector<char> data;
+    if (const std::string path = PipelineCachePath(); !path.empty()) {
+        std::ifstream file(path, std::ios::binary);
+        if (file) data.assign(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+    }
+    // The driver validates the header (vendor, device, cache UUID) and ignores
+    // data it does not recognise.
+    VkPipelineCacheCreateInfo info{VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO};
+    info.initialDataSize = data.size();
+    info.pInitialData = data.data();
+    if (vkCreatePipelineCache(g->device, &info, nullptr, &g->pipelineCache) != VK_SUCCESS) {
+        info.initialDataSize = 0;
+        info.pInitialData = nullptr;
+        data.clear();
+        VK_CHECK(vkCreatePipelineCache(g->device, &info, nullptr, &g->pipelineCache));
+    }
+    g->pipelineCacheLoadedBytes = data.size();
+}
+void SavePipelineCache() {
+    if (!g->pipelineCache) return;
+    const std::string path = PipelineCachePath();
+    std::size_t size = 0;
+    if (!path.empty() && g->pipelinesCreated && vkGetPipelineCacheData(g->device, g->pipelineCache, &size, nullptr) == VK_SUCCESS &&
+        size > g->pipelineCacheLoadedBytes) {
+        std::vector<char> data(size);
+        if (vkGetPipelineCacheData(g->device, g->pipelineCache, &size, data.data()) == VK_SUCCESS) {
+            // Write then rename so a concurrent or interrupted process never leaves a torn file.
+            const std::string temporary = path + "." + std::to_string(std::uint64_t(std::chrono::steady_clock::now().time_since_epoch().count())) + ".tmp";
+            std::ofstream file(temporary, std::ios::binary | std::ios::trunc);
+            file.write(data.data(), std::streamsize(size));
+            file.close();
+            std::error_code error;
+            if (file.good()) std::filesystem::rename(temporary, path, error);
+            if (!file.good() || error) std::filesystem::remove(temporary, error);
+        }
+    }
+    vkDestroyPipelineCache(g->device, g->pipelineCache, nullptr);
+    g->pipelineCache = VK_NULL_HANDLE;
+}
+} // namespace
+
 // ------------------------------------------------------------- swapchain ---
 namespace {
 void DestroySwapchain() {
@@ -774,6 +842,7 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     context->glMinor = glMinor;
     if (const char *value = std::getenv("JUDAS_VULKAN_VALIDATION"))
         context->validation = std::strcmp(value, "0") != 0;
+    if (const char *value = std::getenv("JUDAS_VULKAN_SHADER_CACHE")) context->diskCache = std::strcmp(value, "0") != 0;
     if (const char *value = std::getenv("JUDAS_VULKAN_DRAW_CACHE")) context->drawCache = std::strcmp(value, "0") != 0;
     if (const char *value = std::getenv("JUDAS_VULKAN_TRACE"))
         context->trace = std::strcmp(value, "0") != 0;
@@ -1009,6 +1078,7 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
     poolInfo.queueFamilyIndex = g->queueFamily;
     VK_CHECK(vkCreateCommandPool(g->device, &poolInfo, nullptr, &g->commandPool));
+    LoadPipelineCache();
     VkQueryPoolCreateInfo queryInfo{VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO};
     queryInfo.queryType = VK_QUERY_TYPE_TIMESTAMP;
     queryInfo.queryCount = Context::kQuerySlots;
@@ -1078,6 +1148,7 @@ void Shutdown() {
     if (!g) return;
     if (g->device) {
         PrintDispatchTiming();
+        SavePipelineCache();
         vkDeviceWaitIdle(g->device);
         if (g->cmd) {
             EndPass();
@@ -1134,6 +1205,10 @@ void Shutdown() {
             vkGetInstanceProcAddr(g->instance, "vkDestroyDebugUtilsMessengerEXT"));
         if (destroy) destroy(g->instance, g->messenger, nullptr);
     }
+    if (g->trace)
+        std::fprintf(stderr, "[Vulkan trace] shader programs: %llu from disk, %llu compiled, %.1f ms; pipelines created: %llu, %.1f ms\n",
+                     static_cast<unsigned long long>(g->shaderCacheHits), static_cast<unsigned long long>(g->shaderCacheMisses),
+                     g->shaderSeconds * 1e3, static_cast<unsigned long long>(g->pipelinesCreated), g->pipelineSeconds * 1e3);
     if (g->trace)
         std::fprintf(stderr, "[Vulkan trace] draws reusing state: %llu, rebuilding: %llu\n",
                      static_cast<unsigned long long>(g->drawCacheHits), static_cast<unsigned long long>(g->drawCacheMisses));

@@ -34,14 +34,18 @@ means the Vulkan side owns execution explicitly, not that shaders fork.
 2. **Stable bindings for streamed data.** Buffer textures used as float tables
    (bone palettes) are bound as dynamic-offset storage buffers, so a new palette
    is a new offset, not a new descriptor set.
-3. **Ahead-of-time state.** SPIR-V and the driver pipeline cache persist on
-   disk; pipelines seen in earlier runs are created at startup, before the first
-   frame, instead of at first use.
-4. **Memory placement.** Static geometry and GPU-owned buffers live in device
-   memory; streamed data stays host-visible.
+3. **Ahead-of-time state.** Compiled SPIR-V (one file per program, keyed by
+   the adapted sources and compiler version) and the driver's pipeline cache
+   persist under `$XDG_CACHE_HOME/judas-engine/vulkan` (default `~/.cache`).
+   `JUDAS_VULKAN_SHADER_CACHE=0` disables both. Creating known pipelines before
+   the first frame is not implemented yet: they are still created at first
+   use, from the warm cache.
+4. **Memory placement.** GPU-owned buffers (`*_COPY`) live in device memory.
+   Placing static geometry there too was measured and rejected (no gain).
 5. **Native passes.** Where the OpenGL formulation is the limit, a pass has a
-   Vulkan-specific path selected by `JudasVulkan::Active()`, declared in
-   `src/vulkan/VulkanNative.h`. The OpenGL path of the same pass is untouched.
+   Vulkan-specific path selected by `JudasVulkan::Active()`; the OpenGL path of
+   the same pass is untouched. So far: the GPU particle billboard draw
+   (`src/render/GpuParticlePass.cpp`).
 
 ## Rules
 

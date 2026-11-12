@@ -465,6 +465,14 @@ struct Context {
     std::uint32_t dirty = DirtyAll;
     bool drawCache = true; // JUDAS_VULKAN_DRAW_CACHE=0 forces every draw to rebuild
     std::uint64_t drawCacheHits = 0, drawCacheMisses = 0;
+    // Ahead-of-time state persisted between runs (JUDAS_VULKAN_SHADER_CACHE=0
+    // disables both): compiled SPIR-V per program and the driver's pipeline cache.
+    bool diskCache = true;
+    std::string cacheDirectory; // empty when unavailable
+    VkPipelineCache pipelineCache = VK_NULL_HANDLE;
+    std::size_t pipelineCacheLoadedBytes = 0;
+    double shaderSeconds = 0, pipelineSeconds = 0;
+    std::uint64_t shaderCacheHits = 0, shaderCacheMisses = 0, pipelinesCreated = 0;
     std::deque<std::uint64_t> frameSerials; // last submission serial of each recent frame
     bool validation = false, trace = false;
 };

@@ -4,6 +4,10 @@
 // blocks are then reflected from the generated SPIR-V itself, so the layout
 // used on the CPU is exactly the layout the driver executes.
 #include "VkCore.h"
+#include <system_error>
+#include <fstream>
+#include <filesystem>
+#include <chrono>
 
 #include <glslang/Public/ResourceLimits.h>
 #include <glslang/Public/ShaderLang.h>
@@ -729,14 +733,153 @@ void ResetLink(Program &program) {
     program.defaultsDirty = true;
 }
 
-bool Link(Program &program) {
-    ResetLink(program);
-    program.log.clear();
+// ---- SPIR-V disk cache ----
+// One file per linked program, named by a hash of the adapted stage sources.
+// It stores what glslang produced (per-stage SPIR-V before binding
+// unification, and the declared OpenGL block bindings), so a later run skips
+// parsing, linking and code generation entirely.
+struct CompiledProgram {
+    std::vector<std::vector<std::uint32_t>> code;
+    std::unordered_map<std::string, int> declared;
+};
+std::string SourceKey(const std::vector<std::string> &sources, const std::vector<GLenum> &types) {
+    std::uint64_t a = 1469598103934665603ull, b = 0x9E3779B97F4A7C15ull;
+    const auto mix = [&](const void *data, std::size_t bytes) {
+        const auto *p = static_cast<const unsigned char *>(data);
+        for (std::size_t i = 0; i < bytes; ++i) {
+            a = (a ^ p[i]) * 1099511628211ull;
+            b = (b + p[i]) * 0xD6E8FEB86659FD93ull;
+            b ^= b >> 32;
+        }
+    };
+    const std::string version = std::string("judas-spv-1/") + glslang::GetGlslVersionString();
+    mix(version.data(), version.size());
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        mix(&types[i], sizeof(types[i]));
+        const std::uint64_t length = sources[i].size();
+        mix(&length, sizeof(length));
+        mix(sources[i].data(), sources[i].size());
+    }
+    char text[40];
+    std::snprintf(text, sizeof(text), "%016llx%016llx", static_cast<unsigned long long>(a), static_cast<unsigned long long>(b));
+    return text;
+}
+constexpr std::uint32_t kCacheMagic = 0x4A565331; // "JVS1"
+bool LoadCompiled(const std::string &key, std::size_t stages, CompiledProgram &out) {
+    if (g->cacheDirectory.empty()) return false;
+    std::ifstream file(g->cacheDirectory + "/" + key + ".spv", std::ios::binary);
+    if (!file) return false;
+    const auto read = [&](void *data, std::size_t bytes) { return bool(file.read(static_cast<char *>(data), std::streamsize(bytes))); };
+    std::uint32_t magic = 0, count = 0;
+    if (!read(&magic, 4) || magic != kCacheMagic || !read(&count, 4) || count != stages) return false;
+    out.code.resize(count);
+    for (auto &code : out.code) {
+        std::uint32_t words = 0;
+        if (!read(&words, 4) || words < 5 || words > (64u << 20)) return false;
+        code.resize(words);
+        if (!read(code.data(), std::size_t(words) * 4) || code[0] != 0x07230203u) return false;
+    }
+    std::uint32_t entries = 0;
+    if (!read(&entries, 4) || entries > 4096) return false;
+    for (std::uint32_t i = 0; i < entries; ++i) {
+        std::uint32_t length = 0;
+        std::int32_t binding = 0;
+        if (!read(&length, 4) || length > 1024) return false;
+        std::string name(length, '\0');
+        if (!read(name.data(), length) || !read(&binding, 4)) return false;
+        out.declared[name] = binding;
+    }
+    std::uint32_t end = 0;
+    return read(&end, 4) && end == ~kCacheMagic;
+}
+void StoreCompiled(const std::string &key, const CompiledProgram &compiled) {
+    if (g->cacheDirectory.empty()) return;
+    const std::string path = g->cacheDirectory + "/" + key + ".spv";
+    const std::string temporary = path + "." + std::to_string(std::uint64_t(std::chrono::steady_clock::now().time_since_epoch().count())) + ".tmp";
+    std::ofstream file(temporary, std::ios::binary | std::ios::trunc);
+    const auto write = [&](const void *data, std::size_t bytes) { file.write(static_cast<const char *>(data), std::streamsize(bytes)); };
+    const std::uint32_t count = std::uint32_t(compiled.code.size());
+    write(&kCacheMagic, 4);
+    write(&count, 4);
+    for (const auto &code : compiled.code) {
+        const std::uint32_t words = std::uint32_t(code.size());
+        write(&words, 4);
+        write(code.data(), code.size() * 4);
+    }
+    const std::uint32_t entries = std::uint32_t(compiled.declared.size());
+    write(&entries, 4);
+    for (const auto &[name, binding] : compiled.declared) {
+        const std::uint32_t length = std::uint32_t(name.size());
+        const std::int32_t value = binding;
+        write(&length, 4);
+        write(name.data(), name.size());
+        write(&value, 4);
+    }
+    const std::uint32_t end = ~kCacheMagic;
+    write(&end, 4);
+    file.close();
+    std::error_code error;
+    if (file.good()) std::filesystem::rename(temporary, path, error);
+    if (!file.good() || error) std::filesystem::remove(temporary, error);
+}
+
+bool CompileWithGlslang(const std::vector<std::string> &sources, const std::vector<GLenum> &types, CompiledProgram &out,
+                        std::string &log) {
     if (!glslangReady) {
         glslang::InitializeProcess();
         glslangReady = true;
     }
     std::vector<std::unique_ptr<glslang::TShader>> shaders;
+    glslang::TProgram linker;
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        auto shader = std::make_unique<glslang::TShader>(StageOf(types[i]));
+        const char *text = sources[i].c_str();
+        shader->setStrings(&text, 1);
+        ConfigureShader(*shader, StageOf(types[i]));
+        if (!shader->parse(GetDefaultResources(), 450, false, kMessages)) {
+            log = shader->getInfoLog();
+            return false;
+        }
+        linker.addShader(shader.get());
+        shaders.push_back(std::move(shader));
+    }
+    if (!linker.link(kMessages)) {
+        log = linker.getInfoLog();
+        return false;
+    }
+    // Declared interface-block bindings are OpenGL binding points; record them
+    // before Vulkan binding assignment rewrites the qualifiers.
+    if (linker.buildReflection(EShReflectionSeparateBuffers | EShReflectionAllBlockVariables)) {
+        for (int i = 0; i < linker.getNumUniformBlocks(); ++i)
+            out.declared[linker.getUniformBlock(i).name] = linker.getUniformBlock(i).getBinding();
+        for (int i = 0; i < linker.getNumBufferBlocks(); ++i)
+            out.declared[linker.getBufferBlock(i).name] = linker.getBufferBlock(i).getBinding();
+    }
+    if (!linker.mapIO()) {
+        log = linker.getInfoLog();
+        return false;
+    }
+    out.code.resize(types.size());
+    for (std::size_t i = 0; i < types.size(); ++i) {
+        glslang::SpvOptions options;
+        options.disableOptimizer = true;
+        glslang::GlslangToSpv(*linker.getIntermediate(StageOf(types[i])), out.code[i], &options);
+        if (out.code[i].empty()) {
+            log = "SPIR-V generation produced no code";
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Link(Program &program) {
+    ResetLink(program);
+    program.log.clear();
+    const auto started = std::chrono::steady_clock::now();
+    struct Timer {
+        std::chrono::steady_clock::time_point start;
+        ~Timer() { g->shaderSeconds += std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count(); }
+    } timer{started};
     std::vector<std::string> sources;
     std::vector<GLenum> types;
     for (GLuint name : program.attached) {
@@ -753,46 +896,19 @@ bool Link(Program &program) {
         return false;
     }
     program.compute = types.size() == 1 && types[0] == GL_COMPUTE_SHADER;
-    glslang::TProgram linker;
-    for (std::size_t i = 0; i < sources.size(); ++i) {
-        auto shader = std::make_unique<glslang::TShader>(StageOf(types[i]));
-        const char *text = sources[i].c_str();
-        shader->setStrings(&text, 1);
-        ConfigureShader(*shader, StageOf(types[i]));
-        if (!shader->parse(GetDefaultResources(), 450, false, kMessages)) {
-            program.log = shader->getInfoLog();
-            return false;
-        }
-        linker.addShader(shader.get());
-        shaders.push_back(std::move(shader));
+    CompiledProgram compiled;
+    const std::string key = SourceKey(sources, types);
+    if (LoadCompiled(key, types.size(), compiled)) ++g->shaderCacheHits;
+    else {
+        compiled = CompiledProgram{};
+        if (!CompileWithGlslang(sources, types, compiled, program.log)) return false;
+        ++g->shaderCacheMisses;
+        StoreCompiled(key, compiled);
     }
-    if (!linker.link(kMessages)) {
-        program.log = linker.getInfoLog();
-        return false;
-    }
-    // Declared interface-block bindings are OpenGL binding points; record them
-    // before Vulkan binding assignment rewrites the qualifiers.
-    std::unordered_map<std::string, int> declared;
-    if (linker.buildReflection(EShReflectionSeparateBuffers | EShReflectionAllBlockVariables)) {
-        for (int i = 0; i < linker.getNumUniformBlocks(); ++i)
-            declared[linker.getUniformBlock(i).name] = linker.getUniformBlock(i).getBinding();
-        for (int i = 0; i < linker.getNumBufferBlocks(); ++i)
-            declared[linker.getBufferBlock(i).name] = linker.getBufferBlock(i).getBinding();
-    }
-    if (!linker.mapIO()) {
-        program.log = linker.getInfoLog();
-        return false;
-    }
+    const auto &declared = compiled.declared;
     BindingPlan plan;
     for (std::size_t i = 0; i < types.size(); ++i) {
-        std::vector<std::uint32_t> code;
-        glslang::SpvOptions options;
-        options.disableOptimizer = true;
-        glslang::GlslangToSpv(*linker.getIntermediate(StageOf(types[i])), code, &options);
-        if (code.empty()) {
-            program.log = "SPIR-V generation produced no code";
-            return false;
-        }
+        std::vector<std::uint32_t> &code = compiled.code[i];
         UnifyBindings(code, plan);
         UnifyVaryings(code, types[i], plan);
         if (types[i] == GL_VERTEX_SHADER && !program.feedbackVaryings.empty()) {
@@ -833,7 +949,8 @@ bool Link(Program &program) {
         info.stage.module = program.modules[2];
         info.stage.pName = "main";
         info.layout = program.layout;
-        if (vkCreateComputePipelines(g->device, VK_NULL_HANDLE, 1, &info, nullptr, &program.computePipeline) != VK_SUCCESS) {
+        ++g->pipelinesCreated;
+        if (vkCreateComputePipelines(g->device, g->pipelineCache, 1, &info, nullptr, &program.computePipeline) != VK_SUCCESS) {
             program.log = "vkCreateComputePipelines failed";
             return false;
         }
@@ -874,12 +991,28 @@ void GLAD_API_PTR CompileShader(GLuint shader) {
         glslangReady = true;
     }
     const std::string adapted = AdaptSource(object->source, object->type);
+    // A shader that compiled in an earlier run compiles now: the marker is keyed
+    // by the adapted source and the compiler version.
+    const std::string marker = g->cacheDirectory.empty() ? std::string()
+                                                         : g->cacheDirectory + "/" + SourceKey({adapted}, {object->type}) + ".ok";
+    std::error_code ignored;
+    if (!marker.empty() && std::filesystem::exists(marker, ignored)) {
+        object->compiled = true;
+        object->log.clear();
+        return;
+    }
+    const auto started = std::chrono::steady_clock::now();
+    struct Timer {
+        std::chrono::steady_clock::time_point start;
+        ~Timer() { g->shaderSeconds += std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count(); }
+    } timer{started};
     glslang::TShader parser(StageOf(object->type));
     const char *text = adapted.c_str();
     parser.setStrings(&text, 1);
     ConfigureShader(parser, StageOf(object->type));
     object->compiled = parser.parse(GetDefaultResources(), 450, false, kMessages);
     object->log = object->compiled ? std::string() : std::string(parser.getInfoLog());
+    if (object->compiled && !marker.empty()) std::ofstream(marker, std::ios::binary).put('1');
 }
 void GLAD_API_PTR GetShaderiv(GLuint shader, GLenum pname, GLint *value) {
     ShaderObject *object = Lookup(g->shaders, shader);

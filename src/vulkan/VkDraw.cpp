@@ -1,3 +1,4 @@
+#include <chrono>
 // Vulkan backend: buffer objects, vertex arrays, render-pass management,
 // pipeline/descriptor construction, draws, clears and compute dispatch.
 #include <map>
@@ -582,7 +583,11 @@ VkPipeline GetPipeline(Program &program, const VertexSetup &setup, VkPrimitiveTo
     info.pDynamicState = &dynamic;
     info.layout = program.layout;
     VkPipeline pipeline = VK_NULL_HANDLE;
-    if (vkCreateGraphicsPipelines(g->device, VK_NULL_HANDLE, 1, &info, nullptr, &pipeline) != VK_SUCCESS) {
+    const auto started = std::chrono::steady_clock::now();
+    const VkResult created = vkCreateGraphicsPipelines(g->device, g->pipelineCache, 1, &info, nullptr, &pipeline);
+    g->pipelineSeconds += std::chrono::duration<double>(std::chrono::steady_clock::now() - started).count();
+    ++g->pipelinesCreated;
+    if (created != VK_SUCCESS) {
         Warn("graphics pipeline creation failed");
         return VK_NULL_HANDLE;
     }
