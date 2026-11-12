@@ -12,7 +12,7 @@ Check the release page for subsequently published packages.
 
 This checkout is an unsupported V2 source preview on Experimental. Published Alpha packages remain separately versioned.
 
-Scripting V2, Editor V2, Renderer V2, Particles V2, Terrain V2 and game-resolution Advanced Fluids V2 are the current implementations. Terrain V2 and Advanced Fluids V2 have operator gameplay review; the architectural purge awaits separate acceptance. The Alpha fluid lock remains unchanged.
+Scripting V2, Editor V2, Renderer V2, Particles V2, Terrain V2 and game-resolution Advanced Fluids V2 are the current implementations. Terrain V2 and Advanced Fluids V2 have operator gameplay review; the architectural purge awaits separate acceptance. Advanced Fluids V2 is now project-opt-in in all V2 build channels; V2 remains on Experimental and main is unchanged.
 
 Native demonstration gameplay, pose-delta saves, PBF fluids, reservoir/container liquids and separate bounded V1 terrain are retired without compatibility shims or migrations. Historical projects require their matching historical engine.
 

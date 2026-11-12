@@ -1,6 +1,5 @@
 #include "AssetDatabase.h"
 #include "Project.h"
-#include "ProjectFeaturePolicy.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "ScriptSystem.h"
@@ -20,10 +19,7 @@ int main() {
             std::cerr << "FAIL " << message << '\n';
         }
     };
-    if (AdvancedFluidDynamicsRestriction()) {
-        std::cout << "Source preview requires Experimental; Alpha remains locked\n";
-        return 0;
-    }
+
     const auto root = fs::temp_directory_path() /
                       ("judas-water-script-" +
                        std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));

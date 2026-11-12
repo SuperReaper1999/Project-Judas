@@ -1,7 +1,6 @@
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "Project.h"
-#include "ProjectFeaturePolicy.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "ScriptSystem.h"
@@ -14,10 +13,7 @@
 // Exercise the actual shipped game script with real input and MK2 bodies,
 // rather than a substitute controller that merely calls the same APIs.
 int main() {
-    if (AdvancedFluidDynamicsRestriction()) {
-        std::cout << "Workshop qualification requires Experimental source preview\n";
-        return 0;
-    }
+
     int checks = 0, failures = 0;
     auto check = [&](bool passed, const std::string& message) {
         ++checks;

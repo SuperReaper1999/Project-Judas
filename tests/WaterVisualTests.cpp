@@ -2,7 +2,6 @@
 #include "InteractivePlay.h"
 #include "PerformanceProfiler.h"
 #include "Project.h"
-#include "ProjectFeaturePolicy.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
 #include "ScreenshotWriter.h"
@@ -32,7 +31,7 @@ void Measure(std::vector<double> values,const std::string& label){
 }
 }
 int main(int argc,char** argv){
-    if(AdvancedFluidDynamicsRestriction()){std::cout<<"Water visuals require Experimental source preview\n";return 0;}
+
     const std::filesystem::path out=std::filesystem::absolute(argc>1?argv[1]:".cache/water-visual-check");
     const bool measured=argc>2&&std::string(argv[2])=="--measure";
     std::filesystem::create_directories(out);

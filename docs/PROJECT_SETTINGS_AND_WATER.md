@@ -25,10 +25,10 @@ Try [Stillwater](../projects/basic_water_lab/README.md). Its project-owned contr
 
 ## Advanced Fluids V2
 
-`advanced-fluid-dynamics "false"` is the default. Experimental builds require explicit confirmation of the performance/limitations warning. Alpha builds enforce a compiled lock: authored opt-in cannot bypass it through a scene, save, script, environment variable or export. Disable the setting to use Basic Water. There is no conversion of advanced saves into Basic Water.
+`advanced-fluid-dynamics "false"` is the default. Every V2 build channel requires explicit project opt-in; the editor asks for confirmation of the performance/limitations warning. Alpha is a build label, not a separate fluid implementation or an execution restriction. Disable the setting to use Basic Water. There is no conversion of advanced saves into Basic Water.
 
 The sole advanced backend is [Game Water V2](ADVANCED_FLUIDS_V2.md): a coarse conservative physical grid, finite air reservoirs, MK2 body coupling and a separately reconstructed visual surface. The fluid volume component owns grid dimensions, cell size and initial fill. Backend selectors, PBF emitters and M54/M55 liquid bakes no longer exist.
 
 With advanced simulation disabled, fluid component metadata remains editable but allocates no solver, contributes no advanced force and creates no advanced-fluid region pin. Current policy tests cover default water, dormant authored regions, save staging and export. Existing unsupported region/origin combinations still reject explicitly when enabled.
 
-Use [Water V2 Workshop](../projects/water_v2_workshop/README.md) on Experimental for the accepted physical/presentation workflow. Basic Water remains independent. This architectural cleanup does not change the accepted solver or unlock Alpha.
+Use [Water V2 Workshop](../projects/water_v2_workshop/README.md) on Experimental for the accepted physical/presentation workflow. Basic Water remains independent. The accepted solver is unchanged. V2 remains on Experimental; removing the channel restriction does not promote it to main.

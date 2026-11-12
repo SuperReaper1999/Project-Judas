@@ -1,4 +1,3 @@
-#include "ProjectFeaturePolicy.h"
 #include "SaveArchive.h"
 #include "RuntimeWorld.h"
 #include "Project.h"
@@ -47,18 +46,9 @@ int main(){try{
  Scene exported;Check(LoadSceneFromFile(packaged.StartupScenePath(),exported,error)&&exported.Find(object.id)->fluidVolume.has_value(),"export retains inert authored component");
  project.Settings().advancedFluidDynamics=true;options.destination+="-enabled";
  const bool enabledExport=ExportProject(project,options,result,error);
- Check(enabledExport==!bool(AdvancedFluidDynamicsRestriction()),"current self-contained grid export follows the compiled channel lock: "+error);
- if(enabledExport){Project enabledPackage;Check(enabledPackage.Load((std::filesystem::path(result.packageDirectory)/"game.judasproj").string(),error)&&enabledPackage.Settings().advancedFluidDynamics,"Experimental grid export preserves explicit opt-in");}
- if(AdvancedFluidDynamicsRestriction()) {
-  Check(error.find("contact stability")!=std::string::npos,"Alpha exporter reports the actual feature restriction before dependency errors");
-  Check(!std::filesystem::exists(options.destination),"rejected Alpha export leaves no misleading package");
-  Check(project.Settings().advancedFluidDynamics,"export preflight never silently rewrites project policy");
-  RuntimeWorld blocked;blocked.ConfigureProject(project.Settings());
-  Check(!blocked.Build(Scene{},nullptr,error)&&error.find("contact stability")!=std::string::npos,
-        "public runtime construction rejects a hand-authored Alpha opt-in");
-  project.Settings().advancedFluidDynamics=false;blocked.ConfigureProject(project.Settings());
-  Check(blocked.Build(Scene{},nullptr,error),"correcting policy allows ordinary world construction after rejection");
- }
+ Check(enabledExport,"V2 opt-in exports in every build channel: "+error);
+ if(enabledExport){Project enabledPackage;Check(enabledPackage.Load((std::filesystem::path(result.packageDirectory)/"game.judasproj").string(),error)&&enabledPackage.Settings().advancedFluidDynamics,"grid export preserves explicit opt-in");}
+
 
  std::cout<<"Project fluid policy: "<<checks<<" checks, 0 failures\n";return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

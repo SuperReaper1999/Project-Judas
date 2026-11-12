@@ -49,10 +49,7 @@ requiring particle `burst(count)` to receive a finite integer number from zero
 through 100,000. Native binding modularization does not introduce a second VM,
 an asynchronous gameplay scheduler or a required script-conversion step.
 
-Basic Water and swimming remain independent of Advanced Fluids. The **published
-Alpha-channel fluid lock is unchanged**. Experimental builds retain the existing
-explicit project opt-in; its V2 gameplay/visual review is separate from release
-qualification. Keep Advanced Fluids
+Basic Water and swimming remain independent of Advanced Fluids. **V2 supports explicit project opt-in in every build channel.** Published V1 packages remain unchanged; V2 remains only on Experimental. Its accepted gameplay/visual review is separate from release qualification. Keep Advanced Fluids
 disabled in the RPG project. New V2 platform results retain their recorded scope;
 existing Windows/Android acceptance is not blanket certification of this new
 local build. A host-built Linux SDK is not automatically an Ubuntu 24.04 ABI

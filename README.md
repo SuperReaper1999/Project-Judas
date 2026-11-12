@@ -25,7 +25,7 @@ Check the release page for subsequently published packages.
 
 Scripting, Editor, Renderer, Particles and Terrain V2 are integrated on Experimental.
 Advanced Fluids V2 has a playable conservative water grid and independent visual
-surface; **the Alpha compiled fluid lock remains unchanged**. Basic Water and
+surface; **V2 supports project opt-in in every build channel**. Basic Water and
 swimming work independently and are enabled by default.
 
 The [architectural purge](docs/ARCHITECTURAL_PURGE.md) removes native demo gameplay,

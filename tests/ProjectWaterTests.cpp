@@ -1,4 +1,3 @@
-#include "ProjectFeaturePolicy.h"
 #include "BuildIdentity.h"
 #include "BasicWater.h"
 #include "Project.h"
@@ -30,11 +29,6 @@ Scene WaterScene(bool advancedComponents=false){
 }
 int main(){
     std::string error;
-    // The expected contract comes from the compiled channel, not the policy
-    // function under test: accidentally unlocking Alpha must fail this suite.
-    const bool alphaChannel = std::string(GetBuildIdentity().channel) == "Alpha";
-    Check((AdvancedFluidDynamicsRestriction() != nullptr) == alphaChannel,
-          "advanced-fluid restriction agrees with independently observed build channel");
     ProjectSettings defaults;defaults.name="Water policy";defaults.startupScene="Scenes/main.judas";
     Check(defaults.basicWater&&defaults.waterSwimming&&!defaults.advancedFluidDynamics,"basic water/swimming on, advanced off by default");
     auto text=Project::SerializeToString(defaults);ProjectSettings parsed;
@@ -95,20 +89,12 @@ int main(){
     Check(world.SampleWater({-512,-1,0},{0,1,0},.3f,.2f).immersion==1,"water frame follows shifted world");
     world.Destroy();Check(world.Build(scene,nullptr,error)&&!world.GridWater()&&world.BasicWaters().size()==1,"Play/Stop reconstruction retains immutable project policy");
     auto optin=defaults;optin.advancedFluidDynamics=true;RuntimeWorld advanced;advanced.ConfigureProject(optin);
-    if (AdvancedFluidDynamicsRestriction()) {
-        Check(!advanced.AdvancedFluidsEnabled(),"Alpha denies effective activation even before Build");
-        Check(!advanced.Build(scene,nullptr,error)&&error.find("contact stability")!=std::string::npos,
-              "Alpha rejects explicit opt-in before constructing the world");
-        Check(!advanced.IsBuilt(),"rejected Alpha world is not published");
-        Check(!advanced.GridWater(),"rejected Alpha opt-in allocates no advanced solver");
-        Check(!advanced.Build(Scene{},nullptr,error),"even an empty scene cannot bypass Alpha project policy");
-        Check(!advanced.Build(scene,nullptr,error,nullptr,nullptr,true),"cold snapshot construction cannot bypass Alpha policy");
-    } else {
-    Check(advanced.Build(scene,nullptr,error)&&advanced.GridWater(),"explicit Experimental opt-in creates the authoritative grid owner");
+
+    Check(advanced.Build(scene,nullptr,error)&&advanced.GridWater(),"explicit project opt-in creates the authoritative grid owner");
     for(unsigned i=0;i<4;++i){input.BeginFixedStep();StepAuthoritativeWorld(advanced,input,1.f/60);}
     Check(advanced.GridWater()!=nullptr,"opted-in current backend advances through normal simulation");
 
-    }
+
     auto off=defaults;off.basicWater=false;RuntimeWorld noWater;noWater.ConfigureProject(off);Check(noWater.Build(WaterScene(),nullptr,error)&&noWater.BasicWaters().empty()&&noWater.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"basic-water project switch controls rendering volumes and queries");
     auto noSwim=defaults;noSwim.waterSwimming=false;RuntimeWorld visualOnly;visualOnly.ConfigureProject(noSwim);Check(visualOnly.Build(WaterScene(),nullptr,error)&&visualOnly.BasicWaters().size()==1&&visualOnly.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"swimming can be disabled independently of water surfaces");
     std::cout<<"ProjectWaterTests: "<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;

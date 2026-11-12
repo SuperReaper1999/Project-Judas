@@ -1,5 +1,7 @@
 # Lucifer / Lighting V2
 
+**Subsequent V2 policy update:** the obsolete Alpha fluid restriction has been removed on Experimental. Advanced Fluids remains project-opt-in. References below to a retained lock describe the original Lucifer qualification checkpoints, not the current policy. Main and published V1 packages remain unchanged.
+
 Lucifer is implemented on Experimental and awaits operator acceptance. This is
 an unsupported Alpha V2 source-build preview, not a published release. Main,
 Advanced Fluids V2's Alpha lock and consumer RPG SDK selection are unchanged.

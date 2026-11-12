@@ -6,7 +6,7 @@ Retired findings and original evidence are recoverable at their historical Git r
 <!-- judas-findings:start -->
 | ID | Status | Current scope / disposition |
 | --- | --- | --- |
-| FLUID-LOCK | locked | Advanced Fluids V2 has operator gameplay/visual acceptance on Experimental. Alpha compiled lock remains; this purge does not unlock or publish it. |
+| FLUID-LOCK | retired | Obsolete V1-era channel restriction removed. Accepted Advanced Fluids V2 is available through explicit project opt-in in every V2 build channel. V2 remains on Experimental; main and existing packages are unchanged. |
 | TERRAIN-EDITOR | scoped measured improvement | Hidden Game rendering and editing-preview LOD were corrected. Current whole-frame SDK editor/standalone observations are recorded in docs/WHOLE_ENGINE_PERFORMANCE.md; different viewport sizes and workloads do not establish universal editor/runtime parity. |
 | BALANCE-RECOVERY | deferred | Humanoid get-up and animation blending remain limited; no claim of general natural physical recovery. |
 | PLATFORMS | scoped | Linux qualification is current per purge evidence. Earlier Windows/Android hardware acceptance does not certify this changed checkpoint. |

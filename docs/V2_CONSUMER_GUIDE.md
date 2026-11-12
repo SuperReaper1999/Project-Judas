@@ -143,7 +143,7 @@ Run the exported game after relocation, outside the engine checkout. Preserve
 its complete package and provenance files. A local host-built SDK is not by
 itself a clean-machine or older-distribution certification.
 
-**The published Alpha fluid lock is unchanged.** Existing Experimental/Local
+**V2 fluid execution is available by project opt-in in every V2 build channel.** Published V1 packages remain unchanged. Existing Experimental/Local
 builds retain advanced-fluid opt-in for repair and regression work; that
 availability is not qualification for a consumer game. Keep Advanced Fluid
 Dynamics disabled in this RPG upgrade. Basic Water and swimming remain

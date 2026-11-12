@@ -1,8 +1,8 @@
 # Advanced Fluids V2 — current architecture
 
 The playable game-water implementation passed operator gameplay and visual review
-on Experimental. **Alpha's compiled Advanced Fluid Dynamics lock remains in place.**
-This purge neither unlocks nor publishes the feature. Basic Water and swimming
+on Experimental. **Advanced Fluids V2 is available by project opt-in in every V2 build channel.**
+The obsolete Alpha-channel restriction is removed; no release or main promotion is implied. Basic Water and swimming
 remain available independently, with no advanced solver allocation by default.
 
 ## Authoritative implementation

@@ -4,8 +4,8 @@
   "findings": [
     {
       "id": "FLUID-LOCK",
-      "status": "locked",
-      "disposition": "Advanced Fluids V2 has operator gameplay/visual acceptance on Experimental. Alpha compiled lock remains; this purge does not unlock or publish it."
+      "status": "retired",
+      "disposition": "Obsolete V1-era channel restriction removed. Accepted Advanced Fluids V2 is available through explicit project opt-in in every V2 build channel. V2 remains on Experimental; main and existing packages are unchanged."
     },
     {
       "id": "TERRAIN-EDITOR",

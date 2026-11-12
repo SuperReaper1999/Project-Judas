@@ -650,7 +650,6 @@ private:
     std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
     std::unique_ptr<JudasWater::WorldSystem> m_gridWater;
-    bool m_advancedFluidsRequested=false;
     bool m_advancedFluids=false, m_basicWaterEnabled=true, m_waterSwimming=true;
     std::set<EntityId> m_basicWaterOwners;
     std::map<EntityId,EntityCategories> m_entityCategories;

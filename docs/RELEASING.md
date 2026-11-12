@@ -195,13 +195,7 @@ Configure `JUDAS_ENABLE_VALIDATION=ON` and `JUDAS_SDK_RELEASE=ON` in the baselin
 namespace, then use `scripts/qualify_m100.py` for one coordinated authoritative
 pass. This runs the registered native gates plus joints, vehicles, gravity and
 swimming. It preserves known-failure classification; it does not silently waive
-new failures. Alpha deliberately excludes the advanced-fluid RuntimeWorld tests:
-the feature is unavailable, and `unavailableTests` records those cases as
-**not-exercised**, not passed. Original tests remain intact for Experimental;
-Alpha instead exercises refusal, inactive ownership, Basic Water and swimming.
-Direct geometry/storage checks remain in scope. See
-[the restriction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M100_FLUID_CONTACT_STABILITY.md). Run relevant API/type and
-tooling controls too.
+new failures. V2 runs the advanced-fluid runtime checks in every build channel; project opt-in remains explicit. Routine CI is not release qualification. Main promotion requires the completed exact-candidate Linux and native Windows qualification plus operator acceptance. V2 remains on Experimental until that promotion is explicitly authorised. Historical V1 package restrictions do not define current V2 behaviour. Run relevant API/type and tooling controls too.
 
 Run `scripts/qualify_sdk.py --sdk SDK --work FRESH_WORK --rootfs
 PREPARED_UBUNTU24_ROOT`. It mounts only the SDK for project/editor/tool work and

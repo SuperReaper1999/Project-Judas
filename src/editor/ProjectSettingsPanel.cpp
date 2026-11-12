@@ -1,6 +1,5 @@
 #include "../EnginePaths.h"
 #include "BrowserExportWorkflow.h"
-#include "ProjectFeaturePolicy.h"
 #include "EditorPanels.h"
 #include "ProjectSettingsHistory.h"
 #include "EditorDocument.h"
@@ -183,24 +182,14 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::TextWrapped("No particles, conserved-volume solver, pressure solve, flow simulation or rigid-body buoyancy is required. Waves are visual; swimming samples the mean water volume. CharacterMotor games use the existing world.fluidSample query and choose their own swimming controls in JavaScript.");
         ImGui::TextWrapped("Each volume has its own local up, independent of world Y. Continuous spherical oceans are not represented by one box; use appropriately oriented local regions.");
         if(ImGui::Button("Create basic water"))requests.createKind="basic-water";
-        ImGui::TextColored({.3f,.8f,.75f,1},"Advanced Fluid Dynamics: %s",AdvancedFluidDynamicsRestriction()?"unavailable in Alpha":(s.advancedFluidDynamics?"enabled (experimental)":"disabled"));
+        ImGui::TextColored({.3f,.8f,.75f,1},"Advanced Fluid Dynamics: %s",s.advancedFluidDynamics?"enabled (experimental)":"disabled");
     }
     if(page==9){
         ImGui::TextWrapped("Online and local multiplayer are optional runtime services, configured by project JavaScript through the existing players/network APIs. Hosting, joining, ports, interest and authority remain explicit game policy; opening a project never starts a network listener.");
         ImGui::TextWrapped("See docs/judasjs/network.md and docs/NETWORKING.md for supported replication and security limits.");
     }
     if(page==10){
-        if (const char* restriction = AdvancedFluidDynamicsRestriction()) {
-            ImGui::TextWrapped("%s", restriction);
-            bool unavailable = false;
-            ImGui::BeginDisabled();
-            ImGui::Checkbox("Advanced Fluid Dynamics", &unavailable);
-            ImGui::EndDisabled();
-            if (s.advancedFluidDynamics) {
-                ImGui::TextWrapped("This project still requests advanced fluids. Its authored components are preserved; Play and export are blocked until you disable the request and save.");
-                if (ImGui::Button("Disable advanced fluids for this project")) s.advancedFluidDynamics = false;
-            }
-        } else {
+
         bool requested=s.advancedFluidDynamics;
         if(ImGui::Checkbox("Advanced Fluid Dynamics",&requested)&&editing){
             if(requested)ImGui::OpenPopup("Enable experimental fluid physics?");
@@ -211,7 +200,6 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::TextWrapped("Existing advanced components remain authored when disabled, but do not simulate or allocate solver grids. Save, then restart Play. See docs/PROJECT_SETTINGS_AND_WATER.md for numerical, persistence and integration limits.");
         if(ImGui::BeginPopupModal("Enable experimental fluid physics?",nullptr,ImGuiWindowFlags_AlwaysAutoResize)){
             ImGui::TextWrapped("Advanced Fluid Dynamics is experimental and potentially performance-intensive.\n"
-                "Known contact stability issues can apply excessive forces; unavailable in Alpha.\n"
                 "Grid water, conserved-volume dynamics and fluid-body interactions have documented\n"
                 "numerical, geometry, streaming and origin-shift limitations.\n"
                 "Enable only for projects that need those systems. Basic water does not need it.");
@@ -219,7 +207,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
             ImGui::SameLine();if(ImGui::Button("Cancel"))ImGui::CloseCurrentPopup();
             ImGui::EndPopup();
         }
-        }
+
         ImGui::Separator();
     }
     if(page==kExportSettingsPage){

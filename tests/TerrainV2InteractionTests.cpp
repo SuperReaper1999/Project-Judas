@@ -1,6 +1,5 @@
 #include "CollisionGeometry.h"
 #include "Project.h"
-#include "ProjectFeaturePolicy.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "WorldPersistence.h"
@@ -138,9 +137,7 @@ int main() {
         Check(reincarnated.size() == 1 && reincarnated[0].revision == initial[0].revision &&
                   !reincarnated[0].SameGeometry(initial[0]),
               "a new incarnation cannot alias a previous source's numeric revision");
-        if (AdvancedFluidDynamicsRestriction()) {
-            std::cout << "NOT EXERCISED advanced-fluid integration: Alpha lock remains intact\n";
-        } else {
+
             auto &water = scene.CreateObject("Source-aware water");
             water.fluidVolume = SceneFluidVolumeComponent{};
 
@@ -273,7 +270,7 @@ int main() {
                       << (steadyPreparation[14] + steadyPreparation[15]) * .5
                       << " steady_geometry_p95_ms=" << steadyPreparation[28]
                       << " steady_geometry_worst_ms=" << steadyPreparation.back() << '\n';
-        }
+
         basic.Destroy();
         resources.Shutdown();
         fs::remove_all(root);

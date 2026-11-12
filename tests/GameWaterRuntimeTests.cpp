@@ -1,6 +1,5 @@
 #include "../third_party/nlohmann/json.hpp"
 #include "Project.h"
-#include "ProjectFeaturePolicy.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
 #include "SaveStorage.h"
@@ -119,12 +118,7 @@ int main(int argc, char **argv) {
     enabled.advancedFluidDynamics = true;
     RuntimeWorld source;
     source.ConfigureProject(enabled);
-    if (AdvancedFluidDynamicsRestriction()) {
-        Check(!source.Build(scene, nullptr, error),
-              "Alpha lock rejects execution of the replacement too");
-        std::cout << checks << " checks, " << failures << " failures (Alpha lock path)\n";
-        return failures ? 1 : 0;
-    }
+
     if (!source.Build(scene, nullptr, error)) {
         Check(false, "ordinary RuntimeWorld builds grid water: " + error);
         return 1;

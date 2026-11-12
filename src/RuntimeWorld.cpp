@@ -1,4 +1,3 @@
-#include "ProjectFeaturePolicy.h"
 #include "NetworkSession.h"
 #include "PlanetTiles.h"
 #include "terrain/TerrainComponent.h"
@@ -276,7 +275,6 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
 }
 
 bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std::string& outError, const ProjectClassification* categories,const ProjectNavigation* navigation,bool runtimeSnapshot) {
-    if (!ValidateAdvancedFluidDynamicsRequest(m_advancedFluidsRequested, outError)) return false;
     if(!ValidateAppearance(authored.Settings(),outError))return false;
  JUDAS_PROFILE_SCOPE("World build"); PerformanceProfiler::Get().Boundary("World build");
     if(m_preparationYield)m_preparationYield();

@@ -1,9 +1,9 @@
 # Game-resolution water replacement
 
-**Experimental source preview, not an unlocked Alpha feature.** Grid Water V2 now
+**V2 source preview on Experimental; project opt-in in every build channel.** Grid Water V2 now
 uses normal Fluid Volume scene components, RuntimeWorld, JudasJS, CharacterMotor,
 editor authoring, Renderer V2 and the regular save/export workflow. Main,
-published SDKs, Basic Water and the Alpha fluid lock remain unchanged.
+published V1 SDKs and Basic Water remain unchanged. The obsolete Alpha channel restriction is removed in V2.
 
 The editable game is [Water V2 Workshop](../projects/water_v2_workshop/README.md).
 The [Water API](judasjs/water.md) lists exact scene keys, handles and receipts.

@@ -12,7 +12,7 @@ Check the release page for subsequently published packages.
 
 The latest recorded Alpha qualification includes Linux and native hosted Windows
 builds, selected functional gates and SDK workflows. Hardware/controller and
-clean-machine coverage remain separate. Advanced Fluids remains locked.
+clean-machine coverage remain separate. V2 fluid execution requires project opt-in in every build channel. Published V1 packages are unchanged.
 [Outstanding work](OUTSTANDING_WORK.md) separates repairs from support boundaries.
 
 ## Platforms and distribution
@@ -61,7 +61,7 @@ distributions. See the [V2 review guide](EDITOR_V2.md) and
 | CharacterMotor and script-owned controllers/cameras | Supported preferred path | Engine supplies movement/query primitives, project JS supplies policy. Not a skeleton, camera or AI system. |
 | FaithfulGravity / RadicalGravity / script selection | Supported | Resolver owns default selection; per-entity overrides are optional. Support normals remain separate. Arbitrary orientation does not remove local-chart precision limits. |
 | Basic water and swimming | Supported; default configuration | Rendering and simple interaction do not require advanced-fluid solvers. Default-off and cold-process controls cover actual runtime policy. |
-| Advanced Fluids V2 | Experimental source only; Alpha locked | Conservative grid water, finite air reservoirs, MK2 coupling and independent presentation. PBF and reservoir/container systems are retired. [Contract](ADVANCED_FLUIDS_V2.md). |
+| Advanced Fluids V2 | V2 source preview; explicit project opt-in | Conservative grid water, finite air reservoirs, MK2 coupling and independent presentation. PBF and reservoir/container systems are retired. [Contract](ADVANCED_FLUIDS_V2.md). |
 | Large-world origins / planetary terrain | Supported bounded chart and terrain workflow | Checked participant admission, tile-local geometry and double absolute positions; not multiple simultaneous independent physics charts. |
 | Streaming / regional suspension | Supported declared subsets | Inactive state persists; unsupported active assembly/fluid combinations reject explicitly. No universal suspension claim. |
 | Volumetric excavation | Supported local volumes | Real collision and navigation publication for bounded edits. Not arbitrary planet-wide excavation through every terrain representation. |
@@ -130,4 +130,4 @@ SDK-only terrain cold saves and moved exports on this host. It is a native previ
 requiring GLIBC2.43, not a refreshed Ubuntu24.04 distribution. Dirty/untracked
 build provenance is retained. Source paging and local-edit upload costs have
 measured evidence; initial loading is not claimed faster. Published packages, release channels, the Alpha
-fluid lock and the user's installed game SDK are unchanged.
+published V1 packages and the user's installed game SDK are unchanged.

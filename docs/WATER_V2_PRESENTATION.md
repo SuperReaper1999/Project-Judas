@@ -1,7 +1,6 @@
 # Grid Water V2 presentation
 
-Experimental source preview. The Alpha Advanced Fluid Dynamics lock and published
-releases remain unchanged. The [physical support boundaries](GAME_WATER_PREVIEW.md)
+V2 source preview on Experimental. Advanced Fluids is project-opt-in in every V2 build channel; published V1 releases and main remain unchanged. The [physical support boundaries](GAME_WATER_PREVIEW.md)
 still apply. Visual quality is a human acceptance requirement; compiling shaders
 or rendering a blue surface does not establish that acceptance.
 
