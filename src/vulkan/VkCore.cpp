@@ -894,6 +894,10 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     enable.features.shaderCullDistance = g->features.shaderCullDistance;
     enable.features.sampleRateShading = g->features.sampleRateShading;
     enable.features.shaderImageGatherExtended = g->features.shaderImageGatherExtended;
+    // GLSL 4.x kernels may use double and 64-bit integer arithmetic.
+    enable.features.shaderFloat64 = g->features.shaderFloat64;
+    enable.features.shaderInt64 = g->features.shaderInt64;
+    enable.features.shaderInt16 = g->features.shaderInt16;
     g->anisotropy = g->features.samplerAnisotropy;
     g->bcSupported = g->features.textureCompressionBC;
     const float priority = 1.0f;

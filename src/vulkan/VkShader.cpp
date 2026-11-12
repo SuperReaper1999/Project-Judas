@@ -184,18 +184,39 @@ bool BasicOf(const SpvModule &m, std::uint32_t id, Basic &out) {
     return false;
 }
 
-std::uint32_t TypeBytes(const SpvModule &m, std::uint32_t id, std::uint32_t matrixStride) {
+// Base alignment of a type under std430 (std140 additionally rounds structs
+// and arrays up to 16, which the caller applies where relevant).
+std::uint32_t TypeAlignment(const SpvModule &m, std::uint32_t id) {
+    const SpvType &t = m.types.at(id);
+    switch (t.op) {
+    case 20: return 4;
+    case 21: case 22: return std::max(4u, t.width / 8);
+    case 23: return TypeAlignment(m, t.element) * (t.count == 2 ? 2 : 4);
+    case 24: case 28: return TypeAlignment(m, t.element);
+    case 30: {
+        std::uint32_t alignment = 4;
+        for (auto member : t.members) alignment = std::max(alignment, TypeAlignment(m, member));
+        return alignment;
+    }
+    default: return 4;
+    }
+}
+// Size in bytes as laid out by the module's explicit offsets and strides.
+// `std140` selects the uniform-block rule that structures end on a 16-byte
+// boundary; storage blocks (std430) end on the structure's own alignment.
+std::uint32_t TypeBytes(const SpvModule &m, std::uint32_t id, std::uint32_t matrixStride, bool std140 = true) {
     const SpvType &t = m.types.at(id);
     Basic basic;
     switch (t.op) {
-    case 20: case 21: case 22: return 4;
-    case 23: return 4 * t.count;
+    case 20: return 4;
+    case 21: case 22: return std::max(4u, t.width / 8);
+    case 23: return TypeBytes(m, t.element, 0, std140) * t.count;
     case 24:
         BasicOf(m, id, basic);
         return matrixStride ? matrixStride * (basic.columns - 1) + 4u * basic.rows : 4u * basic.rows * basic.columns;
     case 28: {
         const auto stride = m.arrayStride.find(id);
-        return (stride == m.arrayStride.end() ? TypeBytes(m, t.element, matrixStride) : stride->second) * t.count;
+        return (stride == m.arrayStride.end() ? TypeBytes(m, t.element, matrixStride, std140) : stride->second) * t.count;
     }
     case 30: {
         std::uint32_t end = 0;
@@ -203,9 +224,10 @@ std::uint32_t TypeBytes(const SpvModule &m, std::uint32_t id, std::uint32_t matr
             const auto offset = m.memberOffset.find(MemberKey(id, i));
             const auto stride = m.memberMatrixStride.find(MemberKey(id, i));
             const std::uint32_t base = offset == m.memberOffset.end() ? 0 : offset->second;
-            end = std::max(end, base + TypeBytes(m, t.members[i], stride == m.memberMatrixStride.end() ? 0 : stride->second));
+            end = std::max(end, base + TypeBytes(m, t.members[i], stride == m.memberMatrixStride.end() ? 0 : stride->second, std140));
         }
-        return (end + 15) / 16 * 16;
+        const std::uint32_t alignment = std140 ? std::max(16u, TypeAlignment(m, id)) : TypeAlignment(m, id);
+        return (end + alignment - 1) / alignment * alignment;
     }
     default: return 0;
     }
@@ -220,7 +242,7 @@ std::uint32_t BlockDataBytes(const SpvModule &m, std::uint32_t id) {
         const auto offset = m.memberOffset.find(MemberKey(id, i));
         const auto stride = m.memberMatrixStride.find(MemberKey(id, i));
         end = std::max(end, (offset == m.memberOffset.end() ? 0 : offset->second) +
-                                TypeBytes(m, t.members[i], stride == m.memberMatrixStride.end() ? 0 : stride->second));
+                                TypeBytes(m, t.members[i], stride == m.memberMatrixStride.end() ? 0 : stride->second, false));
     }
     return end;
 }
