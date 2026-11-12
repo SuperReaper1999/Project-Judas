@@ -123,6 +123,10 @@ def main():
     cap_policy = native.get('cap_policy', 'legacy-millisecond-floor-delay' if args.cap else 'none')
     metadata = {'command': command, 'exit': process.returncode, 'clock_ticks': os.sysconf('SC_CLK_TCK'),
                 'resolution': args.resolution, 'graphics_policy': env.get('JUDAS_GL_PROFILE', 'auto'),
+                # Not a comparison key: run_matrix may compare backends deliberately.
+                'graphics_backend': native.get('graphics_backend', 'opengl'),
+                'vulkan_validation': env.get('JUDAS_VULKAN_VALIDATION') == '1',
+                'swap_interval': native.get('swap_interval'),
                 'gpu_model': hardware.get('name', 'unavailable'),
                 'gpu_driver': hardware.get('driver_version', 'unavailable'),
                 'cap_hz': args.cap, 'capture_policy': cap_policy, 'profile': not args.no_profile,

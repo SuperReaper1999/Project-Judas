@@ -1718,6 +1718,10 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
     # interposer is never linked into the engine or included in the SDK.
     add_library(judas_present_capture SHARED EXCLUDE_FROM_ALL tools/benchmarks/PresentCapture.cpp)
     target_link_libraries(judas_present_capture PRIVATE SDL2::SDL2 ${CMAKE_DL_LIBS})
+    if(JUDAS_VULKAN_ENABLED)
+        # Headers only: the interposer forwards to the engine's own loader via RTLD_NEXT.
+        target_include_directories(judas_present_capture PRIVATE ${Vulkan_INCLUDE_DIRS})
+    endif()
     judas_warnings(judas_present_capture)
 endif()
 

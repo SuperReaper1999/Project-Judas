@@ -29,6 +29,7 @@ struct MemBlock {
     VkDeviceSize size = 0;
     std::uint32_t memoryType = 0;
     bool dedicated = false;
+    bool devicePlacement = false; // buffer block requested in device-local memory
     std::map<VkDeviceSize, VkDeviceSize> free; // offset -> size
 };
 struct Range {
@@ -352,6 +353,7 @@ struct Context {
     // per swapchain image (kept across swapchain recreation).
     std::vector<VkSemaphore> acquireSemaphores, freeAcquireSemaphores, presentSemaphores;
     int swapInterval = 1;
+    VkPresentModeKHR presentMode = VK_PRESENT_MODE_FIFO_KHR;
     bool swapchainDirty = true;
     VkFormat depth24Format = VK_FORMAT_D32_SFLOAT;
     bool bcSupported = false, anisotropy = false;
@@ -436,14 +438,18 @@ struct Context {
 
     // Statistics.
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0, descriptorSets = 0,
-                  validationMessages = 0, bufferBytes = 0, imageBytes = 0;
+                  validationMessages = 0, bufferBytes = 0, imageBytes = 0, deviceBufferBytes = 0;
+    bool deviceBufferHeapExhausted = false;
     bool validation = false, trace = false;
 };
 
 extern Context *g;
 
 // ---- core (VkCore.cpp) ----
-Range AllocateBuffer(VkDeviceSize size);
+// deviceLocal: the GL buffer is GPU-owned (written/read mainly by the GPU), so
+// prefer memory that is both device-local and host-visible (a discrete GPU's
+// BAR heap). Falls back to host memory when that heap is absent or exhausted.
+Range AllocateBuffer(VkDeviceSize size, bool deviceLocal = false);
 void RetireRange(Range range, std::uint64_t serial);
 void Retire(Retired::Kind kind, std::uint64_t handle, std::uint64_t serial);
 void RetireImage(std::shared_ptr<Image> image);

@@ -36,3 +36,12 @@ inline void GraphicsSetSwapInterval(int interval) {
     (void)interval;
 #endif
 }
+// Interval actually in effect on the active backend (SDL_GL_GetSwapInterval semantics).
+inline int GraphicsGetSwapInterval() {
+#ifndef __EMSCRIPTEN__
+    if (JudasVulkan::Active()) return JudasVulkan::SwapInterval();
+    return SDL_GL_GetSwapInterval();
+#else
+    return 0;
+#endif
+}

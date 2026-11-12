@@ -107,6 +107,17 @@ void GLAD_API_PTR PixelStorei(GLenum pname, GLint value) {
 GLuint BoundTexture(int slot) { return g->gl.textures[std::size_t(g->gl.activeUnit)][std::size_t(slot)]; }
 
 // Returns the number of values written, 0 when `pname` is unknown.
+std::uint32_t TimestampSlot();
+// glGet(GL_TIMESTAMP): the device clock in nanoseconds. Records a timestamp and
+// waits for it, so it is for calibration outside measured frames only.
+GLint64 CurrentTimestamp() {
+    const std::uint32_t slot = TimestampSlot();
+    Flush(true);
+    std::uint64_t ticks = 0;
+    vkGetQueryPoolResults(g->device, g->queryPool, slot, 1, sizeof(ticks), &ticks, sizeof(ticks),
+                          VK_QUERY_RESULT_64_BIT | VK_QUERY_RESULT_WAIT_BIT);
+    return GLint64(double(ticks) * double(g->properties.limits.timestampPeriod));
+}
 int GetIntegers(GLenum pname, GLint64 *v) {
     const GlState &gl = g->gl;
     const auto &limits = g->properties.limits;
@@ -201,7 +212,7 @@ int GetIntegers(GLenum pname, GLint64 *v) {
         v[0] = IsEnabled(pname); return 1;
     case GL_DRAW_BUFFER: v[0] = gl.drawFbo ? GLint64(g->framebuffers[gl.drawFbo].drawBuffers[0]) : GL_BACK; return 1;
     case GL_READ_BUFFER: v[0] = gl.readFbo ? GLint64(g->framebuffers[gl.readFbo].readBuffer) : GL_BACK; return 1;
-    case GL_TIMESTAMP: v[0] = 0; return 1;
+    case GL_TIMESTAMP: v[0] = CurrentTimestamp(); return 1;
     case GL_SUBPIXEL_BITS: v[0] = limits.subPixelPrecisionBits; return 1;
     case 0x0D57: v[0] = 0; return 1;  // GL_STENCIL_BITS (compatibility query)
     case 0x0D56: v[0] = 24; return 1; // GL_DEPTH_BITS (compatibility query)

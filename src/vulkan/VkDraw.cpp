@@ -49,8 +49,18 @@ void DropTexelView(Buffer &buffer) {
     buffer.texelView = VK_NULL_HANDLE;
 }
 
+// GPU-owned per the application's own hint: *_COPY usage (the GL meaning is
+// "written by the GL, read by the GL"), or immutable storage the CPU cannot map
+// or update. Everything else stays in host memory, which the CPU reads fast.
+bool GpuOwned(const Buffer &buffer) {
+    if (buffer.storageFlags || buffer.persistent)
+        return !(buffer.storageFlags & (GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT |
+                                        GL_MAP_PERSISTENT_BIT | GL_CLIENT_STORAGE_BIT));
+    return buffer.usage == GL_STATIC_COPY || buffer.usage == GL_DYNAMIC_COPY || buffer.usage == GL_STREAM_COPY;
+}
+
 void ReplaceStorage(Buffer &buffer, VkDeviceSize size, bool copy) {
-    Range replacement = AllocateBuffer(size);
+    Range replacement = AllocateBuffer(size, GpuOwned(buffer));
     if (copy && buffer.storage) std::memcpy(replacement.Data(), buffer.storage.Data(), std::size_t(std::min(size, buffer.size)));
     DropTexelView(buffer);
     RetireRange(buffer.storage, buffer.lastUse);
@@ -64,10 +74,14 @@ void BufferDataImpl(Buffer *buffer, GLsizeiptr size, const void *data, GLenum us
     if (!buffer || size < 0) return;
     const VkDeviceSize bytes = VkDeviceSize(size);
     const bool busy = buffer->lastUse > g->completedSerial || buffer->lastGpuWrite > g->completedSerial;
-    if (!buffer->storage || bytes != buffer->size || busy || buffer->persistent) ReplaceStorage(*buffer, bytes, false);
+    const bool placementChanged = buffer->storage && (GpuOwned(*buffer) !=
+        (usage == GL_STATIC_COPY || usage == GL_DYNAMIC_COPY || usage == GL_STREAM_COPY));
+    const bool wasPersistent = buffer->persistent;
     buffer->usage = usage;
     buffer->persistent = false;
     buffer->storageFlags = 0;
+    if (!buffer->storage || bytes != buffer->size || busy || wasPersistent || placementChanged)
+        ReplaceStorage(*buffer, bytes, false);
     if (data && bytes) std::memcpy(buffer->storage.Data(), data, std::size_t(bytes));
 }
 void BufferSubDataImpl(Buffer *buffer, GLintptr offset, GLsizeiptr size, const void *data) {
@@ -77,9 +91,9 @@ void BufferSubDataImpl(Buffer *buffer, GLintptr offset, GLsizeiptr size, const v
 }
 void BufferStorageImpl(Buffer *buffer, GLsizeiptr size, const void *data, GLbitfield flags) {
     if (!buffer || size < 0) return;
-    ReplaceStorage(*buffer, VkDeviceSize(size), false);
     buffer->storageFlags = flags;
     buffer->persistent = (flags & GL_MAP_PERSISTENT_BIT) != 0;
+    ReplaceStorage(*buffer, VkDeviceSize(size), false);
     if (data && size) std::memcpy(buffer->storage.Data(), data, std::size_t(size));
     else if (size) std::memset(buffer->storage.Data(), 0, std::size_t(size));
 }

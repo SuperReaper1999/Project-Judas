@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -66,6 +67,9 @@ def main():
     parser.add_argument('--cap', type=int, default=0)
     parser.add_argument('--no-profile', action='store_true')
     parser.add_argument('--p99-regression-fraction', type=float, default=.10)
+    # Same executable on two backends: e.g. --baseline-graphics opengl --candidate-graphics vulkan.
+    parser.add_argument('--baseline-graphics', choices=['opengl', 'vulkan'], default='opengl')
+    parser.add_argument('--candidate-graphics', choices=['opengl', 'vulkan'], default='opengl')
     args = parser.parse_args()
     if not 3 <= args.repeats <= 10 or not 10 <= args.seconds <= 300:
         parser.error('use 3–10 repetitions and 10–300 seconds per capture')
@@ -89,7 +93,8 @@ def main():
         destination = out / (mode + source.suffix)
         shutil.copy2(source, destination)
         binaries[mode] = destination
-    campaign = dict(schema=1, cases=args.cases, results={},
+    graphics = dict(baseline=args.baseline_graphics, candidate=args.candidate_graphics)
+    campaign = dict(schema=1, cases=args.cases, results={}, graphics=graphics,
                     binaries={name: dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest())
                               for name, path in binaries.items()},
                     scope='Relative p99 regression gate. Not human acceptance or an absolute frame-budget certification.')
@@ -109,7 +114,13 @@ def main():
                            '--cap', str(args.cap), *controls]
                 if args.no_profile:
                     command.append('--no-profile')
-                subprocess.run(command, check=True)
+                env = os.environ.copy()
+                env['JUDAS_GRAPHICS'] = graphics[mode]
+                env.pop('JUDAS_VULKAN_VALIDATION', None)  # validation layers distort timing
+                subprocess.run(command, check=True, env=env)
+                backend = json.loads((capture / 'invocation.json').read_text()).get('graphics_backend')
+                if backend != graphics[mode]:
+                    raise RuntimeError(f'{capture}: ran on {backend}, expected {graphics[mode]}')
                 if state_contract >= 1:
                     verify_state(capture, case)
                 paths[mode].append(capture)

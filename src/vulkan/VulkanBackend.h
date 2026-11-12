@@ -52,6 +52,10 @@ Proc ProcAddress(const char *name);
 // like the OpenGL default framebuffer) to the window.
 void Present();
 void SetSwapInterval(int interval);
+// Interval the presentation engine actually applies, like SDL_GL_GetSwapInterval:
+// 0 for IMMEDIATE/MAILBOX, 1 for FIFO. Before the first swapchain exists it is
+// the requested interval; -1 without a backend.
+int SwapInterval();
 // Drawable size of the default framebuffer in pixels.
 void DrawableSize(int &width, int &height);
 
@@ -79,6 +83,7 @@ using Proc = void (*)(void);
 inline Proc ProcAddress(const char *) { return nullptr; }
 inline void Present() {}
 inline void SetSwapInterval(int) {}
+inline int SwapInterval() { return -1; }
 inline void DrawableSize(int &width, int &height) { width = height = 0; }
 struct Statistics {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;

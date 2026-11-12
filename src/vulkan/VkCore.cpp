@@ -103,7 +103,7 @@ void BlockFree(MemBlock &block, VkDeviceSize offset, VkDeviceSize size) {
     block.free[offset] = size;
 }
 
-std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated) {
+std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated, bool deviceLocal) {
     auto block = std::make_unique<MemBlock>();
     VkBufferCreateInfo info{VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO};
     info.size = size;
@@ -118,11 +118,31 @@ std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated) {
     vkGetBufferMemoryRequirements(g->device, block->buffer, &requirements);
     VkMemoryAllocateInfo allocate{VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO};
     allocate.allocationSize = requirements.size;
-    allocate.memoryTypeIndex = FindMemoryType(
-        requirements.memoryTypeBits,
-        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-        VK_MEMORY_PROPERTY_HOST_CACHED_BIT);
-    VK_CHECK(vkAllocateMemory(g->device, &allocate, nullptr, &block->memory));
+    const VkMemoryPropertyFlags mappable = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+    // Host blocks: CPU-written/read data, cached for readback. All storage is
+    // persistently mapped because the backend writes buffer contents directly.
+    const std::uint32_t hostType = FindMemoryType(requirements.memoryTypeBits, mappable, VK_MEMORY_PROPERTY_HOST_CACHED_BIT);
+    VkResult result = VK_ERROR_OUT_OF_DEVICE_MEMORY;
+    if (deviceLocal && !g->deviceBufferHeapExhausted) {
+        const std::uint32_t deviceType =
+            FindMemoryType(requirements.memoryTypeBits, mappable, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+        if (g->memoryProperties.memoryTypes[deviceType].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) {
+            allocate.memoryTypeIndex = deviceType;
+            result = vkAllocateMemory(g->device, &allocate, nullptr, &block->memory);
+            if (result != VK_SUCCESS) {
+                g->deviceBufferHeapExhausted = true;
+                Warn("device-local host-visible memory exhausted after %llu MiB; GPU-owned buffers now use host memory",
+                     static_cast<unsigned long long>(g->deviceBufferBytes >> 20));
+            } else
+                g->deviceBufferBytes += requirements.size;
+        }
+    }
+    if (result != VK_SUCCESS) {
+        allocate.memoryTypeIndex = hostType;
+        VK_CHECK(vkAllocateMemory(g->device, &allocate, nullptr, &block->memory));
+    }
+    block->memoryType = allocate.memoryTypeIndex;
+    block->devicePlacement = deviceLocal;
     VK_CHECK(vkBindBufferMemory(g->device, block->buffer, block->memory, 0));
     void *mapped = nullptr;
     VK_CHECK(vkMapMemory(g->device, block->memory, 0, VK_WHOLE_SIZE, 0, &mapped));
@@ -137,6 +157,9 @@ void DestroyBlock(MemBlock &block) {
     if (block.buffer) {
         vkDestroyBuffer(g->device, block.buffer, nullptr);
         g->bufferBytes -= block.size;
+        if (g->memoryProperties.memoryTypes[block.memoryType].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT &&
+            block.devicePlacement)
+            g->deviceBufferBytes -= std::min(g->deviceBufferBytes, block.size);
     } else
         g->imageBytes -= block.size;
     if (block.memory) vkFreeMemory(g->device, block.memory, nullptr);
@@ -144,20 +167,21 @@ void DestroyBlock(MemBlock &block) {
 }
 } // namespace
 
-Range AllocateBuffer(VkDeviceSize size) {
+Range AllocateBuffer(VkDeviceSize size, bool deviceLocal) {
     size = std::max<VkDeviceSize>(size, 1);
     const VkDeviceSize rounded = (size + g->bufferAlignment - 1) / g->bufferAlignment * g->bufferAlignment;
     Range range;
     range.size = rounded;
     if (rounded <= kBufferBlockBytes / 4) {
         for (auto &block : g->bufferBlocks)
-            if (!block->dedicated && BlockAllocate(*block, rounded, g->bufferAlignment, range.offset)) {
+            if (!block->dedicated && block->devicePlacement == deviceLocal &&
+                BlockAllocate(*block, rounded, g->bufferAlignment, range.offset)) {
                 range.block = block.get();
                 return range;
             }
-        g->bufferBlocks.push_back(CreateBufferBlock(kBufferBlockBytes, false));
+        g->bufferBlocks.push_back(CreateBufferBlock(kBufferBlockBytes, false, deviceLocal));
     } else
-        g->bufferBlocks.push_back(CreateBufferBlock(rounded, true));
+        g->bufferBlocks.push_back(CreateBufferBlock(rounded, true, deviceLocal));
     range.block = g->bufferBlocks.back().get();
     if (!BlockAllocate(*range.block, rounded, g->bufferAlignment, range.offset))
         Fatal("buffer block allocation failed");
@@ -520,7 +544,7 @@ Range RingAllocate(VkDeviceSize size, VkDeviceSize alignment) {
             }
         if (g->ringCurrent < 0) {
             Context::RingChunk chunk;
-            chunk.block = CreateBufferBlock(std::max(kChunk, size), true);
+            chunk.block = CreateBufferBlock(std::max(kChunk, size), true, false);
             g->ring.push_back(std::move(chunk));
             g->ringCurrent = int(g->ring.size() - 1);
         }
@@ -650,6 +674,7 @@ void CreateSwapchain() {
     }
     g->swapchain = created;
     g->swapchainFormat = chosen.format;
+    g->presentMode = mode;
     g->swapchainExtent = extent;
     vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, nullptr);
     g->swapchainImages.resize(count);
@@ -1118,6 +1143,12 @@ void SetSwapInterval(int interval) {
     if (!g || g->swapInterval == interval) return;
     g->swapInterval = interval;
     g->swapchainDirty = true;
+}
+
+int SwapInterval() {
+    if (!g) return -1;
+    if (!g->swapchain || g->swapchainDirty) return g->swapInterval;
+    return g->presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR || g->presentMode == VK_PRESENT_MODE_MAILBOX_KHR ? 0 : 1;
 }
 
 void DrawableSize(int &width, int &height) {
