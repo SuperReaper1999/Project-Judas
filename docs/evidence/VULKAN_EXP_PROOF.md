@@ -190,11 +190,45 @@ Reading the table:
   animation, combined, basic water).
 - **Particles fails the gate**: p99 +10.1 %, median frame +22 %. Both backends
   are GPU-bound; the GPU frame is about 3.9 ms on Vulkan vs 3.2 ms on OpenGL.
-  `JUDAS_VULKAN_DISPATCH_TIMING=1` shows the simulation kernels take about
-  0.27 ms per step, so the remaining gap is in the 100k-instance particle draw or
-  its view pass. Not yet traced.
+  Traced (temporary GPU scopes and timestamps, all reverted): see
+  "Particle draw trace" below.
 - One Vulkan `lightweight` trial in an earlier run had a single 59 ms
   `Swap present wait` stall; in the final run the worst frame was 5.95 ms.
   Cause unknown.
 - p99 passes do not certify product budgets: the `combined` 14.1 ms worst frame
   and the IK hitches still need the usual exceptional-frame review.
+
+### Particle draw trace (100k GPU particle stress, 1280×720)
+
+Measured with temporary GPU profiler scopes around the particle view
+preparation and draw (same timer queries on both backends), and a temporary
+timestamp pair around the Vulkan indirect draw alone. All diagnostics were
+reverted; only `JUDAS_VULKAN_DISPATCH_TIMING` remains.
+
+| GPU work per frame | OpenGL | Vulkan |
+|---|---:|---:|
+| View preparation (cull + 131k-key bitonic sort + gather, ~55 dispatches) | 1.81 ms | 1.81 ms |
+| Particle draw (`glDrawArraysIndirect`, 100,000 instances × 6 vertices) | 0.80 ms | 1.19 ms |
+| Same draw at 640×360 | 0.73 ms | 1.28 ms |
+
+- The gap is the **draw call itself**. It does not scale with resolution, so it
+  is per-vertex/per-instance work, not fill rate or blending. Both backends draw
+  exactly 100,000 instances (indirect command read back on each).
+- Restarting the render pass after the view compute costs nothing measurable.
+
+Ruled out by A/B measurement on the same binary (no measurable change):
+
+1. Narrower compute barriers (compute→all after, all→compute before) instead of
+   a full barrier after every dispatch: 252 vs 252 FPS.
+2. glslang SPIR-V optimisation: the system glslang ignores
+   `disableOptimizer = false` (identical SPIR-V), so it could not be tested.
+3. Replacing the shader's dynamically indexed local corner arrays with
+   arithmetic: 1.26 → 1.21 ms (noise; OpenGL 0.82 → 0.72).
+4. Omitting the backend's injected `gl_PointSize = 1.0` write: 1.19–1.25 ms
+   either way.
+5. Placing the per-frame uniform ring in device-local memory: 1.19 vs 1.18 ms.
+
+Not yet tried: a vendor GPU profiler (Nsight Graphics) on this draw, and the
+non-instanced formulation (6N vertices, per-particle data fetched from the
+records buffer by `gl_VertexIndex / 6`), which changes engine code shared with
+OpenGL.
