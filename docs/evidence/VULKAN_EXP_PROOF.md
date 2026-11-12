@@ -232,3 +232,86 @@ Not yet tried: a vendor GPU profiler (Nsight Graphics) on this draw, and the
 non-instanced formulation (6N vertices, per-particle data fetched from the
 records buffer by `gl_VertexIndex / 6`), which changes engine code shared with
 OpenGL.
+
+## 6. Native execution (docs/VULKAN_NATIVE.md), GTX 970
+
+Same machine and method as section 5. Automated only: **not human-tested**.
+
+### Where the time went before this work (`perf`, user-space samples, Vulkan)
+
+| Scene | Frame | Backend draw path | Engine scene walk and material logic |
+|---|---:|---:|---:|
+| 129 animated characters (2,640 draws) | 6.8 ms | about 2.5 ms | about 3.2 ms |
+| Renderer lab (206 draws, about 8,500 object visits) | 7.2 ms | about 0.3 ms | about 5.9 ms |
+
+The backend share was measured by making draws return early; the engine share
+is what remained. In the renderer lab the top samples are `memcmp`,
+`RuntimeWorld::FindEntity`, `RuntimeDefinition`, `RenderLayerOf` and material
+key construction: engine code shared by both backends.
+
+### Stages
+
+| Stage | Measured effect | Kept |
+|---|---|---|
+| Draw-state cache | 129 characters: 6.5 → 4.95 ms median frame; 83 % of draws reuse state | yes |
+| Bone palettes as dynamic-offset storage blocks | 4.95 → 4.2 ms; backend draw functions fall to about 3 % of samples | yes |
+| Persistent SPIR-V and pipeline caches | Renderer lab, empty caches: 116 ms compiling + 250 ms for the first 5 pipelines; warm: about 5 ms + 1 ms | yes |
+| GPU particle draw fetching records from storage | 100k stress: GPU frame 3.97 → 3.75 ms, p99 4.50 → 4.12 ms | yes |
+| `GL_STATIC_DRAW` buffers in device-local memory | No measurable change in four scenes (A/B, two trials each) | no, reverted |
+
+### Correctness after all stages
+
+- Gates: OpenGL 117/117; Vulkan 116/117 with validation on, 0 validation
+  messages in 59 runs (`renderer-compute`: the same 2 OpenGL-context checks).
+- `compare_backends.py`, 24 projects: all run, 0 validation messages, the same
+  three known differences (water 0.16 %, terrain 0.24–0.25 %). Renderer lab
+  lights+shadows 0.002 %, monitors+split views 0.009 %, Lucifer 0.001 %,
+  particle cases unchanged from section 5.
+
+### Same binary, OpenGL vs Vulkan, after all stages
+
+| Workload | Avg FPS GL → VK | p50 ms | p99 ms | Worst ms | Gate |
+|---|---:|---:|---:|---:|---|
+| lightweight | 1041.0 → 1152.9 | 0.95 → 0.86 | 1.04 → 0.93 | 1.81 → 3.22 | pass |
+| town | 771.6 → 833.9 | 1.21 → 1.12 | 2.69 → 2.59 | 4.96 → 5.47 | pass |
+| populated-rendering | 126.0 → 137.9 | 7.90 → 7.16 | 8.59 → 8.03 | 19.06 → 15.38 | pass |
+| animation | 108.0 → 201.7 | 10.34 → 4.15 | 10.93 → 7.12 | 28.15 → 9.17 | pass |
+| particles | 302.5 → 262.2 | 3.22 → 3.78 | 4.08 → 4.31 | 5.26 → 100.67 | pass |
+| basic-water | 803.2 → 1021.7 | 1.21 → 0.95 | 1.40 → 1.20 | 111.90 → 3.07 | pass |
+| terrain-excavation | 1003.0 → 894.0 | 0.96 → 1.09 | 1.40 → 1.44 | 3.34 → 4.56 | pass |
+| terrain-large | 1320.4 → 1283.8 | 0.71 → 0.74 | 1.21 → 1.18 | 5.69 → 32.40 | pass |
+| vehicle | 767.3 → 787.6 | 1.23 → 1.19 | 2.55 → 2.36 | 5.86 → 8.24 | pass |
+| fleet | 716.8 → 732.0 | 1.24 → 1.21 | 3.62 → 3.49 | 5.99 → 6.64 | pass |
+| combined | 278.7 → 492.3 | 2.76 → 1.55 | 6.69 → 5.47 | 12.00 → 11.72 | pass |
+| animation-ik | 81.9 → 144.8 | 13.38 → 4.63 | 15.35 → 11.33 | 194.77 → 259.90 | rejected¹ |
+
+¹ As in section 5: `animation-ik` trials on both backends overflowed the
+profiler during 190–260 ms hitches, so the tool gives no gate result.
+
+- All 11 gated workloads pass; particles now passes (p99 +5.6 %, median still
+  +17 %: the remaining gap is the instanced draw itself, see section 5).
+- Largest gains over section 5: animation 140.6 → 201.7 FPS, combined
+  372.9 → 492.3 FPS, animation-ik 102.6 → 144.8 FPS.
+- `terrain-excavation` is 11 % slower in average FPS on Vulkan (p99 equal).
+  Not traced.
+- Single slow frames on Vulkan: particles 100.7 ms (no profiled scope active)
+  and terrain-large 32.4 ms (inside the SDL event pump). OpenGL had a 111.9 ms
+  frame in basic-water. These are outside rendering; cause not established.
+
+### Startup failures observed
+
+Twice, a Vulkan run started in the same second the previous graphics process
+exited failed in `vkCreateDevice` with `VK_ERROR_DEVICE_LOST`; the kernel
+logged NVIDIA Xid 32 and Xid 13 at those moments. Both happened before any
+rendering by the failing process. Eleven targeted repeat runs (with and without
+the draw cache and disk caches) did not reproduce it, and the final 72-launch
+matrix had none. Device creation now retries up to four times. Cause not
+established; if it recurs, check `journalctl -k | grep Xid`.
+
+### Not done
+
+- Pipelines are still created at first use (from the warm cache), not before
+  the first frame.
+- The mesh passes still reach the backend through OpenGL-named calls; only the
+  particle draw has a Vulkan-specific formulation.
+- The engine scene walk that dominates populated scenes is unchanged.

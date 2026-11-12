@@ -23,6 +23,12 @@ with a real GPU. Read this first, then [VULKAN_BACKEND.md](VULKAN_BACKEND.md)
   gated workloads; GPU particles remain about 10–20 % slower. See section 5 of
   [evidence/VULKAN_EXP_PROOF.md](evidence/VULKAN_EXP_PROOF.md). Still **never
   human-tested** (step 4), and no AMD/Intel or Windows results exist.
+- **Native execution** ([VULKAN_NATIVE.md](VULKAN_NATIVE.md)): the backend now
+  caches draw state, binds bone palettes as storage blocks, persists compiled
+  shaders and the pipeline cache, and draws GPU particles its own way. All 11
+  gated workloads pass against OpenGL; results are in section 6 of the
+  evidence file. Switches: `JUDAS_VULKAN_DRAW_CACHE=0`,
+  `JUDAS_VULKAN_SHADER_CACHE=0`, `JUDAS_VULKAN_PARTICLE_PULL=0`.
 
 ## How it works, in one page
 
