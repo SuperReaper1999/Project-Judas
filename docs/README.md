@@ -19,7 +19,7 @@ Check the release page for subsequently published packages.
 ## Authoritative architecture
 
 [Architecture](ARCHITECTURE.md) · [Scripting V2](judasjs/scripting-v2.md) ·
-[Renderer V2](RENDERER_V2.md) · [Particles V2](PARTICLES_V2.md) ·
+[Renderer V2](RENDERER_V2.md) · [Vulkan backend experiment (branch Vulkan-Exp)](VULKAN_BACKEND.md) · [Particles V2](PARTICLES_V2.md) ·
 [Terrain V2](TERRAIN_V2.md) · [terrain residency](TERRAIN_V2_RESIDENCY.md) ·
 [Advanced Fluids V2](ADVANCED_FLUIDS_V2.md) · [water presentation](WATER_V2_PRESENTATION.md) ·
 [MK2 physics](MK2_PHYSICS_ARCHITECTURE.md).
