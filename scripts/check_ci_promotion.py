@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Verify an exact main promotion using completed, same-repository native CI.
 
-This saves duplicate compilation, not validation. Missing proof fails explicitly;
-workflow_dispatch still runs both native channels on either branch.
+Routine CI is feedback, not release proof. Missing exact-candidate Linux and
+Windows qualification fails explicitly; operator acceptance remains separate.
 """
 import json
 import os
@@ -17,16 +17,9 @@ def qualifies(run, jobs, repository, revision):
             or run.get('head_branch') != 'Experimental'):
         return False
     workflow = run.get('path')
-    if workflow == '.github/workflows/prealpha.yml':
-        if run.get('event') not in ('push', 'workflow_dispatch'):
-            return False
-        required = {'linux (Alpha)', 'linux (Experimental)'}
-    elif workflow == '.github/workflows/release-candidate.yml':
-        if run.get('event') != 'workflow_dispatch':
-            return False
-        required = {'linux', 'windows'}
-    else:
+    if workflow != '.github/workflows/release-candidate.yml' or run.get('event') != 'workflow_dispatch':
         return False
+    required = {'linux', 'windows'}
     selected = [j for j in jobs if j.get('name') in required]
     return (required <= {j.get('name') for j in selected}
             and all(j.get('status') == 'completed' and j.get('conclusion') == 'success'
@@ -42,7 +35,7 @@ def main():
     revision = os.environ['GITHUB_SHA']
     if not re.fullmatch(r'[0-9a-f]{40}', revision):
         raise ValueError('Exact source revision required')
-    for workflow in ('prealpha.yml', 'release-candidate.yml'):
+    for workflow in ('release-candidate.yml',):
         runs = api(f'repos/{repository}/actions/workflows/{workflow}/runs'
                    f'?head_sha={revision}&status=success&per_page=100')['workflow_runs']
         for run in runs:
@@ -52,7 +45,7 @@ def main():
                                   'proofRun': run['html_url'], 'humanAcceptance': False}))
                 return
     raise ValueError('No completed native qualification for this exact Experimental commit. '
-                     'Finish Experimental CI, or manually dispatch Engine focused gates on main. '
+                     'Complete exact-candidate Linux and Windows release qualification. '
                      'A skipped job, tooling-only pass or different commit is not proof.')
 
 

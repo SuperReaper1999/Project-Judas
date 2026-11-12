@@ -14,6 +14,11 @@ on:
   pull_request:
     branches: [Experimental, main]
   workflow_dispatch:
+    inputs:
+      full:
+        description: Run full qualification coverage instead of routine coverage
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -42,17 +47,17 @@ jobs:
         run: python3 scripts/check_ci_promotion.py
   linux:
     if: github.event_name != 'push' || github.ref != 'refs/heads/main'
-    name: linux (${{ matrix.channel }})
-    strategy:
-      fail-fast: false
-      matrix:
-        channel: [Experimental, Alpha]
+    name: linux
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      CCACHE_DIR: /home/runner/.cache/ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_COMPILERCHECK: content
+      CCACHE_MAXSIZE: 1G
     steps:
       - uses: actions/checkout@v7
         with:
@@ -61,12 +66,31 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
-          package-manager-cache: false
+          cache: npm
+          cache-dependency-path: tools/verification/package-lock.json
       - name: Native and optional verification prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++ libsdl2-dev libglm-dev xvfb libgl1-mesa-dri
+          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb libgl1-mesa-dri
           npm ci --ignore-scripts --prefix tools/verification
+      - name: Identify compiler and runner
+        id: compiler
+        run: |
+          echo "version=$(g++ -dumpfullversion)-$(sha256sum "$(g++ -print-prog-name=cc1plus)" | cut -c1-12)" >> "$GITHUB_OUTPUT"
+          nproc
+          free -m
+          ccache --version
+      - name: Restore compiler objects
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ccache
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-${{ github.sha }}
+          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-
+      - name: Reuse immutable ICU build
+        uses: actions/cache@v4
+        with:
+          path: build/unicode
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v1-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
       - name: Tooling positive and negative controls
         run: |
           python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
@@ -79,27 +103,37 @@ jobs:
           node scripts/check_judasjs_api.mjs
       - name: Configure an explicitly identified build
         env:
-          CHANNEL: ${{ matrix.channel }}
-        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON
+          CHANNEL: Alpha
+        run: |
+          ccache --zero-stats
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
       - name: Build focused dependencies and public SDK
-        run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
+        run: |
+          target=judas_ci_tests
+          if [ "${{ inputs.full }}" = true ]; then target=judas_prealpha_tests; fi
+          cmake --build build --target "$target" judas_linux_sdk -j2
       - name: Focused native gates
-        run: xvfb-run -a ctest --test-dir build -L prealpha --output-on-failure
+        run: |
+          label=routine
+          if [ "${{ inputs.full }}" = true ]; then label=prealpha; fi
+          xvfb-run -a ctest --test-dir build -L "$label" -j2 --output-on-failure
       - name: Qualify SDK on its declared Linux baseline
         run: |
           python3 build/linux-sdk/tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/prealpha/ci/sdk-qualification.json
           cd /tmp
           python3 "$GITHUB_WORKSPACE/build/linux-sdk/tools/package_sdk.py" verify "$GITHUB_WORKSPACE/build/linux-sdk"
+      - name: Compiler cache statistics
+        if: always()
+        run: ccache --show-stats
       - name: Preserve diagnostics even on failure
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: prealpha-linux-${{ matrix.channel }}-${{ github.sha }}
+          name: prealpha-linux-${{ github.sha }}
           path: |
             .cache/prealpha/validation/
             .cache/prealpha/ci/
             build/judas-build-info-Release.json
-            build/judas-validation-channel-plan.json
             build/Testing/Temporary/
             build/linux-sdk/SDK_MANIFEST.json
             build/linux-sdk/BUILD_INFO.json

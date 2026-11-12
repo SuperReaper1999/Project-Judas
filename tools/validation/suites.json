@@ -50,7 +50,8 @@
       "args": [
         "--residency",
         "{output}/terrain-v2-residency"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "terrain-v2-source-paging",
@@ -378,7 +379,8 @@
       "groups": [
         "rendering",
         "platform"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "renderer-shader-library",
@@ -386,7 +388,8 @@
       "groups": [
         "rendering",
         "tooling"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "renderer-v2-submission",
@@ -413,7 +416,8 @@
       "target": "judas_submission_queue_tests",
       "groups": [
         "rendering"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "renderer-stream-arena",
@@ -724,7 +728,8 @@
         "core",
         "scripting",
         "lifecycle"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "ui-transfer",
@@ -747,7 +752,8 @@
         "roundtrip",
         "{root}/projects/menu_workshop/Satchel_Menu_Workshop.judasproj",
         "{output}/ui-menu"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "runtime-ui",
@@ -786,7 +792,8 @@
       "groups": [
         "ai",
         "core"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "ai-reservation-script",
@@ -795,7 +802,8 @@
         "ai",
         "scripting",
         "lifecycle"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "ai-sensing",
@@ -803,7 +811,8 @@
       "groups": [
         "ai",
         "physics"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "ai-sensing-script",
@@ -811,7 +820,8 @@
       "groups": [
         "ai",
         "scripting"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "ai-fresh-workflow",
@@ -832,7 +842,8 @@
       "args": [
         "{root}/projects/ai_workshop/AI_Workshop.judasproj",
         "{output}/ai-workshop"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "willow-town-application",
@@ -845,7 +856,8 @@
       "args": [
         "{root}/projects/willow_town/Willow_Town.judasproj",
         "{output}/willow-town"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "willow-town-life",
@@ -858,7 +870,8 @@
       "args": [
         "{root}/projects/willow_town/Willow_Town.judasproj",
         "{output}/willow-town-life"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "willow-town-absence",
@@ -872,7 +885,8 @@
         "{root}/projects/willow_town/Willow_Town.judasproj",
         "{output}/willow-town-absence",
         "absence"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "utility-ai",
@@ -880,7 +894,8 @@
       "groups": [
         "ai",
         "core"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "utility-ai-script",
@@ -889,7 +904,8 @@
         "ai",
         "scripting",
         "lifecycle"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "utility-ai-editor",
@@ -905,7 +921,8 @@
       "groups": [
         "browser",
         "editor"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "browser-surface",
@@ -940,7 +957,8 @@
       ],
       "args": [
         "{output}/one-way-platform"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "grid-movement",
@@ -951,7 +969,8 @@
       ],
       "args": [
         "{output}/grid-movement"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "2d-helpers",
@@ -962,7 +981,8 @@
       "args": [
         "{root}/docs/judasjs/examples",
         "{output}/2d-helpers"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "planar-gameplay",
@@ -983,7 +1003,8 @@
         "{root}/projects/beacon_grove/Beacon_Grove.judasproj",
         "{output}/beacon-grove-loss",
         "loss"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "2d-game-workflow",
@@ -995,7 +1016,8 @@
       "args": [
         "{root}/projects/tilemap_workshop/Assets/tiles.png",
         "{output}/2d-game-workflow"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "beacon-grove-application",
@@ -1007,7 +1029,8 @@
       "args": [
         "{root}/projects/beacon_grove/Beacon_Grove.judasproj",
         "{output}/beacon-grove-application"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "tilemap-application",
@@ -1019,7 +1042,8 @@
       "args": [
         "{root}/projects/tilemap_workshop/Tilemap_Workshop.judasproj",
         "{output}/tilemap-application"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "tilemap-render",
@@ -1051,7 +1075,8 @@
       ],
       "args": [
         "{output}/tilemap"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "consumer-lifecycle",
@@ -1097,14 +1122,16 @@
       ],
       "args": [
         "{output}/sprite-animation"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "planar-physics",
       "target": "judas_planar_physics_tests",
       "groups": [
         "2d"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "planar-integration",
@@ -1121,7 +1148,8 @@
       "target": "judas_sprite_math_tests",
       "groups": [
         "2d"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "sprite-integration",
@@ -1179,7 +1207,8 @@
       "target": "judas_build_identity_tests",
       "groups": [
         "core"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "collision-geometry",
@@ -1187,14 +1216,16 @@
       "groups": [
         "core",
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "collision-witness",
       "target": "judas_collision_witness_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "rigid-contact",
@@ -1202,49 +1233,56 @@
       "groups": [
         "core",
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "impact-timing",
       "target": "judas_impact_timing_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "contact-sat-filter",
       "target": "judas_contact_sat_filter_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "contact-sphere-filter",
       "target": "judas_contact_sphere_filter_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "candidate-reuse",
       "target": "judas_candidate_reuse_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "native-mesh-growth",
       "target": "judas_native_mesh_growth_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "clip-polygon",
       "target": "judas_clip_polygon_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "impact-mesh-arrival",
@@ -1277,7 +1315,8 @@
       "target": "judas_collision_continuity_tests",
       "groups": [
         "collision"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "character-motor",
@@ -1537,7 +1576,8 @@
       "args": [
         "--profile",
         "{output}/water"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "basic-water-cold",
@@ -1550,7 +1590,8 @@
       "args": [
         "--cold-cycle",
         "{output}/cold"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "editor-file-browser",
@@ -1587,7 +1628,8 @@
         "{root}/docs/judasjs/examples/developer_workflows/developer_workflows.judasproj",
         "cycle",
         "{output}/workflow"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "editor-preferences",
@@ -1628,7 +1670,8 @@
       "args": [
         "--cold-suite",
         "{output}/camera-cold"
-      ]
+      ],
+      "releaseOnly": true
     },
     {
       "name": "vehicle-v2-contact",
@@ -1679,28 +1722,69 @@
       "groups": [
         "physics",
         "character"
-      ]
+      ],
+      "parallel": true
     },
     {
       "name": "material-uniform-publication",
       "target": "judas_material_uniform_batch_tests",
-      "groups": ["rendering", "performance"]
+      "groups": [
+        "rendering",
+        "performance"
+      ]
     },
     {
       "name": "independent-animation-ik-batches",
       "target": "judas_animation_ik_batch_tests",
-      "args": ["{root}"],
-      "groups": ["animation", "performance"]
+      "args": [
+        "{root}"
+      ],
+      "groups": [
+        "animation",
+        "performance"
+      ]
     },
     {
       "name": "prepared-panel-render-frames",
       "target": "judas_panel_render_preparation_tests",
-      "groups": ["rendering", "physics", "performance"]
+      "groups": [
+        "rendering",
+        "physics",
+        "performance"
+      ]
     },
-    {"name": "async-application-startup", "target": "judas_async_application_tests", "groups": ["rendering", "lifecycle"]},
-    {"name": "startup-movie", "target": "judas_startup_movie_tests", "groups": ["rendering", "lifecycle"]},
-    {"name": "lighting-exposure", "target": "judas_lighting_exposure_tests", "groups": ["rendering", "scripting"]},
-    {"name": "lighting-lists", "target": "judas_lighting_lists_tests", "groups": ["rendering"]}
+    {
+      "name": "async-application-startup",
+      "target": "judas_async_application_tests",
+      "groups": [
+        "rendering",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "startup-movie",
+      "target": "judas_startup_movie_tests",
+      "groups": [
+        "rendering",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "lighting-exposure",
+      "target": "judas_lighting_exposure_tests",
+      "groups": [
+        "rendering",
+        "scripting"
+      ],
+      "parallel": true
+    },
+    {
+      "name": "lighting-lists",
+      "target": "judas_lighting_lists_tests",
+      "groups": [
+        "rendering"
+      ]
+    }
   ],
   "known_findings": [
     {

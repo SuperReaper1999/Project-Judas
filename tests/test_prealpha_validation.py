@@ -63,6 +63,8 @@ class GateTests(unittest.TestCase):
             dict(tests=[dict(entry, groups='core')]),
             dict(tests=[dict(entry, groups=['core', 'core'])]),
             dict(tests=[dict(entry, manual='false')]),
+            dict(tests=[dict(entry, parallel='false')]),
+            dict(tests=[dict(entry, releaseOnly='false')]),
             dict(tests=[entry, dict(entry, name='same-invocation-new-name')]),
             dict(tests=[dict(entry, args=['{unknown}'])]),
             dict(tests=[dict(entry, args=['{output.__class__}'])]),
@@ -218,14 +220,14 @@ class GateTests(unittest.TestCase):
         expected = dict(source_revision='a' * 40)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for channel in ('Alpha', 'Experimental'):
+            for channel in gate.CHANNELS:
                 identity = dict(schema=1, channel=channel, **expected)
                 with mock.patch.object(gate, 'probe_identity', return_value=identity):
                     result = gate.run_verified_case(
                         [sys.executable, '-c', 'raise SystemExit(7)'], root / 'log', root,
-                        os.environ.copy(), 5, expected, entry=entry, expected_channel=channel)
-                self.assertEqual(result['status'], 'not-exercised' if channel == 'Alpha' else 'failed')
-                self.assertEqual(result['exit'], None if channel == 'Alpha' else 7)
+                        os.environ.copy(), 5, expected, expected_channel=channel)
+                self.assertEqual(result['status'], 'failed')
+                self.assertEqual(result['exit'], 7)
             # Neither stale provenance nor the wrong compiled channel may skip.
             for identity, error in [
                 (dict(schema=1, channel='Alpha', source_revision='b' * 40), 'stale'),
@@ -233,42 +235,7 @@ class GateTests(unittest.TestCase):
                 with mock.patch.object(gate, 'probe_identity', return_value=identity):
                     with self.assertRaisesRegex(ValueError, error):
                         gate.run_verified_case([sys.executable], root / 'log', root,
-                            os.environ.copy(), 5, expected, entry=entry, expected_channel='Alpha')
-
-    def test_grid_water_requires_the_advanced_runtime_opt_in(self):
-        entry = dict(name='game-water-runtime', target='judas_game_water_runtime_tests')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
-        self.assertFalse(selected)
-        self.assertEqual(unavailable[0]['status'], 'not-exercised')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Experimental')
-        self.assertEqual(selected, [entry])
-        self.assertFalse(unavailable)
-
-    def test_workshop_controls_require_unlocked_experimental_water(self):
-        entry = dict(name='water-workshop-controls', target='judas_water_workshop_tests')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
-        self.assertFalse(selected)
-        self.assertEqual(unavailable[0]['status'], 'not-exercised')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Experimental')
-        self.assertEqual(selected, [entry])
-        self.assertFalse(unavailable)
-
-    def test_water_visuals_require_actual_unlocked_water(self):
-        entry = dict(name='water-visuals', target='judas_water_visual_tests')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Alpha')
-        self.assertFalse(selected)
-        self.assertEqual(unavailable[0]['status'], 'not-exercised')
-        selected, unavailable = gate.partition_channel_tests([entry], 'Experimental')
-        self.assertEqual(selected, [entry])
-        self.assertFalse(unavailable)
-
-    def test_basic_water_runs_on_alpha_without_advanced_fluid_runtime(self):
-        advanced = dict(name='grid-water', target='judas_game_water_runtime_tests')
-        ordinary = dict(name='basic-water', target='judas_project_water_tests')
-        selected, unavailable = gate.partition_channel_tests([advanced, ordinary], 'Alpha')
-        self.assertEqual(selected, [ordinary])
-        self.assertEqual(len(unavailable), 1)
-        self.assertEqual(unavailable[0]['status'], 'not-exercised')
+                            os.environ.copy(), 5, expected, expected_channel='Alpha')
 
     def test_unavailable_main_receipt_is_not_a_pass(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -280,7 +247,7 @@ class GateTests(unittest.TestCase):
                  mock.patch.object(gate, 'git', return_value=None), \
                  mock.patch.object(gate, 'run_verified_case', return_value={
                      'status': 'not-exercised', 'exit': None, 'reason': 'fixture unavailable'}):
-                self.assertEqual(gate.main(), 77)
+                self.assertEqual(gate.main(), 1)
             receipt = json.loads((output / 'RESULTS.json').read_text())
             self.assertFalse(receipt['passed'])
             self.assertEqual(receipt['tests'][0]['status'], 'not-exercised')

@@ -1,10 +1,11 @@
 param(
     [string]$VcpkgRoot = "$env:LOCALAPPDATA\JudasBuildTools\vcpkg",
     [string]$PkgConfig = "",
-    [ValidateSet('Visual Studio 17 2022', 'Visual Studio 18 2026')][string]$Generator = 'Visual Studio 17 2022',
+    [ValidateSet('Visual Studio 17 2022', 'Visual Studio 18 2026', 'Ninja')][string]$Generator = 'Visual Studio 17 2022',
     [ValidateSet('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')][string]$Channel = 'Experimental',
     [string]$BuildDirectory = "",
     [string]$EngineVersion = "",
+    [string]$CompilerLauncher = "",
     [ValidateRange(1,32)][int]$Jobs = 2,
     [switch]$ReleasePackage
 )
@@ -31,7 +32,9 @@ if (!(Test-Path "$VcpkgRoot\.git")) {
 }
 Run-Native "$VcpkgRoot\bootstrap-vcpkg.bat" @('-disableMetrics')
 $build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { "$repo\build\windows-$Channel" }
-$configure = @('-S', $repo, '-B', $build, '-G', $Generator, '-A', 'x64', "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot/scripts/buildsystems/vcpkg.cmake", '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md', "-DVCPKG_MANIFEST_DIR=$repo/packaging/windows", "-DVCPKG_INSTALLED_DIR=$build/vcpkg_installed", "-DJUDAS_BUILD_CHANNEL=$Channel")
+$configure = @('-S', $repo, '-B', $build, '-G', $Generator, '-DCMAKE_BUILD_TYPE=Release', "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot/scripts/buildsystems/vcpkg.cmake", '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md', "-DVCPKG_MANIFEST_DIR=$repo/packaging/windows", "-DVCPKG_INSTALLED_DIR=$build/vcpkg_installed", "-DJUDAS_BUILD_CHANNEL=$Channel")
+if ($Generator -ne 'Ninja') { $configure += @('-A', 'x64') }
+if ($CompilerLauncher) { $configure += @("-DCMAKE_C_COMPILER_LAUNCHER=$CompilerLauncher", "-DCMAKE_CXX_COMPILER_LAUNCHER=$CompilerLauncher") }
 if ($ReleasePackage) { $configure += "-DJUDAS_SDK_RELEASE=ON" }
 if ($EngineVersion) { $configure += "-DJUDAS_ENGINE_VERSION=$EngineVersion" }
 Run-Native cmake $configure

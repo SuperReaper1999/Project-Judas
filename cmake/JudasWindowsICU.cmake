@@ -5,13 +5,21 @@ if(NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif()
 set(JUDAS_ICU_SOURCE "${CMAKE_BINARY_DIR}/unicode/windows-icu")
 file(MAKE_DIRECTORY "${JUDAS_ICU_SOURCE}/include")
+# Ninja still uses upstream ICU's native Visual Studio project. Do not rely on
+# a variable populated only by CMake's Visual Studio generator.
+if(CMAKE_VS_MSBUILD_COMMAND)
+ set(judas_icu_msbuild "${CMAKE_VS_MSBUILD_COMMAND}")
+else()
+ find_program(judas_icu_msbuild NAMES MSBuild.exe MSBuild
+  HINTS "$ENV{VSINSTALLDIR}/MSBuild/Current/Bin" REQUIRED)
+endif()
 ExternalProject_Add(judas_icu_build
  URL "${CMAKE_SOURCE_DIR}/third_party/text/icu4c-76_1-src.tgz"
  URL_HASH SHA256=dfacb46bfe4747410472ce3e1144bf28a102feeaa4e3875bac9b4c6cf30f4f3e
  SOURCE_DIR "${JUDAS_ICU_SOURCE}"
  PREFIX "${CMAKE_BINARY_DIR}/unicode/build"
  CONFIGURE_COMMAND ""
- BUILD_COMMAND "${CMAKE_VS_MSBUILD_COMMAND}" <SOURCE_DIR>/source/allinone/allinone.sln /m:4 /t:makedata /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0
+ BUILD_COMMAND "${judas_icu_msbuild}" <SOURCE_DIR>/source/allinone/allinone.sln /m:4 /t:makedata /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0
  INSTALL_COMMAND ""
  BUILD_BYPRODUCTS "${JUDAS_ICU_SOURCE}/lib64/icuuc.lib" "${JUDAS_ICU_SOURCE}/lib64/icuin.lib" "${JUDAS_ICU_SOURCE}/lib64/icudt.lib"
  "${JUDAS_ICU_SOURCE}/bin64/icuuc76.dll" "${JUDAS_ICU_SOURCE}/bin64/icuin76.dll" "${JUDAS_ICU_SOURCE}/bin64/icudt76.dll"

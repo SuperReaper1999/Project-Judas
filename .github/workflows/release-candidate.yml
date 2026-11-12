@@ -28,6 +28,10 @@ jobs:
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      CCACHE_DIR: /home/runner/.cache/ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_COMPILERCHECK: content
+      CCACHE_MAXSIZE: 1G
     steps:
       - name: Validate literal commit input
         run: python3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'
@@ -44,17 +48,50 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
-          package-manager-cache: false
-      - run: |
+          cache: npm
+          cache-dependency-path: tools/verification/package-lock.json
+      - name: Install Linux build dependencies
+        run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++ libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri
+          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri
           npm ci --ignore-scripts --prefix tools/verification
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON
+      - name: Identify Linux compiler
+        id: compiler
+        run: |
+          echo "version=$(g++ -dumpfullversion)-$(sha256sum "$(g++ -print-prog-name=cc1plus)" | cut -c1-12)" >> "$GITHUB_OUTPUT"
+          nproc
+          free -m
+      - name: Restore Linux compiler objects
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ccache
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-${{ inputs.candidate }}-candidate
+          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v1-
+      - name: Reuse Linux ICU
+        uses: actions/cache@v4
+        with:
+          path: build/unicode
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v1-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
+      - name: Configure exact Linux release candidate
+        run: |
+          ccache --zero-stats
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+      - name: Build Linux SDK
+        run: |
           cmake --build build --target judas_linux_sdk -j2
+      - name: Complete Linux qualification
+        run: |
           xvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2
+      - name: Linux SDK authoring and relocated exports
+        run: |
           xvfb-run -a python3 scripts/qualify_sdk.py --sdk build/linux-sdk --work .cache/release-sdk-work
+      - name: Linux API and ABI qualification
+        run: |
           node scripts/check_judasjs_api.mjs
           python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json
+      - name: Linux compiler cache statistics
+        if: always()
+        run: ccache --show-stats
       - name: Pack qualified SDK and tracked source as immutable CI artifacts
         run: |
           git diff --exit-code HEAD
@@ -90,6 +127,7 @@ jobs:
       CHANNEL: ${{ inputs.channel }}
       PYTHONUTF8: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      SCCACHE_GHA_ENABLED: 'true'
     steps:
       - name: Validate literal commit input
         shell: pwsh
@@ -100,6 +138,23 @@ jobs:
           persist-credentials: false
       - name: Verify release and status documentation before building
         run: python tools/release_docs.py
+      - name: Native compiler cache
+        uses: mozilla-actions/sccache-action@fd02668681acd5f960e1372061bee5e3e987195c # v0.0.11
+        with:
+          version: v0.16.0
+      - name: Identify Windows image
+        id: image
+        shell: pwsh
+        run: |
+          "version=$env:ImageVersion" >> $env:GITHUB_OUTPUT
+          Get-CimInstance Win32_ComputerSystem | Select-Object NumberOfLogicalProcessors,TotalPhysicalMemory
+      - name: Reuse Windows dependency builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/AppData/Local/vcpkg/archives
+            build/windows-${{ inputs.channel }}/unicode
+          key: windows-native-${{ steps.image.outputs.version }}-${{ inputs.channel }}-deps-v1-${{ hashFiles('packaging/windows/vcpkg.json', 'cmake/JudasWindowsICU.cmake', 'third_party/text/*') }}
       - name: Build complete native MSVC SDK
         shell: pwsh
         run: |
@@ -122,57 +177,54 @@ jobs:
           $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
           $vsVersion = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationVersion
           if ($LASTEXITCODE -or !$vsVersion) { throw 'MSVC installation not found' }
-          $generator = switch (([version]$vsVersion).Major) {
-            17 { 'Visual Studio 17 2022' }
-            18 { 'Visual Studio 18 2026' }
-            default { throw "Unqualified Visual Studio installation: $vsVersion" }
-          }
-          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator $generator
+          $vsPath = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          & "$vsPath/Common7/Tools/Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
+          sccache --zero-stats
+          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator Ninja -CompilerLauncher sccache
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           $build = "build/windows-$env:CHANNEL"
-          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests judas_one_way_platform_tests judas_grid_movement_tests judas_planar_physics_tests judas_tilemap_tests judas_sprite_animation_tests judas_editor_script_workflow_tests judas_ui_drag_tests --parallel 2
+          $bin = $build
+          $aiTargets = @('judas_utility_ai_tests', 'judas_utility_ai_script_tests', 'judas_utility_ai_editor_tests', 'judas_ai_workflow_tests', 'judas_ai_reservation_tests', 'judas_ai_reservation_script_tests', 'judas_ai_sensing_tests', 'judas_ai_sensing_script_tests')
+          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests judas_one_way_platform_tests judas_grid_movement_tests judas_planar_physics_tests judas_tilemap_tests judas_sprite_animation_tests judas_editor_script_workflow_tests judas_ui_drag_tests $aiTargets --parallel 2
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_build_identity_tests.exe"
+          & "$bin/judas_build_identity_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json
+          & "$bin/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_mk2_rotation_tests.exe"
+          & "$bin/judas_mk2_rotation_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_network_transport_tests.exe"
+          & "$bin/judas_network_transport_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"
+          & "$bin/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_planar_physics_tests.exe"
+          & "$bin/judas_planar_physics_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release"
+          & "$bin/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release" --cold
+          & "$bin/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release" --cold
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release"
+          & "$bin/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold
+          & "$bin/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold-queue
+          & "$bin/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold-queue
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_tilemap_tests.exe" "$env:RUNNER_TEMP/tilemap-release"
+          & "$bin/judas_tilemap_tests.exe" "$env:RUNNER_TEMP/tilemap-release"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_sprite_animation_tests.exe" "$env:RUNNER_TEMP/animation-release"
+          & "$bin/judas_sprite_animation_tests.exe" "$env:RUNNER_TEMP/animation-release"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_editor_script_workflow_tests.exe"
+          & "$bin/judas_editor_script_workflow_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          & "$build/Release/judas_ui_drag_tests.exe"
+          & "$bin/judas_ui_drag_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           # These AI contracts use native physics/script/editor-model code, not
           # a hosted desktop/GL session. Keep graphics qualification separate.
-          $aiTargets = @('judas_utility_ai_tests', 'judas_utility_ai_script_tests', 'judas_utility_ai_editor_tests', 'judas_ai_workflow_tests', 'judas_ai_reservation_tests', 'judas_ai_reservation_script_tests', 'judas_ai_sensing_tests', 'judas_ai_sensing_script_tests')
-          cmake --build $build --config Release --target $aiTargets --parallel 2
-          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           New-Item -ItemType Directory -Path windows-ai-qualification -Force | Out-Null
           $aiFailures = @()
           $aiResults = @()
           foreach ($test in $aiTargets) {
             $log = "windows-ai-qualification/$test.log"
-            & "$build/Release/$test.exe" *> $log
+            & "$bin/$test.exe" *> $log
             $result = $LASTEXITCODE
             Get-Content $log
             $aiResults += @{ name = $test; exit = $result; log = $log }
@@ -181,7 +233,7 @@ jobs:
           $aiResults | ConvertTo-Json -Depth 4 | Set-Content -Encoding utf8 windows-ai-qualification/RESULTS.json
           foreach ($mode in @('write', 'read')) {
             $log = "windows-ai-qualification/reservation-$mode.log"
-            & "$build/Release/judas_ai_reservation_script_tests.exe" $mode "$env:RUNNER_TEMP/ai-reservation-cold" *> $log
+            & "$bin/judas_ai_reservation_script_tests.exe" $mode "$env:RUNNER_TEMP/ai-reservation-cold" *> $log
             $result = $LASTEXITCODE
             Get-Content $log
             if ($result) { throw "AI reservation cold $mode failed: $result" }

@@ -107,7 +107,7 @@ class QualificationScope(unittest.TestCase):
                 self.assertTrue(package_source.selected(project,'engine'))
 
     def test_ai_release_scope_and_cold_readers_use_real_producer_paths(self):
-        self.assertIn('ai',qualify_m100.GROUPS)
+        self.assertTrue(any('ai' in t['groups'] for t in qualify_m100.qualification_tests(json.loads((ROOT/'tools/validation/suites.json').read_text()))))
         manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
         tests=[entry for entry in manifest['tests'] if 'ai' in entry['groups']]
         gates=ROOT/'unused-qualification-fixture'
@@ -125,7 +125,7 @@ class QualificationScope(unittest.TestCase):
             self.assertIn('projects/'+name,spec['directories'])
 
     def test_2d_release_scope_has_its_own_checks_and_source_fixtures(self):
-        self.assertIn('2d',qualify_m100.GROUPS)
+        self.assertTrue(any('2d' in t['groups'] for t in qualify_m100.qualification_tests(json.loads((ROOT/'tools/validation/suites.json').read_text()))))
         spec=package_sdk.inventory(ROOT/'packaging/sdk-inventory.json')
         for name in package_source.LEARNING_PROJECTS:
             self.assertIn('projects/'+name,spec['directories']+spec.get('source_only_projects',[]))
@@ -180,7 +180,7 @@ class QualificationScope(unittest.TestCase):
             relative=Path(os.path.relpath(build,Path.cwd()))
             output=temporary/'qualification'
             with patch.object(sys,'argv',['qualify_m100.py','--build',str(relative),'--output',str(output)]), \
-                 patch.object(qualify_m100,'GROUPS',[]), \
+                 patch.object(qualify_m100,'qualification_tests',return_value=[]), \
                  patch.object(qualify_m100,'EXTRA',['judas_joint_tests']), \
                  patch.object(qualify_m100.subprocess,'check_output',return_value='{"channel":"Alpha"}'), \
                  patch.object(qualify_m100.subprocess,'run',return_value=argparse.Namespace(returncode=0)) as launch:
@@ -191,20 +191,6 @@ class QualificationScope(unittest.TestCase):
             self.assertEqual(Path(checks[0].args[0][0]),build.resolve()/executable)
             self.assertEqual(checks[0].kwargs['cwd'],output.resolve())
 
-    def test_alpha_preserves_but_does_not_certify_unavailable_runtime(self):
-        tests=[{'name':'core','target':'judas_game_water_tests'},
-               {'name':'runtime','target':'judas_game_water_runtime_tests'},
-               {'name':'origin','target':'judas_origin_environment_tests'},
-               {'name':'water-policy','target':'judas_project_water_tests'}]
-        original=copy.deepcopy(tests)
-        selected,unavailable=qualify_m100.partition_channel_tests(tests,'Alpha')
-        self.assertEqual([t['name'] for t in selected],['core','origin','water-policy'])
-        self.assertEqual([t['name'] for t in unavailable],['runtime'])
-        self.assertTrue(all(t['status']=='not-exercised' for t in unavailable))
-        self.assertEqual(tests,original)
-        selected,unavailable=qualify_m100.partition_channel_tests(tests,'Experimental')
-        self.assertEqual(selected,original)
-        self.assertEqual(unavailable,[])
 
 
 class Packaging(unittest.TestCase):

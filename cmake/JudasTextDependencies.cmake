@@ -35,11 +35,14 @@ if(WIN32)
 endif()
 set(JUDAS_ICU_PREFIX "${CMAKE_BINARY_DIR}/unicode/icu")
 file(MAKE_DIRECTORY "${JUDAS_ICU_PREFIX}/include")
+# Honour the same compiler cache for the external autoconf build.
+string(JOIN " " judas_icu_cc ${CMAKE_C_COMPILER_LAUNCHER} "${CMAKE_C_COMPILER}")
+string(JOIN " " judas_icu_cxx ${CMAKE_CXX_COMPILER_LAUNCHER} "${CMAKE_CXX_COMPILER}")
 ExternalProject_Add(judas_icu_build
  URL "${CMAKE_SOURCE_DIR}/third_party/text/icu4c-76_1-src.tgz"
  URL_HASH SHA256=dfacb46bfe4747410472ce3e1144bf28a102feeaa4e3875bac9b4c6cf30f4f3e
  PREFIX "${CMAKE_BINARY_DIR}/unicode/build"
- CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "CFLAGS=-O2 -fPIC" "CXXFLAGS=-O2 -fPIC" <SOURCE_DIR>/source/runConfigureICU Linux --prefix=${JUDAS_ICU_PREFIX} --disable-shared --enable-static --with-data-packaging=static --disable-tests --disable-samples --disable-extras --disable-icuio
+ CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "CC=${judas_icu_cc}" "CXX=${judas_icu_cxx}" "CFLAGS=-O2 -fPIC" "CXXFLAGS=-O2 -fPIC" <SOURCE_DIR>/source/runConfigureICU Linux --prefix=${JUDAS_ICU_PREFIX} --disable-shared --enable-static --with-data-packaging=static --disable-tests --disable-samples --disable-extras --disable-icuio
  BUILD_COMMAND make -j4
  INSTALL_COMMAND make install
  BUILD_BYPRODUCTS "${JUDAS_ICU_PREFIX}/lib/libicui18n.a" "${JUDAS_ICU_PREFIX}/lib/libicuuc.a" "${JUDAS_ICU_PREFIX}/lib/libicudata.a"

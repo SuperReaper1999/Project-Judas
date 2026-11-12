@@ -30,17 +30,18 @@ class Promotion(unittest.TestCase):
         self.revision = 'a'*40
         self.run = dict(head_sha=self.revision, conclusion='success',
                         head_repository={'full_name': self.repository},
-                        head_branch='Experimental', event='push',
-                        path='.github/workflows/prealpha.yml')
-        self.jobs = [dict(name='linux ('+c+')', status='completed', conclusion='success')
-                     for c in ('Alpha', 'Experimental')]
+                        head_branch='Experimental', event='workflow_dispatch',
+                        path='.github/workflows/release-candidate.yml')
+        self.jobs = [dict(name=n, status='completed', conclusion='success')
+                     for n in ('linux', 'windows')]
 
     def accepted(self, run=None, jobs=None):
         return promotion.qualifies(run or self.run, self.jobs if jobs is None else jobs,
                                    self.repository, self.revision)
 
-    def test_same_source_both_native_channels_are_reusable(self):
-        self.assertTrue(self.accepted())
+    def test_routine_channel_jobs_are_not_release_qualification(self):
+        run=dict(self.run, path='.github/workflows/prealpha.yml', event='push')
+        self.assertFalse(self.accepted(run=run))
 
     def test_missing_skipped_failed_or_incomplete_channels_are_not_proof(self):
         self.assertFalse(self.accepted(jobs=[]))
@@ -73,7 +74,7 @@ class Routing(unittest.TestCase):
         self.assertNotIn('--allow-untracked',workflow)
         self.assertIn('git diff --exit-code HEAD',workflow)
 
-    def test_native_and_unknown_inputs_still_require_full_gates(self):
+    def test_native_and_unknown_inputs_still_require_native_validation(self):
         ignored = path_patterns('prealpha.yml', 'paths-ignore')
         for name in ('src/PhysicsWorld.h', 'src/RendererWeather.inl', 'CMakeLists.txt',
                      'cmake/Physics.cmake', 'tools/package_sdk.py', 'tools/validation/suites.json',

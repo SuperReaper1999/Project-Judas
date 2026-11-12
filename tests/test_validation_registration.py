@@ -84,20 +84,12 @@ class ValidationRegistrationTests(unittest.TestCase):
                              ['--build-dir', case['command'][3], '--test', entry['name'],
                               '--expected-channel', channel])
             properties = {item['name']: item['value'] for item in case['properties']}
-            unavailable = channel == 'Alpha' and entry['target'] in {
-                'judas_game_water_runtime_tests', 'judas_game_water_script_tests',
-                'judas_water_workshop_tests',
-                'judas_water_visual_tests',
-}
             labels = ['prealpha', *entry['groups']]
-            if unavailable:
-                labels.append('unavailable-in-channel')
-                self.assertIn('SKIP_RETURN_CODE', properties)
-                self.assertEqual(properties['SKIP_RETURN_CODE'], 77)
-            else:
-                self.assertNotIn('SKIP_RETURN_CODE', properties)
+            if not entry.get('releaseOnly', False):
+                labels.append('routine')
+            self.assertNotIn('SKIP_RETURN_CODE', properties)
             self.assertEqual(properties['LABELS'], sorted(labels))
-            self.assertTrue(properties['RUN_SERIAL'])
+            self.assertEqual(properties.get('RUN_SERIAL', False), not entry.get('parallel', False))
             self.assertEqual(properties['TIMEOUT'], 150.0)
         for name in tooling:
             command = tests[name]['command']
@@ -106,14 +98,8 @@ class ValidationRegistrationTests(unittest.TestCase):
     def test_ordinary_registration_omits_only_explicit_manual_failures(self):
         self.assert_contract(self.configure())
 
-    def test_alpha_marks_only_advanced_runtime_unavailable(self):
+    def test_alpha_runs_all_opt_in_v2_capabilities(self):
         self.assert_contract(self.configure(channel='Alpha'), channel='Alpha')
-
-    def test_alpha_multi_configuration_discovery(self):
-        if not shutil.which('ninja'):
-            self.skipTest('Ninja needed for explicit multi-config control')
-        self.assert_contract(self.configure(channel='Alpha', generator='Ninja Multi-Config'),
-                             channel='Alpha')
 
     def test_removed_modular_editor_or_scripting_gate_is_detected(self):
         original = MODULE.read_text(encoding='utf-8')
@@ -131,36 +117,10 @@ class ValidationRegistrationTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.assert_contract(self.configure(module=changed))
 
-    def test_removed_channel_guard_is_detected(self):
-        module = MODULE.read_text(encoding='utf-8').replace(
-            'if(name IN_LIST judas_channel_unavailable)', 'if(FALSE)', 1)
-        self.assertNotEqual(module, MODULE.read_text(encoding='utf-8'))
-        with self.assertRaises(AssertionError):
-            self.assert_contract(self.configure(channel='Alpha', module=module), channel='Alpha')
 
-    def test_removed_advanced_runtime_channel_admission_is_detected(self):
-        # This real RuntimeWorld fixture needs Advanced Fluids. Alpha must report
-        # it unavailable, while Experimental must continue to execute it.
-        alpha = self.configure(channel='Alpha')
-        experimental = self.configure()
-        for name in ('game-water-runtime', 'water-workshop-controls'):
-            with self.subTest(gate=name):
-                case = alpha['prealpha.' + name]
-                original = list(case['properties'])
-                case['properties'] = [item for item in original
-                                      if item['name'] != 'SKIP_RETURN_CODE']
-                with self.assertRaises(AssertionError):
-                    self.assert_contract(alpha, channel='Alpha')
-                case['properties'] = original
-                case = experimental['prealpha.' + name]
-                original = list(case['properties'])
-                case['properties'].append({'name': 'SKIP_RETURN_CODE', 'value': 77})
-                with self.assertRaises(AssertionError):
-                    self.assert_contract(experimental)
-                case['properties'] = original
-
-    @unittest.skipUnless(shutil.which('ninja'), 'Ninja needed for explicit multi-config control')
     def test_multi_configuration_discovery(self):
+        if not shutil.which('ninja'):
+            self.skipTest('Ninja required for multi-configuration discovery')
         self.assert_contract(self.configure(generator='Ninja Multi-Config'))
 
     def test_explicit_failure_registration_preserves_original_case(self):
