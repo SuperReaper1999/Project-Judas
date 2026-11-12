@@ -1,6 +1,7 @@
 // Vulkan backend core: instance/device/swapchain ownership, memory, command
 // submission and presentation. See VulkanBackend.h for the backend contract.
 #include "VkCore.h"
+#include <thread>
 #include <chrono>
 #include <system_error>
 #include <iterator>
@@ -1060,7 +1061,15 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     deviceInfo.pQueueCreateInfos = &queueInfo;
     deviceInfo.enabledExtensionCount = std::uint32_t(deviceExtensions.size());
     deviceInfo.ppEnabledExtensionNames = deviceExtensions.data();
-    result = vkCreateDevice(g->physical, &deviceInfo, nullptr, &g->device);
+    // A device can be reported lost at creation while the driver is still
+    // releasing another process's context (observed twice on NVIDIA 580 when a
+    // run started in the same second the previous one exited). Retry briefly.
+    for (int attempt = 0; attempt < 4; ++attempt) {
+        result = vkCreateDevice(g->physical, &deviceInfo, nullptr, &g->device);
+        if (result != VK_ERROR_DEVICE_LOST) break;
+        std::fprintf(stderr, "[Vulkan] device creation reported a lost device (attempt %d); retrying\n", attempt + 1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250 << attempt));
+    }
     if (result != VK_SUCCESS) return fail("vkCreateDevice failed (" + std::to_string(int(result)) + ")");
     vkGetDeviceQueue(g->device, g->queueFamily, 0, &g->queue);
     if (g->transformFeedback) {
