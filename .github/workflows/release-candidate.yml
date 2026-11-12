@@ -12,6 +12,12 @@ on:
         type: choice
         options: [Alpha, Experimental, Beta, Stable]
         default: Alpha
+      platform:
+        description: Both platforms required for release proof; single platform is investigation only
+        required: true
+        type: choice
+        options: [both, linux, windows]
+        default: both
 permissions:
   contents: read
 concurrency:
@@ -19,7 +25,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   linux:
-    if: github.actor == github.repository_owner
+    if: github.actor == github.repository_owner && inputs.platform != 'windows'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     env:
@@ -119,7 +125,7 @@ jobs:
           include-hidden-files: true
           retention-days: 14
   windows:
-    if: github.actor == github.repository_owner
+    if: github.actor == github.repository_owner && inputs.platform != 'linux'
     runs-on: windows-2025
     timeout-minutes: 120
     env:

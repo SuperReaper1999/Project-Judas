@@ -64,6 +64,8 @@ class Promotion(unittest.TestCase):
         self.assertTrue(self.accepted(run, jobs))
         self.assertFalse(self.accepted(run, jobs[:1]))
         self.assertFalse(self.accepted(dict(run, event='push'), jobs))
+        partial=copy.deepcopy(jobs);partial[0]['conclusion']='skipped'
+        self.assertFalse(self.accepted(run, partial))
 
 
 class Routing(unittest.TestCase):

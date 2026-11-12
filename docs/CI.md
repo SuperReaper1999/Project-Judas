@@ -12,7 +12,7 @@ Compiler caches validate actual compiler inputs; dependency cache keys include t
 
 ## Complete candidate qualification
 
-`release-candidate.yml` is manual and never publishes. It freezes exact source, builds and qualifies Linux and native Windows SDKs, runs all 186 native manifest cases on Linux, cold-process readers, primitive controls and the complete Python control suite, SDK authoring/moved exports, API and ABI checks. Native Windows remains MSVC; Ninja schedules requested targets as a shared dependency graph. Its hosted tool/contracts qualification does not certify Windows hardware GL, Android or full browser gameplay.
+`release-candidate.yml` is manual and never publishes. Its platform selector permits a Linux-only or Windows-only investigation; those partial runs cannot qualify promotion or publication. Full qualification uses the default `both`. It freezes exact source, builds and qualifies Linux and native Windows SDKs, runs all 186 native manifest cases on Linux, cold-process readers, primitive controls and the complete Python control suite, SDK authoring/moved exports, API and ABI checks. Native Windows remains MSVC; Ninja schedules requested targets as a shared dependency graph. Its hosted tool/contracts qualification does not certify Windows hardware GL, Android or full browser gameplay.
 
 Main promotion requires successful exact-candidate Linux AND Windows jobs and explicit operator acceptance. Routine checks, a different revision, skipped/failed jobs or a completed build alone cannot qualify promotion. Publication continues to consume already-qualified immutable artifacts through the existing operator-approved publication environment. No main promotion or publication follows an Experimental push automatically.
 
