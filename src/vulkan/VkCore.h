@@ -211,6 +211,9 @@ struct Program {
     Range defaultsRange;          // last upload (ring chunk + offset)
     std::uint64_t defaultsSerial = 0;
     std::vector<BlockInfo> uniformBlocks, storageBlocks;
+    // Blocks the shader declares but never uses. OpenGL does not report them
+    // as active resources; Vulkan still needs a descriptor for the variable.
+    std::vector<BlockInfo> inactiveBlocks;
     std::vector<AttributeInfo> attributes;
     std::vector<std::uint32_t> samplerUniforms; // indices into uniforms
     std::uint32_t outputMask = 0;

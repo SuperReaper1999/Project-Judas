@@ -711,10 +711,10 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
         dynamic.emplace_back(program.defaultBinding, std::uint32_t(program.defaultsRange.offset));
         mix(std::uint64_t(program.defaultsRange.block->buffer));
     }
-    const auto addBlock = [&](const BlockInfo &block, bool storage) {
+    const auto addBlock = [&](const BlockInfo &block, bool storage, bool active) {
         const auto &indexed = storage ? gl.storageBindings[std::min<std::size_t>(block.glBinding, gl.storageBindings.size() - 1)]
                                       : gl.uniformBindings[std::min<std::size_t>(block.glBinding, gl.uniformBindings.size() - 1)];
-        Buffer *buffer = GetBuffer(indexed.buffer);
+        Buffer *buffer = active ? GetBuffer(indexed.buffer) : nullptr;
         VkDescriptorBufferInfo info{};
         std::uint32_t offset = 0;
         if (buffer && buffer->storage && indexed.offset < buffer->size) {
@@ -739,8 +739,9 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
         mix(std::uint64_t(info.buffer));
         mix(info.range);
     };
-    for (const auto &block : program.uniformBlocks) addBlock(block, false);
-    for (const auto &block : program.storageBlocks) addBlock(block, true);
+    for (const auto &block : program.uniformBlocks) addBlock(block, false, true);
+    for (const auto &block : program.storageBlocks) addBlock(block, true, true);
+    for (const auto &block : program.inactiveBlocks) addBlock(block, block.storage, false);
     for (const auto &image : work.images) {
         mix(std::uint64_t(image.view));
         mix(std::uint64_t(image.sampler));

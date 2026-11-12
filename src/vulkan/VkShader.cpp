@@ -497,11 +497,13 @@ void ReflectStage(const std::vector<std::uint32_t> &code, GLenum stage, Program 
                 program.defaults.resize(std::max<std::size_t>(program.defaults.size(), TypeBytes(m, pointee, 0)));
                 continue;
             }
-            auto &list = storage ? program.storageBlocks : program.uniformBlocks;
+            const auto declared = declaredBindings.find(blockName);
+            const bool active = declared != declaredBindings.end();
+            auto &list = !active ? program.inactiveBlocks : storage ? program.storageBlocks : program.uniformBlocks;
             bool known = false;
             for (const auto &existing : list) known |= existing.name == blockName;
             if (known) continue;
-            if (!storage) {
+            if (!storage && active) {
                 // Introspection of named-block members (glGetUniformIndices).
                 Program members;
                 FlattenBlock(m, members, "", pointee, 0, 0);
@@ -515,8 +517,7 @@ void ReflectStage(const std::vector<std::uint32_t> &code, GLenum stage, Program 
             info.binding = binding;
             info.size = storage ? BlockDataBytes(m, pointee) : TypeBytes(m, pointee, 0);
             info.storage = storage;
-            const auto declared = declaredBindings.find(blockName);
-            info.glBinding = declared != declaredBindings.end() && declared->second >= 0 ? GLuint(declared->second) : 0;
+            info.glBinding = active && declared->second >= 0 ? GLuint(declared->second) : 0;
             list.push_back(std::move(info));
         } else if (variable.storage == 0) { // UniformConstant: opaque
             const SpvType *opaque = &type;
@@ -607,6 +608,10 @@ bool BuildLayouts(Program &program, std::string &error) {
         ok &= add(block.binding, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1);
         program.dynamicBindings.push_back(block.binding);
     }
+    for (const auto &block : program.inactiveBlocks) {
+        ok &= add(block.binding, block.storage ? VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC : VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1);
+        program.dynamicBindings.push_back(block.binding);
+    }
     for (const auto index : program.samplerUniforms) {
         const Uniform &uniform = program.uniforms[index];
         ok &= add(uniform.binding, uniform.samplerBuffer ? VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER
@@ -661,6 +666,7 @@ void ResetLink(Program &program) {
     program.locationTable.clear();
     program.uniformBlocks.clear();
     program.blockUniforms.clear();
+    program.inactiveBlocks.clear();
     program.feedbackStride = 0;
     program.storageBlocks.clear();
     program.attributes.clear();
@@ -780,6 +786,12 @@ bool Link(Program &program) {
             program.log = "vkCreateComputePipelines failed";
             return false;
         }
+    }
+    if (g->trace) {
+        for (const auto &block : program.uniformBlocks)
+            std::fprintf(stderr, "[Vulkan trace] uniform block %s binding=%u gl=%u bytes=%u\n", block.name.c_str(), block.binding, block.glBinding, block.size);
+        for (const auto &block : program.storageBlocks)
+            std::fprintf(stderr, "[Vulkan trace] storage block %s binding=%u gl=%u bytes=%u\n", block.name.c_str(), block.binding, block.glBinding, block.size);
     }
     program.generation = ++g->programGenerations;
     program.linked = true;
