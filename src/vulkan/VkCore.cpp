@@ -1074,6 +1074,7 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
 void Shutdown() {
     if (!g) return;
     if (g->device) {
+        PrintDispatchTiming();
         vkDeviceWaitIdle(g->device);
         if (g->cmd) {
             EndPass();
@@ -1229,9 +1230,17 @@ void Present() {
             g->swapchainDirty = true;
     }
     if (!presented) Submit(VK_NULL_HANDLE, VK_NULL_HANDLE);
-    // Bound latency and memory: at most two frames may be in flight.
-    while (g->inFlight.size() > 2) PollCompleted(true, g->inFlight.front().serial);
+    // Bound latency and memory: at most two frames may be in flight. Count
+    // frames, not submissions: a frame that also flushed mid-way (fences,
+    // readbacks) must not force the CPU to wait for the previous frame, which
+    // would serialise CPU and GPU work.
+    g->frameSerials.push_back(g->serial - 1);
+    while (g->frameSerials.size() > 2) {
+        PollCompleted(true, g->frameSerials.front());
+        g->frameSerials.pop_front();
+    }
     PollCompleted(false);
+    ResolveDispatchTiming(false);
     if (width != g->drawableWidth || height != g->drawableHeight)
         RecreateDefaultFramebuffer(width, height);
 }

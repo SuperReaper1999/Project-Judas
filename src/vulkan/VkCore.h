@@ -1,5 +1,6 @@
 #pragma once
 // Internal declarations of the Vulkan backend. Not included by engine code.
+#include <deque>
 #include <vulkan/vulkan.h>
 #include <glad/gl.h>
 
@@ -440,6 +441,7 @@ struct Context {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0, descriptorSets = 0,
                   validationMessages = 0, bufferBytes = 0, imageBytes = 0, deviceBufferBytes = 0;
     bool deviceBufferHeapExhausted = false;
+    std::deque<std::uint64_t> frameSerials; // last submission serial of each recent frame
     bool validation = false, trace = false;
 };
 
@@ -473,6 +475,10 @@ void MemoryBarrierAll();
 void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table);
 void DestroyProgramResources(Program &program);
 Program *CurrentProgram();
+// JUDAS_VULKAN_DISPATCH_TIMING=1: GPU time of every compute dispatch, grouped by
+// program and grid, printed at shutdown. Diagnostic only (adds timestamp writes).
+void ResolveDispatchTiming(bool wait);
+void PrintDispatchTiming();
 void ShutdownShaderCompiler();
 
 // ---- textures / framebuffers (VkTexture.cpp) ----

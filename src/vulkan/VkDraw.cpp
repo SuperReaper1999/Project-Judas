@@ -1,5 +1,6 @@
 // Vulkan backend: buffer objects, vertex arrays, render-pass management,
 // pipeline/descriptor construction, draws, clears and compute dispatch.
+#include <map>
 #include "VkCore.h"
 
 #include <algorithm>
@@ -1008,6 +1009,26 @@ void GLAD_API_PTR Clear(GLbitfield mask) {
     vkCmdClearAttachments(g->cmd, count, attachments.data(), 1, &rect);
 }
 
+struct DispatchTiming {
+    bool enabled = false, checked = false;
+    VkQueryPool pool = VK_NULL_HANDLE;
+    static constexpr std::uint32_t kSlots = 8192;
+    struct Pending { std::uint32_t slot; std::uint64_t serial; std::string key; };
+    std::vector<Pending> pending;
+    std::uint32_t cursor = 0;
+    struct Total { std::uint64_t count = 0; double ms = 0, worst = 0; };
+    std::map<std::string, Total> totals;
+};
+DispatchTiming &Timing() {
+    static DispatchTiming timing;
+    if (!timing.checked) {
+        timing.checked = true;
+        const char *value = std::getenv("JUDAS_VULKAN_DISPATCH_TIMING");
+        timing.enabled = value && std::strcmp(value, "1") == 0;
+    }
+    return timing;
+}
+
 void GLAD_API_PTR DispatchCompute(GLuint x, GLuint y, GLuint z) {
     Program *program = CurrentProgram();
     if (!program || !program->linked || !program->compute || !x || !y || !z) return;
@@ -1016,7 +1037,30 @@ void GLAD_API_PTR DispatchCompute(GLuint x, GLuint y, GLuint z) {
     ResolveSamplers(*program, work.images);
     vkCmdBindPipeline(g->cmd, VK_PIPELINE_BIND_POINT_COMPUTE, program->computePipeline);
     BindDescriptors(*program, VK_PIPELINE_BIND_POINT_COMPUTE, work, true);
+    DispatchTiming &timing = Timing();
+    std::uint32_t slot = 0;
+    if (timing.enabled) {
+        if (!timing.pool) {
+            VkQueryPoolCreateInfo info{VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO};
+            info.queryType = VK_QUERY_TYPE_TIMESTAMP;
+            info.queryCount = DispatchTiming::kSlots;
+            if (vkCreateQueryPool(g->device, &info, nullptr, &timing.pool) != VK_SUCCESS) { timing.enabled = false; timing.pool = VK_NULL_HANDLE; }
+        }
+    }
+    if (timing.enabled) {
+        if (timing.pending.size() * 2 + 2 > DispatchTiming::kSlots) ResolveDispatchTiming(true);
+        slot = timing.cursor;
+        timing.cursor = (timing.cursor + 2) % DispatchTiming::kSlots;
+        vkCmdResetQueryPool(g->cmd, timing.pool, slot, 2);
+        vkCmdWriteTimestamp(g->cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, timing.pool, slot);
+    }
     vkCmdDispatch(g->cmd, x, y, z);
+    if (timing.enabled) {
+        vkCmdWriteTimestamp(g->cmd, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, timing.pool, slot + 1);
+        char key[96];
+        std::snprintf(key, sizeof key, "program %u grid %ux%ux%u", g->gl.program, x, y, z);
+        timing.pending.push_back({slot, g->serial, key});
+    }
     MemoryBarrierAll();
 }
 void GLAD_API_PTR MemoryBarrier(GLbitfield) {
@@ -1028,6 +1072,39 @@ template <class F> void (*Erase(F function))(void) { return reinterpret_cast<voi
 } // namespace
 
 void ClearDrawScratch() { Work() = DescriptorWork{}; }
+
+void ResolveDispatchTiming(bool wait) {
+    DispatchTiming &timing = Timing();
+    if (!timing.enabled || timing.pending.empty()) return;
+    if (wait && timing.pending.back().serial >= g->serial) Flush(true);
+    else if (wait) PollCompleted(true, timing.pending.back().serial);
+    std::size_t kept = 0;
+    for (auto &entry : timing.pending) {
+        if (entry.serial > g->completedSerial) { timing.pending[kept++] = std::move(entry); continue; }
+        std::uint64_t ticks[2] = {};
+        vkGetQueryPoolResults(g->device, timing.pool, entry.slot, 2, sizeof ticks, ticks, sizeof(std::uint64_t),
+                              VK_QUERY_RESULT_64_BIT | VK_QUERY_RESULT_WAIT_BIT);
+        const double ms = double(ticks[1] - ticks[0]) * double(g->properties.limits.timestampPeriod) / 1e6;
+        auto &total = timing.totals[entry.key];
+        ++total.count;
+        total.ms += ms;
+        total.worst = std::max(total.worst, ms);
+    }
+    timing.pending.resize(kept);
+}
+void PrintDispatchTiming() {
+    DispatchTiming &timing = Timing();
+    if (!timing.enabled) return;
+    ResolveDispatchTiming(true);
+    std::vector<std::pair<std::string, DispatchTiming::Total>> rows(timing.totals.begin(), timing.totals.end());
+    std::sort(rows.begin(), rows.end(), [](const auto &a, const auto &b) { return a.second.ms > b.second.ms; });
+    std::fprintf(stderr, "[Vulkan] dispatch timing (GPU ms): total / count / mean / worst\n");
+    for (const auto &[key, total] : rows)
+        std::fprintf(stderr, "[Vulkan]   %-40s %10.3f %8llu %8.4f %8.4f\n", key.c_str(), total.ms,
+                     static_cast<unsigned long long>(total.count), total.ms / double(total.count), total.worst);
+    if (timing.pool) vkDestroyQueryPool(g->device, timing.pool, nullptr);
+    timing.pool = VK_NULL_HANDLE;
+}
 
 void PrepareBufferWrite(Buffer &buffer, bool discard) {
     if (buffer.persistent) return;
