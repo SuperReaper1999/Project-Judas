@@ -61,6 +61,9 @@ bool GpuOwned(const Buffer &buffer) {
 }
 
 void ReplaceStorage(Buffer &buffer, VkDeviceSize size, bool copy) {
+    // New storage means new VkBuffer/offset for every binding of this buffer;
+    // a texel view of the old storage also changes descriptor contents.
+    MarkDirty(DirtyBuffers | (buffer.texelView ? DirtyTextures : 0u));
     Range replacement = AllocateBuffer(size, GpuOwned(buffer));
     if (copy && buffer.storage) std::memcpy(replacement.Data(), buffer.storage.Data(), std::size_t(std::min(size, buffer.size)));
     DropTexelView(buffer);
@@ -226,7 +229,11 @@ void BindIndexed(GLenum target, GLuint index, GLuint name, VkDeviceSize offset, 
     }
     auto *list = target == GL_UNIFORM_BUFFER ? &g->gl.uniformBindings : target == GL_SHADER_STORAGE_BUFFER ? &g->gl.storageBindings : nullptr;
     if (!list || index >= list->size()) return;
-    (*list)[index] = {name, offset, size};
+    auto &indexed = (*list)[index];
+    if (indexed.buffer != name || indexed.offset != offset || indexed.size != size) {
+        indexed = {name, offset, size};
+        MarkDirty(DirtyBuffers);
+    }
     BindBuffer(target, name);
 }
 void GLAD_API_PTR BindBufferBase(GLenum target, GLuint index, GLuint name) { BindIndexed(target, index, name, 0, 0); }
@@ -246,6 +253,7 @@ void GLAD_API_PTR CreateVertexArrays(GLsizei count, GLuint *names) {
 }
 void GLAD_API_PTR BindVertexArray(GLuint name) {
     if (name && !Lookup(g->vertexArrays, name)) return;
+    if (g->gl.vao != name) MarkDirty(DirtyVertex);
     g->gl.vao = name;
     g->vertexArrays[name].bound = true;
 }
@@ -701,8 +709,57 @@ struct DescriptorWork {
     std::vector<std::pair<std::uint32_t, std::uint32_t>> dynamic; // binding -> offset
 };
 
+// Copies the program's default-block uniforms into this frame's ring when they
+// changed (or belong to an earlier submission). True when the range moved.
+bool RefreshDefaults(Program &program) {
+    if (!program.hasDefaultBlock) return false;
+    if (!program.defaultsDirty && program.defaultsSerial == g->serial && program.defaultsRange) return false;
+    program.defaultsRange = RingAllocate(std::max<std::size_t>(program.defaults.size(), 16), g->bufferAlignment);
+    std::memcpy(program.defaultsRange.Data(), program.defaults.data(), program.defaults.size());
+    program.defaultsDirty = false;
+    program.defaultsSerial = g->serial;
+    return true;
+}
+
+// The last graphics draw's resolved state. Reused while nothing it depends on
+// is marked dirty (Context::dirty); see docs/VULKAN_NATIVE.md.
+struct DrawCache {
+    bool valid = false;
+    std::uint64_t program = 0; // Program::generation
+    VkPrimitiveTopology topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+    VkPipeline pipeline = VK_NULL_HANDLE;
+    VkDescriptorSet set = VK_NULL_HANDLE;
+    VkPipelineLayout layout = VK_NULL_HANDLE;
+    VkBuffer defaultsBuffer = VK_NULL_HANDLE;
+    int defaultsSlot = -1; // index of the default block in `offsets`
+    std::vector<std::uint32_t> offsets;
+    std::uint64_t vertexHash = 0;
+    std::uint64_t bindings = 0; // BindingSignature of the resolved samplers
+};
+// The texture and sampler object names the program's samplers read right now.
+std::uint64_t BindingSignature(const Program &program) {
+    const GlState &gl = g->gl;
+    std::uint64_t hash = 1469598103934665603ull;
+    for (const auto index : program.samplerUniforms) {
+        const Uniform &uniform = program.uniforms[index];
+        const int slot = uniform.samplerBuffer ? int(SlotBuffer) : SlotForTarget(uniform.samplerTarget);
+        for (const GLint unit : uniform.units) {
+            std::uint64_t value = ~0ull;
+            if (unit >= 0 && unit < kTextureUnits && slot >= 0)
+                value = (std::uint64_t(gl.textures[std::size_t(unit)][std::size_t(slot)]) << 32) | gl.samplers[std::size_t(unit)];
+            hash = (hash ^ value) * 1099511628211ull;
+        }
+    }
+    return hash;
+}
+DrawCache &Cache() {
+    static DrawCache cache;
+    return cache;
+}
+
 // Builds (or reuses) the descriptor set for the current bindings and binds it.
-bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, DescriptorWork &work, bool markGpuWrites) {
+bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, DescriptorWork &work, bool markGpuWrites,
+                     DrawCache *cache = nullptr) {
     GlState &gl = g->gl;
     std::uint64_t hash = 1469598103934665603ull;
     const auto mix = [&](std::uint64_t value) { hash = (hash ^ value) * 1099511628211ull; };
@@ -715,12 +772,7 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
     dynamic.clear();
     bufferWrites.clear();
     if (program.hasDefaultBlock) {
-        if (program.defaultsDirty || program.defaultsSerial != g->serial || !program.defaultsRange) {
-            program.defaultsRange = RingAllocate(std::max<std::size_t>(program.defaults.size(), 16), g->bufferAlignment);
-            std::memcpy(program.defaultsRange.Data(), program.defaults.data(), program.defaults.size());
-            program.defaultsDirty = false;
-            program.defaultsSerial = g->serial;
-        }
+        RefreshDefaults(program);
         work.bufferInfos.push_back({program.defaultsRange.block->buffer, 0, std::max<VkDeviceSize>(program.defaults.size(), 16)});
         bufferWrites.push_back({program.defaultBinding, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, work.bufferInfos.size() - 1});
         dynamic.emplace_back(program.defaultBinding, std::uint32_t(program.defaultsRange.offset));
@@ -811,6 +863,18 @@ bool BindDescriptors(Program &program, VkPipelineBindPoint bindPoint, Descriptor
     }
     vkCmdBindDescriptorSets(g->cmd, bindPoint, program.layout, 0, 1, &set, std::uint32_t(work.dynamicOffsets.size()),
                             work.dynamicOffsets.data());
+    if (cache) {
+        cache->set = set;
+        cache->layout = program.layout;
+        cache->offsets = work.dynamicOffsets;
+        cache->defaultsSlot = -1;
+        cache->defaultsBuffer = VK_NULL_HANDLE;
+        if (program.hasDefaultBlock) {
+            cache->defaultsBuffer = program.defaultsRange.block->buffer;
+            for (std::size_t i = 0; i < dynamic.size(); ++i)
+                if (dynamic[i].first == program.defaultBinding) cache->defaultsSlot = int(i);
+        }
+    }
     return true;
 }
 
@@ -870,21 +934,63 @@ bool PrepareDraw(GLenum mode) {
     }
     if (g->gl.viewport[2] <= 0 || g->gl.viewport[3] <= 0) return false;
     DescriptorWork &work = Work();
-    EnsurePass();
-    ResolveSamplers(*program, work.images);
+    DrawCache &cache = Cache();
     EnsurePass();
     if (!g->pass.active) return false;
-    VertexSetup setup;
-    BuildVertexSetup(*program, setup);
-    const VkPipeline pipeline = GetPipeline(*program, setup, topology);
-    if (!pipeline) return false;
-    if (g->dynamic.pipeline != pipeline) {
-        vkCmdBindPipeline(g->cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-        g->dynamic.pipeline = pipeline;
+    const bool reusable = g->drawCache && cache.valid && cache.program == program->generation;
+    if (!reusable) g->dirty = DirtyAll;
+    if (g->dirty & (DirtyBindings | DirtyTextures)) {
+        const std::uint64_t signature = BindingSignature(*program);
+        if (signature != cache.bindings) g->dirty |= DirtyTextures;
+        cache.bindings = signature;
+        g->dirty &= ~std::uint32_t(DirtyBindings);
     }
-    BindDescriptors(*program, VK_PIPELINE_BIND_POINT_GRAPHICS, work, false);
-    if (setup.count) vkCmdBindVertexBuffers(g->cmd, 0, setup.count, setup.buffers.data(), setup.offsets.data());
+    if (g->dirty & DirtyTextures) {
+        // May end the pass to change image layouts; restarting it marks more.
+        ResolveSamplers(*program, work.images);
+        EnsurePass();
+        if (!g->pass.active) return false;
+    }
+    if (cache.topology != topology) g->dirty |= DirtyPipeline;
+    const std::uint32_t dirty = g->dirty;
+    if (dirty) ++g->drawCacheMisses; else ++g->drawCacheHits;
+    if (dirty & (DirtyVertex | DirtyBuffers)) {
+        VertexSetup setup;
+        BuildVertexSetup(*program, setup);
+        if ((dirty & (DirtyVertex | DirtyPipeline)) || setup.hash != cache.vertexHash || !cache.pipeline) {
+            cache.pipeline = GetPipeline(*program, setup, topology);
+            cache.vertexHash = setup.hash;
+        }
+        if (setup.count) vkCmdBindVertexBuffers(g->cmd, 0, setup.count, setup.buffers.data(), setup.offsets.data());
+    } else if (dirty & DirtyPipeline) {
+        // Same vertex layout: only the pipeline's fixed state or formats changed.
+        VertexSetup setup;
+        BuildVertexSetup(*program, setup);
+        cache.pipeline = GetPipeline(*program, setup, topology);
+        cache.vertexHash = setup.hash;
+    }
+    if (!cache.pipeline) {
+        cache.valid = false;
+        return false;
+    }
+    if (g->dynamic.pipeline != cache.pipeline) {
+        vkCmdBindPipeline(g->cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, cache.pipeline);
+        g->dynamic.pipeline = cache.pipeline;
+    }
+    const bool moved = RefreshDefaults(*program);
+    const bool newDefaultsBuffer = program->hasDefaultBlock && program->defaultsRange.block->buffer != cache.defaultsBuffer;
+    if ((dirty & (DirtyTextures | DirtyBuffers)) || newDefaultsBuffer || !cache.set) {
+        BindDescriptors(*program, VK_PIPELINE_BIND_POINT_GRAPHICS, work, false, &cache);
+    } else if (moved && cache.defaultsSlot >= 0) {
+        cache.offsets[std::size_t(cache.defaultsSlot)] = std::uint32_t(program->defaultsRange.offset);
+        vkCmdBindDescriptorSets(g->cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, cache.layout, 0, 1, &cache.set,
+                                std::uint32_t(cache.offsets.size()), cache.offsets.data());
+    }
     ApplyDynamicState(topology);
+    cache.valid = true;
+    cache.program = program->generation;
+    cache.topology = topology;
+    g->dirty = 0;
     ++g->draws;
     return true;
 }
@@ -1071,7 +1177,10 @@ void GLAD_API_PTR MemoryBarrier(GLbitfield) {
 template <class F> void (*Erase(F function))(void) { return reinterpret_cast<void (*)(void)>(function); }
 } // namespace
 
-void ClearDrawScratch() { Work() = DescriptorWork{}; }
+void ClearDrawScratch() {
+    Work() = DescriptorWork{};
+    Cache() = DrawCache{};
+}
 
 void ResolveDispatchTiming(bool wait) {
     DispatchTiming &timing = Timing();
@@ -1186,6 +1295,7 @@ void BeginPass(bool clearColor, bool clearDepth) {
     }
     vkCmdBeginRendering(g->cmd, &rendering);
     pass.active = true;
+    MarkDirty(DirtyPipeline); // attachment formats are part of the pipeline
     ++g->renderPasses;
 }
 
@@ -1197,52 +1307,52 @@ void EnsurePass() {
 }
 
 void InstallDrawEntries(std::unordered_map<std::string, void (*)(void)> &table) {
-    table["glGenBuffers"] = Erase(&GenBuffers);
-    table["glCreateBuffers"] = Erase(&CreateBuffers);
+    table["glGenBuffers"] = Erase(&Invalidating<&GenBuffers>::Call);
+    table["glCreateBuffers"] = Erase(&Invalidating<&CreateBuffers>::Call);
     table["glBindBuffer"] = Erase(&BindBuffer);
-    table["glDeleteBuffers"] = Erase(&DeleteBuffers);
+    table["glDeleteBuffers"] = Erase(&Invalidating<&DeleteBuffers>::Call);
     table["glIsBuffer"] = Erase(&IsBuffer);
     table["glBufferData"] = Erase(&BufferData);
     table["glNamedBufferData"] = Erase(&NamedBufferData);
     table["glBufferSubData"] = Erase(&BufferSubData);
     table["glNamedBufferSubData"] = Erase(&NamedBufferSubData);
-    table["glBufferStorage"] = Erase(&BufferStorage);
-    table["glNamedBufferStorage"] = Erase(&NamedBufferStorage);
+    table["glBufferStorage"] = Erase(&Invalidating<&BufferStorage>::Call);
+    table["glNamedBufferStorage"] = Erase(&Invalidating<&NamedBufferStorage>::Call);
     table["glMapBufferRange"] = Erase(&MapBufferRange);
     table["glMapBuffer"] = Erase(&MapBuffer);
     table["glUnmapBuffer"] = Erase(&UnmapBuffer);
     table["glFlushMappedBufferRange"] = Erase(&FlushMappedBufferRange);
     table["glGetBufferParameteriv"] = Erase(&GetBufferParameteriv);
     table["glGetBufferParameteri64v"] = Erase(&GetBufferParameteri64v);
-    table["glGetBufferSubData"] = Erase(&GetBufferSubData);
-    table["glCopyBufferSubData"] = Erase(&CopyBufferSubData);
+    table["glGetBufferSubData"] = Erase(&Invalidating<&GetBufferSubData>::Call);
+    table["glCopyBufferSubData"] = Erase(&Invalidating<&CopyBufferSubData>::Call);
     table["glBindBufferBase"] = Erase(&BindBufferBase);
     table["glBindBufferRange"] = Erase(&BindBufferRange);
-    table["glGenVertexArrays"] = Erase(&GenVertexArrays);
-    table["glCreateVertexArrays"] = Erase(&CreateVertexArrays);
+    table["glGenVertexArrays"] = Erase(&Invalidating<&GenVertexArrays>::Call);
+    table["glCreateVertexArrays"] = Erase(&Invalidating<&CreateVertexArrays>::Call);
     table["glBindVertexArray"] = Erase(&BindVertexArray);
-    table["glDeleteVertexArrays"] = Erase(&DeleteVertexArrays);
+    table["glDeleteVertexArrays"] = Erase(&Invalidating<&DeleteVertexArrays>::Call);
     table["glIsVertexArray"] = Erase(&IsVertexArray);
-    table["glEnableVertexAttribArray"] = Erase(&EnableVertexAttribArray);
-    table["glDisableVertexAttribArray"] = Erase(&DisableVertexAttribArray);
-    table["glEnableVertexArrayAttrib"] = Erase(&EnableVertexArrayAttrib);
-    table["glVertexAttribPointer"] = Erase(&VertexAttribPointer);
-    table["glVertexAttribIPointer"] = Erase(&VertexAttribIPointer);
-    table["glVertexAttribDivisor"] = Erase(&VertexAttribDivisor);
-    table["glVertexAttribI4ui"] = Erase(&VertexAttribI4ui);
-    table["glVertexAttrib4f"] = Erase(&VertexAttrib4f);
-    table["glVertexAttrib3f"] = Erase(&VertexAttrib3f);
-    table["glVertexAttrib2f"] = Erase(&VertexAttrib2f);
-    table["glVertexAttrib1f"] = Erase(&VertexAttrib1f);
-    table["glVertexAttrib4fv"] = Erase(&VertexAttrib4fv);
-    table["glVertexAttrib3fv"] = Erase(&VertexAttrib3fv);
+    table["glEnableVertexAttribArray"] = Erase(&VertexInvalidating<&EnableVertexAttribArray>::Call);
+    table["glDisableVertexAttribArray"] = Erase(&VertexInvalidating<&DisableVertexAttribArray>::Call);
+    table["glEnableVertexArrayAttrib"] = Erase(&Invalidating<&EnableVertexArrayAttrib>::Call);
+    table["glVertexAttribPointer"] = Erase(&VertexInvalidating<&VertexAttribPointer>::Call);
+    table["glVertexAttribIPointer"] = Erase(&VertexInvalidating<&VertexAttribIPointer>::Call);
+    table["glVertexAttribDivisor"] = Erase(&VertexInvalidating<&VertexAttribDivisor>::Call);
+    table["glVertexAttribI4ui"] = Erase(&Invalidating<&VertexAttribI4ui>::Call);
+    table["glVertexAttrib4f"] = Erase(&Invalidating<&VertexAttrib4f>::Call);
+    table["glVertexAttrib3f"] = Erase(&Invalidating<&VertexAttrib3f>::Call);
+    table["glVertexAttrib2f"] = Erase(&Invalidating<&VertexAttrib2f>::Call);
+    table["glVertexAttrib1f"] = Erase(&Invalidating<&VertexAttrib1f>::Call);
+    table["glVertexAttrib4fv"] = Erase(&Invalidating<&VertexAttrib4fv>::Call);
+    table["glVertexAttrib3fv"] = Erase(&Invalidating<&VertexAttrib3fv>::Call);
     table["glGetVertexAttribiv"] = Erase(&GetVertexAttribiv);
     table["glGetVertexAttribPointerv"] = Erase(&GetVertexAttribPointerv);
-    table["glVertexArrayVertexBuffer"] = Erase(&VertexArrayVertexBuffer);
-    table["glVertexArrayAttribFormat"] = Erase(&VertexArrayAttribFormat);
-    table["glVertexArrayAttribIFormat"] = Erase(&VertexArrayAttribIFormat);
-    table["glVertexArrayAttribBinding"] = Erase(&VertexArrayAttribBinding);
-    table["glVertexArrayElementBuffer"] = Erase(&VertexArrayElementBuffer);
+    table["glVertexArrayVertexBuffer"] = Erase(&VertexInvalidating<&VertexArrayVertexBuffer>::Call);
+    table["glVertexArrayAttribFormat"] = Erase(&Invalidating<&VertexArrayAttribFormat>::Call);
+    table["glVertexArrayAttribIFormat"] = Erase(&Invalidating<&VertexArrayAttribIFormat>::Call);
+    table["glVertexArrayAttribBinding"] = Erase(&Invalidating<&VertexArrayAttribBinding>::Call);
+    table["glVertexArrayElementBuffer"] = Erase(&Invalidating<&VertexArrayElementBuffer>::Call);
     table["glDrawArrays"] = Erase(&DrawArrays);
     table["glDrawArraysInstanced"] = Erase(&DrawArraysInstanced);
     table["glDrawArraysInstancedBaseInstance"] = Erase(&DrawArraysInstancedBaseInstance);
@@ -1255,11 +1365,11 @@ void InstallDrawEntries(std::unordered_map<std::string, void (*)(void)> &table) 
     table["glDrawElementsIndirect"] = Erase(&DrawElementsIndirect);
     table["glMultiDrawArraysIndirect"] = Erase(&MultiDrawArraysIndirect);
     table["glMultiDrawElementsIndirect"] = Erase(&MultiDrawElementsIndirect);
-    table["glClear"] = Erase(&Clear);
-    table["glBeginTransformFeedback"] = Erase(&BeginTransformFeedback);
-    table["glEndTransformFeedback"] = Erase(&EndTransformFeedback);
-    table["glDispatchCompute"] = Erase(&DispatchCompute);
-    table["glMemoryBarrier"] = Erase(&MemoryBarrier);
+    table["glClear"] = Erase(&Invalidating<&Clear>::Call);
+    table["glBeginTransformFeedback"] = Erase(&Invalidating<&BeginTransformFeedback>::Call);
+    table["glEndTransformFeedback"] = Erase(&Invalidating<&EndTransformFeedback>::Call);
+    table["glDispatchCompute"] = Erase(&Invalidating<&DispatchCompute>::Call);
+    table["glMemoryBarrier"] = Erase(&Invalidating<&MemoryBarrier>::Call);
 }
 
 } // namespace JudasVulkan::detail

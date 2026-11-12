@@ -285,6 +285,21 @@ struct GlState {
     GlState() { for (auto &value : genericAttrib) { value[0] = value[1] = value[2] = 0.0f; value[3] = 1.0f; } }
 };
 
+// What a state change invalidates for the next draw (see docs/VULKAN_NATIVE.md).
+// A draw redoes only the marked parts; an unmarked draw rebinds nothing but
+// its per-draw uniform offset.
+enum DirtyBits : std::uint32_t {
+    DirtyTextures = 1, // texture/sampler bindings, sampler state, image layouts, views
+    DirtyBuffers = 2,  // buffer storage identity, indexed bindings
+    DirtyVertex = 4,   // vertex array object or attribute layout
+    DirtyPipeline = 8, // blend/mask/polygon state, attachment formats
+    // A texture or sampler binding was written. Renderers rebind the same
+    // objects constantly, so the draw compares the bindings its program reads
+    // against the previous draw's before treating this as DirtyTextures.
+    DirtyBindings = 16,
+    DirtyAll = 31,
+};
+
 struct PipelineKey {
     std::uint64_t program = 0;      // program generation
     std::uint64_t vertexHash = 0;
@@ -441,11 +456,34 @@ struct Context {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0, descriptorSets = 0,
                   validationMessages = 0, bufferBytes = 0, imageBytes = 0, deviceBufferBytes = 0;
     bool deviceBufferHeapExhausted = false;
+    // Draw-state cache: accumulated since the last draw; DirtyAll disables reuse.
+    std::uint32_t dirty = DirtyAll;
+    bool drawCache = true; // JUDAS_VULKAN_DRAW_CACHE=0 forces every draw to rebuild
+    std::uint64_t drawCacheHits = 0, drawCacheMisses = 0;
     std::deque<std::uint64_t> frameSerials; // last submission serial of each recent frame
     bool validation = false, trace = false;
 };
 
 extern Context *g;
+
+inline void MarkDirty(std::uint32_t bits) { g->dirty |= bits; }
+// Entry points invalidate the whole draw-state cache unless they are audited
+// and registered directly. Wrapping keeps "forgot to invalidate" impossible.
+// Vertex-array edits change the vertex layout and buffers, nothing else.
+template <auto Function> struct VertexInvalidating;
+template <class R, class... A, R (GLAD_API_PTR *Function)(A...)> struct VertexInvalidating<Function> {
+    static R GLAD_API_PTR Call(A... args) {
+        g->dirty |= DirtyVertex;
+        return Function(args...);
+    }
+};
+template <auto Function> struct Invalidating;
+template <class R, class... A, R (GLAD_API_PTR *Function)(A...)> struct Invalidating<Function> {
+    static R GLAD_API_PTR Call(A... args) {
+        g->dirty = DirtyAll;
+        return Function(args...);
+    }
+};
 
 // ---- core (VkCore.cpp) ----
 // deviceLocal: the GL buffer is GPU-owned (written/read mainly by the GPU), so

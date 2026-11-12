@@ -360,6 +360,7 @@ VkAccessFlags AccessForLayout(VkImageLayout layout) {
 void Transition(Image &image, VkImageLayout layout) {
     if (image.layout == layout) return;
     if (g->pass.active) Fatal("image layout transition inside a render pass");
+    MarkDirty(DirtyTextures);
     VkImageMemoryBarrier barrier{VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER};
     barrier.oldLayout = image.layout;
     barrier.newLayout = layout;
@@ -401,6 +402,7 @@ void BeginCommandBuffer() {
     begin.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
     VK_CHECK(vkBeginCommandBuffer(g->cmd, &begin));
     g->dynamic = Context::Dynamic{};
+    g->dirty = DirtyAll; // nothing is bound in a new command buffer
 }
 
 void ReleaseRetired() {
@@ -772,6 +774,7 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     context->glMinor = glMinor;
     if (const char *value = std::getenv("JUDAS_VULKAN_VALIDATION"))
         context->validation = std::strcmp(value, "0") != 0;
+    if (const char *value = std::getenv("JUDAS_VULKAN_DRAW_CACHE")) context->drawCache = std::strcmp(value, "0") != 0;
     if (const char *value = std::getenv("JUDAS_VULKAN_TRACE"))
         context->trace = std::strcmp(value, "0") != 0;
 
@@ -1131,6 +1134,9 @@ void Shutdown() {
             vkGetInstanceProcAddr(g->instance, "vkDestroyDebugUtilsMessengerEXT"));
         if (destroy) destroy(g->instance, g->messenger, nullptr);
     }
+    if (g->trace)
+        std::fprintf(stderr, "[Vulkan trace] draws reusing state: %llu, rebuilding: %llu\n",
+                     static_cast<unsigned long long>(g->drawCacheHits), static_cast<unsigned long long>(g->drawCacheMisses));
     if (g->validation)
         std::fprintf(stderr, "[Vulkan] validation messages: %llu\n",
                      static_cast<unsigned long long>(g->validationMessages));

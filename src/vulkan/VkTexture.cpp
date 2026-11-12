@@ -401,8 +401,11 @@ void GLAD_API_PTR BindTexture(GLenum target, GLuint name) {
     const int slot = SlotForTarget(target);
     if (slot < 0) return;
     if (Texture *texture = Lookup(g->textures, name))
-        if (!texture->target) texture->target = target;
-    g->gl.textures[std::size_t(g->gl.activeUnit)][std::size_t(slot)] = name;
+        if (!texture->target) { texture->target = target; MarkDirty(DirtyTextures); }
+    GLuint &binding = g->gl.textures[std::size_t(g->gl.activeUnit)][std::size_t(slot)];
+    if (binding == name) return;
+    binding = name;
+    MarkDirty(DirtyBindings);
 }
 void GLAD_API_PTR BindTextureUnit(GLuint unit, GLuint name) {
     if (unit >= kTextureUnits) return;
@@ -585,9 +588,10 @@ void GLAD_API_PTR TextureView(GLuint name, GLenum target, GLuint original, GLenu
 
 void GLAD_API_PTR TexBuffer(GLenum target, GLenum internal, GLuint buffer) {
     Texture *texture = Bound(target);
-    if (!texture) return;
+    if (!texture || (texture->buffer == buffer && texture->bufferFormat == internal)) return;
     texture->buffer = buffer;
     texture->bufferFormat = internal;
+    MarkDirty(DirtyTextures | DirtyBuffers);
 }
 
 struct Readback {
@@ -831,7 +835,9 @@ void GLAD_API_PTR DeleteSamplers(GLsizei count, const GLuint *names) {
     }
 }
 void GLAD_API_PTR BindSampler(GLuint unit, GLuint name) {
-    if (unit < kTextureUnits) g->gl.samplers[unit] = name;
+    if (unit >= kTextureUnits || g->gl.samplers[unit] == name) return;
+    g->gl.samplers[unit] = name;
+    MarkDirty(DirtyBindings);
 }
 GLboolean GLAD_API_PTR IsSampler(GLuint name) { return Lookup(g->samplerObjects, name) != nullptr; }
 void GLAD_API_PTR SamplerParameteri(GLuint name, GLenum pname, GLint value) {
@@ -1265,65 +1271,65 @@ void DestroyTextureObject(Texture &texture) {
 }
 
 void InstallTextureEntries(std::unordered_map<std::string, void (*)(void)> &table) {
-    table["glGenTextures"] = Erase(&GenTextures);
-    table["glCreateTextures"] = Erase(&CreateTextures);
+    table["glGenTextures"] = Erase(&Invalidating<&GenTextures>::Call);
+    table["glCreateTextures"] = Erase(&Invalidating<&CreateTextures>::Call);
     table["glBindTexture"] = Erase(&BindTexture);
-    table["glBindTextureUnit"] = Erase(&BindTextureUnit);
+    table["glBindTextureUnit"] = Erase(&Invalidating<&BindTextureUnit>::Call);
     table["glActiveTexture"] = Erase(&ActiveTexture);
-    table["glDeleteTextures"] = Erase(&DeleteTextures);
+    table["glDeleteTextures"] = Erase(&Invalidating<&DeleteTextures>::Call);
     table["glIsTexture"] = Erase(&IsTexture);
-    table["glTexParameteri"] = Erase(&TexParameteri);
-    table["glTexParameterf"] = Erase(&TexParameterf);
-    table["glTexParameteriv"] = Erase(&TexParameteriv);
-    table["glTexParameterfv"] = Erase(&TexParameterfv);
-    table["glTextureParameteri"] = Erase(&TextureParameteri);
-    table["glTexImage2D"] = Erase(&TexImage2D);
-    table["glTexImage3D"] = Erase(&TexImage3D);
-    table["glCompressedTexImage2D"] = Erase(&CompressedTexImage2D);
-    table["glTexStorage2D"] = Erase(&TexStorage2D);
-    table["glTexStorage3D"] = Erase(&TexStorage3D);
-    table["glTextureStorage2D"] = Erase(&TextureStorage2D);
-    table["glTexSubImage2D"] = Erase(&TexSubImage2D);
-    table["glTexSubImage3D"] = Erase(&TexSubImage3D);
-    table["glTextureSubImage2D"] = Erase(&TextureSubImage2D);
-    table["glGenerateMipmap"] = Erase(&GenerateMipmap);
-    table["glTextureView"] = Erase(&TextureView);
+    table["glTexParameteri"] = Erase(&Invalidating<&TexParameteri>::Call);
+    table["glTexParameterf"] = Erase(&Invalidating<&TexParameterf>::Call);
+    table["glTexParameteriv"] = Erase(&Invalidating<&TexParameteriv>::Call);
+    table["glTexParameterfv"] = Erase(&Invalidating<&TexParameterfv>::Call);
+    table["glTextureParameteri"] = Erase(&Invalidating<&TextureParameteri>::Call);
+    table["glTexImage2D"] = Erase(&Invalidating<&TexImage2D>::Call);
+    table["glTexImage3D"] = Erase(&Invalidating<&TexImage3D>::Call);
+    table["glCompressedTexImage2D"] = Erase(&Invalidating<&CompressedTexImage2D>::Call);
+    table["glTexStorage2D"] = Erase(&Invalidating<&TexStorage2D>::Call);
+    table["glTexStorage3D"] = Erase(&Invalidating<&TexStorage3D>::Call);
+    table["glTextureStorage2D"] = Erase(&Invalidating<&TextureStorage2D>::Call);
+    table["glTexSubImage2D"] = Erase(&Invalidating<&TexSubImage2D>::Call);
+    table["glTexSubImage3D"] = Erase(&Invalidating<&TexSubImage3D>::Call);
+    table["glTextureSubImage2D"] = Erase(&Invalidating<&TextureSubImage2D>::Call);
+    table["glGenerateMipmap"] = Erase(&Invalidating<&GenerateMipmap>::Call);
+    table["glTextureView"] = Erase(&Invalidating<&TextureView>::Call);
     table["glTexBuffer"] = Erase(&TexBuffer);
-    table["glReadPixels"] = Erase(&ReadPixels);
-    table["glGetTexImage"] = Erase(&GetTexImage);
-    table["glGetCompressedTexImage"] = Erase(&GetCompressedTexImage);
+    table["glReadPixels"] = Erase(&Invalidating<&ReadPixels>::Call);
+    table["glGetTexImage"] = Erase(&Invalidating<&GetTexImage>::Call);
+    table["glGetCompressedTexImage"] = Erase(&Invalidating<&GetCompressedTexImage>::Call);
     table["glGetTexLevelParameteriv"] = Erase(&GetTexLevelParameteriv);
-    table["glBlitFramebuffer"] = Erase(&BlitFramebuffer);
-    table["glCopyTexSubImage2D"] = Erase(&CopyTexSubImage2D);
-    table["glGenSamplers"] = Erase(&GenSamplers);
-    table["glDeleteSamplers"] = Erase(&DeleteSamplers);
+    table["glBlitFramebuffer"] = Erase(&Invalidating<&BlitFramebuffer>::Call);
+    table["glCopyTexSubImage2D"] = Erase(&Invalidating<&CopyTexSubImage2D>::Call);
+    table["glGenSamplers"] = Erase(&Invalidating<&GenSamplers>::Call);
+    table["glDeleteSamplers"] = Erase(&Invalidating<&DeleteSamplers>::Call);
     table["glBindSampler"] = Erase(&BindSampler);
     table["glIsSampler"] = Erase(&IsSampler);
-    table["glSamplerParameteri"] = Erase(&SamplerParameteri);
-    table["glSamplerParameterf"] = Erase(&SamplerParameterf);
-    table["glSamplerParameterfv"] = Erase(&SamplerParameterfv);
-    table["glGenRenderbuffers"] = Erase(&GenRenderbuffers);
-    table["glBindRenderbuffer"] = Erase(&BindRenderbuffer);
-    table["glRenderbufferStorage"] = Erase(&RenderbufferStorage);
-    table["glRenderbufferStorageMultisample"] = Erase(&RenderbufferStorageMultisample);
-    table["glDeleteRenderbuffers"] = Erase(&DeleteRenderbuffers);
+    table["glSamplerParameteri"] = Erase(&Invalidating<&SamplerParameteri>::Call);
+    table["glSamplerParameterf"] = Erase(&Invalidating<&SamplerParameterf>::Call);
+    table["glSamplerParameterfv"] = Erase(&Invalidating<&SamplerParameterfv>::Call);
+    table["glGenRenderbuffers"] = Erase(&Invalidating<&GenRenderbuffers>::Call);
+    table["glBindRenderbuffer"] = Erase(&Invalidating<&BindRenderbuffer>::Call);
+    table["glRenderbufferStorage"] = Erase(&Invalidating<&RenderbufferStorage>::Call);
+    table["glRenderbufferStorageMultisample"] = Erase(&Invalidating<&RenderbufferStorageMultisample>::Call);
+    table["glDeleteRenderbuffers"] = Erase(&Invalidating<&DeleteRenderbuffers>::Call);
     table["glIsRenderbuffer"] = Erase(&IsRenderbuffer);
-    table["glGenFramebuffers"] = Erase(&GenFramebuffers);
-    table["glCreateFramebuffers"] = Erase(&CreateFramebuffers);
-    table["glBindFramebuffer"] = Erase(&BindFramebuffer);
-    table["glDeleteFramebuffers"] = Erase(&DeleteFramebuffers);
+    table["glGenFramebuffers"] = Erase(&Invalidating<&GenFramebuffers>::Call);
+    table["glCreateFramebuffers"] = Erase(&Invalidating<&CreateFramebuffers>::Call);
+    table["glBindFramebuffer"] = Erase(&Invalidating<&BindFramebuffer>::Call);
+    table["glDeleteFramebuffers"] = Erase(&Invalidating<&DeleteFramebuffers>::Call);
     table["glIsFramebuffer"] = Erase(&IsFramebuffer);
-    table["glFramebufferTexture2D"] = Erase(&FramebufferTexture2D);
-    table["glFramebufferTextureLayer"] = Erase(&FramebufferTextureLayer);
-    table["glFramebufferTexture"] = Erase(&FramebufferTexture);
-    table["glNamedFramebufferTexture"] = Erase(&NamedFramebufferTexture);
-    table["glFramebufferRenderbuffer"] = Erase(&FramebufferRenderbuffer);
+    table["glFramebufferTexture2D"] = Erase(&Invalidating<&FramebufferTexture2D>::Call);
+    table["glFramebufferTextureLayer"] = Erase(&Invalidating<&FramebufferTextureLayer>::Call);
+    table["glFramebufferTexture"] = Erase(&Invalidating<&FramebufferTexture>::Call);
+    table["glNamedFramebufferTexture"] = Erase(&Invalidating<&NamedFramebufferTexture>::Call);
+    table["glFramebufferRenderbuffer"] = Erase(&Invalidating<&FramebufferRenderbuffer>::Call);
     table["glCheckFramebufferStatus"] = Erase(&CheckFramebufferStatus);
     table["glCheckNamedFramebufferStatus"] = Erase(&CheckNamedFramebufferStatus);
-    table["glDrawBuffers"] = Erase(&DrawBuffers);
-    table["glDrawBuffer"] = Erase(&DrawBuffer);
-    table["glReadBuffer"] = Erase(&ReadBuffer);
-    table["glInvalidateFramebuffer"] = Erase(&InvalidateFramebuffer);
+    table["glDrawBuffers"] = Erase(&Invalidating<&DrawBuffers>::Call);
+    table["glDrawBuffer"] = Erase(&Invalidating<&DrawBuffer>::Call);
+    table["glReadBuffer"] = Erase(&Invalidating<&ReadBuffer>::Call);
+    table["glInvalidateFramebuffer"] = Erase(&Invalidating<&InvalidateFramebuffer>::Call);
 }
 
 } // namespace JudasVulkan::detail

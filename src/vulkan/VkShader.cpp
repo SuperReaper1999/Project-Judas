@@ -935,6 +935,7 @@ void GLAD_API_PTR DeleteProgram(GLuint program) {
 }
 void GLAD_API_PTR UseProgram(GLuint program) {
     const GLuint previous = g->gl.program;
+    if (previous != program) MarkDirty(DirtyAll);
     g->gl.program = program;
     if (previous && previous != program) {
         Program *old = Lookup(g->programs, previous);
@@ -969,7 +970,10 @@ void SetUniform(Program *program, GLint location, int kind, int components, GLsi
             GLint unit = 0;
             if (kind == 0) unit = GLint(static_cast<const float *>(data)[i * components]);
             else unit = static_cast<const GLint *>(data)[i * components];
-            uniform.units[element + i] = unit;
+            if (uniform.units[element + i] != unit) {
+                uniform.units[element + i] = unit;
+                MarkDirty(DirtyTextures);
+            }
         }
         return;
     }
@@ -992,10 +996,12 @@ void SetUniform(Program *program, GLint location, int kind, int components, GLsi
             case UniformBase::Bool: bits = (kind == 0 ? f != 0.0f : integer != 0) ? 1u : 0u; break;
             default: bits = std::uint32_t(integer); break;
             }
-            std::memcpy(out + c * 4, &bits, 4);
+            if (std::memcmp(out + c * 4, &bits, 4) != 0) {
+                std::memcpy(out + c * 4, &bits, 4);
+                program->defaultsDirty = true;
+            }
         }
     }
-    program->defaultsDirty = true;
 }
 void SetMatrix(Program *program, GLint location, int dimension, GLsizei count, GLboolean transpose, const GLfloat *data) {
     if (!program || location < 0 || std::size_t(location) >= program->locationTable.size() || !data) return;
@@ -1012,10 +1018,13 @@ void SetMatrix(Program *program, GLint location, int dimension, GLsizei count, G
             for (int row = 0; row < dimension; ++row) {
                 const float value = transpose ? data[i * dimension * dimension + row * dimension + column]
                                               : data[i * dimension * dimension + column * dimension + row];
-                std::memcpy(program->defaults.data() + base + column * columnStride + row * 4, &value, 4);
+                std::uint8_t *out = program->defaults.data() + base + column * columnStride + row * 4;
+                if (std::memcmp(out, &value, 4) != 0) {
+                    std::memcpy(out, &value, 4);
+                    program->defaultsDirty = true;
+                }
             }
     }
-    program->defaultsDirty = true;
 }
 Program *Active() { return Lookup(g->programs, g->gl.program); }
 
@@ -1233,21 +1242,21 @@ void ShutdownShaderCompiler() {
 }
 
 void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table) {
-    table["glCreateShader"] = Erase(&CreateShader);
-    table["glShaderSource"] = Erase(&ShaderSource);
-    table["glCompileShader"] = Erase(&CompileShader);
+    table["glCreateShader"] = Erase(&Invalidating<&CreateShader>::Call);
+    table["glShaderSource"] = Erase(&Invalidating<&ShaderSource>::Call);
+    table["glCompileShader"] = Erase(&Invalidating<&CompileShader>::Call);
     table["glGetShaderiv"] = Erase(&GetShaderiv);
-    table["glGetShaderInfoLog"] = Erase(&GetShaderInfoLog);
-    table["glDeleteShader"] = Erase(&DeleteShader);
+    table["glGetShaderInfoLog"] = Erase(&Invalidating<&GetShaderInfoLog>::Call);
+    table["glDeleteShader"] = Erase(&Invalidating<&DeleteShader>::Call);
     table["glIsShader"] = Erase(&IsShader);
-    table["glCreateProgram"] = Erase(&CreateProgram);
-    table["glAttachShader"] = Erase(&AttachShader);
-    table["glDetachShader"] = Erase(&DetachShader);
-    table["glLinkProgram"] = Erase(&LinkProgram);
-    table["glValidateProgram"] = Erase(&ValidateProgram);
+    table["glCreateProgram"] = Erase(&Invalidating<&CreateProgram>::Call);
+    table["glAttachShader"] = Erase(&Invalidating<&AttachShader>::Call);
+    table["glDetachShader"] = Erase(&Invalidating<&DetachShader>::Call);
+    table["glLinkProgram"] = Erase(&Invalidating<&LinkProgram>::Call);
+    table["glValidateProgram"] = Erase(&Invalidating<&ValidateProgram>::Call);
     table["glGetProgramiv"] = Erase(&GetProgramiv);
-    table["glGetProgramInfoLog"] = Erase(&GetProgramInfoLog);
-    table["glDeleteProgram"] = Erase(&DeleteProgram);
+    table["glGetProgramInfoLog"] = Erase(&Invalidating<&GetProgramInfoLog>::Call);
+    table["glDeleteProgram"] = Erase(&Invalidating<&DeleteProgram>::Call);
     table["glUseProgram"] = Erase(&UseProgram);
     table["glIsProgram"] = Erase(&IsProgram);
     table["glGetUniformLocation"] = Erase(&GetUniformLocation);
@@ -1289,8 +1298,8 @@ void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table
     table["glProgramUniformMatrix4fv"] = Erase(&ProgramUniformMatrix4fv);
     table["glGetUniformBlockIndex"] = Erase(&GetUniformBlockIndex);
     table["glGetActiveUniformBlockiv"] = Erase(&GetActiveUniformBlockiv);
-    table["glUniformBlockBinding"] = Erase(&UniformBlockBinding);
-    table["glShaderStorageBlockBinding"] = Erase(&ShaderStorageBlockBinding);
+    table["glUniformBlockBinding"] = Erase(&Invalidating<&UniformBlockBinding>::Call);
+    table["glShaderStorageBlockBinding"] = Erase(&Invalidating<&ShaderStorageBlockBinding>::Call);
     table["glGetUniformIndices"] = Erase(&GetUniformIndices);
     table["glGetActiveUniformsiv"] = Erase(&GetActiveUniformsiv);
     table["glGetActiveUniform"] = Erase(&GetActiveUniform);
@@ -1298,7 +1307,7 @@ void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table
     table["glGetProgramResourceIndex"] = Erase(&GetProgramResourceIndex);
     table["glGetProgramResourceiv"] = Erase(&GetProgramResourceiv);
     table["glGetFragDataLocation"] = Erase(&GetFragDataLocation);
-    table["glTransformFeedbackVaryings"] = Erase(&TransformFeedbackVaryings);
+    table["glTransformFeedbackVaryings"] = Erase(&Invalidating<&TransformFeedbackVaryings>::Call);
     table["glGetUniformfv"] = Erase(&GetUniformfv);
     table["glGetUniformiv"] = Erase(&GetUniformiv);
     table["glGetUniformuiv"] = Erase(&GetUniformuiv);

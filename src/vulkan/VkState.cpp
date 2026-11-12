@@ -32,14 +32,22 @@ bool *Capability(GLenum cap) {
     default: return nullptr;
     }
 }
+// Blend enable and polygon offset enable are baked into pipelines; the other
+// capabilities are dynamic state applied at every draw.
+void SetCapability(GLenum cap, bool enabled) {
+    bool *value = Capability(cap);
+    if (!value || *value == enabled) return;
+    *value = enabled;
+    if (cap == GL_BLEND || cap == GL_POLYGON_OFFSET_FILL) MarkDirty(DirtyPipeline);
+}
 void GLAD_API_PTR Enable(GLenum cap) {
-    if (bool *value = Capability(cap)) *value = true;
+    SetCapability(cap, true);
     if (cap == GL_FRAMEBUFFER_SRGB) {
         static bool warned = false;
         if (!warned) { warned = true; Warn("GL_FRAMEBUFFER_SRGB encoding is not implemented by the Vulkan backend"); }
     }
 }
-void GLAD_API_PTR Disable(GLenum cap) { if (bool *value = Capability(cap)) *value = false; }
+void GLAD_API_PTR Disable(GLenum cap) { SetCapability(cap, false); }
 GLboolean GLAD_API_PTR IsEnabled(GLenum cap) {
     const bool *value = Capability(cap);
     return value && *value;
@@ -48,14 +56,16 @@ void GLAD_API_PTR DepthFunc(GLenum function) { g->gl.depthFunc = function; }
 void GLAD_API_PTR DepthMask(GLboolean flag) { g->gl.depthMask = flag; }
 void GLAD_API_PTR DepthRange(GLdouble, GLdouble) {}
 void GLAD_API_PTR DepthRangef(GLfloat, GLfloat) {}
-void GLAD_API_PTR BlendFunc(GLenum source, GLenum destination) {
-    g->gl.blendSrcRgb = g->gl.blendSrcAlpha = source;
-    g->gl.blendDstRgb = g->gl.blendDstAlpha = destination;
-}
 void GLAD_API_PTR BlendFuncSeparate(GLenum sourceRgb, GLenum destinationRgb, GLenum sourceAlpha, GLenum destinationAlpha) {
-    g->gl.blendSrcRgb = sourceRgb; g->gl.blendDstRgb = destinationRgb;
-    g->gl.blendSrcAlpha = sourceAlpha; g->gl.blendDstAlpha = destinationAlpha;
+    GlState &gl = g->gl;
+    if (gl.blendSrcRgb == sourceRgb && gl.blendDstRgb == destinationRgb && gl.blendSrcAlpha == sourceAlpha &&
+        gl.blendDstAlpha == destinationAlpha)
+        return;
+    gl.blendSrcRgb = sourceRgb; gl.blendDstRgb = destinationRgb;
+    gl.blendSrcAlpha = sourceAlpha; gl.blendDstAlpha = destinationAlpha;
+    MarkDirty(DirtyPipeline);
 }
+void GLAD_API_PTR BlendFunc(GLenum source, GLenum destination) { BlendFuncSeparate(source, destination, source, destination); }
 void GLAD_API_PTR BlendEquation(GLenum mode) { g->gl.blendEqRgb = g->gl.blendEqAlpha = mode; }
 void GLAD_API_PTR BlendEquationSeparate(GLenum rgb, GLenum alpha) { g->gl.blendEqRgb = rgb; g->gl.blendEqAlpha = alpha; }
 void GLAD_API_PTR BlendColor(GLfloat, GLfloat, GLfloat, GLfloat) {}
@@ -428,13 +438,13 @@ void InstallStateEntries(std::unordered_map<std::string, void (*)(void)> &table)
     table["glIsEnabled"] = Erase(&IsEnabled);
     table["glDepthFunc"] = Erase(&DepthFunc);
     table["glDepthMask"] = Erase(&DepthMask);
-    table["glDepthRange"] = Erase(&DepthRange);
-    table["glDepthRangef"] = Erase(&DepthRangef);
+    table["glDepthRange"] = Erase(&Invalidating<&DepthRange>::Call);
+    table["glDepthRangef"] = Erase(&Invalidating<&DepthRangef>::Call);
     table["glBlendFunc"] = Erase(&BlendFunc);
     table["glBlendFuncSeparate"] = Erase(&BlendFuncSeparate);
-    table["glBlendEquation"] = Erase(&BlendEquation);
-    table["glBlendEquationSeparate"] = Erase(&BlendEquationSeparate);
-    table["glBlendColor"] = Erase(&BlendColor);
+    table["glBlendEquation"] = Erase(&Invalidating<&BlendEquation>::Call);
+    table["glBlendEquationSeparate"] = Erase(&Invalidating<&BlendEquationSeparate>::Call);
+    table["glBlendColor"] = Erase(&Invalidating<&BlendColor>::Call);
     table["glCullFace"] = Erase(&CullFace);
     table["glFrontFace"] = Erase(&FrontFace);
     table["glViewport"] = Erase(&Viewport);
@@ -443,15 +453,15 @@ void InstallStateEntries(std::unordered_map<std::string, void (*)(void)> &table)
     table["glClearDepth"] = Erase(&ClearDepth);
     table["glClearDepthf"] = Erase(&ClearDepthf);
     table["glClearStencil"] = Erase(&ClearStencil);
-    table["glColorMask"] = Erase(&ColorMask);
-    table["glPolygonMode"] = Erase(&PolygonMode);
+    table["glColorMask"] = Erase(&Invalidating<&ColorMask>::Call);
+    table["glPolygonMode"] = Erase(&Invalidating<&PolygonMode>::Call);
     table["glPolygonOffset"] = Erase(&PolygonOffset);
     table["glLineWidth"] = Erase(&LineWidth);
     table["glPointSize"] = Erase(&PointSize);
     table["glHint"] = Erase(&Hint);
-    table["glStencilMask"] = Erase(&StencilMask);
-    table["glStencilFunc"] = Erase(&StencilFunc);
-    table["glStencilOp"] = Erase(&StencilOp);
+    table["glStencilMask"] = Erase(&Invalidating<&StencilMask>::Call);
+    table["glStencilFunc"] = Erase(&Invalidating<&StencilFunc>::Call);
+    table["glStencilOp"] = Erase(&Invalidating<&StencilOp>::Call);
     table["glPixelStorei"] = Erase(&PixelStorei);
     table["glGetIntegerv"] = Erase(&GetIntegerv);
     table["glGetInteger64v"] = Erase(&GetInteger64v);
@@ -461,24 +471,24 @@ void InstallStateEntries(std::unordered_map<std::string, void (*)(void)> &table)
     table["glGetString"] = Erase(&GetString);
     table["glGetStringi"] = Erase(&GetStringi);
     table["glGetError"] = Erase(&GetError);
-    table["glFlush"] = Erase(&FlushCommands);
-    table["glFinish"] = Erase(&Finish);
-    table["glGenQueries"] = Erase(&GenQueries);
-    table["glDeleteQueries"] = Erase(&DeleteQueries);
+    table["glFlush"] = Erase(&Invalidating<&FlushCommands>::Call);
+    table["glFinish"] = Erase(&Invalidating<&Finish>::Call);
+    table["glGenQueries"] = Erase(&Invalidating<&GenQueries>::Call);
+    table["glDeleteQueries"] = Erase(&Invalidating<&DeleteQueries>::Call);
     table["glIsQuery"] = Erase(&IsQuery);
     table["glQueryCounter"] = Erase(&QueryCounter);
     table["glBeginQuery"] = Erase(&BeginQuery);
     table["glEndQuery"] = Erase(&EndQuery);
-    table["glClipControl"] = Erase(&ClipControl);
-    table["glGetQueryObjectui64v"] = Erase(&GetQueryObjectui64v);
-    table["glGetQueryObjecti64v"] = Erase(&GetQueryObjecti64v);
-    table["glGetQueryObjectiv"] = Erase(&GetQueryObjectiv);
-    table["glGetQueryObjectuiv"] = Erase(&GetQueryObjectuiv);
-    table["glGetQueryiv"] = Erase(&GetQueryiv);
+    table["glClipControl"] = Erase(&Invalidating<&ClipControl>::Call);
+    table["glGetQueryObjectui64v"] = Erase(&Invalidating<&GetQueryObjectui64v>::Call);
+    table["glGetQueryObjecti64v"] = Erase(&Invalidating<&GetQueryObjecti64v>::Call);
+    table["glGetQueryObjectiv"] = Erase(&Invalidating<&GetQueryObjectiv>::Call);
+    table["glGetQueryObjectuiv"] = Erase(&Invalidating<&GetQueryObjectuiv>::Call);
+    table["glGetQueryiv"] = Erase(&Invalidating<&GetQueryiv>::Call);
     table["glFenceSync"] = Erase(&FenceSync);
     table["glIsSync"] = Erase(&IsSync);
-    table["glDeleteSync"] = Erase(&DeleteSync);
-    table["glClientWaitSync"] = Erase(&ClientWaitSync);
+    table["glDeleteSync"] = Erase(&Invalidating<&DeleteSync>::Call);
+    table["glClientWaitSync"] = Erase(&Invalidating<&ClientWaitSync>::Call);
     table["glGetSynciv"] = Erase(&GetSynciv);
 }
 
