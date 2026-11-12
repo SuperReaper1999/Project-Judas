@@ -88,6 +88,7 @@ public:
     bool IsMouseCaptured() const { return m_mouseCaptured; }
     SDL_Window* NativeWindow() const { return m_window; }
     SDL_GLContext NativeGLContext() const { return m_glContext; }
+    bool UsesVulkan() const { return m_vulkan; }
 
     void SetTestInputMode(bool enabled);
     void BeginTestFrame();
@@ -130,6 +131,7 @@ private:
     std::weak_ptr<InputDeviceHub> m_localHub;
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
+    bool m_vulkan = false; // this window owns the experimental Vulkan device
 #ifdef __ANDROID__
     void RefreshTiltSensor();
     void CloseTiltSensor();

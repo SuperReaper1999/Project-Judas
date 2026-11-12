@@ -22,11 +22,7 @@ constexpr char BlockSource[] = R"GLSL(layout(std140) uniform JudasView {
 )GLSL";
 
 std::uintptr_t CurrentContext() {
-#ifdef __EMSCRIPTEN__
-    return std::uintptr_t(emscripten_webgl_get_current_context());
-#else
-    return reinterpret_cast<std::uintptr_t>(SDL_GL_GetCurrentContext());
-#endif
+    return GraphicsContextIdentity();
 }
 bool Finite(const glm::mat4 &matrix) {
     const auto *values = glm::value_ptr(matrix);

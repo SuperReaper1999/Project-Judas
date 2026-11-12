@@ -12,5 +12,27 @@
 inline bool GraphicsContextCurrent() { return emscripten_webgl_get_current_context()!=0; }
 #else
 #include <SDL2/SDL.h>
-inline bool GraphicsContextCurrent() { return SDL_GL_GetCurrentContext()!=nullptr; }
+#include "vulkan/VulkanBackend.h"
+// The Vulkan backend has no OpenGL context; its device is the "context".
+inline bool GraphicsContextCurrent() { return JudasVulkan::Active() || SDL_GL_GetCurrentContext()!=nullptr; }
 #endif
+
+// Identity of the graphics context/device owning GPU objects on this thread.
+// Renderer owners compare it to detect use from another context; zero = none.
+inline std::uintptr_t GraphicsContextIdentity() {
+#ifdef __EMSCRIPTEN__
+    return static_cast<std::uintptr_t>(emscripten_webgl_get_current_context());
+#else
+    if (const auto vulkan = JudasVulkan::ContextIdentity()) return vulkan;
+    return reinterpret_cast<std::uintptr_t>(SDL_GL_GetCurrentContext());
+#endif
+}
+// Presentation interval of the active backend (0 = immediate, 1 = vsync).
+inline void GraphicsSetSwapInterval(int interval) {
+#ifndef __EMSCRIPTEN__
+    if (JudasVulkan::Active()) JudasVulkan::SetSwapInterval(interval);
+    else SDL_GL_SetSwapInterval(interval);
+#else
+    (void)interval;
+#endif
+}

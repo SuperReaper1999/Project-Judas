@@ -2,6 +2,7 @@
 #include "InputDeviceHub.h"
 #include "AppIcon.h"
 #include "AndroidPlatform.h"
+#include "vulkan/VulkanBackend.h"
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include "BrowserSurface.h"
@@ -48,6 +49,42 @@ EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
 
 bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int height, bool visible) {
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    if (JudasVulkan::Requested()) {
+        // Experimental Vulkan backend: no OpenGL context is created. The
+        // requested profile selects the same renderer tier as it does for GL.
+        if (!JudasVulkan::Compiled()) {
+            m_lastError = "JUDAS_GRAPHICS=vulkan was requested, but this build does not contain the "
+                          "Vulkan backend. Configure with -DJUDAS_VULKAN=ON or unset JUDAS_GRAPHICS.";
+            return false;
+        }
+        m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+                                    JudasVulkan::WindowFlag() | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+        if (!m_window) {
+            // Video drivers without Vulkan surfaces (for example SDL's offscreen
+            // driver) can still render and capture; they cannot present.
+            std::fprintf(stderr, "[Graphics] no Vulkan surface (%s); rendering without presentation\n", SDL_GetError());
+            m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+                                        SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+        }
+        if (!m_window) {
+            m_lastError = "SDL_CreateWindow failed: " + std::string(SDL_GetError());
+            return false;
+        }
+        const bool portable = m_graphicsProfile == GraphicsProfile::Portable;
+        std::string error;
+        if (!JudasVulkan::Init(m_window, portable ? 3 : 4, portable ? 3 : 6, error)) {
+            m_lastError = "Cannot start the Vulkan backend: " + error;
+            SDL_DestroyWindow(m_window);
+            m_window = nullptr;
+            return false;
+        }
+        m_vulkan = true;
+        JudasVulkan::SetSwapInterval(1);
+        if (visible) SDL_ShowWindow(m_window);
+        std::fprintf(stderr, "[Graphics] created Vulkan device (%s policy): %s\n",
+                     GraphicsProfileName(m_graphicsProfile), JudasVulkan::DeviceSummary().c_str());
+        return true;
+    }
     std::string failures;
     const auto versions = DesktopGraphicsContextRequests(m_graphicsProfile);
     for (const auto version : versions) {
@@ -241,7 +278,8 @@ bool Window::Resize(int width, int height, std::string& error) {
     // Mesa GLX can report the resized X window while retaining the previous
     // backbuffer until a swap. This also matters for hidden, capture-only runs
     // which deliberately do not present every harness frame.
-    SDL_GL_SwapWindow(m_window);
+    if (m_vulkan) JudasVulkan::Present();
+    else SDL_GL_SwapWindow(m_window);
     SDL_GetWindowSize(m_window, &m_width, &m_height);
     if (m_width != width || m_height != height) {
         error = "Window manager did not grant the requested size";
@@ -273,6 +311,10 @@ void Window::Shutdown() {
         m_browserGLContext=0;
     }
 #endif
+    if (m_vulkan) {
+        JudasVulkan::Shutdown();
+        m_vulkan = false;
+    }
     if (m_glContext) {
         SDL_GL_DeleteContext(m_glContext);
         m_glContext = nullptr;
@@ -655,7 +697,8 @@ void Window::SwapBuffers() {
     // Simulation retains its independent fixed-step policy.
     AwaitBrowserFrame();
 #else
-    SDL_GL_SwapWindow(m_window);
+    if (m_vulkan) JudasVulkan::Present();
+    else SDL_GL_SwapWindow(m_window);
 #endif
 }
 

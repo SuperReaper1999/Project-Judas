@@ -223,6 +223,7 @@ add_library(judas_graphics_caps STATIC src/render/GraphicsCapabilities.cpp)
 target_include_directories(judas_graphics_caps PUBLIC src)
 target_link_libraries(judas_graphics_caps PUBLIC judas_glad SDL2::SDL2)
 judas_warnings(judas_graphics_caps)
+include(cmake/JudasVulkan.cmake)
 set(JUDAS_RENDERER_SOURCES
     src/Renderer.cpp src/render/ShaderLibrary.cpp
     src/render/SubmissionQueue.cpp src/render/StreamArena.cpp

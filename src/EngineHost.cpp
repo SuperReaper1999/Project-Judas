@@ -17,6 +17,11 @@ namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
 }
+// The Vulkan backend supplies Judas-owned implementations of the same entry
+// points; nothing is resolved from an OpenGL driver.
+GLADapiproc LoadVulkanProcAddress(const char* name) {
+    return reinterpret_cast<GLADapiproc>(JudasVulkan::ProcAddress(name));
+}
 
 // GLAD's required API is 3.3. Optional diagnostics resolve their own extension
 // entry points instead of increasing the engine's graphics requirement.
@@ -84,7 +89,7 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if (!glGetString(GL_VERSION)) { outError = "OpenGL ES 3 context unavailable"; return false; }
 #else
-    if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
+    if (gladLoadGL(m_window.UsesVulkan() ? &LoadVulkanProcAddress : &LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
         outError = "Failed to load the required OpenGL 3.3 Core entry points.";
         return false;
     }
@@ -120,6 +125,11 @@ void EngineHost::PumpResources() {
 void EngineHost::StartGpuDiagnostics() {
     const char* enabled = std::getenv("JUDAS_GPU_DIAGNOSTICS");
     if (!enabled || std::strcmp(enabled, "1") != 0) return;
+    if (m_window.UsesVulkan()) {
+        std::fprintf(stderr, "[GPU] OpenGL debug callbacks do not apply to the Vulkan backend; "
+                             "use JUDAS_VULKAN_VALIDATION=1\n");
+        return;
+    }
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     std::fprintf(stderr, "[GPU] native diagnostic callbacks unavailable on this platform\n");
 #else

@@ -103,7 +103,7 @@ Script Load(const std::string& path,const InputMap& map){
 }
 int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const std::string& path,const std::function<void()>& beforeFrame,const std::function<void()>& afterFrame,const std::function<bool(const std::string&)>& servicesReady){
  try{
-  const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);SDL_GL_SetSwapInterval(0);
+  const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);GraphicsSetSwapInterval(0);
   std::unique_ptr<TestHaptics> haptics;
   for(const auto& command:script.commands)if(command.kind=="HAPTICS"){
    haptics=std::make_unique<TestHaptics>(window.Input());break;

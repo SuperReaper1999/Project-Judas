@@ -14,7 +14,7 @@ struct GpuParticlePass::Storage {
     GpuParticlePassStats stats;
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     bool Own(std::string& error){
-        const auto active=reinterpret_cast<std::uintptr_t>(SDL_GL_GetCurrentContext());
+        const auto active=GraphicsContextIdentity();
         if(!active){error="GPU particle drawing needs its owning graphics context.";return false;}
         if(context&&(context!=active||thread!=std::this_thread::get_id())){error="GPU particle draw resources belong to another context/thread.";return false;}
         context=active;thread=std::this_thread::get_id();return true;

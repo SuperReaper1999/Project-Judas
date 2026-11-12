@@ -63,7 +63,7 @@ void RetireGeneration(unsigned &generation) { generation = NextGeneration(genera
 struct ComputeDevice::State {
     GraphicsCapabilities caps;
     ComputeBudget budget;
-    SDL_GLContext context = nullptr;
+    std::uintptr_t context = 0;
     std::thread::id thread;
     std::uint64_t owner = 0;
     std::vector<BufferSlot> buffers;
@@ -142,7 +142,7 @@ bool ComputeDevice::Initialize(const GraphicsCapabilities &caps, ComputeBudget b
     auto candidate = std::make_unique<State>();
     candidate->caps = actual;
     candidate->budget = budget;
-    candidate->context = SDL_GL_GetCurrentContext();
+    candidate->context = GraphicsContextIdentity();
     candidate->thread = std::this_thread::get_id();
     candidate->owner = nextOwner.fetch_add(1, std::memory_order_relaxed);
     candidate->bindings.resize(unsigned(actual.limits.storageBufferBindings));
@@ -157,7 +157,7 @@ bool ComputeDevice::Current(std::string &error) const {
         error = diagnostic.empty() ? "compute device is not initialized" : diagnostic;
         return false;
     }
-    if (std::this_thread::get_id() != state->thread || SDL_GL_GetCurrentContext() != state->context)
+    if (std::this_thread::get_id() != state->thread || GraphicsContextIdentity() != state->context)
         return Fail(error, "compute operation requires its owning graphics context and thread");
     return true;
 }
