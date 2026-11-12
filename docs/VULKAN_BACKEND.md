@@ -1,5 +1,8 @@
 # Vulkan backend — experimental proof (branch `Vulkan-Exp`)
 
+Continuing this work? Start with [VULKAN_HANDOFF.md](VULKAN_HANDOFF.md): how
+the backend is organised, what to test on a real GPU and how to debug it.
+
 Baseline: Experimental `d9a80f6c`. This branch is an experiment, not a release,
 not an Experimental checkpoint and not human-validated. OpenGL remains the
 default backend of every build. Nothing here changes `main` or `Experimental`.
