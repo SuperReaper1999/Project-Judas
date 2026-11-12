@@ -109,10 +109,92 @@ executed a different number of simulation steps before the capture, so that
 figure is not a rendering comparison. Detached editor windows are disabled on
 Vulkan and were not exercised. The editor gate group is included in section 1.
 
-## 4. Not measured
+## 4. Not measured (software-rasterizer phase; section 5 covers hardware)
 
 - Any hardware GPU or vendor driver (NVIDIA/AMD/Intel), Windows, Android, browser.
 - Frame time, hitching, memory or any budget in `AGENTS.md`. Software
   rasterizer timings were deliberately not recorded as performance evidence.
 - Long sessions, window resize while rendering, device loss, multi-monitor.
 - Human play-testing of any project or the editor.
+
+## 5. Hardware results: GTX 970 (after rebasing onto Experimental 65a0400b)
+
+Machine: Ryzen 5 5600, GeForce GTX 970 4 GiB, NVIDIA 580.178.04, Vulkan 1.4.312,
+Kubuntu (Wayland session). Startup line:
+`[Graphics] Vulkan backend: NVIDIA GeForce GTX 970 (API 1.4.312, driver 0x912c8100), depth D24, device clip control, BC 1`.
+Automated only: **not human-tested**. Raw captures stay on that machine.
+
+### Correctness
+
+- Gates (rendering, render, particles, water, game-water, ui, editor, terrain, 2d):
+  OpenGL 117/117. Vulkan 116/117 with validation on, **0 validation messages in
+  59 runs**; `renderer-compute` fails only its 2 checks that release an OpenGL
+  context (not applicable to Vulkan). Experimental fixed the earlier
+  `renderer-shader-library` failure.
+- `compare_backends.py` on all 24 projects: all run, 0 validation messages; only
+  the known `basic_water_lab` (0.16 %) and terrain workshop (0.22–0.25 %)
+  differences exceed 0.05 %. Renderer lab cases 2 and 5 (with shadows), 4, and 6
+  (monitors + split views), and Lucifer at frames 120/390, were also compared:
+  all within 0.01 %, except case 4 (particles) at 1.6 % of pixels, almost all
+  differing by at most 8/255 (blending rounding).
+- Resize to 1600×900, 320×200 and back on all three depth paths (D24, D32F,
+  shader depth remap): correct capture sizes, 0 validation messages.
+  Minimise and fullscreen were not exercised.
+
+### Defects found on hardware and fixed
+
+1. Swapchain semaphores were reused while still pending (validation errors in 9
+   gates). Now a pool of acquire semaphores and one present semaphore per image.
+2. Tests set vsync with `SDL_GL_SetSwapInterval`, a no-op on Vulkan, so they ran
+   FIFO-capped (Willow Town timed out). They now use `GraphicsSetSwapInterval`.
+3. Every buffer lived in host memory: the 100k GPU particle stress ran at about
+   **1 FPS**. GPU-owned buffers (`*_COPY` usage, or immutable storage without
+   CPU access flags) now prefer device-local host-visible memory.
+4. Latency was bounded by in-flight *submissions*: frames that flushed mid-way
+   (the particle simulation's async readback) serialised CPU and GPU, costing
+   about 4 ms on every simulation step. Now bounded by frames.
+5. `glGet(GL_TIMESTAMP)` returned 0, breaking benchmark GPU clock calibration.
+
+### Performance: same binary, OpenGL vs Vulkan
+
+`run_matrix.py --baseline-graphics opengl --candidate-graphics vulkan`, with
+`prepare_workloads.py` inputs at the Vulkan-Exp revision, 1280×720, VSync off,
+uncapped, validation off, 3 alternating 20 s trials per backend (IK 45 s).
+Medians across trials; worst is the worst of all trials. Gate = the existing 10 %
+relative p99 regression check, with Vulkan as the candidate.
+
+| Workload | Avg FPS GL → VK | p50 ms | p99 ms | Worst ms | Gate |
+|---|---:|---:|---:|---:|---|
+| lightweight | 1047.2 → 1141.1 | 0.95 → 0.87 | 1.10 → 1.01 | 1.65 → 5.95 | pass |
+| town | 760.0 → 815.3 | 1.23 → 1.14 | 2.73 → 2.63 | 6.61 → 5.43 | pass |
+| populated-rendering | 125.6 → 137.7 | 7.93 → 7.17 | 8.62 → 8.01 | 14.94 → 12.46 | pass |
+| animation | 108.3 → 140.6 | 10.31 → 6.07 | 11.08 → 9.15 | 23.06 → 14.02 | pass |
+| particles | 303.4 → 252.4 | 3.21 → 3.93 | 4.06 → 4.47 | 5.92 → 6.58 | **fail** |
+| basic-water | 809.9 → 1027.1 | 1.20 → 0.94 | 1.41 → 1.17 | 7.56 → 2.59 | pass |
+| terrain-excavation | 1005.5 → 920.7 | 0.96 → 1.06 | 1.40 → 1.44 | 14.47 → 4.75 | pass |
+| terrain-large | 1328.2 → 1321.0 | 0.71 → 0.72 | 1.20 → 1.16 | 11.12 → 6.10 | pass |
+| vehicle | 766.4 → 786.8 | 1.23 → 1.19 | 2.67 → 2.44 | 10.01 → 4.51 | pass |
+| fleet | 715.1 → 729.2 | 1.24 → 1.21 | 3.70 → 3.63 | 5.57 → 6.48 | pass |
+| combined | 273.8 → 372.9 | 2.81 → 2.05 | 6.95 → 5.98 | 12.37 → 14.10 | pass |
+| animation-ik | 81.4 → 102.6 | 13.49 → 11.65 | 15.38 → 13.53 | 211.36 → 189.49 | rejected¹ |
+
+¹ `animation-ik`: the comparison tool rejects the case because trials on
+**both** backends overflowed the profiler (truncated records) during
+190–210 ms hitches, so no gate result exists. Its medians are for information
+only. The same hitch appears on OpenGL, so it is not a Vulkan defect; it should
+be investigated on Experimental.
+
+Reading the table:
+
+- Vulkan is faster or equal in 10 of the 11 gated cases (largest gains:
+  animation, combined, basic water).
+- **Particles fails the gate**: p99 +10.1 %, median frame +22 %. Both backends
+  are GPU-bound; the GPU frame is about 3.9 ms on Vulkan vs 3.2 ms on OpenGL.
+  `JUDAS_VULKAN_DISPATCH_TIMING=1` shows the simulation kernels take about
+  0.27 ms per step, so the remaining gap is in the 100k-instance particle draw or
+  its view pass. Not yet traced.
+- One Vulkan `lightweight` trial in an earlier run had a single 59 ms
+  `Swap present wait` stall; in the final run the worst frame was 5.95 ms.
+  Cause unknown.
+- p99 passes do not certify product budgets: the `combined` 14.1 ms worst frame
+  and the IK hitches still need the usual exceptional-frame review.

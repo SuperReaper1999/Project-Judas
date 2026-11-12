@@ -7,7 +7,8 @@ with a real GPU. Read this first, then [VULKAN_BACKEND.md](VULKAN_BACKEND.md)
 
 ## State at handoff
 
-- Branch `Vulkan-Exp`, based on Experimental `d9a80f6c`. Not merged anywhere.
+- Branch `Vulkan-Exp`, rebased onto Experimental `65a0400b` (originally based on
+  `d9a80f6c`). Not merged anywhere.
   Do not push this work to `Experimental` or `main` without the operator asking.
 - `JUDAS_GRAPHICS=vulkan` runs the runtime and editor on Vulkan. OpenGL is the
   default and its code path is unchanged apart from the small host edits listed
@@ -16,8 +17,12 @@ with a real GPU. Read this first, then [VULKAN_BACKEND.md](VULKAN_BACKEND.md)
   lavapipe Vulkan) in a headless container. On those: 182/184 gates pass on
   each backend, 0 validation messages, 24/24 sample projects run and match
   closely.
-- **Never run on a hardware GPU, never profiled, never human-tested.** That is
-  the work this document hands over.
+- **Update:** steps 1–3 and 5 below have since been run on a GTX 970 (NVIDIA
+  580.178.04). Five hardware-only defects were found and fixed, the gates and
+  image comparison are clean, and Vulkan matches or beats OpenGL in 10 of 11
+  gated workloads; GPU particles remain about 10–20 % slower. See section 5 of
+  [evidence/VULKAN_EXP_PROOF.md](evidence/VULKAN_EXP_PROOF.md). Still **never
+  human-tested** (step 4), and no AMD/Intel or Windows results exist.
 
 ## How it works, in one page
 
@@ -182,6 +187,11 @@ creation hitches; run-time shader compilation at startup.
 
 - **Validation**: `JUDAS_VULKAN_VALIDATION=1`. Fix messages first; later
   symptoms are often consequences.
+- **Compute cost**: `JUDAS_VULKAN_DISPATCH_TIMING=1` times every compute
+  dispatch on the GPU and prints totals per program and grid at exit.
+- **Same-binary benchmark**: `tools/benchmarks/run_matrix.py` with
+  `--baseline-graphics opengl --candidate-graphics vulkan` and the same binary
+  for both sides. `run_whole_engine.py` records `graphics_backend`.
 - **Shader/layout trace**: `JUDAS_VULKAN_TRACE=1` prints each linked program's
   reflected blocks and writes its SPIR-V to `/tmp/judas-vk-N.spv`
   (`spirv-dis`, `spirv-val`).
