@@ -224,7 +224,7 @@ void DrawEditorMainMenu(EditorDocument &doc, EditorPanelState &state, EditorRequ
     }
     const auto brandAt = ImGui::GetCursorScreenPos();
     const float brandSize = ImGui::GetFontSize() * 1.15f;
-    EditorVisuals::BrandMark(ImGui::GetWindowDrawList(), {brandAt.x, brandAt.y + 1}, brandSize);
+    EditorVisuals::BrandMark(ImGui::GetWindowDrawList(), {brandAt.x, brandAt.y + 1}, brandSize, state.brandImage);
     ImGui::Dummy({brandSize + 5, brandSize});
     ImGui::SameLine();
     ImGui::PushFont(EditorVisuals::HeadingFont());

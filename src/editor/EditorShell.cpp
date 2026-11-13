@@ -1,5 +1,7 @@
 #include "EditorVisuals.h"
 #include "EditorShell.h"
+#include "AppIcon.h"
+#include <cstdio>
 #include "EditorCorePanels.h"
 #include "EditorToolPanels.h"
 #include "EditorPanels.h"
@@ -22,7 +24,25 @@ void EditorShell::RegisterPanels(EditorSceneViewport &scene, EditorPlaySession &
     RegisterEditorCorePanels(panels);
     RegisterEditorToolPanels(panels, tools);
 }
+void EditorShell::Destroy(Renderer &renderer) {
+    views.Destroy(renderer);
+    renderer.DestroyTexture(brandTexture);
+    brandTexture = {};
+    brandAttempted = false;
+}
+
 void EditorShell::Draw(EditorContext &c, EditorPreferences &preferences) {
+    auto &renderer = c.host.GetRenderer();
+    if (!brandAttempted) {
+        brandAttempted = true;
+        TextureData pixels;
+        std::string error;
+        if (LoadDefaultAppIcon(pixels, error))
+            brandTexture = renderer.CreateTexture(pixels);
+        else
+            std::fprintf(stderr, "Editor brand image: %s\n", error.c_str());
+    }
+    c.panels.brandImage = brandTexture.IsValid() ? renderer.EditorImageToken(brandTexture) : 0;
     views.BeginFrame();
     c.panels.sceneViewHovered = false;
     const bool stopped = c.phase == EditorPanelPhase::DebugStopped;

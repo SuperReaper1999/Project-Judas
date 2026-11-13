@@ -46,7 +46,7 @@ void JudasToolsPanel::Draw(EditorContext &context, std::unique_ptr<ScriptTools> 
         draw->AddRectFilled(header, {header.x + headerWidth, header.y + headerHeight},
                             ImGui::GetColorU32(EditorVisuals::SurfaceColor(.035f)), 5);
         draw->AddRectFilled(header, {header.x + 3, header.y + headerHeight}, ImGui::GetColorU32(accent), 2);
-        EditorVisuals::BrandMark(draw, {header.x + 12, header.y + 14}, lineHeight * 1.25f);
+        EditorVisuals::BrandMark(draw, {header.x + 12, header.y + 14}, lineHeight * 1.25f, context.panels.brandImage);
         ImGui::SetCursorScreenPos({header.x + lineHeight * 1.25f + 24, header.y + 7});
         ImGui::PushFont(EditorVisuals::HeadingFont());
         ImGui::TextColored(accent, "Judas Tools");

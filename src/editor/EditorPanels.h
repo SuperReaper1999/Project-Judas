@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 #include <set>
 #include <vector>
 #include <memory>
@@ -109,6 +110,7 @@ struct RuntimeRenderHistory;
 struct RetargetPanelState;
 struct BrowserExportWorkflow;
 struct EditorPanelState {
+    std::uintptr_t brandImage = 0; // Frame-scoped borrowed token; EditorShell owns the texture.
     std::shared_ptr<BrowserExportWorkflow> browserExport;
     bool showBrowserExport = false;
     bool experimentalBrowserSupport = false; // explicit per-launch opt-in, not a project setting

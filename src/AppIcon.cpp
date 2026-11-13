@@ -74,6 +74,10 @@ bool ApplyAppIcon(SDL_Window* window, const std::string& path, std::string& erro
     return true;
 }
 
+bool LoadDefaultAppIcon(TextureData& texture, std::string& error) {
+    return DecodeIcon("", texture, error);
+}
+
 bool ValidateAppIcon(const std::string& path, std::string& error) {
     TextureData texture;
     const bool valid = DecodeIcon(path, texture, error);

@@ -5,10 +5,11 @@
 #include "imgui.h"
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 
 // Small editor-only drawing primitives. Native ImGui widgets retain keyboard,
-// focus and accessibility labels; icons are vector geometry, not font glyphs or
-// a second UI/layout system. Colours follow the user's current appearance.
+// focus and accessibility labels. Tool icons are vector geometry; the brand
+// uses the shared app artwork. Neither introduces a second UI/layout system.
 namespace EditorVisuals {
 enum class Icon {
     Cube,
@@ -238,17 +239,11 @@ inline bool ActionButton(const char *label, Icon icon, bool primary = false, ImV
             glyph, ImGui::GetColorU32(primary ? AccentColor() : ImGui::GetStyleColorVec4(ImGuiCol_Text)));
     return clicked;
 }
-inline void BrandMark(ImDrawList *draw, ImVec2 at, float size) {
-    auto color = EditorSecondaryAccent();
-    for (int i = 3; i >= 0; --i) {
-        color.w = i ? .045f : 1.f;
-        float pad = float(i) * 1.2f;
-        draw->AddTriangle({at.x + size * .5f, at.y - pad}, {at.x - pad, at.y + size * .87f + pad},
-                          {at.x + size + pad, at.y + size * .87f + pad}, ImGui::GetColorU32(color),
-                          i ? 3.f : 1.4f);
-    }
-    color.w = 1;
-    draw->AddTriangle({at.x + size * .51f, at.y + size * .25f}, {at.x + size * .31f, at.y + size * .67f},
-                      {at.x + size * .74f, at.y + size * .67f}, ImGui::GetColorU32(color), 1.2f);
+inline void BrandMark(ImDrawList *draw, ImVec2 at, float size, std::uintptr_t image) {
+    if (image)
+        draw->AddImage(ImTextureID(image), at, {at.x + size, at.y + size}, {0, 1}, {1, 0});
+    else
+        draw->AddText(at, ImGui::GetColorU32(ImGuiCol_Text), "J");
 }
+
 } // namespace EditorVisuals

@@ -491,7 +491,8 @@ void EditorApplication::Shutdown(bool savePreferences) {
         m_scriptTools->drawStoppedShell = {};
         m_scriptTools->presentStoppedShell = {};
     }
-    m_shell.views.Destroy(renderer);
+    m_shell.Destroy(renderer);
+    m_panels.brandImage = 0;
     m_sceneViewport.Destroy(renderer);
     if (m_terrain) {
         m_terrain->Shutdown(renderer, m_panels.importJobs);
