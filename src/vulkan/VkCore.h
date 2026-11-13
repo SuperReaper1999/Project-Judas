@@ -463,6 +463,9 @@ struct Context {
     bool deviceBufferHeapExhausted = false;
     // Draw-state cache: accumulated since the last draw; DirtyAll disables reuse.
     std::uint32_t dirty = DirtyAll;
+    // Bumped whenever texture or buffer identity may have changed (views,
+    // layouts, storage). The explicit interface keys binding groups on it.
+    std::uint64_t resourceEpoch = 1;
     bool drawCache = true; // JUDAS_VULKAN_DRAW_CACHE=0 forces every draw to rebuild
     std::uint64_t drawCacheHits = 0, drawCacheMisses = 0;
     // Ahead-of-time state persisted between runs (JUDAS_VULKAN_SHADER_CACHE=0
@@ -479,7 +482,10 @@ struct Context {
 
 extern Context *g;
 
-inline void MarkDirty(std::uint32_t bits) { g->dirty |= bits; }
+inline void MarkDirty(std::uint32_t bits) {
+    g->dirty |= bits;
+    if (bits & (DirtyTextures | DirtyBuffers)) ++g->resourceEpoch;
+}
 // Entry points invalidate the whole draw-state cache unless they are audited
 // and registered directly. Wrapping keeps "forgot to invalidate" impossible.
 // Vertex-array edits change the vertex layout and buffers, nothing else.
@@ -494,6 +500,7 @@ template <auto Function> struct Invalidating;
 template <class R, class... A, R (GLAD_API_PTR *Function)(A...)> struct Invalidating<Function> {
     static R GLAD_API_PTR Call(A... args) {
         g->dirty = DirtyAll;
+        ++g->resourceEpoch;
         return Function(args...);
     }
 };
@@ -516,6 +523,8 @@ void EndPass();
 void Flush(bool wait);
 void PollCompleted(bool wait = false, std::uint64_t untilSerial = 0);
 Range RingAllocate(VkDeviceSize size, VkDeviceSize alignment);
+// Marks the ring chunk backing `buffer` as used by the current submission.
+void RingKeepAlive(VkBuffer buffer);
 VkDescriptorSet AllocateSet(VkDescriptorSetLayout layout);
 bool IsDepthFormat(VkFormat format);
 VkImageAspectFlags AspectOf(VkFormat format);
@@ -526,6 +535,9 @@ void MemoryBarrierAll();
 void InstallShaderEntries(std::unordered_map<std::string, void (*)(void)> &table);
 void DestroyProgramResources(Program &program);
 Program *CurrentProgram();
+// Parameter-block writes by location (kind: 0 float, 1 int, 2 unsigned).
+void WriteUniform(Program *program, GLint location, int kind, int components, GLsizei count, const void *data);
+void WriteUniformMatrix(Program *program, GLint location, int dimension, GLsizei count, const GLfloat *data);
 // JUDAS_VULKAN_DISPATCH_TIMING=1: GPU time of every compute dispatch, grouped by
 // program and grid, printed at shutdown. Diagnostic only (adds timestamp writes).
 void ResolveDispatchTiming(bool wait);
@@ -557,6 +569,10 @@ void PrepareBufferWrite(Buffer &buffer, bool discard);
 void BeginPass(bool clearColor, bool clearDepth);
 void EnsurePass();
 void ClearDrawScratch();
+// Copies a program's changed parameter block into this frame's transient ring.
+bool RefreshProgramDefaults(Program &program);
+// ---- explicit interface (VkGfx.cpp) ----
+void ShutdownGfx();
 
 // ---- queries (VkInstall.cpp) ----
 void InstallStateEntries(std::unordered_map<std::string, void (*)(void)> &table);

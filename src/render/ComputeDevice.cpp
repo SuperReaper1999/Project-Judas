@@ -289,6 +289,7 @@ bool ComputeDevice::BindStorage(ComputeBuffer handle, unsigned binding, ComputeA
     return true;
 }
 
+unsigned ComputeDevice::NativeName(ComputeBuffer handle){std::string ignored;if(!Current(ignored))return 0;auto* entry=state->Buffer(handle,ignored);return entry?entry->name:0;}
 bool ComputeDevice::BindGraphicsStorage(ComputeBuffer handle,unsigned binding,std::string& error){
     if(!Current(error))return false;
     auto* entry=state->Buffer(handle,error);if(!entry)return false;
@@ -653,6 +654,7 @@ bool ComputeDevice::BindStorage(ComputeBuffer, unsigned, ComputeAccess, std::str
     return Current(e);
 }
 bool ComputeDevice::BindGraphicsStorage(ComputeBuffer,unsigned,std::string& e){return Current(e);}
+unsigned ComputeDevice::NativeName(ComputeBuffer){return 0;}
 bool ComputeDevice::BindVertex(ComputeBuffer, std::string &e) { return Current(e); }
 bool ComputeDevice::BindIndirect(ComputeBuffer, std::string &e) { return Current(e); }
 ComputeKernel ComputeDevice::CreateKernel(const char *, const char *, std::string &e) {

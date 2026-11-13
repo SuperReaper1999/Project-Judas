@@ -1217,6 +1217,8 @@ void GLAD_API_PTR MemoryBarrier(GLbitfield) {
 template <class F> void (*Erase(F function))(void) { return reinterpret_cast<void (*)(void)>(function); }
 } // namespace
 
+bool RefreshProgramDefaults(Program &program) { return RefreshDefaults(program); }
+
 void ClearDrawScratch() {
     Work() = DescriptorWork{};
     Cache() = DrawCache{};

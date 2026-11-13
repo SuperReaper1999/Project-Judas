@@ -61,9 +61,18 @@ void Renderer::EndMeshBatch(){
          JudasRender::StreamArena::PageBytes:aligned+bytes;
  }
  m_render->instanceArena.SetWorkingSetHint(workingSet);
- if(!m_instanceBuffer)glGenBuffers(1,&m_instanceBuffer);
+ if(!m_nativeMesh&&!m_instanceBuffer)glGenBuffers(1,&m_instanceBuffer);
  for(const auto& batch:m_render->submission.Batches()){auto* mesh=GetMesh(batch.mesh);if(!mesh)continue;
   const auto bytes=batch.instances.size()*sizeof(Instance);
+  if(m_nativeMesh){
+      // Vulkan: the instance array is transient frame data bound by offset.
+      m_nativeMesh->instances=JudasVulkan::Gfx::AllocateTransient(std::uint32_t(bytes));
+      std::memcpy(m_nativeMesh->instances.data,batch.instances.data(),bytes);
+      m_stats.instanceBytes=std::max(m_stats.instanceBytes,bytes);m_stats.uploadedBytes+=bytes;++m_stats.uploadCalls;
+      m_materialBindings=batch.bindings;m_submittingBatch=true;m_activeInstances=unsigned(batch.instances.size());m_activeBatchReversed=batch.reversed;m_activeBatchLod=batch.lod;
+      DrawMesh(batch.mesh,{0,0,0},{1,0,0,0},{1,1,1},batch.texture,{1,1,1},1);
+      m_submittingBatch=false;continue;
+  }
   JudasRender::StreamSlice slice;std::string error;
   if(!m_render->instanceArena.Upload(batch.instances.data(),bytes,m_render->persistentUploads&&m_capabilities.modernTier&&m_capabilities.bufferStorage,slice,error)){
       // Preserve the draw if an optional streaming facility fails. Orphaned
@@ -83,7 +92,8 @@ void Renderer::EndMeshBatch(){
   DrawMesh(batch.mesh,{0,0,0},{1,0,0,0},{1,1,1},batch.texture,{1,1,1},1);
   m_submittingBatch=false;glBindVertexArray(mesh->vao);for(unsigned c=9;c<=13;++c){glDisableVertexAttribArray(c);glVertexAttribDivisor(c,0);}
  }
- glBindVertexArray(0);m_materialBindings=std::move(saved);m_renderLayer=layer;m_render->submission.Clear();
+ if(!m_nativeMesh)glBindVertexArray(0);
+ m_materialBindings=std::move(saved);m_renderLayer=layer;m_render->submission.Clear();
 }
 
 void Renderer::ReserveShadowLayers(unsigned layers){

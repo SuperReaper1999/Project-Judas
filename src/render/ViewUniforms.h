@@ -47,6 +47,8 @@ class ViewUniforms {
     bool Bind(unsigned program, std::string &error);
     bool Shutdown(std::string *error = nullptr);
     const ViewUniformData &Data() const;
+    // Engine handle of the uploaded block (0 before the first Bind).
+    unsigned Buffer() const;
     ViewUniformStats Stats() const;
 
   private:

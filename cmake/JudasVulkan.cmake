@@ -36,7 +36,8 @@ if(JUDAS_VULKAN_ENABLED)
         src/vulkan/VkShader.cpp
         src/vulkan/VkTexture.cpp
         src/vulkan/VkDraw.cpp
-        src/vulkan/VkState.cpp)
+        src/vulkan/VkState.cpp
+        src/vulkan/VkGfx.cpp)
     target_include_directories(judas_vulkan PUBLIC src)
     target_link_libraries(judas_vulkan PUBLIC judas_glad SDL2::SDL2 Vulkan::Vulkan
         PRIVATE glslang::glslang glslang::SPIRV glslang::glslang-default-resource-limits)

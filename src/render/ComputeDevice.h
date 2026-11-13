@@ -84,6 +84,8 @@ class ComputeDevice {
     // Unlike BindStorage (dispatch preparation), this immediately binds the
     // indexed SSBO and generic storage target. Call again after foreign draws.
     bool BindGraphicsStorage(ComputeBuffer,unsigned binding,std::string& error);
+    // Engine handle of a buffer, for renderers that bind resources explicitly (0 if invalid).
+    unsigned NativeName(ComputeBuffer handle);
     bool BindVertex(ComputeBuffer, std::string &error);
     bool BindIndirect(ComputeBuffer, std::string &error);
 

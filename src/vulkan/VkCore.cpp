@@ -526,6 +526,11 @@ void Flush(bool wait) {
     PollCompleted(wait, wait ? submitted : 0);
 }
 
+void RingKeepAlive(VkBuffer buffer) {
+    for (auto &chunk : g->ring)
+        if (chunk.block && chunk.block->buffer == buffer) chunk.serial = std::max(chunk.serial, g->serial);
+}
+
 Range RingAllocate(VkDeviceSize size, VkDeviceSize alignment) {
     constexpr VkDeviceSize kChunk = 4ull << 20;
     alignment = std::max<VkDeviceSize>(alignment, 16);
@@ -545,7 +550,10 @@ Range RingAllocate(VkDeviceSize size, VkDeviceSize alignment) {
         }
         g->ringCurrent = -1;
         for (std::size_t i = 0; i < g->ring.size(); ++i)
-            if (g->ring[i].serial <= g->completedSerial && g->ring[i].block->size >= size) {
+            // Data written in one submission may be consumed by a draw recorded in
+            // the next (a flush can fall between an upload and its draw), so a
+            // chunk stays reserved until the submission after its last use is done.
+            if (g->ring[i].serial + 1 <= g->completedSerial && g->ring[i].block->size >= size) {
                 g->ring[i].cursor = 0;
                 g->ringCurrent = int(i);
                 break;
@@ -1157,6 +1165,8 @@ void Shutdown() {
     if (!g) return;
     if (g->device) {
         PrintDispatchTiming();
+        vkDeviceWaitIdle(g->device);
+        ShutdownGfx();
         SavePipelineCache();
         vkDeviceWaitIdle(g->device);
         if (g->cmd) {

@@ -172,6 +172,8 @@ constexpr int kShadowMapResolution = kDefaultShadowResolution;
 
 }  // namespace
 
+#include "render/NativeMeshPass.inl"
+
 Renderer::Renderer():m_render(std::make_unique<JudasRender::RendererInfrastructure>()){}
 Renderer::~Renderer()=default;
 
@@ -436,7 +438,7 @@ bool Renderer::Init() {
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uPointShadowMaps"),16);
     SetDirectionalCascadeCount(1);
     m_render->viewUniforms.SetCamera(m_view,m_projection);
-    return true;
+    return InitNativeMeshPass();
 }
 
 void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int handle, std::size_t bytes) const {
@@ -468,6 +470,7 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 #endif
 }
 void Renderer::Shutdown() {
+    m_nativeMesh.reset();
     m_render->lightStorageReady=false;
     std::string lightingError;if(!m_render->lightLists.Shutdown(lightingError))std::fprintf(stderr,"Lighting shutdown: %s\n",lightingError.c_str());
     m_render->submission.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
@@ -633,13 +636,14 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     }
     m_render->shadowCache.Forget(unsigned(shadowSlot));
     ReserveShadowLayers(unsigned(shadowSlot+1));
-    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
+    if(!m_nativeMesh){glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);}
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
     m_shadowPassActive = true;
     m_currentShadowSlot = shadowSlot;
     m_frustum=Frustum(lightViewProjection);
     ++m_stats.shadowPasses;
+    if(m_nativeMesh){NativeBeginShadowPass(shadowSlot,lightViewProjection);return;}
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
     glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
@@ -655,6 +659,7 @@ void Renderer::EndShadowPass() {
     m_shadowPassActive = false;
     m_frustum=Frustum(m_projection*m_view);
     m_currentShadowSlot = -1;
+    if(m_nativeMesh){JudasVulkan::Gfx::EndPass();return;}
     glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_shadowSavedFramebuffer));glViewport(m_shadowSavedViewport.x,m_shadowSavedViewport.y,m_shadowSavedViewport.z,m_shadowSavedViewport.w);
 }
 
@@ -1033,6 +1038,11 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     // only pass, so none of them are touched here.
 
 
+    if(m_nativeMesh){
+        NativeSubmitMesh(*gpuMesh,primitives,lod,model,*palette,texture,tintColor,alpha,hiddenParts,materialAt,bindingAt,alphaAt);
+        return;
+    }
+
     if (m_shadowPassActive) {
         glUseProgram(m_shadowShaderProgram);
         glUniform1i(m_uShadowInstanced,m_submittingBatch);
@@ -1083,12 +1093,14 @@ void Renderer::DrawBox(const glm::vec3& position, const glm::quat& rotation,
 }
 
 void Renderer::BeginTransparentPass() {
+    m_nativeTransparent=true;
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDepthMask(GL_FALSE);
 }
 
 void Renderer::EndTransparentPass() {
+    m_nativeTransparent=false;
     glDepthMask(GL_TRUE);
     glDisable(GL_BLEND);
 }

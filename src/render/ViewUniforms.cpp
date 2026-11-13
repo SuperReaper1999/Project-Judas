@@ -136,6 +136,7 @@ void ViewUniforms::ForgetProgram(unsigned program) {
     auto &programs = storage->programs;
     programs.erase(std::remove(programs.begin(), programs.end(), program), programs.end());
 }
+unsigned ViewUniforms::Buffer() const { return storage->buffer; }
 bool ViewUniforms::Bind(unsigned program, std::string &error) {
     error.clear();
     if (!storage->OwnContext(error))

@@ -578,6 +578,20 @@ private:
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
     using Instance=JudasRender::MeshInstance;
     std::unique_ptr<JudasRender::RendererInfrastructure> m_render;
+    // Vulkan-native shadow and mesh passes (render/NativeMeshPass.inl). Null on
+    // OpenGL, where DrawMesh/BindMaterial/EndMeshBatch issue the draws.
+    struct NativeMeshPass;
+    std::unique_ptr<NativeMeshPass> m_nativeMesh;
+    bool m_nativeTransparent=false; // inside Begin/EndTransparentPass
+    bool InitNativeMeshPass();
+    void NativeBeginShadowPass(int slot,const glm::mat4& lightViewProjection);
+    bool NativeBindMaterial(const GpuMaterial*,const MaterialBinding&,TextureHandle,float alpha,bool shadow);
+    void NativeBindTerrainMaterial();
+    void NativeBindTerrainGeometry(bool shadow);
+    template<class MaterialAt,class BindingAt,class AlphaAt>
+    void NativeSubmitMesh(GpuMesh&,const std::vector<MeshPrimitive>&,unsigned lod,const glm::mat4& model,
+                          const std::vector<glm::mat4>& palette,TextureHandle,const glm::vec3& tint,float alpha,
+                          const std::vector<std::string>* hiddenParts,MaterialAt&&,BindingAt&&,AlphaAt&&);
     unsigned m_activeInstances=0,m_activeBatchLod=0;bool m_activeBatchReversed=false;float m_meshLodMultiplier=1;
     void QueueMeshInstance(MeshHandle,TextureHandle,const glm::mat4&,glm::vec4,unsigned lod);
 

@@ -1405,6 +1405,12 @@ template <class F> void (*Erase(F function))(void) { return reinterpret_cast<voi
 } // namespace
 
 Program *CurrentProgram() { return Lookup(g->programs, g->gl.program); }
+void WriteUniform(Program *program, GLint location, int kind, int components, GLsizei count, const void *data) {
+    SetUniform(program, location, kind, components, count, data);
+}
+void WriteUniformMatrix(Program *program, GLint location, int dimension, GLsizei count, const GLfloat *data) {
+    SetMatrix(program, location, dimension, count, GL_FALSE, data);
+}
 
 void DestroyProgramResources(Program &program) {
     for (auto &module : program.modules) {
