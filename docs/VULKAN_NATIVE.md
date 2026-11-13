@@ -42,10 +42,33 @@ means the Vulkan side owns execution explicitly, not that shaders fork.
    use, from the warm cache.
 4. **Memory placement.** GPU-owned buffers (`*_COPY`) live in device memory.
    Placing static geometry there too was measured and rejected (no gain).
-5. **Native passes.** Where the OpenGL formulation is the limit, a pass has a
-   Vulkan-specific path selected by `JudasVulkan::Active()`; the OpenGL path of
-   the same pass is untouched. So far: the GPU particle billboard draw
-   (`src/render/GpuParticlePass.cpp`).
+5. **Explicit interface and native passes.** `src/vulkan/VulkanGfx.h` is an
+   explicit renderer interface in Vulkan's own terms: shader objects with
+   indexed parameters, vertex layouts, pipelines, passes with named
+   attachments, binding groups, transient frame data and draws. It reads no
+   OpenGL-style global state and involves no OpenGL-named entry point. Passes
+   are moved onto it one at a time; a pass that has moved leaves the
+   OpenGL-named layer entirely on Vulkan, while its OpenGL version stays the
+   OpenGL backend's path, untouched.
+
+## Pass migration status
+
+| Pass | On the explicit interface | Notes |
+|---|---|---|
+| Shadow charts | yes | Explicit depth pass per chart; `src/render/NativeMeshPass.inl` |
+| Mesh draws: opaque, instanced, skinned, blended, sprites, terrain grids | yes | Materials, terrain bindings, bone palettes and instance arrays; all 20 pipelines created at startup |
+| GPU particles | partly | Vulkan-specific shader, still issued through OpenGL-named calls |
+| CPU particles, water, weather, UI and text, debug lines, post-processing | no | OpenGL-named layer |
+| Frame targets, clears, viewport | no | Chosen by frame code through the OpenGL-named layer; native draws join the current target |
+| Scene-wide shader parameters (lighting, weather, water, terrain flags) | no | Written by their own passes through OpenGL-named calls into the same parameter block the native pass uses |
+| Resource creation and uploads (meshes, textures, buffers), compute | no | OpenGL-named layer; referenced by handle |
+
+`JUDAS_VULKAN_NATIVE_MESH=0` routes the mesh passes through the OpenGL-named
+layer again, for bisecting. While a shadow pass is recording, the chart also
+remains the current framebuffer and viewport for code that inspects it through
+the graphics API (gates read its depth mid-pass); drawing does not use that.
+
+The OpenGL-named layer can be removed only when every row above reads "yes".
 
 ## Rules
 
