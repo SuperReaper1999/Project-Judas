@@ -636,14 +636,21 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     }
     m_render->shadowCache.Forget(unsigned(shadowSlot));
     ReserveShadowLayers(unsigned(shadowSlot+1));
-    if(!m_nativeMesh){glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);}
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
     m_shadowPassActive = true;
     m_currentShadowSlot = shadowSlot;
     m_frustum=Frustum(lightViewProjection);
     ++m_stats.shadowPasses;
-    if(m_nativeMesh){NativeBeginShadowPass(shadowSlot,lightViewProjection);return;}
+    if(m_nativeMesh){
+        // The chart stays the current framebuffer and viewport for code that
+        // inspects a shadow pass through the graphics API (gates read its depth
+        // mid-pass). Drawing does not depend on this binding.
+        glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
+        glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
+        NativeBeginShadowPass(shadowSlot,lightViewProjection);return;
+    }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
     glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
@@ -659,7 +666,7 @@ void Renderer::EndShadowPass() {
     m_shadowPassActive = false;
     m_frustum=Frustum(m_projection*m_view);
     m_currentShadowSlot = -1;
-    if(m_nativeMesh){JudasVulkan::Gfx::EndPass();return;}
+    if(m_nativeMesh)JudasVulkan::Gfx::EndPass();
     glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_shadowSavedFramebuffer));glViewport(m_shadowSavedViewport.x,m_shadowSavedViewport.y,m_shadowSavedViewport.z,m_shadowSavedViewport.w);
 }
 

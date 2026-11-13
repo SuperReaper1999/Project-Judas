@@ -1165,8 +1165,6 @@ void Shutdown() {
     if (!g) return;
     if (g->device) {
         PrintDispatchTiming();
-        vkDeviceWaitIdle(g->device);
-        ShutdownGfx();
         SavePipelineCache();
         vkDeviceWaitIdle(g->device);
         if (g->cmd) {
@@ -1201,6 +1199,7 @@ void Shutdown() {
         g->defaultColor.reset();
         g->defaultDepth.reset();
         ReleaseRetired();
+        ShutdownGfx(); // after the last command buffer has ended
         for (auto &entry : g->pipelines) vkDestroyPipeline(g->device, entry.second, nullptr);
         for (auto &entry : g->samplerCache) vkDestroySampler(g->device, entry.second, nullptr);
         for (auto pool : g->freePools) vkDestroyDescriptorPool(g->device, pool, nullptr);
