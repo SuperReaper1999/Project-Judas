@@ -414,6 +414,7 @@ void DeformableInstance::SurfaceContacts(DeformableInstance& a,DeformableInstanc
     if((a.settings.collisionMask&CategoryBit(b.settings.collisionLayer))==0||(b.settings.collisionMask&CategoryBit(a.settings.collisionLayer))==0)return;
     if(self)a.PrepareSelfCandidates();else b.BuildSurfaceTree();
     double thickness=a.settings.material.thickness+b.settings.material.thickness;
+    const auto contactsBeforeVertex=a.stats.contacts;
     {JUDAS_PROFILE_SCOPE("Deformable vertex face contacts");
     auto contact=[&](unsigned n,unsigned t){if(!b.FaceVisible(t))return;auto f=b.asset->triangles[t];
             if(a.asset->fracture&&a.fracture.removed[a.asset->fracture->nodePart[n]])return;
@@ -454,7 +455,14 @@ void DeformableInstance::SurfaceContacts(DeformableInstance& a,DeformableInstanc
     {JUDAS_PROFILE_SCOPE("Deformable edge edge contacts");
     // Traverse tree pairs once, rather than issuing one complete BVH query for
     // every edge. Identical subtree pairs visit only their upper triangle.
-    if(!self){b.BuildSurfaceTree();a.BuildSurfaceTree();}
+    if(!self){
+        // The first refit includes both face and edge trees. Without a vertex
+        // correction neither participant has moved in this call, so the
+        // target's edge tree is already current. Source geometry may have
+        // changed since its last use and still requires its own refit.
+        if(a.stats.contacts!=contactsBeforeVertex)b.BuildSurfaceTree();
+        a.BuildSurfaceTree();
+    }
     auto contact=[&](unsigned e,unsigned j){if(self){if(e==j)return;if(e>j)std::swap(e,j);const auto& exclusions=a.asset->excludedEdges[e];if(std::binary_search(exclusions.begin(),exclusions.end(),j))return;}
         auto v=a.asset->edges[e],w=b.asset->edges[j];if(a.asset->fracture&&a.fracture.removed[a.asset->fracture->nodePart[v.x]])return;if(b.asset->fracture&&b.fracture.removed[b.asset->fracture->nodePart[w.x]])return;if(self&&a.asset->fracture){const auto& c=*a.asset->fracture;auto p=c.nodePart[v.x],q=c.nodePart[w.x];if(a.fracture.removed[p]||a.fracture.removed[q]||a.fracture.component[p]==a.fracture.component[q])return;}++a.stats.candidates;
             auto [s,t]=segments(a.positions[v.x],a.positions[v.y],b.positions[w.x],b.positions[w.y]);

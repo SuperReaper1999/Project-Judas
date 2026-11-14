@@ -251,55 +251,110 @@ void TestCompletedSupportObservations() {
     Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"current collision masks exclude completed support observations");
     physics.SetCollisionFilter(fixture.body,0,kAllCategories);
     Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"restoring a filter before another solve cannot revive old observations");
-    fixture.Step();
-    Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after filter invalidation");
-    physics.SetPhysicalMaterial(fixture.body,"changed authored material",.6f,0);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"physical-material mutation invalidates completed observations with warm history");
-    fixture.Step();
-    Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after material invalidation");
-    const auto pose=physics.GetTransform(fixture.body);
-    physics.ResetBody(fixture.body,pose.position,pose.rotation);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"even same-pose reset invalidates completed observation revisions");
-    fixture.Step();
-    physics.SetBodyEnabled(fixture.body,false);
-    Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"disabled body cannot expose completed observations");
-    physics.SetBodyEnabled(fixture.body,true);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"re-enabling before another solve cannot revive disabled observations");
-    fixture.Step();
-    physics.SetBodySensor(fixture.body,true);
-    Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"sensor cannot grant physical support from completed rows");
-    physics.SetBodySensor(fixture.body,false);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"leaving sensor mode cannot revive earlier physical observations");
-    fixture.Step();
-    physics.SetPairCollisionEnabled(fixture.body,fixture.floor,false);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"suppressed pair cannot expose completed support");
-    physics.SetPairCollisionEnabled(fixture.body,fixture.floor,true);
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"unsuppressing before another solve cannot revive old support");
-    fixture.Step();
-    // A different collider can still have a legitimate completed reaction.
-    // Slot reuse must reject the removed/replacement floor's observations,
-    // without erasing real contacts belonging to that other collider.
-    physics.ReadBodyContactSample(fixture.body,contacts);
-    auto otherContacts=contacts;
-    otherContacts.erase(std::remove_if(otherContacts.begin(),otherContacts.end(),
-        [&](const auto& contact){return contact.other.id==fixture.floor.id;}),otherContacts.end());
-    Check(!otherContacts.empty(),"slot-reuse fixture exercises another real load-bearing contact");
-    const auto removedFloor=fixture.floor;physics.DestroyBody(removedFloor);
-    fixture.floor=physics.CreateStaticBox({0,-.5f,0},{4,.5f,3},.8f,0);
-    const bool readAfterReuse=physics.ReadBodyContactSample(fixture.body,contacts);
-    const bool staleFloor=std::any_of(contacts.begin(),contacts.end(),[&](const auto& contact){
-        return contact.other.id==removedFloor.id||contact.other.id==fixture.floor.id;});
-    Check(fixture.floor.id!=removedFloor.id&&readAfterReuse&&!staleFloor,"reused support slot cannot alias completed contact generations");
-    bool retainedOtherContacts=readAfterReuse&&contacts.size()==otherContacts.size();
-    for(std::size_t i=0;retainedOtherContacts&&i<contacts.size();++i)
-        retainedOtherContacts=contacts[i].other.id==otherContacts[i].other.id&&
-            contacts[i].normalImpulse==otherContacts[i].normalImpulse&&
-            contacts[i].point==otherContacts[i].point&&contacts[i].normal==otherContacts[i].normal;
-    Check(retainedOtherContacts,"removing a neighbour preserves other genuine completed reactions");
-    const auto removedBody=fixture.body;physics.DestroyBody(removedBody);
-    fixture.body=physics.CreateDynamicBox({0,8,0},{.5f,.5f,.5f},4,.8f,0);
-    Check(!physics.ReadBodyContactSample(removedBody,contacts)&&contacts.empty(),"destroyed observer handle fails safely after slot reuse");
-    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"new body inherits no old completed observations");
+    // A continuing impact may unload the box transiently or retain support.
+    // Require genuine reacquisition without freezing either numerical outcome.
+    bool reacquired=false;
+    for(unsigned step=0;step<8&&!reacquired;++step){
+        fixture.Step();
+        reacquired=SupportRows(physics,fixture.body,fixture.floor)>0;
+    }
+    Check(reacquired,"post-impact support returns through a real bounded recontact solve");
+
+    // Give an otherwise ordinary supported box a known physical upward impulse
+    // to exercise the unloaded contract independently of crash solver ordering.
+    {
+        SolvedSupport unloaded;
+        auto& flight=unloaded.physics;
+        Check(SupportRows(flight,unloaded.body,unloaded.floor)>0,
+              "unloaded-control setup starts with a real load-bearing contact");
+        flight.ApplyLinearImpulse(unloaded.body,{0,.8f,0}); // 4 kg * 0.2 m/s.
+        flight.SetCollisionFilter(unloaded.body,0,0);
+        flight.SetCollisionFilter(unloaded.body,0,kAllCategories);
+        Check(flight.ReadBodyContactSample(unloaded.body,contacts)&&contacts.empty(),
+              "restored airborne-control filter cannot revive its previous support rows");
+        unloaded.Step();
+        const auto pose=flight.GetTransform(unloaded.body);
+        const long double lowest=static_cast<long double>(pose.position.y)-.5L*(
+            std::abs(Column(pose.rotation,0).y)+std::abs(Column(pose.rotation,1).y)+
+            std::abs(Column(pose.rotation,2).y));
+        const auto clearance=lowest-(static_cast<long double>(flight.GetTransform(unloaded.floor).position.y)+.5L);
+        Check(clearance>0&&flight.ReadBodyContactSample(unloaded.body,contacts)&&
+              SupportRows(flight,unloaded.body,unloaded.floor)==0,
+              "physically launched unloaded body does not fabricate a floor reaction");
+        bool returned=false;
+        for(unsigned step=0;step<8&&!returned;++step){
+            unloaded.Step();
+            returned=SupportRows(flight,unloaded.body,unloaded.floor)>0;
+        }
+        Check(returned,"launched unloaded body reacquires actual support under gravity within eight steps");
+    }
+
+    // Lifecycle invalidation must reacquire load immediately when the fixture
+    // is actually load-bearing. Isolate that contract from the impact's valid
+    // unloaded interval, retaining a second real contact for neighbour removal.
+    {
+        SolvedSupport fixture;
+        auto& physics=fixture.physics;
+        fixture.ball=physics.CreateDynamicSphere({0,1.15f,0},.15f,2,.8f,0);
+        for(unsigned step=0;step<4;++step)fixture.Step();
+        Check(SupportRows(physics,fixture.body,fixture.floor)>0&&
+              SupportRows(physics,fixture.body,fixture.ball)>0,
+              "independently settled lifecycle control has actual floor and neighbour loads");
+        physics.SetCollisionFilter(fixture.body,0,0);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"current collision masks exclude completed support observations");
+        physics.SetCollisionFilter(fixture.body,0,kAllCategories);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"restoring a filter before another solve cannot revive old observations");
+        fixture.Step();
+        Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after filter invalidation");
+        physics.SetPhysicalMaterial(fixture.body,"changed authored material",.6f,0);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"physical-material mutation invalidates completed observations with warm history");
+        fixture.Step();
+        Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after material invalidation");
+        const auto pose=physics.GetTransform(fixture.body);
+        physics.ResetBody(fixture.body,pose.position,pose.rotation);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"even same-pose reset invalidates completed observation revisions");
+        fixture.Step();
+        physics.SetBodyEnabled(fixture.body,false);
+        Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"disabled body cannot expose completed observations");
+        physics.SetBodyEnabled(fixture.body,true);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"re-enabling before another solve cannot revive disabled observations");
+        fixture.Step();
+        physics.SetBodySensor(fixture.body,true);
+        Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"sensor cannot grant physical support from completed rows");
+        physics.SetBodySensor(fixture.body,false);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"leaving sensor mode cannot revive earlier physical observations");
+        fixture.Step();
+        physics.SetPairCollisionEnabled(fixture.body,fixture.floor,false);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"suppressed pair cannot expose completed support");
+        physics.SetPairCollisionEnabled(fixture.body,fixture.floor,true);
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"unsuppressing before another solve cannot revive old support");
+        fixture.Step();
+        // A different collider can still have a legitimate completed reaction.
+        // Slot reuse must reject the removed/replacement floor's observations,
+        // without erasing real contacts belonging to that other collider.
+        physics.ReadBodyContactSample(fixture.body,contacts);
+        auto otherContacts=contacts;
+        otherContacts.erase(std::remove_if(otherContacts.begin(),otherContacts.end(),
+            [&](const auto& contact){return contact.other.id==fixture.floor.id;}),otherContacts.end());
+        Check(!otherContacts.empty(),"slot-reuse fixture exercises another real load-bearing contact");
+        const auto removedFloor=fixture.floor;physics.DestroyBody(removedFloor);
+        fixture.floor=physics.CreateStaticBox({0,-.5f,0},{4,.5f,3},.8f,0);
+        const bool readAfterReuse=physics.ReadBodyContactSample(fixture.body,contacts);
+        const bool staleFloor=std::any_of(contacts.begin(),contacts.end(),[&](const auto& contact){
+            return contact.other.id==removedFloor.id||contact.other.id==fixture.floor.id;});
+        Check(fixture.floor.id!=removedFloor.id&&readAfterReuse&&!staleFloor,"reused support slot cannot alias completed contact generations");
+        bool retainedOtherContacts=readAfterReuse&&contacts.size()==otherContacts.size();
+        for(std::size_t i=0;retainedOtherContacts&&i<contacts.size();++i)
+            retainedOtherContacts=contacts[i].other.id==otherContacts[i].other.id&&
+                contacts[i].normalImpulse==otherContacts[i].normalImpulse&&
+                contacts[i].point==otherContacts[i].point&&contacts[i].normal==otherContacts[i].normal;
+        Check(retainedOtherContacts,"removing a neighbour preserves other genuine completed reactions");
+        const auto removedBody=fixture.body;physics.DestroyBody(removedBody);
+        fixture.body=physics.CreateDynamicBox({0,8,0},{.5f,.5f,.5f},4,.8f,0);
+        Check(!physics.ReadBodyContactSample(removedBody,contacts)&&contacts.empty(),"destroyed observer handle fails safely after slot reuse");
+        Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"new body inherits no old completed observations");
+
+    }
 
     SolvedSupport island(false,true);
     Check(SupportRows(island.physics,island.second,island.floor)>0,"connected articulation has observed stance support before incoming impact");

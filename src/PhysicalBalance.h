@@ -155,5 +155,5 @@ private:
     // Get-up progress (PhysicalBalanceGetUp.cpp). Derived and not persisted:
     // a restored task assesses the lying rig again and restarts the motion.
     bool GetUp(PhysicsWorld&,const glm::vec3& up,float dt);
-    bool m_getUp=false,m_getUpFaceUp=false;float m_getUpTime=0;unsigned m_getUpAttempts=0;bool m_getUpReached=false;
+    bool m_getUp=false,m_getUpFaceUp=false;float m_getUpTime=0;unsigned m_getUpAttempts=0;
 };

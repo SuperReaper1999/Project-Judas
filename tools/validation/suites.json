@@ -1784,6 +1784,43 @@
       "groups": [
         "rendering"
       ]
+    },
+    {
+      "name": "ccd-scheduling",
+      "target": "judas_ccd_scheduling_tests",
+      "groups": [
+        "physics",
+        "collision",
+        "mk2",
+        "performance"
+      ]
+    },
+    {
+      "name": "contact-separation",
+      "target": "judas_contact_separation_tests",
+      "groups": [
+        "physics",
+        "collision"
+      ],
+      "parallel": true
+    },
+    {
+      "name": "physics-motion-ledger",
+      "target": "judas_rigid_motion_tests",
+      "groups": [
+        "physics",
+        "collision",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "physics-parallel-geometry",
+      "target": "judas_parallel_narrowphase_tests",
+      "groups": [
+        "physics",
+        "collision",
+        "lifecycle"
+      ]
     }
   ],
   "known_findings": [

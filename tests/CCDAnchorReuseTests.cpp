@@ -65,6 +65,70 @@ int main() {
         world.InvalidateImpactPose(slot);
         world.ImpactPoseAt(slot,.25);
     }
+    {
+        // Both anchors can be borrowed before either lane-local array exists.
+        // Reset(scratch,world) below intentionally pre-sizes storage and cannot
+        // cover the empty-lane ActualImpactBound regression on its own.
+        const auto physicalState=[&] {
+            SaveArchive state;
+            for(auto handle:physics.AliveBodies()){
+                auto pose=physics.GetTransform(handle),previous=physics.GetPreviousTransform(handle);
+                auto velocity=physics.GetLinearVelocity(handle),spin=physics.GetAngularVelocity(handle);
+                auto id=handle.id;state(id,pose.position,pose.rotation,previous.position,previous.rotation,velocity,spin);
+                physics.PersistBodyForces(state,handle);physics.PersistSleep(state,handle);
+                auto leaves=physics.GetBodyMotionSegments(handle);auto count=uint32_t(leaves.size());state(count);
+                for(auto& leaf:leaves)state(leaf.begin,leaf.end,leaf.start.position,leaf.start.rotation,
+                    leaf.endPose.position,leaf.endPose.rotation,leaf.linearVelocity,leaf.angularVelocity,
+                    leaf.pivotOffset,leaf.movable,leaf.prescribed,leaf.exactRotation,
+                    leaf.anchoredTranslation,leaf.translationOrigin,leaf.translationTime);
+            }
+            return state.bytes;
+        };
+        const auto beforePhysical=physicalState();
+        const auto anchorA=world.impactAnchorSamples[Slot(a)],anchorB=world.impactAnchorSamples[Slot(b)];
+        const auto serialTruth=world.PairTouches(Slot(a),Slot(b),0,0,.25);
+        const auto serialManifold=world.PairAt(Slot(a),Slot(b),0,0,.25,0);
+        Check(serialTruth&&serialManifold.count>0&&!serialManifold.uncertain,
+              "empty-lane control uses a genuine accepted contact, not an empty query");
+        World::CCDQueryStorage freshTruth;
+        World::CCDQuery truthLane(world,freshTruth);
+        const auto* first=&truthLane.ImpactPoseAt(Slot(a),.25);
+        const auto* second=&truthLane.ImpactPoseAt(Slot(b),.25);
+        Check(first==&world.impactAnchorSamples[Slot(a)]&&second==&world.impactAnchorSamples[Slot(b)]&&
+                  truthLane.ownerAnchorBorrows==2&&freshTruth.impactPoseSamples.empty()&&
+                  freshTruth.impactAnchorSamples.empty(),
+              "both prepared owner anchors borrow with genuinely empty lane storage");
+        const auto laneTruth=truthLane.PairTouches(Slot(a),Slot(b),0,0,.25);
+        Check(laneTruth==serialTruth&&freshTruth.impactPoseSamples.size()==world.bodies.size()&&
+                  freshTruth.impactAnchorSamples.size()==world.bodies.size()&&freshTruth.impactPoseEvaluations==0,
+              "boolean bounds independently allocate private storage without recomputing borrowed poses");
+        World::CCDQueryStorage freshManifold;
+        Check(freshManifold.impactPoseSamples.empty()&&freshManifold.impactAnchorSamples.empty(),
+              "manifold control starts with a separate untouched lane");
+        World::CCDQuery manifoldLane(world,freshManifold);
+        const auto laneManifold=manifoldLane.PairAt(Slot(a),Slot(b),0,0,.25,0);
+        bool same=laneManifold.count==serialManifold.count&&laneManifold.uncertain==serialManifold.uncertain;
+        for(int k=0;k<laneManifold.count&&k<serialManifold.count;++k){
+            const auto& x=laneManifold.points[k];const auto& y=serialManifold.points[k];
+            same&=x.hit==y.hit&&x.point==y.point&&x.normal==y.normal&&x.penetration==y.penetration&&
+                x.signedSeparation==y.signedSeparation&&x.preciseNormal==y.preciseNormal&&
+                x.localAnchorA==y.localAnchorA&&x.localAnchorB==y.localAnchorB&&
+                x.localWitnessA==y.localWitnessA&&x.localWitnessB==y.localWitnessB&&
+                x.hasLocalAnchors==y.hasLocalAnchors&&x.anchorAInWorldFrame==y.anchorAInWorldFrame&&
+                x.anchorBInWorldFrame==y.anchorBInWorldFrame&&x.separationState==y.separationState;
+        }
+        Check(same&&manifoldLane.ownerAnchorBorrows>=2&&freshManifold.impactPoseEvaluations==0&&
+                  freshManifold.impactPoseSamples.size()==world.bodies.size(),
+              "fresh borrowed-anchor manifold matches all exact serial geometry fields");
+        Check(world.impactAnchorSamples[Slot(a)].time==anchorA.time&&
+                  world.impactAnchorSamples[Slot(b)].time==anchorB.time&&
+                  world.impactAnchorSamples[Slot(a)].pose.position==anchorA.pose.position&&
+                  world.impactAnchorSamples[Slot(b)].pose.position==anchorB.pose.position&&
+                  world.impactAnchorSamples[Slot(a)].pose.orientation==anchorA.pose.orientation&&
+                  world.impactAnchorSamples[Slot(b)].pose.orientation==anchorB.pose.orientation&&
+                  beforePhysical==physicalState(),
+              "empty-lane queries leave owner anchors and authoritative physical motion unchanged");
+    }
     World::CCDQueryStorage scratch;Reset(scratch,world);
     World::CCDQuery lane(world,scratch);
     const auto* borrowed=&lane.ImpactPoseAt(Slot(b),.25);

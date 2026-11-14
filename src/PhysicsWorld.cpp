@@ -59,27 +59,120 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
 void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) {
     if (coupling && (!coupling->iterations || coupling->iterations > 64))
         throw std::invalid_argument("invalid velocity coupling quality");
-    JUDAS_PROFILE_SCOPE("Rigid physics");
     Impl &w = *m_impl;
-    if (w.stepping)
+    if (w.stepping || w.contactPhaseContext)
         throw std::logic_error("recursive physics step");
+    w.ValidateCoupling(fixedDeltaTime,coupling);
+    // One macro owner prepares fresh contacts at each physical interval.
+    {
+        if (!(std::isfinite(fixedDeltaTime) && fixedDeltaTime > 0))
+            throw std::invalid_argument("invalid contact phase step");
+        JUDAS_PROFILE_SCOPE("Physics contact phase ownership");
+        constexpr unsigned phases = Impl::kPhysicalIntervals;
+        Impl::ContactPhaseContext phaseContext;
+        phaseContext.macroDeltaTime=fixedDeltaTime;
+        phaseContext.count=phases;
+        phaseContext.fullAccelerationKick.assign(w.bodies.size(),char(0));
+        phaseContext.accelerationSplit.assign(w.bodies.size(),char(0));
+        struct PhaseScope {
+            Impl& world;
+            explicit PhaseScope(Impl& value, Impl::ContactPhaseContext& context) : world(value) {
+                world.contactPhaseContext=&context;
+            }
+            ~PhaseScope() {
+                world.contactPhaseContext=nullptr;
+            }
+        } phaseScope(w,phaseContext);
+        struct AccelerationSource { BodyHandle body; glm::vec3 acceleration; };
+        std::vector<AccelerationSource> accelerationSources;
+        for (auto slot : w.aliveSlots) {
+            auto& body=w.bodies[slot];
+            if (!body.isDynamic || body.rigidBody.IsStatic() || body.simulationSuspended)
+                continue;
+            const auto delta=body.stepVelocityDelta;
+            if (delta==glm::vec3(0) && !body.deferredAcceleration)
+                continue; // lastAcceleration alone is not a current force source.
+            const auto acceleration=delta!=glm::vec3(0) ? delta/fixedDeltaTime : body.lastAcceleration;
+            accelerationSources.push_back({w.MakeHandle(slot),acceleration});
+            // Preserve an awake public kick until native rows establish
+            // whether this body is constrained. Retiming a free kick here
+            // would separate it from a genuine cancelling physical impulse.
+            if (delta!=glm::vec3(0))
+                phaseContext.fullAccelerationKick[slot]=1;
+            else
+                // A sleeping/deferred source has no pre-step kick. Continue
+                // registering its ordinary h-sized acceleration on wake.
+                phaseContext.accelerationSplit[slot]=1;
+        }
+        const auto original = coupling ? *coupling : VelocityCoupling{};
+        unsigned phase=0, firstRound=0, phaseRounds=0;
+        VelocityCoupling bridge;
+        bridge.physicalBatch=original.physicalBatch;
+        if (!original.physicalBatch)
+            bridge.solve=[&](float, unsigned round) {
+                if (round<phaseRounds && original.solve)
+                    original.solve(fixedDeltaTime,firstRound+round);
+            };
+        if (original.afterSubstep)
+            bridge.afterSubstep=[&](const auto&) {
+                VelocityCoupling::Substep context;
+                context.stepDeltaTime=fixedDeltaTime;
+                context.deltaTime=fixedDeltaTime/float(phases);
+                context.beginTime=float(phase)*context.deltaTime;
+                context.index=phase;
+                context.count=phases;
+                context.iteration=context.iterations=phaseRounds;
+                original.afterSubstep(context);
+            };
+        StepCoupledImpl(fixedDeltaTime,phases,[&](float h, unsigned index) {
+            phase=index;
+            phaseContext.index=index;
+            const auto base=original.iterations/phases, extra=original.iterations%phases;
+            firstRound=index*base+std::min(index,extra);
+            phaseRounds=base+(index<extra);
+            // A zero-share interval still needs an after-interval hook. Its
+            // single bridge round is a no-op, never an extra source advance.
+            bridge.iterations=std::max(1u,phaseRounds);
+            bridge.begin=index==0 && original.begin
+                ? std::function<void(float)>([&](float) { original.begin(fixedDeltaTime); })
+                : std::function<void(float)>{};
+            bridge.finish=index+1==phases && original.finish
+                ? std::function<void(float)>([&](float) { original.finish(fixedDeltaTime); })
+                : std::function<void(float)>{};
+            for (const auto& source : accelerationSources) {
+                const auto slot=source.body.id & Impl::kSlotMask;
+                // At phase zero an already-applied kick is still untouched.
+                // Later phases repeat only sources classified by native rows,
+                // plus initially deferred sources awaiting a legitimate wake.
+                if (!phaseContext.accelerationSplit[slot])
+                    continue;
+                if (auto* body=w.Get(source.body); body && body->isDynamic &&
+                    !body->rigidBody.IsStatic() && !body->simulationSuspended) {
+                    body->lastAcceleration=source.acceleration;
+                    if (body->sleeping) {
+                        // If prediction/contact wakes it during this phase,
+                        // the ordinary integrator consumes exactly this h.
+                        body->deferredAcceleration=true;
+                    } else {
+                        const auto delta=source.acceleration*h;
+                        body->rigidBody.linearVelocity+=delta;
+                        body->stepVelocityDelta+=delta;
+                        body->deferredAcceleration=false;
+                    }
+                }
+            }
+        },{},coupling ? &bridge : nullptr,true);
+        return;
+    }
+}
+
+void PhysicsWorld::StepInterval(float fixedDeltaTime,const VelocityCoupling *coupling) {
+    Impl &w=*m_impl;
+    if (!w.contactPhaseContext)
+        throw std::logic_error("native physics interval requires its macro owner");
+    JUDAS_PROFILE_SCOPE("Rigid physics");
     if (coupling && coupling->physicalBatch) {
         const auto& batch = *coupling->physicalBatch;
-        if (coupling->begin || coupling->solve || coupling->finish)
-            throw std::invalid_argument("physical batch cannot compose with legacy velocity-changing callbacks");
-        if (!std::isfinite(fixedDeltaTime) || fixedDeltaTime <= 0 ||
-            !batch.propose || !batch.maximumBodies || batch.maximumBodies > 4096 ||
-            !batch.maximumContacts || batch.maximumContacts > 16384 ||
-            !batch.maximumJointRows || batch.maximumJointRows > 16384 ||
-            batch.bodies.size() > batch.maximumBodies)
-            throw std::invalid_argument("invalid physical constraint participant/bounds");
-        std::set<unsigned> unique;
-        for (const auto handle : batch.bodies) {
-            const auto* body = w.Get(handle);
-            if (!body || !body->enabled || !body->isDynamic || body->sensor || body->queryOnly ||
-                body->simulationSuspended || !unique.insert(handle.id).second)
-                throw std::invalid_argument("invalid, duplicate or inactive physical batch body");
-        }
         // Declare material participation BEFORE predictor/contact construction;
         // never infer it by position or wait for a late impulse to wake a body.
         for (const auto handle : batch.bodies) w.Wake(handle.id & Impl::kSlotMask);
@@ -158,7 +251,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                              body.rigidBody.angularVelocity != glm::vec3(0)
                        : !body.sleeping && !body.rigidBody.IsStatic() &&
                              (glm::length(body.rigidBody.linearVelocity -
-                                          body.lastAcceleration * fixedDeltaTime) > .03f ||
+                                          body.stepVelocityDelta) > .03f ||
                               glm::length(body.rigidBody.angularVelocity) > .03f);
         };
         if (aa.sleeping && moving(bb))
@@ -218,6 +311,20 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     // 3) Narrowphase at the current poses — the sole authority on contact.
     w.lastStepContacts.clear();
     w.pendingCache.clear();
+    // Warm support impulses have the duration of their producing kernel,
+    // independently of the enclosing observation/publication interval.
+    if (w.contactWarmDt>0 && w.contactWarmDt!=fixedDeltaTime) {
+        const float scale=fixedDeltaTime/w.contactWarmDt;
+        for (auto& cached:w.contactCache) {
+            cached.normalImpulse*=scale;
+            cached.tangentImpulse*=scale;
+            cached.macroSteadyNormal*=scale;
+        }
+    }
+    w.contactWarmDt=fixedDeltaTime;
+    if (w.contactPhaseContext->index==0)
+        for (auto& cached:w.contactCache)
+            cached.macroSteadyNormal=cached.normalImpulse;
     w.cacheUsed.assign(w.contactCache.size(), 0);
     w.PrepareInitialContactGeometry(fixedDeltaTime);
     std::size_t initialGeometryIndex = 0;
@@ -308,7 +415,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                                                   ? contact.localAnchorA
                                                   : inverseA * (glm::dvec3(contact.point) -
                                                                 glm::dvec3(a.rigidBody.position));
-                    float warmNormal = 0.0f;
+                    float warmNormal = 0.0f, warmSteadyNormal = 0.0f;
                     glm::vec3 warmTangent(0.0f);
                     std::ptrdiff_t best = -1;
                     double bestDistance = kWarmStartAnchorDistance;
@@ -328,6 +435,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                         w.cacheUsed[static_cast<std::size_t>(best)] = 1;
                         warmNormal = w.contactCache[static_cast<std::size_t>(best)].normalImpulse;
                         warmTangent = w.contactCache[static_cast<std::size_t>(best)].tangentImpulse;
+                        warmSteadyNormal = w.contactCache[static_cast<std::size_t>(best)].macroSteadyNormal;
                     }
                     // Every manifold point, new or persistent, joins one
                     // simultaneous substepped solve (WorldMk2Solver.cpp).
@@ -339,7 +447,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                                               b.contactObservationRevision});
                     w.mk2Points.push_back({slotA, slotB, contact, friction,
                                            std::max(a.restitution, b.restitution),
-                                           warmNormal, warmTangent});
+                                           warmNormal, warmTangent, warmSteadyNormal});
                     w.lastStepContacts.push_back(
                         {contact.point, contact.normal, contact.penetration});
                     ++pairPoints;
@@ -359,10 +467,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         ProfileScope mk2Scope(mk2Label);
         w.Mk2Solve(fixedDeltaTime, coupling);
     }
-    static ProfileLabel settleLabel("Physics sleeping assessment");
-    ProfileScope settleScope(settleLabel);
-    w.Settle(fixedDeltaTime);
-    settleScope.End();
     solverScope.End();
     ProfileScope proxyScope(proxiesLabel);
     const Clock::time_point solverEnd = Clock::now();
@@ -400,10 +504,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     w.stats.broadphaseMilliseconds = MillisecondsBetween(broadphaseStart, narrowphaseStart) +
                                      MillisecondsBetween(solverEnd, stepEnd);
     w.stats.narrowphaseMilliseconds = MillisecondsBetween(narrowphaseStart, solverStart);
-    JUDAS_PROFILE_COUNTER("Sleeping physics bodies", double(w.stats.sleepingBodies),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Awake physics bodies", double(w.stats.awakeBodies),
-                          ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics bodies last step", double(w.stats.bodies),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics candidate pairs last step", double(w.stats.candidatePairs),
@@ -432,12 +532,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     JUDAS_PROFILE_COUNTER("Physics broadphase root queries", double(w.work.candidateQueries),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics broadphase overlapping leaves", double(w.work.candidateLeaves),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics sleep graph edges", double(w.sleepGraphEdges),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics sleep islands", double(w.sleepIslandCount),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics sleep scratch bytes", double(w.sleepScratchBytes),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics joint rows",
                           double(w.joints.empty() ? 0 : w.jointSolver.RowCount()),
@@ -540,6 +634,14 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
                                const std::function<void(float, unsigned)> &before,
                                const std::function<void(float, unsigned)> &after,
                                const VelocityCoupling *coupling) {
+    m_impl->ValidateCoupling(dt,coupling);
+    StepCoupledImpl(dt,intervals,before,after,coupling,false);
+}
+
+void PhysicsWorld::StepCoupledImpl(float dt,unsigned intervals,
+                               const std::function<void(float,unsigned)> &before,
+                               const std::function<void(float,unsigned)> &after,
+                               const VelocityCoupling *coupling,bool nativePhases) {
     if (!std::isfinite(dt) || dt <= 0 || !intervals || intervals > 32)
         throw std::invalid_argument("invalid coupled physics interval");
     if (coupling && (!coupling->iterations || coupling->iterations > 64))
@@ -553,8 +655,9 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
         return;
     }
     Impl &w = *m_impl;
-    if (w.coupledStep)
+    if (w.coupledStep && !nativePhases)
         throw std::logic_error("nested coupled physics step");
+    const auto coordinatorStart=Clock::now();
     struct Snapshot {
         BodyHandle handle;
         glm::vec3 position{0}, force{0}, torque{0};
@@ -589,8 +692,9 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
     std::map<uint64_t, Reaction> jointReactions;
     std::vector<CachedContact> observations;
     StepStats totals{};
+    const bool enclosingCoupledStep=w.coupledStep;
     w.coupledStep = true;
-    if (!w.collectingPreStepQueries)
+    if (!enclosingCoupledStep && !w.collectingPreStepQueries)
         w.stepTouches.clear();
     try {
         for (unsigned interval = 0; interval < intervals; ++interval) {
@@ -615,7 +719,8 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
                 joint.state.reactionAngularImpulse = {0, 0, 0};
                 joint.state.motorImpulse = 0;
             }
-            Step(h, coupling);
+            if (nativePhases) StepInterval(h,coupling);
+            else Step(h,coupling);
             for (const auto &joint : w.joints) {
                 auto &reaction = jointReactions[joint.handle.id];
                 reaction.linear += joint.state.reactionImpulse;
@@ -717,10 +822,10 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
                 after(h, interval);
         }
     } catch (...) {
-        w.coupledStep = false;
+        w.coupledStep = enclosingCoupledStep;
         throw;
     }
-    w.coupledStep = false;
+    w.coupledStep = enclosingCoupledStep;
     w.lastStepContacts = std::move(contacts);
     std::stable_sort(observations.begin(), observations.end(),
                      [](const auto &a, const auto &b) { return a.key < b.key; });
@@ -745,9 +850,35 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
             joint.state.motorImpulse = it->second.motor;
         }
     w.stats = totals;
+    if (nativePhases) {
+        // Contact preparation is phased, but sleeping owns one completed
+        // macro boundary. Assess the restored full trajectory/start poses,
+        // advance quiet time once, and publish population counts once.
+        static ProfileLabel settleLabel("Physics sleeping assessment");
+        ProfileScope settleScope(settleLabel);
+        const auto settleStart=Clock::now();
+        w.stats.sleepingBodies=w.stats.awakeBodies=w.stats.sleepingIslands=0;
+        w.Settle(dt);
+        const auto settleMilliseconds=MillisecondsBetween(settleStart,Clock::now());
+        w.stats.solverMilliseconds+=settleMilliseconds;
+        w.stats.totalMilliseconds+=settleMilliseconds;
+        JUDAS_PROFILE_COUNTER("Sleeping physics bodies", double(w.stats.sleepingBodies),
+                              ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Awake physics bodies", double(w.stats.awakeBodies),
+                              ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics sleep graph edges", double(w.sleepGraphEdges),
+                              ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics sleep islands", double(w.sleepIslandCount),
+                              ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics sleep scratch bytes", double(w.sleepScratchBytes),
+                              ProfileCounterMode::Latest);
+    }
     PublishImpactCounters(w.stats);
-    if (!w.queryTouchesPending)
+    if (!w.queryTouchesPending && !enclosingCoupledStep)
         w.FinishTouches();
+    // Include aggregation, preparation and publication in the public call's
+    // cost rather than reporting only the sum of the nested interval kernels.
+    w.stats.totalMilliseconds=MillisecondsBetween(coordinatorStart,Clock::now());
 }
 
 const PhysicsWorld::StepStats &PhysicsWorld::LastStepStats() const {
@@ -781,7 +912,7 @@ void PhysicsWorld::ShiftOrigin(glm::dvec3 delta) {
             shift(j.state.settings.anchorB);
     for (auto &c : w.lastStepContacts)
         shift(c.point);
-    for (auto *events : {&w.previousTouches, &w.stepTouches, &w.preStepQueryTouches})
+    for (auto *events : {&w.previousTouches, &w.stepTouches, &w.preStepQueryTouches, &w.querySensorCrossings})
         for (auto &entry : *events)
             shift(entry.second.point);
     for (auto &e : w.touchEvents)

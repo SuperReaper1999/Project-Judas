@@ -171,12 +171,26 @@ int main(){
         Check(Near(p.GetPointVelocity(h,{2,1,0}),{-2,0,0}),"point velocity measures about compound COM rather than authored pivot");
         auto q=glm::angleAxis(2*dt,glm::vec3(0,0,1));
         Check(Near(p.GetTransform(h).position,glm::vec3(2,0,0)-q*glm::vec3(2,0,0)),"world COM velocity and angular pose describe one consistent trajectory");
-        const auto segments=p.GetBodyMotionSegments(h);Check(segments.size()==1,"prescribed motion exports normal value-owned motion ledger");
-        if(!segments.empty()){
-            const auto at=PhysicsWorld::EvaluateBodyMotionSegment(segments.front(),dt*.5);
-            auto middle=glm::angleAxis(dt,glm::vec3(0,0,1));
-            Check(Near(at.position,glm::vec3(2,0,0)-middle*glm::vec3(2,0,0)),"passive motion sampling retains COM offset and exact prescribed rotation");
+        const auto segments=p.GetBodyMotionSegments(h);
+        Check(!segments.empty(),"prescribed motion exports a value-owned piecewise ledger");
+        double covered=0;
+        for(const auto& leaf:segments){
+            const bool valid=std::isfinite(leaf.begin)&&std::isfinite(leaf.end)&&
+                leaf.begin==covered&&leaf.end>leaf.begin&&leaf.end<=double(dt);
+            Check(valid,"prescribed ledger covers contiguous positive intervals within the fixed step");
+            if(!valid)continue; // Report invalid coverage without sampling outside a leaf.
+            for(double time:{leaf.begin,(leaf.begin+leaf.end)*.5,leaf.end}){
+                const auto at=PhysicsWorld::EvaluateBodyMotionSegment(leaf,time);
+                const auto expected=glm::angleAxis(float(2*time),glm::vec3(0,0,1));
+                Check(Near(at.position,glm::vec3(2,0,0)-expected*glm::vec3(2,0,0)),
+                      "every leaf sample retains the analytic global COM-offset trajectory");
+                Check(Near(at.rotation*glm::vec3(1,0,0),expected*glm::vec3(1,0,0))&&
+                      Near(at.rotation*glm::vec3(0,1,0),expected*glm::vec3(0,1,0)),
+                      "every leaf sample retains the analytic global prescribed rotation");
+            }
+            covered=leaf.end;
         }
+        Check(covered==double(dt),"prescribed piecewise ledger covers the entire fixed interval");
     }
     {
         PhysicsWorld p;p.Init();auto support=KinematicBox(p,{0,-.25f,0},{3,.25f,3});auto crate=p.CreateDynamicBox({0,.3f,0},{.3f,.3f,.3f},1,.9f,0);

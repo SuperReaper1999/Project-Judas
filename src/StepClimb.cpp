@@ -27,7 +27,8 @@ constexpr float kDownProbeLookAhead = 0.08f;
 bool TryStepMove(const PhysicsWorld& physics, const glm::vec3& position,
                   const glm::quat& orientation, const glm::vec3& localUp,
                   const glm::vec3& horizontalDisplacement, float maxStepHeight, float minGroundDot,
-                  float skinMargin, glm::vec3& outNewPosition, const Shape* capsule, const PhysicsQueryFilter* filter, unsigned layer, CategoryMask mask) {
+                  float skinMargin, glm::vec3& outNewPosition, const Shape* capsule, const PhysicsQueryFilter* filter, unsigned layer, CategoryMask mask,
+                  std::array<glm::vec3,4>* acceptedPath) {
     auto sweep=[&](glm::vec3 p,glm::vec3 d){return capsule ? physics.SweepCapsuleMotion(capsule->radius,capsule->halfHeight,p,orientation,d,false,0,1,filter,layer,mask) : physics.SweepPlayerShape(p,orientation,d);};
     const float horizontalLength = glm::length(horizontalDisplacement);
     if (horizontalLength < 1.0e-6f) return false;
@@ -113,6 +114,9 @@ bool TryStepMove(const PhysicsWorld& physics, const glm::vec3& position,
     if (glm::dot(downHit.normal, localUp) <= minGroundDot) return false;
 
     outNewPosition = downProbeOrigin - localUp * std::max(0.0f, downHit.distance - skinMargin);
+    // The probe's skin lift is preparation; the accepted move starts at the
+    // actual capsule position and includes that lift on its upward leg.
+    if (acceptedPath) *acceptedPath = {position, raisedPosition, downProbeOrigin, outNewPosition};
     return true;
 }
 

@@ -5,6 +5,10 @@ MK2 is Judas's only rigid physics solver. The operator human-accepted
 Subsequent Experimental corrections require their own acceptance. There is no
 MK1 selector, fallback solver or requirement to reproduce MK1 trajectories.
 
+Physics V2 is the current Experimental implementation, awaiting its own final
+qualification and human review. [Current architecture, measurements and limits](PHYSICS_V2.md)
+supersede the historical scheduling/arrival policies below where identified.
+
 The [unaltered development record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/MK2_PHYSICS_DEVELOPMENT.md) preserves the
 experiments, rejected approaches, original failures, measurements and stage-time
 acceptance statements. Its old “not promoted”, alternate-solver flags and interim
@@ -22,7 +26,9 @@ See [collision architecture and measured performance](MK2_COLLISION_ARCHITECTURE
 The same implementation handles ordinary steps, coupled intervals and
 velocity-coupling participants; there is no old-solver path for coupled work.
 
-A normal rigid step has four chronological substeps. Contact blocks use two
+A normal rigid step owns four chronological intervals, each with freshly
+prepared contact geometry. The private solve advances one interval; it does
+not subdivide those four again. Contact blocks use two
 biased sweeps and one unbiased relaxation sweep; joint-connected blocks receive
 additional joint sweeps. Relaxation uses the configuration at which its impulses
 were applied, before geometry/inertia/Jacobians advance. Position recovery has a
@@ -87,8 +93,10 @@ chart; origin services preserve absolute double positions separately.
 
 ## Supported envelope and limits
 
-The fast-body pass sweeps ledger segments with the shared CCD search. It bounds
-re-timing at four distinct arrivals per body and 256 response iterations per step.
+The fast-body pass sweeps ledger segments with the shared CCD search. Successful
+responses continue without the former four-distinct-arrival body freeze. Search
+work is bounded at 256 response iterations per native interval. This is an
+interval guard, not a 256-event bound across all four intervals of a public Step.
 Same-instant iterations count against the global bound without exhausting distinct
 future-arrival slots. A certified static-planar sphere fallback can retain tangential
 travel, subject to ordinary CCD against other colliders. A body can be held at an
@@ -96,7 +104,8 @@ arrival when response is unavailable or a bound is exhausted: this prevents
 unbounded work/tunnelling, but can lose travelled distance in extreme cases.
 Sidedness, deep initial overlap and bounded temporal search are not a promise of
 exact unrestricted continuous dynamics. StepStats and the profiler now count actual path-hold operations, partitioned into
-per-body arrival limit, per-step arrival limit and unavailable response. They are
+interval event limit and unavailable response. The retained body-limit diagnostic
+is zero with the current algorithm. These counters are
 not unique-body counts; coupled intervals sum operations. `impactSafetyFallback`
 is the total, and `impactEventCapFallback` is the body/step-cap subset. These
 counters describe actual safety operations. They do not imply perfectly accurate
@@ -144,5 +153,6 @@ participant proposes material impulses and matching native reactions; the world
 validates and publishes the complete impulse sum, then continues its ordinary
 solve without warming those reactions twice. `WorldConstraintBatch.cpp` owns the
 bounded connectivity, snapshot and validation work; it does not own integration.
-The native contact/joint cadence is unchanged. Unsupported combinations fail
-explicitly. Advanced Fluids remains release-locked while its backend is developed.
+The physical interval count is unchanged; Physics V2 refreshes native geometry
+at those boundaries. Unsupported combinations fail explicitly. Advanced Fluids
+V2 retains its existing project opt-in policy across V2 build channels.

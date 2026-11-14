@@ -40,13 +40,38 @@ void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCouplin
         material.AdvancePhysicalInterval(interval.deltaTime,subdivisions,m_physics,GravityForEntity(id),record.targets,true);
     }
     const auto crossStart=measuredStart?PerformanceProfiler::Now():0;
-    for(auto a=m_deformables.begin();a!=m_deformables.end();++a)for(auto b=std::next(a);b!=m_deformables.end();++b){auto& x=a->second.simulation;auto& y=b->second.simulation;
-        if(!x.PhysicalStepActive()||!y.PhysicalStepActive()||!x.error.empty()||!y.error.empty()||(x.sleeping&&y.sleeping))continue;
+    struct Region {
+        DeformableRecord* record;
+        glm::dvec3 minimum{0},maximum{0};
+        bool prepared=false;
+    };
+    std::vector<Region> regions;
+    regions.reserve(m_deformables.size());
+    for(auto& [id,record]:m_deformables){auto& material=record.simulation;
+        if(material.PhysicalStepActive()&&material.error.empty())
+            regions.push_back({&record});
+    }
+    const auto prepareBounds=[](Region& region){
+        if(region.prepared)return;
+        region.minimum=region.record->simulation.Minimum();
+        region.maximum=region.record->simulation.Maximum();
+        region.prepared=true;
+    };
+    // Keep the established map/pair order. Sleeping pairs need no bounds at
+    // all; unchanged active patches need no repeated node scan. Invalidate
+    // both enclosures after projection so an earlier pair's correction cannot
+    // hide a later contact.
+    for(std::size_t a=0;a<regions.size();++a)for(std::size_t b=a+1;b<regions.size();++b){
+        auto& first=regions[a];auto& second=regions[b];
+        auto& x=first.record->simulation;auto& y=second.record->simulation;
+        if(x.sleeping&&y.sleeping)continue;
+        prepareBounds(first);prepareBounds(second);
         double thickness=x.settings.material.thickness+y.settings.material.thickness;
-        if(glm::any(glm::lessThan(x.Maximum()+glm::dvec3(thickness),y.Minimum()))||glm::any(glm::lessThan(y.Maximum()+glm::dvec3(thickness),x.Minimum())))continue;
+        if(glm::any(glm::lessThan(first.maximum+glm::dvec3(thickness),second.minimum))||glm::any(glm::lessThan(second.maximum+glm::dvec3(thickness),first.minimum)))continue;
         DeformableInstance::SurfaceContacts(x,y,interval.deltaTime);
         DeformableInstance::SurfaceContacts(y,x,interval.deltaTime);
-        ++a->second.revision;++b->second.revision;
+        first.prepared=second.prepared=false;
+        ++first.record->revision;++second.record->revision;
     }
     if(measuredStart){
         JUDAS_PROFILE_COUNTER("Deformable cross-material contacts CPU ms",double(PerformanceProfiler::Now()-crossStart)*1e-6,ProfileCounterMode::Sum);

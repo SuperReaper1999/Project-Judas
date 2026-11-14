@@ -34,6 +34,32 @@ bool Near(double a,double b,double tolerance) { return std::isfinite(a)&&std::ab
 bool Near(const glm::dvec3& a,const glm::dvec3& b,double tolerance) {
     return std::isfinite(a.x)&&std::isfinite(a.y)&&std::isfinite(a.z)&&glm::length(a-b)<=tolerance;
 }
+// A public Step now owns four chronological geometry preparations. Compare
+// independence against another public Step, rather than requiring its binary32
+// endpoint to equal one call to the old whole-dt position integrator. Keep a
+// separate analytic displacement bound so two matching paths cannot hide drift.
+void CheckUnrelatedFreeFlight(PhysicsWorld& world,BodyHandle body,const RigidBody& start,float dt) {
+    PhysicsWorld reference;reference.Init();
+    const auto alone=reference.CreateDynamicSphere(start.position,.5f,1,0,0);
+    reference.ResetBody(alone,start.position,start.orientation);
+    reference.SetLinearVelocity(alone,start.linearVelocity);
+    reference.SetAngularVelocity(alone,start.angularVelocity);
+    reference.Step(dt);
+    const auto actual=world.GetTransform(body).position;
+    Check(actual==reference.GetTransform(alone).position,
+        "unrelated impacts leave the ordinary free-flight endpoint exactly unchanged");
+    Check(world.GetLinearVelocity(body)==reference.GetLinearVelocity(alone) &&
+          world.GetAngularVelocity(body)==reference.GetAngularVelocity(alone),
+        "unrelated impacts leave ordinary free-flight momentum exactly unchanged");
+    const auto expected=glm::dvec3(start.position)+glm::dvec3(start.linearVelocity)*double(dt);
+    const double tolerance=4*std::numeric_limits<float>::epsilon()*std::max({1.,
+        std::abs(expected.x),std::abs(expected.y),std::abs(expected.z)});
+    const double error=glm::length(glm::dvec3(actual)-expected);
+    Check(Near(glm::dvec3(actual),expected,tolerance),
+        "unaffected translation retains independently bounded analytic displacement");
+    std::cout << "{\"kind\":\"unrelated_free_flight\",\"analytic_error\":" << error
+              << ",\"position_tolerance\":" << tolerance << "}\n";
+}
 struct Budget { double energy=0;glm::dvec3 momentum{0},angular{0}; };
 Budget Spheres(PhysicsWorld& w,const std::vector<BodyHandle>& bodies,const std::vector<double>& masses) {
     Budget result;
@@ -204,7 +230,7 @@ void FastThin() {
     w.CreateStaticBox({wallX,8192,-4096},{halfWidth,1,1},0,0);
     const auto body=w.CreateDynamicSphere({0,8192,-4096},radius,1,0,restitution);w.SetLinearVelocity(body,{speed,0,0});
     const auto unrelated=w.CreateDynamicSphere({100,100,100},.5f,1,0,0);w.SetLinearVelocity(unrelated,{1,2,3});w.SetAngularVelocity(unrelated,{0,0,1000});
-    RigidBody spinReference;spinReference.inverseMass=1;spinReference.position={100,100,100};spinReference.linearVelocity={1,2,3};spinReference.angularVelocity={0,0,1000};const RigidBody spinStart=spinReference;IntegrateRigidBodyPosition(spinReference,dt);
+    RigidBody spinReference;spinReference.inverseMass=1;spinReference.position={100,100,100};spinReference.linearVelocity={1,2,3};spinReference.angularVelocity={0,0,1000};const RigidBody spinStart=spinReference;
     const double contact=double(wallX)-double(halfWidth)-double(radius);
     const double expected=contact-double(restitution)*double(speed)*(double(dt)-contact/double(speed));
     // Eight binary32 relative roundoff units bound the represented endpoint
@@ -213,7 +239,7 @@ void FastThin() {
     Step(w,dt);const auto pose=w.GetTransform(body);const auto v=w.GetLinearVelocity(body);
     Check(Near(pose.position.x,expected,tolerance),"fast body detects a thin obstacle before crossing it");
     Check(Near(v,glm::dvec3(-500,0,0),1e-4),"fast isolated impact restitution");
-    Check(w.GetTransform(unrelated).position==spinReference.position,"fast unrelated impact preserves translation anchor");
+    CheckUnrelatedFreeFlight(w,unrelated,spinStart,dt);
     Check(SameFreeRotation(w.GetTransform(unrelated).rotation,spinStart,dt),"fast unrelated impact preserves exact angular endpoint");
     std::cout << "{\"kind\":\"fast_thin\",\"speed\":" << speed << ",\"expected_x\":" << expected << ",\"actual_x\":" << pose.position.x << ",\"position_tolerance\":" << tolerance << "}\n";
     EndCase("fast_thin",before,w);
@@ -361,8 +387,8 @@ void Ledger() {
         const int before=failures;PhysicsWorld w;w.Init();auto body=w.CreateDynamicSphere({100,100,100},.5f,1,0,0);
         w.SetLinearVelocity(body,{1,2,3});w.SetAngularVelocity(body,{0,0,omega});
         w.CreateStaticBox({0,-.5f,0},{10,.5f,10},0,1);auto impact=w.CreateDynamicSphere({0,.501f,0},.5f,1,0,1);w.SetLinearVelocity(impact,{0,-1,0});
-        RigidBody oracle;oracle.inverseMass=1;oracle.position={100,100,100};oracle.linearVelocity={1,2,3};oracle.angularVelocity={0,0,omega};const RigidBody start=oracle;IntegrateRigidBodyPosition(oracle,1.f/60);Step(w,1.f/60);
-        Check(w.GetTransform(body).position==oracle.position,"unaffected translation endpoint unchanged");Check(SameFreeRotation(w.GetTransform(body).rotation,start,1.f/60),"unaffected anchored rotation endpoint unchanged");EndCase("anchored_rotation",before,w);
+        RigidBody oracle;oracle.inverseMass=1;oracle.position={100,100,100};oracle.linearVelocity={1,2,3};oracle.angularVelocity={0,0,omega};const RigidBody start=oracle;Step(w,1.f/60);
+        CheckUnrelatedFreeFlight(w,body,start,1.f/60);Check(SameFreeRotation(w.GetTransform(body).rotation,start,1.f/60),"unaffected anchored rotation endpoint unchanged");EndCase("anchored_rotation",before,w);
     }
 }
 }

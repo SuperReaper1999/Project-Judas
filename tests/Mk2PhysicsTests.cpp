@@ -17,6 +17,9 @@
 
 #include "CollisionShapes.h"
 #include "PhysicsWorld.h"
+#include "Contacts.h"
+#include "PerformanceProfiler.h"
+#include "SaveArchive.h"
 
 namespace {
 int g_failures = 0;
@@ -173,8 +176,15 @@ void TestMomentum() {
         const auto l0 = linear(), h0 = angular();
         world.Step(kDt);
         const double dl = glm::length(linear() - l0), dh = glm::length(angular() - h0);
+        const auto angularChange=angular()-h0;
+        const auto boxPose=world.GetTransform(a),spherePose=world.GetTransform(c);
+        const auto endpointContact=SphereVsBox(spherePose.position,.2f,boxPose.position,
+                                              boxPose.rotation,{.2f,.5f,.9f});
         const bool touched = glm::length(world.GetLinearVelocity(c)) > 1.0f;
         std::printf("    linear error %.3g, angular error %.3g, struck sphere moving %d\n", dl, dh, int(touched));
+        std::printf("    angular delta (%.9g,%.9g,%.9g)\n", angularChange.x, angularChange.y, angularChange.z);
+        std::printf("    endpoint geometric penetration %.9g m\n",
+                    endpointContact.hit?std::max(0.f,endpointContact.penetration):0.f);
         Check(touched && dl < 1e-4 && dh < 1e-4, "fast spinning impact conserves momentum");
     }
 }
@@ -716,6 +726,226 @@ void TestRedirectedFutures() {
         }
 }
 
+void TestSweptSensors() {
+    std::printf("Swept sensors: completed paths and transient overlap lifecycle\n");
+    for (bool reverseOrder : {false, true}) {
+        for (float offset : {0.f, 5000.f}) {
+            PhysicsWorld world;
+            world.Init();
+            BodyHandle gate, ball;
+            const auto makeGate = [&] {
+                gate = world.CreateStaticBox({offset, 0, 0}, {.01f, 1, 1}, 0, 0);
+                world.SetBodySensor(gate, true);
+            };
+            const auto makeBall = [&] {
+                ball = world.CreateDynamicSphere({offset-.8f, 0, 0}, .05f, 1, 0, 0);
+                world.SetLinearVelocity(ball, {120, 0, 0});
+            };
+            if (reverseOrder) { makeBall(); makeGate(); }
+            else { makeGate(); makeBall(); }
+            world.Step(kDt);
+            const auto events = world.LastStepTouchEvents();
+            Check(events.size() == 2 && events[0].sensor && events[1].sensor &&
+                      events[0].phase == PhysicsWorld::TouchPhase::Enter &&
+                      events[1].phase == PhysicsWorld::TouchPhase::Exit,
+                  "fast thin-sensor crossing emits enter/exit in the same step");
+            Check(events.size() == 2 && std::abs(events[0].point.x-offset) < .02f &&
+                      !events[0].impulseAvailable && events[0].normalImpulse == 0,
+                  "sensor event has the verified crossing point and no physical impulse");
+            Check(std::abs(world.GetTransform(ball).position.x-(offset+1.2f)) < .001f &&
+                      world.GetLinearVelocity(ball).x == 120,
+                  "sensor detection does not truncate or accelerate the body");
+            world.Step(kDt);
+            Check(world.LastStepTouchEvents().empty(), "transient sensor overlap leaves no stale stay/exit");
+        }
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({0,0,0}, {.01f,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        world.CreateStaticBox({-.4f,0,0}, {.02f,1,1}, 0, 1);
+        const auto ball = world.CreateDynamicSphere({-.8f,0,0}, .05f,1,0,1);
+        world.SetLinearVelocity(ball, {120,0,0});
+        world.Step(kDt);
+        Check(std::none_of(world.LastStepTouchEvents().begin(),world.LastStepTouchEvents().end(),
+                           [](const auto& event) { return event.sensor; }),
+              "an impact that redirects a predicted crossing does not fire the sensor");
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({-.6f,0,0}, {.01f,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        world.CreateStaticBox({-.4f,0,0}, {.02f,1,1}, 0, 1);
+        const auto ball = world.CreateDynamicSphere({-.8f,0,0}, .05f,1,0,1);
+        world.SetLinearVelocity(ball, {120,0,0});
+        world.StepCoupled(kDt, 3, {}, {});
+        unsigned sensorEvents = 0;
+        for (const auto &event : world.LastStepTouchEvents()) sensorEvents += event.sensor;
+        Check(sensorEvents == 2 && world.GetTransform(ball).position.x < -.8f,
+              "sensor crossed before a rebound is detected even with endpoints on the same side");
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({-.8f,0,0}, {.01f,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        world.SetMotionType(gate, BodyMotionType::Kinematic);
+        world.SetKinematicVelocity(gate, {120,0,0}, {0,0,0});
+        world.CreateDynamicSphere({0,0,0}, .05f,1,0,0);
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().size()==2,
+              "a moving kinematic sensor detects a stationary body along its actual path");
+    }
+    for (bool filtered : {false,true}) {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({0,0,0}, {.01f,.1f,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        if (filtered) world.SetCollisionFilter(gate,0,0);
+        const auto ball = world.CreateDynamicSphere({-.8f,filtered?0.f:.2f,0}, .05f,1,0,0);
+        world.SetLinearVelocity(ball,{120,0,0});
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().empty(),
+              filtered ? "swept sensor detection respects bilateral collision filtering"
+                       : "a swept-bound near miss is not promoted into a sensor event");
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({0,0,0}, {.1f,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        const auto ball = world.CreateDynamicSphere({0,0,0}, .05f,1,0,0);
+        world.SetLinearVelocity(ball,{120,0,0});
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().size()==2,
+              "a newly published body that starts inside and exits gets enter/exit");
+        SaveArchive saved;
+        world.PersistTouches(saved,[](BodyHandle body){return uint64_t(body.id);},
+                             [](uint64_t){return BodyHandle{};});
+        SaveArchive restored(saved.bytes);
+        uint32_t savedPairs = 1;
+        restored(savedPairs);restored.Finish();
+        Check(savedPairs==0,"a transient crossing is not serialized as a persistent overlap");
+    }
+    for (bool delayed : {false,true}) {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({0,0,0}, {.01f,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        const auto ball = world.CreateDynamicSphere({-.8f,0,0}, .05f,1,0,0);
+        world.SetLinearVelocity(ball,{120,0,0});
+        if (delayed) world.CreateQueryCapsule(.1f,.2f,{{20,0,0},{1,0,0,0}});
+        auto& profiler=PerformanceProfiler::Get();
+        profiler.Enable(true);profiler.Clear();profiler.BeginFrame("swept sensor publication");
+        world.StepCoupled(kDt,3,{},{});
+        const auto queriesBefore=world.LastStepStats().impactQueries;
+        if (delayed) {
+            Check(world.LastStepTouchEvents().empty(),"query-only observers defer publication until its completed boundary");
+            world.FinishQueryTouches();
+        }
+        Check(world.LastStepTouchEvents().size()==2,"coupled steps publish one coalesced transient sensor crossing");
+        Check(queriesBefore==0 && world.LastStepStats().impactQueries==queriesBefore,
+              "sensor searches do not alter the rigid solver's completed CCD diagnostics");
+        if (delayed) {
+            world.FinishQueryTouches();
+            Check(world.LastStepTouchEvents().size()==2,"repeated query publication does not duplicate events");
+        }
+        profiler.EndFrame();
+        bool sensorQueries=false,sensorCrossings=false;
+        const auto history=profiler.History();
+        for (const auto& counter:history.back().counters) {
+            const auto name=std::string(counter.name.c_str());
+            sensorQueries|=name=="Physics swept sensor queries"&&counter.value>0;
+            sensorCrossings|=name=="Physics swept sensor crossings"&&counter.value==1;
+        }
+        Check(sensorQueries&&sensorCrossings,"sensor work has distinct query and crossing telemetry");
+        profiler.Enable(false);profiler.Clear();
+        world.Step(kDt);world.FinishQueryTouches();
+        Check(world.LastStepTouchEvents().empty(),"subsequent publication has no stale coupled crossing");
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate=world.CreateStaticBox({0,0,0},{.01f,1,1},0,0);
+        world.SetBodySensor(gate,true);
+        const auto body=world.CreateDynamicSphere({-.8f,0,0},.05f,1,0,0);
+        world.ResetBody(body,{.8f,0,0},{1,0,0,0});
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().empty(),"an authored teleport is not interpreted as a swept path");
+    }
+    {
+        PhysicsWorld world;
+        world.Init();
+        const auto gate = world.CreateStaticBox({0,0,0}, {1,1,1}, 0, 0);
+        world.SetBodySensor(gate, true);
+        const auto ball = world.CreateDynamicSphere({-.8f,0,0}, .05f,1,0,0);
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().size()==1 &&
+                  world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Enter,
+              "persistent sensor overlap enters once");
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().size()==1 &&
+                  world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Stay,
+              "persistent sensor overlap retains stay semantics");
+        world.SetLinearVelocity(ball,{120,0,0});
+        world.Step(kDt);
+        Check(world.LastStepTouchEvents().size()==1 &&
+                  world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Exit,
+              "leaving a persistent overlap emits only its exit");
+    }
+}
+
+void TestRotatingContactSupport() {
+    std::printf("Rotating support: a frictionless sphere's normal reaction exerts no torque\n");
+    PhysicsWorld world;
+    world.Init();
+    world.CreateStaticBox({0,-.5f,0},{10,.5f,10},0,0);
+    const auto sphere=world.CreateDynamicSphere({0,.5f,0},.5f,1,0,0);
+    const glm::vec3 initialSpin(0,0,50);
+    world.SetAngularVelocity(sphere,initialSpin);
+    const auto angularMomentum=[&] {
+        return glm::dmat3(world.GetInertiaWorld(sphere))*glm::dvec3(world.GetAngularVelocity(sphere));
+    };
+    const auto energy=[&] {
+        const glm::dvec3 v(world.GetLinearVelocity(sphere)),w(world.GetAngularVelocity(sphere));
+        return .5*glm::dot(v,v)+.5*glm::dot(w,angularMomentum())+
+               9.81*world.GetTransform(sphere).position.y;
+    };
+    const auto initialMomentum=angularMomentum();
+    const double initialEnergy=energy();
+    double peakEnergy=initialEnergy,maxSpinError=0,maxMomentumError=0;
+    float minimumHeight=.5f,maximumHeight=.5f;
+    for (unsigned step=0;step<120;++step) {
+        world.ApplyLinearAcceleration(sphere,{0,-9.81f,0},kDt);
+        world.Step(kDt);
+        const auto spin=world.GetAngularVelocity(sphere);
+        maxSpinError=std::max(maxSpinError,glm::length(glm::dvec3(spin-initialSpin))/50.);
+        maxMomentumError=std::max(maxMomentumError,
+            glm::length(angularMomentum()-initialMomentum)/glm::length(initialMomentum));
+        peakEnergy=std::max(peakEnergy,energy());
+        const auto height=world.GetTransform(sphere).position.y;
+        minimumHeight=std::min(minimumHeight,height);
+        maximumHeight=std::max(maximumHeight,height);
+    }
+    const auto spin=world.GetAngularVelocity(sphere);
+    const auto finalMomentum=angularMomentum();
+    std::printf("    spin (0,0,50) -> (%.9g,%.9g,%.9g), peak relative spin error %.9g\n",
+                spin.x,spin.y,spin.z,maxSpinError);
+    std::printf("    angular momentum (%.9g,%.9g,%.9g) -> (%.9g,%.9g,%.9g), peak relative error %.9g\n",
+                initialMomentum.x,initialMomentum.y,initialMomentum.z,
+                finalMomentum.x,finalMomentum.y,finalMomentum.z,maxMomentumError);
+    std::printf("    total energy %.12g -> %.12g (peak %.12g), height range %.9g..%.9g\n",
+                initialEnergy,energy(),peakEnergy,minimumHeight,maximumHeight);
+    Check(maxSpinError<=1e-3 && maxMomentumError<=1e-3,
+          "frictionless support preserves the sphere's spin axis and angular momentum");
+    Check(minimumHeight>=.495f && maximumHeight<=.505f,
+          "the spinning sphere remains supported at its geometric radius");
+    Check(peakEnergy<=initialEnergy*(1+1e-3),
+          "stationary frictionless support does not create mechanical energy");
+}
+
 int main() {
     TestInitializationLifecycle();
     TestColumns();
@@ -732,6 +962,8 @@ int main() {
     TestWakeIsolation();
     TestActualContactResponse();
     TestRedirectedFutures();
+    TestSweptSensors();
+    TestRotatingContactSupport();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }

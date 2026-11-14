@@ -1,10 +1,10 @@
 #pragma once
 
 namespace JudasPhysicsDetail {
-// Shared numerical policies, retained from the accepted MK2 solver. Search
-// scheduling changes do not increase arrival caps or relax approach coverage.
+// Shared physical resolution and bounded-search policies. A native interval
+// may resolve up to 256 arrivals; successful responses do not freeze a body
+// merely because it has reached a fourth distinct collision time.
 inline constexpr float kMk2ImpactApproach = 1e-4f;
-inline constexpr unsigned kMk2ArrivalsPerBody = 4;
 inline constexpr unsigned kMk2ArrivalsPerStep = 256;
 inline constexpr double kMk2FastFraction = 0.25;
 }

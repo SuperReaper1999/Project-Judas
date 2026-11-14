@@ -31,7 +31,7 @@ struct CharacterMotionResult {
 // compatibility caller; new motors use finite bounded impulse transfer.
 void ResolveCharacterSlide(PhysicsWorld&,glm::vec3& center,const glm::quat&,glm::vec3 displacement,
     glm::vec3& velocity,const CharacterMotorSettings&,const PhysicsQueryFilter*,bool movingGeometry,
-    bool legacyPush,bool& collided,BodyHandle observer={},glm::vec3* externalVelocity=nullptr);
+    bool legacyPush,bool& collided,BodyHandle observer={},glm::vec3* externalVelocity=nullptr,float motionDeltaTime=0);
 class CharacterMotor {
 public:
     void Persist(class SaveArchive&);

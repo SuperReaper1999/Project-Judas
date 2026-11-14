@@ -2,6 +2,7 @@
 #include "WorldMk2Policy.h"
 
 #include <queue>
+#include <cstdlib>
 #include <limits>
 #include <stdexcept>
 #include <tuple>
@@ -16,7 +17,6 @@ using namespace JudasPhysicsDetail;
 // Bias is relaxed at its own configuration, then retained only as geometric
 // projection. See docs/MK2_PHYSICS_ARCHITECTURE.md for the numerical contract.
 namespace {
-constexpr int kMk2Substeps = 4;
 ProfileLabel mk2RowPreparationLabel("Physics contact row preparation");
 constexpr int kMk2Iterations = 2;      // biased sweeps per substep
 // Sweeps for joints and the contact blocks touching jointed bodies: an
@@ -75,6 +75,11 @@ struct SolverBody {
 struct Row {
     unsigned a, b; // solver body indices
     glm::vec3 rA0, rB0; // step-start arms to the common contact point
+    // Sphere orientation changes its material points, not its geometric
+    // support direction for this row's fixed world normal. Compound sphere
+    // centers still follow the parent's rotation about its COM.
+    glm::vec3 sphereCenterA0{0}, sphereCenterB0{0};
+    bool sphericalA = false, sphericalB = false;
     glm::vec3 gap0{0};  // AnchorGap when the anchors last coincided (re-collision)
     glm::vec3 rA, rB;   // current substep arms, both to one current common point
     glm::vec3 n, t1, t2;
@@ -337,9 +342,24 @@ void ApplyAxis(SolverBody &a, SolverBody &b, const glm::vec3 &d, const glm::vec3
     }
 }
 
+// Transport geometric contact features, not an arbitrary surface material
+// point on a sphere. Friction still uses omega x r at the current common
+// contact point; this changes neither angular velocity nor the normal law.
+glm::vec3 TransportArm(const SolverBody &body, glm::vec3 reference,
+                       glm::vec3 sphereCenter, bool spherical) {
+    return spherical ? body.dq * sphereCenter + (reference - sphereCenter)
+                     : body.dq * reference;
+}
+glm::vec3 RebaseArm(const SolverBody &body, glm::vec3 current,
+                    glm::vec3 sphereCenter, bool spherical) {
+    return spherical ? current - body.dq * sphereCenter + sphereCenter
+                     : glm::transpose(body.dq) * current;
+}
+
 // World offset of A's contact anchor from B's, relative to the step start.
 glm::vec3 AnchorGap(const SolverBody &a, const SolverBody &b, const Row &row) {
-    return (a.dp + (a.dq * row.rA0 - row.rA0)) - (b.dp + (b.dq * row.rB0 - row.rB0));
+    return (a.dp + (TransportArm(a, row.rA0, row.sphereCenterA0, row.sphericalA) - row.rA0)) -
+           (b.dp + (TransportArm(b, row.rB0, row.sphereCenterB0, row.sphericalB) - row.rB0));
 }
 
 // Jacobians from the current arms and current world inertia. Both arms end at
@@ -514,19 +534,19 @@ PhysicsWorld::VelocityCoupling PhysicsWorld::VelocityCoupling::ForEachSubstep(
     unsigned iterationsPerSubstep, std::function<void(const Substep&)> callback,
     std::function<void(const Substep&)> completed) {
     if (!callback || iterationsPerSubstep == 0 ||
-        iterationsPerSubstep > unsigned(std::numeric_limits<int>::max()) / kMk2Substeps)
+        iterationsPerSubstep > unsigned(std::numeric_limits<int>::max()) / Impl::kPhysicalIntervals)
         throw std::invalid_argument("invalid per-substep velocity coupling");
 
     VelocityCoupling coupling;
-    coupling.iterations = iterationsPerSubstep * unsigned(kMk2Substeps);
+    coupling.iterations = iterationsPerSubstep * unsigned(Impl::kPhysicalIntervals);
     coupling.afterSubstep = std::move(completed);
     coupling.solve = [iterationsPerSubstep, callback = std::move(callback)](
                          float dt, unsigned round) {
         Substep context;
         context.stepDeltaTime = dt;
-        context.deltaTime = dt / float(kMk2Substeps);
+        context.deltaTime = dt / float(Impl::kPhysicalIntervals);
         context.index = round / iterationsPerSubstep;
-        context.count = unsigned(kMk2Substeps);
+        context.count = unsigned(Impl::kPhysicalIntervals);
         context.beginTime = float(context.index) * context.deltaTime;
         context.iteration = round % iterationsPerSubstep;
         context.iterations = iterationsPerSubstep;
@@ -546,8 +566,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     mk2ImpactObservations.clear();
     mk2ContinuousAwakened = false;
     int participantRound = 0;
-    const int substeps = kMk2Substeps;
-    const float h = dt / float(substeps);
+    // The macro owner refreshes geometry between these calls. This kernel
+    // advances exactly one interval; it must never subdivide those four again.
+    const int substeps = 1;
+    const float h = dt;
 
     // A contact or joint with an awake participant wakes the other dynamic
     // body, so no constraint ever acts on a frozen (unintegrated) body.
@@ -633,6 +655,20 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     rows.reserve(mk2Points.size());
     // Profiled under MK1's name: the same work (contact rows from manifolds).
     ProfileScope rowPreparation(mk2RowPreparationLabel);
+    const auto sphereCenter = [&](unsigned slot, int part, const SolverBody &state,
+                                   glm::vec3 &worldOffset) {
+        const auto &shape = bodies[slot].shape;
+        glm::vec3 localOffset;
+        if (shape.type == ShapeType::Sphere)
+            localOffset = -shape.pivotOffset;
+        else if (shape.type == ShapeType::CompoundBoxes &&
+                 shape.boxes[std::size_t(part)].type == ShapeType::Sphere)
+            localOffset = shape.boxes[std::size_t(part)].localCenter - shape.pivotOffset;
+        else
+            return false;
+        worldOffset = glm::vec3(ContactRotation(state.q0) * glm::dvec3(localOffset));
+        return true;
+    };
     for (const auto &p : mk2Points) {
         const unsigned ia = addBody(p.a), ib = addBody(p.b);
         const auto &A = state[ia];
@@ -640,6 +676,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         Row row;
         row.a = ia;
         row.b = ib;
+        // pendingCache and mk2Points are published together, one per row.
+        // Keep the primitive identity: a compound may mix boxes and spheres.
+        const auto &key = pendingCache[rows.size()].key;
+        row.sphericalA = sphereCenter(p.a, key.partA, A, row.sphereCenterA0);
+        row.sphericalB = sphereCenter(p.b, key.partB, B, row.sphereCenterB0);
         const auto &c = p.contact;
         // Lever arms from the manifold's precise parent-local anchors (as in
         // ContactSolver), so mirrored patch points get mirrored arms; a float
@@ -663,7 +704,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         PrepareRow(A, B, row);
         row.friction = p.friction;
         row.restitution = p.restitution;
-        row.normalImpulse = row.steadyNormal = p.warmNormal / float(substeps);
+        row.normalImpulse = p.warmNormal / float(substeps);
+        row.steadyNormal = p.warmSteadyNormal / float(substeps);
         row.tangent1 = glm::dot(p.warmTangent, row.t1) / float(substeps);
         row.tangent2 = glm::dot(p.warmTangent, row.t2) / float(substeps);
         rows.push_back(row);
@@ -679,6 +721,16 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     // Every awake body shares the chronological intervals. An unchanged
     // linear flight keeps one velocity-episode anchor across those intervals.
     for (auto &s : state) {
+        // Only the first actual row/active-joint preparation may split an
+        // already-applied macro kick. Unconstrained free flight retains its
+        // original public timing, including cancelling genuine impulses.
+        if (s.dynamic && contactPhaseContext && contactPhaseContext->index==0 &&
+            s.slot<contactPhaseContext->fullAccelerationKick.size() &&
+            contactPhaseContext->fullAccelerationKick[s.slot] &&
+            (s.constrained || coupling)) {
+            s.gravityStep/=float(contactPhaseContext->count);
+            contactPhaseContext->accelerationSplit[s.slot]=1;
+        }
         // The public acceleration/force kick is already applied before Step.
         // Only actual constraint/coupling solves distribute it over substeps.
         // Free flights still share the chronological CCD intervals, without
@@ -731,8 +783,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             const auto &A = state[row.a];
             const auto &B = state[row.b];
             const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
-            row.rA = A.dq * row.rA0 - 0.5f * d;
-            row.rB = B.dq * row.rB0 + 0.5f * d;
+            row.rA = TransportArm(A, row.rA0, row.sphereCenterA0, row.sphericalA) - 0.5f * d;
+            row.rB = TransportArm(B, row.rB0, row.sphereCenterB0, row.sphericalB) + 0.5f * d;
             PrepareRow(A, B, row);
         }
         for (auto &block : blocks)
@@ -756,8 +808,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 const auto &A = state[row.a];
                 const auto &B = state[row.b];
                 const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
-                row.rA = A.dq * row.rA0 - 0.5f * d;
-                row.rB = B.dq * row.rB0 + 0.5f * d;
+                row.rA = TransportArm(A, row.rA0, row.sphereCenterA0, row.sphericalA) - 0.5f * d;
+                row.rB = TransportArm(B, row.rB0, row.sphereCenterB0, row.sphericalB) + 0.5f * d;
                 PrepareRow(A, B, row);
                 changed = true;
             }
@@ -813,7 +865,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 const auto &A = state[row.a];
                 const auto &B = state[row.b];
                 const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
-                const glm::vec3 armA = A.dq * row.rA0 - 0.5f * d;
+                const glm::vec3 armA = TransportArm(A, row.rA0, row.sphereCenterA0, row.sphericalA) - 0.5f * d;
                 int best = -1;
                 float nearest = std::numeric_limits<float>::infinity();
                 std::array<glm::vec3, 4> relA{}, relB{};
@@ -843,8 +895,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 used[best] = true;
                 const auto &c = manifold.points[best];
                 const glm::vec3 tangent = row.t1 * row.tangent1 + row.t2 * row.tangent2;
-                row.rA0 = glm::transpose(A.dq) * relA[best];
-                row.rB0 = glm::transpose(B.dq) * relB[best];
+                row.rA0 = RebaseArm(A, relA[best], row.sphereCenterA0, row.sphericalA);
+                row.rB0 = RebaseArm(B, relB[best], row.sphereCenterB0, row.sphericalB);
                 row.n = c.normal;
                 ContactTangents(*A.rb,*B.rb,row);
                 const glm::vec3 planar = tangent - row.n * glm::dot(tangent, row.n);
@@ -875,8 +927,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     std::vector<glm::vec3> pseudoLinear(state.size()), pseudoAngular(state.size());
     std::vector<glm::vec3> contactProjectionLinear, contactProjectionAngular;
     std::vector<char> requiredContinuous(bodies.size());
-    std::vector<unsigned> continuousArrivals(bodies.size(), 0);
-    unsigned continuousEvents = 0;
+    // Event-search work remains bounded at 256 arrivals per native interval.
+    // Macro telemetry below is an aggregate, not a second scheduling guard.
+    std::vector<unsigned> continuousArrivals(bodies.size(),0);
+    unsigned continuousEvents=0;
     std::vector<RigidMotion> kinematicPaths(bodies.size());
     for (auto slot : aliveSlots) if (bodies[slot].isKinematic) kinematicPaths[slot] = bodies[slot].motion;
     std::vector<std::pair<glm::vec3, glm::vec3>> savedVelocity;
@@ -1135,8 +1189,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     RowTarget(state, row, 1.0f / h, false, false),
                     row.arriving || row.arrivesNext || row.deferredImpact, &row.normalImpulse, &row.tangent1, &row.tangent2});
             }
+            const PhysicsConstraintBatch::Context context{
+                contactPhaseContext->macroDeltaTime,h,
+                contactPhaseContext->index,contactPhaseContext->count};
             projected = ProjectConstraintBatch(*coupling->physicalBatch,
-                {dt, h, unsigned(step), unsigned(substeps)}, batchBodies, batchContacts);
+                context, batchBodies, batchContacts);
         }
         // Warm start with at most the steady support load. Re-applying an
         // impact substep's spike would have to be removed again by the next
@@ -1146,7 +1203,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         for (auto &block : blocks) {
             if (!projected.contacts.empty() && projected.contacts[block.first])
                 continue; // the complete block impulse is already in physical velocity
-            if (step > 0) {
+            if (contactPhaseContext->index>0) {
                 float current = 0, steady = 0;
                 for (std::size_t i = 0; i < block.count; ++i) {
                     current += rows[block.first + i].normalImpulse;
@@ -1555,6 +1612,27 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         InvalidateImpactPose(slot);
     }
 
+    // Count accepted distinct-time arrivals, independently of response/hold
+    // attempts. Fresh per-phase guards and shared macro guards must expose the
+    // same macro accounting for honest attribution of zero-hold results.
+    const std::vector<unsigned>* macroArrivals=&continuousArrivals;
+    unsigned macroEvents=continuousEvents;
+    if (contactPhaseContext) {
+        auto& totals=contactPhaseContext->macroArrivalTotals;
+        totals.resize(bodies.size(),0);
+        for (std::size_t slot=0;slot<continuousArrivals.size();++slot)
+            totals[slot]+=continuousArrivals[slot];
+        contactPhaseContext->macroEvents+=continuousEvents;
+        macroArrivals=&totals;
+        macroEvents=contactPhaseContext->macroEvents;
+    }
+    const unsigned peakArrivals=macroArrivals->empty() ? 0
+        : *std::max_element(macroArrivals->begin(),macroArrivals->end());
+    JUDAS_PROFILE_COUNTER("Physics CCD per-body macro accepted arrivals",double(peakArrivals),
+                          ProfileCounterMode::Maximum);
+    JUDAS_PROFILE_COUNTER("Physics CCD macro accepted events",double(macroEvents),
+                          ProfileCounterMode::Maximum);
+
     // Contact history: step-total physical impulses in the existing cache format.
     for (std::size_t i = 0; i < rows.size() && i < pendingCache.size(); ++i) {
         const auto &key = pendingCache[i].key;
@@ -1572,6 +1650,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         // Warm-start cache: the final substep's support load, per step. Touch
         // events above carry the step's total (impact-inclusive) impulse.
         pendingCache[i].normalImpulse = rows[i].cachedNormal * float(substeps);
+        pendingCache[i].macroSteadyNormal = rows[i].steadyNormal * float(substeps);
         pendingCache[i].tangentImpulse =
             (rows[i].t1 * rows[i].tangent1 + rows[i].t2 * rows[i].tangent2) * float(substeps);
     }

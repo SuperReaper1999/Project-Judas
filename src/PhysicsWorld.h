@@ -200,7 +200,9 @@ public:
     std::size_t LastStepContactCount() const { return LastStepContacts().size(); }
 
     // Pair events are snapshots from the authoritative Step, ordered by
-    // generation-checked body handles. One event per pair, not manifold point.
+    // generation-checked body handles, not manifold points. A sensor crossed
+    // entirely within a step emits Enter then Exit at the crossing location;
+    // it does not become a persistent overlap or apply a contact impulse.
     enum class TouchPhase { Enter, Stay, Exit };
     struct TouchEvent {
         BodyHandle a,b;
@@ -231,6 +233,13 @@ public:
     // normal post-physics contact publication. No query geometry is rerun.
     void BeginPreStepQueryContacts();
     void ObserveQueryContact(BodyHandle,const ShapeSweepHit&,const glm::vec3& velocity);
+    // Publish one accepted fixed-orientation controller translation. All hit
+    // STATIC sensors receive coalesced observations at FinishQueryTouches;
+    // the query body itself remains massless and receives no physical impulse.
+    // Rejected probes, depenetration and teleports must not call this method.
+    // This does not infer a shared clock for moving sensors or capsule rotation.
+    void ObserveQueryTranslation(BodyHandle,const BodyTransform& from,const glm::vec3& displacement,
+                                 const glm::vec3& velocity,const PhysicsQueryFilter* filter=nullptr);
     void FinishQueryTouches();
     void PersistTouches(class SaveArchive&,const std::function<uint64_t(BodyHandle)>&,const std::function<BodyHandle(uint64_t)>&,const std::function<bool(BodyHandle)>& include = {});
     void PersistBodyForces(class SaveArchive&,BodyHandle);
@@ -626,6 +635,9 @@ public:
                                     const PhysicsQueryFilter* filter = nullptr) const;
 
 private:
+    void StepInterval(float,const VelocityCoupling*);
+    void StepCoupledImpl(float,unsigned,const std::function<void(float,unsigned)>&,
+        const std::function<void(float,unsigned)>&,const VelocityCoupling*,bool nativePhases);
     PhysicsCastHit Cast(const Shape& shape,const BodyTransform& pose,const glm::vec3& direction,float maximum,
         const PhysicsQueryFilter& filter,PhysicsCastStats* stats) const;
     struct Impl;

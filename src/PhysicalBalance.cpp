@@ -147,7 +147,7 @@ bool PhysicalBalanceController::Request(PhysicsWorld& world,BalanceTask task,boo
     if(m_bodies.empty()||(task!=BalanceTask::Stand&&task!=BalanceTask::Recover)){error="balance task needs configured articulation and stand/recover intent";return false;}
     std::vector<glm::quat> initial(m_bodies.size(),glm::quat(1,0,0,0));
     for(size_t i=0;i<m_bodies.size();++i){if(!world.IsDynamicBody(m_bodies[i].body)||!world.IsBodyEnabled(m_bodies[i].body)){error="balance mapped body no longer available";return false;}if(i){JointState state;if(!world.GetJoint(m_bodies[i].joint,state)){error="balance mapped joint no longer available";return false;}initial[i]=glm::inverse(world.GetTransform(m_bodies[i].body).rotation)*world.GetTransform(m_bodies[m_bodies[i].parent].body).rotation;}}
-    m_waitingForSample=false;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;m_getUpReached=false;m_history={};m_history.task=task;m_history.progress=BalanceProgress::Executing;m_history.stepping=steps;m_history.effort=effort;m_history.initialTargets=std::move(initial);m_observation={};error.clear();return true;
+    m_waitingForSample=false;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;m_history={};m_history.task=task;m_history.progress=BalanceProgress::Executing;m_history.stepping=steps;m_history.effort=effort;m_history.initialTargets=std::move(initial);m_observation={};error.clear();return true;
 }
 void PhysicalBalanceController::Release(PhysicsWorld& world){JointAngularDrive disabled;for(size_t i=1;i<m_bodies.size();++i)world.SetJointAngularDrive(m_bodies[i].joint,disabled);}
 void PhysicalBalanceController::Cancel(PhysicsWorld& world){Release(world);m_getUp=false;m_history.progress=BalanceProgress::Cancelled;m_history.task=BalanceTask::None;m_history.swing=-1;m_history.reason="cancelled";m_observation={};}
@@ -384,5 +384,5 @@ void PhysicalBalanceController::PersistHistory(SaveArchive& a,const std::functio
     for(auto q:h.postStepTargets)a.Require(Quaternion(q),"invalid saved post-step reference rotation");
     a.Require(Quaternion(h.rootReference)&&Quaternion(h.supportReference),"invalid saved balance frame");
     a.Require(h.swing<0||(h.plannedSupport.IsValid()&&h.stanceSupport.IsValid()),"saved step lacks physical support references");
-    if(a.reading){m_observation={};m_waitingForSample=true;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;m_getUpReached=false;}
+    if(a.reading){m_observation={};m_waitingForSample=true;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;}
 }

@@ -2,10 +2,14 @@
 #include "PhysicsWorld.h"
 #include "SaveArchive.h"
 #include <stdexcept>
+#include <functional>
 #include <vector>
 
-// Same public-API 3D workload in the unmodified source and both experiments.
-inline uint64_t PlanarStage0Trajectory3D() {
+// The same public-API 3D workload for both current-physics isolation runs.
+// Optional unrelated work must not affect the sampled spatial bodies. Hashes
+// compare every step within this executable; no historical golden is retained.
+inline uint64_t PlanarStage0Trajectory3D(
+    const std::function<void(PhysicsWorld&,int)>& unrelated = {}) {
     PhysicsWorld world;
     world.Init();
     world.CreateStaticBox({0, -.5f, 0}, {8, .5f, 8}, .6f, .2f);
@@ -27,6 +31,7 @@ inline uint64_t PlanarStage0Trajectory3D() {
     for (int step = 0; step < 300; ++step) {
         for (auto h : bodies) world.ApplyLinearAcceleration(h, {0, -9.81f, 0}, dt);
         if (step == 130) world.ApplyImpulseAtPoint(bodies[1], {1, 3, 2}, world.GetTransform(bodies[1]).position + glm::vec3(.1f, .3f, .2f));
+        if (unrelated) unrelated(world,step);
         world.Step(dt);
         SaveArchive samples;
         for (auto h : bodies) {

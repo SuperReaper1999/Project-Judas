@@ -191,10 +191,32 @@ void FrictionCovariance(){
     Check(glm::length(aligned.first-rotated.first)<1e-4&&glm::length(aligned.second-rotated.second)<1e-4,"native sliding friction is covariant under arbitrary fixed-frame rotation");
 }
 
+// Compare the same spatial workload with and without active planar actors
+// in this world. Co-located XY geometry must not become an extruded obstacle,
+// disturb spatial solver ordering, or contaminate another domain's state.
+void SpatialIsolation(){
+    const auto isolated=PlanarStage0Trajectory3D();
+    BodyHandle floor,circle;bool planarContact=false;glm::vec3 planarPosition{0};
+    const auto mixed=PlanarStage0Trajectory3D([&](PhysicsWorld& world,int step){
+        if(step==0){
+            floor=Body(world,PlanarBox({6,.5}),{0,-.5f,0},false);
+            circle=Body(world,PlanarCircle(.25),{-1.5f,2,0},true,2);
+            world.SetLinearVelocity(circle,{1,0,0});
+            world.SetAngularVelocity(circle,{0,0,3});
+        }else{
+            for(const auto& event:world.LastStepTouchEvents())
+                planarContact|=(event.a.id==floor.id&&event.b.id==circle.id)||
+                               (event.a.id==circle.id&&event.b.id==floor.id);
+            planarPosition=world.GetTransform(circle).position;
+        }
+        world.ApplyLinearAcceleration(circle,{0,-9.81f,0},1.f/60);
+    });
+    Check(planarContact&&planarPosition.y>.247f&&planarPosition.y<.253f&&
+              planarPosition.z==0&&planarPosition.x>-1.4f,
+          "isolation control actually advances colliding planar geometry alongside 3D bodies");
+    Check(isolated==mixed,
+          "unrelated active planar work leaves every current-physics 3D trajectory sample unchanged");
 }
-// The pre-frontier control was f67106f8392d2826. MK2's pair-owned arrival
-// correction intentionally changes its first impact at step 31 (old: 22
-// arrivals/two holds; current: eight/one), initially by 2.8 micrometres.
-// Retain an exact current 3D control so planar work cannot silently change it;
-// the old trace and physical comparison are preserved with the MK2 report.
-int main(){try{Check(PlanarStage0Trajectory3D()==0xcba95a924ae713f1ULL,"current MK2 3D physical trajectory remains bit-identical to its control");Geometry();Dynamics();QueriesAndChains();MomentumAndFrames();SensorsAndKinematics();JointControls();SpinAndPersistence();FrictionCovariance();std::printf("SUMMARY %u checks 0 failures\n",checks);return 0;}catch(const std::exception& e){std::fprintf(stderr,"FAIL %s\n",e.what());return 1;}}
+
+}
+int main(){try{SpatialIsolation();Geometry();Dynamics();QueriesAndChains();MomentumAndFrames();SensorsAndKinematics();JointControls();SpinAndPersistence();FrictionCovariance();std::printf("SUMMARY %u checks 0 failures\n",checks);return 0;}catch(const std::exception& e){std::fprintf(stderr,"FAIL %s\n",e.what());return 1;}}

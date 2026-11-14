@@ -113,6 +113,9 @@ struct CachedContact {
     glm::vec3 tangentImpulse{0.0f};
     float separation = 0;
     uint64_t observationRevisionA = 0, observationRevisionB = 0;
+    // Derived warm-only support estimate for one enclosing contact macro.
+    // This is never a completed physical observation or persistence input.
+    float macroSteadyNormal = 0;
 };
 
 std::vector<BodyBox> BoxesAt(const Shape &shape, const glm::vec3 &position,
@@ -210,8 +213,27 @@ struct PhysicsWorld::Impl {
     std::vector<PhysicsWorld::DebugContact> lastStepContacts;
     using TouchKey = std::pair<unsigned, unsigned>;
     std::map<TouchKey, PhysicsWorld::TouchEvent> previousTouches, stepTouches, preStepQueryTouches;
+    // Accepted controller paths publish events only, never another pose owner.
+    // One pending static-sensor crossing per generation-checked pair.
+    std::map<TouchKey, PhysicsWorld::TouchEvent> querySensorCrossings;
     bool queryTouchesPending = false, collectingPreStepQueries = false, coupledStep = false,
          stepping = false;
+    // A public Step owns four freshly prepared physical intervals. The
+    // private kernel advances one interval; external StepCoupled retains its
+    // requested number of complete Steps and its own publication boundary.
+    static constexpr unsigned kPhysicalIntervals = 4;
+    struct ContactPhaseContext {
+        float macroDeltaTime = 0;
+        unsigned index = 0, count = 0;
+        // The first native row preparation decides which already-applied
+        // public kicks belong to constrained, phase-distributed integration.
+        std::vector<char> fullAccelerationKick, accelerationSplit;
+        // Diagnostics aggregate across the macro. The bounded CCD event
+        // guard belongs to each native physical interval, not this counter.
+        std::vector<unsigned> macroArrivalTotals;
+        unsigned macroEvents = 0;
+    };
+    ContactPhaseContext *contactPhaseContext = nullptr;
     std::vector<PhysicsWorld::TouchEvent> touchEvents;
     void Observe(unsigned a, unsigned b, const Contact &c, float impulse = 0, bool preStep = false);
     void FinishTouches();
@@ -238,6 +260,7 @@ struct PhysicsWorld::Impl {
     JointSolver jointSolver, mk2JointProjection;
     RigidBody worldAnchor;
     bool JointActive(const JointRecord &joint) const;
+    void ValidateCoupling(float,const PhysicsWorld::VelocityCoupling*) const;
     JudasPhysicsDetail::ConstraintPublication ProjectConstraintBatch(
         const PhysicsConstraintParticipant&, const PhysicsConstraintBatch::Context&,
         const std::vector<JudasPhysicsDetail::ConstraintBodyBinding>&,
@@ -267,6 +290,7 @@ struct PhysicsWorld::Impl {
         Contact contact;
         float friction, restitution, warmNormal;
         glm::vec3 warmTangent;
+        float warmSteadyNormal = 0;
     };
     // Substep length the joints' warm starts were last written in (MK2):
     // a coupled interval's substeps differ in length from an ordinary step's.
@@ -457,6 +481,7 @@ struct PhysicsWorld::Impl {
     // Milestone 32 warm-start state: last step's converged impulses, sorted
     // by key, and the keys/anchors of this step's constraints in solver order.
     std::vector<CachedContact> contactCache;
+    float contactWarmDt=0;
     // Completed solver observations are not warm-start storage.
     // Island velocity changes may invalidate warm starts without erasing
     // untouched load-bearing contacts from the completed physical step.

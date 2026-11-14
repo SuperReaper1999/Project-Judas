@@ -109,6 +109,28 @@ ContactManifold PrimitiveContacts(const Shape& a, const ContactPose& poseA,
                                   const ContactPreparedOrientation* preparedB = nullptr,
                                   bool facePreference = false);
 
+// Shape-specific support-plane query for conservative advancement. This does
+// not construct contact witnesses, classify contact existence, or resolve an
+// impact. Only boxes are currently supported. The margin must be finite and
+// nonnegative; invalid represented geometry reports uncertainty.
+//
+// supported && !uncertain && !withinMargin certifies that a SAT separating
+// axis exceeds margin. gap/normal are valid only when withinMargin is true;
+// they describe the selected SAT support plane (normal B toward A), not the
+// Euclidean closest distance. Only a positive gap is useful for advancement.
+// Callers retain ordinary contact queries for nonpositive/uncertain results.
+struct PrimitiveSeparation {
+    bool supported = false, withinMargin = false, uncertain = false;
+    double gap = 0;
+    glm::dvec3 normal{0};
+};
+PrimitiveSeparation PrimitiveBoxSeparation(
+    const Shape& a, const ContactPose& poseA, const Shape& b, const ContactPose& poseB,
+    float margin = 0.0f,
+    const ContactPreparedOrientation* preparedA = nullptr,
+    const ContactPreparedOrientation* preparedB = nullptr,
+    bool facePreference = false);
+
 // Accepted-contact existence with exactly PrimitiveContacts' boundary and
 // uncertainty policy. Zero-margin box/sphere pairs share the full validated
 // predicates and numeric-gap guards without constructing response witnesses;

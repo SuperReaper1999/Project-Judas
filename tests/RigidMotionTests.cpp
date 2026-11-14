@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <algorithm>
 #include "RigidMotion.h"
 #include "PhysicsWorld.h"
 #include <iostream>
@@ -141,8 +142,21 @@ int main() {
   w.SetAngularVelocity(b,{0,0,100});w.SetLinearVelocity(b,{1,2,3});
   if(elsewhere){w.CreateStaticBox({0,-.5,0},{10,.5,10},0,1);auto x=w.CreateDynamicSphere({0,.501,0},.5,1,0,1);w.SetLinearVelocity(x,{0,-1,0});}
   RigidBody oracle;oracle.inverseMass=1;oracle.position={100,100,100};oracle.linearVelocity={1,2,3};oracle.angularVelocity={0,0,100};
-  const RigidBody start=oracle;IntegrateRigidBodyPosition(oracle,1.f/60);w.Step(1.f/60);
-  check(w.GetTransform(b).position==oracle.position);
+  const RigidBody start=oracle;constexpr float dt=1.f/60;w.Step(dt);
+  // Whole-world Step prepares four chronological intervals. Unrelated impacts
+  // must leave its ordinary free flight exactly unchanged; one call to the
+  // primitive whole-dt position integrator is no longer that rounding oracle.
+  PhysicsWorld isolated;isolated.Init();const auto alone=isolated.CreateDynamicSphere(start.position,.5f,1,0,0);
+  isolated.SetLinearVelocity(alone,start.linearVelocity);isolated.SetAngularVelocity(alone,start.angularVelocity);isolated.Step(dt);
+  check(w.GetTransform(b).position==isolated.GetTransform(alone).position);
+  check(w.GetLinearVelocity(b)==start.linearVelocity &&
+        w.GetAngularVelocity(b)==isolated.GetAngularVelocity(alone));
+  const auto expected=glm::dvec3(start.position)+glm::dvec3(start.linearVelocity)*double(dt);
+  const double magnitude=std::max(1.,std::max(std::abs(expected.x),std::max(std::abs(expected.y),std::abs(expected.z))));
+  const double tolerance=4*std::numeric_limits<float>::epsilon()*magnitude;
+  const double error=glm::length(glm::dvec3(w.GetTransform(b).position)-expected);
+  check(std::isfinite(error) && error<=tolerance);
+  std::cout<<"PUBLIC_FREE elsewhere="<<elsewhere<<" displacement_error="<<error<<" tolerance="<<tolerance<<'\n';
   // The exact rotation of the same rate.
   check(std::abs(glm::dot(w.GetTransform(b).rotation,glm::normalize(glm::angleAxis(100.f/60,glm::vec3(0,0,1))*start.orientation)))>=1-1e-6f);
  }
@@ -211,4 +225,5 @@ int main() {
   check(glm::length(total()-before)<1e-5);
  }
  std::cout<<"Rigid motion checks "<<checks<<" PASS\n";
+ return 0;
 }

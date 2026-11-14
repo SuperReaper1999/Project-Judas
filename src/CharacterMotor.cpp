@@ -13,14 +13,20 @@ glm::quat Align(glm::vec3 a,glm::vec3 b){
 }
 void ResolveCharacterSlide(PhysicsWorld& physics,glm::vec3& center,const glm::quat& rotation,
     glm::vec3 remaining,glm::vec3& velocity,const CharacterMotorSettings& s,
-    const PhysicsQueryFilter* filter,bool movingGeometry,bool legacyPush,bool& collided,BodyHandle observer,glm::vec3* externalVelocity){
+    const PhysicsQueryFilter* filter,bool movingGeometry,bool legacyPush,bool& collided,BodyHandle observer,glm::vec3* externalVelocity,float motionDeltaTime){
     float bodyMotionTime=0;
     float pushBudget=s.maxPushImpulse;
     for(int i=0;i<4;++i){
         float length=glm::length(remaining);if(length<1e-6f)break;
+        const auto observedVelocity=motionDeltaTime>0&&bodyMotionTime<1
+            ? remaining/(motionDeltaTime*(1-bodyMotionTime)) : velocity;
         auto hit=legacyPush?physics.SweepPlayerShape(center,rotation,remaining,movingGeometry,bodyMotionTime,1):
             physics.SweepCapsuleMotion(s.radius,s.halfHeight,center,rotation,remaining,movingGeometry,bodyMotionTime,1,filter,s.collisionLayer,s.collisionMask);
-        if(!hit.hit){center+=remaining;break;}collided=true;
+        if(!hit.hit){
+            const auto start=center;center+=remaining;
+            if(observer.IsValid())physics.ObserveQueryTranslation(observer,{start,rotation},remaining,observedVelocity,filter);
+            break;
+        }collided=true;
         if(observer.IsValid())physics.ObserveQueryContact(observer,hit,velocity);
         if(physics.IsDynamicBody(hit.hitBody)){
             auto direction=-hit.normal;auto objectVelocity=physics.GetLinearVelocity(hit.hitBody);
@@ -33,7 +39,11 @@ void ResolveCharacterSlide(PhysicsWorld& physics,glm::vec3& center,const glm::qu
         }
         float fraction=0;
         if(hit.distance<s.skin)center+=hit.normal*(s.skin-hit.distance);
-        else {fraction=(hit.distance-s.skin)/length;center+=remaining*fraction;}
+        else {
+            fraction=(hit.distance-s.skin)/length;const auto start=center;
+            const auto accepted=remaining*fraction;center+=accepted;
+            if(observer.IsValid())physics.ObserveQueryTranslation(observer,{start,rotation},accepted,observedVelocity,filter);
+        }
         bodyMotionTime+=(1-bodyMotionTime)*fraction;
         auto leftover=remaining*(1-fraction);float inward=glm::dot(leftover,hit.normal);
         if(inward<0)leftover-=hit.normal*inward;
@@ -86,6 +96,7 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
     auto shape=Shape::Capsule(settings.radius,settings.halfHeight);
     if(!supported&&!departing&&(previous.supported||followingSupport)){glm::vec3 p,n;BodyHandle body;
         if(TryStepDown(physics,center,orientation,up,settings.stepHeight,slope,settings.skin,p,n,body,&shape,&filter,settings.collisionLayer,settings.collisionMask)){
+            if(observationBody.IsValid())physics.ObserveQueryTranslation(observationBody,{center,orientation},p-center,dt>0?(p-center)/dt:velocity,&filter);
             center=p;ground.hit=true;ground.hitBody=body;ground.normal=n;ground.distance=settings.skin;supported=true;result.stepped=true;}}
     glm::vec3 carryVelocity(0);
     if(supported){followingSupport=true;supportOrigin=center;center+=up*(settings.skin-ground.distance);
@@ -94,7 +105,7 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
             auto target=b.position+b.rotation*(glm::inverse(a.rotation)*(center-a.position));
             // Sweep carried motion too: support cannot carry the capsule through a wall.
             auto carryFilter=filter;carryFilter.ignoredBodies.push_back(ground.hitBody);bool blocked=false;auto cv=velocity;
-            ResolveCharacterSlide(physics,center,orientation,target-center,cv,settings,&carryFilter,false,false,blocked);result.collided|=blocked;
+            ResolveCharacterSlide(physics,center,orientation,target-center,cv,settings,&carryFilter,false,false,blocked,observationBody,nullptr,dt);result.collided|=blocked;
             carryVelocity=physics.GetPointVelocity(ground.hitBody,center);
         }
         velocity+=carryVelocity-previous.supportVelocity;
@@ -102,10 +113,16 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
     }
     velocity+=netAcceleration*dt;acceleration={0,0,0};
     auto remaining=(velocity-carryVelocity)*dt+authoredMotion;
-    if(supported&&!departing){glm::vec3 stepped;auto tangent=remaining-up*glm::dot(remaining,up);
-        if(TryStepMove(physics,center,orientation,up,tangent,settings.stepHeight,slope,settings.skin,stepped,&shape,&filter,settings.collisionLayer,settings.collisionMask)){center=stepped;remaining={0,0,0};result.stepped=true;}}
+    if(supported&&!departing){glm::vec3 stepped;std::array<glm::vec3,4> acceptedPath;auto tangent=remaining-up*glm::dot(remaining,up);
+        if(TryStepMove(physics,center,orientation,up,tangent,settings.stepHeight,slope,settings.skin,stepped,&shape,&filter,settings.collisionLayer,settings.collisionMask,&acceptedPath)){
+            if(observationBody.IsValid())for(std::size_t segment=1;segment<acceptedPath.size();++segment){
+                const auto translation=acceptedPath[segment]-acceptedPath[segment-1];
+                physics.ObserveQueryTranslation(observationBody,{acceptedPath[segment-1],orientation},translation,dt>0?translation/dt:velocity,&filter);
+            }
+            center=stepped;remaining={0,0,0};result.stepped=true;
+        }}
     auto resolvedVelocity=velocity+motionVelocity;
-    ResolveCharacterSlide(physics,center,orientation,remaining,resolvedVelocity,settings,&filter,!supported,false,result.collided,observationBody,&velocity);
+    ResolveCharacterSlide(physics,center,orientation,remaining,resolvedVelocity,settings,&filter,!supported,false,result.collided,observationBody,&velocity,dt);
     position=center-orientation*settings.offset;
     // End-of-step support reports the current pose, rather than yesterday's ground.
     auto final=sweep(center,-up*settings.supportDistance);

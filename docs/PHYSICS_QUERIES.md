@@ -1,4 +1,4 @@
-# M44 — runtime raycasts and shape casts
+# Physics queries and swept gameplay events
 
 ## Editable terrain products
 
@@ -83,8 +83,9 @@ casts use separating-plane advancement. Sphere/capsule-to-box distance uses
 an exact piecewise-quadratic segment/AABB closest pair; box-to-box reuses
 Judas's robust signed-separation/contact manifold. Compound children use
 parent-local geometry rather than a competing mesh representation. Render
-meshes without colliders are not physics targets. The custom player controller's
-separate capsule is not a registered rigid-body query target.
+meshes without colliders are not physics targets. CharacterMotor registers
+massless capsule geometry for queries and contact events; it never participates
+as a responding rigid body.
 
 ## Terrain and deliberate limits
 
@@ -102,9 +103,38 @@ These APIs do not cast rotational trajectories, predict target motion, query
 render-only geometry or redesign the player's bespoke sweep. They operate in
 the existing fixed-origin local simulation coordinates, not absolute doubles.
 
-## Demo
+## Accepted controller paths and sensors
 
-`projects/query_demo/query_demo.judasproj`: red ordinary box, green moving
+`PhysicsWorld::ObserveQueryTranslation(observer, from, displacement, velocity, filter)`
+publishes an accepted, fixed-orientation translation of a massless query observer.
+It casts the actual observer shape against every eligible static sensor, respects
+bilateral collision masks and query filters, and applies no physical impulse.
+`from` is the query shape's pose; `velocity` is its world-space motion snapshot.
+
+CharacterMotor publishes accepted slide, support-carry and step-down travel, and
+successful step-up/forward/down legs. Rejected probes, depenetration and teleports
+do not count as swept travel. Custom controllers should publish each accepted
+leg rather than a straight chord joining their first and last positions.
+
+Crossings coalesce per generation-checked pair. A crossing ending outside emits
+Enter then Exit at ordinary publication; endpoint overlap owns persistent
+Enter/Stay/Exit. Verified points and velocities survive the motor's final pose
+reset. Origin shifts translate pending points. Publication rechecks owner
+lifetime, enabled state and bilateral collision policy; query-specific filters
+are evaluated when the accepted path is cast. Moving a still-enabled
+static sensor after a real crossing retains the historical contact snapshot;
+moving it before the cast uses its new geometry. Transient crossings are not
+durable state or replayed after cold restoration.
+
+This query-controller API does not infer continuous relative timing against a
+moving/rotating sensor or a rotating query capsule. Endpoint overlap still works.
+Native dynamic/kinematic rigid-body sensors separately sweep their completed,
+piecewise motion ledgers, including changes of direction after solid impacts.
+See [Physics V2](PHYSICS_V2.md) for qualification and remaining limits.
+
+## Historical M44 demo (retired)
+
+The retired `projects/query_demo/query_demo.judasproj` demonstrated a red ordinary box, green moving
 runtime-prefab sphere, yellow explicitly ignored box, blue excluded layer/tag.
 Aim with mouse; **G** toggles ray / radius-0.4 sphere; **P** spawns another prefab.
 New P-spawned targets appear three metres along the view; the HUD shows the
@@ -122,7 +152,8 @@ are not human visual acceptance.
 
 ## Validation
 
-`python3 scripts/m44_validation.py` performs one clean Release build, existing
-production/async suite, focused geometry + real Application/JS checks, editor
-Play/Stop, standalone and moved-package smoke. Persistent results and source
-fingerprints: `docs/evidence/m44/`. It refuses to overwrite existing evidence.
+Current focused targets are `judas_physics_cast_tests`,
+`judas_character_motor_tests`, `judas_ccd_scheduling_tests` and
+`judas_ccd_anchor_reuse_tests`. The registered scheduling, character and anchor
+tests run with routine CI. Historical M44 runners/evidence belong to their
+matching Git revision; they are not current launch instructions.

@@ -669,6 +669,57 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
     return result;
 }
 
+PrimitiveSeparation PrimitiveBoxSeparation(
+    const Shape& a, const ContactPose& pa, const Shape& b, const ContactPose& pb, float margin,
+    const ContactPreparedOrientation* preparedA, const ContactPreparedOrientation* preparedB,
+    bool facePreference) {
+    PrimitiveSeparation result;
+    if (a.type != ShapeType::Box || b.type != ShapeType::Box)
+        return result;
+    result.supported = true;
+    const auto validHalf = [](const glm::vec3& half) {
+        for (int k = 0; k < 3; ++k)
+            if (!(std::isfinite(half[k]) && half[k] > 0)) return false;
+        return true;
+    };
+    if (!Valid(pa) || !Valid(pb) || !validHalf(a.halfExtents) || !validHalf(b.halfExtents) ||
+        !std::isfinite(margin) || margin < 0) {
+        ++diagnostics.invalidInputs;
+        ++diagnostics.unresolved;
+        result.uncertain = true;
+        return result;
+    }
+    try {
+        std::optional<ContactPreparedOrientation> localA, localB;
+        const auto resolve = [&](const glm::quat& q, const ContactPreparedOrientation* prepared,
+                                 std::optional<ContactPreparedOrientation>& local)
+                                 -> const ContactPreparedOrientation& {
+            if (prepared && prepared->Matches(q)) return *prepared;
+            if (prepared) ++diagnostics.preparedOrientationMisses;
+            local.emplace(q);
+            return *local;
+        };
+        const auto& orientationA = resolve(pa.orientation, preparedA, localA);
+        const auto& orientationB = resolve(pb.orientation, preparedB, localB);
+        Context context(pa, pb, orientationA, orientationB);
+        const auto plane = BoxSat(context, a.halfExtents, b.halfExtents, margin, facePreference);
+        result.withinMargin = plane.hit;
+        if (plane.hit) {
+            if (!std::isfinite(plane.gap) || !std::isfinite(plane.normal.x) ||
+                !std::isfinite(plane.normal.y) || !std::isfinite(plane.normal.z) ||
+                !(glm::dot(plane.normal, plane.normal) > 0))
+                throw ArithmeticFailure();
+            result.gap = plane.gap;
+            result.normal = plane.normal;
+        }
+    } catch (const ArithmeticFailure&) {
+        ++diagnostics.unresolved;
+        result.withinMargin = false;
+        result.uncertain = true;
+    }
+    return result;
+}
+
 bool PrimitiveHasContacts(const Shape& a,const ContactPose& pa,const Shape& b,const ContactPose& pb,float margin,
                           const ContactPreparedOrientation* preparedA,
                           const ContactPreparedOrientation* preparedB){

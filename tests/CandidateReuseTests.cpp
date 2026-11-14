@@ -167,24 +167,75 @@ void WakeWithoutProxyChange() {
 }
 
 void ForceInvalidatesCandidates() {
-    PhysicsWorld physics;
-    physics.Init();
-    physics.SetSleepingEnabled(false);
-    const auto mover = physics.CreateDynamicSphere({0, 0, 0}, .2f, 1, 0, 0);
-    const auto wall = physics.CreateStaticBox({1.5f, 0, 0}, {.1f, 2, 2}, 0, 0);
-    Check(!Contains(Oracle(physics), mover, wall),
-          "force fixture initially excludes the remote wall candidate");
-    physics.ApplyForce(mover, {7200, 0, 0});
-    physics.Step(kDeltaTime);
-    Check(physics.LastStepStats().proxyReinsertions > 0,
-          "integrated force genuinely changes the proxy reach");
-    Check(Contains(physics.m_impl->candidatePairs, mover, wall),
-          "changed-tree fallback discovers newly reachable wall candidate");
-    Check(physics.LastStepStats().impactEvents > 0,
-          "force fixture causes an actual physical collision episode");
-    Check(physics.GetTransform(mover).position.x < 1.3f &&
-              std::abs(physics.GetLinearVelocity(mover).x) < 1.f,
-          "actual CCD prevents the forced body crossing the wall");
+    for(float force:{7200.f,14400.f}) {
+        PhysicsWorld physics;
+        physics.Init();
+        physics.SetSleepingEnabled(false);
+        const auto mover = physics.CreateDynamicSphere({0, 0, 0}, .2f, 1, 0, 0);
+        const auto wall = physics.CreateStaticBox({1.5f, 0, 0}, {.1f, 2, 2}, 0, 0);
+        Check(!Contains(Oracle(physics), mover, wall),
+              "force fixture initially excludes the remote wall candidate");
+        // Force is retained over four native intervals, not converted into one
+        // whole-dt pre-step kick. Independently check its actual free flight.
+        PhysicsWorld free;free.Init();free.SetSleepingEnabled(false);
+        const auto unblocked=free.CreateDynamicSphere({0,0,0},.2f,1,0,0);
+        free.ApplyForce(unblocked,{force,0,0});free.Step(kDeltaTime);
+        constexpr unsigned phases=4;
+        const double h=double(kDeltaTime)/phases;
+        const double freeX=double(force)*h*h*double(phases*(phases+1))/2;
+        const double freeV=double(force)*double(kDeltaTime);
+        Check(std::abs(double(free.GetTransform(unblocked).position.x)-freeX)<2e-6 &&
+                  std::abs(double(free.GetLinearVelocity(unblocked).x)-freeV)<2e-5,
+              "retained force matches the independent quarter-interval displacement and total impulse");
+        physics.ApplyForce(mover, {force, 0, 0});
+        physics.Step(kDeltaTime);
+        Check(physics.LastStepStats().proxyReinsertions > 0,
+              "integrated force genuinely changes the proxy reach");
+        Check(Contains(physics.m_impl->candidatePairs, mover, wall),
+              "changed-tree fallback discovers newly reachable wall candidate");
+        constexpr double tolerance=2e-6;
+        const double limit=double(1.5f)-double(.1f)-double(.2f);
+        Check(freeX>limit+tolerance,"independent free flight really crosses the wall limit");
+        for(const auto& segment:physics.GetBodyMotionSegments(mover))
+            Check(segment.start.position.x<=limit+tolerance && segment.endPose.position.x<=limit+tolerance,
+                  "every actual force-driven flight remains on the incident side of the wall");
+        std::vector<PhysicsWorld::BodyContactSample> contacts;
+        const bool sampled=physics.ReadBodyContactSample(mover,contacts);
+        double normalImpulse=0;
+        for(const auto& contact:contacts)normalImpulse+=contact.normalImpulse;
+        const auto position=physics.GetTransform(mover).position;
+        const auto velocity=physics.GetLinearVelocity(mover);
+        Check(sampled && normalImpulse>0 &&
+                  std::abs(normalImpulse-(freeV-double(velocity.x)))<2e-4,
+              "the new force-expanded contact publishes its real momentum-changing normal reaction");
+        Check(std::abs(double(position.x)-limit)<tolerance &&
+                  physics.LastStepStats().impactSafetyFallback==0 && physics.m_impl->tree.Validate(),
+              "force-driven contact reaches the wall without penetration, safety holds or invalid tree state");
+        std::cout << "{\"kind\":\"force_candidate\",\"force\":" << force
+                  << ",\"free_x\":" << free.GetTransform(unblocked).position.x
+                  << ",\"wall_x\":" << position.x << ",\"velocity_x\":" << velocity.x
+                  << ",\"normal_impulse\":" << normalImpulse
+                  << ",\"impact_events\":" << physics.LastStepStats().impactEvents << "}\n";
+        if(force==14400.f) {
+            // This stronger input reaches the wall before the final native
+            // boundary, so it retains the original in-step collision assertions.
+            Check(physics.LastStepStats().impactEvents > 0,
+                  "force fixture causes an actual physical collision episode");
+            Check(physics.GetTransform(mover).position.x < 1.3f &&
+                      std::abs(physics.GetLinearVelocity(mover).x) < 1.f,
+                  "actual CCD prevents the forced body crossing the wall");
+        } else {
+            // The original 7200 force reaches a non-bouncing speculative
+            // contact at the final native boundary. A CCD-event count is not
+            // its contract: require actual reaction/containment above, then
+            // verify complete stopping at the following force-free boundary.
+            physics.Step(kDeltaTime);
+            Check(std::abs(double(physics.GetTransform(mover).position.x)-limit)<tolerance &&
+                      std::abs(physics.GetLinearVelocity(mover).x)<1e-5f &&
+                      physics.LastStepStats().impactSafetyFallback==0,
+                  "the original near-boundary force contact stops without penetration or lost continuation");
+        }
+    }
 }
 
 void BetweenStepIdentityAndPolicy() {

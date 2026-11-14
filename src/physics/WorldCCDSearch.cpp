@@ -762,22 +762,46 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
                 break;
             }
         } else {
-            const auto manifold = PairAt(a, b, pa, pb, time, reach);
-            if (!manifold.count)
-                return finish + 1;
-            const Contact *nearest = &manifold.points[0];
-            for (int k = 1; k < manifold.count; ++k)
-                if (manifold.points[k].signedSeparation < nearest->signedSeparation)
-                    nearest = &manifold.points[k];
-            const double gap = nearest->hasLocalAnchors ? nearest->signedSeparation
-                                                        : -double(nearest->penetration);
+            double gap = 0;
+            glm::dvec3 normal(0);
+            bool separated = false;
+            if (firstType == ShapeType::Box && secondType == ShapeType::Box) {
+                PhysicsWorkTimer geometryTimer(work.geometry, work.active);
+                const auto &aa = ImpactPoseAt(a, time), &bb = ImpactPoseAt(b, time);
+                const auto first = PrimitiveAt(ba.shape, aa.pose, pa, &*aa.orientation);
+                const auto second = PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
+                if (first.childRotation == glm::quat(1,0,0,0) &&
+                    second.childRotation == glm::quat(1,0,0,0)) {
+                    const auto plane = PrimitiveBoxSeparation(
+                        first.shape, {first.parentPosition, first.parentOrientation, first.parentLocalCenter},
+                        second.shape, {second.parentPosition, second.parentOrientation, second.parentLocalCenter},
+                        reach, &*aa.orientation, &*bb.orientation, true);
+                    if (plane.supported && !plane.uncertain) {
+                        if (!plane.withinMargin) return finish + 1;
+                        if (plane.gap > 0) {
+                            gap = plane.gap;
+                            normal = plane.normal;
+                            separated = true;
+                        }
+                    }
+                }
+            }
+            if (!separated) {
+                const auto manifold = PairAt(a, b, pa, pb, time, reach);
+                if (!manifold.count)
+                    return finish + 1;
+                const Contact *nearest = &manifold.points[0];
+                for (int k = 1; k < manifold.count; ++k)
+                    if (manifold.points[k].signedSeparation < nearest->signedSeparation)
+                        nearest = &manifold.points[k];
+                gap = nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
+                normal = nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
+            }
             if (gap <= 0) {
                 ++stats.impactUncertifiedAdvances;
                 uncertifiedAdvance = true;
                 break;
             }
-            const auto normal =
-                nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
             const double closing = -glm::dot(relative, normal) + angular;
             if (!(closing > 0))
                 return finish + 1;

@@ -1,5 +1,7 @@
 #include "PhysicsWorld.h"
 
+#include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstdio>
 #include <limits>
@@ -130,6 +132,98 @@ void CoupledIntervals() {
           "coupled adapter preserves endpoint and macro presentation history");
 }
 
+
+void RawPhaseTiming(unsigned iterations,unsigned externalIntervals) {
+    PhysicsWorld world;
+    world.Init();
+    const auto body=world.CreateDynamicBox({0,0,0},{.1f,.1f,.1f},2,0,0);
+    world.SetLinearVelocity(body,{2,0,0});
+    constexpr float dt=1.f/60;
+    const float localDt=dt/float(externalIntervals),h=localDt/4;
+    unsigned external=0,phase=0,begins=0,finishes=0,totalCalls=0,callsInStep=0;
+    unsigned beforeCalls=0,afterCalls=0;
+    std::array<unsigned,4> phaseCalls{};
+    const unsigned quotient=iterations/4,remainder=iterations%4;
+    PhysicsWorld::VelocityCoupling participant;
+    participant.iterations=iterations;
+    participant.begin=[&](float interval) {
+        Check(interval==localDt&&phase==0&&callsInStep==0,
+              "raw begin observes the current outer Step interval once before its solves");
+        ++begins;
+    };
+    participant.solve=[&](float interval,unsigned round) {
+        Check(phase<4&&interval==localDt&&round==callsInStep,
+              "raw callback retains its Step duration and contiguous global round number");
+        const unsigned prefix=phase*quotient+std::min(phase,remainder);
+        Check(round==prefix+phaseCalls[phase],
+              "raw callback remainder rounds retain their chronological phase");
+        Check(std::abs(world.GetTransform(body).position.x-
+                       2*(float(external)*localDt+float(phase)*h))<1e-6f,
+              "raw callback executes at its actual physical phase pose");
+        ++phaseCalls[phase];++callsInStep;++totalCalls;
+    };
+    participant.afterSubstep=[&](const auto& context) {
+        Check(phase<4&&context.stepDeltaTime==localDt&&context.deltaTime==h&&
+                  context.index==phase&&context.count==4&&context.beginTime==float(phase)*h,
+              "raw completion has four correctly timed physical phase contexts");
+        const unsigned share=quotient+(phase<remainder?1u:0u);
+        Check(context.iteration==share&&context.iterations==share&&phaseCalls[phase]==share,
+              "raw iteration remainder is front-loaded without manufacturing zero-share solves");
+        Check(std::abs(world.GetTransform(body).position.x-
+                       2*(float(external)*localDt+float(phase+1)*h))<1e-6f,
+              "raw completion observes the advanced pose before the next phase");
+        ++phase;
+    };
+    participant.finish=[&](float interval) {
+        Check(interval==localDt&&phase==4&&callsInStep==iterations,
+              "raw finish occurs once after every requested solve and physical phase");
+        ++finishes;
+    };
+    if(externalIntervals==1)world.Step(dt,&participant);
+    else world.StepCoupled(dt,externalIntervals,[&](float interval,unsigned index) {
+        Check(interval==localDt&&index==beforeCalls,
+              "external interval preparation retains its own clock and ordering");
+        external=index;phase=0;callsInStep=0;phaseCalls.fill(0);++beforeCalls;
+    },[&](float interval,unsigned index) {
+        Check(interval==localDt&&index==afterCalls&&phase==4&&callsInStep==iterations,
+              "external completion follows its four physical phases");
+        ++afterCalls;
+    },&participant);
+    Check(begins==externalIntervals&&finishes==externalIntervals&&
+              totalCalls==externalIntervals*iterations,
+          "raw callbacks run exactly once per requested round and begin/finish once per Step");
+    Check(externalIntervals==1||(beforeCalls==externalIntervals&&afterCalls==externalIntervals),
+          "external interval callbacks are not multiplied by physical contact phases");
+    Check(std::abs(world.GetTransform(body).position.x-2*dt)<1e-6f&&
+              world.GetPreviousTransform(body).position==glm::vec3(0),
+          "raw/external phases preserve total elapsed motion and the macro presentation origin");
+}
+
+void ForceAndImpulseOwnership(unsigned externalIntervals) {
+    PhysicsWorld world;
+    world.Init();
+    constexpr float dt=1.f/60;
+    const auto body=world.CreateDynamicSphere({0,0,0},.5f,2,0,0);
+    world.ApplyLinearImpulse(body,{2,0,0});
+    world.ApplyAngularImpulse(body,{0,0,.2f});
+    world.ApplyLinearAcceleration(body,{3,0,0},dt);
+    world.ApplyForce(body,{4,0,0});
+    world.ApplyTorque(body,{0,0,2});
+    if(externalIntervals==1)world.Step(dt);
+    else world.StepCoupled(dt,externalIntervals,{},{});
+    const auto velocity=world.GetLinearVelocity(body),spin=world.GetAngularVelocity(body);
+    Check(std::abs(velocity.x-(1+5*dt))<2e-6f&&
+              glm::length(glm::vec2(velocity.y,velocity.z))<1e-6f,
+          "force and sampled acceleration integrate once while the initial impulse is never divided or replayed");
+    Check(glm::length(spin-glm::vec3(0,0,1+10*dt))<5e-6f,
+          "torque and initial angular impulse retain their independent physical ownership");
+    if(externalIntervals==1)world.Step(dt);
+    else world.StepCoupled(dt,externalIntervals,{},{});
+    Check(glm::length(world.GetLinearVelocity(body)-velocity)<2e-6f&&
+              glm::length(world.GetAngularVelocity(body)-spin)<5e-6f,
+          "absent force/torque and stale last-acceleration state add no momentum on the next Step");
+}
+
 void EmptyWorld() {
     PhysicsWorld world;
     world.Init();
@@ -153,6 +247,9 @@ int main() {
             for (float dt : {1.f / 60, .01f}) Timing(iterations, dt);
         for (float angle : {0.f, .37f, 1.31f}) NormalSupport(angle);
         CoupledIntervals();
+        for(unsigned iterations:{1u,5u,10u})
+            for(unsigned externalIntervals:{1u,3u})RawPhaseTiming(iterations,externalIntervals);
+        for(unsigned externalIntervals:{1u,3u})ForceAndImpulseOwnership(externalIntervals);
         EmptyWorld();
         for (unsigned count : {0u, std::numeric_limits<unsigned>::max()}) {
             bool rejected = false;

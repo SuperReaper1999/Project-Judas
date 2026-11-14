@@ -973,6 +973,7 @@ judas_add_engine_test(judas_overlap_pair_index_tests tests/OverlapPairIndexTests
 
 
 judas_add_engine_test(judas_ccd_anchor_reuse_tests tests/CCDAnchorReuseTests.cpp)
+judas_add_engine_test(judas_ccd_scheduling_tests tests/CCDSchedulingTests.cpp)
 judas_add_engine_test(judas_native_mesh_growth_tests tests/NativeMeshGrowthTests.cpp)
 judas_add_engine_test(judas_clip_polygon_tests tests/ClipPolygonTests.cpp)
 # Continuous-impact cost of a jointed ragdoll resting in static triangle meshes (timings reported, not asserted).
@@ -1431,6 +1432,10 @@ add_executable(judas_primitive_contact_boolean_tests tests/PrimitiveContactBoole
 target_include_directories(judas_primitive_contact_boolean_tests PRIVATE src)
 target_link_libraries(judas_primitive_contact_boolean_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_primitive_contact_boolean_tests)
+add_executable(judas_contact_separation_tests tests/ContactSeparationTests.cpp src/Contacts.cpp src/PlanarGeometry.cpp)
+target_include_directories(judas_contact_separation_tests PRIVATE src)
+target_link_libraries(judas_contact_separation_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_contact_separation_tests)
 add_executable(judas_rigid_motion_bounds_tests tests/RigidMotionBoundsTests.cpp)
 target_link_libraries(judas_rigid_motion_bounds_tests PRIVATE judas_engine)
 judas_add_engine_test(judas_rigid_motion_geometry_tests tests/RigidMotionGeometryTests.cpp)

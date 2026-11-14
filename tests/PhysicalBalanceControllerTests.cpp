@@ -36,11 +36,36 @@ struct Fixture {
 void Recovery(float fallen,glm::quat frame,int variant=0){Fixture f(fallen,frame,true,false,variant);f.Advance(120,false);Check(f.controller.Request(f.world,BalanceTask::Recover,false,true,f.error),"recovery request accepted");f.Advance(1080);if(variant==2){auto p=f.world.GetTransform(f.mapping[0].body);auto& o=f.controller.Observation();std::printf("Second rig recovery: root %.4f up %.4f speed %.4f contacts %u/%u, reason %s\n",p.position.y,(p.rotation*glm::vec3(0,1,0)).y,o.speed,o.supports[0].contacts,o.supports[1].contacts,f.controller.History().reason.c_str());}Check(f.Standing(),"actual dynamic root and mass reach physical standing");Check(f.controller.History().progress==BalanceProgress::Succeeded,"success requires sustained measured physical standing");Check(f.world.IsDynamicBody(f.mapping[0].body),"physical root remains dynamic");auto& observation=f.controller.Observation();Check(observation.supports[0].contacts&&observation.supports[1].contacts,"both declared effectors have actual solver support");}
 void CorrectiveStep(){
  Fixture denied(0,glm::quat(1,0,0,0),true,false,true),allowed(0,glm::quat(1,0,0,0),true,false,true);
- for(auto* f:{&denied,&allowed}){f->Advance(120,false);f->controller.Request(f->world,BalanceTask::Stand,f==&allowed,true,f->error);f->Advance(360);Check(f->Standing(),"equivalent stepping trial starts physically settled");f->world.ApplyLinearImpulse(f->mapping[0].body,{0,0,29});}
- glm::vec3 initial=allowed.world.GetTransform(allowed.mapping[3].body).position;float clearance=0,slip=0;bool airborne=false,choiceObserved=false,selectionVerified=false;
- for(int k=0;k<720;k++){denied.Advance(1);allowed.Advance(1);auto pose=allowed.world.GetTransform(allowed.mapping[3].body);clearance=std::max(clearance,pose.position.y-initial.y);auto& observation=allowed.controller.Observation();if(!choiceObserved&&allowed.controller.History().swing>=0){choiceObserved=true;auto a=observation.supports[0].load,b=observation.supports[1].load;selectionVerified=allowed.controller.History().swing==(b+.001f*(a+b)<a?1:0);std::printf("First planned foot %d, actual loads %.9g / %.9g N s\n",allowed.controller.History().swing,a,b);}if(clearance>.025f&&!observation.supports[0].contacts)airborne=true;slip=std::max(slip,glm::length(allowed.world.GetTransform(allowed.mapping[6].body).position-glm::vec3(.4f,.12f,.08f)));}
- Check(choiceObserved&&selectionVerified,"actual first step uses lighter support or stable authored order within the load tie band");Check(!denied.Standing(),"same real perturbation defeats in-place balance");Check(allowed.Standing(),"actual step extends measured physical recovery envelope");Check(airborne&&clearance>.025f,"selected foot lifts physically and loses actual supporting contact");Check(allowed.controller.History().landings>=1,"touchdown requires returned solver contact");Check(allowed.controller.History().progress==BalanceProgress::Succeeded,"post-step physical standing settles before success");Check(glm::length(allowed.world.GetTransform(allowed.mapping[3].body).position-initial)>.15f,"foot physically changes its placement");Check(allowed.controller.History().referenceTime==allowed.settings.referenceSeconds,"disturbance does not replay initial collapsed reference fade");
- std::printf("Step comparison: lift %.4f m, stance travel %.4f m, landings %u, denied root %.4f m, allowed root %.4f m\n",clearance,slip,allowed.controller.History().landings,denied.world.GetTransform(denied.mapping[0].body).position.y,allowed.world.GetTransform(allowed.mapping[0].body).position.y);
+ glm::vec3 initialFeet[2]{};
+ for(auto* f:{&denied,&allowed}){
+  f->Advance(120,false);f->controller.Request(f->world,BalanceTask::Stand,f==&allowed,true,f->error);f->Advance(360);
+  Check(f->Standing(),"equivalent stepping trial starts physically settled");
+  if(f==&allowed)for(unsigned foot=0;foot<2;++foot)
+   initialFeet[foot]=f->world.GetTransform(f->mapping[f->settings.effectors[foot].foot].body).position;
+  f->world.ApplyLinearImpulse(f->mapping[0].body,{0,0,29});
+ }
+ float clearance=0,slip=0;bool airborne=false,choiceObserved=false,selectionVerified=false;int selectedFoot=-1;
+ for(int k=0;k<720;k++){
+  denied.Advance(1);allowed.Advance(1);auto& observation=allowed.controller.Observation();
+  if(!choiceObserved&&allowed.controller.History().swing>=0){
+   choiceObserved=true;selectedFoot=allowed.controller.History().swing;
+   auto a=observation.supports[0].load,b=observation.supports[1].load;
+   selectionVerified=selectedFoot==(b+.001f*(a+b)<a?1:0);
+   std::printf("First planned foot %d, actual loads %.9g / %.9g N s\n",selectedFoot,a,b);
+  }
+  if(selectedFoot>=0&&selectedFoot<2){
+   const auto selected=allowed.mapping[allowed.settings.effectors[selectedFoot].foot].body;
+   const auto stance=allowed.mapping[allowed.settings.effectors[1-selectedFoot].foot].body;
+   const float lift=allowed.world.GetTransform(selected).position.y-initialFeet[selectedFoot].y;
+   clearance=std::max(clearance,lift);
+   if(lift>.025f&&!observation.supports[selectedFoot].contacts)airborne=true;
+   slip=std::max(slip,glm::length(allowed.world.GetTransform(stance).position-initialFeet[1-selectedFoot]));
+  }
+ }
+ const float placement=selectedFoot>=0&&selectedFoot<2
+  ?glm::length(allowed.world.GetTransform(allowed.mapping[allowed.settings.effectors[selectedFoot].foot].body).position-initialFeet[selectedFoot]):0;
+ Check(choiceObserved&&selectionVerified,"actual first step uses lighter support or stable authored order within the load tie band");Check(!denied.Standing(),"same real perturbation defeats in-place balance");Check(allowed.Standing(),"actual step extends measured physical recovery envelope");Check(airborne&&clearance>.025f,"selected foot lifts physically and loses actual supporting contact");Check(allowed.controller.History().landings>=1,"touchdown requires returned solver contact");Check(allowed.controller.History().progress==BalanceProgress::Succeeded,"post-step physical standing settles before success");Check(placement>.15f,"foot physically changes its placement");Check(allowed.controller.History().referenceTime==allowed.settings.referenceSeconds,"disturbance does not replay initial collapsed reference fade");
+ std::printf("Step comparison: selected foot %d, lift %.4f m, placement %.4f m, stance travel %.4f m, landings %u, denied root %.4f m, allowed root %.4f m\n",selectedFoot,clearance,placement,slip,allowed.controller.History().landings,denied.world.GetTransform(denied.mapping[0].body).position.y,allowed.world.GetTransform(allowed.mapping[0].body).position.y);
 }
 void Negatives(){
  Fixture off(1.5707963f);off.Advance(120,false);off.controller.Request(off.world,BalanceTask::Recover,false,false,off.error);off.Advance(1080);Check(!off.Standing(),"effort-disabled rig remains fallen");Check(off.controller.History().progress!=BalanceProgress::Succeeded,"effort-off reference deadline cannot report standing");

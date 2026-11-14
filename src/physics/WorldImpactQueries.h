@@ -61,6 +61,9 @@ inline auto PhysicsWorld::Impl::CCDQuery::ImpactPoseAt(unsigned slot, double tim
 
 inline auto PhysicsWorld::Impl::CCDQuery::ActualImpactBound(unsigned slot, const ImpactPoseSample &pose)
     -> const Aabb & {
+    // A frozen query may borrow both owner anchors without preparing any
+    // lane-local pose. Tight bounds still belong to this lane's storage.
+    EnsureImpactPoseStorage();
     auto &sample = impactPoseSamples[slot];
     if (!sample.tightValid || !SamePosition(sample.tightPosition, pose.pose.position) ||
         !SameRotation(sample.tightOrientation, pose.pose.orientation)) {

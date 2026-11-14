@@ -115,13 +115,28 @@ int main() {
         // Its old excessive response is no longer a valid cap-positive control.
         const auto repaired = Run(1, 100, 1, true);
         Check(repaired.energyRatio<=1.0001,"original spinning-box fixture creates no energy");
-        // At 1000 m/s, a centered elastic sphere must traverse more than four
-        // corridor widths in 1/60 s. This independently demands the body cap.
-        const auto bounded = Run(1, 1000, 1, true, true);
+        // Sixteen genuine arrivals are supported work, not a reason to hold
+        // motion. Check the endpoint against independent unfolded reflection.
+        const auto completed = Run(1, 1000, 1, true, true);
+        const double extent=double(.6f)-double(.05f)-double(.05f),width=2*extent;
+        const double phase=std::fmod(extent+1000.*double(1.f/60),2*width);
+        const double expectedX=-extent+(phase<=width?phase:2*width-phase);
+        const double expectedV=phase<width?1000.:-1000.;
+        Check(!completed.heldPaths && !completed.stats.impactSafetyFallback &&
+                  completed.stats.impactBodyCapHolds==0 && completed.stats.impactStepCapHolds==0,
+              "supported repeated arrivals complete without per-body or global motion holds");
+        Check(std::abs(double(completed.poses.front().x)-expectedX)<2e-4 &&
+                  std::abs(double(completed.velocities.front().x)-expectedV)<1e-3 &&
+                  completed.energyRatio<=1.0001,
+              "supported repeated arrivals retain analytic position, velocity and elastic energy");
+        // This single-body negative control genuinely exceeds 256 events in
+        // each native interval; the remaining global fallback stays visible.
+        const auto bounded = Run(1, 200000, 1, true, true);
         Check(bounded.heldPaths && bounded.stats.impactSafetyFallback,
               "a stationary remaining ledger segment with retained velocity reports a real hold");
-        Check(bounded.stats.impactBodyCapHolds > 0 && bounded.stats.impactStepCapHolds == 0,
-              "one fast bouncing body reaches the per-body limit, not the global limit");
+        Check(bounded.stats.impactBodyCapHolds==0 && bounded.stats.impactStepCapHolds>0 &&
+                  bounded.stats.impactResponseHolds==0,
+              "one over-budget body reports the genuine global guard with valid physical responses");
         Check(glm::length(bounded.velocities.front()) > 1 && std::abs(bounded.poses.front().x) < .56f,
               "safety hold keeps physical speed and collision-bounded endpoint");
         const auto many = Run(300, 1000, 1, true, true);

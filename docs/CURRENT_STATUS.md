@@ -12,7 +12,11 @@ Check the release page for subsequently published packages.
 
 This checkout is an unsupported V2 source preview on Experimental. Published Alpha packages remain separately versioned.
 
-Scripting V2, Editor V2, Renderer V2, Particles V2, Terrain V2 and game-resolution Advanced Fluids V2 are the current implementations. Terrain V2 and Advanced Fluids V2 have operator gameplay review; the architectural purge awaits separate acceptance. Advanced Fluids V2 is now project-opt-in in all V2 build channels; V2 remains on Experimental and main is unchanged.
+Scripting V2, Editor V2, Renderer V2, Particles V2, Terrain V2, game-resolution Advanced Fluids V2, Vehicles/Wheels V2, Deformables V2 and Lucifer are the current implementations. The operator has reviewed the completed V2 milestones and architectural purge. Advanced Fluids V2 is project-opt-in in all V2 build channels; V2 remains on Experimental and main is unchanged.
+
+[Physics V2](PHYSICS_V2.md) is undergoing implementation and qualification. Its
+collision-continuation corrections and measured performance changes are not yet
+human accepted; remaining severe-impact budget failures are explicit.
 
 Native demonstration gameplay, pose-delta saves, PBF fluids, reservoir/container liquids and separate bounded V1 terrain are retired without compatibility shims or migrations. Historical projects require their matching historical engine.
 

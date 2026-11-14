@@ -187,21 +187,115 @@ void FreePairMomentum() {
     }
 }
 
+// Independent unfolded reflection in a symmetric frictionless channel. The
+// endpoint and outgoing sign use authored binary32 geometry evaluated in double.
+struct ReflectionOracle { double position,velocity,travel; };
+ReflectionOracle ReflectedFlight(float speed,float duration,float wallCentre,float wallHalf,float radius) {
+    const double extent=double(wallCentre)-double(wallHalf)-double(radius);
+    const double width=2*extent;
+    double phase=std::fmod(extent+double(speed)*double(duration),2*width);
+    if(phase<0)phase+=2*width;
+    return {-extent+(phase<=width?phase:2*width-phase),
+            phase<width?double(speed):-double(speed),std::abs(double(speed))*double(duration)};
+}
+
 void BoundedContactContinuation() {
-    for(bool blocker:{false,true}) {
+    constexpr float duration=.2f,wallCentre=.6f,wallHalf=.05f,radius=.05f;
+    const double extent=double(wallCentre)-double(wallHalf)-double(radius);
+    for(float speed:{100.f,30000.f}) for(bool blocker:{false,true}) {
+        const bool overBudget=speed>100;
         PhysicsWorld world;world.Init();
-        for(float sign:{-1.f,1.f})world.CreateStaticBox({sign*.6f,0,0},{.05f,4,4},0,1);
+        for(float sign:{-1.f,1.f})world.CreateStaticBox({sign*wallCentre,0,0},{wallHalf,4,4},0,1);
         if(blocker)world.CreateStaticBox({0,0,.13f},{4,4,.01f},0,1);
-        const auto body=world.CreateDynamicSphere({0,0,0},.05f,1,0,1);
-        world.SetLinearVelocity(body,{100,0,1});world.Step(.2f);
-        Check(world.LastStepStats().impactBodyCapHolds>0,"fallback fixture actually exhausts normal arrival work");
-        if(!blocker)Check(std::abs(world.GetTransform(body).position.z-.2f)<2e-6,
+        const auto body=world.CreateDynamicSphere({0,0,0},radius,1,0,1);
+        world.SetLinearVelocity(body,{speed,0,1});world.Step(duration);
+        const auto& stats=world.LastStepStats();
+        const auto oracle=ReflectedFlight(speed,duration,wallCentre,wallHalf,radius);
+        const auto position=world.GetTransform(body).position;
+        const auto velocity=world.GetLinearVelocity(body);
+        std::printf("CONTINUATION speed=%g blocker=%d x=%.12g oracle_x=%.12g z=%.9g events=%zu body_holds=%zu step_holds=%zu response_holds=%zu\n",
+            double(speed),int(blocker),double(position.x),oracle.position,double(position.z),
+            stats.impactEvents,stats.impactBodyCapHolds,stats.impactStepCapHolds,stats.impactResponseHolds);
+        Check(stats.impactBodyCapHolds==0,"arrival continuation has no per-body motion truncation");
+        if(overBudget) {
+            Check(stats.impactStepCapHolds>0,"fallback fixture genuinely exhausts the global event budget");
+            Check(stats.impactResponseHolds==0,"global-budget stress retains valid elastic responses");
+        } else {
+            Check(stats.impactSafetyFallback==0,"ordinary repeated impacts complete without motion holds");
+            Check(std::abs(double(position.x)-oracle.position)<2e-6,
+                "ordinary repeated impacts retain the independent triangle-wave endpoint");
+            Check(std::abs(double(velocity.x)-oracle.velocity)<1e-4,
+                "ordinary repeated impacts retain the analytic outgoing speed and sign");
+        }
+        if(!blocker)Check(std::abs(position.z-duration)<2e-6,
             "a bounded normal hold preserves certified tangential travel");
-        else for(const auto& leaf:world.GetBodyMotionSegments(body))
-            Check(leaf.start.position.z<=.070002f && leaf.endPose.position.z<=.070002f,
+        for(const auto& leaf:world.GetBodyMotionSegments(body)) {
+            Check(std::abs(double(leaf.start.position.x))<=extent+2e-6 &&
+                  std::abs(double(leaf.endPose.position.x))<=extent+2e-6,
+                "bounded and ordinary flights never escape the rigid channel");
+            if(blocker)Check(leaf.start.position.z<=.070002f && leaf.endPose.position.z<=.070002f,
                 "tangential continuation stops at a real secondary obstacle");
-        Check(glm::length(world.GetLinearVelocity(body))<=glm::length(glm::vec3(100,0,1))*1.0001f,
+        }
+        Check(glm::length(velocity)<=glm::length(glm::vec3(speed,0,1))*1.0001f,
             "bounded geometry continuation never changes physical energy");
+    }
+}
+
+void RepeatedArrivalFlight() {
+    constexpr float wallCentre=.51f,wallHalf=.01f,radius=.1f;
+    constexpr double positionTolerance=2e-4;
+    const double extent=double(wallCentre)-double(wallHalf)-double(radius);
+    for(float speed:{1000.f,2000.f}) {
+        PhysicsWorld world;world.Init();
+        for(float sign:{-1.f,1.f})world.CreateStaticBox({sign*wallCentre,0,0},{wallHalf,2,2},0,1);
+        const auto body=world.CreateDynamicSphere({0,0,0},radius,1,0,1);
+        world.SetLinearVelocity(body,{speed,0,0});
+        // This disconnected later impact must not be starved by the busy lane.
+        constexpr float laterWall=1.51f,laterSpeed=120;
+        world.CreateStaticBox({laterWall,10,0},{wallHalf,1,1},0,1);
+        const auto later=world.CreateDynamicSphere({0,10,0},radius,2,0,1);
+        world.SetLinearVelocity(later,{laterSpeed,0,0});
+        world.Step(kDt);
+        const auto oracle=ReflectedFlight(speed,kDt,wallCentre,wallHalf,radius);
+        const auto position=world.GetTransform(body).position;
+        const auto velocity=world.GetLinearVelocity(body);
+        const auto& stats=world.LastStepStats();
+        double travel=0,previous=0;
+        bool ordered=true,inside=true;
+        const auto path=world.GetBodyMotionSegments(body);
+        for(const auto& leaf:path) {
+            ordered &= leaf.end>=leaf.begin && std::abs(leaf.begin-previous)<1e-10;
+            const auto a=PhysicsWorld::EvaluateBodyMotionSegment(leaf,leaf.begin).position;
+            const auto b=PhysicsWorld::EvaluateBodyMotionSegment(leaf,leaf.end).position;
+            travel+=glm::length(glm::dvec3(b)-glm::dvec3(a));
+            for(const auto point:{a,b})inside &= std::isfinite(point.x) &&
+                std::abs(double(point.x))<=extent+positionTolerance;
+            previous=leaf.end;
+        }
+        ordered &= !path.empty() && std::abs(previous-double(kDt))<1e-10;
+        const double initialEnergy=.5*double(speed)*double(speed);
+        const double finalEnergy=.5*glm::dot(glm::dvec3(velocity),glm::dvec3(velocity));
+        const double laterLimit=double(laterWall)-double(wallHalf)-double(radius);
+        const double laterExpected=2*laterLimit-double(laterSpeed)*double(kDt);
+        std::printf("FULL_FLIGHT speed=%g x_error=%.9g travel_error=%.9g energy_relative=%.9g events=%zu holds=%zu segments=%zu later_error=%.9g\n",
+            double(speed),std::abs(double(position.x)-oracle.position),std::abs(travel-oracle.travel),
+            (finalEnergy-initialEnergy)/initialEnergy,stats.impactEvents,stats.impactSafetyFallback,path.size(),
+            std::abs(double(world.GetTransform(later).position.x)-laterExpected));
+        Check(stats.impactSafetyFallback==0,"supported fast repeated arrivals have no motion holds");
+        Check(std::abs(double(position.x)-oracle.position)<positionTolerance,
+            "fast repeated arrivals match the independent triangle-wave endpoint");
+        Check(std::abs(double(velocity.x)-oracle.velocity)<std::max(1e-3,double(speed)*2e-6),
+            "fast repeated arrivals retain the analytic outgoing speed and sign");
+        Check(std::abs(travel-oracle.travel)<positionTolerance,
+            "completed fast-arrival ledger retains the entire travelled distance");
+        Check(ordered && inside,"completed fast-arrival ledger is chronological and remains inside both walls");
+        Check(std::abs(position.y)+std::abs(position.z)<1e-7 && glm::length(world.GetAngularVelocity(body))<1e-6f,
+            "centred frictionless arrivals preserve transverse motion and introduce no spin");
+        Check(std::abs(finalEnergy-initialEnergy)<=initialEnergy*5e-6,
+            "fast elastic arrivals conserve independently calculated kinetic energy");
+        Check(std::abs(double(world.GetTransform(later).position.x)-laterExpected)<positionTolerance &&
+              std::abs(world.GetLinearVelocity(later).x+laterSpeed)<1e-3f,
+            "an independent later collision retains its analytic flight and rebound");
     }
 }
 
@@ -346,7 +440,7 @@ void ExternalKickTiming() {
 
 int main() {
     ExternalKickTiming();
-    try { FreeRotation(); ElasticEnvelope(); ArrivalTiming(); FreePairMomentum(); BoundedContactContinuation(); ReactionObservations(); RestitutionCutoff(); LateWake(); MotionView(); }
+    try { FreeRotation(); ElasticEnvelope(); ArrivalTiming(); FreePairMomentum(); BoundedContactContinuation(); RepeatedArrivalFlight(); ReactionObservations(); RestitutionCutoff(); LateWake(); MotionView(); }
     catch (const std::exception& error) { ++failures; std::printf("EXCEPTION %s\n",error.what()); }
     std::printf("MK2 rotation: %u checks %u failures\n",checks,failures);
     return failures?1:0;

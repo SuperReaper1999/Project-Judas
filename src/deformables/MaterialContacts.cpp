@@ -36,6 +36,28 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     std::size_t rejectedPoints=0;
     Aabb pointBounds;
     V pointAllowance(0);
+    // The projection loop changes rigid velocity, not pose or mass properties.
+    // Prepare the existing effective-mass arithmetic lazily once per candidate.
+    bool responsePrepared=false;
+    double rigidInverseMass=0;
+    V rigidCenter(0);
+    glm::dmat3 rigidInverseInertia(0);
+    const auto effectiveMass=[&](BodyHandle body,V point,V normal){
+        if(!responsePrepared){
+            responsePrepared=true;
+            if(physics.IsDynamicBody(body)){
+                const double mass=physics.GetMass(body);
+                if(mass>0){
+                    rigidInverseMass=1/mass;
+                    rigidCenter=V(physics.GetCenterOfMass(body));
+                    rigidInverseInertia=glm::dmat3(glm::inverse(physics.GetInertiaWorld(body)));
+                }else rigidInverseMass=0;
+            }else rigidInverseMass=0;
+        }
+        if(!(rigidInverseMass>0))return 0.;
+        const auto angular=glm::cross(point-rigidCenter,normal);
+        return rigidInverseMass+glm::dot(angular,rigidInverseInertia*angular);
+    };
     auto sample=[&](glm::uvec3 nodes,V weights,BodyHandle body,const Shape& shape,const BodyTransform& pose){
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[nodes.x]])return;
         V p(0),old(0);
@@ -78,7 +100,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
                     }}
             double w=0;
             for(int k=0;k<3;++k)w+=inverseMass[nodes[k]]*weights[k]*weights[k];
-            double rigid=JudasDeformables::EffectiveMass(physics,body,point,normal),den=w+rigid;
+            double rigid=effectiveMass(body,point,normal),den=w+rigid;
             if(den<1e-20)return;
             double dl=depth/den;
             for(int k=0;k<3;++k)positions[nodes[k]]+=normal*dl*inverseMass[nodes[k]]*weights[k];
@@ -89,7 +111,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             V tangent=velocity-normal*glm::dot(velocity,normal);
             double speed=glm::length(tangent);
             if(speed>1e-10){V dir=tangent/speed;
-                double tangentialMass=w+JudasDeformables::EffectiveMass(physics,body,point,dir);
+                double tangentialMass=w+effectiveMass(body,point,dir);
                 double frictionImpulse=std::min(speed/tangentialMass,settings.material.friction*dl/h);
                 for(int k=0;k<3;++k)positions[nodes[k]]-=dir*frictionImpulse*h*inverseMass[nodes[k]]*weights[k];
                 if(rigid>0)JudasDeformables::ApplyReaction(physics,body,dir*frictionImpulse,point,&candidateWoken);
@@ -113,7 +135,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         }
     };
     for(auto body:rigidCandidates){
-        candidateWoken=false;
+        candidateWoken=false;responsePrepared=false;
         if(std::any_of(carrierCollisionExclusions.begin(),carrierCollisionExclusions.end(),[&](auto other){return other.id==body.id&&other.world==body.world;}))continue;
         unsigned layer;
         CategoryMask mask;

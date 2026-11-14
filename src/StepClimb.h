@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
@@ -51,11 +52,14 @@
 //
 // Returns true and fills `outNewPosition` only when all of the above
 // succeed, i.e. stepping produced genuine forward progress a flat sweep
-// from `position` could not have achieved on its own.
+// from `position` could not have achieved on its own. Optional acceptedPath
+// receives the accepted up/forward/down waypoints from the actual position
+// only on success. Preparation offsets and failed probes are not movement.
 bool TryStepMove(const PhysicsWorld& physics, const glm::vec3& position,
                   const glm::quat& orientation, const glm::vec3& localUp,
                   const glm::vec3& horizontalDisplacement, float maxStepHeight, float minGroundDot,
-                  float skinMargin, glm::vec3& outNewPosition, const Shape* capsule = nullptr, const PhysicsQueryFilter* filter = nullptr, unsigned layer = 0, CategoryMask mask = kAllCategories);
+                  float skinMargin, glm::vec3& outNewPosition, const Shape* capsule = nullptr, const PhysicsQueryFilter* filter = nullptr, unsigned layer = 0, CategoryMask mask = kAllCategories,
+                  std::array<glm::vec3,4>* acceptedPath = nullptr);
 
 // Attempts to catch a small drop-off directly below the player (a step
 // down, or walking off a low ledge) by reaching further than the caller's

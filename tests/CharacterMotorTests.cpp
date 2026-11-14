@@ -15,7 +15,233 @@ int checks=0,failures=0;
 void Check(bool ok,const char* label){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",label);}
 bool Near(glm::vec3 a,glm::vec3 b,float eps=.02f){return glm::length(a-b)<eps;}
 void Tick(CharacterMotor& m,PhysicsWorld& p,const GravityField& g,int n){for(int i=0;i<n;++i){p.Step(1.f/60);m.Step(p,g,1.f/60);}}
+
+namespace {
+void RegisterObserver(CharacterMotor& motor,PhysicsWorld& physics){
+ motor.observationBody=physics.CreateQueryCapsule(motor.settings.radius,motor.settings.halfHeight,
+     {motor.position+motor.orientation*motor.settings.offset,motor.orientation});
+ physics.SetCollisionFilter(motor.observationBody,motor.settings.collisionLayer,motor.settings.collisionMask);
+ motor.filter.ignoredBodies.push_back(motor.observationBody);
+}
+void QueryTick(CharacterMotor& motor,PhysicsWorld& physics,const GravityField& gravity,bool pre=false){
+ constexpr float dt=1.f/60;
+ if(pre)physics.BeginPreStepQueryContacts();else physics.Step(dt);
+ motor.Step(physics,gravity,dt);
+ physics.ResetBody(motor.observationBody,motor.position+motor.orientation*motor.settings.offset,motor.orientation);
+ if(pre)physics.Step(dt);
+ physics.FinishQueryTouches();
+}
+unsigned SensorEvents(const PhysicsWorld& world,BodyHandle sensor,BodyHandle observer){
+ unsigned count=0;for(const auto& event:world.LastStepTouchEvents())
+  if(event.sensor&&((event.a.id==sensor.id&&event.b.id==observer.id)||
+                    (event.b.id==sensor.id&&event.a.id==observer.id)))++count;
+ return count;
+}
+void PrintSensorPairs(const PhysicsWorld& world,BodyHandle sensor,BodyHandle observer,const char* label){
+ for(const auto& event:world.LastStepTouchEvents())if(event.sensor&&(event.a.id==sensor.id||event.b.id==sensor.id))
+  std::printf("QUERY_PAIR %s sensor=%u observer=%u a=%u b=%u phase=%u point=(%.9g,%.9g,%.9g)\n",
+              label,sensor.id,observer.id,event.a.id,event.b.id,unsigned(event.phase),event.point.x,event.point.y,event.point.z);
+}
+BodyHandle Sensor(PhysicsWorld& world,glm::vec3 center,glm::vec3 half){
+ auto body=world.CreateStaticBox(center,half,0,0);world.SetBodySensor(body,true);return body;
+}
+void QuerySensorPaths(){
+ UniformGravity zero({0,0,0}),gravity({0,-9.81f,0});
+ for(bool pre:{false,true})for(bool shift:{false,true}){
+  PhysicsWorld world;world.Init();const float origin=shift?5000.f:0.f;
+  auto a=Sensor(world,{origin+.5f,1,0},{.002f,1,1});
+  auto b=Sensor(world,{origin+1.3f,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({origin,1,0},{1,0,0,0});RegisterObserver(motor,world);
+  if(shift){world.ShiftOrigin({5000,0,0});motor.ShiftOrigin({5000,0,0});}
+  motor.velocity={120,0,0};QueryTick(motor,world,zero,pre);
+  Check(SensorEvents(world,a,motor.observationBody)==2&&SensorEvents(world,b,motor.observationBody)==2,
+        "accepted motor dash crosses every thin static sensor, including prephysics/origin-shift publication");
+  bool meaningful=true;for(const auto& event:world.LastStepTouchEvents())if(event.sensor)
+    meaningful&=event.point.x>.39f&&event.point.x<1.41f&&
+                std::abs(event.relativeVelocity.x)>119.f&&!event.impulseAvailable&&event.normalImpulse==0;
+  Check(meaningful&&Near(motor.position,{2,1,0},.001f),
+        "accepted query path keeps real impact points/velocity without impulses or motion truncation");
+  QueryTick(motor,world,zero,pre);
+  Check(SensorEvents(world,a,motor.observationBody)==0&&SensorEvents(world,b,motor.observationBody)==0,"query path crossing does not leave a phantom overlap");
+ }
+ {
+  PhysicsWorld world;world.Init();world.CreateStaticBox({.5f,1,1},{.05f,2,2},0,0);
+  auto chord=Sensor(world,{.165f,1,1},{.005f,.2f,.005f});
+  auto slide=Sensor(world,{.33f,1,1.5f},{.005f,.2f,.005f});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({0,1,0},{1,0,0,0});RegisterObserver(motor,world);motor.velocity={120,0,120};
+  QueryTick(motor,world,zero);
+  Check(motor.result.collided&&motor.position.x<.36f&&motor.position.z>1.9f&&
+        SensorEvents(world,chord,motor.observationBody)==0&&SensorEvents(world,slide,motor.observationBody)==2,
+        "wall-slide records its accepted legs and never a start-to-final chord through another sensor");
+ }
+ for(bool ceiling:{false,true}){
+  PhysicsWorld world;world.Init();world.CreateStaticBox({0,-.5f,0},{10,.5f,10},.6f,0);
+  const auto obstacle=world.CreateStaticBox({1,.2f,0},{.5f,.2f,2},.6f,0);
+  if(ceiling)world.CreateStaticBox({0,2.1f,0},{2,.2f,2},.6f,0);
+  auto apex=Sensor(world,ceiling?glm::vec3(0,1.88f,0):glm::vec3(.15f,2.32f,0),{.01f,.005f,.1f});
+  CharacterMotor motor;motor.Reset({0,.92f,0},{1,0,0,0});RegisterObserver(motor,world);
+  QueryTick(motor,world,gravity);
+  BodyHandle startOverlap;
+  if(!ceiling){
+    // Create after settling/publication: this first real overlap has no prior
+    // touch owner. A successful step must observe it before the capsule leaves.
+    startOverlap=Sensor(world,{0,.025f,0},{.01f,.002f,.01f});
+    auto query=motor.filter;query.includeSensors=true;
+    const auto center=motor.position+motor.orientation*motor.settings.offset;
+    const auto overlaps=[&](glm::vec3 p){
+      bool truncated=false,found=false;
+      const auto bodies=world.OverlapShape(Shape::Capsule(motor.settings.radius,motor.settings.halfHeight),
+          {p,motor.orientation},query,32,truncated);
+      for(const auto body:bodies)found|=body.id==startOverlap.id;
+      return !truncated&&found;
+    };
+    Check(overlaps(center)&&!overlaps(center+motor.result.up*motor.settings.skin),
+          "step-origin sensor overlaps the actual capsule but not its lifted preparation probe");
+  }
+  motor.velocity={12,0,0};QueryTick(motor,world,gravity);
+  std::printf("QUERY_STEP ceiling=%d pos=(%.9g,%.9g,%.9g) stepped=%d supported=%d recovered=%d events=%u\n",ceiling,motor.position.x,motor.position.y,motor.position.z,motor.result.stepped,motor.result.supported,motor.result.recovered,SensorEvents(world,apex,motor.observationBody));
+  PrintSensorPairs(world,apex,motor.observationBody,"step");
+  if(ceiling)Check(!motor.result.stepped&&SensorEvents(world,apex,motor.observationBody)==0,
+                   "a rejected step probe does not publish sensor travel");
+  else {
+    // The capsule can land on the step's front corner before its center is
+    // above the flat top. Check actual capsule/box clearance and support, not
+    // a height that assumes the capsule has already crossed the entire edge.
+    const auto coreBottom=motor.position-glm::vec3(0,motor.settings.halfHeight,0);
+    const auto nearest=glm::clamp(coreBottom,glm::vec3(.5f,0,-2),glm::vec3(1.5f,.4f,2));
+    const auto gap=glm::length(coreBottom-nearest)-motor.settings.radius;
+    Check(motor.result.stepped&&motor.result.supported&&motor.result.support.id==obstacle.id&&
+          gap>-.002f&&gap<motor.settings.skin+.005f&&SensorEvents(world,apex,motor.observationBody)==2,
+          "accepted step has real nonpenetrating support and publishes its up/forward/down path");
+    Check(SensorEvents(world,startOverlap,motor.observationBody)==2,
+          "accepted step publishes a real initial sensor overlap omitted by the lifted probe origin");
+  }
+ }
+ for(bool filterActor:{false,true}){
+  PhysicsWorld world;world.Init();auto filtered=Sensor(world,{.5f,1,0},{.002f,1,1});
+  if(!filterActor)world.SetCollisionFilter(filtered,1,0);
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  if(filterActor)motor.settings.collisionMask=0;
+  motor.Reset({0,1,0},{1,0,0,0});RegisterObserver(motor,world);motor.velocity={120,0,0};
+  QueryTick(motor,world,zero);
+  Check(SensorEvents(world,filtered,motor.observationBody)==0,"accepted query sensor sweeps respect bilateral collision masks");
+ }
+
+ {
+  PhysicsWorld world;world.Init();auto gate=Sensor(world,{.5f,1,0},{.3f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({0,1,0},{1,0,0,0});RegisterObserver(motor,world);motor.velocity={36,0,0};
+  QueryTick(motor,world,zero);
+  Check(SensorEvents(world,gate,motor.observationBody)==1&&world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Enter&&
+        std::abs(world.LastStepTouchEvents()[0].relativeVelocity.x)>35.f,
+        "query traversal ending inside a sensor publishes persistent enter with its actual entry velocity");
+  motor.velocity={0,0,0};QueryTick(motor,world,zero);
+  Check(SensorEvents(world,gate,motor.observationBody)==1&&world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Stay,
+        "query endpoint overlap retains normal stay ownership");
+  motor.velocity={120,0,0};QueryTick(motor,world,zero);
+  Check(SensorEvents(world,gate,motor.observationBody)==1&&world.LastStepTouchEvents()[0].phase==PhysicsWorld::TouchPhase::Exit,
+        "leaving a persistent query overlap publishes only its exit");
+ }
+ {
+  PhysicsWorld world;world.Init();auto gate=Sensor(world,{1001,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({1000,1,0},{1,0,0,0});RegisterObserver(motor,world);motor.velocity={120,0,0};
+  world.Step(1.f/60);motor.Step(world,zero,1.f/60);
+  world.ShiftOrigin({1000,0,0});motor.ShiftOrigin({1000,0,0});
+  world.ResetBody(motor.observationBody,motor.position,motor.orientation);world.FinishQueryTouches();
+  bool translated=SensorEvents(world,gate,motor.observationBody)==2;
+  for(const auto& event:world.LastStepTouchEvents())if(event.sensor)translated&=event.point.x>.99f&&event.point.x<1.01f;
+  Check(translated,"pending accepted query events translate with a completed-boundary origin shift");
+ }
+ {
+  PhysicsWorld world;world.Init();auto gate=Sensor(world,{1,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({0,1,0},{1,0,0,0});RegisterObserver(motor,world);
+  motor.Reset({2,1,0},{1,0,0,0});
+  world.ResetBody(motor.observationBody,motor.position,motor.orientation);
+  QueryTick(motor,world,zero);
+  Check(SensorEvents(world,gate,motor.observationBody)==0,"a controller teleport is not inferred as a sensor sweep");
+ }
+
+ {
+  PhysicsWorld world;world.Init();world.CreateStaticBox({0,1,0},{1,2,2},0,0);
+  auto gate=Sensor(world,{.6f,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({.1f,1,0},{1,0,0,0});RegisterObserver(motor,world);
+  QueryTick(motor,world,zero);
+  std::printf("QUERY_RECOVER pos=(%.9g,%.9g,%.9g) recovered=%d supported=%d events=%u\n",motor.position.x,motor.position.y,motor.position.z,motor.result.recovered,motor.result.supported,SensorEvents(world,gate,motor.observationBody));
+  PrintSensorPairs(world,gate,motor.observationBody,"recovery");
+  Check(motor.result.recovered&&motor.position.x>1&&SensorEvents(world,gate,motor.observationBody)==0,
+        "depenetration recovery does not invent travel through an intermediate sensor");
+ }
+ {
+  PhysicsWorld world;world.Init();auto platform=world.CreateStaticBox({0,-.25f,0},{1,.25f,1},.6f,0);
+  world.SetMotionType(platform,BodyMotionType::Kinematic);
+  auto gate=Sensor(world,{1,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.Reset({0,.92f,0},{1,0,0,0});RegisterObserver(motor,world);
+  QueryTick(motor,world,zero);world.SetKinematicVelocity(platform,{120,0,0},{0,0,0});
+  QueryTick(motor,world,zero);
+  const auto pp=world.GetTransform(platform).position,previous=world.GetPreviousTransform(platform).position;
+  std::printf("QUERY_CARRY pos=(%.9g,%.9g,%.9g) supported=%d recovered=%d events=%u platform=(%.9g,%.9g,%.9g) previous=(%.9g,%.9g,%.9g) velocity=(%.9g,%.9g,%.9g)\n",motor.position.x,motor.position.y,motor.position.z,motor.result.supported,motor.result.recovered,SensorEvents(world,gate,motor.observationBody),pp.x,pp.y,pp.z,previous.x,previous.y,previous.z,motor.velocity.x,motor.velocity.y,motor.velocity.z);
+  PrintSensorPairs(world,gate,motor.observationBody,"carry");
+  Check(motor.result.supported&&motor.position.x>1.9f&&SensorEvents(world,gate,motor.observationBody)==2,
+        "accepted support-carry segments publish static sensor crossings");
+ }
+ // Pending observations are generation-checked snapshots. A later target
+ // move keeps a real historical crossing; removal/disable/mask changes retire
+ // it. Moving a target before the accepted path must never use its old bound.
+ for(int mutation=0;mutation<7;++mutation){
+  PhysicsWorld world;world.Init();auto gate=Sensor(world,{1,1,0},{.002f,1,1});
+  CharacterMotor motor;motor.settings.radius=.1f;motor.settings.halfHeight=0;
+  motor.Reset({0,1,0},{1,0,0,0});RegisterObserver(motor,world);motor.velocity={120,0,0};
+  world.Step(1.f/60);
+  if(mutation==0)world.ResetBody(gate,{10,1,0},{1,0,0,0});
+  motor.Step(world,zero,1.f/60);
+  world.ResetBody(motor.observationBody,motor.position,motor.orientation);
+  if(mutation==1)world.ResetBody(gate,{10,1,0},{1,0,0,0});
+  if(mutation==2)world.SetBodyEnabled(gate,false);
+  if(mutation==3)world.SetCollisionFilter(gate,0,0);
+  if(mutation==4){world.DestroyBody(gate);auto replacement=Sensor(world,{10,1,0},{.002f,1,1});
+    Check(replacement.id!=gate.id,"sensor slot reuse has a different generation");}
+  if(mutation==5){world.DestroyBody(motor.observationBody);
+    auto replacement=world.CreateQueryCapsule(.1f,0,{{10,1,0},{1,0,0,0}});
+    Check(replacement.id!=motor.observationBody.id,"query observer slot reuse has a different generation");}
+  if(mutation==6)world.SetCollisionFilter(motor.observationBody,0,0);
+  world.FinishQueryTouches();
+  const unsigned expected=mutation==1?2:0;
+  std::printf("QUERY_LIFETIME mutation=%d events=%u expected=%u\n",mutation,
+              SensorEvents(world,gate,motor.observationBody),expected);
+  Check(SensorEvents(world,gate,motor.observationBody)==expected,
+        "pending query crossings obey owner lifetime and current bilateral policy");
+  if(mutation==1){bool snapshot=true;for(const auto& event:world.LastStepTouchEvents())if(event.sensor)
+      snapshot&=event.point.x>.99f&&event.point.x<1.01f;
+    Check(snapshot,"sensor moved after a real crossing retains its verified historical point");}
+  world.FinishQueryTouches();
+  Check(SensorEvents(world,gate,motor.observationBody)==expected,"repeated query publication does not append events");
+ }
+ for(bool pre:{false,true}){
+  PhysicsWorld world;world.Init();auto gate=Sensor(world,{1,1,0},{.002f,1,1});
+  CharacterMotor first,second;
+  for(auto* motor:{&first,&second}){motor->settings.radius=.1f;motor->settings.halfHeight=0;}
+  first.Reset({0,1,-.5f},{1,0,0,0});second.Reset({0,1,.5f},{1,0,0,0});
+  RegisterObserver(first,world);RegisterObserver(second,world);
+  for(auto* motor:{&first,&second})motor->velocity={120,0,0};
+  if(pre)world.BeginPreStepQueryContacts();else world.Step(1.f/60);
+  for(auto* motor:{&first,&second}){motor->Step(world,zero,1.f/60);
+    world.ResetBody(motor->observationBody,motor->position,motor->orientation);}
+  if(pre)world.Step(1.f/60);
+  world.FinishQueryTouches();
+  Check(SensorEvents(world,gate,first.observationBody)==2&&SensorEvents(world,gate,second.observationBody)==2,
+        "multiple pre/postphysics controllers retain separate pairs on one shared sensor");
+ }
+
+}
+}
+
 int main(){
+ QuerySensorPaths();
  UniformGravity g({0,-9.81f,0}),zero({0,0,0});PhysicsWorld p;p.Init();auto floor=p.CreateStaticBox({0,-.5,0},{20,.5,20},.6,0);
  CharacterMotor m;m.Reset({0,.92,0},{1,0,0,0});Tick(m,p,g,3);Check(m.result.supported&&m.result.support.id==floor.id&&Near(m.result.supportNormal,{0,1,0}),"flat support / true geometry normal");
  auto q=glm::angleAxis(.8f,glm::normalize(glm::vec3(1,2,3)));PhysicsWorld rotated;rotated.Init();rotated.CreateStaticBox(q*glm::vec3(0,-.5,0),q,{20,.5,20},.6,0);UniformGravity rg(q*glm::vec3(0,-9.81f,0));CharacterMotor r;r.Reset(q*glm::vec3(0,.92,0),q);Tick(r,rotated,rg,3);Check(r.result.supported&&Near(glm::inverse(q)*r.position,m.position)&&Near(r.result.supportNormal,q*glm::vec3(0,1,0)),"arbitrarily rotated equivalent support");

@@ -4,6 +4,7 @@
 #include <queue>
 #include <tuple>
 #include <map>
+#include <cfenv>
 
 using namespace JudasPhysicsDetail;
 
@@ -268,7 +269,22 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                     impactPoseSamples[slot].tightValid = false;
             }
         };
-        const auto evaluate = [&](std::size_t index, double from) {
+        // Evaluate independent frozen geometry queries on bounded worker lanes;
+        // publish their results in the original pair order.
+        const char* laneSetting=std::getenv("JUDAS_MK2_QUERY_LANES");
+        const unsigned requestedQueryLanes=laneSetting&&std::strcmp(laneSetting,"1")==0?1u:
+            laneSetting&&std::strcmp(laneSetting,"2")==0?2u:4u;
+        unsigned usedQueryLanes=1;
+        std::size_t helperQueryJobs=0,helperQueryRoots=0,ownerQueryRoots=0,frozenQueryRoots=0;
+        std::uint64_t frozenQueryWallNanoseconds=0;
+        struct RootObservation { bool ready=false,touching=false; double hit=0; };
+        std::size_t lazyDeferredFutures=0,lazyImmediateFlushes=0;
+        double lazyDeferredFrom=0;
+        std::vector<RootObservation> lazyCurrent;
+        std::vector<std::size_t> lazyDeferred;
+        const auto evaluate = [&](std::size_t index, double from,
+                                   const RootObservation* observation=nullptr,
+                                   bool strictlyFuture=false) {
             auto &pair = pairs[index];
             const auto [a, b, partA, partB] = pair.key;
             if (pair.evaluated && pair.revisionA == bodies[a].impactTrajectoryRevision &&
@@ -290,9 +306,10 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 work.ccdInitialSweep = from == 0;
             }
             impactQueryAnchorTime = from;
-            const bool touching = PairTouches(a, b, int(partA), int(partB), from);
-            double hit = double(dt) + 1;
-            if (touching) {
+            const bool touching = observation ? observation->touching
+                : PairTouches(a, b, int(partA), int(partB), from);
+            double hit = observation ? observation->hit : double(dt) + 1;
+            if (!observation && touching) {
                 const auto contact = PairAt(a, b, int(partA), int(partB), from, 0);
                 const auto aa = PoseAt(a, from), bb = PoseAt(b, from);
                 for (int k = 0; k < contact.count; ++k) {
@@ -313,8 +330,11 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                         hit = from;
                 }
             }
-            if (hit != from)
+            if (!observation && hit != from) {
                 hit = ImpactTime(a, b, int(partA), int(partB), from, dt);
+            }
+            if (strictlyFuture && hit<=from)
+                throw std::logic_error("native future query contradicted its current-time predicate");
             if (!(hit < double(dt)))
                 return;
             const auto row = std::lower_bound(mk2RowPairs.begin(), mk2RowPairs.end(), pair.key);
@@ -357,10 +377,271 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             p.queued = true;
             pending.push_back(index);
         };
+        const auto frontPair = [&]() -> std::optional<std::size_t> {
+            while (!queue.empty()) {
+                const auto& entry=queue.top();
+                const auto index=std::get<2>(entry);
+                const auto& pair=pairs[index];
+                if (std::get<3>(entry)==pair.version && pair.found && active(pair) &&
+                    pair.revisionA==bodies[pair.key[0]].impactTrajectoryRevision &&
+                    pair.revisionB==bodies[pair.key[1]].impactTrajectoryRevision)
+                    return index;
+                queue.pop();
+            }
+            return std::nullopt;
+        };
         const auto flush = [&](double from) {
-            for (auto index : pending) {
-                pairs[index].queued = false;
-                evaluate(index, from);
+            const auto pendingCount=pending.size();
+            if (pendingCount) {
+                impactQueryAnchorTime=from;
+                lazyCurrent.assign(pendingCount,RootObservation{});
+                auto first=frontPair();
+                bool immediate=first && pairs[*first].hit==from;
+                const auto nativeBoxPart=[](const Shape& shape,unsigned part) {
+                    if (shape.asset) return false;
+                    glm::vec3 half(0);
+                    if (shape.type==ShapeType::Box && part==0) half=shape.halfExtents;
+                    else if (shape.type==ShapeType::CompoundBoxes && part<shape.boxes.size()) {
+                        const auto& child=shape.boxes[part];
+                        if (child.type!=ShapeType::Box || child.asset ||
+                            child.rotation!=glm::quat(1,0,0,0)) return false;
+                        half=child.halfExtents;
+                    } else return false;
+                    return rigid_motion_bounds::Finite3(half) &&
+                        glm::all(glm::greaterThan(half,glm::vec3(0)));
+                };
+                // Establish every eligible current-time event before choosing
+                // one. A certain zero-margin native manifold has the same
+                // contact truth as the predicate used by ImpactTime at start.
+                for (std::size_t n=0;n<pendingCount;++n) {
+                    const auto& pair=pairs[pending[n]];
+                    const auto [a,b,pa,pb]=pair.key;
+                    if ((pair.evaluated && pair.revisionA==bodies[a].impactTrajectoryRevision &&
+                         pair.revisionB==bodies[b].impactTrajectoryRevision) ||
+                        !active(pair) || !CanRespond(a,b) ||
+                        !nativeBoxPart(bodies[a].shape,pa) ||
+                        !nativeBoxPart(bodies[b].shape,pb)) continue;
+                    const auto manifold=PairAt(a,b,int(pa),int(pb),from,0);
+                    if (manifold.uncertain) continue;
+                    auto& current=lazyCurrent[n];
+                    current.ready=true;current.touching=manifold.count>0;current.hit=double(dt)+1;
+                    if (!current.touching) continue;
+                    const auto aa=PoseAt(a,from),bb=PoseAt(b,from);
+                    if (!FiniteVector(aa.linearVelocity) || !FiniteVector(bb.linearVelocity) ||
+                        !FiniteVector(aa.angularVelocity) || !FiniteVector(bb.angularVelocity)) {
+                        current.ready=false;
+                        continue;
+                    }
+                    for (int k=0;k<manifold.count;++k) {
+                        const auto& c=manifold.points[k];
+                        const auto arm=[&](const RigidBody& body,bool first) {
+                            if (!c.hasLocalAnchors) return glm::dvec3(c.point)-glm::dvec3(body.position);
+                            const auto local=first?c.localAnchorA:c.localAnchorB;
+                            return (first?c.anchorAInWorldFrame:c.anchorBInWorldFrame)
+                                ? local : ContactRotation(body.orientation)*local;
+                        };
+                        const auto va=glm::dvec3(aa.linearVelocity)+
+                            glm::cross(glm::dvec3(aa.angularVelocity),arm(aa,true));
+                        const auto vb=glm::dvec3(bb.linearVelocity)+
+                            glm::cross(glm::dvec3(bb.angularVelocity),arm(bb,false));
+                        if (glm::dot(va-vb,glm::dvec3(c.normal)) < -kMk2ImpactApproach)
+                            current.hit=from;
+                    }
+                    immediate=immediate || current.hit==from;
+                }
+                if (immediate) {
+                    lazyDeferred.clear();
+                    for (std::size_t n=0;n<pendingCount;++n) {
+                        const auto index=pending[n];
+                        const auto& current=lazyCurrent[n];
+                        if (current.ready && current.hit!=from) {
+                            auto& pair=pairs[index];
+                            // request() used to rely on eager evaluate() to
+                            // invalidate an old heap observation. A retained
+                            // dirty future must not leave that entry visible.
+                            ++pair.version;pair.found=false;pair.evaluated=false;
+                            lazyDeferred.push_back(index);
+                        } else {
+                            pairs[index].queued=false;
+                            evaluate(index,from,current.ready?&current:nullptr);
+                        }
+                    }
+                    lazyDeferredFrom=from;
+                    lazyDeferredFutures+=lazyDeferred.size();
+                    ++lazyImmediateFlushes;
+                    pending.swap(lazyDeferred);
+                    return;
+                }
+            }
+            // Snapshot geometry preparation only. The pending order, bodies,
+            // trajectories, response state and heap stay frozen until all query
+            // lanes have joined. Unsupported pairs retain the serial path.
+            constexpr std::size_t maximumQueryRoots=256;
+            std::vector<std::size_t> queryPositions;
+            std::vector<RootObservation> observations;
+            const auto nativeBox=[](const Shape& shape){
+                if(shape.asset)return false;
+                if(shape.type==ShapeType::Box)return true;
+                return shape.type==ShapeType::CompoundBoxes&&!shape.boxes.empty()&&
+                    std::all_of(shape.boxes.begin(),shape.boxes.end(),[](const auto& child){
+                        return child.type==ShapeType::Box&&!child.asset&&
+                            child.rotation==glm::quat(1,0,0,0);
+                    });
+            };
+            const bool mayBatch=requestedQueryLanes>1&&contactJobs&&
+                !contactJobs->IsShutDown()&&contactJobLanes>1&&!searchObserver&&
+                std::fegetround()==FE_TONEAREST&&pendingCount>=8;
+            unsigned lanes=1;
+            if(mayBatch){
+                queryPositions.reserve(std::min(maximumQueryRoots,pendingCount));
+                for(std::size_t n=0;n<pendingCount&&queryPositions.size()<maximumQueryRoots;++n){
+                    const auto& pair=pairs[pending[n]];
+                    const auto a=pair.key[0],b=pair.key[1];
+                    if(active(pair)&&CanRespond(a,b)&&nativeBox(bodies[a].shape)&&
+                       nativeBox(bodies[b].shape)&&
+                       !(pair.evaluated&&pair.revisionA==bodies[a].impactTrajectoryRevision&&
+                         pair.revisionB==bodies[b].impactTrajectoryRevision))
+                        queryPositions.push_back(n);
+                }
+                if(queryPositions.size()>=8)
+                    lanes=std::min({requestedQueryLanes,contactJobLanes,
+                                    contactJobs->WorkerCount()+1,unsigned(queryPositions.size()/4)});
+            }
+            if(lanes>1){
+                const auto frozenStart=work.active?Clock::now():Clock::time_point{};
+                observations.resize(queryPositions.size());
+                if(ccdQueryStorage.size()<lanes)ccdQueryStorage.resize(lanes);
+                for(unsigned lane=0;lane<lanes;++lane){
+                    if(!ccdQueryStorage[lane])ccdQueryStorage[lane]=std::make_unique<CCDQueryStorage>();
+                    ccdQueryStorage[lane]->Reset();
+                    ccdQueryStorage[lane]->work.active=work.active;
+                }
+                std::array<InitialGeometryDiagnostics,4> laneDiagnostics{};
+                std::array<std::size_t,4> laneRoots{};
+                std::atomic<std::size_t> cursor{0};
+                const auto run=[&](unsigned lane){
+                    // A pool created under a different rounding mode must not
+                    // change geometry results. The owner can drain its work.
+                    if(std::fegetround()!=FE_TONEAREST)return;
+                    auto& scratch=*ccdQueryStorage[lane];
+                    CCDQuery query(*this,scratch);
+                    query.impactQueryAnchorTime=from;
+                    const auto contactsBefore=GetContactGeometryDiagnostics();
+                    const auto cookedBefore=GetCollisionGeometryStats();
+                    const auto compute=[&](std::size_t n){
+                        const auto& pair=pairs[pending[queryPositions[n]]];
+                        const auto [a,b,pa,pb]=pair.key;
+                        auto& result=observations[n];
+                        result.touching=query.PairTouches(a,b,int(pa),int(pb),from);
+                        result.hit=double(dt)+1;
+                        if(result.touching){
+                            const auto manifold=query.PairAt(a,b,int(pa),int(pb),from,0);
+                            const auto aa=PoseAt(a,from),bb=PoseAt(b,from);
+                            for(int k=0;k<manifold.count;++k){
+                                const auto& c=manifold.points[k];
+                                const auto arm=[&](const RigidBody& body,bool first){
+                                    if(!c.hasLocalAnchors)return glm::dvec3(c.point)-glm::dvec3(body.position);
+                                    const auto local=first?c.localAnchorA:c.localAnchorB;
+                                    return (first?c.anchorAInWorldFrame:c.anchorBInWorldFrame)
+                                        ?local:ContactRotation(body.orientation)*local;
+                                };
+                                const auto va=glm::dvec3(aa.linearVelocity)+
+                                    glm::cross(glm::dvec3(aa.angularVelocity),arm(aa,true));
+                                const auto vb=glm::dvec3(bb.linearVelocity)+
+                                    glm::cross(glm::dvec3(bb.angularVelocity),arm(bb,false));
+                                if(glm::dot(va-vb,glm::dvec3(c.normal)) < -kMk2ImpactApproach)
+                                    result.hit=from;
+                            }
+                        }
+                        if(result.hit!=from)result.hit=query.ImpactTime(a,b,int(pa),int(pb),from,dt);
+                        result.ready=true;
+                        ++laneRoots[lane];
+                    };
+                    try{
+                        for(;;){
+                            const auto n=cursor.fetch_add(1,std::memory_order_relaxed);
+                            if(n>=queryPositions.size())break;
+                            compute(n);
+                        }
+                    }catch(...){
+                        AddContactDiagnostics(laneDiagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);
+                        AddCookedDiagnostics(laneDiagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);
+                        throw;
+                    }
+                    AddContactDiagnostics(laneDiagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);
+                    AddCookedDiagnostics(laneDiagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);
+                };
+                std::array<JobHandle,3> handles{};
+                unsigned handleCount=0;
+                std::exception_ptr error;
+                try{
+                    for(unsigned lane=1;lane<lanes;++lane){
+                        auto handle=contactJobs->Submit([&,lane](JobContext&){run(lane);},
+                            JobPriority::High,"Physics frozen pair queries");
+                        if(handle.IsValid())handles[handleCount++]=handle;
+                    }
+                }catch(...){error=std::current_exception();}
+                try{run(0);}catch(...){if(!error)error=std::current_exception();}
+                for(unsigned n=0;n<handleCount;++n)
+                    if(contactJobs->StateOf(handles[n])==JobState::Queued)contactJobs->Cancel(handles[n]);
+                std::string workerError;
+                bool failed=false;
+                for(unsigned n=0;n<handleCount;++n){
+                    if(contactJobs->Wait(handles[n])==JobState::Failed){
+                        failed=true;workerError=contactJobs->ErrorOf(handles[n]);
+                    }
+                    contactJobs->Forget(handles[n]);
+                }
+                // All captured outputs and scratch are now exclusively owned.
+                if(error)std::rethrow_exception(error);
+                if(failed)throw std::runtime_error(workerError.empty()?"frozen pair query failed":workerError);
+                std::size_t helperRoots=0;
+                for(unsigned lane=0;lane<lanes;++lane){
+                    const auto& s=*ccdQueryStorage[lane];
+                    impactPoseEvaluations+=s.impactPoseEvaluations;impactPoseReuses+=s.impactPoseReuses;
+                    impactOrientationBuilds+=s.impactOrientationBuilds;impactTruthRequests+=s.impactTruthRequests;
+                    impactTruthReuses+=s.impactTruthReuses;impactBoundsRejected+=s.impactBoundsRejected;
+                    impactActualBoundsRejected+=s.impactActualBoundsRejected;
+                    cacheCounters.orientationHits+=s.cacheCounters.orientationHits;
+                    cacheCounters.orientationRebuilds+=s.cacheCounters.orientationRebuilds;
+                    cacheCounters.boundHits+=s.cacheCounters.boundHits;cacheCounters.boundRebuilds+=s.cacheCounters.boundRebuilds;
+                    cacheCounters.shapeRebuilds+=s.cacheCounters.shapeRebuilds;
+                    cacheCounters.allocations+=s.cacheCounters.allocations;cacheCounters.allocatedBytes+=s.cacheCounters.allocatedBytes;
+                    const auto mergeSample=[](auto& into,const auto& value){into.calls+=value.calls;into.nanoseconds+=value.nanoseconds;};
+                    mergeSample(work.toi,s.work.toi);mergeSample(work.geometry,s.work.geometry);
+                    mergeSample(work.advance,s.work.advance);mergeSample(work.sampling,s.work.sampling);mergeSample(work.preparation,s.work.preparation);
+                    work.segmentVisits+=s.work.segmentVisits;work.segmentKnots+=s.work.segmentKnots;work.segmentAllocations+=s.work.segmentAllocations;
+                    stats.impactQueries+=s.stats.impactQueries;stats.impactSearchIterations+=s.stats.impactSearchIterations;
+                    stats.impactPeakIterations=std::max(stats.impactPeakIterations,s.stats.impactPeakIterations);
+                    stats.impactSearchLimit+=s.stats.impactSearchLimit;stats.impactUncertifiedAdvances+=s.stats.impactUncertifiedAdvances;
+                    stats.impactSearchStalls+=s.stats.impactSearchStalls;stats.impactSamplingFallbacks+=s.stats.impactSamplingFallbacks;
+                    stats.impactSamplingTests+=s.stats.impactSamplingTests;stats.impactSamplingResolutionCaps+=s.stats.impactSamplingResolutionCaps;
+                    stats.impactSamplingMaxInterval=std::max(stats.impactSamplingMaxInterval,s.stats.impactSamplingMaxInterval);
+                    if(lane){
+                        helperRoots+=laneRoots[lane];
+                        AddContactDiagnostics(parallelContactDiagnostics,laneDiagnostics[lane].contacts);
+                        AddCookedDiagnostics(parallelCookedDiagnostics,laneDiagnostics[lane].cooked);
+                    }
+                }
+                usedQueryLanes=std::max(usedQueryLanes,lanes);
+                helperQueryJobs+=handleCount;helperQueryRoots+=helperRoots;
+                ownerQueryRoots+=laneRoots[0];frozenQueryRoots+=queryPositions.size();
+                if(work.active)frozenQueryWallNanoseconds+=std::uint64_t(
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-frozenStart).count());
+            }
+            // Preserve the original pending order, including unsupported pairs.
+            // Publication/response never depend on worker completion order.
+            std::size_t nextObservation=0;
+            for(std::size_t n=0;n<pendingCount;++n){
+                const auto index=pending[n];
+                const RootObservation* observation=nullptr;
+                if(lanes>1&&nextObservation<queryPositions.size()&&queryPositions[nextObservation]==n){
+                    if(observations[nextObservation].ready)observation=&observations[nextObservation];
+                    ++nextObservation;
+                }
+                pairs[index].queued=false;
+                evaluate(index,from,observation,n<lazyCurrent.size() &&
+                         lazyCurrent[n].ready && lazyCurrent[n].hit!=from);
             }
             pending.clear();
         };
@@ -412,15 +693,20 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 discover(slot, 0);
         flush(0);
         const auto nextPair = [&]() -> std::optional<std::size_t> {
-            while (!queue.empty()) {
-                const auto entry = queue.top();
-                queue.pop();
-                const auto index = std::get<2>(entry);
-                const auto &pair = pairs[index];
-                if (std::get<3>(entry) == pair.version && pair.found && active(pair))
-                    return index;
+            auto first=frontPair();
+            // A strictly-future dirty pair can wait only while an exact
+            // current-time response is ready. Complete all retained roots
+            // before the frontier may advance, preserving their original
+            // episode start and the existing time/key ordering.
+            if (!pending.empty() &&
+                (!first || pairs[*first].hit!=lazyDeferredFrom)) {
+                flush(lazyDeferredFrom);
+                first=frontPair();
+                if (!pending.empty() && (!first || pairs[*first].hit!=lazyDeferredFrom))
+                    throw std::logic_error("deferred future query crossed its frontier barrier");
             }
-            return std::nullopt;
+            if (first) queue.pop();
+            return first;
         };
         const auto resolve = [&](std::size_t index, bool terminal) {
             const auto key = pairs[index].key;
@@ -459,18 +745,14 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 }
                 auto &arrivals = arrivalCounts ? (*arrivalCounts)[slot] : localArrivals[slot];
                 const bool newInstant = lastArrival[slot] != at;
-                const bool stop = held[slot] || terminal || !resolved ||
-                                  (newInstant && arrivals >= kMk2ArrivalsPerBody);
+                const bool stop = held[slot] || terminal || !resolved;
                 if (stop && !held[slot]) {
                     ++stats.impactSafetyFallback;
                     if (!resolved)
                         ++stats.impactResponseHolds;
                     else {
                         ++stats.impactEventCapFallback;
-                        if (terminal)
-                            ++stats.impactStepCapHolds;
-                        else
-                            ++stats.impactBodyCapHolds;
+                        ++stats.impactStepCapHolds;
                     }
                 } else if (!stop && newInstant) {
                     ++arrivals;
@@ -478,7 +760,10 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 lastArrival[slot] = at;
                 glm::vec3 safeSlide(0);
                 const auto boundary = slot == a ? b : a;
-                if (stop && !terminal && resolved && (slot == a || slot == b) &&
+                // An exhausted work guard still permits a separately certified
+                // tangent path. Keep the normal hold and its telemetry; the
+                // complete projected sweep below must prove clearance first.
+                if (stop && resolved && (slot == a || slot == b) &&
                     bodies[slot].shape.type == ShapeType::Sphere &&
                     bodies[slot].shape.pivotOffset == glm::vec3(0) &&
                     !bodies[boundary].HasMotion() &&
@@ -554,6 +839,21 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             if (!next)
                 break;
             resolve(*next, true);
+        }
+        JUDAS_PROFILE_COUNTER("Physics CCD lazy deferred futures",double(lazyDeferredFutures),
+                              ProfileCounterMode::Sum);
+        JUDAS_PROFILE_COUNTER("Physics CCD lazy immediate flushes",double(lazyImmediateFlushes),
+                              ProfileCounterMode::Sum);
+        if(requestedQueryLanes>1){
+            // Publish once per pass, not per resweep: dense crashes must not
+            // flood the profiler merely because helpers completed more work.
+            JUDAS_PROFILE_COUNTER("Physics CCD query worker lanes",usedQueryLanes,ProfileCounterMode::Maximum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query helper jobs",double(helperQueryJobs),ProfileCounterMode::Sum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query helper roots",double(helperQueryRoots),ProfileCounterMode::Sum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query owner roots",double(ownerQueryRoots),ProfileCounterMode::Sum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query frozen roots",double(frozenQueryRoots),ProfileCounterMode::Sum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query frozen batch wall ms",double(frozenQueryWallNanoseconds)*1e-6,ProfileCounterMode::Sum);
+            JUDAS_PROFILE_COUNTER("Physics CCD query scratch bytes",double(CCDQueryBytes()),ProfileCounterMode::Latest);
         }
         JUDAS_PROFILE_COUNTER("Physics CCD frontier outlier proxies", double(futureProxyPeak),
                               ProfileCounterMode::Maximum);

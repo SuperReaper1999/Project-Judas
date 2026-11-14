@@ -14,6 +14,27 @@ bool Finite(glm::dvec3 value) {
 }
 }
 
+void PhysicsWorld::Impl::ValidateCoupling(float fixedDeltaTime,
+    const PhysicsWorld::VelocityCoupling* coupling) const {
+    if (!coupling || !coupling->physicalBatch) return;
+    const auto& batch=*coupling->physicalBatch;
+    if (coupling->begin || coupling->solve || coupling->finish)
+        throw std::invalid_argument("physical batch cannot compose with legacy velocity-changing callbacks");
+    if (!std::isfinite(fixedDeltaTime) || fixedDeltaTime <= 0 ||
+        !batch.propose || !batch.maximumBodies || batch.maximumBodies > 4096 ||
+        !batch.maximumContacts || batch.maximumContacts > 16384 ||
+        !batch.maximumJointRows || batch.maximumJointRows > 16384 ||
+        batch.bodies.size() > batch.maximumBodies)
+        throw std::invalid_argument("invalid physical constraint participant/bounds");
+    std::set<unsigned> unique;
+    for (const auto handle : batch.bodies) {
+        const auto* body = Get(handle);
+        if (!body || !body->enabled || !body->isDynamic || body->sensor || body->queryOnly ||
+            body->simulationSuspended || !unique.insert(handle.id).second)
+            throw std::invalid_argument("invalid, duplicate or inactive physical batch body");
+    }
+}
+
 ConstraintPublication PhysicsWorld::Impl::ProjectConstraintBatch(
     const PhysicsConstraintParticipant& participant,
     const PhysicsConstraintBatch::Context& context,

@@ -27,8 +27,13 @@ auto PhysicsWorld::Impl::Observe(unsigned a, unsigned b, const Contact &c, float
 
 auto PhysicsWorld::Impl::FinishTouches() -> void {
     touchEvents.clear();
-    // Sensor overlap is discrete endpoint geometry, never speculative skin
-    // or TOI response. Reuse the same tree, layer policy and narrowphase.
+    std::vector<TouchEvent> sensorCrossings;
+    std::optional<CCDQuery> sensorQuery;
+    const auto sensorStart = work.active ? PerformanceProfiler::Now() : 0;
+    // Endpoint overlap owns persistent sensor state. A swept-only crossing
+    // publishes an enter/exit pair without retaining a phantom overlap into
+    // the next step. Search the completed motion ledger, never its uncorrected
+    // pre-solve prediction, and never apply a physical sensor impulse.
     if (std::any_of(aliveSlots.begin(), aliveSlots.end(), [&](unsigned i) {
             return (bodies[i].sensor || bodies[i].isKinematic) && bodies[i].enabled;
         })) {
@@ -40,17 +45,121 @@ auto PhysicsWorld::Impl::FinishTouches() -> void {
                 if(!bodies[a].sensor&&!bodies[b].sensor&&!OneWayAllows(a,b))continue;
                 const auto &oa = Orientation(bodies[a]);
                 const auto &ob = Orientation(bodies[b]);
+                bool endpointOverlap = false;
                 for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
                     for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
                         auto m = ComputeContacts(
                             PrimitiveAt(bodies[a].shape, bodies[a].rigidBody, pa, &oa),
                             PrimitiveAt(bodies[b].shape, bodies[b].rigidBody, pb, &ob), 0, &oa,
                             &ob);
-                        if (m.count)
+                        if (m.count) {
                             Observe(a, b, m.points[0]);
+                            endpointOverlap = true;
+                        }
                     }
+                if (endpointOverlap || !(bodies[a].sensor || bodies[b].sensor) ||
+                    bodies[a].queryOnly || bodies[b].queryOnly || !(stepDuration > 0))
+                    continue;
+                const auto handleA = MakeHandle(a), handleB = MakeHandle(b);
+                const auto handles = std::minmax(handleA.id, handleB.id);
+                // An existing overlap already receives its ordinary exit below.
+                const auto previous = previousTouches.find({handles.first, handles.second});
+                if (previous != previousTouches.end() && previous->second.sensor)
+                    continue;
+                // The completed path can reverse after a solid impact. Its
+                // endpoint enclosure alone is not an enclosure of that path.
+                // Search each common ledger interval, with fresh observations
+                // after StepCoupled has assembled the full-step trajectories.
+                if (!sensorQuery) {
+                    // Physics query workers have joined before publication.
+                    // Reuse their bounded scratch, never the solver's memo or
+                    // diagnostics. Coupled steps have now rebuilt their full
+                    // trajectories, so their old local-time anchor is invalid.
+                    if (ccdQueryStorage.empty()) ccdQueryStorage.resize(1);
+                    if (!ccdQueryStorage[0]) ccdQueryStorage[0] = std::make_unique<CCDQueryStorage>();
+                    auto &scratch = *ccdQueryStorage[0];
+                    scratch.Reset();
+                    sensorQuery.emplace(*this, scratch);
+                    sensorQuery->impactQueryAnchorTime = std::numeric_limits<double>::quiet_NaN();
+                }
+                std::vector<double> boundaries{0, stepDuration};
+                for (auto slot : {a, b})
+                    for (const auto &segment : bodies[slot].motion.Segments())
+                        if (segment.end > 0 && segment.end < stepDuration)
+                            boundaries.push_back(segment.end);
+                std::sort(boundaries.begin(), boundaries.end());
+                boundaries.erase(std::unique(boundaries.begin(), boundaries.end()), boundaries.end());
+                double first = stepDuration + 1;
+                int firstA = 0, firstB = 0;
+                for (std::size_t interval = 1; interval < boundaries.size(); ++interval) {
+                    for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                        for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
+                            if (interval == 1) {
+                                const auto initial = sensorQuery->PairAt(a, b, pa, pb, 0, 0);
+                                if (initial.count && !initial.uncertain) {
+                                    first = 0;
+                                    firstA = pa;
+                                    firstB = pb;
+                                    continue;
+                                }
+                            }
+                            const auto hit = sensorQuery->ImpactTime(a, b, pa, pb, boundaries[interval-1],
+                                                                     boundaries[interval]);
+                            if (hit <= boundaries[interval] && hit < first) {
+                                first = hit;
+                                firstA = pa;
+                                firstB = pb;
+                            }
+                        }
+                    if (first <= boundaries[interval])
+                        break;
+                }
+                if (!(first < stepDuration))
+                    continue;
+                auto manifold = sensorQuery->PairAt(a, b, firstA, firstB, first, 0);
+                if (!manifold.count || manifold.uncertain)
+                    continue;
+                const auto aa = PoseAt(a, first), bb = PoseAt(b, first);
+                const auto &contact = manifold.points[0];
+                const auto va = aa.linearVelocity + glm::cross(aa.angularVelocity,
+                                                              contact.point - aa.position);
+                const auto vb = bb.linearVelocity + glm::cross(bb.angularVelocity,
+                                                              contact.point - bb.position);
+                TouchEvent event;
+                event.a = MakeHandle(a);
+                event.b = MakeHandle(b);
+                event.sensor = true;
+                event.point = contact.point;
+                event.normal = contact.normal;
+                event.relativeVelocity = vb - va;
+                if (event.a.id > event.b.id) {
+                    std::swap(event.a, event.b);
+                    event.normal = -event.normal;
+                    event.relativeVelocity = -event.relativeVelocity;
+                }
+                sensorCrossings.push_back(event);
             }
     }
+    // Query-controlled actors publish only accepted path segments. Final pose
+    // reset does not erase those observations; endpoint overlap still owns
+    // persistent state and an existing overlap already receives its normal exit.
+    for (const auto &[key, event] : querySensorCrossings) {
+        const auto *a = Get(event.a), *b = Get(event.b);
+        if (!a || !b || !a->enabled || !b->enabled ||
+            !CanCollide(event.a.id & kSlotMask, event.b.id & kSlotMask)) continue;
+        const auto *sensor = a->sensor ? a : b->sensor ? b : nullptr;
+        if (!sensor || sensor->isDynamic || sensor->isKinematic) continue;
+        const auto old = previousTouches.find(key);
+        const bool entering=old == previousTouches.end() || !old->second.sensor;
+        const auto endpoint=stepTouches.find(key);
+        if (endpoint != stepTouches.end()) {
+            // The endpoint retains overlap ownership. Its first Enter carries
+            // the verified entry point/velocity instead of ResetBody's zero
+            // velocity. Subsequent Stay observations use endpoint geometry.
+            if (entering) endpoint->second=event;
+        } else if (entering) sensorCrossings.push_back(event);
+    }
+    querySensorCrossings.clear();
     for (auto &[key, e] : stepTouches) {
         const auto old = previousTouches.find(key);
         if (old != previousTouches.end() && old->second.sensor != e.sensor) {
@@ -69,10 +178,25 @@ auto PhysicsWorld::Impl::FinishTouches() -> void {
             exit.phase = PhysicsWorld::TouchPhase::Exit;
             touchEvents.push_back(exit);
         }
+    for (auto event : sensorCrossings) {
+        event.phase = PhysicsWorld::TouchPhase::Enter;
+        touchEvents.push_back(event);
+        event.phase = PhysicsWorld::TouchPhase::Exit;
+        touchEvents.push_back(event);
+    }
     std::stable_sort(touchEvents.begin(), touchEvents.end(), [](const auto &a, const auto &b) {
         return std::tie(a.a.id, a.b.id) < std::tie(b.a.id, b.b.id);
     });
     previousTouches = stepTouches;
+    JUDAS_PROFILE_COUNTER("Physics swept sensor queries",
+                          sensorQuery ? double(ccdQueryStorage[0]->stats.impactQueries) : 0,
+                          ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics swept sensor crossings", double(sensorCrossings.size()),
+                          ProfileCounterMode::Sum);
+    if (sensorStart)
+        JUDAS_PROFILE_COUNTER("Physics sensor publication CPU ms",
+                              double(PerformanceProfiler::Now()-sensorStart)*1e-6,
+                              ProfileCounterMode::Sum);
 }
 
 auto PhysicsWorld::Impl::PrepareInitialContactGeometry(float dt) -> void {
@@ -275,6 +399,7 @@ void PhysicsWorld::ClearTouchHistory() {
     m_impl->previousTouches.clear();
     m_impl->stepTouches.clear();
     m_impl->preStepQueryTouches.clear();
+    m_impl->querySensorCrossings.clear();
     m_impl->collectingPreStepQueries = false;
     m_impl->queryTouchesPending = false;
     m_impl->touchEvents.clear();
@@ -282,6 +407,7 @@ void PhysicsWorld::ClearTouchHistory() {
 
 void PhysicsWorld::BeginPreStepQueryContacts() {
     m_impl->preStepQueryTouches.clear();
+    m_impl->querySensorCrossings.clear();
     m_impl->collectingPreStepQueries = true;
 }
 
@@ -298,6 +424,59 @@ void PhysicsWorld::ObserveQueryContact(BodyHandle h, const ShapeSweepHit &hit,
     c.normal = hit.normal;
     m_impl->Observe(h.id & Impl::kSlotMask, hit.hitBody.id & Impl::kSlotMask, c, 0,
                     m_impl->collectingPreStepQueries);
+}
+
+void PhysicsWorld::ObserveQueryTranslation(BodyHandle observer,const BodyTransform& from,
+                                           const glm::vec3& displacement,const glm::vec3& velocity,
+                                           const PhysicsQueryFilter* filter) {
+    auto* actor=m_impl->Get(observer);
+    if(!actor || !actor->queryOnly || !actor->enabled) return;
+    const auto finite=[](glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);};
+    const double rotationNorm=glm::dot(glm::dquat(from.rotation),glm::dquat(from.rotation));
+    const double length=glm::length(glm::dvec3(displacement));
+    if(!finite(from.position)||!finite(from.position+displacement)||!finite(displacement)||!finite(velocity)||
+       !std::isfinite(rotationNorm)||!(rotationNorm>0)||!(length>1e-6)) return;
+    const auto started=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
+    auto policy=filter?*filter:PhysicsQueryFilter{};
+    policy.includeSensors=true;
+    const auto first=ShapeAabb(actor->shape,from.position,from.rotation);
+    const auto last=ShapeAabb(actor->shape,from.position+displacement,from.rotation);
+    const auto candidates=m_impl->QuerySlots(first.Union(last).Expanded(kSweepQueryEpsilon));
+    const auto direction=glm::vec3(glm::dvec3(displacement)/length);
+    unsigned tested=0;
+    for(auto slot:candidates){
+        const auto& target=m_impl->bodies[slot];
+        if(slot==(observer.id&Impl::kSlotMask)||!target.sensor||target.isDynamic||target.isKinematic||
+           !m_impl->CanCollide(observer.id&Impl::kSlotMask,slot)||
+           !m_impl->MatchesQuery(slot,policy)) continue;
+        const auto handle=m_impl->MakeHandle(slot);
+        const auto ids=std::minmax(observer.id,handle.id);
+        const Impl::TouchKey key{ids.first,ids.second};
+        if(m_impl->querySensorCrossings.count(key)) continue;
+        PrimitiveCastHit nearest;
+        nearest.distance=length+1;
+        for(int part=0;part<PrimitiveCount(target.shape);++part){
+            ++tested;
+            const auto geometry=PrimitiveAt(target.shape,target.rigidBody,part);
+            const auto hit=CastAgainstPrimitive(actor->shape,from,direction,length,geometry,false,
+                                               policy.normalAxis,policy.minimumNormalDot);
+            if(hit.hit&&(policy.normalAxis==glm::vec3(0)||glm::dot(hit.normal,policy.normalAxis)>policy.minimumNormalDot)&&
+               (!nearest.hit||hit.distance<nearest.distance)) nearest=hit;
+        }
+        if(!nearest.hit) continue;
+        TouchEvent event;
+        event.a=observer;event.b=handle;event.sensor=true;
+        event.point=nearest.point;event.normal=nearest.normal;event.relativeVelocity=-velocity;
+        if(event.a.id>event.b.id){
+            std::swap(event.a,event.b);event.normal=-event.normal;event.relativeVelocity=-event.relativeVelocity;
+        }
+        m_impl->querySensorCrossings.emplace(key,event);
+        m_impl->queryTouchesPending=true;
+    }
+    JUDAS_PROFILE_COUNTER("Physics accepted query translations",1,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics query sensor primitives",double(tested),ProfileCounterMode::Sum);
+    if(started) JUDAS_PROFILE_COUNTER("Physics query sensor search CPU ms",
+                                    double(PerformanceProfiler::Now()-started)*1e-6,ProfileCounterMode::Sum);
 }
 
 void PhysicsWorld::FinishQueryTouches() {

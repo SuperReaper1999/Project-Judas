@@ -48,6 +48,9 @@ double Counter(const char* name){const auto history=PerformanceProfiler::Get().H
     for(const auto& counter:history.back().counters)if(counter.name==name)return counter.value;
     return -1;
 }
+// Every actual Step gets its own frame, including serial controls. Keeping
+// recording enabled without draining their events batches unrelated steps into
+// the next measured frame and can overflow the bounded lane during long tests.
 void Measured(const std::function<void()>& step){ProfileFrame frame("parallel narrowphase test");step();}
 void GravityStep(PhysicsWorld& world,glm::vec3 gravity={0,-9.81f,0}){
     for(auto body:world.AliveBodies())if(world.IsDynamicBody(body))world.ApplyLinearAcceleration(body,gravity,dt);
@@ -119,37 +122,37 @@ void ExactParallel(JobSystem& jobs,unsigned lanes,bool mixed){
     parallel.dynamic[12]=parallel.world.CreateShape(Shape::Sphere(.25f),{pose.position+parallel.rotation*glm::vec3(0,2,0),pose.rotation},true,1,.6f,0);
     Shape ignored;BodyTransform ignoredPose;
     Check(serial.dynamic[12].id!=oldA.id&&parallel.dynamic[12].id!=oldB.id&&!parallel.world.GetBodyShape(oldB,ignored,ignoredPose),"slot reuse cannot retain stale prefetched body/shape identity");
-    for(unsigned i=0;i<4;++i){serial.Tick();parallel.Tick();identical&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
+    for(unsigned i=0;i<4;++i){Measured([&]{serial.Tick();});Measured([&]{parallel.Tick();});identical&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
     Check(identical,"reused-slot geometry rebuild preserves subsequent exact physical endpoints");
 }
 void Sleeping(JobSystem& jobs){
     Fixture serial(nullptr,1,false,false,false),parallel(&jobs,4,false,false,false);bool same=true;
-    for(unsigned i=0;i<60;++i){serial.Tick();Measured([&]{parallel.Tick();});same&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
+    for(unsigned i=0;i<60;++i){Measured([&]{serial.Tick();});Measured([&]{parallel.Tick();});same&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
     const auto asleep=parallel.world.LastStepStats().sleepingBodies;
     Check(same&&asleep==240,"all resting bodies naturally sleep with exactly the original quiet clocks");
     Check(Counter("Physics parallel initial manifolds")==0,"inactive sleeping assemblies do not receive unnecessary geometry jobs");
     const auto start=parallel.world.GetTransform(parallel.dynamic[10]).position;
     serial.world.ApplyLinearImpulse(serial.dynamic[10],{1,0,0});parallel.world.ApplyLinearImpulse(parallel.dynamic[10],{1,0,0});
-    for(unsigned i=0;i<4;++i){serial.Tick();parallel.Tick();same&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
+    for(unsigned i=0;i<4;++i){Measured([&]{serial.Tick();});Measured([&]{parallel.Tick();});same&=PhysicalState(serial.world)==PhysicalState(parallel.world);}
     Check(same&&!parallel.world.IsSleeping(parallel.dynamic[10])&&glm::length(parallel.world.GetTransform(parallel.dynamic[10]).position-start)>.002f,"actual impulse wakes and moves the original physical contact island");
 }
 void ServiceBoundaries(){
     Fixture serial(nullptr,1),detached(nullptr,4);Measured([&]{serial.Tick();});Measured([&]{detached.Tick();});
     Check(PhysicalState(serial.world)==PhysicalState(detached.world)&&Counter("Physics initial geometry worker lanes")==0,"null borrowed service keeps the original serial result");
-    JobSystem stopped(1);stopped.Shutdown();Fixture afterStop(&stopped,4),reference(nullptr,1);reference.Tick();Measured([&]{afterStop.Tick();});
+    JobSystem stopped(1);stopped.Shutdown();Fixture afterStop(&stopped,4),reference(nullptr,1);Measured([&]{reference.Tick();});Measured([&]{afterStop.Tick();});
     Check(PhysicalState(reference.world)==PhysicalState(afterStop.world)&&Counter("Physics initial geometry worker lanes")==0&&stopped.Stats().submitted==0,"already-stopped pool safely falls back without submitting or skipping physics");
-    JobSystem jobs(1);Fixture one(&jobs,1),oneReference(nullptr,1);oneReference.Tick();Measured([&]{one.Tick();});
+    JobSystem jobs(1);Fixture one(&jobs,1),oneReference(nullptr,1);Measured([&]{oneReference.Tick();});Measured([&]{one.Tick();});
     Check(PhysicalState(oneReference.world)==PhysicalState(one.world)&&Counter("Physics initial geometry worker lanes")==0,"one-lane limit keeps the unbatched serial path");
     bool rejected=false;PhysicsWorld::VelocityCoupling material;material.iterations=10;material.begin=[&](float){try{one.world.SetJobSystem(nullptr);}catch(const std::logic_error&){rejected=true;}};
-    one.world.Step(dt,&material);Check(rejected,"service ownership cannot change inside an authoritative step callback");
-    one.world.SetJobSystem(nullptr);one.world.Step(dt);
+    Measured([&]{one.world.Step(dt,&material);});Check(rejected,"service ownership cannot change inside an authoritative step callback");
+    one.world.SetJobSystem(nullptr);Measured([&]{one.world.Step(dt);});
     Check(jobs.Stats().running==0,"detaching at a completed boundary leaves no physics jobs alive");
 }
 void BusyPool(){
     JobSystem jobs(1);std::atomic<bool> release{false},finished{false},rescued{false};
     const auto resource=jobs.Submit([&](JobContext& ctx){while(!release.load()&&!ctx.CancelRequested())std::this_thread::yield();},JobPriority::Normal,"unrelated resource fixture");
     while(jobs.StateOf(resource)!=JobState::Running)std::this_thread::yield();
-    Fixture serial(nullptr,1),parallel(&jobs,4);serial.Tick();
+    Fixture serial(nullptr,1),parallel(&jobs,4);Measured([&]{serial.Tick();});
     std::thread watchdog([&]{const auto end=std::chrono::steady_clock::now()+std::chrono::seconds(3);while(!finished.load()&&std::chrono::steady_clock::now()<end)std::this_thread::yield();if(!finished.load()){rescued=true;release=true;}});
     try{Measured([&]{parallel.Tick();});}catch(...){finished=true;release=true;watchdog.join();throw;}
     finished=true;watchdog.join();
@@ -158,25 +161,27 @@ void BusyPool(){
     release=true;Require(jobs.Wait(resource)==JobState::Completed,"unrelated resource did not complete normally");jobs.Forget(resource);
     const auto failure=jobs.Submit([](JobContext&){throw std::runtime_error("independent resource failure");});
     Check(jobs.Wait(failure)==JobState::Failed,"negative control produces a real failed unrelated worker job");jobs.Forget(failure);
-    serial.Tick();parallel.Tick();Check(PhysicalState(serial.world)==PhysicalState(parallel.world),"unrelated worker failure does not poison geometry or authoritative motion");
+    Measured([&]{serial.Tick();});Measured([&]{parallel.Tick();});Check(PhysicalState(serial.world)==PhysicalState(parallel.world),"unrelated worker failure does not poison geometry or authoritative motion");
 }
 void ConcurrentShutdown(){
     JobSystem jobs(1);const auto blocker=jobs.Submit([](JobContext& ctx){while(!ctx.CancelRequested())std::this_thread::yield();ctx.ReportCancelled();});
     while(jobs.StateOf(blocker)!=JobState::Running)std::this_thread::yield();
-    Fixture serial(nullptr,1),parallel(&jobs,4);serial.Tick();std::atomic<bool> sawSubmission{false};
+    Fixture serial(nullptr,1),parallel(&jobs,4);Measured([&]{serial.Tick();});std::atomic<bool> sawSubmission{false};
     std::thread shutdown([&]{const auto end=std::chrono::steady_clock::now()+std::chrono::seconds(3);while(jobs.Stats().submitted<2&&std::chrono::steady_clock::now()<end)std::this_thread::yield();sawSubmission=jobs.Stats().submitted>=2;jobs.Shutdown();});
-    try{parallel.Tick();}catch(...){shutdown.join();throw;}shutdown.join();
+    try{Measured([&]{parallel.Tick();});}catch(...){shutdown.join();throw;}shutdown.join();
     Check(sawSubmission&&jobs.IsShutDown()&&PhysicalState(serial.world)==PhysicalState(parallel.world),"pool shutdown around a submitted batch joins/cancels safely and preserves the actual endpoint");
-    serial.Tick();parallel.Tick();Check(PhysicalState(serial.world)==PhysicalState(parallel.world),"subsequent steps continue serially after pool shutdown");
+    Measured([&]{serial.Tick();});Measured([&]{parallel.Tick();});Check(PhysicalState(serial.world)==PhysicalState(parallel.world),"subsequent steps continue serially after pool shutdown");
 }
 void ScratchBound(JobSystem& jobs,unsigned count,bool expectedParallel){
     PhysicsWorld serial,parallel;serial.Init();parallel.Init();parallel.SetJobSystem(&jobs,4);
     for(unsigned i=0;i<count;++i){const glm::vec3 p{float(i%6)*.01f,float((i/6)%6)*.01f,float(i/36)*.01f};serial.CreateDynamicSphere(p,.0005f,1,0,0);parallel.CreateDynamicSphere(p,.0005f,1,0,0);}
     // Fat broadphase boxes overlap; the actual spheres are independently spaced
     // ten radii apart. This exercises the cap without a destructive pile.
-    serial.Step(dt);Measured([&]{parallel.Step(dt);});
+    Measured([&]{serial.Step(dt);});Measured([&]{parallel.Step(dt);});
     const auto pairs=std::size_t(count)*(count-1)/2;
-    Check(parallel.LastStepStats().candidatePairs==pairs&&parallel.LastStepContacts().empty()&&PhysicalState(serial)==PhysicalState(parallel),"large candidate-only negative control retains real separation and exact physical state");
+    // Candidate statistics sum four native preparations. Prefetch and scratch
+    // counters below are per-phase maxima; their 16384-pair cap is unchanged.
+    Check(parallel.LastStepStats().candidatePairs==4*pairs&&parallel.LastStepContacts().empty()&&PhysicalState(serial)==PhysicalState(parallel),"large candidate-only negative control retains real separation and exact physical state");
     Check(expectedParallel?Counter("Physics parallel initial manifolds")==double(pairs)&&Counter("Physics initial geometry scratch bytes")>0:Counter("Physics parallel initial manifolds")==0&&Counter("Physics initial geometry scratch bytes")==0,"16384-pair prefetch cap bounds storage and selects ordinary serial fallback above the cap");
 }
 Scene SaveScene(){Scene scene;scene.Settings().name="parallel geometry persistence";
@@ -186,7 +191,7 @@ Scene SaveScene(){Scene scene;scene.Settings().name="parallel geometry persisten
 void PersistenceAndRuntimeWiring(JobSystem& jobs){
     ResourceManager resources(nullptr,nullptr,&jobs);RuntimeWorld serial,parallel,cold,coldSerial;const auto scene=SaveScene();std::string error;
     Require(serial.Build(scene,nullptr,error)&&parallel.Build(scene,&resources,error),"runtime build: "+error);
-    for(unsigned i=0;i<4;++i){GravityStep(serial.Physics());Measured([&]{GravityStep(parallel.Physics());});}
+    for(unsigned i=0;i<4;++i){Measured([&]{GravityStep(serial.Physics());});Measured([&]{GravityStep(parallel.Physics());});}
     Check(Counter("Physics initial geometry worker lanes")==4&&PhysicalState(serial.Physics())==PhysicalState(parallel.Physics()),"ordinary RuntimeWorld borrows its ResourceManager job service and preserves real contacts");
     std::map<std::string,SaveChunk> serialChunks,chunks;Require(WorldPersistence::Capture(serial,serialChunks,error)&&WorldPersistence::Capture(parallel,chunks,error),"runtime capture: "+error);
     bool same=serialChunks.size()==chunks.size();for(const auto& [key,value]:serialChunks){auto found=chunks.find(key);same&=found!=chunks.end()&&found->second.version==value.version&&found->second.data==value.data;}
@@ -205,7 +210,8 @@ void PersistenceAndRuntimeWiring(JobSystem& jobs){
     bool warmExact=true,coldExact=true,warmColdExact=true;
     for(unsigned i=0;i<4;++i){
         if(i==1)for(auto* instance:{&serial,&parallel,&coldSerial,&cold})instance->Physics().ApplyLinearImpulse(instance->RuntimeBody(moving),{.4f,.2f,.1f});
-        GravityStep(serial.Physics());GravityStep(parallel.Physics());GravityStep(coldSerial.Physics());Measured([&]{GravityStep(cold.Physics());});
+        Measured([&]{GravityStep(serial.Physics());});Measured([&]{GravityStep(parallel.Physics());});
+        Measured([&]{GravityStep(coldSerial.Physics());});Measured([&]{GravityStep(cold.Physics());});
         warmExact&=PhysicalState(serial.Physics())==PhysicalState(parallel.Physics());
         coldExact&=PhysicalState(coldSerial.Physics())==PhysicalState(cold.Physics());
         warmColdExact&=PhysicalState(serial.Physics())==PhysicalState(coldSerial.Physics());

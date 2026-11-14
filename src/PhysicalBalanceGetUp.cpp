@@ -23,8 +23,11 @@ bool PhysicalBalanceController::GetUp(PhysicsWorld& world,const glm::vec3& up,fl
         // it directly. Only a stand that has not lifted the root past
         // getUpUpright within getUpPatience switches to the staged motion; a
         // failed rise is assessed again at once.
-        if(m_observation.upright>=m_settings.getUpUpright)m_getUpReached=true;
-        if(m_history.progress!=BalanceProgress::Executing||m_history.hasStood||m_getUpReached)return false;
+        // Becoming briefly upright is not a completed stand. If the rig falls
+        // again before measured success, it may still use its authored get-up
+        // attempts instead of remaining permanently disqualified by a latch.
+        if(m_history.progress!=BalanceProgress::Executing||m_history.hasStood||
+           m_observation.upright>=m_settings.getUpUpright)return false;
         if(!m_getUpAttempts&&m_history.elapsed<m_settings.getUpPatience)return false;
         if(m_getUpAttempts>=m_settings.getUpAttempts){Fail(world,"no physical get-up after the authored attempts");return true;}
         m_getUp=true;m_getUpTime=0;++m_getUpAttempts;
