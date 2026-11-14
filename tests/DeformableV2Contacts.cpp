@@ -43,6 +43,28 @@ void RunDeformableV2ContactChecks(void(*check)(bool,const char*)){
         material.Step(1./60,world,zero,{});
         check(material.error.empty()&&material.stats.contacts==0,"next material step cannot reuse stale large-compound geometry");
     }
+    {
+        // A previous step's contact preparation must not outlive changes to
+        // the body's mass frame, orientation or authoritative pose.
+        PhysicsWorld reused,fresh;reused.Init();fresh.Init();
+        auto oldBody=reused.CreateDynamicBox({0,0,.1f},{1,1,.1f},2,0,0);
+        auto newBody=fresh.CreateDynamicBox({0,0,.1f},{1,1,.1f},2,0,0);
+        auto settings=config;settings.iterations=6;settings.substeps=4;
+        DeformableInstance warm,reference;
+        warm.Initialize(sheet,settings,glm::dmat4(1),703);
+        warm.Step(1./60,reused,zero,{});
+        check(warm.stats.contacts>0,"mass-frame refresh fixture first prepares a real reacting contact");
+        const auto rotation=glm::angleAxis(.3f,glm::vec3(0,1,0));
+        const glm::mat3 inertia(3,0,0,0,4,0,0,0,5);
+        check(reused.SetMassDistribution(oldBody,7,inertia)&&fresh.SetMassDistribution(newBody,7,inertia),"material contact recipients accept changed physical mass and inertia");
+        reused.ResetBody(oldBody,{0,0,.08f},rotation);fresh.ResetBody(newBody,{0,0,.08f},rotation);
+        warm.Reset(glm::dmat4(1));reference.Initialize(sheet,settings,glm::dmat4(1),704);
+        warm.Step(1./60,reused,zero,{});reference.Step(1./60,fresh,zero,{});
+        check(warm.error.empty()&&reference.error.empty()&&warm.stats.contacts>0&&warm.positions==reference.positions&&warm.velocities==reference.velocities,
+            "reused material preparation refreshes mass, inertia and pose exactly across fixed steps");
+        check(reused.GetLinearVelocity(oldBody)==fresh.GetLinearVelocity(newBody)&&reused.GetAngularVelocity(oldBody)==fresh.GetAngularVelocity(newBody),
+            "refreshed material contacts preserve the fresh recipient's exact linear and angular reaction");
+    }
     for(bool rotated:{false,true}){
         PhysicsWorld world;check(world.Init(),"V2 capsule contact world initializes");
         auto rotation=rotated?glm::angleAxis(.7f,glm::vec3(0,0,1)):glm::quat(1,0,0,0);

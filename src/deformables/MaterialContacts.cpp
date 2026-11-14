@@ -28,11 +28,13 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     // Overflow retains ordinary wake propagation rather than dropping it.
     bool candidateWoken=false;
     bool pointBoundsEligible=false;
-    std::size_t rejectedPoints=0;
+    std::size_t rejectedPoints=0,responsePreparations=0,responseReuses=0;
     Aabb pointBounds;
     V pointAllowance(0);
     // The projection loop changes rigid velocity, not pose or mass properties.
-    // Prepare the existing effective-mass arithmetic lazily once per candidate.
+    // Prepare the existing effective-mass arithmetic lazily once per frozen
+    // candidate substep; rigid reaction impulses do not change its mass frame.
+    PreparedRigidContact* responseEntry=nullptr;
     bool responsePrepared=false;
     double rigidInverseMass=0;
     V rigidCenter(0);
@@ -40,14 +42,23 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     const auto effectiveMass=[&](BodyHandle body,V point,V normal){
         if(!responsePrepared){
             responsePrepared=true;
-            if(physics.IsDynamicBody(body)){
-                const double mass=physics.GetMass(body);
-                if(mass>0){
-                    rigidInverseMass=1/mass;
-                    rigidCenter=V(physics.GetCenterOfMass(body));
-                    rigidInverseInertia=glm::dmat3(glm::inverse(physics.GetInertiaWorld(body)));
-                }else rigidInverseMass=0;
-            }else rigidInverseMass=0;
+            if(!responseEntry->responseReady){
+                responseEntry->responseReady=true;
+                ++responsePreparations;
+                responseEntry->inverseMass=0;
+                if(physics.IsDynamicBody(body)){
+                    const double mass=physics.GetMass(body);
+                    if(mass>0){
+                        responseEntry->inverseMass=1/mass;
+                        responseEntry->center=V(physics.GetCenterOfMass(body));
+                        responseEntry->inverseInertia=glm::dmat3(glm::inverse(physics.GetInertiaWorld(body)));
+                    }
+                }
+            }
+            else ++responseReuses;
+            rigidInverseMass=responseEntry->inverseMass;
+            rigidCenter=responseEntry->center;
+            rigidInverseInertia=responseEntry->inverseInertia;
         }
         if(!(rigidInverseMass>0))return 0.;
         const auto angular=glm::cross(point-rigidCenter,normal);
@@ -55,10 +66,8 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     };
     auto sample=[&](glm::uvec3 nodes,V weights,BodyHandle body,const Shape& shape,const BodyTransform& pose){
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[nodes.x]])return;
-        V p(0),old(0);
-        for(int k=0;k<3;++k){p+=positions[nodes[k]]*weights[k];
-            old+=start[nodes[k]]*weights[k];
-            }
+        V p(0);
+        for(int k=0;k<3;++k)p+=positions[nodes[k]]*weights[k];
         if(pointBoundsEligible&&(glm::any(glm::lessThan(p+pointAllowance,V(pointBounds.min)))||
                                  glm::any(glm::greaterThan(p-pointAllowance,V(pointBounds.max))))){++rejectedPoints;return;}
         auto contact=[&](V center,glm::dquat q,glm::dquat inverse,V half,double radius,const PrimitivePose* geometry=nullptr){V normal,point;
@@ -102,6 +111,9 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             // This projection's velocity change IS the particle impulse. The
             // equal opposite impulse is submitted once, including lever arm.
             if(rigid>0)JudasDeformables::ApplyReaction(physics,body,-normal*dl/h,point,&candidateWoken);
+            // History is frozen throughout this substep. Rejected samples
+            // need no history interpolation; preserve its arithmetic for hits.
+            V old(0);for(int k=0;k<3;++k)old+=start[nodes[k]]*weights[k];
             V velocity=(p-old)/h-JudasDeformables::PointVelocity(physics,body,point);
             V tangent=velocity-normal*glm::dot(velocity,normal);
             double speed=glm::length(tangent);
@@ -136,7 +148,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         const auto body=rigidCandidates[candidateIndex];
         candidateWoken=false;responsePrepared=false;
         auto* entry=candidateIndex<rigidPreparation.size()?&rigidPreparation[candidateIndex]:&fallback;
-        if(entry==&fallback){fallback.ready=fallback.valid=fallback.expanded=false;fallback.primitives.clear();}
+        if(entry==&fallback){fallback.ready=fallback.valid=fallback.expanded=fallback.responseReady=false;fallback.primitives.clear();}
         if(!entry->ready){
             auto& prepared=*entry;
             prepared.ready=true;
@@ -154,6 +166,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             fallback=std::move(*entry);*entry=PreparedRigidContact{};entry=&fallback;
         }
         auto& prepared=*entry;
+        responseEntry=entry;
         if(!prepared.valid)continue;
         auto& shape=prepared.shape;const auto& pose=prepared.pose;
         // Broadphase fat/swept padding is not a reason to evaluate every
@@ -191,5 +204,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         for(unsigned f=0;f<asset->triangles.size();++f)if(FaceVisible(f))sample(asset->triangles[f],V(1./3),body,shape,pose);
         if(candidateWoken&&!alreadyTracked&&awakenedCount<awakened.size())awakened[awakenedCount++]=body;
     }
+    JUDAS_PROFILE_COUNTER("Deformable rigid response preparations",double(responsePreparations),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Deformable rigid response reuses",double(responseReuses),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Deformable rigid point bound rejections",double(rejectedPoints),ProfileCounterMode::Sum);
 }

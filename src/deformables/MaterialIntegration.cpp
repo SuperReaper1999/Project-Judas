@@ -74,7 +74,7 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
     // scratch capacity may survive, but collision resources cannot be pinned.
     struct ReleasePrepared {
         std::vector<PreparedRigidContact>& values;
-        ~ReleasePrepared(){for(auto& p:values){p.shape.asset.reset();for(auto& child:p.shape.boxes)child.asset.reset();p.primitives.clear();p.ready=p.valid=p.expanded=false;}}
+        ~ReleasePrepared(){for(auto& p:values){p.shape.asset.reset();for(auto& child:p.shape.boxes)child.asset.reset();p.primitives.clear();p.ready=p.valid=p.expanded=p.responseReady=false;}}
     } releasePrepared{rigidPreparation};
     const bool measured=PerformanceProfiler::Get().Active();
     std::array<uint64_t,4> phaseNanoseconds{};
@@ -106,7 +106,7 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
             physics.QueryBodiesInAabbInto(glm::vec3(Minimum()-V(settings.material.thickness+asset->cellSize)),glm::vec3(Maximum()+V(settings.material.thickness+asset->cellSize)),rigidCandidates,filter);
             }
         rigidPreparation.resize(std::min<size_t>(rigidCandidates.size(),64));
-        for(auto& candidate:rigidPreparation){candidate.ready=candidate.valid=candidate.expanded=false;candidate.primitives.clear();}
+        for(auto& candidate:rigidPreparation){candidate.ready=candidate.valid=candidate.expanded=candidate.responseReady=false;candidate.primitives.clear();}
         for(unsigned iteration=0;iteration<settings.iterations;++iteration){
             measure(0,[&]{Internal(h);Cohesive(h);});
             measure(1,[&]{RigidContacts(h,fraction,physics,awakened,awakenedCount);RecoverTerrainContacts(h,physics);});

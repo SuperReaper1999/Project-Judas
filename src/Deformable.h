@@ -204,7 +204,8 @@ private:
     std::vector<BodyHandle> rigidCandidates;
     struct PreparedRigidPrimitive {PrimitivePose geometry;glm::dvec3 center;glm::dquat rotation,inverse;};
     struct PreparedRigidContact {
-        bool ready=false,valid=false,expanded=false;
+        bool ready=false,valid=false,expanded=false,responseReady=false;
+        double inverseMass=0;glm::dvec3 center{0};glm::dmat3 inverseInertia{0};
         Shape shape;BodyTransform pose;Aabb bounds;
         glm::dquat rotation,inverse;
         std::vector<PreparedRigidPrimitive> primitives;
