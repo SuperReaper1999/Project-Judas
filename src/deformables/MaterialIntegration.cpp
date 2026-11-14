@@ -1,4 +1,5 @@
 #include "Deformable.h"
+#include "MaterialInterval.h"
 #include "SaveArchive.h"
 #include "PerformanceProfiler.h"
 #include <algorithm>
@@ -29,17 +30,17 @@ bool DeformableInstance::BeginPhysicalStep(){
     stats.iterations=settings.iterations;
     return true;
 }
-void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions,PhysicsWorld& physics,const GravityField& gravity,const std::vector<DeformableTarget>& targets,bool rigidPoseIsCurrent){
+bool DeformableInstance::PreparePhysicalInterval(double dt,unsigned subdivisions,PhysicsWorld& physics,const GravityField& gravity,const std::vector<DeformableTarget>& targets,bool rigidPoseIsCurrent){
     if(!integrating)throw std::logic_error("material interval without BeginPhysicalStep");
     if(!std::isfinite(dt)||dt<=0||subdivisions<1||subdivisions>16)throw std::invalid_argument("invalid material interval budget");
-    if(!error.empty())return;
+    if(!error.empty())return false;
     // A prescribed world/bone/static frame has no finite dynamic reaction in
     // this solver. Refuse a finite-strength claim rather than silently treating
     // such a target as an infinite-strength connection. Unlimited legacy roots
     // continue through exactly the original prescribed-target path.
     for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];
         if(!released[i]&&a.enabled&&(a.forceLimit>0||a.torqueLimit>0)&&i<targets.size()&&targets[i].valid&&!physics.IsDynamicBody(targets[i].body)){
-            error="finite attachment strength requires a dynamic body target";return;
+            error="finite attachment strength requires a dynamic body target";return false;
         }
     }
     for(size_t n=0;n<inverseMass.size();++n)inverseMass[n]=1/mass[n];
@@ -63,27 +64,14 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
     if(sleeping){
         bool moving=false;
         if(sleepingContacts.Refresh(physics,Minimum()-V(settings.material.thickness+asset->cellSize),Maximum()+V(settings.material.thickness+asset->cellSize),settings.collisionLayer,settings.collisionMask,moving)||moving)Wake();
-        if(sleeping)return;
+        if(sleeping)return false;
     }
     integrationSubsteps=subdivisions;integrationDeltaTime=dt;intervalReference=positions;
     stats.substeps+=subdivisions;
     currentRigidContactPose=rigidPoseIsCurrent;
-    double h=dt/subdivisions;
-    std::array<BodyHandle,64> awakened{};unsigned awakenedCount=0;
-    // Release paged geometry even when a material error returns early. Numeric
-    // scratch capacity may survive, but collision resources cannot be pinned.
-    struct ReleasePrepared {
-        std::vector<PreparedRigidContact>& values;
-        ~ReleasePrepared(){for(auto& p:values){p.shape.asset.reset();for(auto& child:p.shape.boxes)child.asset.reset();p.primitives.clear();p.ready=p.valid=p.expanded=p.responseReady=false;}}
-    } releasePrepared{rigidPreparation};
-    const bool measured=PerformanceProfiler::Get().Active();
-    std::array<uint64_t,4> phaseNanoseconds{};
-    const auto measure=[&](unsigned phase,auto&& operation){
-        const auto began=measured?PerformanceProfiler::Now():0;
-        operation();
-        if(measured)phaseNanoseconds[phase]+=PerformanceProfiler::Now()-began;
-    };
-    for(unsigned sub=0;sub<subdivisions;++sub){
+    return true;
+}
+void DeformableInstance::PredictPhysicalSubstep(double h,PhysicsWorld& physics,const GravityField& gravity){
         std::fill(attachmentImpulse.begin(),attachmentImpulse.end(),V(0));
         std::fill(attachmentMoment.begin(),attachmentMoment.end(),V(0));
         {JUDAS_PROFILE_SCOPE("Deformable force prediction");
@@ -100,19 +88,15 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
         if(panelBending)panelBending->BeginSubstep();
         std::fill(lambda.begin(),lambda.end(),0);
         std::fill(volumeLambda.begin(),volumeLambda.end(),0);
-        double fraction=double(sub+1)/subdivisions;
+
         {PhysicsQueryFilter filter;
             filter.includeLayers=settings.collisionMask;
             physics.QueryBodiesInAabbInto(glm::vec3(Minimum()-V(settings.material.thickness+asset->cellSize)),glm::vec3(Maximum()+V(settings.material.thickness+asset->cellSize)),rigidCandidates,filter);
             }
         rigidPreparation.resize(std::min<size_t>(rigidCandidates.size(),64));
         for(auto& candidate:rigidPreparation){candidate.ready=candidate.valid=candidate.expanded=candidate.responseReady=false;candidate.primitives.clear();}
-        for(unsigned iteration=0;iteration<settings.iterations;++iteration){
-            measure(0,[&]{Internal(h);Cohesive(h);});
-            measure(1,[&]{RigidContacts(h,fraction,physics,awakened,awakenedCount);RecoverTerrainContacts(h,physics);});
-            measure(2,[&]{SurfaceContacts(*this,*this,h);});
-            measure(3,[&]{Attach(h,fraction,physics,targets,awakened,awakenedCount);});
-            }
+}
+void DeformableInstance::FinishPhysicalSubstep(double h){
         if(panelBending)panelBending->Plastic(positions,h);
         for(size_t a=0;a<settings.attachments.size();++a){auto& state=attachmentState[a];
             state.force=attachmentImpulse[a]/h;state.moment=attachmentMoment[a]/h;
@@ -153,12 +137,54 @@ void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions
         if(stats.capacityExceeded){error="deformable surface candidate capacity exceeded; instance stopped";
             return;
             }
-    }
-    if(measured){
-        JUDAS_PROFILE_COUNTER("Deformable internal constraints CPU ms",double(phaseNanoseconds[0])*1e-6,ProfileCounterMode::Sum);
-        JUDAS_PROFILE_COUNTER("Deformable rigid/terrain contacts CPU ms",double(phaseNanoseconds[1])*1e-6,ProfileCounterMode::Sum);
-        JUDAS_PROFILE_COUNTER("Deformable self contacts CPU ms",double(phaseNanoseconds[2])*1e-6,ProfileCounterMode::Sum);
-        JUDAS_PROFILE_COUNTER("Deformable attachment solve CPU ms",double(phaseNanoseconds[3])*1e-6,ProfileCounterMode::Sum);
+}
+MaterialInterval::MaterialInterval(DeformableInstance& value,double dt,unsigned count,PhysicsWorld& world,const GravityField& field,const std::vector<DeformableTarget>& sampled,bool current)
+    :state(value),physics(world),gravity(field),targets(sampled),subdivisions(count),h(count?dt/count:0){
+    active=state.PreparePhysicalInterval(dt,count,physics,gravity,targets,current);
+    measured=PerformanceProfiler::Get().Active();
+}
+MaterialInterval::~MaterialInterval(){
+    for(auto& p:state.rigidPreparation){p.shape.asset.reset();for(auto& child:p.shape.boxes)child.asset.reset();p.primitives.clear();p.ready=p.valid=p.expanded=p.responseReady=false;}
+    if(!measured)return;
+    JUDAS_PROFILE_COUNTER("Deformable internal constraints CPU ms",double(phaseNanoseconds[0])*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Deformable rigid/terrain contacts CPU ms",double(phaseNanoseconds[1])*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Deformable self contacts CPU ms",double(phaseNanoseconds[2])*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Deformable attachment solve CPU ms",double(phaseNanoseconds[3])*1e-6,ProfileCounterMode::Sum);
+}
+bool MaterialInterval::Ready()const{return active&&state.error.empty();}
+void MaterialInterval::Predict(unsigned substep){
+    fraction=double(substep+1)/subdivisions;
+    state.PredictPhysicalSubstep(h,physics,gravity);
+}
+void MaterialInterval::RunIndependent(Independent phase,DeformableInstance& data){
+    const auto began=measured?PerformanceProfiler::Now():0;
+    if(phase==Independent::Internal){data.Internal(h);data.Cohesive(h);}
+    else if(phase==Independent::SelfContact)DeformableInstance::SurfaceContacts(data,data,h);
+    else data.FinishPhysicalSubstep(h);
+    if(measured&&phase!=Independent::Finish)phaseNanoseconds[phase==Independent::Internal?0:2]+=PerformanceProfiler::Now()-began;
+}
+void MaterialInterval::RigidContacts(){
+    const auto began=measured?PerformanceProfiler::Now():0;
+    state.RigidContacts(h,fraction,physics,awakened,awakenedCount);state.RecoverTerrainContacts(h,physics);
+    if(measured)phaseNanoseconds[1]+=PerformanceProfiler::Now()-began;
+}
+void MaterialInterval::Attach(){
+    const auto began=measured?PerformanceProfiler::Now():0;
+    state.Attach(h,fraction,physics,targets,awakened,awakenedCount);
+    if(measured)phaseNanoseconds[3]+=PerformanceProfiler::Now()-began;
+}
+void DeformableInstance::AdvancePhysicalInterval(double dt,unsigned subdivisions,PhysicsWorld& physics,const GravityField& gravity,const std::vector<DeformableTarget>& targets,bool current){
+    MaterialInterval interval(*this,dt,subdivisions,physics,gravity,targets,current);
+    if(!interval.Ready())return;
+    for(unsigned sub=0;sub<subdivisions&&interval.Ready();++sub){
+        interval.Predict(sub);
+        for(unsigned i=0;i<settings.iterations;++i){
+            interval.RunIndependent(MaterialInterval::Independent::Internal,*this);
+            interval.RigidContacts();
+            interval.RunIndependent(MaterialInterval::Independent::SelfContact,*this);
+            interval.Attach();
+        }
+        interval.RunIndependent(MaterialInterval::Independent::Finish,*this);
     }
 }
 void DeformableInstance::EndPhysicalStep(double dt,PhysicsWorld& physics){

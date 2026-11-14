@@ -65,18 +65,32 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
    // A finite spring/damper cannot supply an instantaneous rigid weld impulse.
    // Impact is resolved by the ordinary collider CCD path; material efforts are
    // integrated over the normal physical interval, with no impact position bias.
-   if(impact||projection||constitutive.failed)continue;
+   if(constitutive.failed)continue;
    auto q=glm::normalize(glm::inverse(fa)*fb);if(q.w<0)q=-q;
    glm::vec3 v(q.x,q.y,q.z);float l=glm::length(v);
    auto angle=l>1e-7f?v*(2*std::atan2(l,q.w)/l):2.f*v;
    auto local=glm::transpose(basis)*delta;
-   auto materialReturn=[&](glm::vec3 value,glm::vec3& rest,glm::vec3& travel,float k,float yield,float hardening){
-    for(int axis=0;axis<3;++axis){float e=value[axis]-rest[axis],excess=k*std::abs(e)-yield-hardening*travel[axis];
-     if(excess>0){float increment=excess/(k+hardening);rest[axis]+=std::copysign(increment,e);constitutive.plasticWork+=double(yield+hardening*(travel[axis]+.5f*increment))*increment;travel[axis]+=increment;}}
+   auto stops=[&]{
+    if(!m.connected)return;
+    // Convex admissible translation/rotation envelopes about the authored
+    // joint frame. Unilateral impulses resist motion; no body is teleported
+    // and no momentum is removed by a transform or velocity clamp.
+    float distance=glm::length(local),rotation=glm::length(angle);
+    index=6;
+    if(distance>=m.maximumTranslation)linear(basis*(local/distance),distance-m.maximumTranslation,-inf,0);
+    index=7;
+    if(rotation>=m.maximumAngle)angular(basis*(angle/rotation),rotation-m.maximumAngle,-inf,0);
    };
-   materialReturn(local,constitutive.translation,constitutive.translationTravel,m.stiffness,m.yieldForce,m.hardeningForce);
-   materialReturn(angle,constitutive.rotation,constitutive.rotationTravel,m.angularStiffness,m.yieldTorque,m.hardeningTorque);
-   if(glm::length(constitutive.translationTravel)>=m.maximumTranslation||glm::length(constitutive.rotationTravel)>=m.maximumAngle){constitutive.failed=true;input.warm->fill(0);continue;}
+   if(impact||projection){stops();continue;}
+   auto materialReturn=[&](glm::vec3 value,glm::vec3& rest,glm::vec3& travel,float k,float yield,float hardening,float capacity){
+    for(int axis=0;axis<3;++axis){float e=value[axis]-rest[axis],excess=k*std::abs(e)-yield-hardening*travel[axis];
+     if(excess>0){float increment=excess/(k+hardening);
+      if(m.connected){float other=0;for(int j=0;j<3;++j)if(j!=axis)other+=travel[j]*travel[j];increment=std::min(increment,std::max(0.f,std::sqrt(std::max(0.f,capacity*capacity-other))-travel[axis]));}
+      rest[axis]+=std::copysign(increment,e);constitutive.plasticWork+=double(yield+hardening*(travel[axis]+.5f*increment))*increment;travel[axis]+=increment;}}
+   };
+   materialReturn(local,constitutive.translation,constitutive.translationTravel,m.stiffness,m.yieldForce,m.hardeningForce,m.maximumTranslation);
+   materialReturn(angle,constitutive.rotation,constitutive.rotationTravel,m.angularStiffness,m.yieldTorque,m.hardeningTorque,m.maximumAngle);
+   if(!m.connected&&(glm::length(constitutive.translationTravel)>=m.maximumTranslation||glm::length(constitutive.rotationTravel)>=m.maximumAngle)){constitutive.failed=true;input.warm->fill(0);continue;}
    // Six implicit Kelvin-Voigt rows. The return map owns only rest strain;
    // Jacobians apply equal/opposite impulses at the actual attachment frames.
    auto materialRow=[&](glm::vec3 n,float error,float k,float damping,bool angularAxis){
@@ -90,6 +104,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
    };
    for(int k=0;k<3;++k)materialRow(basis[k],local[k]-constitutive.translation[k],m.stiffness,m.damping,false);
    for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
+   stops();
    continue;
   }
   if(s.type==JointType::PlanarPin||s.type==JointType::PlanarWeld){

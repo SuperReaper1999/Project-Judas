@@ -6,13 +6,8 @@
 double DeformableInstance::AttachmentWork(unsigned index)const{
     if(index>=settings.attachments.size())throw std::out_of_range("attachment index");
     if(!panelBending)return 0;
-    const auto found=asset->groups.find(settings.attachments[index].group);
-    if(found==asset->groups.end())return 0;
     double work=0;
-    for(const auto& hinge:panelBending->hinges){
-        unsigned owners=0;for(unsigned k=0;k<4;++k)owners+=std::find(found->second.begin(),found->second.end(),hinge.nodes[k])!=found->second.end();
-        work+=hinge.work*(double(owners)/4);
-    }
+    for(const auto& [hinge,weight]:attachmentHinges.at(index))work+=panelBending->hinges[hinge].work*weight;
     return work;
 }
 bool DeformableInstance::CommitPanelFailures(){

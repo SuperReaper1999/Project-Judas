@@ -19,6 +19,8 @@ void FractureCook::SaveStructural(SaveArchive& s){
     for(auto& b:bonds)s(b.tension,b.shear,b.compression);
 }
 bool FractureCook::HasMaterials()const{return std::any_of(bonds.begin(),bonds.end(),[](const auto& b){return b.material.enabled;});}
+bool FractureCook::HasConnectedHull()const{return std::any_of(bonds.begin(),bonds.end(),[](const auto& b){return b.material.connected;});}
+void FractureCook::SaveConnectedHull(SaveArchive& a){for(auto& b:bonds)a(b.material.connected);}
 void FractureCook::SaveMaterials(SaveArchive& a){a(filterNeighbours);for(auto& b:bonds){auto& m=b.material;a(m.enabled,m.stiffness,m.angularStiffness,m.damping,m.angularDamping,m.yieldForce,m.yieldTorque,m.hardeningForce,m.hardeningTorque,m.maximumTranslation,m.maximumAngle);}}
 bool PrepareFractureCook(DeformableAsset& a,std::string& error){
     if(!a.fracture)return true;
@@ -45,7 +47,7 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
     keys.clear();c.faceBond.assign(a.triangles.size(),-1);std::set<std::pair<unsigned,unsigned>> interfaces;
     for(unsigned b=0;b<c.bonds.size();++b){auto& bond=c.bonds[b];
         if(bond.key.empty()||!keys.insert(bond.key).second||bond.a>=c.parts.size()||bond.b>=c.parts.size()||bond.a==bond.b||!interfaces.insert(std::minmax(bond.a,bond.b)).second||bond.pairs.size()<3||bond.pairs.size()>16||!finite(bond.normal)||glm::length(bond.normal)<.999||glm::length(bond.normal)>1.001||!finite(bond.centroid)||!std::isfinite(bond.area)||bond.area<=0)return fail("invalid/duplicate fracture interface");
-        if(!ValidJointMaterial(bond.material)||(bond.material.enabled&&!c.rigid))return fail("finite connection material requires valid rigid partition");
+        if(!ValidJointMaterial(bond.material)||(bond.material.connected&&!bond.material.enabled)||(bond.material.enabled&&!c.rigid))return fail("finite connection material requires valid rigid partition");
         std::set<unsigned> sideA,sideB;
         for(auto pair:bond.pairs){if(pair.x>=a.nodes.size()||pair.y>=a.nodes.size()||c.nodePart[pair.x]!=bond.a||c.nodePart[pair.y]!=bond.b||!sideA.insert(pair.x).second||!sideB.insert(pair.y).second||glm::length(a.nodes[pair.x]-a.nodes[pair.y])>1e-7)return fail("invalid fracture interface node correspondence");}
         for(double strength:{bond.tension,bond.shear,bond.compression})if(!std::isfinite(strength)||strength<0)return fail("invalid interface strength");
@@ -84,6 +86,11 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
             for(auto pair:bond.pairs)bond.sectionPoints.push_back(a.nodes[pair.x]-bond.centroid);
         }
     }
+    c.partByKey.clear();for(unsigned p=0;p<c.parts.size();++p)c.partByKey.emplace(c.parts[p].key,p);
+    c.hullComponent.resize(c.parts.size());std::iota(c.hullComponent.begin(),c.hullComponent.end(),0);
+    auto hullRoot=[&](unsigned p){while(c.hullComponent[p]!=p)p=c.hullComponent[p];return p;};
+    for(const auto& bond:c.bonds)if(bond.material.connected){const auto a=hullRoot(bond.a),b=hullRoot(bond.b);c.hullComponent[std::max(a,b)]=std::min(a,b);}
+    for(unsigned p=0;p<c.parts.size();++p)c.hullComponent[p]=hullRoot(p);
     c.contactNeighbours.clear();
     if(c.filterNeighbours){
         if(!c.rigid||!c.HasMaterials())return fail("material neighbour filtering requires a finite rigid material partition");
@@ -125,7 +132,7 @@ void FractureState::Observe(const FractureCook& c,unsigned b,glm::dvec3 force,gl
     if(b>=broken.size()||broken[b]||removed[c.bonds[b].a]||removed[c.bonds[b].b])return;
     double traction=glm::dot(force,normal)/c.bonds[b].area,shear=glm::length(force-normal*glm::dot(force,normal))/c.bonds[b].area;
     tensionDemand[b]=std::max(tensionDemand[b],std::max(traction,0.));shearDemand[b]=std::max(shearDemand[b],shear);
-    if(traction>c.tension||shear>c.shear||(c.compression>0&&-traction>c.compression))pending[b]=1;
+    if(!c.bonds[b].material.connected&&(traction>c.tension||shear>c.shear||(c.compression>0&&-traction>c.compression)))pending[b]=1;
 }
 // Resultant traction model on the actual authored planar section. Linear
 // normal stress satisfies axial force and both bending moments exactly. Shear
@@ -145,14 +152,14 @@ void FractureState::ObserveSection(const FractureCook& c,unsigned b,glm::dvec3 f
     }
     tensionDemand[b]=std::max(tensionDemand[b],tensile);shearDemand[b]=std::max(shearDemand[b],shearPeak);
     double ts=section.tension>0?section.tension:c.tension,ss=section.shear>0?section.shear:c.shear,cs=section.compression>0?section.compression:c.compression;
-    if(tensile>ts||shearPeak>ss||(cs>0&&compressive>cs))pending[b]=1;
+    if(!section.material.connected&&(tensile>ts||shearPeak>ss||(cs>0&&compressive>cs)))pending[b]=1;
 }
-bool FractureState::Request(const FractureCook& c,unsigned b,uint64_t expected){if(expected!=revision||b>=broken.size()||broken[b]||removed[c.bonds[b].a]||removed[c.bonds[b].b])return false;pending[b]=2;return true;}
-void FractureState::Connectivity(const FractureCook& c){JUDAS_PROFILE_SCOPE("Fracture connectivity");component.resize(c.parts.size());std::iota(component.begin(),component.end(),0);auto root=[&](unsigned p){while(component[p]!=p)p=component[p];return p;};
-    for(unsigned b=0;b<c.bonds.size();++b)if(!broken[b]&&!removed[c.bonds[b].a]&&!removed[c.bonds[b].b]){auto a=root(c.bonds[b].a),d=root(c.bonds[b].b);component[std::max(a,d)]=std::min(a,d);}
+bool FractureState::Request(const FractureCook& c,unsigned b,uint64_t expected){if(expected!=revision||b>=broken.size()||broken[b]||c.bonds[b].material.connected||removed[c.bonds[b].a]||removed[c.bonds[b].b])return false;pending[b]=2;return true;}
+void FractureState::Connectivity(const FractureCook& c){JUDAS_PROFILE_SCOPE("Fracture connectivity");component=c.hullComponent;if(component.size()!=c.parts.size()){component.resize(c.parts.size());std::iota(component.begin(),component.end(),0);}auto root=[&](unsigned p){while(component[p]!=p)p=component[p];return p;};
+    for(unsigned b=0;b<c.bonds.size();++b)if((!c.bonds[b].material.connected||c.hullComponent.size()!=c.parts.size())&&!broken[b]&&!removed[c.bonds[b].a]&&!removed[c.bonds[b].b]){auto a=root(c.bonds[b].a),d=root(c.bonds[b].b);component[std::max(a,d)]=std::min(a,d);}
     for(unsigned p=0;p<component.size();++p)component[p]=removed[p]?~0u:root(p);
 }
-bool FractureState::RequestRemoval(const FractureCook& c,unsigned part,uint64_t expected){if(expected!=revision||part>=c.parts.size()||removed[part])return false;pendingRemoved[part]=1;return true;}
+bool FractureState::RequestRemoval(const FractureCook& c,unsigned part,uint64_t expected){if(expected!=revision||part>=c.parts.size()||removed[part])return false;for(const auto& bond:c.bonds)if(bond.material.connected&&(bond.a==part||bond.b==part))return false;pendingRemoved[part]=1;return true;}
 bool FractureState::Commit(const FractureCook& c){JUDAS_PROFILE_SCOPE("Fracture topology commit");committed.clear();if(c.parts.size()>c.pieceBudget){error="fracture piece budget exhausted; prior topology retained";return false;}
     bool removal=false;for(unsigned p=0;p<removed.size();++p)if(pendingRemoved[p]){removed[p]=1;removal=true;for(unsigned b=0;b<c.bonds.size();++b)if(c.bonds[b].a==p||c.bonds[b].b==p)pending[b]=2;}
     std::fill(pendingRemoved.begin(),pendingRemoved.end(),0);
@@ -160,7 +167,7 @@ bool FractureState::Commit(const FractureCook& c){JUDAS_PROFILE_SCOPE("Fracture 
     std::fill(pending.begin(),pending.end(),0);if(committed.empty()&&!removal)return false;++revision;Connectivity(c);return true;
 }
 bool FractureState::FaceVisible(const DeformableAsset& a,unsigned f)const{if(f>=a.triangles.size())return false;auto& c=*a.fracture;if(removed[c.nodePart[a.triangles[f].x]])return false;return c.faceBond[f]<0||broken[c.faceBond[f]];}
-void FractureState::Persist(SaveArchive& s,const FractureCook& c){s(revision,broken,removed,tensionDemand,shearDemand);if(c.HasMaterials()){s(plasticTranslation,plasticRotation,plasticWork);s.Require(plasticTranslation.size()==c.bonds.size()&&plasticRotation.size()==c.bonds.size()&&plasticWork.size()==c.bonds.size(),"material diagnostic topology differs");for(unsigned b=0;b<c.bonds.size();++b)s.Require(finite(glm::dvec3(plasticTranslation[b]))&&finite(glm::dvec3(plasticRotation[b]))&&std::isfinite(plasticWork[b])&&plasticWork[b]>=0,"invalid material diagnostic state");}s.Require(revision>0&&broken.size()==c.bonds.size()&&removed.size()==c.parts.size()&&tensionDemand.size()==broken.size()&&shearDemand.size()==broken.size(),"fracture snapshot topology mismatch");for(auto b:broken)s.Require(b<=2,"invalid fracture failure cause");for(auto r:removed)s.Require(r<=1,"invalid fracture removal state");for(auto d:tensionDemand)s.Require(std::isfinite(d)&&d>=0,"invalid saved tensile demand");for(auto d:shearDemand)s.Require(std::isfinite(d)&&d>=0,"invalid saved shear demand");if(s.reading){pending.assign(broken.size(),0);pendingRemoved.assign(c.parts.size(),0);multipliers.assign(c.bonds.size()*16,glm::dvec3(0));committed.clear();Connectivity(c);}}
+void FractureState::Persist(SaveArchive& s,const FractureCook& c){s(revision,broken,removed,tensionDemand,shearDemand);if(c.HasMaterials()){s(plasticTranslation,plasticRotation,plasticWork);s.Require(plasticTranslation.size()==c.bonds.size()&&plasticRotation.size()==c.bonds.size()&&plasticWork.size()==c.bonds.size(),"material diagnostic topology differs");for(unsigned b=0;b<c.bonds.size();++b)s.Require(finite(glm::dvec3(plasticTranslation[b]))&&finite(glm::dvec3(plasticRotation[b]))&&std::isfinite(plasticWork[b])&&plasticWork[b]>=0,"invalid material diagnostic state");}s.Require(revision>0&&broken.size()==c.bonds.size()&&removed.size()==c.parts.size()&&tensionDemand.size()==broken.size()&&shearDemand.size()==broken.size(),"fracture snapshot topology mismatch");for(unsigned b=0;b<broken.size();++b){s.Require(broken[b]<=2,"invalid fracture failure cause");if(c.bonds[b].material.connected)s.Require(!broken[b]&&!removed[c.bonds[b].a]&&!removed[c.bonds[b].b],"saved connected hull is disconnected");}for(auto r:removed)s.Require(r<=1,"invalid fracture removal state");for(auto d:tensionDemand)s.Require(std::isfinite(d)&&d>=0,"invalid saved tensile demand");for(auto d:shearDemand)s.Require(std::isfinite(d)&&d>=0,"invalid saved shear demand");if(s.reading){pending.assign(broken.size(),0);pendingRemoved.assign(c.parts.size(),0);multipliers.assign(c.bonds.size()*16,glm::dvec3(0));committed.clear();Connectivity(c);}}
 
 // Reusable DCC/offline route: explicit material nodes/cells/interfaces, never
 // welding a visual seam or guessing adjacency from imported vertex positions.
@@ -176,6 +183,7 @@ bool ImportFracturePartition(const std::string& text,DeformableAsset& output,std
             else if(token=="bond"){FractureBond b;unsigned n=0;in>>std::quoted(b.key)>>b.a>>b.b;vector(b.normal);vector(b.centroid);in>>b.area>>n;if(n>16)throw std::runtime_error("interface correspondence limit");b.pairs.resize(n);for(auto& p:b.pairs)in>>p.x>>p.y;c.bonds.push_back(std::move(b));if(c.bonds.size()>1024)throw std::runtime_error("interface limit");}
             else if(token=="group"){std::string name;std::vector<unsigned> nodes;in>>std::quoted(name);list(nodes);if(!a.groups.emplace(name,std::move(nodes)).second)throw std::runtime_error("duplicate group");}
             else if(token=="settings"){in>>c.rigid>>c.tension>>c.shear>>c.compression>>c.compliance>>c.pieceBudget;}
+            else if(token=="connected"){std::string key;in>>std::quoted(key);auto b=std::find_if(c.bonds.begin(),c.bonds.end(),[&](const auto& x){return x.key==key;});if(b==c.bonds.end()||!b->material.enabled||b->material.connected)throw std::runtime_error("connected requires a unique finite material interface");b->material.connected=true;}
             else if(token=="material"){std::string key;in>>std::quoted(key);auto b=std::find_if(c.bonds.begin(),c.bonds.end(),[&](const auto& x){return x.key==key;});if(b==c.bonds.end()||b->material.enabled)throw std::runtime_error("material requires a unique already authored interface");auto& m=b->material;m.enabled=true;in>>m.stiffness>>m.angularStiffness>>m.damping>>m.angularDamping>>m.yieldForce>>m.yieldTorque>>m.hardeningForce>>m.hardeningTorque>>m.maximumTranslation>>m.maximumAngle;}
             else if(token=="neighbour-filter"){in>>c.filterNeighbours;}
             else if(token=="structural"){in>>c.structural;}

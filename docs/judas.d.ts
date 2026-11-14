@@ -744,7 +744,7 @@ declare module "judas" {
     forceLimit?:number;torqueLimit?:number;
   }
   export interface FracturePartState {key:string;index:number;component:number|null;removed:boolean;entity:Entity|null;mass:number}
-  export interface FractureInterfaceState {key:string;a:number;b:number;broken:boolean;cause:'physical'|'explicit'|null;tension:number;shear:number;material:boolean;plasticTranslation:Vec3;plasticRotation:Vec3;plasticWork:number}
+  export interface FractureInterfaceState {key:string;a:number;b:number;broken:boolean;cause:'physical'|'explicit'|null;tension:number;shear:number;material:boolean;connected:boolean;plasticTranslation:Vec3;plasticRotation:Vec3;plasticWork:number}
   export interface FractureState {revision:number;rigid:boolean;error:string;parts:FracturePartState[];interfaces:FractureInterfaceState[];tensileStrength:number;shearStrength:number}
   export interface FractureEvent {revision:number;interfaces:{key:string;cause:'physical'|'explicit'}[]}
   export class Fracture {

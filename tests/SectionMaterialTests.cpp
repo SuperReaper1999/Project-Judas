@@ -23,6 +23,44 @@ int main(){
  w.SetLinearVelocity(b,q*glm::vec3(20,0,0));for(int i=0;i<120;++i)w.Step(1.f/60);w.GetJoint(j,state);check(state.constitutive.failed&&glm::length(w.GetLinearVelocity(b))>1,"capacity failure releases real body motion");
  auto bad=m;bad.stiffness=std::numeric_limits<float>::quiet_NaN();check(!w.ConfigureJointMaterial(j,bad),"nonfinite material rejected");w.DestroyJoint(j);check(!w.ConfigureJointMaterial(j,m),"stale joint safely rejected");w.Shutdown();
  }
+ {
+ PhysicsWorld w;w.Init();w.SetSleepingEnabled(false);BodyTransform pose;
+ auto b=w.CreateShape(Shape::Box({.5,.5,.5}),pose,true,100,0,0);JointSettings s;s.bodyA=b;auto j=w.CreateJoint(s);
+ JointMaterial m;m.enabled=true;m.connected=true;m.stiffness=10000;m.angularStiffness=10000;m.damping=600;m.angularDamping=600;m.yieldForce=1000;m.yieldTorque=1000;m.maximumTranslation=.2f;m.maximumAngle=.4f;
+ check(w.ConfigureJointMaterial(j,m),"connected hull accepts a finite physical material");
+ w.SetLinearVelocity(b,{20,0,0});for(int i=0;i<240;++i)w.Step(1.f/60);
+ JointState state;w.GetJoint(j,state);
+ check(!state.constitutive.failed&&state.constitutive.plasticWork>0&&glm::length(state.constitutive.translationTravel)<=.20001f,"severe load retains connected hull with bounded permanent plastic flow");
+ check(glm::length(w.GetTransform(b).position)<.205f,"hull stop reactions bound physical displacement without deleting its body");
+ auto work=state.constitutive.plasticWork;w.SetLinearVelocity(b,{-20,0,0});for(int i=0;i<240;++i)w.Step(1.f/60);w.GetJoint(j,state);
+ check(!state.constitutive.failed&&state.constitutive.plasticWork>=work&&glm::length(w.GetTransform(b).position)<.205f,"repeated opposite impacts retain bounded connected material and irreversible work");
+ w.Shutdown();
+ auto hull=MakeFractureBlock({1,1,3},{1,1,3},true);for(auto& bond:hull.fracture->bonds){bond.material.enabled=true;bond.material.connected=true;}
+ hull.fracture->bonds.back().material.connected=false;
+ auto bytes=EncodeDeformableAsset(hull);DeformableAsset loaded;std::string error;
+ check(bytes.rfind("JudasDeformable7",0)==0&&DecodeDeformableAsset({bytes.begin(),bytes.end()},loaded,error)&&loaded.fracture->bonds.front().material.connected&&!loaded.fracture->bonds.back().material.connected,"cooked hull continuity and detachable component policies round trip independently");
+ FractureState f;f.Initialize(*hull.fracture);
+ check(!f.Request(*hull.fracture,0,f.revision)&&f.Request(*hull.fracture,1,f.revision),"scripted fracture cannot split a hull but can release designated components");
+ check(!f.RequestRemoval(*hull.fracture,hull.fracture->bonds[0].a,f.revision),"piece removal cannot bypass connected hull ownership");
+ f.Observe(*hull.fracture,0,{1e12,1e12,1e12},{1,0,0});f.Commit(*hull.fracture);
+ check(!f.broken[0]&&f.broken[1],"physical load retains hull continuity while component fracture publishes normally");
+ }
+ {
+ PhysicsWorld w;w.Init();w.SetSleepingEnabled(false);BodyTransform pa,pb;pa.position={-.5,0,0};pb.position={.5,0,0};
+ auto a=w.CreateShape(Shape::Box({.4,.4,.4}),pa,true,100,0,0),b=w.CreateShape(Shape::Box({.4,.4,.4}),pb,true,100,0,0);w.SetPairCollisionEnabled(a,b,false);
+ JointSettings settings;settings.bodyA=a;settings.bodyB=b;settings.anchorA={.5,0,0};settings.anchorB={-.5,0,0};auto joint=w.CreateJoint(settings);
+ JointMaterial law;law.enabled=true;law.connected=true;law.stiffness=30000;law.angularStiffness=15000;law.yieldForce=1000;law.yieldTorque=500;law.maximumTranslation=.2f;law.maximumAngle=.4f;
+ check(w.ConfigureJointMaterial(joint,law),"two dynamic hull sections use the authoritative rigid solver");
+ w.SetLinearVelocity(a,{20,0,0});w.SetAngularVelocity(a,{0,0,8});
+ const auto initialMomentum=w.GetLinearVelocity(a)*100.f+w.GetLinearVelocity(b)*100.f;
+ for(unsigned i=0;i<300;++i)w.Step(1.f/60);
+ const auto momentum=w.GetLinearVelocity(a)*100.f+w.GetLinearVelocity(b)*100.f;JointState state;w.GetJoint(joint,state);
+ check(!state.constitutive.failed&&glm::length(momentum-initialMomentum)<.1f,"bounded hull reactions preserve equal/opposite dynamic linear momentum");
+ check(glm::length(state.constitutive.rotationTravel)<=.40001f&&glm::length(state.constitutive.translationTravel)<=.20001f,"combined bending and crush retain finite plastic budgets");
+ SaveArchive saved;w.PersistJointMaterial(saved,joint);auto history=state.constitutive;w.ConfigureJointMaterial(joint,law);SaveArchive reader(saved.bytes);w.PersistJointMaterial(reader,joint);reader.Finish();w.GetJoint(joint,state);
+ check(state.constitutive.translation==history.translation&&state.constitutive.rotation==history.rotation&&state.constitutive.plasticWork==history.plasticWork&&!state.constitutive.failed,"connected damaged material cold participant restoration preserves physical history");
+ w.Shutdown();
+ }
  auto a=MakeFractureBlock({1,1,3},{1,1,3},true);for(auto& b:a.fracture->bonds)b.material.enabled=true;auto bytes=EncodeDeformableAsset(a);DeformableAsset restored;std::string error;check(bytes.rfind("JudasDeformable5",0)==0&&DecodeDeformableAsset({bytes.begin(),bytes.end()},restored,error)&&restored.fracture->HasMaterials(),"versioned physical partition material round trip");a.fracture->rigid=false;check(!PrepareDeformableAsset(a,error),"soft partition cannot silently use rigid material law");
  // This actual lazy-publication fixture would fail if the constructor used
  // the authored transform or reset parent-carried motion to zero.

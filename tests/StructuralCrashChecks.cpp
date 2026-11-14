@@ -219,7 +219,7 @@ unsigned RunStructuralCrashChecks() {
         auto& hinges=panel.Material().panelBending->hinges;
         auto localHinge=[&](unsigned mount){
             const auto& group=panel.Material().asset->groups.at(panel.Material().settings.attachments[mount].group);
-            for(unsigned h=0;h<hinges.size();++h){unsigned own=0,other=0;for(unsigned k=0;k<4;++k){auto n=hinges[h].nodes[k];own+=std::find(group.begin(),group.end(),n)!=group.end();for(unsigned a=0;a<3;++a)if(a!=mount){const auto& g=panel.Material().asset->groups.at(panel.Material().settings.attachments[a].group);other+=std::find(g.begin(),g.end(),n)!=g.end();}}if(own&&!other)return std::pair<unsigned,unsigned>{h,own};}
+            for(unsigned h=0;h<hinges.size();++h){unsigned own=0,other=0;for(unsigned k=0;k<4;++k){auto n=panel.Material().panelBending->topology->at(h).nodes[k];own+=std::find(group.begin(),group.end(),n)!=group.end();for(unsigned a=0;a<3;++a)if(a!=mount){const auto& g=panel.Material().asset->groups.at(panel.Material().settings.attachments[a].group);other+=std::find(g.begin(),g.end(),n)!=g.end();}}if(own&&!other)return std::pair<unsigned,unsigned>{h,own};}
             throw std::runtime_error("no isolated attachment ligament");
         };
         auto history=[&](unsigned index,double work){

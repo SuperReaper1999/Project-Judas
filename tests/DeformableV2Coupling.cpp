@@ -2,6 +2,9 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "Simulation.h"
+#include "JobSystem.h"
+#include <SDL2/SDL.h>
+#include <cstdlib>
 #include <chrono>
 #include <cstdio>
 #include <cmath>
@@ -83,6 +86,46 @@ void RunDeformableV2CouplingChecks(void(*check)(bool,const char*)){
         bool same=segments.size()==reference.size()&&pose.position==referencePose.position&&pose.rotation==referencePose.rotation;
         for(unsigned n=0;same&&n<segments.size();++n)same=segments[n].begin==reference[n].begin&&segments[n].end==reference[n].end;
         check(!segments.empty()&&same,"remote deformable quality cannot change native MK2 motion intervals or unrelated rigid trajectories");
+    }
+
+    // The same authoritative phase schedule must produce EXACT numerical
+    // states with one, two or four execution lanes, including finite mounts.
+    {
+        const char* prior=std::getenv("JUDAS_MATERIAL_LANES");
+        const std::string original=prior?prior:"4";
+        struct Restore {std::string value;~Restore(){SDL_setenv("JUDAS_MATERIAL_LANES",value.c_str(),1);}} restore{original};
+        JobSystem jobs(3);ResourceManager parallelResources(nullptr,&db,&jobs);
+        parallelResources.RequestDeformable(asset.id);parallelResources.WaitForAll();
+        Scene scene;std::vector<EntityId> bodies,panels;
+        for(unsigned n=0;n<12;++n){
+            auto& mount=scene.CreateObject("Independent finite mount");bodies.push_back(mount.id);mount.transform.position={float(n)*2,0,0};
+            mount.body=SceneBodyComponent{};mount.body->motion=SceneBodyMotion::Dynamic;mount.body->mass=2;mount.body->collisionMask=0;
+            auto& panel=scene.CreateObject("Independent full material");panels.push_back(panel.id);panel.transform.position={float(n)*2,0,0};
+            panel.deformable=DeformableSettings{};auto& cfg=*panel.deformable;cfg.asset=asset.id;cfg.iterations=6;cfg.substeps=4;cfg.collisionMask=0;cfg.selfContact=true;cfg.panel.enabled=true;cfg.material.density=12.5;cfg.material.damping=0;
+            DeformableAttachment a;a.group="physical-mount";a.kind=DeformableAttachment::Kind::Body;a.target=bodies.back();cfg.attachments={a};
+        }
+        std::vector<glm::dvec3> reference;
+        for(unsigned lanes:{1u,2u,4u}){
+            SDL_setenv("JUDAS_MATERIAL_LANES",std::to_string(lanes).c_str(),1);
+            RuntimeWorld world;if(!world.Build(scene,&parallelResources,error))throw std::runtime_error(error);
+            for(unsigned n=0;n<bodies.size();++n){
+                world.Physics().SetLinearVelocity(world.RuntimeBody(bodies[n]),{.3f+float(n)*.01f,0,0});
+                auto* panel=world.RuntimeDeformable(panels[n],error);if(!panel)throw std::runtime_error(error);
+                panel->velocities.back().z=.25*(n+1); // Actual local bending load.
+            }
+            InputSystem input;std::vector<glm::dvec3> state;bool healthy=true;
+            for(unsigned step=0;step<20;++step){
+                StepAuthoritativeWorld(world,input,1.f/60);
+                for(unsigned n=0;n<panels.size();++n){auto* m=world.RuntimeDeformable(panels[n],error);healthy&=m&&m->error.empty()&&!m->PhysicalStepActive();
+                    if(!m)continue;
+                    state.insert(state.end(),m->positions.begin(),m->positions.end());state.insert(state.end(),m->velocities.begin(),m->velocities.end());
+                    if(m->panelBending)for(const auto& h:m->panelBending->hinges)state.push_back({h.rest,h.plastic,h.work});
+                    const auto body=world.RuntimeBody(bodies[n]);state.push_back(glm::dvec3(world.Physics().GetTransform(body).position));state.push_back(glm::dvec3(world.Physics().GetLinearVelocity(body)));
+                }
+            }
+            if(lanes==1)reference=state;
+            check(healthy&&state==reference,"full material and finite dynamic mounts are bit-identical across one/two/four worker lanes");
+        }
     }
 
 }

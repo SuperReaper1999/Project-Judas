@@ -78,7 +78,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return !a.part.empty();}))throw std::invalid_argument("structural section mounts belong to independent deformable panels, not rigid frame supports");
     if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
     sleepingContacts.Invalidate();terrainRegions.clear();
-    panelBending.reset();
+    panelBending.reset();attachmentHinges.clear();
     asset=std::move(data);
     settings=config;
     generation=epoch;
@@ -109,7 +109,17 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
         if(asset->kind!=DeformableKind::Cloth||asset->fracture)throw std::invalid_argument("local panel material requires an independent sheet asset");
         panelBending.emplace();panelBending->stiffness=settings.panel.stiffness;
         panelBending->yieldMoment=settings.panel.yieldMoment;panelBending->hardening=settings.panel.hardening;
-        panelBending->Initialize(asset->nodes,asset->triangles);
+        panelBending->Initialize(asset->panelHinges);
+        attachmentHinges.assign(settings.attachments.size(),{});
+        std::vector<uint8_t> membership(asset->nodes.size());
+        for(size_t mount=0;mount<settings.attachments.size();++mount){
+            auto group=asset->groups.find(settings.attachments[mount].group);if(group==asset->groups.end())continue;
+            std::fill(membership.begin(),membership.end(),0);for(auto node:group->second)membership.at(node)=1;
+            for(unsigned i=0;i<asset->panelHinges->size();++i){unsigned count=0;
+                for(unsigned k=0;k<4;++k)count+=membership[(*asset->panelHinges)[i].nodes[k]];
+                if(count)attachmentHinges[mount].emplace_back(i,double(count)/4);
+            }
+        }
     }
     Reset(transform);
 }
@@ -207,8 +217,8 @@ void DeformableInstance::Cohesive(double h){
 void DeformableInstance::Internal(double h){
     JUDAS_PROFILE_SCOPE("Deformable internal constraints");
     const auto& m=settings.material;
-    size_t row=0;
-    for(auto& t:asset->cloth){unsigned ids[3]={t.nodes.x,t.nodes.y,t.nodes.z};
+    const auto membrane=[&](size_t triangle){auto& t=asset->cloth[triangle];size_t row=triangle*3;
+        unsigned ids[3]={t.nodes.x,t.nodes.y,t.nodes.z};
         V e1=positions[ids[1]]-positions[ids[0]],e2=positions[ids[2]]-positions[ids[0]];
         V f[2]={e1*t.inverseRest[0][0]+e2*t.inverseRest[0][1],e1*t.inverseRest[1][0]+e2*t.inverseRest[1][1]};
         for(unsigned c=0;c<3;++c){unsigned a=c==1?1:0,b=c==0?0:1;
@@ -222,7 +232,9 @@ void DeformableInstance::Internal(double h){
             f[0]=e1*t.inverseRest[0][0]+e2*t.inverseRest[0][1];
             f[1]=e1*t.inverseRest[1][0]+e2*t.inverseRest[1][1];
         }
-    }
+    };
+    for(size_t triangle=0;triangle<asset->cloth.size();++triangle)membrane(triangle);
+    size_t row=asset->cloth.size()*3;
     for(size_t index=0;index<asset->solids.size();++index){auto& t=asset->solids[index];
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[t.nodes.x]]){row+=6;continue;}
         unsigned ids[4]={t.nodes.x,t.nodes.y,t.nodes.z,t.nodes.w};
@@ -398,8 +410,15 @@ void DeformableInstance::PrepareSelfCandidates(){
     JUDAS_PROFILE_SCOPE("Deformable self pair cache");
     double skin=settings.material.thickness*.5;
     bool rebuild=!selfCandidatesValid;
-    if(!rebuild)for(size_t i=0;i<positions.size();++i)if(glm::length(positions[i]-contactReference[i])>skin||glm::length(start[i]-contactStartReference[i])>skin){rebuild=true;break;}
-    if(!rebuild)return;
+    // A common translation of both endpoint configurations cannot create a
+    // new self-contact. Bound only residual deformation relative to that
+    // translation, using the SAME shift for start and current endpoints.
+    // Different endpoint shifts, rotation and local shape changes still consume
+    // the existing conservative skin and eventually force a fresh tree query.
+    const V shift=positions.empty()?V(0):positions[0]-contactReference[0];
+    if(!rebuild)for(size_t i=0;i<positions.size();++i)if(glm::length(positions[i]-(contactReference[i]+shift))>skin||glm::length(start[i]-(contactStartReference[i]+shift))>skin){rebuild=true;break;}
+    if(!rebuild){JUDAS_PROFILE_COUNTER("Deformable self pair cache reuses",1,ProfileCounterMode::Sum);return;}
+    JUDAS_PROFILE_COUNTER("Deformable self pair cache rebuilds",1,ProfileCounterMode::Sum);
     selfCandidatesValid=true;contactReference=positions;contactStartReference=start;
     selfFacePairs.clear();selfEdgePairs.clear();BuildSurfaceTree();
     double padding=settings.material.thickness*2+skin*2;
@@ -579,7 +598,7 @@ void DeformableInstance::Persist(SaveArchive& ar){
     ar.Require(panel==settings.panel.enabled,"saved panel ownership does not match material configuration");
     if(panel){
         ar.Require(asset->kind==DeformableKind::Cloth&&!asset->fracture,"saved local panel requires sheet topology");
-        if(!panelBending){panelBending.emplace();panelBending->Initialize(asset->nodes,asset->triangles);}
+        if(!panelBending){panelBending.emplace();panelBending->Initialize(asset->panelHinges);}
         panelBending->Persist(ar);
         ar.Require(panelBending->stiffness==settings.panel.stiffness&&panelBending->yieldMoment==settings.panel.yieldMoment&&panelBending->hardening==settings.panel.hardening,"saved panel material disagrees with its solver");
     }else if(ar.reading)panelBending.reset();

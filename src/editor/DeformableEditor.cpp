@@ -66,6 +66,11 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
             ImGui::Text("Fracture: %zu parts / %zu interfaces (%s)",cook.parts.size(),cook.bonds.size(),cook.rigid?"rigid M45 cells":"deformable cohesive cells");
             if(ImGui::BeginCombo("Interface preview",state.fractureInterface.empty()?"all interfaces":state.fractureInterface.c_str())){if(ImGui::Selectable("all interfaces",state.fractureInterface.empty()))state.fractureInterface.clear();for(const auto& bond:cook.bonds)if(ImGui::Selectable(bond.key.c_str(),state.fractureInterface==bond.key))state.fractureInterface=bond.key;ImGui::EndCombo();}
             bool changed=ImGui::InputDouble("Tensile strength (Pa)",&cook.tension)|ImGui::InputDouble("Shear strength (Pa)",&cook.shear)|ImGui::InputDouble("Compression strength (0 = no crushing)",&cook.compression)|ImGui::InputDouble("Cohesive compliance (m/Pa)",&cook.compliance);
+            if(state.mode==EditorMode::Edit&&cook.rigid&&cook.HasMaterials()&&ImGui::Button("Connect main-hull material interfaces")){
+                for(auto& bond:cook.bonds)if(bond.material.enabled)bond.material.connected=true;
+                changed=true;
+            }
+            ImGui::TextWrapped("Connected hull interfaces deform within physical limits and never fail. Keep designated detachable interfaces separate or disable the connected flag on those interfaces.");
             changed|=ImGui::Checkbox("Structural section stress (M79/M80 opt-in)",&cook.structural);
             if(cook.structural&&!state.fractureInterface.empty())for(auto& bond:cook.bonds)if(bond.key==state.fractureInterface){
                 ImGui::TextWrapped("Interface overrides: 0 inherits family strength. Capacity follows actual area and bending section.");
@@ -76,12 +81,13 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
             if(cook.rigid&&!state.fractureInterface.empty())for(auto& bond:cook.bonds)if(bond.key==state.fractureInterface){
                 auto& m=bond.material;changed|=ImGui::Checkbox("Finite elastic/plastic connection (M83)",&m.enabled);
                 if(m.enabled){
+                    changed|=ImGui::Checkbox("Connected hull (deforms, never detaches)",&m.connected);
                     ImGui::TextWrapped("Six physical spring/damper axes. Plastic rest strain changes collider/mount geometry; capacity failure releases ordinary rigid pieces. Values are per connection, not a vehicle preset.");
                     changed|=ImGui::InputFloat("Translation stiffness N/m",&m.stiffness)|ImGui::InputFloat("Rotation stiffness N m/rad",&m.angularStiffness);
                     changed|=ImGui::InputFloat("Translation damping N s/m",&m.damping)|ImGui::InputFloat("Rotation damping N m s/rad",&m.angularDamping);
                     changed|=ImGui::InputFloat("Yield force N",&m.yieldForce)|ImGui::InputFloat("Yield torque N m",&m.yieldTorque);
                     changed|=ImGui::InputFloat("Force hardening N/m",&m.hardeningForce)|ImGui::InputFloat("Torque hardening N m/rad",&m.hardeningTorque);
-                    changed|=ImGui::InputFloat("Plastic travel capacity m",&m.maximumTranslation)|ImGui::InputFloat("Plastic angle capacity rad",&m.maximumAngle);
+                    changed|=ImGui::InputFloat(m.connected?"Hull crush limit m":"Plastic travel capacity m",&m.maximumTranslation)|ImGui::InputFloat(m.connected?"Hull bend limit rad":"Plastic angle capacity rad",&m.maximumAngle);
                 }
             }
             if(changed&&state.mode==EditorMode::Edit){auto baked=*asset;baked.fracture=std::make_shared<FractureCook>(cook);auto* record=state.assets->Find(d.asset);if(record&&PrepareDeformableAsset(baked,error)){std::ofstream output(record->path,std::ios::binary);auto bytes=EncodeDeformableAsset(baked);output.write(bytes.data(),std::streamsize(bytes.size()));output.close();if(output){state.resources->Invalidate(d.asset);state.status="Fracture material baked; asset content changes save compatibility.";}}else state.status=error;}

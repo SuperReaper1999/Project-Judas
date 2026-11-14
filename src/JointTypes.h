@@ -28,12 +28,16 @@ struct JointAngularDrive {
 // damage policy; rest offsets are constitutive history, never body teleports.
 struct JointMaterial {
  bool enabled=false;
+ // Connected hull: finite plastic stroke followed by physical stop reactions.
+ // Detachable connections retain the ordinary capacity-failure law.
+ bool connected=false;
  float stiffness=1200000,angularStiffness=50000,damping=1500,angularDamping=600;
  float yieldForce=60000,yieldTorque=10000,hardeningForce=10000,hardeningTorque=1000;
  float maximumTranslation=.4f,maximumAngle=.7f;
 };
 inline bool ValidJointMaterial(const JointMaterial& m){
  for(float x:{m.stiffness,m.angularStiffness,m.damping,m.angularDamping,m.yieldForce,m.yieldTorque,m.hardeningForce,m.hardeningTorque,m.maximumTranslation,m.maximumAngle})if(!std::isfinite(x)||x<0)return false;
+ if(m.connected&&!m.enabled)return false;
  return !m.enabled||(m.stiffness>0&&m.angularStiffness>0&&m.yieldForce>0&&m.yieldTorque>0&&m.maximumTranslation>0&&m.maximumAngle>0&&m.maximumAngle<=3.1415927f);
 }
 struct JointMaterialState {

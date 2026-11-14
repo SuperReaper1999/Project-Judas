@@ -241,12 +241,13 @@ int main(int argc, char **argv) {
         unsigned frames = 0, count = 1, saveAt = 0, layers = 2, columns = 2, segments = 8, collisionWorkers=0;
         float speed = 12;
         int wheelView=-1;
-        bool wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false,authorProject=false;
+        bool connectedHull=false, wheelCourse=false, captureSteps=false, bonnetView=false, startPaused=false,authorProject=false;
         bool headless = false, load = false, profile = false, drive = false, cpuSkin = false, repeat = false,
              postDrive = false, xray = false, panelsEnabled=false;
         for (int i = 3; i < argc; ++i) {
             std::string arg = argv[i];
             if(arg.rfind("--collision-workers=",0)==0)collisionWorkers=unsigned(std::stoul(arg.substr(20)));
+            else if(arg=="--connected-hull")connectedHull=true;
             else if(arg=="--panels") panelsEnabled=true;
             else if(arg.rfind("--panel-parts=",0)==0)panelRecipe=arg.substr(14);
             else if(arg.rfind("--part-roles=",0)==0)partRolePath=arg.substr(13);
@@ -333,6 +334,7 @@ int main(int argc, char **argv) {
         Require(collisionWorkers==0 || collisionWorkers==1 || collisionWorkers==2 || collisionWorkers==4,
             "collision worker count must be 1, 2 or 4");
         auto asset = MakeCrashStructure(segments, layers, columns);
+        if(connectedHull)for(auto& bond:asset.fracture->bonds)bond.material.connected=true;
         if(panelsEnabled){
             for(auto& bond:asset.fracture->bonds){
                 auto& m=bond.material;
@@ -473,6 +475,7 @@ int main(int argc, char **argv) {
             Require(snapshot.metadata == "{\"shape\":\"" + hash + "\"}",
                     "cold restoration changed durable deformation/wheel/rotor state");
             std::cout << "COLD_SHAPE_VERIFIED " << hash << '\n';
+            if(std::getenv("JUDAS_NUMERICAL_STATE_LOAD")){std::ofstream state(root/"numerical-restored.json");state<<CaptureNumericalState(world,rigs,panels).dump();Require(bool(state),"cannot publish cold numerical comparison state");}
         }
         std::cout << std::setprecision(10) << "PREPARATION ms=" << Elapsed(preparation)
                   << " vehicles=" << count << " sections=" << asset.fracture->parts.size()

@@ -82,6 +82,7 @@ JSValue HandleMechanics(BindingContext &context, const std::string &op, int argc
                         ? JS_NewString(c, state.broken[b] == 1 ? "physical" : "explicit")
                         : JS_NULL);
                 JS_SetPropertyStr(c, v, "material", JS_NewBool(c, cook.bonds[b].material.enabled));
+                JS_SetPropertyStr(c, v, "connected", JS_NewBool(c, cook.bonds[b].material.connected));
                 JS_SetPropertyStr(c, v, "plasticTranslation",
                                   Vec(c, state.plasticTranslation.empty()
                                              ? glm::vec3(0)

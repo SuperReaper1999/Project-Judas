@@ -1,5 +1,6 @@
 // Included by Renderer.cpp. All GL operations stay in Renderer ownership.
 #include <string_view>
+#include "SceneFingerprint.h"
 TextureHandle Renderer::ColourTexture(TextureHandle source){
  if(!ValidTexture(source))return source;
  const auto& t=m_textures[source.id];
@@ -18,10 +19,29 @@ TextureHandle Renderer::ColourTexture(TextureHandle source){
  auto view=CreateTexture(data,true);m_textures[source.id].colourView=view;return view;
 }
 GLint Renderer::MaterialUniform(const char* name){auto it=m_materialUniforms.find(std::string_view(name));if(it!=m_materialUniforms.end())return it->second;auto location=glGetUniformLocation(m_shaderProgram,name);m_materialUniforms.emplace(name,location);return location;}
+// Immutable embedded image storage is shared; sampler and material overrides
+// remain per material. Only live owners retain entries, so unloading releases
+// the GPU allocation and no historical image cache accumulates.
+std::pair<TextureHandle,std::string> Renderer::AcquireMaterialImage(const TextureData& image,bool srgb){
+ auto digest=[](const auto& bytes){return SceneFingerprintSha256(std::string_view(reinterpret_cast<const char*>(bytes.data()),bytes.size()));};
+ std::string key=std::to_string(image.width)+":"+std::to_string(image.height)+":"+std::to_string(unsigned(image.storage))+":"+std::to_string(srgb)+":"+digest(image.pixels);
+ for(const auto& level:image.levels)key+=":"+std::to_string(level.width)+":"+std::to_string(level.height)+":"+digest(level.bytes);
+ key=SceneFingerprintSha256(key);
+ auto found=m_materialImages.find(key);
+ if(found!=m_materialImages.end()&&ValidTexture(found->second.texture)){++found->second.users;return {found->second.texture,key};}
+ auto texture=CreateTexture(image,srgb);if(!texture.IsValid())return {};
+ m_materialImages[key]={texture,1};return {texture,key};
+}
+void Renderer::ReleaseMaterialImage(TextureHandle texture,const std::string& key){
+ if(key.empty()){DestroyTexture(texture);return;}
+ auto found=m_materialImages.find(key);
+ if(found==m_materialImages.end()||found->second.texture.id!=texture.id||found->second.texture.generation!=texture.generation)return;
+ if(--found->second.users==0){DestroyTexture(texture);m_materialImages.erase(found);}
+}
 MaterialHandle Renderer::CreateMaterial(const MaterialDefinition& definition){
  std::string error;if(!ValidateMaterial(definition,error))return {};
  GpuMaterial m;m.alive=true;m.definition=MaterialSettings(definition);
- for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(image.embedded.HasImage()){m.textures[i]=CreateTexture(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
+ for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(image.embedded.HasImage()){auto acquired=AcquireMaterialImage(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);m.textures[i]=acquired.first;m.imageKeys[i]=std::move(acquired.second);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
  // Encoded source images belong to the immutable CPU resource/cooked archive.
  // Retaining them here would copy megabytes in ApplyMaterialOverride on every
  // draw. The GPU material only needs uploaded handles and lightweight settings.
@@ -34,13 +54,16 @@ bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t materia
  auto handle=gpu->materials[material];if(!ValidMaterial(handle))return false;
  const auto& definition=data.materials.at(material);const auto& image=definition.maps[map];
  auto& m=m_materials[handle.id];if(!image.embedded.HasImage())return true;
- m.textures[map]=CreateTexture(image.embedded,(map==0||map==4)&&definition.model!=MaterialModel::Legacy);
- if(!m.textures[map].IsValid())return false;
+ auto acquired=AcquireMaterialImage(image.embedded,(map==0||map==4)&&definition.model!=MaterialModel::Legacy);
+ if(!acquired.first.IsValid())return false;
+ ReleaseMaterialImage(m.textures[map],m.imageKeys[map]);
+ if(m.samplers[map])glDeleteSamplers(1,&m.samplers[map]);
+ m.textures[map]=acquired.first;m.imageKeys[map]=std::move(acquired.second);
  glGenSamplers(1,&m.samplers[map]);auto& s=image.sampler;
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_T,s.wrapT);
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[map],GL_TEXTURE_MAG_FILTER,s.magFilter);return true;
 }
-void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(auto t:m.textures)DestroyTexture(t);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}}
+void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(size_t i=0;i<m.textures.size();++i)ReleaseMaterialImage(m.textures[i],m.imageKeys[i]);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}}
 EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
  if(data.specular.empty()||data.diffuse.pixels.empty()||data.brdf.empty())return {};
  GpuEnvironment e;e.alive=true;e.levels=unsigned(data.specular.size());GLint previous;glGetIntegerv(GL_TEXTURE_BINDING_2D,&previous);

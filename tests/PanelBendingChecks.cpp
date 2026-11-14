@@ -3,6 +3,7 @@
 #include "Deformable.h"
 #include "UniformGravity.h"
 #include <cmath>
+#include <algorithm>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -35,7 +36,9 @@ unsigned RunPanelBendingChecks(){
     check(std::abs(bend.hinges[0].plastic-plastic)<1e-12&&std::abs(bend.hinges[0].work-work)<1e-12,"return mapping does not creep under an unchanged solved load");
     SaveArchive saved;bend.Persist(saved);PanelBending restored;restored.Initialize(rest,{{0,1,2},{1,0,3}});SaveArchive reader(saved.bytes);restored.Persist(reader);reader.Finish();
     SaveArchive roundtrip;restored.Persist(roundtrip);check(saved.bytes==roundtrip.bytes,"physical hinge plastic state survives exact participant roundtrip");
-    restored.Reset();check(restored.hinges[0].plastic==0&&restored.hinges[0].work==0&&restored.hinges[0].rest==restored.hinges[0].authored,"explicit material reset clears permanent strain and restores authored curvature");
+    PanelBending sibling;sibling.Initialize(bend.topology);
+    check(sibling.topology==bend.topology&&sibling.hinges[0].plastic==0&&bend.hinges[0].plastic>0,"shared cooked hinges keep independent instance damage");
+    restored.Reset();check(restored.hinges[0].plastic==0&&restored.hinges[0].work==0&&restored.hinges[0].rest==restored.topology->at(0).authored,"explicit material reset clears permanent strain and restores authored curvature");
     bool rejected=false;try{PanelBending invalid;invalid.stiffness=0;invalid.Initialize(rest,{{0,1,2},{1,0,3}});}catch(const std::invalid_argument&){rejected=true;}
     check(rejected,"invalid panel stiffness is rejected");
     {

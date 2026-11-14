@@ -4,6 +4,7 @@
 #include "ModelLoader.h"
 #include "SceneFingerprint.h"
 #include <fstream>
+#include <algorithm>
 #include <cstdio>
 // Developer/editor-compatible helpers. Outputs immutable assets, never runtime
 // geometry rebuilt every frame. Generic indexed import preserves source seams.
@@ -11,9 +12,20 @@ int main(int argc,char** argv){
     if (HandleBuildIdentityArguments(argc, argv, "deformable_bake")) return 0;
 
     try{
-        if(argc<4)throw std::runtime_error("usage: judas_deformable_bake sheet output columns rows width height subdivision | block output x y z width height depth | fracture|fracture-rigid|structure|flex-structure output x y z width height depth [tension shear compliance] | panel output source columns rows normalAxis [sourceAssetId] [sourcePart] | cloth output source [sourceAssetId]");
+        if(argc<4)throw std::runtime_error("usage: judas_deformable_bake sheet output columns rows width height subdivision | block output x y z width height depth | fracture|fracture-rigid|structure|flex-structure output x y z width height depth [tension shear compliance] | panel output source columns rows normalAxis [sourceAssetId] [sourcePart] | connected-hull output source [bondKey ...] | cloth output source [sourceAssetId]");
         DeformableAsset asset;std::string error,kind=argv[1];
-        if(kind=="sheet"&&argc==8)asset=MakeDeformableSheet(std::stoul(argv[3]),std::stoul(argv[4]),std::stod(argv[5]),std::stod(argv[6]),std::stoul(argv[7]));
+        if(kind=="connected-hull"){
+            std::ifstream input(argv[3],std::ios::binary);if(!input)throw std::runtime_error("cannot read hull source");
+            std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(input),{}};
+            if(!DecodeDeformableAsset(bytes,asset,error)||!asset.fracture||!asset.fracture->rigid||!asset.fracture->HasMaterials())throw std::runtime_error("connected hull requires a finite rigid material partition: "+error);
+            std::vector<std::string> selected;for(int i=4;i<argc;++i)selected.push_back(argv[i]);
+            for(const auto& key:selected)if(std::none_of(asset.fracture->bonds.begin(),asset.fracture->bonds.end(),[&](const auto& b){return b.key==key&&b.material.enabled;}))throw std::runtime_error("unknown or nonmaterial hull bond: "+key);
+            for(auto& bond:asset.fracture->bonds)if(selected.empty()||std::find(selected.begin(),selected.end(),bond.key)!=selected.end()){
+                if(!bond.material.enabled)throw std::runtime_error("hull connection requires finite material");
+                bond.material.connected=true;
+            }
+        }
+        else if(kind=="sheet"&&argc==8)asset=MakeDeformableSheet(std::stoul(argv[3]),std::stoul(argv[4]),std::stod(argv[5]),std::stod(argv[6]),std::stoul(argv[7]));
         else if((kind=="fracture"||kind=="fracture-rigid"||kind=="structure"||kind=="flex-structure")&&(argc==9||argc==12))asset=MakeFractureBlock({std::stoul(argv[3]),std::stoul(argv[4]),std::stoul(argv[5])},{std::stod(argv[6]),std::stod(argv[7]),std::stod(argv[8])},kind!="fracture"&&kind!="flex-structure");
         else if(kind=="material-sections"&&(argc==10||argc==11)){
             asset=MakeFractureBlock({std::stoul(argv[3]),std::stoul(argv[4]),std::stoul(argv[5])},{std::stod(argv[6]),std::stod(argv[7]),std::stod(argv[8])},true);

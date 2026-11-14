@@ -1,12 +1,18 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
+#include <memory>
 class SaveArchive;
 // Optional finite-mass material kernel. Signed dihedral angles give nonzero
 // flat-panel bending stiffness, unlike opposite-vertex distance springs.
 class PanelBending {
 public:
-    struct Hinge {glm::uvec4 nodes;double authored=0,rest=0,lambda=0,plastic=0,work=0;};
+    struct RestHinge {glm::uvec4 nodes;double authored=0;};
+    using Topology=std::vector<RestHinge>;
+    struct Hinge {double rest=0,lambda=0,plastic=0,work=0;};
+    std::shared_ptr<const Topology> topology;
+    static std::shared_ptr<const Topology> Prepare(const std::vector<glm::dvec3>&,const std::vector<glm::uvec3>&);
+    void Initialize(std::shared_ptr<const Topology>);
     double stiffness=60,yieldMoment=4,hardening=4;
     std::vector<Hinge> hinges;
     void Initialize(const std::vector<glm::dvec3>&,const std::vector<glm::uvec3>&);

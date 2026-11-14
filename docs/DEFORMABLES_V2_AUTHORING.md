@@ -138,3 +138,23 @@ section geometry remains available to existing world integrations.
 See [the qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for measured
 costs, platform evidence and review instructions, and [the implementation
 record](DEFORMABLES_V2_IMPLEMENTATION.md) for preserved checkpoint history.
+
+
+## Connected vehicle hulls
+
+For the ordinary vehicle model, use **Connect main-hull material interfaces** in
+structural authoring, or select **Connected hull** on individual finite interfaces.
+Set maximum translation and angle to the permitted crush/bending envelope. The
+material still yields and accumulates permanent deformation; physical stop rows
+resist exceeding the envelope. Main-hull continuity is not a rigid chassis hidden
+under a cosmetic mesh.
+
+Keep bonnet/door/bumpers and other detachable components on separate ordinary
+finite connections or panel hinges/latches. Do not mark those failure interfaces
+connected. Generic destructibles retain unrestricted fracture by default.
+
+The same operation is available through `judas_deformable_bake connected-hull
+OUTPUT SOURCE [bondKey ...]`. Without keys it selects all finite interfaces in the
+source. The output uses `JudasDeformable7`; author a new output file rather than
+overwriting a valuable source. See [bounded runtime and qualification](DEFORMABLES_V2_BOUNDED_RUNTIME.md)
+for scheduling, resource ownership, measured costs and current limits.

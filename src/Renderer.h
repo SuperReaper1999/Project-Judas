@@ -223,6 +223,8 @@ public:
     // Replaces a non-indexed mesh's vertices without changing its handle.
     // Used for a surface derived each presentation frame from simulated
     // fluid positions. Returns false for indexed or invalid handles.
+    // Independent section/override state sharing frozen geometry storage.
+    MeshHandle CloneImmutableMesh(MeshHandle);
     bool UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices);
     // Deforming detailed exteriors retain rest vertices and materials. Only
     // section weights and visible topology change when connections tear.
@@ -453,6 +455,7 @@ private:
     // count/type information to issue the right draw call.
     struct GpuMesh {
         unsigned generation=0;
+        std::shared_ptr<const int> geometryLease;
         GLuint vao = 0;
         GLuint vbo = 0,skinVbo=0;
         GLuint ebo = 0;          // 0 if non-indexed
@@ -509,7 +512,11 @@ private:
     std::vector<GpuTexture> m_textures;
     bool m_shadowsEnabled=true,m_allowBlockCompression=true;
 
-    struct GpuMaterial {unsigned generation=0;bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
+    struct SharedMaterialImage {TextureHandle texture;size_t users=0;};
+    std::map<std::string,SharedMaterialImage> m_materialImages;
+    std::pair<TextureHandle,std::string> AcquireMaterialImage(const TextureData&,bool srgb);
+    void ReleaseMaterialImage(TextureHandle,const std::string&);
+    struct GpuMaterial {std::array<std::string,5> imageKeys;unsigned generation=0;bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
     struct GpuEnvironment {bool alive=false;GLuint diffuse=0,specular=0,brdf=0;unsigned levels=0;std::size_t bytes=0;};
     std::vector<GpuMaterial> m_materials;std::vector<GpuEnvironment> m_environments;
     std::vector<MaterialBinding> m_materialBindings;

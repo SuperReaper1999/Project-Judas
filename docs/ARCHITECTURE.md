@@ -89,6 +89,12 @@ ordering between unrelated script instances.
 5. Publish wheels, powertrains, particles and simulation time; deliver physics and
    fracture events, drain signals and publish network snapshots.
 
+Full material intervals group compatible local subdivisions into coherent phases.
+Internal/self-contact/finish kernels own exclusive data on the existing worker pool;
+rigid contacts, attachment reactions and publication remain ordered on the owner.
+Connected hull ownership and immutable render/preparation leases are documented in
+[bounded deformable runtime](DEFORMABLES_V2_BOUNDED_RUNTIME.md).
+
 Replica clients process snapshots and fixed scripts without a second authoritative
 solver. Joining inside a callback is checked again before local physics runs.
 Frame/UI work, input edges and pause follow `InteractivePlay.cpp` and the

@@ -3,6 +3,7 @@
 #include "JointTypes.h"
 #include <string>
 #include <vector>
+#include <map>
 #include <cstdint>
 class SaveArchive;
 struct DeformableAsset;
@@ -38,6 +39,8 @@ struct FractureCook {
     unsigned pieceBudget=256;
     std::vector<FracturePart> parts;
     std::vector<FractureBond> bonds;
+    std::map<std::string,unsigned,std::less<>> partByKey;
+    std::vector<unsigned> hullComponent; // cooked permanent connectivity, no instance failure history
     // Derived per simulation boundary face; -1 is exterior.
     std::vector<int> faceBond;
     std::vector<unsigned> nodePart;
@@ -45,6 +48,8 @@ struct FractureCook {
     void SaveStructural(SaveArchive&);
     void SaveMaterials(SaveArchive&);
     bool HasMaterials()const;
+    bool HasConnectedHull()const;
+    void SaveConnectedHull(SaveArchive&);
 };
 bool PrepareFractureCook(DeformableAsset&,std::string&);
 bool ImportFracturePartition(const std::string&,DeformableAsset&,std::string&);

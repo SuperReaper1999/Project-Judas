@@ -779,7 +779,7 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
     GpuMesh* mesh = GetMesh(handle);
     // Indexed deformables keep immutable topology; only their vertex stream
     // changes. Existing non-indexed transient surfaces may still resize.
-    if (!mesh || (mesh->ebo != 0 && vertices.size()!=size_t(mesh->vertexCount))) return false;
+    if (!mesh || mesh->geometryLease || (mesh->ebo != 0 && vertices.size()!=size_t(mesh->vertexCount))) return false;
     glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(MeshVertex)),
                  vertices.empty() ? nullptr : vertices.data(), GL_DYNAMIC_DRAW);
@@ -814,7 +814,7 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
                                      const std::vector<MeshSkinVertex>& skin,const std::vector<MeshPrimitive>& primitives){
     const auto validationStart=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
     auto* mesh=GetMesh(handle);
-    if(!mesh||!mesh->skinVbo||!mesh->ebo||!mesh->lods.empty()||indices.size()%3||indices.size()>size_t(std::numeric_limits<GLsizei>::max()))return false;
+    if(!mesh||mesh->geometryLease||!mesh->skinVbo||!mesh->ebo||!mesh->lods.empty()||indices.size()%3||indices.size()>size_t(std::numeric_limits<GLsizei>::max()))return false;
     if(!indices.empty()&&skin.size()!=size_t(mesh->vertexCount))return false;
     for(auto i:indices)if(i>=unsigned(mesh->vertexCount))return false;
     for(const auto& p:primitives)if(p.first%3||p.count%3||p.first>indices.size()||p.count>indices.size()-p.first||p.material>=int(mesh->materials.size())||p.material< -1)return false;
@@ -845,6 +845,31 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
     return true;
 }
 
+MeshHandle Renderer::CloneImmutableMesh(MeshHandle source){
+    auto* original=GetMesh(source);if(!original)return {};
+    if(!original->geometryLease)original->geometryLease=std::make_shared<const int>(0);
+    auto copy=*original;copy.materials.clear();
+    // Material slots/samplers remain independent. Their immutable images use
+    // the same leases as ordinary mesh uploads; no CPU image copy/readback.
+    for(auto handle:original->materials){
+        const auto material=m_materials.at(handle.id);
+        auto cloned=CreateMaterial(material.definition);auto& target=m_materials[cloned.id];
+        target.textures=material.textures;target.imageKeys=material.imageKeys;
+        for(size_t i=0;i<5;++i){
+            if(!target.imageKeys[i].empty())++m_materialImages.at(target.imageKeys[i]).users;
+            if(material.samplers[i]){glGenSamplers(1,&target.samplers[i]);const auto& sampler=material.definition.maps[i].sampler;
+                glSamplerParameteri(target.samplers[i],GL_TEXTURE_WRAP_S,sampler.wrapS);glSamplerParameteri(target.samplers[i],GL_TEXTURE_WRAP_T,sampler.wrapT);
+                glSamplerParameteri(target.samplers[i],GL_TEXTURE_MIN_FILTER,sampler.minFilter);glSamplerParameteri(target.samplers[i],GL_TEXTURE_MAG_FILTER,sampler.magFilter);}
+        }
+        copy.materials.push_back(cloned);
+    }
+    MeshHandle result;
+    if(m_freeMeshes.empty()){result.id=unsigned(m_meshes.size());copy.generation=0;m_meshes.push_back(std::move(copy));}
+    else{result.id=m_freeMeshes.back();m_freeMeshes.pop_back();copy.generation=m_meshes[result.id].generation;result.generation=copy.generation;m_meshes[result.id]=std::move(copy);}
+    TraceResourceOperation(ResourceTracePoint::MeshCreated,result.id,0);
+    return result;
+}
+
 Renderer::GpuMesh* Renderer::GetMesh(MeshHandle handle) {
     if (!handle.IsValid() || handle.id >= m_meshes.size() || !m_meshes[handle.id].alive || m_meshes[handle.id].generation!=handle.generation) {
         return nullptr;
@@ -856,11 +881,12 @@ void Renderer::DestroyMesh(MeshHandle handle) {
     GpuMesh* mesh = GetMesh(handle);
     if (!mesh) return;
     m_render->waterPass.Forget((std::uint64_t(handle.generation)<<32)|handle.id);
-    if (mesh->ebo) glDeleteBuffers(1, &mesh->ebo);
-    glDeleteBuffers(1, &mesh->vbo);
+    const bool releaseGeometry=!mesh->geometryLease||mesh->geometryLease.use_count()==1;
+    if (releaseGeometry&&mesh->ebo) glDeleteBuffers(1, &mesh->ebo);
+    if(releaseGeometry)glDeleteBuffers(1, &mesh->vbo);
     for(auto material:mesh->materials)DestroyMaterial(material);
-    if(mesh->skinVbo)glDeleteBuffers(1,&mesh->skinVbo);
-    glDeleteVertexArrays(1, &mesh->vao);
+    if(releaseGeometry&&mesh->skinVbo)glDeleteBuffers(1,&mesh->skinVbo);
+    if(releaseGeometry)glDeleteVertexArrays(1, &mesh->vao);
     const std::size_t bytes = static_cast<std::size_t>(mesh->vertexCount) * sizeof(MeshVertex) +
                               static_cast<std::size_t>(mesh->indexCount) * sizeof(std::uint32_t);
     auto generation=mesh->generation;*mesh=GpuMesh{};mesh->generation=generation;

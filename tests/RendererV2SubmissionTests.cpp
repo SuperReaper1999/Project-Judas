@@ -169,6 +169,45 @@ int main(int argc, char **argv) {
     Check(r.Stats().particlesSubmitted == 2, "particle control exercises two real presented particles");
     WriteRgbPng((out / "particles.png").string(), Width, Height, particles);
 
+    {
+        unsigned created=0,destroyed=0;
+        r.SetResourceTrace([&](const ResourceTraceEvent& event){
+            created+=event.point==ResourceTracePoint::TextureCreated;
+            destroyed+=event.point==ResourceTracePoint::TextureDestroyed;
+        });
+        MaterialDefinition image;image.model=MaterialModel::PBR;
+        image.maps[0].embedded=white;image.maps[0].embedded.pixels={13,57,93,251};
+        auto first=r.CreateMaterial(image),second=r.CreateMaterial(image);
+        std::printf("IMAGE_LEASE_COUNTS initial %u %u valid %d %d\n",created,destroyed,first.IsValid(),second.IsValid());
+        Check(first.IsValid()&&second.IsValid()&&created==1,"identical immutable material images share one GPU allocation");
+        r.DestroyMaterial(first);
+        Check(destroyed==0,"releasing one material retains the other image owner");
+        auto different=image;different.maps[0].embedded.pixels[0]=127;
+        auto third=r.CreateMaterial(different);
+        auto linear=image;linear.model=MaterialModel::Legacy;
+        auto fourth=r.CreateMaterial(linear);
+        std::printf("IMAGE_LEASE_COUNTS distinct %u %u\n",created,destroyed);
+        Check(created==3,"different image content and colour space retain independent GPU storage");
+        r.DestroyMaterial(second);r.DestroyMaterial(third);r.DestroyMaterial(fourth);
+        std::printf("IMAGE_LEASE_COUNTS released %u %u\n",created,destroyed);
+        Check(destroyed==3,"last material owners release all immutable image storage");
+        auto meshData=Triangle();meshData.materials={image};
+        auto mesh=r.CreateMesh(meshData);
+        auto uploads=created;
+        Check(r.UploadMeshMap(mesh,meshData,0,0)&&created==uploads,"reuploading an owned map reuses storage without leaking its lease");
+        auto peer=r.CreateMaterial(image);
+        auto instance=r.CloneImmutableMesh(mesh);
+        Check(instance.IsValid()&&!r.UpdateMeshVertices(mesh,meshData.vertices)&&!r.UpdateMeshVertices(instance,meshData.vertices),"shared immutable geometry refuses dynamic writes through either owner");
+        r.DestroyMesh(mesh);
+        Begin(r);r.DrawMesh(instance,{0,0,0},{1,0,0,0},{1,1,1},{},{1,1,1},1);r.EndFrame();
+        Check(r.Stats().drawCalls==1,"immutable geometry remains drawable after its original owner retires");
+        r.DestroyMesh(instance);
+        Check(destroyed+1==created,"mesh retirement preserves a surviving material image lease");
+        r.DestroyMaterial(peer);
+        Check(created==destroyed,"mesh and direct material image lifecycles balance exactly");
+        r.SetResourceTrace({});
+    }
+
     std::vector<MaterialHandle> materials;
     for (unsigned i = 0; i < 8; ++i) {
         MaterialDefinition material;
@@ -244,6 +283,11 @@ int main(int argc, char **argv) {
         std::vector<glm::mat4> palette={glm::mat4(1),glm::translate(glm::mat4(1),glm::vec3(8,0,0))};
         auto draw=[&](){Begin(r);r.DrawMesh(handle,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&palette);r.EndFrame();return Capture(r);};
         Check(r.UpdateMeshStructuralSections(handle,{0,0})&&Near(Pixel(draw()),{0,0,0}),"connected resident influences retain the physical blend");
+        auto independent=r.CloneImmutableMesh(handle);
+        Check(r.UpdateMeshStructuralSections(independent,{0,1}),"immutable geometry clone accepts independent fracture ownership");
+        Begin(r);r.DrawMesh(independent,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&palette);r.EndFrame();
+        Check(Pixel(Capture(r)).x>200&&Near(Pixel(draw()),{0,0,0}),"fracturing one geometry instance leaves its intact sibling pixels unchanged");
+        r.DestroyMesh(independent);
         Check(r.UpdateMeshStructuralSections(handle,{0,1})&&Pixel(draw()).x>200,"separation updates actual pixels immediately without a vertex/index upload");
         Check(!r.UpdateMeshStructuralSections(handle,{0,2})&&Pixel(draw()).x>200,"invalid section IDs reject transactionally");
         Check(!r.UpdateMeshStructuralSections(handle,{0})&&Pixel(draw()).x>200,"wrong section count preserves published ownership");

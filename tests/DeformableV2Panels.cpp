@@ -65,12 +65,12 @@ void RunDeformableV2PanelChecks(void(*check)(bool,const char*)){
     check(panel.panelBending&&panel.panelBending->stiffness==2000,"normal engine initialization owns the authored panel material");
     check(!panel.CommitPanelFailures(),"undamaged sheet does not release its physical mounts");
     unsigned damaged=~0u;
-    for(unsigned i=0;i<panel.panelBending->hinges.size();++i){auto& h=panel.panelBending->hinges[i];for(unsigned k=0;k<4;++k)if(h.nodes[k]==5)damaged=i;}
+    for(unsigned i=0;i<panel.panelBending->hinges.size();++i){const auto& nodes=panel.panelBending->topology->at(i).nodes;for(unsigned k=0;k<4;++k)if(nodes[k]==5)damaged=i;}
     if(damaged==~0u)throw std::runtime_error("procedural test patch has no local hinge");
     // Generate actual constitutive plastic work, not a damage counter or speed trigger.
     auto& law=*panel.panelBending;auto& h=law.hinges[damaged];
     glm::dvec3 points[4],gradient[4];double angle=0;
-    for(unsigned k=0;k<4;++k)points[k]=panel.positions[h.nodes[k]];
+    for(unsigned k=0;k<4;++k)points[k]=panel.positions[law.topology->at(damaged).nodes[k]];
     PanelBending::AngleGradient(points,angle,gradient);h.rest=angle-.7;
     law.Plastic(panel.positions,1./60);
     auto positions=panel.positions,velocities=panel.velocities;

@@ -103,6 +103,7 @@ struct DeformableAsset {
     std::vector<DeformableTriangle> cloth;
     std::vector<DeformableTet> solids;
     std::vector<DeformableBend> bends;
+    std::shared_ptr<const PanelBending::Topology> panelHinges;
     std::vector<glm::uvec2> edges;
     std::vector<std::vector<unsigned>> neighbors,excludedFaces,excludedEdges;
     double cellSize=0;
@@ -139,6 +140,7 @@ public:
     std::map<std::string,std::string> attachmentEvents;
     // Instance-owned signed-dihedral material; persisted with the physical state.
     std::optional<PanelBending> panelBending;
+    std::vector<std::vector<std::pair<unsigned,double>>> attachmentHinges;
     bool sleeping=false;double quietSeconds=0;
     struct TerrainRegion {TerrainV2::SolidSnapshot solid;std::vector<BodyHandle> bodies;};
     // Derived current-world collision publication; never persisted as ownership.
@@ -182,6 +184,10 @@ public:
     // exclusions. Both participants receive the same mass-weighted projection.
     static void SurfaceContacts(DeformableInstance&,DeformableInstance&,double);
 private:
+    friend class MaterialInterval;
+    bool PreparePhysicalInterval(double,unsigned,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&,bool);
+    void PredictPhysicalSubstep(double,PhysicsWorld&,const GravityField&);
+    void FinishPhysicalSubstep(double);
     bool integrating=false,integrationTargetMoving=false,currentRigidContactPose=false;
     unsigned integrationSubsteps=1;
     double integrationDeltaTime=0;

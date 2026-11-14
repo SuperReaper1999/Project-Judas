@@ -146,7 +146,13 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha||structuralTopologyChanged){
             const auto mapStart=measured?profiler.Now():0;
             if(sim.asset->structuralSkin){
-                if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildResidentGpuMesh(sim,record.presentation);
+                if(!record.mesh.IsValid()){
+                    for(const auto& [otherId,other]:m_deformables)if(otherId!=id&&other.mesh.IsValid()&&other.simulation.asset->structuralSkin==sim.asset->structuralSkin){
+                        record.mesh=renderer.CloneImmutableMesh(other.mesh);
+                        if(record.mesh.IsValid()){record.presentation.primitives=other.presentation.primitives;break;}
+                    }
+                    if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildResidentGpuMesh(sim,record.presentation);
+                }
             }else sim.MapRender(materialAlpha,record.presentation);
             const auto uploadStart=measured?profiler.Now():0;
             if(measured)JUDAS_PROFILE_COUNTER("Deformable render mapping CPU ms",double(uploadStart-mapStart)*1e-6,ProfileCounterMode::Sum);

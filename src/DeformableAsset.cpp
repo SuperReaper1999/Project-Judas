@@ -306,6 +306,11 @@ bool PrepareDeformableAsset(DeformableAsset& a,std::string& error){
             }if(std::abs(sum-1)>1e-8)return fail("render binding must sum to one");
         }
     for(auto p:a.render.primitives)if(p.first>a.render.indices.size()||p.count>a.render.indices.size()-p.first||p.count%3)return fail("invalid render material range");
+    a.panelHinges.reset();
+    if(a.kind==DeformableKind::Cloth){
+        try{a.panelHinges=PanelBending::Prepare(a.nodes,a.triangles);}
+        catch(const std::exception& e){error=e.what();return false;}
+    }
     PreparePanelRenderGroups(a);
     return PrepareFractureCook(a,error);
 }
@@ -322,14 +327,15 @@ std::string EncodeDeformableAsset(const DeformableAsset& input){auto a=input;
         std::vector<std::string> chunks;for(size_t i=0;i<model.size();i+=1024*1024)chunks.emplace_back(reinterpret_cast<const char*>(model.data()+i),std::min(size_t(1024*1024),model.size()-i));
         ar(chunks);return "JudasDeformable6\n"+ar.bytes;
     }
-    if(a.fracture&&a.fracture->HasMaterials()){a.fracture->Save(ar);a.fracture->SaveStructural(ar);a.fracture->SaveMaterials(ar);return "JudasDeformable5\n"+ar.bytes;}
+    if(a.fracture&&a.fracture->HasMaterials()){a.fracture->Save(ar);a.fracture->SaveStructural(ar);a.fracture->SaveMaterials(ar);if(a.fracture->HasConnectedHull()){a.fracture->SaveConnectedHull(ar);return "JudasDeformable7\n"+ar.bytes;}return "JudasDeformable5\n"+ar.bytes;}
     if(a.fracture){a.fracture->Save(ar);if(a.fracture->structural){a.fracture->SaveStructural(ar);return "JudasDeformable3\n"+ar.bytes;}return "JudasDeformable2\n"+ar.bytes;}
     return "JudasDeformable1\n"+ar.bytes;
     }
 bool DecodeDeformableAsset(const std::vector<unsigned char>& bytes,DeformableAsset& out,std::string& error){try{std::string b(bytes.begin(),bytes.end());
         const std::string magic="JudasDeformable1\n";
         bool panel=b.rfind("JudasDeformable6\n",0)==0;
-        bool material=b.rfind("JudasDeformable5\n",0)==0;
+        bool connected=b.rfind("JudasDeformable7\n",0)==0;
+        bool material=connected||b.rfind("JudasDeformable5\n",0)==0;
         bool structural=material||b.rfind("JudasDeformable3\n",0)==0;
         bool fracture=structural||b.rfind("JudasDeformable2\n",0)==0;
         if(!panel&&!fracture&&b.rfind(magic,0)!=0)throw std::runtime_error("invalid deformable asset version");
@@ -343,7 +349,7 @@ bool DecodeDeformableAsset(const std::vector<unsigned char>& bytes,DeformableAss
             ar.Require(exterior.vertices.size()==a.render.vertices.size()&&exterior.indices==a.render.indices,"panel exterior does not match physical binding");
             a.render=std::move(exterior);a.panelBinding=true;
         }
-        if(fracture){a.fracture=std::make_shared<FractureCook>();a.fracture->Save(ar);if(structural)a.fracture->SaveStructural(ar);if(material)a.fracture->SaveMaterials(ar);}
+        if(fracture){a.fracture=std::make_shared<FractureCook>();a.fracture->Save(ar);if(structural)a.fracture->SaveStructural(ar);if(material)a.fracture->SaveMaterials(ar);if(connected)a.fracture->SaveConnectedHull(ar);}
         ar.Finish();
         if(!PrepareDeformableAsset(a,error))return false;
         out=std::move(a);
