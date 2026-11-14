@@ -441,8 +441,7 @@ public:
     struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;
         // Detailed exterior topology depends on component ownership/removal,
         // not every failed (possibly redundant) structural connection.
-        mutable std::vector<unsigned> meshComponents;
-        mutable std::vector<uint8_t> meshRemoved;
+        mutable std::vector<int> meshSections;
         DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
     DeformableInstance* RuntimeDeformable(EntityId,std::string& error,bool staged=false);
     void UpdateDeformables(double dt);

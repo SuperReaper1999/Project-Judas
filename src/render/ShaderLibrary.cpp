@@ -9,6 +9,24 @@
 #include <sstream>
 #include <vector>
 
+// Shared by colour and shadow passes: authoritative connectivity is a tiny
+// per-section table; detailed vertices and original influences stay resident.
+#define JUDAS_STRUCTURAL_SKIN_GLSL R"(
+uniform bool uStructuralSkin;
+uniform ivec4 uStructuralSections[64];
+int sectionState(uint section) { return uStructuralSections[int(section>>2u)][int(section&3u)]; }
+mat4 vertexSkin() {
+    if(!uSkinned)return mat4(1.0);
+    if(!uStructuralSkin)return bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
+    uint owner=aJoints1.x;int component=sectionState(owner);vec4 weights=aWeights;
+    for(int k=0;k<4;++k)if(sectionState(aJoints[k])!=component)weights[k]=0.0;
+    float sum=weights.x+weights.y+weights.z+weights.w;
+    if(sum<=0.0)return bone(owner);
+    weights/=sum;
+    return bone(aJoints.x)*weights.x+bone(aJoints.y)*weights.y+bone(aJoints.z)*weights.z+bone(aJoints.w)*weights.w;
+}
+)"
+
 namespace JudasRender::Shaders {
 
 // Canonical portable shaders. Extracted byte-for-byte from Renderer.cpp;
@@ -27,6 +45,7 @@ layout(location = 6) in uvec4 aJoints1;
 layout(location = 7) in vec4 aWeights1;
 uniform samplerBuffer uBones;
 mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
+)" JUDAS_STRUCTURAL_SKIN_GLSL R"(
 uniform mat4 uModel;
 uniform bool uInstanced;
 layout(location=9) in mat4 aInstanceModel;
@@ -59,8 +78,7 @@ void main() {
     // once per draw call (see DrawMesh) — the standard correction so
     // normals stay perpendicular to their surface under non-uniform scale
     // (DrawBox's halfExtents are rarely a uniform scale), not just rotation.
-    mat4 skin=mat4(1.0);
-    if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
+    mat4 skin=vertexSkin();
     vec4 localPosition=skin*vec4(aLocalPos,1.0);
     mat3 linear=mat3(skin);
     vec3 normal=abs(determinant(linear))>1e-8?transpose(inverse(linear))*aLocalNormal:linear*aLocalNormal;
@@ -85,6 +103,7 @@ void main() {
     vWorldPos = vec3(model * localPosition);
     vUV = aUV;vUV1=uTerrainGrid?terrainSamplePoint(aUV)/(uTerrainDimensions-vec2(1.0)):aUV1;
     gl_Position = uProjection * uView * model * localPosition;
+    if(uStructuralSkin&&sectionState(aJoints1.x)<0)gl_Position=vec4(2.0,2.0,2.0,1.0);
 }
 )";
 
@@ -394,6 +413,7 @@ layout(location = 6) in uvec4 aJoints1;
 layout(location = 7) in vec4 aWeights1;
 uniform samplerBuffer uBones;
 mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
+)" JUDAS_STRUCTURAL_SKIN_GLSL R"(
 uniform mat4 uModel;
 uniform bool uInstanced;
 layout(location=9) in mat4 aInstanceModel;
@@ -402,9 +422,9 @@ uniform mat4 uLightViewProj;
 )" JUDAS_TERRAIN_VERTEX_GLSL R"(
 
 void main() {
-    mat4 skin=mat4(1.0);
-    if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
+    mat4 skin=vertexSkin();
     mat4 model=uInstanced?aInstanceModel:uModel;shadowUV=aUV;shadowUV1=aUV1;vec4 local=skin*vec4(aLocalPos,1.0);if(uTerrainGrid)local.y=terrainGridHeight(aUV);gl_Position = uLightViewProj * model * local;
+    if(uStructuralSkin&&sectionState(aJoints1.x)<0)gl_Position=vec4(2.0,2.0,2.0,1.0);
 }
 )";
 

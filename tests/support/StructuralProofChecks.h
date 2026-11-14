@@ -2,6 +2,7 @@
 #include "Deformable.h"
 #include "StructuralMass.h"
 #include "deformables/StructuralSkin.h"
+#include "render/StructuralSkinState.h"
 #include <iostream>
 #include <stdexcept>
 inline unsigned RunStructuralProofChecks() {
@@ -99,6 +100,19 @@ inline unsigned RunStructuralProofChecks() {
         check(glm::length(glm::vec3(point) - mapped.vertices[i].position) < 1e-5f,
               "GPU palette agrees with CPU torn skin");
     }
+    MeshData resident;skin.BuildResidentGpuMesh(simulation,resident);
+    std::vector<int> sections;
+    check(skin.UpdateSectionState(simulation,sections),"resident skin publishes initial physical ownership");
+    check(!skin.UpdateSectionState(simulation,sections),"unchanged ownership needs no damage publication");
+    for(size_t i=0;i<resident.vertices.size();++i){
+        auto weights=JudasRender::ResolveStructuralWeights(resident.skinVertices[i],sections);
+        glm::vec4 point(0);
+        for(unsigned k=0;k<4;++k)point+=weights.weights[k]*palette[weights.joints[k]]*glm::vec4(resident.vertices[i].position,1);
+        check(glm::length(glm::vec3(point)-mapped.vertices[i].position)<1e-5f,
+              "resident ownership shader arithmetic agrees with actual CPU torn geometry");
+    }
+    const auto residentIndices=resident.indices;
+    const auto residentWeights=resident.skinVertices;
     // A failed redundant bond changes damage revision without changing the
     // connected material frames that determine visible skin weights/indices.
     auto loop = MakeFractureBlock({2,2,1}, {2,2,1}, true);
@@ -138,5 +152,9 @@ inline unsigned RunStructuralProofChecks() {
     skin.BuildGpuMesh(simulation, gpu);
     check(gpu.vertices.empty() && gpu.indices.empty() && gpu.skinVertices.empty(),
           "removed physical owners cannot reappear in GPU geometry");
+    check(skin.UpdateSectionState(simulation,sections)&&std::all_of(sections.begin(),sections.end(),[](int state){return state<0;}),
+          "all removed physical owners publish immediate removal in the resident section table");
+    check(resident.indices==residentIndices&&resident.skinVertices.size()==residentWeights.size(),
+          "physical removal does not rebuild immutable resident exterior buffers");
     return checks;
 }

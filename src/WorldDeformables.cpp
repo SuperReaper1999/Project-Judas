@@ -140,24 +140,23 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
         auto& sim=record.simulation;
         const float materialAlpha=sim.sleeping?1.f:alpha;
         std::vector<glm::mat4> palette;
+        const bool sectionStateChanged=sim.asset->structuralSkin&&sim.asset->structuralSkin->UpdateSectionState(sim,record.meshSections);
         const bool structuralTopologyChanged=sim.asset->structuralSkin&&
-            (record.meshTopology==~uint64_t(0)||record.meshComponents!=sim.fracture.component||record.meshRemoved!=sim.fracture.removed);
+            (record.meshTopology==~uint64_t(0)||sectionStateChanged);
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=materialAlpha||structuralTopologyChanged){
             const auto mapStart=measured?profiler.Now():0;
             if(sim.asset->structuralSkin){
-                if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
-                else if(structuralTopologyChanged&&!sim.asset->structuralSkin->UpdateGpuTopology(sim,record.presentation))sim.asset->structuralSkin->BuildGpuMesh(sim,record.presentation);
+                if(!record.mesh.IsValid())sim.asset->structuralSkin->BuildResidentGpuMesh(sim,record.presentation);
             }else sim.MapRender(materialAlpha,record.presentation);
             const auto uploadStart=measured?profiler.Now():0;
             if(measured)JUDAS_PROFILE_COUNTER("Deformable render mapping CPU ms",double(uploadStart-mapStart)*1e-6,ProfileCounterMode::Sum);
-            if(!record.mesh.IsValid())record.mesh=renderer.CreateMesh(record.presentation);
+            if(!record.mesh.IsValid()){record.mesh=renderer.CreateMesh(record.presentation);if(sim.asset->structuralSkin&&!renderer.UpdateMeshStructuralSections(record.mesh,record.meshSections))throw std::runtime_error("invalid initial structural section state");}
             else if(sim.asset->structuralSkin){
-                if(structuralTopologyChanged&&!renderer.UpdateMeshSkinTopology(record.mesh,record.presentation.indices,record.presentation.skinVertices,record.presentation.primitives))throw std::runtime_error("invalid prepared structural skin topology");
+                if(structuralTopologyChanged&&!renderer.UpdateMeshStructuralSections(record.mesh,record.meshSections))throw std::runtime_error("invalid structural section state");
             }
             else if(sim.asset->fracture&&record.meshTopology!=sim.fracture.revision){renderer.DestroyMesh(record.mesh);record.mesh=renderer.CreateMesh(record.presentation);}
             else if(!sim.asset->structuralSkin)renderer.UpdateMeshVertices(record.mesh,record.presentation.vertices);
             if(measured)JUDAS_PROFILE_COUNTER("Deformable geometry preparation/upload CPU ms",double(profiler.Now()-uploadStart)*1e-6,ProfileCounterMode::Sum);
-            if(sim.asset->structuralSkin&&structuralTopologyChanged){record.meshComponents=sim.fracture.component;record.meshRemoved=sim.fracture.removed;}
             record.meshTopology=sim.fracture.revision;
             record.mappedRevision=record.revision;record.mappedAlpha=materialAlpha;
             // Immutable assets retain source images for resource rebuilding;

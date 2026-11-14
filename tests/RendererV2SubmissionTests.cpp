@@ -234,6 +234,46 @@ int main(int argc, char **argv) {
         Check(!r.UpdateMeshSkinTopology(handle,data.indices,data.skinVertices,data.primitives),"retired skin handles cannot modify later mesh generations");
     }
 
+    {
+        auto data=Triangle();data.indices={0,1,2};data.primitives={{0,3,-1}};
+        auto skeleton=std::make_shared<SkeletalAsset>();auto& sk=skeleton->skeleton;
+        sk.names={"owner","neighbour"};sk.parents={-1,-1};sk.order={0,1};sk.rest.local.resize(2);sk.skinNodes={0,1};sk.inverseBind.assign(2,glm::mat4(1));
+        data.skeletal=skeleton;data.skinVertices.resize(data.vertices.size());
+        for(auto& v:data.skinVertices){v.joints={0,1,0,0};v.weights={.5f,.5f,0,0};v.joints1=glm::uvec4(0);v.weights1=glm::vec4(0);}
+        const auto handle=r.CreateMesh(data);
+        std::vector<glm::mat4> palette={glm::mat4(1),glm::translate(glm::mat4(1),glm::vec3(8,0,0))};
+        auto draw=[&](){Begin(r);r.DrawMesh(handle,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&palette);r.EndFrame();return Capture(r);};
+        Check(r.UpdateMeshStructuralSections(handle,{0,0})&&Near(Pixel(draw()),{0,0,0}),"connected resident influences retain the physical blend");
+        Check(r.UpdateMeshStructuralSections(handle,{0,1})&&Pixel(draw()).x>200,"separation updates actual pixels immediately without a vertex/index upload");
+        Check(!r.UpdateMeshStructuralSections(handle,{0,2})&&Pixel(draw()).x>200,"invalid section IDs reject transactionally");
+        Check(!r.UpdateMeshStructuralSections(handle,{0})&&Pixel(draw()).x>200,"wrong section count preserves published ownership");
+        Check(r.UpdateMeshStructuralSections(handle,{-1,1})&&Near(Pixel(draw()),{0,0,0}),"removed physical owner clips its complete triangle immediately");
+        Check(r.UpdateMeshStructuralSections(handle,{0,1})&&Pixel(draw()).x>200,"cold-restored resident ownership reveals the original geometry again");
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+        auto depth=[&](){r.BeginShadowPass(0,glm::ortho(-3.f,3.f,-3.f,3.f,.1f,100.f)*glm::lookAt(glm::vec3(0,0,10),glm::vec3(0),glm::vec3(0,1,0)));r.DrawMesh(handle,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&palette);GLint viewport[4];glGetIntegerv(GL_VIEWPORT,viewport);float value=1;glReadPixels(viewport[2]/2,viewport[3]/2,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&value);r.EndShadowPass();return value;};
+        Check(depth()<.9f,"resident separated owner casts the current shadow silhouette");
+        Check(r.UpdateMeshStructuralSections(handle,{-1,1})&&depth()>.999f,"removed owner stops casting shadow in the same publication");
+#endif
+        r.DestroyMesh(handle);
+        Check(!r.UpdateMeshStructuralSections(handle,{0,1}),"retired handles cannot publish section state into reused meshes");
+    }
+
+    {
+        auto data=Triangle();data.indices={0,1,2};data.primitives={{0,3,-1}};
+        auto skeleton=std::make_shared<SkeletalAsset>();auto& sk=skeleton->skeleton;
+        for(unsigned i=0;i<256;++i){sk.names.push_back(std::to_string(i));sk.parents.push_back(-1);sk.order.push_back(i);sk.skinNodes.push_back(i);sk.rest.local.emplace_back();sk.inverseBind.emplace_back(1);}
+        data.skeletal=skeleton;data.skinVertices.resize(3);
+        for(auto& v:data.skinVertices){v.joints=glm::uvec4(255);v.weights={1,0,0,0};v.joints1={255,0,0,0};v.weights1=glm::vec4(0);}
+        auto handle=r.CreateMesh(data);std::vector<int> state(256,0);std::vector<glm::mat4> pose(256,glm::mat4(1));
+        auto draw=[&](){Begin(r);r.DrawMesh(handle,{0,0,0},{1,0,0,0},{1,1,1},{},{1,0,0},1,&pose);r.EndFrame();return Capture(r);};
+        Check(r.UpdateMeshStructuralSections(handle,state)&&Pixel(draw()).x>200,"portable packed ownership reaches physical section255");
+        state[255]=-1;Check(r.UpdateMeshStructuralSections(handle,state)&&Near(Pixel(draw()),{0,0,0}),"last packed section removal reaches the actual GPU vertex path");
+        r.DestroyMesh(handle);
+        data.skinVertices[0].joints1.x=0;handle=r.CreateMesh(data);
+        Check(!r.UpdateMeshStructuralSections(handle,state),"mixed owners within one physical face cannot publish a partial clipping convention");
+        r.DestroyMesh(handle);
+    }
+
     const auto target = r.CreateRenderTarget(320, 180, error);
     Check(target.IsValid(), "independent secondary render target is created");
     Begin(r);

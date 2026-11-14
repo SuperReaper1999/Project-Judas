@@ -4,6 +4,7 @@
 #include "Tangents.h"
 #include "Renderer.h"
 #include "render/ShaderLibrary.h"
+#include "render/StructuralSkinState.h"
 #include "SkeletalAnimation.h"
 #include "Weather.h"
 #include "BasicWater.h"
@@ -28,6 +29,26 @@
 
 namespace {
 using namespace JudasRender::Shaders;
+
+// First surviving face supplies the same winding reference as a filtered index
+// stream. Prepare one candidate per owner at upload time, never scan the full
+// exterior when a section is removed during gameplay.
+bool StructuralOrientations(const std::vector<MeshSkinVertex>& skin,const std::vector<uint32_t>& indices,
+                            const std::vector<MeshPrimitive>& parts,std::vector<std::vector<MeshSkinVertex>>& out) {
+    out.clear();out.resize(parts.size());
+    for(size_t i=0;i<parts.size();++i){
+        std::array<bool,JudasRender::kStructuralSectionLimit> seen{};
+        const auto& part=parts[i];
+        if(part.first%3||part.count%3||size_t(part.first)+part.count>(indices.empty()?skin.size():indices.size()))return false;
+        for(size_t t=part.first;t<size_t(part.first)+part.count;t+=3){
+            const auto& binding=skin.at(indices.empty()?t:indices.at(t));
+            if(binding.joints1.x>=seen.size())return false;
+            for(unsigned k=1;k<3;++k)if(skin.at(indices.empty()?t+k:indices.at(t+k)).joints1.x!=binding.joints1.x)return false;
+            if(!seen[binding.joints1.x]){seen[binding.joints1.x]=true;out[i].push_back(binding);}
+        }
+    }
+    return true;
+}
 
 // A unit cube (36 vertices, non-indexed, two triangles per face) centered on
 // the origin in local [-0.5, 0.5] space — the same geometry Judas has used
@@ -231,6 +252,7 @@ bool Renderer::Init() {
 
     m_uModel = glGetUniformLocation(m_shaderProgram, "uModel");
     m_uSkinned=glGetUniformLocation(m_shaderProgram,"uSkinned");m_uBones=glGetUniformLocation(m_shaderProgram,"uBones");
+    m_uStructuralSkin=glGetUniformLocation(m_shaderProgram,"uStructuralSkin");m_uStructuralSections=glGetUniformLocation(m_shaderProgram,"uStructuralSections[0]");
     m_uNormalMatrix = glGetUniformLocation(m_shaderProgram, "uNormalMatrix");
     m_uView = glGetUniformLocation(m_shaderProgram, "uView");
     m_uProjection = glGetUniformLocation(m_shaderProgram, "uProjection");
@@ -307,6 +329,7 @@ bool Renderer::Init() {
     m_uShadowModel = glGetUniformLocation(m_shadowShaderProgram, "uModel");
     m_uShadowInstanced=glGetUniformLocation(m_shadowShaderProgram,"uInstanced");
     m_uShadowSkinned=glGetUniformLocation(m_shadowShaderProgram,"uSkinned");m_uShadowBones=glGetUniformLocation(m_shadowShaderProgram,"uBones");
+    m_uShadowStructuralSkin=glGetUniformLocation(m_shadowShaderProgram,"uStructuralSkin");m_uShadowStructuralSections=glGetUniformLocation(m_shadowShaderProgram,"uStructuralSections[0]");
     m_uShadowLightViewProj = glGetUniformLocation(m_shadowShaderProgram, "uLightViewProj");
     glUseProgram(m_shadowShaderProgram);
     glUniform1i(m_uShadowBones, 15);
@@ -693,7 +716,9 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     mesh.lods=data.lods;mesh.lodPixels=data.lodPixels;
     mesh.primitives=data.primitives;for(const auto& material:data.materials)mesh.materials.push_back(CreateMaterial(MaterialSettings(material)));
     mesh.alive = true;
+    mesh.structuralEligible=data.skeletal&&data.skeletal->skeleton.skinNodes.size()<=JudasRender::kStructuralSectionLimit&&std::all_of(data.skinVertices.begin(),data.skinVertices.end(),[](const auto& v){return v.weights1==glm::vec4(0);});
     if(data.skeletal){mesh.restSkin=ResolveSkinMatrices(data.skeletal->skeleton,data.skeletal->skeleton.rest);for(auto& part:data.primitives)if(part.count)mesh.partOrientation.push_back(data.skinVertices.at(data.indices.empty()?part.first:data.indices.at(part.first)));else mesh.partOrientation.emplace_back();}
+    if(mesh.structuralEligible)mesh.structuralEligible=StructuralOrientations(data.skinVertices,data.indices,mesh.primitives,mesh.structuralOrientations);
     for(const auto& v:data.vertices)mesh.bounds.Include(v.position);
     mesh.vertexCount = static_cast<GLsizei>(data.vertices.size());
 
@@ -766,6 +791,25 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
     return true;
 }
 
+bool Renderer::UpdateMeshStructuralSections(MeshHandle handle,const std::vector<int>& sections) {
+    auto* mesh=GetMesh(handle);
+    if(!mesh||!mesh->structuralEligible||sections.empty()||sections.size()!=mesh->restSkin.size())return false;
+    for(int state:sections)if(state< -1||state>=int(sections.size()))return false;
+    mesh->structuralSections.resize((sections.size()+3)/4*4,0);
+    std::copy(sections.begin(),sections.end(),mesh->structuralSections.begin());
+    JUDAS_PROFILE_COUNTER("Structural section state publications",1,ProfileCounterMode::Sum);
+    ++m_shadowResourceRevision;
+    return true;
+}
+void Renderer::UploadStructuralSections(const GpuMesh& mesh,bool shadow) {
+    const bool enabled=!mesh.structuralSections.empty();
+    glUniform1i(shadow?m_uShadowStructuralSkin:m_uStructuralSkin,enabled);
+    if(enabled){
+        glUniform4iv(shadow?m_uShadowStructuralSections:m_uStructuralSections,GLsizei(mesh.structuralSections.size()/4),mesh.structuralSections.data());
+        JUDAS_PROFILE_COUNTER("Structural section upload bytes",double(mesh.structuralSections.size()*sizeof(int)),ProfileCounterMode::Sum);
+    }
+}
+
 bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32_t>& indices,
                                      const std::vector<MeshSkinVertex>& skin,const std::vector<MeshPrimitive>& primitives){
     const auto validationStart=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
@@ -774,10 +818,15 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
     if(!indices.empty()&&skin.size()!=size_t(mesh->vertexCount))return false;
     for(auto i:indices)if(i>=unsigned(mesh->vertexCount))return false;
     for(const auto& p:primitives)if(p.first%3||p.count%3||p.first>indices.size()||p.count>indices.size()-p.first||p.material>=int(mesh->materials.size())||p.material< -1)return false;
-    for(const auto& v:skin){float sum=0;
+    for(const auto& v:skin){if(!mesh->structuralSections.empty()&&v.weights1!=glm::vec4(0))return false;float sum=0;
         for(unsigned k=0;k<4;++k){if(v.joints[k]>=mesh->restSkin.size()||v.joints1[k]>=mesh->restSkin.size()||!std::isfinite(v.weights[k])||!std::isfinite(v.weights1[k])||v.weights[k]<0||v.weights1[k]<0)return false;sum+=v.weights[k]+v.weights1[k];}
         if(std::abs(sum-1)>1e-4f)return false;
     }
+    std::vector<std::vector<MeshSkinVertex>> orientations;
+    const bool eligible=!mesh->restSkin.empty()&&mesh->restSkin.size()<=JudasRender::kStructuralSectionLimit&&
+        std::all_of(skin.begin(),skin.end(),[](const auto& v){return v.weights1==glm::vec4(0);})&&
+        StructuralOrientations(skin,indices,primitives,orientations);
+    if(!mesh->structuralSections.empty()&&!eligible)return false;
     if(validationStart)JUDAS_PROFILE_COUNTER("Structural topology validation CPU ms",double(PerformanceProfiler::Now()-validationStart)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_SCOPE("Structural topology upload");
     const auto submissionStart=validationStart?PerformanceProfiler::Now():0;
@@ -790,6 +839,7 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
     if(submissionStart)JUDAS_PROFILE_COUNTER("Structural topology GL submission CPU ms",double(PerformanceProfiler::Now()-submissionStart)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Structural topology publications",1,ProfileCounterMode::Sum);
     ++m_shadowResourceRevision;
+    mesh->structuralEligible=eligible;mesh->structuralOrientations=std::move(orientations);
     mesh->indexCount=GLsizei(indices.size());mesh->primitives=primitives;mesh->partOrientation.clear();
     for(const auto& p:primitives)mesh->partOrientation.push_back(p.count?skin[indices[p.first]]:MeshSkinVertex{});
     return true;
@@ -1013,7 +1063,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     auto alphaAt=[&](size_t slot,const GpuMaterial* material){auto binding=bindingAt(slot);return binding.overrides.alpha.value_or(material?material->definition.alpha:MaterialAlpha::Opaque);};
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);if(!shadow)BindTerrainMaterial();BindTerrainGeometry(shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
+    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);if(!shadow)BindTerrainMaterial();BindTerrainGeometry(shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto w=gpuMesh->partOrientation[i];if(!gpuMesh->structuralSections.empty()){if(i<gpuMesh->structuralOrientations.size())for(const auto& candidate:gpuMesh->structuralOrientations[i])if(gpuMesh->structuralSections[candidate.joints1.x]>=0){w=candidate;break;}w=JudasRender::ResolveStructuralWeights(w,gpuMesh->structuralSections);}for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
@@ -1036,6 +1086,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     if (m_shadowPassActive) {
         glUseProgram(m_shadowShaderProgram);
+        UploadStructuralSections(*gpuMesh,true);
         glUniform1i(m_uShadowInstanced,m_submittingBatch);
         glUniform1i(m_uShadowSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uShadowBones,15);}
         glUniformMatrix4fv(m_uShadowModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1049,6 +1100,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     const glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
 
     glUseProgram(m_shaderProgram);
+    UploadStructuralSections(*gpuMesh,false);
     glUniform1i(MaterialUniform("uInstanced"),m_submittingBatch);
     glUniform1i(MaterialUniform("uBones"),15);
     glUniform1i(MaterialUniform("uSkinned"),!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(MaterialUniform("uBones"),15);}

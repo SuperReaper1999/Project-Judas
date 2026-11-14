@@ -210,7 +210,7 @@ void StructuralSkin::Palette(const DeformableInstance &simulation, double alpha,
         palette[i] = glm::mat4(transform);
     }
 }
-void StructuralSkin::BuildGpuMesh(const DeformableInstance &simulation, MeshData &mesh) const {
+void StructuralSkin::InitializeGpuMesh(const DeformableInstance &simulation, MeshData &mesh) const {
     if (!simulation.asset->fracture || simulation.asset->fracture->parts.size() != frames.size())
         throw std::invalid_argument("structural skin partition changed");
     // Rebuild only on topology publication. Ordinary motion updates the bounded
@@ -228,7 +228,25 @@ void StructuralSkin::BuildGpuMesh(const DeformableInstance &simulation, MeshData
         skeleton.inverseBind.emplace_back(1);
     }
     mesh.skeletal = std::move(asset);
+}
+void StructuralSkin::BuildGpuMesh(const DeformableInstance &simulation, MeshData &mesh) const {
+    InitializeGpuMesh(simulation,mesh);
     UpdateGpuTopology(simulation,mesh);
+}
+void StructuralSkin::BuildResidentGpuMesh(const DeformableInstance &simulation, MeshData &mesh) const {
+    InitializeGpuMesh(simulation,mesh);
+    for (size_t i=0;i<corners.size();++i) {
+        const auto& corner=corners[i];auto& skin=mesh.skinVertices[i];
+        for(unsigned k=0;k<4;++k){skin.joints[k]=corner.parts[k];skin.weights[k]=float(corner.weights[k]);}
+        skin.joints1={corner.owner,0,0,0};skin.weights1=glm::vec4(0);
+    }
+}
+bool StructuralSkin::UpdateSectionState(const DeformableInstance& simulation,std::vector<int>& state)const {
+    if(!simulation.asset->fracture||simulation.fracture.component.size()!=frames.size()||simulation.fracture.removed.size()!=frames.size())
+        throw std::invalid_argument("structural skin partition changed");
+    bool changed=state.size()!=frames.size();state.resize(frames.size());
+    for(size_t i=0;i<frames.size();++i){const int value=simulation.fracture.removed[i]?-1:int(simulation.fracture.component[i]);changed|=state[i]!=value;state[i]=value;}
+    return changed;
 }
 bool StructuralSkin::UpdateGpuTopology(const DeformableInstance& simulation,MeshData& mesh)const{
     if(!mesh.skeletal||mesh.vertices.size()!=rest.vertices.size()||mesh.skinVertices.size()!=corners.size())return false;

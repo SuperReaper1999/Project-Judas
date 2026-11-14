@@ -13,6 +13,22 @@ from run_matrix import verify_state
 
 
 class WholeFrameMetricsTests(unittest.TestCase):
+    def test_pending_time_is_distinct_from_discarded_time(self):
+        rows = [dict(discarded_seconds=0, cap_reached=False,
+                     incoming_delta_clipped_seconds=0, steps=3,
+                     pending_simulation_seconds=.055, accumulator_seconds=.005),
+                dict(discarded_seconds=0, cap_reached=False,
+                     incoming_delta_clipped_seconds=0, steps=6,
+                     pending_simulation_seconds=.104, accumulator_seconds=.004)]
+        result = simulation_loss(rows)
+        self.assertEqual(result['peak_pending_simulation_seconds'], .104)
+        self.assertEqual(result['peak_post_step_accumulator_seconds'], .005)
+        self.assertEqual(result['maximum_fixed_steps_per_frame'], 6)
+        self.assertEqual(result['total_simulation_time_lost_seconds'], 0)
+        del rows[0]['pending_simulation_seconds']
+        self.assertIsNone(simulation_loss(rows)['peak_pending_simulation_seconds'])
+        self.assertIsNone(simulation_loss(rows, profiled=False)['maximum_fixed_steps_per_frame'])
+
     def test_clock_loss_includes_both_discard_policies(self):
         rows = [{'discarded_seconds': .02, 'cap_reached': True,
                  'incoming_delta_clipped_seconds': .3},

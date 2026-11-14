@@ -14,6 +14,10 @@ class StructuralSkin {
     bool Bind(const DeformableAsset &, const MeshData &, std::string &error, bool panelSeams=false);
     void Map(const DeformableInstance &, double alpha, MeshData &) const;
     void BuildGpuMesh(const DeformableInstance &, MeshData &) const;
+    // Upload detailed geometry/influences once. Damage changes only the small
+    // section table, immediately consumed by both colour and shadow shaders.
+    void BuildResidentGpuMesh(const DeformableInstance &, MeshData &) const;
+    bool UpdateSectionState(const DeformableInstance &, std::vector<int> &) const;
     // Update an exterior previously built by this binding, preserving immutable
     // vertices/material payload. False requests a rebuild after complete removal.
     bool UpdateGpuTopology(const DeformableInstance &, MeshData &) const;
@@ -24,6 +28,7 @@ class StructuralSkin {
     const std::vector<MaterialDefinition>& Materials()const{return rest.materials;}
 
   private:
+    void InitializeGpuMesh(const DeformableInstance &, MeshData &) const;
     struct Corner {
         unsigned owner = 0;
         std::array<unsigned, 4> parts{};

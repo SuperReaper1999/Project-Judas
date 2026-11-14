@@ -9,7 +9,13 @@ def simulation_loss(rows, profiled=True):
     complete = profiled and bool(rows) and all(
         row.get('incoming_delta_clipped_seconds') is not None for row in rows)
     clipped = sum(row['incoming_delta_clipped_seconds'] for row in rows) if complete else None
-    return {'physics_discarded_seconds': discarded,
+    def observed_max(key):
+        return max(row[key] for row in rows) if profiled and rows and all(
+            row.get(key) is not None for row in rows) else None
+    return {'peak_pending_simulation_seconds': observed_max('pending_simulation_seconds'),
+            'peak_post_step_accumulator_seconds': observed_max('accumulator_seconds'),
+            'maximum_fixed_steps_per_frame': observed_max('steps'),
+            'physics_discarded_seconds': discarded,
             'physics_cap_frames': sum(bool(row['cap_reached']) for row in rows) if profiled else None,
             'incoming_delta_clipped_seconds': clipped,
             'total_simulation_time_lost_seconds': discarded + clipped if complete else None}

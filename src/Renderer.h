@@ -228,6 +228,9 @@ public:
     // section weights and visible topology change when connections tear.
     bool UpdateMeshSkinTopology(MeshHandle,const std::vector<uint32_t>& indices,
                                 const std::vector<MeshSkinVertex>&,const std::vector<MeshPrimitive>&);
+    // Resident structural bindings: one component ID (or -1 for removal) per
+    // physical section. Owner is in joints1.x; second weights must be zero.
+    bool UpdateMeshStructuralSections(MeshHandle,const std::vector<int>&);
     void DestroyMesh(MeshHandle handle);
 
     // Uploads `data` as a 2D RGBA texture (linear filtering, mipmapped,
@@ -459,6 +462,9 @@ private:
         VisualBounds bounds;
         std::vector<glm::mat4> restSkin;
         std::vector<MeshSkinVertex> partOrientation;
+        std::vector<std::vector<MeshSkinVertex>> structuralOrientations;
+        bool structuralEligible=false;
+        std::vector<int> structuralSections; // padded to ivec4, empty for ordinary skins
         std::vector<MeshPrimitive> primitives;
         std::vector<MeshLod> lods;float lodPixels=1;
         std::vector<MaterialHandle> materials;
@@ -561,7 +567,8 @@ private:
 
     GLuint m_poseBuffer=0,m_poseTexture=0;
     void UploadPosePalette(const std::vector<glm::mat4>&);
-    GLint m_uModel = -1,m_uSkinned=-1,m_uBones=-1;
+    void UploadStructuralSections(const GpuMesh&,bool shadow);
+    GLint m_uModel = -1,m_uSkinned=-1,m_uBones=-1,m_uStructuralSkin=-1,m_uStructuralSections=-1;
     GLint m_uNormalMatrix = -1;
     GLint m_uView = -1;
     GLint m_uProjection = -1;
@@ -600,7 +607,7 @@ private:
     // (see DrawMesh's own comment).
     std::array<bool,kShadowMapCount> m_shadowContentValid{};
     GLuint m_shadowShaderProgram = 0;
-    GLint m_uShadowModel = -1,m_uShadowSkinned=-1,m_uShadowBones=-1;
+    GLint m_uShadowModel = -1,m_uShadowSkinned=-1,m_uShadowBones=-1,m_uShadowStructuralSkin=-1,m_uShadowStructuralSections=-1;
     GLint m_uShadowLightViewProj = -1;
     GLuint m_shadowFbo[kShadowMapCount] = {0, 0, 0};
     glm::mat4 m_shadowLightSpaceMatrix[kShadowMapCount] = {glm::mat4(1.0f), glm::mat4(1.0f),
