@@ -3,6 +3,8 @@
 #include "ResourceManager.h"
 #include "Simulation.h"
 #include "JobSystem.h"
+#include "UniformGravity.h"
+#include "SaveArchive.h"
 #include <SDL2/SDL.h>
 #include <cstdlib>
 #include <chrono>
@@ -126,6 +128,33 @@ void RunDeformableV2CouplingChecks(void(*check)(bool,const char*)){
             if(lanes==1)reference=state;
             check(healthy&&state==reference,"full material and finite dynamic mounts are bit-identical across one/two/four worker lanes");
         }
+    }
+
+    {
+        auto faces=std::make_shared<DeformableAsset>();
+        faces->nodes={{-1,0,-1},{1,0,-1},{0,0,1},{-1,.2,-1},{1,.2,-1},{0,.2,1}};
+        faces->triangles={{0,1,2},{3,4,5}};
+        if(!PrepareDeformableAsset(*faces,error))throw std::runtime_error(error);
+        DeformableSettings cfg;cfg.substeps=1;cfg.iterations=2;cfg.selfContact=true;cfg.material.damping=0;cfg.material.thickness=.02;
+        DeformableInstance cached;cached.Initialize(faces,cfg,glm::dmat4(1),1);
+        for(unsigned n=0;n<cached.velocities.size();++n)cached.velocities[n]={4,n>=3?-1.:0.,0};
+        PhysicsWorld physics;physics.Init();UniformGravity zero({0,0,0});bool exact=true;size_t contacts=0;
+        for(unsigned step=0;step<40;++step){
+            if(step==15){auto q=glm::angleAxis(.4,glm::dvec3(0,0,1));for(auto& v:cached.positions)v=q*v;for(auto& v:cached.velocities)v=q*v;}
+            if(step==25)cached.ShiftOrigin({1000,0,-500});
+            // A genuine fresh instance retains its bounded candidate storage; a
+            // vector copy would shrink empty scratch capacity to zero.
+            SaveArchive snapshot;cached.Persist(snapshot);
+            DeformableInstance rebuilt;rebuilt.Initialize(faces,cfg,glm::dmat4(1),1);
+            SaveArchive read(snapshot.bytes);rebuilt.Persist(read);read.Finish();
+            cached.Step(1./60,physics,zero,{});rebuilt.Step(1./60,physics,zero,{});
+            const bool same=cached.error.empty()&&rebuilt.error.empty()&&cached.positions==rebuilt.positions&&cached.velocities==rebuilt.velocities;
+            if(exact&&!same){double delta=0;for(unsigned n=0;n<cached.positions.size();++n)delta=std::max(delta,glm::length(cached.positions[n]-rebuilt.positions[n]));std::printf("SELF_REUSE step=%u position_delta=%.17g contacts=%zu/%zu errors=%s/%s\n",step,delta,size_t(cached.stats.contacts),size_t(rebuilt.stats.contacts),cached.error.c_str(),rebuilt.error.c_str());}
+            exact&=same;
+            contacts+=cached.stats.contacts;
+        }
+        std::printf("SELF_REUSE total_contacts=%zu exact=%d\n",contacts,int(exact));
+        check(exact&&contacts>0,"translation-reused self candidates match forced fresh searches through contact, changed rotation and origin shifts");
     }
 
 }

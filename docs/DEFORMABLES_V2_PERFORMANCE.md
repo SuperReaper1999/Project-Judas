@@ -1,5 +1,9 @@
 # Deformables V2 — post-acceptance performance qualification
 
+Current connected-hull/resource-sharing work and its remaining real-time limits are
+recorded in [bounded runtime qualification](DEFORMABLES_V2_BOUNDED_RUNTIME.md).
+The earlier checkpoint evidence below remains historical.
+
 The operator human-accepted Stages 1–4 at Experimental
 `69677c8c66d57149b6ee7fb02c08d9820d20f27c`. This separate optimisation pass
 **was human accepted at `f0990a9ea00e6a769853d392136776ea28b80682`**. The accepted private-model quality and physical

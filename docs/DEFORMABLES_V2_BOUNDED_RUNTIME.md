@@ -194,3 +194,50 @@ frame JSONL, GPU/OS samples and summaries are under the ignored local directory
   connecting every interface intentionally prevents that structure fragmenting.
 - Native Windows, Android device and browser runtime performance are not established
   by the Linux desktop measurements.
+
+
+## Automated physical checks
+
+The affected native suite passes 166 checks, including exact one/two/four-lane
+states with actual local bending loads, plastic hinge history and finite rigid
+mounts. Translation-reused self-contact candidates match forced fresh searches
+through 35 real contacts, changed rotation and an origin shift. The fresh-search
+control is a genuinely initialized/restored instance with valid bounded scratch,
+not a C++ vector copy that loses reserved candidate capacity.
+
+Connected finite-material checks: 41 passed. Structural checks: 192 passed.
+Renderer submission/ownership: 58 passed on both modern and forced portable
+feature paths in the desktop NVIDIA context. These are not Android/WebGL device
+runs. The connected Challenger frontal, offset and repeated 30 m/s proofs each
+run 900 fixed steps, exit, restore in a new process and continue 120 steps.
+Durable shape hashes and numerical states match exactly at the restore boundary;
+transient last-step contact notifications are deliberately excluded from saves.
+The tool's optional `JUDAS_NUMERICAL_STATE_LOAD=1` emits that boundary state.
+
+SDK and full integration/CI results belong to the final handover receipt; these
+individual checks alone do not certify the remaining frame-budget failures.
+
+## Human acceptance
+
+Use the matching clean SDK's `judas` with the local connected crash yard. The local
+launcher `.cache/deformable-connected-hull-20261114/launch-connected-yard.py`
+verifies original private-asset provenance, connected cooks, SDK revision and the
+Xid stop marker before starting. Run it from the checkout with `python3`.
+`--scenario two|four|six` selects the corresponding controlled Ural fixture;
+`--repeat` selects repeated impulses. The default is the four-model crash yard.
+
+1. Inspect all four intact cars, including wheel axes, interiors and materials.
+2. Use 1–4 to select, W/S to drive/reverse, A/D to steer, Space to brake. Hold
+   RMB and move the mouse to orbit; scroll to zoom and C to reset the view.
+3. Enter launches the selected vehicle; X changes launch speed. Test walls,
+   offset poles and corners at low and high speeds; repeat without resetting.
+4. Inspect permanent hull bending/crushing and cabin support. The main hull must
+   remain connected; designated bonnet/door components can fail independently.
+5. Drive after damage, observe wheel/mount changes and independent detached debris.
+6. Use K/L save/load, then exit/relaunch and reload. Check damaged shape, remaining
+   attachments and independent debris. Use a disposable human save identity.
+7. In the controlled fixtures, F4 launches the group. Compare two, four and six;
+   six is deliberately a stress/failure case, not a promised 60-FPS experience.
+
+Do not promote main or infer human acceptance from this checklist. Private linked
+assets are for local driving tests; normal authoring should use independent assets.

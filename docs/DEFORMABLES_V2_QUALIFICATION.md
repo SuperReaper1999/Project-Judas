@@ -1,5 +1,9 @@
 # Deformables V2 — final engineering qualification
 
+Current connected-hull/resource-sharing work and its remaining real-time limits are
+recorded in [bounded runtime qualification](DEFORMABLES_V2_BOUNDED_RUNTIME.md).
+The earlier checkpoint evidence below remains historical.
+
 **Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Stages 1–4 were human accepted at Experimental 69677c8c.
 
 Stages 1–4 were human accepted by the operator at Experimental
