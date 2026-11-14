@@ -861,3 +861,26 @@ New regressions protect the clock distinction and actual resident-skin colour,
 shadow, removal and restoration behaviour. Raw paired runs and source identities
 are in `.cache/backlog-correction-20261114/`; qualification scope and remaining
 limits are in the Physics V2 handover above.
+
+
+## Material-preparation follow-up (14 November 2026)
+
+The exact-physics `72baf889` follow-up is measured against `20815460` using three
+interleaved, 126-file-manifest-verified four-Ural trials per revision. Median
+FPS 59.98 -> 66.47 and p95 30.88 -> 17.99 ms improve. P99 39.00 -> 41.96 ms
+**does not improve**; the 7.58% increase stays within the existing 10% relative
+allowance, while absolute heavy-workload frame budgets still fail. Median trial
+maxima improve only modestly, 95.36 -> 91.02 ms. A separate profiled pair peaks
+at 97.06 -> 109.47 ms with six catch-up steps in both, effectively unchanged
+110 ms pending time and zero discarded/clipped time. Preserve both the positive
+throughput result and this unresolved exceptional-frame failure.
+
+The material interval falls 8.182 -> 7.763 ms per fixed step with unchanged
+physical outcomes: 2,040 exact native/cold state hashes, and matching common
+reported Ural observations. BVH extent storage and direct periodic angle-wrap
+experiments were rejected, respectively for no measured gain and changed
+fracture/debris outcomes. Combined terrain/actors/particles remain within about
+3% (274.36 -> 266.92 FPS, p99 6.814 -> 6.937 ms). Full results, memory,
+measurement identities and qualification are in `PHYSICS_V2.md` and ignored
+`.cache/material-spikes-20261114/` evidence. Do not infer that a passing relative
+gate certifies the remaining severe-impact latency or human acceptance.

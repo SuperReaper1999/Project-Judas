@@ -4,12 +4,130 @@
 integration gates pass. Severe-crash frame budgets remain unmet: this is not
 universal real-time performance qualification or a release promotion.
 
-The current implementation code is **`57c4b8c46c1fbf79279de272cc6beeaf115b89b2`**.
-The resident-presentation correction below is the latest update. Earlier
+The current implementation code is **`72baf889fb1f3e41afbbd466fc994e42b54af8a6`**.
+The material-preparation correction below is the latest update. Earlier
 `b2810116` and `0a85558e` measurements remain as explicitly historical evidence.
 The matching SDK identifies its exact documentation-handover checkpoint in
 `build/linux-sdk/BUILD_INFO.json`. Main remains
 `1094d64515604fe9d03fdab479efc7f880b112a8`. Consumer SDK selections are unchanged.
+
+## Material constraints and contact preparation
+
+**14 November 2026.** This focused pass retains physical fidelity and improves
+ordinary/tail throughput, but **does not resolve severe-impact latency**.
+The four-Ural reference's worst measured frame spent 91.52 ms in five physics
+steps and 5.54 ms elsewhere. Material intervals accounted for 50.80 ms, including
+17.34 ms internal constraints, 10.82 ms rigid/terrain contacts and 14.37 ms self
+contact. Those inner phases nest inside the interval; do not add them to it.
+Timestamp-aligned CPU hardware samples corroborate bending geometry, rigid
+sample evaluation and self-candidate traversal as hot paths. Flat user-space
+sampling worked; the host rejected DWARF call-stack capture. No profiling
+permissions or OS settings were changed.
+
+Retained changes:
+
+- Interpolate a rigid sample's frozen history only after it produces contact.
+  Rejected samples no longer calculate unused history; accepted samples retain
+  exactly the original arithmetic and ordering.
+- Reuse rigid mass, centre and inverse-inertia preparation inside the existing
+  frozen material substep. Reactions still read current velocities and publish
+  every physical impulse in the original order. Preparation resets at every
+  local substep/native interval; large/dense candidate fallback remains intact.
+- Share a specialised signed-hinge geometry kernel. Actual bending retains all
+  gradients and the original angle/wrap arithmetic. Plastic flow and initial
+  rest preparation omit gradients they never consume. No material law changes.
+- Count response preparations/reuses. The corrected profiled capture records
+  119,929 preparations and 541,705 reuses. Numeric fields add 104 bytes per
+  candidate before platform alignment, with the existing 64-entry bound and
+  one ordinary overflow fallback. No new GPU buffer or cooked-asset format.
+
+The source checkpoint is `72baf889`. Baseline is `20815460`. Final comparisons
+use three interleaved unprofiled trials per build, verifying **126 complete
+project/asset/cold-seed files before every run**. Same original full-quality
+four-Ural fixture, 20 m/s, 24 wheels/75 rigid bodies, six iterations/four
+substeps, 1280x720, cap/VSync off and shadow budget eight. Hardware remains
+Ryzen 5 5600 / GTX 970 / 16 GB at 2133 MT/s. Values below are medians of the
+three per-trial statistics:
+
+| Whole-frame metric | Reference | Corrected |
+|---|---:|---:|
+| Average FPS | 59.98 | 66.47 |
+| p50 ms | 16.28 | 15.78 |
+| p95 ms | 30.88 | 17.99 |
+| p99 ms | 39.00 | 41.96 |
+| Median trial maximum ms | 95.36 | 91.02 |
+| 1% low FPS | 15.72 | 16.78 |
+| 0.1% low FPS | 10.96 | 11.04 |
+| Longest consecutive >50 ms sequence, median ms | 579.54 | 538.76 |
+
+Actual trial maxima: reference **92.23 / 95.36 / 95.68 ms**; corrected
+**91.02 / 94.87 / 86.35 ms**. All final unprofiled trials have zero >100 ms
+frames. **P99 is not a demonstrated improvement:** an earlier exploratory
+three-pair set improved, but the final verified set regressed 7.58%. The existing
+10% relative gate passes; that is not an absolute frame-budget pass or evidence
+that every tail metric improved. Raw exploratory captures are retained and not
+substituted for the final gate. Their original automatic comparison correctly
+rejected a missing workload manifest; the final independent set fixes the
+measurement identity rather than weakening the gate.
+
+Separate profiler-enabled captures show mean internal work **3.106 -> 3.004
+ms/fixed step**, rigid/terrain contacts **2.968 -> 2.688 ms**, and total material
+intervals **8.182 -> 7.763 ms**. Self-contact remains roughly 0.95 ms/step on
+average and is much more expensive during folding/impacts. Peak pending time
+is effectively unchanged: **109.80 -> 109.91 ms**, maximum catch-up **six steps
+in both**, zero clipped/discarded simulation time and no eight-step-cap frames.
+The profiled worst frame worsened **97.06 -> 109.47 ms**: the corrected worst
+frame groups six steps (103.52 ms physics, 5.95 ms other) while the reference
+worst groups five. Preserve this negative result; do not claim the catch-up
+spiral or severe hitches have been eliminated. No cap, clock, resolution,
+contact coverage, strength, substep or iteration reduction was used.
+
+Combined terrain/32 supported actors/5,000 GPU particles control: **274.36 ->
+266.92 FPS**, p99 **6.814 -> 6.937 ms**, worst **7.79 -> 8.31 ms**, no simulation
+time loss. Actual workload state is verified in both; one paired control within
+about 3% is not universal performance qualification. Median peak RSS stays
+about **2,923 MiB**; one corrected trial peaked at 2,970 MiB. Full-quality stress
+uses about **3,981-3,986 MiB device-wide VRAM**, including the desktop. No GPU
+allocation path changed. The earlier under-3-GB texture diagnostic remains
+separate evidence; these full-quality results do not prove VRAM is irrelevant
+to every possible stall.
+
+Rejected experiments:
+
+- Storing squared BVH extents during refit showed no useful self-contact gain
+  (0.959 -> 0.969 ms/step in the first control); the extra node data was removed.
+- Replacing trigonometric angle wrap with direct periodic subtraction changed
+  floating-point results and one repeated-crash fracture outcome. The debris
+  case developed large trajectory differences, so it was rejected before GPU
+  performance qualification. The original calculation is restored; do not
+  resurrect the experimental executable as the working build.
+
+Qualification and boundaries:
+
+- **162 deformable checks pass**, including fresh-versus-reused contact state
+  after changing rigid mass/inertia/orientation/pose, plus existing bounded
+  overflow, capsule, terrain, sleeping and reaction controls.
+- **All 2,040 full physical-state hashes match** the reference in frontal and
+  repeated four-car native writers and separate cold readers. Cold restoration
+  is exact. In the actual four-Ural frame captures all common 19 reported
+  vehicle observations match; those observations are not full nodal hashes.
+- [Completed Linux source CI](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43618519236)
+  and [completed Windows native SDK/contracts](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43618525006)
+  both pass at exact `72baf889`. Windows GPU gameplay, Android and browser runtime
+  qualification were not performed. Unchanged resident-skin GPU validation
+  from the preceding pass remains applicable.
+- Final local matching SDK workflow and handover receipts are recorded in
+  `.cache/material-spikes-20261114/FINAL_HANDOVER.json`; the final documentation
+  revision is identified by `build/linux-sdk/BUILD_INFO.json`. No consumer SDK
+  selection, private asset or main branch is changed.
+
+Raw identities, phase attribution, final verified relative gate, all matched
+captures, cold hashes, screenshots and rejected experiments live under
+`.cache/material-spikes-20261114/`. Severe material self-contact/internal work
+and remaining MK2/vehicle work still exceed the heavy-workload 60/120 FPS and
+5 ms combined-engine goals. This checkpoint awaits human review; it is an
+incremental measured improvement, not a declaration that impact hitches are
+solved. The existing Crash Yard launcher and four-way controls remain valid.
 
 ## Backlog correction: resident fracture presentation
 
