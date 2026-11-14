@@ -19,12 +19,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
     // Rigid poses are frozen for this projection call. Reactions alter
     // velocity, not this call's collision geometry. Prepare each candidate's
     // primitives once rather than rebuilding them for every surface sample.
-    struct PreparedContact {
-        PrimitivePose geometry;
-        V center;
-        glm::dquat rotation,inverse;
-    };
-    std::vector<PreparedContact> contactPrimitives;
+    const std::vector<PreparedRigidPrimitive>* contactPrimitives=nullptr;
     glm::dquat bodyRotation,bodyInverse;
     // This projection only updates node positions and rigid velocities. No
     // topology, contacts, sleep assessment or time advance occurs between its
@@ -124,7 +119,7 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
         if(shape.type==ShapeType::Sphere)contact(V(pose.position),bodyRotation,bodyInverse,V(0),shape.radius);
         else if(shape.type==ShapeType::Box)contact(V(pose.position),bodyRotation,bodyInverse,V(shape.halfExtents),0);
         else {
-            for(const auto& prepared:contactPrimitives) {
+            for(const auto& prepared:*contactPrimitives) {
                 const auto& primitive=prepared.geometry;
                 if(primitive.shape.asset || primitive.shape.type==ShapeType::Terrain ||
                    primitive.shape.type==ShapeType::Capsule)
@@ -134,25 +129,37 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             }
         }
     };
-    for(auto body:rigidCandidates){
+    // Cache a bounded small working set. Dense or large-compound candidates
+    // retain the original per-call preparation; no geometry/contact is omitted.
+    PreparedRigidContact fallback;
+    for(size_t candidateIndex=0;candidateIndex<rigidCandidates.size();++candidateIndex){
+        const auto body=rigidCandidates[candidateIndex];
         candidateWoken=false;responsePrepared=false;
-        if(std::any_of(carrierCollisionExclusions.begin(),carrierCollisionExclusions.end(),[&](auto other){return other.id==body.id&&other.world==body.world;}))continue;
-        unsigned layer;
-        CategoryMask mask;
-        if(!physics.GetCollisionFilter(body,layer,mask)||(mask&CategoryBit(settings.collisionLayer))==0||physics.IsBodySensor(body))continue;
-        Shape shape;
-        BodyTransform pose;
-        if(!physics.GetBodyShape(body,shape,pose,false))continue;
-        if(!currentRigidContactPose){
-        auto prev=physics.GetPreviousTransform(body);
-        prev.position+=prev.rotation*shape.pivotOffset;
-        pose.position=glm::mix(prev.position,pose.position,float(fraction));
-        pose.rotation=glm::slerp(prev.rotation,pose.rotation,float(fraction));
+        auto* entry=candidateIndex<rigidPreparation.size()?&rigidPreparation[candidateIndex]:&fallback;
+        if(entry==&fallback){fallback.ready=fallback.valid=fallback.expanded=false;fallback.primitives.clear();}
+        if(!entry->ready){
+            auto& prepared=*entry;
+            prepared.ready=true;
+            if(std::any_of(carrierCollisionExclusions.begin(),carrierCollisionExclusions.end(),[&](auto other){return other.id==body.id&&other.world==body.world;}))continue;
+            unsigned layer;CategoryMask mask;
+            if(!physics.GetCollisionFilter(body,layer,mask)||(mask&CategoryBit(settings.collisionLayer))==0||physics.IsBodySensor(body))continue;
+            if(!physics.GetBodyShape(body,prepared.shape,prepared.pose,false))continue;
+            if(!currentRigidContactPose){auto prev=physics.GetPreviousTransform(body);prev.position+=prev.rotation*prepared.shape.pivotOffset;prepared.pose.position=glm::mix(prev.position,prepared.pose.position,float(fraction));prepared.pose.rotation=glm::slerp(prev.rotation,prepared.pose.rotation,float(fraction));}
+            prepared.bounds=ShapeAabb(prepared.shape,prepared.pose.position,prepared.pose.rotation);
+            prepared.rotation=glm::dquat(prepared.pose.rotation);prepared.inverse=glm::inverse(prepared.rotation);
+            prepared.valid=true;
+            JUDAS_PROFILE_COUNTER("Deformable rigid shape preparations",1,ProfileCounterMode::Sum);
+        }else JUDAS_PROFILE_COUNTER("Deformable rigid shape preparation reuses",1,ProfileCounterMode::Sum);
+        if(entry!=&fallback&&entry->valid&&PrimitiveCount(entry->shape)>32){
+            fallback=std::move(*entry);*entry=PreparedRigidContact{};entry=&fallback;
         }
+        auto& prepared=*entry;
+        if(!prepared.valid)continue;
+        auto& shape=prepared.shape;const auto& pose=prepared.pose;
         // Broadphase fat/swept padding is not a reason to evaluate every
         // surface sample against a body whose actual shape cannot touch it.
         // Bounds are available without faulting paged terrain geometry in.
-        const auto bounds=ShapeAabb(shape,pose.position,pose.rotation);
+        const auto& bounds=prepared.bounds;
         double magnitude=1;for(unsigned k=0;k<3;++k)magnitude=std::max({magnitude,std::abs(double(bounds.min[k])),std::abs(double(bounds.max[k]))});
         const V allowance(thickness+16*std::numeric_limits<float>::epsilon()*magnitude);
         if(glm::any(glm::lessThan(materialMaximum+allowance,V(bounds.min)))||glm::any(glm::greaterThan(materialMinimum-allowance,V(bounds.max))))continue;
@@ -164,20 +171,16 @@ void DeformableInstance::RigidContacts(double h,double fraction,PhysicsWorld& ph
             (shape.type==ShapeType::Box||shape.type==ShapeType::Sphere||
              (shape.type==ShapeType::CompoundBoxes&&std::all_of(shape.boxes.begin(),shape.boxes.end(),[](const auto& child){return !child.asset&&(child.type==ShapeType::Box||child.type==ShapeType::Sphere);})));
         pointBounds=bounds;pointAllowance=allowance;
-        shape.asset=AcquireCollision(shape.asset);
-        contactPrimitives.clear();
-        bodyRotation=glm::dquat(pose.rotation);bodyInverse=glm::inverse(bodyRotation);
-        if(shape.type!=ShapeType::Sphere && shape.type!=ShapeType::Box) {
-            RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
-            const int count=PrimitiveCount(shape);
-            contactPrimitives.reserve(count);
-            for(int i=0;i<count;++i) {
-                auto primitive=PrimitiveAt(shape,parent,i);
-                const auto center=PrimitiveCenter(primitive);
-                const auto rotation=glm::dquat(primitive.body.orientation);
-                contactPrimitives.push_back({std::move(primitive),center,rotation,glm::inverse(rotation)});
+        if(!prepared.expanded){
+            shape.asset=AcquireCollision(shape.asset);
+            if(shape.type!=ShapeType::Sphere&&shape.type!=ShapeType::Box){
+                RigidBody parent;parent.position=pose.position;parent.orientation=pose.rotation;
+                const int count=PrimitiveCount(shape);prepared.primitives.reserve(count);
+                for(int i=0;i<count;++i){auto primitive=PrimitiveAt(shape,parent,i);const auto center=PrimitiveCenter(primitive);const auto rotation=glm::dquat(primitive.body.orientation);prepared.primitives.push_back({std::move(primitive),center,rotation,glm::inverse(rotation)});}
             }
+            prepared.expanded=true;
         }
+        bodyRotation=prepared.rotation;bodyInverse=prepared.inverse;contactPrimitives=&prepared.primitives;
         // Reuse the interval-owned attachment wake publication. All these
         // projections share unchanged rigid connectivity and no sleep boundary.
         // Overflow retains ordinary wake propagation, never drops reactions.

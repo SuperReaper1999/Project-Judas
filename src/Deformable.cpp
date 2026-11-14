@@ -282,6 +282,12 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
         if(group==asset->groups.end())continue;
         const auto& t=targets[a];
         const bool dynamicTarget=t.body.IsValid()&&physics.IsDynamicBody(t.body);
+        // Projection changes velocity, not pose, mass or inertia. Retain the
+        // same effective-mass arithmetic while preparing this frame once.
+        const double targetMass=dynamicTarget?physics.GetMass(t.body):0;
+        const double targetInverseMass=targetMass>0?1/targetMass:0;
+        const V targetCenter=dynamicTarget?V(physics.GetCenterOfMass(t.body)):V(0);
+        const glm::dmat3 targetInverseInertia=targetMass>0?glm::dmat3(glm::inverse(physics.GetInertiaWorld(t.body))):glm::dmat3(0);
         bool targetWoken=false;
         for(unsigned i=0;i<awakenedCount;++i)targetWoken|=awakened[i].id==t.body.id&&awakened[i].world==t.body.world;
         // Keep the moment origin inside the patch, independently of its world
@@ -313,7 +319,8 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
             const V point=start[n];
             for(int axis=0;axis<3;++axis){V normal(0);normal[axis]=1;
                 V relative=(positions[n]-start[n])/h-JudasDeformables::PointVelocity(physics,t.body,point);
-                double den=inverseMass[n]+JudasDeformables::EffectiveMass(physics,t.body,point,normal);
+                const auto angularRow=glm::cross(point-targetCenter,normal);
+                double den=inverseMass[n]+(targetInverseMass+glm::dot(angularRow,targetInverseInertia*angularRow));
                 if(den<=0)continue;
                 // In native coupling the rigid pose is the current interval
                 // boundary, not the end of every local material subdivision.

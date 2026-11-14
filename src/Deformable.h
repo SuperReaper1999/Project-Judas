@@ -2,6 +2,7 @@
 #include "Classification.h"
 #include "FractureTypes.h"
 #include "MeshData.h"
+#include "Narrowphase.h"
 #include "PhysicsWorld.h"
 #include "GravityField.h"
 #include "deformables/PanelBending.h"
@@ -201,6 +202,16 @@ private:
     void PrepareSelfCandidates();
     void InitializeSurfaceTree(std::vector<SurfaceNode>&,bool);
     std::vector<BodyHandle> rigidCandidates;
+    struct PreparedRigidPrimitive {PrimitivePose geometry;glm::dvec3 center;glm::dquat rotation,inverse;};
+    struct PreparedRigidContact {
+        bool ready=false,valid=false,expanded=false;
+        Shape shape;BodyTransform pose;Aabb bounds;
+        glm::dquat rotation,inverse;
+        std::vector<PreparedRigidPrimitive> primitives;
+    };
+    // Candidate-indexed scratch, valid only inside one frozen material substep.
+    std::vector<PreparedRigidContact> rigidPreparation;
+
     void Internal(double);
     void Plastic(double);
     void Attach(double,double,PhysicsWorld&,const std::vector<DeformableTarget>&,std::array<BodyHandle,64>&,unsigned&);

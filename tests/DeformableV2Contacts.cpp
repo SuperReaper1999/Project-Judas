@@ -31,6 +31,18 @@ void RunDeformableV2ContactChecks(void(*check)(bool,const char*)){
         check(std::all_of(plates.begin(),plates.end(),[&](auto b){return !world.IsSleeping(b);})&&!world.IsSleeping(mount),"every reacting body and the later attachment wake despite full publication storage");
         check(glm::length(world.GetLinearVelocity(plates.back()))>0&&glm::length(world.GetLinearVelocity(mount))>0,"overflow fallback preserves collision and attachment impulses");
     }
+    {
+        PhysicsWorld world;world.Init();std::vector<CompoundBox> boxes;
+        for(unsigned i=0;i<37;++i)boxes.push_back({{0,0,.1f},{1,1,.1f}});
+        auto body=world.CreateShape(Shape::Compound(boxes),{{0,0,0},{1,0,0,0}},false,0,0,0);
+        DeformableInstance material;material.Initialize(sheet,config,glm::dmat4(1),702);
+        material.Step(1./60,world,zero,{});
+        check(material.error.empty()&&material.stats.contacts>0,"large compound retains full material contacts beyond preparation-cache bounds");
+        world.ResetBody(body,{0,0,10},{1,0,0,0});
+        for(auto& p:material.positions)p.z=0;for(auto& v:material.velocities)v=V(0);
+        material.Step(1./60,world,zero,{});
+        check(material.error.empty()&&material.stats.contacts==0,"next material step cannot reuse stale large-compound geometry");
+    }
     for(bool rotated:{false,true}){
         PhysicsWorld world;check(world.Init(),"V2 capsule contact world initializes");
         auto rotation=rotated?glm::angleAxis(.7f,glm::vec3(0,0,1)):glm::quat(1,0,0,0);

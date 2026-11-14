@@ -8,7 +8,8 @@
 #include <vector>
 
 // Process-owned diagnostics. No world pointers or simulation inputs. Recording
-// uses fixed per-thread SPSC lanes; only completed snapshots reach consumers.
+// uses fixed SPSC scope lanes and bounded per-thread counter mailboxes;
+// only completed snapshots reach consumers.
 struct ProfileLabel {
     const char* name;
     std::atomic<std::uint32_t> id{0};

@@ -19,10 +19,10 @@
 #endif
 
 namespace {
-struct Event {unsigned kind=0,node=0,parent=0,depth=0,mode=0;std::uint64_t thread=0,frame=0,start=0,end=0,exclusive=0;double value=0;bool wait=false;};
+struct Event {unsigned kind=0,node=0,parent=0,depth=0;std::uint64_t thread=0,frame=0,start=0,end=0,exclusive=0;bool wait=false;};
 struct Open {unsigned node=0,parent=0;std::uint64_t sequence=0,epoch=0,start=0,children=0,frame=0;bool wait=false;};
 struct Cache {std::uint64_t key=0;unsigned node=0;};
-struct PendingCounter {double value=0;std::uint64_t observed=0,frame=0;unsigned mode=0;bool active=false;};
+struct PendingCounter {double sum=0,maximum=0,latest=0;std::uint64_t observed=0;unsigned mode=0;bool active=false;};
 struct Lane {
     // Keep each lane's existing member initialization in a constructor call.
     // Nested aggregate initialization of all lanes exhausts MSVC's compiler
@@ -32,9 +32,11 @@ struct Lane {
     std::array<Event,ProfileLimits::LaneEvents> events{};
     std::atomic<std::uint64_t> write{0},read{0};
     std::array<Open,ProfileLimits::Depth> stack{};unsigned depth=0;std::uint64_t sequence=0;
-    // Producer-owned aggregation; the consumer still reads only the SPSC queue.
+    // Counters use a bounded per-lane mailbox, independently of scope completion.
+    // A short lane-local lock protects snapshot handoff, never engine state.
+    std::mutex counterMutex;
     std::array<PendingCounter,ProfileLimits::Labels> counters{};
-    std::array<unsigned,ProfileLimits::Labels> pending{};unsigned pendingCount=0;std::uint64_t counterEpoch=0,counterFrame=0;
+    std::array<unsigned,ProfileLimits::Labels> pending{};unsigned pendingCount=0;std::uint64_t counterEpoch=0;
     std::array<Cache,8192> cache{};std::atomic<unsigned> open{0};
 };
 thread_local int localLane=-1;
@@ -56,10 +58,6 @@ struct PerformanceProfiler::Impl {
     std::uint64_t spikeThreshold=33'333'333;
     void Push(Lane& lane,const Event& e){auto w=lane.write.load(std::memory_order_relaxed);if(w-lane.read.load(std::memory_order_acquire)>=lane.events.size()){++eventsDropped;return;}lane.events[w%lane.events.size()]=e;lane.write.store(w+1,std::memory_order_release);}
     void DiscardCounters(Lane& lane){for(unsigned n=0;n<lane.pendingCount;++n)lane.counters[lane.pending[n]].active=false;lane.pendingCount=0;}
-    void FlushCounters(Lane& lane){
-        if(lane.counterEpoch==epoch.load())for(unsigned n=0;n<lane.pendingCount;++n){auto label=lane.pending[n];const auto& c=lane.counters[label];Push(lane,{1,label,0,0,c.mode,lane.id,c.frame,c.observed,0,0,c.value,false});}
-        DiscardCounters(lane);
-    }
     unsigned NodeFor(Lane& lane,unsigned label,unsigned parent){std::uint64_t key=(std::uint64_t(parent)<<32)|label;auto slot=(key*11400714819323198485ull)>>51;
         for(unsigned n=0;n<lane.cache.size();++n){auto& c=lane.cache[(slot+n)%lane.cache.size()];if(c.key==key)return c.node;if(!c.key){std::lock_guard<std::mutex> lock(registration);unsigned id=0;for(unsigned i=1;i<nodeCount;++i)if(nodes[i].label==label&&nodes[i].parent==parent){id=i;break;}if(!id){if(nodeCount==nodes.size()){++nodesDropped;return 0;}id=nodeCount++;nodes[id]={label,parent};}c={key,id};return id;}}
         ++nodesDropped;return 0;
@@ -74,28 +72,39 @@ bool PerformanceProfiler::Enabled()const{return m->enabled.load();}
 bool PerformanceProfiler::Frozen()const{return m->frozen.load();}
 void PerformanceProfiler::Enable(bool v){if(m->enabled.exchange(v)!=v){++m->epoch;m->previousStart=0;}}
 void PerformanceProfiler::Freeze(bool v){if(m->frozen.exchange(v)!=v){++m->epoch;m->previousStart=0;}}
-void PerformanceProfiler::RegisterThread(std::string_view name){if(localLane>=0)return;std::lock_guard<std::mutex> lock(m->registration);for(unsigned i=0;i<m->lanes.size();++i){auto& l=m->lanes[i];if(!l.claimed.load()&&l.read.load()==l.write.load()){l.claimed=true;l.id=++m->nextThread;std::snprintf(l.name,sizeof l.name,"%.*s",int(std::min(name.size(),sizeof l.name-1)),name.data());l.depth=0;l.open=0;localLane=int(i);return;}}++m->threadsDropped;}
-void PerformanceProfiler::ReleaseThread(){if(localLane<0)return;auto& l=m->lanes[unsigned(localLane)];m->FlushCounters(l);m->incomplete+=l.depth;l.depth=0;l.open=0;l.claimed.store(false,std::memory_order_release);localLane=-1;}
+void PerformanceProfiler::RegisterThread(std::string_view name){
+    if(localLane>=0)return;
+    std::lock_guard<std::mutex> lock(m->registration);
+    for(unsigned i=0;i<m->lanes.size();++i){auto& l=m->lanes[i];
+        if(l.claimed.load()||l.read.load()!=l.write.load())continue;
+        std::lock_guard<std::mutex> counters(l.counterMutex);
+        if(l.counterEpoch!=m->epoch.load())m->DiscardCounters(l);
+        if(l.pendingCount)continue;
+        l.claimed=true;l.id=++m->nextThread;std::snprintf(l.name,sizeof l.name,"%.*s",int(std::min(name.size(),sizeof l.name-1)),name.data());l.depth=0;l.open=0;localLane=int(i);return;
+    }
+    ++m->threadsDropped;
+}
+void PerformanceProfiler::ReleaseThread(){if(localLane<0)return;auto& l=m->lanes[unsigned(localLane)];m->incomplete+=l.depth;l.depth=0;l.open=0;l.claimed.store(false,std::memory_order_release);localLane=-1;}
 std::uint32_t PerformanceProfiler::Intern(std::string_view name){if(!Active())return 0;std::lock_guard<std::mutex> lock(m->registration);if(name.empty()||name.size()>=128){++m->labelsDropped;return 0;}for(unsigned i=1;i<m->labelCount;++i)if(name==m->labels[i].data())return i;if(m->labelCount==m->labels.size()){++m->labelsDropped;return 0;}unsigned id=m->labelCount++;std::memcpy(m->labels[id].data(),name.data(),name.size());m->labels[id][name.size()]=0;return id;}
 std::uint32_t PerformanceProfiler::Label(ProfileLabel& l){if(!Active())return 0;auto id=l.id.load(std::memory_order_relaxed);if(id==UINT32_MAX)return 0;if(!id){id=Intern(l.name);l.id.store(id?id:UINT32_MAX,std::memory_order_relaxed);}return id;}
 PerformanceProfiler::Token PerformanceProfiler::Begin(std::uint32_t label,bool wait,std::uint64_t stamp){if(!label||!Active())return {};if(localLane<0)RegisterThread("CPU thread");if(localLane<0)return {};auto& l=m->lanes[unsigned(localLane)];if(l.depth>=m->maxDepth&&m->maxDepth<ProfileLimits::Depth)return {};if(l.depth==l.stack.size()){++m->eventsDropped;return {};}
     unsigned parent=l.depth?l.stack[l.depth-1].node:0,node=m->NodeFor(l,label,parent);if(!node)return {};unsigned depth=l.depth++;auto seq=++l.sequence;l.stack[depth]={node,parent,seq,m->epoch.load(),stamp?stamp:Now(),0,m->frame.load(),wait};l.open.store(l.depth,std::memory_order_relaxed);return {unsigned(localLane),depth,seq};}
 void PerformanceProfiler::End(Token t,std::uint64_t stamp){if(!t.sequence)return;auto& l=m->lanes[t.lane];if(l.depth!=t.depth+1||l.stack[t.depth].sequence!=t.sequence){++m->incomplete;return;}auto s=l.stack[t.depth];--l.depth;l.open.store(l.depth,std::memory_order_relaxed);auto end=stamp?stamp:Now();auto duration=end>=s.start?end-s.start:0;
     if(l.depth)l.stack[l.depth-1].children+=duration;
-    if(s.epoch!=m->epoch.load()||!Active()){m->DiscardCounters(l);++m->incomplete;return;}
-    if(!l.depth)m->FlushCounters(l);
-    m->Push(l,{0,s.node,s.parent,t.depth,0,l.id,s.frame,s.start,end,duration>=s.children?duration-s.children:0,0,s.wait});}
+    if(s.epoch!=m->epoch.load()||!Active()){++m->incomplete;return;}
+    m->Push(l,{0,s.node,s.parent,t.depth,l.id,s.frame,s.start,end,duration>=s.children?duration-s.children:0,s.wait});}
 void PerformanceProfiler::Counter(ProfileLabel& label,double value,ProfileCounterMode mode){if(!Active())return;Counter(Label(label),value,mode);}
-void PerformanceProfiler::Counter(std::uint32_t label,double value,ProfileCounterMode mode){if(!label||!Active()||!std::isfinite(value))return;if(localLane<0)RegisterThread("CPU thread");if(localLane<0)return;auto& l=m->lanes[unsigned(localLane)];
-    const auto epoch=m->epoch.load(),frame=m->frame.load();
+void PerformanceProfiler::Counter(std::uint32_t label,double value,ProfileCounterMode mode){
+    if(!label||!Active()||!std::isfinite(value))return;
+    if(label>=ProfileLimits::Labels){++m->labelsDropped;return;}
+    if(localLane<0)RegisterThread("CPU thread");if(localLane<0)return;
+    auto& l=m->lanes[unsigned(localLane)];
+    std::lock_guard<std::mutex> lock(l.counterMutex);
+    const auto epoch=m->epoch.load();
     if(l.counterEpoch!=epoch)m->DiscardCounters(l);
-    else if(l.counterFrame!=frame)m->FlushCounters(l);
-    l.counterEpoch=epoch;l.counterFrame=frame;
-    auto& c=l.counters[label];
-    if(c.active&&c.mode!=unsigned(mode))m->FlushCounters(l);
-    const auto observed=Now();
-    if(!c.active){c={value,observed,frame,unsigned(mode),true};l.pending[l.pendingCount++]=label;}
-    else {if(mode==ProfileCounterMode::Sum)c.value+=value;else if(mode==ProfileCounterMode::Maximum)c.value=std::max(c.value,value);else c.value=value;c.observed=observed;}
+    l.counterEpoch=epoch;auto& c=l.counters[label];
+    if(!c.active){c={value,value,value,Now(),unsigned(mode),true};l.pending[l.pendingCount++]=label;}
+    else {c.sum+=value;c.maximum=std::max(c.maximum,value);c.latest=value;c.observed=Now();}
 }
 bool PerformanceProfiler::BeginFrame(std::string_view mode,bool first,std::uint64_t stamp){if(!Active())return false;if(m->inFrame){++m->nested;return false;}RegisterThread("Main");m->inFrame=true;m->frameEpoch=m->epoch.load();
     // EndFrame swaps the evicted slot into current; history stays intact
@@ -105,7 +114,7 @@ bool PerformanceProfiler::BeginFrame(std::string_view mode,bool first,std::uint6
     f.paused=f.capReached=f.incomplete=false;f.accumulatorSeconds=f.discardedSeconds=0;f.id=++m->frame;f.world=m->world.load();f.start=stamp?stamp:Now();f.interval=m->previousStart?f.start-m->previousStart:0;m->previousStart=f.start;f.mode=mode;f.startup=first;f.mainThread=localLane>=0?m->lanes[unsigned(localLane)].id:0;return true;}
 void PerformanceProfiler::FixedState(double accumulator,bool cap,double discarded,bool paused){if(!m->inFrame||!Active())return;m->current.accumulatorSeconds=accumulator;m->current.capReached=cap;m->current.discardedSeconds=discarded;m->current.paused=paused;}
 void PerformanceProfiler::FixedStep(std::uint64_t a,std::uint64_t b,double dt){if(!m->inFrame||!Active())return;if(m->current.fixed.size()==ProfileLimits::Steps){++m->truncated;return;}m->current.fixed.push_back({++m->nextStep,a,b,dt});}
-void PerformanceProfiler::Boundary(std::string_view name){++m->world;if(!Active())return;unsigned label=Intern(name);if(!label)return;if(localLane<0)RegisterThread("Main");if(localLane>=0){auto& l=m->lanes[unsigned(localLane)];m->Push(l,{2,label,0,0,0,l.id,m->frame.load(),Now()});}}
+void PerformanceProfiler::Boundary(std::string_view name){++m->world;if(!Active())return;unsigned label=Intern(name);if(!label)return;if(localLane<0)RegisterThread("Main");if(localLane>=0){auto& l=m->lanes[unsigned(localLane)];m->Push(l,{2,label,0,0,l.id,m->frame.load(),Now()});}}
 void PerformanceProfiler::GPUAvailability(bool v,std::string_view reason){m->gpuAvailable=v;m->gpuStatus=reason;}
 std::uint64_t PerformanceProfiler::GPUPending(std::string_view pass,std::uint64_t camera){if(!Active()||!m->inFrame)return 0;if(m->current.gpu.size()==ProfileLimits::GPU){++m->gpuDropped;return 0;}auto token=++m->nextGPU;m->current.gpu.push_back({token,FrameId(),camera,ProfileName(pass),true,0,Now(),0,0});return token;}
 void PerformanceProfiler::GPUComplete(std::uint64_t frame,std::uint64_t token,double ms,std::uint64_t gpuStart,std::uint64_t gpuEnd){if(!Active()||!std::isfinite(ms)||ms<0||gpuEnd<gpuStart){++m->gpuDropped;return;}bool found=false;auto update=[&](ProfileFrameSnapshot& f){if(f.id!=frame)return;for(auto& g:f.gpu)if(g.token==token){g.pending=false;g.milliseconds=ms;g.gpuStart=gpuStart;g.gpuEnd=gpuEnd;found=true;}};update(m->current);update(m->startup);for(auto& f:m->history)update(f);for(auto& f:m->spikes)update(f);if(!found)++m->gpuDropped;}
@@ -115,14 +124,29 @@ ProfileDiagnostics PerformanceProfiler::Diagnostics()const{ProfileDiagnostics d;
 std::size_t PerformanceProfiler::ReservedBytes()const{
     std::size_t bytes=sizeof(Impl);auto add=[&](const ProfileFrameSnapshot& f){bytes+=f.scopes.capacity()*sizeof(ProfileScopeRecord)+f.counters.capacity()*sizeof(ProfileCounterRecord)+f.fixed.capacity()*sizeof(ProfileFixedRecord)+f.gpu.capacity()*sizeof(ProfileGPURecord)+f.threads.capacity()*sizeof(ProfileThreadRecord)+f.boundaries.capacity()*sizeof(ProfileName);};add(m->current);add(m->startup);for(auto& f:m->history)add(f);for(auto& f:m->spikes)add(f);return bytes;
 }
-void PerformanceProfiler::EndFrame(std::uint64_t stamp){if(!m->inFrame)return;auto collectionStart=Now();if(localLane>=0)m->FlushCounters(m->lanes[unsigned(localLane)]);m->inFrame=false;auto& f=m->current;f.end=stamp?stamp:Now();f.incomplete=m->frameEpoch!=m->epoch.load();
+void PerformanceProfiler::EndFrame(std::uint64_t stamp){if(!m->inFrame)return;auto collectionStart=Now();m->inFrame=false;auto& f=m->current;f.end=stamp?stamp:Now();f.incomplete=m->frameEpoch!=m->epoch.load();
     std::lock_guard<std::mutex> lock(m->registration); // consumer only; producers never take this to record
     for(auto& l:m->lanes){auto read=l.read.load(std::memory_order_relaxed),write=l.write.load(std::memory_order_acquire);bool seen=false;
         while(read!=write){auto e=l.events[read%l.events.size()];++read;seen=true;if(!Active())continue;
             if(e.kind==0){if(f.scopes.size()==ProfileLimits::FrameEvents){++m->truncated;continue;}f.scopes.push_back({e.node,e.parent,e.depth,e.thread,e.frame,e.start,e.end,e.exclusive,e.wait,m->labels[m->nodes[e.node].label].data()});}
-            else if(e.kind==1){auto name=m->labels[e.node].data();auto i=std::find_if(f.counters.begin(),f.counters.end(),[&](auto& c){return c.name==name;});if(i==f.counters.end()){if(f.counters.size()==ProfileLimits::Counters){++m->truncated;continue;}f.counters.push_back({name,e.value,e.start,ProfileCounterMode(e.mode)});}else if(i->mode==ProfileCounterMode::Sum)i->value+=e.value;else if(i->mode==ProfileCounterMode::Maximum)i->value=std::max(i->value,e.value);else if(e.start>=i->observed){i->value=e.value;i->observed=e.start;}}
             else if(f.boundaries.size()<64)f.boundaries.push_back(m->labels[e.node].data());else ++m->truncated;
-        }l.read.store(read,std::memory_order_release);if(seen)f.threads.push_back({l.id,l.name});
+        }l.read.store(read,std::memory_order_release);
+        {
+            std::lock_guard<std::mutex> counters(l.counterMutex);
+            if(Active()&&l.counterEpoch==m->epoch.load())for(unsigned n=0;n<l.pendingCount;++n){
+                seen=true;auto label=l.pending[n];const auto& c=l.counters[label];auto name=m->labels[label].data();
+                auto i=std::find_if(f.counters.begin(),f.counters.end(),[&](const auto& v){return v.name==name;});
+                if(i==f.counters.end()){
+                    if(f.counters.size()==ProfileLimits::Counters){++m->truncated;continue;}
+                    const auto mode=ProfileCounterMode(c.mode);
+                    f.counters.push_back({name,mode==ProfileCounterMode::Sum?c.sum:mode==ProfileCounterMode::Maximum?c.maximum:c.latest,c.observed,mode});
+                }else if(i->mode==ProfileCounterMode::Sum)i->value+=c.sum;
+                else if(i->mode==ProfileCounterMode::Maximum)i->value=std::max(i->value,c.maximum);
+                else if(c.observed>=i->observed){i->value=c.latest;i->observed=c.observed;}
+            }
+            m->DiscardCounters(l);
+        }
+        if(seen)f.threads.push_back({l.id,l.name});
     }
     if(!Active())return;
     std::vector<std::pair<std::uint64_t,std::uint64_t>> covered,waits;

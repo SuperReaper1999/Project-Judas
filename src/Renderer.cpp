@@ -788,6 +788,7 @@ bool Renderer::UpdateMeshSkinTopology(MeshHandle handle,const std::vector<uint32
     if(!skin.empty()){glBindBuffer(GL_ARRAY_BUFFER,mesh->skinVbo);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(skin.size()*sizeof(MeshSkinVertex)),skin.data(),GL_DYNAMIC_DRAW);}
     glBindVertexArray(GLuint(previousVao));glBindBuffer(GL_ARRAY_BUFFER,GLuint(previousArray));
     if(submissionStart)JUDAS_PROFILE_COUNTER("Structural topology GL submission CPU ms",double(PerformanceProfiler::Now()-submissionStart)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Structural topology publications",1,ProfileCounterMode::Sum);
     ++m_shadowResourceRevision;
     mesh->indexCount=GLsizei(indices.size());mesh->primitives=primitives;mesh->partOrientation.clear();
     for(const auto& p:primitives)mesh->partOrientation.push_back(p.count?skin[indices[p.first]]:MeshSkinVertex{});

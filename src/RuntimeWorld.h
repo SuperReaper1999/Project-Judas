@@ -438,7 +438,12 @@ public:
     const std::vector<glm::mat4>* AnimationSkin(EntityId,float alpha=1) const;
     void UpdateAnimations(float dt);
     struct FractureRigidState {std::vector<EntityId> parts;std::vector<JointHandle> bonds,supports;bool initialized=false;};
-    struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
+    struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;
+        // Detailed exterior topology depends on component ownership/removal,
+        // not every failed (possibly redundant) structural connection.
+        mutable std::vector<unsigned> meshComponents;
+        mutable std::vector<uint8_t> meshRemoved;
+        DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
     DeformableInstance* RuntimeDeformable(EntityId,std::string& error,bool staged=false);
     void UpdateDeformables(double dt);
     bool SampleDeformableTargets(EntityId,bool currentRigidPose=false);

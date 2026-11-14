@@ -99,6 +99,24 @@ inline unsigned RunStructuralProofChecks() {
         check(glm::length(glm::vec3(point) - mapped.vertices[i].position) < 1e-5f,
               "GPU palette agrees with CPU torn skin");
     }
+    // A failed redundant bond changes damage revision without changing the
+    // connected material frames that determine visible skin weights/indices.
+    auto loop = MakeFractureBlock({2,2,1}, {2,2,1}, true);
+    StructuralSkin loopSkin;
+    check(loopSkin.Bind(loop,mesh,error),"cyclic structural skin binds");
+    DeformableInstance loopSimulation;
+    loopSimulation.Initialize(std::make_shared<DeformableAsset>(loop),{},glm::dmat4(1),2);
+    MeshData loopGpu;loopSkin.BuildGpuMesh(loopSimulation,loopGpu);
+    const auto priorSkin=loopGpu.skinVertices;const auto priorIndices=loopGpu.indices;
+    const auto priorComponents=loopSimulation.fracture.component;
+    loopSimulation.fracture.pending[0]=1;loopSimulation.fracture.Commit(*loop.fracture);
+    check(loopSimulation.fracture.broken[0]&&loopSimulation.fracture.component==priorComponents,
+          "redundant structural failure preserves connected ownership");
+    check(loopSkin.UpdateGpuTopology(loopSimulation,loopGpu),"redundant failure permits topology evaluation");
+    bool unchanged=loopGpu.indices==priorIndices&&loopGpu.skinVertices.size()==priorSkin.size();
+    for(size_t i=0;unchanged&&i<priorSkin.size();++i)for(unsigned k=0;k<4;++k)
+        unchanged&=loopGpu.skinVertices[i].joints[k]==priorSkin[i].joints[k]&&loopGpu.skinVertices[i].joints1[k]==priorSkin[i].joints1[k]&&loopGpu.skinVertices[i].weights[k]==priorSkin[i].weights[k]&&loopGpu.skinVertices[i].weights1[k]==priorSkin[i].weights1[k];
+    check(unchanged,"damage revision alone does not change detailed skin topology");
     auto invalid = mesh;
     invalid.indices[0] = 99;
     check(!skin.Bind(a, invalid, error), "invalid skin rejected transactionally");
