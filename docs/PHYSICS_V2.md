@@ -4,10 +4,110 @@
 integration gates pass. Severe-crash frame budgets remain unmet: this is not
 universal real-time performance qualification or a release promotion.
 
-The measured engine code is **`0a85558ed2d8837e16a3361d7339c1b6c90bb43c`**.
-The final handover updates documentation only; the matching local SDK identifies
-its exact checkpoint in `build/linux-sdk/BUILD_INFO.json`. Main remains
+The current implementation code is **`b2810116602119668732c72c90c8f7556ab508b5`**.
+The focused update below qualifies that code; the original `0a85558e` handover
+and measurements are retained in the subsequent sections as historical evidence.
+The matching SDK identifies its exact documentation-handover checkpoint in
+`build/linux-sdk/BUILD_INFO.json`. Main remains
 `1094d64515604fe9d03fdab479efc7f880b112a8`. Consumer SDK selections are unchanged.
+
+## Focused panel/contact performance update
+
+This pass fixes profiler counter overflow and removes repeated preparation without
+changing simulation resolution, material strengths, substeps, iterations, damage
+thresholds, contact coverage or control inputs. No quality reduction was used.
+
+- Counter observations now reduce in bounded per-thread mailboxes, independently
+  of raw scope-event queues. Frame snapshots retain Sum/Latest/Maximum semantics,
+  including mixed observations, worker scopes spanning frames, clear/freeze and
+  the original explicit saturation diagnostics. Hot recording allocates no heap
+  memory. **35 profiler checks** include 300,000 observations without lost values.
+  Raw scope timelines remain capacity-bounded; complete gameplay counter coverage
+  is not a promise to retain arbitrarily many raw startup scope events.
+- Material contacts reuse immutable rigid shape/primitive preparation within one
+  frozen material substep. The working set is bounded to **64 candidates and 32
+  primitives per cached body**. Larger cases retain ordinary full preparation;
+  no contacts are discarded. The next substep invalidates the scratch, and every
+  exit releases paged collision references. Attachment rows prepare unchanged
+  mass/inertia once while continuing to read live velocities for every reaction.
+- Detailed exterior skin topology follows actual connected/removed sections.
+  Breaking a redundant bond no longer rebuilds/uploads identical skin data.
+  Palette motion, real separation/removal and cold restoration still publish
+  correctly. Legitimate GL topology submissions can still take roughly **45 ms**;
+  this pass does not claim to have eliminated that peak.
+
+The same full-quality four-Ural scene was replayed three times per build,
+interleaved, at 20 m/s, 1280x720, VSync/cap off and shadow budget eight on the
+reference Ryzen 5 5600 / GTX 970 / 8 GiB host. Headline values are medians of
+per-trial statistics from **profiler-disabled** runs:
+
+| Metric | Before | After |
+|---|---:|---:|
+| Average FPS | 35.48 | 59.75 |
+| p50 frame ms | 18.78 | 16.19 |
+| p95 frame ms | 48.63 | 31.11 |
+| p99 frame ms | 117.41 | 48.68 |
+| Median trial maximum frame ms | 267.71 | 186.61 |
+| Frames >100 ms, median count | 17 | 4 |
+
+**All-run absolute maxima were 2,041.42 / 2,014.95 ms.** Both occur at the first
+measured frame of the first trial; their cause is unconfirmed. They are retained
+in the raw data and trial statistics. Nearby samples show 3.42/3.66 process CPU
+seconds across threads and zero process swap; this does not establish an OS,
+driver, loading or physics cause. Do not present the median trial maximum as an
+exception-free worst-case guarantee. The longest sequence above 16.67 ms falls
+from about 19.97 to 5.70 seconds, including sustained frames below 60 FPS rather
+than implying the application stopped for that whole period.
+
+Complete profiled captures show **zero gameplay record drops/truncation**. Per
+completed fixed step, rigid/terrain material contact time changes from roughly
+4.36 to 3.00 ms and attachment solving from 0.216 to 0.148 ms. Internal constraints
+remain about 3.12 ms; self contacts about 0.94 ms; wake propagation about 0.79 ms.
+Those are separate scopes, not values to add to inclusive CCD or GPU durations.
+CPU-side GL timings can include driver waits. The final profiled capture still
+reports **127 ms of discarded simulation backlog** over the capture; unprofiled
+backlog totals are unavailable. Heavy four-Ural crashes remain outside the
+minimum-60-FPS and aggressive 5 ms combined-engine budgets.
+
+Peak process RSS was **2,921–2,924 MiB before** and **2,923–2,980 MiB after**;
+there is no demonstrated RAM reduction. Whole-device VRAM reached **3,978–3,984
+MiB before** and **3,979–3,987 MiB after**, close to the card's 4 GiB capacity.
+`DrawDeformables` creates a mesh per instance; `BeginMeshUpload` creates private
+material handles and `UploadMeshMap` uploads their images independently. Those
+textures are properly destroyed with their owning mesh, but identical deformable
+instances do not share their immutable material textures. This is a confirmed
+resource-sharing limitation, not proof that VRAM pressure caused a particular
+stall. Correct resource-sharing/lifetime work is a separate follow-up; this pass
+retains the measured memory footprint and the unresolved delays explicitly.
+
+A separate real combined terrain/animation/particles control remains essentially
+unchanged: p99 **6.797 -> 6.809 ms**, with actual workload-state checks, no dropped
+diagnostics and no reported simulation loss. One paired control is not a general
+performance guarantee.
+
+Qualification completed for the exact implementation checkpoint:
+
+- Local **181/181 routine tests**, **158 deformable checks**, **184 structural
+  checks** and **35 profiler checks** pass. New checks cover dense/large compound
+  fallbacks, stale geometry and redundant-bond skin equivalence.
+- **2,040 full recorded physical-state hashes match exactly** against the prior
+  qualified implementation: two 900-step crash writers and separate 120-step cold
+  readers. Both durable cold boundaries match. All three Ural pairs also retain
+  exact reported vehicle-state observations (17/19/19 post-launch observations).
+- The clean SDK passes all eight creation/Play-Stop/tool/integrity/moved-export
+  operations. An actual **portable OpenGL 3.3 NVIDIA** four-Ural run launches,
+  collides, destroys connections and renders the resulting wrecks. This fixed
+  clock check establishes functionality, not portable FPS qualification.
+- [Completed Linux code/SDK CI](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43591266261)
+  and [completed Windows native SDK/selected contracts](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43591390116)
+  both pass at exact `b2810116`. Windows hardware graphics, Android and browser
+  execution were not performed.
+
+Raw inputs, executable hashes, paired trials, complete counter breakdowns, memory
+samples, cold hashes and retained negative experiments are in
+`.cache/physics-v2-panel-optimisation-20261114/PERFORMANCE_REPORT.json` and adjacent
+receipts. The earlier ablation cases are diagnostic feature removals, not these
+optimisations. Human acceptance and main promotion remain separate decisions.
 
 ## Architecture and corrected causes
 
@@ -54,7 +154,7 @@ lookahead uses the same accelerated swing clock as the actual target. Adjacent
 static colliders share one support frame, retaining a real carrier and all measured
 reactions; separate dynamic/kinematic frames, sensors and query-only bodies do not.
 
-## Correctness and integration evidence
+## Original correctness and integration evidence (0a85558e)
 
 - **181/181 routine CTests pass locally and in exact-code Ubuntu CI.** The balance
   suite has **148 physical checks**, including real two-collider reactions and
@@ -98,7 +198,7 @@ Actual completed CI, not queued work:
 The earlier `83738806` Ubuntu run failed five balance checks; its failed logs and
 controlled reproductions are retained. They are not counted as passing evidence.
 
-## Whole-game performance
+## Original whole-game performance (0a85558e)
 
 Ryzen 5 5600, GTX 970/NVIDIA 580.178.04, 8 GiB RAM, Kubuntu; 1280x720,
 VSync/cap disabled, identical authored inputs and eight-shadow budget. Three
