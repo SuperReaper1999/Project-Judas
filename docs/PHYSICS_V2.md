@@ -1,76 +1,222 @@
-# Physics V2 — current architecture and qualification status
+# Physics V2 — implementation and human handover
 
-**Implementation checkpoint, 14 November 2026. Final SDK and performance qualification pending.**
-The work starts from `d1ce11c7c14d498755e3437292f3a72d022d5783`. The production-default routine suite has completed: **181/181 passed** on the NVIDIA Linux desktop. Extended native contracts, final matching SDK, repeated gameplay measurements and remote CI are being qualified separately; this is not human acceptance or promotion to main.
+**14 November 2026. Experimental; human acceptance pending.** Functional and
+integration gates pass. Severe-crash frame budgets remain unmet: this is not
+universal real-time performance qualification or a release promotion.
 
-## Implemented architecture
+The measured engine code is **`0a85558ed2d8837e16a3361d7339c1b6c90bb43c`**.
+The final handover updates documentation only; the matching local SDK identifies
+its exact checkpoint in `build/linux-sdk/BUILD_INFO.json`. Main remains
+`1094d64515604fe9d03fdab479efc7f880b112a8`. Consumer SDK selections are unchanged.
 
-- **One fixed-step owner, four fresh native intervals.** Each interval prepares contacts at its current geometry and solves/advances once. This replaces preparing one manifold set and carrying it through four increasingly stale intervals; it does not increase physical interval count. Forces, source impulses, coupling rounds, motion history, contact publication and sleep retain their appropriate macro/interval ownership. An explicit outer `StepCoupled` subdivision composes with these intervals.
-- **Support and geometric anchors remain physical.** The existing matched contact cache carries its steady support estimate across the macro interval; impact spikes are not mistaken for reusable support. Warm impulses scale using the duration of the kernel that produced them, separately from public observation duration. Spherical contact support follows sphere geometry rather than a rotating arbitrary surface-material anchor; friction continues to use physical angular point velocity.
-- **Immediate arrivals precede unnecessary future searches.** Certain native box/identity-child compound contacts establish current-time approaching events first. Strictly future roots can remain dirty while those exact-time events run. All eligible current-time candidates are considered before event selection, deferred roots are completed before time advances, and trajectory revisions invalidate stale observations. Unsupported/uncertain cases retain conservative ordinary queries. There is no small-speed/slop collision skip.
-- **Bounded independent geometry workers.** `JUDAS_MK2_QUERY_LANES=1|2|4` tunes query lanes; the production default is four, limited by the supplied worker pool and actual batch width. Only frozen native geometry queries run concurrently. The owner participates, joins every helper, and publishes in original stable pending order; the event heap retains deterministic time/key ordering. Small/unsupported work remains serial. Borrowed owner anchors cannot bypass allocation of lane-private bound storage.
-- **Joint estimates retain macro ownership.** Fresh contact kernels reuse rigid bilateral warm estimates, while impact-limit, motor, material and angular-drive guesses warm once per public fixed step. Subsequent native intervals solve every physical row with the same forces, torque caps and iteration budgets, without replaying earlier impact guesses. Explicit outer coupled steps still own their individual public steps.
-- **Successful impacts continue.** The arbitrary fourth-distinct-arrival body freeze is removed. A native interval still has a shared 256-arrival work guard; failed responses and exhausted searches remain explicit conservative holds. This is bounded CCD, not a promise of unlimited collisions.
+## Architecture and corrected causes
 
-Search, advancement and geometry timings aggregate lane CPU work when workers
-participate. They are not wall latency and must not be added to nested solve
-scopes or GPU time. Use fixed-step/presented-frame duration and frozen-query
-batch wall time for critical-path comparisons. After the frontier's 256-event
-guard, terminal retirement is separately bounded by the world population;
-the guard is not a promise of exactly 256 total contact operations.
+- **One fixed-step owner, four fresh native contact intervals.** The previous
+  solver reused one manifold preparation through four evolving intervals.
+  Contacts now follow current geometry without increasing interval count.
+  Forces, impulses, coupling rounds, contact publication, sleep clocks and motion
+  history retain explicit macro/interval ownership. Outer `StepCoupled` composes
+  complete steps. Warm contact impulses use their actual native duration.
+- **Successful collisions continue.** The fourth-distinct-arrival per-body
+  motion freeze is removed. Its former pose/velocity disagreement was a real
+  truncation defect. The bounded global guard and failed-response holds remain
+  explicit, with conservative certified tangential continuation where supported.
+- **Joint guesses warm once per public step.** Fresh kernels had inadvertently
+  replayed drive, limit and finite-material warm guesses at every native interval.
+  Later intervals retain rigid bilateral estimates while solving every physical
+  row with unchanged forces, torque caps and iteration budgets. No body velocity
+  reset, rotation lock, artificial damping or fidelity reduction was added.
+- **Immediate arrivals precede unnecessary future searches.** Certain native
+  box/identity-child compound contacts establish current-time events first.
+  Strictly future roots can wait while those events run; every required future
+  query completes before time advances. Revision invalidation, original event
+  ordering and conservative ordinary fallbacks remain authoritative.
+- **Bounded independent geometry work uses the existing pool.** Default four
+  lanes, tunable with `JUDAS_MK2_QUERY_LANES=1|2|4`; small/unsupported batches remain
+  serial. Workers own private scratch, join before mutation, and publish in stable
+  pending order. Borrowing owner anchors no longer bypasses private bound-storage
+  allocation. The representative four-lane query scratch was about 588 KiB.
+- **Support and material preparation stay local.** Spherical normal anchors use
+  sphere geometry rather than a rotating material point. Native box separation
+  can avoid constructing unnecessary witnesses. Material bounds, body mass/inertia
+  frames and edge-tree refits avoid repeated preparation when inputs are unchanged.
+  These small changes preserve their original solve order and physical work.
+- **Fast triggers use actual completed travel.** Rigid/kinematic sensors use the
+  piecewise motion ledger; CharacterMotor contributes accepted fixed-orientation
+  translations through static sensors, including successful steps from the true
+  capsule origin. Rejected probes and teleports are not inferred as swept travel.
+  Transient Enter/Exit, filters, lifetimes, coalescing and origin shifts are covered.
 
-Integration qualification also exposed a physical-balance recovery latch: a
-brief upright sample could permanently disable further authored get-up attempts
-before a real stand. The controller now uses current posture until measured
-standing succeeds, retaining its original torque, effort and attempt budgets.
-Accepted character steps record their true starting position, including an
-initial trigger overlap that a lifted preparation probe previously omitted.
+Ubuntu qualification also exposed physical-balance integration defects. A brief
+upright sample could permanently suppress a later get-up; the recovery controller
+now uses current posture until standing is measured. Corrective swing velocity
+lookahead uses the same accelerated swing clock as the actual target. Adjacent
+static colliders share one support frame, retaining a real carrier and all measured
+reactions; separate dynamic/kinematic frames, sensors and query-only bodies do not.
 
-Ubuntu CI at the initial implementation checkpoint exposed five balance checks
-that passed on the host. Millimetre origin variations reproduced the instability
-locally. The macro joint-estimate correction and consistent swing-clock velocity
-lookahead pass the original controls plus permanent rigid-origin and real
-two-collider foot-support regressions: **148 checks**. Distinct enabled static
-colliders share a support frame while retaining one real carrier and every
-measured reaction; independent dynamic/kinematic, query and sensor supports
-remain distinct. The complete local routine suite now passes **181/181**.
-Exact-candidate Ubuntu CI, refreshed SDK and final measurements are pending;
-the failed initial CI is retained rather than reported as passing.
+## Correctness and integration evidence
 
-## Evidence obtained before final-default qualification
+- **181/181 routine CTests pass locally and in exact-code Ubuntu CI.** The balance
+  suite has **148 physical checks**, including real two-collider reactions and
+  rigid-origin slope controls. Old code fails the new controls; corrected code
+  passes without changing their gains, impulses, deadlines or standing thresholds.
+- Fourteen permanent CCD scheduling scenarios compare full per-step state,
+  impulses, touch history and motion paths across serial/two/four lanes, with
+  actual helper/deferred work. Equivalent scheduling changes remain exact.
+  Architecture changes are not represented as preserving historical wreck hashes.
+- Spinning-sphere support, angular momentum/energy, thin/rotating/offset geometry,
+  grazing contacts, kinematics, wheels, articulation, sleeping/waking, terrain,
+  deformables, sensors and modern persistence retain independent controls.
+  Character/controller coverage has **77 checks**; separation has **3,992**.
+- Elastic continuation controls follow the analytic 16.6667/33.3333 m paths at
+  1,000/2,000 m/s, versus the old roughly 15.6 m truncation. Endpoint errors were
+  approximately 0.90/1.80 micrometres, with zero reported relative energy error.
+- **23 additional native programs**, vehicle cold write/read, sustained Terrain V2
+  residency and Basic Water cold restoration pass. Eight explicit portable
+  renderer gates were exercised; renderer portability code is unchanged.
+- The clean SDK passes eight authoring/tool/export operations, including Editor
+  creation, Play/Stop, SDK integrity and relocated editor/CLI standalone exports.
+- Private Challenger frontal and four-car debris writers each advance 900 steps;
+  separate readers restore the exact durable shape/state hash before advancing
+  120 further steps. All 900 writer rows contain zero path holds and no truncated
+  records. This proves the cold boundary; it is not a claim of identical warm/cold
+  continuation when project-owned repeat/post-drive clocks restart.
+- Native front-wall fixtures at **2 and 4 m/s** retain all three bonnet attachments
+  (`000`), with no broken structural links. At 2 m/s bonnet plastic rotation is
+  zero; at 4 m/s it is about 0.304 rad. The severe 30 m/s fixture still deforms and
+  fully detaches the bonnet (`111`), preserving physical damage capability.
 
-Correctness controls and whole-frame pilots have different scopes. The procedural eager/lazy and serial/two/four-lane proof retained complete exact per-step state, contact impulses, touch history and motion paths across nine ordinary scenes plus five precise frozen-ledger scenarios, with two worker repetitions. It passed with actual helper/deferred work, not silent serial fallback. The production-default registered scheduling test now passes all 14 scenarios across serial/two/four lanes. The character/controller correction passes 77 checks, borrowed-anchor queries 34 checks, and separation predicates 3,992 checks. The complete routine build and 181 routine gates passed; extended qualification and final SDK/CI remain in progress.
+Actual completed CI, not queued work:
 
-One NVIDIA desktop four-way pilot, 1280×720, uncapped/VSync off, 20 seconds after 10 seconds warmup:
+- [Ubuntu engine/SDK qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43576866228):
+  181 routine gates, compiler/tooling checks and Ubuntu 24.04/glibc 2.39 SDK baseline.
+- [Windows/MSVC qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43576971800):
+  complete native SDK and selected native contracts. This is not the full Linux
+  matrix, Windows hardware GL, or Windows editor/export gameplay qualification.
+- [Code-checkpoint documentation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43576866270).
 
-| Query policy | Eager worst frame | Lazy worst frame |
-|---|---:|---:|
-| Serial | 125.96 ms | 81.71 ms |
-| Four lanes | 96.15 ms | 76.25 ms |
+The earlier `83738806` Ubuntu run failed five balance checks; its failed logs and
+controlled reproductions are retained. They are not counted as passing evidence.
 
-These are representative single-trial wall-clock observations, not a completed three-repetition performance qualification or a universal speedup. Exact-state equivalence comes from matched fixed-step controls; wall-clock frame grouping differs.
+## Whole-game performance
 
-Removing the body hold changes physical outcomes and must **not** be presented as a matched average-FPS gain. A subsequent four-lane pilot reported zero path holds versus the old body's peak of 36, with maximum fixed step **36.05 ms**, worst frame **85.80 ms**, and eight consecutive >16.67 ms frames spanning **357.31 ms**. No simulation time was reported discarded in that capture. It still fails the 60 FPS exceptional-impact budget and the aggressive 5 ms combined-engine goal. The capture dropped 349 profiler events: outer/fixed-step timing remains available, but missing internal attribution is not complete evidence.
+Ryzen 5 5600, GTX 970/NVIDIA 580.178.04, 8 GiB RAM, Kubuntu; 1280x720,
+VSync/cap disabled, identical authored inputs and eight-shadow budget. Three
+NEW captures per case use the clean code checkpoint above. Twelve unchanged OLD
+captures are explicitly reused, with their original identities and a separate
+fresh OLD four-way stability control (99.06 ms worst frame).
 
-Independent elastic-rattle controls passed **45 checks**. The old body guard allowed only about 15.6 m of travel: the corrected solver follows the 16.6667 m / 33.3333 m analytic paths at 1,000 / 2,000 m/s, with endpoint errors about 0.90 / 1.80 μm and zero reported relative energy error. It does not reset physical momentum to disguise truncation.
+**OLD is the preserved candidate foundation with old scheduling selected, not
+pristine `d1ce11c7`.** The separate Afterglow comparison below uses the actual
+pristine executable. Removing motion holds changes physical outcomes; these
+are matched authored workloads, not identical-state speedup claims.
 
-## Explicit remaining limits
+Values are medians of three per-trial statistics; ranges expose worst-frame
+variation. Full p50/p95/p99, FPS/lows, hitches, counters and identities remain in
+`final-macro-owner-frame-qualification/AGGREGATED.json` beneath the evidence root.
 
-The >256-arrival stress control still demonstrates the shared guard's limit: 200,000 m/s travel truncates (822 m versus a 3,333 m analytic path), five guard holds occur, and an unrelated later collision can be starved. Bounded work is necessary, but this is a documented correctness/workload limitation, not a passed real-time guarantee.
+| Workload | OLD p99 ms | NEW p99 ms | OLD worst-frame ms | NEW worst-frame ms | OLD / NEW maximum fixed-step ms |
+|---|---:|---:|---:|---:|---:|
+| One driven vehicle | 2.46 | 2.63 | 3.47 | 3.90 | 2.25 / 2.58 |
+| Active vehicle fleet | 3.63 | 3.81 | 5.76 | 5.52 | 4.44 / 3.97 |
+| Combined terrain/animation/particles | 6.80 | 6.86 | 7.76 | 8.69 | 4.70 / 5.13 |
+| Four-way private-model crash | 11.63 | 11.77 | 113.20 | 72.19 | 25.79 / 31.31 |
 
-Massless controller translation now contributes swept observations for **static** gameplay sensors along accepted fixed-orientation movement, coalesced at publication. Rejected probes, penetration recovery and teleports are not genuine swept travel. Moving-sensor relative timing and rotating capsule sweeps are not inferred by this API; ordinary rigid-body completed-ledger trigger coverage is separate.
+The four-way NEW worst-frame range is **72.18–75.86 ms**. Median >16.67 ms frames
+fall from 10 to 9, >100 ms frames from 2 to 0, and the longest hitch sequence from
+474.09 to 374.43 ms. No simulation time is reported discarded. Unprofiled controls
+show **96.85 to 69.32 ms** worst frames, supporting a real gameplay improvement.
+The maximum individual physics step increases because valid collision motion
+continues; ordinary vehicle p99 also has a small cost. Neither result is hidden.
 
-Final work remains: run the production-default regression/authoring/cold-save gates, preserve permanent separation/scheduling/empty-lane controls, repeat affected whole-game captures, rebuild and qualify the matching SDK, and finish actual CI. Windows hardware GL, Android and browser execution must be labelled unperformed unless executed. Human acceptance remains the operator's decision.
+All normal-workload p99 values meet 8.33 ms, but one fleet repetition contains an
+isolated **17.96 ms** frame. Its physics step is 3.28 ms and recorded Play work
+4.04 ms; approximately 13.5 ms is unattributed. Its cause is unconfirmed. It is
+retained, not discarded as noise. Four-way crashes still fail 16.67 ms and the
+aggressive 5 ms combined-engine goal. The final captures have zero diagnostic
+drops/truncation; initial overflowed pilots remain historical evidence.
 
-## Evidence locations
+Four-way content remains 99 bodies, 18 wheels and about 1.746 million submitted
+triangles. Median peak RSS is about 184 MiB for normal vehicles, 224 MiB combined,
+and 3,214 MiB for the private yard. Whole-device VRAM peaks near 2,416 MiB, including
+the desktop/startup. Whole-capture process CPU is about one core; short query
+worker bursts do not demonstrate full-core scaling. Owner mutation remains ordered.
+Measured same-frame CPU/GPU completion p99 is about 9.82 ms combined and 17.32 ms
+four-way. CPU/GPU intervals overlap and are **not added** to obtain frame time;
+GPU command spans may contain gaps and device telemetry is not per-process use.
 
-All local proof material is under `.cache/physics-v2-audit-20261113/`:
+### Original Afterglow crash
 
-- `lazy-futures-fixture-results3.log`: exact procedural A/B and worker proof.
-- `macro-owner-routine-ctest.log`: 181/181 routine gates, including 77 character/controller and 148 physical-balance checks.
-- `lazy-futures-frame-proof/{eager-serial,lazy-serial,eager-four,lazy-four}/`: identities, raw frames and pilot summaries.
-- `global-guard-frame-proof/{body-four,global-four,global-serial}/`: separate changed-physics capture, including raw drop counters.
-- `arrival-guard-bounce-results.log` / `arrival-guard-bounce-stress.log`: analytic success and preserved negative stress control.
-- `tiny-approach-proof/tiny-approach-analysis.json`: evidence rejecting a general tiny-speed collision shortcut.
+The frozen 218-file workload hash is
+`c88e58cc0a687b47e239f6c50927352da52b7172e4ba44dccd95ad5af61ace25`.
+Two fixed-clock and one rendered replay per build pass the real three-car cluster,
+intact approach and irreversible-damage checks. Exact runtime/input identities
+are retained. Both builds use the same unchanged engine-asset root. Raw captures
+are preserved; 119 actual game frames are analysed separately from trailing host
+shutdown. Fixed-clock costs are not presented as gameplay FPS.
 
-Source ownership: `PhysicsWorld.cpp`, `physics/WorldMk2Solver.cpp`, `physics/WorldMk2Continuous.cpp`, `physics/WorldCCDSearch.cpp`, `physics/WorldImpactQueries.h`, `physics/WorldContacts.cpp`, and the character/step-climb translation callers. No second vehicle/deformable chassis solver was introduced.
+Rendered outer-work p50/p95/p99/max changes from **3.32/13.07/16.68/23.42 ms** to
+**3.32/13.37/15.47/23.28 ms**. Maximum rendered physics steps are 20.19/19.95 ms.
+This is **no convincing peak-cost improvement for Afterglow**; one rendered trial
+per build cannot establish a general p99 speedup. It still has a >16.67 ms frame.
+The collision-continuation correction is independently established by physical
+controls, not inferred from those timings or a similar final wreck.
+
+## Remaining limits and rejected shortcuts
+
+- The global **256 frontier-event guard per native interval**, plus bounded
+  terminal retirement, can still hold motion under extreme overload. The retained
+  200,000 m/s stress travels 822 m rather than 3,333 m and can starve an unrelated
+  later collision. This is an explicit unsupported limit, not a solved guarantee.
+- Query-only controller sweeps cover accepted fixed-orientation translations
+  through static sensors. Relative moving/rotating sensor timing and rotating
+  controller capsules are not supplied by that API; native rigid/kinematic sensor
+  ledger coverage is separate.
+- Severe crash performance is not yet minimum-60-FPS qualified. Further work must
+  target the measured event/response critical path, not reduce coverage, structural
+  fidelity or supported behaviour. Normal p99 success is not an exception-free
+  frame-time guarantee.
+- Windows hardware graphics, Android and browser execution were not performed.
+  A local glibc 2.43 SDK is for this host; Ubuntu baseline evidence belongs to the
+  CI-built SDK, not a claim that this host binary runs on older libc.
+- Tiny-speed collision suppression was rejected. Blanket convex refresh failed
+  angular-momentum controls; horizon-prefix rejection failed a certificate;
+  oriented-plane/discovery/batch experiments gave no net frame benefit. Failed
+  experiments remain in the evidence folder. No giant cache, GPU physics system,
+  reduced sampling coverage or lower solver quality was introduced.
+
+## Human testing
+
+From the repository, launch the matching local SDK against the existing verified
+private project; downloaded models remain private and absent from SDK/Git:
+
+```sh
+./build/linux-sdk/judas .cache/mk2-collision-architecture/private-current-yard/Crash_Yard.judasproj
+```
+
+For the four-way layout use `Four_Way_Architecture.judasproj` in the same directory
+and F4. The frozen benchmark project is a qualification fixture with its own save
+seed; it is not the ordinary interactive launch target.
+
+1. Select all four vehicles with 1–4. Drive/reverse W/S, steer A/D, brake Space.
+2. Hold RMB to orbit; wheel zooms, C returns behind the car. Confirm wheel/material
+   presentation and steering/suspension remain correct.
+3. Cycle launch speed with X and launch with Enter. Try minor frontal bumps, then
+   the barrier, pole, thin wall and corner; use R between independent trials.
+4. Try repeated/severe impacts and F4 in the four-way layout. Check continuing
+   motion, permanent damage, partial/complete detachment and independent debris.
+5. K/L save/load; quit completely and relaunch before loading a damaged save.
+6. Open a current project in `build/linux-sdk/judas_editor`; check Play/Stop,
+   terrain support/streaming and fast static trigger crossings in normal gameplay.
+
+**Human acceptance is the operator's decision.** No main promotion or publication
+is authorised by these automated results.
+
+All local raw evidence, executable/input hashes and negative controls are under
+`.cache/physics-v2-audit-20261113/`. Current receipts include
+`macro-owner-routine-ctest.log`, `extra-native-qualification-macro-owner/`,
+`macro-owner-sdk-work/`, `macro-owner-native-cold-proof/`,
+`macro-owner-minor-bumps/`, `final-macro-owner-frame-qualification/`,
+`final-macro-owner-unprofiled-control/`, `final-afterglow-macro-owner-analysis/`,
+and the saved completed platform-run JSON/artifacts. Final SDK reconciliation
+receipts are recorded separately with its exact handover revision.

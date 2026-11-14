@@ -14,9 +14,11 @@ This checkout is an unsupported V2 source preview on Experimental. Published Alp
 
 Scripting V2, Editor V2, Renderer V2, Particles V2, Terrain V2, game-resolution Advanced Fluids V2, Vehicles/Wheels V2, Deformables V2 and Lucifer are the current implementations. The operator has reviewed the completed V2 milestones and architectural purge. Advanced Fluids V2 is project-opt-in in all V2 build channels; V2 remains on Experimental and main is unchanged.
 
-[Physics V2](PHYSICS_V2.md) is undergoing implementation and qualification. Its
-collision-continuation corrections and measured performance changes are not yet
-human accepted; remaining severe-impact budget failures are explicit.
+[Physics V2](PHYSICS_V2.md) has passed its current functional and integration
+gates, with completed Linux and Windows qualification and measured whole-game
+evidence. Human acceptance remains pending. Severe-impact frame budgets and
+pathological CCD overload limits remain open; this is not universal performance
+qualification.
 
 Native demonstration gameplay, pose-delta saves, PBF fluids, reservoir/container liquids and separate bounded V1 terrain are retired without compatibility shims or migrations. Historical projects require their matching historical engine.
 
