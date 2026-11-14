@@ -831,3 +831,33 @@ experiments and remaining latency failures. It preserves the prior public
 vehicle/fleet/combined workload identities. The new report also retains a
 separate combined presentation-stall outlier rather than calling a relative
 p99 pass an absolute performance pass.
+
+
+## 14 November: fracture presentation and catch-up debt
+
+The [Physics V2 backlog correction](PHYSICS_V2.md#backlog-correction-resident-fracture-presentation)
+keeps detailed structural geometry resident and publishes small ownership/removal
+tables immediately to colour/shadow shaders. Three matched full-quality four-Ural
+trials on the 16 GB / 2133 MT/s reference configuration reduce median trial maximum
+from 197.87 to 95.52 ms; average FPS remains roughly 60.6/60.4. Do not present this
+as a general throughput increase or a 60-FPS severe-crash qualification.
+
+In the paired profiled capture, peak queued time falls from 213.72 to 110.27 ms,
+maximum catch-up steps from eight to six, and discarded time from 110.38 ms to
+zero with the same timestep, cap and fidelity. Temporary expensive-physics
+catch-up remains. The final removal-only refinement reproduces six steps,
+105.02 ms queued time and zero lost time. Full physical hash/cold checks remain
+exact; combined gameplay shows no material regression.
+
+Profiler-enabled benchmark rows now expose `accumulator_seconds`,
+`simulation_seconds_advanced` and `pending_simulation_seconds`. The latter is
+advanced time plus the end residual plus discarded backlog: pending time before
+the fixed loop. Summary fields report the queue peak, residual peak and maximum
+fixed-step count. Missing historical fields and profiler-disabled measurements
+remain unknown. A zero end accumulator at the cap does not demonstrate zero
+backlog: the remainder may have been discarded. Preserve both measurements.
+
+New regressions protect the clock distinction and actual resident-skin colour,
+shadow, removal and restoration behaviour. Raw paired runs and source identities
+are in `.cache/backlog-correction-20261114/`; qualification scope and remaining
+limits are in the Physics V2 handover above.

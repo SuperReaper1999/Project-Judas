@@ -4,14 +4,128 @@
 integration gates pass. Severe-crash frame budgets remain unmet: this is not
 universal real-time performance qualification or a release promotion.
 
-The current implementation code is **`b2810116602119668732c72c90c8f7556ab508b5`**.
-The focused update below qualifies that code; the original `0a85558e` handover
-and measurements are retained in the subsequent sections as historical evidence.
+The current implementation code is **`57c4b8c46c1fbf79279de272cc6beeaf115b89b2`**.
+The resident-presentation correction below is the latest update. Earlier
+`b2810116` and `0a85558e` measurements remain as explicitly historical evidence.
 The matching SDK identifies its exact documentation-handover checkpoint in
 `build/linux-sdk/BUILD_INFO.json`. Main remains
 `1094d64515604fe9d03fdab479efc7f880b112a8`. Consumer SDK selections are unchanged.
 
+## Backlog correction: resident fracture presentation
+
+**14 November 2026.** Both physics and synchronous fracture presentation produced
+the backlog. The reference collision frame spent about 71 ms in three fixed
+steps plus 76 ms mapping/preparing/uploading damaged skins. Its 153 ms duration
+fed the next frame's accumulator. That frame then spent 152 ms in eight steps,
+plus another roughly 55 ms on skins, producing a 212 ms presented interval.
+Later eight-step frames continued after topology work had finished.
+
+The correction retains detailed rest vertices, indices and original influences
+on the GPU. Actual component/removal state is a small packed per-section table;
+colour and shadow vertex shaders apply the current ownership immediately.
+Normal palette motion, same-frame tearing, removal and restoration remain
+connected to the authoritative physics. No frame-spread queue or stale physical
+separation is introduced. Fully removed material groups/meshes skip drawing;
+partially removed groups clip only the removed owners. First surviving face
+orientation is prepared once, avoiding a new full-mesh scan on removal.
+
+One Ural exterior has 524,451 skin corners: about 32 MiB of weights plus 2 MiB
+of indices. Four former full topology publications could replace about 136 MiB.
+The resident path instead uploads about **1 KiB of section uniforms per frame**
+across four bodies and four views. This does not reduce texture quality or
+physical mesh/contact resolution. It also avoids moving ordinary rigid-body
+simulation to the GPU.
+
+Three interleaved profiler-disabled trials per build used the same original
+full-texture four-Ural scene, 20 m/s, 1280x720, shadows eight, VSync/cap off,
+Ryzen 5 5600 / GTX 970 / **16 GB RAM at 2133 MT/s**. Values are medians of
+per-trial statistics, not guarantees for every frame:
+
+| Whole-game metric | Before | Resident presentation |
+|---|---:|---:|
+| Average FPS | 60.64 | 60.37 |
+| p50 frame ms | 16.18 | 16.27 |
+| p95 frame ms | 30.10 | 30.68 |
+| p99 frame ms | 45.80 | 43.68 |
+| Median trial maximum frame ms | 197.87 | 95.52 |
+| 1% low FPS | 11.31 | 15.99 |
+
+Actual trial maxima were 205.50 / 197.87 / 181.88 ms before and
+89.73 / 95.97 / 95.52 ms after. All three revised profiler-off runs had no
+frames above 100 ms. Average throughput did not improve; p50/p95 were slightly
+worse. This is a substantial worst-frame improvement, not an across-the-board
+FPS win.
+
+A separate profiled pair measured the simulation queue:
+
+| Simulation-clock metric | Before | After |
+|---|---:|---:|
+| Peak queued simulation time before fixed work | 213.72 ms | 110.27 ms |
+| Maximum fixed steps in one frame | 8 | 6 |
+| Frames hitting unchanged eight-step cap | 3 | 0 |
+| Discarded simulation time across capture | 110.38 ms | 0 |
+| Incoming frame-delta clipping | 0 | 0 |
+| Fixed steps completed in measured interval | 1,192 | 1,199 |
+| Maximum presented frame, profiling enabled | 213.68 ms | 101.69 ms |
+
+Queued time includes the legitimately due step; it is not exclusively overdue
+time. New benchmark rows record the residual accumulator, advanced simulation
+time and pending time (`advanced + residual + discarded`). The old peak is
+exactly recoverable from its capped frames: eight fixed durations plus discarded
+remainder, because the accumulator resets at the cap and non-capped frames are
+below eight durations. Unprofiled queue/loss measurements remain unavailable.
+The final removal-culling refinement repeats at 101.67 ms maximum, 105.02 ms
+queued time, six steps and zero clipped/discarded time.
+
+**Remaining limit:** physics steps themselves remain expensive. The revised
+~100 ms profiled peak is roughly 95 ms of six complete physics steps; this change
+removes the presentation trigger but does not eliminate temporary catch-up.
+Material constraints/contact preparation and remaining rigid/vehicle work are
+the next optimisation targets. Heavy four-Ural crashes still fail the minimum
+60 FPS frame-time envelope and aggressive 5 ms combined critical-path target.
+No timestep, cap, material strength, iterations, substeps, collision coverage,
+sleep policy or authoritative scheduling was reduced.
+
+The combined terrain/32-actor/5,000-particle control remains essentially unchanged:
+274.11 -> 274.23 FPS, p99 7.083 -> 6.779 ms, no reported time loss, actual workload
+state verified. One paired control is not universal qualification.
+
+Qualification:
+
+- Linux CI passes **181/181 routine tests**. Local 158 deformable, 191
+  structural/reference and 47 shader checks pass; 11 benchmark
+  metric tests distinguish pending time from discarded time and unknown data.
+- **47 actual GPU colour/shadow checks pass on modern and portable desktop GL**,
+  including blending, immediate separation, mixed-owner per-face removal,
+  restoration, complete-removal culling, malformed ownership and 256 sections.
+  Shader normalisation uses float arithmetic; procedural CPU mapping agrees
+  within 1e-5 units. This is a presentation tolerance, not relaxed physics.
+- **All 2,040 full physical-state hashes match the prior qualified implementation**
+  across frontal/debris writers and separate cold readers. Nineteen common
+  reported vehicle observations match in every paired crash capture. Extra
+  progress after the correction follows from retaining simulation time.
+- Matching SDK creation, editor Play/Stop and relocated exports pass eight
+  operations. Actual portable OpenGL 3.3 NVIDIA four-Ural destruction renders
+  the damaged/detached geometry. Final documentation SDK identity is recorded
+  in `build/linux-sdk/BUILD_INFO.json`.
+- [Completed Linux final-source CI](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43608856615)
+  and [completed Windows native SDK/contracts](https://github.com/SuperReaper1999/Project-Judas/actions/runs/43608904854)
+  both pass at exact `57c4b8c4`. These are distinct from the earlier successful
+  `5848c5cb` checkpoint gates.
+
+Raw evidence and exact executable/input identities are under
+`.cache/backlog-correction-20261114/COMPARISON.json`, adjacent queue sequences,
+physical hash receipts and hardware traces. The prior hitch attribution and
+under-3-GB texture diagnostic remain unchanged. The initial final-check outer
+session returned 143 despite complete successful engine/runner receipts; the
+independent `final-check-v2` completed with exit zero and reproduces the result.
+Windows hardware graphics, Android and browser runtime checks were not executed.
+Human acceptance remains pending; main and consumer SDK selections are untouched.
+
 ## Focused panel/contact performance update
+
+*Historical `b2810116` qualification; resident presentation above supersedes its
+structural topology upload costs.*
 
 This pass fixes profiler counter overflow and removes repeated preparation without
 changing simulation resolution, material strengths, substeps, iterations, damage
