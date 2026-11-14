@@ -1223,6 +1223,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                       row.n * row.normalImpulse + row.t1 * row.tangent1 + row.t2 * row.tangent2);
             }
         }
+        // Impact, motor and drive guesses belong to one public fixed step;
+        // fresh native contact preparation must not replay them each interval.
+        const bool warmEqualityOnly = step > 0 ||
+            (contactPhaseContext && contactPhaseContext->index > 0);
         bool haveJoints = false;
         std::vector<JointInput> inputs;
         if (!joints.empty()) {
@@ -1261,7 +1265,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 for (const auto& joint : joints)
                     if (&joint.state == input.state && projected.Includes(joint.handle))
                         input.impulsesApplied = true;
-            PrepareJoints(jointSolver, inputs, h, true, false, false, 0.0f, step > 0, false,
+            PrepareJoints(jointSolver, inputs, h, true, false, false, 0.0f, warmEqualityOnly, false,
                           kMk2JointLimitApproachRate);
         }
         // A coupled participant's impulse may wake a sleeping body mid-solve
@@ -1322,7 +1326,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             if (!joints.empty()) {
                 const auto oldRows = jointSolver.RowCount();
                 inputs = JointInputs();
-                PrepareJoints(jointSolver, inputs, h, true, false, true, 0.0f, step > 0, false,
+                PrepareJoints(jointSolver, inputs, h, true, false, true, 0.0f, warmEqualityOnly, false,
                               kMk2JointLimitApproachRate);
                 for (const auto &input : inputs)
                     if (std::none_of(jointTotals.begin(), jointTotals.end(),

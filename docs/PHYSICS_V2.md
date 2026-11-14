@@ -1,7 +1,7 @@
 # Physics V2 — current architecture and qualification status
 
 **Implementation checkpoint, 14 November 2026. Final SDK and performance qualification pending.**
-The work starts from `d1ce11c7c14d498755e3437292f3a72d022d5783`. The production-default routine suite has completed: **179/179 passed** on the NVIDIA Linux desktop. Extended native contracts, final matching SDK, repeated gameplay measurements and remote CI are being qualified separately; this is not human acceptance or promotion to main.
+The work starts from `d1ce11c7c14d498755e3437292f3a72d022d5783`. The production-default routine suite has completed: **181/181 passed** on the NVIDIA Linux desktop. Extended native contracts, final matching SDK, repeated gameplay measurements and remote CI are being qualified separately; this is not human acceptance or promotion to main.
 
 ## Implemented architecture
 
@@ -9,6 +9,7 @@ The work starts from `d1ce11c7c14d498755e3437292f3a72d022d5783`. The production-
 - **Support and geometric anchors remain physical.** The existing matched contact cache carries its steady support estimate across the macro interval; impact spikes are not mistaken for reusable support. Warm impulses scale using the duration of the kernel that produced them, separately from public observation duration. Spherical contact support follows sphere geometry rather than a rotating arbitrary surface-material anchor; friction continues to use physical angular point velocity.
 - **Immediate arrivals precede unnecessary future searches.** Certain native box/identity-child compound contacts establish current-time approaching events first. Strictly future roots can remain dirty while those exact-time events run. All eligible current-time candidates are considered before event selection, deferred roots are completed before time advances, and trajectory revisions invalidate stale observations. Unsupported/uncertain cases retain conservative ordinary queries. There is no small-speed/slop collision skip.
 - **Bounded independent geometry workers.** `JUDAS_MK2_QUERY_LANES=1|2|4` tunes query lanes; the production default is four, limited by the supplied worker pool and actual batch width. Only frozen native geometry queries run concurrently. The owner participates, joins every helper, and publishes in original stable pending order; the event heap retains deterministic time/key ordering. Small/unsupported work remains serial. Borrowed owner anchors cannot bypass allocation of lane-private bound storage.
+- **Joint estimates retain macro ownership.** Fresh contact kernels reuse rigid bilateral warm estimates, while impact-limit, motor, material and angular-drive guesses warm once per public fixed step. Subsequent native intervals solve every physical row with the same forces, torque caps and iteration budgets, without replaying earlier impact guesses. Explicit outer coupled steps still own their individual public steps.
 - **Successful impacts continue.** The arbitrary fourth-distinct-arrival body freeze is removed. A native interval still has a shared 256-arrival work guard; failed responses and exhausted searches remain explicit conservative holds. This is bounded CCD, not a promise of unlimited collisions.
 
 Search, advancement and geometry timings aggregate lane CPU work when workers
@@ -25,9 +26,20 @@ standing succeeds, retaining its original torque, effort and attempt budgets.
 Accepted character steps record their true starting position, including an
 initial trigger overlap that a lifted preparation probe previously omitted.
 
+Ubuntu CI at the initial implementation checkpoint exposed five balance checks
+that passed on the host. Millimetre origin variations reproduced the instability
+locally. The macro joint-estimate correction and consistent swing-clock velocity
+lookahead pass the original controls plus permanent rigid-origin and real
+two-collider foot-support regressions: **148 checks**. Distinct enabled static
+colliders share a support frame while retaining one real carrier and every
+measured reaction; independent dynamic/kinematic, query and sensor supports
+remain distinct. The complete local routine suite now passes **181/181**.
+Exact-candidate Ubuntu CI, refreshed SDK and final measurements are pending;
+the failed initial CI is retained rather than reported as passing.
+
 ## Evidence obtained before final-default qualification
 
-Correctness controls and whole-frame pilots have different scopes. The procedural eager/lazy and serial/two/four-lane proof retained complete exact per-step state, contact impulses, touch history and motion paths across nine ordinary scenes plus five precise frozen-ledger scenarios, with two worker repetitions. It passed with actual helper/deferred work, not silent serial fallback. The production-default registered scheduling test now passes all 14 scenarios across serial/two/four lanes. The character/controller correction passes 77 checks, borrowed-anchor queries 34 checks, and separation predicates 3,992 checks. The complete routine build and 179 routine gates passed; extended qualification and final SDK/CI remain in progress.
+Correctness controls and whole-frame pilots have different scopes. The procedural eager/lazy and serial/two/four-lane proof retained complete exact per-step state, contact impulses, touch history and motion paths across nine ordinary scenes plus five precise frozen-ledger scenarios, with two worker repetitions. It passed with actual helper/deferred work, not silent serial fallback. The production-default registered scheduling test now passes all 14 scenarios across serial/two/four lanes. The character/controller correction passes 77 checks, borrowed-anchor queries 34 checks, and separation predicates 3,992 checks. The complete routine build and 181 routine gates passed; extended qualification and final SDK/CI remain in progress.
 
 One NVIDIA desktop four-way pilot, 1280×720, uncapped/VSync off, 20 seconds after 10 seconds warmup:
 
@@ -55,7 +67,7 @@ Final work remains: run the production-default regression/authoring/cold-save ga
 All local proof material is under `.cache/physics-v2-audit-20261113/`:
 
 - `lazy-futures-fixture-results3.log`: exact procedural A/B and worker proof.
-- `final-routine-ctest-v2.log`: 179/179 routine gates, including 77 character/controller checks.
+- `macro-owner-routine-ctest.log`: 181/181 routine gates, including 77 character/controller and 148 physical-balance checks.
 - `lazy-futures-frame-proof/{eager-serial,lazy-serial,eager-four,lazy-four}/`: identities, raw frames and pilot summaries.
 - `global-guard-frame-proof/{body-four,global-four,global-serial}/`: separate changed-physics capture, including raw drop counters.
 - `arrival-guard-bounce-results.log` / `arrival-guard-bounce-stress.log`: analytic success and preserved negative stress control.

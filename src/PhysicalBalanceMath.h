@@ -4,6 +4,16 @@
 #include <glm/gtc/quaternion.hpp>
 #include "PhysicsWorld.h"
 namespace PhysicalBalanceMath {
+// Distinct static colliders are fixed pieces of the same world frame. Keep
+// independent dynamic/kinematic supports distinct even at zero velocity, and
+// never promote sensor or controller-query geometry into physical support.
+inline bool SharedSupportFrame(const PhysicsWorld& world,BodyHandle a,BodyHandle b){
+    const auto physical=[&](BodyHandle body){return world.IsBodyEnabled(body)&&
+        !world.IsBodySensor(body)&&!world.IsQueryOnlyBody(body);};
+    if(!physical(a)||!physical(b))return false;
+    return (a.id==b.id&&a.world==b.world)||
+        (world.GetMotionType(a)==BodyMotionType::Static&&world.GetMotionType(b)==BodyMotionType::Static);
+}
 inline glm::vec3 Tangent(glm::vec3 v,glm::vec3 n){return v-n*glm::dot(v,n);}
 inline glm::quat Align(glm::vec3 from,glm::vec3 to,glm::vec3 fallback){
     from=glm::normalize(from);to=glm::normalize(to);

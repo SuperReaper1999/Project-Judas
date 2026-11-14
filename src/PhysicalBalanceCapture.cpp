@@ -188,7 +188,7 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
                 auto capture=captureAbout(stance.centre);BodyHandle body;glm::vec3 destination;
                 std::array<glm::vec3,2> rest;CaptureRestSoles(world,upright,rest);const auto offset=Tangent(rest[swing]-rest[1-swing],up);
                 const auto stanceSole=World(world.GetTransform(m_bodies[m_settings.effectors[1-swing].foot].body),m_settings.effectors[1-swing].contactOffset);
-                if(CaptureFoothold(world,swing,start,stanceSole+offset,capture-(stanceSole+offset*.5f),upright,body,destination)&&body.id==m_history.plannedSupport.id&&body.world==m_history.plannedSupport.world)m_history.landingLocal=Local(platform,destination);
+                if(CaptureFoothold(world,swing,start,stanceSole+offset,capture-(stanceSole+offset*.5f),upright,body,destination)&&SharedSupportFrame(world,body,m_history.plannedSupport))m_history.landingLocal=Local(platform,destination);
             }
         }
     }
@@ -265,7 +265,7 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
         JointState hip,ankle;world.GetJoint(m_bodies[effector.upper].joint,hip);world.GetJoint(m_bodies[effector.foot].joint,ankle);
         auto hipCentre=World(root,hip.settings.anchorB),hipAhead=hipCentre+world.GetLinearVelocity(m_bodies[0].body)*dt;
         CaptureLeg(world,swing,hipCentre,footTarget(m_history.swingTime)+upright*ankle.settings.anchorA,upright,w);
-        CaptureLeg(world,swing,hipAhead,footTarget(m_history.swingTime+dt)+upright*ankle.settings.anchorA,upright,m_captureAhead);
+        CaptureLeg(world,swing,hipAhead,footTarget(m_history.swingTime+dt*kCaptureSwingRate)+upright*ankle.settings.anchorA,upright,m_captureAhead);
         // Touchdown: a lifted foot regaining supporting contact on the planned
         // support while descending has landed where it physically is.
         auto footPose=world.GetTransform(m_bodies[effector.foot].body);float t=m_history.swingTime/m_settings.stepSeconds;
@@ -273,7 +273,7 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
         // foot often starts rolled onto its toe, so a rise above its start
         // pose is not required.
         if(t>.1f&&!supports[swing].contacts)m_history.lifted=true;
-        if(m_history.lifted&&supports[swing].contacts&&supports[swing].body.id==m_history.plannedSupport.id&&Smooth(t)>=.5f){
+        if(m_history.lifted&&supports[swing].contacts&&SharedSupportFrame(world,supports[swing].body,m_history.plannedSupport)&&Smooth(t)>=.5f){
             m_history.lastSwing=swing;m_history.landedLocal=Local(platform,footPose.position);m_history.swing=-1;++m_history.landings;
             m_history.postStepTargets.assign(m_bodies.size(),glm::quat(1,0,0,0));m_history.postStepTime=0;
         }else if(m_history.swingTime>=m_settings.stepSeconds*3){Fail(world,"corrective step lost support, reach or physical touchdown");return false;}

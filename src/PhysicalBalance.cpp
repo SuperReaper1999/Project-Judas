@@ -175,10 +175,12 @@ bool PhysicalBalanceController::Observe(PhysicsWorld& world,const std::vector<gl
             const auto localPoint=Local(transform,contact.point),localNormal=glm::inverse(transform.rotation)*contact.normal;
             bool accepted=std::any_of(effector.patches.begin(),effector.patches.end(),[&](const auto& patch){return glm::length(localPoint-patch.offset)<=patch.radius&&glm::dot(localNormal,-patch.normal)>.65f;});
             if(contact.separation>.015f||contact.normalImpulse<=0||glm::dot(contact.normal,m_observation.up)<effector.normalAcceptance||!accepted)continue;
-            // One effector straddling independently moving bodies is not a
-            // coherent planted reference. Refuse rather than average identities.
-            if(support.contacts&&support.body.id!=contact.other.id)return false;
-            support.body=contact.other;support.point+=contact.point*contact.normalImpulse;support.normal+=contact.normal*contact.normalImpulse;support.velocity+=contact.supportVelocity*contact.normalImpulse;support.load+=contact.normalImpulse;support.centre+=contact.point;++support.contacts;
+            // Static world pieces share an inertial frame; independently
+            // moving supports do not. Retain one stable real carrier instead
+            // of averaging identities or inventing a synthetic world body.
+            if(support.contacts&&!SharedSupportFrame(world,support.body,contact.other))return false;
+            if(!support.contacts)support.body=contact.other;
+            support.point+=contact.point*contact.normalImpulse;support.normal+=contact.normal*contact.normalImpulse;support.velocity+=contact.supportVelocity*contact.normalImpulse;support.load+=contact.normalImpulse;support.centre+=contact.point;++support.contacts;
         }
         if(support.contacts)support.centre/=float(support.contacts);
         if(support.load>0){support.point/=support.load;support.velocity/=support.load;if(glm::dot(support.normal,support.normal)>1e-8f)support.normal=glm::normalize(support.normal);}
@@ -286,7 +288,7 @@ bool PhysicalBalanceController::SwingReferences(PhysicsWorld& world,const glm::q
     const auto& effector=swing;
     auto footPose=world.GetTransform(m_bodies[effector.foot].body);auto actualContact=World(footPose,effector.contactOffset);
     if(t>.1f&&!m_observation.supports[m_history.swing].contacts&&glm::dot(footPose.position-World(support,m_history.startLocal),m_observation.up)>.025f)m_history.lifted=true;
-    if(t>=1&&m_history.lifted&&m_observation.supports[m_history.swing].contacts&&m_observation.supports[m_history.swing].body.id==m_history.plannedSupport.id&&glm::length(actualContact-World(support,m_history.landingLocal)-upright*effector.contactOffset)<m_settings.touchdownTolerance){m_history.lastSwing=m_history.swing;m_history.landedLocal=Local(support,footPose.position);m_history.swing=-1;++m_history.landings;return true;}
+    if(t>=1&&m_history.lifted&&m_observation.supports[m_history.swing].contacts&&SharedSupportFrame(world,m_observation.supports[m_history.swing].body,m_history.plannedSupport)&&glm::length(actualContact-World(support,m_history.landingLocal)-upright*effector.contactOffset)<m_settings.touchdownTolerance){m_history.lastSwing=m_history.swing;m_history.landedLocal=Local(support,footPose.position);m_history.swing=-1;++m_history.landings;return true;}
     return m_history.swingTime<m_settings.stepSeconds*3;
 }
 void PhysicalBalanceController::Prepare(PhysicsWorld& world,const std::vector<glm::vec3>& gravity,float dt){

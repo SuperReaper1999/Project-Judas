@@ -1,4 +1,5 @@
 #include "PhysicalBalance.h"
+#include "PhysicalBalanceMath.h"
 #include <cstdio>
 #include <cmath>
 #include <algorithm>
@@ -94,6 +95,63 @@ void Supports(){
  std::printf("Radial status %d settled %.5f root speed %.5f\n",int(radial.controller.History().progress),radial.controller.History().settled,glm::length(radial.world.GetLinearVelocity(radial.mapping[0].body)));
  Check(radial.Standing()&&radial.controller.History().progress==BalanceProgress::Succeeded,"curved ground and independently sampled local radial accelerations physically support rig");
 }
+void StaticSupportFrames(){
+ for(bool kinematic:{false,true}){
+  Fixture f(0,glm::quat(1,0,0,0),false);
+  // Both feet bridge the two physical ground patches. Their COMs lie in
+  // the gap, so one patch alone cannot provide the observed static support.
+  auto rear=f.world.CreateStaticBox({0,-.2f,-2.52f},{5,.2f,2.48f},.8f,0);
+  auto front=f.world.CreateStaticBox({0,-.2f,2.6f},{5,.2f,2.4f},.8f,0);
+  f.ground=rear;
+  if(kinematic){f.world.SetMotionType(rear,BodyMotionType::Kinematic);f.world.SetMotionType(front,BodyMotionType::Kinematic);}
+  f.Advance(30,false);
+  std::array<float,2> loads{};
+  bool straddles=true;
+  for(unsigned foot=0;foot<2;++foot){
+   std::vector<PhysicsWorld::BodyContactSample> rows;
+   bool first=false,second=false;
+   const bool read=f.world.ReadBodyContactSample(f.mapping[f.settings.effectors[foot].foot].body,rows);
+   for(const auto& row:rows)if(row.normalImpulse>0){
+    first|=row.other.id==rear.id;second|=row.other.id==front.id;
+    if(row.other.id==rear.id||row.other.id==front.id)loads[foot]+=row.normalImpulse;
+   }
+   straddles&=read&&first&&second;
+  }
+  Check(straddles,"real effector solver reactions span two independent ground colliders");
+  Check(f.world.GetLinearVelocity(rear)==glm::vec3(0)&&f.world.GetLinearVelocity(front)==glm::vec3(0),
+        "support-frame comparison exercises stationary supports, not velocity heuristics");
+  Check(f.controller.Request(f.world,BalanceTask::Stand,false,true,f.error),"split-support observation request accepted");
+  f.controller.Prepare(f.world,f.gravity,1.f/60);
+  const auto& observation=f.controller.Observation();
+  std::printf("STATIC_SUPPORT_FRAMES kinematic=%d raw_two_body_support=%d available=%d contacts=%u/%u raw_loads=%.9g/%.9g loads=%.9g/%.9g reason=%s\n",
+      kinematic,straddles,observation.available,observation.supports[0].contacts,observation.supports[1].contacts,
+      loads[0],loads[1],observation.supports[0].load,observation.supports[1].load,f.controller.History().reason.c_str());
+  if(kinematic){
+   Check(!observation.available&&f.controller.History().progress==BalanceProgress::Failed,
+         "one foot on independently owned kinematic frames remains rejected even when stationary");
+  }else{
+   Check(observation.available&&observation.supports[0].contacts&&observation.supports[1].contacts,
+         "separate static ground pieces provide one available physical support frame");
+   const auto carrier=rear.id<front.id?rear:front;
+   Check(observation.supports[0].body.id==carrier.id&&observation.supports[1].body.id==carrier.id,
+         "static support selects a stable real carrier rather than overwriting it per collider");
+   Check(std::abs(observation.supports[0].load-loads[0])<1e-5f*std::max(1.f,loads[0])&&
+         std::abs(observation.supports[1].load-loads[1])<1e-5f*std::max(1.f,loads[1]),
+         "static support preserves the full measured physical impulse from both colliders");
+  }
+ }
+ PhysicsWorld policies;policies.Init();
+ auto a=policies.CreateStaticBox({0,0,0},{1,1,1},0,0),b=policies.CreateStaticBox({3,0,0},{1,1,1},0,0);
+ Check(PhysicalBalanceMath::SharedSupportFrame(policies,a,b),"enabled static bodies share a world support frame");
+ policies.SetMotionType(b,BodyMotionType::Dynamic,1);
+ Check(!PhysicalBalanceMath::SharedSupportFrame(policies,a,b),"a stationary dynamic body is not a shared static frame");
+ policies.SetMotionType(b,BodyMotionType::Static);policies.SetBodySensor(b,true);
+ Check(!PhysicalBalanceMath::SharedSupportFrame(policies,a,b),"sensor geometry is not physical static support");
+ const auto query=policies.CreateQueryCapsule(.1f,.2f,{{5,0,0},{1,0,0,0}});
+ Check(!PhysicalBalanceMath::SharedSupportFrame(policies,a,query),"query-only controller geometry is not physical static support");
+ policies.SetBodySensor(b,false);policies.SetBodyEnabled(b,false);
+ Check(!PhysicalBalanceMath::SharedSupportFrame(policies,a,b),"disabled support cannot supply a shared frame");
+}
 void History(){
  Fixture f(1.5707963f);f.Advance(120,false);f.controller.Request(f.world,BalanceTask::Recover,false,true,f.error);f.Advance(80);
  auto history=f.controller.History();auto root=f.world.GetTransform(f.mapping[0].body);auto velocity=f.world.GetLinearVelocity(f.mapping[0].body);
@@ -148,4 +206,25 @@ void GetUpAuthoring(){
     bad=d;bad.settings.getUpAttempts=0;Check(!ValidBalanceDefinition(bad,error),"zero get-up attempts rejected");
     Check(!ParseBalanceDefinition(R"({"getUpFaceUp":[[1,0,0,0]],"chains":[{},{}]})",back,error),"short get-up key list rejected");
 }
-int main(){Recovery(1.5707963f,glm::quat(1,0,0,0));Recovery(-1.5707963f,glm::quat(1,0,0,0));Recovery(1.4f,glm::quat(1,0,0,0));Recovery(-1.4f,glm::quat(1,0,0,0));Recovery(1.5707963f,glm::angleAxis(.9f,glm::normalize(glm::vec3(1,2,3))));Recovery(1.5707963f,glm::quat(1,0,0,0),2);Recovery(-1.5707963f,glm::quat(1,0,0,0),2);CorrectiveStep();Negatives();Supports();History();DisturbancesAndLosses();InternalEffort();GetUpAuthoring();std::printf("Physical balance controller development: %d checks, %d failures\n",checks,failures);return failures?1:0;}
+void RigidOriginShiftStanding(){
+ for(float horizontal:{-.001f,.001f}){
+  Fixture f;
+  f.world.ResetBody(f.ground,{0,-.2f,0},glm::angleAxis(.05235988f,glm::vec3(1,0,0)));
+  const glm::dvec3 shift(double(horizontal),0,0);
+  f.world.ShiftOrigin(shift);f.controller.ShiftOrigin(shift);
+  f.Advance(120,false);
+  const bool requested=f.controller.Request(f.world,BalanceTask::Stand,false,true,f.error);
+  f.Advance(1080);
+  const auto& observation=f.controller.Observation();
+  const auto root=f.world.GetTransform(f.mapping[0].body);
+  float mass=0,speed=0;for(const auto& body:f.mapping){const float m=f.world.GetMass(body.body);mass+=m;speed+=m*glm::length(f.world.GetLinearVelocity(body.body));}
+  std::printf("Rigid origin slope: dx %.9g m root %.9g up %.9g mean body speed %.9g contacts %u/%u progress %d\n",
+   double(horizontal),double(root.position.y),double((root.rotation*f.settings.up).y),double(speed/mass),
+   observation.supports[0].contacts,observation.supports[1].contacts,int(f.controller.History().progress));
+  Check(requested&&f.Standing()&&f.controller.History().progress==BalanceProgress::Succeeded&&
+        observation.supports[0].contacts&&observation.supports[1].contacts&&
+        observation.supports[0].body.id==f.ground.id&&observation.supports[1].body.id==f.ground.id,
+        "millimetre rigid origin shift retains measured physical standing on the same sloped support");
+ }
+}
+int main(){Recovery(1.5707963f,glm::quat(1,0,0,0));Recovery(-1.5707963f,glm::quat(1,0,0,0));Recovery(1.4f,glm::quat(1,0,0,0));Recovery(-1.4f,glm::quat(1,0,0,0));Recovery(1.5707963f,glm::angleAxis(.9f,glm::normalize(glm::vec3(1,2,3))));Recovery(1.5707963f,glm::quat(1,0,0,0),2);Recovery(-1.5707963f,glm::quat(1,0,0,0),2);CorrectiveStep();Negatives();Supports();StaticSupportFrames();RigidOriginShiftStanding();History();DisturbancesAndLosses();InternalEffort();GetUpAuthoring();std::printf("Physical balance controller development: %d checks, %d failures\n",checks,failures);return failures?1:0;}
