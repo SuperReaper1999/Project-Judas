@@ -30,7 +30,7 @@ int main(int argc,char** argv){
   std::string baseline;unsigned trial=0;
   // Interleaved equal deterministic inputs, same cameras and simulation cadence.
   for(int mode:{0,1,2,1,0,2}){
-   ++trial;profiler.Freeze(false);profiler.Clear();setenv("JUDAS_PROFILE",mode?"1":"0",1);unsetenv("JUDAS_PROFILE_OUTPUT");
+   ++trial;profiler.Freeze(false);profiler.Clear();SDL_setenv("JUDAS_PROFILE",mode?"1":"0",1);SDL_setenv("JUDAS_PROFILE_OUTPUT","",1);
    Project project;std::string error;const auto filename=std::string(projectName)=="browser_player_lab"?"Browser_Player_Lab":projectName;
    std::string path="projects/"+std::string(projectName)+"/"+filename+".judasproj";
    const bool loaded=project.Load(path,error);check(loaded,"ordinary integration project");if(!loaded){std::fprintf(stderr,"%s\n",error.c_str());return 1;}
