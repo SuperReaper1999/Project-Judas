@@ -1188,7 +1188,16 @@ void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& o
     GLint packAlignment = 4;
     glGetIntegerv(GL_PACK_ALIGNMENT, &packAlignment);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
+#ifdef __ANDROID__
+    // ES guarantees RGBA/UNSIGNED_BYTE for normalized colour buffers; RGB
+    // readback is not portable. Keep CaptureFrame's public tightly packed RGB.
+    std::vector<unsigned char> rgba(static_cast<size_t>(width)*static_cast<size_t>(height)*4);
+    glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,rgba.data());
+    for(size_t pixel=0;pixel<outRgbPixels.size()/3;++pixel)
+        std::copy_n(rgba.data()+pixel*4,3,outRgbPixels.data()+pixel*3);
+#else
     glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, outRgbPixels.data());
+#endif
     glPixelStorei(GL_PACK_ALIGNMENT, packAlignment);
 
     // OpenGL's framebuffer origin is bottom-left; flip rows so row 0 of the

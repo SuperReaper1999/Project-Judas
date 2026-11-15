@@ -98,7 +98,7 @@ class WholeFrameMetricsTests(unittest.TestCase):
         identity = dict(workload_sha256='content', project_sha256='project', controls={},
                         duration_seconds=20, resolution='1280x720', graphics_policy='4.6',
                         cpu_model='reference', gpu_model='reference', gpu_driver='same',
-                        cap_hz=0, capture_policy='none', profile=True)
+                        cap_hz=0, capture_policy='none', profile=True, native_capture_schema=3)
         sample = dict(identity=identity, summary=dict(samples=2000, p99_ms=4, worst_ms=5))
         old = [copy.deepcopy(sample) for _ in range(3)]
         new = [copy.deepcopy(sample) for _ in range(3)]
@@ -112,7 +112,7 @@ class WholeFrameMetricsTests(unittest.TestCase):
         identity = dict(workload_sha256='content', project_sha256='project', controls={},
                         duration_seconds=20, resolution='1280x720',
                         graphics_policy='4.6', cpu_model='reference',
-                        gpu_model='reference', gpu_driver='same', cap_hz=0, capture_policy='none', profile=True)
+                        gpu_model='reference', gpu_driver='same', cap_hz=0, capture_policy='none', profile=True, native_capture_schema=3)
         old = [dict(identity=identity, summary=summarize([10.] * 1000)) for _ in range(3)]
         new = copy.deepcopy(old)
         new[0]['identity'] = dict(identity, resolution='640x360')
@@ -126,6 +126,10 @@ class WholeFrameMetricsTests(unittest.TestCase):
             compare(old[:1], old)
         new = copy.deepcopy(old)
         new[0]['identity'] = dict(identity, capture_policy='different frame pacing')
+        with self.assertRaises(ValueError):
+            compare(old, new)
+        new = copy.deepcopy(old)
+        new[0]['identity'] = dict(identity, native_capture_schema=2)
         with self.assertRaises(ValueError):
             compare(old, new)
         new = copy.deepcopy(old)

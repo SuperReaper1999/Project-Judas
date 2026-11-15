@@ -1107,8 +1107,9 @@ target_link_libraries(judas_profiler_tests PRIVATE judas_engine)
 
 add_executable(judas_profiler_script_tests tests/ProfilerScriptTests.cpp)
 target_link_libraries(judas_profiler_script_tests PRIVATE judas_engine)
-add_executable(judas_profiler_application_tests tests/ProfilerApplicationTests.cpp src/editor/ProfilerView.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+add_executable(judas_profiler_application_tests tests/ProfilerApplicationTests.cpp src/editor/ProfilerView.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp tools/benchmarks/WholeEngineBenchmark.cpp)
 target_link_libraries(judas_profiler_application_tests PRIVATE judas_engine judas_imgui)
+target_compile_definitions(judas_profiler_application_tests PRIVATE JUDAS_BENCHMARK_EMBEDDED=1)
 
 # Historical focused executables also compile engine subsets directly. They use
 # the same headless-capable service, rather than stub profiling implementations.

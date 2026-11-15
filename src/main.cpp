@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
         if(!output||!*output){std::fprintf(stderr,"Missing private Android benchmark output directory\n");return 1;}
         const auto setting=[](const char* key,const char* fallback){const auto* value=std::getenv(key);return value&&*value?value:fallback;};
         std::vector<std::string> arguments={"android-frame-capture","--project",(std::filesystem::current_path()/"game.judasproj").string(),"--out",output,
-            "--seconds",setting("JUDAS_BENCHMARK_SECONDS","20"),"--warmup-seconds",setting("JUDAS_BENCHMARK_WARMUP","10"),"--cap","0"};
+            "--seconds",setting("JUDAS_BENCHMARK_SECONDS","20"),"--warmup-seconds",setting("JUDAS_BENCHMARK_WARMUP","10"),"--warmup","0","--cap","0"};
         if(const auto* key=std::getenv("JUDAS_BENCHMARK_KEY");key&&*key){arguments.push_back("--key");arguments.push_back(key);}
         std::vector<char*> native;for(auto& argument:arguments)native.push_back(argument.data());
         return RunWholeEngineBenchmark(int(native.size()),native.data());

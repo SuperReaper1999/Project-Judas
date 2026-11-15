@@ -1830,6 +1830,14 @@
         "profiling",
         "persistence"
       ]
+    },
+    {
+      "name": "profiler-application",
+      "target": "judas_profiler_application_tests",
+      "groups": [
+        "profiling",
+        "core"
+      ]
     }
   ],
   "known_findings": [

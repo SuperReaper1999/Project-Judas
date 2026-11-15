@@ -884,3 +884,11 @@ fracture/debris outcomes. Combined terrain/actors/particles remain within about
 measurement identities and qualification are in `PHYSICS_V2.md` and ignored
 `.cache/material-spikes-20261114/` evidence. Do not infer that a passing relative
 gate certifies the remaining severe-impact latency or human acceptance.
+
+Timed capture schema 3 retains the completed interval that crosses the requested
+measurement deadline, including its hitch and backlog. Earlier schema 2 omitted
+that final interval. Identity comparisons reject mixed native capture schemas;
+do not relabel historical captures. A timed diagnostic run may retain fewer than
+120 frames (which can be the performance failure being investigated). The
+separate repeated regression gate still requires at least 1,000 samples per run;
+a successful file capture does not certify adequate sample count or frame budget.

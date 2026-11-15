@@ -10,6 +10,8 @@
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
+#include "../tools/benchmarks/WholeEngineBenchmark.h"
+#include "../third_party/nlohmann/json.hpp"
 #include <SDL2/SDL.h>
 #include <filesystem>
 #include <fstream>
@@ -75,6 +77,26 @@ int main(int argc,char** argv){
     auto d=profiler.Diagnostics();std::printf("M56 capacity %zu bytes drops %llu truncated %llu GPU dropped %llu\n",profiler.ReservedBytes(),(unsigned long long)d.droppedEvents,(unsigned long long)d.truncatedFrames,(unsigned long long)d.gpuDropped);
    }
   }
+ }
+ {
+  // This diagnostic runner cap deliberately makes the first completed measured
+  // interval cross the timed deadline. It does not alter physical dt or quality.
+  const auto timedOut=out/("timed-boundary-"+std::to_string(PerformanceProfiler::Now()));
+  std::vector<std::string> arguments={"profiler-timed-boundary","--project","projects/basic_water_lab/basic_water_lab.judasproj",
+   "--out",timedOut.string(),"--seconds","0.03","--warmup","0","--cap","30","--no-profile"};
+  std::vector<char*> native;for(auto& argument:arguments)native.push_back(argument.data());
+  check(RunWholeEngineBenchmark(int(native.size()),native.data())==0,"short timed application capture accepts a valid low-sample run");
+  try{
+   std::ifstream frames(timedOut/"frames.jsonl");std::string line;std::size_t rows=0;bool crossingInterval=false;
+   while(std::getline(frames,line))if(!line.empty()){
+    const auto row=nlohmann::json::parse(line);++rows;crossingInterval|=row.at("interval_ms").get<double>()>=30.;
+   }
+   check(rows>=1&&crossingInterval,"timed capture retains the completed interval crossing its deadline");
+   std::ifstream metadata(timedOut/"run.json");const auto run=nlohmann::json::parse(metadata);
+   check(run.at("frames").get<std::size_t>()==rows,"timed capture metadata matches all streamed frame rows");
+   const auto began=run.at("sample_start_steady_ns").get<std::uint64_t>(),ended=run.at("sample_end_steady_ns").get<std::uint64_t>();
+   check(began>0&&ended>=began+30000000,"timed capture records a complete measured duration through its final frame");
+  }catch(const std::exception& error){std::fprintf(stderr,"Timed application capture: %s\n",error.what());check(false,"timed capture reports parseable full-series evidence");}
  }
  std::printf("M56 application %u checks %u failures\n",checks,failures);return failures?1:0;
 }
