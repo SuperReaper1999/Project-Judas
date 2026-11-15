@@ -16,12 +16,12 @@ RuntimePhysicsDebugView::RuntimePhysicsDebugView(Window& window,Renderer& render
 bool RuntimePhysicsDebugView::PollPauseKey(){const bool value=SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_F9];const bool edge=value&&!m_pauseKey;m_pauseKey=value;return edge;}
 Command RuntimePhysicsDebugView::Inspect(const PhysicsEventDebugger::Snapshot& snapshot){
     ProfileRecordingPause quietInspector;
-    const bool captured=m_window.IsMouseCaptured();m_window.SetMouseCaptured(false);
+    const bool captured=m_window.IsMouseCaptured();if(captured)m_window.SetMouseCaptured(false);
     // Do not route live device events into an in-flight world's input hub.
     // Coalesce deferred levels; publish them only at the next outer boundary.
     std::map<std::pair<unsigned,int>,std::pair<unsigned,SDL_Event>> deferred;unsigned order=0;
     const auto defer=[&](unsigned category,int control,SDL_Event event){if(deferred.size()<1024||deferred.count({category,control}))deferred[{category,control}]={++order,event};};
-    const auto finish=[&](Command command){std::vector<std::pair<unsigned,SDL_Event>> events;for(auto& item:deferred)events.push_back(item.second);std::sort(events.begin(),events.end(),[](const auto& a,const auto& b){return a.first<b.first;});for(auto& e:events)SDL_PushEvent(&e.second);m_window.SetMouseCaptured(captured);return command;};
+    const auto finish=[&](Command command){std::vector<std::pair<unsigned,SDL_Event>> events;for(auto& item:deferred)events.push_back(item.second);std::sort(events.begin(),events.end(),[](const auto& a,const auto& b){return a.first<b.first;});for(auto& e:events)SDL_PushEvent(&e.second);if(captured)m_window.SetMouseCaptured(true);return command;};
     for(;;){
         bool quit=false;
         if(snapshot.inFlight){SDL_Event event;while(SDL_PollEvent(&event)){
@@ -47,9 +47,11 @@ Command RuntimePhysicsDebugView::Paint(const PhysicsEventDebugger::Snapshot& sna
     int drawableWidth=0,drawableHeight=0;SDL_GL_GetDrawableSize(m_window.NativeWindow(),&drawableWidth,&drawableHeight);
     const unsigned width=std::max(320,drawableWidth),height=std::max(240,drawableHeight);
     int mouseX=0,mouseY=0;const auto buttons=SDL_GetMouseState(&mouseX,&mouseY);const bool click=(buttons&SDL_BUTTON_LMASK)&&!m_mouse;
+    const int rootDx=mouseX-m_previousMouseX,rootDy=mouseY-m_previousMouseY;
+    m_previousMouseX=mouseX;m_previousMouseY=mouseY;
     int logicalWidth=1,logicalHeight=1;SDL_GetWindowSize(m_window.NativeWindow(),&logicalWidth,&logicalHeight);mouseX=int(double(mouseX)*width/std::max(1,logicalWidth));mouseY=int(double(mouseY)*height/std::max(1,logicalHeight));
-    int rootDx=0,rootDy=0;if(!snapshot.inFlight)SDL_GetRelativeMouseState(&rootDx,&rootDy);
-    if(buttons&SDL_BUTTON_RMASK){const int dx=snapshot.inFlight?m_inspectDx:rootDx,dy=snapshot.inFlight?m_inspectDy:rootDy;m_yaw+=dx*.004f;m_pitch=std::clamp(m_pitch+dy*.004f,-1.2f,1.2f);}
+    if((buttons&SDL_BUTTON_RMASK)&&m_rightMouse){const int dx=snapshot.inFlight?m_inspectDx:rootDx,dy=snapshot.inFlight?m_inspectDy:rootDy;m_yaw+=dx*.004f;m_pitch=std::clamp(m_pitch+dy*.004f,-1.2f,1.2f);}
+    m_rightMouse=bool(buttons&SDL_BUTTON_RMASK);
     m_inspectDx=m_inspectDy=0;
     if(keys[SDL_SCANCODE_EQUALS])m_distance=std::max(2.f,m_distance*.98f);
     if(keys[SDL_SCANCODE_MINUS])m_distance=std::min(300.f,m_distance*1.02f);

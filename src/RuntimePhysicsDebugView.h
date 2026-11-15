@@ -15,6 +15,7 @@ private:
     std::array<unsigned char,512> m_keys{};bool m_mouse=false,m_pauseKey=false,m_busy=false;
     unsigned m_focus=0;
     int m_inspectDx=0,m_inspectDy=0;
+    int m_previousMouseX=0,m_previousMouseY=0;bool m_rightMouse=false;
     float m_yaw=.8f,m_pitch=.35f,m_distance=14;
     std::string m_status;
     PhysicsEventDebugger::Command Paint(const PhysicsEventDebugger::Snapshot&);
