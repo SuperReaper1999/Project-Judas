@@ -1,6 +1,7 @@
 // The shipping application loop, including its real fixed-step accumulator,
 // resource publication, rendering and swap. No synthetic simulation clock.
 #include "Application.h"
+#include "WholeEngineBenchmark.h"
 #include "BuildIdentity.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
@@ -20,7 +21,7 @@
 #include <thread>
 #include <chrono>
 using Json=nlohmann::json;
-int main(int argc,char** argv){try{
+int RunWholeEngineBenchmark(int argc,char** argv){try{
  std::string project,out;unsigned frames=1800,warmup=240;bool profile=true;std::string key,pulse,sequencePath;double seconds=0,warmupSeconds=0,cap=0;unsigned shadowBudget=8;
  for(int i=1;i<argc;++i){std::string a=argv[i];auto value=[&](){if(++i==argc)throw std::runtime_error("missing option value");return std::string(argv[i]);};
   if(a=="--project")project=value();else if(a=="--out")out=value();else if(a=="--shadow-budget")shadowBudget=std::stoul(value());else if(a=="--frames")frames=std::stoul(value());else if(a=="--warmup")warmup=std::stoul(value());else if(a=="--key")key=value();else if(a=="--pulse")pulse=value();else if(a=="--sequence")sequencePath=value();else if(a=="--seconds")seconds=std::stod(value());else if(a=="--warmup-seconds")warmupSeconds=std::stod(value());else if(a=="--cap")cap=std::stod(value());else if(a=="--no-profile")profile=false;else throw std::runtime_error("unknown option "+a);
@@ -34,7 +35,8 @@ int main(int argc,char** argv){try{
   for(const auto& event:sequence){
    if(!event.is_object()||event.size()!=3||!event.contains("time")||!event.contains("control")||!event.contains("value"))throw std::runtime_error("sequence events require time/control/value");
    const auto time=event.at("time").get<double>();const auto control=event.at("control").get<std::string>();const auto value=event.at("value").get<float>();
-   if(!std::isfinite(time)||time<0||time>300||time<previousTime||control.empty()||control.size()>64||!std::isfinite(value)||std::abs(value)>10000)throw std::runtime_error("invalid ordered input sequence event");previousTime=time;
+   if(!std::isfinite(time)||time<0||time>300||time<previousTime||control.empty()||control.size()>64||!std::isfinite(value)||std::abs(value)>10000)throw std::runtime_error("invalid ordered input sequence event");
+   previousTime=time;
   }
  }
  if(std::filesystem::exists(out))throw std::runtime_error("output directory already exists");
@@ -47,7 +49,7 @@ int main(int argc,char** argv){try{
 #endif
  if(!std::getenv("JUDAS_PROFILE_DEPTH"))SDL_setenv("JUDAS_PROFILE_DEPTH","4",1);
  auto& p=PerformanceProfiler::Get();std::ofstream data(std::filesystem::path(out)/"frames.jsonl"),gpuData(std::filesystem::path(out)/"gpu.jsonl");unsigned samples=0;
- unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
+ unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0,drawableWidth=0,drawableHeight=0;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
  CrashCollisionSearchTrace searchTrace;const bool pairProfile=profile&&std::getenv("JUDAS_CCD_PAIR_PROFILE");PhysicsWorld* tracedPhysics=nullptr;
  std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
  unsigned loadingFrames=0;uint64_t loadingBegin=0;bool loadingScreenshot=false;
@@ -57,7 +59,11 @@ int main(int argc,char** argv){try{
   if(!loadingScreenshot&&now-loadingBegin>=1500000000){std::vector<unsigned char> image;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),image);loadingScreenshot=WriteRgbPng((std::filesystem::path(out)/"startup.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),image);}
  };
 
- control.hostReady=[&](EngineHost& h){h.GetRenderer().SetShadowBudget(shadowBudget);swapResult=SDL_GL_SetSwapInterval(0);swapInterval=SDL_GL_GetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);h.GetWindow().SetTestInputMode(true);if(profile&&glGetInteger64v){GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();calibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};}};
+ control.hostReady=[&](EngineHost& h){h.GetRenderer().SetShadowBudget(shadowBudget);swapResult=SDL_GL_SetSwapInterval(0);swapInterval=SDL_GL_GetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);SDL_GL_GetDrawableSize(h.GetWindow().NativeWindow(),&drawableWidth,&drawableHeight);h.GetWindow().SetTestInputMode(true);
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+ if(profile&&glGetInteger64v){GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();calibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};}
+#endif
+ };
  control.worldReady=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay& play){if(pairProfile){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();}play.SetPointerCaptureAllowed(false);first=h.Jobs().Stats();};
  control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){const auto now=p.Now();if(!begin){begin=now;std::ofstream(std::filesystem::path(out)/"startup.json")<<Json{{"loading_frames",loadingFrames},{"preparation_display_seconds",loadingBegin?double(now-loadingBegin)/1e9:0.},{"simulation_started_after_loading",true}}.dump(2);}
   // A genuine cold load publishes a different world. Observe its physics,
@@ -114,15 +120,26 @@ int main(int argc,char** argv){try{
                               h.GetWindow().Width(),h.GetWindow().Height(),pixels);
   if(!endScreenshotDone)throw std::runtime_error("final presented workload capture failed");
 #endif
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
   if(profile&&glGetInteger64v){
    GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();
    finalCalibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};
   }
+#endif
  };
 
  std::vector<std::string> args={"whole-engine-benchmark",project};std::vector<char*> av;for(auto& a:args)av.push_back(a.data());int result=Application{}.Run(int(av.size()),av.data(),&control);
- std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",2},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
+ std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",2},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"drawable_width",drawableWidth},{"drawable_height",drawableHeight},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
  std::string error;if(profile&&!p.Export((std::filesystem::path(out)/"timeline-last120.json").string(),error))throw std::runtime_error(error);
- if(!data.good()||!gpuData.good()||!meta.good()||result||fault||resourceFailures||inactiveSampleFrames||(seconds==0?samples!=frames:samples<120)||swapInterval!=0)throw std::runtime_error("invalid run: exit, script/resource fault, inactive frame, sample count or swap interval");
+ bool requireUncappedSwap=true;
+#ifdef __ANDROID__
+ // Android compositors may enforce presentation pacing despite an interval-0
+ // request. Retain the observed interval; never mislabel it as uncapped desktop.
+ requireUncappedSwap=false;
+#endif
+ if(!data.good()||!gpuData.good()||!meta.good()||result||fault||resourceFailures||inactiveSampleFrames||(seconds==0?samples!=frames:samples<120)||(requireUncappedSwap&&swapInterval!=0))throw std::runtime_error("invalid run: exit, script/resource fault, inactive frame, sample count or swap interval");
  return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+#ifndef JUDAS_BENCHMARK_EMBEDDED
+int main(int argc,char** argv){return RunWholeEngineBenchmark(argc,argv);}
+#endif

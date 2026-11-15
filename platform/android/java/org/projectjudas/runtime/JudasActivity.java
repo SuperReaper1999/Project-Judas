@@ -137,12 +137,39 @@ public final class JudasActivity extends SDLActivity {
                 SDLActivity.nativeSetenv("JUDAS_PROFILE","1");
                 SDLActivity.nativeSetenv("JUDAS_PROFILE_OUTPUT",new File(getFilesDir(),"judas-profile.json").getAbsolutePath());
             }
+            configureBenchmark(settings);
             return new String[]{"--android-content",root.getAbsolutePath()};
         } catch(Exception e) {
             android.util.Log.e("Judas", "Native content startup failed",e);
             // No fallback to a partially extracted game or development tree.
             throw new IllegalStateException("Cannot prepare Judas content",e);
         }
+    }
+    private void configureBenchmark(android.os.Bundle settings) throws IOException {
+        // A fixed developer interface, not arbitrary environment/path injection.
+        SDLActivity.nativeSetenv("JUDAS_APP_BENCHMARK","0");
+        if((getApplicationInfo().flags&android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE)==0)return;
+        boolean enabled=settings!=null&&settings.getBoolean("judas.benchmark",false);
+        if(getIntent().hasExtra("judas.benchmark"))enabled=getIntent().getBooleanExtra("judas.benchmark",enabled);
+        if(!enabled)return;
+        String key=settings==null?"":settings.getString("judas.benchmark.key","");
+        int seconds=settings==null?20:settings.getInt("judas.benchmark.seconds",20);
+        int warmup=settings==null?10:settings.getInt("judas.benchmark.warmup",10);
+        if(getIntent().hasExtra("judas.benchmark.key"))key=getIntent().getStringExtra("judas.benchmark.key");
+        if(getIntent().hasExtra("judas.benchmark.seconds"))seconds=getIntent().getIntExtra("judas.benchmark.seconds",seconds);
+        if(getIntent().hasExtra("judas.benchmark.warmup"))warmup=getIntent().getIntExtra("judas.benchmark.warmup",warmup);
+        if(key==null)key="";
+        if(seconds<2||seconds>120||warmup<0||warmup>30||key.length()>64)
+            throw new IOException("Invalid developer benchmark duration, warmup or control");
+        for(int i=0;i<key.length();++i)if(key.charAt(i)<32)throw new IOException("Invalid developer benchmark control");
+        // The native recorder owns creation of this new output directory.
+        File output=new File(getFilesDir(),"benchmark-"+System.currentTimeMillis()+"-"+java.util.UUID.randomUUID());
+        SDLActivity.nativeSetenv("JUDAS_BENCHMARK_DIR",output.getAbsolutePath());
+        SDLActivity.nativeSetenv("JUDAS_BENCHMARK_KEY",key);
+        SDLActivity.nativeSetenv("JUDAS_BENCHMARK_SECONDS",Integer.toString(seconds));
+        SDLActivity.nativeSetenv("JUDAS_BENCHMARK_WARMUP",Integer.toString(warmup));
+        SDLActivity.nativeSetenv("JUDAS_PROFILE_DEPTH","1");
+        SDLActivity.nativeSetenv("JUDAS_APP_BENCHMARK","1");
     }
     private byte[] readAsset(String name,int limit)throws IOException {
         try(InputStream in=getAssets().open(name);ByteArrayOutputStream out=new ByteArrayOutputStream()){

@@ -130,6 +130,10 @@ def android_manifest(a, engine_version):
 <meta-data android:name="judas.shadows" android:value="{str(a.shadows=='on').lower()}"/>
 <meta-data android:name="judas.engineVersion" android:value="{escape(engine_version,{chr(34):'&quot;'})}"/>
 <meta-data android:name="judas.buildChannel" android:value="{a.channel}"/>
+<meta-data android:name="judas.benchmark" android:value="{str(a.benchmark).lower()}"/>
+<meta-data android:name="judas.benchmark.key" android:value="{escape(a.benchmark_key,{chr(34):'&quot;'})}"/>
+<meta-data android:name="judas.benchmark.seconds" android:value="{a.benchmark_seconds}"/>
+<meta-data android:name="judas.benchmark.warmup" android:value="{a.benchmark_warmup}"/>
 <activity{orientation} android:name="org.projectjudas.runtime.JudasActivity" android:exported="true" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|layoutDirection|density|navigation" android:resizeableActivity="true">
 <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
 </activity></application></manifest>'''
@@ -146,6 +150,10 @@ def parse_args(argv=None):
     p.add_argument('--abis',default='arm64-v8a,x86_64')
     p.add_argument('--orientation', choices=['any','landscape','portrait','sensorLandscape','sensorPortrait'], default='any', help='Android activity orientation; any preserves device rotation. Android may override restrictions in large-screen or multi-window modes.')
     p.add_argument('--shadows',choices=['off','on'],default='off',help='Mobile graphics profile; physics is unchanged')
+    p.add_argument('--benchmark',action='store_true',help='Enable developer-only normal-application performance logging')
+    p.add_argument('--benchmark-key',default='',help='Optional launch control held after benchmark warmup (at most 64 characters)')
+    p.add_argument('--benchmark-seconds',type=int,default=20,help='Measured benchmark duration, 2..120 seconds')
+    p.add_argument('--benchmark-warmup',type=int,default=10,help='Benchmark warmup, 0..30 seconds')
     p.add_argument('--jobs',type=int,default=4)
     p.add_argument('--icu-host-tools',type=Path,help='Reuse a matching ICU 76.1 host build without rebuilding its tools')
     p.add_argument('--id')
@@ -158,6 +166,12 @@ def parse_args(argv=None):
     p.add_argument('--key-alias')
     p.add_argument('--password-env',default='JUDAS_SIGNING_PASSWORD')
     a=p.parse_args(argv)
+    if a.benchmark and (a.preset=='release' or a.keystore):
+        p.error('Benchmark mode requires a debuggable development APK without a private keystore')
+    if not 2<=a.benchmark_seconds<=120:p.error('benchmark-seconds must be 2..120')
+    if not 0<=a.benchmark_warmup<=30:p.error('benchmark-warmup must be 0..30')
+    if len(a.benchmark_key)>64 or any(ord(c)<32 for c in a.benchmark_key):
+        p.error('benchmark-key must contain at most 64 characters and no control characters')
     if a.preset=='release':
         missing=[name for name in ('id','name','version_code','version_name','keystore','key_alias') if getattr(a,name) is None]
         if missing:p.error('Release preset requires explicit '+', '.join('--'+name.replace('_','-') for name in missing))

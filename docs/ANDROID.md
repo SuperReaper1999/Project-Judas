@@ -346,3 +346,45 @@ and device identity were not independently collected in this follow-up.
 Automated evidence separately covers SDK manifest compilation, the actual SDL
 orientation callback, and Java compilation. Desktop aspect tests do not certify
 Android sensors or touch hardware. See [patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_4_NOTES.md).
+
+### Development whole-frame benchmark APKs
+
+A development APK can run the same ordinary-application capture used by
+`judas_whole_engine_benchmark`, without a synthetic simulation clock:
+
+```sh
+python3 tools/build_android.py /private/project/game.judasproj \
+  --output .cache/android/GameBenchmark.apk --abis arm64-v8a --channel Alpha \
+  --id org.projectjudas.gamebenchmark --name 'Game benchmark' \
+  --orientation sensorLandscape --benchmark --benchmark-key key:F4 \
+  --benchmark-seconds 20 --benchmark-warmup 10
+```
+
+The desktop export tools and Android channel/source must match. Choose the
+launch control belonging to the project; the engine contains no vehicle launch
+logic. The benchmark waits for resource preparation, requests interval-zero
+presentation, holds that control after warmup, records the actual application
+loop, and exits after the measurement. It does not change physics quality,
+fixed cadence, catch-up limits or discarded-time policy. Use a project with
+appropriate automatic or authored controls; normal touch input is isolated
+while the diagnostic runner supplies its reproducible input.
+
+Each launch writes a new private `files/benchmark-TIMESTAMP-UUID/` directory:
+`frames.jsonl` retains every measured frame (including fixed costs, native
+counters, backlog and discarded/clipped time), `run.json` records identity,
+drawable size, renderer and presentation settings, and the existing profiler
+retains its bounded detailed timeline separately. Read the complete JSONL when
+investigating early impacts, rather than relying on the last 120 frames.
+Retrieve only this app's files with `adb exec-out run-as APPLICATION_ID ...`.
+
+The debuggable-only `judas.benchmark` intent extra can enable/disable this mode;
+matching `.key`, `.seconds` and `.warmup` extras override its bounded defaults.
+Durations are 2..120 seconds and warmup 0..30 seconds. Release/private-key APKs
+reject the benchmark preset. The bootstrap accepts no arbitrary output path or
+environment injection.
+
+Android may enforce compositor pacing even after an interval-zero request.
+Inspect the recorded swap result/interval and drawable resolution when comparing
+phones with desktop throughput. GPU timestamp calibration is unavailable on this
+ES path and is never fabricated. Compare the same authored physical workload
+and report rendering, scheduling, thermal and capture-policy differences.
