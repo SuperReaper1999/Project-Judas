@@ -1,5 +1,6 @@
 #include "PerformanceProfiler.h"
 #include "TestHarness.h"
+#include "PhysicsEventDebugger.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
 #include "DynamicBody.h"
@@ -23,7 +24,7 @@
 #include <utility>
 namespace {
 struct Command {std::string kind,name,path;int begin=0,end=0,width=0,height=0;float value=0,other=0,pressure=0;std::int64_t finger=0;int down=0;};
-struct Script {int frames=600,logEvery=1;float seconds=SimulationTiming::kFixedTimestep;bool realtime=false;std::string entity;std::vector<Command> commands;};
+struct Script {int frames=600,logEvery=1;float seconds=SimulationTiming::kFixedTimestep;bool realtime=false;std::string entity,debugReport;bool debug=false;std::vector<std::string> debugActions;std::vector<Command> commands;};
 void Require(bool ok,const std::string& error){if(!ok)throw std::runtime_error(error);}
 struct TestHaptics {
  InputSystem& input;
@@ -50,6 +51,9 @@ Script Load(const std::string& path,const InputMap& map){
  std::ifstream f(path);Require(bool(f),"cannot open "+path);Script s;std::string line;unsigned index=0;
  while(std::getline(f,line)){++index;line=line.substr(0,line.find('#'));std::istringstream in(line);std::string op;in>>op;if(op.empty())continue;Command c;c.kind=op;
   if(op=="STEPS"||op=="FRAMES")in>>s.frames;
+  else if(op=="PHYSICS_DEBUG"){in>>s.debugReport;s.debug=true;}
+  else if(op=="DEBUG_ACTION"){in>>c.name;s.debug=true;s.debugActions.push_back(c.name);}
+  else if(op=="DEBUG_EXPECT")in>>c.name>>c.value;
   else if(op=="LOG_EVERY")in>>s.logEvery;
   else if(op=="REALTIME"){in>>s.frames;s.realtime=true;}
   else if(op=="FRAME_SECONDS")in>>s.seconds;
@@ -81,6 +85,7 @@ Script Load(const std::string& path,const InputMap& map){
   else if(op=="EXPECT_PAUSED")in>>c.value>>c.begin;
   else throw std::runtime_error("unknown directive "+op);
   Require(!in.fail(),"invalid arguments at line "+std::to_string(index));std::string extra;Require(!(in>>extra),"extra argument at line "+std::to_string(index));
+  if(op=="DEBUG_EXPECT")Require(std::isfinite(c.value)&&c.value>=0&&c.value<=1000000000.f&&std::floor(c.value)==c.value,"DEBUG_EXPECT requires a nonnegative integral count up to one billion");
   if(op=="EXPECT_HELD"||op=="EXPECT_PAUSED")Require(c.value==0||c.value==1,"boolean expectation must be 0 or 1");
   if(op=="HAPTICS")Require(c.name=="off"||c.name=="gamepad"||c.name=="phone"||c.name=="both","invalid synthetic haptics mode");
   if(op=="SCREENSHOT")Require(!c.path.empty(),"empty screenshot path");
@@ -101,9 +106,28 @@ Script Load(const std::string& path,const InputMap& map){
  return s;
 }
 }
-int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const std::string& path,const std::function<void()>& beforeFrame,const std::function<void()>& afterFrame,const std::function<bool(const std::string&)>& servicesReady){
+int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const std::string& path,const std::function<void()>& beforeFrame,const std::function<void()>& afterFrame,const std::function<bool(const std::string&)>& servicesReady,const std::function<void(bool)>& debugSave){
  try{
   const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);SDL_GL_SetSwapInterval(0);
+  std::shared_ptr<PhysicsEventDebugger> physicsDebug;
+  struct DebugSessionGuard {
+   InteractivePlay& play;std::shared_ptr<PhysicsEventDebugger> previous;
+   ~DebugSessionGuard(){if(auto current=play.PhysicsDebugger();current&&current!=previous)current->SetHandler({});play.SetPhysicsDebugger(previous);}
+  } debugSession{play,play.PhysicsDebugger()};
+  std::size_t debugAction=0;
+  if(script.debug){
+   physicsDebug=std::make_shared<PhysicsEventDebugger>(script.debugReport);PerformanceProfiler::Get().Enable(true);
+   physicsDebug->SetHandler([&](const auto& snapshot){
+    using Action=PhysicsEventDebugger::Command;
+    std::printf("[PhysicsDebug] %s fixed=%zu event=%llu group=%llu t=%.9g flight=%d\n",PhysicsEventDebugger::PhaseName(snapshot.boundary.phase),snapshot.fixedSteps,(unsigned long long)snapshot.boundary.event,(unsigned long long)snapshot.boundary.timeGroup,snapshot.boundary.macroTime,int(snapshot.inFlight));
+    if(!snapshot.inFlight&&servicesReady&&!servicesReady("save"))return Action::Hold;
+    if(debugAction==script.debugActions.size())return snapshot.inFlight?Action::Fixed:Action::Hold;
+    const auto& name=script.debugActions[debugAction++];
+    for(const auto& item:std::vector<std::pair<std::string,Action>>{{"fixed",Action::Fixed},{"event",Action::Event},{"phase",Action::Phase},{"arm",Action::Arm},{"live",Action::Realtime},{"pause",Action::Pause},{"checkpoint",Action::Checkpoint},{"restore",Action::Restore},{"detach",Action::Detach}})if(item.first==name)return item.second;
+    throw std::runtime_error("unknown DEBUG_ACTION: "+name);
+   });
+   play.SetPhysicsDebugger(physicsDebug);
+  }
   std::unique_ptr<TestHaptics> haptics;
   for(const auto& command:script.commands)if(command.kind=="HAPTICS"){
    haptics=std::make_unique<TestHaptics>(window.Input());break;
@@ -148,6 +172,8 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    bool capture=false;for(const auto& c:script.commands)capture|=c.kind=="SCREENSHOT"&&c.begin==frame;
    float dt=script.seconds;if(script.realtime){auto now=SDL_GetPerformanceCounter();dt=float(now-last)/SDL_GetPerformanceFrequency();last=now;}
    play.Frame(window,renderer,dt,capture||script.realtime);
+   if(play.ConsumeDiagnosticClockReset())last=SDL_GetPerformanceCounter();
+   if(physicsDebug){const bool checkpoint=physicsDebug->ConsumeCheckpoint(),restore=physicsDebug->ConsumeRestore();if(checkpoint||restore){Require(bool(debugSave),"debug checkpoint needs the normal project save service");debugSave(restore);}}
    if(auto* scripts=play.World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed: "+scripts->Diagnostics().front().message);
    for(const auto& c:script.commands)if(c.begin==frame){
     if(c.kind=="SCREENSHOT"){std::filesystem::path output(c.path);if(output.has_parent_path())std::filesystem::create_directories(output.parent_path());std::vector<unsigned char> pixels;renderer.CaptureFrame(window.Width(),window.Height(),pixels);Require(WriteRgbPng(c.path,window.Width(),window.Height(),pixels),"capture failed "+c.path);std::printf("[TestHarness] Wrote screenshot: %s\n",c.path.c_str());}
@@ -186,6 +212,10 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    }
   }
   if(std::getenv("JUDAS_METADATA_TRACE")){auto work=play.World().MetadataStats();auto json=ScriptSystem::MetadataStats();std::printf("[TestHarness] metadata lookups=%llu rebuilds=%llu copies=%llu JSON-contexts=%llu reference-inspections=%llu\n",(unsigned long long)work.lookups,(unsigned long long)work.indexRebuilds,(unsigned long long)work.definitionsCopied,(unsigned long long)json.parserConstructions,(unsigned long long)json.referenceInspections);}
+  if(physicsDebug){
+   for(const auto& c:script.commands)if(c.kind=="DEBUG_EXPECT")Require(physicsDebug->Count(c.name)>=std::size_t(c.value),"physics debug phase count failed: "+c.name);
+   Require(debugAction==script.debugActions.size(),"unconsumed physics debugger commands");physicsDebug->Export();play.SetPhysicsDebugger({});
+  }
   window.SetTestInputMode(false);return 0;
  }catch(const std::exception& e){std::fprintf(stderr,"[TestHarness] %s\n",e.what());window.SetTestInputMode(false);return 1;}
 }

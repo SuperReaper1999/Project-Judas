@@ -384,6 +384,16 @@ struct PhysicsWorld::Impl {
         bool ccdInitialSweep=false;
     } work;
     std::function<void(const PhysicsWorld::CollisionSearchSample&)> searchObserver;
+    PhysicsWorld::DebugObserver debugObserver;
+    bool debugNotifying=false;
+    std::vector<PhysicsWorld::DebugContact> debugContacts;
+    void DebugSearch(const PhysicsWorld::CollisionSearchSample&);
+    std::uint64_t debugSequence=0,debugEvent=0,debugGroup=0,debugPredictionVersion=0,debugDiscarded=0;
+    double debugLastTime=-1;
+    void DebugPoint(PhysicsWorld::DebugPhase,double at=-1,unsigned a=~0u,unsigned b=~0u,
+                    unsigned pa=0,unsigned pb=0,std::size_t contacts=0,std::size_t participants=0,
+                    bool coupled=false,bool applied=false,std::size_t queued=0,const PhysicsWorld::CollisionSearchSample* search=nullptr);
+
     // Indexed output only: workers never mutate physics bodies, geometry
     // caches, solver rows, touches, warm starts or event scheduling.
     struct InitialContactGeometry {

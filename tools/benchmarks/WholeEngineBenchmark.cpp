@@ -72,7 +72,7 @@ int main(int argc,char** argv){try{
     Json counters=Json::object();for(const auto& c:f.counters)counters[c.name.c_str()]=c.value;
     row["incoming_delta_clipped_seconds"]=counters.contains("Play incoming delta clipped seconds")?counters["Play incoming delta clipped seconds"]:Json(nullptr);
     row["counters"]=std::move(counters);Json fixed=Json::array();
-    for(const auto& step:f.fixed)fixed.push_back(double(step.end-step.start)/1e6);
+    for(const auto& step:f.fixed)fixed.push_back(double(step.end-step.start-step.debuggerWaitNanoseconds)/1e6);
     row["fixed_step_ms"]=std::move(fixed);
     if(p.FrameId()>10){auto old=p.Snapshot(p.FrameId()-8);Json passes=Json::array();for(const auto& g:old.gpu)passes.push_back({{"name",g.pass.c_str()},{"pending",g.pending},{"ms",g.milliseconds},{"submitted_cpu_ns",g.submitted},{"gpu_start_ns",g.gpuStart},{"gpu_end_ns",g.gpuEnd}});gpuData<<Json({{"frame_id",old.id},{"passes",passes}}).dump()<<'\n';}
    }

@@ -328,6 +328,34 @@ public:
     void SetCollisionSearchObserver(std::function<void(const CollisionSearchSample&)> observer);
 
 
+    // Synchronous owner-thread inspection only: no mutation/re-entry, resource
+    // pumping, saving or world replacement inside a boundary callback. Helpers
+    // have joined. Returning resumes the SAME live solver stack.
+    enum class DebugPhase { FixedBegin, Candidates, MaterialBegin, MaterialEnd,
+        SearchCompleted, PredictionDiscarded, ToiSelected, ResponsePrepared, BeforeImpact,
+        TrajectoriesPublished, DeformableBegin, DeformableEnd, FixedEnd };
+    struct DebugBoundary {
+        DebugPhase phase=DebugPhase::FixedBegin;
+        std::uint64_t sequence=0,event=0,timeGroup=0,revisionA=0,revisionB=0,predictionVersion=0;
+        std::uint64_t activeClockNanoseconds=0; // owner CPU clock at entry, before inspection exclusion
+        double localTime=-1,macroTime=-1;
+        unsigned interval=0,a=0,b=0,partA=0,partB=0;
+        std::size_t candidates=0,contacts=0,participants=0,invalidated=0;
+        bool coupled=false,applied=false,hasSearch=false;
+        CollisionSearchSample search;
+        std::vector<DebugContact> manifold;
+        StepStats stats;
+        std::size_t geometryRequests=0,geometryHits=0,queuedPairs=0;
+        double searchMs=0,samplingMs=0,contactSolveMs=0;
+    };
+    struct DebugBody {BodyHandle body;glm::vec3 position{0},halfExtents{0};glm::quat rotation{1,0,0,0};glm::vec3 velocity{0};bool sleeping=false,dynamic=false;};
+    using DebugObserver=std::function<void(const DebugBoundary&)>;
+    void SetDebugObserver(DebugObserver);
+    bool HasDebugObserver()const;
+    void DebugPoint(DebugPhase); // whole-world safe phase boundaries, no-op unless attached
+    std::vector<DebugBody> CaptureDebugBodies(double localTime=-1,std::size_t maximum=2048)const;
+
+
     // Milestone 32: the one spatial query the broadphase exposes — every
     // body whose broadphase bound overlaps the box. Conservative (bounds are
     // grown by a margin); callers still test real geometry. Results are in

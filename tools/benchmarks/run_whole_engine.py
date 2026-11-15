@@ -51,6 +51,8 @@ def main():
     args = parser.parse_args()
     if not 0 <= args.warmup_seconds <= 30:
         parser.error('warmup must be finite and between 0 and 30 seconds')
+    if os.environ.get("JUDAS_PHYSICS_DEBUG") == "1":
+        parser.error("physics debugger enabled; throughput captures require normal gameplay")
     workload_sha256 = None
     if args.workload_manifest:
         manifest = json.loads(args.workload_manifest.read_text())

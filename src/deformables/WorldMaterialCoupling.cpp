@@ -37,6 +37,7 @@ void RuntimeWorld::PrepareDeformableTerrain(EntityId id){
 }
 void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCoupling::Substep& interval){
     if(interval.iteration!=0)return;
+    m_physics.DebugPoint(PhysicsWorld::DebugPhase::MaterialBegin);
     JUDAS_PROFILE_SCOPE("Coupled material interval");
     const auto measuredStart=PerformanceProfiler::Get().Active()?PerformanceProfiler::Now():0;
     {
@@ -148,4 +149,17 @@ void RuntimeWorld::AdvanceDeformablesSubstep(const PhysicsWorld::VelocityCouplin
         JUDAS_PROFILE_COUNTER("Deformable cross-material contacts CPU ms",double(PerformanceProfiler::Now()-crossStart)*1e-6,ProfileCounterMode::Sum);
         JUDAS_PROFILE_COUNTER("Deformable interval CPU ms",double(PerformanceProfiler::Now()-measuredStart)*1e-6,ProfileCounterMode::Sum);
     }
+    m_physics.DebugPoint(PhysicsWorld::DebugPhase::MaterialEnd);
+}
+
+std::vector<PhysicsEventDebugger::Material> RuntimeWorld::DebugDeformables()const{
+    std::vector<PhysicsEventDebugger::Material> result;std::size_t remaining=8192;
+    for(const auto& [id,record]:m_deformables){const auto& d=record.simulation;if(!d.asset)continue;
+        PhysicsEventDebugger::Material m;m.owner=id;m.nodes=d.positions.size();m.triangles=d.asset->triangles.size();m.tets=d.asset->solids.size();m.contacts=d.stats.contacts;m.candidates=d.stats.candidates;m.iterations=d.settings.iterations;m.substeps=d.stats.substeps;m.sleeping=d.sleeping;m.strain=d.stats.maximumStrain;
+        for(auto v:d.released)m.released+=bool(v);
+        for(auto v:d.fracture.broken)m.broken+=bool(v);
+        for(auto v:d.fracture.plasticWork)m.plasticWork+=v;
+        if(d.panelBending){m.hinges=d.panelBending->hinges.size();for(const auto& h:d.panelBending->hinges)m.plasticWork+=h.work;}
+        const auto count=std::min(remaining,d.positions.size());m.positions.assign(d.positions.begin(),d.positions.begin()+count);remaining-=count;result.push_back(std::move(m));
+    }return result;
 }

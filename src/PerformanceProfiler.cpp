@@ -1,4 +1,5 @@
 #include "PerformanceProfiler.h"
+#include "PhysicsDebugClock.h"
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -40,6 +41,7 @@ struct Lane {
     std::array<Cache,8192> cache{};std::atomic<unsigned> open{0};
 };
 thread_local int localLane=-1;
+thread_local unsigned recordingPauseDepth=0;
 std::string quote(std::string_view text){std::string out="\"";for(unsigned char c:text){if(c=='"'||c=='\\'){out+='\\';out+=char(c);}else if(c=='\n')out+="\\n";else if(c=='\r')out+="\\r";else if(c=='\t')out+="\\t";else if(c<32){char b[7];std::snprintf(b,sizeof b,"\\u%04x",c);out+=b;}else out+=char(c);}return out+'"';}
 std::uint64_t coverage(std::vector<std::pair<std::uint64_t,std::uint64_t>> intervals){if(intervals.empty())return 0;std::sort(intervals.begin(),intervals.end());std::uint64_t total=0,a=intervals[0].first,b=intervals[0].second;for(auto p:intervals){if(p.first>b){total+=b-a;a=p.first;b=p.second;}else b=std::max(b,p.second);}return total+b-a;}
 }
@@ -67,7 +69,8 @@ PerformanceProfiler& PerformanceProfiler::Get(){static PerformanceProfiler profi
 PerformanceProfiler::PerformanceProfiler():m(new Impl){}
 PerformanceProfiler::~PerformanceProfiler()=default;
 std::uint64_t PerformanceProfiler::Now(){return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
-bool PerformanceProfiler::Active()const{return m->enabled.load(std::memory_order_relaxed)&&!m->frozen.load(std::memory_order_relaxed);}
+bool PerformanceProfiler::Active()const{return !recordingPauseDepth&&m->enabled.load(std::memory_order_relaxed)&&!m->frozen.load(std::memory_order_relaxed);}
+void PerformanceProfiler::PauseThreadRecording(bool pause){if(pause)++recordingPauseDepth;else if(recordingPauseDepth)--recordingPauseDepth;}
 bool PerformanceProfiler::Enabled()const{return m->enabled.load();}
 bool PerformanceProfiler::Frozen()const{return m->frozen.load();}
 void PerformanceProfiler::Enable(bool v){if(m->enabled.exchange(v)!=v){++m->epoch;m->previousStart=0;}}
@@ -113,7 +116,7 @@ bool PerformanceProfiler::BeginFrame(std::string_view mode,bool first,std::uint6
     f.scopes.reserve(ProfileLimits::FrameEvents);f.counters.reserve(ProfileLimits::Counters);f.threads.reserve(ProfileLimits::Threads);f.fixed.reserve(ProfileLimits::Steps);f.gpu.reserve(ProfileLimits::GPU);f.boundaries.reserve(64);
     f.paused=f.capReached=f.incomplete=false;f.accumulatorSeconds=f.discardedSeconds=0;f.id=++m->frame;f.world=m->world.load();f.start=stamp?stamp:Now();f.interval=m->previousStart?f.start-m->previousStart:0;m->previousStart=f.start;f.mode=mode;f.startup=first;f.mainThread=localLane>=0?m->lanes[unsigned(localLane)].id:0;return true;}
 void PerformanceProfiler::FixedState(double accumulator,bool cap,double discarded,bool paused){if(!m->inFrame||!Active())return;m->current.accumulatorSeconds=accumulator;m->current.capReached=cap;m->current.discardedSeconds=discarded;m->current.paused=paused;}
-void PerformanceProfiler::FixedStep(std::uint64_t a,std::uint64_t b,double dt){if(!m->inFrame||!Active())return;if(m->current.fixed.size()==ProfileLimits::Steps){++m->truncated;return;}m->current.fixed.push_back({++m->nextStep,a,b,dt});}
+void PerformanceProfiler::FixedStep(std::uint64_t a,std::uint64_t b,double dt,std::uint64_t debuggerWait){if(!m->inFrame||!Active())return;if(m->current.fixed.size()==ProfileLimits::Steps){++m->truncated;return;}m->current.fixed.push_back({++m->nextStep,a,b,dt,debuggerWait});}
 void PerformanceProfiler::Boundary(std::string_view name){++m->world;if(!Active())return;unsigned label=Intern(name);if(!label)return;if(localLane<0)RegisterThread("Main");if(localLane>=0){auto& l=m->lanes[unsigned(localLane)];m->Push(l,{2,label,0,0,l.id,m->frame.load(),Now()});}}
 void PerformanceProfiler::GPUAvailability(bool v,std::string_view reason){m->gpuAvailable=v;m->gpuStatus=reason;}
 std::uint64_t PerformanceProfiler::GPUPending(std::string_view pass,std::uint64_t camera){if(!Active()||!m->inFrame)return 0;if(m->current.gpu.size()==ProfileLimits::GPU){++m->gpuDropped;return 0;}auto token=++m->nextGPU;m->current.gpu.push_back({token,FrameId(),camera,ProfileName(pass),true,0,Now(),0,0});return token;}
@@ -203,15 +206,15 @@ ProfileScope::ProfileScope(ProfileLabel& l,bool wait,std::uint64_t stamp){auto& 
 ProfileScope::ProfileScope(std::uint32_t l,bool wait,std::uint64_t stamp){token=PerformanceProfiler::Get().Begin(l,wait,stamp);}
 void ProfileScope::End(std::uint64_t stamp){if(token.sequence){PerformanceProfiler::Get().End(token,stamp);token={};}}
 namespace {ProfileLabel fixedLabel("Fixed simulation step");}
-ProfileFixedStep::ProfileFixedStep(double seconds):dt(seconds),scope(fixedLabel){if(PerformanceProfiler::Get().Active())start=PerformanceProfiler::Now();}
-ProfileFixedStep::~ProfileFixedStep(){if(start)PerformanceProfiler::Get().FixedStep(start,PerformanceProfiler::Now(),dt);}
+ProfileFixedStep::ProfileFixedStep(double seconds):debugWaitStart(PhysicsDebugClock::Excluded()),dt(seconds),scope(fixedLabel){if(PerformanceProfiler::Get().Active())start=PerformanceProfiler::Now();}
+ProfileFixedStep::~ProfileFixedStep(){if(start)PerformanceProfiler::Get().FixedStep(start,PerformanceProfiler::Now(),dt,PhysicsDebugClock::Excluded()-debugWaitStart);}
 ProfileRun::~ProfileRun(){if(const char* path=std::getenv("JUDAS_PROFILE_OUTPUT")){std::string error;if(!PerformanceProfiler::Get().Export(path,error))std::fprintf(stderr,"Profiler report: %s\n",error.c_str());}}
 bool PerformanceProfiler::Export(const std::string& path,std::string& error)const{
     std::ofstream out(path);if(!out){error="cannot write profiler snapshot: "+path;return false;}
     out<<std::setprecision(17);
     auto diagnostics=[&](const ProfileDiagnostics& d){out<<"{\"dropped_events\":"<<d.droppedEvents<<",\"exhausted_labels\":"<<d.exhaustedLabels<<",\"exhausted_nodes\":"<<d.exhaustedNodes<<",\"exhausted_threads\":"<<d.exhaustedThreads<<",\"incomplete_scopes\":"<<d.incompleteScopes<<",\"open_scopes\":"<<d.openScopes<<",\"truncated_records\":"<<d.truncatedFrames<<",\"gpu_dropped\":"<<d.gpuDropped<<",\"nested_frames\":"<<d.nestedFrames<<'}';};
     auto frame=[&](const ProfileFrameSnapshot& f){out<<"{\"id\":"<<f.id<<",\"world_boundary_id\":"<<f.world<<",\"mode\":"<<quote(f.mode)<<",\"startup\":"<<(f.startup?"true":"false")<<",\"capture_boundary\":"<<(f.incomplete?"true":"false")<<",\"start_ns\":"<<f.start<<",\"end_ns\":"<<f.end<<",\"interval_ns\":"<<f.interval<<",\"collection_ns\":"<<f.collectionNanoseconds<<",\"main_thread\":"<<f.mainThread<<",\"covered_ns\":"<<f.coverage<<",\"waiting_ns\":"<<f.waiting<<",\"unattributed_ns\":"<<f.unattributed<<",\"fixed\":{\"accumulator_seconds\":"<<f.accumulatorSeconds<<",\"discarded_seconds\":"<<f.discardedSeconds<<",\"cap_reached\":"<<(f.capReached?"true":"false")<<",\"paused\":"<<(f.paused?"true":"false")<<",\"steps\":[";
-        bool comma=false;for(auto& s:f.fixed){if(comma)out<<',';comma=true;out<<"{\"id\":"<<s.id<<",\"start_ns\":"<<s.start<<",\"end_ns\":"<<s.end<<",\"simulation_seconds\":"<<s.simulationSeconds<<'}';}out<<"]},\"threads\":[";comma=false;for(auto& t:f.threads){if(comma)out<<',';comma=true;out<<"{\"id\":"<<t.id<<",\"name\":"<<quote(t.name)<<'}';}out<<"],\"scopes\":[";comma=false;
+        bool comma=false;for(auto& s:f.fixed){if(comma)out<<',';comma=true;out<<"{\"id\":"<<s.id<<",\"start_ns\":"<<s.start<<",\"end_ns\":"<<s.end<<",\"simulation_seconds\":"<<s.simulationSeconds<<",\"debugger_wait_ns\":"<<s.debuggerWaitNanoseconds<<'}';}out<<"]},\"threads\":[";comma=false;for(auto& t:f.threads){if(comma)out<<',';comma=true;out<<"{\"id\":"<<t.id<<",\"name\":"<<quote(t.name)<<'}';}out<<"],\"scopes\":[";comma=false;
         for(auto& s:f.scopes){if(comma)out<<',';comma=true;out<<"{\"node\":"<<s.node<<",\"parent\":"<<s.parent<<",\"depth\":"<<s.depth<<",\"thread\":"<<s.thread<<",\"origin_frame\":"<<s.originFrame<<",\"name\":"<<quote(s.name)<<",\"start_ns\":"<<s.start<<",\"end_ns\":"<<s.end<<",\"inclusive_ns\":"<<(s.end-s.start)<<",\"exclusive_ns\":"<<s.exclusive<<",\"wait\":"<<(s.wait?"true":"false")<<'}';}
         out<<"],\"counters\":[";comma=false;for(auto& c:f.counters){if(comma)out<<',';comma=true;out<<"{\"name\":"<<quote(c.name)<<",\"value\":"<<c.value<<",\"mode\":"<<quote(c.mode==ProfileCounterMode::Sum?"frame_sum":c.mode==ProfileCounterMode::Maximum?"frame_max":"frame_latest_observation")<<'}';}
         out<<"],\"gpu\":{\"available\":"<<(f.gpuAvailable?"true":"false")<<",\"status\":"<<quote(f.gpuStatus)<<",\"passes\":[";comma=false;for(auto& g:f.gpu){if(comma)out<<',';comma=true;out<<"{\"token\":"<<g.token<<",\"source_frame\":"<<g.frame<<",\"camera\":"<<g.camera<<",\"pass\":"<<quote(g.pass)<<",\"pending\":"<<(g.pending?"true":"false")<<",\"milliseconds\":";if(g.pending)out<<"null";else out<<g.milliseconds;out<<",\"submitted_cpu_ns\":"<<g.submitted<<",\"gpu_start_ns\":"<<g.gpuStart<<",\"gpu_end_ns\":"<<g.gpuEnd;out<<'}';}

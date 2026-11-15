@@ -403,6 +403,8 @@ add_library(judas_engine STATIC
     src/WorldPresentation.cpp
     src/EngineHost.cpp
     src/ScriptFaultNotice.cpp
+    src/PhysicsEventDebugger.cpp
+    src/RuntimePhysicsDebugView.cpp
     src/InteractivePlay.cpp
     src/ScreenshotWriter.cpp
     src/FidelityPolicy.cpp
@@ -453,7 +455,7 @@ if(ANDROID)
     target_include_directories(judas_engine SYSTEM PRIVATE third_party/cgltf)
     target_link_libraries(judas_engine PUBLIC judas_quickjs judas_unicode judas_profiler judas_jobs android log)
     add_library(main SHARED src/main.cpp src/Application.cpp src/RuntimeOptions.cpp
-        src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+    src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
     target_link_libraries(main PRIVATE judas_engine SDL2::SDL2main)
     target_compile_definitions(main PRIVATE JUDAS_RUNTIME_BUILD_CONFIG="$<CONFIG>")
     judas_warnings(main)
@@ -974,6 +976,7 @@ judas_add_engine_test(judas_overlap_pair_index_tests tests/OverlapPairIndexTests
 
 judas_add_engine_test(judas_ccd_anchor_reuse_tests tests/CCDAnchorReuseTests.cpp)
 judas_add_engine_test(judas_ccd_scheduling_tests tests/CCDSchedulingTests.cpp)
+judas_add_engine_test(judas_physics_event_debugger_tests tests/PhysicsEventDebuggerTests.cpp)
 judas_add_engine_test(judas_native_mesh_growth_tests tests/NativeMeshGrowthTests.cpp)
 judas_add_engine_test(judas_clip_polygon_tests tests/ClipPolygonTests.cpp)
 # Continuous-impact cost of a jointed ragdoll resting in static triangle meshes (timings reported, not asserted).

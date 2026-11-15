@@ -166,6 +166,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrivalBatch(unsigned fast, unsigned other, i
             }
         return value;
     };
+    if(debugObserver){debugContacts.clear();for(const auto& patch:patches)for(int i=0;i<patch.manifold.count;++i){const auto& c=patch.manifold.points[i];debugContacts.push_back({c.point,c.normal,c.penetration});}DebugPoint(PhysicsWorld::DebugPhase::ResponsePrepared,hit,fast,other,unsigned(partFast),unsigned(partOther),rows.size(),slots.size(),true);}
     const double incoming = energy();
     const auto solve = [&](bool frictionless) {
         std::copy(initial.begin(), initial.end(), copies.begin());
@@ -251,6 +252,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrivalBatch(unsigned fast, unsigned other, i
         if (!solve(true))
             return false;
     }
+    if(debugObserver)DebugPoint(PhysicsWorld::DebugPhase::BeforeImpact,hit,fast,other,unsigned(partFast),unsigned(partOther),rows.size(),slots.size(),true);
     std::vector<unsigned char> loaded(slots.size(), 0);
     for (const auto &row : rows)
         if (row.normalImpulse != 0 || row.tangent1 != 0 || row.tangent2 != 0)

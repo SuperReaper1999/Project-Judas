@@ -40,6 +40,17 @@ TOUCH_UP 8 .1 .2 7
 EXPECT_TOUCHES 0 7
 )TXT",[&](){if(observations==3){auto a=window.Input().Action("ui_click");Check(a.pressed&&a.released&&!a.held,"actual harness preserves same-frame press/release");}if(observations==5){const auto& t=window.Input().Touches();Check(t.size()==2&&t[0].x==.4f&&t[0].y==.5f&&t[0].pressure==.6f,"actual harness retains independent touch motion/pressure");}++observations;});Check(result==0&&observations==8,"new directives traverse real play frames with public pointer/touch assertions");
  Check(run("bad-pressure.txt","FRAMES 1\nTOUCH_DOWN 1 .5 .5 2 0\n")!=0,"out-of-range pressure rejects");Check(run("bad-contact.txt","FRAMES 1\nTOUCH_MOVE 99 .5 .5 .5 0\n")!=0,"move cannot silently invent a missing contact");Check(run("bad-expectation.txt","FRAMES 1\nEXPECT_POINTER .5 .5 2 0\n")!=0,"invalid boolean pointer expectation rejects");Check(run("wrong-oracle.txt","FRAMES 1\nPOINTER_DOWN 80 60 0\nEXPECT_POINTER .75 .75 1 0\n")!=0,"negative control detects an incorrect public pointer position");
+ // Fail after installing and executing the debugger callback, then reuse the
+ // same Play instance. A failed harness must not retain captures of its stack.
+ Check(run("debug-failed-expectation.txt","FRAMES 1\nLOG_EVERY 0\nDEBUG_ACTION fixed\nDEBUG_EXPECT BeforeImpact 1\n")!=0,"debug harness detects an unmet accepted-impact expectation");
+ Check(!play.PhysicsDebugger()&&!world.Physics().HasDebugObserver(),"failed debug harness removes its callback and native observer");
+ const auto beforeDebugReplay=play.FixedStepsSinceReset();
+ Check(run("debug-reuse.txt","FRAMES 1\nLOG_EVERY 0\nDEBUG_ACTION fixed\nDEBUG_EXPECT FixedBegin 1\n")==0&&play.FixedStepsSinceReset()==beforeDebugReplay+1,
+       "same Play instance can execute a fresh debug harness after failure");
+ Check(!play.PhysicsDebugger()&&!world.Physics().HasDebugObserver(),"successful debug harness also releases its callback and native observer");
+ for(const auto* count:{"-1",".5","1e30","nan","inf"}){
+  Check(run("debug-invalid-count.txt",std::string("FRAMES 1\nDEBUG_EXPECT BeforeImpact ")+count+"\n")!=0,"invalid debug expectation count rejects before execution");
+ }
  window.Input().SetTiltEnabled(true);
  const std::array<InputTilt,4> rotations={InputTilt{2,5,7},{-5,2,7},{-2,-5,7},{5,-2,7}};
  unsigned tiltFrames=0;

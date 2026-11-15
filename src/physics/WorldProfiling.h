@@ -1,10 +1,11 @@
 #pragma once
 
 #include <chrono>
+#include "PhysicsDebugClock.h"
 #include <cstdint>
 
 namespace JudasPhysicsDetail {
-using Clock = std::chrono::steady_clock;
+using Clock = PhysicsDebugClock;
 inline double MillisecondsBetween(Clock::time_point a, Clock::time_point b) {
     return std::chrono::duration<double, std::milli>(b - a).count();
 }

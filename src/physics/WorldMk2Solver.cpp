@@ -1832,6 +1832,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     patch.usable=patch.count>=2 && patch.count<=4;
     for(const auto& row:response)patch.usable=patch.usable && glm::dot(row.n,response.front().n)>.99999f;
     PrepareBlock(participants,response,patch);
+    if(debugObserver){debugContacts.clear();for(const auto& c:rows)debugContacts.push_back({c.point,c.normal,c.penetration});DebugPoint(PhysicsWorld::DebugPhase::ResponsePrepared,hit,a,b,unsigned(pa),unsigned(pb),response.size(),2);}
     const auto kinetic=[&]{double result=0;for(const auto& part:participants)if(part.dynamic){
         if(part.rb->IsPlanar()){result+=part.rb->PlanarEnergy();continue;}
         const glm::dvec3 v(part.rb->linearVelocity),w(part.rb->angularVelocity);
@@ -1860,6 +1861,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
         ++stats.impactEnergyRejections;
         return false;
     }
+    if(debugObserver)DebugPoint(PhysicsWorld::DebugPhase::BeforeImpact,hit,a,b,unsigned(pa),unsigned(pb),response.size(),2);
     ++stats.impactResponsesApplied;
     for (auto [copy, slot] : {std::pair<RigidBody *, unsigned>{&bodyA, a}, {&bodyB, b}})
         if (movable(slot)) {

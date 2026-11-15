@@ -1,4 +1,5 @@
 #include "PerformanceProfiler.h"
+#include "PhysicsDebugClock.h"
 #include "Simulation.h"
 
 #include <chrono>
@@ -11,7 +12,7 @@
 #include "Window.h"
 
 namespace {
-using Clock = std::chrono::steady_clock;
+using Clock = PhysicsDebugClock;
 
 double MillisecondsSince(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
@@ -121,7 +122,9 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     world.UpdateSpriteAnimations(fixedDeltaTime);
     world.UpdateRagdolls(fixedDeltaTime);
     world.UpdateSockets();
+    physics.DebugPoint(PhysicsWorld::DebugPhase::DeformableBegin);
     world.UpdateDeformables(fixedDeltaTime);
+    physics.DebugPoint(PhysicsWorld::DebugPhase::DeformableEnd);
     // Damage commits after material solving. Refresh only physical continuity;
     // do not advance shaft angles or repeat the mechanical impulse solve.
     world.PublishPowertrainConnections();

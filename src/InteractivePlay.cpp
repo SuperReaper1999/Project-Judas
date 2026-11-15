@@ -1,4 +1,6 @@
 #include "PerformanceProfiler.h"
+#include "PhysicsEventDebugger.h"
+#include "PhysicsDebugClock.h"
 #include "ScriptSystem.h"
 #include "ScriptFaultNotice.h"
 #include "ResourceManager.h"
@@ -17,7 +19,7 @@
 #include "WorldPresentation.h"
 
 namespace {
-using Clock = std::chrono::steady_clock;
+using Clock = PhysicsDebugClock;
 double MillisecondsSince(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
 }
@@ -29,6 +31,7 @@ bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCo
     End();
     m_worldCoordinates = worldCoordinates;
     m_world = &world;
+    if(m_debugger)m_debugger->Bind(world);
     outError.clear();
     m_physicsAccumulator = 0.0f;
     m_fixedStepsSinceReset = 0;
@@ -40,8 +43,21 @@ bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCo
 
 void InteractivePlay::End() {
  PerformanceProfiler::Get().Boundary("Play end");
+    if(m_debugger)m_debugger->Unbind();
     if(m_world){m_world->EndScripts();m_world->EndAudio();}
     m_world = nullptr;
+}
+
+void InteractivePlay::SetPhysicsDebugger(std::shared_ptr<PhysicsEventDebugger> debugger){
+    if(m_debugger)m_debugger->Unbind();
+    m_debugger=std::move(debugger);
+    if(m_debugger&&m_world)m_debugger->Bind(*m_world);
+    m_debugClockReset=true;
+}
+bool InteractivePlay::ConsumeDiagnosticClockReset(){
+    bool value=m_debugClockReset;m_debugClockReset=false;
+    if(m_debugger){value|=m_debugger->Manual();value|=m_debugger->ConsumeClockReset();}
+    return value;
 }
 
 void InteractivePlay::SetFixedStepMeasurementFlags(bool fire, bool fluid) {
@@ -54,7 +70,26 @@ void InteractivePlay::SetFixedStepMeasurementFlags(bool fire, bool fluid) {
 float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render, const RenderTargetHandle* destination, bool auxiliary) {
     JUDAS_PROFILE_SCOPE("Play frame");
     RuntimeWorld& world = *m_world;
-    world.PumpNetwork(std::chrono::duration<double>(Clock::now().time_since_epoch()).count());
+    if(m_debugger&&m_debugger->Detached())SetPhysicsDebugger({});
+    if(m_debugger&&m_debugger->Manual()){
+        m_lastStepsThisFrame=0;
+        if(m_debugger->BeginFixed(window.Input())){
+            const auto began=Clock::now();
+            if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();
+            m_measurements.fireMeasured=m_measurements.fluidMeasured=false;
+            StepAuthoritativeWorld(world,m_debugger->FixedInput(),SimulationTiming::kFixedTimestep,&m_measurements);
+            m_lastStepMilliseconds=MillisecondsSince(began);m_lastStepsThisFrame=1;++m_fixedStepsSinceReset;
+            m_physicsAccumulator=std::max(0.f,m_physicsAccumulator-SimulationTiming::kFixedTimestep);
+            if(m_observer)m_observer(m_measurements,m_lastStepMilliseconds);
+            m_debugger->EndFixed();
+        }
+        if(m_debugger->Detached())SetPhysicsDebugger({});
+        else if(m_lastStepsThisFrame)m_debugger->PresentRoot();
+        PerformanceProfiler::Get().FixedState(m_physicsAccumulator,false,0,true);
+        return 0;
+    }
+
+    world.PumpNetwork(std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count());
 
     // Paired controller observations belong to this play session. A menu's
     // resume frame must not replay stick movement delivered while it owned input.
@@ -103,21 +138,31 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
             window.Input().BeginFixedStep();if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();
             const auto stepStart = Clock::now();
             m_measurements.fireMeasured = m_measurements.fluidMeasured = false;
-            StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep, &m_measurements);
+            if(m_debugger){
+                if(!m_debugger->BeginFixed(window.Input()))break;
+                StepAuthoritativeWorld(world,m_debugger->FixedInput(),SimulationTiming::kFixedTimestep,&m_measurements);
+                m_debugger->EndFixed();
+            }else StepPlayedWorld(world, window, SimulationTiming::kFixedTimestep, &m_measurements);
             m_lastStepMilliseconds = MillisecondsSince(stepStart);
             if (m_observer) m_observer(m_measurements, measuring ? m_lastStepMilliseconds : 0.0);
             m_physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
             ++m_fixedStepsSinceReset;
+            if(m_debugger&&(m_debugger->Manual()||m_debugger->Detached()))break;
         }
         // Hit the catch-up cap: drop the backlog instead of compounding it.
-        if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) { profileCap=true; profileDiscarded=m_physicsAccumulator; m_physicsAccumulator = 0.0f; }
+        if ((!m_debugger||!m_debugger->Manual())&&stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) { profileCap=true; profileDiscarded=m_physicsAccumulator; m_physicsAccumulator = 0.0f; }
         m_lastStepsThisFrame = stepsThisFrame;
     } else {
         window.ClearPendingRequests();if(auto* players=world.PlayersIfLoaded())players->DiscardPending();
         m_lastStepsThisFrame = 0;
     }
 
+    if(m_debugger&&m_debugger->Manual()){
+        m_debugger->PresentRoot();
+        PerformanceProfiler::Get().FixedState(m_physicsAccumulator,false,0,true);
+        return 0;
+    }
     // How far real time has progressed into an as-yet-unsimulated fixed
     // step — the presentation interpolation factor (M6).
     PerformanceProfiler::Get().FixedState(m_physicsAccumulator,profileCap,profileDiscarded,IsPaused()||uiOwned);

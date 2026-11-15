@@ -60,8 +60,9 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     if (coupling && (!coupling->iterations || coupling->iterations > 64))
         throw std::invalid_argument("invalid velocity coupling quality");
     Impl &w = *m_impl;
-    if (w.stepping || w.contactPhaseContext)
+    if (w.stepping || w.contactPhaseContext || w.debugNotifying)
         throw std::logic_error("recursive physics step");
+    if(w.debugObserver){w.debugEvent=w.debugGroup=w.debugDiscarded=0;w.debugLastTime=-1;}
     w.ValidateCoupling(fixedDeltaTime,coupling);
     // One macro owner prepares fresh contacts at each physical interval.
     {
@@ -465,6 +466,7 @@ void PhysicsWorld::StepInterval(float fixedDeltaTime,const VelocityCoupling *cou
     {
         static ProfileLabel mk2Label("Physics MK2 substep solve");
         ProfileScope mk2Scope(mk2Label);
+        w.DebugPoint(DebugPhase::Candidates);
         w.Mk2Solve(fixedDeltaTime, coupling);
     }
     solverScope.End();

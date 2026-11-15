@@ -35,7 +35,7 @@ struct ProfileScopeRecord {
 };
 struct ProfileCounterRecord {ProfileName name;double value=0;std::uint64_t observed=0;ProfileCounterMode mode=ProfileCounterMode::Latest;};
 struct ProfileThreadRecord {std::uint64_t id=0;ProfileName name;};
-struct ProfileFixedRecord {std::uint64_t id=0,start=0,end=0;double simulationSeconds=0;};
+struct ProfileFixedRecord {std::uint64_t id=0,start=0,end=0;double simulationSeconds=0;std::uint64_t debuggerWaitNanoseconds=0;};
 struct ProfileGPURecord {std::uint64_t token=0,frame=0,camera=0;ProfileName pass;bool pending=true;double milliseconds=0;std::uint64_t submitted=0,gpuStart=0,gpuEnd=0;};
 struct ProfileLimits {
     static constexpr unsigned Threads=32,Labels=2048,Nodes=4096,Depth=64,LaneEvents=4096;
@@ -69,6 +69,7 @@ public:
     static PerformanceProfiler& Get();
     static std::uint64_t Now(); // steady-clock nanoseconds, common to all lanes
     bool Active()const;
+    static void PauseThreadRecording(bool); // nested inspector drawing, no epoch/frame reset
     bool Enabled()const;
     bool Frozen()const;
     void Enable(bool);
@@ -87,7 +88,7 @@ public:
     void EndFrame(std::uint64_t stamp=0);
     std::uint64_t FrameId()const;
     void FixedState(double accumulator,bool capped,double discarded,bool paused);
-    void FixedStep(std::uint64_t start,std::uint64_t end,double dt);
+    void FixedStep(std::uint64_t start,std::uint64_t end,double dt,std::uint64_t debuggerWait=0);
     void Boundary(std::string_view);
     void GPUAvailability(bool,std::string_view reason);
     std::uint64_t GPUPending(std::string_view pass,std::uint64_t camera);
@@ -119,6 +120,12 @@ public:
     ProfileScope(const ProfileScope&)=delete;ProfileScope& operator=(const ProfileScope&)=delete;
 private:PerformanceProfiler::Token token;
 };
+class ProfileRecordingPause {
+public:ProfileRecordingPause(){PerformanceProfiler::PauseThreadRecording(true);}
+    ~ProfileRecordingPause(){PerformanceProfiler::PauseThreadRecording(false);}
+    ProfileRecordingPause(const ProfileRecordingPause&)=delete;
+};
+
 class ProfileFrame {
 public:
     ProfileFrame(const char* mode,bool startup=false):owned(PerformanceProfiler::Get().BeginFrame(mode,startup)){}
@@ -129,7 +136,7 @@ class ProfileFixedStep {
 public:
     explicit ProfileFixedStep(double seconds);
     ~ProfileFixedStep();
-private:std::uint64_t start=0;double dt;ProfileScope scope;
+private:std::uint64_t start=0,debugWaitStart=0;double dt;ProfileScope scope;
 };
 class ProfileRun {
 public:

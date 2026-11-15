@@ -386,6 +386,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                     pair.revisionA==bodies[pair.key[0]].impactTrajectoryRevision &&
                     pair.revisionB==bodies[pair.key[1]].impactTrajectoryRevision)
                     return index;
+                if(debugObserver)DebugPoint(PhysicsWorld::DebugPhase::PredictionDiscarded,pair.hit,pair.key[0],pair.key[1],pair.key[2],pair.key[3],0,0,false,false,queue.size());
                 queue.pop();
             }
             return std::nullopt;
@@ -492,6 +493,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 !contactJobs->IsShutDown()&&contactJobLanes>1&&!searchObserver&&
                 std::fegetround()==FE_TONEAREST&&pendingCount>=8;
             unsigned lanes=1;
+            std::vector<PhysicsWorld::CollisionSearchSample> debugSearches;
             if(mayBatch){
                 queryPositions.reserve(std::min(maximumQueryRoots,pendingCount));
                 for(std::size_t n=0;n<pendingCount&&queryPositions.size()<maximumQueryRoots;++n){
@@ -510,6 +512,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             if(lanes>1){
                 const auto frozenStart=work.active?Clock::now():Clock::time_point{};
                 observations.resize(queryPositions.size());
+                if(debugObserver)debugSearches.resize(queryPositions.size());
                 if(ccdQueryStorage.size()<lanes)ccdQueryStorage.resize(lanes);
                 for(unsigned lane=0;lane<lanes;++lane){
                     if(!ccdQueryStorage[lane])ccdQueryStorage[lane]=std::make_unique<CCDQueryStorage>();
@@ -532,6 +535,8 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                         const auto& pair=pairs[pending[queryPositions[n]]];
                         const auto [a,b,pa,pb]=pair.key;
                         auto& result=observations[n];
+                        const auto debugBegan=debugObserver?Clock::now():Clock::time_point{};
+                        PhysicsWorld::StepStats debugBefore{};if(debugObserver)debugBefore=scratch.stats;
                         result.touching=query.PairTouches(a,b,int(pa),int(pb),from);
                         result.hit=double(dt)+1;
                         if(result.touching){
@@ -554,6 +559,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                             }
                         }
                         if(result.hit!=from)result.hit=query.ImpactTime(a,b,int(pa),int(pb),from,dt);
+                        if(debugObserver){auto& trace=debugSearches[n];trace.a=MakeHandle(a).id;trace.b=MakeHandle(b).id;trace.partA=pa;trace.partB=pb;trace.revisionA=bodies[a].impactTrajectoryRevision;trace.revisionB=bodies[b].impactTrajectoryRevision;trace.typeA=trace.typeB=ShapeType::Box;trace.compoundA=bodies[a].shape.type==ShapeType::CompoundBoxes;trace.compoundB=bodies[b].shape.type==ShapeType::CompoundBoxes;trace.start=from;trace.finish=dt;trace.hit=result.hit;trace.startContact=result.touching?1:0;trace.milliseconds=MillisecondsBetween(debugBegan,Clock::now());trace.queries=scratch.stats.impactQueries-debugBefore.impactQueries;trace.iterations=scratch.stats.impactSearchIterations-debugBefore.impactSearchIterations;trace.samplingTests=scratch.stats.impactSamplingTests-debugBefore.impactSamplingTests;trace.fallbacks=scratch.stats.impactSamplingFallbacks-debugBefore.impactSamplingFallbacks;}
                         result.ready=true;
                         ++laneRoots[lane];
                     };
@@ -636,7 +642,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
                 const auto index=pending[n];
                 const RootObservation* observation=nullptr;
                 if(lanes>1&&nextObservation<queryPositions.size()&&queryPositions[nextObservation]==n){
-                    if(observations[nextObservation].ready)observation=&observations[nextObservation];
+                    if(observations[nextObservation].ready){observation=&observations[nextObservation];if(debugObserver)DebugSearch(debugSearches[nextObservation]);}
                     ++nextObservation;
                 }
                 pairs[index].queued=false;
@@ -712,6 +718,8 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             const auto key = pairs[index].key;
             const auto a = key[0], b = key[1];
             const auto at = pairs[index].hit;
+            if(debugObserver){debugContacts.clear();debugPredictionVersion=pairs[index].version;}
+            if(debugObserver)DebugPoint(PhysicsWorld::DebugPhase::ToiSelected,at,a,b,key[2],key[3],0,0,false,false,queue.size());
             pairs[index].found = false;
             ++stats.impactEvents;
             if (work.active) {
@@ -811,6 +819,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char> *requir
             for (auto slot : changed)
                 if (movable(slot))
                     discover(slot, at);
+            if(debugObserver)DebugPoint(PhysicsWorld::DebugPhase::TrajectoriesPublished,at,a,b,key[2],key[3],0,changed.size(),false,resolved,queue.size());
             flush(at);
             // Retire stale heap observations without changing event order. Storage
             // stays proportional to the current pair set, not the event history.

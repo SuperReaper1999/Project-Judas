@@ -31,10 +31,11 @@ void DrawIntegratedProfilerView(){
     auto& f=selected;double outer=double(f.end-f.start)/1e6;
     ImGui::Text("Frame %llu / world boundary %llu / %s%s",(unsigned long long)f.id,(unsigned long long)f.world,f.mode.c_str(),f.incomplete?" / CAPTURE BOUNDARY":"");
     ImGui::Text("Outer work %.3f ms / start interval %.3f ms / wait %.3f ms / unattributed %.3f ms",outer,double(f.interval)/1e6,double(f.waiting)/1e6,double(f.unattributed)/1e6);
-    double fixed=0;for(const auto& step:f.fixed)fixed+=double(step.end-step.start)/1e6;
+    double fixed=0;for(const auto& step:f.fixed)fixed+=double(step.end-step.start-step.debuggerWaitNanoseconds)/1e6;
     ImGui::Text("Collection/snapshot cost after outer boundary: %.4f ms (included in next interval)",double(f.collectionNanoseconds)/1e6);
     ImGui::Text("Fixed: %zu steps / %.3f ms / accumulator %.6f s / cap %s / discarded %.6f s / paused %s",f.fixed.size(),fixed,f.accumulatorSeconds,f.capReached?"YES":"no",f.discardedSeconds,f.paused?"yes":"no");
-    if(ImGui::CollapsingHeader("Fixed step identities"))for(auto step:f.fixed)ImGui::Text("Step %llu: %.3f ms; simulation %.6f s",(unsigned long long)step.id,double(step.end-step.start)/1e6,step.simulationSeconds);
+    for(const auto& step:f.fixed)if(step.debuggerWaitNanoseconds)ImGui::Text("Debugger inspection excluded: %.3f ms",double(step.debuggerWaitNanoseconds)/1e6);
+    if(ImGui::CollapsingHeader("Fixed step identities"))for(auto step:f.fixed)ImGui::Text("Step %llu: %.3f active ms; simulation %.6f s",(unsigned long long)step.id,double(step.end-step.start-step.debuggerWaitNanoseconds)/1e6,step.simulationSeconds);
     for(const auto& boundary:f.boundaries)ImGui::Text("Boundary: %s",boundary.c_str());
     ImGui::TextWrapped("CPU elapsed is inclusive/exclusive on its named thread. Nested scopes and worker lanes overlap: do not add them to outer time. Worker records appear when completed and may start before this frame.");
     if(ImGui::CollapsingHeader("CPU hierarchy / worker lanes",ImGuiTreeNodeFlags_DefaultOpen))for(const auto& thread:f.threads){

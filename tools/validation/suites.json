@@ -1821,6 +1821,15 @@
         "collision",
         "lifecycle"
       ]
+    },
+    {
+      "name": "physics-event-debugger",
+      "target": "judas_physics_event_debugger_tests",
+      "groups": [
+        "physics",
+        "profiling",
+        "persistence"
+      ]
     }
   ],
   "known_findings": [

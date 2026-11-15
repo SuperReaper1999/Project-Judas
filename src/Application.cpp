@@ -1,6 +1,8 @@
 #include "NetworkSession.h"
 #include "PerformanceProfiler.h"
 #include "Application.h"
+#include "PhysicsEventDebugger.h"
+#include "RuntimePhysicsDebugView.h"
 #include "AppIcon.h"
 #include "modding/ModRuntime.h"
 
@@ -178,10 +180,23 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
                 if(service=="save")return !sceneControl->Saves(host.Resources())->Busy();
                 if(service=="stream"){auto* s=sceneControl->StreamingIfLoaded();return !s||(s->SaveReady()&&s->Stats().pending==0);}
                 throw std::runtime_error("unknown service wait: "+service);
-            });
+            },[&](bool load){std::string saveError;auto* saves=sceneControl->Saves(host.Resources());if(!saves->Request(load?"load":"save","physics-debugger","Physics event checkpoint","{}",saveError))throw std::runtime_error(saveError);});
     }
 
     if (control && control->worldReady) control->worldReady(host, world, play);
+    std::shared_ptr<PhysicsEventDebugger> physicsDebugger;
+    std::unique_ptr<RuntimePhysicsDebugView> physicsDebugView;
+    std::uint64_t physicsDebugSave=0;
+    if(const char* enabled=std::getenv("JUDAS_PHYSICS_DEBUG");enabled&&std::string(enabled)=="1"){
+        if(!options.networkMode.empty())throw std::runtime_error("physics event debugger requires an offline authority");
+        const char* output=std::getenv("JUDAS_PHYSICS_DEBUG_REPORT");
+        physicsDebugger=std::make_shared<PhysicsEventDebugger>(output?output:"physics-debug.json");
+        physicsDebugView=std::make_unique<RuntimePhysicsDebugView>(window,renderer);
+        physicsDebugger->SetHandler([&](const auto& snapshot){return physicsDebugView->Inspect(snapshot);});
+        PerformanceProfiler::Get().Enable(true);
+        play.SetPhysicsDebugger(physicsDebugger);
+    }
+
     if(splash&&!PrepareFirstFrame(host,world,*splash,control,error)){
         if(!error.empty())std::fprintf(stderr,"Startup preparation: %s\n",error.c_str());
         return window.ShouldClose()?0:1;
@@ -207,6 +222,11 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         RendererProfileScope wholeGPU(renderer,"Whole runtime frame");
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
         if(window.ShouldClose())break;
+        if(physicsDebugger&&physicsDebugView&&play.PhysicsDebugger()){
+            if(physicsDebugView->PollPauseKey())physicsDebugger->Request(PhysicsEventDebugger::Command::Pause);
+            auto* saves=sceneControl->Saves(host.Resources());
+            if(physicsDebugSave){const auto* status=saves->Status(physicsDebugSave);if(status)physicsDebugView->ServiceStatus(status->operation+": "+status->state+" "+status->error,saves->Busy());}
+        }
         if(window.ConsumeLifecycleClockReset())previousCounter=SDL_GetPerformanceCounter();
         const bool suspended=!window.ApplicationActive();
         if(suspended!=applicationSuspended){host.Audio().SetApplicationSuspended(suspended);applicationSuspended=suspended;}
@@ -226,6 +246,15 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         if (control && control->frameSeconds) frameDeltaTime = control->frameSeconds(frameDeltaTime);
 
         play.Frame(window, renderer, frameDeltaTime);
+        if(play.ConsumeDiagnosticClockReset())previousCounter=SDL_GetPerformanceCounter();
+        if(physicsDebugger){
+            const bool checkpoint=physicsDebugger->ConsumeCheckpoint(),restore=physicsDebugger->ConsumeRestore();
+            if(checkpoint||restore){
+                std::string saveError;auto* saves=sceneControl->Saves(host.Resources());
+                physicsDebugSave=saves->Request(restore?"load":"save","physics-debugger","Physics event checkpoint","{}",saveError);
+                physicsDebugView->ServiceStatus(saveError.empty()?"Checkpoint service pending":saveError,saves->Busy());
+            }
+        }
         diagnostics.RecordTelemetryFrame(play.World());
         diagnostics.RecordFrame(play.World(), play.LastSurfaceMilliseconds(), play.LastSceneMilliseconds(),
                                 frameDeltaTime);
@@ -236,6 +265,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
             std::fprintf(stderr,"Runtime outer services: %s\n",error.c_str());error.clear();
         }
     }
+    if(physicsDebugger)physicsDebugger->Export();
     if (control && control->beforeShutdown) control->beforeShutdown(host, *worldOwner, play);
     return 0;
 }

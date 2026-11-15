@@ -2,6 +2,7 @@
 #include "NavigationSystem.h"
 #include <stdexcept>
 #pragma once
+#include "PhysicsEventDebugger.h"
 
 #include <memory>
 #include <functional>
@@ -444,6 +445,7 @@ public:
         mutable std::vector<int> meshSections;
         DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
     DeformableInstance* RuntimeDeformable(EntityId,std::string& error,bool staged=false);
+    std::vector<PhysicsEventDebugger::Material> DebugDeformables()const;
     void UpdateDeformables(double dt);
     bool SampleDeformableTargets(EntityId,bool currentRigidPose=false);
     bool BeginDeformableStep();

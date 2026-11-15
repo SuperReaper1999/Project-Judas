@@ -3,6 +3,7 @@
 # partial world implementation.
 set(JUDAS_PHYSICS_WORLD_SOURCES
     src/PhysicsWorld.cpp
+    src/physics/WorldDebug.cpp
     src/physics/WorldBodies.cpp
     src/physics/WorldBounds.cpp
     src/physics/WorldCCDSearch.cpp

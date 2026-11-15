@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -9,6 +10,7 @@
 #include "WorldCoordinates.h"
 
 class Renderer;
+class PhysicsEventDebugger;
 class RuntimeWorld;
 class Window;
 struct RenderTargetHandle;
@@ -29,6 +31,9 @@ public:
     RuntimeWorld& World() { return *m_world; }
     const RuntimeWorld& World() const { return *m_world; }
 
+    void SetPhysicsDebugger(std::shared_ptr<PhysicsEventDebugger>);
+    std::shared_ptr<PhysicsEventDebugger> PhysicsDebugger()const{return m_debugger;}
+    bool ConsumeDiagnosticClockReset();
     void SetFixedStepMeasurementFlags(bool fire, bool fluid);
     // Presentation policy persists through scene/save replacement. No callback recovery.
     void SetScriptFaultNoticeEnabled(bool enabled) {
@@ -62,6 +67,8 @@ public:
     double LastSceneMilliseconds() const { return m_lastSceneMilliseconds; }
 
 private:
+    std::shared_ptr<PhysicsEventDebugger> m_debugger;
+    bool m_debugClockReset=false;
     bool m_scriptFaultNotice = false;
     std::optional<bool> m_scriptFaultNoticeOverride;
     RuntimeWorld* m_world = nullptr;

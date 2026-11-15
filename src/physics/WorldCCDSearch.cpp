@@ -931,7 +931,7 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     memo={pair,trajectories,interval,impactGeometryEpoch,memo.lastUse,hit};
     return hit;
     };
-    if(!searchObserver)return evaluate();
+    if(!searchObserver&&!debugObserver)return evaluate();
     const auto before=stats;const auto workBefore=work;
     const auto workBeforePose=impactPoseEvaluations,workBeforeOrientation=impactOrientationBuilds;
     CollisionSearchSample detail;
@@ -971,6 +971,7 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     detail.geometryRequests=work.geometryMemoRequests-workBefore.geometryMemoRequests;
     detail.geometryEvictions=work.geometryMemoEvictions-workBefore.geometryMemoEvictions;
     detail.searchEvictions=work.searchMemoEvictions-workBefore.searchMemoEvictions;
-    searchObserver(detail);
+    if(searchObserver)searchObserver(detail);
+    if(debugObserver)DebugSearch(detail);
     return result;
 }
