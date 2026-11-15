@@ -1837,6 +1837,10 @@
       "groups": [
         "profiling",
         "core"
+      ],
+      "args": [
+        "--output",
+        "{output}/profiler-application"
       ]
     }
   ],

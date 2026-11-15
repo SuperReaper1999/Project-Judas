@@ -20,8 +20,10 @@
 #include <algorithm>
 #include <map>
 #include <cstdio>
+#include <cstdlib>
 namespace fs=std::filesystem;
 int main(int argc,char** argv){
+ const auto* engineRoot=std::getenv("JUDAS_ENGINE_ROOT");const fs::path source=engineRoot&&*engineRoot?fs::path(engineRoot):fs::current_path();
  fs::path out=argc>2&&std::string(argv[1])=="--output"?argv[2]:argc>1?argv[1]:"build/m56-application";fs::create_directories(out);
  unsigned checks=0,failures=0;auto check=[&](bool v,const char* m){++checks;failures+=!v;std::printf("%s %s\n",v?"PASS":"FAIL",m);};
  std::ofstream metrics(out/"paired.csv");metrics<<"project,trial,mode,frame,interval_ms,active_ms,fixed_ms,ui_ms,steps\n";
@@ -32,7 +34,7 @@ int main(int argc,char** argv){
   for(int mode:{0,1,2,1,0,2}){
    ++trial;profiler.Freeze(false);profiler.Clear();SDL_setenv("JUDAS_PROFILE",mode?"1":"0",1);SDL_setenv("JUDAS_PROFILE_OUTPUT","",1);
    Project project;std::string error;const auto filename=std::string(projectName)=="browser_player_lab"?"Browser_Player_Lab":projectName;
-   std::string path="projects/"+std::string(projectName)+"/"+filename+".judasproj";
+   std::string path=(source/"projects"/projectName/(std::string(filename)+".judasproj")).string();
    const bool loaded=project.Load(path,error);check(loaded,"ordinary integration project");if(!loaded){std::fprintf(stderr,"%s\n",error.c_str());return 1;}
    unsigned frame=0,stepCount=0;std::uint64_t start=0,previous=0;std::string state;bool cursorReleased=true,intentUnchanged=true;
    std::vector<double> times,steps,uis;ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
@@ -82,7 +84,7 @@ int main(int argc,char** argv){
   // This diagnostic runner cap deliberately makes the first completed measured
   // interval cross the timed deadline. It does not alter physical dt or quality.
   const auto timedOut=out/("timed-boundary-"+std::to_string(PerformanceProfiler::Now()));
-  std::vector<std::string> arguments={"profiler-timed-boundary","--project","projects/basic_water_lab/basic_water_lab.judasproj",
+  std::vector<std::string> arguments={"profiler-timed-boundary","--project",(source/"projects/basic_water_lab/basic_water_lab.judasproj").string(),
    "--out",timedOut.string(),"--seconds","0.03","--warmup","0","--cap","30","--no-profile"};
   std::vector<char*> native;for(auto& argument:arguments)native.push_back(argument.data());
   check(RunWholeEngineBenchmark(int(native.size()),native.data())==0,"short timed application capture accepts a valid low-sample run");
