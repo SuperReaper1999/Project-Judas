@@ -270,5 +270,25 @@
     "status": "completed",
     "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/44001388269"
   },
-  "windows_candidate_workflow": "available, owner authenticated, final exact candidate run pending; never publishes and explicitly excludes GUI/hardware certification"
+  "windows_candidate_workflow": "available, owner authenticated, final exact candidate run pending; never publishes and explicitly excludes GUI/hardware certification",
+  "checkpoint_79acc124": {
+    "native_ctest": {
+      "passed": 207,
+      "total": 209,
+      "seconds": 453.68,
+      "failures": [
+        "terrain-v2-editor-preview-rendering: real-terrain image visibility, did not recur in three isolated repeats",
+        "animation-ik-cold-continuation: relative project path from isolated output directory"
+      ]
+    },
+    "focused_ci_run": 44098086861,
+    "hosted_targets_run": 44098123366,
+    "windows_failure": "MSVC MaterialBatch.h static assertion: DeformableInstance move is not guaranteed nothrow; no runtime execution claimed",
+    "repairs": [
+      "Resolve project and IK fixture with the established engine-root path resolver",
+      "Own terrain comparison image/depth attachment rather than a hidden window back buffer; retain all pixel/depth/visibility assertions",
+      "Retain serial ordered material kernels when no-throw instance transfer is unavailable; add full native material contract to Windows qualification"
+    ],
+    "repair_validation": "pending exact next checkpoint"
+  }
 }

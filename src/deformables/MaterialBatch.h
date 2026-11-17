@@ -15,11 +15,15 @@ namespace JudasDeformables {
 inline void IndependentMaterialPhase(const std::vector<MaterialInterval*>& intervals,
                                      MaterialInterval::Independent phase,JobSystem* jobs,unsigned lanes){
     if(intervals.empty())return;
-    if(!jobs||lanes==1||intervals.size()<8){
+    // Some standard libraries allocate a map sentinel when moving the instance.
+    // Keep the same ordered kernels on the owner rather than risking allocation
+    // during a supposedly no-throw lease transfer. Numerical scheduling is unchanged.
+    constexpr bool transferSafe=std::is_nothrow_move_constructible<DeformableInstance>::value&&
+                                std::is_nothrow_move_assignable<DeformableInstance>::value;
+    if(!transferSafe||!jobs||lanes==1||intervals.size()<8){
         for(auto* interval:intervals)interval->RunIndependent(phase,interval->State());
         return;
     }
-    static_assert(std::is_nothrow_move_constructible<DeformableInstance>::value&&std::is_nothrow_move_assignable<DeformableInstance>::value,"material data transfer must not allocate");
     struct Lease {
         MaterialInterval* interval=nullptr;
         DeformableInstance data;

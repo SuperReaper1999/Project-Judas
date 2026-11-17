@@ -168,3 +168,16 @@ rather than install/reconfigure or silently inherit historical acceptance.
 The scoped native-Linux readiness verdict does not depend on universal platform or
 stretch performance qualification. Final hosted results belong in the checkpoint
 receipt; no main promotion or selected consumer SDK replacement is authorized.
+
+
+Final-head qualification of79acc124 found207/209 native passes, not209/209:
+new cold fixture used cwd-relative project path (CI and local isolated runner),
+and one terrain visibility readback failed, unreproduced in3isolated repeats.
+Bounded fixture repairs use ResolveEngineDataPath and an owned render target;
+no assertions weakened. Hosted Windows actually failed compiling MaterialBatch's
+nothrow move assertion. MSVC may allocate map sentinels; keep identical ordered
+kernels on the owner whenever transfer is not guaranteed no-throw. GCC's safe
+worker path stays selected. This is a portability fallback, not a core replacement.
+Windows workflow adds the existing full166-check native material contract.
+Full209final suite and source-hidden SDK must run on the repaired checkpoint.
+Both previous failed hosted runs remain explicit in stage-e-qualification.json.

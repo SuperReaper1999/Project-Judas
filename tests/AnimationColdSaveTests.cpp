@@ -7,6 +7,7 @@
 #include "Project.h"
 #include "SceneFingerprint.h"
 #include "ToolProcess.h"
+#include "EnginePaths.h"
 #include "../third_party/nlohmann/json.hpp"
 #include <cstdio>
 #include <filesystem>
@@ -27,12 +28,12 @@ int main(int argc,char** argv){
  if(argc!=3)return 64;
  std::string error;int checks=0,failures=0;auto check=[&](bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);if(!ok)std::puts(error.c_str());};
  EngineHost host;const bool initialized=host.Init("M95 cold animation and IK save",320,240,false,error);check(initialized,"native resource host");if(!initialized)return 1;
- Project project;const bool loaded=project.Load("projects/animation_studio/animation_studio.judasproj",error);check(loaded,"ordinary project");if(!loaded){host.Shutdown();return 1;}host.OpenProjectAssets(project.RootDir(),project.AssetsDir());auto& resources=host.Resources();RuntimeWorld world;GameSnapshot snapshot;SaveStorage storage(std::filesystem::absolute(argv[2]).string());const bool writing=std::string(argv[1])=="write";
+ Project project;const bool loaded=project.Load(ResolveEngineDataPath("projects/animation_studio/animation_studio.judasproj"),error);check(loaded,"ordinary project");if(!loaded){host.Shutdown();return 1;}host.OpenProjectAssets(project.RootDir(),project.AssetsDir());auto& resources=host.Resources();RuntimeWorld world;GameSnapshot snapshot;SaveStorage storage(std::filesystem::absolute(argv[2]).string());const bool writing=std::string(argv[1])=="write";
  Scene scene;if(writing){check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"authored studio");for(auto& o:scene.Objects()){o.scripts.clear();o.ui.reset();}}
  else{bool recovered=false;check(storage.Read("animation",snapshot,recovered,error)&&!recovered,"fresh process reads checksum-protected save");check(WorldPersistence::SceneFrom(snapshot.participants,scene,error),"saved scene reconstruction");}
  check(world.Build(scene,&resources,error,nullptr,nullptr,!writing),"world construction");world.UpdateAnimations(0);resources.WaitForAll();world.UpdateAnimations(0);
  if(writing){
-  Scene fixture;check(LoadSceneFromFile("tests/fixtures/ik/configuration.judas",fixture,error),"authored IK configuration");
+  Scene fixture;check(LoadSceneFromFile(ResolveEngineDataPath("tests/fixtures/ik/configuration.judas"),fixture,error),"authored IK configuration");
   if(!fixture.Find(10)||!fixture.Find(10)->animation||!fixture.Find(10)->animation->fullBodyIK)return 1;
   auto settings=*fixture.Find(10)->animation->fullBodyIK;settings.targets.clear();
   const char* chains[]={"palmA","palmB","soleA","soleB"};
@@ -46,6 +47,7 @@ int main(int argc,char** argv){
   check(world.ConfigureFullBodyIK(10,settings,error),"live four-target IK config through runtime owner");
  }
 
+ // Manual clip advancement is gameplay intent; production fixed stepping owns IK and physics.
  auto tick=[&]{auto* a=world.RuntimeAnimation(10);auto* m=world.RuntimeCharacter(10);if(!a||!m||!world.AdvanceAnimation(10,1.f/60,error))return false;m->displacementIntent=a->step.motion.translation;StepAuthoritativeWorld(world,host.GetWindow().Input(),1.f/60);return true;};
  auto endpoint=[&]{auto* a=world.RuntimeAnimation(10);auto* m=world.RuntimeCharacter(10);SceneTransform hand;world.JointPose(10,"PalmA","model",1,hand);return Json{{"hand",{hand.position.x,hand.position.y,hand.position.z}},{"ikTargets",a->fullBodyIK?a->fullBodyIK->settings.targets.size():0},{"time",a->playback.time},{"position",{m->position.x,m->position.y,m->position.z}},{"velocity",{m->velocity.x,m->velocity.y,m->velocity.z}},{"events",a->step.events.size()},{"paused",a->mixer.paused}};};
  auto same=[&](const Json& expected){auto actual=endpoint();bool ok=std::abs(actual["time"].get<float>()-expected["time"].get<float>())<1e-6&&actual["events"]==expected["events"]&&actual["paused"]==expected["paused"];ok&=actual["ikTargets"]==expected["ikTargets"];for(auto key:{"position","velocity","hand"})for(int i=0;i<3;++i)ok&=std::abs(actual[key][i].get<float>()-expected[key][i].get<float>())<1e-5;return ok;};

@@ -15,6 +15,10 @@ int main() {
         EngineHost host; std::string error;
         check(host.Init("Terrain editing LOD parity", 160, 160, false, error), error.c_str());
         auto &renderer = host.GetRenderer();
+        // Own the image attachment: a hidden desktop window's back buffer is not
+        // part of the terrain preview contract and can be invalidated externally.
+        const auto target=renderer.CreateRenderTarget(160,160,error);
+        check(target.IsValid(),error.c_str());
         auto source = TerrainV2::Create(65, 65, 1, 16);
         std::fill(source.heights.begin(), source.heights.end(), 2);
         std::vector<TerrainV2::ChunkKey> keys;
@@ -26,7 +30,7 @@ int main() {
         float measuredDepth=1;
         auto compare = [&](glm::vec3 eye, glm::vec3 up, std::optional<TerrainV2::Edit> brush) {
             auto image = [&](bool simplified) {
-                renderer.BeginFrame(160,160);
+                check(renderer.BeginRenderTarget(target),"owned preview image target begins");
                 renderer.SetCamera(glm::lookAt(eye,glm::vec3(0),up),glm::ortho(-36.f,36.f,-36.f,36.f,.1f,150.f));
                 renderer.SetLighting({0,1,0},{0,0,0},{1,1,1});
                 renderer.BeginTerrainMaterial(materialWeights, {}, source.layerColours, glm::mat4(1));
@@ -39,6 +43,7 @@ int main() {
                 renderer.EndTerrainMaterial();renderer.EndFrame();
                 glReadPixels(80,80,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&measuredDepth);
                 std::vector<unsigned char> pixels;renderer.CaptureFrame(160,160,pixels);
+                renderer.EndRenderTarget();
                 return pixels;
             };
             auto exact=image(false);const float exactDepth=measuredDepth;
@@ -86,6 +91,7 @@ int main() {
         check(stats.bytes<=stats.budget,"editor GPU pages obey their bounded budget");
         renderer.DestroyTexture(materialWeights);
         preview.Clear(renderer);
+        renderer.DestroyRenderTarget(target);
         check(preview.Statistics().bytes==0,"preview release returns all owned GPU pages");
         check(glGetError()==GL_NO_ERROR,"preview rendering produces no GL error");
         std::cout<<"SUMMARY "<<checks<<" checks 0 failures\n";

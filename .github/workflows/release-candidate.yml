@@ -190,13 +190,17 @@ jobs:
           $build = "build/windows-$env:CHANNEL"
           $bin = $build
           $aiTargets = @('judas_utility_ai_tests', 'judas_utility_ai_script_tests', 'judas_utility_ai_editor_tests', 'judas_ai_workflow_tests', 'judas_ai_reservation_tests', 'judas_ai_reservation_script_tests', 'judas_ai_sensing_tests', 'judas_ai_sensing_script_tests')
-          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests judas_one_way_platform_tests judas_grid_movement_tests judas_planar_physics_tests judas_tilemap_tests judas_sprite_animation_tests judas_editor_script_workflow_tests judas_ui_drag_tests $aiTargets --parallel 2
+          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_deformable_tests judas_network_transport_tests judas_consumer_pointer_tests judas_one_way_platform_tests judas_grid_movement_tests judas_planar_physics_tests judas_tilemap_tests judas_sprite_animation_tests judas_editor_script_workflow_tests judas_ui_drag_tests $aiTargets --parallel 2
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$bin/judas_build_identity_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$bin/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$bin/judas_mk2_rotation_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          # Validate MSVC's owner-only material transfer fallback with the full
+          # native material contract; no graphics session is required.
+          & "$bin/judas_deformable_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$bin/judas_network_transport_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }

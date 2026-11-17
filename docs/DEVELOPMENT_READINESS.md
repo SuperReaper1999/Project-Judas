@@ -33,6 +33,10 @@ The accepted predecessor passed207CTest cases and16additional workflows. This
 increment passed208expanded cases plus the new permanent fresh-process animation/IK
 continuation contract. Its registered suite now has209cases. Exact checkpoint
 verification must distinguish reused unchanged-code evidence from fresh runs.
+The first clean checkpoint's expanded run passed 207/209: a cwd-relative cold
+fixture path and one terrain image visibility check failed. The former now uses
+the normal engine-root resolver; the latter retains its assertions on an owned
+image target. Exact repaired-checkpoint results are recorded separately.
 The moved SDK IK consumer restored script state at tick142,16enabled IK actors
 and64targets after a real resumed solve. `ikStatus.ready` reports asset availability;
 residuals may be empty before the resumed fixed solver publishes them.
@@ -44,7 +48,7 @@ residuals may be empty before the resumed fixed solver publishes them.
 | Linux x86-64, Kubuntu/Ubuntu26.04.1, GTX970/NVIDIA580.178.04, modern GL | Real desktop editor/runtime/SDK and whole-application captures | Primary current-host development qualification; requires matching host ABI/driver dependencies |
 | Ubuntu24.04 x86-64 CI reference | Accepted ad41 native focused gates and SDK host inspection passed on ubuntu24.04 with software GL | Reference build/CI evidence; local GCC15/GLIBC2.43 SDK is not thereby Ubuntu24-compatible |
 | Portable GL policy on tested NVIDIA hardware | Actual native rendering/particle contracts, including shadow-depth equivalence | Tests the portable code policy on that driver, not every physical GL3.3/GLES device |
-| Windows x64 MSVC | Existing native hosted qualification workflow available; next exact candidate run pending (existing never-publishes workflow) | Build/tools/contracts can be qualified there; workflow explicitly does not certify editor/GL/export or real hardware |
+| Windows x64 MSVC | Native hosted run exposed a material-transfer compile assertion; bounded owner-kernel fallback implemented, exact retry pending | Build/tools/contracts can be qualified there; workflow explicitly does not certify editor/GL/export or real hardware |
 | Android | SDK/NDK/ADB installed; no phone in current USB inventory, complete JDK/emulator absent; device qualification pending | Existing optional runtime/APK workflow and historical scoped acceptance remain; new snapshot is not device-certified |
 | Browser | Firefox installed; current Emscripten toolchain absent | Explicit opt-in Experimental workflow; no new snapshot browser-runtime qualification yet |
 | Other OS/architectures/devices | No new native evidence | Not included in this development-readiness verdict; see existing support documentation for historical scope |
@@ -85,7 +89,7 @@ qualified workflows.
 The native-Linux verdict is supported by the shared runtime ownership, integrated
 editor/SDK workflows, actual application/persistence checks, meaningful fidelity
 regressions, observed performance and bounded output policy. Continue feature/game
-development within this scope. Qualify additional platforms/hardware as their
+development within this scope after the final repaired checkpoint checks. Qualify additional platforms/hardware as their
 actual environments become available; do not inherit older acceptance silently.
 
 Final clean-head identities, remaining hosted CI state and reproducible commands
