@@ -38,16 +38,27 @@ try {
 } finally { [IO.File]::WriteAllBytes($native, $bytes) }
 
 # A clean vcpkg install must compile SDL2/GLM from source without any binary
-# archive cache or usable ambient PKG_CONFIG. No Judas compilation is needed.
+# archive cache or usable PATH pkg-config. No Judas compilation is needed.
 $oldSources = $env:VCPKG_BINARY_SOURCES
 $oldPkgConfig = $env:PKG_CONFIG
 $oldKeepEnv = $env:VCPKG_KEEP_ENV_VARS
+$oldPath = $env:PATH
 try {
     $env:VCPKG_BINARY_SOURCES = 'clear'
+    # Explicit environment selection remains supported, including fail-closed
+    # handling. It must not download another tool after this preflight rejection.
     $env:PKG_CONFIG = $rejected
+    $unusedCache = Join-Path $work 'rejected-env-cache'
+    Expect-Failure { & "$PSScriptRoot\Build-Windows.ps1" -Generator Ninja -DependenciesOnly -ToolCache $unusedCache } 'No alternate executable or MSYS2 fallback'
+    if (Test-Path $unusedCache) { throw 'Rejected environment tool caused an alternate download' }
+    $env:PKG_CONFIG = $null
+    $pathTools = Join-Path $work 'unusable-path-tool'
+    New-Item -ItemType Directory -Path $pathTools | Out-Null
+    Set-Content -LiteralPath (Join-Path $pathTools 'pkg-config.cmd') -Value '@exit /b 17'
+    $env:PATH = "$pathTools;$oldPath"
     $env:VCPKG_KEEP_ENV_VARS = 'JUDAS_BOOTSTRAP_TEST_SENTINEL'
     & "$PSScriptRoot\Build-Windows.ps1" -Generator Ninja -DependenciesOnly -ToolCache $cache -VcpkgRoot (Join-Path $work 'vcpkg') -BuildDirectory (Join-Path $work 'build')
-    if ($env:PKG_CONFIG -ne $rejected -or $env:VCPKG_KEEP_ENV_VARS -ne 'JUDAS_BOOTSTRAP_TEST_SENTINEL') { throw 'Build did not restore the caller environment' }
+    if ($env:PKG_CONFIG -or $env:VCPKG_KEEP_ENV_VARS -ne 'JUDAS_BOOTSTRAP_TEST_SENTINEL') { throw 'Build did not restore the caller environment' }
     $msys = @(Get-ChildItem (Join-Path $work 'vcpkg/downloads') -Recurse -Filter '*msys*')
     if ($msys.Count) { throw "Unexpected MSYS2 downloads: $($msys.FullName)" }
     $installed = Join-Path $work 'build/vcpkg_installed/x64-windows-static-md/share'
@@ -58,5 +69,6 @@ try {
     $env:VCPKG_BINARY_SOURCES = $oldSources
     $env:PKG_CONFIG = $oldPkgConfig
     $env:VCPKG_KEEP_ENV_VARS = $oldKeepEnv
+    $env:PATH = $oldPath
 }
 Write-Host 'Windows fresh dependency bootstrap and integrity/failure controls passed.'

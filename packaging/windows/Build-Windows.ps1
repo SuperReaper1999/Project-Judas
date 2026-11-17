@@ -20,7 +20,10 @@ function Run-Native([string]$Program, [string[]]$Arguments) {
 }
 if (!(Get-Command cmake -ErrorAction SilentlyContinue)) { throw 'Install Visual Studio 2022 Desktop development with C++, including CMake, then use Developer PowerShell.' }
 . "$PSScriptRoot\PkgConfig.ps1"
-$pkgConfigPath = Get-JudasPkgConfig -Path $PkgConfig -CacheRoot ([IO.Path]::GetFullPath($ToolCache))
+# Preserve the existing explicit environment contract, with the parameter taking
+# precedence. A rejected caller-selected tool must fail, never trigger fallback.
+$selectedPkgConfig = if ($PkgConfig) { $PkgConfig } else { $env:PKG_CONFIG }
+$pkgConfigPath = Get-JudasPkgConfig -Path $selectedPkgConfig -CacheRoot ([IO.Path]::GetFullPath($ToolCache))
 $previousPkgConfig = $env:PKG_CONFIG
 $previousKeepEnv = $env:VCPKG_KEEP_ENV_VARS
 try {

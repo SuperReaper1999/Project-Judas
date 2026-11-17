@@ -94,8 +94,9 @@ define that chain. Native tool provenance is the upstream
 
 The build script passes the prepared executable through `PKG_CONFIG` and
 `VCPKG_KEEP_ENV_VARS` and restores the caller's environment on success or failure.
-An ambient PATH/`PKG_CONFIG` executable is not selected implicitly. For an
-organisation-approved alternative, pass its full path using `-PkgConfig`; it is
+An ambient PATH executable is not selected implicitly. An explicitly set
+`PKG_CONFIG` environment variable remains supported; `-PkgConfig` takes precedence.
+For an organisation-approved alternative, pass its full path using `-PkgConfig`; it is
 checked before dependency installation and never silently replaced after failure.
 An explicit override remains caller-owned and must support the pkg-config
 operations used by the pinned port.
@@ -115,7 +116,7 @@ To reproduce only dependency installation and CMake generation:
 
 This does not compile Judas or qualify its applications. The dedicated Windows
 bootstrap CI uses a fresh vcpkg root, disabled binary caches, a space-containing
-tool cache, and an unusable ambient tool; it tests actual SDL2/GLM installation,
+tool cache, and an unusable PATH tool; it tests actual SDL2/GLM installation,
 cache reuse, corrupt-download/executable rejection and explicit-tool failure.
 It does not claim to reproduce Application Control policy enforcement itself.
 
