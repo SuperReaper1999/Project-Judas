@@ -20,6 +20,11 @@
 - Preserve protected historical evidence, independent research and unrelated assets. Document actual failures and limitations rather than weakening fixtures to obtain a pass.
 - GitHub protects main against force pushes and deletion, including administrator actions. Human-test acceptance is an operator workflow requirement; GitHub does not independently prove that testing occurred.
 
+## Live application testing
+
+- Prefer the built-in `JUDAS_TEST_SCRIPT` harness over desktop input automation when testing live Judas games. See [`docs/TEST_HARNESS.md`](docs/TEST_HARNESS.md) for usage, capabilities and limitations.
+- The harness is not the full regression suite. Use `tools/validation/suites.json` for authoritative regression selection.
+
 ## Real-time performance qualification
 
 - Performance-relevant milestones must include measured whole-game evidence, not only functional tests or isolated subsystem timings. Reuse valid evidence for unchanged systems and run representative affected workloads plus a combined gameplay workload.
