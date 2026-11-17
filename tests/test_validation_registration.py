@@ -71,7 +71,8 @@ class ValidationRegistrationTests(unittest.TestCase):
                    if include_known or not entry.get('manual', False)]
         tooling = {'prealpha.gate-negative-controls', 'prealpha.build-organization',
                    'prealpha.gate-registration', 'prealpha.browser-export-boundaries',
-                   'prealpha.editor-v2-architecture', 'prealpha.scripting-catalogue'}
+                   'prealpha.editor-v2-architecture', 'prealpha.scripting-catalogue',
+                   'prealpha.workspace-storage'}
         self.assertEqual(set(tests), {'prealpha.' + entry['name'] for entry in entries} | tooling)
         browser_command=tests['prealpha.browser-export-boundaries']['command']
         browser_pattern=browser_command[browser_command.index('-p')+1]
@@ -94,6 +95,10 @@ class ValidationRegistrationTests(unittest.TestCase):
         for name in tooling:
             command = tests[name]['command']
             self.assertIn('unittest', command)
+        storage = tests['prealpha.workspace-storage']
+        self.assertIn('test_workspace_storage.py', storage['command'])
+        properties = {item['name']: item['value'] for item in storage['properties']}
+        self.assertEqual(properties['LABELS'], ['prealpha', 'routine', 'tooling'])
 
     def test_ordinary_registration_omits_only_explicit_manual_failures(self):
         self.assert_contract(self.configure())
@@ -103,7 +108,7 @@ class ValidationRegistrationTests(unittest.TestCase):
 
     def test_removed_modular_editor_or_scripting_gate_is_detected(self):
         original = MODULE.read_text(encoding='utf-8')
-        for name in ('editor-v2-architecture', 'scripting-catalogue'):
+        for name in ('editor-v2-architecture', 'scripting-catalogue', 'workspace-storage'):
             with self.subTest(gate=name):
                 changed = original.replace('prealpha.' + name, 'prealpha.missing-' + name)
                 self.assertNotEqual(original, changed)

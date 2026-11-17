@@ -493,7 +493,7 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 void Renderer::Shutdown() {
     m_render->lightStorageReady=false;
     std::string lightingError;if(!m_render->lightLists.Shutdown(lightingError))std::fprintf(stderr,"Lighting shutdown: %s\n",lightingError.c_str());
-    m_render->submission.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
+    m_render->submission.Clear();m_render->skinnedBounds.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
     if(m_lightTexture)glDeleteTextures(1,&m_lightTexture);
     m_lightTexture=0;m_lightTextureRows=0;
     if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
@@ -595,6 +595,7 @@ void Renderer::DrawDebugLines(const std::vector<DebugLine>& lines, bool depthTes
 }
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
+    m_render->skinnedBounds.Clear();
     InvalidateMaterialUniformState();
     PollProfileGPU();
     glViewport(0, 0, windowWidth, windowHeight);
@@ -1093,7 +1094,10 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;if(!gpuMesh->structuralSections.empty()&&i<gpuMesh->structuralOrientations.size()&&std::none_of(gpuMesh->structuralOrientations[i].begin(),gpuMesh->structuralOrientations[i].end(),[&](const auto& v){return gpuMesh->structuralSections[v.joints1.x]>=0;}))continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);if(!shadow)BindTerrainMaterial();BindTerrainGeometry(shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto w=gpuMesh->partOrientation[i];if(!gpuMesh->structuralSections.empty()){if(i<gpuMesh->structuralOrientations.size())for(const auto& candidate:gpuMesh->structuralOrientations[i])if(gpuMesh->structuralSections[candidate.joints1.x]>=0){w=candidate;break;}w=JudasRender::ResolveStructuralWeights(w,gpuMesh->structuralSections);}for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
-    if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
+    if(!palette->empty()){
+        JUDAS_PROFILE_SCOPE("Skinned mesh bounds");
+        bounds=m_render->skinnedBounds.Resolve(gpuMesh->bounds,*palette);
+    }
     if(!m_submittingBatch)++m_stats.renderablesConsidered;
     if(!m_submittingBatch&&!IsVisible(TransformBounds(bounds,model))){++m_stats.renderablesCulled;return;}
     if(!m_submittingBatch)++m_stats.renderablesVisible;

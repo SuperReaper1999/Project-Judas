@@ -13,6 +13,19 @@ from run_matrix import verify_state
 
 
 class WholeFrameMetricsTests(unittest.TestCase):
+    def test_explicit_lean_clock_records_keep_profiler_off_loss_visible(self):
+        rows = [dict(discarded_seconds=.1, incoming_delta_clipped_seconds=.75,
+                     cap_reached=True, steps=8, accumulator_seconds=0,
+                     pending_simulation_seconds=.233333)]
+        self.assertIsNone(simulation_loss(rows, profiled=False)['total_simulation_time_lost_seconds'])
+        actual = simulation_loss(rows, profiled=False, clock_telemetry=True)
+        self.assertAlmostEqual(actual['total_simulation_time_lost_seconds'], .85)
+        self.assertEqual(actual['physics_cap_frames'], 1)
+        self.assertEqual(actual['maximum_fixed_steps_per_frame'], 8)
+        del rows[0]['discarded_seconds']
+        self.assertIsNone(simulation_loss(rows, profiled=False, clock_telemetry=True)
+                          ['total_simulation_time_lost_seconds'])
+
     def test_pending_time_is_distinct_from_discarded_time(self):
         rows = [dict(discarded_seconds=0, cap_reached=False,
                      incoming_delta_clipped_seconds=0, steps=3,
@@ -145,6 +158,16 @@ class WholeFrameMetricsTests(unittest.TestCase):
         self.assertFalse(result['candidate_p99_120fps'])
         self.assertTrue(result['candidate_p99_60fps'])
         self.assertFalse(result['human_accepted'])
+        self.assertIsNone(result['candidate_simulation_time_lost_seconds'])
+        lean = copy.deepcopy(old)
+        for run in lean:
+            run['identity']['profile'] = False
+            run['summary'].update(physics_discarded_seconds=.1,
+                                  incoming_delta_clipped_seconds=.75,
+                                  total_simulation_time_lost_seconds=.85)
+        self.assertEqual(compare(lean, lean)['candidate_simulation_time_lost_seconds'], .85)
+        lean[0]['summary']['total_simulation_time_lost_seconds'] = None
+        self.assertIsNone(compare(lean, lean)['candidate_simulation_time_lost_seconds'])
 
     def test_percentiles_and_lows(self):
         values = [1.] * 990 + [10.] * 9 + [100.]

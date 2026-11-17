@@ -168,10 +168,13 @@ int main(int argc, char** argv) try {
         auto click = [&](const char* id) {
             const auto document = world.UI().Find("willow_town");
             world.UI().Layout(window.Width(), window.Height());
+            Check(world.UI().Focus(document, id), std::string("focus reveals authored control: ") + id);
+            world.UI().Layout(window.Width(), window.Height());
             const auto* layout = world.UI().LayoutOf(document, id);
             Check(layout && layout->visible && layout->enabled, std::string("usable authored UI control: ") + id);
             if (layout && layout->visible && layout->enabled) {
                 const auto p = layout->rect.position + layout->rect.size * .5f;
+                Check(layout->clip.Contains(p), "control centre is inside its actual scroll clip");
                 window.SetTestPointer(int(p.x), int(p.y));
                 window.QueueTestPhysical("mouse:Left", 1);
                 releasePointer = true;

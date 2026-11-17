@@ -24,6 +24,20 @@ steps, presentation scripts/audio, world views and overlays), swaps, then
 advances scene/save/stream services. Fixed steps retain the existing catch-up
 policy; benchmark reports must identify cap activation and discarded time.
 
+Current benchmark receipts with `clock_telemetry: 1` observe the actual
+InteractivePlay clock even with profiling disabled: fixed-step count, incoming
+clipping, discarded accumulator backlog, catch-up cap and remaining accumulator.
+This is observation of the existing policy, not a policy change. Historical
+profiler-off receipts without that explicit capability retain unknown loss.
+`SimulationClockTests` deliberately supplies a one-second hitch with profiling
+disabled and checks both loss components against actual body advancement.
+
+The enclosing `Lighting shadow planning` scope includes actual shadow rendering.
+Nested `Shadow light selection`, `Shadow cache keys` and `Shadow draw submission`
+scopes separate those costs; do not interpret the enclosing time as cache/key
+preparation or add it to its children. Set an adequate profiler depth and report
+truncation before using detailed scopes to choose an optimization.
+
 Fixed-step work includes script callbacks, navigation/weather/characters,
 Advanced Fluids only under its existing policy, MK2 with vehicle/deformable
 coupling, animation/ragdolls/sockets, particles and event/network publication.
@@ -892,3 +906,51 @@ do not relabel historical captures. A timed diagnostic run may retain fewer than
 120 frames (which can be the performance failure being investigated). The
 separate repeated regression gate still requires at least 1,000 samples per run;
 a successful file capture does not certify adequate sample count or frame budget.
+
+
+## Bounded reconciliation: skinned bounds reuse (2026-11-17)
+
+The independent audit separated the enclosing shadow scope: populated animation
+spent about 5.10 ms/frame in draw submission versus 0.24 ms in cache keys. A
+narrower scope measured repeated skinned bounds at 1.284 ms/frame across the 859
+untruncated intervals of an 864-frame probe; five affected intervals were excluded.
+Deep IK profiling truncated records and was excluded from full cost attribution.
+
+The renderer now owns a CPU-only exact-input bounds cache. A palette address is
+only a lookup hint: every reuse compares the complete matrix snapshot and source
+mesh bounds. Changed animation or geometry invalidates the product. A miss runs
+the original calculation; world transforms, per-camera frustum tests, all lights,
+cascades, draw submissions, LOD and simulation remain unchanged. BeginFrame and
+Shutdown retire snapshots; limits are 256 entries and 4 MiB of pose data plus
+bounded entry overhead. This replaces repeated calculation, without a second
+culling authority. Regression tests cover mutation, visibility restoration,
+geometry changes, empty poses and both storage limits.
+
+Three interleaved profiler-off pairs used the same frozen inputs, native GTX 970 /
+580.178.04, Ryzen 5 5600, modern GL, 1280×720, VSync off and no frame cap. Animation
+and combined trials were 20 seconds each; IK trials were 45 seconds. All eighteen
+captures reported zero clipped incoming time, discarded backlog and catch-up caps.
+The repository and capture storage monitors were active. This is native-host
+performance evidence, not Windows/browser/Android or human acceptance.
+
+| Workload | Baseline median p99 | Candidate median p99 | Change | Candidate worst hitch |
+| --- | ---: | ---: | ---: | ---: |
+| Populated animation | 13.435 ms | 13.233 ms | −1.5% | 27.588 ms |
+| Independent IK | 17.507 ms | 16.008 ms | −8.6% | 44.132 ms |
+| Combined gameplay | 8.087 ms | 7.410 ms | −8.4% | 14.862 ms |
+
+All three pass the matched relative-regression gate. Animation's tail improvement
+is small; its median frame consistently falls from 10.6–11.1 to 9.9–10.0 ms.
+Animation and IK still miss 120 FPS; these throughput captures do not establish the aggressive
+5 ms combined-engine critical-path goal. Exceptional animation/IK hitches remain explicit.
+Frame intervals measure whole Application throughput, not compositor/scanout
+latency; CPU and GPU durations must not be added. Other host work was present.
+
+Exact frozen executable hashes, source/build identities, input digest, all trial
+percentiles/hitches and loss observations are in
+[audit receipts](audits/platform-20261116/evidence/reconciliation-performance.json).
+Stage A used the original dirty physics experiment. These paired reconciliation
+runs instead use the explicit production source boundary in
+[SOURCE_SELECTION](audits/platform-20261116/SOURCE_SELECTION.md); the experiments
+remain on separate unmerged branches. Final SDK/application qualification is a
+separate gate from these timing comparisons.

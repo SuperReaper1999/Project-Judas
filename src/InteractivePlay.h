@@ -50,6 +50,14 @@ public:
     int LastFixedStepsThisFrame() const { return m_lastStepsThisFrame; }
     double LastFixedStepMilliseconds() const { return m_lastStepMilliseconds; }
     const FixedStepMeasurements& LastMeasurements() const { return m_measurements; }
+    struct FrameClockState {
+        double incomingClippedSeconds = 0;
+        double discardedSeconds = 0;
+        float accumulatorSeconds = 0;
+        bool capReached = false;
+    };
+    // Observations of the existing clock policy, available without profiling.
+    const FrameClockState& LastClockState() const { return m_clockState; }
 
     // Route input, run fixed steps unless authored UI pauses/owns input, then
     // present the world and project UI. A hidden display can retain authored
@@ -74,6 +82,7 @@ private:
     RuntimeWorld* m_world = nullptr;
     WorldCoordinates m_worldCoordinates;
     FixedStepMeasurements m_measurements;
+    FrameClockState m_clockState;
     FixedStepObserver m_observer;
     WorldOverlay m_overlay;
     int m_lastStepsThisFrame = 0;

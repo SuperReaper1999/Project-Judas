@@ -11,8 +11,12 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import time
 from performance.metrics import summarize, simulation_loss
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import workspace_storage
 
 
 def sample_process(pid):
@@ -49,6 +53,7 @@ def main():
     parser.add_argument('--workload-manifest', type=Path,
                         help='verify every frozen input before running; emitted by prepare_workloads.py')
     args = parser.parse_args()
+    workspace_storage.check()
     if not 0 <= args.warmup_seconds <= 30:
         parser.error('warmup must be finite and between 0 and 30 seconds')
     if os.environ.get("JUDAS_PHYSICS_DEBUG") == "1":
@@ -72,7 +77,7 @@ def main():
             parser.error('workload manifest digest differs')
     if args.out.exists():
         parser.error('output directory already exists')
-    args.out.mkdir(parents=True)
+    args.out.mkdir(parents=True, exist_ok=False)
     run = args.out / 'application'
     env = os.environ.copy()
     env.update(SDL_AUDIODRIVER='dummy', JUDAS_WINDOW_SIZE=args.resolution)
@@ -95,7 +100,13 @@ def main():
         try:
             process = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
             deadline = time.monotonic() + args.seconds + 120
+            next_storage_check = time.monotonic()
+            capture_limit = json.loads(workspace_storage.POLICY.read_text())['capture_limit_bytes']
             while process.poll() is None:
+                if time.monotonic() >= next_storage_check:
+                    if workspace_storage.usage(args.out) >= capture_limit:
+                        raise RuntimeError('capture storage budget reached; stopped without deleting evidence')
+                    next_storage_check = time.monotonic() + 2
                 if time.monotonic() > deadline:
                     process.terminate()
                     try:
@@ -118,6 +129,8 @@ def main():
                     process.wait(timeout=10)
             gpu_process.terminate()
             gpu_process.wait(timeout=10)
+    if workspace_storage.usage(args.out) >= capture_limit:
+        raise RuntimeError('capture storage budget reached; completed output retained for review')
     with (args.out / 'gpu.csv').open() as source:
         rows = list(csv.DictReader(source))
     hardware = {key.strip(): value.strip() for key, value in rows[0].items()} if rows else {}
@@ -146,7 +159,8 @@ def main():
         raise RuntimeError(f'workload failed; see {args.out / "application.log"}')
     rows = [json.loads(line) for line in (run / 'frames.jsonl').open()]
     report = summarize([row['interval_ms'] for row in rows])
-    report.update(simulation_loss(rows, profiled=not args.no_profile))
+    report.update(simulation_loss(rows, profiled=not args.no_profile,
+                                  clock_telemetry=native.get("clock_telemetry") == 1))
     if not args.no_profile:
         report['diagnostic_dropped_events'] = rows[-1]['scope_dropped_total'] - rows[0]['scope_dropped_total']
         report['diagnostic_truncated_records'] = rows[-1]['records_truncated_total'] - rows[0]['records_truncated_total']

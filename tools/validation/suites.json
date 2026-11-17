@@ -1842,6 +1842,81 @@
         "--output",
         "{output}/profiler-application"
       ]
+    },
+    {
+      "name": "scene-authoring-runtime",
+      "target": "judas_scene_tests",
+      "groups": [
+        "core",
+        "assets",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "editor-application-lifecycle",
+      "target": "judas_editor_application_lifecycle_tests",
+      "groups": [
+        "editor",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "world-persistence-continuation",
+      "target": "judas_world_persistence_tests",
+      "groups": [
+        "persistence",
+        "physics",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "powertrain-lifecycle",
+      "target": "judas_powertrain_lifecycle_tests",
+      "groups": [
+        "vehicles",
+        "persistence",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "wheel-lifecycle",
+      "target": "judas_wheel_lifecycle_tests",
+      "groups": [
+        "vehicles",
+        "persistence",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "simulation-clock-observation",
+      "target": "judas_simulation_clock_tests",
+      "groups": [
+        "core",
+        "profiling",
+        "lifecycle"
+      ]
+    },
+    {
+      "name": "willow-town-layout",
+      "target": "judas_willow_town_layout_tests",
+      "groups": [
+        "editor",
+        "ui",
+        "application"
+      ],
+      "args": [
+        "{root}/projects/willow_town/Willow_Town.judasproj",
+        "{output}/willow-town-layout"
+      ]
+    },
+    {
+      "name": "skinned-bounds-cache",
+      "target": "judas_skinned_bounds_cache_tests",
+      "groups": [
+        "rendering",
+        "animation"
+      ],
+      "args": []
     }
   ],
   "known_findings": [

@@ -5,6 +5,7 @@
 #include "BuildIdentity.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
+#include "SimulationTiming.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
 #include "../crash_proof/CollisionSearchTrace.h"
@@ -53,6 +54,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
  CrashCollisionSearchTrace searchTrace;const bool pairProfile=profile&&std::getenv("JUDAS_CCD_PAIR_PROFILE");PhysicsWorld* tracedPhysics=nullptr;
  std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
  unsigned loadingFrames=0;uint64_t loadingBegin=0;bool loadingScreenshot=false;
+ InteractivePlay::FrameClockState clockState;int clockSteps=0;
  ApplicationControl control;
  control.loadingFrame=[&](EngineHost& h,RuntimeWorld&){
   ++loadingFrames;const auto now=p.Now();if(!loadingBegin)loadingBegin=now;
@@ -74,11 +76,11 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
   // A completed interval crossing a timed deadline is still measured work,
   // especially when it is the very hitch this capture is intended to expose.
   if(previous&&ready&&(seconds>0||!done)&&!starting){if(!completedGameplayFrame)++inactiveSampleFrames;Json row={{"index",samples},{"interval_ms",double(now-previous)/1e6}};
-   if(profile){const auto f=p.Snapshot(p.FrameId()-1);row["frame_id"]=f.id;row["outer_ms"]=double(f.end-f.start)/1e6;row["waiting_ms"]=double(f.waiting)/1e6;row["collection_ms"]=double(f.collectionNanoseconds)/1e6;row["rss_bytes"]=f.processResidentBytes;row["steps"]=f.fixed.size();row["discarded_seconds"]=f.discardedSeconds;row["cap_reached"]=f.capReached;row["accumulator_seconds"]=f.accumulatorSeconds;double advanced=0;for(const auto& step:f.fixed)advanced+=step.simulationSeconds;row["simulation_seconds_advanced"]=advanced;row["pending_simulation_seconds"]=advanced+f.accumulatorSeconds+f.discardedSeconds;row["scope_dropped_total"]=f.diagnostics.droppedEvents;row["records_truncated_total"]=f.diagnostics.truncatedFrames;row["cpu_start_ns"]=f.start;row["cpu_end_ns"]=f.end;Json phases=Json::object();
+   row["steps"]=clockSteps;row["discarded_seconds"]=clockState.discardedSeconds;row["cap_reached"]=clockState.capReached;row["accumulator_seconds"]=clockState.accumulatorSeconds;row["incoming_delta_clipped_seconds"]=clockState.incomingClippedSeconds;const double advanced=clockSteps*double(SimulationTiming::kFixedTimestep);row["simulation_seconds_advanced"]=advanced;row["pending_simulation_seconds"]=advanced+clockState.accumulatorSeconds+clockState.discardedSeconds;
+   if(profile){const auto f=p.Snapshot(p.FrameId()-1);row["frame_id"]=f.id;row["outer_ms"]=double(f.end-f.start)/1e6;row["waiting_ms"]=double(f.waiting)/1e6;row["collection_ms"]=double(f.collectionNanoseconds)/1e6;row["rss_bytes"]=f.processResidentBytes;row["scope_dropped_total"]=f.diagnostics.droppedEvents;row["records_truncated_total"]=f.diagnostics.truncatedFrames;row["cpu_start_ns"]=f.start;row["cpu_end_ns"]=f.end;Json phases=Json::object();
     for(const auto& s:f.scopes)if(s.thread==f.mainThread){auto name=std::string(s.name.c_str());double ms=double(s.end-s.start)/1e6;phases[name]=phases.value(name,0.)+ms;}
     row["phases_ms"]=std::move(phases);
     Json counters=Json::object();for(const auto& c:f.counters)counters[c.name.c_str()]=c.value;
-    row["incoming_delta_clipped_seconds"]=counters.contains("Play incoming delta clipped seconds")?counters["Play incoming delta clipped seconds"]:Json(nullptr);
     row["counters"]=std::move(counters);Json fixed=Json::array();
     for(const auto& step:f.fixed)fixed.push_back(double(step.end-step.start-step.debuggerWaitNanoseconds)/1e6);
     row["fixed_step_ms"]=std::move(fixed);
@@ -103,7 +105,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
   if(!pulse.empty()){queue(pulse,ready&&!pulsed?1:0);if(ready)pulsed=true;}
   if(auto* scripts=world.Scripts();scripts&&!scripts->Diagnostics().empty())fault=true;
  };
- control.afterFrame=[&](EngineHost& h,RuntimeWorld&,InteractivePlay&){completedGameplayFrame=true;if(!screenshotDone&&resourcesReady){std::vector<unsigned char> pixels;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),pixels);if(!WriteRgbPng((std::filesystem::path(out)/"workload.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),pixels))throw std::runtime_error("workload preview capture failed");screenshotDone=true;}if(cap>0){JUDAS_PROFILE_WAIT("Benchmark FPS cap");const auto elapsed=p.Now()-previous;const auto budget=std::uint64_t(1e9/cap);if(elapsed<budget)std::this_thread::sleep_for(std::chrono::nanoseconds(budget-elapsed));}};
+ control.afterFrame=[&](EngineHost& h,RuntimeWorld&,InteractivePlay& play){clockState=play.LastClockState();clockSteps=play.LastFixedStepsThisFrame();completedGameplayFrame=true;if(!screenshotDone&&resourcesReady){std::vector<unsigned char> pixels;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),pixels);if(!WriteRgbPng((std::filesystem::path(out)/"workload.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),pixels))throw std::runtime_error("workload preview capture failed");screenshotDone=true;}if(cap>0){JUDAS_PROFILE_WAIT("Benchmark FPS cap");const auto elapsed=p.Now()-previous;const auto budget=std::uint64_t(1e9/cap);if(elapsed<budget)std::this_thread::sleep_for(std::chrono::nanoseconds(budget-elapsed));}};
  control.beforeShutdown=[&](EngineHost& h,RuntimeWorld&,InteractivePlay&){
   last=h.Jobs().Stats();resourceFailures=h.Resources().Stats().failed;
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
@@ -131,7 +133,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
  };
 
  std::vector<std::string> args={"whole-engine-benchmark",project};std::vector<char*> av;for(auto& a:args)av.push_back(a.data());int result=Application{}.Run(int(av.size()),av.data(),&control);
- std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",3},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"drawable_width",drawableWidth},{"drawable_height",drawableHeight},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
+ std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",3},{"clock_telemetry",1},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"drawable_width",drawableWidth},{"drawable_height",drawableHeight},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
  std::string error;if(profile&&!p.Export((std::filesystem::path(out)/"timeline-last120.json").string(),error))throw std::runtime_error(error);
  bool requireUncappedSwap=true;
 #ifdef __ANDROID__

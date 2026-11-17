@@ -6,6 +6,7 @@ on:
       '.github/workflows/**', '.gitignore',
       'scripts/check_ci_promotion.py', 'scripts/check_current_docs.py',
       'scripts/qualify_m100.py', 'scripts/qualify_sdk.py', 'scripts/qualify_sdk_workflows.py',
+      'tools/workspace_storage.py', 'tools/storage-policy.json', 'tests/test_workspace_storage.py',
       'tests/test_android_*.py', 'tools/build_android.py',
       'platform/android/java/**',
       'tests/test_ci_workflows.py', 'tests/test_release_packaging.py', 'tests/test_release_manifest.py',
@@ -40,6 +41,8 @@ jobs:
           "$RUNNER_TEMP/actionlint" -shellcheck= -pyflakes= .github/workflows/*.yml
       - name: Promotion proof and CI routing positive/negative controls
         run: python3 -m unittest discover -s tests -p test_ci_workflows.py -v
+      - name: Generated storage budget controls
+        run: python3 -m unittest discover -s tests -p test_workspace_storage.py -v
       - name: Release packaging and update controls
         run: |
           python3 tests/test_release_packaging.py

@@ -9,6 +9,7 @@
 #include "GpuParticlePass.h"
 #include "WaterPass.h"
 #include "ShadowPassCache.h"
+#include "SkinnedBoundsCache.h"
 #include "../lighting/LightLists.h"
 
 namespace JudasRender {
@@ -20,6 +21,7 @@ struct RendererInfrastructure {
     GpuParticlePass gpuParticlePass;
     WaterPass waterPass;
     ShadowPassCache shadowCache;
+    SkinnedBoundsCache skinnedBounds;
     JudasLighting::LightLists lightLists;
     bool lightStorageReady=false,lightStorageUnavailable=false,lightStorageVariant=false;
     bool persistentUploads=true, orderedInstances=false;

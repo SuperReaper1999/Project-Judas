@@ -7,8 +7,10 @@ Experimental Judas editor, then Play; or run:
 build/judas projects/water_v2_workshop/water_v2_workshop.judasproj
 ```
 
-Advanced Fluids must be explicitly enabled in Project Settings. Alpha's fluid
-lock is unchanged; published Alpha SDKs cannot run this preview.
+Advanced Fluids must be explicitly enabled in Project Settings. The current V2
+runtime supports that project opt-in in every build channel. This source-preview
+project is not bundled in the curated SDK inventory; use a matching runtime and
+export the project normally.
 
 - WASD/mouse: walk/look. Space: jump or swim up. Q: dive.
 - Aim the centre crosshair at a loose prop within 5 metres; G picks it up or

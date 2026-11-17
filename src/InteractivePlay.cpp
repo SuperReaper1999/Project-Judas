@@ -34,6 +34,7 @@ bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCo
     if(m_debugger)m_debugger->Bind(world);
     outError.clear();
     m_physicsAccumulator = 0.0f;
+    m_clockState = {};
     m_fixedStepsSinceReset = 0;
     m_wasPauseMenuOpen = false;
     m_captureInitialized = false;
@@ -69,6 +70,7 @@ void InteractivePlay::SetFixedStepMeasurementFlags(bool fire, bool fluid) {
 
 float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool render, const RenderTargetHandle* destination, bool auxiliary) {
     JUDAS_PROFILE_SCOPE("Play frame");
+    m_clockState = {};
     RuntimeWorld& world = *m_world;
     if(m_debugger&&m_debugger->Detached())SetPhysicsDebugger({});
     if(m_debugger&&m_debugger->Manual()){
@@ -85,6 +87,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         }
         if(m_debugger->Detached())SetPhysicsDebugger({});
         else if(m_lastStepsThisFrame)m_debugger->PresentRoot();
+        m_clockState.accumulatorSeconds = m_physicsAccumulator;
         PerformanceProfiler::Get().FixedState(m_physicsAccumulator,false,0,true);
         return 0;
     }
@@ -121,6 +124,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     }
     const float incomingFrameDeltaTime=frameDeltaTime;
     frameDeltaTime = std::min(frameDeltaTime, SimulationTiming::kMaxFrameDeltaTime);
+    m_clockState.incomingClippedSeconds = double(incomingFrameDeltaTime) - double(frameDeltaTime);
     JUDAS_PROFILE_COUNTER("Play incoming frame seconds",double(incomingFrameDeltaTime),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Play incoming delta clipped seconds",double(incomingFrameDeltaTime)-double(frameDeltaTime),ProfileCounterMode::Sum);
 
@@ -160,12 +164,16 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
 
     if(m_debugger&&m_debugger->Manual()){
         m_debugger->PresentRoot();
+        m_clockState.accumulatorSeconds = m_physicsAccumulator;
         PerformanceProfiler::Get().FixedState(m_physicsAccumulator,false,0,true);
         return 0;
     }
     // How far real time has progressed into an as-yet-unsimulated fixed
     // step — the presentation interpolation factor (M6).
     PerformanceProfiler::Get().FixedState(m_physicsAccumulator,profileCap,profileDiscarded,IsPaused()||uiOwned);
+    m_clockState.accumulatorSeconds = m_physicsAccumulator;
+    m_clockState.discardedSeconds = profileDiscarded;
+    m_clockState.capReached = profileCap;
     const float presentationAlpha = m_physicsAccumulator / SimulationTiming::kFixedTimestep;
     window.Input().SuspendRumble(IsPaused());
     world.PresentationScripts(&window.Input(),frameDeltaTime,presentationAlpha);

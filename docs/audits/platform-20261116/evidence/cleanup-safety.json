@@ -1,0 +1,61 @@
+{
+  "root": "/home/conner/Documents/GitHub/Project-Judas",
+  "head": "ca0d437135ac5f5dd7adf9314b56526099d1c313",
+  "status": "# branch.oid ca0d437135ac5f5dd7adf9314b56526099d1c313\n# branch.head Experimental\n# branch.upstream origin/Experimental\n# branch.ab +0 -0\n1 .M N... 100644 100644 100644 3fc91f6ae9a98a6dec11cb204b3b6a64da78267a 3fc91f6ae9a98a6dec11cb204b3b6a64da78267a CMakeLists.txt\n1 .M N... 100644 100644 100644 3f34f2ec6751a1fddbab45ab7ee35af3e7f01adb 3f34f2ec6751a1fddbab45ab7ee35af3e7f01adb src/PhysicsEventDebugger.cpp\n1 .M N... 100644 100644 100644 2f77628870f6f66fb78deda383a261597f6302e7 2f77628870f6f66fb78deda383a261597f6302e7 src/PhysicsWorld.cpp\n1 .M N... 100644 100644 100644 6772f8d5f0d1cf705e442644f5bb70309e0533d1 6772f8d5f0d1cf705e442644f5bb70309e0533d1 src/PhysicsWorld.h\n1 .M N... 100644 100644 100644 13257fc7f7d15e46ddc79ceb3aa7621a23244ab7 13257fc7f7d15e46ddc79ceb3aa7621a23244ab7 src/physics/WorldBodies.cpp\n1 .M N... 100644 100644 100644 d0cb50b630c88531730958d8c0612c04cb9f40bd d0cb50b630c88531730958d8c0612c04cb9f40bd src/physics/WorldInternal.h\n1 .M N... 100644 100644 100644 519916301e99976adbdb2d37f79c568a40c99ff8 519916301e99976adbdb2d37f79c568a40c99ff8 src/physics/WorldMk2ArrivalBatch.inl\n1 .M N... 100644 100644 100644 d8fb69b727b76faf07943c73ad4fe2ea4bbe7db3 d8fb69b727b76faf07943c73ad4fe2ea4bbe7db3 src/physics/WorldMk2Continuous.cpp\n1 .M N... 100644 100644 100644 131e3d036ccf0bc176fd13d611dbd45114fb1264 131e3d036ccf0bc176fd13d611dbd45114fb1264 src/physics/WorldMk2Solver.cpp\n? docs/REDUCED_VEHICLE_HULL_PROOF.md\n? docs/audits/\n? src/ContactDeformation.h\n? src/vehicle_damage/\n? tests/ReducedHullTests.cpp\n? tools/vehicle_hull/\n",
+  "worktrees": [
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-core-replacement-20261116/source",
+      "head": "d12490a9f1fa1b4a48672a7ab858d1b2f3347141",
+      "status": "",
+      "containing_refs": [
+        "refs/heads/codex/physics-core-v2"
+      ],
+      "ignored": ""
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/baseline-source",
+      "head": "cd4cb87e41f0fc6bc1b7928f6649de3274ba94a4",
+      "status": "",
+      "containing_refs": [
+        "refs/heads/Experimental",
+        "refs/heads/codex/physics-core-v2",
+        "refs/remotes/origin/Experimental",
+        "refs/remotes/origin/Vulkan-Exp"
+      ],
+      "ignored": ""
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/vehicles-v2/committed-source",
+      "head": "b6a4fedc3f66d75d2917601663d6873ea72da016",
+      "status": "",
+      "containing_refs": [
+        "refs/heads/Experimental",
+        "refs/heads/codex/physics-core-v2",
+        "refs/remotes/origin/Experimental",
+        "refs/remotes/origin/Vulkan-Exp"
+      ],
+      "ignored": "!! tools/__pycache__/\n"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/whole-engine-performance/sdk-source",
+      "head": "c2a4e4088fbf31514218d462e83fd7f13e086046",
+      "status": "",
+      "containing_refs": [
+        "refs/heads/Experimental",
+        "refs/heads/codex/physics-core-v2",
+        "refs/remotes/origin/Experimental",
+        "refs/remotes/origin/Vulkan-Exp"
+      ],
+      "ignored": ""
+    }
+  ],
+  ".cache": {
+    "allocated_bytes": 108348403712,
+    "inode": 42370977
+  },
+  "build": {
+    "allocated_bytes": 19998494720,
+    "inode": 3440034
+  },
+  "disk_before": "Filesystem        1B-blocks         Used    Available Use% Mounted on\n/dev/sdc2      943660769280 362394619904 533255352320  41% /home/conner/Documents/GitHub/Project-Judas\n"
+}

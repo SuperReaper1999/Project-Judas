@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "directory_limits_bytes": {
+    ".cache": 8589934592,
+    "build": 15032385536
+  },
+  "total_limit_bytes": 17179869184,
+  "capture_limit_bytes": 268435456,
+  "retention": "Reuse one build per active toolchain/configuration. Keep only the current experiment campaign. Stop on budget; review exact owned paths before cleanup. No automatic deletion. Source experiments belong on Git branches outside generated directories."
+}

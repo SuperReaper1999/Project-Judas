@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'tools/validation/suites.json'
 sys.path.insert(0, str(ROOT / 'tools'))
 from package_sdk import probe_identity  # Same bounded tool probe as distribution verification.
+import workspace_storage
 
 
 CHANNELS = ('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')
@@ -281,6 +282,10 @@ def main():
     now = datetime.datetime.now(datetime.timezone.utc)
     output = (args.output or ROOT / '.cache/prealpha/validation' /
               (now.strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])).resolve()
+    try:
+        workspace_storage.check(ROOT)
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
     output.mkdir(parents=True, exist_ok=False)
     environment = execution_environment(output, args.graphics_profile)
     revision = git('rev-parse', 'HEAD')
@@ -315,9 +320,11 @@ def main():
         command = [str(args.build_dir.resolve() / (entry['target'] + extension))]
         command += [a.format(output=output, root=ROOT) for a in entry.get('args', [])]
         try:
+            workspace_storage.check(ROOT)
             result = run_verified_case(command, output / (entry['name'] + '.log'), output,
                                        environment, args.timeout, expected_source,
                                        expected_channel=args.expected_channel)
+            workspace_storage.check(ROOT)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             result = dict(status='unavailable', exit=None, argv=command, error=str(error))
             (output / (entry['name'] + '.log')).write_text(str(error) + '\n')

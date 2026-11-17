@@ -1,0 +1,48 @@
+{
+  "base": "ca0d437135ac5f5dd7adf9314b56526099d1c313",
+  "tracked_experiment_paths": [
+    "CMakeLists.txt",
+    "src/PhysicsEventDebugger.cpp",
+    "src/PhysicsWorld.cpp",
+    "src/PhysicsWorld.h",
+    "src/physics/WorldBodies.cpp",
+    "src/physics/WorldInternal.h",
+    "src/physics/WorldMk2ArrivalBatch.inl",
+    "src/physics/WorldMk2Continuous.cpp",
+    "src/physics/WorldMk2Solver.cpp"
+  ],
+  "untracked_experiment_paths": [
+    "docs/REDUCED_VEHICLE_HULL_PROOF.md",
+    "src/ContactDeformation.h",
+    "tests/ReducedHullTests.cpp",
+    "src/vehicle_damage/ReducedHull.cpp",
+    "src/vehicle_damage/ReducedHull.h",
+    "tools/vehicle_hull/ReducedHullContactGate.cpp",
+    "tools/vehicle_hull/ReducedHullProof.cpp",
+    "tools/vehicle_hull/ReducedVehicleProof.cpp"
+  ],
+  "sha256": {
+    "CMakeLists.txt": "68b96bb0df8944254b64f2b9d943a92ba39843a5af5975bae71d4225ea877f31",
+    "src/PhysicsEventDebugger.cpp": "322d82b3b344059a78bccb57c138c044169b3d1ae5694f4bf9f2a6375ac7df70",
+    "src/PhysicsWorld.cpp": "a0af66ea539a98a48cd84aaf8d840d5c967034c05e782826f9e6b962317bac1c",
+    "src/PhysicsWorld.h": "7f695927f5a6ea5eec5b3599ddc3100e51cf8eb3ca0feb1ca870e853b4dc9472",
+    "src/physics/WorldBodies.cpp": "b16556f117dacf1b5b6c2c0bbc79f0d51af03b2300ab01078849d9416a06a1b5",
+    "src/physics/WorldInternal.h": "4012a29523501715a9965aa342826007e0216df28a5bbf0294f80a321147f2f5",
+    "src/physics/WorldMk2ArrivalBatch.inl": "ef2c1cb4793fdb5d7197c1c8a92f9f4f56c3344355be717fefe3fc503cf5e619",
+    "src/physics/WorldMk2Continuous.cpp": "1c0940ef42e5fad9d1c74d765d07b31152e5bd07dc2e13b85a0746327e7c9719",
+    "src/physics/WorldMk2Solver.cpp": "9855550e774e2ca9cfc68192ee316a5b8070dd804269af407303239f4cfe0f30",
+    "docs/REDUCED_VEHICLE_HULL_PROOF.md": "f083fa2bdd7aea35bcea953076a8c3e88fefa927bd224b154da678296aef5108",
+    "src/ContactDeformation.h": "adac36ced79633fb3fd28bb77fa8a7f787c2a31668473501da0c1984810f4df8",
+    "tests/ReducedHullTests.cpp": "3eb3127f23be1a7081c8a9e4a9188af45ebeb3ac4ca590fa42e6a2d883e617a3",
+    "src/vehicle_damage/ReducedHull.cpp": "d6bc62d6b201e25dd1d2a819651437a0c96cf1b5293130fe46481f6e43d9aeeb",
+    "src/vehicle_damage/ReducedHull.h": "13f2d0e531b045918e56e27382520cd7c3fed73de75b92830aebcc5cbdde789b",
+    "tools/vehicle_hull/ReducedHullContactGate.cpp": "15938b214acd80cb70e88887101abb68814b8eef4a57fa533f3d0b18ca37aa17",
+    "tools/vehicle_hull/ReducedHullProof.cpp": "d222066255bbe2302836393a45161a4ab371aec402647819d989781b705299ef",
+    "tools/vehicle_hull/ReducedVehicleProof.cpp": "51336e81ac44b34eeecefba883319e0c2706ca0bb708e41f0e9fe51f78edb496"
+  },
+  "branch": "codex/preserved-contact-material-20261117",
+  "commit": "2e6079950625fedb59b343979fc47f29de15395b",
+  "worktree": "/home/conner/Documents/GitHub/Project-Judas/source-worktrees/contact-material-preserved",
+  "verified": true,
+  "primary_experiment_paths_restored_to_base": true
+}

@@ -36,10 +36,17 @@ def compare(baseline, candidate, p99_regression_fraction=.10):
     new = statistics.median(run['summary']['p99_ms'] for run in candidate)
     if not math.isfinite(old) or not math.isfinite(new) or old <= 0 or new <= 0:
         raise ValueError('invalid p99')
+    def maximum_observed(key):
+        values = [run['summary'].get(key) for run in candidate]
+        return max(values) if all(isinstance(value, (int, float)) and
+                                  math.isfinite(value) and value >= 0 for value in values) else None
     return {'baseline_p99_ms': old, 'candidate_p99_ms': new,
             'p99_change_fraction': new / old - 1,
             'regression_pass': new <= old * (1 + p99_regression_fraction),
             'candidate_p99_120fps': new <= 1000 / 120,
             'candidate_p99_60fps': new <= 1000 / 60,
             'exceptional_worst_ms': max(run['summary']['worst_ms'] for run in candidate),
+            'candidate_discarded_seconds': maximum_observed('physics_discarded_seconds'),
+            'candidate_incoming_clipped_seconds': maximum_observed('incoming_delta_clipped_seconds'),
+            'candidate_simulation_time_lost_seconds': maximum_observed('total_simulation_time_lost_seconds'),
             'human_accepted': False}

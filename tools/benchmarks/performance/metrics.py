@@ -3,22 +3,32 @@ import math
 import statistics
 
 
-def simulation_loss(rows, profiled=True):
-    """Keep unobserved historical clock loss unknown, not a zero-loss pass."""
-    discarded = sum(row['discarded_seconds'] for row in rows) if profiled else None
-    complete = profiled and bool(rows) and all(
-        row.get('incoming_delta_clipped_seconds') is not None for row in rows)
-    clipped = sum(row['incoming_delta_clipped_seconds'] for row in rows) if complete else None
-    def observed_max(key):
-        return max(row[key] for row in rows) if profiled and rows and all(
-            row.get(key) is not None for row in rows) else None
-    return {'peak_pending_simulation_seconds': observed_max('pending_simulation_seconds'),
-            'peak_post_step_accumulator_seconds': observed_max('accumulator_seconds'),
-            'maximum_fixed_steps_per_frame': observed_max('steps'),
+def simulation_loss(rows, profiled=True, clock_telemetry=False):
+    """Keep historical/unobserved loss unknown; accept explicit lean clock receipts."""
+    observed = profiled or clock_telemetry
+    def values(key):
+        if not observed or not rows:
+            return None
+        result = [row.get(key) for row in rows]
+        return result if all(isinstance(v, (int, float)) and math.isfinite(v) and v >= 0
+                             for v in result) else None
+    def total(key):
+        result = values(key)
+        return sum(result) if result is not None else None
+    def maximum(key):
+        result = values(key)
+        return max(result) if result is not None else None
+    discarded = total('discarded_seconds')
+    clipped = total('incoming_delta_clipped_seconds')
+    caps = values('cap_reached')
+    return {'peak_pending_simulation_seconds': maximum('pending_simulation_seconds'),
+            'peak_post_step_accumulator_seconds': maximum('accumulator_seconds'),
+            'maximum_fixed_steps_per_frame': maximum('steps'),
             'physics_discarded_seconds': discarded,
-            'physics_cap_frames': sum(bool(row['cap_reached']) for row in rows) if profiled else None,
+            'physics_cap_frames': sum(bool(v) for v in caps) if caps is not None else None,
             'incoming_delta_clipped_seconds': clipped,
-            'total_simulation_time_lost_seconds': discarded + clipped if complete else None}
+            'total_simulation_time_lost_seconds': discarded + clipped
+                if discarded is not None and clipped is not None else None}
 
 
 def percentile(values, fraction):

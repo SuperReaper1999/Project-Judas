@@ -98,4 +98,8 @@ if(JUDAS_ENABLE_VALIDATION)
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_validation_registration.py -v)
     set_tests_properties(prealpha.gate-registration PROPERTIES LABELS "prealpha;routine;tooling")
+    add_test(NAME prealpha.workspace-storage
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_workspace_storage.py -v)
+    set_tests_properties(prealpha.workspace-storage PROPERTIES LABELS "prealpha;routine;tooling")
 endif()

@@ -49,13 +49,18 @@ Follow [installation/distribution](docs/DISTRIBUTION.md) for dependencies,
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
-cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
-ctest --test-dir build -L prealpha --output-on-failure
+python3 tools/workspace_storage.py run -- cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
+python3 tools/workspace_storage.py run -- ctest --test-dir build -L prealpha --output-on-failure
 ```
 
 Graphics checks require a working desktop GL context or Xvfb/Mesa. Headless native
 checks do not prove hardware/controller/audio acceptance. See [Windows](docs/WINDOWS.md),
 [Android](docs/ANDROID.md) and [experimental browser export](docs/BROWSER_SUPPORT.md).
 Source identity is not a published release or human acceptance of this checkpoint.
+
+Reuse active build directories and run builds/tests through the storage guard.
+The [storage policy](docs/WORKSPACE_STORAGE.md) bounds generated output and keeps
+source experiments on Git branches. Budget exhaustion stops work; it never deletes
+unknown files automatically.
 
 Copyright © 2026 Conner / SuperReaper1999. [MIT licence](LICENSE).

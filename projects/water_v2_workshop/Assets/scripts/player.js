@@ -102,7 +102,7 @@ export default class {
   this.hud.get('crosshair').visible=!this.hud.modal;
   input.pointerCapture=!this.hud.modal;
   const s=world.gridWaterRegions[0]?.gridWater?.state;
-  let text=s?`Water ${s.quantity.toFixed(3)} m³ | stored ${s.storedDisplacement.toFixed(3)} m³ | swim ${Math.round(this.immersion*100)}%\n${s.simulationMs.toFixed(2)} ms incl. geometry/body loads | pump ${this.state.pump?'ON':'OFF'}\n${s.error||'Grid owns quantity; mesh is presentation only.'}`:'Advanced Fluids locked or disabled; use an Experimental source build.';
+  let text=s?`Water ${s.quantity.toFixed(3)} m³ | stored ${s.storedDisplacement.toFixed(3)} m³ | swim ${Math.round(this.immersion*100)}%\n${s.simulationMs.toFixed(2)} ms incl. geometry/body loads | pump ${this.state.pump?'ON':'OFF'}\n${s.error||'Grid owns quantity; mesh is presentation only.'}`:'Water region unavailable. Enable Advanced Fluids in Project Settings and check the scene diagnostics.';
   const target=!this.held?.valid?this.target():null;
   text+='\n'+(this.held?.valid?'Holding a prop | G: release / H: throw':target?.entity?.motionType==='dynamic'?'G: pick up this prop':'Aim at a loose prop within 5 metres.');
   text+='\n'+this.feedback;

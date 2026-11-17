@@ -78,13 +78,14 @@ states these independently guarded contracts.
 `Simulation.cpp` is authoritative. This phase map does not promise callback
 ordering between unrelated script instances.
 
-1. Commit an origin request at a fixed boundary; update navigation, begin the
-   liquid step, process incoming network work and invoke fixed scripts.
+1. Commit an origin request at a fixed boundary; update navigation, process
+   incoming network work and invoke fixed scripts. Replica clients advance their
+   script clock and snapshots without a second local dynamics solve.
 2. Prepare weather, opted-in character/reference/physical animation and conserved
    liquids; apply the applicable gravity and other force consumers.
 3. Advance mechanical sources, wheel contacts/load feedback and rigid physics.
    Coupled material/mechanical configurations use their bounded authored substeps.
-4. Advance legacy fluid coupling where present, combustion/coarse state, remaining
+4. Advance combustion/coarse state, remaining
    character work and final physical/animation/socket/deformable observations.
 5. Publish wheels, powertrains, particles and simulation time; deliver physics and
    fracture events, drain signals and publish network snapshots.

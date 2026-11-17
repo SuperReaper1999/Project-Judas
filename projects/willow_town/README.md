@@ -14,6 +14,11 @@ Open **Willow_Town.judasproj** in the current Experimental editor and press Play
 or launch it with the matching `judas` runtime. This requires the AI helpers added
 after Alpha v1.1.0; the older published Alpha runtime is not sufficient.
 
+The interface adapts to the editor's small Game view (681×386) and larger
+standalone windows. The right sidebar scrolls; use the wheel or keyboard focus
+to reach utility scores, experiment controls and shop actions. Header and resident
+controls stay outside that scrolling area.
+
 - **Click a person**, or their name along the bottom, to see their needs, wallet,
   job, current decision and native utility scores.
 - **Take control** lets you walk that person with **WASD / arrows**. Everyone else

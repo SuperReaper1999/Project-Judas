@@ -85,7 +85,10 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
                     const ShadowScene& scene,const std::function<void()>& draw){
     JUDAS_PROFILE_SCOPE("Lighting shadow planning");
     const auto view=renderer.ViewMatrix(),projection=renderer.ProjectionMatrix();
-    auto selected=SelectShadowLights(lights,view,projection,renderer.ShadowBudget());
+    auto selected=[&]{
+        JUDAS_PROFILE_SCOPE("Shadow light selection");
+        return SelectShadowLights(lights,view,projection,renderer.ShadowBudget());
+    }();
     // Per-view importance selects lights; a bounded context-owned LRU retains
     // inactive charts for other cameras instead of thrashing the first slots.
     renderer.ShadowCache().AssignLocalSlots(selected);
@@ -102,14 +105,21 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
     const auto* reuse=std::getenv("JUDAS_SHADOW_REUSE");
     const bool cacheable=!scene.volatileContent&&!(reuse&&std::strcmp(reuse,"0")==0);
     auto render=[&](int slot,std::uint64_t identity,const glm::mat4& matrix){
-        JudasRender::ShadowPassKey key;key.slot=slot;key.source=identity;key.lightViewProjection=matrix;
+        JudasRender::ShadowPassKey key;
+        {
+        JUDAS_PROFILE_SCOPE("Shadow cache keys");
+        key.slot=slot;key.source=identity;key.lightViewProjection=matrix;
         key.viewDependentLod=renderer.HasViewDependentMeshLods();
         if(key.viewDependentLod){key.cameraView=view;key.cameraProjection=projection;key.viewport=renderer.RenderTargetDiagnostics().viewport;}
         key.resourceRevision=renderer.ShadowResourceRevision();
         const Frustum frustum(matrix);
         for(const auto& c:scene.casters)if(frustum.IsVisible(c.bounds)){Append(key.content,c.content);}
         if(cacheable&&renderer.ShadowCache().Matches(key)&&renderer.ReuseShadowChart(slot,matrix))return;
+        }
+        {
+        JUDAS_PROFILE_SCOPE("Shadow draw submission");
         renderer.BeginShadowPass(slot,matrix);draw();renderer.EndShadowPass();
+        }
         // Resource publication during drawing makes this observation ineligible
         // next time. Unknown dynamic owners never publish reusable snapshots.
         if(cacheable)renderer.ShadowCache().Remember(key);

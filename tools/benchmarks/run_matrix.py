@@ -115,8 +115,6 @@ def main():
                 paths[mode].append(capture)
         old, new = [load(p) for p in paths['baseline']], [load(p) for p in paths['candidate']]
         result = compare(old, new, args.p99_regression_fraction)
-        result['candidate_discarded_seconds'] = max((r['summary']['physics_discarded_seconds'] or 0)
-                                                    for r in new) if not args.no_profile else None
         result['candidate_worst_within_60fps'] = result['exceptional_worst_ms'] <= 1000 / 60
         campaign['results'][case] = result
         (out / 'RESULTS.json').write_text(json.dumps(campaign, indent=2) + '\n')

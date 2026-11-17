@@ -95,8 +95,9 @@ export default class WillowTown {
   // UI consumes its own physical bindings first. Empty scenery never changes
   // selection; a normal short click still works without a fixed step that frame.
   if(!this.town||!input.pressed('select'))return;
-  const p=input.pointer,v=world.viewport;
-  if(p.x*v.width>=v.width-this.panel||p.y*v.height<66||p.y*v.height>v.height-89)return;
+  const p=input.pointer,v=world.viewport,r=this.mapRect;
+  const px=p.x*v.width,py=p.y*v.height;
+  if(!r||px<r.x||px>r.x+r.width||py<r.y||py>r.y+r.height)return;
   const ray=world.unproject({x:p.x,y:p.y});
   if(!ray||Math.abs(ray.direction.z)<1e-8)return;
   const t=-ray.origin.z/ray.direction.z;
@@ -137,38 +138,55 @@ export default class WillowTown {
     selected:brain?.selected??null,decisionElapsed:brain?.elapsed??null};})}));
  }
  layout(){
-  const viewport=world.viewport,w=Math.max(640,viewport.width),h=Math.max(480,viewport.height);
+  const viewport=world.viewport,w=Math.max(640,viewport.width),h=Math.max(360,viewport.height);
   const key=w+'x'+h;if(key===this.size||!this.doc)return;this.size=key;
+  const compact=w<1100||h<600,header=compact?106:66,footer=compact?54:30;
   this.panel=Math.max(300,Math.min(370,w*.27));const x=w-this.panel,pad=18,inner=this.panel-pad*2;
   this.doc.referenceSize={x:w,y:h};
-  const set=(id,x,y,width,height)=>this.doc.get(id).setLayout({offset:{x,y},size:{x:width,y:height}});
-  set('canvas',0,0,w,h);set('header',0,0,w,66);set('sidebar',x,66,this.panel,h-96);
-  set('brand',22,9,280,30);set('subtitle',23,39,390,20);
-  set('clock',Math.max(350,w*.36),20,220,28);
-  for(const [i,id] of ['pause','speed','save','load'].entries())set(id,w-406+i*98,16,90,34);
-  set('hiring-toggle',w-584,16,164,34);
-  const sy=Math.min(1,(h-112)/660);this.sideScale=sy;
-  const line=(id,y,height=25)=>set(id,x+pad,76+y*sy,inner,height*sy);
-  line('person-name',0,34);line('person-job',34,22);line('person-life',57,21);
-  line('person-action',85,29);line('person-reason',115,37);
-  for(const [i,need] of ['hunger','fatigue','social'].entries()){
-   line('need-'+need,157+i*30,21);line('track-'+need,180+i*30,6);line('bar-'+need,180+i*30,6);
+  const get=id=>this.doc.get(id);
+  const set=(id,x,y,width,height)=>get(id).setLayout({offset:{x,y},size:{x:width,y:height}});
+  set('canvas',0,0,w,h);set('header',0,0,w,header);set('sidebar',x,header,this.panel,h-header-footer);
+  set('brand',22,6,280,36);set('subtitle',23,43,compact?350:390,20);
+  get('brand').configure({fontSize:compact?22:25});get('subtitle').configure({fontSize:compact?12:14});
+  set('clock',compact?w-250:Math.max(350,w*.36),compact?10:20,230,28);
+  get('clock').configure({fontSize:compact?16:20});
+  const controls=['hiring-toggle','pause','speed','save','load'];
+  for(const [i,id] of controls.entries()){
+   const widths=compact?[154,86,86,86,86]:[164,90,90,90,90];
+   const left=compact?18+widths.slice(0,i).reduce((a,b)=>a+b+8,0):w-584+(i===0?0:178+(i-1)*98);
+   set(id,left,compact?68:16,widths[i],compact?28:34);get(id).configure({fontSize:compact?13:16});
   }
-  line('person-money',256,23);line('control',286,33);line('person-employment',328,33);
-  for(const [i,id] of ['dismiss','job-toggle'].entries())set(id,x+pad+i*(inner+8)/2,76+369*sy,(inner-8)/2,29*sy);
-  line('scores-title',410,20);line('scores',436,110);line('experiment-label',550,18);
-  for(const [i,id] of ['hungry','tired','lonely','hurt'].entries())set(id,x+pad+i*(inner+6)/4,76+573*sy,(inner-18)/4,28*sy);
-  line('shop-status',610,20);
-  for(const [i,id] of ['shop-toggle','restock'].entries())set(id,x+pad+i*(inner+8)/2,76+633*sy,(inner-8)/2,27*sy);
-  const townWidth=w-this.panel;
-  for(const [i,r] of this.state.residents.entries())set('resident-'+r.id,16+i*(townWidth-32)/6,h-79,(townWidth-48)/6,35);
-  set('town-help',20,h-108,townWidth-40,20);
-  set('footer',0,h-30,w,30);set('message',20,h-26,w-40,22);
+  // Sidebar children have local offsets and retain their authored font sizes.
+  // A real Scroll container keeps every action reachable at small Game-view sizes.
+  const line=(id,y,height=24)=>set(id,pad,y,inner,height);
+  line('person-name',12,40);line('person-job',50,24);line('person-life',78,40);
+  line('person-action',124,48);line('person-reason',178,70);
+  for(const [i,need] of ['hunger','fatigue','social'].entries()){
+   line('need-'+need,254+i*42,22);line('track-'+need,280+i*42,6);line('bar-'+need,280+i*42,6);
+  }
+  line('person-money',386,40);line('control',434,34);line('person-employment',480,64);
+  for(const [i,id] of ['dismiss','job-toggle'].entries())set(id,pad+i*(inner+8)/2,554,(inner-8)/2,34);
+  line('scores-title',602,22);line('scores',632,132);line('experiment-label',778,22);
+  for(const [i,id] of ['hungry','tired','lonely','hurt'].entries())set(id,pad+i*(inner+6)/4,810,(inner-18)/4,34);
+  line('shop-status',858,40);
+  for(const [i,id] of ['shop-toggle','restock'].entries())set(id,pad+i*(inner+8)/2,908,(inner-8)/2,34);
+  const townWidth=w-this.panel,row=h-footer-40;
+  for(const [i,r] of this.state.residents.entries()){
+   set('resident-'+r.id,16+i*(townWidth-32)/6,row,(townWidth-48)/6,32);
+   get('resident-'+r.id).configure({fontSize:compact?13:16});
+  }
+  set('town-help',20,row-26,townWidth-40,22);
+  get('town-help').configure({fontSize:compact?12:13});
+  get('town-help').text=compact?'Click resident · Space: pause · Esc: AI':'Click anyone to inspect  |  Space: pause  |  Esc: return to AI';
+  set('footer',0,h-footer,w,footer);set('message',20,h-footer+4,w-40,footer-8);
+  get('message').configure({fontSize:compact?12:14});
+  this.mapRect={x:16,y:header+8,width:townWidth-32,height:row-40-header-8};
  }
  camera(){
-  const v=world.viewport,w=Math.max(640,v.width),h=Math.max(480,v.height),panel=this.panel??340;
-  const height=Math.max(25.5,33*h/Math.max(300,w-panel-24),23*h/Math.max(260,h-180));
-  const position={x:panel*.5*height/h,y:-23*height/h,z:30};
+  const v=world.viewport,w=Math.max(640,v.width),h=Math.max(360,v.height),r=this.mapRect;
+  if(!r)return;
+  const height=Math.max(25.5,33*h/Math.max(1,r.width),23*h/Math.max(1,r.height));
+  const position={x:(w/2-r.x-r.width/2)*height/h,y:(r.y+r.height/2-h/2)*height/h,z:30};
   world.setView({position,rotation:{w:1,x:0,y:0,z:0}},60,{projection:'orthographic',height,near:.01,far:100});
   this.state.view={position,height};
  }
@@ -201,7 +219,7 @@ export default class WillowTown {
   const inner=this.panel-36;
   for(const [need,label] of [['hunger','Hunger'],['fatigue','Tiredness'],['social','Needs company']]){
    get('need-'+need).text=label+'  '+percent(person[need]);
-   get('bar-'+need).setLayout({size:{x:inner*Math.max(.005,person[need]),y:6*(this.sideScale??1)}});
+   get('bar-'+need).setLayout({size:{x:inner*Math.max(.005,person[need]),y:6}});
   }
   get('person-money').text='Wallet '+Math.floor(person.money)+' coins  ·  Jobs done '+person.workDone;
   get('control').text=s.controlled===person.id?'Return to AI [Esc]':'Take control [WASD]';
