@@ -42,7 +42,8 @@
     "assets/branding/judas-icon.png",
     "docs/qualification/baseline.json",
     "docs/qualification/rendering.json",
-    "docs/qualification/source-boundary.json"
+    "docs/qualification/source-boundary.json",
+    "third_party/windows/README.md"
   ],
   "directories": [
     "assets/fonts",

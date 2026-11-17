@@ -12,8 +12,8 @@ foreach(dll IN LISTS JUDAS_WINDOWS_DLLS)
  string(APPEND judas_dll_manifest "${name}\n")
 endforeach()
 file(WRITE "${CMAKE_BINARY_DIR}/required-dlls.txt" "${judas_dll_manifest}")
-set(judas_sdl_license "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/sdl2/copyright")
-set(judas_glm_license "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/glm/copyright")
+set(judas_sdl_license "${JUDAS_SDL_LICENSE}")
+set(judas_glm_license "${JUDAS_GLM_LICENSE}")
 # All these executables share a configuration output directory. Stage the common
 # runtime once before linking, so parallel post-build copies cannot race.
 # CMP0112 NEW ensures TARGET_FILE_DIR does not introduce a dependency on judas.

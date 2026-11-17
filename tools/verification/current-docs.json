@@ -178,6 +178,7 @@
     "tests/fixtures/ik/ASSET_PROVENANCE.md",
     "tests/fixtures/m58/README.md",
     "tests/fixtures/model-runtime/README.md",
+    "third_party/windows/README.md",
     "tools/benchmarks/playable_combined/README.md",
     "tools/demos/beacon_grove/README.md"
   ],

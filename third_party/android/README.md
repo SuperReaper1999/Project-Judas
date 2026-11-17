@@ -1,7 +1,9 @@
 # Optional Android build sources
 
-These archives are used only when CMake's ANDROID target is enabled. Desktop
-builds keep their existing system/vcpkg dependencies. No configure-time download.
+These archives serve Android, browser and MinGW builds. Native MSVC also reuses
+the GLM archive; its SDL2 2.30.12 source is documented in
+[Windows dependency provenance](../windows/README.md). Linux uses its existing
+system SDL2/GLM packages. No configure-time download.
 
 | Source | Upstream | SHA-256 | Licence |
 |---|---|---|---|

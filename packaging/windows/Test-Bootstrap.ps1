@@ -1,74 +1,80 @@
-# No Pester/module installation required. Run on a fresh Windows CI runner.
+# Fresh native dependency build and independent installed-package consumers.
 param([Parameter(Mandatory)][string]$WorkDirectory)
 $ErrorActionPreference = 'Stop'
-. "$PSScriptRoot\PkgConfig.ps1"
-New-Item -ItemType Directory -Path $WorkDirectory -ErrorAction Stop | Out-Null
+$repo = (Resolve-Path "$PSScriptRoot\..\..").Path
+New-Item -ItemType Directory -Path $WorkDirectory | Out-Null
 $work = (Resolve-Path -LiteralPath $WorkDirectory).Path
-function Expect-Failure([scriptblock]$Action, [string]$Message) {
-    try { & $Action } catch {
-        if ($_.ToString() -notlike "*$Message*") { throw "Unexpected failure: $_" }
-        return
-    }
-    throw "Expected failure containing: $Message"
+function Run-Native([string]$Program, [string[]]$Arguments) {
+    & $Program @Arguments
+    if ($LASTEXITCODE) { throw "$Program failed: $LASTEXITCODE" }
 }
-
-# The actual native MSI/tool, not an alternate PATH pkg-config installation.
-$cache = Join-Path $work 'tool cache with spaces'
-$native = Get-JudasPkgConfig -CacheRoot $cache
-$cached = Get-JudasPkgConfig -CacheRoot $cache
-if ($native -ne $cached) { throw 'Cache reuse changed tool selection' }
-$override = Get-JudasPkgConfig -Path $native -CacheRoot (Join-Path $work 'unused')
-if ($native -ne $override -or (Test-Path (Join-Path $work 'unused'))) { throw 'Explicit override was not respected' }
-
-# Never silently fall back after an explicit tool fails to execute. This models
-# failure handling, not a claim to exercise Application Control itself.
-$rejected = Join-Path $work 'rejected.cmd'
-Set-Content -LiteralPath $rejected -Value '@exit /b 17'
-Expect-Failure { Get-JudasPkgConfig -Path $rejected -CacheRoot $cache } 'No alternate executable or MSYS2 fallback'
-
-# Both the cached download and executable must retain their pinned integrity.
-$badCache = Join-Path $work 'bad-cache'
-New-Item -ItemType Directory -Path (Join-Path $badCache 'pkgconf-x64-3.0.8') -Force | Out-Null
-Set-Content -LiteralPath (Join-Path $badCache 'pkgconf-x64-3.0.8/pkgconf-x64-3.0.8.msi') -Value 'corrupt installer'
-Expect-Failure { Get-JudasPkgConfig -CacheRoot $badCache } 'checksum mismatch'
-$bytes = [IO.File]::ReadAllBytes($native)
-try {
-    [IO.File]::WriteAllText($native, 'corrupt executable')
-    Expect-Failure { Get-JudasPkgConfig -CacheRoot $cache } 'checksum mismatch'
-} finally { [IO.File]::WriteAllBytes($native, $bytes) }
-
-# A clean vcpkg install must compile SDL2/GLM from source without any binary
-# archive cache or usable PATH pkg-config. No Judas compilation is needed.
-$oldSources = $env:VCPKG_BINARY_SOURCES
+function Reject-Configure([string[]]$Arguments, [string]$Expected) {
+    $ErrorActionPreference = 'Continue'
+    & cmake @Arguments *> "$work/rejected-configure.log"
+    $code = $LASTEXITCODE
+    $ErrorActionPreference = 'Stop'
+    if (!$code -or (Get-Content "$work/rejected-configure.log" -Raw) -notlike "*$Expected*") {
+        Get-Content "$work/rejected-configure.log"
+        throw "Missing configure rejection: $Expected"
+    }
+}
 $oldPkgConfig = $env:PKG_CONFIG
-$oldKeepEnv = $env:VCPKG_KEEP_ENV_VARS
+$oldSources = $env:VCPKG_BINARY_SOURCES
+$oldRoot = $env:VCPKG_ROOT
 $oldPath = $env:PATH
 try {
+    # Any invocation of pkg-config is a test failure, including --version.
+    $tools = Join-Path $work 'unusable-tools'
+    New-Item -ItemType Directory -Path $tools | Out-Null
+    $marker = Join-Path $work 'pkg-config-was-executed'
+    $blocked = Join-Path $tools 'pkg-config.cmd'
+    Set-Content $blocked @('@echo off', "echo forbidden > `"$marker`"", 'exit /b 17')
+    $env:PKG_CONFIG = $blocked
+    $env:PATH = "$tools;$oldPath"
     $env:VCPKG_BINARY_SOURCES = 'clear'
-    # Explicit environment selection remains supported, including fail-closed
-    # handling. It must not download another tool after this preflight rejection.
-    $env:PKG_CONFIG = $rejected
-    $unusedCache = Join-Path $work 'rejected-env-cache'
-    Expect-Failure { & "$PSScriptRoot\Build-Windows.ps1" -Generator Ninja -DependenciesOnly -ToolCache $unusedCache } 'No alternate executable or MSYS2 fallback'
-    if (Test-Path $unusedCache) { throw 'Rejected environment tool caused an alternate download' }
-    $env:PKG_CONFIG = $null
-    $pathTools = Join-Path $work 'unusable-path-tool'
-    New-Item -ItemType Directory -Path $pathTools | Out-Null
-    Set-Content -LiteralPath (Join-Path $pathTools 'pkg-config.cmd') -Value '@exit /b 17'
-    $env:PATH = "$pathTools;$oldPath"
-    $env:VCPKG_KEEP_ENV_VARS = 'JUDAS_BOOTSTRAP_TEST_SENTINEL'
-    & "$PSScriptRoot\Build-Windows.ps1" -Generator Ninja -DependenciesOnly -ToolCache $cache -VcpkgRoot (Join-Path $work 'vcpkg') -BuildDirectory (Join-Path $work 'build')
-    if ($env:PKG_CONFIG -or $env:VCPKG_KEEP_ENV_VARS -ne 'JUDAS_BOOTSTRAP_TEST_SENTINEL') { throw 'Build did not restore the caller environment' }
-    $msys = @(Get-ChildItem (Join-Path $work 'vcpkg/downloads') -Recurse -Filter '*msys*')
-    if ($msys.Count) { throw "Unexpected MSYS2 downloads: $($msys.FullName)" }
-    $installed = Join-Path $work 'build/vcpkg_installed/x64-windows-static-md/share'
-    foreach ($port in @('sdl2', 'glm')) {
-        if (!(Test-Path (Join-Path $installed "$port/copyright"))) { throw "Missing installed dependency: $port" }
+    $env:VCPKG_ROOT = Join-Path $work 'vcpkg-must-not-be-used'
+    $fixture = "$repo/tests/fixtures/windows-dependencies"
+    $build = Join-Path $work 'dependency build'
+    $prefix = Join-Path $work 'installed'
+    Run-Native cmake @('-S', $fixture, '-B', $build, '-G', 'Ninja Multi-Config', "-DJUDAS_SOURCE_ROOT=$repo", "-DCMAKE_INSTALL_PREFIX=$prefix")
+    foreach ($config in @('Release', 'Debug')) {
+        Run-Native cmake @('--build', $build, '--config', $config, '--target', 'dependency_probe', 'SDL2main', '--parallel', '2')
+        Run-Native "$build/$config/dependency_probe.exe" @()
+        Run-Native cmake @('--install', $build, '--config', $config)
+        $sdl = if ($config -eq 'Debug') { 'SDL2-staticd.lib' } else { 'SDL2-static.lib' }
+        $crt = if ($config -eq 'Debug') { 'MSVCRTD' } else { 'MSVCRT' }
+        $glm = if ($config -eq 'Debug') { 'glmd.lib' } else { 'glm.lib' }
+        foreach ($library in @($sdl, $glm)) {
+            $directives = & dumpbin /directives "$prefix/lib/$library"
+            if ($LASTEXITCODE -or ($directives -join "`n") -notmatch "DEFAULTLIB:`"?$crt(?:`"|\s|$)") { throw "$library $config CRT contract is missing" }
+        }
     }
+    # Remove the original install/build locations before independent linking.
+    $moved = Join-Path $work 'moved dependency package'
+    Move-Item $prefix $moved
+    Move-Item $build (Join-Path $work 'hidden dependency build')
+    Copy-Item $fixture (Join-Path $work 'consumer-source') -Recurse
+    $consumer = Join-Path $work 'consumer-build'
+    Run-Native cmake @('-S', "$work/consumer-source/consumer", '-B', $consumer, '-G', 'Ninja Multi-Config', "-DCMAKE_PREFIX_PATH=$moved", '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF')
+    foreach ($config in @('Release', 'Debug')) {
+        Run-Native cmake @('--build', $consumer, '--config', $config, '--parallel', '2')
+        Run-Native "$consumer/$config/consumer.exe" @()
+        Run-Native "$consumer/$config/consumer_main.exe" @()
+    }
+    if (Test-Path $marker) { throw 'pkg-config was executed' }
+    if (Test-Path $env:VCPKG_ROOT) { throw 'vcpkg was used' }
+    # Exercise the real FetchContent hash failure, not a hand-written substitute.
+    $bad = Join-Path $work 'corrupt-source'
+    New-Item -ItemType Directory -Path "$bad/cmake", "$bad/third_party/windows" -Force | Out-Null
+    Copy-Item "$repo/cmake/JudasWindowsDependencies.cmake" "$bad/cmake/"
+    Set-Content "$bad/third_party/windows/SDL2-2.30.12.tar.gz" 'corrupt source archive'
+    Reject-Configure @('-S', $fixture, '-B', "$work/bad-hash-build", '-G', 'Ninja', "-DJUDAS_SOURCE_ROOT=$bad") 'does not match expected value'
+    Reject-Configure @('-S', $repo, '-B', "$work/bad-crt-build", '-G', 'Ninja', '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded') 'requires /MD'
+    Reject-Configure @('-S', $repo, '-B', "$work/legacy-build", '-G', 'Ninja', '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md') 'without the old vcpkg toolchain'
+    Write-Host 'PASS fresh native SDL2/GLM Release/Debug, MD/MDd, SDL2main, relocated CMake consumers, source-hash and configuration rejections; no pkgconf or vcpkg execution.'
 } finally {
-    $env:VCPKG_BINARY_SOURCES = $oldSources
     $env:PKG_CONFIG = $oldPkgConfig
-    $env:VCPKG_KEEP_ENV_VARS = $oldKeepEnv
+    $env:VCPKG_BINARY_SOURCES = $oldSources
+    $env:VCPKG_ROOT = $oldRoot
     $env:PATH = $oldPath
 }
-Write-Host 'Windows fresh dependency bootstrap and integrity/failure controls passed.'
