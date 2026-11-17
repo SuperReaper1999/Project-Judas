@@ -18,6 +18,11 @@ was published after final approval on 27 October 2026. See [versioning](VERSIONI
 
 ## Native SDK
 
+Linux is the primary, officially supported distribution platform. Windows SDKs
+and native game exports are experimental and best-effort. See the
+[platform support matrix](ALPHA_SUPPORT_MATRIX.md) and the
+[Windows executable trust limitations](WINDOWS.md#platform-support-and-executable-trust).
+
 Configure separate build directories, then build the shared inventory target:
 
 ```sh

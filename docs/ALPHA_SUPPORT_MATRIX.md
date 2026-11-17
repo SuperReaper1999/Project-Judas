@@ -20,8 +20,8 @@ qualification to every device or imply main promotion/publication.
 
 | Target | Development scope | Boundary |
 | --- | --- | --- |
-| Native Linux x86-64 | Engine, desktop editor and JudasJS SDK; Ubuntu 24.04 reference build and current NVIDIA desktop workflows | Host-native SDKs inherit host ABI; other distributions/devices need their own check |
-| Windows x64 MSVC | Native SDK build/tools/selected contracts and loader inspection pass | Current Windows editor/GL/export/hardware behaviour has not been requalified |
+| Native Linux x86-64 | Primary, officially supported development and distribution platform for the engine, editor and SDK. Ubuntu 24.04 is the reference build. | Host-native SDKs inherit the host ABI. Other distributions and devices need their own checks. |
+| Windows x64 MSVC | Experimental, best-effort development and distribution. Builds and SDKs may be provided without a compatibility guarantee. | Windows 11 with Smart App Control enabled is unqualified for official Judas SDKs and exported games. See [Windows trust limitations](WINDOWS.md#platform-support-and-executable-trust). |
 | Portable GL / GLES3 | Capability-selected fallback code; portable controls on the tested desktop | Code-path testing is not every GLES/Android device certification |
 | Android | Optional game runtime/APK workflow | Complete JDK/NDK/SDK/device required; no current snapshot device qualification; no Android editor |
 | Browser | Explicit opt-in Experimental game export through WebAssembly/WebGL2 | Emscripten/isolation-capable hosting required; current snapshot browser runtime unqualified; no browser editor |

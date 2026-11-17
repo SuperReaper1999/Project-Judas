@@ -13,6 +13,24 @@ the [development baseline](DEVELOPMENT_READINESS.md). This is separate from a ne
 Windows editor/GL/export, hardware audio/controller or clean-machine trial.
 Older operator acceptance does not certify this changed snapshot.
 
+## Platform support and executable trust
+
+Linux is the primary, officially supported development and distribution platform.
+Windows is experimental and best-effort. Windows builds and SDKs may be provided
+without a compatibility guarantee. Existing Windows workflows remain available for
+developers who want to use them experimentally.
+
+Windows 11 with Smart App Control (SAC) enabled is unqualified for official Judas
+SDKs and exported games. Windows may reject an executable or a DLL at launch or
+load time. The tested Windows 11 Home configuration confirmed failures in both
+[native source builds](https://github.com/SuperReaper1999/Project-Judas/issues/34)
+and [unsigned exported games](https://github.com/SuperReaper1999/Project-Judas/issues/36).
+The project is deferring SAC compatibility work. Successful Windows CI or
+testing with SAC disabled does not establish compatibility with SAC enabled.
+
+Keep your Windows security settings in place. Changing them is outside the
+documented installation and build procedures.
+
 ## Build natively
 
 Install Git, Python 3.11+, CMake and Visual Studio's Desktop development with C++.
