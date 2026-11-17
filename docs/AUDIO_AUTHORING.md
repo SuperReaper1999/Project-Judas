@@ -1,9 +1,4 @@
-# M34 — Authored engine audio
-
-**Status through M69:** M34 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+# Audio assets and emitters
 
 **Human listening validation accepted by the operator on 2026-09-30.** Automated
 checks do not establish perceptual quality, clicks, natural volume or stereo realism.
@@ -76,10 +71,10 @@ Runtime-created body definitions retain their existing body/render/celestial-onl
 contract; use the service voice API for transient game sounds.
 
 Only the ordinary InteractivePlay frame updates audio, once per rendered frame.
-It observes the same world; secondary M33 cameras do not move the listener or tick
+It observes the same world; secondary camera-target cameras do not move the listener or tick
 audio. Old scripted blocking screenshot harnesses are not audio playback evidence.
 Edit mode plays no runtime sounds. Play constructs runtime state; Stop releases it
-without modifying authored data. There is no editor clip-preview tool in M34.
+without modifying authored data. There is no editor clip-preview tool in audio.
 
 ## Spatial and non-spatial scope
 
@@ -96,29 +91,7 @@ claimed. These properties still require operator listening on an actual device.
 ## Compatibility
 
 Authored scene grammar stays version 3, adding `audio-emitter`, `audio.*`,
-`audio-listener`, `listener.*`. At M34, canonical fingerprint **schema 4** included every
-authored audio property. M36 superseded it with current **schema 5**. The original
+`audio-listener`, `listener.*`. At audio, canonical fingerprint **schema 4** included every
+authored audio property. prefab superseded it with current **schema 5**. The original
 strict FTFT1 compatibility rejected older schema-3 saves;
 existing authored scenes remain readable. No silent migration/deletion occurs.
-
-## Demo and human listening checklist
-
-Open `assets/scenes/audio.judas` in the editor and Play, or run
-`./build/judas assets/scenes/audio.judas`. Red box = looping spatial source; green
-sphere = one-shot; the centered MP3 is non-spatial. WASD/mouse moves the listener.
-The original CC0 tone assets are offline-authored demonstration content, not a
-runtime synthesis capability. Stop/restart Play to repeat the one-shots.
-
-1. Can you hear the looping source?
-2. Does it pan left/right as you move around it?
-3. Does it get quieter with distance?
-4. Does the one-shot play once?
-5. Does the 2D sound stay centered/non-spatial?
-6. Does stopping Play stop runtime sounds?
-
-See `docs/evidence/m34/RESULTS.md` for executed automated results and lightweight
-CPU measurements. Device-free tests run the real backend mixer/voices but neither
-record audio nor assert how it sounds.
-
-Exact cursor snapshots are exposed only in device-free tests. Production does not
-read the backend's non-atomic PCM cursor during device mixing.

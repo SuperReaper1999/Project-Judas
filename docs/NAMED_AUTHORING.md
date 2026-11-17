@@ -1,6 +1,4 @@
-# Supported content authoring — M67 candidate
-
-[World-building workflow (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M67_WORLD_BUILDING.md) · [JudasJS](JUDASJS.md)
+# Named content and authoring tools
 
 ## One editable document
 
@@ -31,7 +29,7 @@ required fields, references, finite values, shapes and ranges.
 
 Positions/dimensions are metres; colors are linear component values where the
 existing component says so. Transform rotations and recipe frames use **WXYZ**
-quaternions. World-region rotations preserve the M59 **XYZW** record convention.
+quaternions. World-region rotations preserve the region **XYZW** record convention.
 Vectors are fixed-length numeric arrays. Enums written as bare legacy tokens use
 `{"symbol":"box"}`; quoted strings remain strings. `body`, `gravity`,
 `gravity.region`, `fidelity-policy`, `light.cone`, compound children and cavities
@@ -52,14 +50,14 @@ existing identities. Deterministic writers normalize defaults/order; comments
 and arbitrary original whitespace are not round-tripped. Scene fingerprint
 schema remains **5**. Editorial folders/recipe metadata participate in undo/dirty
 state but do not alter that gameplay fingerprint. Generated geometry, transforms
-and other gameplay content do. M61 compatibility is still enforced.
+and other gameplay content do. Save/content compatibility remains explicit.
 
 ## Complete current-field coverage
 
 | Family | Representation and normal authority | Fields covered / proof |
 |---|---|---|
-| Project | Named setting groups → `Project::ParseFromString` / serializer | Name, legacy policy, save/icon identity, directories/start/export/exclusion scenes, composition manifest, all input bindings, tag/collision/render registries, navigation profiles/areas, localization/fallback/fonts, audio groups |
-| Scene / prefab | Ordered objects with `id`, `name`, canonical `fields`; settings block → `SceneSerialization` and `Prefab` | All current writer fields: transforms/parent, prefab source/maps/overrides, tags/layers; render/material/mesh/subassets, lights/cameras, physical materials/body/compound/cavity, gravity/regions, motor, joints, skeleton/pose/layers/limb targets/socket/ragdoll, particles, audio, UI, scripts/properties, navigation, liquid/deformable/fracture, terrain/atmosphere/combustion and retained legacy components; all scene environment/fluid/fidelity settings |
+| Project | Named setting groups → `Project::ParseFromString` / serializer | Name, independent water policy, save/icon identity, directories/start/export/exclusion scenes, composition manifest, all input bindings, tag/collision/render registries, navigation profiles/areas, localization/fallback/fonts, audio groups |
+| Scene / prefab | Ordered objects with `id`, `name`, canonical `fields`; settings block → `SceneSerialization` and `Prefab` | All current writer fields: transforms/parent, prefab source/maps/overrides, tags/layers; render/material/mesh/subassets, lights/cameras, physical materials/body/compound/cavity, gravity/regions, motor, joints, skeleton/pose/layers/limb targets/socket/ragdoll, particles, audio, UI, scripts/properties, navigation, Basic Water/fluid-volume/deformable/fracture, terrain/atmosphere/combustion; current scene environment/fluid/fidelity settings |
 | UI | Ordered, named element objects → `UIDocument` | Document reference/visible/enabled/modal; ID/parent/kind/flow/direction; anchors/offset/size/relative size/alignment/margins/padding/spacing/clip; visible/enabled/wrap/image fit; text/font/font size/localization/logical alignment/row mirroring; texture/colors/background; slider/toggle values/ranges |
 | Input | Ordered named entries/bindings → `InputMap` | Action/axis/vector name/kind, controls, scale/scaleY, deadzone and circular response; no raw device-policy replacement |
 | World composition | Named budgets/regions/references → `WorldManifest` | Every current budget, region ID/scene/origin/rotation/extents/priority/policy/estimated bytes/dependency, qualified endpoints/field/hard-soft policy; soft references remain limited to texture cameras |
@@ -75,7 +73,7 @@ build/export even when its document parses; complete validation happens at build
 
 ## Actual CLI
 
-The M72 candidate uses this same scene/prefab field path for authored and durable
+Runtime rendering uses this same scene/prefab field path for authored and durable
 render state. Optional fields include object `render-visible`; `render.visible`,
 `render.instance-overrides-v1`, `render.part-materials-v1`,
 `render.runtime-materials-v1`, `render.material-overrides-v1`; and settings
@@ -83,7 +81,7 @@ render state. Optional fields include object `render-visible`; `render.visible`,
 encoded strings validated by the ordinary material/appearance codecs, not a new
 document format. Default omissions preserve historical schema-5 fingerprints.
 Use normal editor/converter output for these encodings. Runtime calls remain
-isolated from authored files; [M72](RUNTIME_RENDERING.md) describes reset/save/retention ownership.
+isolated from authored files; [runtime-rendering](RUNTIME_RENDERING.md) describes reset/save/retention ownership.
 
 Build the existing `judas_scene_author` target. Paths below are examples; keep
 experiments in a copied project. Commands reject invalid data with nonzero status.
@@ -114,12 +112,12 @@ build/judas_scene_author --build-project project.judasproj /tmp/package build/ju
 Patch files are JSON Patch arrays, up to 256 operations: `add`, `replace`, `remove`,
 `test`. `--edit` requires an existing JSON pointer; use `add` for an absent field.
 `--overwrite` is explicit; `--dry-run` performs document validation without writing.
-Recipes have no legacy format. Compound geometry needs the ordinary M64 closed
+Recipes have no legacy format. Compound geometry needs the ordinary collision-authoring closed
 physical source validation; use a lower-resolution collision proxy deliberately.
-Physical sweep/arc frames require unit entity scale; edit profile/path/radius dimensions instead. Import recipes use the established M66 format/services, not this JSON envelope.
+Physical sweep/arc frames require unit entity scale; edit profile/path/radius dimensions instead. Import recipes use the established model-import format/services, not this JSON envelope.
 `--dependencies` is typed direct asset discovery without constructing a JS VM;
 asset browser traversal covers normal prefab/UI/material/model/collision sources.
-Dynamic JS IDs are not statically linked: M38 still packages all registered project
+Dynamic JS IDs are not statically linked: export still packages all registered project
 runtime assets and validates supported transitive dependencies.
 
 ## Editor ↔ source
@@ -170,3 +168,74 @@ retained for canonical round-trips, and the cone does not affect point lighting.
 Spot lights require `light.cone` (inner/outer degrees). Explicit cone values on
 either kind must remain finite and satisfy `0 <= inner <= outer < 90`, with a
 positive outer angle. The same rule applies to named and line-oriented scenes.
+
+## Structured JSON ingest
+
+The preferred editable envelope is the named document above. `--structured` is
+an additional bounded ingest form calling the same serializers/validators; it is
+not a second runtime format. For example, convert this UI JSON to a `.judasui`:
+
+Build `judas_scene_author`. Use:
+
+```sh
+build/judas_scene_author --structured input.json output.judasui
+```
+
+This developer tool parses named JSON into the existing engine structs, then calls
+**the same scene/UI/input serializers and validators used by the editor**. Defaults
+come from those structs. It is not a new runtime format. Unknown fields/types fail.
+Input is bounded to 8 MiB and arrays to 4096 entries. It supplies no game runtime.
+
+```json
+{"kind":"ui","reference":[1280,720],"elements":[
+ {"id":"root","kind":"canvas","relativeSize":[1,1]},
+ {"id":"title","parent":"root","kind":"text","text":"My game",
+  "offset":[30,30],"size":[600,60],"fontSize":32},
+ {"id":"start","parent":"root","kind":"button","text":"Start",
+  "offset":[30,100],"size":[240,50],"background":[0.1,0.3,0.5,1]}
+]}
+```
+
+Optional element names correspond to [UI layout](judasjs/ui.md): visible, enabled,
+clip, wrap, fit, font/texture stable asset IDs, textKey, anchorMin/anchorMax, offset,
+size, relativeSize, align/textAlign, margin/padding (left/top/right/bottom), background,
+color, spacing, fontSize, value/minimum/maximum. `flow`: free/horizontal/vertical.
+`direction`: auto/ltr/rtl; `textLogicalAlign`: -1 physical, 0 start, 1 centre, 2 end.
+Document visible/enabled/modal are optional. Parent IDs must exist, cycles fail.
+Vectors are arrays with exactly two/four finite numbers. On disk: `JudasUI 1`;
+direction/localized text features use the compatible version-2 serializer as needed.
+
+```json
+{"kind":"input","entries":[
+ {"name":"move_x","axis":true,"bindings":[
+  {"control":"key:A","scale":-1},{"control":"key:D"},
+  {"control":"stick:LeftX","deadzone":0.15}]},
+ {"name":"confirm","bindings":[{"control":"key:Return"},{"control":"pad:South"}]}
+]}
+```
+
+Writes InputMap version 1's existing serialized record, ready for the project's
+`input-map` quoted field. Names must be unique; normal control/deadzone validation
+applies. This does not overwrite a project's other settings.
+
+```json
+{"kind":"scene","name":"My scene","objects":[
+ {"id":"1","name":"Floor","components":["render","body"],"fields":{
+   "position":"0 -0.5 0","render.half-extents":"5 0.5 5",
+   "body.half-extents":"5 0.5 5"}},
+ {"id":"2","name":"Visitor","components":["motor"],"fields":{
+   "position":"0 1 0","motor.gravityScale":"1"}}
+]}
+```
+
+Writes `JudasScene 3` with engine settings/component defaults. Stable id/parent are
+**decimal strings**. Optional parent defaults to 0. Available default components:
+render/body/motor/gravity/animation/socket/joint/ragdoll/ui/particle/audio. Required
+references for sockets/UI/skeleton mappings must then be supplied. `fields` maps
+named **existing scene record keys** to their literal values (strings); quoted asset
+strings use `"\"asset-id\""`. Component header changes such as `body:"dynamic box"`
+are possible. Missing fields use actual engine defaults; no counting trailing tokens.
+
+These fields are also the editor/prefab property contract (ObjectProperties /
+ApplyObjectProperties). Complex region world/manifests and asset cooking use their
+existing tools rather than a parallel schema. Runtime handles never belong in files.

@@ -1,4 +1,4 @@
-# Judas developer documentation
+# Judas V2 developer documentation
 
 <!-- judas-release-status:start -->
 Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
@@ -10,48 +10,49 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-## Learn and build
+Choose a task below. Each feature has one practical/native contract and, where
+scriptable, an exact JudasJS reference. The [qualification matrix](DEVELOPMENT_READINESS.md)
+owns tested configurations; guide contents alone do not certify every platform.
 
-[First project](FIRST_PROJECT.md) · [Editor guide](EDITOR_GUIDE.md) ·
-[Editor V2](EDITOR_V2.md) · [SDK authoring](SDK_AUTHORING.md) ·
-[2D quick start](2D_QUICKSTART.md) · [complete 2D workflow](2D_GAME_WORKFLOW.md).
+## Create, author and deliver
 
-## Authoritative architecture
+- [First project](FIRST_PROJECT.md), [editor](EDITOR_GUIDE.md), [2D quick start](2D_QUICKSTART.md), [traversal](2D_TRAVERSAL.md).
+- [SDK consumer workflow](V2_CONSUMER_GUIDE.md), [terrain → navigation → NPC](SDK_AUTHORING.md), [distribution](DISTRIBUTION.md), [exports](EXPORTS.md).
+- [Named content/CLI](NAMED_AUTHORING.md), [assets and cooking](ASSET_PIPELINE.md), [model import](MODEL_IMPORT.md), [prefabs](PREFABS.md).
+- [Ownership/readiness walkthrough](DEVELOPER_WORKFLOWS.md), [startup presentation](STARTUP_LOADING.md), [project and water settings](PROJECT_SETTINGS_AND_WATER.md).
 
-[Architecture](ARCHITECTURE.md) · [Scripting V2](judasjs/scripting-v2.md) ·
-[Renderer V2](RENDERER_V2.md) · [Particles V2](PARTICLES_V2.md) ·
-[Terrain V2](TERRAIN_V2.md) · [terrain residency](TERRAIN_V2_RESIDENCY.md) ·
-[Advanced Fluids V2](ADVANCED_FLUIDS_V2.md) · [water presentation](WATER_V2_PRESENTATION.md) ·
-[MK2 physics](MK2_PHYSICS_ARCHITECTURE.md).
+## Scripting and gameplay
 
-## Gameplay and content
+- [JudasJS index](JUDASJS.md), [typed declarations](judas.d.ts), [getting started](judasjs/getting-started.md), [cookbook](judasjs/cookbook.md), [binding architecture](judasjs/scripting-v2.md), [debugging/reload](SCRIPT_DEBUGGING.md).
+- [Input](INPUT.md), [local players](LOCAL_MULTIPLAYER.md), [classification](CLASSIFICATION.md), [signals](SIGNALS.md), [AI](GAME_AI.md), [navigation](NAVIGATION.md).
+- [Runtime UI](RUNTIME_UI.md), [drag/drop and model previews](UI_TRANSFERS_AND_PREVIEWS.md), [localization](LOCALIZATION.md).
+- [Audio assets](AUDIO_AUTHORING.md), [streaming/acoustics](AUDIO_STREAMING.md), [weather](WEATHER.md), [networking](NETWORKING.md).
 
-[JudasJS](JUDASJS.md) · [typed API](judas.d.ts) · [cookbook](judasjs/cookbook.md) ·
-[AI](GAME_AI.md) · [navigation](NAVIGATION.md) · [character motor](CHARACTER_MOTOR.md) ·
-[input](INPUT.md) · [animation](ANIMATION.md) · [model import](MODEL_IMPORT.md) ·
-[materials](MATERIALS.md) · [runtime UI](RUNTIME_UI.md) ·
-[drag/drop and 3D previews](UI_TRANSFERS_AND_PREVIEWS.md) · [audio](AUDIO_STREAMING.md) ·
-[physics queries](PHYSICS_QUERIES.md) · [collision](COLLISION_AUTHORING.md) ·
-[joints](JOINTS.md) · [gravity](GRAVITY_SELECTION.md) · [Vehicles V2](VEHICLES_V2.md) ·
-[powertrains](POWERTRAINS.md) · [Deformables V2 authoring](DEFORMABLES_V2_AUTHORING.md) ·
-[qualification and human review](DEFORMABLES_V2_QUALIFICATION.md) · [fracture](FRACTURE.md) ·
-[cloth/solid numerical reference](DEFORMABLES.md) ·
-[Deformables V2 implementation history](DEFORMABLES_V2_IMPLEMENTATION.md) ·
-[accepted Stage 1 wheel/panel proof](DEFORMABLES_V2_REVISED_STAGE1.md) ·
-[bonnet attachment correction](DEFORMABLES_V2_BONNET_ATTACHMENTS.md) ·
-[weather](WEATHER.md) · [streaming](WORLD_STREAMING.md) · [persistence](PERSISTENCE.md) ·
-[save evolution](SAVE_EVOLUTION.md) · [mods](MODDING.md) · [networking](NETWORKING.md).
+## Worlds, state and physical systems
 
-## Distribution and evidence
+- [Architecture/ownership](ARCHITECTURE.md), [physics overview](PHYSICS_V2.md), [MK2 contract](MK2_PHYSICS_ARCHITECTURE.md), [physics modules](../src/physics/WorldModules.md).
+- [Collision authoring](COLLISION_AUTHORING.md), [continuity](COLLISION_CONTINUITY.md), [events](COLLISION_EVENTS.md), [queries](PHYSICS_QUERIES.md), [batches](BATCHED_QUERIES.md), [sleep/scaling](PHYSICS_SCALING.md).
+- [Character motor](CHARACTER_MOTOR.md), [kinematic bodies](KINEMATIC_BODIES.md), [joints](JOINTS.md), [gravity](GRAVITY_SELECTION.md).
+- [Animation/pose composition](ANIMATION.md), [timeline/root motion/events](ANIMATION_WORKFLOW.md), [retargeting](ANIMATION_RETARGETING.md), [IK](MULTI_TARGET_IK.md), [ragdolls/physical modes](RAGDOLLS.md), [balance limits](BALANCE.md).
+- [Vehicles/wheels](VEHICLES_V2.md), [powertrains](POWERTRAINS.md), [structures](STRUCTURES.md), [mechanical damage](MECHANICAL_DAMAGE.md), [finite crash sections](COARSE_CRASH.md).
+- [Deformable authoring](DEFORMABLES_V2_AUTHORING.md), [numerical ownership](DEFORMABLES.md), [bending](BENDING.md), [fracture](FRACTURE.md), [optional native constraint participants](PHYSICAL_CONSTRAINT_BATCH.md).
+- [Terrain](TERRAIN_V2.md), [residency](TERRAIN_V2_RESIDENCY.md), [planetary precision](PLANETARY_TERRAIN.md), [origin/assembly travel](ASSEMBLY_TRAVEL.md).
+- [Streaming/suspension](WORLD_STREAMING.md), [scene transitions](SCENE_TRANSITIONS.md), [save slots](PERSISTENCE.md), [migration/recovery](SAVE_EVOLUTION.md), [mods](MODDING.md), [scalability](SCALABILITY.md).
 
-[Current status](CURRENT_STATUS.md) · [limitations](CURRENT_FINDINGS.md) ·
-[support matrix](ALPHA_SUPPORT_MATRIX.md) · [purge report](ARCHITECTURAL_PURGE.md) ·
-[SDK distribution](DISTRIBUTION.md) · [versions](VERSIONING.md) · [release process](RELEASING.md) ·
-[Windows](WINDOWS.md) · [Android](ANDROID.md) · [browser](BROWSER_SUPPORT.md) ·
-[test harness](TEST_HARNESS.md) · [profiler](PROFILER.md) ·
-[documentation maintenance](DOCUMENTATION_MAINTENANCE.md).
+## Rendering and water
 
-Current capability guides are retained even where their origins predate V2.
-Historical milestone reports, obsolete implementations and retired example games
-belong to their Git revisions, not the current checkout. A linked historical
-measurement is evidence for its recorded checkpoint, not certification of this one.
+- [Renderer ownership/policy](RENDERER_V2.md), [lighting/shadows/exposure](LUCIFER_V2.md), [runtime appearance/visibility](RUNTIME_RENDERING.md), [materials](MATERIALS.md), [camera targets](CAMERA_TARGETS.md), [particles](PARTICLES_V2.md).
+- [Basic versus advanced water](PROJECT_SETTINGS_AND_WATER.md), [conservative grid water](ADVANCED_FLUIDS_V2.md), [playable water workflow](GAME_WATER_PREVIEW.md), [water presentation](WATER_V2_PRESENTATION.md).
+
+## Build, qualify and contribute
+
+- [Build identity](BUILD_RELEASES.md), [CI](CI.md), [test harness](TEST_HARNESS.md), [profiler/GPU diagnostics](PROFILER.md), [physical event debugger](PHYSICS_EVENT_DEBUGGER.md), [whole-application performance](WHOLE_ENGINE_PERFORMANCE.md).
+- [Linux reference userland](LINUX_BASELINE_BUILD.md), [Windows](WINDOWS.md), [MinGW cross-build](WINDOWS_CROSS_BUILD.md), [Android](ANDROID.md), [browser](BROWSER_SUPPORT.md).
+- [Supported scope](ALPHA_SUPPORT_MATRIX.md), [qualified baseline](DEVELOPMENT_READINESS.md), [known limitations](CURRENT_FINDINGS.md), [intentional compatibility breaks](V2_BREAKING_CHANGES.md).
+- [Versioning](VERSIONING.md), [release procedure](RELEASING.md), [current source notes](ALPHA_V2_0_0_NOTES.md), [storage](WORKSPACE_STORAGE.md), [documentation maintenance](DOCUMENTATION_MAINTENANCE.md).
+
+Source links/native fixtures require the matching source checkout; not every
+source example is bundled in an SDK. Keep legal notices and asset provenance with
+their assets. Superseded reports, screenshots, benchmark histories and roadmaps
+belong to Git history. Only concise current qualification/source-boundary receipts
+remain in `qualification/`; this directory is not a historical archive.

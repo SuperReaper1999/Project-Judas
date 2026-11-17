@@ -537,7 +537,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 - **globalThis.__judas**: Internal native dispatcher; unsupported, not a public API declaration.
 - **globalThis.console**: Alias of exported console; no extra API.
-- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance, M83 DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
+- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance, mechanical-damage DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
 - **types-only exports**: Interfaces/type aliases are tooling only; runtime export comparison excludes them.
 - **setter-only accessors**: TypeScript cannot prohibit reads; docs state these return undefined.
 - **callback ordering / phases**: Implementation traced manually; no AST checker proves temporal semantics.

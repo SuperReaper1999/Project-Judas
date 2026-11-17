@@ -1,13 +1,4 @@
-# M80 — Judas learns to bend
-
-**Human validated on Linux by the operator on 2026-10-13**, for implementation
-`0b19cda66e7dfc6d6d0232b936d435248d41c426`; Stable promotion is authorized.
-See the [acceptance record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m80/HUMAN_VALIDATION.md). Native Windows
-M80 validation remains outstanding and nonblocking. M80 extends the
-existing M62 tetrahedral solids, M63 cohesive fracture and M79 section model.
-It does not add a second body solver or replace physical deformation with a
-render effect. Focused validation and measured results belong to the final
-candidate evidence; this page describes the implementation and its limits.
+# Material bending and plasticity
 
 ## One material, geometry and ownership path
 
@@ -23,8 +14,8 @@ The same current node positions define material constraints, deformable contact,
 changes its physical boundary. Broken cohesive interfaces stop transmitting load;
 the existing nodes retain mass, velocity and plastic deformation, and newly exposed
 faces participate in presentation and contact. No fresh rigid proxy replaces a
-bent piece. M79's rigid-cell path remains available for structures that need rigid
-fragments and ordinary M44/CharacterMotor contact.
+bent piece. structure's rigid-cell path remains available for structures that need rigid
+fragments and ordinary shape-query/CharacterMotor contact.
 
 ## Elasticity and plasticity
 
@@ -37,7 +28,7 @@ volume; XPBD uses compliance divided by substep duration squared. Solid strain
 uses **shearCompliance**; **volumeCompliance** controls volume preservation.
 Cloth's stretch/bend settings do not become beam or panel material parameters.
 
-M80 evaluates elastic columns in the authored material basis:
+bending evaluates elastic columns in the authored material basis:
 `F = D_s * inverse(D_p) * R_initial`. This removes dependence of the componentwise
 strain response on global placement rotation. Saved rest matrices retain their
 existing authored world-frame representation. The original material basis is now
@@ -61,7 +52,7 @@ reset toward the original shape.
 
 ## Bending load and physical failure
 
-Optional soft structural cooks use the same explicit material partition as M63,
+Optional soft structural cooks use the same explicit material partition as fracture,
 with duplicated interface nodes joined by vector XPBD cohesive constraints.
 For the completed substep, each pair contributes its **accumulated** multiplier
 as a force `f_i = -lambda_i / h²`. Individual iteration corrections are not
@@ -70,7 +61,7 @@ counted repeatedly as impacts.
 The interface resultants are `F = sum(f_i)` and `M = sum(r_i cross f_i)`, using
 current paired-node midpoints relative to the current reference-area-weighted
 centroid. A volume-weighted polar material frame rotates the resultants into the
-section frame. M79's reference section area, second moments and vertex extrema
+section frame. structure's reference section area, second moments and vertex extrema
 then resolve combined axial/bending stress and approximate shear/torsion. These
 are **corotated nominal reference-area stresses**, not exact Cauchy stress on a
 strongly warped section. The same interface strength overrides apply to rigid
@@ -92,7 +83,7 @@ block** for a cohesive solid with section-based failure. Set resolution and size
 then density, solid shear/volume compliance, damping and optional plastic settings.
 Named node groups provide world/body/bone attachments and force application.
 
-For a partitioned asset, **Structural section stress (M79/M80 opt-in)** is available
+For a partitioned asset, **Structural section stress (structure/bending opt-in)** is available
 for both soft and rigid cells. Edit family strengths in Pa, select an interface
 to edit its overrides, and preview material groups/interfaces. Zero override
 inherits the family value. Changing a shared cook affects every instance and
@@ -140,7 +131,7 @@ See [saves](judasjs/saves.md) and [streaming](judasjs/streaming.md).
 
 Current node, edge-midpoint and face-centroid samples contact authoritative
 PhysicsWorld geometry through the existing broadphase. Finite node/body mass,
-world inertia and hit-point impulses provide two-way reaction; reciprocal M39
+world inertia and hit-point impulses provide two-way reaction; reciprocal classification
 layer/mask filtering remains in force. Self/deformable contacts use current boundary
 geometry and topology exclusions. For cohesive solids, self-contact within one
 still-connected material component is suppressed; separated components can contact
@@ -149,32 +140,8 @@ Renderer maps/interpolates the same node state;
 rendering never advances simulation. No universal world-up is introduced.
 
 This sampled contact model can miss small/fast objects between coarse samples.
-It is not exact deformable CCD, general M44 deformable casts, CharacterMotor
-blocking or M42 soft-surface event delivery. Strong compression/inversion and
+It is not exact deformable CCD, general shape-query deformable casts, CharacterMotor
+blocking or collision-event soft-surface event delivery. Strong compression/inversion and
 extreme element distortion remain outside the supported envelope. No cloth
 tearing, remeshing, fluid-cavity fracture, FEM certification, fatigue or automatic
 soft-to-rigid conversion is added.
-
-## Editable lab and human review
-
-Open `projects/bending_lab/bending_lab.judasproj`. Its registered flat and radial
-scenes contain a paired elastic/plastic cantilever, a bendable failing partition,
-a plastic panel under an ordinary physical press and an independently oblique
-elastic specimen. The annex and elastic/plastic prefabs use normal residency and
-runtime construction. All interaction policy is project JavaScript.
-
-WASD/mouse move/look; Space launches; **B** toggles equal end loads on the elastic
-and plastic pair; **H** increases/cycles the failing beam's load; **click** applies
-an impulse at the current deformed ray hit; **G/T** pick up/throw ordinary props;
-**P** alternates elastic/plastic prefab instances; **F3** requests/releases the
-annex; **1/2** select uniform/radial scenes; **F5/F8** save/load; **F9** reload;
-**Escape** pauses. The physical press contacts the actual panel boundary.
-
-For future rechecks, inspect elastic return, permanent deformation after
-unloading, physical interface failure under increased load, contact with deformed
-geometry, rotated/gravity equivalence, prefab independence, save/load,
-streaming/reload/Stop and exported standalone behaviour. Automated measurements
-do not establish human physical or visual acceptance.
-
-See [M62 foundations](DEFORMABLES.md), [M63 fracture](FRACTURE.md),
-[M79 section equations](STRUCTURES.md) and [Architecture](ARCHITECTURE.md).

@@ -28,7 +28,7 @@ are read-only in this example so users retain a way back to the controls menu.
 
 ## input
 
-`import {input} from 'judas'`. Names refer to the current project's M35 map.
+`import {input} from 'judas'`. Names refer to the current project's input map.
 `held(name)`, `pressed(name)`, `released(name)` return booleans; `axis(name)`
 returns a number. Unknown names/no attached input return false/zero. `vector(name)`
 returns a copied `{x,y}` for a named paired binding, or neutral for an unknown name.
@@ -77,7 +77,7 @@ main-input snapshot. Projects own any player assignment and user preference
 persistence. SDL's own Android orientation monitoring follows its existing
 lifecycle independently of the gameplay opt-in.
 
-## Paired sticks (M69)
+## Paired sticks
 
 | Method | Result |
 |---|---|
@@ -108,7 +108,7 @@ zero delta. Use history to retain delivered intermediate movement.
 
 ### Circular vector binding
 
-Add a vector entry in the project's existing input map/inspector. Example M67
+Add a vector entry in the project's existing input map/inspector. Example named-authoring
 named `input` document (the same `data` is the project's named `input` group):
 
 ```json
@@ -188,7 +188,7 @@ into render callbacks.
 [Copyable right-stick reader](examples/paired-stick.js) shows both values, frame
 delta, independent cursor/reset/overflow handling and recent ordered samples.
 [100-ray fan](examples/ray-fan.js) demonstrates the corresponding query batch.
-[The small operator fixture](cookbook.md#small-operator-fixture) displays these
+[The small operator fixture](cookbook.md) displays these
 samples using ordinary authored UI, with C for same-world scalar comparison.
 
 ## time
@@ -207,14 +207,14 @@ print `[object Object]`; use `JSON.stringify` for structured output. No warn/err
 log levels, file sink or developer debugger API. The virtual module also sets
 `globalThis.console` to this object.
 
-## input.pointerCapture (M51)
+## input.pointerCapture
 
 Boolean get/set request for relative pointer capture in this runtime world.
 Modal UI temporarily releases actual capture; the getter reports script intent,
 not device state. The request resets at world destruction/authored reset.
 New projects start uncaptured until a script requests capture. There is no native gameplay capture adapter.
 
-## Touch and pointer snapshots (M88)
+## Touch and pointer snapshots
 
 `input.touches` is a copied array of up to ten currently active contacts. Each
 `{id,x,y,pressure}` uses normalized [0,1] top-left **window** coordinates. IDs are
@@ -238,7 +238,7 @@ or camera. Modal menus must gate a game's touch behaviour just as other input.
 Focus loss, OS backgrounding and input reset clear held contacts. Handle rotation
 by reading current coordinates/viewport rather than caching pixel dimensions.
 
-## Local players (M89)
+## Local players
 
 Use [players and PlayerInput](local-multiplayer.md) for independent routes. The
 global input namespace deliberately retains its existing aggregate/selected-pad

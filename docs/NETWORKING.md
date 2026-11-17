@@ -1,19 +1,9 @@
-# M99 — Online multiplayer foundation
+# Networking, sessions and replication
 
-M99 is an optional, server-authoritative multiplayer foundation. Project JavaScript
+is an optional, server-authoritative multiplayer foundation. Project JavaScript
 supplies game rules; a session supplies bounded transport, peer identities, input
 delivery and selected entity replication. It shares the existing authoritative
 world rather than creating a second network physics engine.
-
-M98 was initially promoted provisionally for combined M98/M99 testing. The operator
-accepted both milestones on 2026-10-17 at candidate
-`696f480bc57250f9bf6f9846e32e20dfc28f5363`. Physical Android-to-Linux testing used
-USB forwarding; Wi-Fi, Internet deployment and Windows M99 validation remain
-outstanding. See the [acceptance record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m99/HUMAN_VALIDATION.md).
-
-See the [JudasJS network reference](judasjs/network.md),
-[local-player reference](judasjs/local-multiplayer.md), and
-[validation evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m99/REPORT.md).
 
 ## Initial support boundary
 
@@ -128,7 +118,7 @@ without checking its script dependencies.
 5. Try a wrong port and incompatible content; verify useful failure messages.
 6. Try delay/loss and observe interpolation and the documented TCP delay limit.
 7. Close the session, save/reload or change scene, then host/join again.
-8. Repeat with the relocated standalone package. M98 save-evolution testing remains
+8. Repeat with the relocated standalone package. save-evolution save-evolution testing remains
    part of the combined operator review.
 
 Measured results and exact tested combinations belong to the evidence report;

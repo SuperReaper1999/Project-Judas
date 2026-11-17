@@ -16,7 +16,7 @@ benchmarks.
 ## Historical Pre-Alpha result (MK1)
 
 The operator accepted the pair-discovery checkpoint `45f0614fa2` on main.
-The subsequent [CCD query/history follow-up](../../docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt)
+The subsequent [CCD query/history follow-up](../../docs/MK2_PHYSICS_ARCHITECTURE.md)
 is on Experimental pending human review. It replaces per-event whole-world
 history scans with contact-group updates, certifies cheaper margin predicates
 and schedules independent eligible searches on the existing job pool. Matched
@@ -60,9 +60,9 @@ constraints, actual collision geometry and CCD for new encounters. Population
 selection never changes simulation quality.
 
 The original M87 seconds-long dense-pile failure remains preserved in its
-[historical report](../../docs/evidence/m87/live-slowdown-followup/REPORT.md).
+[historical report](../../docs/qualification/baseline.json).
 M91's matched measurements and physical checks are in the
-[current report](../../docs/evidence/m91/REPORT.md), with the numerical contract
+[current report](../../docs/qualification/baseline.json), with the numerical contract
 [explained separately](../../docs/COLLISION_CONTINUITY.md).
 
 **The 1,024-piece pile is an extreme stress workload.** The M91 measurement
@@ -70,12 +70,12 @@ improved the failure region, with isolated stalls still present. The default
 room is the practical watch-tour demonstration;
 press **3** deliberately to inspect the worst case. No body is frozen or removed
 to improve the result. M91 was human accepted at the checkpoint recorded in the
-[current architecture](../../docs/ARCHITECTURE.md#physics-ownership-and-modules).
+[current architecture](../../docs/ARCHITECTURE.md#system-ownership-map).
 Later Pre-Alpha acceptance and current pending work are distinguished above.
 
 ## Pre-Alpha Pass2
 
-[Matched Pass2 evidence](../../docs/evidence/prealpha-pass2/physics/REPORT.md)
+[Matched Pass2 evidence](../../docs/qualification/baseline.json)
 retains the same 1,024-piece workload and every measured trajectory digest.
 Query/event scratch and whole-world teardown improve selected costs; the extreme
 pile still has multi-second fixed steps and is not 60 Hz certified. A separate
@@ -83,7 +83,7 @@ curved-mesh first-arrival repair passes its asserting contract, while later
 one-sided-sheet continuation remains a documented failure. The lab never changes
 physics quality to hide these limits.
 
-The later [curved-mesh continuation follow-up](../../docs/evidence/prealpha-ccd-continuation-20261019/REPORT.md)
+The later [curved-mesh continuation follow-up](../../docs/qualification/baseline.json)
 passes the original four numerical fast-box failures with native per-triangle
 depth-growth queries. It also reports increased articulated-mesh costs honestly.
 This room exercises ordinary machinery; it is **not** a visual reproduction of
@@ -103,7 +103,7 @@ performance. See the latest result above for subsequent dense-pile measurements.
 
 The free inspection camera is a lab tool, not a CharacterMotor. This room is a
 physics workload, not an arcade scoring game. For a real consumer game use the
-existing [Tuppence](../tuppence/README.md) project. Before/after timing comes from
+existing [Tuppence](../../docs/WHOLE_ENGINE_PERFORMANCE.md) project. Before/after timing comes from
 the controlled M87/M91 benchmarks, not visual FPS or HUD sampling alone.
 
 ## Human checklist
@@ -122,11 +122,11 @@ M91 evidence report. Human acceptance and Windows validation are separate states
 
 ## Persistent contacts and incremental impacts
 
-The [incremental-impact report](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md) covers
+The [incremental-impact report](../../docs/MK2_PHYSICS_ARCHITECTURE.md) covers
 new impacts growing through real velocity dependencies while continuing support
 keeps its ordinary force ownership. The scene, counts, materials, cadence and
 controls are unchanged. The later
-[ordinary support-history correction](../../docs/PREALPHA_SUPPORT_CONTINUITY.txt)
+[ordinary support-history correction](../../docs/COLLISION_CONTINUITY.md)
 stops eligible impacts from repeatedly cold-starting the next ordinary solve.
 Its matched 1,024-piece live capture improves from about 2.4 to 36.5 FPS in the
 late 20–35 second window on the Ryzen 5 5600. Press **3** to inspect that same

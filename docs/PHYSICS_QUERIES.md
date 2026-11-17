@@ -2,26 +2,24 @@
 
 ## Editable terrain products
 
-[M75 local terrain (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) is an ordinary cooked static triangle mesh, including existing ray/sphere/capsule/box casts and closest-point support. No terrain-only raycast or infinite fallback exists. A finite one-sided patch has no underside or volume. Draft edits are author-time only; queries see published content.
-
 
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
 Judas answers geometric questions; project JavaScript gives the answers meaning.
-These are **read-only queries of resolved colliders**, separate from M42 events,
+These are **read-only queries of resolved colliders**, separate from collision-event events,
 player locomotion sweeps and the impact solver.
 
-## Current extensions through M69
+## Supported query families
 
-M69 adds `physics.raycastMany`, `sphereCastMany` and `capsuleCastMany`: at most
+batch-query adds `physics.raycastMany`, `sphereCastMany` and `capsuleCastMany`: at most
 256 requests, one shared normal filter and ordered scalar-style hit/null results.
 See [current batch contracts](judasjs/physics.md). Existing geometry is unchanged.
 
-M64 extends these existing queries to actual cooked hulls, static triangle surfaces
+collision-authoring extends these existing queries to actual cooked hulls, static triangle surfaces
 and oriented compound children. It adds `physics.closestPoint` and read-only
 `Entity.collider` metadata. See [current geometry contracts](COLLISION_AUTHORING.md) and
 [JudasJS physics](judasjs/physics.md) for surface/containment, sidedness, feature keys
-and bounded convergence. The M44 sections below retain their milestone context.
+and bounded convergence. The shape-query sections below retain their milestone context.
 
 ## API
 
@@ -48,19 +46,19 @@ physics.boxCast({position:origin, rotation:{w:1,x:0,y:0,z:0}},
                 halfExtents, direction, maximum, filter);
 ```
 
-The filter is shared with M39 queries: `includeLayers`, `excludeLayers`,
+The filter is shared with classification queries: `includeLayers`, `excludeLayers`,
 `requiredTags` (all required), `excludedTags` (any rejects), `ignored` entity
 handles, `includeSensors` (default false). Query policy is independent of a
 body's physical collision mask. Unknown category names/invalid numeric inputs
 produce a useful JS exception; they do not become an unfiltered query.
 
-Miss: C++ `hit=false` / JS `null`. Hit: generation-aware C++ body / normal M40
+Miss: C++ `hit=false` / JS `null`. Hit: generation-aware C++ body / normal scripting
 safe JS entity wrapper, point on the target surface, outward target normal,
 distance, fraction, `initialOverlap`, target `shape`, and `primitiveIndex`
 (compound child index). JS `bodyId` is an opaque generation-bearing identifier,
 not a second body-control API. A retained hit is a historical observation;
 check `entity.valid` before later use. Equal-distance hits choose lowest body
-handle, then lowest primitive index. There is no all-hits API in M44.
+handle, then lowest primitive index. There is no all-hits API in shape-query.
 
 Zero distance may report initial overlap. Deep initial overlaps have no unique
 surface normal; a deterministic nearest feature is returned, not a penetration
@@ -71,7 +69,7 @@ limits. Nonconvergence after 256 convex iterations reports an error.
 ## Geometry and ownership
 
 The existing dynamic AABB tree provides candidates. Its conservative swept
-AABB is the union of start/end shape bounds. The existing M39 body filter then
+AABB is the union of start/end shape bounds. The existing classification body filter then
 rejects candidates before geometry work. Static, dynamic, enabled, compound,
 sensor and runtime-prefab colliders use the same body entries and identities.
 No query changes poses, velocities, forces, contacts, warm starts or events.
@@ -131,29 +129,3 @@ moving/rotating sensor or a rotating query capsule. Endpoint overlap still works
 Native dynamic/kinematic rigid-body sensors separately sweep their completed,
 piecewise motion ledgers, including changes of direction after solid impacts.
 See [Physics V2](PHYSICS_V2.md) for qualification and remaining limits.
-
-## Historical M44 demo (retired)
-
-The retired `projects/query_demo/query_demo.judasproj` demonstrated a red ordinary box, green moving
-runtime-prefab sphere, yellow explicitly ignored box, blue excluded layer/tag.
-Aim with mouse; **G** toggles ray / radius-0.4 sphere; **P** spawns another prefab.
-New P-spawned targets appear three metres along the view; the HUD shows the
-spawn count plus entity, distance, point and normal. White marker = hit point;
-magenta marker = endpoint of a 0.5 m outward normal. Escape opens authored pause.
-Project JS owns all these reactions. `world.viewRay` is the latest completed
-active presentation-camera snapshot (null before the first view), hence aiming
-has a one-render-frame snapshot delay. It does not control physics or camera
-ownership; arbitrary supplied origins/directions remain the primary API.
-
-Human review: aim at red/green; aim into empty space; confirm blue/yellow are
-ignored; spawn a green target; compare ray and sphere near edges; confirm the
-same behaviour in an exported standalone project. Automated/headless checks
-are not human visual acceptance.
-
-## Validation
-
-Current focused targets are `judas_physics_cast_tests`,
-`judas_character_motor_tests`, `judas_ccd_scheduling_tests` and
-`judas_ccd_anchor_reuse_tests`. The registered scheduling, character and anchor
-tests run with routine CI. Historical M44 runners/evidence belong to their
-matching Git revision; they are not current launch instructions.

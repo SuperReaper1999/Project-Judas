@@ -8,7 +8,7 @@ WHY playback/physical transitions occur; it cannot access raw pose arrays or GL.
 
 ## Animation
 
-See the [M95 timeline and root-motion workflow](../ANIMATION_WORKFLOW.md) for
+See the [animation-workflow timeline and root-motion workflow](../ANIMATION_WORKFLOW.md) for
 event authoring, fixed-step sampling, blend policies, persistence and limitations.
 
 `advance(seconds)` returns an `AnimationSample` during `fixedUpdate`, once per
@@ -79,21 +79,21 @@ pose, recent observed motion where available, returns true or throws. `leave(sec
 captures physics pose, retires bodies/constraints, and visually fades back to
 animation; duration 0..3600, zero immediate. `enabled` is setter-only (read undefined).
 `body(jointKey)` returns mapped ordinary Entity or null; check validity before
-force/impulse/query use. No built-in death/recovery/balance. The separate M70 API below adds bounded physical pose drives.
+force/impulse/query use. No built-in death/recovery/balance. The separate IK/physical-animation API below adds bounded physical pose drives.
 
 Mappings and constraints are authored via ordinary scene/editor/prefabs; JS does
-not construct mappings. M45 joints/normal PhysicsWorld own articulation, M47
+not construct mappings. joint joints/normal PhysicsWorld own articulation, pose-composition
 resolves its physics contribution into the same skeleton. Owner translation
 follows physical root; reference orientation/scale remain fixed. Mapped body
 collisions are per-body, not owner-aggregate. Asset replacement/destruction/disable
 cleans articulation; mapped transient entities are not independently saved.
-**Historical M46–M60 persistence limitation:** active ragdoll and mixer state were not persisted by legacy deltas. [M61 slots](saves.md) now preserve active articulation and mixer state through the shared pose/physics path. Uniform positive mapped scale
-only, no owner rigid collider. The legacy enter/leave API remains available; M70 adds explicitly selected physical regions below.
+**Historical animation–streaming-audio persistence limitation:** active ragdoll and mixer state were not persisted by legacy deltas. [save-slot slots](saves.md) now preserve active articulation and mixer state through the shared pose/physics path. Uniform positive mapped scale
+only, no owner rigid collider. The legacy enter/leave API remains available; IK/physical-animation adds explicitly selected physical regions below.
 See [mapping/lifecycle limits](../RAGDOLLS.md).
 
 ### `Ragdoll.receiveContactEvents`
 
-Read/write boolean, default **false**. Opt an owner script into the existing M42
+Read/write boolean, default **false**. Opt an owner script into the existing collision-event
 collision/trigger callbacks for its mapped bodies' contacts with external bodies:
 `entity.ragdoll.receiveContactEvents = true`. An owner with unscripted transient
 bone entities must both enable this flag and implement the callbacks on its own
@@ -106,7 +106,7 @@ the whole articulation into one impact or assign gameplay meaning. `selfBody`
 identifies the mapped body and `selfJoint` its stable joint key; `other` remains
 the actual other body entity. `otherArticulation`/`otherJoint` identify an external
 articulation when applicable. Wholly internal same-owner contacts are not forwarded
-to the owner. Scripts on individual bodies retain ordinary M42 delivery unchanged.
+to the owner. Scripts on individual bodies retain ordinary collision-event delivery unchanged.
 
 The current subscription is checked when observations are delivered. Toggling it
 does not create synthetic enter/exit events or reset contact history: enabling it
@@ -128,16 +128,16 @@ onCollisionEnter(event) {
 }
 ```
 
-## Resolved joint reads, visual sockets and limb IK (M65)
+## Resolved joint reads, visual sockets and limb IK
 
 `animation.jointTransform(key, space='world', presented=false) → Transform|null`
-reads the final M47-resolved pose, including layers/IK/M48 physics. Missing/unready
+reads the final pose-composition-resolved pose, including layers/IK/ragdoll physics. Missing/unready
 joints return null; stale entity throws. Space is local (parent-relative), model
 (skeleton-relative), or world (composed entity pose). Invalid space throws TypeError.
 In presentationUpdate, presented=true interpolates the entity root exactly as the
-renderer does. With M70 enabled, joint-local poses interpolate the previous/current
+renderer does. With IK/physical-animation enabled, joint-local poses interpolate the previous/current
 fixed final pose too, matching sockets/skinning for that same presentation sample.
-Legacy disabled-M70 consumers retain their existing evaluated joint-local sample. Simulation reads never use presentation roots.
+Legacy disabled-IK/physical-animation consumers retain their existing evaluated joint-local sample. Simulation reads never use presentation roots.
 
 ### Legacy two-bone position IK: `Animation.limb`
 
@@ -150,9 +150,9 @@ Unreachable targets preserve bone lengths and retain an honest endpoint error;
 straight/folded chains use the input bend or deterministic model-space fallback.
 This legacy API is position-only: `target` and `pole` are `{x,y,z}` objects, and
 it has no target-orientation field. For palm/sole orientation and coupled multiple
-effectors, use [M70 shared IK](#multi-target-full-body-ik-m70), whose targets accept
+effectors, use [IK/physical-animation shared IK](#multi-target-full-body-ik), whose targets accept
 both position and orientation. Shared IK still provides no automatic balancing or
-dynamic bone-driving; physical drives are a [separate capability](#partial-physical-animation-m70).
+dynamic bone-driving; physical drives are a [separate capability](#partial-physical-animation).
 Authored/runtime settings persist; solver caches do not.
 
 ### Visual sockets
@@ -174,25 +174,16 @@ presentationUpdate() {
 }
 ```
 
-[Integration project and authoring (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M65_INTEGRATION.md) shows two independent
-foot targets on a tilting board and a hand socket through interrupted crossfades
-and ragdoll output. Scripts no longer need transitionFraction to estimate bones.
-
 ### Imported joint frames and observed motion
-
-The editor's stable-key skeleton picker and rest-pose axis overlay show each imported
-joint's **local** axes. M45 hinge/slider frame X is the constraint axis; orient the
-frame to the intended imported joint axis rather than assuming humanoid names or Y.
-The picker is not an automatic physical mapping/fitter. See [authoring (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M65_INTEGRATION.md).
 
 Ragdoll entry uses recent evaluated world-joint samples and their simulation sample
 interval when available, plus entity motion. Body-free scripted transform changes
 between samples therefore contribute observed motion; they are not proof of a
 continuous physical trajectory. Presentation-only placement should not be treated
-as authoritative velocity. Large/teleported deltas need project policy; M65 does not
+as authoritative velocity. Large/teleported deltas need project policy; authoring does not
 add a get-up controller or change the existing motion-inheritance model.
 
-## Multi-target full-body IK (M70)
+## Multi-target full-body IK
 
 `animation.configureIK(settings|null) → boolean` validates one complete configuration
 before publication. Null removes it. `animation.ikTargets(targets) → boolean` replaces
@@ -206,7 +197,7 @@ Before the first configured reference phase, targets are empty and converged is 
 
 ### Configuration tuples versus live vector objects
 
-The M70 batch configuration deliberately uses the same serializable tuple format
+The IK/physical-animation batch configuration deliberately uses the same serializable tuple format
 as its authored JSON: vectors are ordinary arrays `[x,y,z]` (`PoseVector`), and
 quaternions are `[x,y,z,w]` (`PoseQuaternion`). These fields do not accept ordinary
 `{x,y,z}` / `{x,y,z,w}` objects interchangeably. All components must be finite;
@@ -288,7 +279,7 @@ starts from the current reference, so previous correction does not accumulate dr
 
 ### Reference/final phase and composition
 
-M70 owners retain `CharacterMotor` as locomotion authority. In a fixed step:
+IK/physical-animation owners retain `CharacterMotor` as locomotion authority. In a fixed step:
 
 1. Project fixedUpdate writes motor intent and target/configuration requests.
 2. Opted-in motor motion resolves; clip/crossfade/layers and existing ordered limb IK
@@ -300,7 +291,7 @@ M70 owners retain `CharacterMotor` as locomotion authority. In a fixed step:
 Ordinary layers retain insertion order. Existing limb/external sources retain their
 `(order,id)` order below physical order 1000; the shared IK stage follows them. Physical
 sources at/above 1000 follow the new stage, so IK cannot overwrite their actual pose.
-M70 disabled preserves legacy ordering/semantics. No solve occurs per camera.
+IK/physical-animation disabled preserves legacy ordering/semantics. No solve occurs per camera.
 
 Target writes made by a callback cannot make an earlier joint read see future physics.
 If JS constructs a target from its own solved joint/socket, that is an explicit
@@ -324,7 +315,7 @@ Mapping names here belong to the [Character Lab](../MULTI_TARGET_IK.md), not eng
 Use `animation.info.joints` and the normal skeleton picker for another imported model.
 Existing `crossFade`, `layer`, `limb` and visual sockets remain composable.
 
-## Partial physical animation (M70)
+## Partial physical animation
 
 `ragdoll.configurePhysical(settings|null) → boolean` assigns/removes settings on an
 existing authored ragdoll mapping. It does not construct a second skeleton or physics
@@ -351,8 +342,8 @@ resistance and physical materials remain. `poseWeight` blends the simulated skel
 contribution visually; a value below one is an explicit approximation whose displayed
 pose can differ from collision geometry. Inspect `ragdoll.body(key).transform` for the
 actual body and `physicalState.drives` for target error/saturation. A drive does not
-imply that the body reached the requested pose. M70 region drives alone provide no balance/get-up controller. The separately authored
-[M77 physical-balance task](#ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77-candidate) supplies bounded native control.
+imply that the body reached the requested pose. IK/physical-animation region drives alone provide no balance/get-up controller. The separately authored
+[balance physical-balance task](#ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77-candidate) supplies bounded native control.
 
 `ragdoll.setMode(mode,options={}) → boolean` queues an explicit authority request;
 validate before publication, apply at the safe fixed boundary. Modes:
@@ -377,10 +368,10 @@ conflicting motor authority. `resumeMotor`/`placement` apply only when requestin
 `animation`; they use endpoint/recovery/path checks from the normal motor collision
 contract and can be refused;
 inspect `physicalState.diagnostic`. No automatic recovery alignment or get-up selection.
-`physicalState` returns `{mode,pending,diagnostic,drives}` for M70 authority; pending
+`physicalState` returns `{mode,pending,diagnostic,drives}` for IK/physical-animation authority; pending
 is requested mode or null. Legacy `enter()`/`leave()` consumers use `ragdoll.active`: an
-articulation created without M70 configuration still has a default animation mode
-snapshot and does not acquire M70 authority semantics. Each drive reports `{joint,region,angleError,torque,saturated,sleeping}`:
+articulation created without IK/physical-animation configuration still has a default animation mode
+snapshot and does not acquire IK/physical-animation authority semantics. Each drive reports `{joint,region,angleError,torque,saturated,sleeping}`:
 angleError radians, torque N m. Configuration/mode failures throw TypeError; a later
 boundary refusal leaves the prior coherent mode and records its reason.
 
@@ -414,12 +405,12 @@ scene/prefab/save paths; disposable solve caches and GPU matrices are not serial
 
 <a id="ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77-candidate"></a>
 
-## Ragdoll.configureBalance, requestBalance, cancelBalance, balanceState (M77)
+## Ragdoll.configureBalance, requestBalance, cancelBalance, balanceState
 
 Judas plans bounded physical corrections; game scripts decide whether to attempt
 standing/recovery and whether to permit corrective steps. Configuration is explicit,
 optional and inactive until requested. The original bounded mechanical rig envelope
-and platform results are in [M77](../BALANCE.md). Subsequent [cold-save corrections](saves.md#joint-continuation-and-legacy-compatibility)
+and platform results are in [balance](../BALANCE.md). Subsequent [cold-save corrections](saves.md#joint-continuation-and-legacy-compatibility)
 preserve physical continuation in new captures; old snapshots without that history
 have a separate compatibility limit. These APIs do not provide a general humanoid
 gait or recovery guarantee.
@@ -435,11 +426,11 @@ gait or recovery guarantee.
   the fixed boundary. An enabled CharacterMotor requires `motorHandoff:true`.
   It does not resume the motor automatically. Configuration, topology, gravity,
   contacts, effort and finite deadlines can make a request fail.
-- `cancelBalance()` stops M77 joint actuation without moving bodies or resetting
+- `cancelBalance()` stops balance joint actuation without moving bodies or resetting
   velocities. The articulation stays physical; ordinary `setMode`/`leave` remain
   separate explicit authority operations. A successful ordinary mode request
   cancels balance ownership. Shared IK target replacement and physical-drive
-  reconfiguration reject during M77 ownership; project clip/layer settings remain.
+  reconfiguration reject during balance ownership; project clip/layer settings remain.
 - `balanceState` is a snapshot of the **previous completed pre-step observation**:
   `task`, `status`, `pending`, `diagnostic`, `available`, COM/velocity/gravity/up,
   mass (kg), root height relative to observed support (m), upright dot, relative
@@ -462,7 +453,7 @@ reach .4, height .18, reference duration .7, touchdown tolerance .12; load fract
 patch-radius fraction .75, transfer deadline 2, maximum landings 3 (cap 8).
 Near-equal support impulses (within .1% of their sum) use stable authored chain
 order for the discrete swing choice; meaningfully lighter support still wins.
-Foothold filters use M39 numeric masks (`includeLayers`, `excludeLayers`,
+Foothold filters use classification numeric masks (`includeLayers`, `excludeLayers`,
 `requiredTags`, `excludedTags`); omit includeLayers for all layers. Queries reject
 sensors and ignore the entire physical articulation. Author exact masks in JSON;
 JavaScript numbers cannot represent arbitrary 64-bit mask integers exactly.
@@ -471,8 +462,8 @@ No owner gravity override is inherited implicitly: each physical bone uses its
 ordinary entity gravity selection. Gravity, support normal and a reference frame
 remain separate. A game script fault leaves an explicitly native-owned task running;
 entity/component destruction, disable, cancellation or authority change retires it.
-The final pose uses the ordinary M47 physical contribution at full weight while
-M77 owns actuation. Selected references never overwrite physics or skin matrices.
+The final pose uses the ordinary pose-composition physical contribution at full weight while
+balance owns actuation. Selected references never overwrite physics or skin matrices.
 
 A separate `setMode('animation', {placement, resumeMotor:true, fade})` may follow
 measured standing. Existing capsule placement/path checks can refuse it; refusal

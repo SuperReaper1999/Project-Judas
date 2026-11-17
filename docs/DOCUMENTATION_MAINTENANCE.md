@@ -1,119 +1,109 @@
-# Maintaining current documentation
+# Maintain current V2 documentation
 
-[Current status and finding register](CURRENT_STATUS.md) · [Architecture](ARCHITECTURE.md) ·
-[JudasJS](JUDASJS.md) · [Build identity](BUILD_RELEASES.md)
+The [documentation index](README.md) routes users to current engine/editor/SDK
+contracts. Source, public interfaces, selected build paths and demonstrated
+application behaviour are authoritative. A historical report is not a specification.
 
-Current guidance must describe actual source/runtime contracts. A milestone's
-implementation date or a passing demonstration does not prove every API,
-integration or platform. Historical reports and failed experiments retain their
-exact checkpoint-time claims; put a subsequent correction in a current reference
-and link the new evidence instead of rewriting those receipts.
+## Change one authoritative guide
 
-## Change checklist
+1. Trace registration, runtime owner, configuration, errors, units, lifecycle,
+   persistence and editor/SDK integration. Distinguish selected production code,
+   optional extensions, unavailable platforms and unselected experiments.
+2. Update the practical feature guide and corresponding JudasJS reference. Add
+   current examples with actual component/asset prerequisites. Preserve complete
+   useful explanations; replace an obsolete explanation rather than appending a
+   correction to an old one.
+3. Consolidate duplicate guides. Before deleting, inspect their contents and
+   implementation references, move still-current contracts to the owner guide,
+   and repair incoming links and SDK inventory. Git retains old versions: do not
+   create an archive of progress reports, old patch notes or diagnostic captures.
+4. Keep required licences and asset provenance. Retain concise qualification
+   evidence only while it supports current scope, a compatibility contract or an
+   unresolved decision. Raw outputs belong to one bounded campaign/CI retention.
+5. Update the [support boundary](ALPHA_SUPPORT_MATRIX.md), [readiness record](DEVELOPMENT_READINESS.md)
+   and current findings only when the evidence changes. Unit/API/type checks,
+   real applications, performance, platform qualification and human acceptance
+   are separate claims. Never invent missing device coverage.
+6. For public API changes, update declarations, module catalogue, reference,
+   executable examples and meaningful native regressions together. Documentation
+   work must not modify engine behaviour to make an obsolete guide true.
 
-1. Trace the affected runtime registration, owner and implementation. Check
-   arguments, results, errors, units, coordinate frames and lifecycle validity.
-2. Update the subsystem reference and any current summaries in README,
-   Architecture, onboarding and platform guides. Search for the superseded name
-   or limitation in current documentation, including examples and editor labels.
-3. For public JudasJS changes, update `docs/judas.d.ts`,
-   [inventory and manifest](judasjs/API_INVENTORY.md), reference and relevant
-   executable examples together. Use the documented [API checks](JUDASJS.md)
-   and meaningful behavioural regressions; a symbol check cannot prove semantics.
-4. Keep support claims scoped: Linux host acceptance, native Windows functional
-   checks, software graphics, Android compile/emulator/device and human testing
-   are separate evidence. Preserve unperformed checks and known failures.
-5. Link exact reproducible evidence for corrected findings. Update the current
-   disposition register; retain original fixtures, thresholds and failures. A
-   report under `docs/evidence/` is not implicitly current guidance.
-6. Check local links and copyable commands from their stated working directory.
-   SDK/source archives deliberately exclude games, research and historical
-   evidence; label links requiring the matching source checkout. Do not infer
-   that an SDK includes every linked file or regression fixture.
-7. Finish tracked source/docs edits before configuring final-provenance binaries
-   and running guarded validation. Documentation changes contribute to source
-   identity; stale-binary refusal is not a passing test. Record actual tested
-   inputs and binary hashes without relabelling older artifacts.
-8. Record human acceptance separately and only when the operator grants it for
-   the exact candidate. Push development to Experimental; main promotion follows
-   [AGENTS.md](../AGENTS.md), not documentation wording or automated passes.
-
-## Focused current-reference check
-
-From the repository root:
-
-```sh
-python3 -m unittest discover -s tests -p test_current_docs.py -v
-python3 scripts/check_current_docs.py
-```
-
-The explicit [current-reference inventory](../tools/verification/current-docs.json)
-selects maintained developer pages. The checker validates local file destinations
-and Markdown heading links and checks the managed release/finding summaries. It
-excludes historical archives/evidence from its
-page selection. Update the inventory when adding a maintained reference. It does
-not inspect external URLs or certify prose, API semantics or platform support.
-
-CI in a complete Git checkout also uses
-`python3 scripts/check_current_docs.py --require-tracked` to reject links relying
-on untracked local files. Run that mode after intended files are tracked; an
-engine-only source archive deliberately omits some linked games and evidence and
-cannot supply a complete-checkout link qualification.
-
-## Boundaries
-
-Do not sanitize archived logs, regenerate expected hashes to hide drift, delete
-known failing tests, or turn a local ignored continuity note into a tracked
-artifact. API drift checks, link checks and compilation are useful focused
-controls; none establishes complete prose correctness, physics correctness,
-hardware qualification or Alpha readiness. These still require source review,
-behavioural evidence and the recorded human review process.
-
-## Release status and distribution examples
-
-Do not copy a "current main" commit into evergreen onboarding prose: it becomes
-stale at the next promotion. Exact identities belong in build manifests and
-checkpoint-specific evidence; direct users to `--build-info-json` or Git for the
-checkout they actually have. Separate commands for a full Git checkout, a verified
-engine source archive and an unpacked SDK. SDK/archive profiles intentionally omit
-repository games, and SDK executables live at its root rather than under `build/`.
-Local-link checks do not prove these commands work; qualify the actual moved SDK
-and create/export a new project before claiming that workflow passed.
-
-## Source versions, publication receipts and current findings
-
-The current release/status blocks in nine entry pages are generated from
-`engine-version.json` and [RELEASE_STATUS.json](RELEASE_STATUS.json).
-The source version can advance while the dated publication receipt still points
-to the last verified release. Updating the receipt requires an actual published
-tag, exact source SHA, publication timestamp and successful qualification and
-publication run IDs. Verify those against GitHub and the Alpha feed. A candidate
-or branch promotion alone does not supply them.
-
-When preparing a version, add its curated notes and update the authoritative
-engine version. Then refresh all managed summaries with one command:
+## Checks from the source checkout
 
 ```sh
 python3 tools/release_docs.py --write
 python3 scripts/check_current_docs.py --require-tracked
+python3 -m unittest discover -s tests -p test_current_docs.py
+python3 -m unittest discover -s tests -p test_release_docs.py
+node scripts/check_judasjs_api.mjs
 ```
 
-Do not edit text between the `judas-release-status` markers by hand.
-`docs/CURRENT_FINDINGS.json` owns the original finding dispositions. The same
-refresh command regenerates its Markdown table. Retain superseded dispositions
-in the dated updates list and link actual later evidence. The
-[outstanding-work register](OUTSTANDING_WORK.md) owns current follow-up priorities.
-Keep publication metadata out of project-specific installation claims.
+`tools/verification/current-docs.json` explicitly registers current owned Markdown,
+including project/example entry points and the native physics module map. Add new
+current guides there in the same change. The checker rejects missing files/anchors,
+stale managed summaries and accidental historical exclusions; it does not prove
+runtime semantics. The API checker verifies declarations/wrappers/examples with
+negative drift controls; actual native/application tests supply behaviour evidence.
 
-The documentation workflow runs when the engine version, publication/finding
-records, generator, current pages or checks change. Both release-candidate
-platform jobs verify the managed summaries before expensive builds. The existing
-current-document checker also runs that verification. A stale version, missing
-notes, altered summary, missing marker or divergent finding table fails with the
-refresh command, including in a source archive without Git.
+Validate copyable commands with matching tools and isolated output paths. An SDK
+can exclude native source or source-only example projects; identify those paths
+rather than implying every referenced file is installed. Verify staged SDK docs
+and complete inventory/checksums after changing packaged documentation.
 
-After publication, update the dated receipt from the published release metadata,
-refresh, verify and checkpoint the documentation on Experimental. The published
-tag and SDK remain immutable. Historical reports, archived failures and prose
-outside managed blocks are preserved; this check cannot certify every sentence
-or determine whether an untested feature is correct.
+## Source, publication and contributor authority
+
+`engine-version.json` owns source identity. `RELEASE_STATUS.json` is a dated
+publication receipt and is not updated by documentation cleanup or a development
+checkpoint. The single current-version curated notes file is release input;
+obsolete notes for an older publication are not required in the active tree.
+`CURRENT_FINDINGS.json` owns the generated limitations table. Refresh managed
+blocks with `tools/release_docs.py`; never rewrite a receipt as new qualification.
+
+Finish source/document edits before source-aware builds/tests. Record actual
+binary identities; a stale-binary refusal is not a pass. Work on Experimental,
+preserve unrelated local work and follow root AGENTS.md for commits/pushes.
+Main promotion, releases and selected consumer SDK changes require their explicit
+operator authority. Ordinary docs cleanup does not grant it.
+
+## Current documentation verification scope
+
+The V2 reconciliation reviewed every owned text-document path and report/capture
+inventory, grouped technical guides by current source owner/public interface,
+retained useful contracts, removed obsolete reports and repaired navigation/tooling.
+Core architecture, animation, physical state, terrain, rendering, build/platform
+and support guides were rewritten where successive milestone explanations conflicted.
+The shared declarations/examples are independently checked against the binding
+catalogue; qualification claims reuse the established exact V2 baseline.
+
+The unregistered legacy `judas_script_presentation_tests` target still references
+removed demos. It is a separate implementation finding in [the register](CURRENT_FINDINGS.md),
+not repaired or represented as covered by this documentation pass.
+
+
+## Implementation verification map
+
+Use these source owners when changing the corresponding guide family. Public
+arguments/results are independently covered by `docs/judas.d.ts`, the module
+catalogue and the API checker; native/application scopes come from the validation
+manifest and exact baseline receipts, not this table alone.
+
+| Guide family | Current source / integration boundary |
+| --- | --- |
+| Application, editor, SDK | EngineHost, Application, InteractivePlay, SceneSession; `src/editor/EditorPanels.*`, workspace/presenter, CMake and `packaging/sdk-inventory.json` |
+| Scripts, lifecycle, debugging | ScriptSystem, `src/scripting/Modules.json`, module handlers/library fragments and debugger; one VM |
+| Assets, import, named content, exports | AssetDatabase/ResourceManager, ModelImport, NamedAuthoring/AuthoringDocument, `tools/SceneAuthor.cpp`, build/export services |
+| Animation, retargeting, IK, physical poses | SkeletalAnimation, WorldAnimation, AnimationRetarget, FullBodyIK/PhysicalAnimation, WorldPersistence, animation binding module |
+| Rigid/planar mechanics, queries, events | PhysicsWorld, production `src/physics/WorldMk2*`, geometry/filter/query and event owners; Simulation authoritative schedule |
+| Vehicles, structural damage, materials | Wheels/powertrains, JointMaterial, Deformable/PanelBending, `src/deformables/MaterialBatch.h`, finite connections and persistence participants |
+| Terrain, planetary charts, streaming | `src/terrain/TerrainCook.cpp`, TerrainPersistence/RenderPages, WorldStreaming, WorldOrigin, navigation publication and terrain binding module |
+| Rendering, light, materials, particles | Renderer, `src/render/*`, `src/lighting/*`, particle owners, appearance/material codecs and rendering bindings |
+| Water, weather, atmosphere | WorldWater/WorldWeather, `src/fluid/GameWater*`, project policy, current water bindings and explicit unsupported save/region cases |
+| Saves, migrations, mods, networking | SaveService/WorldPersistence, SaveEvolution, mod registry/package owners, NetworkSession/NetworkTransport; dedicated/replica authority |
+| UI, text, localization, audio/input | RuntimeUI/UIStack/RuntimeUIControls, UIAssetEditor, text/layout/localization, audio backend, InputMap/device/local-player routing |
+| Build/platform/debug workflow | CMake identity/feature selection, packaging scripts, Android/browser builders, selected CI workflows, bounded storage and actual tool parsers |
+
+The API pass includes 58 type-checked examples, 353 registered native operations and
+524 live VM surface entries; these are surface checks. The cookbook's six actual
+VM/world cases have 37 behavioural assertions. Supported native application and
+SDK lifecycle/persistence qualification remains tied to its exact V2 code candidate.
+This documentation-only assignment does not claim new full-platform qualification.

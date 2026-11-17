@@ -13,7 +13,7 @@ use scripts to supply game rules. No C++ recompilation is needed to change those
 rules. This guide describes the current Alpha API; the source version is recorded
 in [engine-version.json](../../engine-version.json). Tooling changes and platform
 coverage are recorded on the [landing page](../JUDASJS.md),
-[support matrix](../ALPHA_SUPPORT_MATRIX.md) and [qualification history](../CURRENT_STATUS.md).
+[support matrix](../ALPHA_SUPPORT_MATRIX.md) and [qualification history](../DEVELOPMENT_READINESS.md).
 
 ## 1. Create an ordinary project
 
@@ -80,7 +80,7 @@ general async callback runtime. Top-level module code also runs during inspector
 metadata inspection, without a world: keep native game work inside callbacks.
 
 Stop, save source and Play again for a fresh world. For a deliberate in-place
-script-session replacement, use [M94 developer tools](../SCRIPT_DEBUGGING.md).
+script-session replacement, use [script-debugging developer tools](../SCRIPT_DEBUGGING.md).
 Reload can retain bounded JSON state, but reconstructs the VM and callbacks;
 it is not automatic hot reload or arbitrary object migration. Editing runtime
 objects does not rewrite your authored scene.
@@ -127,7 +127,7 @@ loads install saved state after construction and call `restore` instead of
 There can be zero or several fixed steps per frame. Input edges are latched for
 the next fixed step; reading the same edge in both frame and fixed code can
 observe it twice. Do not integrate relative mouse motion once per catch-up step.
-Ordering is described in [lifecycle](lifecycle.md), including M70 reference/final
+Ordering is described in [lifecycle](lifecycle.md), including IK/physical-animation reference/final
 pose phases. Returned transforms/results are snapshots: modify and assign a
 transform explicitly. Physical transform assignment is a teleport; use a motor,
 dynamic force/impulse or kinematic command for continuous motion.
@@ -138,7 +138,7 @@ dynamic force/impulse or kinematic command for continuous motion.
 |---|---|
 | Character locomotion | **Character motor** + script; [character.js](examples/character.js) uses `move_x`, `move_y`, `jump`. The script chooses speed/launch; the motor resolves collisions/gravity/support. |
 | Main camera | Separate script-owned `world.setView`; [presentation.js](examples/presentation.js) shows interpolated following. Author your look/offset policy; a render-target camera is a different component. |
-| Physical props/platforms | Body component; forces/impulses for dynamic bodies, [kinematic commands](entities.md#kinematic-motion-m71) for prescribed trajectories. Render mesh is not automatically a collider. |
+| Physical props/platforms | Body component; forces/impulses for dynamic bodies, [kinematic commands](entities.md#kinematic-motion) for prescribed trajectories. Render mesh is not automatically a collider. |
 | Probes, interaction, aiming | [Physics casts/filters](physics.md), then JS interprets hit entity/tags. Ignore the probing character where appropriate. |
 | Connections | Authored or runtime [joints](physics.md#joint); JS chooses motor/spring policy. |
 | HUD/pause | Registered `.judasui`; [ui.js](examples/ui.js), modal state and `input.pointerCapture`. UI consumes shared bindings; the script decides pause/resume meaning. |
@@ -147,19 +147,13 @@ dynamic force/impulse or kinematic command for continuous motion.
 | Routes | Baked navigation surface + agent; [navigation](navigation.md) guides, a script drives the motor. |
 | Liquid/deformables/fracture | Author their normal cooked resources/components; use the respective references, readiness guards and fixed mutation contracts. |
 | Restart/next scene | Save a `.judas` in the project's scene directory; `scenes.reload/load` queues replacement at the safe outer boundary. |
-| Independent instances | [Prefabs](entities.md#worldspawnprefab-construction-options-m67); asset data shares, runtime state does not. |
+| Independent instances | [Prefabs](entities.md#worldspawnprefab-construction-options); asset data shares, runtime state does not. |
 
 In **File → Project settings → Input actions, axes and vectors**, author logical
 bindings and save the project. Scripts read names through `input`; they do not poll
 keys directly. Review required names in each cookbook fixture. Unknown input names
 read neutral rather than throwing. Gravity/support/camera up remain separate;
 derive movement from entity/motor frames, not global world-Y.
-
-For a complete inspectable game, [Spring Range (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/shooter_game/shooter_game.judasproj)
-composes character, first/third-person camera, queries, hinges, UI and feedback in
-separate project scripts. [Character Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/character_lab/README.md)
-shows current pose/physical composition. Their names and game rules are examples,
-not engine conventions.
 
 ## 6. Get completion and ship the project
 

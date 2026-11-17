@@ -1,12 +1,8 @@
-# M33 — camera-to-surface rendering
+# Cameras and render targets
 
-**Status through M69:** M33 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
-
-Feature candidate; operator visual acceptance and checkpointing are pending.
-No portals, recursive render passes or reflected-camera clipping are implemented.
+Cameras render ordinary scenes to owned targets for supported material/UI
+consumers. No general portal, recursive pass or reflected-camera clipping system
+is supplied by this camera component. See [renderer ownership](RENDERER_V2.md).
 
 ## Ownership and path
 
@@ -85,11 +81,3 @@ Camera settings and stable material references enter canonical fingerprint
 **schema 3**. Under the existing strict FTFT1 policy, schema-2 saves are rejected;
 there is no silent migration, deletion or reinterpretation. Authored scenes remain
 separate from runtime images, cadence counters and world deltas.
-
-## Evidence
-
-See [executed results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m33/RESULTS.md). Focused tests use actual EngineHost,
-Renderer, RuntimeWorld, GPU readback and InteractivePlay; they do not reproduce
-the renderer. The test also records synchronized CPU/render wall time and actual
-draw submissions for disabled, every-frame, every-2 and every-4 scheduling.
-These small-scene numbers are evidence, not GPU-only timings or a universal budget.

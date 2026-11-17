@@ -53,7 +53,7 @@ filled pools, flow, moving props, floating/sinking, finite air behaviour, origin
 basin geometry, rotated/radial cases, swimming and cold saves. See
 [physical model and measured limits](GAME_WATER_PREVIEW.md),
 [presentation](WATER_V2_PRESENTATION.md), and the
-[purge qualification](ARCHITECTURAL_PURGE.md) for checkpoint-specific results.
+[purge qualification](V2_BREAKING_CHANGES.md) for checkpoint-specific results.
 
 The old PBF and microscopic conservative-pressure prototypes are retired from the
 current engine. Their unsuccessful experiments and reference results remain in

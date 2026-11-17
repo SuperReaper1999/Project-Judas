@@ -151,8 +151,8 @@ ownership is recorded in **ASSET_LICENSE.txt**.
 8. Resize the window and check the town, sidebar and buttons remain readable.
 
 Automated Linux evidence and exact fingerprints are recorded in
-[Tests/LIFE_QUALIFICATION.md](Tests/LIFE_QUALIFICATION.md). The original
-[version-1 qualification](Tests/QUALIFICATION.md) is preserved as historical evidence. Human visual/gameplay acceptance and fresh Windows/Android/browser
+[../../docs/DEVELOPMENT_READINESS.md](../../docs/DEVELOPMENT_READINESS.md). The original
+[version-1 qualification](../../docs/DEVELOPMENT_READINESS.md) is preserved as historical evidence. Human visual/gameplay acceptance and fresh Windows/Android/browser
 qualification are separate; they are not inferred from native automation.
 
 

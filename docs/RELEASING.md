@@ -1,9 +1,5 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
-
-## Current boundary
-
 <!-- judas-release-status:start -->
 Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
 [Source notes](ALPHA_V2_0_0_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
@@ -23,138 +19,6 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-The publication receipt records the exact accepted release. Development branches
-may advance afterward. Read [the maintenance procedure](DOCUMENTATION_MAINTENANCE.md)
-before preparing the next version.
-
-### Previous publication: v1.2.4
-
-[Alpha v1.2.4](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.4-alpha.1)
-was published from `96a74f07a75e84fed91ff827a906717315d3814f`.
-Its [notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_4_NOTES.md) record device tilt, vibration, rig-scale validation
-and the retained locked-fluid work.
-
-### Previous publication: v1.2.3
-
-[Alpha v1.2.3](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.3-alpha.1)
-was published from `7660be45089808ba0cf7ab5011daa5e73aecd335`.
-Its [notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_3_NOTES.md) record editor and performance improvements.
-
-### Previous publication: v1.2.2
-
-**[Judas Engine Alpha v1.2.2 / `1.2.2-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.2-alpha.1)**
-from `4ec20cece21b39756734591684056770116bcac4` on 3 November 2026, after explicit operator
-publication and main-promotion authorization. [Exact-source preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41553753282),
-[Alpha and Experimental gates](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41553748313),
-[main promotion verification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41557887352)
-and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41557886594)
-passed. Each channel passed 121 CTest cases. Linux release qualification passed
-96 native gates, coordinated cold readers and eight SDK workflows. Hosted native
-Windows SDK qualification and all 41 new transfer checks passed; this is not a
-new desktop, graphics, audio or controller hardware trial.
-
-The first preparation exposed an isolated-working-directory assumption in the
-old UI fixture. Its original failure, 22-check isolated retest and missing-fixture
-control are retained in [qualification evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/alpha-v1.2.2-20261103/publication.json).
-The bundled Satchel project was exported from the actual Alpha SDK and run outside
-the checkout: a pointer drag changed the source slot, equipment slot and live
-preview; Resume and Escape passed. All eight published asset sizes and digests
-matched the local assembly, and the live Alpha feed matched the published manifest.
-[Patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_2_NOTES.md) describe the APIs and limits. Advanced Fluids
-remain locked. Sealed package notes keep their preparation wording, and earlier
-published tags and packages were left intact.
-
-### Previous publication: v1.2.1
-
-**[Judas Engine Alpha v1.2.1 / `1.2.1-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.1-alpha.1)**
-from `a461bab5b73c6aafdf43842288542b055c984d12` on 2 November 2026, under the
-operator's conditional publication/main-promotion approval, including passing
-qualification corrections. [Exact-source preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41532266816),
-[Alpha/Experimental gates](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41532265232)
-and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41537305389)
-passed. Experimental passed 117 CTest cases; the registration oracle passed all
-10 controls, including both Ninja configurations. Linux release qualification
-passed 92 native gates plus coordinated cold readers, SDK creation, tool operations
-and moved exports. Native hosted Windows selected contracts and SDK inspection
-passed; this is not fresh Windows graphics/audio/controller hardware acceptance.
-
-The public Linux, Windows and source package hashes matched the local deterministic
-assembly and GitHub asset digests. The live Alpha feed matched the published
-manifest. [Patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_1_NOTES.md) describe the shadow correction,
-bounded GPU diagnostics and retained fluid repairs. **Advanced Fluids remain
-locked**; unavailable Alpha runtime combinations and unresolved fluid diagnostics
-are not passes. Sealed package notes retain preparation-time wording; this current
-record supplies publication status. No prior tag or package was replaced.
-
-### Previous publication: v1.2.0
-
-**[Judas Engine Alpha v1.2.0 / `1.2.0-alpha.1` is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.0-alpha.1)**
-from `b81b39b22ac305bcd250b1cef0fe9ff28e097633` on 1 November 2026, after explicit
-operator approval of the corrected build. [Release preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41360911680)
-and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41363879795)
-passed for that exact source. Linux Alpha/Experimental gates and SDK workflows,
-native Windows selected contracts and SDK qualification passed. Published package
-hashes and the live Alpha feed were verified. Prior tags/packages remain immutable.
-
-The release includes optional Utility AI, Little Haven and Willow Town, alongside
-the gated experimental browser workflow. Windows AI core (165), script (21),
-authoring model (39), fresh-object workflow (49), reservations (65), reservation
-script (26), sensing (53), sensing/script integration (10) and reservation cold
-write/read (13/5) checks passed. These are native functional checks, not a new
-Windows GPU/audio/controller trial or Android/browser AI qualification.
-[Release notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_2_0_NOTES.md) retain the feature and limitation detail;
-sealed preparation artifacts retain their original pre-publication wording.
-
-Advanced Fluids remains locked. Browser export requires explicit
-`-ExpBrowserSupport=1` and a separately installed source/Emscripten toolchain;
-no browser compiler is bundled in the desktop SDK.
-
-The SDK and verified source archive include the four native 2D learning projects
-plus Little Haven and Willow Town. Larger consumer games, research, build caches
-and unrelated experiments remain outside these release artifacts.
-
-**[Alpha v1.0.4 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.4-alpha.1)**
-on 30 October 2026. Its immutable tag/packages remain unchanged.
-
-**[Alpha v1.0.3 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1)**
-on 30 October 2026 from `f2813324155166c6942fd68dde843d9775eb532d`. Linux and
-Windows preparation and protected publication passed. Package digests and the
-live Alpha feed were verified; see [the release record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_3_NOTES.md).
-Advanced Fluids remains locked. Previous tags and packages remain immutable.
-
-**[Alpha v1.0.2 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1)**
-on 29 October 2026 from `24ae686f5918105dd84c2b00f98f5354bad13ef8`.
-The verified Linux/Windows SDKs, source, checksums and Alpha update manifest are
-live. See [the release record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_2_NOTES.md).
-Prior releases below remain immutable.
-
-**[Alpha v1.0.1 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)** on
-29 October 2026 from `13b032080c6300c50af8bf44536c2dd8da5814d2`, with operator authorization.
-Linux and native Windows preparation, guarded publication and old-updater
-compatibility passed. See [the patch release record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_1_NOTES.md).
-
-The original [Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1) was published after final operator approval on
-27 October 2026. Tag `v1.0.0-alpha.1` identifies exact historical source
-`636eec475b9955dcfd7d6d943d00c05d911135ad`. The verified Linux, Windows and source
-packages and Alpha update manifest are live. These publication steps remain the
-procedure for future releases; compilation, staging and preparation alone never
-grant approval. Do not republish or replace the existing Alpha tag/assets.
-
-The Git branches remain `Experimental` and operator-accepted `main`. Distribution
-channels are Alpha, optional future Beta/Experimental, and eventual GA Stable.
-Do not create a duplicate Stable branch. Do not publish Alpha as latest Stable.
-
-The `0dab8e5d` candidate predates the advanced-fluid restriction; `31205c6a`
-predates the accepted Basic Water editor-preview correction. Both are superseded.
-The original Alpha v1.0.0 packages use `636eec47`; do not distribute older candidates
-as that accepted release. Sealed preparation receipts retain their original pending
-approval wording as historical evidence; the public release records the later
-operator approval. See [the release record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_0_NOTES.md).
-
-The operator-authorized Alpha v1.0.1 patch includes the accepted weather/input
-corrections and qualified release/CI repairs. Assembly chooses curated notes matching the
-authoritative version and channel; it does not reuse initial-release notes.
-
 ## 1. Freeze a source candidate
 
 Update `engine-version.json` once, then update curated release notes and support
@@ -162,7 +26,7 @@ boundaries. Commit intended source to Experimental; exclude research, games not
 needed in an SDK, build outputs and unrelated local experiments. Generate a
 factual changelog with `tools/generate_changelog.py --base ACCEPTED_BASE --head
 CANDIDATE --output PATH`. Review notes rather than treating commit subjects as
-validation claims. Keep protected historical evidence unchanged.
+validation claims. Retain required current qualification/provenance receipts; superseded documentation belongs in Git history.
 
 Before freezing the candidate, refresh the maintained summaries and verify them:
 
@@ -175,7 +39,7 @@ Curated source notes must exist for the new engine version. The dated
 `docs/RELEASE_STATUS.json` publication receipt may still name the previous
 published version. Record a new receipt only after successful publication and
 verification, then refresh again on Experimental. See
-[documentation maintenance](DOCUMENTATION_MAINTENANCE.md#source-versions-publication-receipts-and-current-findings).
+[documentation maintenance](DOCUMENTATION_MAINTENANCE.md#source-publication-and-contributor-authority).
 
 Create a tracked engine-source archive with `tools/package_source.py --output
 OUTSIDE_SOURCE/source.tar.gz --channel Alpha`. When unrelated untracked
@@ -191,17 +55,11 @@ Linux uses the established Ubuntu 24.04 complete build userland:
 python3 tools/build_linux_baseline.py --rootfs PREPARED_UBUNTU24_ROOT --build FRESH_BUILD --channel Alpha --jobs 1
 ```
 
-Configure `JUDAS_ENABLE_VALIDATION=ON` and `JUDAS_SDK_RELEASE=ON` in the baseline
-namespace, then use `scripts/qualify_m100.py` for one coordinated authoritative
-pass. This runs the registered native gates plus joints, vehicles, gravity and
-swimming. It preserves known-failure classification; it does not silently waive
-new failures. V2 runs the advanced-fluid runtime checks in every build channel; project opt-in remains explicit. Routine CI is not release qualification. Main promotion requires the completed exact-candidate Linux and native Windows qualification plus operator acceptance. V2 remains on Experimental until that promotion is explicitly authorised. Historical V1 package restrictions do not define current V2 behaviour. Run relevant API/type and tooling controls too.
-
 Run `scripts/qualify_sdk.py --sdk SDK --work FRESH_WORK --rootfs
 PREPARED_UBUNTU24_ROOT`. It mounts only the SDK for project/editor/tool work and
 only each moved game for standalone smoke. Frozen test fixtures make the tool
 workflows reproducible from engine-only source archives. No deleted /tmp script
-is required. All 17 Linux tools have actual representative operations, not merely
+is required. All 15 common Linux tools have actual representative operations, not merely
 version probes. Positive/negative script and collision controls are included.
 
 Windows uses the established native MSVC 2022 x64 workflow:
@@ -275,7 +133,7 @@ known limits and human checklist. Stop for final approval.
    identities. Interrupted draft/upload failures remain diagnosable; do not
    bypass guards or clobber the existing release to force a retry.
 
-Before approval, none of steps 1–7 is authorized by M100 implementation alone.
+Before explicit publication approval, none of steps 1–7 is authorized merely by a passing build.
 The publication scripts contain no installer, project updater or version-control
 synchronization for developers. Offline users continue using their installed SDK.
 

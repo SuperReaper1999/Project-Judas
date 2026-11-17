@@ -15,7 +15,7 @@ the live world and report failure through normal application diagnostics.
 Replacement builds a fresh normal RuntimeWorld, ends the old Play/VM/audio/UI,
 then starts the new world. Reload reconstructs authored state, not an automatic
 save overlay. No old entities, closures, UI, animation mixer or ragdoll state survive.
-Whole-scene replacement is distinct from [M59 additive residency](streaming.md). Scene operations require an active
+Whole-scene replacement is distinct from [region additive residency](streaming.md). Scene operations require an active
 project SceneSession; isolated no-session worlds throw.
 
 ## session
@@ -25,7 +25,7 @@ project SceneSession; isolated no-session worlds throw.
 maximum 256 keys/64 KiB combined. Values obey the same bounded plain-data checks
 below. Invalid values/budgets throw TypeError. get/delete missing keys are safe.
 Session data survives scene replacement/reload but ends when Play/application
-session ends. It is not automatically disk-persistent; explicit [M61 slots](saves.md)
+session ends. It is not automatically disk-persistent; explicit [save-slot slots](saves.md)
 include the bounded session map. Re-fetch values after modification:
 mutating `session.get('x')` does not update the stored value.
 
@@ -44,11 +44,11 @@ baseline and restores before `start`. Invalid captured state prevents valid save
 serialization; faulted slots are omitted. `entity.scriptState(slot)` reads a
 detached JSON snapshot or null. This is not live inter-script object sharing.
 
-**Historical M40–M60 contract, superseded for modern slots by M61:** no JS save/load-disk binding existed. The runtime/editor's existing save controls
+**Historical scripting–streaming-audio contract, superseded for modern slots by save-slot:** no JS save/load-disk binding existed. The runtime/editor's existing save controls
 are separate. Session is not saved automatically. Private instance fields/module
 globals/animation mixer/active ragdoll/UI/live voices are not VM-persisted. Authored
 script/UI/prefab content contributes strict content fingerprints; don't assume
-save compatibility after changing source. [Persistence architecture](../SCRIPTING.md).
+save compatibility after changing source. [Persistence architecture](scripting-v2.md).
 
 ## Safe handle rules
 
@@ -61,7 +61,6 @@ save compatibility after changing source. [Persistence architecture](../SCRIPTIN
 | `entity.material(slot)` | Constructs a facade; methods validate owner/render/slot. Stale owner ReferenceError; absent component/invalid slot TypeError. |
 | `entity.renderVisible` / `rendererVisible` | Local render-only booleans. Stale owner ReferenceError; renderer gate additionally requires an existing Render component. |
 | `entity.deformable` / `.fracture` | Null until ready or absent; `.valid` false for stale retained epoch handles, other stale operations ReferenceError. |
-| `entity.liquid` | Null until registered or absent; retained `.valid` false when stale, state/control ReferenceError. |
 | `entity.navigation` | Null without agent; facade exists while disabled. Disabled/unregistered state/control ReferenceError; enabled setter can restore it. |
 | `physics.joint(owner)` | Null if no live joint; `.valid` false on stale Joint; state/mutations throw. |
 | `ui.get(name)` | Null if absent. Document/element stale accesses throw; no valid flag. |
@@ -88,15 +87,15 @@ the call returns. `destroy` may see an already-stale owner. Keep teardown defens
 faulted scripts receive no destroy callback. Support-body disappearance is handled
 by the motor's safe generations, not explicit transform parenting.
 
-## M59 additive residency
+## additive residency
 
-For additive region requests, ownership, pins and suspension see [Streaming](streaming.md). Whole-world reload remains distinct. The historical legacy delta save remains disabled for composed worlds; M61 slots now include qualified resident/retained state.
+For additive region requests, ownership, pins and suspension see [Streaming](streaming.md). Whole-world reload remains distinct. Modern slots include supported resident/retained state; retired delta saves are not an alternative path.
 
-## Project slots (M61)
+## Project slots
 
 The reusable [`saves`](saves.md) service persists the bounded session map and supported world state. It stages a coherent replacement and never overlays a legacy delta afterward. Session-only data remains distinct from durable disk state.
 
-M73 [signals](signals.md) are world-local transient delivery, not session/save facts.
+signal [signals](signals.md) are world-local transient delivery, not session/save facts.
 World replacement discards subscriptions/queues. Re-register in restore; persist
 required intent explicitly rather than relying on replay of accepted notifications.
 

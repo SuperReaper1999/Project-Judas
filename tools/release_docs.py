@@ -21,7 +21,6 @@ PAGES = (
     'README.md',
     'docs/README.md',
     'docs/VERSIONING.md',
-    'docs/CURRENT_STATUS.md',
     'docs/ALPHA_SUPPORT_MATRIX.md',
     'docs/RELEASING.md',
     'docs/DISTRIBUTION.md',
@@ -53,7 +52,9 @@ def read_records(root):
     for field in ('preparation_run', 'publication_run'):
         if type(published.get(field)) is not int or published[field] <= 0:
             raise ValueError('publication requires positive workflow run IDs')
-    for version in {source['version'], published['version']}:
+    # Only the candidate's curated notes are active release input.
+    # The dated publication receipt does not require obsolete patch-note files.
+    for version in {source['version']}:
         notes = root / 'docs' / ('ALPHA_V' + version.split('-')[0].replace('.', '_') + '_NOTES.md')
         if not notes.is_file():
             raise ValueError('missing versioned release notes: ' + str(notes.relative_to(root)))

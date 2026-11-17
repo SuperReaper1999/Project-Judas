@@ -178,12 +178,6 @@ enclosed air pockets and concave shoreline details can remain unresolved.
 Advanced Fluids are still unavailable in Alpha builds pending qualification;
 this repair does not change that lock or Basic Water.
 
-Use the sample with resolved Judas gravity for project-owned buoyancy, drag and
-propulsion. CharacterMotor remains geometric movement, not a built-in swim mode.
-See [Project Settings and water](../PROJECT_SETTINGS_AND_WATER.md) for authoring,
-defaults, experimental opt-in, approximation limits and the Stillwater project.
-The particle path still has its [existing limitations (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_DEMO.md).
-
 ## Portal views: off-axis frustum and oblique clip plane
 
 `entity.setCameraProjection({near, far, frustum, clipPlane})` also accepts two optional
@@ -203,12 +197,12 @@ Omitting either key keeps its current value; `null` clears it. Both are runtime 
 settings: they are not authored, saved or restored, so scripts set them each `presentationUpdate`
 (typically right after publishing the main view). `entity.camera` reports them as `frustum` and
 `clipPlane` (or null). One render target cannot show itself: a portal camera that sees its own
-surface still gets the M33 white fallback, and portals seen inside another portal show that portal's
-previous image (no recursive passes). Explicit M85 origin shifts translate the plane point
+surface still gets the camera-target white fallback, and portals seen inside another portal show that portal's
+previous image (no recursive passes). Explicit planetary-terrain origin shifts translate the plane point
 alongside the camera; normals and camera-space frustum extents remain unchanged.
 [Copyable example](examples/portal-camera.js).
 
-## CameraRange, world.project and world.viewport (M67)
+## CameraRange, world.project and world.viewport
 
 `world.setView(pose, fov=70, range={near:0.1,far:500})` accepts a partial transform and optional clipping range. Omitted clipping members retain these defaults on that call; set both each presentation update to keep a longer range. Both values must be finite and positive with `near < far`. Unknown range keys throw `TypeError`. `entity.setCameraProjection({near,far})` changes an existing secondary/render-target camera, returning false if the entity has no camera; `entity.camera` includes the current `near` and `far`. These are runtime settings, captured by the existing camera/world save participants.
 
@@ -218,7 +212,7 @@ The actual view projection drives Renderer frustum culling and projection. `worl
 
 Use `presentationUpdate` for view/marker placement, not authoritative movement. A larger far range with a very small near plane reduces depth precision. Camera clipping does not supply infinite viewing distance or request an origin shift; use the explicit [origin API](planetary-terrain.md) within its supported bounds.
 
-## Local viewports (M89)
+## Local viewports
 
 [LocalPlayer.setView/project/ray](local-multiplayer.md#viewports-and-cameras)
 provide independent cameras in the same world. With no dedicated player views,

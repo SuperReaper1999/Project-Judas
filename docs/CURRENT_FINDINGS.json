@@ -3,11 +3,6 @@
   "scope": "Current V2 limitations and decisions. Retired Pre-Alpha assessment and numerical experiments live in Git history, not the runtime distribution.",
   "findings": [
     {
-      "id": "FLUID-LOCK",
-      "status": "retired",
-      "disposition": "Obsolete V1-era channel restriction removed. Accepted Advanced Fluids V2 is available through explicit project opt-in in every V2 build channel. V2 remains on Experimental; main and existing packages are unchanged."
-    },
-    {
       "id": "TERRAIN-EDITOR",
       "status": "scoped measured improvement",
       "disposition": "Hidden Game rendering and editing-preview LOD were corrected. Current whole-frame SDK editor/standalone observations are recorded in docs/WHOLE_ENGINE_PERFORMANCE.md; different viewport sizes and workloads do not establish universal editor/runtime parity."
@@ -20,7 +15,7 @@
     {
       "id": "PLATFORMS",
       "status": "scoped",
-      "disposition": "Linux qualification is current per purge evidence. Earlier Windows/Android hardware acceptance does not certify this changed checkpoint."
+      "disposition": "Native Linux integrated development and Ubuntu/Windows build/contracts passed at the recorded V2 baseline. Current Windows desktop graphics/export, Android and browser runtime remain unqualified; historical device acceptance is not inherited."
     },
     {
       "id": "GPU-FALLBACKS",
@@ -33,14 +28,9 @@
       "disposition": "Content-dependent dense contact and CCD safety limits remain; removal of MK1 diagnostics does not change MK2 algorithms."
     },
     {
-      "id": "PURGE",
-      "status": "human accepted",
-      "disposition": "The operator accepted the architectural purge before the Vehicles/Wheels V2 milestone. This records that decision; it does not promote main or publish a V2 release."
-    },
-    {
       "id": "GPU-CAPTURE-REPEATABILITY",
       "status": "unconfirmed",
-      "disposition": "One local NVIDIA terrain depth capture and one first-dispatch one-slot particle test failed in the purge full run; unchanged isolated reruns passed. Cause remains unestablished. Assertions and GPU algorithms remain unchanged; see purge qualification evidence."
+      "disposition": "Prior one-slot particle first-capture and hidden-window terrain readback failures did not recur in isolated repeats. The terrain comparison now owns an image target; no universal driver/particle repeatability repair is claimed. Retain live assertions and investigate a new reproduction."
     },
     {
       "id": "MOD-TERRAIN",
@@ -55,7 +45,12 @@
     {
       "id": "PRIVATE-ASSET-FOOTPRINT",
       "status": "measured limitation",
-      "disposition": "The local four-model yard retains about 3.12 GiB process RSS plus swap, including decoded images needed for resource recreation. Active pinned assets exceed the cache target. This is a footprint follow-up, not proof of unbounded growth; private models remain outside Git and SDKs."
+      "disposition": "Large active private model/image sets can exceed resource cache targets because live pinned data cannot be evicted. This is content-dependent footprint, not evidence of unbounded growth; private assets remain outside Git/SDKs."
+    },
+    {
+      "id": "LEGACY-PRESENTATION-TEST",
+      "status": "unregistered stale target",
+      "disposition": "CMake still declares judas_script_presentation_tests, whose source copies removed projects/shooter_game and projects/boundary_demo and missing docs/evidence/m52 originals. It is absent from the supported validation manifest. Documentation cleanup does not repair or certify this target; reconcile or retire it as a separate implementation task."
     }
   ]
 }

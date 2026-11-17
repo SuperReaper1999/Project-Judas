@@ -1,18 +1,8 @@
-# Judas Physics MK2 — current production contract
+# Production MK2 rigid-body contract
 
-MK2 is Judas's only rigid physics solver. The operator human-accepted
-`c859901cc9a52cf5b7104887f56b5e7ad4269b1d`; main and Experimental aligned there.
-Subsequent Experimental corrections require their own acceptance. There is no
-MK1 selector, fallback solver or requirement to reproduce MK1 trajectories.
-
-Physics V2 is the current Experimental implementation, awaiting its own final
-qualification and human review. [Current architecture, measurements and limits](PHYSICS_V2.md)
-supersede the historical scheduling/arrival policies below where identified.
-
-The [unaltered development record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/MK2_PHYSICS_DEVELOPMENT.md) preserves the
-experiments, rejected approaches, original failures, measurements and stage-time
-acceptance statements. Its old “not promoted”, alternate-solver flags and interim
-open gaps are historical, not the current runtime contract.
+MK2 is the selected V2 rigid solver. See [the physical system overview](PHYSICS_V2.md),
+[readiness](DEVELOPMENT_READINESS.md) and the native module map below. Separate
+physics-core/contact-material experiment branches are not alternative selected solvers.
 
 ## Ownership and update order
 
@@ -22,7 +12,7 @@ open gaps are historical, not the current runtime contract.
 `src/physics/WorldMk2Continuous.cpp` owns pair-local chronological searches and
 trajectory publication. Recurrent same-time contacts reuse the existing row
 kernels through `WorldMk2ArrivalBatch.inl`. The old mover-wide frontier is removed.
-See [collision architecture and measured performance](MK2_COLLISION_ARCHITECTURE_PERFORMANCE.md).
+See [collision architecture and measured performance](MK2_PHYSICS_ARCHITECTURE.md).
 The same implementation handles ordinary steps, coupled intervals and
 velocity-coupling participants; there is no old-solver path for coupled work.
 
@@ -44,15 +34,6 @@ knots preserve a common linear episode origin/time. The local angle tolerance is
 CCD contact depth allowances span the episode, rather than restarting at each knot.
 A conservative point-speed bound preserves ordinary speculative support when the
 existing restitution law cannot bounce; the 0.5 m/s cutoff is unchanged.
-
-A coupling receives `begin(dt)` once, exactly its requested `solve(dt,round)`
-calls spread over substeps, then `finish(dt)` once. Bodies woken during coupling
-join through the same owner, without a second simulation system. Gameplay forces
-and per-entity gravity are engine primitives; input policy remains project JS.
-All awake bodies share the chronological intervals. Pre-applied external kicks
-are redistributed only for actual constraints/velocity couplings; free flight
-retains its public pre-step impulse timing. The [qualification follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_QUALIFICATION.md)
-records the suspension regression and balanced-kick proof for this correction.
 
 Native participants that need a solve at every chronological boundary can use
 `VelocityCoupling::ForEachSubstep(iterationsPerSubstep, callback)`. Its context
@@ -127,23 +108,7 @@ WASD measurements with exact stage identities. Those are not universal 60 Hz
 certification or fresh measurements of every later checkpoint. The old Pre-Alpha
 TOI-event/island hitch diagnoses describe the removed MK1 architecture.
 
-The [rotation/contact correction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_MK2_ROTATION_CORRECTION.md) repairs the
-moderate-rate elastic energy-gain reproduction through consistent rotation and
-chronological response. Its measured energy, collision, momentum, cold-save and
-performance evidence is separate from the preserved original failure record.
-It was human accepted at `c76e92dc20b5765f61d6077bf618a8b94ac22462`, not a universal
-no-energy-error guarantee: nominal e=1 still loses some energy over long runs,
-extreme spin has measured phase error, and bounded arrivals can truncate motion.
-
 ## Validation
-
-The focused manifest schedules MK2 foundation, physical balance, original physical
-mesh arrival/continuation, contacts, movement and save/lifecycle regressions.
-Water/default-off policy and fresh-process basic-water continuation have their own
-entries. The rotation and process-separated rotation-cold suites cover the new
-trajectory and continuation contracts. Synthetic and automated passes do not establish human acceptance.
-See [Pre-Alpha status](CURRENT_STATUS.md) and
-[the final correction work (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_CORRECTIONS.md).
 
 ## Optional native material impulse transactions (Experimental)
 

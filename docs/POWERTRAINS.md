@@ -1,25 +1,18 @@
-# M82 — Judas learns to roar
-
-**Human validated by the operator on Linux on 2026-10-13.** Development starts from
-the M81 accepted checkpoint `b74906350084ab20d01b09774dfc56711b4d97cb`.
-Linux is the automated acceptance platform; Windows validation is informational
-and does not imply native hardware acceptance. The operator authorized release
-promotion; see [acceptance (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m82/HUMAN_VALIDATION.md) and
-[evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m82/RESULTS.md).
+# Powertrains and mechanical connections
 
 ## Architecture and ownership
 
-M81 already supplies wheel spin inertia, suspension, query contact, friction,
+wheel already supplies wheel spin inertia, suspension, query contact, friction,
 direct drive torque and braking. PhysicsWorld supplies ordinary rigid angular
-inertia, impulses and M45 hinges. None of these supplied a general shaft network,
-engine load response, clutch or differential. M82 adds an optional Powertrain
+inertia, impulses and joint hinges. None of these supplied a general shaft network,
+engine load response, clutch or differential. powertrain adds an optional Powertrain
 component that connects those existing degrees of freedom.
 
 An assembly owns bounded arrays of named **shafts**, **sources**, **links** and
 **brakes**. It may belong to any ordinary entity. Shafts can be:
 
 - **Internal:** explicit finite scalar inertia, optional rigid bearing or wheel-carrier reference.
-- **Wheel:** the existing M81 wheel spin degree of freedom and chassis reaction.
+- **Wheel:** the existing wheel wheel spin degree of freedom and chassis reaction.
 - **Body:** angular motion of an ordinary rigid body about an authored axis,
   optionally measured relative to another rigid bearing or wheel carrier.
 
@@ -98,7 +91,7 @@ PhysicsWorld capabilities.
 ## Gravity, frames and terminals
 
 Internal/body shaft axes are bearing-local when a bearing exists, otherwise
-world-space. Wheel terminals use the existing authored M81 axle convention.
+world-space. Wheel terminals use the existing authored wheel axle convention.
 A bearing ID may name an ordinary rigid entity or a wheel entity. A wheel reference
 resolves its physical carrier, including a stable structural `wheel.part`; it does
 not use wheel spin or create another chassis. This is an authored reference, not a
@@ -108,7 +101,7 @@ separate bearing. The bearing body's actual orientation rotates the mechanical a
 graph nor its solver assumes global Y, a car chassis, or a suspension direction.
 Gravity remains the existing Judas field resolver acting on normal bodies.
 
-Body terminals are most useful with an ordinary M45 hinge that constrains the
+Body terminals are most useful with an ordinary joint hinge that constrains the
 other motion axes. Powertrain supplies torque about an axis; it does not silently
 invent the physical bearing or translational constraint. The lab's flywheel is
 an actual dynamic body attached to its static stand by a normal hinge.
@@ -164,22 +157,6 @@ See [public reference](judasjs/powertrains.md), [types](judas.d.ts) and
 [the API inventory](judasjs/API_INVENTORY.md). Wheels remain independently usable
 through [their direct API](judasjs/wheels.md).
 
-## Editable demonstration
-
-Open [Powertrain Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/powertrain_lab/powertrain_lab.judasproj):
-
-1. Orange four-wheel buggy: combustion crank, manual ratio, bounded clutch,
-   open differential and driven rear tyres.
-2. Cyan six-wheel rover: independent electric motors, without a gearbox.
-3. Purple stationary machine: electric source, reduction and real hinged flywheel.
-
-Flat, oblique uniform-gravity and spherical radial-gravity scenes use the same
-components. Real payloads, low tyre grip, source/brake loads and clutch/gear
-controls change the mechanical outcome. HUD RPM/torque/slip values come from the
-solver, and presentation cameras follow interpolated ordinary body poses.
-Prefab spawn, streamed garage, save/load, pause/reload and normal export use
-existing public APIs. Controls are in the [project README (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/powertrain_lab/README.md).
-
 ## Limitations
 
 - Scalar shaft mechanics omit full rotor gyroscopic transport, flexible shafts,
@@ -195,10 +172,10 @@ existing public APIs. Controls are in the [project README (historical)](https://
 - Separate graphs execute in ascending owner entity-ID order. Shared bearings
   physically couple their motion, but only shafts within one graph participate
   in a simultaneous mechanical solve; author tightly coupled machinery together.
-- Existing M81 query-contact, tyre geometry, sleep-island and high-speed limits
-  remain. M82 does not redesign tyre contact or rigid-body CCD.
+- Existing wheel query-contact, tyre geometry, sleep-island and high-speed limits
+  remain. powertrain does not redesign tyre contact or rigid-body CCD.
 - Graph editing is deliberately compact rather than a visual drivetrain designer.
-- Windows M82 functional/hardware validation is not inferred from Linux results.
+- Windows powertrain functional/hardware validation is not inferred from Linux results.
 
 The [Project Chrono shaft/gear/clutch tutorial](https://api.projectchrono.org/8.0.0/tutorial_demo_powertrain.html)
 is a modelling reference. Judas implements its own bounded shaft solver and adds
@@ -207,6 +184,6 @@ no Chrono dependency or copied runtime implementation.
 Protected history, independent fluid research, existing games and unrelated
 deferred findings remain unchanged. Human acceptance comes from the operator's
 subsequent desktop test, not automated delivery. Release promotion is explicitly
-authorized. After M82 acceptance, main became the human-tested release branch
+authorized. After powertrain acceptance, main became the human-tested release branch
 and the duplicate Stable branch was retired. Development remains on
 Experimental; see the [branch workflow](../AGENTS.md).

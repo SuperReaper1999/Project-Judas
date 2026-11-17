@@ -1,6 +1,4 @@
-# Runtime scene transitions (M43)
-
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+# Scene transitions
 
 Judas owns world lifetime. Project JavaScript chooses when to change scenes.
 
@@ -23,7 +21,7 @@ the project root; requests must exactly match a registered project-relative path
 Absolute paths, traversal and unknown names are rejected. The API is main/runtime-thread only. The registry is captured
 at session start. Restart Play to discover newly added scene files. Project settings
 shows the runtime scene list and existing startup-scene selection.
-M38 already exports this same scene set and all registered assets. No new project,
+export already exports this same scene set and all registered assets. No new project,
 scene or save schema is needed; packaging paths do not affect fingerprints.
 
 ## Lifetime and failure
@@ -52,7 +50,7 @@ document unchanged, even after playing other scenes.
 
 Session values are detached JSON copies, not live JS objects or entity handles.
 Values support null, booleans, finite numbers, strings, arrays and plain objects.
-M40 validation limits apply: depth 16, 4096 nodes, no accessors/cycles/functions;
+scripting validation limits apply: depth 16, 4096 nodes, no accessors/cycles/functions;
 the session is bounded to 256 keys and 64KiB total key/value bytes, key length 128.
 Update nested data by getting a copy, editing it, and setting it again.
 
@@ -65,17 +63,3 @@ Transitions load the authored baseline without automatically applying saved delt
 unchanged. F6/F7 target the new current scene's save path; FTFT1 strict authored
 baseline validation is unchanged. `JUDAS_WORLD_STATE=none` disables saves for the
 whole standalone run; a custom initial override applies to initial startup only.
-
-## Demo and scope
-
-`projects/scene_demo/scene_demo.judasproj`: A has a green gate, B has a purple gate
-and blue floor. E in A sends a prefab courier through the real sensor; its JS event
-sets a session key and requests B. E in B returns to A. P spawns another courier;
-R reloads. Escape opens authored UI with Return/Reload/Quit buttons. Session key
-and visit count remain visible while scene entities reset.
-
-Sensors use M42's discrete rigid-body overlap contract. This demo uses a normal
-prefab rigid body, not the custom sweep-only player, as the trigger participant.
-No continuous triggers, background streaming, loading screen, persistent entities,
-additive scenes or cross-scene state migration are included. Scene loading is
-synchronous at the safe frame boundary and may visibly pause for a large scene.

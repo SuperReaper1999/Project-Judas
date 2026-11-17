@@ -1,9 +1,9 @@
 # Materials and scene appearance
 
-[Index](../JUDASJS.md) · [Rendering contracts](../MATERIALS.md) · [M72 ownership and review](../RUNTIME_RENDERING.md) · [Render visibility](entities.md#render-visibility-m72)
+[Index](../JUDASJS.md) · [Rendering contracts](../MATERIALS.md) · [runtime-rendering ownership and review](../RUNTIME_RENDERING.md) · [Render visibility](entities.md#render-visibility)
 
 The [material example](examples/materials.js) uses the ordinary public handles;
-[M72 validation status](../RUNTIME_RENDERING.md#validation-status) records current execution.
+[runtime-rendering validation status](../RUNTIME_RENDERING.md) records current execution.
 
 Judas provides material, light and environment primitives. Project JS chooses
 transitions, sun paths and the meaning of a visual change. All values below are
@@ -63,8 +63,8 @@ transparent surfaces, refraction and coloured transparent shadows are unsupporte
 
 `clearOverrides()` removes the runtime patch at this target, including runtime
 material assignment, and returns true. Authored assignment/factors/maps reappear,
-with any remaining runtime patches at other targets still applied. This M72 reset
-supersedes M57's narrower parameter-only reset that kept runtime assignment.
+with any remaining runtime patches at other targets still applied. This runtime-rendering reset
+supersedes material's narrower parameter-only reset that kept runtime assignment.
 Runtime calls never rewrite material files, model imports or scene/prefab sources.
 
 ### Readback and asynchronous textures
@@ -127,14 +127,14 @@ synchronous loading.
 `world.resetAppearance()` restores the root scene's authored settings and returns
 true. Additive region defaults do not take ownership of the root sun/environment.
 Whole-scene replacement/reload and Play/Stop reconstruct authored defaults. Modern
-[M61 save slots](saves.md) preserve supported live appearance, material selections
-and visibility; [M59 retention](streaming.md) preserves per-entity instance state.
+[save-slot save slots](saves.md) preserve supported live appearance, material selections
+and visibility; [region retention](streaming.md) preserves per-entity instance state.
 GPU handles/loading caches are rebuilt rather than serialized.
 
 ## Main and auxiliary views
 
 The main view consumes real sun lighting and the existing directional shadows;
-exposure/output conversion follows the world pass. M33 auxiliary views share
+exposure/output conversion follows the world pass. camera-target auxiliary views share
 ordinary geometry/material/transparency submissions and the main-focused shadow
 maps. They keep their authored resolution, cadence and render masks; no independent
 shadow focus or main-view quality guarantee is added. Modern auxiliary targets
@@ -145,6 +145,6 @@ shared source remains scene-linear for material consumers; legacy/display target
 are not converted again. Feedback protection and target ownership remain in force.
 Visibility governs supported submissions in every view. UI/debug display colours
 remain independent of world exposure. Point/spot counts and controls retain their
-existing bounded authoring surface; M72 adds no new light classes or counts.
+existing bounded authoring surface; runtime-rendering adds no new light classes or counts.
 
-Physical contact materials remain independent [resources](physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65).
+Physical contact materials remain independent [resources](physics.md#gravity-physical-materials-and-runtime-joint-configuration).

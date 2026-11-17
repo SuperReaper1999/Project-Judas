@@ -1,7 +1,7 @@
-# Judas Engine
+# Judas Engine V2
 
-A C++ game engine with project-owned JudasJS gameplay, 2D and 3D authoring,
-MK2 physics, large worlds and optional simulation systems.
+A C++ engine, desktop editor and matching JudasJS SDK for 2D/3D games. Game rules
+belong to project scripts; shared native systems own simulation, assets and delivery.
 
 <!-- judas-release-status:start -->
 Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
@@ -15,55 +15,44 @@ Check the release page for subsequently published packages.
 
 ## Start here
 
-- [First project](docs/FIRST_PROJECT.md) and [Editor V2 guide](docs/EDITOR_V2.md).
-- [SDK authoring: terrain → navigation → NPC movement](docs/SDK_AUTHORING.md).
-- [JudasJS reference](docs/JUDASJS.md), [typed API](docs/judas.d.ts) and [cookbook](docs/judasjs/cookbook.md).
-- [2D game workflow](docs/2D_GAME_WORKFLOW.md): sprites, tiles, animation, planar collision and traversal.
-- [Documentation index](docs/README.md), [support matrix](docs/ALPHA_SUPPORT_MATRIX.md) and [current limitations](docs/CURRENT_FINDINGS.md).
+- [Create a project](docs/FIRST_PROJECT.md) and use the [editor](docs/EDITOR_GUIDE.md).
+- [Make a 2D game](docs/2D_QUICKSTART.md), or follow [SDK terrain/navigation authoring](docs/SDK_AUTHORING.md).
+- Find exact [JudasJS APIs](docs/JUDASJS.md), [types](docs/judas.d.ts) and [examples](docs/judasjs/cookbook.md).
+- Read [V2 architecture](docs/ARCHITECTURE.md), [supported boundaries](docs/ALPHA_SUPPORT_MATRIX.md) and the [qualified development baseline](docs/DEVELOPMENT_READINESS.md).
+- Browse the [documentation index](docs/README.md) for subsystem and developer workflows.
 
-## Current V2 source
+## Build and test
 
-Scripting, Editor, Renderer, Particles and Terrain V2 are integrated on Experimental.
-Advanced Fluids V2 has a playable conservative water grid and independent visual
-surface; **V2 supports project opt-in in every build channel**. Basic Water and
-swimming work independently and are enabled by default.
-
-The [architectural purge](docs/ARCHITECTURAL_PURGE.md) removes native demo gameplay,
-pose-delta saves, PBF fluids, reservoir/container liquids and separate V1 terrain.
-No historical API or project compatibility is promised. Historical demos and their
-matching implementations remain in Git history. Six consumer games have separate
-editable preservation copies; they are not engine dependencies.
-
-Try [Terrain Workshop](projects/terrain_v2_workshop/README.md),
-[Planetary Workshop](projects/terrain_v2_planet_workshop/README.md),
-[Graffiti Workshop](projects/graffiti_workshop/README.md),
-[Stillwater](projects/basic_water_lab/README.md) or
-[Willow Town](projects/willow_town/README.md). The complete curated list is in the
-[purge report](docs/ARCHITECTURAL_PURGE.md).
-
-Current V2 development scope and platform limits are recorded in the
-[development-readiness verdict](docs/DEVELOPMENT_READINESS.md).
-
-## Build and qualify
-
-Follow [installation/distribution](docs/DISTRIBUTION.md) for dependencies,
-[build identity](docs/BUILD_RELEASES.md) for provenance and
-[Linux baseline builds](docs/LINUX_BASELINE_BUILD.md) for Ubuntu-compatible SDKs.
+Install the [native build prerequisites](docs/DISTRIBUTION.md). From the checkout:
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
 python3 tools/workspace_storage.py run -- cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
-python3 tools/workspace_storage.py run -- ctest --test-dir build -L prealpha --output-on-failure
+python3 tools/workspace_storage.py run -- ctest --test-dir build -L prealpha -j1 --output-on-failure
 ```
 
-Graphics checks require a working desktop GL context or Xvfb/Mesa. Headless native
-checks do not prove hardware/controller/audio acceptance. See [Windows](docs/WINDOWS.md),
-[Android](docs/ANDROID.md) and [experimental browser export](docs/BROWSER_SUPPORT.md).
-Source identity is not a published release or human acceptance of this checkpoint.
+Reuse the active build and keep outputs under the [bounded storage policy](docs/WORKSPACE_STORAGE.md).
+Graphics tests need a real desktop context or the declared CI Xvfb/Mesa route;
+software graphics and synthetic input do not imply hardware or human acceptance.
+[Ubuntu baseline](docs/LINUX_BASELINE_BUILD.md), [Windows](docs/WINDOWS.md),
+[Android](docs/ANDROID.md) and [Experimental browser export](docs/BROWSER_SUPPORT.md)
+have different prerequisites and qualification scopes.
 
-Reuse active build directories and run builds/tests through the storage guard.
-The [storage policy](docs/WORKSPACE_STORAGE.md) bounds generated output and keeps
-source experiments on Git branches. Budget exhaustion stops work; it never deletes
-unknown files automatically.
+## Develop with the current platform
+
+Basic Water/swimming are independent default-enabled effects. Advanced Fluids V2
+is explicit project opt-in in every V2 channel. Terrain, rendering/lighting,
+particles, production MK2, animation/IK, UI, audio, networking and modern saves
+have their own documented representations and limits. [Compatibility removals](docs/V2_BREAKING_CHANGES.md)
+are deliberate; current instructions do not depend on retired demos or old SDKs.
+
+Try [Willow Town](projects/willow_town/README.md), [Terrain Workshop](projects/terrain_v2_workshop/README.md),
+[Planetary Workshop](projects/terrain_v2_planet_workshop/README.md),
+[Graffiti Workshop](projects/graffiti_workshop/README.md) or [Stillwater](projects/basic_water_lab/README.md).
+[The SDK inventory](packaging/sdk-inventory.json) identifies bundled and source-only projects.
+
+Work on Experimental; [main promotion](AGENTS.md) and publication require explicit
+operator acceptance. [Documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md)
+explains source verification, reference checks and keeping historical clutter out.
 
 Copyright © 2026 Conner / SuperReaper1999. [MIT licence](LICENSE).

@@ -1,8 +1,5 @@
 # UI — runtime controls
 
-[Index](../JUDASJS.md) · [Input](input.md) · [Local players](local-multiplayer.md)
-· [Save lifecycle](saves.md) · [Authoring and limitations (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md)
-
 Judas owns the UI system; projects own content; JavaScript owns meaning.
 Runtime edits copy authored data and never change the source asset.
 
@@ -71,13 +68,6 @@ Returns undefined. Validated atomic subset of: `placeholder`, `accessibleLabel`,
 pixels; maxBytes integer 1..16384. Unknown keys throw. No DOM or arbitrary CSS.
 
 ### Text input
-
-`selection: {anchor,caret}` reads/writes **extended grapheme indices** in the
-committed text. Bounds reject. `text` is single-line valid UTF-8 within maxBytes;
-programmatic replacement places selection at the end. Placeholder is presentation,
-not the value. Read-only blocks user editing, not programmatic updates.
-The native SDL text/IME path supports clipboard, selection, undo and commit;
-[precise editing/platform limits (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md).
 
 ### Scroll container / virtual list
 

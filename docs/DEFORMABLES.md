@@ -1,23 +1,9 @@
-# M62 — Cloth and volumetric deformables
+# Deformable simulation and ownership
 
-For current physical panels, structural carriers, editor authoring and the native
-V2 lifecycle, start with [Deformables V2 authoring](DEFORMABLES_V2_AUTHORING.md)
-and [qualification](DEFORMABLES_V2_QUALIFICATION.md). The numerical reference and
-original review state below retain their historical cloth/solid scope.
-
-**Status through M69:** M62 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
-
-**Current extension:** [M80 bending](BENDING.md) reuses these tetrahedral
-elastic/plastic nodes, corrects their authored material basis under rotation and
-adds nominal section-resultant failure to optional cohesive solids. The original
-M62 measurements and review statements below retain their historical scope.
-
-Combined cloth/solid candidate is implemented and ready for operator review.
-Automated validation is complete; human visual/physical acceptance is pending.
-Starting accepted checkpoint: `9e281d6ed57a7f88bc0a8fa48cd9c3cec6984961`.
+For physical panels and structural carriers, start with
+[deformable authoring](DEFORMABLES_V2_AUTHORING.md). This guide explains the
+current cloth/solid numerical model, ownership, contacts, connected hulls and
+material scheduling; [qualification](DEVELOPMENT_READINESS.md) has its own scope.
 
 ## Ownership and numerical model
 
@@ -56,20 +42,20 @@ These choices use the compliance and bounded-substep approach of
 Finite iterations still affect response; the supplied numerical comparison reports
 that difference. The separate volumetric/distortional direction in
 [Stable Neo-Hookean Materials](https://matthias-research.github.io/pages/publications/neohookean.pdf)
-informs the separation of constraints; M62 deliberately uses the simpler Green-strain
+informs the separation of constraints; deformable deliberately uses the simpler Green-strain
 approximation and does not claim that paper's constitutive law. [Surface contact](https://graphics.stanford.edu/papers/cloth-sig02/)
 is handled separately from material constraints.
 
 ## Contacts and coupling
 
-| Pair / consumer | M62 coverage |
+| Pair / consumer | deformable coverage |
 |---|---|
 | Static/dynamic box, sphere, compound boxes | Authoritative geometry + tree candidates; surface nodes, edge midpoints, face centroids |
 | Cloth self-contact | Swept vertex/face side test + discrete edge/edge proximity; one-ring exclusions |
 | Cloth/solid and deformable/deformable | Same accelerated boundary contacts; bilateral layer/mask filtering |
-| Terrain | Not an M62 contact primitive |
-| CharacterMotor blocking, M42 events | Unchanged; no deformable contact/event expansion |
-| M44 casts | Continue querying rigid geometry |
+| Terrain | Not an deformable contact primitive |
+| CharacterMotor blocking, collision-event events | Unchanged; no deformable contact/event expansion |
+| shape-query casts | Continue querying rigid geometry |
 | Deformable ray picking | Current triangles; checked generation/triangle/barycentric location |
 
 Primitive contact sampling is a bounded surface-aware approximation. Very small,
@@ -133,7 +119,7 @@ and indices, 64 groups/attachments and 1–16 substeps/iterations; payload and a
 storage have explicit bounds. Large-resolution jobs may exceed these limits and
 fail diagnostically. Derived geometry, render data and node/total mass must also
 remain finite and representable; rejected material changes are atomic. Tetrahedral import is through the versioned pre-baked asset
-representation; M62 has no arbitrary tetrahedralizer or universal external tet format.
+representation; deformable has no arbitrary tetrahedralizer or universal external tet format.
 
 [JavaScript reference](judasjs/deformables.md), [declarations](judas.d.ts), and
 [executed example](judasjs/examples/deformable.js) cover the small handle API.
@@ -142,25 +128,56 @@ No raw node arrays/pointers are exposed to JS.
 
 ## Persistence and residency
 
-M61 adds a required conditional version-1 `deformables` participant. Scenes without
+save-slot adds a required conditional version-1 `deformables` participant. Scenes without
 deformables keep their previous participant set. Saves include positions/velocities,
 plastic matrices, runtime materials/attachments, release/enabled/sleep state; handles,
 GPU buffers and candidate caches are rebuilt. Missing/failed required instances
 reject capture. Asset bytes remain covered by existing content compatibility.
 
-M59 captures independent state once before sliced teardown, using streaming
+region captures independent state once before sliced teardown, using streaming
 participant version 2 only when retained deformable state exists. Fresh owner IDs
 remap internal and qualified attachment references. Live cross-region attachments
 pin their target region, including runtime-changed bindings; released pins do not.
 Animation/ragdoll regions retain their existing explicit residency limitations.
 No large arrays are captured repeatedly during each unload-budget slice.
 
-## Current demonstration
+## Connected hulls and shared resources
 
-[Deformable Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/deformable_lab/README.md) is an ordinary project with
-uniform/radial scenes and a suspendable annex. It contains original/reused licensed
-simple geometry and project JS controls. No fluid, fracture, tailoring, full-body
-skin contact, IK or active physical animation changes belong to M62.
+A finite structural interface may set `JointMaterial.connected`. Its default is
+false for general destructibles. Connected interfaces retain their material
+stiffness, damping, yield and hardening. Cumulative plastic translation/rotation
+have finite budgets; once consumed, further loading is elastic and physical
+unilateral stop rows resist translation/rotation outside the authored envelope.
+The solver applies reactions through ordinary MK2 Jacobians. It never teleports
+sections, zeroes their velocity or releases a connection because its hull
+plastic capacity was consumed. Hull connections reject explicit fracture/piece
+removal requests that would disconnect the protected structure.
 
-Focused results, performance, the single Release/production gate, limitations and
-final fingerprints are indexed in [M62 results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m62/RESULTS.md).
+The editor exposes the flag per finite interface. The generic authoring command
+`judas_deformable_bake connected-hull OUTPUT SOURCE [bondKey ...]` cooks selected
+finite interfaces, or all finite interfaces when no keys are supplied. Select
+only main-hull connections: retain ordinary finite failure laws for designated
+separate components. The new asset revision `JudasDeformable7` records this
+policy; ordinary fragmenting assets retain their existing representation.
+Runtime plastic history remains instance-owned and uses the existing save
+participant. A saved connected hull that claims broken protected interfaces is
+rejected rather than silently restoring an impossible structural state.
+
+Shared immutable geometry clones retain distinct material slots, samplers,
+section ownership and per-draw palettes. Mutation of leased geometry through
+vertex/topology update APIs is rejected. Destroying one instance releases only
+its leases; the last instance frees the GPU geometry and image storage.
+
+## Material phase scheduling
+
+Full internal, self-contact and finish kernels run in exclusive batches on the
+existing job pool when transfer is guaranteed no-throw. Rigid/terrain contacts,
+attachment reactions and publication remain ordered on the owner. Small batches
+and platforms without safe transfer execute the same kernels on the owner.
+`JUDAS_MATERIAL_LANES=1|2|3|4` is a diagnostic execution policy; lanes do not change
+physical quality, time, constitutive laws or authoritative publication order.
+Workers join and state is restored on failure before shared phases continue.
+
+Severe pile-ups remain expensive; no universal real-time crash guarantee follows
+from numerical correctness. Use [whole-application measurements](WHOLE_ENGINE_PERFORMANCE.md)
+and the [current qualification boundary](DEVELOPMENT_READINESS.md).

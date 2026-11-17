@@ -1,4 +1,4 @@
-# Alpha scope and qualification matrix
+# V2 support boundaries
 
 <!-- judas-release-status:start -->
 Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
@@ -10,124 +10,59 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-The latest recorded Alpha qualification includes Linux and native hosted Windows
-builds, selected functional gates and SDK workflows. Hardware/controller and
-clean-machine coverage remain separate. V2 fluid execution requires project opt-in in every build channel. Published V1 packages are unchanged.
-[Outstanding work](OUTSTANDING_WORK.md) separates repairs from support boundaries.
+## Qualification versus capability
 
-## Platforms and distribution
+The authoritative [development-readiness matrix](DEVELOPMENT_READINESS.md) records
+exact builds, native application/SDK checks, platform scope and performance limits.
+The [baseline receipt](qualification/baseline.json) identifies its evidence.
+This page describes the supported product boundaries; it does not extend that
+qualification to every device or imply main promotion/publication.
 
-| Configuration | Scope | Qualification boundary |
-|---|---|---|
-| Linux x86-64, Ubuntu 24.04 reference userland | Supported reference build | Complete older-userland SDK, ABI/loader checks, editor/project workflows and moved games; see final receipts. System graphics/audio libraries and drivers remain prerequisites. |
-| Newer Linux host-native builds | Supported build workflow | Binaries inherit the build host's ABI. They are not automatically compatible with Ubuntu 24.04. |
-| Other Linux distributions / Ubuntu 22.04 / non-x86-64 desktop | Unqualified | No inference from a glibc symbol check alone. |
-| Windows x64 MSVC / tested Windows 11 hardware | Human accepted at `6941b381` | Effective 59/59 native gate plus 33/33 extras; operator project creation, save/reopen, small game, audio and editor/gameplay trial. Controller hardware and clean-machine certification remain unqualified. [Evidence](WINDOWS.md). |
-| Linux-to-Windows MinGW cross-build | Existing separately qualified workflow | Native MSVC acceptance does not supply a new MinGW qualification; historical cross-build receipts keep their own scope. |
-| Android runtime, touch, APK workflow | Human-verified working through real games | Operator confirms making and playing multiple Judas Android games, alongside earlier scoped phone acceptance. Exact revisions/devices were not supplied for the additional report; the operator additionally reports the d5f02448-based Hinge APK working on the phone after the orientation correction. APK bytes/device identity were not independently captured for this report; no general controller/emulator or every-device qualification is implied. |
-| Browser runtime / Linux export host | Experimental, explicit `-ExpBrowserSupport=1` opt-in | Same engine through WebAssembly/WebGL2. Separately installed Emscripten/source toolchain and isolation-capable hosting required. Bounded Chromium/Firefox and Android phone/emulator evidence; no general browser or complete-engine certification. [Scope](BROWSER_SUPPORT.md). |
-| macOS, iOS, consoles | Unsupported | No supported distribution pipeline promised. |
-| Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
+| Target | Development scope | Boundary |
+| --- | --- | --- |
+| Native Linux x86-64 | Engine, desktop editor and JudasJS SDK; Ubuntu 24.04 reference build and current NVIDIA desktop workflows | Host-native SDKs inherit host ABI; other distributions/devices need their own check |
+| Windows x64 MSVC | Native SDK build/tools/selected contracts and loader inspection pass | Current Windows editor/GL/export/hardware behaviour has not been requalified |
+| Portable GL / GLES3 | Capability-selected fallback code; portable controls on the tested desktop | Code-path testing is not every GLES/Android device certification |
+| Android | Optional game runtime/APK workflow | Complete JDK/NDK/SDK/device required; no current snapshot device qualification; no Android editor |
+| Browser | Explicit opt-in Experimental game export through WebAssembly/WebGL2 | Emscripten/isolation-capable hosting required; current snapshot browser runtime unqualified; no browser editor |
+| macOS, iOS, consoles | No supported distribution pipeline | Unsupported |
 
-M100 defines Alpha/Experimental and reserves Stable for GA; preparing a candidate
-does not publish or promote it. Main remains operator controlled. Use
-`--build-info-json`, `BUILD_INFO.json` and package checksums for exact provenance.
+Older recorded human acceptance remains scoped to its original build/device. It
+is neither withdrawn nor inherited by this changed source. See [Windows](WINDOWS.md),
+[Android](ANDROID.md), [browser](BROWSER_SUPPORT.md) and [Linux baseline](LINUX_BASELINE_BUILD.md).
 
-## Editor V2 development scope
+## Supported feature boundaries
 
-Editor V2 is an **Experimental preview with scoped Linux automated qualification;
-combined human acceptance remains pending** with Scripting V2. It does not change
-the published version or
-retroactively extend older Linux/Windows acceptance. Docking, tabbing and
-in-window floating use the desktop editor only. Native OS detachment is enabled
-only for SDL x11/windows backends; native Wayland is not advertised as supporting
-it. Linux native detached Scene/Game checks passed; Windows V2 has not been
-rerun. Scene/Game targets render at 1× logical UI resolution, not native HiDPI
-backing-pixel resolution. Agent-reviewed captures cover Dark at scales 0.85/1.0/1.5 and Light at
-1.0/1.25; operator acceptance remains pending. Android/browser
-game exports remain their existing workflows, not mobile or browser editor
-distributions. See the [V2 review guide](EDITOR_V2.md) and
-[Linux qualification receipt](EDITOR_V2_QUALIFICATION.md).
+- Production MK2 owns rigid contacts/CCD/joints. Dense/severe contacts, nominal
+  elastic energy loss and extreme-spin/arrival limits remain content-dependent.
+- CharacterMotor, kinematics and planar physics expose mechanics; game scripts
+  supply controllers. Native planar and 3D physical bodies cannot coexist.
+- Vehicles/materials/fracture use finite authored representations. Full sheet CCD,
+  automatic semantic vehicle/panel discovery and universal industrial mechanics
+  are not promised. Natural humanoid get-up remains unavailable.
+- Terrain supports native heightfields, local excavation, independent residency,
+  geographic charts, navigation, exports and cold persistence. One local physical
+  chart and bounded owners/journals are deliberate limits. Mods do not admit
+  native Terrain V2 assets; old terrain/liquid formats have no compatibility shim.
+- Directional cascades and point/spot shadows are implemented. Local shadow budgets,
+  exact invalidation and conservative redraw are explicit. True area/LTC emitters,
+  universal GPU residency and arbitrary per-mip streaming are not supplied.
+- CPU particle fallback and portable graphics remain valid policies. Required-GPU
+  authoring must fail meaningfully when unavailable rather than silently weakening it.
+- Basic Water/swimming are default-enabled prescribed effects. Advanced Fluids
+  uses one conservative game-water backend, default-off project opt-in in every
+  V2 channel. It is not PBF or a hidden microscopic research backend.
+- Saves and streaming support explicit participants, current content identities
+  and controlled migrations. No automatic topology merge or reconstruction of
+  missing historical physical state. Live articulations/unsupported assemblies
+  retain documented region pins or reject unsupported suspension.
+- Online sessions support explicit authored-root authority/replication. Streamed or
+  mod-enabled dedicated roots, hostile public-Internet deployment and arbitrary
+  assembly replication are outside the current foundation.
+- Editor native detachment is limited to SDL x11/windows backends; native Wayland
+  detachment is not advertised. Scene/Game render at logical UI resolution.
+  Browser/Android exports do not distribute the desktop editor.
 
-## Runtime systems
-
-| Area | Scope | Important boundary / evidence |
-|---|---|---|
-| MK2 rigid bodies, contacts, CCD, joints | Supported | Authoritative solver. Bounded arrivals can hold/truncate travel; no unrestricted exact dynamics claim. Rotation, independent collision timing, momentum and cold continuation have focused tests. [Contract](MK2_PHYSICS_ARCHITECTURE.md). |
-| Dense physics workloads | Supported with content-dependent limits | Benchmark results are fixture/hardware specific. No guarantee that every 1024-body disturbance meets a frame budget. |
-| Elastic / very fast spin | Supported bounded approximation | Corrected moderate-rate energy gain; long-run nominal-e=1 dissipation and extreme-spin phase error remain. [Measurements (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_MK2_ROTATION_CORRECTION.md). |
-| Wheels, powertrains, structural/deformation mechanisms | Supported within documented representations | Vehicle-agnostic authored components, not universal industrial mechanics. Native physical/lifecycle tests cover wheels and powertrains; other accepted mechanisms retain their own evidence. |
-| Utility AI and action lifecycles | Supported utility/action subset | Optional utility/target decisions, bounded-result physical sensing, transient exclusive leases, script-owned actions and fresh-object editor workflow. Linux native/script/editor, cold-save and relocated-export checks cover the implementation; selected native Windows AI core/script/authoring/sensing/lease checks also pass at `a461bab5`. Windows AI graphics/gameplay hardware, Android and browser AI execution remain unqualified. Cached observations are explicitly stale; broadphase traversal is not hard-budgeted. No planner or automatic network authority. [Guide](GAME_AI.md). |
-| CharacterMotor and script-owned controllers/cameras | Supported preferred path | Engine supplies movement/query primitives, project JS supplies policy. Not a skeleton, camera or AI system. |
-| FaithfulGravity / RadicalGravity / script selection | Supported | Resolver owns default selection; per-entity overrides are optional. Support normals remain separate. Arbitrary orientation does not remove local-chart precision limits. |
-| Basic water and swimming | Supported; default configuration | Rendering and simple interaction do not require advanced-fluid solvers. Default-off and cold-process controls cover actual runtime policy. |
-| Advanced Fluids V2 | V2 source preview; explicit project opt-in | Conservative grid water, finite air reservoirs, MK2 coupling and independent presentation. PBF and reservoir/container systems are retired. [Contract](ADVANCED_FLUIDS_V2.md). |
-| Large-world origins / planetary terrain | Supported bounded chart and terrain workflow | Checked participant admission, tile-local geometry and double absolute positions; not multiple simultaneous independent physics charts. |
-| Streaming / regional suspension | Supported declared subsets | Inactive state persists; unsupported active assembly/fluid combinations reject explicitly. No universal suspension claim. |
-| Volumetric excavation | Supported local volumes | Real collision and navigation publication for bounded edits. Not arbitrary planet-wide excavation through every terrain representation. |
-| Saves and cold restoration | Supported declared current formats | Real physical endpoints tested; old snapshots missing historical state cannot be retroactively reconstructed. |
-| Save migration / mods | Supported controlled policies | Explicit identities, source allowlists and ordered migrations. Not arbitrary physical topology rewrites, automatic merges of newly authored worlds, or universal mod compatibility. |
-| Local multiplayer | Supported implemented device/view combinations | Device identity, players and controlled entities are separate. Platform/device availability limits practical configuration. |
-| Online sessions / replication | Supported scoped foundation | Explicit server authority and supported authored-root representations. Dedicated hosting currently rejects streamed/composed worlds and mod-enabled projects. Not universal assembly replication, secure public-Internet deployment, rollback for every game or a managed online service. |
-| Runtime authoring APIs | Supported declared controls | Navigation obstacle/link edits and agent corner tolerance, tilemap cell/collision edits, bounded shape overlaps, effect settings/readback and camera target resizing are documented in the shipped JudasJS reference. Obstacle tile-carving limits remain enforced. [Navigation](judasjs/navigation.md), [tilemaps](judasjs/tilemaps-2d.md), [effects](judasjs/effects-camera.md). |
-| Resources, rendering, LOD and budgets | Supported documented paths | No universal per-mip residency, every-backend performance or all-camera combination certification. |
-| Animation, IK, UI, localization, audio, weather | Supported documented workflows | Their milestone-specific support boundaries remain. No new all-member validation claim from this final focused pass. |
-
-## Developer workflow and coverage
-
-The packaged SDK is intended to create, edit, script, debug, save, import/cook and
-export ordinary projects without the development checkout. Script policy remains
-project owned. Current reference/declaration consistency is checked separately
-from runtime behavioural coverage.
-
-The final pass deliberately selects high-risk contracts and positive/negative
-controls; it does not certify every public API member or every permutation of
-features. Remaining registry/module debt is maintainability work, not evidence
-that tested ownership is incorrect. No speculative rewrite is required merely
-to remove all deferred entries from this table.
-
-The operator's Windows 11 project/save/reopen/small-game/audio trial is accepted.
-Broader game-building coverage, controller hardware, clean-machine distribution
-and fresh qualification of a particular Android build remain separate. A usability blocker still
-deserves correction even if automated tests pass.
-
-## Native 2D and experimental browser scope
-
-Native sprites, sheets/frame animation/events, orthographic cameras, editable layered
-tilemaps with collision and modern-save persistence, native planar MK2 collision, free top-down/platformer/grid presets,
-script parallax and sampled attack helpers are included. One-way platforms are
-static straight segments. Planar and 3D rigid bodies cannot share a physical
-world. Browser export is a separate experimental source workflow, explicitly
-gated behind `-ExpBrowserSupport=1`. It is not an installed compiler bundled
-inside the desktop SDK, and it does not qualify every native subsystem for the web.
-
-Exact-source release-preparation results identify Linux and Windows checks. Earlier
-Android human acceptance remains real, but is not a new 1.2.x AI/device qualification.
-
-## Terrain V2 Experimental scope
-
-The current Terrain V2 integration is a source-build review checkpoint, not an
-extension of the published Alpha qualification above. Sampled native landscapes,
-bounded volumetric excavation, surface sculpt/paint, source-owned navigation,
-regional suspension, cold saves and geographic planet patches have focused Linux
-qualification. See [implementation and bounds](TERRAIN_V2.md) and
-[evidence](evidence/terrain-v2/planetary-integration/REVIEW.md).
-
-Desktop GTX970 OpenGL4.6 and portable3.3 paths are exercised with explicitly
-verified graphics profiles. This does not certify new Windows, Android/GLES or
-browser terrain workflows. Native samples, exact collision products and GPU
-resources now have independent bounded caches. Physical leases and body bounds
-preserve off-camera support; active runtime sources no longer retain all arrays
-and cooks. Geographic patches use native render meshes, while the surrounding
-planet retains its existing LOD. See [residency and budgets](TERRAIN_V2_RESIDENCY.md)
-and [final qualification/human checklist](TERRAIN_V2_QUALIFICATION.md). Cross-face excavation,
-overlapping/movable planetary patches and automatic replication of terrain edits
-are not provided by this checkpoint. Existing representations remain available;
-assets are not automatically converted.
-
-The locally staged Terrain V2 SDK verifies17tools, fresh-project/editor/CLI work,
-SDK-only terrain cold saves and moved exports on this host. It is a native preview
-requiring GLIBC2.43, not a refreshed Ubuntu24.04 distribution. Dirty/untracked
-build provenance is retained. Source paging and local-edit upload costs have
-measured evidence; initial loading is not claimed faster. Published packages, release channels, the Alpha
-published V1 packages and the user's installed game SDK are unchanged.
+Use the corresponding guide/reference for API phase, format, resource and persistence
+rules. The [current limitations register](CURRENT_FINDINGS.md) tracks unresolved
+engineering issues; it does not retain closed milestone checklists as future work.

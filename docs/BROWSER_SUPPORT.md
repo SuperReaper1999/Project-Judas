@@ -1,8 +1,8 @@
 # Experimental browser game builds
 
-This is a separate development effort beyond the Alpha 1.1.0 release candidate.
-It is **not** a browser-support certification or part of the already-frozen 2D
-release. See BROWSER_EXPORT_REVIEW.md for architecture and qualification stages.
+Optional game export uses the same engine through WebAssembly/WebGL2. It requires
+explicit opt-in and a separate Emscripten/source toolchain; no browser editor or
+current-snapshot device certification is implied. See [the qualification matrix](DEVELOPMENT_READINESS.md).
 
 ## Deliberate opt-in
 
@@ -72,12 +72,12 @@ this is not cloud synchronization or automatic browser-to-desktop save transfer.
 Never close the tab while a save is still pending. Existing content-identity and
 migration contracts still apply.
 
-## Initial scope and limitations
+## Runtime scope and limitations
 
 - Same C++ engine, QuickJS gameplay and MK2 solver; same sprite/tilemap renderer
   through the existing GLES3 facilities. No second JS game implementation.
-- Script-owned projects only. Advanced Fluid Dynamics and legacy hardcoded
-  gameplay are rejected at runtime, including named-format project files.
+- Script-owned projects only. Advanced Fluid Dynamics must be disabled: both the browser compiler preflight
+  and runtime reject enabled projects. Retired native gameplay is absent.
 - Only the ordinary save-service publication path has browser durability proof;
   regional streaming archives, mods, user filesystem pickers and other direct
   file-writing workflows are not independently qualified.
@@ -98,40 +98,6 @@ migration contracts still apply.
 - No browser-hosted editor, automatic SDK update or unconditional browser feature
   switch. Native games keep their existing launch behaviour.
 
-## Evidence status
-
-Human player-stage testing exposed severe memory growth and close-time desktop
-pressure on Firefox/NVIDIA. Experimental now bounds unfinished GPU submission
-with asynchronous frame fences; RAF alone was insufficient. The fresh-source
-correction passed input, high-DPI, cold-save and background/audio checks and the
-installed-Firefox leave-game reproduction. See the
-[backpressure investigation](BROWSER_FRAME_BACKPRESSURE_REPORT.md) for original
-failures, memory measurements and remaining human checks. The 1 GiB WASM limit
-is **not** a whole-browser memory guarantee. Older browser packages must be
-rebuilt to include this correction.
-
-The original MK2 headless suite passed as actual compiled WASM under Node. The
-launch-option parser passed 28 checks and the exporter boundary suite passed ten.
-Chromium 156 with software ANGLE/SwiftShader rendered the actual Traversal game,
-accepted keyboard movement and completed two durable saves. A completely new
-Chromium process recovered the exact saved bytes and loaded the real player
-endpoint. A competing same-game tab, denied IndexedDB and missing isolation
-headers all failed closed. The native application still switched scenes, moved,
-rendered a capture and saved using its ordinary desktop backend.
-
-This is software-browser functional evidence, not browser hardware performance,
-Safari/mobile certification or complete-engine compatibility. The first
-uncompressed universal WASM is roughly 51 MiB, plus project data; initial memory
-is 256 MiB with growth bounded at 1 GiB. Assets are preloaded as one package, not
-HTTP-residency streamed. Optional gzip transfer representations and repeat-load
-cache validation now reduce delivery costs; they do not reduce decoded WASM size
-or runtime memory. More 3D effects and browser-specific qualification remain future work. The current
-scope is an early optional foundation, not a production browser distribution.
-
-The failed preload, canvas-ownership and integer-attribute experiments are retained
-alongside reproduction scripts and final results under the browser evidence folder.
-Native Alpha 1.1.0 packages do not include or certify this browser prototype.
-
 ## Backend references
 
 The implementation follows Emscripten's [pthread ownership rules](https://emscripten.org/docs/porting/pthreads.html),
@@ -144,10 +110,10 @@ Browser-owned shortcuts such as Firefox F6 may never reach SDL. Bind ordinary
 project controls instead of trapping the browser UI: Traversal uses K to save and
 L to load, with F6/F7 retained as desktop alternatives.
 
-## Offline-game stage and audio architecture
+## Browser audio and durable storage
 
 The next bounded qualification uses Beacon Grove and Traversal in Chromium and
-Firefox on Linux. See [the offline qualification procedure](BROWSER_OFFLINE_QUALIFICATION.md)
+Firefox on Linux. See [the offline qualification procedure](BROWSER_SUPPORT.md)
 and its evidence status; this does not certify the entire engine for the web.
 Beacon Grove now offers K/L save/load alongside desktop F6/F7.
 
@@ -242,18 +208,15 @@ service. Hosts/iframes without the required isolation remain unsupported. Do not
 open index.html with file://. No public upload, installation or release happens
 from the editor.
 
-The earlier standalone audio-probe evidence used a deliberately incomplete
-receipt with the old diagnostic server. Reproduce that historical probe using
-the server from `567f03e7`; the current preview intentionally rejects its dummy
-receipt. Ordinary completed stage-1/2 packages still verify normally.
 
-## Browser player stage
+
+## Canvas, focus and lifecycle
 
 The shared shadow filter now compares each PCF texel with the receiver plane at
 that texel's center. This corrects the repeating flat-face shadow pattern without
 disabling shadows or increasing bias/resolution. The follow-up includes native,
 Chromium and Firefox checks, plus ten minutes of active installed-Firefox play
-and three close/reopen cycles. See [the correction and memory evidence](BROWSER_SHADOWS_AND_ENDURANCE.md).
+and three close/reopen cycles. See [the correction and memory evidence](BROWSER_SUPPORT.md).
 It remains bounded Experimental qualification, not general browser certification.
 
 The shell offers Fullscreen only after Play, with a separate exit strip that does
@@ -276,15 +239,6 @@ transitions even if the browser freezes the worker. These changes reset the cloc
 avoiding a catch-up burst on return. Already-dispatched durable
 save work retains its existing completion contract. Context loss still requires
 reload. No mobile/browser-family or autoplay guarantee follows from these paths.
-
-`projects/browser_player_lab` is an editable ordinary 3D consumer with a motor,
-script-owned first/third-person camera, MK2 crates, UI hit target and cold saves.
-See [player qualification](BROWSER_PLAYER_QUALIFICATION.md). The rendering/input
-driver is `tests/browser/player.cjs`, and actual tab visibility uses
-`tests/browser/visibility.cjs`; it reads actual rendered
-markers and public gameplay state, separately from surface diagnostics. Desktop
-browser tests do not certify every 3D renderer feature, touch, physical gamepads,
-mobile audio or network transports.
 
 
 ## Download delivery and repeat loads
@@ -322,21 +276,11 @@ real repeat-fetch tests caught this after manual conditional requests had passed
 See the [Chromium cache implementation](https://chromium.googlesource.com/chromium/src/net/+/master/http/http_cache_transaction.cc#3299).
 
 
-The game canvas owns touch drag gestures (`touch-action: none`), preventing page
-scrolling while a touch-controlled game is played outside fullscreen. Touch events
-still reach gameplay, and scrolling outside the canvas remains available. This is
-not a touch controller automatically added to keyboard-only projects: games must
-provide suitable project-owned controls. The existing Breakwater game already
-uses the ordinary touch API and can be exported without a browser-specific game
-implementation. Phone observations and the retained desktop loading experiments
-are recorded in [delivery qualification](BROWSER_DELIVERY_QUALIFICATION.md).
-
-
-## Android emulator follow-up
+## Touch and mobile browser limits
 
 A bounded Android 16 / Chrome 133 emulator pass verifies rotation, real physical
 paddle restoration after fresh-process save loading, genuine Home/lock suspension
 without hidden-time catch-up, and nonzero native PCM plus Web Audio suspend/resume.
 The emulator host audio driver did not initialize, so audible speaker output remains
 unqualified. The original large emulator exceeded its contained memory budget;
-a smaller read-only session passed. See [exact scope, failures and evidence](BROWSER_ANDROID_EMULATOR_QUALIFICATION.md).
+a smaller read-only session passed. See [exact scope, failures and evidence](BROWSER_SUPPORT.md).

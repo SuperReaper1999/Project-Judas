@@ -10,7 +10,7 @@ registered script assets. Other bare imports, absolute paths, Node and browser
 modules are unavailable. Source modules are limited to 1 MiB. Modules are cached
 once per world's VM; module globals are shared between instances in that world.
 A new scene/reload/Play creates a fresh VM, not a retained module heap.
-[M94's explicit editor script reload](../SCRIPT_DEBUGGING.md#deliberate-edit-and-reload)
+[script-debugging's explicit editor script reload](../SCRIPT_DEBUGGING.md#deliberate-edit-and-reload)
 also replaces the VM, optionally retaining bounded instance JSON state while
 keeping the physical world. It runs constructors/start anew; it is not a save
 restore, automatic hot reload or a closure/object-graph migration.
@@ -18,7 +18,7 @@ restore, automatic hot reload or a closure/object-graph migration.
 Default-export a constructible class. Each enabled authored slot creates its own
 instance with `{entity, properties, restored, initialState}`. `restored` is true for modern
 save restoration. `initialState` is bounded prefab construction data or null;
-it is not automatically copied into `this.state`. See [spawn construction](entities.md#worldspawnprefab-construction-options-m67).
+it is not automatically copied into `this.state`. See [spawn construction](entities.md#worldspawnprefab-construction-options).
 Slot IDs are stable identities, distinct
 from order. The constructor runs before restored `state` is installed. Do not
 make constructor side effects depend on saved state.
@@ -42,8 +42,8 @@ export default class {
 ```
 
 `properties` is an exported plain schema; supported types are `number`, `boolean`,
-`string` and (M65) `entity`, usually declared as `{type:'entity', default:null}`; scripts
-receive null or a safe Entity wrapper (see [entity references](entities.md#m65-references-and-physicalpresentation-consumers)).
+`string` and (authoring) `entity`, usually declared as `{type:'entity', default:null}`; scripts
+receive null or a safe Entity wrapper (see [entity references](entities.md#references-and-physicalpresentation-consumers)).
 Non-null authored entity values/defaults use `{entity:'decimal-stable-id'}`,
 not an Entity instance or display name. `PropertySchema` describes these authored
 values; `ScriptContext.properties` contains the resolved wrappers.
@@ -55,7 +55,7 @@ not JS source. Asset references may be string properties. There is no exported
 
 Inspector metadata evaluation runs top-level module code in a no-world VM. Keep
 top-level code declarative; importing `judas` is fine, calling its world API there
-fails (logging is allowed). Stop/Play starts fresh; M94 also provides deliberate
+fails (logging is allowed). Stop/Play starts fresh; script-debugging also provides deliberate
 editor script-session reload. Source edits never trigger automatic hot reload.
 
 ## Callbacks and order
@@ -71,7 +71,7 @@ Promise. No async callback/top-level-await scheduler exists.
 | `onUI(event)` | UI input events, before gameplay input; broadcast to live scripts. |
 | `update(dt)` | Active gameplay frame, before that frame's fixed-step catch-up. |
 | `presentationUpdate(dt, alpha)` | After fixed-step catch-up, before the interactive view/audio/world draw. Runs also on zero-step frames and while UI pauses gameplay. Alpha is the same [0,1] interpolation fraction used by rendering; `dt` is outer-frame seconds. |
-| `onOriginShift(event)` | M90: after a nonzero native chart commit, before fixed scripts; only already-started live/healthy slots. Position caches may subtract `event.delta`; fixed-only writes stay forbidden. [Coordinates and lifetime](planetary-terrain.md#onoriginshiftevent--explicit-script-caches-m90). |
+| `onOriginShift(event)` | origin-shift: after a nonzero native chart commit, before fixed scripts; only already-started live/healthy slots. Position caches may subtract `event.delta`; fixed-only writes stay forbidden. [Coordinates and lifetime](planetary-terrain.md#onoriginshiftevent--explicit-script-caches). |
 | `fixedUpdate(dt)` | Before ordinary fixed-step force/physics advance; zero or several calls per rendered frame. |
 | `onCollisionEnter/Stay/Exit(event)` | Fixed-step authoritative contact delivery after physics/motor/pose publication. |
 | `onTriggerEnter/Stay/Exit(event)` | Same event boundary; sensors generate no physical response. |
@@ -92,7 +92,7 @@ UI runs before gameplay, consumes logical actions sharing physical bindings, and
 visible enabled modal documents pause gameplay/fixed accumulation. The frame
 closing a modal is also withheld from gameplay. Physics steps call `fixedUpdate`
 and advance the authoritative world once. Ordinary motors/poses publish after
-physics. [M70 opted-in pose/physical owners](animation-ragdolls.md#referencefinal-phase-and-composition)
+physics. [IK/physical-animation opted-in pose/physical owners](animation-ragdolls.md#referencefinal-phase-and-composition)
 prepare motor/reference/IK and drives before physics, then resolve physical pose
 afterward. Contacts dispatch after the completed fixed state; a joint read inside
 `fixedUpdate` cannot observe a future solve from that same step.
@@ -116,7 +116,7 @@ a model copied before its motor moves. Interpolation intentionally presents up t
 one fixed step behind simulation, as the renderer already does. Cosmetic followers
 should have no physical body; pose writes on bodies are teleports, not rendering.
 Only presentation reads use alpha; fixed queries/forces must use actual physics.
-M71 authority/kinematic-command writes explicitly reject presentation callbacks;
+kinematic authority/kinematic-command writes explicitly reject presentation callbacks;
 they advance through PhysicsWorld, not a render-following transform assignment.
 
 The scripted screenshot harness calls presentation with `dt=0` and its draw alpha;
@@ -131,7 +131,7 @@ that is their desired menu policy.
 First module/constructor/callback failure records entity/slot/asset/phase/stack
 and faults that instance until its VM is restarted. Other slots continue. A
 faulted slot does not receive `destroy`. Legacy delta capture omits faulted slots;
-modern M61 capture rejects missing required script records rather than silently
+modern save-slot capture rejects missing required script records rather than silently
 saving an incomplete world.
 Module globals are still shared; error isolation is not independent VMs per slot.
 
@@ -142,14 +142,14 @@ DOM, timers, networking, npm, promise pumping or JS worker API is supplied.
 Scripts are trusted project code, not a security sandbox. `__judas` is an internal
 native dispatch function; `globalThis.console` aliases the public logging object.
 
-## Modern save restoration (M61)
+## Modern save restoration
 
 The constructor context includes `restored`; restored construction has
 `initialState:null`. Loaded script state is installed before `restore(dt)`, which replaces `start(dt)` for modern slots. Reacquire handles and UI in restore; do not replay new-game side effects. [Save contract](saves.md). Legacy delta restoration retains its historical lifecycle.
 
 <a id="owned-signals-m73-candidate"></a>
 
-## Owned signals (M73)
+## Owned signals
 
 [Signals](signals.md) are transient slot-generation-owned subscriptions and queues.
 Register in both start and restore through a shared helper, preserving restored facts.

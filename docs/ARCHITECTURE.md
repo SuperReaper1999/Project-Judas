@@ -1,354 +1,130 @@
-# Judas architecture
+# V2 architecture and ownership
 
-Implementation map for the current Alpha source.
-[Engine version](../engine-version.json) and [release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
-identify source and published packages separately.
-This describes ownership and integration boundaries, not universal certification.
-See [current status](CURRENT_STATUS.md), [documentation index](README.md), and
-[JudasJS](JUDASJS.md). Historical architecture and milestone reports remain in Git history.
-Source links require the matching checkout/source archive; SDK/runtime packages
-do not contain every project, native source or historical evidence artifact.
+Engine, editor and SDK consume the same runtime, serializers and asset services.
+A project supplies gameplay policy in JudasJS; the engine supplies mechanics,
+resources, authoring and application services. [Readiness](DEVELOPMENT_READINESS.md)
+records the qualified configuration. Source existence is not device qualification.
 
-## Optional utility decisions (Experimental)
+## Application and world lifetime
 
-`UtilityAI.{h,cpp}` is a world-independent, bounded decision/timer core. It owns
-neither targets nor movements. `ScriptUtilityAI` lazily owns native agents per
-script entity/slot; the private `scripting/library/AI.h` wrapper owns synchronous
-action callbacks. ScriptSystem retires them through its existing destruction,
-fault and reload boundaries. No-agent projects have no agent registry or
-background evaluation loop. Optional `AISensing` uses existing MK2 spatial queries
-with explicit result/cast budgets and timed stale observations; it does not replace
-the broadphase. `AIReservationBoard` provides exclusive simulation-time leases.
-Their script bridges are lazy and slot-owned. Claims are released before teardown
-callbacks; no new claims are admitted during retirement. Caches invalidate on
-origin transitions and are discarded with their script session. Neither helper
-serializes runtime tokens; actions reacquire resources after restoration.
+| Owner | Responsibility | Boundary |
+| --- | --- | --- |
+| `EngineHost` | Window/context, input, renderer, audio, jobs and resources | Shared by standalone applications, editor and native tests |
+| `Application` | Ordinary application loop, service pumping and harness entry | Harness drives this application; it is not a substitute engine |
+| `InteractivePlay` | Play lifecycle, accumulator and pause/presentation | One played world, including editor Scene/Game views |
+| `RuntimeWorld` | Live entities/components, handles, native systems and script VM | Authored Scene is input, not a mutable alias of runtime state |
+| `SceneSession` | Project/scene transitions and session policy | Validates/stages replacement before retiring the active world |
+| `ResourceManager` / `AssetDatabase` | Registered identities, worker preparation and context-thread publication | Resource readiness/failure is explicit; file existence alone is insufficient |
+| `SaveService` / `WorldPersistence` | Coherent supported-state capture/restore | Ordinary slots, not old pose overlays or serialized VM heaps |
+| `WorldStreaming` | Region preparation, pins, retention and suspension | Explicit supported participant matrix; not arbitrary world serialization |
 
-Definitions are constrained JSON default exports in ordinary tracked `.ai.js`
-script modules, reusing asset ownership, imports, fingerprints and export.
-`EditorAIWorkflow` creates paired source/definition assets and a copyable actor
-starter through the normal scene edit/undo paths. `UtilityAIEditor` shares native validation and exposes opt-in authoring/live
-inspection through existing panels/preferences. Gameplay explicitly stores native
-snapshots inside script state; modern persistence and regional scripting remain
-the owning lifecycle. No new physics, navigation, save or replication system is
-introduced. [Guide](GAME_AI.md) · [qualification](GAME_AI_QUALIFICATION.md).
+Stop retires runtime work/resources through their owners and restores authoring;
+Play builds a fresh world. A failed startup/asset/transition must not publish a
+half-valid world. Handles carry owner/generation identity and become invalid at
+retirement. Explicit valid/dispose/readiness APIs have subsystem-specific phases.
+See [developer workflows](DEVELOPER_WORKFLOWS.md) and [persistence](PERSISTENCE.md).
 
-## Engine and game boundary
+## One authoritative simulation schedule
 
-Judas owns simulation, rendering, resources, authoring and platform mechanisms.
-Projects own input mappings, camera policy and game rules through trusted
-JavaScript. A query is not a weapon; a hinge is not a target. CharacterMotor,
-camera and skeleton remain separate.
+`Simulation.cpp::StepWorld` implements both `StepPlayedWorld` and
+`StepAuthoritativeWorld`. The normal fixed boundary:
 
-There is no engine-owned demonstration gameplay. Project scripts own controls, cameras, menus and interaction. CharacterMotor and reusable physical queries remain native primitives.
+1. Commit a checked origin shift, update navigation/network preparation and run
+   fixed scripts. A network replica advances its local script clock and applies
+   resolved network state without running a second authoritative physics solve.
+2. Prepare weather, opted-in motor/reference animation, physical animation/balance,
+   material mechanics, dynamic forces, celestial/coarse coupling and opt-in grid water.
+3. Advance MK2 chronological rigid intervals. Vehicle mechanics and deformable
+   substeps couple at these boundaries; their quality budgets do not step the
+   whole world repeatedly. Owner-only contacts/reactions preserve ordering.
+4. Publish remaining motors/body transforms, wheel/powertrain state, animation,
+   ragdolls, sockets, materials and completed mechanical continuity.
+5. Update particles and simulation time, dispatch physics/material events, drain
+   signals, publish network state and evaluate the optional fidelity policy.
 
-| Responsibility | Owner and source |
-|---|---|
-| Authored definitions | [Scene](../src/Scene.h), named serializers and project assets |
-| Live component state | [RuntimeWorld](../src/RuntimeWorld.h) and subsystem implementations |
-| Session/scene replacement | [SceneSession](../src/SceneSession.h) |
-| Frame/fixed ordering | [InteractivePlay](../src/InteractivePlay.cpp), [Simulation](../src/Simulation.cpp) |
-| VM, instances and callbacks | [ScriptSystem](../src/ScriptSystem.h), [world script bridge](../src/WorldScripts.cpp) |
-| Rigid simulation/queries | [PhysicsWorld](../src/PhysicsWorld.h), [private module map](../src/physics/WorldModules.md) |
-| Graphics/GPU objects | [Renderer](../src/Renderer.h), [presentation](../src/WorldPresentation.cpp) |
-| Resource preparation/residency | [ResourceManager](../src/ResourceManager.h), [asset pipeline](ASSET_PIPELINE.md) |
-| Durable restoration | [WorldPersistence](../src/WorldPersistence.h), [save evolution](SAVE_EVOLUTION.md) |
-| Regional state | [WorldStreaming](../src/WorldStreaming.h), [living worlds (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md) |
-| Network authority | [NetworkSession](../src/NetworkSession.h), [replication scope](NETWORKING.md) |
+Frame scripts, fixed scripts, UI updates and presentation callbacks are distinct.
+Presentation interpolates settled state and cannot author physical motion. The
+accumulator exposes clipping/discard/catch-up limits; [performance qualification](WHOLE_ENGINE_PERFORMANCE.md)
+must report actual lost simulation time, not just frame throughput.
 
-## Identity, handles and publication
+## System ownership map
 
-Authored IDs, runtime generation-safe handles, network identities and graphics
-tokens serve different purposes. Do not serialize a transient handle as durable
-project identity. JudasJS handles validate their world/generation and reacquire
-native state. Stale behavior is subsystem-specific; see
-[safe handles and lifecycle](judasjs/lifecycle.md).
+| Capability | Current owner and authoritative guide |
+| --- | --- |
+| Rigid motion/contact/CCD | `PhysicsWorld`, `src/physics/WorldMk2*`; [MK2](MK2_PHYSICS_ARCHITECTURE.md), [physics overview](PHYSICS_V2.md), [module map](../src/physics/WorldModules.md) |
+| Planar bodies/queries | Native planar geometry in the same physical world; [2D physics](judasjs/physics-2d.md) |
+| Motors and prescribed bodies | CharacterMotor and kinematic commands; [motor](CHARACTER_MOTOR.md), [kinematics](KINEMATIC_BODIES.md) |
+| Gravity and coarse evolution | Native gravity resolver, optional per-entity selection, celestial/coarse records; [gravity](GRAVITY_SELECTION.md), [scaling](SCALABILITY.md) |
+| Vehicles and damage | Wheels, powertrains, structural finite connections, materials and fracture; [vehicles](VEHICLES_V2.md), [deformables](DEFORMABLES.md), [structures](STRUCTURES.md) |
+| Skeletons and physical poses | Immutable skeletal assets, world-owned playback/IK, mapped articulations; [animation](ANIMATION.md), [IK](MULTI_TARGET_IK.md), [balance](BALANCE.md) |
+| Terrain and navigation | Source-owned landscape with independent source/collision/GPU products; [terrain](TERRAIN_V2.md), [navigation](NAVIGATION.md) |
+| Rendering and lighting | Renderer/context resources, ShadowSystem and light lists; [renderer](RENDERER_V2.md), [lighting](LUCIFER_V2.md) |
+| Particles | World-owned effects, explicit CPU/GPU capability policy; [particles](PARTICLES_V2.md) |
+| Basic and advanced water | Independent prescribed surface/swimming versus one opt-in conservative grid; [water policy](PROJECT_SETTINGS_AND_WATER.md), [advanced water](ADVANCED_FLUIDS_V2.md) |
+| Weather, atmosphere and fire | Native weather/atmosphere/combustion owners; [weather](WEATHER.md); unsupported persistence combinations reject |
+| Utility decisions | World-independent decision core plus per-script agent/sensing/lease ownership; [AI](GAME_AI.md) |
+| UI, text and audio | Shared document/layout renderer, Unicode shaping and audio backend/voices; [UI](RUNTIME_UI.md), [localization](LOCALIZATION.md), [audio](AUDIO_STREAMING.md) |
+| Input/local players | Logical actions, physical device identities and player/view routing; [input](INPUT.md), [local multiplayer](LOCAL_MULTIPLAYER.md) |
+| Online sessions | Explicit authority, transport and supported replication records; [networking](NETWORKING.md) |
 
-Definitions are distinct from live state. Play does not silently write changes
-back to authored content. Prefabs remap references before publication. Workers
-prepare private products; the owning world/resource/render thread validates and
-publishes them. Failed replacement retains the last good product.
+Similar representations are not necessarily duplicates: visual meshes and physical
+geometry have different owners; CPU particle fallbacks are legitimate capability
+policies. Independent physics-core/contact-material experiment branches are not
+selected by the normal CMake targets. Their preserved source provenance is in
+[the source-boundary receipt](qualification/source-boundary.json), not in temporary
+build outputs or an accepted alternative runtime.
 
-Rendering support does not establish regional suspension, cold-save or replication
-support. The [integration matrix](CURRENT_STATUS.md)
-states these independently guarded contracts.
+## Scripting boundary
 
-## Simulation ordering
+One QuickJS runtime exports the `judas` module. `ScriptSystem` coordinates slots,
+budgets, lifecycle and exceptions; `src/scripting/Modules.json` declares subsystem
+registration and embedded library fragments. Handlers live under
+`src/scripting/modules`; public wrappers under `src/scripting/library` share that
+VM and lifecycle. A subsystem's C++ interface does not imply a JudasJS binding.
 
-`Simulation.cpp` is authoritative. This phase map does not promise callback
-ordering between unrelated script instances.
+Use [the typed public API](judas.d.ts) and [reference index](JUDASJS.md).
+[The extension guide](judasjs/scripting-v2.md) explains ownership-safe native
+registration. Scripts own gameplay decisions, movement intent, camera policy and
+bounded JSON state, not hidden native demo controllers. Re-entry/retirement rules,
+start versus restore, presentation observations and deliberate reload are explicit.
 
-1. Commit an origin request at a fixed boundary; update navigation, process
-   incoming network work and invoke fixed scripts. Replica clients advance their
-   script clock and snapshots without a second local dynamics solve.
-2. Prepare weather, opted-in character/reference/physical animation and conserved
-   liquids; apply the applicable gravity and other force consumers.
-3. Advance mechanical sources, wheel contacts/load feedback and rigid physics.
-   Coupled material/mechanical configurations use their bounded authored substeps.
-4. Advance combustion/coarse state, remaining
-   character work and final physical/animation/socket/deformable observations.
-5. Publish wheels, powertrains, particles and simulation time; deliver physics and
-   fracture events, drain signals and publish network snapshots.
+## Editor and authoring boundary
 
-Full material intervals group compatible local subdivisions into coherent phases.
-Internal/self-contact/finish kernels own exclusive data on the existing worker pool;
-rigid contacts, attachment reactions and publication remain ordered on the owner.
-Connected hull ownership and immutable render/preparation leases are documented in
-[bounded deformable runtime](DEFORMABLES_V2_BOUNDED_RUNTIME.md).
+The editor owns editable documents, undo/drafts, tools and panels. It uses the same
+Project/Scene/Prefab/UI serializers, import/cook services and runtime as the SDK.
+Worker jobs publish validated products in Edit; they do not run game JavaScript,
+physics or raw OpenGL. Drafts, scene edits and filesystem publication have distinct
+undo/conflict rules. [Named authoring](NAMED_AUTHORING.md) preserves these contracts.
 
-Replica clients process snapshots and fixed scripts without a second authoritative
-solver. Joining inside a callback is checked again before local physics runs.
-Frame/UI work, input edges and pause follow `InteractivePlay.cpp` and the
-[lifecycle reference](judasjs/lifecycle.md).
+Scene/Game tabs, detached views and auxiliary cameras observe one played world.
+`EditorViewportPresenter` chooses primary presentation cadence; a hidden Game tab
+is not rendered because its target exists. Terrain previews reuse runtime height
+LOD and immutable source publications, retaining exact picking and brush pinning.
+See [the editor guide](EDITOR_GUIDE.md) for authoring and panel extension.
 
-Presentation callbacks consume interpolated poses after fixed catch-up. Use
-`Entity.presentedTransform` for view-following and `Entity.transform` for
-physical state. Presentation must not own simulation. Shooting queries and
-impulses keep their ordinary authoritative semantics.
+## Coordinates, persistence and delivery
 
-## Physics ownership and modules
+Local transforms/physics use local simulation metres. Geographic source/anchors
+and world origin use binary64; subtract the origin before narrowing to local
+float geometry. One checked active chart does not become simultaneous distant
+physics islands. [Origin transactions](ASSEMBLY_TRAVEL.md) translate actual owners,
+preserve momenta/handles and explicitly notify script-owned local-point caches.
 
-Judas owns its rigid solver. `PhysicsWorld.cpp` coordinates one world; private
-modules separate body lifecycle, bounds, queries, CCD search/events, contacts,
-joints, sleeping, particles and persistence. They share one private state owner.
-[PhysicsWorldSources.cmake](../cmake/PhysicsWorldSources.cmake) supplies the same
-module list to engine and direct fixtures; configuration rejects a partial world.
-See the [module map](../src/physics/WorldModules.md) for ordering and scratch lifetime.
+Modern saves capture supported native participants and bounded script state at a
+coherent boundary. Load validates content/participants, prepares a replacement,
+restores native state, republishes derived observations, then runs script restore.
+[Save evolution](SAVE_EVOLUTION.md) is explicit developer policy, not automatic
+recovery of removed formats or unrecorded physical state.
 
-The contact and joint solve is **Judas Physics MK2**
-(`src/physics/WorldMk2Solver.cpp`): a substepped simultaneous block solve with
-arrival-instant impacts, a bounded fast-body CCD pass and split-impulse joint
-position projection. It replaced the MK1 time-of-impact event pipeline, which was
-retired with its white-box pipeline tests. The
-[MK2 architecture](MK2_PHYSICS_ARCHITECTURE.md) records design, measurements and
-open gaps. Physical balance uses the capture-point stepping controller by default
-(`BalanceSettings::captureStepping`; `false` or `JUDAS_BALANCE_CAPTURE_STEPPING=0`
-selects the established controller).
+SDKs contain matching tools/runtime, registered dependencies, current guides,
+declarations and curated examples. Source-only examples are identified by
+`packaging/sdk-inventory.json`; projects and exported games are separate from SDK
+installation. [Distribution](DISTRIBUTION.md) and [exports](EXPORTS.md) specify
+checksum/identity/relocation rules. Browser/Android game runtimes reuse this engine
+with explicit backend limits; there is no browser or mobile desktop-editor promise.
 
-Initial contact geometry can borrow the existing job pool over frozen inputs,
-using private derived scratch. The owner joins results in deterministic pair
-order. Solving, body mutation and callbacks remain owner-thread work; public
-physics methods are not generally thread-safe.
-
-Contacts, continuation identities, warm starts and completed observations are
-separate state. A cache hit does not license skipping geometric invalidation.
-Modern saves retain supported continuation data; an older snapshot cannot supply
-historical data it never stored. Joint continuation records written by MK1 load
-as per-step warm impulses.
-
-Bounded CCD sampling, sidedness and deep initial overlap remain limitations.
-Dense-contact cost is workload dependent and universal 60 Hz performance is not
-established; see [current measured limits](CURRENT_STATUS.md)
-and the MK2 architecture's timing tables. The pre-alpha support-continuity and
-CCD-query follow-up reports describe the retired MK1 pipeline.
-
-## Coordinates, gravity and large worlds
-
-Origins and planetary positions use binary64. The active physical chart and most
-public vectors use local binary32. There is one bounded chart, not independently
-simulated physics everywhere on a planet. Origin changes are checked transactions;
-active spatial participants must remain inside the 8 km chart.
-
-[WorldOrigin](../src/WorldOrigin.cpp) admits participants and translates world-space
-history before publishing the new frame. Local geometry, stable handles and
-scalar mechanical state retain their owners. Retained regions decode against
-their capture origin. Legacy PBF/emitted liquid and pending/unsupported
-transactions retain explicit rejection paths.
-
-Gravity is sampled at the consumer's current position. Faithful/uniform and
-`RadicalGravity`/radial are interchangeable fields; Radical is the intentional
-name. Optional scripted entity selection uses the resolver and defaults to
-normal authored behavior. Support normal is separate from gravity; world-Y is
-not universal up. See [gravity selection](GRAVITY_SELECTION.md),
-[CharacterMotor](judasjs/character.md), [planetary terrain](PLANETARY_TERRAIN.md)
-and [assembly travel](ASSEMBLY_TRAVEL.md).
-
-## Physical assemblies and liquids
-
-Bodies, joints, wheels, powertrains, structures, material geometry, animation and
-ragdolls compose through existing owners and fixed phases. They are optional.
-JS owns driver policy, damage meaning and gameplay. Query-contact wheels require
-no fixed chassis/drivetrain arrangement. Coarse physical crash sections and
-material deformation have different practical cost envelopes.
-
-Navigation supplies guidance; it does not own motor movement. Resolved skeleton
-poses, physical contributions, IK and sockets share their pose authority.
-References are grouped under [physics and worlds](README.md#gameplay-and-content).
-
-M54 reservoirs/containers own quantity; optional M55 surfaces evolve distribution.
-Owner-local storage survives supported shifts/restoration. Legacy PBF and
-protected independent research are separate representations. A passing ledger
-is not general fluid-fidelity or exterior-momentum certification. FLU-001 and
-the half-turn grid-query identity limitation remain. See [reservoirs (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/LIQUID_RESERVOIRS.md),
-[surfaces (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/LIQUID_SURFACES.md) and [current limits](CURRENT_STATUS.md).
-
-## Rendering, cameras and resources
-
-Experimental Renderer V2 keeps one renderer and shared portable scene path.
-`Renderer` coordinates public operations, while private `render/` owners handle
-capabilities, shader programs, typed submission, streaming storage, view uniforms,
-particle presentation, scoped targets and bounded compute. Their coordinator state
-is hidden behind `RendererInfrastructure`, so an implementation-owner change does
-not force unrelated users of `Renderer.h` to include its private modules.
-[Ownership, controls and qualification](RENDERER_V2.md).
-
-Renderer owns graphics/context use. Resource workers decode CPU content; private
-GPU upload/replacement publishes on the graphics owner. Cancellation and eviction
-must not expose incomplete resources. Async pumps have soft time budgets:
-indivisible driver calls and decode expansion are not hard latency/memory guarantees.
-
-Compatible opaque geometry uses pass-scoped instancing. Each view selects its own
-lights/shadows; planetary LOD considers active interests within shared budgets.
-Secondary/local views do not step another world. Cooked mip chains and whole-resource
-residency exist; independent mip residency and universal material/pose instancing
-do not. See [rendering](judasjs/rendering.md), [assets](ASSET_PIPELINE.md) and
-[scalability](SCALABILITY.md).
-
-Weather is a prescribed optional field, not atmospheric CFD. Graphics quality
-does not change wind forces. Retained UI is player-addressed and project-authored;
-menu/inventory meaning remains JS. Audio retains its shared-listener policy.
-Secondary-view and platform limitations stay explicit in subsystem references.
-
-## Persistence, streaming and networking
-
-Cold restore prepares a private candidate. Identities, ordered migrations,
-backups and rejection paths preserve originals. The engine does not automatically
-merge newly authored content or rewrite unknown native topology. Regional
-suspension retains supported state/edited terrain; unsupported dependencies pin
-regions with reasons. See [saves](SAVE_EVOLUTION.md) and [living worlds (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md).
-
-Online sessions are optional and host-authoritative. Their entity subset is narrower
-than offline simulation: vehicles, articulation, liquids, terrain and arbitrary
-spawned identities are not universally replicated. Local player identity is
-independent of devices and controlled entities. See [network/security boundaries](NETWORKING.md)
-and [local multiplayer](LOCAL_MULTIPLAYER.md).
-
-## Editor V2 ownership (Experimental)
-
-The desktop editor remains an engine consumer, with one project/document/history,
-one authoritative played world and the shared JudasJS runtime. `EditorApplication`
-coordinates the frame; it does not implement hierarchy, inspector, import or
-export bodies. [Editor V2](EDITOR_V2.md) maps the current source owners and
-qualification boundaries.
-
-`editor/EditorShell` owns dock/UI composition and platform-window presentation.
-`EditorPanelRegistry` performs deterministic setup-time registration and phase/
-visibility dispatch over a frame-scoped borrowed `EditorContext`. The existing
-`EditorDocument` owns authored mutations and undo. `EditorProjectWorkflow`,
-`EditorRequestWorkflow` and `EditorExportWorkflow` own project/document commands;
-`EditorPlaySession` owns Start/Stop and the single runtime; `EditorSceneViewport`
-and `EditorViewportPresenter` own camera/targets/content bounds and input mapping.
-
-Actual panel bodies live in `HierarchyPanel`, `InspectorPanel`, the separate
-asset list/details/import modules, scene settings, profiler, streaming and UI
-asset modules. `AssetPublicationWorkflow` publishes completed import/cook results
-at a safe authoring boundary even while the browser is hidden. Panel-local drafts
-remain local; shared services/selection and persistent visibility are explicit.
-The application frame does not gain a panel-specific branch when a descriptor is
-registered. The Console extension is the focused proof path, qualified separately.
-
-Breakpoint suspension draws the safe shell and debugger only. It must not pump
-simulation, save/load, streaming publication or recursive script execution while
-QuickJS's C/JS stacks are suspended. Platform windows share the one editor ImGui
-context; they do not create a scripting VM or physical world.
-
-Docking uses the pinned Dear ImGui docking vendor with its matching SDL2/OpenGL
-backends. Native OS detachment is admitted only for x11/windows; other backends
-retain docking/in-window floating. Linux V2 automated qualification covers native
-detached Scene/Game views; Windows V2 has not been rerun. Scene/Game targets use
-1× logical resolution, not native HiDPI backing-pixel resolution. The
-[qualification receipt](EDITOR_V2_QUALIFICATION.md) records the scoped checks;
-combined human acceptance remains pending. This is not an Alpha v2.0 release.
-
-## Native interfaces, builds and validation
-
-Native headers document actual interfaces, not a stable binary SDK ABI promise.
-JudasJS is the supported project scripting surface: trusted QuickJS modules,
-without Node/npm or unrestricted host modules. Optional TypeScript tooling gives
-completion for JavaScript; it is not a runtime dependency.
-Subsystem bindings and facade fragments are registered through one compiled
-[scripting catalogue](../src/scripting/Modules.json); the [Scripting V2 guide](judasjs/scripting-v2.md)
-explains runtime ownership and local extension. Metadata/property inspection
-lives in `scripting/ScriptMetadata.cpp`, sharing the private VM implementation.
-
-CMake separates subsystem targets under `cmake/targets/`, shares test helpers and
-finalizes SDK/validation after declarations. Build identity records version,
-channel and exact source inputs; archives can carry provenance without Git.
-See [build identity](BUILD_RELEASES.md), [distribution](DISTRIBUTION.md) and
-[focused checks](CURRENT_STATUS.md).
-
-Linux is the acceptance reference. Windows VM/Android receipts have individual
-version/hardware scope. Main is human-tested release lineage; Experimental is
-development. Published Alpha identities remain in the release record; this
-Experimental editor work does not publish a version or change release channels.
-
-## Project policy and basic water
-
-Project-wide water policy is serialized by both Project and NamedAuthoring codecs
-and captured by RuntimeWorld::ConfigureProject before construction. Runtime,
-editor Play, scene replacement, dedicated hosting and cold-save staging apply
-the same policy. UI lives in `src/editor/ProjectSettingsPanel.cpp`; it reuses the
-existing project input, classification, navigation, localization, audio, residency
-and export settings rather than introducing a parallel configuration service.
-
-`BasicWater` is a prescribed oriented volume with GPU visual waves and cheap
-swimming/optical queries. It does not own conserved quantity or rigid-body forces.
-RuntimeWorld indexes authored/streamed owners; `WorldWater.cpp` samples their
-existing entity poses. Alpha distributions reject advanced-fluid project activation before world construction
-and export due to contact-stability issues; Experimental/local builds retain the
-opt-in implementation for repair. See [restriction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M100_FLUID_CONTACT_STABILITY.md).
-Advanced Game Water V2 updates and allocations
-are gated by explicit project opt-in. No fluid numerical solver, MK2 contact
-solver or physical balance policy is redesigned by this separation.
-
-See [Project Settings and water](PROJECT_SETTINGS_AND_WATER.md) for exact defaults,
-intentional Pre-Alpha compatibility changes, supported ownership and limitations.
-
-
-### Developer observation boundaries
-
-`src/editor/RuntimeInspector.cpp` is optional editor-only UI over current ownership,
-region retention, native body/motor publication, `ScriptSystem::InspectPhase` and
-already-initialized save-slot metadata. It does not serialize VM state, start a
-save service, request regions or invoke callbacks. Its native lifecycle observation
-is deliberately not a new JudasJS readiness promise. `SaveEvolution` supplies the
-same identity mismatch description to rejected loads and save listings; migration
-policy and native participant validation remain unchanged. Current operating
-instructions and the shipped small SDK example are in `docs/DEVELOPER_WORKFLOWS.md`.
-
-### Native 2D
-
-Sprites and orthographic cameras share the existing renderer/scene path. Native
-planar bodies share MK2's world, clock, handles, CCD, contact and joint ownership;
-`PlanarGeometry` owns lamina shapes, contact witnesses and snapshot casts. Reduced
-linear/angular mobility restricts physical response to the fixed authored plane
-without post-step clamps or three extra bilateral constraints per body.
-`PlanarAuthoring` centralizes runtime/preflight boundaries. Planar pin/weld rows
-use the existing joint solver. Scene descriptors and modern physical save
-participants retain geometry, mass, inertia and fixed plane; legacy world deltas
-reject them. Player movement/cameras remain ordinary editable project JavaScript.
-See [Stage 2 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE2.md) and [2D API/boundaries](judasjs/physics-2d.md).
-
-Sprite sheets and frame clips are optional typed CPU resources. `SpriteAnimation`
-owns content validation/sampling; `WorldSpriteAnimation` owns fixed-boundary
-instance clocks and observations. Skeletal and sprite markers share interval
-traversal, while preview/render passes never advance gameplay. Existing scene
-definitions, prefab/stream snapshots, resource generations and modern saves own
-their normal lifetime; conditional content hashes prevent silent clip reinterpretation.
-See [Stage 3 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE3.md) and [the sprite animation API](judasjs/sprite-animation.md).
-
-`authoring/Tilemap` compiles bounded editor-owned sparse grid recipes to ordinary
-sprites and chunk-merged static planar boxes. `editor/TilemapEditor` owns palette
-selection, ray/grid painting and draft strokes; `EditorDocument` owns publication
-and Undo. Existing scene recipes retain source metadata; runtime physics, saves,
-streaming and exports use the compiled ordinary entities. There is no additional
-tile simulation or runtime clock. See [Stage 4 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/2D_STAGE4.md) and the
-[tile authoring guide](judasjs/tilemaps-2d.md) for limits and ownership.
-
-## Initial game readiness
-
-`StartupScreen` owns the game loading display; `StartupMovie` decodes its cooked
-animation through the existing image loader. `WorldStartup` discovers readiness
-through normal resource and presentation paths without advancing simulation.
-The application coordinates this boundary before beginning its gameplay clock.
-See [startup loading](STARTUP_LOADING.md) for lifecycle, packaging and limits.
+Native build targets and meaningful registered tests are declared in CMake and
+`tools/validation/suites.json`. [CI](CI.md), [the harness](TEST_HARNESS.md),
+[diagnostics](PROFILER.md) and [contribution/storage policy](DOCUMENTATION_MAINTENANCE.md)
+explain reproducible work. [Intentional removals](V2_BREAKING_CHANGES.md) are a short
+compatibility contract, not an alternate old-engine manual.

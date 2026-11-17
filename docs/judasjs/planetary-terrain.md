@@ -1,4 +1,4 @@
-# Planet terrain and local physics origins (M85 / M90)
+# Planet terrain and local physics origins
 
 This optional component describes an absolute binary64 cube-sphere. Ordinary
 `Entity.transform`, physics queries, CharacterMotor and camera positions still
@@ -20,7 +20,7 @@ points, world joint anchors, gravity regions, motor support origins and rigid
 presentation history together. It does not reset momentum, sleep, orientation,
 constraints or time. Support normal remains independent from gravity direction.
 
-**M90 scope:** live shifts require script-owned execution and an 8 km active
+**origin-shift scope:** live shifts require script-owned execution and an 8 km active
 physics chart. Spatial actors must be streamed out/retired before moving to a
 distant chart. Wheels and scalar powertrain state, navigation frames/corridors,
 ragdolls/physical animation, shared and legacy IK targets, sockets, deformables,
@@ -29,25 +29,20 @@ the operation translates positions and preserves directions, velocities, loads,
 sleep, commands and local attachment frames. Detour tiles and immutable mesh/rest
 assets remain in their own local frames.
 
-**Pre-Alpha extension:** conserved liquid owners and detached parcels translate
-within the same 8 km chart. Owner-local capacity geometry, surface waves/history,
-quantity, velocity and handles remain intact; derived optical planes rebuild.
-An owner whose cavity has not yet published refuses nonzero shifts with a
-prepare/retry diagnostic; a no-op origin request still succeeds. This prevents
-liquid-only actors from bypassing geometry bounds during asynchronous startup.
-Analytic atmosphere translates its frame; combustion retains its thermal scalars
-and carrier handles. This does not add regional liquid suspension or modern-slot
-atmosphere/combustion persistence. See the [composition matrix](../CURRENT_STATUS.md).
+Analytic atmosphere translates its frame; combustion retains thermal scalars
+and carrier handles. This does not imply unsupported atmosphere/combustion
+save or regional suspension combinations.
 
-**Remaining exclusions:** legacy PBF and emitted legacy fluid reject shifts.
-An in-flight M59 residency transaction defers the shift
+**Remaining boundaries:** enabled Advanced Fluids has explicit origin/region
+restrictions; Basic Water is independent. Retired PBF/liquid owners are absent.
+An in-flight region residency transaction defers the shift
 until it reaches a safe boundary. A live articulation still pins its streamed
 source region under the existing suspension rules; translating it does not add
 articulation suspension support. This is one shared local physics chart, not
 simultaneous distant physics islands or universal whole-engine rebasing.
 Scenes that never request a shift retain their existing path.
 
-## `onOriginShift(event)` — explicit script caches (M90)
+## `onOriginShift(event)` — explicit script caches
 
 An optional synchronous script callback runs **after** a nonzero origin change
 has fully committed and **before** the next ordinary `fixedUpdate`:
@@ -83,11 +78,11 @@ receive no callbacks while absent; on `restore`/resume, rebuild local caches fro
 absolute data, rather than replaying missed origin events.
 
 Scene reload resets to the authored origin. Full saves preserve the active chart.
-M59 retained records preserve capture origins and decode kinematic targets,
+region retained records preserve capture origins and decode kinematic targets,
 deformed nodes and owned material sections in the new chart before publication.
 Powertrain spin/commands are scalar and are not translated. Derived contact and
 presentation data reconstruct through their existing lifecycle. See the
-[M90 implementation and limitations](../ASSEMBLY_TRAVEL.md).
+[origin-shift implementation and limitations](../ASSEMBLY_TRAVEL.md).
 
 ## Entity planet methods
 
@@ -127,13 +122,7 @@ export default class {
 }
 ```
 
-Game-side traversal/camera policy is shown in the ordinary
-[planetary lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/planetary_terrain_lab/README.md). See also
-[CharacterMotor](character.md), [physics/gravity](physics.md),
-[streaming](streaming.md), [saves](saves.md) and the
-[representation, authoring and measured limits](../PLANETARY_TERRAIN.md).
-
-## M92 multi-view render selection
+## multi-view render selection
 
 The world submits main/local-player and enabled secondary camera interest together.
 The selector takes the maximum requested screen error per tile, under the existing

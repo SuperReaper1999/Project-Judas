@@ -1,12 +1,4 @@
-# Lucifer / Lighting V2
-
-**Subsequent V2 policy update:** the obsolete Alpha fluid restriction has been removed on Experimental. Advanced Fluids remains project-opt-in. References below to a retained lock describe the original Lucifer qualification checkpoints, not the current policy. Main and published V1 packages remain unchanged.
-
-Lucifer is implemented on Experimental and awaits operator acceptance. This is
-an unsupported Alpha V2 source-build preview, not a published release. Main,
-Advanced Fluids V2's Alpha lock and consumer RPG SDK selection are unchanged.
-Final candidate/SDK identities and completed platform CI outcomes accompany the
-handover; this document does not establish human acceptance.
+# Lighting and shadows
 
 ## Architecture and behaviour
 
@@ -78,208 +70,19 @@ relative direct-light approximation against published MK2 collision geometry,
 not lux, GI, material transmission or a render-pixel prediction. Ambient is
 unoccluded. Physical query count is bounded, not arbitrary mesh-query wall time.
 
-## Correctness and workflow evidence
+## Continuous shadow filtering
 
-The clean native run at `dd0474502d16d3ca0def9bfb1072767762630a19` passed all
-192 current gates in 233.48 seconds on the actual NVIDIA desktop. It covers
-renderer/editor, scripting, Terrain V2, Vehicles V2, deformables, particles,
-water/lock policy, navigation, networking, persistence and supported primitives.
-The kernel contained no new entries during that clean run.
+Interpolate the comparison results of four adjacent 3x3 kernel placements.
+Their shared samples form a 4x4 footprint, with per-axis weights
+  [1 - phase, 1, 1, phase], phase = fract(projectedUV * mapSize - 0.5).
+The two weight sums are each 3, so total normalization remains 9.
+Every tap still uses the actual receiver-plane depth at that texel center.
+Raw depth values are not interpolated, which would fabricate occluder depths.
+Existing bias, map size/count, directional coverage, lighting and geometry are
+unchanged. Sampling work is 16 depth fetches per evaluated light versus 9;
+shadow-map memory/resolution are unchanged. No throughput speedup is claimed.
 
-Focused modern and portable GL3.3 controls also passed. They include:
 
-- Native shadow-on/off pixel negatives; moving occluders redraw in the same frame.
-- Persistent unchanged reuse, immediate radiance/disabled-source changes, all six
-  point faces, multi-view allocation and source-pool eviction.
-- Resource changes, camera-backed textures and view-dependent LOD guards.
-- Authored Edit-preview occlusion and immediate redraw after a geometry edit;
-  neighbouring preview-region casters are included before shadow planning.
-- Independent UBO layout reflection/readback through final slot 53 and exact
-  texture/CPU-SSBO/compute-SSBO light records and rendered pixels.
-- Exposure occlusion, independent attenuation answers, cone/orientation changes,
-  exhausted budgets, invalid/stale inputs and fresh-world restoration.
-
-Six stored native image controls were byte-identical; the spotlight comparison
-changed by at most one 8-bit channel value. WebGL2's production-owner proof passed
-33 checks using Playwright 1.64.0 / existing Chromium revision 1248, a fixed 32 MiB
-Wasm heap and explicit context destruction. Its process-group ceiling was
-768 MiB; observed peak was 467.2 MiB with no swap. This is scoped software-WebGL
-renderer evidence, not a complete browser-game or Android-device certification.
-
-Actual live QuickJS enumeration matches 524 public symbols, 353 native operations
-and 281 callable signatures. The checker covers 26 structured result contracts,
-58 examples and eight negative drift controls. The new exposure binding is local
-to the existing Rendering module; the central dispatcher was not modified.
-
-The matching clean Linux SDK at that checkpoint verified all 15 tools and 818
-files. Eight SDK workflow operations passed, including fresh project creation,
-Edit/Play/Stop, import tools, unchanged-package verification and relocated editor
-and CLI exports. A separate copy of the **packaged** workshop put one bulb in the
-initial aiming direction. Real mouse input shot bulb 200; ordinary save completed.
-The export was moved, its source copy renamed, and it ran from `/tmp` with the
-exact packaged runtime. A fresh process restored `broken:{"200":true}` with an
-exact migration report. No private gameplay state was injected.
-
-The real editor Scene tab, a `bulb` hierarchy search/selection and F5 Play/Stop
-were also exercised through native UI input in a disposable project. An earlier
-ad-hoc pan automation stayed on the inactive Game tab under Wayland and was not
-counted as Scene-view qualification. Direct editor-drawable capture and normal
-Scene selection supplied the usable preview evidence instead. Search remains
-case-sensitive; `bulb` matches the workshop's authored lamp names.
-
-## Whole-game performance
-
-Reference: Ryzen 5 5600, GTX 970 4 GiB, 8 GiB RAM, Kubuntu Linux,
-NVIDIA 580.178.04 / OpenGL 4.6. Captures used the real application loop,
-VSync off, uncapped presentation, 3 seconds warmup and 20 seconds measured play.
-No compiler or other graphics test ran concurrently; images were inspected after
-the controlled batch. All 18 captures completed without script/resource faults,
-inactive sampled frames or discarded/clipped simulation time. There were no new
-kernel GPU errors in the controlled window.
-
-Three alternating trials per frozen old/new workload, medians of trial metrics:
-
-| Fixed inputs / renderer | FPS | p50 / p95 / p99 ms | worst across trials ms |
-| --- | ---: | --- | ---: |
-| Original courtyard, C33 baseline | 371.73 | 2.589 / 3.143 / 3.339 | 35.449 |
-| Same courtyard, Lucifer | 280.48 | 3.655 / 4.339 / 4.500 | 7.861 |
-| Combined terrain/32 actors/5,000 particles, baseline | 434.15 | 1.706 / 5.584 / 6.299 | 18.781 |
-| Same combined inputs, Lucifer | 260.83 | 2.832 / 7.218 / 8.272 | 20.717 |
-| Current PBR Night Watch, 1920×1080 | 225.23 | 4.541 / 4.842 / 5.000 | 5.912 |
-
-The old renderer does **less shadow work**: it lacks the new point-light shadow
-coverage and three-cascade presentation. These rows quantify the quality/cost
-change, not an optimisation speedup. The frozen combined view is an elevated
-observer benchmark, not the corrected first-person terrain acceptance game.
-Actual logs confirm 32 ready/supported actors and 5,000 GPU particles with real
-contacts. The scene/images were inspected, not accepted as an empty fast run.
-
-The combined Lucifer p99 range was 6.657–9.480 ms: two trials met 120 FPS at p99,
-one did not. It had one isolated frame above 16.67 ms across the three trials,
-none above 33.33 ms, and no simulation loss. **A p99 budget pass is not a promise
-that every frame remains above 60 FPS.** The aggressive 5 ms combined critical
-path goal is not generally met by this combined workload.
-
-Additional identical-final-binary controls:
-
-| Workload | FPS | p50 / p95 / p99 / max ms |
-| --- | ---: | --- |
-| Current PBR workshop, 1280×720 | 381.15 | 2.690 / 2.941 / 3.098 / 6.481 |
-| Same workshop, shadow reuse disabled | 341.12 | 3.020 / 3.298 / 3.494 / 4.998 |
-| 1,024 modules / 256 overlapping lights | 62.09 | 16.260 / 17.447 / 17.906 / 18.237 |
-
-The dense scene **fails the 60 FPS p99 target**. It requested 32 local shadows,
-selected four and reused no charts. Median CPU shadow planning was 14.067 ms;
-GPU main-camera time was 16.136 ms. Those overlap and must not be summed.
-This workload remains outside the demonstrated 60 FPS envelope.
-
-For 1080p Night Watch, CPU Play median was 1.459 ms and GPU main camera 4.386 ms;
-presented p50 was 4.541 ms. For combined trial 1 those values were
-2.652 / 2.974 / 2.837 ms. Again, nested CPU scopes and GPU durations are not added.
-Measured gameplay RSS peaks were 149.8 MiB at 1080p, 222.7 MiB combined and
-199.1 MiB dense. Shadow allocation counters were 144 / 12 / 216 MiB respectively.
-Light-list buffers used 0.375 MiB in Night Watch and 1.688 MiB dense. Whole-device
-VRAM (including the desktop) peaked at 525 / 397 / 1,019 MiB in the corresponding
-first trials; these are not claimed as per-process VRAM measurements.
-
-A separate full-resolution day/night control and physical walking/mouse/flashlight
-control passed without script/resource faults or simulation loss; their p99
-was 5.551 ms at 1080p and 3.299 ms at 720p respectively.
-
-## Preserved negative findings and changes
-
-- An initial shared light-fetch shader with a per-fetch runtime branch slowed
-  both texture and SSBO paths and was rejected. Separate shader variants restored
-  ordinary throughput. Three matched policy trials showed dense throughput
-  59.12 FPS texture versus 62.21 CPU SSBO / 62.50 compute SSBO, about 6% net benefit;
-  ordinary courtyard throughput remained approximately 204 FPS on all three.
-  Those path-selection captures predate final exact-zero contribution skipping.
-- Exact fieldwise caster encoding replaced slow text encoding: CPU preparation
-  fell from 1.114 to 0.079 ms and submission from 1.948 to 0.923 ms. At that stage
-  presented throughput stayed GPU-limited; the CPU saving was not falsely claimed
-  as an equivalent frame-rate improvement.
-- The real parented-spotlight negative control retained an old direction after
-  the parent returned to identity. Derived cached poses were removed and the
-  shared resolver now supplies current direction. C++ `StaticLight.position`/
-  `direction` and unused historical named shadow slots are intentionally retired;
-  use world transforms and source allocation. JudasJS changes are additive.
-- The first new PBR diagnostic included one 259.350 ms stall, 257.695 ms in swap
-  waiting and 0.126924 seconds lost simulation. Main-camera GPU work remained
-  2.045 ms; a large gap followed UI before the outer GPU end marker. Do not call
-  that 260 ms of busy lighting work. Image inspection overlapped that diagnostic,
-  so it is retained as an uncontrolled negative, not a clean timing pass.
-- One native UBO colour-control attempt coincided with NVIDIA Xid 13 in that
-  process at 22:08:50 UTC on 2026-11-11. No engine workaround was applied. An
-  independent SDL/OpenGL control and five repeated original native controls
-  passed, followed by the clean 192-gate run. The isolated fault is unexplained,
-  **not claimed repaired**. Earlier artifact-upload infrastructure failures and
-  the obsolete nine-chart WebGL test fixture are also preserved.
-- The later `b388944` full native run passed 191/192 gates in 235.96 seconds:
-  the independent GPU-particle control failed alongside another NVIDIA Xid 13
-  at 23:02:22 UTC. Three subsequent actual native 63-check runs passed. This
-  does not erase the failure or establish a repair. That control creates its
-  own SDL/GL context without initialising Lucifer; driver, hardware and software
-  attribution remains unresolved. Final hardware qualification is not clean.
-- Software Mesa CI exposed another stale nine-slot sampling fixture: its
-  purported invalid slot 9 is now valid, and exceeded the fixture's own uniform
-  array. The fixture now declares 54 charts, proves real occlusion at slots 9
-  and 53, and rejects slot 54. Production sampling is unchanged. The original
-  failed Alpha/Experimental CI evidence is retained, not classified as a pass.
-- Native Windows qualification exposed MSVC's reference interpretation of a
-  captured queue's `decltype` in existing MK2 code. An explicit `ArrivalQueue`
-  type preserves the algorithm. All 17 executable sections of the native GCC
-  object are byte-identical; only profiler source-line strings moved. Focused
-  collision/rotation and lighting gates passed. Final MSVC build results must
-  come from the accompanying exact-candidate CI receipt, not this Linux evidence.
-- The next Windows link exposed an existing `StructuralSkin` forward declaration
-  calling `DeformableInstance` a struct despite its class definition. MSVC emitted
-  different linkage names for GPU mesh/palette methods. The declaration now
-  matches the definition; no deformation or rendering algorithm changed. All
-  26 executable sections of the native GCC object remain byte-identical.
-
-Raw executable/input identities, complete frame/GPU timelines, operating-system
-samples, images and failed attempts are retained under `.cache/lucifer-v2`.
-`FINAL_PERFORMANCE.json` and `final-capture-runs.json` enumerate the controlled
-trials. Final handover records the exact SDK/CI identities independently of these
-historical benchmark executables. No private downloaded assets are used.
-
-## Human-review correction: visible bulb illumination
-
-Human review found that built-in sphere triangles were wound inward despite outward normals. A single-sided PBR bulb therefore blocked its own point source in the shadow pass. Corrected winding and matching UV order restore outward faces without disabling sphere shadows or changing shooting logic. The rendered regression compares a bulb with an independent no-enclosure reference, preserves opaque double-sided and light-off negative controls, and checks that destroying one source does not brighten unrelated surfaces or disable its neighbour.
-
-The normal local-shadow budget is now eight sources (the existing supported maximum), covering all concurrently active Workshop bulbs, flashlight, headlights and alternating strobe. The eight invisible non-shadowing fill lights on the left, including inside the room, were removed from both the editable scene and its generator. Accepted decorative lighting on the open right route is retained. This is a correctness/presentation change; earlier four-source performance evidence does not certify its new cost. The whole-frame benchmark now records an explicit `--shadow-budget` quality policy for matched cost controls; qualify the corrected eight-source path separately.
-
-## Authoring and human acceptance
-
-Launch from the checkout:
-
-```sh
-build/judas_editor projects/lucifer_workshop/Lucifer_Workshop.judasproj
-build/judas projects/lucifer_workshop/Lucifer_Workshop.judasproj
-```
-
-The local packaged equivalent is `build/linux-sdk/judas_editor` or
-`build/linux-sdk/judas`, with project
-`build/linux-sdk/projects/lucifer_workshop/Lucifer_Workshop.judasproj`.
-For a full work-area editor use `JUDAS_EDITOR_MAXIMIZED=1`. Click the **Scene**
-tab for Edit preview; Game is the Play surface.
-
-1. In Scene, search `bulb`, select a lamp and open its Light component. Change
-   colour/intensity, range, Point/Spot, cones and shadow priority. Spots face local
-   -Z. Confirm preview changes and Undo; save authored changes separately.
-2. Play: WASD/mouse, Space jump, F flashlight. Walk around pedestrians, columns
-   and the doorway. Check shadows while moving and rotating rapidly.
-3. E toggles scripted patrol motion, Q emergency lighting and N day/night. Observe
-   the moving headlights/strobes and directional cascades. The original cruiser
-   and pedestrians are project-scripted kinematic fixtures, not a claim of native
-   vehicle driving controls or skeletal character animation.
-4. Aim at a warm hanging bulb and left-click. Its emission and illumination should
-   disappear immediately and surrounding shadows should respond. The physical
-   exposure HUD samples every quarter second; that display cadence does not delay
-   shadows.
-5. K saves; wait for completed status, quit the process, reopen and L loads. Check
-   broken lamps, time/state and continued movement. R restarts; Esc toggles pointer
-   capture. F5 stops Editor Play and returns the authored scene unchanged.
-
-Passing automated checks does not substitute for this human acceptance. Do not
-promote Experimental, unlock Advanced Fluids or publish a release automatically.
+Choose actual light budgets in the editor; use `world.lightExposure` for the
+bounded gameplay approximation, not a GPU pixel readback. See
+[the exact lighting interface](judasjs/lighting.md) and [runtime appearance](RUNTIME_RENDERING.md).

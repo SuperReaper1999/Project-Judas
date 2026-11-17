@@ -1,139 +1,104 @@
-# M41 authored runtime UI
+# Runtime UI authoring and controls
 
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+Projects own `.judasui` content; JavaScript owns menu/HUD meaning; the engine owns
+layout, rendering, text editing, focus and routed input. These are native controls,
+not a browser DOM or game-specific menu framework. Use the matching SDK's
+[exact UI API](judasjs/ui.md) and [Unicode/localization](LOCALIZATION.md) contracts.
 
-Judas owns layout/rendering/input. Project `.judasui` assets own the hierarchy;
-JavaScript owns menus, HUD meaning and reactions. No browser or gameplay UI classes.
+## Create a document
 
-**Accepted M58 update:** [Unicode text / localization](LOCALIZATION.md) and the
-[current JS contract](judasjs/localization.md) supersede the original ASCII text
-limitations below. Runtime-label source editing now includes a shaped-text preview.
+In Edit, Asset Browser **Create UI document** makes a registered asset. Select it
+and open **Edit UI document**. Author a canvas with stable IDs and parent-first
+children. Choose Canvas, Panel, Text, Image, Button, Slider, Toggle, Text input,
+Scroll container or Virtual list. Configure layout, text, fonts/images, colours,
+control limits, accessibility labels and focus styling.
 
-**Current M96 extension:** [UI toolkit (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md) and [public API](judasjs/ui.md)
-add native editable text/IME, scrolling, virtual lists, focus, semantic observations
-and explicit control-state snapshots. The editor retains its normal canvas, named
-source, undo and explicit save workflow. M96 was human accepted; current platform coverage remains separate.
+The runtime canvas preview uses the shared UI layout/render path; named source
+and visual editing share the same document and validated undo/draft workflow.
+**Save UI source** publishes source; **Reload UI source** discards the draft.
+Source conflicts remain visible rather than overwriting an external edit.
+Add Runtime UI to an entity and select the asset, or use `ui.load(assetId,name)`.
+Two live documents need distinct runtime names. Restart Play after source changes.
+Stop does not rewrite documents or authored scenes.
 
-## Authoring
+Documents are bounded to 2,048 elements and one canvas. IDs are identities, not
+labels or array indices: renaming one requires updating its script references.
+Dependencies must be registered assets of the correct type. Export uses normal
+font/image/camera dependency ownership, including after relocation.
 
-In Edit mode, Asset Browser **Create UI document** makes a tracked asset. Select it
-and expand **Edit UI document**: add panels/children, set stable IDs and parents,
-choose canvas/panel/text/image/button/slider/toggle, layout, colours, text, font/image
-asset IDs and values. **Save UI source** commits the source edit explicitly;
-**Reload UI source** discards in-panel edits. Parents must precede children. Delete
-removes a subtree. Historical M41 source editing was a basic property panel without undo/preview;
-accepted M58 adds a rendered text preview (not a general WYSIWYG editor).
+## Layout and responsive design
 
-Add **Runtime UI** to a scene entity, select its asset, assign a unique runtime
-name and enabled state. Source is copied into the world's runtime instance.
-Alternatively scripts can load a registered document dynamically. Scene/prefab
-configuration uses normal serialization and property overrides. Stop does not
-rewrite source documents or authored scenes. Restart Play after source edits.
+A reference canvas (default 1280×720) scales uniformly and centres in the viewport.
+Anchors address a parent's padded content rectangle. Span, relative size, fixed
+size, margins, pivot and offset determine geometry; horizontal/vertical flow owns
+its axis for visible direct children. Text alignment is separate from layout alignment.
+Rendering, clipping, pointer hits, focus reveal and runtime layout snapshots use
+the same geometry. Images support fit/stretch; Unicode shaping is shared with the
+runtime text system. UI draws in document/hierarchy order after world rendering.
 
-Documents are bounded to 2048 elements, one canvas, unique string element IDs.
-IDs are stable references, not display-label/array-position identities. Renaming
-an ID requires updating scripts that refer to it. Two document instances need
-different runtime names; prefab overrides can supply those names.
+Use Scroll for overflowing groups and fixed-row Virtual list for large data sets;
+do not rely on scaling a fixed desktop layout to make it usable at phone aspects.
+`referenceSize` and `setLayout` support explicit reflow. Document scale 0.75–2 changes
+reference-unit geometry/text, not physical game scale. Test small landscape and
+portrait viewports with real bounds/hit tests, not only a 1280×720 screenshot.
+The Willow Town and UI Showcase projects demonstrate these policies.
 
-## Layout / rendering
+## Editing, lists and transfers
 
-A reference resolution (default 1280x720) scales uniformly to fit the window;
-the reference canvas is centred with unused aspect-ratio space around it.
-Layout recomputes against current window size. Anchors address the parent's
-padded content rectangle. Size = anchor span + relative size times parent extent
-+ fixed size minus margins. Offset and pivot alignment place that rectangle.
-Horizontal/vertical containers lay out visible direct children in source order
-with margins and spacing; free layout uses anchors directly. Text alignment is
-separate from layout pivot alignment.
+Text input is single-line valid UTF-8 with an authored byte limit. Selection uses
+extended grapheme indices, with clipboard, undo, SDL text/IME commit and read-only
+behaviour. Embedded NUL/line breaks reject without replacing the old value.
+Native screen-reader adapters, multiline editing and every hardware IME are not
+implemented/qualified by the copied accessibility observations.
 
-Renderer owns all GL. UI is a final screen-space alpha-blended pass, in document
-load order then authored hierarchy order. Rectangular scissor intersections clip
-children of clipped containers; rendering and pointer hits use the same clip.
-Images use normal ResourceManager textures with fit/stretch.
+Scroll/List offsets are clamped reference units. A list holds at most 10,000 rows,
+unique stable keys and 2 MiB combined text/IDs; labels are bounded to 512 bytes and
+keys to 128 bytes. `setItems` replaces data atomically and preserves a valid enabled
+selected key. Offscreen data does not allocate a hidden widget tree. Fixed authored
+row height is supported; complex variable-height cells are not.
 
-**HISTORICAL M41 text path, superseded by accepted M58:** Text used the existing
-TrueType loader/ASCII atlas, wrapping at word boundaries and alignment. No Unicode,
-rich text, scrollbars or advanced shaping. Font atlases are cached by Renderer
-(maximum 64 paths, destroyed at renderer shutdown); image references are released
-on document unload/owner destruction and after texture replacement.
-Current font/layout resource and cache lifetimes are specified in [M58](LOCALIZATION.md).
+[Item transfers and live model images](UI_TRANSFERS_AND_PREVIEWS.md) use explicit
+drag/drop categories and camera targets. Drop events request a project-owned
+inventory mutation; the engine does not decide item rules. Modal/player ownership,
+retirement and input reset cancel transient transfers through their normal owners.
 
-## Script API
+## Script lifecycle and pause
 
 ```js
-import {ui,input} from 'judas';
+import { ui } from 'judas';
 export default class Menu {
-  start() { this.hud=ui.get('hud'); }
-  update() { this.hud.get('message').text='Hello'; }
+  start() { this.doc = ui.get('hud'); }
+  restore() { this.doc = ui.get('hud'); }
   onUI(event) {
-    if(event.document==='hud' && event.element==='confirm' && event.type==='click') {
-      this.hud.hide();
+    if (event.document === 'hud' && event.element === 'confirm' && event.type === 'click') {
+      this.doc.hide();
     }
   }
 }
 ```
 
-- `ui.load(assetID, uniqueName)` / `ui.get(name)` return a document handle (get
-  returns null when absent). `get(elementID)` returns a validated element handle.
-- Document `visible`, `enabled`, `modal`; `show()`, `hide()`, `unload()`.
-- Element `text`, `visible`, `enabled`, `texture`, `value` read/write. Texture must
-  be a registered texture; values must be finite and within the authored range.
-  Programmatic edits do not synthesize input events.
-- `ui.quit()` requests ordinary application shutdown.
-- `ui.debugOverlayVisible` controls the existing engine diagnostics independently
-  of project HUD content (demo disables diagnostics to keep its menu clear).
-- `uiUpdate(dt)` is optional, once per interactive outer frame even while paused.
-  `onUI({document,element,type,value})` receives click/change/focus/back events.
-  Events dispatch in input order to live behaviours in normal entity/slot order.
-  Filter by document/element in the script. Start runs before UI work. Existing
-  `update/fixedUpdate` remain gameplay callbacks and do not advance while modal.
-  Constructors/callbacks use M40 fault isolation and interrupt guards.
+Filter broadcast UI observations by document/element/player. Input types include
+click/change/focus/back, text submit and drag/drop lifecycle. Programmatic setters
+and list replacement do not manufacture user events. `uiUpdate` runs at the
+interactive outer frame even while a modal pauses gameplay; ordinary update/fixed
+callbacks do not advance behind a global modal. Local-player documents scope
+layout/focus/input; a local modal blocks its player, a global modal pauses the world.
 
-Handles validate document generation and element ID on every call. Unload never
-reuses the same document handle in that world; stale accesses throw. Destroying
-an owning entity unloads its documents; script-loaded documents are also released
-when their creating script slot is removed/disabled. End Play releases UI and the VM. UI state
-is presentation state, not automatically persisted; use bounded script state
-when game-specific UI values need persistence. Existing save format remains 2.
-Authored component fingerprints gain optional `Judas.RuntimeUI.1`; UI-bearing or
-scripted worlds with registered UI assets additionally hash all UI IDs/content.
-Script/UI-free existing baselines are unchanged. Export packages all registered
-assets, validates UI font/image dependencies and resolves normally after moving.
+Handles validate document generation and element identity. UI documents have no
+`.valid` property: stale access throws. Unload, script/entity retirement, Stop,
+scene change and player departure release/invalidate owned documents.
 
-## Input / pause
+## Save and verify
 
-UI routes before gameplay, using M35 `ui_up/down/left/right/activate/click` and
-`pause` actions plus window pointer state. Default gamepad D-pad and South confirm
-are supported. Disabled/hidden controls cannot interact. Focus order is authored
-order; the top visible modal document owns navigation (otherwise top document's
-pointer controls). Sliders use drag or left/right increments; toggles use activation.
+`captureState`/`restoreState` copy supported control state atomically: text/value,
+visibility/enabled, scale, focus, selection, scroll and selected key. Rebuild list
+data first. Layout/style, list data, clipboard, undo and IME preedit are not saved
+by that snapshot. Its 4 MiB bound does not enlarge the script slot's 64 KiB JSON
+limit. Keep game data separate and reconstruct transient UI bindings in `restore`.
 
-A visible enabled modal document pauses the existing accumulator/fixed-step path
-and releases mouse capture. Closing it resumes without adding paused time. UI
-consumes actions and all actions/axes sharing their physical bindings for the
-frame/catch-up steps; pending edges are discarded. The frame that closes a modal
-is not handed to gameplay. Main-menu/pause/options meaning is entirely JS.
-Legacy scenes without authored UI retain the engine's compatibility pause menu.
-The new project demo replaces that flow with authored panels, including nested
-Options/Back/Resume/Quit; engine debug HUD remains separate.
-
-## Demo / human checklist
-
-`projects/ui_demo/ui_demo.judasproj`: enter the game, K key / G door, P prefab / J
-pulse, Escape authored pause. The JS HUD counts spawned props. Options has a slider
-and HUD toggle. Normal M38 export works unchanged.
-
-1. Main-menu mouse buttons work.
-2. Arrows/controller focus and confirm work (hardware listening/interaction is operator-owned).
-3. Enter game and inspect HUD; P changes its count.
-4. Escape pauses/resumes without a gameplay double-action.
-5. Options slider/toggle and Back work.
-6. Resize and inspect aspect/layout.
-7. Export/move/run, including UI/font/image/script content.
-
-**Historical M41 scope:** visual acceptance was pending at the candidate gate;
-operator acceptance was subsequently recorded. Localization/Unicode arrived in
-M58, pointer capture is script-accessible, and M67 adds transient layout mutation.
-See [current UI](judasjs/ui.md), [localization](judasjs/localization.md) and
-[input](judasjs/input.md). World-space UI, data binding and a general styling
-engine remain outside the current system.
+Try [UI Showcase](../projects/ui_showcase/README.md),
+[Menu Workshop](../projects/menu_workshop/README.md) and
+[Willow Town](../projects/willow_town/README.md). Exercise edit/undo/save/reopen,
+Play/Stop, keyboard/pointer controls, responsive layouts and cold restoration.
+Physical touch/controller/audio/IME/accessibility trials retain their own scopes;
+see [development readiness](DEVELOPMENT_READINESS.md).

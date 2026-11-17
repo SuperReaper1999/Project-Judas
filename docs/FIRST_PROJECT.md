@@ -175,11 +175,3 @@ Next, follow [Making a game by hand](judasjs/getting-started.md) for input,
 CharacterMotor, physics, UI, saves and inspectable complete game projects.
 
 ## Verification scope
-
-`judas_first_project_tests` creates an ordinary project from scratch, registers
-this exact script, saves/reopens its scene and exercises real VM callbacks. It
-checks actual rotation/camera endpoints, syntax-failure isolation, deliberate
-reload and state continuation. It needs no private content, renderer or compiler
-at execution time. It does **not** certify editor clicks, visual appearance,
-export, platform hardware or human acceptance; test receipts record execution
-status separately in the [Pre-Alpha evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass2).

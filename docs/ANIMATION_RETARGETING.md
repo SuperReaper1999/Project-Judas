@@ -1,9 +1,8 @@
-# M74 — editor-time animation retargeting
+# Import-time animation retargeting
 
-Provisionally checkpointed by operator instruction, based on
-`b7d7f4142b243cd57d9998f4952857e67e5d84a8`; **human validation is pending**.
-Import → map → retarget → preview → bake → use.
-Judas transfers an existing performance; projects decide when ordinary clips play.
+Import → map → retarget → preview → bake → use. Retargeting transfers an existing
+performance through the shared importer; project scripts decide when clips play.
+It is an authoring operation, not a runtime retargeting service.
 
 ## Design and ownership
 
@@ -57,62 +56,20 @@ Compatible articulated hierarchies with different names, proportions, local axes
 reference poses and helper counts; explicit manual mapping, positive uniform
 normalization, ordinary quaternion/local tracks. No runtime retarget service,
 automatic anatomy detection, arbitrary topology conversion, motion generation,
-contact warping, face solution or animation timeline editor. Participating shear,
+contact warping, face solution or skeletal keyframe editor. Participating shear,
 reflection/singular transforms and animated scale are diagnosed explicitly.
 Nonconstant participating STEP channels are rejected: LINEAR emitted tracks cannot
 honestly preserve a discontinuity. Continuous LINEAR/CUBICSPLINE sources are
 sampled on the declared grid plus source keys/endpoints; curved motion between
 samples is an approximation. Already-extracted source root tracks are rejected
 explicitly; use an unextracted source for this first version.
-Mapped joints use the importer hierarchy bound (4096), not M70's IK solve bound.
+Mapped joints use the importer hierarchy bound (4096), not IK/physical-animation's IK solve bound.
 Profiles are bounded to 4 MiB; sampling to 240 Hz, one hour, one million sample
 times, 64 million sampled source-plus-target node evaluations and four million
 keys. All bounds apply together: sample count multiplied by the combined full
 source/target hierarchy size must fit the node-evaluation budget. Source keys and
 trim endpoints added to the grid count toward these bounds. They are checked
 before allocating the emitted key arrays.
-
-## Workflow and evidence
-
-The small Retarget panel and shared import CLI use the same profile validation,
-pose transfer and bake service. Profile save, draft undo and cooked publication
-are separate operations; scene undo is not filesystem rollback. A normal game
-crossfades by the baked clip's name through existing JudasJS. No JS binding is added.
-
-The original CC0 [Retarget Lab project (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/retarget_lab/retarget_lab.judasproj)
-contains the source performance, two differently proportioned target rigs,
-profiles/recipes and an independent instance sharing the broad target asset.
-[Candidate evidence and measurements (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m74/REPORT.md) record focused
-checks and platform validation. Human visual/motion acceptance remains outstanding.
-Earlier milestone evidence and accepted Lastlight/Skate content remain outside
-this change.
-
-### Retarget Lab controls
-
-Open `Scenes/lab.judas` and Play, or launch the exported project. The source is
-followed by broad, tall and independent target instances. Clip selection changes
-the broad/tall targets together; the independent instance keeps its own Wave
-playback clock. The script uses the project's logical input map:
-
-| Control | Action |
-|---|---|
-| `1` / `2` / `3` / `4` | Select Travel / Wave / Bob / target-native Native |
-| `G` | Crossfade broad/tall between Native and Wave over 0.6 seconds |
-| `M` | Cycle Travel preserve / extract / in-place root policies |
-| `Space` | Pause/resume the source and target playback clocks |
-| `Right` | Seek each clock forward 0.25 seconds, wrapping at two seconds |
-| `L` | Toggle a masked left-arm Wave layer on the broad target |
-| `I` | Toggle an existing shared-IK left-arm contribution on the broad target |
-| `P` | Toggle an existing partial physical contribution on the broad target |
-| `T` | Request/release the authored `rig` suspended region |
-| `F6` / `F7` | Save/load the `retarget-lab` slot |
-| `R` | Reload the scene |
-| `Escape` | Pause/resume through the authored UI; the menu also offers reload |
-
-The HUD reports each clock, root policy and enabled contributions. Extracted root
-motion is inspectable data; the lab does not automatically move an entity from
-that track. Layer/IK/physical controls exercise existing pose producers alongside
-ordinary baked clips, not runtime retargeting.
 
 ## Profile and recipe reference
 
@@ -127,7 +84,7 @@ There is one format and no runtime profile registration. All keys are escaped fu
 | `sourceSignature`, `targetSignature` | SHA-256 of key-sorted rest/affine/bind hierarchy content; not transient indices |
 | `mapping` | Unique one-to-one `{source,target}` full-key pairs; nearest mapped ancestors must correspond |
 | `modelAlignment` | Normalized quaternion `[x,y,z,w]`, source model frame to target model frame |
-| `translationScale` | Positive scalar, default 1 after M66 unit normalization |
+| `translationScale` | Positive scalar, default 1 after model-import unit normalization |
 | `translationJoints` | Target keys whose source/helper local translation deltas are transferred |
 | `sourceReference`, `targetReference` | `{joint,rotation:[x,y,z,w]}` local rest-postmultiplying calibration corrections |
 
@@ -137,10 +94,8 @@ not. Clip keys, source content, profile calibration or recipe settings need a re
 Material-only changes do not require a different skeleton identity. The existing
 logical target asset ID survives compatible rebakes.
 
-The lab's [broad profile (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/retarget_lab/Imports/broad.judasretarget) and
-[tall profile (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/retarget_lab/Imports/tall.judasretarget) are complete
-reusable examples. They map 17 joints while retaining all unmapped helpers.
-Per-clip choices stay in ordinary `JudasImport.motions` entries:
+Use an explicit profile for your source and target skeletons; saved profiles
+are authored content, not automatic anatomy detection.
 
 ```json
 {
@@ -161,7 +116,7 @@ Per-clip choices stay in ordinary `JudasImport.motions` entries:
 This is the broad lab recipe's actual target root key. For another target, select
 its **actual target root key** from the picker/profile; the example axis is
 asset-local, not universal world-up. `trim:[begin,end]` is optional and output time
-starts at zero. Optional `settings` describes the **source's** M66 unit/basis
+starts at zero. Optional `settings` describes the **source's** model-import unit/basis
 normalization independently of the target recipe. Output names must be unique;
 collisions fail before publication. The editor has an explicit choice to replace
 an existing *retarget recipe operation* with the same name; native target clips
@@ -172,7 +127,7 @@ axes/twist once and records the normal motion track. `inPlace` performs the same
 selected-channel removal without storing locomotion; undeclared bob stays. No
 entity transform or motor is automatically driven. Extracted loop interval queries
 compose the existing motion frames. Already-extracted sources must be supplied in
-unextracted form; M74 does not silently forget their separate motion track.
+unextracted form; retargeting does not silently forget their separate motion track.
 
 ## Editor workflow
 
@@ -200,39 +155,17 @@ raw OpenGL.
 Run from the repository root with the built tool:
 
 ```sh
-build/judas_model_import_cli --retarget-validate projects/retarget_lab/Sources/source.gltf projects/retarget_lab/Imports/broad.judasimport projects/retarget_lab/Imports/broad.judasretarget
-build/judas_model_import_cli --recipe projects/retarget_lab/Imports/broad.judasimport
+build/judas_model_import_cli --retarget-validate /path/to/Project/Sources/source.gltf /path/to/Project/Imports/broad.judasimport /path/to/Project/Imports/broad.judasretarget
+build/judas_model_import_cli --recipe /path/to/Project/Imports/broad.judasimport
 ```
 
 `--retarget-profile SOURCE TARGET_RECIPE NEW_PROFILE SOURCE_ID TARGET_ASSET_ID`
 creates an empty manual draft and prints keys/takes/signatures; it will not overwrite
 an existing profile. `--inspect-motion SOURCE` prints the full source hierarchy.
-Standalone profile inspection uses default M66 source metadata normalization;
+Standalone profile inspection uses default model-import source metadata normalization;
 custom source normalization belongs in the recipe/editor. Validation/cooking errors
 return nonzero. CLI and editor call the same C++ service, not a second Python backend.
-Regenerate original lab content with `python3 scripts/create_m74_lab.py --project
-.cache/m74/regenerated` after building both CLI and scene author. `--overwrite` is
-required to replace a previously authored lab. This is fixture-art generation;
-retarget mathematics remain in Judas.
-
-## Ordinary executed JudasJS use
-
-The lab's [script (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/retarget_lab/Assets/scripts/lab.js) consumes only public
-current APIs. Once `actor.animation.info.ready` is true:
-
-```js
-actor.animation.play('TravelInPlace');
-actor.animation.crossFade('Native', 0.6);
-actor.animation.layer('left-arm', {
-  clip: 'Wave', mask: [keys.ShoulderA, keys.ElbowA, keys.PalmA], weight: 0.7
-});
-const motion = actor.animation.rootMotion('TravelExtract', 0, 2, false);
-```
-
-These are existing [animation APIs](judasjs/animation-ragdolls.md). Retargeted clips
-remain ordinary M47 pose contributors; M70 IK/physical contributions keep their
-existing order and authority. Saves, prefab instances and suspended regions retain
-normal clip/mixer state. There is no `animation.retarget()` method.
+Retarget mathematics and validation remain in the shared native service.
 
 ## Runtime and authoring limits
 
@@ -256,9 +189,5 @@ Cancellation is checked while sampling. Reported working memory is an estimate,
 not complete allocator accounting. Runtime has no retarget evaluation or source
 skeleton demand; ordinary joint-palette uploads still occur for animation skinning.
 The existing Windows import/cache staging path can exceed the ordinary Win32
-path limit in deeply nested project/test directories. M74's native cook proof
+path limit in deeply nested project/test directories. retargeting's native cook proof
 uses a short test root; it does not claim general long-path support.
-
-Current focused results, native-platform receipts and the single human checklist are in
-[the M74 evidence report (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m74/REPORT.md). Human motion acceptance remains
-outstanding; the operator authorized a provisional checkpoint before human validation.

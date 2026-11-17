@@ -11,7 +11,7 @@ missing state. No old-save conversion is provided.
 | `legacyGameplay` / `legacy-gameplay`, player-start/vehicle/door/lightSwitch and body.pickable demonstration metadata | Project-owned scripts and data; no replacement engine gameplay flag |
 | `.judasstate`, pose-delta overlay, native save/delete-state input actions | SaveService slots, WorldPersistence and developer-controlled save evolution |
 | LiquidSystem, reservoirs/containers, transfers, liquid assets and `judas_liquid_bake` | Retired capability; Basic Water and accepted Advanced Fluids V2 remain distinct current systems |
-| `liquid`, `LiquidVolume`, `Entity.liquid`, PBF FluidWorld/ProductionFluidCoupling and backend/emitter switches | No compatibility API. Current `GridWater` APIs use the sole game-water backend; Alpha lock still applies |
+| `liquid`, `LiquidVolume`, `Entity.liquid`, PBF FluidWorld/ProductionFluidCoupling and backend/emitter switches | No compatibility API. Current `GridWater` APIs use the sole game-water backend; explicit project opt-in applies in every V2 channel |
 | V1 bounded terrain, VolumeTerrainSource, `terrain.create`, volume author CLI, v2-import and full-mesh v2-cook bootstrap | Terrain V2 native asset/source, `createLandscape(serializedSource)`, heightfield surface edits and sparse volume excavation |
 | Fixed-panel editor fallback, empty panel compatibility files, old ASCII atlas/stb rasterizer | Docked Editor V2 panels and current Unicode text renderer |
 | `world.sweepCapsule` fixed native-player wrapper, no-op debugOverlayVisible | Explicit `physics.capsuleCast`; project UI and real current diagnostics |
@@ -21,8 +21,7 @@ Use `judas_mod registries PROJECT` when authoring an explicit new game contract.
 
 Current portability and CPU particle fallbacks, MK2, flat/radial gravity,
 planetary precision, input, audio, joints, deformables, animation and modern
-persistence are legitimate capabilities and remain. No V2 release, main promotion
-or fluid unlock is implied by this purge.
+persistence are legitimate capabilities and remain. Source capability and release publication remain separate.
 
 ## Vehicle template input policy
 
@@ -31,4 +30,4 @@ while moving in the other direction. Release and re-press to select reverse. Thi
 is an intentional change to the copyable project driver, not a JudasJS or native
 torque API break. Existing project-owned controllers remain yours to manage. The
 unpowered trailer preset now has one axle; the Workshop uses a rear tandem.
-See [towing correction and limits](VEHICLES_V2_TOWING.md).
+See [towing correction and limits](VEHICLES_V2.md).

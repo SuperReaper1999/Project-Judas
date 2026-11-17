@@ -1,4 +1,4 @@
-# Online multiplayer — `network`, `NetworkEntity` (M99)
+# Online multiplayer — `network`, `NetworkEntity`
 
 Optional server-authoritative sessions for small games using the same authored
 scene/content. Scripts decide gameplay; the engine validates scalar controls,

@@ -4,12 +4,6 @@ This is a source-checkout developer workflow. Packaged SDK consumers keep the
 checksum-verified SDK read-only and place their projects/exports outside it;
 the source build/test commands below are not SDK consumer commands.
 
-The operator cleared repository-local `.cache` and `build` on 2026-11-16 after
-checking and safely unregistering their Git worktrees. Experiments that matter
-belong in source commits/branches, tests, tracked assets and concise documentation.
-Historical executables, screenshots, raw benchmarks and diagnostic dumps are
-disposable. Do not archive every temporary campaign before clearing it.
-
 `tools/storage-policy.json` sets allocated-byte budgets: 8 GiB for `.cache`,
 14 GiB for `build`, 16 GiB combined, and 256 MiB per whole-engine capture.
 These are workspace limits, not engine runtime memory or performance budgets.

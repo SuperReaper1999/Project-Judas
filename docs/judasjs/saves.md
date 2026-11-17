@@ -30,18 +30,6 @@ if (result?.state === 'failed') console.log(result.error);
 | `reference(entity)` | Stable opaque reference string, or `null` for destroyed entity. Full-width IDs never go through Number. |
 | `resolve(key)` | Fresh Entity or `null` if absent/unloaded/destroyed; never loads a region from a getter. |
 
-**Historical defect (M78 checkpoint audit, LIF-002):** excluding a legally eligible simple
-dynamic actor omits its scene entity but retains a sleep record. Full restoration
-then fails with `saved sleep body unavailable/duplicate`. The normal non-excluded
-control passes. The original failure remains in the
-[measured reproduction (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md).
-The subsequent M78 correction applies the existing retained-body ownership rule
-to sleep capture as well as contacts. Newly captured eligible exclusions restore;
-required mapped articulation bodies retain their sleep records despite their
-internal transient flag. Sleep format 1 and strict missing/duplicate/truncated
-record rejection are unchanged. Previously emitted orphan-bearing slots are not
-repaired retrospectively. See [current scoped results (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md).
-
 Slot IDs are 1–64 ASCII letters/digits/underscore/hyphen, not paths. Names are
 independent bounded Unicode strings. Metadata and script/session data must use
 bounded plain JSON values, not wrappers, functions or closures. One operation is
@@ -91,7 +79,7 @@ project policy; they must not replay target hits, initial water, starting enemie
 or score initialization. Modules/closures/globals/UI focus are new, not serialized.
 Required modern state is listed in the participation contract. Unsupported required
 legacy state rejects the save explicitly. Save files never execute migration code.
-Strict content compatibility is the default; M98 optionally accepts explicit, project-authored ordered migrations (below). container 1 timestamp seconds have
+Strict content compatibility is the default; save-evolution optionally accepts explicit, project-authored ordered migrations (below). container 1 timestamp seconds have
 an explicit checked upgrade to container 2 milliseconds. Unsupported game or
 participant versions reject before live mutation.
 
@@ -103,10 +91,10 @@ namespace unless an explicit `save-identity` is authored. Copies of an identity
 intentionally represent the same game. Editor Play uses `EditorSlots`. Runtime
 packages do not need write access to their installed content.
 
-## Deformable/fracture participation — M62/M63
+## Deformable/fracture participation/fracture
 
 A scene containing deformables adds a required version-1 `deformables` participant;
-M63 fracture scenes require version 2 of that participant, including irreversible
+fracture fracture scenes require version 2 of that participant, including irreversible
 topology/material removal and owned rigid-joint state. Scenes without deformables
 omit this participant. It preserves authoritative nodes/velocities, plastic rest state, runtime materials/attachments, enabled/sleep
 state. Missing or failed required simulations reject save capture. Runtime handles,
@@ -124,7 +112,7 @@ modern slot save/load, not ordinary scene reload.
 Composed projects use the same service with qualified resident/retained region
 records.
 
-## M65 participant compatibility
+## participant compatibility
 
 Authored/runtime limb IK settings, visual socket identity, typed entity properties,
 physical-material selection/overrides and runtime-created joints use the existing
@@ -135,7 +123,7 @@ The SaveApplication participant assertion changes from 11 to 12 for this additio
 chunk, rather than relaxing required participants. Cached GPU matrices/layouts are
 not save data. Current integration includes a separate-process save/load check.
 
-## Current pose and motion intent (M70–M71)
+## Current pose and motion intent (IK/physical-animation–kinematic)
 
 Modern slots preserve full-body IK configuration/targets and physical-animation
 region settings in ordinary entity definitions. The skeletal participant preserves
@@ -150,7 +138,7 @@ Kinematic bodies retain current motion authority/physical state plus durable tar
 or velocity commands, including the target's remaining duration. Save/load does not
 reapply authored initial velocity over a captured command. The legacy pose-delta
 `.judasstate` save rejects changed authority/kinematic intent; use modern slots.
-[Kinematic reference](entities.md#kinematic-motion-m71) · [Pose/physical reference](animation-ragdolls.md).
+[Kinematic reference](entities.md#kinematic-motion) · [Pose/physical reference](animation-ragdolls.md).
 
 <a id="joint-continuation--current-m78-corrective-candidate"></a>
 
@@ -171,16 +159,7 @@ present the remaining subset as complete or empty; the native controller keeps
 its ordinary first-sample wait. A genuinely completed empty publication remains
 distinct from an unpublished one.
 
-An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. The same closure also records live motor tag propagation to the query capsule; [CharacterMotor metadata](character.md) describes the current rule.
-
-This is not a promise of universal bitwise trajectories or persistence of every
-cache. Old articulation/contact versions remain readable through their previous
-cold-start path. An older in-progress save that omitted this context can still
-fail to continue its original bounded physical task. The original M77 failure is
-preserved, separately from passing new captures. See the
-[mechanism and compatibility report (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_COLD_CONTINUATION.md).
-
-## M97 mutable regions
+## mutable regions
 
 Slots include committed [Terrain](terrain.md) instance fields/settings. Pending edits
 defer capture; cold restore reconstructs actual collision and navigation. Retained
@@ -190,7 +169,7 @@ strict warm-history validation; moving-owner frame round trips are not used as a
 substitute for those settings. Earlier save formats retain their existing contracts.
 
 
-## Save evolution — M98
+## Save evolution
 
 Current saves expose separate `content` (SHA-256), `compatibility` (project-owned
 contract string) and `contentVersion` (integer; 0 means legacy exact-only).
@@ -285,4 +264,4 @@ Save byte telemetry is obtained from the envelope already encoded by storage;
 it does not trigger a second encoding. `bytes` describes encoded data when
 available, not a durability guarantee. Check the terminal state/error. For the
 latest consumer timing investigation and limits, see
-[Hinge save latency](../SAVE_LATENCY_FOLLOWUP.md).
+[Hinge save latency](../PERSISTENCE.md).

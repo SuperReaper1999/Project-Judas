@@ -1,4 +1,4 @@
-# Rendering and light selection (current M92)
+# Rendering, light selection and shadows
 
 Judas owns drawing, culling and resource lifetime. Scripts author meaning and
 change ordinary transforms/materials/lights, not native graphics calls.
@@ -13,10 +13,10 @@ A spot faces local -Z. Positions/directions use the current local chart, indepen
 of gravity. The normal presented transform supplies moving light poses.
 
 The renderer conservatively projects each finite light volume into 64-pixel
-screen tiles (grid dimensions saturate at 120 per axis). GPU fragments fetch a
-bounded nearby list from one RGBA32F texture, shared by legacy and PBR materials.
-No compute shader, texture-buffer extension or desktop-only storage buffer is
-required for this lighting path. A maximum of **1024 visible lights per view**
+screen tiles (grid dimensions saturate at 120 per axis). Portable fragments use the shared texture reader. Modern desktop can use
+CPU-filled SSBOs or bounded compute packing, preserving stable record/index order.
+Capability/policy selection is explicit; no native graphics scripting API is added.
+A maximum of **1024 visible lights per view**
 and **128 lights per tile** keeps work bounded. Overload selects stable
 intensity/distance relevance; profiler overflow counts expose omitted references.
 Large ranges and many overlapping lights still cost more than spatially separate
@@ -24,21 +24,23 @@ small sources. There is no shadowless-light registration-order five-light cap.
 
 ## Shadows
 
-A depth-array layer holds the directional light; up to eight further layers hold
-selected spots. The ordinary world path requests **four spots per camera**.
-`castsShadow` requests a slot, not a guaranteed reservation. Selection ranks
-visible requests by `shadowPriority + max(color)/(1 + distanceSquared)`, where
-colour is intensity-scaled; stable source identity breaks ties. Other sources remain
-lit. **Point-light cubemap shadows are not implemented.**
+The shared lighting planner supplies three stabilized directional cascades with
+16/48/144 m half-extents and local point/spot sources. The default local shadow
+budget is four, configurable from zero through eight sources per view. A point
+uses six faces and a spot one chart in an aligned six-layer allocation. Importance
+and explicit `shadowPriority` select sources; unselected lights remain illuminated.
 
-Each rendered camera rebuilds its actual directional chart and spot assignments;
-secondary and split views cannot sample a different eye's old shadow coverage.
-Authored edit previews do not generate these maps and explicitly discard runtime
-shadow history before drawing; they cannot inherit Play mode shadows.
-Layer storage grows on demand and is retained until renderer shutdown. The
-existing directional projection remains a finite local 50 m-wide shadow window;
-this is not cascaded sunlight across an entire planet. PCF/bias approximations
-remain. Many shadowed views still require repeated world/caster submissions.
+Every selected dirty chart is drawn before colour consumes it. Exact cache keys
+include relevant caster observations, resource revisions, matrices and LOD inputs;
+unknown or specialized presentations conservatively redraw. Runtime and Edit
+previews use this planner. Cross-view keys cannot borrow another eye's coverage.
+The depth pool grows lazily to at most 54 charts, separately budgeted from ordinary
+material residency. Modern cubemap-array views and portable depth arrays implement
+the same ownership. Finite resolution/coverage and PCF/bias limits remain.
+
+See [lighting budgets/cache semantics](../LUCIFER_V2.md) and
+[gameplay exposure](lighting.md); shadow maps are presentation resources, not saved
+physical state or universal whole-planet sunlight coverage.
 
 ## Repeated geometry
 
@@ -75,15 +77,14 @@ this is not perfect visibility-driven planetary occlusion.
 Light patches live in ordinary runtime entity definitions, including modern
 save and streaming snapshots. GPU lists, instance groups and shadow maps never
 enter durable data. A scene teardown removes owners and camera targets normally.
-Legacy pose-only world-state deltas do not retain light patches.
+Retired pose-only world-state deltas are not supported.
 
-M56 records light selection/upload, opaque instance submission and shadow passes.
+profiler records light selection/upload, opaque instance submission and shadow passes.
 Counters include instanced draws/instances, tile overflow, light-grid GPU bytes
 and shadow-array payload bytes. GPU timestamps include command-stream gaps;
-they are not a hardware utilization meter. Windows/Android M92 validation is
-informational and has not been claimed by Linux rendering checks.
+they are not a hardware utilization meter. Device qualification is stated in [the current matrix](../DEVELOPMENT_READINESS.md).
 
-## Cooked visual assets (M93 Experimental)
+## Cooked visual assets
 
 Projects may author `.judastex` textures and `.judasmesh` rigid meshes through the
 editor or offline cooker. Existing mesh/texture asset IDs, scene transitions,

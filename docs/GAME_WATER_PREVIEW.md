@@ -1,4 +1,4 @@
-# Game-resolution water replacement
+# Game Water authoring and runtime workflow
 
 **V2 source preview on Experimental; project opt-in in every build channel.** Grid Water V2 now
 uses normal Fluid Volume scene components, RuntimeWorld, JudasJS, CharacterMotor,
@@ -7,10 +7,6 @@ published V1 SDKs and Basic Water remain unchanged. The obsolete Alpha channel r
 
 The editable game is [Water V2 Workshop](../projects/water_v2_workshop/README.md).
 The [Water API](judasjs/water.md) lists exact scene keys, handles and receipts.
-
-The previous exact/cut-fragment solvers and their failed controls remain research
-references. They are not this solver's architecture or its microscopic acceptance
-specification. [Previous checkpoint (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/FLUID_BULK_STORAGE.md).
 
 ## Build and play the editable project
 
@@ -47,7 +43,7 @@ bash tools/diagnostics/run_game_water_lab.sh
 
 Its controls remain 1 pool, 2 sluice, 3 trapped air, 4 authored terrain, 5 preserved
 basin fixture; X rotated gravity; G gate/vent; B throw; R reset; P pause; F5/F9 save/load.
-This diagnostic is off by default and is not an Alpha feature unlock.
+This diagnostic is off by default and does not change project feature policy.
 
 The observer is a flying camera, not a swimming character. Save slots default to
 `.cache/game-water-lab-saves`; `--save-dir` selects another owned directory.
@@ -105,43 +101,6 @@ preserved fixture; its water seed and geometry are intentionally re-sampled.
 The rotated original uses the authored rotation. These are declared-resolution
 tests, not identical-geometry comparisons with the microscopic research solver.
 
-## Preserved foundation qualification
-
-These measurements describe the previous native foundation checkpoint, not the
-new runtime integration. Current integration evidence is recorded separately in
-[evidence/game-water-integration-20261107](evidence/game-water-integration-20261107/README.md).
-
-
-[Exact source hashes, commands, raw runs and results](evidence/game-water-20261107/README.md).
-The integrated runner advances real fluid/MK2 scenes in separate processes:
-
-```sh
-./build/judas_game_water_tests
-python3 tools/validation/qualify_game_water.py \
-  --executable build/judas_game_water_lab --output /tmp/judas-game-water-proof
-```
-
-It checks the untouched pool, floating/sinking bodies, real gate flow, sealed-air
-compression and finite venting, actual authored terrain, the original basin in
-both orientations, global material ledgers and fresh-process continuation.
-Performance records distinguish the complete CPU fluid step from water+MK2 scene
-cost. Rendering and graphics-driver costs are measured separately, not inferred
-from headless simulation. Automated checks and screenshots are not human acceptance.
-
-The measured 1,200-step pool run used 5.77 ms median / 6.34 ms p95 / 7.94 ms
-worst for water plus MK2 on the Ryzen 5 5600. The flowing gate and trapped-air
-cases had medians of 5.57 and 6.40 ms. These are small game-resolution workloads,
-not a matched-fidelity speedup over the previous exact solver. Five actual
-relocated rendered scenes maintained 60 Hz simulation at approximately 100
-presentations/second on the GTX 970 at 1280×800 (the desktop presentation rate).
-Full raw timings, startup, capture hitches and the tested hardware are retained.
-
-Use `--frame-log /tmp/water-frames.csv` for presentation timings. The normal
-bounded engine profiler also works with `JUDAS_PROFILE=1` and
-`JUDAS_PROFILE_OUTPUT=/tmp/water-profile.json`; the `Game water surface` GPU
-interval measures the water draw, not CPU mesh generation or the whole renderer.
-The preview retains catch-up backlog instead of silently dropping simulation time.
-
 ## Current support and boundaries
 
 - Water owns explicit binary64 quantities and source/drain receipts. The native
@@ -198,22 +157,3 @@ The preview retains catch-up backlog instead of silently dropping simulation tim
 - Linux source-build/relocated-export qualification is separate from release and
   hardware acceptance. No new Windows, Android or browser qualification is claimed.
   The runtime uses portable C++/existing rendering, with no new compute dependency.
-
-## Human check
-
-1. Open the Workshop project in the editor. Select the water owner, inspect grid
-   fields and the experimental warning. Play, Stop, then Play again; authoring must
-   remain unchanged and initial water should reset deliberately.
-2. Walk down the steps, swim and dive. Aim the centre crosshair at a loose prop
-   within 5 metres and press G; the HUD must confirm it is held. G releases it;
-   H throws it. Watch the green crate float and the grey sphere sink without launching.
-3. F toggles circulation (equal pump/drain receipts, rather than a rising pool).
-   Aim down at water and press B to splash there; solids block the splash ray.
-   Water should flow/settle while quantity
-   follows the explicit receipts. Inspect the chamber/roof and ordinary solid contacts.
-4. Switch to tilted/radial gravity and the original planet basin geometry. Check
-   stable bodies, swimming, surface alignment and camera controls.
-5. Save while disturbed, change the pool, reload, then quit/reopen and load again.
-   Water, inventory receipts, body poses and script state must survive.
-6. Run the normal exported project after moving the package. Keep the Alpha fluid
-   lock in place until review; automated checks do not establish human acceptance.

@@ -1,8 +1,6 @@
-# M53 — Navigation and navmesh foundation
+# Navigation surfaces, agents and dynamic edits
 
 ## Terrain-derived navigation
-
-[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) supplies ordinary static triangle-mesh terrain to existing Recast extraction. Sculpting changes the geometry fingerprint and makes the old bake stale; a new offline bake provides normal Detour queries. Painting alone retains geometry and does not invalidate navigation. Navigation remains advisory.
 
 
 Navigation answers where an agent may go and proposes routes/steering.
@@ -50,7 +48,7 @@ For exact scene keys and a complete SDK-only example, see the
 Headless authoring uses the same baker, through CMake's `judas_navigation_bake`:
 
 ```sh
-./build/judas_navigation_bake projects/shooter_game/shooter_game.judasproj Scenes/range.judas
+./build/judas_navigation_bake /path/to/Project/shooter_game.judasproj Scenes/range.judas
 ```
 
 This tool bakes every authored surface, registers/reuses asset IDs, writes scene
@@ -130,31 +128,8 @@ remains 3 with ordinary `nav.*` component properties. Canonical fingerprint sche
 remains 5: conditional navigation configuration and baked-content extensions distinguish
 navigation worlds, while worlds without navigation retain their prior identity.
 Runtime routes/caches are transient, not save objects. Baked bytes contribute to the
-effective authored baseline without export-machine paths. Normal M38 registered-asset
+effective authored baseline without export-machine paths. Normal export registered-asset
 export includes bakes, project settings, scripts/prefabs and dependency notices.
-
-## Spring Range integration game
-
-Open `projects/shooter_game/shooter_game.judasproj`. The arena is 48×64 m with
-corridors/corners, ramp/platform, weighted corridor and a separate landing surface.
-Six ordinary linked navigator prefabs chase the same player, periodically updating
-the destination in `Assets/scripts/enemy.js`. Guidance drives CharacterMotor;
-existing M52 first/third-person cameras, hinged spring targets, score/audio/UI and
-pause/restart remain game scripts. Shootable navigator sensor children follow the
-authoritative motor pose (M49 motors do not themselves expose rigid-body colliders).
-Two hits defeat one navigator; JS owns health/score/disable decisions.
-
-- **WASD / left stick:** move; **mouse / right stick:** look.
-- **Left mouse / controller fire:** shoot; **Space:** script launch.
-- **V:** same-player first/third-person toggle; **Escape:** pause; **R:** reload round.
-- **B:** toggle corridor obstacle AND its separate physical collider.
-- **N:** spawn another normal navigator prefab.
-
-The sixth navigator begins on the independent landing. This project's purple link
-means a slow hover crossing performed with CharacterMotor velocity and temporarily
-zero gravity scale; it is not a native link behaviour or a teleport. Navigation itself
-never samples/overrides gravity. Chase cadence, speed, health and scoring are editable
-project JS/component data, requiring no C++ recompilation.
 
 ## Limits and validation
 
@@ -169,8 +144,3 @@ Nav raycast is a local-horizontal traversal test, not a physics/visibility query
 Its returned height interpolates query endpoints; sample to obtain surface height.
 Links follow authored/explicit transform writes, not automatic dynamic-body motion.
 Surface enable state is authored; runtime toggles cover agents/obstacles/links.
-
-See [JudasJS navigation reference](judasjs/navigation.md),
-[copyable example](judasjs/examples/navigation.js), [CharacterMotor](judasjs/character.md),
-[physics queries](judasjs/physics.md), and [M53 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m53/README.md).
-Human gameplay/visual acceptance remains the authority.

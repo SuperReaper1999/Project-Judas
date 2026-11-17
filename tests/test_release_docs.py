@@ -59,6 +59,17 @@ class ReleaseDocumentationTests(unittest.TestCase):
         self.assertIn('Source identity is **Judas Engine Alpha v1.2.6**', text)
         self.assertIn('v1.2.5-alpha.1', text)  # Preparation must not claim publication.
 
+    def test_old_published_notes_are_not_required_for_current_source(self):
+        self.source.update(version='2.0.0-alpha.1', release_name='Judas Engine Alpha v2.0.0')
+        (self.root / 'docs/ALPHA_V2_0_0_NOTES.md').write_text('# Current source notes\n', encoding='utf-8')
+        (self.root / 'docs/ALPHA_V1_2_5_NOTES.md').unlink()
+        self.write_records()
+        docs.refresh(self.root, write=True)
+        self.assertEqual(docs.refresh(self.root), [])
+        (self.root / 'docs/ALPHA_V2_0_0_NOTES.md').unlink()
+        with self.assertRaisesRegex(ValueError, 'missing versioned release notes'):
+            docs.refresh(self.root)
+
     def test_historical_prose_is_preserved(self):
         before = (self.root / 'README.md').read_text(encoding='utf-8')
         docs.refresh(self.root, write=True)

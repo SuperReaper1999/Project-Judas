@@ -2,9 +2,9 @@
 
 [Ownership/readiness walkthrough and editable example](../DEVELOPER_WORKFLOWS.md)
 
-M59 describes one played world, physics world and script VM. A region is an
+region describes one played world, physics world and script VM. A region is an
 ownership group. `scenes.current`, `scenes.load()` and `scenes.reload()` retain
-M43 whole-world semantics. Additive operations do not change the root identity,
+scene/session whole-world semantics. Additive operations do not change the root identity,
 session store, selected locale or persistent root entities.
 
 ## Requests and readiness
@@ -31,7 +31,7 @@ scenes.releaseRegion(demand);
 | `owner(entity)` | Region identity or `root`; throws for stale entity. Ownership is independent of location. |
 | `resolveRegionEntity(region, localId)` | Fresh safe `Entity` or `null` while absent/staged/destroyed. `root` accepts root entity identity. Cache only while valid. |
 | `pinRegion(region, reason, pin=true)` | Bounded named manual pin; false for unknown region/invalid reason. Caller releases explicitly. |
-| `adopt(entity, region='root')` | Transfers a complete hierarchy without changing its identity, velocity or JS instance. Throws for invalid destination, incomplete joint assembly or group-owned gravity/liquid/ragdoll state. |
+| `adopt(entity, region='root')` | Transfers a complete hierarchy without changing its identity, velocity or JS instance. Throws for invalid destination, incomplete joint assembly or group-owned gravity/articulation state. |
 | `setInterest(name, position, {load, retain, priority?})` | Adds/updates one of at most 32 sources. Position/distances are metres in the fixed simulation frame; `retain >= load`; priority is an integer in [-100000, 100000]. Returns true or throws. |
 | `removeInterest(name)` | Removes a spatial source. Does not cancel another source/request. |
 
@@ -71,18 +71,18 @@ suspendable state in `state`, and reacquire local handles in `start`; arbitrary
 closures/native handles are not snapshots. Module caches remain in the one VM.
 Do not put a region's unique state only in an imported module singleton.
 
-Conserved liquid groups remain pinned: they have no lossless suspension participant.
+Enabled Grid Water owners must remain in the root scene; owner suspension is unsupported.
 Ordinary animated owners can suspend their playback, mixer/layers and resolved pose
 through the shared bounded animation snapshot. Active ragdolls, captured-pose
 returns and pending/non-animation physical authority still pin their region with
 a reason. See [pose lifetime](animation-ragdolls.md) and [modern saves](saves.md).
 Adopt compatible travelling actors or carried props into the persistent root
-before releasing their source region; group-owned liquid/articulation cannot be
+before releasing their source region; group-owned articulation cannot be
 adopted separately.
 Incomplete physical assemblies are rejected. Retention pressure pins content
 rather than silently respawning or discarding it.
 
-**Historical M59–M60 disk limitation:** composed-world legacy deltas were disabled/rejected; session JSON survived M43 replacement but region records did not. [M61 slots](saves.md) now preserve qualified active and suspended state, tombstones and travellers. Ordinary reload still resets world-owned region state; Load reconstructs the selected slot.
+[Modern slots](saves.md) preserve supported active/suspended state, tombstones and travellers. Ordinary reload still resets world-owned region state; Load reconstructs the selected slot.
 
 ## Coordinates and authoring
 
@@ -90,14 +90,14 @@ A project's `world-manifest` is a stable `.judasworld` asset ID. Manifest versio
 uses unit-scale placements: an absolute **double** source-origin destination and
 quaternion `x y z w`. Source object positions remain local to that origin. The
 session origin is subtracted in double precision before converting to float;
-M85 adds opt-in checked live-origin changes for a supported component subset; see [planetary terrain and origins](planetary-terrain.md). Bounds are oriented 3D half extents for interest.
+planetary-terrain adds opt-in checked live-origin changes for a supported component subset; see [planetary terrain and origins](planetary-terrain.md). Bounds are oriented 3D half extents for interest.
 
-See [M59 authoring/component matrix](../WORLD_STREAMING.md) and the executable
+See [the authoring/component matrix](../WORLD_STREAMING.md) and the executable
 [streaming cookbook](examples/streaming.js). Related APIs:
 [scene/session](scenes-state.md), [navigation](navigation.md),
 [character motors](character.md), [physics](physics.md).
 
-## Deformable residency — M62
+## Deformable residency
 
 Independent deformables retain node/velocity/plastic/material/attachment state once
 before sliced teardown, then restore privately before publication with fresh owner
@@ -105,43 +105,21 @@ IDs and handle epochs. An active attachment from another region pins its target
 region; releasing it permits suspension. Manifest reference fields use
 `deformable:<group>` with normal qualified region/local IDs. The selected gravity
 region is retained when live simulated node positions depend on it. Existing
-articulation/liquid residency restrictions above remain; a pinned region is not
+articulation/water-owner residency restrictions above remain; a pinned region is not
 reported as unloaded. See [Deformable](deformables.md) and [save slots](saves.md).
 
-## M65 visual and script dependencies
+## visual and script dependencies
 
-Socket targets and typed entity properties use stable scene identity. Streaming
-remaps local references and accepts normal qualified manifest fields (`socket`,
-`script:<slot>:<property>`), rather than storing native handles. An external socket
-or typed reference pins its target region. **Historical M65 restriction, superseded
-for ordinary animation by later snapshot support:** all animated/IK/articulated
-regions pinned live pose state. Current ordinary animation suspension follows the
-policy above; active articulation and return still pin. Compatible adoption requires
-a complete hierarchical/socket/joint assembly; partial assemblies and group-owned
-articulation are rejected. Revisit reconstructs suspended rigid
-bodies/joints awake with fresh safe handles; adopted members do not duplicate.
-See [integration lifecycle proof (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m65/REPORT.md).
-
-## Prescribed bodies (M71)
+## Prescribed bodies
 
 Suspending a kinematic body retains its current authority, physical state and
 remaining target/persistent velocity intent. Revisit restores that intent privately
 before publication; unload time does not advance it. Fresh bodies have fresh native
-handles. [Kinematic command semantics](entities.md#kinematic-motion-m71) apply equally
+handles. [Kinematic command semantics](entities.md#kinematic-motion) apply equally
 to a root body and a region-owned body. This does not add physics to preparation jobs.
 
-## M85 absolute terrain and live origins
+## absolute terrain and live origins
 
 See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.
 
-## M97 mutable regional content
-
-[Terrain](terrain.md) fields and supported root primitive runtime construction can
-now be retained in snapshot regions. `adopt` assigns new arrivals a durable
-region-local recipe; no immutable source file is rewritten. Complex newly adopted
-hierarchies/articulations and resource-backed subsystem ownership remain restricted.
-Cross-region dependencies still pin. Pending terrain work defers suspension; retained
-geometry prepares asynchronously while the destination stays private. Private
-rigid/kinematic bodies do not accumulate simulated motion during preparation.
-See [scope and lab (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M97_LIVING_WORLD.md). The normal collider-enabled property
-continues to control collision, not whether a gameplay body is simulated.
+## mutable regional content

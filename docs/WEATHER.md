@@ -1,12 +1,4 @@
-# M86 — Judas Learns to Weather
-
-Human-accepted M86 implementation; current platform qualification remains separate. This document
-describes the source contract; actual Linux measurements, focused results and
-the preserved unrelated regression failure are recorded in the
-[M86 evidence report (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m86/REPORT.md). Windows M86 remains untested.
-
-[JudasJS reference](judasjs/weather.md) · [Architecture](ARCHITECTURE.md) ·
-[Weather Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/weather_lab/README.md) · [M85 terrain](PLANETARY_TERRAIN.md)
+# Weather, atmosphere and presentation
 
 ## Ownership and source map
 
@@ -119,7 +111,7 @@ atmosphere altitude. Global weather remains available to orbital cameras for clo
 rendering even where local air/wind forces have reached zero.
 
 Add **Weather wind response** to an ordinary dynamic Body to opt in. Author its
-effective area, drag coefficient, maximum acceleration and 64-bit M39 shelter
+effective area, drag coefficient, maximum acceleration and 64-bit classification shelter
 collision mask. The ordinary force accumulator receives:
 
 ```
@@ -146,7 +138,7 @@ The current OpenGL backend ray marches actual three-dimensional density in a
 flat slab or spherical shell. Camera-relative positions are formed after absolute
 double subtraction; modulo reductions occur before narrowing large coordinates.
 The radial altitude expression avoids direct subtraction of nearby Earth-sized
-float radii. Integrated advection remains absolute across M85 chart shifts.
+float radii. Integrated advection remains absolute across planetary-terrain chart shifts.
 
 A lazily generated 64³ R8 noise volume with its complete mip chain (299,593
 texel bytes) supplies layered cloud density. Each octave selects an explicit
@@ -237,7 +229,7 @@ eight events per region and active weather voices to eight. Excess events may be
 dropped. Already playing one-shots are transient audio presentation; pending
 future thunder, rather than sample-by-sample voice playback, is save state.
 
-The lab authors an ordinary follow-active-view audio listener. M85 origin support
+The lab authors an ordinary follow-active-view audio listener. planetary-terrain origin support
 is extended for that listener's camera-derived motion and weather's absolute
 one-shot locations. Positional audio emitters/zones retain their existing live
 origin restrictions; this is not general rebasing of every audio component.
@@ -250,7 +242,7 @@ advection, tornado travel, last lightning and pending thunder. Missing or mismat
 required records reject restoration. Weather owners cannot opt out as transient
 entities while still contributing required world state.
 
-M59 retained weather uses streaming archive version 8. A region contributes no
+region retained weather uses streaming archive version 8. A region contributes no
 weather until atomic publication, retires its field on unload and retains its
 continuation. Its clock freezes while nonresident. Reactivation rebuilds the
 ordinary component and restores state before publication, including capture-origin
@@ -261,27 +253,6 @@ region reconstruction.
 GPU textures, cover atlas, quality choice and running sound voices are not
 physical continuation data. Export uses the existing project scene/asset closure;
 there is no hidden engine demo mode or downloaded weather service.
-
-## Weather Lab and controls
-
-Open [`projects/weather_lab/weather_lab.judasproj` (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/weather_lab/weather_lab.judasproj).
-The flat meadow supplies a solid-roof pavilion, light panels, freight and a 300 kg
-crate. The Earth-sized scene uses M85 terrain plus a normally registered streamed
-observatory. Project JS owns the tour, free-camera flight, ordinary CharacterMotor
-locomotion and physical probe spawning.
-
-- **1–8:** sunny, cloudy, rain, thunderstorm, tornado, snow, blizzard, fog.
-- **F5:** watch tour; **F9:** switch flat/planet scenes.
-- **Q:** quality; **0:** visuals off/on without changing wind forces.
-- **WASD/mouse/Space:** walk/look/jump; **E:** throw a physical probe.
-- **F1/F2:** ascend/land; **F3:** planetary face visit.
-- **F6/F7:** save/load; **R:** reload; **Escape:** pause.
-
-The lab's orbit travel is a project-controlled view. It retires/streams local
-physical actors before changing an M85 physics chart and reconstructs a motor on
-landing. It does not pretend the motor itself flew through interplanetary space.
-See the [project README (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/weather_lab/README.md) for the consolidated
-human inspection sequence.
 
 ## Deliberate limitations and validation status
 
@@ -300,15 +271,3 @@ human inspection sequence.
 - Scene/quality/resolution comparisons require separate CPU/GPU timing and memory
   receipts. The evidence report separates the matched render workload, whole-lab
   responsiveness and physical wind workload; none is a universal timing guarantee.
-
-## Reference starting points
-
-Technique/context references supplied with the brief; none is a new engine
-runtime dependency or a claim of feature parity:
-
-- [Guerrilla, Nubis: Authoring Real-Time Volumetric Cloudscapes (2017)](https://www.guerrilla-games.com/read/nubis-authoring-real-time-volumetric-cloudscapes-with-the-decima-engine).
-- [Guerrilla/GDC, The Real-Time Volumetric Superstorms of Horizon Forbidden West (2022)](https://gdcvault.com/play/1028023/The-Real-Time-Volumetric-Superstorms).
-- [Epic, Volumetric Cloud Component](https://dev.epicgames.com/documentation/unreal-engine/volumetric-cloud-component-in-unreal-engine).
-- [NVIDIA GPU Gems 2, Accurate Atmospheric Scattering](https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-16-accurate-atmospheric-scattering).
-- [Microsoft Research, Real-Time Rendering of Realistic Rain (2006)](https://www.microsoft.com/en-us/research/publication/real-time-rendering-of-realistic-rain/).
-- [NOAA, Ingredients for a Thunderstorm](https://www.noaa.gov/jetstream/thunderstorms/ingredients-for-thunderstorm).

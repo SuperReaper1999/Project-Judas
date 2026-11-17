@@ -1,11 +1,4 @@
-# M49 — Scriptable character motor (candidate)
-
-**Status through M69:** M49 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
-
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+# Character movement
 
 Judas owns collision-aware motion primitives. JavaScript owns character behaviour.
 
@@ -15,8 +8,8 @@ Judas owns collision-aware motion primitives. JavaScript owns character behaviou
 rigid body, camera, input consumer or animation state machine. Its capsule queries
 use the authoritative PhysicsWorld tree, collider geometry and resolved motion
 segments. Each instance has independent state. A world with no motors does no
-motor work. **Historical M49 scope:** character blocking/events were not implemented.
-M65 adds queryable motor observation capsules and collision/sensor callbacks through
+motor work. **Historical character-motor scope:** character blocking/events were not implemented.
+authoring adds queryable motor observation capsules and collision/sensor callbacks through
 the normal physics event path, without making motors dynamic rigid bodies.
 See [current motor contracts](judasjs/character.md); motor-to-motor blocking
 remains a separate limitation.
@@ -108,59 +101,8 @@ A conditional `Judas.CharacterMotor.1` fingerprint extension includes every
 motor-authored setting; canonical schema remains 5 and motor-free hashes are
 unchanged. Existing entity-state persistence carries motor position/velocity.
 Under the legacy persistence contract, support/camera/one-step acceleration were
-transient. Modern M61 slots preserve motor motion/support identity; presentation
+transient. Modern save-slot slots preserve motor motion/support identity; presentation
 is reinitialized and camera/input remain project policy. See [save contracts](PERSISTENCE.md).
 Disable clears support; destruction, reset, Stop and transitions invalidate state.
 Script removal leaves an enabled component's last resolved velocity/normal gravity
 active; games may explicitly disable it. No script owns the component's lifetime.
-
-## Current project and workflow
-
-Open `projects/character_demo/character_demo.judasproj` or run it standalone.
-
-- F1: flat walls/corner, 25°/65° slopes, stairs, finite-mass pushable and actual
-  M45 constrained translating/rotating platforms.
-- F2: real radial spherical world, same generic systems.
-- F3: accepted pool geometry/content copied into this new project. JS drives
-  buoyancy, drag and bounded propulsion via the existing field query. The approved
-  `projects/fluid_demo` and its evidence are untouched.
-- WASD/controller + mouse/stick: project JS movement/look.
-- Space: project JS launch; in liquid, project JS propulsion.
-- Z: independent prefab motor with a separate scripted motion pattern.
-- R: scene reconstruction. Escape: authored pause menu.
-
-`Assets/scripts/controller.js` contains all movement rates, input mapping,
-acceleration/deceleration, launch and swimming decisions. The motor's C++ API has
-none of those gameplay states. Animation/ragdoll integration is deliberately
-limited to the independent architecture; no automatic animation, root motion,
-IK, ragdoll activation or active physical animation is added.
-
-The pool retains the documented coarse production-fluid limitations and 20 Hz
-liquid setting. This milestone does not improve its numerical/visual quality.
-
-## Human checklist
-
-1. Move, look and launch using keyboard/controller.
-2. Push into walls/corners; climb/descend the stairs.
-3. Compare the gentle and steep slopes.
-4. Ride translating/rotating platforms; leave/launch and inspect carry.
-5. Push the finite-mass box.
-6. Switch to radial gravity and move around the actual sphere.
-7. Spawn another motor and confirm independence.
-8. Switch to the pool, enter/swim/exit; Space supplies script propulsion.
-9. Reload and Play/Stop; inspect that no stale motor state remains.
-10. Repeat in the moved exported standalone package.
-
-Human interactive/visual acceptance is pending. Automated state checks are not
-human acceptance. Results and fingerprints: `docs/evidence/m49/`.
-
-## Candidate validation
-
-Clean Release build: zero warnings. All 92 production suites and 246 real async
-integration checks passed. M49: 32 motor + 39 application checks passed. Editor
-Play/Stop restored identical authored state. Standalone, scene transitions/reload
-and moved-package export smoke passed. Source fingerprints match the tested run.
-
-Final simple-floor batch cost (including ordinary physics): 1 / 10 / 100 motors
-= 0.030989 / 0.317179 / 3.195049 ms per step over 120 samples. Human interactive
-validation remains pending; headless runs cannot confirm mouse capture or feel.

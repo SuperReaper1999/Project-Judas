@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "scope": "Native Linux engine/editor/JudasJS SDK development baseline; no release or inferred human acceptance",
+  "qualified_code": "eb2123684e77494007a4452cee6bb0918f8b4eff",
+  "documentation_checkpoint": "be3bc61c22af4b2bc7b442d29bb168385419aaa1",
+  "native_build_id": "2.0.0-alpha.1-Experimental-eb21236-clean-6337fffb54e9",
+  "ctest": {
+    "passed": 209,
+    "total": 209,
+    "native_executable_identities": 195,
+    "seconds": 471.71
+  },
+  "tooling": {
+    "python_passed": 206,
+    "python_skipped": 3,
+    "skips": [
+      "JDK unavailable (two cases)",
+      "Ninja Multi-Config unavailable"
+    ],
+    "api_check": "passed"
+  },
+  "sdk": {
+    "source_checkout_hidden": true,
+    "desktop": "native NVIDIA",
+    "tools": 15,
+    "tool_operations": 39,
+    "operations": [
+      "create",
+      "author",
+      "undo",
+      "save",
+      "reopen",
+      "Play",
+      "Stop",
+      "export",
+      "relocate",
+      "cold restore"
+    ],
+    "ik_restored_ticks": 141,
+    "ik_actors": 16,
+    "ik_targets": 64,
+    "checksum_invariant": true
+  },
+  "ci": {
+    "engine": 44101521448,
+    "tooling": 44101521391,
+    "docs": 44101521437,
+    "ubuntu_windows": 44101575648,
+    "result": "success"
+  },
+  "platform_scope": {
+    "linux_desktop": "Kubuntu/Ubuntu26.04.1 x86-64 NVIDIA GTX970 580.178.04, real application workflows",
+    "ubuntu24": "hosted native/SDK authoring/relocation/API/GLIBC2.39 boundary, software GL",
+    "windows": "native MSVC SDK, selected contracts including full166-check material suite, loader inspection; no editor/GL/export or hardware qualification",
+    "android": "new snapshot not device-qualified; complete JDK/emulator/current phone absent",
+    "browser": "new snapshot not browser-qualified; current Emscripten toolchain absent"
+  },
+  "negative_results": [
+    {
+      "candidate": "79acc12468b294066cba1e4c1f06065d94fcf237",
+      "ctest_passed": 207,
+      "ctest_total": 209,
+      "failures": [
+        "cwd-relative cold continuation fixture",
+        "terrain preview image visibility, did not recur in three isolated repeats"
+      ],
+      "resolution": "engine-root path resolver and owned terrain image/depth test target; all assertions retained"
+    },
+    {
+      "run": 44098123366,
+      "failure": "MSVC no-throw material transfer static assertion",
+      "resolution": "same ordered owner kernels when no-throw transfer unavailable; native material contract added and passed"
+    },
+    {
+      "observation": "Earlier one-slot GPU particle first-capture failure was not explained by an isolated pass",
+      "status": "no claimed universal repeatability fix; retain the live regression and investigate a new reproduction"
+    },
+    {
+      "observation": "Incomplete78ms profiled frame",
+      "status": "unreproduced and unattributed; not replaced by the complete14.977ms trace"
+    }
+  ],
+  "known_limits": [
+    "animation/IK120FPS misses",
+    "33.142ms lean IK hitch",
+    "dense/severe vehicle and CCD costs",
+    "hardware peripherals and long-soak/WAN qualification gaps"
+  ],
+  "evidence_policy": "Concise support-decision receipts retained; superseded reports, raw captures and prototypes are in matching Git revisions, not an active archive."
+}

@@ -42,7 +42,7 @@ false. Includes default to all, excludes to none; all required tags must match,
 any excluded tag rejects. Unknown names throw. Query masks are independent of
 physical body collision masks. Ignored missing bodies are skipped safely.
 
-## Batched nearest casts (M69)
+## Batched nearest casts
 
 `raycastMany`, `sphereCastMany` and `capsuleCastMany` cross the JS/native bridge
 **once per accepted batch**. Native code validates all requests, prepares the
@@ -165,7 +165,7 @@ Exit retains historical contact observations, not a new geometric query.
 
 One event per body pair/phase, deterministic body-handle ordering, then ordinary
 recipient A/B and authored slots followed by opted-in articulation owners.
-Sensors share normal geometry/M39 physical filtering but
+Sensors share normal geometry/classification physical filtering but
 produce no response; overlaps are discrete endpoint observations, not continuous
 trigger trajectories. Disabled/destroyed recipients are rechecked; destroyed `other`
 may still be an Entity wrapper with `valid=false`. Check validity before use.
@@ -183,7 +183,7 @@ Toggling the subscription generates no synthetic enter/exit callbacks.
 Motors now participate through massless query capsules and coalesced sweep/support
 observations; endpoint sensor overlap is discrete and supplies no solved impulse. JS decides game meaning.
 
-## Gravity, physical materials and runtime joint configuration (M65)
+## Gravity, physical materials and runtime joint configuration
 
 `physics.gravity(position) → Vec3` samples acceleration (m/s²) using the normal
 position-based gravity resolver, including overriding zones, uniform and radial
@@ -205,9 +205,9 @@ optional Entity/null (world anchor); anchorA/B Vec3, frameA/B quaternion; enable
 limits, lower, upper, motor, speed, maxForce, spring, rest, stiffness, damping.
 Creation accepts owner references, not raw handles. AnchorA is body-local; body-side
 B is body-local, world-side B is **owner-local**, composed through owner transform.
-Fixed/ball translation uses metres. Existing M45 angular/slider units apply.
+Fixed/ball translation uses metres. Existing joint angular/slider units apply.
 Configuration retains participants and invalidates cached rows; create/destroy can
-replace them. Use fixedUpdate. Normal scene/prefab/M59/M61 references own lifetime.
+replace them. Use fixedUpdate. Normal scene/prefab/region/save-slot references own lifetime.
 
 Sleeping bodies retain geometry and queries. `entity.sleeping` reports current
 physical state (false without a physical body); force/impulse/torque and meaningful
@@ -279,7 +279,7 @@ intent with normal entity identities. Stop/reload restores authored intent.
 See [character](character.md), [lifecycle](lifecycle.md) and
 [copyable example](examples/gravity-selection.js).
 
-M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
+planetary-terrain coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
 
 Native sprite-game bodies, casts, pin/weld joints and domain boundaries: [2D physics](physics-2d.md).
 

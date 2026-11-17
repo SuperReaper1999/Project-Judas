@@ -32,7 +32,7 @@ the replacement; changing a launcher does not migrate or delete game content.
 Open the project with `"$SDK/judas_editor" "$PROJECT"`. See
 [First project](FIRST_PROJECT.md) and [Editor guide](EDITOR_GUIDE.md) for ordinary
 creation, importing, hierarchy, components, scripts, Play/Stop and export.
-[Editor V2](EDITOR_V2.md) covers workspaces, docked/floating panels and the
+[Editor V2](EDITOR_GUIDE.md) covers workspaces, docked/floating panels and the
 updated interaction model. Advanced tools remain available through the editor;
 the V2 interface does not replace the scene system or require a new game format.
 
@@ -81,7 +81,7 @@ For [native Terrain V2 landscapes](TERRAIN_V2.md), use source-owned navigation:
 the terrain worker prepares changed collision and affected navigation tiles
 together, then publishes the complete revision. A separate static bake that
 includes the editable landscape is rejected rather than left stale. See the
-[current qualification and limits](TERRAIN_V2_QUALIFICATION.md) and
+[current qualification and limits](DEVELOPMENT_READINESS.md) and
 [independent residency budgets](TERRAIN_V2_RESIDENCY.md). Runtime collision,
 particle coverage and fluid solid queries remain independent of visual LOD.
 
@@ -153,3 +153,12 @@ establish Windows, Android-device, browser or controller acceptance for every V2
 change. See the
 [support matrix](ALPHA_SUPPORT_MATRIX.md) and the individual V2 qualification
 records for the actual tested scope.
+
+## SDK versus source-checkout documentation
+
+Use installed tool paths from the SDK root. Commands beginning with `cmake`,
+`build/`, `scripts/` or source-test paths describe the matching source checkout,
+not hidden dependencies of an exported game. Native source, fixture, CI and
+branch-policy links require that checkout. The inventory explicitly distinguishes
+curated bundled projects from source-only animation/audio/browser examples.
+The public API and ordinary tools do not require those source-only projects.

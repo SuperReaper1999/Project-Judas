@@ -1,9 +1,5 @@
 # Terrain V2 residency
 
-This describes the native Terrain V2 paging implementation on Experimental. It
-is not a release announcement or human acceptance record. The final qualification
-record is [TERRAIN_V2_QUALIFICATION.md](TERRAIN_V2_QUALIFICATION.md).
-
 ## Independent responsibilities
 
 A terrain region owns small chunk descriptions, physical body identities, bounds
@@ -92,8 +88,7 @@ continuations still encode their source; native assets use identity references.
 `collisionPageBytes`, `collisionPageBudget`, `collisionPages`, `gpuPageBytes`,
 `gpuPageBudget`, `gpuPages`, the three `*Evictions` counters, `pagePrepareMs` and
 `worstPagePrepareMs`. Native Terrain V2 `bytes` includes estimated current CPU
-payload (samples, recipes, cooked geometry and navigation). Legacy bounded volume
-terrain retains its previous grid estimate. These counters are not whole-process
+payload (samples, recipes, cooked geometry and navigation). These counters are not whole-process
 RAM or total driver VRAM.
 
 `pagePrepareMs` is the most recent GPU-page preparation/upload duration, and
@@ -103,5 +98,5 @@ Run `judas_terrain_v2_game_benchmark PROJECT --traverse` only with the generated
 one-kilometre qualification fixture: it visits all 1,024 chunks three times and
 asserts the actual runtime camera. It is a diagnostic workload, not an FPS gate.
 
-See the final qualification record for measured costs, full commands, platform
-coverage and remaining limitations. Alpha's Advanced Fluids lock is unchanged.
+See [performance measurement](WHOLE_ENGINE_PERFORMANCE.md) and
+[the qualification matrix](DEVELOPMENT_READINESS.md) for supported boundaries.

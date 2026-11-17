@@ -1,4 +1,4 @@
-# M36 — Prefab assets, instances and overrides
+# Prefabs and overrides
 
 A `.judasprefab` is a normal `JudasScene 3` document with exactly one root,
 parent-local child transforms and ordinary components. Scene settings in the
@@ -57,7 +57,7 @@ terrain/fluid/atmosphere, vehicle/combustible, door/switch) remain scene-authore
 spawning a hierarchy containing them reports a capability error before creation.
 They are supported in placed scene instances, subject to existing singleton rules.
 Runtime camera/parent dependencies must admit a creation order; cyclic creation
-references fail safely. Streaming prefab files is outside M36: small authored
+references fail safely. Streaming prefab files is outside prefab: small authored
 prefab documents load synchronously at authoring/spawn boundaries.
 
 Parent transforms compose ordinary TRS: translation, normalized rotation and
@@ -76,19 +76,3 @@ unverifiable under the new contract and are rejected, never migrated or deleted.
 Runtime-created hierarchy definitions and state use ordinary created-entity
 records, not live prefab objects. Parent references/cycles are preflighted before
 applying saved deltas.
-
-## Demo and checks
-
-`judas assets/scenes/prefab_demo.judas`, or open that scene in `judas_editor`.
-Two blue-base/green-lamp assemblies share one prefab; the right base explicitly
-overrides its colour to yellow. A lamp cap demonstrates a second child level.
-
-Focused tests: `judas_prefab_tests` and `judas_prefab_application_tests`.
-The latter runs real async startup, GL rendering, fixed steps, spawning,
-destruction and shutdown. Automated output is not human visual acceptance.
-Results and commands: `docs/evidence/m36/`.
-
-Nested prefabs, variants, structural instance overrides, automatic merge of
-incompatible component changes and source-file undo are future work. An override
-that becomes invalid after an incompatible source edit produces a useful error;
-it is not silently retargeted to another child.

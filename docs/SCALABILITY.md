@@ -1,10 +1,4 @@
-# Scalability and content-pipeline contracts (accepted M68)
-
-M68 is accepted at `c042797c755df68b45e36aa917c4ca72818b9bcd`; its original
-starting checkpoint was `52828779993843d9c8b0060f5e30e49e61d0466f`.
-M67 human acceptance remains provisional/deferred. Automated checks here do not
-supply that acceptance. Measurements and exact commands are in
-[evidence/m68 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m68/REPORT.md).
+# Scalability and resource preparation
 
 ## Runtime work
 
@@ -46,7 +40,7 @@ owner thread. Workers never call OpenGL. The existing blocking tool/required
 physical-geometry boundaries remain explicit; normal async rendering does not wait.
 
 Driver buffer/texture calls, mipmap generation, filesystem calls and script callbacks
-are indivisible. They can exceed the soft target. M56 separates mesh geometry,
+are indivisible. They can exceed the soft target. profiler separates mesh geometry,
 texture texel upload and mipmap work. Streaming plus upload plus publication is the
 aggregate frame cost; separate targets must not be added up and called one budget.
 Resident cache eviction still preserves references/pins; retained world state is
@@ -54,7 +48,7 @@ not discarded to make byte counters smaller.
 
 ## Import and disposable caches
 
-M66 recipes, settings, identity, normalization and full cooked-asset validation remain
+model-import recipes, settings, identity, normalization and full cooked-asset validation remain
 unchanged. Unchanged CLI/build import verifies source/dependency contents, recipe,
 cooker revision and accepted output hash. A hash-paired receipt supplies validated
 provenance without decoding the product again. Missing/corrupt legacy receipts fall
@@ -80,7 +74,7 @@ Project settings support:
 - `exportAssetPolicy: "closure"`: selected scenes, project icon/world/localization,
   explicit `runtimeAssets` IDs, then transitive prefab/material/model/collision/
   deformable/UI dependencies. Runtime glTF/GLB compatibility remains self-contained;
-  approved external source buffers/images must be cooked by M66 into `.judasmodel`
+  approved external source buffers/images must be cooked by model-import into `.judasmodel`
   first. World-required region scenes must follow the existing scene policy.
 - `runtimeAssets`: explicit stable-ID roots for dynamic requests and save/retained-only
   resources. Their dependencies are gathered normally. The exporter does not guess
@@ -99,7 +93,7 @@ staging where supported, with copy fallback. Logical IDs/metadata and runtime mu
 instances remain independent. `du` physical bytes differ from a logical sum of file
 sizes; no lossy compression or archive representation change was introduced.
 
-The M61 project save-content fingerprint normalizes the new packaging-only policy
+The save-slot project save-content fingerprint normalizes the new packaging-only policy
 and root fields to their legacy defaults. Actual packaged files are still hashed.
 For excluded assets, the same dependency report retains ID/type/content hashes so
 pruning unused bytes does not change the original project identity. Those records
@@ -114,7 +108,7 @@ Do not remove resources merely because a package exceeds 200 MiB. Inspect the re
 
 ## Bounded authoring follow-through
 
-M67's shared editor/source/CLI model remains. Typed named loaders validate once at
+named-authoring's shared editor/source/CLI model remains. Typed named loaders validate once at
 the actual parse boundary; format conversion no longer repeats preceding validation.
 Accepted editor candidates move their already-owned prior scene into history instead
 of copying it again. One action/one undo, drag cancellation, 200 complete revisions,
@@ -122,19 +116,10 @@ prefab/reference/ID validation and external conflict handling remain. Identical
 accepted AuthoringDocument text is a no-op; different text is still normalized and
 validated. Whole-scene history still consumes memory proportional to retained content.
 
-## Reproduction and human review
+## Validation and measurement
 
-Run from the repository with a Release build and fresh output paths:
-
-```sh
-python3 scripts/m68_measure.py --output .cache/my-m68-capture --bin build --tracks runtime import export authoring resource
-build/judas_scalability_tests .cache/my-m68-structure
-build/judas_scalability_pipeline_tests .cache/my-m68-pipeline build/judas
-build/judas_resource_handoff_tests .cache/my-m68-gpu
-python3 scripts/m68_integration.py --output .cache/my-m68-integration
-```
-
-The professional import fixture follows its existing local-only policy. Missing
-original content is a missing fixture, not a synthetic substitute or a passing test.
-Heavy captures run serially; OS caches are not purged. Do not interpret a new process
-as a cold disk cache. Human GUI/visual/audio acceptance remains the operator's job.
+Use the native scalability/resource-handoff contracts in the current validation
+manifest and [matched whole-application tools](WHOLE_ENGINE_PERFORMANCE.md).
+Run heavy captures serially with matching executables, fresh owned output paths
+and explicit workload identities. A fresh process is not a cold OS disk cache.
+Private source assets are not replaced with synthetic substitutes to claim a pass.

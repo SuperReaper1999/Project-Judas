@@ -1,108 +1,76 @@
-# M48 — articulated physics as a pose producer
+# Ragdoll ownership and physical animation
 
-**M70 candidate extension:** shared multi-target IK and optional partial/full-active
-physical regions now extend the historical clip/pose/passive-ragdoll scope below.
-The older milestone statements remain their historical contracts. See
-[M70](MULTI_TARGET_IK.md) for current phases, authority and limitations, and the
-[JudasJS reference](judasjs/animation-ragdolls.md) for exact public interfaces.
-M61 already persists animation/articulation runtime state; M70 extends that
-ownership for physical modes and pending requests.
+A Ragdoll component maps imported skeleton keys to ordinary native rigid bodies
+and constraints. RuntimeWorld owns the articulation and its final pose contribution;
+the renderer consumes skin matrices and does not own physical bones. Mapping,
+physical regions and authority are separate from animation playback and IK.
 
+## Author the mapping
 
-**Status through M69:** M48 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+Add Animation and Ragdoll to an ordinary model entity. Choose explicit joint keys,
+parent mapping, shape, offset/orientation, mass, material and collision filters.
+The mapping is ordered parent-first, with one physical root; unmapped visual/helper
+nodes need no body. Boxes/spheres and supported passive fixed, hinge, ball and slider
+constraints reuse MK2. Do not infer anatomical axes or limits from imported names.
+The editor/import tools can fit explicit mappings; no automatic humanoid controller
+or arbitrary rig conversion is promised.
 
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+Named scene/prefab serialization and ordinary dependency/export paths preserve
+mapping configuration. Refer to [model import](MODEL_IMPORT.md),
+[IK configuration](MULTI_TARGET_IK.md) and [the exact API](judasjs/animation-ragdolls.md).
 
-A Ragdoll component is an ordered, parent-first mapping from imported skeleton
-joint hierarchy keys (or unique names) to ordinary runtime rigid bodies. There
-is exactly one mapped physical root; not every skeleton node needs a body.
-Supported shapes are boxes and spheres, with joint-local shape offset/orientation,
-mass, friction/restitution and ordinary project collision layer/mask. Each
-non-root mapping names a mapped skeleton ancestor and an M45 passive fixed,
-hinge, ball/socket or slider constraint. Hinge/slider limits retain M45 semantics;
-ball/socket does not acquire a new angular cone limiter in M48.
+## Explicit authority transitions
 
-## Authority and transitions
+`ragdoll.configurePhysical(settings)` declares physical regions/settings; it does
+not itself request active mode. `setMode` queues an authority request at the fixed
+boundary. Animation, partial, active and passive are distinct policies:
 
-`RuntimeWorld::EnterRagdoll` validates the entire mapping/scale before creation.
-It places bodies from the **current final resolved pose**, not bind pose. The
-recent two fixed-step world-pose observations provide linear and angular motion;
-without observations the entity's existing motion is inherited. A seek/teleport
-is not interpreted as a continuous physical trajectory. Uniform positive entity
-and mapped joint scales are supported and frozen for the activation. Shear,
-reflection and nonuniform mapped scale are rejected explicitly. A separate
-collider on the animated owner is unsupported; mapped bodies are its physical
-representation. Creation failure releases the partial articulation.
+- Animation uses the resolved clip/layer/IK reference.
+- Partial physical animation retains motor/root ownership while mapped dynamic
+  regions respond to real forces, contacts, inertia and bounded relative torques.
+- Active/full physical control requires an explicit motor handoff. Torque effort
+  can saturate and physical bodies can lag their targets.
+- Passive releases active effort while retaining physical momentum and contacts.
+  `effortWeight` is not `poseWeight`: a visual blend does not disable physics.
 
-Automatic anchors capture each child skeleton pivot in both currently placed
-body frames. Manual anchors are body-local authored values, scaled on entry.
-Constraint frames are explicitly authored body-local frames (X is hinge/slider
-axis), so limits retain a clear mechanical reference. Bodies and constraints
-use the normal PhysicsWorld solver, contacts, gravity, generation-aware lifetime
-and motion integration. No pose motor, fake force or post-step physics correction
-exists. Nonadjacent self collision remains enabled by default; each connection
-may suppress its parent pair. An explicit selfCollision=false suppresses all
-intra-articulation pairs. Suppression lives in the ordinary early physical pair
-filter, keyed by complete body generations and removed on destruction. Queries
-remain independent of physical pair suppression.
+Returning to animation/motor control requires a game-chosen collision-valid placement
+and explicit resume/fade policy. Refusal preserves physical authority. No implicit
+stand-up, natural get-up, contact selection or animation recovery is supplied.
+[Balance](BALANCE.md) is a separate bounded controller with its own request and
+support conditions, not a guarantee that an arbitrary articulation can stand.
 
-After the normal fixed step, mapped physical transforms convert through explicit
-shape offsets and the skeletal parent hierarchy into a validated M47 external
-contribution, `ragdollPhysics`, priority 1000. The same final pose and GPU skinning
-serve all cameras. The owner's reference **translation follows the physical root**;
-its reference orientation/scale stay fixed. Physical rotation is represented in
-the skeletal pose. Updating this collider-free reference never teleports the
-mapped bodies. There is no duplicate skeleton and no renderer-only physics path.
+Use the public reference's complete `setMode` placement/options schema. Existing
+`enter`/`leave` operations retain their explicit legacy *API form*, not a separate
+legacy simulator or old persistence system.
 
-Leaving captures the final physical pose, destroys the bodies/constraints, then
-fades the full `ragdollReturn` contribution to the ordinary resolved animation.
-Clip clocks continue underneath while active. The transition is visual recovery,
-not balance, standing up or collision-controlled character locomotion. A duration
-of zero is explicit immediate replacement. No active body is driven to animation.
+## Pose, bodies and events
 
-## Runtime API / lifecycle
+References/IK prepare before physics; articulation poses resolve from settled body
+frames afterward, preserving bind/root relations and explicit visual blending.
+Use `ragdoll.body(key)` for a fresh safe mapped body (or null); ordinary impulses,
+queries and filters apply. Presented joint/socket reads serve visuals, while
+physical policy reads authoritative body state. Event opt-in routes supported
+mapped contact observations to the owner through the existing event lifecycle.
 
-```js
-const r = world.entity('10').ragdoll;
-r.enter();
-if (r.active) r.body('Root/Elbow/Tip').applyImpulse({x: 3, y: 1, z: 0});
-r.leave(0.6);
-r.enabled = false;
-```
+Disabling/destroying a mapped body or losing/replacing the skeletal asset retires
+that articulation at its validated boundary. It does not silently bind old bodies
+to a new skeleton. Owner/hierarchy destruction, Stop and scene replacement release
+owned bodies and constraints. Generation checks prevent recycled slots aliasing
+an old mapping.
 
-`body(key)` returns the ordinary safe mapped entity, or null. Existing force,
-impulse, torque, query and filtering APIs apply. Collision events retain ordinary
-per-body semantics; they are not newly aggregated onto the collider-free owner.
-Destroying/disabling a mapped body invalidates the articulation at the next fixed
-pose boundary and releases its remaining bodies/constraints. Owner/hierarchy
-destruction, Stop, reset and scene replacement release everything. Complete
-body-generation validation prevents slot reuse from aliasing a prior mapping.
-Asset replacement/unavailability ends the old articulation rather than rebinding
-old physical bodies to a different skeleton.
+## Persistence and integration
 
-Mapped internal entities are transient owner resources, excluded from independent
-save deltas. M48 does not persist active articulation/animation mixer state; normal
-saves retain the owner's supported entity state and restore authored animation.
-Authored ragdoll mapping contributes `Judas.Ragdoll.1` under canonical fingerprint
-schema 5. Existing no-ragdoll baselines remain unchanged. Generic serialization,
-prefab overrides and M38 registered-asset export use the normal paths.
+Modern SaveService/WorldPersistence slots preserve supported active articulation,
+physical mode/settings/poses/velocities, motor relation and animation continuation.
+Internal transient bodies are durable resources of their owner, not independently
+saved gameplay entities. Derived palettes/status rebuild; previous contact events
+are not replayed as new gameplay. Retired pose-delta saves are not supported.
 
-Editor: add Animation and Ragdoll to an ordinary mesh entity. Configure mapped
-joint/parent names, shape/offset/material, filters and passive frames/limits in
-the inspector. No automatic humanoid generator or new controller exists.
+Ordinary compatible animation can suspend using retained region records; active
+articulations, pending transitions or cross-owner attachments can pin a region.
+Read the actual retention reason. Origin shifts translate the same physical owners,
+not a visual-only skeleton. Whole-scene reload is not a save load.
 
-## Combined demo / review
-
-`projects/ragdoll_demo/ragdoll_demo.judasproj` uses an original three-segment bar,
-with a uniform-scale Stretch variant. Orange/blue share one immutable asset.
-G crossfades; J toggles a tip mask; K toggles additive elbow; C changes speed;
-F toggles orange ragdoll; V toggles oblique blue ragdoll; H applies a real tip
-impulse; P spawns an independent prefab directly into ragdoll; Escape pauses.
-The M47-only `projects/pose_demo` remains a separate internal boundary.
-
-Full-body ragdoll is demonstrated. Partial active physical control, animation
-motors, recovery, IK and M49 work are absent. This is a skeletal/physics substrate,
-not a humanoid behavioural system. Human visual/physical acceptance is pending.
+Use the current [animation studio](../projects/animation_studio/README.md), native
+IK/physical-animation/save fixtures and [qualification matrix](DEVELOPMENT_READINESS.md)
+for exercised scope. Source-only examples are not all bundled in an installed SDK.

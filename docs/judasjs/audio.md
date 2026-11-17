@@ -1,6 +1,6 @@
 # Audio playback and acoustics
 
-Current audio API (extended in M60). Judas owns playback, spatial processing and resource lifetime; projects own clips, groups and reverb settings; JavaScript decides when and why they play. See [lifecycle](lifecycle.md), [entities](entities.md) and [world streaming](streaming.md).
+Current audio API (extended in streaming-audio). Judas owns playback, spatial processing and resource lifetime; projects own clips, groups and reverb settings; JavaScript decides when and why they play. See [lifecycle](lifecycle.md), [entities](entities.md) and [world streaming](streaming.md).
 
 ## Entity audio controls
 
@@ -72,11 +72,11 @@ The callback consumes prepared PCM and atomics, never runs JS/physics/file IO/de
 
 Voice removal detaches from the mixer graph (the pinned backend can wait for its current graph read), then retires the decoder/pages asynchronously on Judas jobs. Region unload never waits for decoder cleanup. Process shutdown may drain jobs after voices detach. This is not a claim that the whole backend is lock-free.
 
-Persistent-root voices retain one cursor across additive region trips. Ordinary suspended region emitters follow M59's restart-on-resume policy. Adopted emitters retain the existing voice; destroying their old region does not destroy them. World replacement/Play–Stop invalidates old entity handles and clears environment state. **Historical M60 persistence scope:** runtime decoder pointers, cursors and DSP tails were not save/fingerprint data. [M61 slots](saves.md) now preserve semantic persistent-voice cursors and control state using normal seek/prefill; decoder memory and DSP tails still clear. One-shot effects deliberately do not resume.
+Persistent-root voices retain one cursor across additive region trips. Ordinary suspended region emitters follow region's restart-on-resume policy. Adopted emitters retain the existing voice; destroying their old region does not destroy them. World replacement/Play–Stop invalidates old entity handles and clears environment state. **Historical streaming-audio persistence scope:** runtime decoder pointers, cursors and DSP tails were not save/fingerprint data. [save-slot slots](saves.md) now preserve semantic persistent-voice cursors and control state using normal seek/prefill; decoder memory and DSP tails still clear. One-shot effects deliberately do not resume.
 
 `audio.diagnostics` returns current voice/stream/PCM bytes, high-water PCM allocation, underruns, decoded frames, query count, pending retirements, processor count and maximum main-thread detach milliseconds (or null without audio service). These are workload diagnostics, not device latency or perceptual acceptance. [Executed example](examples/audio.js).
 
-M65 creation failures distinguish invalid clip, invalid settings, missing project
+authoring creation failures distinguish invalid clip, invalid settings, missing project
 audio group and exhausted buffered/streamed voice capacity. Capacity remains128
 voices /32 active streams, with bounded retirements. One emitter/entity remains a
 limit; these diagnostics do not add multi-emitter ownership.

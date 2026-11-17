@@ -5,8 +5,8 @@ predefined combat, hunger, personality, cover selection or social simulation.
 Developers define candidate actions/targets and sensed facts; native scoring
 selects a candidate. Ordinary project action callbacks perform the gameplay.
 No machine learning, model download or external service is involved.
-[Initial qualification](GAME_AI_QUALIFICATION.md) ·
-[Usability, sensing and reservation qualification](AI_USABILITY_QUALIFICATION.md).
+[Initial qualification](GAME_AI.md) ·
+[Usability, sensing and reservation qualification](GAME_AI.md).
 
 A tiny enemy can offer `patrol` and `hide`. A simulated person can offer meals,
 beds, work and conversations. Both use the same decisions, action lifecycle,

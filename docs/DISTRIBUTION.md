@@ -21,9 +21,9 @@ was published after final approval on 27 October 2026. See [versioning](VERSIONI
 Configure separate build directories, then build the shared inventory target:
 
 ```sh
-cmake -S . -B build/prealpha-Experimental -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
-cmake --build build/prealpha-Experimental --target judas_linux_sdk -j4
-python3 build/prealpha-Experimental/linux-sdk/tools/package_sdk.py verify build/prealpha-Experimental/linux-sdk
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
+cmake --build build --target judas_linux_sdk -j2
+python3 build/linux-sdk/tools/package_sdk.py verify build/linux-sdk
 ```
 
 For native Windows games exported **from Linux**, use the optional
@@ -46,8 +46,8 @@ It also requires the qualification host to identify as Ubuntu 24.04. This is a
 declared baseline with a mechanical gate; only a completed CI receipt establishes
 that a particular checkpoint passed. GPU/application checks remain separate.
 
-SDKs built on newer systems retain those systems' actual ABI requirements. The
-pass-1 Ubuntu 26.04 build requires glibc 2.43 and is **not** an Ubuntu 24.04 binary.
+SDKs built on newer systems retain those systems' actual ABI requirements. A
+host-native Ubuntu 26.04 build requires glibc 2.43 and is **not** an Ubuntu 24.04 binary.
 Nothing rewrites that requirement or claims universal Linux/AppImage portability.
 Use the optional [Ubuntu 24.04 baseline build](LINUX_BASELINE_BUILD.md) from a newer Linux host. It builds against the complete older development environment; it does not relabel newer binaries. Build from source on a compatible host if no qualified binary is available.
 
@@ -70,7 +70,7 @@ APK content/native-byte verification does not need the source checkout or JDK.
 
 [sdk-inventory.json](../packaging/sdk-inventory.json) is the single list used by
 CMake and the packager. It includes the runtime/editor/exporter; model, scene,
-navigation, liquid, environment, deformable, collision and terrain authoring;
+navigation, environment, deformable, collision and terrain authoring;
 mods; asset cooking; script checks; save evolution; and dedicated hosting.
 Historical harnesses and lab builders are not public SDK tools.
 

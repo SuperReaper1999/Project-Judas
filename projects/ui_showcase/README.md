@@ -37,4 +37,4 @@ focus and routed input. No game menu names occur in runtime C++.
 
 M96 human validation and physical Android/IME accessibility acceptance are pending.
 Native screen-reader adapters, multiline editing and complex variable-height list
-cells are not implemented. See [toolkit contracts](../../docs/M96_UI_TOOLKIT.md).
+cells are not implemented. See [toolkit contracts](../../docs/RUNTIME_UI.md).

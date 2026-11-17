@@ -1,8 +1,8 @@
-# Native physical constraint participants (Experimental)
+# Optional native material constraint participants
 
-This optional C++ interface supports development of the replacement pressure
-backend. **It does not enable Advanced Fluids**, add a retired backend, or add a
-JudasJS binding. Published Alpha packages retain their compiled fluid lock.
+This optional C++ participant interface is an experimental native extension, not
+a selected Grid Water backend or a JudasJS service. It does not enable a second
+rigid solver; Advanced Fluids has its separate project opt-in.
 
 Include `PhysicsConstraintBatch.h` alongside `PhysicsWorld.h`. Set
 `PhysicsWorld::VelocityCoupling::physicalBatch` to a participant that lives through
@@ -69,7 +69,7 @@ island or silently lowers physical quality. Those are resource limits, not a
 claim that every pressure solver scales to them. The existing profiler separately
 labels `Physics material constraint batch` only when this path is used.
 
-## Validation and remaining fluid work
+## Validation and integration boundary
 
 `tests/PhysicalConstraintBatchTests.cpp` exercises physical free/support/joint
 endpoints, rotated forcing, real sleeping owners, common-floor isolation,
@@ -82,5 +82,3 @@ This is not yet the application backend. In particular, the old translating-pist
 mesh silently loses body-boundary tags when actual native motion includes a tiny
 rotation. The reference now detects this and fails closed; general moving owned
 cut geometry must be completed before claiming that runtime case passes.
-
-Detailed measured outcomes and preserved failures: [native interface checkpoint (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ADVANCED_FLUID_NATIVE_INTERFACE.txt).

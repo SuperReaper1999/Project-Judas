@@ -1,7 +1,4 @@
-# M95 — animation production workflow
-
-Current optional Judas animation workflow, based on accepted M94. Linux automated
-validation and operator acceptance are separate. See [evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m95/REPORT.md).
+# Animation timeline, root motion and events
 
 ## Content → timeline → runtime
 
@@ -30,7 +27,7 @@ diagnostics. Pause to select it in the hierarchy; Stop to edit content.
 Opening/scrubbing/previewing never moves scene entities or emits gameplay events.
 The timeline is an event editor and clip inspector, not a skeletal keyframe DCC.
 Use Blender or another source tool to author bone animation. Retargeting remains
-in the existing [M74 workspace](ANIMATION_RETARGETING.md).
+in the existing [retargeting workspace](ANIMATION_RETARGETING.md).
 
 ## Event format and timing
 
@@ -91,7 +88,7 @@ consume its result immediately. Do not consume both paths for the same sample.
 
 The CharacterMotor recipe uses unit entity scale; normalize size/units at import.
 `advance` samples the clip/mixer clock and marker interval before motor motion;
-it does not promise a final world-space IK pose inside that callback. M70
+it does not promise a final world-space IK pose inside that callback. IK/physical-animation
 world-space references resolve after the pre-physics motor. Legacy world-space
 limbs resolve after the ordinary motor. These stages may recompose a zero-time
 pose without advancing clips or emitting markers again; the IK solve itself is
@@ -167,4 +164,4 @@ Deferred: morph-target animation, bone-key editing in the editor, state-machine
 or motion-matching tools, foot locking/stride warping, exact blended SE(3) root
 integration, automatic dynamic-body root authority, and sub-fixed-step event
 callbacks. Existing DCC/import/IK/ragdoll limits continue to apply. Windows and
-Android M95 functional/visual validation are outstanding.
+Android animation-workflow functional/visual validation are outstanding.

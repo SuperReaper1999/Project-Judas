@@ -1,6 +1,6 @@
 # Deformable
 
-Current deformation API (introduced in M62). Judas owns deformation and contact; project JavaScript chooses
+Current deformation API (introduced in deformable). Judas owns deformation and contact; project JavaScript chooses
 forces, attachments and game meaning. Obtain `entity.deformable`; it returns null
 until the normal immutable resource is ready, or if the component is absent.
 Failed/stale baked resources throw a diagnostic `TypeError`; they are not a successful empty simulation.
@@ -17,8 +17,8 @@ strain, named `groups` and per-attachment observations. These are snapshots, not
 boundary**, returning `{point, normal, distance, location}` or null. Coordinates
 are metres in the normal fixed-origin simulation frame. Direction is normalized.
 `location` is a checked generation/triangle/barycentric snapshot, not a node pointer.
-This query is separate from M44 rigid-body casts. Shape casts, CharacterMotor
-blocking and M42 deformable events are not implied.
+This query is separate from shape-query rigid-body casts. Shape casts, CharacterMotor
+blocking and collision-event deformable events are not implied.
 
 ## Fixed-update mutation
 
@@ -81,21 +81,21 @@ export default class Fabric {
 
 See [lifecycle](lifecycle.md), [physics](physics.md),
 [animation](animation-ragdolls.md), [saves](saves.md) and [streaming](streaming.md).
-M64 extends sampled rigid contact to cooked static meshes, convex hulls and
+collision-authoring extends sampled rigid contact to cooked static meshes, convex hulls and
 oriented compound children through the same authoritative geometry path. This
-does not add exact mesh/cloth CCD, motor blocking or deformable M42 events.
-See [M64 geometry coverage](../COLLISION_AUTHORING.md) and the
-[M62 implementation/limits](../DEFORMABLES.md) for the physical support envelope.
+does not add exact mesh/cloth CCD, motor blocking or deformable collision-event events.
+See [collision-authoring geometry coverage](../COLLISION_AUTHORING.md) and the
+[deformable implementation/limits](../DEFORMABLES.md) for the physical support envelope.
 
-## M63 fracture cooks
+## fracture cooks
 
 An optional partition uses this same resource/component. See [Fracture](fracture.md)
 for irreversible interfaces, rigid/deformable representation, interior materials,
 topology-aware picks, support release and the restrictions on reset/material/attach.
 
-## M80 elastic/plastic structural solids
+## elastic/plastic structural solids
 
-[M80 bending](../BENDING.md) reuses this API for physically deforming
+[bending bending](../BENDING.md) reuses this API for physically deforming
 tetrahedral solids and optional soft section-based failure. Solid elastic strain
 uses `shearCompliance`; `volumeCompliance` controls volume preservation.
 `stretchCompliance`/`bendCompliance` remain cloth parameters. Yield/rate/capped
@@ -103,7 +103,7 @@ isochoric rest flow produces permanent deformation; the plastic cap is not a
 failure threshold. Optional cooked interface strength determines physical fracture.
 `state.maximumStrain` is a diagnostic strain magnitude, not accumulated damage.
 Current node geometry still supplies contact, rendering and `raycast`; no new
-M44 cast, CharacterMotor blocking or M42 soft-event contract is implied.
+shape-query cast, CharacterMotor blocking or collision-event soft-event contract is implied.
 
 Without finite attachment strengths, new saves use deformables participant 3 and versioned retained streaming state to
 preserve the original material basis independently of a moved owner/support frame.
@@ -114,13 +114,13 @@ Within a still-connected cohesive component, self-contact is suppressed;
 separated components use normal deformable surface contact. Extreme intact folds
 remain outside the supported envelope.
 
-## M83 material/body connection strength
+## material/body connection strength
 
 `attach` accepts optional `forceLimit` (N) and `torqueLimit` (N m), each zero or
 omitted for unlimited strength. Finite limits require an ordinary **dynamic body**
 target. World, bone, static and kinematic prescribed targets have no measured
 finite-mass reaction in this solver and reject finite strength. Rigid fracture
-families retain their M79 section-bond failure path; these limits apply to soft
+families retain their structure section-bond failure path; these limits apply to soft
 material/body patches, including cloth and tetrahedral solids.
 
 The actual signed impulses applied to the body are summed within each substep.
@@ -150,8 +150,8 @@ state uses `Judas.DeformableState.2`. Default unlimited content retains particip
 with unlimited historical strength; no absent strength history is invented.
 
 A [Powertrain connection prerequisite](powertrains.md#physical-connection-prerequisite)
-can require this patch and an intact M79 material path. The next mechanical fixed
-interval observes committed release/fracture. See [M83 model and bounds](../MECHANICAL_DAMAGE.md).
+can require this patch and an intact structure material path. The next mechanical fixed
+interval observes committed release/fracture. See [mechanical-damage model and bounds](../MECHANICAL_DAMAGE.md).
 
 ## V2 physical panels and failure events
 
@@ -171,4 +171,4 @@ its former structural carrier.
 Detailed structural exterior binding uses the ordinary immutable asset/resource
 pipeline and physical section palettes. Local panel meshes use independent coarse
 physical sheets. Neither path simulates every detailed render polygon.
-See [Deformables V2 implementation and qualification](../DEFORMABLES_V2_IMPLEMENTATION.md).
+See [Deformables V2 implementation and qualification](../DEFORMABLES.md).

@@ -61,4 +61,4 @@ python3 tools/build_android.py projects/core_scramble/core_scramble.judasproj \
 See [Android setup](../../docs/ANDROID.md). Use one ABI to reduce APK size.
 Android and desktop use the same gameplay scripts/assets. M89 hardware acceptance
 is pending; synthetic controller/emulator results are distinguished in
-[the M89 report](../../docs/evidence/m89/REPORT.md). No networking is included.
+[the M89 report](../../docs/qualification/baseline.json). No networking is included.

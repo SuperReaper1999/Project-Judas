@@ -13,8 +13,7 @@ are not used by `fluidSample`, buoyancy or quantity accounting. Author colour an
 opacity on the Fluid Volume; opacity controls absorption/tint, while interface
 reflections remain visible even in clear water.
 
-Grid Water V2 is optional physical water in **Experimental source builds**.
-Alpha's Advanced Fluid Dynamics lock remains effective. A project must explicitly
+Grid Water V2 is optional physical water in every V2 build channel. A project must explicitly
 enable **Project Settings → Experimental → Advanced Fluid Dynamics** before Play
 or export. Authoring a component does not bypass that policy.
 
@@ -88,9 +87,8 @@ actual occupancy for swimming, including Grid Water. Existing Basic Water
 swimming code can keep that query. Water quantity comes from the grid, not the
 visible mesh or cosmetic particles.
 
-Save slots include a versioned grid-water participant. Legacy world-state delta
-saves deliberately reject physical fluids; use the normal slot/save APIs. Missing
+Save slots include a versioned grid-water participant. Retired pose-only world-state deltas are not supported; use modern slot/save APIs. Missing
 grid state must reject loading rather than reseeding the initial fill.
 
 See the current water status for qualified shapes, gravity, streaming and platform
-boundaries. This reference does not constitute an Alpha unlock or human acceptance.
+boundaries. Project opt-in does not constitute device qualification or human acceptance.

@@ -1,6 +1,6 @@
-# M93 — cooked assets, mesh LOD and visual residency
+# Cooked assets, mesh LOD and visual residency
 
-Current Experimental asset contracts. These extend M92 rendering; old projects
+Current Experimental asset contracts. These extend rendering; old projects
 retain their existing behavior unless they explicitly opt into residency.
 Human review and non-Linux validation are separate from automated evidence.
 
@@ -84,7 +84,7 @@ LOD selection because its original error estimates are no longer valid.
 `render.lod-multiplier` is authorable, serialized and prefab-overridable. Default
 1 uses the cooked tolerance; 0 forces full geometry; larger values permit coarser
 geometry (range 0–32). This is rendering policy, not collision quality. No new
-JudasJS runtime binding is introduced by M93.
+JudasJS runtime binding is introduced by asset-cooking.
 
 ## Optional memory budget
 
@@ -127,8 +127,3 @@ remote asset service.
 Meshoptimizer v0.25 and stb_dxt provenance/licenses are in `third_party` and runtime
 notices. Standard sources are still supported; neither cooking nor the residency
 option is mandatory for small projects.
-
-See [The Packed Museum (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/asset_lab/README.md),
-[M93 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m93/REPORT.md), [model import](MODEL_IMPORT.md),
-[JudasJS rendering](judasjs/rendering.md) and
-[architecture](ARCHITECTURE.md).

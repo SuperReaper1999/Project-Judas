@@ -1,14 +1,9 @@
-# Using the Judas editor
+# Using the V2 editor
 
-This guide describes the current **Editor V2 development preview on Experimental**.
-Focused Linux editor/Scripting V2 qualification passed; combined human acceptance
-is pending. It is not a new published Alpha version or a main promotion. Use the guide
-included with an installed SDK when its editor predates this checkout.
-
-[Editor V2 architecture and review checklist](EDITOR_V2.md) ·
-[JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) ·
-[Named authoring](NAMED_AUTHORING.md). Earlier milestone/platform receipts keep
-their original scope; they do not qualify the new desktop windowing integration.
+The native Linux editor, engine and matching SDK share the qualified development
+workflow in [the readiness matrix](DEVELOPMENT_READINESS.md). Use documentation
+from your selected SDK. Automated desktop checks do not imply human or every-platform
+acceptance. Start with [your first project](FIRST_PROJECT.md).
 
 ## Making a 2D game
 
@@ -67,7 +62,7 @@ Linux native detached Scene/Game qualification passed its scoped automated check
 Windows V2 has not been rerun. Older Windows engine acceptance is not that evidence.
 Scene/Game render targets currently use one pixel per logical UI unit, including
 on HiDPI displays; native backing-pixel rendering at higher display scales is not
-implemented. See the [qualification receipt](EDITOR_V2_QUALIFICATION.md).
+implemented. See the [qualification receipt](DEVELOPMENT_READINESS.md).
 
 Layouts and colours are personal preferences, outside projects/exports. See
 [appearance and saved layouts](#personal-appearance-and-saved-layouts) for storage,
@@ -272,7 +267,7 @@ worker pool; GPU upload and drawing stay in Renderer on the editor thread.
 
 The game uses the resulting **ordinary named target clip** with the existing
 animation API. It needs no runtime profile, source rig or retargeting service.
-See [M74's transfer convention, bounds and limitations](ANIMATION_RETARGETING.md) and
+See [retargeting's transfer convention, bounds and limitations](ANIMATION_RETARGETING.md) and
 [model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
 
 For ordinary clip preview, scrubbing and event-track authoring, use
@@ -281,18 +276,7 @@ Retargeting and the runtime animation timeline are separate tools.
 
 ## Terrain authoring and live edits
 
-**Window → World → Terrain tools** opens shared-source height/radial terrain editing.
-Select a terrain and open its source, or create/cook a new source and instance.
-Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and
-Cook are separate. Draft graphics are not published collision. This authoring
-panel is unavailable during Play. See [M75 workflow, units and lifetime (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md).
-
-[Volumetric terrain (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M84_VOLUMETRIC_TERRAIN.md) uses its own source/cook workflow.
-Project JavaScript can separately request bounded live volume edits through
-[runtime terrain APIs](judasjs/terrain.md); that does not enable the authoring
-brush during Play or automatically save runtime changes into the authored source.
-
-## Lighting, visibility and materials (M72)
+## Lighting, visibility and materials
 
 In the ordinary object inspector, **Entity render visible** is a local render
 gate. Under Render, **Render component visible** and imported **Part visible**
@@ -313,21 +297,12 @@ the existing environment/background/exposure controls. Direction points toward
 the source in world coordinates. Exposure is independent of lighting. There is
 no native day/night clock; project scripts choose transitions.
 
-During Play, **Runtime render preview** exposes live visibility and whole/numeric/
-stable-part material targets, source selection, factors/maps and **Clear runtime
-material binding**. The scene settings runtime section includes sun/environment
-controls and **Reset runtime environment**. **Undo preview / Redo preview** use
-a separate bounded history; they do not change authored Ctrl+Z history or silently
-save runtime values to the scene. Start/Stop clears this preview history and Stop
-reconstructs authored state. See [exact API/reset contracts](judasjs/materials.md)
-and the [Render Control Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/render_control_lab/README.md).
-
 ## Play, stop and ship
 
 **F5 / Play** instantiates the authored scene. Running Play uses the normal
 full-window runtime view; authoring rails collapse. A paused game can expose
 runtime inspection and render previews. Project scripts own modern input, camera and pause meaning;
-historical projects can retain legacy controls. **Stop / F5** discards runtime
+projects keep their own script-defined controls. **Stop / F5** discards runtime
 state and returns to the authored scene.
 
 Select the startup scene and input bindings in **File → Project settings**.
@@ -339,20 +314,6 @@ The same window links to export settings for scene and asset inclusion. It shows
 **Build for browser…** only with the [experimental browser opt-in](BROWSER_SUPPORT.md).
 Save scenes, settings and source before exporting. JavaScript completion comes
 from [judas.d.ts](judas.d.ts), with setup in [practices](judasjs/practices.md).
-
-## Review the current editor
-
-1. Resize the editor and its dividers; confirm labels, scene and assets remain usable.
-2. Select, frame, pan, fly and transform objects; Undo/Redo the complete gesture.
-3. Edit a scene and try New/Open/close; Cancel preserves it, Save/Discard continue.
-4. Track a script, open its file and reference, attach it, then Play/Stop.
-5. Save, reopen and export a small project.
-
-Automated evidence is in [M71 editor polish (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m71/editor-polish/README.md)
-and [wheel/picking follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m71/editor-picking-zoom/README.md).
-Those receipts describe accepted M71 work. [M72 review](RUNTIME_RENDERING.md#human-review)
-adds lighting, hiding and material checks; current results are reported there.
-Offscreen checks do not establish physical desktop capture or human usability.
 
 ## Local mods and game kits
 
@@ -375,12 +336,6 @@ The notice distinguishes installed and available versions, includes release note
 and a browser download link, and provides the expected SHA-256. Nothing is
 installed automatically. Verify downloaded bytes with the packaged release tool
 before extraction; see [versioning and integrity](VERSIONING.md#updates).
-
-HTTPS requests are bounded and use optional system curl, without GitHub CLI or
-sign-in. Missing utilities, offline access, absent initial publication and malformed
-metadata are nonfatal. Public Git ancestry is no longer the update authority.
-The [original milestone-notice receipt (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/editor-milestone-notice/RESULTS.md)
-remains historical and does not describe this implementation.
 
 ## Project documents and first-project workflow
 
@@ -462,14 +417,6 @@ or select it and press **Open folder** to browse inside it. **Parent** goes up;
 enter a location and press Enter or **Go** to jump there. **Choose folder/file**
 confirms the selection; **Cancel** leaves the original path unchanged.
 
-Project Settings has its own dirty indicator and settings Undo/Redo. Scene undo
-still affects scenes. Closing/replacing a project offers Save/Discard/Cancel;
-failed/conflicting saves preserve live changes. Run/Export read saved content,
-with **Save all and continue / Use saved version / Cancel** when edits exist.
-Choosing the saved version does not discard the live edits. See
-[the first-project walkthrough](FIRST_PROJECT.md) and
-[current correction scope (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_FINAL_CORRECTIONS.md).
-
 ## Finding specialized tools
 
 Ordinary scene editing keeps specialist windows closed unless your saved layout
@@ -491,3 +438,79 @@ It is read-only and its visibility participates in saved layouts. Start/restore
 completion does not imply all project-specific resources are ready. Follow the
 [editable workflow lessons](DEVELOPER_WORKFLOWS.md) before treating those observations
 as gameplay contracts. Save loading/migration stays under project control.
+
+## Terrain preview ownership
+
+`TerrainV2PreviewRenderer` owns editor GPU presentation. It reuses `HeightLod`,
+stitched height grids and `RenderPages`, rather than adding a second terrain LOD
+algorithm. Ordinary heightfields use the runtime's two-pixel geometric error
+criterion. Volumetric/cave chunks and planetary chart meshes retain their real
+geometry. Brush interests pin affected heightfield chunks to full resolution.
+
+Picking and the shared authored mesh retain full-resolution geometry. Physics,
+runtime collision, saves and source brush operations are unchanged. Rendering
+reads an immutable worker-published source snapshot; it cannot combine new
+heights with an old hierarchy during asynchronous preparation. Excavation
+shares the unchanged height hierarchy; sculpting replaces it. Changed chunk
+bounds invalidate relevant GPU pages, including normal/stitching halos.
+
+The GPU page cache is bounded to 32 MiB, separately from the shared material
+textures and CPU authoring products. Editor pages borrow the current full-detail
+material weights, so painting does not leave stale colours or rebuild heights.
+Shutdown and project changes explicitly release owned pages.
+
+## Extending editor panels
+
+The shell reuses the existing document, engine host and runtime. It does not add
+a scene model, physics world or scripting engine per panel or platform window.
+
+| Owner | Responsibility |
+|---|---|
+| [EditorApplication](../src/editor/EditorApplication.cpp) | Startup/shutdown and frame coordination over explicit service owners. |
+| [EditorShell](../src/editor/EditorShell.cpp), [EditorWorkspace](../src/editor/EditorWorkspace.cpp) | Menus/toolbars/status, dock host, preset arrangement and platform-window presentation. |
+| [EditorPanelRegistry](../src/editor/EditorPanelRegistry.cpp), [EditorContext](../src/editor/EditorContext.h) | Setup-time panel descriptors, stable ordering, phase/visibility dispatch and frame-scoped borrowed services. |
+| [EditorDocument](../src/editor/EditorDocument.h) | Authored scene, selection, mutations and undo history. |
+| [EditorProjectWorkflow](../src/editor/EditorProjectWorkflow.cpp), [EditorRequestWorkflow](../src/editor/EditorRequestWorkflow.cpp), [EditorExportWorkflow](../src/editor/EditorExportWorkflow.cpp) | Project/document commands, file/confirmation state, request application and export. |
+| [EditorPlaySession](../src/editor/EditorPlaySession.cpp) | Start/Stop and exactly one RuntimeWorld/InteractivePlay session. |
+| [EditorSceneViewport](../src/editor/EditorSceneViewport.cpp), [EditorViewportPresenter](../src/editor/EditorViewportPresenter.cpp) | Camera, picking, gizmos and scene preview; Scene/Game images, render targets and native-window/input coordinate mapping. |
+| [HierarchyPanel](../src/editor/HierarchyPanel.cpp), [InspectorPanel](../src/editor/InspectorPanel.cpp) | Actual hierarchy and inspector bodies, with document actions through existing services. |
+| [AssetBrowserPanel](../src/editor/AssetBrowserPanel.cpp), [AssetListPanel](../src/editor/AssetListPanel.cpp), [AssetDetailsPanel](../src/editor/AssetDetailsPanel.cpp), [AssetImportTools](../src/editor/AssetImportTools.cpp) | Browser tabs, folder/list/grid interaction, selected-asset tools and import authoring. |
+| [AssetBrowserModel](../src/editor/AssetBrowserModel.cpp), [AssetPublicationWorkflow](../src/editor/AssetPublicationWorkflow.cpp), [EditorAssetPreview](../src/editor/EditorAssetPreview.cpp) | Deterministic folder/filter projection, safe completion publication and render-only resource previews. |
+| [EditorConsolePanel](../src/editor/EditorConsolePanel.cpp), scene settings, profiler, streaming and UI-asset modules | Their own panel bodies and local drafts; no private application dependency. |
+| [EditorToolPanels](../src/editor/EditorToolPanels.cpp), existing specialized editors | Registration/adaptation of scripting, terrain, AI, animation, sprite/tilemap and mod tools. |
+| [EditorPreferences](../src/editor/EditorPreferences.cpp) | Personal appearance, visibility and versioned named layouts. |
+
+`EditorContext` is a borrow for the current draw, not a retained global model.
+Panel drafts belong to their panel-owned state; shared selection, project
+services and persistent visibility remain explicit. Specialized tools keep their
+existing implementation when it is already cohesive. This is an incremental
+decomposition, not a claim that every component editor is now independent.
+
+Completed cook/import results are pumped by the authoring workflow independently
+of Asset Browser visibility. Publication remains Edit-only and rejects a result
+belonging to a previous project. Hiding a panel must not stall or prematurely
+publish asynchronous work.
+
+An existing panel's implementation belongs in its own source, not the application
+frame. A new panel supplies a registration function owning its descriptor and
+draw callback, then the appropriate setup catalogue calls that function.
+[Core panels](../src/editor/EditorCorePanels.cpp) and
+[specialized tools](../src/editor/EditorToolPanels.cpp) are separate catalogues.
+
+A descriptor declares a stable ID, visible title, Window-menu category, allowed
+phases and an optional visibility member. The registry rejects duplicate IDs,
+invalid descriptors, registration during drawing and recursive dispatch. The
+draw callback borrows `EditorContext`; it must not retain it or create a runtime.
+Use `BeginEditorPanel` for dock-aware windows, and pair every ImGui Begin with
+End even when its content is collapsed.
+
+The Console is the focused extension proof: its registration lives in its own
+module and is called from the core catalogue. Qualification must demonstrate
+that enabling it changes only the panel/catalogue wiring while the application
+frame remains byte-identical, and that the registered callback actually draws.
+Source locations alone are not that proof.
+
+Build registration and persistent preference visibility are still explicit.
+Adding a panel is not a dynamic plug-in loader or automatic schema generator;
+if it needs saved visibility, add the named preference member/mapping and tests.
+Do not add a panel-specific branch to the main frame or an unrelated panel.

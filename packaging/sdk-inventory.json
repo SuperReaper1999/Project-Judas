@@ -40,13 +40,9 @@
     "assets/branding/judas-startup.jsplash",
     "assets/branding/judas-startup.json",
     "assets/branding/judas-icon.png",
-    "docs/audits/platform-20261116/SOURCE_SELECTION.md",
-    "docs/audits/platform-20261116/RECONCILIATION.md",
-    "docs/audits/platform-20261116/evidence/source-selection-preservation.json",
-    "docs/audits/platform-20261116/evidence/reconciliation-performance.json",
-    "docs/audits/platform-20261116/evidence/reconciliation-qualification.json",
-    "docs/audits/platform-20261116/evidence/stage-e-rendering.json",
-    "docs/audits/platform-20261116/evidence/stage-e-qualification.json"
+    "docs/qualification/baseline.json",
+    "docs/qualification/rendering.json",
+    "docs/qualification/source-boundary.json"
   ],
   "directories": [
     "assets/fonts",

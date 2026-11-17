@@ -1,10 +1,10 @@
-# M79 — practical load-driven structures
+# Load-driven structures
 
 Current implementation on Experimental; **human validated by the operator on 2026-10-13**. This is an
-optional extension of M63 fracture, not a second structural physics solver.
+optional extension of fracture, not a second structural physics solver.
 
-[M80 bending](BENDING.md) extends this same section model to optional soft
-cohesive cells. The rigid-cell contracts and original M79 evidence below remain
+[bending](BENDING.md) extends this same section model to optional soft
+cohesive cells. The rigid-cell contracts and original evidence below remain
 unchanged; soft cells retain their actual deforming nodes rather than becoming
 rigid proxy bodies.
 
@@ -12,14 +12,14 @@ rigid proxy bodies.
 
 A normal `.judasdeform` solid partitions material into explicitly authored rigid
 cells and planar interfaces. Every cell is an ordinary PhysicsWorld body with
-its own collision box, material mass, inertia and motion. M45 fixed constraints
+its own collision box, material mass, inertia and motion. joint fixed constraints
 carry loads across intact interfaces. Losing a support changes those constraints;
 subsequent solves redistribute demand and may break more interfaces. No unsupported
 island detection, scripted collapse, spawned replacement debris or health counter
 is involved. The logical family owns lifetime, not an additional collider.
 
 In the editor, select a deformable entity, create/import a rigid fracture asset,
-and enable **Structural section stress (M79 opt-in)**. Edit family tensile/shear
+and enable **Structural section stress (structure opt-in)**. Edit family tensile/shear
 strength in Pa; compression is optional (0 disables crushing). Select an interface
 in **Interface preview** to set tension, shear and compression overrides. Zero
 inherits the family value. Geometry preview shows cells and interfaces. Strength
@@ -85,31 +85,7 @@ The existing save path retains broken connections, tombstones, supports, physica
 poses/motion and owned joint continuation. Saves do not heal or replay fracture
 callbacks. Destroying an owner cleans its bodies and constraints. Live region
 families explicitly pin their source region; this is retention, not streaming
-of freely moving rubble. Normal M38 export includes the cooked assets.
-
-## Lab and controls
-
-Open `projects/structural_lab/structural_lab.judasproj` in the editor or runtime.
-Three eight-cell bridges use the same 8 × 0.6 × 2 m geometry and 80 kg/m³ material
-(768 kg each), plus ordinary 20 kg contact loads:
-
-- A: two supports, 120 kPa tension;
-- B: two supports, 1 MPa tension;
-- C: A's strength with an extra middle support.
-
-An independently rotated fourth bridge has a matching oblique gravity region.
-Scene 2 uses the actual spatial RadicalGravity field, with that explicit uniform
-region taking precedence locally. It is not a rotated flat-scene physics branch.
-
-WASD/mouse move/look; Space launches; click applies a 500 N·s hit-point impulse;
-B toggles a 2000 kg-equivalent force in the sampled gravity direction (raised from 1000 kg, whose
-settled stress on A was about 84 kPa against its 120 kPa capacity: A only failed on a solver
-transient); R removes
-right anchors and actual right pedestals; H removes C's middle anchor/pedestal;
-P spawns an independent bridge prefab; F3 requests/releases the annex;
-1/2 uniform/radial scenes; F5/F8 save/load; F9 reload; Escape pause.
-G/T retain ordinary pickup/throw for tagged proof loads. The three comparisons
-show **different physical outcomes**, not a promise of an unbreakable strong bridge.
+of freely moving rubble. Normal export export includes the cooked assets.
 
 ## Limits
 
@@ -123,20 +99,3 @@ than guaranteeing survival. Ideal world pins have unlimited capacity. Cells use
 validated authored box proxies and uniform nodal material density. Liquid-bearing
 fracture and deformable-surface general casts remain the existing unsupported paths.
 No fluid, independent research or unrelated deferred CCD behaviour was changed.
-
-## Human checklist
-
-1. Observe all bridges supporting their orange proof loads at rest.
-2. Click a slab and watch actual impact motion and physical failure.
-3. Reload; toggle overload with B and compare the three structures.
-4. Reload; press R, watch successive failure/falling pieces, and compare A/B/C.
-5. Remove C's middle support with H; verify its load path changes.
-6. Walk on and collide with rubble; pick up/throw an orange proof load.
-7. Inspect/modify an interface strength in the editor, reload, compare the result.
-8. Test the rotated assembly and radial scene (2).
-9. Spawn a prefab, save/load after collapse, request/release the annex, reload/Stop.
-10. Run the exported standalone and repeat pause, loads and support loss.
-
-See [focused evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m79/RESULTS.md), [Fracture API](judasjs/fracture.md),
-[Deformables](judasjs/deformables.md), [physics](judasjs/physics.md),
-[saves](judasjs/saves.md), and [streaming](judasjs/streaming.md).

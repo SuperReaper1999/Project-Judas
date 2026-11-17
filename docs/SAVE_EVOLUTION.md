@@ -1,9 +1,4 @@
-# M98 — Save evolution
-
-Operator accepted on Linux in the combined M98/M99 review on 2026-10-17; see the
-[acceptance record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m98/HUMAN_VALIDATION.md). This extends modern
-`saves` slots, not legacy `.judasstate` deltas. [JudasJS reference](judasjs/saves.md)
-· [Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/save_evolution_lab/README.md).
+# Save compatibility, migration and recovery
 
 ## Identities and ownership
 
@@ -162,51 +157,3 @@ rejects mod-enabled projects; use their resolved in-game service. The tool is SD
 functionality and need not be shipped inside every game.
 
 ## Integration boundaries
-
-- Saves remain captured physical snapshots, not overlays of a new authored scene.
-  New authored props/components do not automatically appear in an old world.
-- Only active entity/script records are patchable. Retained region records, runtime
-  terrain density, constructed recipes and native regional state remain opaque
-  and byte-exact. Do not change their layouts/resources/scripts unless still compatible.
-  There is no promised automatic migration of unloaded region script schemas.
-- Stable world manifests/region IDs, unchanged region resources and runtime terrain
-  are exercised by the lab. Changed manifest topology and missing required resources
-  must pass existing validators or fail; they are not repaired speculatively.
-- There is no arbitrary native physical topology migration, missing-cache invention,
-  downgrade path or repair of historical M78 incomplete continuation snapshots.
-- Unknown participants are preserved, not discarded; the normal native reader still
-  rejects unsupported participants/schemas. A converter cannot authorize them.
-- Format 4 is forward-readable only by the new reader. Older Judas releases do not
-  understand it. Existing no-policy projects continue to write their old format.
-- Linux is acceptance; Windows/Android M98 validation is outstanding/nonblocking.
-  Cross-platform archive/storage implementations share policy semantics; that is
-  source integration, not a claim of tested devices.
-
-## Reproduction and human review
-
-```
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --target judas_save_evolution_tests judas_save_evolution_application_tests judas_save judas judas_editor judas_export -j4
-python3 scripts/m98_validation.py --output .cache/m98/my-validation
-```
-
-`tools/ConfigureSaveEvolutionLab.py` deliberately authors policies after lab content
-changes. It is not run by validation and must not be used to disguise a mismatched
-fixture. Preserve old content and source fixtures when evolving a real game.
-
-Human checklist (one composed workflow):
-
-1. Open lab **v1**, Play, collect salvage with C; dig/build and travel away/return.
-2. F6 writes `old-progress`; Stop. Open **v3**, Play. F8 refuses exact-only loading.
-3. F7 upgrades old progress through both steps. Verify salvage count, chapter,
-   renamed traveller/ground appearance and excavated terrain after returning.
-4. Build/throw physical props; confirm the restored collision/motor remain usable.
-5. F6 saves `upgraded-progress`; repeat a fresh process load using the public API.
-6. Open **failure** and F7: guard failure leaves the current world usable and old
-   slot intact. Open **incompatible** and F7: unapproved content is rejected.
-7. Inspect the recorded missing-mod fixture/diagnostic and separate-slot recovery
-   tool; verify originals remain byte-identical.
-8. Repeat with relocated standalone versions. Review Project settings policy UI.
-
-Evidence: [M98 report (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m98/REPORT.md). Automated source/binary fingerprints
-identify the exact tested candidate; human acceptance is separate.

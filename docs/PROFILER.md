@@ -1,9 +1,4 @@
-# Integrated performance profiler — M56
-
-Current CPU/GPU diagnostic facility based on M55 checkpoint
-`7b1e5ea1eab46456bead72b0dcdc7b7fdc9b36fd`. Timings are observations, never
-simulation inputs. Collection does not change quality, cadence, scheduling,
-physics, authored content or gameplay.
+# Profiling and GPU diagnostics
 
 ## Getting started
 
@@ -67,14 +62,10 @@ worker lanes, installation, pump/budget eviction and shutdown; shadows,
 secondary/main cameras, editor viewport/camera, culling/submission, particles, UI
 and liquid presentation.
 
-M54/M55 distinguish containers, paired transfers, detached parcels, solid geometry
-batch/**Solid excluded storage rebuild**, **Dynamic surface solve**, pressure/
-continuity attempts, body loading/submersion, surface mesh/upload and optical/
-water-boundary work. Storage-call count includes cheap cache hits; **cells rebaked**
-and aperture counts describe actual changed work. Cell/face/iteration counters
-sum executed solves in the frame, not an extra recount of all liquid topology.
-Useful resource/render/physics/navigation counts reuse existing observations.
-No per-contact/tetrahedron/glyph/draw timestamp queries are installed.
+Grid Water counters distinguish geometry preparation, physical transport,
+pressure, air accounting, coupling and visual reconstruction. They are separate
+from Basic Water and do not imply per-subsystem frame allowances.
+
 
 Audio backend callbacks are deliberately not instrumented: the collector has
 registration/clock machinery not certified for that real-time callback.
@@ -87,7 +78,7 @@ row counts. A large list normally submits only the visible rows.
 **Editor Play model preflight**, which counts the unique model archives checked
 in that request. The startup scope ends before the first rendered Play frame.
 
-### M87 physics stages and work counters
+### physics stages and work counters
 
 Physics now separates kinematic publication, predicted reach/wake, velocity
 integration, candidate generation, contact row preparation, contact-history
@@ -138,17 +129,9 @@ joined initial-contact phase. The normal batch limit is four contexts including
 the caller, with 256–16,384 eligible primitive pairs; fallback is serial. These
 measurements do not imply parallel event scheduling or contact/constraint solving.
 
-`JavaScript contact events` now surrounds the complete dispatch batch rather than
-emitting a scope for every considered body pair. Executed lifecycle/callback and
-script-asset attribution is retained. This reduces diagnostic event floods without
-omitting gameplay callbacks or changing their order. Inspect dropped/truncated
-records before interpreting any capture: the original overflowing live capture is
-preserved as a failure, alongside later zero-overflow captures in the
-[follow-up evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
-
 These diagnostics do not change solver iterations, physical thresholds, wake
-semantics or scheduling. The [M87 scaling report](PHYSICS_SCALING.md) explains
-the separate owner-thread allocation probe used by its benchmark; ordinary M56
+semantics or scheduling. The [physics-scaling scaling report](PHYSICS_SCALING.md) explains
+the separate owner-thread allocation probe used by its benchmark; ordinary profiler
 capture is not a general-purpose heap-allocation tracer.
 
 ## GPU and memory
@@ -192,22 +175,51 @@ Freeze affects diagnostics only. It does not synchronize/stop simulation workers
 See [JudasJS profiling](judasjs/profiling.md) and the
 [executed example](judasjs/examples/profiling.js). Public API remains two methods.
 
-Focused targets: `judas_profiler_tests`, `judas_profiler_script_tests`,
-`judas_profiler_application_tests`. The latter uses the actual application loop,
-Spring Range and M55 liquid project with identical input/120 fixed steps across
-interleaved off/on/UI cases. Bucket probe placement exercises normal opening
-exchange, carrying and pouring; it never writes liquid quantities. Offscreen GL
-software timings are diagnostic workload evidence, not desktop FPS certification.
-Candidate results and fingerprints are in `docs/evidence/m56/`.
+Focused profiler native/script/application contracts exercise actual integration;
+see the selected entries in `tools/validation/suites.json`. Whole-application
+measurements follow [the performance policy](WHOLE_ENGINE_PERFORMANCE.md).
 
-## Known limits
+## Native GPU diagnostics
 
-Bounded recent capture, not an exhaustive trace or allocator profiler. Worker
-records are published on completion; an open/long wait has no partial duration.
-Long labels are dropped rather than truncated into ambiguous identities. First
-use and history warmup may allocate snapshot storage; no zero-overhead claim.
-Data access/export/UI belongs to the main consumer thread. Frozen GPU arrivals
-are discarded. Process ID registrations survive repeated hosts. GPU pool capacity
-is bounded and driver memory is unknown. Per-instance script labels and audio
-callback timing are intentionally absent. Human responsiveness/UI acceptance is
-operator-owned.
+Opt in for a diagnostic run with JUDAS_GPU_DIAGNOSTICS=1, for example:
+
+  JUDAS_GPU_DIAGNOSTICS=1 JUDAS_WORLD_STATE=none ./build/judas project.judasproj
+
+The runtime and editor share the EngineHost implementation. Setting this variable
+installs a native KHR_debug callback when the existing GL context supports it.
+It does not request a debug context, force synchronous debug output, record every
+GL call, or add glFinish/per-draw glGetError calls. Default-off runs make no extra
+GL diagnostic calls. Android/browser builds report that this native callback is
+unavailable if the variable is explicitly enabled; their backends are unchanged.
+
+Output goes to stderr with a [GPU] prefix:
+- Startup vendor, renderer, version and context flags.
+- High/medium-severity and API-error messages, including source/type/severity/id.
+- Performance notices and notification messages are filtered out.
+- Output is capped at256 messages per process and1024 payload bytes per message;
+  one suppression marker announces reaching the cap. A new process resets it.
+- Where robustness extensions expose a reset query, the existing resource-pump
+  boundary checks it once and reports changed nonzero reset status. The startup
+  line records the context's reset-notification strategy. A non-robust or
+  no-notification context cannot be assumed to report driver resets reliably.
+
+Callbacks are asynchronous and never dereference the host. They retain only an
+opaque integer context tag, so late driver callback execution cannot access freed
+host state. The callback is detached before context destruction. Resource and
+renderer teardown remain within the callback's logging window.
+
+This is evidence collection, not a crash fix or a promise of an exact failing GL
+call. Drivers may omit diagnostics from ordinary non-debug contexts, catastrophic
+GPU failures may prevent delivery, and enabling diagnostics can still affect
+timing. Preserve the OS/driver journal and coredump alongside application stderr.
+For a user service, journalctl --user -u SERVICE retains the application's stderr;
+the kernel journal may independently record NVIDIA Xid or reset events.
+
+Focused native controls are in tests/GpuDiagnosticsTests.cpp. Run separate
+processes with off, on, and optionally flood arguments. The positive controls
+inject synthetic debug messages (id778901), intentionally call one invalid GL
+enum, exercise resource pumping/frames, and close/reopen a default host. Noise
+markers778902/778903 must not appear in callback output. The flood control emits
+270 synthetic messages to verify the cap. These deliberate messages are test
+inputs, not genuine driver or engine failures. Unsupported KHR_debug returns77
+instead of pretending to test the callback.

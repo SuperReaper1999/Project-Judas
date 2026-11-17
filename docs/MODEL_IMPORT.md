@@ -1,20 +1,10 @@
 # Model import and reliable reimport
 
-Introduced against M66 starting checkpoint
-`3e5147a4ed97102200da91b4181c97b2a98942ba`. The accepted content contract remains.
-accepted M68 cache/readiness changes are described in [Scalability](SCALABILITY.md).
-Judas normalizes content; scripts decide what the content means.
-[Animation](ANIMATION.md) · [Materials](MATERIALS.md) · [Collision](COLLISION_AUTHORING.md)
-· [JudasJS](JUDASJS.md) · [M66 results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m66/REPORT.md)
-· [Editor/import-time retargeting (M74)](ANIMATION_RETARGETING.md)
-
 ## Import, inspect, place
 
-**Clean checkouts:** the import lab's scene uses the original character, which is
-local-only (see [Import lab and original assets](#import-lab-and-original-assets)).
-Without those files the lab scene fails to build (`unknown asset id`), and so does the
-[imported-model example](judasjs/examples/imported-model.js). The workflow below still
-applies to your own sources and the CC0 fixtures in `tests/fixtures/m66`.
+Use your own licensed source model or the checked-in animation/IK source fixtures.
+The imported-model script requires the clip names its source requests; there is no
+private original model or retired import-lab project bundled with the SDK.
 
 Open your project and choose **File → Import assets…**. Pick an FBX, glTF, GLB or
 OBJ file and review the cooked destination inside Assets, such as
@@ -68,7 +58,7 @@ original files use `mixamo.com`. An invalid choice reports available takes. Reci
 clip entries select, rename, trim, loop and choose root policy. Keep all clips by
 omitting `clips`. No Blender/NLA merge is required.
 
-**Different compatible skeletons:** M74's [retargeting workspace](EDITOR_GUIDE.md#animation-retargeting)
+**Different compatible skeletons:** retargeting's [retargeting workspace](EDITOR_GUIDE.md#animation-retargeting)
 uses one reusable `Imports/*.judasretarget` correspondence/reference profile.
 The target recipe adds a `motions[]` entry with `retargetProfile`, source take
 and ordinary output clip name. This extends motion assembly, rather than adding
@@ -84,7 +74,7 @@ this transfer; ordinary importing/playback of STEP tracks remains supported.
 An already-extracted source motion track is explicitly rejected before cooking,
 so the author must choose a source retaining its original skeletal locomotion.
 The transferred operation then uses the existing preserve/in-place/extract root
-policy, not another root-motion system. See [M74](ANIMATION_RETARGETING.md) for the exact recipe,
+policy, not another root-motion system. See [retargeting](ANIMATION_RETARGETING.md) for the exact recipe,
 shared CLI, measured tolerances, invalidation and supported limits.
 
 ## Same CLI, same service
@@ -224,7 +214,7 @@ retaining affine render data does not authorize dynamic nonuniform collider scal
 
 ## Appearance and stable parts
 
-Imported material defaults retain supported M57 colour/data-map paths, scalar
+Imported material defaults retain supported material colour/data-map paths, scalar
 metal/roughness, normal, emission, opacity/cutout, double-sided and UV/sampler
 settings. FBX Phong/graph conversion is an approximation with warnings. Separate
 metal/rough maps are packed only with compatible UV transforms. Opacity combines
@@ -283,48 +273,29 @@ changed rig/asset bytes reject incompatible slots before replacing the world.
 Legacy fingerprint schema remains 5; nonempty authored hidden-parts fields are
 conditional so default legacy scenes retain their prior fingerprint.
 
-Snapshot streaming retires an ordinary animated region using the existing M61
+Snapshot streaming retires an ordinary animated region using the existing save-slot
 instance pose serializer (clip/mixer/layers/external/source/final poses). Revisit
 gets fresh generation-safe handles. The bounded retained record participates in
 modern saves: streaming participant version 3 only when animation snapshots exist;
 versions 1/2 remain supported. Active ragdolls and visual return transitions stay
 pinned until physics authority ends. No runtime FBX cook or streaming redesign.
 
-M38 exports cooked runtime assets and regular dependencies, not `Sources/`,
+export exports cooked runtime assets and regular dependencies, not `Sources/`,
 `Imports/`, caches or import tools. Player contains archive decoding, not ufbx.
 Moved, read-only packages use the normal writable save location. Authoring dependency
 licenses/provenance remain in `third_party`; runtime notices include the archive
 JSON library. Asset rights apply to source **and** cooked derivatives.
 
-## Import lab and original assets
+## Optional runtime cooking
 
-Original character: 65 meaningful source bones, 72 source hierarchy nodes, six
-retained parts, 109 mesh-specific skin palette entries; 73 runtime hierarchy nodes
-include one generic root-track helper. Approximately 1.801 metres tall. Push,
-Cruise, Walking, WalkingExtract and PushInPlace use the original separate files.
-No join, finger folding, bone deletion, external unit surgery, root stripping or
-NLA clip assembly. Manual choices are import settings, take names, root policy,
-material remaps and a physical subset.
+## Legacy material graphs and explicit dependency roles
 
-Raw/cooked original character and artist half-pipe stay local/ignored pending
-redistribution rights. CC0 analytic fixtures and sources are tracked. To assemble
-from lawful original files, use the normal panel/CLI; `scripts/m66_create_lab.py`
-only constructs this demonstration with the public CLI (no DCC conversion).
-The generated `scripts/m66_create_consumer.py` clone retains the accepted Three
-Games/reduced-rig tricks and adds a full-rig comparison beside Skate. Reduced rig
-trick poses are deliberately not name-retargeted to the original skeleton.
-
-Controls: **G** clips/crossfade, **J** arm mask, **K** additive spine, **I** IK,
-**F** ragdoll/return, **T** part, **P** prefab, **B** extracted motor intent,
-**U** stream load/retire/revisit, **F5** reload, **F6/F7** modern save/load,
-**Esc** pause, mouse + **WASD** separate inspection camera.
-
-## Optional runtime cooking (M93)
-
-Rigid imported models can additionally be cooked to `.judasmesh`, preserving
-material parts, source topology and embedded map roles while adding render-only
-LODs and compressed streams. Source import/reimport remains authoritative and
-separate. Animated assets continue through the normal import path; rigid cooking
-rejects them. Textures can use `.judastex` mip chains. See
-[asset cooking/residency contracts](ASSET_PIPELINE.md) and
-[The Packed Museum (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/asset_lab/README.md).
+The importer does not recreate arbitrary source shader graphs or infer that every
+scalar FBX Bump input is a tangent normal map. Inspect opacity/alpha mode, map roles
+and material slots in the ordinary preview. Author opaque rubber/body/interior,
+masked detail and translucent glass deliberately; texture alpha is not automatic
+proof that a material should blend. Explicit dependency remaps take precedence
+over embedded image data and participate in cooking/publication invalidation.
+Use an explicit replacement for a bounded image derivative; the decoder limit is
+not bypassed. Original downloaded files and their licences remain yours to manage.
+Private proof part-role recipes/launchers are not required public SDK content.

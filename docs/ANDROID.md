@@ -10,44 +10,12 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-This guide describes the current optional APK workflow. On 27 October 2026 the
-operator additionally confirmed making and playing multiple Judas Android games:
-Android support is human-verified working. Exact revisions/devices were not
-specified for that report; no fresh APK or emulator/device qualification was
-performed for the desktop Alpha package refresh. Controller and broad-device
-certification are not inferred. See [the Alpha support matrix](ALPHA_SUPPORT_MATRIX.md). Platform acceptance is
-build- and device-specific: M88 Breakwater and M99 phone-to-Linux networking
-have recorded phone reviews. M89 local multiplayer was accepted on desktop;
-Android multiplayer hardware testing was not inferred. These reviews do not
-certify all later engine changes or every desktop feature on Android. M99 used USB
-forwarding, not a demonstrated Wi-Fi/Internet deployment. See
-[M99 platform scope](NETWORKING.md), [current Pre-Alpha qualification](CURRENT_STATUS.md)
-and the original [M88 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/HUMAN_VALIDATION.md),
-[M89 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/HUMAN_VALIDATION.md) and
-[M99 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m99/HUMAN_VALIDATION.md) acceptance records.
-
-**M96 update:** the UI toolkit adds native editable fields, SDL IME/clipboard,
-scrolling and per-player focus through the shared runtime. The common M93 mesh
-codec link dependency now also reaches Android before its early CMake return.
-M96 arm64 compilation, development APK signature and 16 KiB alignment are checked;
-new keyboard/IME/touch interaction has not received device/emulator acceptance.
-Earlier Android hardware acceptance is not retroactively withdrawn. See the
-[UI contracts (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M96_UI_TOOLKIT.md) and [M96 results (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m96/REPORT.md).
-
 
 Android is an **optional runtime target**. Linux and Windows keep their existing
 build/export workflow and do not need an Android SDK. Android builds use the same
 C++ Application, RuntimeWorld, Judas-owned physics, QuickJS gameplay, resources,
 Unicode UI and miniaudio engine. SDL supplies the native Activity/window/device
 adapter; this is not a browser, remote desktop or streaming client.
-
-**Current scope:** Android 16 / API 36 target, minimum API 26, OpenGL ES 3,
-arm64-v8a phones/tablets and x86_64 emulators. Linux is the supported APK build
-host for this first toolchain. An editor on Android is not included. The operator
-[accepted Breakwater on their phone (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/HUMAN_VALIDATION.md) on
-16 October 2026. Tablet, broad vendor-driver, sustained thermal/battery, physical
-16 KiB and real-controller coverage remain outstanding. Emulator measurements
-remain separate from phone results in [M88 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m88/REPORT.md).
 
 ## Build and export
 
@@ -61,7 +29,7 @@ Studio/Gradle/npm are not required. Set `ANDROID_HOME` to your SDK and
   'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358'
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
 cmake --build build --target judas judas_export -j4
-python3 tools/build_android.py projects/breakwater/breakwater.judasproj \
+python3 tools/build_android.py /path/to/Project/breakwater.judasproj \
   --id org.projectjudas.breakwater --name Breakwater \
   --output .cache/android/Breakwater.apk
 ```
@@ -73,7 +41,7 @@ tools and ABI-specific native ICU libraries, preserving the existing Unicode
 implementation rather than linking Android's private ICU ABI. Caches are large
 and belong on disk, not a small RAM `/tmp` filesystem.
 
-The exporter validates/copies normal M38 project content, cross-compiles the native
+The exporter validates/copies normal export project content, cross-compiles the native
 runtime for both ABIs, compiles SDL/Judas Java bootstrap code, creates DEX/resources,
 strips staging copies of native libraries, aligns and signs an installable APK.
 `--shadows off` is the mobile default; `--shadows on` enables 512² maps.
@@ -85,7 +53,7 @@ read the **same ordinary project scripts/scenes/assets**.
 Default signing uses a local cached **development** key and a debuggable manifest.
 It is suitable for sideload testing, not publication. Never commit that key.
 The development preset derives its default app ID/name from the project filename
-and uses version name `development`; it no longer assigns every project the M88
+and uses version name `development`; it no longer assigns every project the touch-input
 Breakwater identity. Keep explicit app identity/version arguments when updating an
 existing installation.
 
@@ -145,7 +113,7 @@ failures are not evidence of phone-driver compatibility.
 
 For native logs, use `adb logcat -s Judas.Native SDL`. The bounded native stdout/
 stderr bridge retains existing script/resource/renderer diagnostics. To capture
-the existing M56 profiler, launch with `--ez judas.profile true`, play, then use
+the existing profiler profiler, launch with `--ez judas.profile true`, play, then use
 Exit Game for a clean native shutdown. A debug build allows:
 
 ```sh
@@ -157,11 +125,11 @@ measurements remain real. Emulator frame timings do not certify device performan
 
 ## Input, lifecycle and storage
 
-- Standard Android InputDevice gamepads use the existing M35 logical bindings.
+- Standard Android InputDevice gamepads use the existing input logical bindings.
   Projects still author controls; no built-in mobile gameplay controller is added.
   Bluetooth pairing is OS-owned. Raw Bluetooth HID features requiring extra
   permissions are not enabled by this manifest. Physical pad testing is pending.
-- [`input.touches` and `input.pointer`](judasjs/input.md#touch-and-pointer-snapshots-m88)
+- [`input.touches` and `input.pointer`](judasjs/input.md#touch-and-pointer-snapshots)
   expose bounded normalized snapshots. Primary touch also drives existing UI.
   Secondary contacts are independent, not duplicate UI clicks. Back becomes
   ordinary Escape/logical UI-back input; project JS decides menu behaviour.
@@ -181,7 +149,7 @@ measurements remain real. Emulator frame timings do not certify device performan
   is retried. This initial packaging path bounds content to 50,000 files / 1 GiB
   and temporarily needs space for current plus staging generations. Upgrades retire only engine-owned content generations. Project
   content remains filesystem-compatible; no external-storage permission is used.
-- M61 slots live separately under private `files/judas/games/<save-id>/Saves`.
+- save-slot slots live separately under private `files/judas/games/<save-id>/Saves`.
   They survive process death, rotation and same-key APK reinstall/update. Existing
   content-identity checks still apply; edits can make old saves incompatible.
   Uninstall/clear-data removes them. Backup/cloud sync is not enabled.
@@ -224,48 +192,13 @@ and [Android's 16 KB page-size requirements](https://developer.android.com/guide
 NDK r28c builds 16 KB-compatible ELF loads; the packager verifies APK 16 KB native
 alignment and signature. Physical 16 KB hardware validation remains separate.
 
-## Focused emulator reproduction
-
-The development APK permits normal `adb run-as` access. These tools target only
-an isolated Android emulator; they do not certify real touch/controller hardware:
-
-```sh
-python3 scripts/android/check_breakwater.py --adb "$ANDROID_HOME/platform-tools/adb" \
-  --apk .cache/android/Breakwater.apk --output .cache/android/cold-save
-python3 scripts/android/profile_game.py --adb "$ANDROID_HOME/platform-tools/adb" \
-  --shadows off --mode active --seconds 5 --output .cache/android/profile
-```
-
-The UI fixture expects a 720×1280 portrait AVD. Set that test device explicitly
-with `adb shell wm size 720x1280`, `adb shell wm density 240` and
-`adb shell wm user-rotation lock 0` if needed. The check resets only Breakwater's
-running round, writes its test save, cold-launches, reloads and compares real
-entity populations plus non-default score/lives. The profile retains M56's bounded
-120-frame history, excludes paused frames and reports fixed-step caps/discarded time.
-Use ready mode with shadows on/off for identical-content rendering comparisons.
-
-Build caches are locked per export transaction. Concurrent exports must wait or
-use separate caches. The game/APK is a generated deliverable; source, instructions
-and evidence are committed, SDK/build caches/signing keys are not.
-
 ## Local multiplayer
-
-[Core Scramble](../projects/core_scramble/README.md) uses the same public
-[local-player APIs](judasjs/local-multiplayer.md) and gameplay on desktop/Android.
-Touches are captured to non-overlapping normalized regions at contact down;
-primary-touch mouse emulation stays out of another player's physical-mouse route.
-Standard Android InputDevice gamepads route independently through SDL instances.
-Physical multi-keyboard/multi-mouse separation is not available through this SDL2
-adapter. Four touch players are best suited to a tablet. Broader touch-device and
-physical-controller qualification remains outstanding; retain the narrower
-[M89 acceptance (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/HUMAN_VALIDATION.md) and separate emulator/virtual
-input scope in [M89 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/REPORT.md).
 
 For repeated builds `--icu-host-tools /absolute/path/to/matching/icu-host-build`
 may reuse ICU 76.1's existing native data tools. The default still builds its own;
 SDK/ICU caches are developer artifacts, never packaged runtime dependencies.
 
-## Pre-Alpha artifact verification
+## APK verification
 
 The builder checks one complete JDK 17+ (`java`, `javac`, `keytool`) before
 configuring native code. An explicit `JAVA_HOME` is authoritative; an incomplete
@@ -337,15 +270,6 @@ size on every device. Desktop aspect tests are described in
 [the application harness guide](TEST_HARNESS.md#window-size-and-rotation-layout-tests).
 
 ### Orientation acceptance for the Alpha v1.0.4 patch
-
-The operator confirms the rebuilt Hinge APK works on the phone following the
-`sensorLandscape` correction, in response to the both-landscape-directions and
-pause/resume checklist. Claude reports that APK was built from `d5f02448` with
-matching receipt/DEX/manifest. This is genuine operator acceptance; APK bytes
-and device identity were not independently collected in this follow-up.
-Automated evidence separately covers SDK manifest compilation, the actual SDL
-orientation callback, and Java compilation. Desktop aspect tests do not certify
-Android sensors or touch hardware. See [patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_4_NOTES.md).
 
 ### Development whole-frame benchmark APKs
 

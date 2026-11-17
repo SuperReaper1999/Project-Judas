@@ -1,33 +1,20 @@
-# M83 practical physical crash sections
+# Finite physical crash sections
 
-Current production replacement for the unsuccessful dense implicit-node experiment.
-The original source, numerical successes and genuine failures are preserved under
-`docs/evidence/m83-structural-corrective/architecture-reassessment/` and in the
-research artifact archive. They are not the current runtime representation.
-
-## Open the current lab
-
-`projects/coarse_crash_lab/coarse_crash_lab.judasproj`
-
-Use V for torque-driven autopilot in a case, T for the tour, W/S throttle,
-A/D steering, Space brake, Tab selection, P prefab spawn, J collision overlay,
-F3 streamed annex, F5/F8 save/load, R reload, Escape pause.
-1 normal road; 2 low impact; 3 medium; 4 high; 5 offset;
-6 weak/nominal/strong; 7 generic force-loaded cantilever; 8 oblique gravity.
-The four-car scenes are `Scenes/group.judas` (15 m/s) and
-`Scenes/group_high.judas` (25 m/s).
+Finite crash sections reuse native structural parts and physical material
+connections. This is current authored simulation, not the removed implicit-node
+prototype or a hidden undamaged chassis with cosmetic displacement.
 
 ## Representation and ownership
 
-The native M79 rigid material-partition path owns ordinary generation-safe bodies
-and M45 connections. Finite material connections are optional; existing hard
+The native structure rigid material-partition path owns ordinary generation-safe bodies
+and joint connections. Finite material connections are optional; existing hard
 fracture, bending, wheel and powertrain content keeps its defaults.
 
 A car has four front crush sections and one supported hollow cabin/rear floor:240 kg
 of partitioned front material plus a336 kg cabin/core. Roof and pillars have actual collision.
-Four independent M81 wheels act on ordinary bodies. Front wheels resolve stable
+Four independent wheel wheels act on ordinary bodies. Front wheels resolve stable
 partition-part keys through the existing owner, not cached native body slots.
-M82 power sources, couplings and brakes act through the actual wheel DOFs.
+powertrain power sources, couplings and brakes act through the actual wheel DOFs.
 
 The partition mesh follows the physical sections. Plastic rest strain changes their
 relative positions/orientations, collision and wheel frames. A detached section
@@ -84,7 +71,6 @@ invalid capacities, duplicate records and material use on a soft partition are r
 `judas_deformable_bake material-sections output x y z width height depth strengthFactor [plasticTravel]`
 creates a small generic regular partition with finite connections and named part
 groups. `partition output source` imports hand-authored geometry/materials.
-`tools/CreateCoarseCrashLab.py` reproduces current authored lab assets.
 The cantilever's `.source` is an editable non-game-specific example.
 The car authors0.20 m of accumulated plastic travel per connection (about17%
 of a1.2 m section length), identically in every speed case. Strength variants
@@ -146,7 +132,7 @@ section strain and permanent joint rest geometry. There is no arbitrary mesh
 cutting, sheet folding, fatigue, thermal damage or fluid-bearing fractured geometry.
 Authored section count, mass distribution and contact neighbourhood matter.
 The original accepted nodal/lumped part inertia approximation remains in use.
-Visual wheel meshes remain separate from M81's suspension/contact representation.
+Visual wheel meshes remain separate from wheel's suspension/contact representation.
 No Windows or human acceptance is implied by Linux checks.
 
 Measurements, exact checks, failures and fingerprints are in the final evidence

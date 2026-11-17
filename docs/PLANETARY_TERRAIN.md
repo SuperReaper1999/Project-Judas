@@ -1,9 +1,4 @@
-# M85 — precision-safe planetary terrain
-
-Linux operator acceptance is [recorded (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m85/HUMAN_VALIDATION.md). Windows remains untested. Linux measurements and exact
-candidate hashes are in `docs/evidence/m85/`. Existing `RadialTerrain` and small
-flat scenes retain their old paths. This adds an optional **Planet terrain**
-component, not an Earth-specific branch or a replacement global physics solver.
+# Planetary terrain and precision
 
 ## Representation and precision
 
@@ -44,7 +39,7 @@ No global Earth-sized float collision object is created.
   prepared; arbitrary disk/network streaming is not performed inside sampling.
   A violated height certificate fails explicitly.
 
-Planet descriptors belong to the root world; local M59 regions hold nearby content.
+Planet descriptors belong to the root world; local region regions hold nearby content.
 Translated region owners cannot relocate an absolute planet component.
 
 The canonical versioned descriptor is `planet.surface` in ordinary scene/prefab
@@ -91,7 +86,7 @@ No per-planet worker threads or unbounded generated-asset cache are introduced.
 
 Nearby contact tiles are fixed-resolution, ordinary cooked one-sided triangle
 meshes in PhysicsWorld. Their resolution does not change when the camera changes
-LOD. Actual mesh contacts, M44 casts and CharacterMotor sweeps share the existing
+LOD. Actual mesh contacts, shape-query casts and CharacterMotor sweeps share the existing
 solver/query path. No analytic helper floor or terrain-specific motor exists.
 Collision normals are geometric; gravity remains an independent field selection.
 
@@ -119,7 +114,7 @@ translate native motion/contact/broadphase history and world anchors, and retain
 velocities, sleep and generation-safe handles. Gravity regions are translated in
 existing precedence order; RadicalGravity is still ordinary Judas gravity.
 
-Origin-aware M59 retained records store their capture origin (archive version 7
+Origin-aware region retained records store their capture origin (archive version 7
 only when needed). Old versions 1..6 retain their original byte layout. Pending
 region transactions and unsupported opaque continuations explicitly block shifts.
 Absolute source placement and immutable preparation products are not mutated.
@@ -142,61 +137,9 @@ Changing the descriptor replaces the edit preview; Play creates independent stat
 The owner must remain identity; use the descriptor centre/rotation for placement.
 Editor camera coordinates remain local to the authored chart.
 
-Open `projects/planetary_terrain_lab/planetary_terrain_lab.judasproj`.
-The lab uses a 6,371,000 m radius, kilometre relief, 2.5 cm analytic elevation,
-a 12 cm authored local patch, ordinary RadicalGravity, a JS-driven motor, thrown
-rigid probes and an ordinary streamed local station. F1/F2/F3/F4 select flight,
-landing, face-edge visit and tour. The orbital view is a project-script free
-camera, **not** a simulated spacecraft or global physical actor. Physical actors
-are retired before leaving a chart and recreated only after collision is ready;
-visual traversal does not reload a scene. Ground movement itself remains real
-CharacterMotor motion, including crossing tile/face boundaries.
-
 M84 bounded volumes and M75 terrain can still be ordinary nearby streamed assets.
 This radial height representation cannot itself make caves/overhangs or edit
 volumetric holes through the sphere; no such integration is claimed.
-
-## Measured Linux candidate
-
-Release on Intel i7-4790 / NVIDIA GTX 970. The final 860-frame application
-sequence includes real initial landing, probe contact, two cold saves, orbit,
-descent, face-edge movement and reload; its clock is fixed at 1/60 s. Timings are
-CPU wall time, not GPU timer certification or an achieved display refresh promise.
-
-| Measurement | Result |
-| --- | ---: |
-| Earth tile-local float reconstruction error | 6.451e-8 m |
-| Maximum measured mixed-LOD/cube-face render seam | 1.318e-9 m |
-| Character support across 180 native steps | 180/180 |
-| Native moving collision-interest + motor/physics mean | 0.379 ms/step |
-| Four-tile cold collision cook/publication | 13.022 ms |
-| Application fixed-step p95 / max | 1.664 / 9.829 ms |
-| Whole application CPU frame p50 / p95 | 10.469 / 24.679 ms |
-| Render CPU p95 / settled-ground subset p95 | 20.662 / 16.901 ms |
-| Terrain preparation p95 | 19.233 ms |
-| Cold initial terrain preparation / whole-frame max | 253.159 / 281.527 ms |
-| Peak leaves / resident meshes / contact tiles | 384 / 500 / 34 |
-
-The inverse CPU frame costs are roughly 96 FPS at the median and 41 FPS at p95,
-excluding present wait. Rapid LOD transitions still cost more than a stationary
-view on this older host. The synchronous cold-cover preparation is a visible
-startup/loading hitch, not hidden inside an average. Ground selection reports a
-conservative 5.23 px error against the requested 2 px when the 384-leaf budget is
-exhausted. Increase a measured budget or relax the target explicitly; the engine
-does not silently certify the smaller error. No 60 Hz worst-frame guarantee is
-claimed.
-
-Focused validation: numerical geometry/source/LOD; native world collision, tags,
-authored reset, motor, cold saves; origin physics and streaming; 37 real graphical
-application assertions; 12 relevant existing regression executables; TypeScript
-5.9.3 and API drift. Per-vertex assertions are not separate engine capabilities.
-Editor, export and moved-package receipts are recorded separately in the evidence
-report. Windows M85 validation remains outstanding; Linux operator acceptance is recorded above.
-
-Generated colliders currently use default collision layer 0/all-layers and the
-planet owner's runtime tags. They are anonymous derived bodies, not individually
-authored terrain entities. A separate per-planet physical-material/filter editor
-is not part of this version.
 
 ## References
 

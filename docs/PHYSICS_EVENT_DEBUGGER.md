@@ -1,10 +1,5 @@
 # Physics-event debugger
 
-This opt-in developer tool inspects the existing MK2 collision scheduler and the
-normal fixed-step simulation. It does not introduce a second physics world,
-change solver quality or replace collision response. Qualification measurements
-and human acceptance must be recorded separately from this usage description.
-
 ## Launch and controls
 
 From an existing source build, launch an ordinary offline project:

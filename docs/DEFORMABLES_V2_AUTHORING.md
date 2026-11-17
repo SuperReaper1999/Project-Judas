@@ -1,10 +1,10 @@
 # Authoring Deformables V2
 
-**Model-fidelity follow-up:** [current causes, corrections and visual limits](DEFORMABLES_V2_MODEL_FIDELITY.md) supersedes the earlier intact-model material comparison. Stages 1–4 are human accepted at Experimental `69677c8c`.
+**Model-fidelity follow-up:** [current causes, corrections and visual limits](MODEL_IMPORT.md) supersedes the earlier intact-model material comparison. Stages 1–4 are human accepted at Experimental `69677c8c`.
 
 Stages 1–4 are implemented and human accepted on Experimental at `69677c8c`.
 The separately authorised post-acceptance performance pass awaits its own review. See the
-[qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for the exact automated
+[qualification handover](DEVELOPMENT_READINESS.md) for the exact automated
 scope and CI evidence. This is an unsupported V2 source preview, not a published
 SDK upgrade.
 
@@ -135,9 +135,8 @@ blocking by arbitrary soft sheets, soft-material buoyancy and per-render-polygon
 particle collisions are not implied by this milestone. Actual MK2 structural
 section geometry remains available to existing world integrations.
 
-See [the qualification handover](DEFORMABLES_V2_QUALIFICATION.md) for measured
-costs, platform evidence and review instructions, and [the implementation
-record](DEFORMABLES_V2_IMPLEMENTATION.md) for preserved checkpoint history.
+See [the numerical/ownership contract](DEFORMABLES.md) and
+[current qualification boundary](DEVELOPMENT_READINESS.md).
 
 
 ## Connected vehicle hulls
@@ -156,5 +155,5 @@ connected. Generic destructibles retain unrestricted fracture by default.
 The same operation is available through `judas_deformable_bake connected-hull
 OUTPUT SOURCE [bondKey ...]`. Without keys it selects all finite interfaces in the
 source. The output uses `JudasDeformable7`; author a new output file rather than
-overwriting a valuable source. See [bounded runtime and qualification](DEFORMABLES_V2_BOUNDED_RUNTIME.md)
+overwriting a valuable source. See [bounded runtime and qualification](DEFORMABLES.md)
 for scheduling, resource ownership, measured costs and current limits.

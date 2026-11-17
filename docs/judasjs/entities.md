@@ -24,7 +24,7 @@ can exceed safe JS integers. `new Entity(id)` also exists but does not test vali
 | `classification` | Detached `{renderLayer,collisionLayer,collisionMask}`. Layer IDs are numeric, 64-bit mask is a decimal string. No JS classification setters exist. |
 | `scriptState(slot)` | Detached bounded JSON copy of another slot's state; null when absent/faulted. Invalid slot/state throws. |
 | `velocity`, `angularVelocity` | Read actual dynamic/kinematic world COM m/s and world rad/s; writes require dynamic authority, missing/static body throws. Character velocity is instead on `.character`. |
-| `applyForce(v)`, `applyImpulse(v)`, `applyTorque(v)` | N, N·s, N·m; world-space, existing dynamic body required. Return undefined. `applyImpulseAtPoint(impulse, point)` applies world-space N·s at a world-space point in metres through the existing rigid-body operation (M52). It produces both linear and angular motion; stale/missing/static body throws, and invalid vectors throw before mutation. |
+| `applyForce(v)`, `applyImpulse(v)`, `applyTorque(v)` | N, N·s, N·m; world-space, existing dynamic body required. Return undefined. `applyImpulseAtPoint(impulse, point)` applies world-space N·s at a world-space point in metres through the existing rigid-body operation (presentation). It produces both linear and angular motion; stale/missing/static body throws, and invalid vectors throw before mutation. |
 | `audio`, `animation`, `ragdoll`, `character`, `camera` | Component facades/snapshots or null when component absent; see subsystem pages. Stale entity usually throws; `.character` specifically returns null. |
 | `wheel` | [Wheel](wheels.md) handle or null when absent/stale; `Wheel.valid` checks lifetime, state/settings read detached snapshots, and direct torque/brake/steering mutations belong in fixedUpdate. |
 | `powertrain` | [Powertrain](powertrains.md) handle or null when absent/stale; `valid` checks component lifetime. Detached settings/state describe physical shafts, sources and connections; named held commands and the enabled gate are fixedUpdate work. Retained stale-handle access other than `valid` throws ReferenceError. |
@@ -43,7 +43,7 @@ nonzero rotations normalize on write. Supplied position/scale must have all xyz
 components; scale is positive. Pose writes teleport, not collision-aware movement.
 Visual scale does not resize authored collider dimensions. Parent-local authoring
 is resolved before these world-space reads; scripts do not set a parent through this API.
-The [M70 batch-configuration tuple format](animation-ragdolls.md#configuration-tuples-versus-live-vector-objects)
+The [IK/physical-animation batch-configuration tuple format](animation-ragdolls.md#configuration-tuples-versus-live-vector-objects)
 is an explicit exception: its `PoseVector`/`PoseQuaternion` arrays are not a replacement
 for these ordinary object `Vec3`/`Quat` transform fields.
 Disabling a collider does not invalidate its entity/body identity: these dynamic-body
@@ -74,7 +74,7 @@ query configuration is an explicitly exposed exception, not a global setter API.
 An entity without a rigid body reports collision layer 0/mask "0"; this does not
 create a collider or describe its CharacterMotor query settings.
 
-## M51 rigid-body properties
+## rigid-body properties
 
 `entity.mass` is a readonly mass snapshot in kg. `entity.inertiaWorld` is a
 readonly world-space inertia tensor snapshot in kg m², with columns `x`, `y`, `z`
@@ -86,21 +86,17 @@ acceleration gives a world torque; it does not add a controller or holding polic
 
 `Entity.navigation`, `navigationObstacle`, `navigationLink` and `setNavigationEnabled` are described in [Navigation](navigation.md). They remain distinct from character movement and physical collision.
 
-## `Entity.liquid` (M54)
-
-Nullable generation-safe [LiquidVolume (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/judasjs/liquid.md) owner after resource loading and fixed-step registration. It exposes conserved quantity/capacity/material snapshots and paired transfers. It is separate from the legacy PBF `world.fluidSample` API.
-
-## `Entity.deformable` — M62
+## `Entity.deformable`
 
 Returns a [Deformable](deformables.md) handle for an authored component after its
 normal asynchronous resource publishes. Absent/loading returns null; failed or
 stale source bakes throw a diagnostic TypeError. Mutable nodes remain native engine
 state. Force/impulse/attachment/material/reset mutations belong in fixedUpdate.
-Deformable-local picking queries the current surface, separate from rigid M44 casts.
+Deformable-local picking queries the current surface, separate from rigid shape-query casts.
 
 ## Entity.collider
 
-M64 read-only detached snapshot, or null without a living physics body. Stale
+collision-authoring read-only detached snapshot, or null without a living physics body. Stale
 Entity reads throw `ReferenceError`. Fields: `type`, `key`, `position`,
 `rotation`, `halfExtents` (box, otherwise null), `radius` (sphere or capsule,
 otherwise null), `halfHeight` (capsule cylinder half-height, otherwise null), `asset` (cooked asset ID or null), `vertexCount`, `triangleCount`,
@@ -120,13 +116,13 @@ for (const child of collider?.children ?? []) {
 
 See [queries](physics.md#physicsclosestpoint) and [collision assets](../COLLISION_AUTHORING.md).
 
-## M65 references and physical/presentation consumers
+## references and physical/presentation consumers
 
 `setSocket(target,joint,offset={})` assigns a visual attachment and `clearSocket()`
 removes it; `setSocket(null)` or `setSocket(undefined)` also removes it. See
-[resolved pose/socket semantics](animation-ragdolls.md#resolved-joint-reads-visual-sockets-and-limb-ik-m65).
+[resolved pose/socket semantics](animation-ragdolls.md#resolved-joint-reads-visual-sockets-and-limb-ik).
 `physicalMaterial`, `setPhysicalMaterial` and read-only `sleeping` use
-[normal physical state](physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65). The material
+[normal physical state](physics.md#gravity-physical-materials-and-runtime-joint-configuration). The material
 getter returns null when this live entity has no available rigid body; check it
 before reading friction/restitution.
 
@@ -136,7 +132,7 @@ Entity wrappers. Existing primitives retain their meanings. References remap thr
 prefab/duplication/region/save paths; a missing target is an invalid safe wrapper,
 not a guessed entity. Never store raw body handles in authoring data.
 
-## Render visibility (M72)
+## Render visibility
 
 `entity.renderVisible` hides renderables owned by this entity. Its scope is local:
 it does not recursively hide children, disable the entity, move it, change scale
@@ -145,7 +141,7 @@ Render component. Both require booleans; stale owners throw `ReferenceError`, an
 reading/writing `rendererVisible` without a Render component throws `TypeError`.
 
 The component gate controls its primary Render surface. Other owned visuals such
-as particles, fire and conserved-liquid surfaces use the entity gate. The legacy
+as particles, fire and current water surfaces use the entity gate. The legacy
 M25 fluid surface is one globally merged mesh without individual volume ownership;
 these switches do not invent per-volume granularity or alter accepted fluid ownership.
 
@@ -161,14 +157,14 @@ running while render-hidden. Editor hierarchy/inspector selection remains availa
 to find and restore an object; editor overlays are distinct from world geometry.
 Authored visibility uses normal scene/prefab/undo paths. Play/Stop and reload restore
 authored values; modern slots and region retention preserve supported live gates.
-See [M72 ownership and limits](../RUNTIME_RENDERING.md).
+See [runtime-rendering ownership and limits](../RUNTIME_RENDERING.md).
 
 ## `Entity.modelParts` and `Entity.setPartVisible(identity, visible)`
 
 `modelParts` returns a detached array of `{identity,materialSlot,triangles,visible}`
 for a ready rendered model, otherwise null. Identity is the cooked stable part key;
 `materialSlot` selects the existing per-instance `entity.material(slot)` facade;
-M72 also accepts the stable `identity` itself as a material target. `visible`
+runtime-rendering also accepts the stable `identity` itself as a material target. `visible`
 reports this part's own flag, not the effective entity/component gate combination.
 `setPartVisible` changes this runtime instance only and returns false for a missing
 part/unready mesh. Stale entity handles throw through normal validity checks.
@@ -176,15 +172,15 @@ Hidden parts are omitted from ordinary camera, secondary-camera and shadow draws
 this does not disable physics or remove skeleton joints. Editor assignments serialize
 as render hidden-part keys. Stop restores authored visibility.
 
-## world.spawnPrefab construction options (M67)
+## world.spawnPrefab construction options
 
 `world.spawnPrefab(asset, transform={}, options={})` keeps ordinary spawn behaviour when options are absent. Options accept only `velocity`, `angularVelocity` and `scripts`. Initial velocity is world-space m/s and angular velocity is world-space rad/s; both require a dynamic or kinematic root body. Kinematic initialization starts persistent prescribed velocity control. The whole hierarchy, resource/shape references and initialization are validated before any hierarchy member is created.
 
 `scripts` contains at most 256 unique `{source?,slot,properties?,state?}` records. `source` is a decimal source-prefab entity ID (omitted/0 selects the root); `slot` is its authored script slot ID. `properties` replaces that slot's authored property object and is checked against its existing exported schema. Use normal typed entity-reference values (`{entity:"ID"}`); the engine accepts only live published external entities or members of the new hierarchy. Construction state is bounded plain JSON (64 KiB per slot), passed as `context.initialState` to the constructor. There is no module-global pending map. Unknown/disabled/duplicate slots, stale refs and malformed data throw before publication.
 
-Construction data and body motion are applied before publication/first integration. The constructor sees final properties and initialState; `start` follows normal resource readiness/synchronization, before the instance's first script fixedUpdate. Physical integration uses the ordinary fixed-step boundary; spawning inside a fixed callback can integrate the body before its next script synchronization, so do not assume its velocity remains numerically equal to the initial velocity in a later callback. Instances are independent. Capture values you need into your script's existing serialized state. On M61 restore, `context.restored` is true, `initialState` is null, existing saved properties/motion/script state are restored, and fresh initialization is not reapplied or start called twice. There is no arbitrary async JS constructor.
+Construction data and body motion are applied before publication/first integration. The constructor sees final properties and initialState; `start` follows normal resource readiness/synchronization, before the instance's first script fixedUpdate. Physical integration uses the ordinary fixed-step boundary; spawning inside a fixed callback can integrate the body before its next script synchronization, so do not assume its velocity remains numerically equal to the initial velocity in a later callback. Instances are independent. Capture values you need into your script's existing serialized state. On save-slot restore, `context.restored` is true, `initialState` is null, existing saved properties/motion/script state are restored, and fresh initialization is not reapplied or start called twice. There is no arbitrary async JS constructor.
 
-## Kinematic motion (M71)
+## Kinematic motion
 
 `Entity.motionType` reads `"static"`, `"dynamic"`, `"kinematic"`, or null without a
 live rigid body. Static authority holds placement; dynamic authority integrates
@@ -222,7 +218,7 @@ cannot be issued during `presentationUpdate`; issue repeatable intent from
 |---|---|
 | JS `fixedUpdate` | Script publishes bounded intent. Transform/actual velocity reads still show the previous resolved physics interval; command readback shows the latest queued request. |
 | `PhysicsWorld::Step` starts | Physics accepts the latest command, constructs prescribed motion and uses the existing motion ledger, broadphase and continuous contact processing. |
-| Physics contacts and ordinary motor resolution | Dynamic bodies receive impulses; prescribed bodies retain commanded trajectories. Normal motors consume the resolved support interval through existing support history. M70 motors running before physics retain their established preceding-interval support contract. |
+| Physics contacts and ordinary motor resolution | Dynamic bodies receive impulses; prescribed bodies retain commanded trajectories. Normal motors consume the resolved support interval through existing support history. IK/physical-animation motors running before physics retain their established preceding-interval support contract. |
 | Authoritative state and events | Physics owns actual pose/COM/angular velocity; owner identities and existing filtered contact callbacks remain unchanged. |
 | Presentation | Existing moving-body interpolation reads previous/current fixed poses. It creates no physical motion or collision history. |
 
@@ -236,7 +232,7 @@ Masks, sensors, enable state and tags retain their ordinary meanings.
 Authority changes reject managed/reduced bodies and actors whose other components
 own motion or fixed geometry: character motors, animation/ragdolls, historical
 vehicles/doors/switches, gravity/celestial sources, atmosphere/particle-fluid,
-baked liquid/nav surfaces, deformables and active joint participants. This keeps
+baked navigation surfaces, deformables and active joint participants. This keeps
 unsupported ownership changes explicit. A normal prop can change among all three
 modes with its existing body identity. Native runtime consumers use
 `RuntimeWorld::SetRuntimeMotionType` for the same definition, presentation and
@@ -275,15 +271,11 @@ fixedUpdate(dt) {
 // mover.setMotionType('dynamic', {preserveVelocity:true});
 ```
 
-The ordinary [kinematic lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/kinematic_lab) executes these public
-VM calls with dynamic crates and motor supports. Its retained evidence records
-measured bounds and validation separately from this API contract.
-
-## M85 absolute terrain and live origins
+## absolute terrain and live origins
 
 See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.
 
-M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
+planetary-terrain coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
 
 ## Entity.light / Entity.setLight(settings)
 

@@ -1,8 +1,4 @@
-# M73 — Judas learns to react
-
-Candidate based on `f1609af0dac863257a0f200cb74ea8a504f9e644`. Uncommitted;
-Linux/Windows execution and operator review are recorded separately in evidence.
-M72 Linux human acceptance and outstanding Windows hardware acceptance are retained.
+# Signals and lifecycle-safe events
 
 ## Ownership and scheduler design
 
@@ -60,18 +56,13 @@ bounded by the same combined capacities.
 
 ## Save boundary and limits
 
-Signals are transient. M61 save capture neither flushes queues nor persists tokens,
+Signals are transient. save-slot save capture neither flushes queues nor persists tokens,
 subscriptions, payloads or delivery cursors. `state`/session store game facts;
 `start` and `restore` register via a shared helper without resetting restored facts.
 Fresh worlds/processes have empty queues. Required intent must be stored explicitly;
 accepted undelivered signals are not durable. No save schema or participant changes.
 No cross-world/project/process/network routing, wildcard channels, schema assets,
 request/reply or automatic rebroadcast of engine observations.
-
-Judas owns bounded routing and lifetime. Project JS owns names, payload meaning,
-responses and incremental adoption. Existing projects need not use this primitive.
-See [reference](judasjs/signals.md), [lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/signals_lab/README.md) and
-`docs/evidence/m73/` for executed checks and final source identity.
 
 Showcase work is separately preserved in ignored `/video_work/`. Its previous
 `.cache/judas-promo` path remains a compatibility symlink; the user's Videos delivery

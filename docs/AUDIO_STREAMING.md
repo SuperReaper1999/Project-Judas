@@ -1,10 +1,8 @@
-# M60 — Streaming audio and environmental acoustics
+# Streaming audio and environmental acoustics
 
-Starting checkpoint: `277e67d2b0811644b2122bae27a4301d6dd3c96b`.
-Candidate, uncommitted; auditory/gameplay acceptance belongs to the operator.
-
-Judas owns playback, spatial/DSP primitives and resource lifetime. Projects own
-sounds, routing and settings. JavaScript chooses their meaning and pause policy.
+The engine owns playback, spatial/DSP primitives and resource lifetime.
+Projects own sounds/routing/settings; scripts choose their meaning and pause policy.
+Physical output and backend qualification are separate from dummy-audio tests.
 
 ## Architecture and boundedness
 
@@ -33,7 +31,7 @@ mixer read; this is **not** a strict lock-free backend claim. Normal region remo
 first detaches then submits decoder/page cleanup asynchronously. It never waits on
 a decoder job. Shutdown drains detached streams before destroying the JobSystem.
 
-M59's composed identity worker formerly read entire registered files with a
+region's composed identity worker formerly read entire registered files with a
 128 MiB limit. It now uses 64 KiB incremental SHA-256, producing the same digest,
 with cooperative cancellation. This shared correction prevents long music being
 whole-file-loaded by unrelated identity work. Canonical fingerprint schema remains
@@ -96,66 +94,6 @@ one-shots. Stale entity handles use existing ReferenceError behaviour.
 
 Persistent root music keeps one voice/cursor across region requests. Local streams,
 queries and zones disappear on removal and retire safely. Adopted emitters keep
-voice identity; cancellation cannot resurrect removed sources. M59 suspension
+voice identity; cancellation cannot resurrect removed sources. region suspension
 still restarts region sounds on reconstruction; decoder/DSP snapshot suspension
 was not invented. Script destroy callbacks run while world audio is valid.
-
-## Demonstrations and human listening checklist
-
-Open `projects/audio_lab/audio_lab.judasproj`. WASD/mouse move/look, Esc controls,
-E toggles the physical hinged door, P Doppler, B actual effect bypass, T tone on/off,
-Space independent reverb impulse, R clean reload. The menu pauses/seeks music, toggles looping,
-changes group gain and pauses effects independently. Initial levels are modest.
-Pause music and stop the tone to isolate wall/reverb comparisons. Walk toward the
-left doorway to compare closed/open geometry; blue floor is hall, orange damped
-booth, outside dry.
-
-`projects/streamed_range/streamed_range.judasproj` retains existing game/locale/
-return-journey controls. Root music streams continuously, gallery ambience uses
-resident wall geometry, contrasting gallery zones select environments, and the
-ordinary carryable prop emits quiet sound. Shots/hits use independent buffered
-voices. JS menu policy pauses effects while leaving music running.
-
-1. Start music; pause/resume, seek, loop and adjust group gain.
-2. Hear the moving tone approach/pass/recede; compare P Doppler off/on.
-3. Walk behind the wall/door; open E and compare smooth obstruction.
-4. Enter both coloured spaces, Space impulse, compare B dry/wet and tails.
-5. Play across several galleries **and back**; music continues, local sounds retire,
-   and carry Q a sound-emitting prop beyond its original region.
-6. Pause, switch locale, resume, reload and Stop; no stuck controls/ghost sound.
-7. Inspect diagnostics and repeat in moved standalone.
-
-## Evidence and limits
-
-Focused numerical, real PCM, lifecycle, project and package evidence is under
-[docs/evidence/m60 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m60). Performance numbers there distinguish control,
-offline DSP, rendered frame work and actual device operation, not output latency.
-Headless waveform measurements and a brief device smoke establish mechanics;
-they do not constitute human listening acceptance.
-
-No universal gapless MP3 or sample-exact compressed seeking promise; decoder seeks have codec-dependent cost. Streamed MP3 deliberately avoids
-whole-file length scans; duration is unknown until natural decoded EOF, while
-WAV/FLAC use header lengths. No HRTF, multiple active listeners,
-material acoustics, portal graph, microphone, interactive music framework or audio
-VM callbacks. Abrupt control changes are smoothed where described, not sample-exact
-AV/network synchronization. Thin/grazing geometry and discontinuities below the
-motion threshold remain approximate. One shared environment tail cannot be muted
-independently per originating group. Current platform remains Linux desktop.
-
-## Focused checks from a fresh checkout
-
-Build the normal Release targets. `tools/CreateAudioFixtures.py` uses local FFmpeg
-only for generated test recordings under the ignored cache (not a game/runtime
-requirement), then run:
-
-```sh
-python3 tools/CreateAudioFixtures.py .cache/m60-audio
-./build/judas_audio_acoustics_tests .cache/m60-audio
-./build/judas_audio_world_tests
-DISPLAY=:0 ./build/judas_audio_application_tests projects/audio_lab/audio_lab.judasproj .cache/m60-app
-```
-
-The API checker accepts a local TypeScript installation through `--typescript`;
-there is no permanent runtime/build dependency on Node/TypeScript. The once-only
-candidate runner preserves its output and refuses to overwrite the broad gate.
-See [final result adjudication (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m60/RESULTS.md); original failures remain.

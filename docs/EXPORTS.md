@@ -1,9 +1,4 @@
-# M38 — standalone project export
-
-**Status through M69:** M38 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+# Standalone project exports
 
 Linux desktop packages use the existing Release `judas` runtime, not the editor.
 Open a project in the editor, save scene edits, then **Project settings → Package
@@ -15,7 +10,7 @@ an actionable error. A sibling Release `judas` must be available.
 Command line, from an existing Release CMake build:
 
 ```
-./build/judas_export projects/export_demo/export_demo.judasproj /path/to/MyGame
+./build/judas_export /path/to/Project/export_demo.judasproj /path/to/MyGame
 /path/to/MyGame/judas
 ```
 
@@ -24,7 +19,7 @@ queries that executable's `--build-info` without starting the engine. It rejects
 Debug/unrecognized executables. Build with the normal CMake Release configuration;
 there is no separate compilation pipeline.
 
-accepted M68 adds an opt-in asset closure policy, explicit runtime roots and
+accepted adds an opt-in asset closure policy, explicit runtime roots and
 `DEPENDENCIES.json`; default conservative inclusion remains. See
 [Scalability](SCALABILITY.md#export-policy-and-inclusion-report).
 
@@ -96,22 +91,11 @@ Judas MIT license and the HUD font license ship alongside the runtime. Additiona
 asset redistribution permissions remain the project's responsibility.
 
 No cross-platform installers, archives, shipping editor, streaming/cooking or
-incremental patches. The accepted M36 runtime-spawn component subset is unchanged.
+incremental patches. The accepted prefab runtime-spawn component subset is unchanged.
 Human visual/listening acceptance is pending; automated image/voice state checks
 are not human perception.
 
-## Operator checklist
-
-1. Export `projects/export_demo/export_demo.judasproj` in Project settings.
-2. Move/copy the result outside the repository/build and launch `judas` from an
-   unrelated directory.
-3. Confirm the startup scene, walking/mouse look, audio, particles, camera screen
-   and colored prefab beacon appear/work.
-4. Quit normally.
-
-Proposed commit: `Add M38 standalone project export packaging`.
-
-## Optional local mods (M76 candidate)
+## Optional local mods
 
 A developer must opt in with a saved game-owned `modContract`. The ordinary exporter
 includes its explicitly published runtime references/replacement scenes in the same

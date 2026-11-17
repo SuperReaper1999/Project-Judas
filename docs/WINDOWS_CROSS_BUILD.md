@@ -32,7 +32,7 @@ python3 tools/build_windows_cross.py \
   --host-build build/linux-cross-host-Experimental \
   --jobs 4 \
   --bundle build/windows-runtime-001 \
-  --project projects/hearthworld/hearthworld.judasproj \
+  --project /path/to/Project/hearthworld.judasproj \
   --output build/Hearthworld-Windows-001
 ```
 
@@ -49,7 +49,7 @@ To reuse a bundle explicitly:
 
 ```sh
 python3 tools/export_windows.py \
-  --project projects/hearthworld/hearthworld.judasproj \
+  --project /path/to/Project/hearthworld.judasproj \
   --output build/Hearthworld-Windows-002 \
   --runtime-bundle build/windows-runtime-001 \
   --host-exporter build/linux-cross-host-Experimental/judas_export \
@@ -86,12 +86,6 @@ use the established [distribution instructions](DISTRIBUTION.md) to preserve the
 archive identity rather than stripping it.
 
 ## Qualification and boundaries
-
-See the [cross-build evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/windows-cross/REPORT.md) for exact tested
-versions, commands, failures and native Windows results. Compilation and import
-closure alone are not gameplay acceptance. VM software rendering is functional
-validation, not physical GPU or performance qualification. Test your own project
-on its target Windows hardware before distribution.
 
 Qualified scope is MinGW-w64 GCC, x64, Release, Linux host, Windows 10 VM.
 Windows 11/hardware/gamepads and other compiler versions require further testing.

@@ -1,8 +1,8 @@
-# M94 — JudasJS developer tools
+# JudasJS debugging and deliberate reload
 
 [API index](JUDASJS.md) · [Lifecycle](judasjs/lifecycle.md) · [State/lifetime](judasjs/scenes-state.md) · [Lab](../projects/developer_lab/README.md)
 
-Current repository tooling, originally introduced in M94. Judas remains JavaScript; neither a
+Current repository tooling, originally introduced in script-debugging. Judas remains JavaScript; neither a
 TypeScript runtime nor an external debugger service is required.
 
 ## Start debugging
@@ -63,16 +63,6 @@ callback through the existing fault boundary, then Stop discards the runtime.
 Whole-session Stop/shutdown disables debug stops before destroy callbacks.
 Already-issued game side effects are not rolled back. Existing audio voices may
 continue playing; pausing a debugger is not a game-authored audio-pause policy.
-
-An online session also stops polling transport while its owning script stack is
-suspended. The stopped editor shows a warning: remote peers can hit the normal
-receive-idle timeout. Continue, then use ordinary reconnect if needed. A brief
-source stop can retain the connection, but there is no distributed breakpoint
-pause or heartbeat thread. Ordinary gameplay pause is different: the application
-can keep polling networking without advancing physics or callbacks. The
-[Pass 3 checks (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/prealpha-pass3/integration/REPORT.md) exercise actual
-QuickJS stops, real loopback endpoints, timeout and reconnect with an injected
-monotonic clock; this is not a claim of transparent online debugging.
 
 ## Deliberate edit and reload
 
@@ -145,15 +135,9 @@ not resolve an enabled mod session: check the actual effective project separatel
 
 ## Costs, portability and limits
 
-Without attachment, the VM performs a disabled hook-pointer branch at instruction
-dispatch and allocates no debugger/source-snapshot store. No debugger socket,
-network service, editor UI or polling thread is installed in standalone games.
-Attached debugging adds source-map/line bookkeeping and inspection cost; pauses
-are intentionally not representative game timings. See [measured evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m94/REPORT.md).
-
 This first implementation is integrated with Judas Editor, not DAP, CDP or an IDE
 remote-debug protocol. IDE completion still comes from [judas.d.ts](judas.d.ts).
 There are no conditional breakpoints, exception-break mode, expression watches,
 automatic hot reload, live-object migration or native C++ stepping. Use ordinary
 runtime diagnostics and native tools for native failures. Linux automated checks
-and human acceptance are recorded separately; Windows/Android M94 are unvalidated.
+and human acceptance are recorded separately; Windows/Android script-debugging are unvalidated.

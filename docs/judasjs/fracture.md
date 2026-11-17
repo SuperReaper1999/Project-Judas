@@ -1,6 +1,6 @@
 # Fracture
 
-M63 adds an optional material partition to an ordinary `.judasdeform` asset.
+fracture adds an optional material partition to an ordinary `.judasdeform` asset.
 Judas owns physical demand, irreversible connectivity and material ownership.
 Project JS chooses loads, sounds, scoring and explicit cleanup; it does not need a
 health counter or a scripted collapse sequence.
@@ -20,7 +20,7 @@ fragment root. Reacquire parts from `state`, not from old body-slot numbers.
 A snapshot, not mutable storage:
 
 - `revision`: topology revision, incremented on publication/removal.
-- `rigid`: ordinary M45-connected rigid cells, or M62 cohesive deformable cells.
+- `rigid`: ordinary joint-connected rigid cells, or deformable cohesive deformable cells.
 - `error`: bounded-topology diagnostic, empty on success. Also inspect
   `entity.deformable.state.error` for preparation/solve failures.
 - `tensileStrength`, `shearStrength`: cooked thresholds in Pa.
@@ -34,7 +34,7 @@ A snapshot, not mutable storage:
   `cause` is `physical`, `explicit`, or null. Demand numbers are observed peak
   tractions in Pa, not current health or a calibrated engineering damage measure.
 
-M79 additionally offers an opt-in rigid **structural section stress** cook with
+structure additionally offers an opt-in rigid **structural section stress** cook with
 geometry-integrated bending, combined axial/bending stress and approximate torsion.
 Per-interface strengths can be authored in the editor or partition source; the
 state's top-level strength fields remain family defaults. Existing methods,
@@ -65,7 +65,7 @@ rigid `impulseAt` forwards exactly once to the owning physical body at the actua
 hit point. For a rigid cell, use `part.entity.applyImpulseAtPoint` / ordinary
 physics/joint APIs for precise loading or attachment. Rigid material and support
 configuration are authored; runtime `setMaterial` / `attach` reject changes.
-`release(group)` still releases an authored support. Soft attachments remain M62.
+`release(group)` still releases an authored support. Soft attachments remain deformable.
 `reset()` rejects fracture healing: use a normal scene reload.
 
 ## onFracture(event)
@@ -82,13 +82,13 @@ subsequent physical step; requests are not recursive fracture transactions.
 
 ## Geometry, persistence and residency
 
-M44 queries, CharacterMotor, M42 contacts and audio obstruction see ordinary rigid
+shape-query queries, CharacterMotor, collision-event contacts and audio obstruction see ordinary rigid
 cell colliders; they never hit a duplicate intact-parent AABB. Soft fragments keep
-M62 surface contacts and per-instance `deformable.raycast`; general M44 shape
-casts/motor blocking/M42 soft-surface callbacks are still unsupported.
+deformable surface contacts and per-instance `deformable.raycast`; general shape-query shape
+casts/motor blocking/collision-event soft-surface callbacks are still unsupported.
 `DeformableHit.location.revision` makes pre-cut picks reject after topology change.
 
-M61 saves persist broken interfaces, material removal, deformed/plastic state,
+save-slot saves persist broken interfaces, material removal, deformed/plastic state,
 rigid transforms/motion and owned support/bond solver history. Source assets must
 match. Pending requests are not saved: capture records the last coherent published
 state. Live region-owned families explicitly pin their source region, with a
@@ -100,19 +100,19 @@ individual `setColliderEnabled` retains the physical cell but disables its colli
 Liquid-bearing fractured owners are unsupported and rejected; no conserved water
 is deleted by this feature.
 
-See [M63 architecture/authoring](../FRACTURE.md), [deformables](deformables.md),
+See [fracture architecture/authoring](../FRACTURE.md), [deformables](deformables.md),
 [physics/joints](physics.md), [saves](saves.md), [streaming](streaming.md), and the
 [executed example](examples/fracture.js).
 
 Pending topology requests on a disabled family are deferred until it is enabled.
 Required material/owner entities marked transient cannot be silently omitted from
-an M61 save; capture fails with a diagnostic before replacing a good slot.
+an save-slot save; capture fails with a diagnostic before replacing a good slot.
 
-## M83 finite physical material sections
+## finite physical material sections
 
 A rigid partition can additionally author a finite elastic/plastic law on each
 interface. The current implementation and practical lab are documented in
-[M83 physical sections](../COARSE_CRASH.md). This changes physical collider and
+[mechanical-damage physical sections](../COARSE_CRASH.md). This changes physical collider and
 mount geometry through ordinary body motion; it is not a visual crush animation.
 
 Interface snapshots also contain `material` (boolean), `plasticTranslation`

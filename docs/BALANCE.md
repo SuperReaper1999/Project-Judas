@@ -1,63 +1,4 @@
-# M77 — physical balance, corrective stepping and bounded recovery
-
-**M77 checkpointed by operator instruction. NOT HUMAN VALIDATED / NOT HUMAN TESTED.**
-Automated Linux and native Windows VM evidence retains its recorded scope.
-Physical Windows GPU/input acceptance remains outstanding. Implementation base:
-`ab3dfbab13585680a9e6cc92fa318c8d95012979`. M76, M74 retargeting and M67's
-specified deferred human reviews remain pending. M75 acceptance is independent.
-Lastlight/Wayfarer, historical evidence and accepted fluid work are preserved.
-
-## M77 checkpoint capability and current correction status
-
-HISTORICAL — the first M78 corrective candidate reproduced a corrective-step regression on Linux and native Windows; its failures remain in the [first follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_FOLLOWUP.md). The preserved [midpoint/contact continuation (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_CONTINUATION.md) corrected generic physics/observation mechanisms and passed the unchanged controller and authored application on Linux and native Windows VM. At that stage an additional in-progress cold-save case remained failed: its exact native snapshot also failed on Linux, while uninterrupted native continuation stood. No sufficient cold-continuation repair had been retained at that stage. The later correction and remaining legacy gap are recorded below. Original M77 passes remain historical evidence; platform validation and limitations are reported separately for each changed candidate. No rig, inputs, timestep, gains or original acceptance thresholds were retuned. Human validation remains pending.
-
-M77 provides default-off, explicit two-chain physical balance, bounded corrective
-steps and physical rest-reference get-up. It uses the existing fully dynamic
-articulation, gravity, contacts and M45 constraints. It does not pin feet, servo
-root position, replace the skeleton, or promise general humanoid walking/recovery.
-
-Later corrective status: [M78 cold-boundary continuation (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_COLD_CONTINUATION.md)
-records a measured repair for newly captured in-progress joint-bearing saves.
-Actual commands, finite-pass continuation and completed observations reconstruct
-before the ordinary next preparation. The byte-preserved older failed snapshot
-cannot recover fields it never recorded and remains an explicit legacy gap.
-The original controller settings, fixture and thresholds remain unchanged; human review
-is still pending.
-
-The ordinary [Balance Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/balance_lab/balance_lab.judasproj) contains
-standing, support, fallen-recovery and radial scenes. Three original mechanical
-rigs make the physical envelope visible: two weighted-foot rigs recover, while
-one slender rig demonstrates a narrow corrective-step envelope. Failure cases
-include frictionless support, excessive perturbation, blocked recovery and
-incoherent body gravity. Denied tasks report finite failure and release drives.
-
-Linux clean affected Release, native/controller checks, real-GL/public-JS lab
-checks, fresh-process saves, actual Application save/reload/transitions, editor
-Play/Stop and a moved export with source hidden have passed. Native Windows Release build and 27 focused core/application/editor/save/export
-cases pass, including the corrected step and a source-hidden Unicode moved package.
-VM software rendering never establishes hardware/input acceptance. No unrelated full production-suite run or human acceptance
-is claimed.
-
-See [candidate results and capability boundaries (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m77/final/RESULTS.md),
-[performance (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m77/final/PERFORMANCE.md), and the controls/checklist below.
-Earlier failed probes and corrected follow-ups remain in
-[the development record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m77/DEVELOPMENT.md).
-
-## HISTORICAL — foundation preflight before the completed M77 candidate
-
-| Capability | Decision | Source and reason |
-|---|---|---|
-| Authoritative articulated motion | Reuse | `PhysicsWorld`, M45 constraints, existing ragdoll body/bone mappings; no second world or skeleton. |
-| Physical publication | Reuse | `WorldRagdoll`, M47 final contribution, current presentation and sockets; actual body pose remains full weight. |
-| Mode/motor handoff | Reuse/extend narrowly | M70 validated fixed-boundary requests and collision-checked explicit motor return. |
-| Clip/layer/shared IK references | Reuse | `WorldAnimation` and explicit M70 chains; references are inputs, never achieved contacts. |
-| Contact support observations | Extend | Native solved contact rows/cache contain identities/impulses missing from coalesced public events. Read bounded body samples through broadphase-selected cache ranges; no ray-as-support substitution. |
-| Bounded angular actuation | Extend | Optional relative quaternion drive rows solved with existing contacts/joints. Initial free-root experiments expose collapse with independent pre-integrated posture torques. Existing M70 remains unchanged when absent. |
-| Balance/step/recovery tasks | Planned, not implemented | Authored two-legged mappings, actual COM/motion/contact observations, stance-local references, bounded plans and physical completion gates. No anatomy-name convention or game state. |
-| Gravity and moving supports | Reuse | Per-physical-body gravity selections, authoritative body/COM point velocity, normal friction/reactions; no owner-only gravity assumption or motor carry in full physical mode. |
-| Authoring/resources | Reuse/extend | Named scene/prefab fields, inspector stable skeleton keys, immutable assets, normal AssetDatabase/export. |
-| Durable task lifetime | Extend | Existing M61 participant/chunk/reference validation; semantic task/planning history retained, observations/caches reacquired. Default-off old saves retain compatibility. |
-| Regions/mod contracts | Reuse with explicit admission review | Existing whole-articulation pinning and M76 exclusions remain; no individual bone adoption or broadened permissions. |
+# Physical balance and bounded recovery
 
 ## Fixed phases and ownership
 
@@ -80,25 +21,8 @@ The controller does not own a root transform, external root force, capsule suppo
 render pose or game policy. A selected foothold is intent, not support. All joint
 angular effort has paired reactions. Standing/step/recovery success requires
 measured physical state and a dwell, independently checked in focused trials.
-Configuration must not activate a task. Existing M70 partial/active/passive and
-ordinary CharacterMotor paths retain their supported meaning without M77.
-
-## HISTORICAL — early foundation development status
-
-Current experiments and failures are recorded in
-[the development log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m77/DEVELOPMENT.md). Quantitative envelopes,
-public configuration/API, persistence and final evidence are not yet established.
-The native foundation check has 32 passing checks. The normal incremental Release
-build and existing M70 physical-animation regression also pass (64 checks).
-This is not the clean full-engine candidate build or final candidate validation.
-
-One narrow mechanical recovery experiment succeeds with an explicitly heavy,
-cubic-foot robot in both fallen orientations and nearby starting rotations.
-Its effort-off controls remain fallen. The lighter slender-foot probe does not
-recover. Neither is an integrated M77 controller or a completed lab demonstration.
-Corrective stepping, the second rig, fixed-phase integration, public API,
-authoring, durable task saves and platform/lifecycle proof remain outstanding.
-No complete M77 acceptance or platform-validation claim is made here.
+Configuration must not activate a task. Existing IK/physical-animation partial/active/passive and
+ordinary CharacterMotor paths retain their supported meaning without balance.
 
 ## Control and numerical envelope
 
@@ -109,7 +33,7 @@ are from the preceding completed solver interval, not predictions or query hits.
 
 Tangent feedback is `cross(up, -(positionResponse * COMError + velocityResponse *
 relativeVelocity))`, capped by `maximumLean`. Relative quaternion joint targets
-produce implicit soft drive rows alongside normal contacts/M45 constraints. Their
+produce implicit soft drive rows alongside normal contacts/joint constraints. Their
 three component impulse bounds conservatively enforce the authored torque magnitude.
 All drive reactions are paired between dynamic bodies; no world-anchored actuator
 is permitted. Native mass, velocity and transform assignment is absent.
@@ -122,7 +46,7 @@ A capture estimate `COM + tangentVelocity * sqrt(COMHeight / gravityMagnitude)`
 selects a bounded translated foot placement. Normal ray/box queries are planning
 only. Real stance load gates transfer; real loss of foot contact and >2.5 cm lift
 are required before actual contact may complete touchdown. References use actual
-M45 anchors/hinge axes; they never move physics bodies. Standing requires two real
+joint anchors/hinge axes; they never move physics bodies. Standing requires two real
 accepted supports, upright dot >.96, authored height/speed bounds and a 1 s dwell.
 
 `plantedOrientationWeight` is an explicit 0..1 stance-reference setting. At zero
@@ -131,18 +55,6 @@ weighted-foot recovery fixtures). At one it uses the authored upright foot
 orientation (tested on curved ground with single-point contacts). It changes
 paired ankle targets, never creates support or modifies friction. Trying one
 policy everywhere demonstrably failed; original failures are retained.
-
-**HISTORICAL — M77 checkpoint measurements, before M78 corrections.**
-The complete seven-body no-contact audit retains ordinary solver numerical limits:
-paired ±10 N m input torques, no applied gravity, 240 intervals at 60 Hz. Net linear
-momentum residual stayed below 3e-6 kg m/s. Angular residual at interval 240 was
-.03706 kg m²/s with control effort off and .04081 with it on. The inherited rigid
-solver integrates orientation without gyroscopic angular-momentum transport and
-uses constraint corrections. These are not exact global angular conservation
-claims. The separate shared-axis actuator check measures paired angular reaction
-within 1e-5; no new unpaired root wrench was added.
-
-The M78 working candidate corrects the inherited free-body angular transport; these original M77 measurements remain evidence, not current-source results. Contact/constraint residuals are still approximate. See [the corrective follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_FOLLOWUP.md).
 
 ## Normal authoring and use
 
@@ -195,46 +107,8 @@ re-enable a motor, or remove normal constraints.
 Actual external support/foothold dependencies pin the region while needed. Complete
 owner/assembly adoption derives transient bone ownership from the existing articulation;
 individual bone adoption refuses. No new independently archived bone IDs are introduced.
-M76 admission retains existing exclusions; M77 does not grant mod scripting privileges.
+mod admission retains existing exclusions; balance does not grant mod scripting privileges.
 
-## Controls and human review
-
-Open `projects/balance_lab/balance_lab.judasproj` in the editor or launch the
-exported package. F1–F4 select flat/support/fallen/radial scenes; Tab selects an
-actor. Mouse orbits the script-owned presentation camera. Esc pauses.
-
-| Control | Meaning |
-|---|---|
-| P | Cancel native effort and enter passive physics; explicitly hand off motor. |
-| B / G | Request physical standing / physical recovery. |
-| U / J / K | Small / stepping-envelope / excessive genuine root impulse. |
-| T / Y | Toggle stepping / effort permission for the next request. |
-| Q / E | Rotate / reverse the next authored impulse direction. |
-| N | Separate collision-checked return to animation/motor, after actual standing. |
-| O / L | Existing partial-physics compatibility / masked rest layer. |
-| WASD | Script-driven motor after explicit return. |
-| Z / Delete | Spawn another prefab / remove selected support. |
-| F5 / F6 / F7 / R | Diagnostics / save / load / reload. |
-
-1. F1: select Stride, P, allow effort/stepping, B; wait for measured standing,
-   then J. Confirm actual foot lift/contact and recovery. Reload and repeat with
-   stepping denied; the same disturbance should exceed its standing envelope.
-2. Tab through independent rigs. U is a small disturbance; K deliberately exceeds
-   the bounded controller. P must stop effort without removing physics.
-3. F2: exercise moving/rotating, uneven, sloped and obliquely oriented supports.
-   Confirm no foot anchors or global-up assumption; delete support and observe
-   safe failure. The frictionless F1 actor is an intentional negative case.
-4. F3: request G on the two clear fallen weighted-foot rigs. Confirm physical
-   get-up from their actual pose. The low-roof rig must fail honestly, not pass
-   through its obstruction. The slender rig is not a universal get-up proof.
-5. F4: activate a weighted-foot rig and confirm local radial gravity/curved
-   support. Owner-only gravity selection does not silently override bone bodies.
-6. After actual standing use N; inspect the normal visual fade and motor return.
-   Check O, L and the socket indicator without taking native actuator ownership.
-7. Spawn an independent prefab; save/load during standing, a step and recovery;
-   pause, reload, switch scenes and Stop. Check no stale bodies or drives.
-8. Repeat representative cases in the moved standalone. Windows VM proof is
-   separate from real Windows GPU/input and operator acceptance.
-
-Suggested commit after operator approval: `Add M77 physical balance and recovery`.
-**HISTORICAL — original M77 handoff:** no commit, push or tag had been made at that handoff, and M78 had not started. The later M77 checkpoint and current M78 correction status are recorded above.
+Natural humanoid get-up remains deferred: controller APIs and bounded standing
+fixtures do not establish a general animation/contact-aware recovery system.
+See [physical animation](RAGDOLLS.md) and [current limitations](CURRENT_FINDINGS.md).

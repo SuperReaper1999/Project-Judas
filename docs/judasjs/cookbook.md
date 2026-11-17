@@ -1,12 +1,17 @@
-# Copyable, executed examples
+# Copyable JudasJS examples
 
-[Index](../JUDASJS.md) · [Making a game by hand](getting-started.md) · [Practices](practices.md)
+[Index](../JUDASJS.md) · [Getting started](getting-started.md) · [Practices](practices.md)
 
-These are ordinary default-exported scripts, not pseudocode or hidden test paths.
-Import/track a script in Assets, attach an enabled slot to an appropriate entity,
-and set its properties in the inspector. Relative imports must also be tracked.
-The focused `judas_cookbook_tests` executes minimal lifecycle, profiling, queries, off-centre impulses, presentation and surface enumeration through the normal QuickJS/RuntimeWorld path. Other examples have static type checks and their named subsystem regressions; the old all-game M50 harness is retired. It does not replace the renderer,
-physics or VM. Example names/IDs are content, not engine-owned semantics.
+Import/register a script, attach an enabled slot and author its required properties,
+assets, actions and components. These are scripts, not standalone games. Clip/joint/
+entity names are fixture content, not engine conventions. Relative modules also
+need registered identities. Never infer that a retired lab project is bundled.
+
+All shipped examples have source/type/signature checks. The focused
+`judas_cookbook_tests` executes minimal lifecycle, profiling, queries, off-centre
+impulses, presentation and surface enumeration through the actual VM/world.
+Other native/subsystem regressions have their own declared scopes; type checks
+alone do not establish every example's behaviour or device support.
 
 | File | Required setup / task |
 |---|---|
@@ -18,8 +23,8 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [queries.js](examples/queries.js) | Floor below origin, colliders; ray and sphere cast, ignore owner. |
 | [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
 | [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
-| [kinematic.js](examples/kinematic.js) | Ordinary box, sphere, convex or compound rigid body; velocity, complete target, stop and point velocity through public Entity commands. Executed by the focused `judas_kinematic_lab_tests` target. |
-| [materials.js](examples/materials.js) | Existing Render component and registered fixture prefab; numeric/whole material patches, alpha/texture removal, independent visibility, sun/ambient writes and reset. Stable-part targeting runs when a ready imported model supplies parts. The original execution record is in [the M72 handoff](../RUNTIME_RENDERING.md#validation-status); current API checks are described below. |
+| [kinematic.js](examples/kinematic.js) | Ordinary box, sphere, convex or compound rigid body; velocity, complete target, stop and point velocity through public Entity commands. Type-checked; requires the stated authored setup. |
+| [materials.js](examples/materials.js) | Existing Render component and registered fixture prefab; numeric/whole material patches, alpha/texture removal, independent visibility, sun/ambient writes and reset. Stable-part targeting runs when a ready imported model supplies parts. See [current runtime appearance](../RUNTIME_RENDERING.md). |
 | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
 | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
 | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |
@@ -28,9 +33,9 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [joint.js](examples/joint.js) | Owner of authored hinge/slider joint; bounded motor. |
 | [animation.js](examples/animation.js) | Skinned asset with Wave/Stretch clips and Root/Elbow/Tip keys (change properties/content for your skeleton). |
 | [ragdoll.js](examples/ragdoll.js) | Authored animation + mapping; physical entry, impulse, visual return. |
-| [multi-target-ik.js](examples/multi-target-ik.js) | Original multipart `character_lab` rig; explicit shared four-contact mapping, last-solve residuals, atomic target replacement and clear. |
-| [physical-animation.js](examples/physical-animation.js) | Same full rig with ordinary mapped bodies and CharacterMotor; partial impulse, explicit full handoff, passive release and collision-validated animation return. |
-| [physical-balance.js](examples/physical-balance.js) | Explicitly mapped original Balance Lab rig; human stand/recover/passive requests and copied actual support/status. Executed by `judas_balance_lab_tests` cookbook mode. |
+| [multi-target-ik.js](examples/multi-target-ik.js) | Explicit rig matching `tests/fixtures/ik/configuration.judas` (source fixture); explicit shared four-contact mapping, last-solve residuals, atomic target replacement and clear. |
+| [physical-animation.js](examples/physical-animation.js) | The matching explicit full rig with ordinary mapped bodies and CharacterMotor; partial impulse, explicit full handoff, passive release and collision-validated animation return. |
+| [physical-balance.js](examples/physical-balance.js) | Explicitly mapped balance-capable articulation; human stand/recover/passive requests and copied actual support/status. Type-checked; requires the stated authored setup. |
 | [character.js](examples/character.js) | CharacterMotor, `move_x/move_y/jump` map; generic JS acceleration/launch. No camera ownership. |
 | [wheel.js](examples/wheel.js) | Authored Wheel referencing a dynamic chassis; `drive`/`steer` axes and `brake` action. Executed by `judas_wheel_script_tests`; torque and suspension remain engine primitives. |
 | [stale-handle.js](examples/stale-handle.js) | Prefab ID; validates stale Entity and retained Character behaviour. UI/Joint lifetime differences are documented separately. |
@@ -45,162 +50,35 @@ raw-ID query ignores, unknown API names and incomplete vectors). It is compiled
 only and must not be imported into a runtime project.
 Add `--runtime /path/to/current/surface.json` when comparing a fresh actual-VM
 enumeration. This verifies surface/types, not visual behaviour or every runtime branch.
+| [physical-control.js](examples/physical-control.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [impulse-point.js](examples/impulse-point.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [presentation.js](examples/presentation.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [navigation.js](examples/navigation.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [profiling.js](examples/profiling.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [localization.js](examples/localization.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [streaming.js](examples/streaming.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [saves.js](examples/saves.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [fracture.js](examples/fracture.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [developer-integration.js](examples/developer-integration.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [imported-model.js](examples/imported-model.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [authoring-runtime.js](examples/authoring-runtime.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [signals.js](examples/signals.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [mechanical-damage.js](examples/mechanical-damage.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [ui-controls.js](examples/ui-controls.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [terrain.js](examples/terrain.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
+| [save-evolution.js](examples/save-evolution.js) | See the matching subsystem reference for required assets/components and lifecycle; adapt fixture names to your project. |
 
+## Adapt and run
 
-## M51 physical control
+Use the matching [typed API](../judas.d.ts) for exact options and the subsystem
+reference for coordinate, phase, ownership, error and save rules. Read the example's
+properties/comments before attaching it. Imported-model examples need a cooked
+model with the explicitly requested clips; native IK fixture mappings require
+source assets with matching keys. Supply your own compatible content rather than
+expecting private original models or retired lab directories.
 
-[physical-control.js](examples/physical-control.js) executes on a dynamic-body
-entity: project damping uses mass/inertia snapshots and requests pointer
-capture. The complete workshop/flight compositions live in
-`projects/boundary_demo/Assets/scripts/rules.js`; no private native calls are used.
-
-M52 adds [impulse at a world point](examples/impulse-point.js): an off-centre impulse through the ordinary body API, with validation before mutation.
-
-M52 [presentation.js](examples/presentation.js) follows a body's/motor's existing
-interpolated world pose in the post-simulation presentation phase; it leaves
-authoritative motion untouched. Attach to a moving body or CharacterMotor.
-
-- [Navigation guidance into CharacterMotor](examples/navigation.js) ([reference](navigation.md)).
-
-
-
-- [Exception-safe custom profiling](examples/profiling.js) — `profiler.scope` and finite counters, capture on or off.
-
-## Localization / Unicode UI (M58)
-
-[Executed localization example](examples/localization.js) uses the text-lab catalogs
-and document. It preserves supplementary/combining UTF-8, named whole messages,
-Russian plural rules and invalid-locale handling. [API and asset syntax](localization.md).
-
-- [Additive preload/activation](examples/streaming.js) runs on a persistent root in `projects/streamed_range`; requests never block.
-
-## M61 slots and durable references
-
-[saves.js](examples/saves.js) uses the ordinary public service. Attach to an entity
-in a registered project with supported modern components. Default policy queues a
-save and polls later; the focused fixture cancels before capture. The separate M61
-application proof executes committed saves and fresh-process restores. Never treat
-`queued` as success, and wait for `completed` before exiting. [Save API](saves.md).
-
-- [Fracture](examples/fracture.js): physical part impulse, an explicitly labelled
-  tool cut, coherent callback state, independent prefab and stale-handle rejection.
-
-## Developer integration (M65)
-
-[Executed example](examples/developer-integration.js): final joint reads, IK, visual
-socket, gravity sample, physical coefficients and generation-safe runtime joints.
-Fixture is the original rig in [current integration project (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/m65_integration/m65_integration.judasproj).
-
-- [Imported parts and extracted clip interval](examples/imported-model.js) (needs the local-only original character used by `import_lab`; fails on a clean checkout, see [model import](../MODEL_IMPORT.md#import-inspect-place))
-  ([model workflow](../MODEL_IMPORT.md)): attach to the original import-lab model.
-
-<a id="authoring-to-runtime-seams-m67-candidate"></a>
-
-## Authoring-to-runtime seams (M67)
-
-[authoring-runtime.js](examples/authoring-runtime.js) is an executed public-API
-example for configured projection/behind points, layout snapshots/atomic mutation,
-independent prefab initial properties/state/world velocity and stale handles. It
-uses registered assets from [World Workshop (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/world_workshop/README.md).
-
-<a id="paired-input-and-batched-queries-m69-candidate"></a>
-
-## Paired input and batched queries (accepted M69)
-
-[paired-stick.js](examples/paired-stick.js) keeps render-frame reads separate from
-authoritative fixed-step observation processing. Its `state` exposes raw and
-circular values, net frame delta, twelve recent delivered samples, monotonic
-cursor, reset/overflow counts and per-phase read counts. Author `flick_stick` as
-shown in [input reference](input.md#circular-vector-binding). Hardware absence
-means neutral readings; synthetic focused checks are not human controller testing.
-
-[ray-fan.js](examples/ray-fan.js) builds a 10×10 fan from the owner's local
-orientation, with ordinary `maximum`, `spread` and `height` script properties.
-It records all 100 result positions, including null misses, in `state.results`.
-Bind `compare_rays` to a convenient logical action (the small fixture uses C) to
-perform 100 scalar calls on the unchanged world and record `state.matched`.
-That comparison is optional game-side evidence, not the production batch path.
-The example implements no trick recognizer or ledge-choice policy.
-
-The final M69 gate executes these two cases only through
-`judas_cookbook_tests <fresh-output> paired-stick` and
-`judas_cookbook_tests <fresh-output> ray-fan`, using private copies of ordinary
-project content. API/types/live enumeration uses the existing `surface` case and
-`scripts/check_judasjs_api.mjs`. See [M69 evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m69/REPORT.md) for
-the actual commands/results and any untested hardware claims; do not substitute
-the older M50 runner, which would build and execute unrelated examples again.
-
-### Small operator fixture
-
-`python3 scripts/create_m69_example.py` creates a private ordinary project at
-`.cache/m69/example/m69_example.judasproj` by copying the current character arena.
-It preserves source projects and refuses an existing output. Launch with
-`build/judas .cache/m69/example/m69_example.judasproj` (or open that project in the
-editor). The final M69 gate creates this copy; it is not a required runtime tool.
-
-The normal `.judasui` HUD displays raw/circular/frame values, six ordered samples,
-cursor/reset/overflow counts and all-hit/miss totals. Right-stick diagonals and
-out-and-back movement exercise observations; C compares the 100-ray batch with
-100 scalar rays in the same world. Escape pauses/resumes, R reloads, Q quits.
-No device is substituted for human controller feel: an absent controller reads
-neutral. The source [generator (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/scripts/create_m69_example.py) and its small
-JS display subclasses use only ordinary authoring and public APIs.
-
-## Kinematic bodies (M71)
-
-[kinematic.js](examples/kinematic.js) attaches to an ordinary supported rigid
-body. `start` chooses kinematic authority; `fixedUpdate` replaces a persistent
-world COM/angular velocity command with stop and a bounded complete pose target,
-then reads actual point velocity and checks invalid quaternion rejection.
-The example state reports queued commands, last resolved pose/velocities and
-completion. It supplies no route, character or camera policy.
-
-The focused `judas_kinematic_lab_tests` target executes this file through normal
-asset registration and RuntimeWorld/QuickJS callbacks. The ordinary
-[kinematic lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/kinematic_lab) composes similar public APIs for
-interactive content. See [command semantics and lifecycle](entities.md#kinematic-motion-m71).
-
-<a id="owned-signals-m73-candidate"></a>
-
-## Owned signals (M73)
-
-[Copyable broadcast/target/UI script](examples/signals.js) is executed by
-`judas_signal_tests` through the ordinary VM. Its shared registration helper supports
-start and modern restore without resetting counters; see [signals](signals.md) for
-bounds, transient-save semantics and paused-lane delivery.
-
-## Coupled mechanical damage (M83)
-
-[mechanical-damage.js](examples/mechanical-damage.js) reads actual attachment
-reactions and physical transmission availability, then applies an ordinary body
-impulse from logical input. It does not assign a damaged pose or disable a drive
-to fake damage. Configure the named material/physical connection in content; see
-[Deformables](deformables.md#m83-materialbody-connection-strength) and
-[Powertrains](powertrains.md#physical-connection-prerequisite). The exact example
-executes in the focused M83 QuickJS fixture.
-
-## Editable controls and virtual lists (M96)
-
-[ui-controls.js](examples/ui-controls.js) executes against the ordinary Field Notes
-asset: configuration, grapheme selection, keyed lists, atomic state restore, invalid
-input rejection, submit and stale handles. See [UI reference](ui.md).
-
-## Runtime excavation and persistent construction (M97)
-
-[terrain.js](examples/terrain.js) shows a generic static-body volume and a
-query-driven remove dab. Bind the project's logical `dig` action. For a complete
-executed application composition (add/remove/smooth, retained prefab construction,
-rotated gravity and cold saves), inspect [Living World Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/living_world_lab/README.md)
-and [Terrain's ownership limits](terrain.md). The standalone example is type-checked;
-the lab/application regression exercises the full asynchronous lifecycle.
-
-[Explicit save evolution](examples/save-evolution.js) shows request/poll/error policy. The executable cross-version lab is [Save Evolution Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/save_evolution_lab/README.md); see [conversion boundaries](../SAVE_EVOLUTION.md).
-
-## Online shared physics (M99)
-
-[Connected Workshop](../../projects/connected_workshop/Assets/scripts/game.js) is
-a copyable ordinary project example: host-authoritative CharacterMotor control,
-validated remote logical input, physical hit-point shoves, replicated JSON score
-and detached input/peer/entity identities. [Network reference](network.md).
-`NetworkScriptTests` executes the public bindings and two independent copies of
-this exact game; see [reproduction and limits](../NETWORKING.md).
+For the fully editable SDK example, open
+[Developer Workflows](examples/developer_workflows/README.md). Use
+[the first-project tutorial](../FIRST_PROJECT.md) for a minimal visible application.
+Static checks run with `node scripts/check_judasjs_api.mjs` from the source checkout;
+optional real-VM enumeration checks surface membership, not every method's semantics.

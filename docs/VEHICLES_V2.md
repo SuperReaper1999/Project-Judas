@@ -54,7 +54,7 @@ trailer axles scrub strongly in turns; use a steerable bogie if that layout is n
 Real jackknifing remains possible under excessive reversing or insufficient grip;
 no artificial articulation limit or anti-jackknife rotation lock is applied.
 
-See [towing correction and qualification](VEHICLES_V2_TOWING.md).
+See [towing correction and qualification](VEHICLES_V2.md).
 
 ## Tyres, drive and sleep
 

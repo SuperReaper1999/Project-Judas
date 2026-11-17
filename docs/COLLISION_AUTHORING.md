@@ -1,16 +1,14 @@
-# M64 — Mesh, convex and compound collision
+# Collision geometry and cooking
 
 ## Author-time terrain consumer
 
-[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) cooks its accepted heightfield triangles through this existing static triangle-mesh path. Rendering/picking/query/contact/motor/nav geometry share those triangles; the patch is finite and one-sided. Cooked/mixed collision placements require unit scale, enforced at scene/runtime boundaries. Sculpting invalidates derived geometry, while paint-only cooking retains collider bytes.
 
-
-**Status through M69:** M64 is operator-accepted and checkpointed. Candidate/pending
+**Status through batch-query:** collision-authoring is operator-accepted and checkpointed. Candidate/pending
 statements and measurements below record the original milestone review state,
 not a current outstanding acceptance gate. Later contracts take precedence;
 start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
 
-Current candidate on M63 checkpoint `b5676438ed12d9cb3d05c634eaf5f578d7216ada`.
+Current candidate on fracture checkpoint `b5676438ed12d9cb3d05c634eaf5f578d7216ada`.
 Human review is pending. Judas owns geometry/contacts; JavaScript owns skating and
 other gameplay. No new dynamics engine, gravity implementation or skate component.
 
@@ -104,7 +102,7 @@ Convex SAT uses actual face axes and physical edge cross-products; primitive fas
 paths remain. Queries use geometric feature normals, which can differ from the
 solver's edge-aware normal. No render-normal interpolation. A faceted curve remains
 piecewise planar; tumbling/inelastic bodies can lose substantial mechanical energy.
-M64 does not promise lossless curves or that JS skate assistance becomes unnecessary.
+collision-authoring does not promise lossless curves or that JS skate assistance becomes unnecessary.
 
 QuickHull is pinned to `4ef66c68950cb4db11d3b75bfe4034d807485ad0`, upstream Public
 Domain; see [provenance](../third_party/quickhull/PROVENANCE.md). It is an offline hull
@@ -121,7 +119,7 @@ See [JudasJS physics](judasjs/physics.md), [entities](judasjs/entities.md) and
 `physics.closestPoint(point, maximum, filter)` finds the nearest surface, with
 containment separate. Casts expose child keys/features. Nothing exposes mutable
 native geometry or copies the full mesh into JS. Layer/tag/ignored-generation,
-enabled-state and sensor policy remain the existing M39/M44 contract.
+enabled-state and sensor policy remain the existing classification/shape-query contract.
 
 Casts translate with fixed orientation, convergence tolerance 1e-5 metres, at most
 256 advances per candidate. Concave candidates advance separately: a nearest
@@ -131,51 +129,27 @@ This is not a new universal high-speed/angular CCD guarantee.
 
 ## Other systems
 
-- M42 remains body-pair observations: triangle feature changes do not create new
+- collision-event remains body-pair observations: triangle feature changes do not create new
   semantic bodies/events. Compound children retain one rigid identity.
 - CharacterMotor uses the shared casts/distance geometry; no skating rules.
 - Navigation extracts **physical** triangles/hulls/oriented children in its local
   nav frame; fingerprints change with extracted geometry. Audio obstruction and
-  M60 occlusion use ordinary authoritative rays, preserving real openings.
-- M62 cloth/soft contacts use their existing sampled vertex/edge/face contact seam
+  streaming-audio occlusion use ordinary authoritative rays, preserving real openings.
+- deformable cloth/soft contacts use their existing sampled vertex/edge/face contact seam
   against new geometry. No exact triangle-triangle/self CCD or soft motor blocking.
-- M63 rigid fragments retain ordinary primitive proxies and hit the mesh normally.
-  M64 does not generate/remesh arbitrary fragment hulls.
+- fracture rigid fragments retain ordinary primitive proxies and hit the mesh normally.
+  collision-authoring does not generate/remesh arbitrary fragment hulls.
 - Streaming preloads cooked CPU data, installs at budgeted safe boundaries, retains
   shared dependencies and removes body/query registrations on unload. Adoption uses
   existing entity identity. Save restoration recooks nothing and creates fresh handles.
-- M61 root saves include authored asset IDs/transforms and cooked identity in the
+- save-slot root saves include authored asset IDs/transforms and cooked identity in the
   runtime baseline. **Additive compositions still do not support disk saves**;
   the lab has a separate ordinary root-project configuration for cold-save proof.
 - Export follows normal all-registered-runtime-assets policy, copies cooked and
   source identities, and rejects stale source/settings instead of inventing a box.
 
-M54/M55 algorithms/cavity authority are unchanged. Rotated box-child geometry is
+Grid Water retains its own sampled occupancy/solid-coupling policy. Rotated box-child geometry is
 propagated through supported liquid calculations. Oriented box liquid mass geometry
 must be disjoint; identity legacy compounds retain their accepted union quadrature.
 Hull/mixed-child liquid loading, open-mesh capacity and legacy PBF contact/loading
 without supported primitive geometry are explicitly rejected. No hull AABB buoyancy.
-
-## Current collision lab
-
-`projects/collision_lab/collision_lab.judasproj`: streamed lab.
-`collision_lab_local.judasproj`: same assets/scene, root world for disk saves.
-Scenes: `flat.judas`, rotated streamed `annex.judas`, `skate-mesh.judas` and
-`skate-boxes.judas` (separate comparison geometry, no fallback under the mesh).
-
-Green quarter-pipe: original R6, 32 curve facets, connected flat approach,
-68 vertices/66 triangles. Gold doorway: actual hole, 12 vertices/10 triangles.
-Red hull: asymmetric 8-vertex physical source. Compound keys 17/22/31 identify
-rotated box/sphere/hull children. Small original cloth/soft blocks and ordinary rigid fracture cells
-contact the curved mesh. Navigation and two ordinary spatial tones exercise its opening.
-
-Controls: WASD/mouse; Space launch; click physical impulse; G carry/drop; T throw;
-P hull prefab; C release a fracture interface; 1/2/3 lab/mesh-skate/box-skate; F3 request/release annex; H adopt region prop; F5/F8 save/load in
-**root** configuration; F9 scene reload; Esc pause. Skate scenes start a four-ray
-chassis automatically; V toggles only its seam velocity-transport compensation.
-The unchanged reconstruction baseline is compensation-enabled; disabled comparison
-retains its spring forces and other game behaviour. It is original reconstructed
-content—not Claude's absent raw project or proof of rerunning that frozen game.
-
-Measurements, failure/follow-ups, fingerprints and exact changed files:
-[docs/evidence/m64 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m64). Human acceptance remains pending.

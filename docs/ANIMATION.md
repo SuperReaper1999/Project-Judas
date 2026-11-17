@@ -1,145 +1,100 @@
-# M46 — skeletal-animation foundation
+# Animation, poses and skinning
 
-**Accepted M70 extension:** shared multi-target IK and optional partial/full-active
-physical regions now extend the historical clip/pose/passive-ragdoll scope below.
-The older milestone statements remain their historical contracts. See
-[M70](MULTI_TARGET_IK.md) for current phases, authority and limitations, and the
-[JudasJS reference](judasjs/animation-ragdolls.md) for exact public interfaces.
-M61 already persists animation/articulation runtime state; M70 extends that
-ownership for physical modes and pending requests.
+Use the editor to import and preview a rig, project scripts to control playback,
+and the shared runtime to resolve its pose. [Model import](MODEL_IMPORT.md) owns
+source conversion; [the animation workflow](ANIMATION_WORKFLOW.md) owns clip
+selection, root motion and event editing. [Retargeting](ANIMATION_RETARGETING.md)
+is an import-time bake, not a second runtime or an automatic rig-conversion service.
 
+## Assets and ownership
 
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+`SkeletalAsset` contains immutable skeletons, clips, skin palettes and inverse
+binds. Resources decode/precompute on workers; the renderer creates and destroys
+GPU resources on its context thread. Each `RuntimeWorld` animation instance owns
+its playback clocks, mixer, layers, contributions and resolved poses. Instances
+share assets without sharing playback or mutable damage/physical state.
 
-**M74 current authoring extension:** [editor/import-time retargeting](ANIMATION_RETARGETING.md)
-transfers an existing performance through an explicit reusable profile and bakes
-ordinary target-compatible named clips. The target retains its bind skeleton,
-weights, geometry and existing clips. Runtime consumes the usual immutable
-`SkeletalAsset`; there is no runtime retargeting service or new JudasJS API.
-Crossfade between native and transferred clips on the same animated instance.
-The M46 historical import limits below are not M74's current bounds.
+Skeleton nodes are hierarchy transforms, not rigid bodies. Imported parts can
+have independent palettes and up to eight influences per vertex. The native
+asset limits are 4,096 hierarchy nodes and 16,384 palette entries; hardware and
+resource validation can impose a smaller usable envelope. Do not use the removed
+48-joint/single-mesh import restrictions. Supported formats, affine transforms,
+external dependencies and material import are specified in [Model import](MODEL_IMPORT.md).
 
-Retarget baking emits LINEAR local TRS samples. Animated STEP discontinuities and
-already-extracted source root-motion tracks fail explicitly; this does not remove
-ordinary STEP playback or ordinary output root-motion queries. Source-preserved
-locomotion can be transferred and then preserved, extracted or made in-place
-through the existing import policy. See [model import](MODEL_IMPORT.md) and the
-[editor workflow](EDITOR_GUIDE.md#animation-retargeting).
+STEP, LINEAR and CUBICSPLINE playback use the normal sampler. Rotation sampling
+normalizes quaternions. Renderer passes consume the resolved skin matrices; drawing
+main, shadow or camera views does not advance clips or move physical collision.
 
-## Ownership and pipeline
+## Mixing and layers
 
-`Skeleton` stores the full node hierarchy/rest local transforms and a skin
-palette with inverse bind matrices. `SkeletalPose` is joint-local TRS data,
-independent of playback. `SampleClip(skeleton, clip, seconds)` is addressable
-without rendering or stepping physics. `ResolveSkinMatrices` composes the
-hierarchy and inverse binds.
+The base mixer supports crossfades. Interrupted transitions retain the current
+weighted contributors and their clocks; zero-duration fades replace immediately.
+There are at most 16 outgoing contributors. Excess interruptions fail explicitly
+until the current transition retires contributors.
 
-The normal mesh ResourceManager reads/decodes on a job worker, retains one
-immutable `SkeletalAsset`, and uploads an optional joint/weight vertex buffer
-on the Renderer/context thread. Static meshes keep their old vertex layout.
-Each ordinary RuntimeWorld entity with an Animation component owns independent
-playback, final pose and matrix palette. The fixed step samples once; main,
-shadow and secondary camera passes consume that result. No renderer changes
-simulation, and no skinned vertex changes authoritative collision geometry.
+Authored/runtime layers resolve in list order after the base. An override layer
+interpolates from the accumulated local pose. An empty mask affects every joint;
+an explicit mask selects local transforms, while parent transforms still affect
+descendants. Use stable imported hierarchy keys. Unique leaf names are accepted;
+missing or ambiguous names fail. Renaming a source joint requires reviewing masks.
 
-Clip playback **does not own the final pose**. RuntimeWorld resolves the clip
-source into its final pose at `UpdateAnimations`; `SetFinalPose` can supply a
-validated independent pose after that boundary. A later producer/combiner can
-replace that resolution policy without changing assets or GPU skinning. M46
-implements one active clip, not blending, IK, ragdolls or physical bone mapping.
-M45 rigid joints are distinct from skeleton nodes.
-
-## Historical M46 import and limits
-
-**Superseded by accepted M66:** [Model import](MODEL_IMPORT.md) documents the
-current multipart/affine/eight-weight import path and size-aware palette. The
-following retains the original M46 scope; its 48-joint/one-mesh restrictions
-do not describe accepted M66.
-
-Import `.glb` or `.gltf` as an ordinary Mesh asset. cgltf is pinned to 1.15
-(MIT, Johannes Kuhlmann); source/header/license/provenance are under
-`third_party/cgltf`, and the full notice is also in exported runtime notices.
-Supported: one skinned mesh node/skin, triangle primitives, positions/normals/UV0,
-JOINTS_0/WEIGHTS_0 (four nonnegative normalized influences), hierarchy/rest TRS,
-inverse binds and named translation/rotation/scale clips. Missing normals are
-generated. STEP, LINEAR (normalized quaternion slerp) and CUBICSPLINE (Hermite,
-normalized rotations) are supported. Matrix rest nodes may not receive TRS
-animation; shear is rejected. Maximum 48 skin joints/128 total nodes.
-
-Use self-contained GLB or data-URI embedded-buffer glTF. External buffer files,
-multiple mesh nodes/skins, Draco, morph targets and additional influence sets
-are rejected with useful resource errors. The normal Judas authored texture/tint
-is used; glTF material/PBR/image import is not implemented. Mesh-node transform
-is not applied a second time to skinned geometry: joint world transforms times
-inverse binds produce asset-space vertices, then the authored entity transform
-places them in Judas. No root-motion gameplay or animation collision is implied.
-
-## Authoring and playback
-
-Editor: import/choose the mesh, add an **Animation** component, set enabled,
-play-on-start, clip name, loop, speed and starting time. The regular entity
-transform places/rotates/scales the result. Prefabs/overrides serialize the same
-component fields. Disabled playback holds the last resolved visual pose;
-play-on-start false starts paused at the authored sample.
+Additive layers compare a clip sample to rest or an explicit reference clip/time:
+translation differences, relative rotations and multiplicative scale ratios.
+Zero reference scale is invalid. Native external pose producers submit copied,
+validated contributions through `RuntimeWorld::SetPoseContribution`, sorted by
+priority then source name after authored layers. `SetFinalPose` routes through
+that ownership rather than becoming a second skeleton owner.
 
 ```js
-const animation = world.entity('10').animation;
-if (animation.info.ready) {
-    console.log(animation.clips); // [{name, duration}, ...]
-    animation.play('Wave');       // named play restarts that clip
-    animation.loop = false;
-    animation.speed = 2;
-    animation.seek(0.5);          // seconds; loop wraps, non-loop clamps
-    animation.pause();
-    animation.resume();          // continue current time
-    animation.stop();            // rest pose, time zero
-}
+actor.animation.play('Walk');
+actor.animation.crossFade('Idle', 0.25);
+actor.animation.layer('upper-body', {
+  clip: 'Wave', weight: 0.7, enabled: true, mask: ['Arm/Shoulder', 'Arm/Elbow']
+});
+actor.animation.removeLayer('upper-body');
 ```
 
-Playback can run backwards via negative speed; a non-loop reaches its endpoint
-and stops. To restart an ended clip call `play(name)`. Unknown named clips and
-invalid/stale entity handles throw safely. Before async readiness play/seek/stop
-return false; query `info.ready`. An unknown authored clip holds rest pose.
-Runtime changes never rewrite authored settings. Play/Stop, scene reload and
-project teardown discard instance state; normal asset lifetime/refcounting
-protects shared data. M38 exports registered mesh assets and notices unchanged;
-self-contained buffers require no export-specific resource path.
+Clip names and joint keys are examples: choose names actually present in your
+asset. Pause holds clip clocks. Updating a layer with the same clip retains its
+clock; choose a new clip/layer when a restart is intended. Runtime layers do not
+rewrite authored scene files. See [exact signatures](judasjs/animation-ragdolls.md).
 
-Canonical fingerprint schema remains **5**. A tagged `Judas.SkeletalPlayback.1`
-extension includes authored component settings only when present. No-animation
-baselines are unchanged; runtime time/pose changes are not authored changes.
-This retains the existing asset-reference compatibility policy rather than
-inventing content identity for an animation player.
+## Motion, IK and physical animation
 
-## Demo and checks
+Use `animation.rootMotion` for a model-local interval query, or `advance(dt)` once
+per fixed callback when gameplay must consume every root-motion/event sample.
+Apply movement through the appropriate motor or body authority; root-motion
+sampling alone does not move an entity. Do not consume automatic and manual
+samples twice. The [production workflow](ANIMATION_WORKFLOW.md) specifies timing,
+marker limits and modern save behaviour.
 
-`projects/animation_demo/animation_demo.judasproj`: an original three-joint
-segmented bar (CC0), Wave and Stretch clips. Orange is controlled through JS;
-blue shares the asset but has independent playback and an oblique world rotation.
-P spawns an ordinary animated prefab. G selects the other clip and toggles
-loop/non-loop; J pauses/resumes; K seeks to 0.5 seconds; C toggles 1x/2x; Esc pauses
-the game. WASD/mouse use normal project input.
+[Multi-target IK](MULTI_TARGET_IK.md) solves explicit simultaneous contact frames.
+[Physical animation](RAGDOLLS.md) supplies authored body/constraint mappings and
+explicit authority transitions. [Balance](BALANCE.md) is an additional bounded
+controller, not implicit behaviour of every IK rig. There is no automatic natural
+get-up controller, motion synthesis or skeletal keyframe DCC in the editor.
 
-Run `python3 scripts/m46_validation.py` for the one clean Release/production
-candidate gate plus editor/standalone/moved-export smoke. Focused executables:
-`judas_skeletal_animation_tests` (CPU references, actual GL/async/lifecycle/perf)
-and `judas_animation_application_tests` (normal Application/JS/reload/pause).
-Evidence is under `docs/evidence/m46`. Automated pixel/state checks do not grant
-human visual acceptance.
+In the authoritative fixed step, scripts submit intent first; opted-in animation
+references/IK and physical targets prepare before dynamics; resolved animation,
+ragdoll poses and sockets publish afterward. Visual presentation uses the shared
+interpolation boundary. Use authoritative joint/body observations for simulation
+and presented joint/socket observations for cameras and visual attachments.
 
-### Human checklist
+`ikStatus.ready` means the asset is available, not that a newly configured or
+cold-restored rig has produced residuals. Inspect targets after a real fixed solve.
 
-- No detached/exploding vertices; hierarchy bends sensibly.
-- Switch Wave/Stretch; test pause/resume, seek, speed and one-shot completion.
-- Two instances animate independently; the rotated instance remains correct.
-- P creates independent animated instances.
-- Reload/Stop leaves no stale animation state.
-- Moved exported standalone matches the demo.
+## Save, edit and export
 
-### Later candidate extension
+Animation clocks, supported mixer/layer configuration, physical modes and pending
+requests participate in normal `WorldPersistence` saves. Transient solver results
+are rebuilt. Fresh-process continuation compares phase, motion, events, hand pose
+and target counts through the real authoritative step. Stop returns to authored
+content; Play constructs a fresh runtime. Export includes cooked model dependencies,
+not a runtime requirement for source art or retarget profiles.
 
-M47 extends the historical single-clip M46 scope with a resolver, crossfades,
-ordered/masked and additive contributions. `SetFinalPose` now submits a validated
-external contribution instead of bypassing resolution. M48 maps passive physical
-articulations into that resolver. See [POSE_COMPOSITION.md](POSE_COMPOSITION.md)
-and [RAGDOLLS.md](RAGDOLLS.md); the import and renderer ownership above are retained.
+`projects/animation_studio` is the current editable source example; it is listed
+as source-only rather than bundled in every SDK. Native fixtures live under
+`tests/fixtures/animation` and `tests/fixtures/ik`, with their required licences.
+Source owners: `SkeletalAnimation.*`, `WorldAnimation.cpp`, `FullBodyIK.*`, `Simulation.cpp` and the animation scripting
+module. The declared API and [qualification matrix](DEVELOPMENT_READINESS.md)
+separate source capability from tested device/performance scope.

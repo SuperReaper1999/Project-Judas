@@ -1,6 +1,6 @@
 # `localization` — project messages and horizontal Unicode text
 
-Current localization API (introduced in M58), using ICU4C 76.1 MessageFormat and number data. Import
+Current localization API (introduced in text/localization), using ICU4C 76.1 MessageFormat and number data. Import
 `localization` from the virtual `judas` module. QuickJS has no `Intl` requirement.
 Judas owns primitives; projects supply fonts/catalogs; scripts choose language policy.
 
@@ -66,7 +66,7 @@ rules; `number()` uses **the published display locale**.
 
 Locale state is project/runtime-session owned. Scene load/reload preserves it;
 Stop/project replacement creates fresh defaults. It is not persistent user settings,
-a legacy save delta or fingerprint input. Explicit [M61 slots](saves.md) preserve
+a legacy save delta or fingerprint input. Explicit [save-slot slots](saves.md) preserve
 the selected locale alongside session state; this is not automatic user-preference
 storage. Authored catalogs/font bytes/configuration are
 content fingerprint inputs. Resource replacement publishes a complete validated
@@ -108,11 +108,8 @@ world exposure. See [UI](ui.md) and [font/layout implementation](../LOCALIZATION
 
 Scalable Unicode outline TTF/OTF, first face only, horizontal grayscale rendering.
 No color emoji/SVG glyph paints, vertical writing, ruby, rich text, advanced
-justification/hyphenation, automatic translation. [M96 UI controls](ui.md) now provide single-line text
+justification/hyphenation, automatic translation. [UI-toolkit UI controls](ui.md) now provide single-line text
 entry, IME, grapheme selection and caret editing; their input/keyboard limitations
 are distinct from text shaping.
 Supplementary decoding is supported independently of font coverage. Demo translations
 have not received native-speaker review. No process-global locale mutation.
-
-[Executed example](examples/localization.js) · [API inventory](API_INVENTORY.md) ·
-[Text lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/text_lab/text_lab.judasproj) · [Lifecycle](lifecycle.md)

@@ -1,22 +1,6 @@
-# M72 — runtime lighting, render visibility and instance materials
+# Runtime lighting, visibility and materials
 
-M72 was initially checkpointed without human validation at
-`0f3694bb7142dc38a59abbd7365a113b673bae5e`, built on accepted M71 checkpoint
-`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`.
-On 2026-10-09 the operator tested the desktop Render Control Lab and accepted
-M72 as human validated. Native Windows M72 validation remains outstanding.
-Original automated receipts and the initial checkpoint status remain historical;
-this acceptance update changes no M72 implementation or assets. The optional
-gravity-selection follow-up is documented separately in [Gravity selection](GRAVITY_SELECTION.md).
-Unrelated asset-pack work remains separate.
-
-[JudasJS appearance/material API](judasjs/materials.md) ·
-[Visibility API](judasjs/entities.md#render-visibility-m72) ·
-[Editor guide](EDITOR_GUIDE.md) ·
-[Rendering contracts](MATERIALS.md) ·
-[Render Control Lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/render_control_lab/README.md)
-
-## Working design and publication
+## State publication
 
 Authored defaults → isolated validated runtime patches → one rendered sample →
 ordinary resource resolution and draw/shadow passes is the ownership path.
@@ -62,17 +46,6 @@ are ignored when restoring a captured appearance snapshot. Selected resources ca
 be pending or failed after a valid write; selection is not synchronous loading.
 Exact arguments, ranges and errors are in the [public reference](judasjs/materials.md).
 
-### Incremental consumer adoption
-
-Claude's city can replace exposure-only night policy with `world.setAppearance`
-sun/ambient/environment writes while retaining its project-owned clock. Replace
-parking an object out of view with `entity.renderVisible = false`, leaving its
-physics and scripts intact. Existing numeric material targets still work;
-`material("*")` adds whole-instance control and stable part keys add precise
-imported targeting. Use `alphaMode: "blend"` with partial base-colour alpha for
-transparency, and registered texture IDs for map changes. Clear/reset restores
-authored values. No consumer project has been edited on Claude's behalf.
-
 ## Visibility and instance materials
 
 `Entity.renderVisible` is local to one entity, including its owned renderables;
@@ -89,7 +62,7 @@ remain available to restore hidden geometry. Geometry combined into one authored
 mesh is addressable at its actual supported parts, not lost original entities;
 joint-subtree hiding/scaling is outside this milestone.
 The Render-component gate addresses its primary surface; other owned particle,
-fire and conserved-liquid visuals use the entity gate. The legacy M25 globally
+fire and current water visuals use the entity gate. The legacy M25 globally
 merged fluid mesh has no individual volume owner/granularity. Accepted fluid
 ownership and simulation are not changed to introduce one.
 
@@ -119,10 +92,10 @@ material/appearance updates validate before publishing any part of a batch.
 ## Main and auxiliary view support
 
 The audit found that the existing auxiliary path already uses ordinary geometry,
-material, transparency, dynamic-light and water-path submissions. M72 preserves
+material, transparency, dynamic-light and water-path submissions. runtime-rendering preserves
 that implementation and its existing cheaper choices.
 
-| Property | Main view | M33 auxiliary view |
+| Property | Main view | camera-target auxiliary view |
 | --- | --- | --- |
 | World/state sample | One current appearance and presented world sample | Same sample; no extra scripts, fixed work or fades |
 | Visibility/material parameters | Normal applicable submissions | Same supported submission gates/material paths |
@@ -149,7 +122,7 @@ source selection, factors/maps and **Clear runtime material binding**. The scene
 settings runtime preview adds lighting/environment and **Reset runtime environment**.
 Its bounded 64-action **Undo preview / Redo preview** history is separate from
 authored scene undo, coalesces gestures and clears on Start/Stop. Runtime previews
-do not silently write authoring files. Accepted M71 navigation/layout/picking
+do not silently write authoring files. Accepted kinematic navigation/layout/picking
 remains the editor foundation.
 
 Optional ordinary scene/prefab fields carry the state:
@@ -163,188 +136,15 @@ Optional ordinary scene/prefab fields carry the state:
 Versioned material binding/override blocks contain bounded encoded plain values,
 texture IDs and explicit source-selection state. The normal serializers/validators
 and named converter own their encoding; no additional named document format,
-M61 participant version or M59 archive version is introduced. Optional fingerprint
+save-slot participant version or region archive version is introduced. Optional fingerprint
 tags extend canonical schema 5; unchanged defaults omit them and preserve historical
 identity. Asset dependency gathering includes every override texture/material and
 the reset baseline's environment reference.
 
-Scene/prefab/reload/Play/Stop use ordinary authored defaults. Explicit M61 slots
-and M59 retained definitions preserve live visibility/material IDs and root
+Scene/prefab/reload/Play/Stop use ordinary authored defaults. Explicit save-slot slots
+and region retained definitions preserve live visibility/material IDs and root
 appearance/reset state, reconstructing disposable GPU/load caches. Restored scripts
 use the existing restore lifecycle; initialization must not replay to reconstruct
-visual state. M38/M68 export supports conservative all-assets inclusion or opt-in
+visual state. export/scalability export supports conservative all-assets inclusion or opt-in
 closure. Script-selected material/texture/environment IDs must be reachable or
 listed as explicit runtime assets when closure is selected.
-
-## Lab
-
-Open `projects/render_control_lab/render_control_lab.judasproj`. It contains
-ordinary imported/static/skinned instances, opacity/texture controls, physics
-that remains active while hidden, and a live in-world camera screen. Its public
-script owns a lighting cycle and plain saved clock state. The second shared-model
-instance is the isolation control; project content, source recipes and licences
-remain ordinary assets.
-Animated figure 35 is the render-hidden skeleton check; independent marker 61 is
-bound to its final resolved joint through the normal visual-socket API and remains
-visible when H hides the figure. The HUD reports the hidden-solid ray hit and
-joint/socket readiness. Camera 50 renders a 384×216 target every rendered frame
-to display 51, retaining the existing main-focused shadow coverage.
-
-Y submits an unregistered texture ID and catches the immediate validation error;
-the rejected batch preserves its previous material state. It does not package a
-corrupt image or demonstrate asynchronous decoding failure. The separate
-`tests/RuntimeRenderTests.cpp` fixture registers malformed image bytes and exercises
-pending/failed source-map fallback through ResourceManager; final execution results
-belong to the receipt table below.
-
-| Control | Action |
-| --- | --- |
-| WASD / mouse / Escape | Inspect and control pointer capture |
-| P / Left / Right | Start/stop project lighting cycle; scrub |
-| F / B / V | Sun enabled; environment background; independent exposure |
-| H / J / K | Entity gate; Render gate; first stable part |
-| C / O / T / Y | Instance colour; alpha modes; texture replacement; rejected identity |
-| Backspace | Restore material and lighting authored defaults |
-| N / R / F6 / F7 | Prefab skin; authored reload; save/load |
-
-Use the [lab guide (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/render_control_lab/README.md) for current setup and
-controls. Main-view review is distinct from the simplified camera screen.
-
-## Validation status
-
-The Linux Release candidate and affected follow-up builds completed. Inspected
-final build receipts print no compiler warnings/errors; earlier build and fixture
-corrections remain under `docs/evidence/m72/development/`. This is focused candidate
-validation, not a full production-suite or native Windows acceptance claim.
-
-| Executed scope | Current result / receipt |
-| --- | --- |
-| Main rendered lighting, alpha/depth/shadows, instance/part visibility, texture fallback and camera/resource lifetime | 54 checks, 0 failures — [render-controls-02.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/render-controls-02.log) and [scope/measurements (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/render-controls/README.md) |
-| Actual public VM, detached/atomic state, pending/failed/error material readback, resource demands, hidden script/joint/socket work, staged additive publication/removal and engine snapshot capture | 40 checks, 0 failures — [application-verified.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/application-verified.log) |
-| Separate-process engine snapshot/script continuation and original authored reset | 13 checks, 0 failures — [fresh-process-verified.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/fresh-process-verified.log) |
-| Authoring/named/prefab/full material records, undo, strict malformed-state rejection and independent baseline identity | 28 checks, 0 failures — [authoring.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/authoring.log) |
-| M57 material/PBR/static+skinned regression | 44 checks, 0 failures — [materials-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/materials-final.log) |
-| M57/M55 environment, optical composition and resolve integration | 36 checks, 0 failures — [material-integration-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/material-integration-final.log) |
-| M33 cameras, cadence/feedback and balanced resource lifetime | 52 checks, 0 failures — [cameras-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/cameras-final.log) |
-| Ordinary asynchronous application/resource lifecycle | 246 checks, 0 failures — [async.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/async.log) |
-| Resource admission/private GPU publication/cancellation | 9 checks, all pass — [resource-handoff.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/resource-handoff.log) |
-| M66 imported multipart model runtime | 23 checks, 0 failures — [model-runtime.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/model-runtime.log) |
-| Skinning/pose lifetime | 34 checks, 0 failures — [skinning.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/skinning.log) |
-| Directional/spot shadow matrices and rotated-frame invariance | All tests passed — [shadows.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/shadows.log) |
-| Historical canonical fingerprints | 140 checks, 0 failures — [fingerprint.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/fingerprint.log) |
-| Shared editor widget gesture lifecycle / geometry picking | 15 / 36 checks, 0 failures — [editor-widgets.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/editor-widgets.log), [editor-picking.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/editor-picking.log) |
-| Ordinary editor authoring undo, duplicate/undo, Play/Stop and save | Shared batch/undo pass; duplicate undo and post-Play/Stop authored scene IDENTICAL; save succeeds — [editor-smoke.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/editor-smoke.log). Runtime-preview-specific Undo/Redo remains a human check. |
-| Actual VM API surface versus current inventory | 321 public symbols, 224 native operations, no missing/phantom symbols — [api-live-comparison.json (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/api-live-comparison.json) |
-| Extended material cookbook through the ordinary VM | 9 checks, 0 failures — [cookbook-materials.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/cookbook-materials.log). Numeric/whole/visibility/light checks run; this primitive fixture has no imported parts. |
-| Normal TypeScript/AST/declaration/example checker | **Unexecuted**: TypeScript is unavailable and temporary download has not been authorized. The VM/inventory comparison does not replace this check. |
-| Save-storage durability regression | 28 checks, 0 failures — [save-storage.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/save-storage.log) |
-| Export regression | 18 checks, 0 failures — [export-regression-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/export-regression-final.log) |
-| Lab export and moved standalone save/load | 33 assets, one scene, 53,147,870 bytes; 260-frame moved run captures authored/hidden/changed/loaded states and completes save/load waits — [export-lab-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/export-lab-final.log), [moved-package-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/moved-package-final.log) |
-| Full M59 retained archive/revisit for new render state | 5 checks, 0 failures — [retained-region-01.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/retained-region-01.log) |
-| Native live-lab every-frame presentation and profile | 4 checks, 0 failures — [live-app-verified.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/live-app-verified.log), [M56 profile (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/application/lab-live-profile.json) |
-| Native Windows M72 | Pending; prior operator-reported Windows acceptance is historical |
-| Human visual/editor review | Pending |
-
-The actual GL receipts use an ordinary hidden EngineHost with SDL offscreen,
-Mesa llvmpipe (LLVM 21.1.8, 256 bits), software OpenGL and dummy audio. The focused
-main view is 256×192; its auxiliary fixture is 128×96. Logs retain the EGL software
-device warning, and the ordinary offscreen editor reports unavailable relative
-mouse capture. These runs do not establish physical mouse/compositor, audio or
-human visual quality. Prior M71 receipts remain historical and are not reused as
-proof of M72.
-
-The first rendered fixture's five expectation/setup failures remain in
-`render-controls-01.log`: display-transform assumptions and request/wait ordering
-were corrected, then the final 54-check run passed. Earlier authoring/application
-attempts and the wrong-working-directory M57 invocation are retained as well.
-The linked final receipts identify the executed scope; no TypeScript pass or
-complete runtime-preview gesture acceptance is inferred from neighbouring checks.
-
-The actual public VM fixture registers malformed image bytes, observes a pending
-replacement, then receives failed status and a bounded error. Clearing the runtime
-patch restores ready authored-source state. This supplements the rendered fallback
-check and is separate from the lab's immediately rejected unregistered ID.
-
-The retained-region fixture archives 12,236 bytes through public M59 streaming
-operations. Unload retires the old identity and model/material/texture references;
-revisit creates a fresh identity, restores visibility and full whole/stable-part
-runtime bindings, and reacquires one demand per resource. The persistent root
-sun/environment remains unchanged. The live-lab receipt runs the ordinary
-application at 1024×768 with every-frame presentation and exports its M56 profile.
-
-### Package relocation and bounded measurements
-
-The exported lab was renamed to `/tmp/judas-m72-moved-render-lab-20261009`.
-Its owned source copy was moved aside to `.cache/m72/export-source-hidden`;
-the unrelated repository and asset-pack work remain present. The final standalone
-run starts the moved package from an unrelated working directory, renders 260
-frames and completes public slot save/load waits. Captures are in
-`docs/evidence/m72/package/`; the source runtime lab run is in
-[lab-startup-final.log (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/development/lab-startup-final.log).
-The actual moved-project log names the relocated `game.judasproj`, not a repository
-project. Export time was 0.052 seconds. This is Linux relocation evidence.
-
-The bounded rendered workload shares one material across 128 primitive instances.
-The default observation draws all 128 for 20 frames; the changing observation
-runs 60 frames with factors changing every frame, 96 visible and the sun disabled
-on six frames. CPU times include submission and driver waits, with no screenshot
-readback inside the loops. Different visibility/shadow work prevents interpreting
-the lower changing time as a general speedup.
-
-| Observation | Median / p95 / maximum CPU ms |
-| --- | --- |
-| Shared defaults | 3.5132 / 3.9301 / 3.9955 |
-| Frequent factor/sun/visibility updates | 2.9693 / 3.5599 / 4.0003 |
-| Replacement prepare/two submissions/retire, eight cycles | 7.2704 / 8.0683 / 8.0683 |
-
-Steady frames create zero new texture or mesh uploads and retain 540,672 appearance
-cache bytes and the same shared material handle. Eight replacement/retirement
-cycles create 16 textures and destroy all 16. The retained M56 profile contains
-80 frames with no dropped/incomplete/truncated/exhausted observations; its final
-two delayed GPU records remain pending. The CPU figures do not treat them as a GPU
-timing guarantee. See the [rendered receipt (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m72/render-controls/README.md).
-
-Separately, the application fixture measures 10,000 grouped lighting/material/
-visibility writes at 7.216 ms total (0.000722 ms per update). That is publication
-cost in this bounded local fixture, not an every-frame live-lab or FPS guarantee.
-
-## Architecture refresh in this handoff
-
-[Architecture](ARCHITECTURE.md) now names accepted M71/current M72 status and
-provides a compact current owner/timing guide. Its current fixed ordering includes
-M70 motor/reference/physical-drive preparation and final socket updates. M33
-auxiliary shadow/sample limits, M57→M66/M72 material continuity and optional M68
-export closure are explicit. Four older language/rendering/main-loop/testing
-accounts gained historical labels; their original reasoning and failure evidence
-remain. The prior M32 liquid/solid failure narrative and old evidence files were
-preserved. Platform wording distinguishes the operator's earlier Windows acceptance
-from outstanding native evidence for this candidate.
-
-## Human review
-
-1. Run the lab and change sun direction, enable, intensity and colour. Check real
-   direct light/shadow movement independently of exposure.
-2. Coordinate ambient, environment/background and exposure; inspect pending/error
-   status and restore root defaults. Load a region without changing the root sun.
-3. Hide a whole entity, its Render component and a part independently. Show it and
-   verify intentional component/part hiding remains, children retain their state,
-   and hidden geometry casts no stale shadow.
-4. Confirm hidden bodies remain queryable and animated joints/sockets/audio/scripts
-   still run. Restore the object from hierarchy/inspector access.
-5. Compare two shared-model/material instances while changing whole/slot/part colour,
-   opacity and texture on one. Check opaque, cutout and simple non-intersecting blend
-   depth/sorting. Clear runtime assignment/patches back to authored values.
-6. Replace/reset textures during loading, then destroy/unload/reload the owner;
-   inspect fallback/error and confirm no obsolete map appears.
-7. Observe the live screen while changing/hiding sources. Check feedback/resource
-   safety and main-view continuity; screen pixel/shadow parity is not required.
-8. Use authored Undo/Redo and separate runtime preview Undo/Redo. Stop, reopen,
-   prefab-spawn, save/load in a fresh process and revisit a retained region.
-9. Export and move the package; repeat selected-ID and save/restore behaviour
-   from an unrelated working directory.
-
-Remaining intentional limits: bounded existing lights/resources/material targets,
-object-origin transparent sorting, main-focused shared auxiliary shadows, fixed
-origin, no joint-subtree hiding/scaling, no native transition policy, GI/refraction/
-weather/shader graph or asset-pack distribution. Human acceptance remains the
-final boundary for this combined candidate.

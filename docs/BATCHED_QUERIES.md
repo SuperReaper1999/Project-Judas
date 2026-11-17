@@ -1,9 +1,9 @@
-# M69 — paired controller input and batched physics queries
+# Batched physics queries and paired input
 
 Accepted at `8ddec3b97d66815de4174d6e103be77e74b7eb0f`, originally based on
-`c042797c755df68b45e36aa917c4ca72818b9bcd` (M68). Operator acceptance
+`c042797c755df68b45e36aa917c4ca72818b9bcd` (scalability). Operator acceptance
 uses synthetic controller/VM checks; no physical controller was available.
-M67's deferred human authoring review remains deferred. This work adds two engine
+named-authoring's deferred human authoring review remains deferred. This work adds two engine
 primitives; flick recognition, ledge selection and climbing remain project JS.
 
 ## Public surface
@@ -38,38 +38,3 @@ filter. One dispatcher crossing prepares the filter once, validates every entry,
 then performs the same authoritative PhysicsWorld casts as scalar calls. Results
 are ordered scalar-style hit snapshots/null with normal safe entity wrappers.
 There is no batch box/overlap family, new geometry, query scheduler or copied world.
-
-## Examples and operator check
-
-[Right-stick reader](judasjs/examples/paired-stick.js) displays raw/circular/frame
-values and retains recent ordered observations at fixed boundaries.
-[100-ray fan](judasjs/examples/ray-fan.js) returns ordered hit data in the owner's
-local orientation and compares scalar results on the `compare_rays` logical action.
-The tiny generated operator fixture is described in the
-[cookbook](judasjs/cookbook.md); source projects remain unchanged.
-
-1. Connect a controller and try right-stick cardinal/diagonal values. Raw diagonal
-   components can both reach 1; circular output preserves direction and caps magnitude.
-2. Flick out and back: neutral endpoint/net delta can coexist with ordered nonzero
-   intermediate samples. Inspect reset/overflow counters rather than treating gaps
-   as complete gestures. Hardware timing/feel requires this operator check.
-3. Press C in the fixture to compare the 100-ray batch with scalar results. Misses
-   remain in place and matches are reported. This is query data, not ledge selection.
-
-## Validation boundary
-
-`scripts/m69_validation.py` performs one existing-config incremental Release build,
-then one focused native-input/real-VM query/input pass, the two executed public
-examples, TypeScript/source/live API coverage and one generated-fixture startup.
-It stops on the first failure;
-no second build/test cycle is authorized automatically. No production suite,
-historical rebuild, consumer-game port or export matrix is needed here.
-
-The query fixture measures 100 scalar crossings versus one batch crossing in the
-same VM/world, with five warm-up callbacks and 21 measured callbacks per mode.
-Both modes still perform 100 geometric queries. Profiling scopes/counters separate
-geometry from total callback cost; this is no universal speedup promise.
-
-Actual gate outcome, commands, measurement, changed files and candidate SHA-256
-fingerprints are recorded under [evidence/m69 (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m69/REPORT.md). Synthetic SDL
-delivery and real VM checks do not claim human controller validation.

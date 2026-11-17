@@ -1,68 +1,75 @@
-# Materials and environment lighting — M57 foundation, M72 candidate
+# Materials and environments
 
-## Terrain base-color painting
+Materials own appearance, not collision or gameplay. Use registered `.judasmat`
+assets, model material slots and explicit runtime instance overrides. The renderer
+consumes immutable shared resources; one entity's runtime patch does not rewrite
+the shared asset or another instance. See [exact script fields](judasjs/materials.md),
+[model import](MODEL_IMPORT.md) and [runtime appearance](RUNTIME_RENDERING.md).
 
-[M75 (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M75.md) blends up to four registered base-color textures using normalized spatial weights and local metre tiling into one ordinary opaque baked texture. It does not add multilayer PBR, shader graphs or per-texel physical materials. Geometry and appearance revisions are separate.
+## Author and assign
 
+In the Asset Browser create/select a material, edit it and save its source. Assign
+its registered ID to a Render component or imported model slot. Inspect stable
+model part/material identities rather than relying on a downloaded file's display
+names or slot order. Prefab overrides use the same scene property contracts.
 
-Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [M72 ownership/review](RUNTIME_RENDERING.md), [material lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/material_lab/material_lab.judasproj), [Spring Range (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/shooter_game/shooter_game.judasproj).
+Choose Legacy, PBR or Unlit. PBR uses metallic/roughness, base colour, normal,
+occlusion and emission with the supported texture roles. Configure UV transform,
+sampler, alpha mode/cutoff and double-sided policy explicitly. A translucent source
+image does not establish that every associated body/interior material should blend.
+Imported legacy shader graphs may require deliberate material authoring; the
+importer does not reconstruct every DCC/game shading graph or guess every bump
+texture's semantic role.
 
-M72 extends the existing pipeline with validated runtime sun/ambient/environment
-controls, local entity/component visibility and isolated whole/slot/stable-part
-material patches. Sun direction points toward the source in world coordinates;
-linear radiance multipliers are not certified photometric units. Reset removes
-runtime values and restores authored defaults, including material assignment.
-Explicit opacity uses the alpha modes described below. Shared source assets remain
-immutable; resource replacement and durable state use ordinary IDs/generations.
-The [API reference](judasjs/materials.md) defines ranges, timing, resource readback
-and reset precedence. M72 remains an uncommitted candidate awaiting human review.
+Opaque, Mask and Blend have different depth/order behaviour. Use Mask for cutout
+coverage and Blend for genuine translucency. Opaque casts need no alpha texture
+sampling; masks retain material-specific shadow coverage. Blend rendering is
+sorted separately. Double-sidedness and mirrored winding retain their own cull
+policy. Hiding a renderable does not disable its body, scripts or audio.
 
-## Authoring
+## Colour, lighting and environments
 
-In the editor Asset Browser, **Create material** registers a `.judasmat` asset. Select it and edit **SHARED material source**, then save intentionally. Assign its ID to a Render component's material slot. The scene is the preview. Instance parameters are labelled **INSTANCE OVERRIDE**; revert removes overrides without changing the source. Ordinary scene edit transactions support assignment/override undo. Shared asset saves are explicit disk operations, not scene undo. Texture reimport invalidates dependent material resources.
+Texture colour roles, scene-linear shading and final display resolve are explicit.
+Normal/roughness/metallic/occlusion data are not colour-transformed as albedo.
+The shader's PBR path uses direct lighting plus its supported environment terms;
+Legacy uses its own established arithmetic. AO affects ambient/environment, not
+unrelated direct/emissive contribution. Emission is not a light source for neighbours.
+Light multipliers are engine radiance controls, not certified photometric units.
 
-Scene settings opt into **Linear rendering**, exposure, a baked environment, its quaternion orientation and intensity, and independent background visibility. **Bake HDR environment** imports a Radiance `.hdr` source into a registered `.judasenv`. CLI: `build/judas_environment_bake input.hdr output.judasenv 128 128`. Width is power of two 16–512; samples 32–1024. These are preprocessing controls, not per-frame settings.
+Use `judas_environment_bake` or the matching editor tool to prepare `.judasenv`
+assets. Offline integration builds diffuse irradiance, roughness-filtered specular
+levels and a BRDF lookup, with source/settings/algorithm provenance. Runtime loads
+those products rather than convolving source HDR images every frame. Environment
+selection/intensity/rotation and background visibility are scene appearance settings;
+rotation is independent of gravity. Without an environment, ambient is the practical
+fallback. No dynamic GI, automatic reflection probes or arbitrary source-material
+transmission model is supplied.
 
-Material model is **Legacy**, **PBR metallic/roughness**, or **Unlit**. Maps: base colour, metallic/roughness, tangent normal, ambient occlusion, emission. Factors are linear RGB; alpha is unencoded. The editor's factor colour fields show linear numeric values, not an sRGB colour picker. Base colour channels/metallic/roughness/occlusion/cutoff are 0–1, normal strength 0–8, emission/intensity nonnegative ≤100000. UV scale/offset and repeat/clamp/mirror wrapping plus nearest/linear/mipmap filters are authored per map.
+Directional cascades and point/spot lighting/shadows are described by
+[the lighting system](LUCIFER_V2.md); the former fixed shadow-slot limits do not
+describe current V2. Exposure changes final presentation, not physical light output.
+[Grid Water optics](WATER_V2_PRESENTATION.md) and Basic Water have separate current
+presentation owners; retired reservoir/liquid optical paths are not alternatives.
 
-Opaque writes depth. Cutout discards below cutoff in both colour and shadow passes. Blend draws after opaque, back to front by object-origin camera depth, depth test on/depth writes off, no shadows. Mixed meshes submit opaque primitives first, blended primitives later. Intersecting transparent surfaces and per-triangle sorting are not solved. Alpha blending is not refractive glass. Double-sided flips the shading normal on back faces.
+## Runtime and lifecycle
 
-## Colour and pass ordering
+`entity.material(target)` addresses a numeric slot, stable part or whole instance.
+Patch supported factors/textures/alpha policy through the public reference; invalid
+or unknown options reject before mutation. Texture/environment selection can be
+pending or failed after a valid write. Inspect actual readiness/error rather than
+assuming that a selected ID is synchronously loaded.
 
-Base-colour/emission images use sRGB texture views, so hardware decoding, interpolation and mip filtering occur in linear light; alpha is linear. Normal/AO/metallic-roughness maps are numerical linear data. Roughness uses G; metallic uses B; AO uses R. CPU RGBA8 resources retain raw bytes; material uploads use separate role-correct sRGB/linear views, so one image can serve colour and data safely. Legacy disk textures keep their original raw-byte presentation. PBR/unlit consumers of an ordinary Render texture slot and modern particles lazily cache a separate sRGB upload from already-decoded GPU texels on the context thread (once per source lifetime, not per frame). Source destruction also releases the view. Legacy display camera targets remain live raw images; modern targets are already scene-linear. Missing maps use white/no perturbation/unit AO. Material loads take immutable CPU texture snapshots, upload on the context thread and own those GPU maps; no dependent texture handle dangles during eviction/reload.
+World appearance patches, entity/component visibility, stable part visibility and
+instance overrides have explicit reset semantics. Authored defaults return on
+ordinary reload/Stop; modern saves and supported region snapshots retain durable
+runtime appearance through the existing owners. GPU objects, texture units and
+framebuffers are rebuilt, not serialized. Export verifies dependency closure.
 
-Legacy scenes without new authored appearance remain on the original presentation policy. Imported glTF PBR materials are used when the scene opts into linear rendering; explicitly assigned materials select their model. Optional HDR/environment work is absent for legacy scenes. A PBR material without HDR uses bounded per-fragment Reinhard + sRGB; unlit without HDR encodes linear colour directly.
+Terrain paint uses its four material layers independently of heightfield LOD.
+Small paint detail must not disappear merely because geometry simplifies; terrain
+material pages and geometric patches have separate ownership. See
+[terrain authoring](TERRAIN_V2.md) and [residency](TERRAIN_V2_RESIDENCY.md).
 
-Modern world lighting accumulates in RGBA16F, then manual exposure, luminance-preserving Reinhard (`rgb / (1 + dot(rgb, [.2126,.7152,.0722]))`), clamp for SDR gamut, then exact piecewise sRGB transfer, once. The representable lighting ceiling is 60000 per channel (below binary16 overflow); over-bright material output saturates there before resolve. HDR input outside finite 0–60000 fails with an import diagnostic. This is internal HDR, not HDR-monitor output. UI/debug authored colours remain display-referred and render after world resolve, independent of exposure. Particle authored tint and colour-texture RGB are decoded separately before multiplication into modern linear lighting; alpha is unchanged.
-
-Modern M33 targets are RGBA16F **scene-linear** images: environment background and water optics included, exposure/tone mapping excluded. Their resource carries its interpretation; ordinary material sampling skips sRGB decoding. The final main camera applies exposure/output conversion once. When a UI Image displays a scene-linear camera target (including `setPreviewCamera`), the UI applies that same scene exposure, luminance-Reinhard and sRGB conversion at its own display boundary, before UI tint/opacity. This does not modify the shared camera texture or tone-map ordinary UI images, panels or text. Already display-resolved targets are not converted twice. Legacy targets stay RGBA8 display-referred. Camera masks, cadence and self-feedback fallback remain intact. Target resize caches are bounded; main/secondary sizes do not allocate every frame.
-Auxiliary views use the ordinary geometry/material/transparency paths and reuse
-the main-focused directional/legacy spot shadow maps. Their resolution/cadence
-remain authored; independent shadow focus and pixel-quality parity are not promised.
-
-M55 optical boundary paths still come from the accepted liquid system at interpolated presentation time. World fragments apply Beer-Lambert attenuation and existing in-scattering **before** HDR display resolve. Liquid surface/particles follow opaque world rendering, then resolve, then UI. No changes to liquid quantity, surface solver, geometry or gravity are part of M57.
-
-## Shading and environment
-
-Direct model: metallic/roughness GGX distribution, height-correlated Smith visibility, Schlick Fresnel and Fresnel-reduced Lambert diffuse. Dielectric F0=.04; metal F0=base colour and diffuse zero. Perceptual roughness clamps to .05, alpha=roughness², avoiding an unbounded delta lobe. Existing directional, five dynamic point/spot lights and three shadow slots remain. Light colours are engine-authored radiance multipliers with existing bounded range attenuation, **not certified photometric units**. Emission does not light neighbours. AO affects environment/fallback ambient only, not direct light or emission. Assigned IBL replaces fallback ambient, never double adds it.
-
-Offline deterministic Hammersley integration builds cosine-weighted diffuse irradiance/π, GGX roughness-prefiltered latitude/longitude specular mip levels and a split-sum BRDF lookup. `.judasenv` contains derived floats plus SHA256 of source bytes, bake settings and algorithm version; runtime just loads/uploads. Authored environment rotation is independent of gravity. No assigned environment uses the scene's ambient colour as a practical diffuse fallback. No reflection probes, dynamic convolution or GI.
-
-## Import and lifecycle
-
-**Historical M57 import restrictions, superseded by accepted M66** ([current model import](MODEL_IMPORT.md)): pinned cgltf handles self-contained GLB/glTF with embedded buffers/images, one mesh node, triangle primitives and up to one skin; existing 48 skin-joint/128 node limits remain. Core metallic/roughness factors/maps, sampler state, alpha, double-sided and KHR_materials_unlit import per primitive. TEXCOORD_0 only. Required unsupported extensions fail; optional unsupported extensions are reported. Texture transforms, external resource files, additional UV sets and material extension effects are unsupported. Embedded bytes survive package relocation; reimport replaces resources through their normal identity.
-
-Imported tangents retain their sign; missing tangents use pinned MikkTSpace (zlib license) on indexed corners, splitting seams and preserving skin influences. Degenerate UVs use a finite orthogonal tangent fallback. Normal matrices account for nonuniform instance/skin transforms; determinant sign preserves mirrored handedness. Normals and tangents consume the same resolved skin palette as vertex positions; entity transforms use presentation timing. There is no separate pose pipeline.
-
-Shared material/mesh/environment CPU decoding uses ResourceManager workers; Renderer owns all GL upload/delete. Registered IDs are serialized in scenes/prefabs with generic override support. Runtime overrides do not rewrite authored source files; explicit modern M61 saves and M59 retention preserve supported live values/IDs and rebuild disposable resources. Optional authored fingerprint extension retains canonical schema 5; worlds opting into appearance or declaring registered material/environment assets include registered material/environment/mesh/texture bytes in content identity, independent of absolute path. Absent new appearance and registered M57 assets preserves old fingerprint data. M38's conservative all-assets export remains default; M68 also supports opt-in selected-scene dependency closure plus explicit runtime assets. With closure selected, script-selected material/texture/environment IDs must be reachable or declared runtime assets. Export validates map references. Source HDR and import/bake tooling are not required by shipped runtime.
-
-## References and limits
-
-Algorithms/contracts: [glTF 2.0](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html), [Filament explanation](https://google.github.io/filament/main/filament.html), [MikkTSpace](https://github.com/mmikk/MikkTSpace). Implementation uses one documented Reinhard operator; no borrowed tone-mapping code. MikkTSpace pinned source and license are in `third_party/mikktspace`; notices accompany exports.
-
-Twelve fragment texture units cover base, three shadows, water, four material maps and three IBL textures; hardware limits are checked at startup. Modest environment sizes suit small GPUs. No bloom, GI, advanced glTF material extensions, refraction, dynamic probes or general shader scripting. Screenshots/readback are engineering evidence; human review decides visual/gameplay quality.
-
-M66 uses one additional vertex texture-buffer binding at unit 15 for size-aware
-skin palettes (GL3.3; checked against the hardware limit). Main/shadow/secondary
-passes share eight-weight geometry. Supported imported texture transforms/UV1
-are documented in [Model import](MODEL_IMPORT.md).
+Test appearance in the real editor and moved runtime at the intended camera,
+lighting and alpha policy. A successful bake/parser, hidden interior or unlit
+screenshot is not proof that the imported material matches an external reference.

@@ -90,9 +90,3 @@ registry boundary; existing JavaScript error types pass through. No general API 
 part of this pass.
 
 ## Qualification
-
-See [implementation evidence](../evidence/scripting-v2/README.md). Baseline
-observations, real fixed-step endpoint comparisons, editor debugger/reload
-checks and relocated exports are distinguished from manual human acceptance.
-Native Linux qualification does not by itself establish Windows, Android or
-browser qualification for this refactor.

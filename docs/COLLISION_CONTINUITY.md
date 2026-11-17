@@ -1,10 +1,4 @@
-# M91 — Predictable Collision at Scale
-
-M91 develops on Experimental. Human acceptance and main promotion are separate.
-See the [measured evidence, failures and limits (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m91/REPORT.md).
-
-[Architecture](ARCHITECTURE.md) · [Mechanical Arcade lab](../projects/physics_stress_lab/README.md) ·
-[M87 investigation (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m87/live-slowdown-followup/REPORT.md)
+# Collision continuity and cached contact preparation
 
 ## What changes
 
@@ -14,7 +8,7 @@ The fixed cadence, materials, gravity integration, contact manifolds, ten veloci
 iterations, restitution/energy policy, sleeping rules and sampling budgets remain.
 No distance-based freezing, reduced contact fidelity or scene-specific path exists.
 
-M91 changes **persistent-contact continuation**, not the definition of geometric
+contact-continuity changes **persistent-contact continuation**, not the definition of geometric
 contact. Numerical trajectories can change; this is not a bit-identical simulation
 optimization. In particular, retaining an already-established support is allowed
 only by the bounded geometric rule below. A strictly zero-overlap simulator is not
@@ -28,7 +22,7 @@ contact events**. Hard-jointed islands, external physics couplers, elastic fligh
 and events containing cooked/compound/displaced geometry retain the original
 contact-cache invalidation and CCD event policy. Geometry bounds alone do not
 certify a mechanism’s reaction history. An unrestricted prototype regressed the
-unchanged M77 corrective-step controller; isolated controls showed both new
+unchanged balance corrective-step controller; isolated controls showed both new
 identity retention and support certification could alter that coupled response.
 The restricted implementation restores the baseline output without changing the
 controller, fixtures, iterations or acceptance thresholds. Exact arithmetic and
@@ -51,14 +45,14 @@ separate and continue to contain actual solved rows, not certificates.
 
 This is not new save state. The existing limitation around missing warm-contact
 continuation for arbitrary unjointed piles remains; a cold save is not promised to
-reproduce an uninterrupted pile bit for bit. Articulated M70/M77 contracts are
+reproduce an uninterrupted pile bit for bit. Articulated IK/physical-animation/balance contracts are
 validated independently.
 
 ### A support survives a changed trajectory only with a proof
 
 Previously, changing a body's velocity discarded other support-pair exemptions
 unless those pairs happened to be touching at that event. Small positive gaps then
-re-entered first-touch CCD repeatedly. M91 tries to certify the complete remaining
+re-entered first-touch CCD repeatedly. contact-continuity tries to certify the complete remaining
 motion before discarding an already-established support.
 
 For centred native boxes and spheres, choose a current geometric normal `n` and
@@ -80,7 +74,7 @@ rotation/discontinuities, uncertain arithmetic and unsuccessful proofs retain th
 original CCD invalidation/search path. Other objects and newly encountered pairs
 always retain ordinary CCD.
 
-The rotation enclosure follows M87's represented quaternion arithmetic, factored
+The rotation enclosure follows physics-scaling's represented quaternion arithmetic, factored
 into a shared helper. If an interval is too wide, at most three subdivisions
 (eight terminal intervals) tighten it. Each accepted interval encloses **all**
 represented times; this is not collision sampling. Exhaustion means ordinary CCD,
@@ -123,7 +117,7 @@ coarse for the proof, it fails closed. No world-up direction is used.
 
 ## Profiling
 
-M56 exposes continuation attempts/acceptances, partition count, over-budget
+profiler exposes continuation attempts/acceptances, partition count, over-budget
 fallback count, coupled/elastic/geometry fallback events, peak impact-island
 bodies/contact rows, and inclusive proof/cache times. CCD geometry/search, island discovery,
 impact response and observation-publication categories remain available.
@@ -134,31 +128,3 @@ There is no per-contact profiler-event flood. Inspect dropped/truncated records.
 penetrations for the lab's authored `loose_piece` population. This observation is
 outside fixed-step timing. It is not a general collision certificate for arbitrary
 projects, and finite fields alone are not physical acceptance.
-
-## Reproduction and demonstration
-
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --target judas judas_editor judas_export \
-  judas_collision_continuity_tests judas_contact_interval_tests \
-  judas_physics_stress_live_benchmark -j4
-build/judas_collision_continuity_tests
-build/judas_contact_interval_tests --benchmark
-build/judas projects/physics_stress_lab/physics_stress_lab.judasproj
-```
-
-The unchanged authored populations exercise 32 mechanisms, 96 joints and
-128/512/1024 loose bodies. **F5** runs the watch tour; **1–4** choose the normal
-registered scenes. The largest pile remains an extreme workload, not a 60 Hz
-certification. Longer runs still expose seconds-long global contact-island
-cascades. M91 is a measured improvement, not closure of every dense-contact
-performance limit. The evidence states measured tails and censored failures.
-
-For matched timing, link the same observer source against the preserved baseline
-and final engine, then use `scripts/m91_measure.py`. It alternates process order,
-preserves complete per-step CSVs and endpoint geometry, records native peak RSS,
-and kills only its owned process group on timeout. An unfinished step has no
-invented duration. Synthetic fixed-cadence runs do not measure displayed FPS.
-
-The evidence supplies the exact baseline, binaries, commands, configurations,
-source fingerprints, historical fixture references and rejected alternatives.

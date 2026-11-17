@@ -1,15 +1,9 @@
-# M90 — Bring Everything Along
-
-M90 release promotion was authorized by the operator after the driving review
-and third-person camera correction. See the [camera follow-up (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m90-camera-followup/REPORT.md)
-for the automated before/after proof; a further human camera retest is not claimed.
-The [original candidate evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m90/REPORT.md) retains its original status.
-No Windows or Android M90 validation is claimed.
+# Origin shifts and physical assemblies
 
 ## One chart, one authoritative world
 
-M85 already owned binary64 absolute terrain, a checked 512 m origin request,
-a single local PhysicsWorld and a completed-fixed-boundary commit. M90 extends
+planetary-terrain already owned binary64 absolute terrain, a checked 512 m origin request,
+a single local PhysicsWorld and a completed-fixed-boundary commit. origin-shift extends
 that transaction, rather than making a second vehicle/character solver or moving
 only presentation. `Simulation.cpp` commits before navigation and fixed scripts.
 The existing request API remains unchanged; projects decide when to request.
@@ -53,7 +47,7 @@ per-frame participant scan; the extra work is requested origin publication.
 ## Streaming, saves and lifecycle
 
 Snapshot records retain their capture origin. Previously wheels, mechanical and
-other opaque component records prohibited origin changes while suspended. M90
+other opaque component records prohibited origin changes while suspended. origin-shift
 removes that blanket rejection and performs explicit reconstruction:
 
 - Kinematic target points shift **before** the existing motion validation. Staged
@@ -69,12 +63,12 @@ removes that blanket rejection and performs explicit reconstruction:
 
 Live articulation suspension restrictions remain intact. Such an assembly can
 travel through origin changes, but still pins its source region until its usual
-retirement/adoption rules permit unloading. Pending M59 installation/retirement
+retirement/adoption rules permit unloading. Pending region installation/retirement
 continues to block publication rather than allowing a partial rebase.
 
 ## Script caches
 
-[The optional `onOriginShift(event)` hook](judasjs/planetary-terrain.md#onoriginshiftevent--explicit-script-caches-m90)
+[The optional `onOriginShift(event)` hook](judasjs/planetary-terrain.md#onoriginshiftevent--explicit-script-caches)
 lets projects translate known local caches after publication. Arbitrary script
 JSON is never inspected or changed heuristically. Keep long-lived locations in
 absolute coordinates, especially when a script can be suspended; absent scripts
@@ -82,28 +76,13 @@ receive no missed notifications. Rebuild local caches when the instance resumes.
 The hook is synchronous/budgeted/error-isolated, and fixed-only writes remain
 restricted to `fixedUpdate`.
 
-## Editable lab
-
-[Bring Everything Along (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/travelling_lab/README.md) uses an ordinary
-project, reusable rover/explorer prefabs, real Earth-sized M85 terrain and M59
-waystations. Its electric source, reduction gear, clutch and differential drive
-four M81 wheels. Project JS supplies inputs, a watch-tour course, camera policy,
-stream interests and origin requests. No car/scene-name branch was added to C++.
-The lab is intentionally compact content, not an orbit simulator or new game.
-
-Regenerate authored content and the baked local navigation asset with
-`build/judas_create_travel_lab` from the repository root; the existing M81/M82
-wheel/buggy assets are the recipes. The lab owns copies and independent stable
-asset IDs. Its authored JS is kept separately and is not overwritten by the tool.
-
 ## Boundaries / remaining work
 
 - One shared local chart, checked at 8 km; absolute anchors are finite and bounded
   to 1e12 m. This does not enable simultaneous widely separated active physics.
-- M90 originally rejected conserved liquids, legacy PBF, atmosphere and combustion.
-  Pre-Alpha Pass2 adds bounded conserved-owner/parcel and analytic gas/thermal
-  carrier translation; see [current composition support](CURRENT_STATUS.md).
-  Legacy PBF remains rejected. FLU-001 and independent fluid research are untouched.
+- Grid Water regions translate through their existing owner. Analytic atmosphere
+  frames and combustion carrier/scalar state have origin handling; that does not
+  imply save/suspension participants. Retired PBF/reservoir owners are absent.
 - Planet collision retains one bounded focus; the lab prepares ahead and brakes
   if collision is not ready. It does not silently drive through missing terrain.
 - Pending streaming blocks a shift; large travel still requires residency policy.
@@ -112,5 +91,5 @@ asset IDs. Its authored JS is kept separately and is not overwritten by the tool
   errors and tolerances are evidence for the exercised fixtures, not a global
   determinism guarantee. Continuous active travel was measured over 2 km; the
   authored watch route contains waystations over approximately 11 km.
-- Windows/Android M90 builds and physical-controller validation are unperformed;
+- Windows/Android origin-shift builds and physical-controller validation are unperformed;
   they are informational/nonblocking under the established workflow.

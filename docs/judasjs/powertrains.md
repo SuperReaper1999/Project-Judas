@@ -1,6 +1,6 @@
 # Powertrain — shafts, torque sources and mechanical connections
 
-[Index](../JUDASJS.md) · [Wheels](wheels.md) · [Physics/joints](physics.md) · [Entities/prefabs](entities.md) · [Saves](saves.md) · [M82 model/authoring](../POWERTRAINS.md)
+[Index](../JUDASJS.md) · [Wheels](wheels.md) · [Physics/joints](physics.md) · [Entities/prefabs](entities.md) · [Saves](saves.md) · [powertrain model/authoring](../POWERTRAINS.md)
 
 An optional authored Powertrain component contains a bounded rotational network.
 Internal shafts have real rotational inertia. Terminals can refer to ordinary
@@ -41,7 +41,7 @@ record identifies a member by its authored `name`, scoped to that component.
 
 - `sources: [{name, input?, customTorque?, starter?}]`: source input, signed
   custom torque in N m, and authored starter fraction. `input` and `starter`
-  ranges depend on the source model; see the M82 model reference.
+  ranges depend on the source model; see the powertrain model reference.
 - `links: [{name, enabled?, engagement?, ratio?}]`: enabled gate, clutch fraction
   in `[0,1]` and signed output/input speed ratio. `ratio: null` restores the
   authored ratio. A disabled link represents disconnection/neutral. There is no
@@ -100,7 +100,7 @@ during mechanical evaluation; reading it does not advance their pose or command.
   `residual` describes the last mechanical projection; `slip` is refreshed from
   the final published physical velocities after the fixed interval.
 - `kineticEnergy`, `constraintEnergyChange`: scalar-network diagnostics in joules,
-  with their modelling bounds described in M82; not a whole-world energy ledger.
+  with their modelling bounds described in powertrain; not a whole-world energy ledger.
 - `shafts`: `{name, available, angularVelocity, rpm, angle, torque}`. Relative
   angular speed is measured in rad/s; RPM is its signed conversion, not scripted
   display state. `angle` is in radians; `torque` is interval net mechanical torque.
@@ -117,16 +117,16 @@ physics lifecycle. Public snapshots never grant ownership of native solver state
 
 This is a small scalar rotational network, not a combustion thermodynamics,
 gear-tooth elasticity, battery/fuel, thermal clutch, vehicle controller or full
-3D rotor gyroscope model. Physical body rotors still use ordinary M45 constraints
+3D rotor gyroscope model. Physical body rotors still use ordinary joint constraints
 and PhysicsWorld. Finite-step splitting of mechanical rows, tyre contacts and
-rigid integration is approximate. See M82 for measured checks and bounds.
+rigid integration is approximate. See powertrain for measured checks and bounds.
 Separate graphs execute in ascending owner entity-ID order, with one simultaneous
 mechanical solve per graph. Shared bearings couple physically across graphs;
 place tightly coupled shaft networks in one authored graph.
 
 ## Physical connection prerequisite
 
-M83 adds an optional authored link record:
+mechanical-damage adds an optional authored link record:
 
 ```json
 "connection": {"owner":"102", "attachment":"right", "rootAttachment":"left"}
@@ -135,7 +135,7 @@ M83 adds an optional authored link record:
 `owner` is the existing Deformable entity identity. `attachment` is its named
 physical attachment group. Optional `rootAttachment` requires a second enabled,
 live attachment and a continuous current material path between the groups.
-For cohesive M79 cooks, every surviving patch node must belong to the same
+For cohesive structure cooks, every surviving patch node must belong to the same
 unbroken component as the root. Removed material or committed bond breaks open
 the transmission only when they invalidate that patch or its required root path;
 unrelated cuts and surviving alternate paths do not. Released/disabled attachments,
@@ -155,15 +155,15 @@ The qualified streamed reference is `powertrain-link:<link-name>:connection`.
 held JS `enabled` command. A failed prerequisite suppresses that link's impulses;
 it does not destroy shafts/wheels, discard momentum, turn off independent
 sources/brakes or overwrite driver commands. Enabling the link cannot heal it.
-No prerequisite means `connected: true` and unchanged M82 mechanics. The optional
+No prerequisite means `connected: true` and unchanged powertrain mechanics. The optional
 record is omitted from default authored graphs, preserving their fingerprints.
 Connection availability is reconstructed, not saved as a second damage truth.
 Committed material changes are observed at the next mechanical interval.
 
-See [Deformable strength and observations](deformables.md#m83-materialbody-connection-strength)
-and [M83 model/authoring](../MECHANICAL_DAMAGE.md).
+See [Deformable strength and observations](deformables.md#materialbody-connection-strength)
+and [mechanical-damage model/authoring](../MECHANICAL_DAMAGE.md).
 
-## Material group prerequisites (M83)
+## Material group prerequisites
 
 A connection can opt in to `groups: true`. `attachment` and required
 `rootAttachment` then identify cooked material node groups, rather than attachment

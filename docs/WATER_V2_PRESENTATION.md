@@ -1,9 +1,5 @@
 # Grid Water V2 presentation
 
-V2 source preview on Experimental. Advanced Fluids is project-opt-in in every V2 build channel; published V1 releases and main remain unchanged. The [physical support boundaries](GAME_WATER_PREVIEW.md)
-still apply. Visual quality is a human acceptance requirement; compiling shaders
-or rendering a blue surface does not establish that acceptance.
-
 ## Physics and presentation
 
 The coarse native grid owns water quantity, pressure, transport, air and body
@@ -67,7 +63,7 @@ phase and blends through a 24 mm near-plane transition band. Opaque scene depth
 limits travel; bounded stepping/refinement finds the first visible medium exit.
 The scene colour is sampled from a separate copy, never the active attachment.
 
-The existing Basic Water and M54/M55 optical paths remain independent. Runtime
+Basic Water retains its independent prescribed presentation path. Runtime
 world rendering excludes Grid Water from their coarse optical map so the new
 water is not fogged twice. HDR views keep linear colour until the existing output
 transform; display-encoded views decode and encode at the pass boundary. The pass
@@ -128,11 +124,3 @@ texture bytes are reported independently of physical grid memory.
 
 Human acceptance must judge the actual moving game from all these views, rather
 than treating any screenshot or numerical gate as automatic visual approval.
-
-The [7 November qualification report](evidence/game-water-visuals-20261107/REPORT.md)
-contains full-resolution captures, measured CPU/GPU costs, preserved failed
-controls, cold-export results and a practical human checklist.
-
-The [wall and transient-pocket follow-up](evidence/game-water-visual-followups-20261107/REPORT.md)
-records reproduced failures, independent negative controls and the subsequent
-connected-column/opaque-wall corrections.

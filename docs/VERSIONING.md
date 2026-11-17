@@ -10,26 +10,6 @@ Source identity and publication are separate. The
 Check the release page for subsequently published packages.
 <!-- judas-release-status:end -->
 
-## Historical release examples
-
-The authoritative source is [`engine-version.json`](../engine-version.json).
-The first release title is **Judas Engine Alpha v1.0.0**; its machine version is
-**`1.0.0-alpha.1`**, [published after final operator approval](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)
-on 27 October 2026 from `636eec475b9955dcfd7d6d943d00c05d911135ad`.
-Build configuration alone is not approval for any subsequent release.
-The accepted weather/input patch advanced the source identity to
-`1.0.1-alpha.1`, [published on 29 October 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)
-from `13b032080c6300c50af8bf44536c2dd8da5814d2`. The original Alpha remains immutable. Patch numbers and
-prerelease sequence numbers are separate SemVer components.
-The rain patch is `1.0.2-alpha.1`, released on 29 October 2026
-from `24ae686f5918105dd84c2b00f98f5354bad13ef8`. Publication evidence is in the
-[release procedure](RELEASING.md) and [patch notes (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_2_NOTES.md).
-The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 from
-`f2813324155166c6942fd68dde843d9775eb532d`; see
-[its authoring/Android diagnostic corrections and release record (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/ALPHA_V1_0_3_NOTES.md).
-
-
-
 ## Version ordering
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <

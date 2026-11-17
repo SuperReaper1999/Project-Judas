@@ -1,11 +1,11 @@
-# Local multiplayer — `players`, `LocalPlayer`, `PlayerInput` (M89)
+# Local multiplayer — `players`, `LocalPlayer`, `PlayerInput`
 
 Optional, world-owned local identities, device routes, viewports and UI focus.
 There is **one authoritative world and fixed-step clock**, regardless of view or
 player count. No networking, replication, prediction, server authority or game
 rules are implied. [Input](input.md), [physics/CharacterMotor](character.md),
 [cameras](effects-camera.md), [UI](ui.md), [scene/save lifetimes](scenes-state.md).
-M99 adds a separate optional [online session layer](network.md) which can associate
+network adds a separate optional [online session layer](network.md) which can associate
 remote peers with these same local-world player identities; this namespace remains
 usable independently of networking.
 
@@ -87,7 +87,7 @@ No engine movement/jump/weapon concepts are added.
 `touches`, `pointer`. Stick sides are `left`/`right`. Coordinates remain normalized
 **window** coordinates, not automatically remapped to the camera. Snapshots are
 copied; IDs are not OS pointers. Multiple fixed readers see the same snapshot;
-zero-step frames retain edges and catch-up steps do not repeat them. See M35/M69
+zero-step frames retain edges and catch-up steps do not repeat them. See input/batch-query
 input semantics. This first scoped surface does not expose the global stick-history
 cursor API; advanced per-player flick-history recognition is not claimed.
 

@@ -40,22 +40,3 @@ The cooker preserves the source, emits the bounded JSM1 JPEG-frame container
 and records its SHA-256 in the adjacent JSON. The container limits are 32 MiB,
 600 frames, 60 fps, 1024 square pixels maximum and 2 MiB per encoded frame.
 No downloaded vehicle content or external project files belong in this asset.
-
-## Qualification
-
-- `judas_startup_movie_tests`: every supplied frame, looping, corrupt/truncated
-  payloads and bounds; no graphics driver needed.
-- `judas_async_application_tests`: real asynchronous worker/GPU ownership,
-  stalled startup with responsive SDL input, no physics during loading, complete
-  initial mesh residency before gameplay and no loading-time catch-up; retains
-  cancellation, recovery, stale generation, budget and shutdown coverage.
-- `judas_script_tests`: lifecycle-only startup is idempotent and does not invoke
-  gameplay updates.
-- `judas_export_tests`: package-relative animation included in exported games.
-- Whole-engine benchmark observers record loading-frame count and preparation
-  display duration separately in `startup.json`; sufficiently long preparation
-  also captures `startup.png`. Gameplay metrics exclude startup.
-
-Native Linux NVIDIA qualification is recorded in
-`.cache/startup-splash/QUALIFICATION.json`. Other platform runtime validation
-must be reported separately; common packaging alone is not platform proof.

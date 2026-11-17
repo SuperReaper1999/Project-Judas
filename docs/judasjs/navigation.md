@@ -1,6 +1,6 @@
 # Navigation
 
-Current navigation API (introduced in M53). Navigation proposes traversable routes and steering;
+Current navigation API (introduced in navigation). Navigation proposes traversable routes and steering;
 [CharacterMotor](character.md) resolves authoritative collision-aware movement.
 Destination choice, chase, link traversal, animation and combat belong to project JS.
 Navigation does not read input, gravity or player state, and never writes entity transforms.
@@ -128,7 +128,7 @@ use conservative surface-frame AABBs; cylinders align to the navigation frame's 
 Use these for doors/crates/modest slow blockers, not every fast-moving rigid body.
 Changing a navigation obstacle never adds/removes its separate physical collider.
 Links follow authored/explicit transform writes; physics-driven moving link endpoints
-are not synchronized automatically in M53. Surface enabling is authored; runtime
+are not synchronized automatically in navigation. Surface enabling is authored; runtime
 setters cover agents, obstacles and links, not moving/enabling surfaces.
 
 ## Lifetime and limitations
@@ -136,14 +136,14 @@ setters cover agents, obstacles and links, not moving/enabling surfaces.
 Scene replacement, reload and Stop discard routes, agents, links and mutable caches.
 Snapshots are detached values; entity wrappers remain subject to normal safe-handle
 rules. Session JSON can store game intent, not a live navmesh/path pointer.
-[M61 slots](saves.md) preserve destination/settings, stop and link-progress state;
+[save-slot slots](saves.md) preserve destination/settings, stop and link-progress state;
 restoration rebuilds corridors against ordinary baked resources, not saved Detour pointers.
 
 Recast is locally 2.5D; arbitrary **orientation** is supported, whole-planet continuous
 curvature/streaming is not. Use separate locally oriented surfaces and explicit links.
 Current budgets: 4096 bake grid tiles, 16384 serialized layers, 256 obstacles per
 surface, 512 polygon/corner query buffers, 32 avoidance neighbours. Buffer-limited
-paths are partial. M64 bake extraction uses authoritative cooked mesh/hull faces
+paths are partial. collision-authoring bake extraction uses authoritative cooked mesh/hull faces
 and independently oriented box/sphere/hull compound children. Boxes use exact
 collider faces; spheres/terrain use finite tessellations of real collision surfaces.
 Changed physical geometry invalidates the bake fingerprint; render meshes are not

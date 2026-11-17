@@ -1,14 +1,8 @@
-# M58 — Unicode text shaping and project localization
+# Unicode text and localization
 
-**Status through M69:** M58 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
-
-**Candidate for operator review**, based on M57 checkpoint
-`ba16c2c52c60194a95ff161d55b93ff874863b77`. Human visual/gameplay acceptance is pending.
-Judas owns layout, font resources and localization primitives. Projects own fonts,
-catalogs and presentation. JavaScript owns language selection and game behaviour.
+The engine owns Unicode shaping/layout, font resources and localization
+primitives. Projects own fonts, catalogs and presentation; scripts choose locale
+and game behaviour. Hardware IME/accessibility qualification has its own scope.
 
 ## Shared runtime text path
 
@@ -122,47 +116,6 @@ all Unicode libraries/data are static in the Release runtime. Existing Linux SDL
 OpenGL, glibc/libstdc++ system dependencies remain. No arbitrary system folders copied.
 Runtime packages omit development docs/typings; developers obtain them from `docs/`.
 
-## Current demonstrations
-
-### Unicode lab
-
-[Project (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/text_lab/text_lab.judasproj), scene `Scenes/lab.judas`, document
-`Assets/ui/lab.judasui`, script `Assets/scripts/lab.js`. Six configured locales:
-English, German, Arabic, Japanese, Russian and Hindi. Buttons select language; Reload
-catalogs retries edited sources. No pointer capture. Resize normally.
-
-Latin accents/decomposed marks, Cyrillic, Arabic/Hebrew with Latin/numbers, Devanagari,
-horizontal Japanese, supplementary 😀/𝔸 and intentionally unsupported U+10FFFF.
-DejaVu lacks Indic/CJK coverage, so fallback is genuinely exercised. Expanded/narrow
-text, explicit missing-key fallback, plurals and locale numbers are included.
-Noto/DejaVu font commits/hashes/licenses live beside project fonts. Translations are
-**demonstration content, not native-speaker reviewed**.
-
-### Localized Spring Range
-
-[Project (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/shooter_game/shooter_game.judasproj). Existing game mechanics,
-physics, score, materials and navigation remain unchanged. HUD, controls, instructions
-and pause captions use English/German/Arabic/Japanese catalogs. **L** cycles languages
-while playing or paused; pause menu also has a Language button. Escape pauses/resumes.
-WASD, mouse aim, fire, jump, camera toggle and restart retain existing project bindings.
-HUD language policy is only `Assets/scripts/hud.js`; no game-specific engine translation.
-Arabic/Japanese font families are demanded only for those configured locales.
-
-## Verification / evidence
-
-[Candidate evidence (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m58) keeps real development failures and follow-ups.
-`scripts/m58_validation.py` runs one clean Release/production/async gate; new focused
-executables cover layout/catalogs, actual GL and normal application/session lifetime.
-[saved independent references](../tests/fixtures/m58/README.md) retain logical text,
-font hashes and upstream hb-shape commands. `scripts/m58_reference.py` compares without
-rewriting expected fixtures. JudasJS inventory/type/live VM coverage and the executed
-localization cookbook cover every public addition.
-
-M56 captures cold/warm text scopes, changing HUD, 100-label ASCII/multilingual loads,
-atlas/cache/font memory, locale transitions and application frame median/p95/max.
-Final native/software results, package sizes and exact source fingerprints are recorded
-in candidate evidence rather than inferred from screenshot appearance.
-
 ## Honest limits / human review
 
 Horizontal outline grayscale text only; no color/SVG emoji, font collection face
@@ -176,11 +129,7 @@ Catalog editing is UTF-8 source editing, not a translation-management platform.
 Human review: read lab/mixed-direction numbers/fallback; resize and inspect wrapping,
 marks/baselines/clips; change Spring Range language in play/pause and continue same
 round; check score/plurals/numbers/RTL menus; edit/reload a catalog; test Stop/reload
-and moved standalone, inspect M56 cost. Human visual/gameplay acceptance is authoritative.
+and moved standalone, inspect profiler cost. Human visual/gameplay acceptance is authoritative.
 
 Proposed commit after acceptance: `Add M58 Unicode text shaping and localization`.
-No commit, push, tag or M59 work during this candidate.
-
-Final results: [review report (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m58/RESULTS.md),
-[exact changed files (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m58/CHANGED_FILES.txt),
-[source/asset fingerprints (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m58/FINAL_FINGERPRINTS.json).
+No commit, push, tag or region work during this candidate.

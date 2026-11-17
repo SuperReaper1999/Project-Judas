@@ -46,43 +46,29 @@ motor, including an initial overlap at distance zero. For environment probes
 (walls, ledges, headroom), pass `{ignored: [entity]}` to each cast. The motor's
 `ignore(entities)` setting affects its movement solver, not separate public queries.
 
-The M78 lifecycle correction publishes authored enabled/layer/mask/tag metadata
+The physical-correction lifecycle correction publishes authored enabled/layer/mask/tag metadata
 when the capsule is constructed and restores enabled state when a retained region
 becomes public. A fixed step is not required to make those authored filters work.
 Capsule resize, local offset changes and explicit teleports update query geometry;
 region retirement destroys its owned capsule and invalidates the old body handle.
 Frame and UI-only script startup register published motor geometry before callbacks.
 
-Runtime `Entity.addTag` / `removeTag` also update the live query capsule, so
-`requiredTags` / `excludedTags` cast filters observe the same classification as
-entity lookup. This is separate from the motor's own movement-filter settings.
-The original [LIF-003 failure (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md)
-is preserved; the [lifecycle closure (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/M78_LIFECYCLE_CLOSURE.md)
-records the generic correction and authored/streamed/tag-mutation checks.
-
 Current limits: query-only motors don't physically block each other; endpoint sensors and coalesced
-sweep/support contacts now produce normal M42 events without fabricated mass/impulse;
+sweep/support contacts now produce normal collision-event events without fabricated mass/impulse;
 unit entity scale, no simultaneous root rigid-body authority, bounded recovery/slide,
 short lip probe can add up to0.08m reported travel, approximate capped dynamic push,
 teleported supports aren't continuous motion. Skeleton/animation is independent.
-M70 explicitly supports selected physical limbs alongside motor-owned locomotion;
-full dynamic articulation requires [motor authority handoff](animation-ragdolls.md#partial-physical-animation-m70).
+IK/physical-animation explicitly supports selected physical limbs alongside motor-owned locomotion;
+full dynamic articulation requires [motor authority handoff](animation-ragdolls.md#partial-physical-animation).
 This is not two systems simultaneously owning the root motion.
 Disabling/removing scripts does not inherently disable their motor; last velocity
 and gravity remain until explicitly changed/disabled. No fluid solver is owned.
 
-Ordinary reload/Stop reconstructs authored motor state. Explicit [M61 slots](saves.md)
+Ordinary reload/Stop reconstructs authored motor state. Explicit [save-slot slots](saves.md)
 preserve velocity/orientation, support state and its supporting identity, then
 reconstruct generation-safe handles. Do not retain a support wrapper across Load.
 
-Use [conserved `liquid.sample` (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/judasjs/liquid.md) for M54/M55 water, or
-[`world.fluidSample`](effects-camera.md#worldfluidsample) for default basic-water volumes or the explicitly enabled
-legacy PBF field, to implement buoyancy/drag/propulsion in project JS. Existing
-coarse production liquid limitations still apply; do not turn the motor into a
-hardcoded swim mode. Copyable [motor example](examples/character.js), current full
-project [character demo (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/character_demo/character_demo.judasproj).
-
-## Inclined support and touch events (M65)
+## Inclined support and touch events
 
 Tangent uphill motion may have a positive gravity-up component and still remain
 supported. Departure tests relative motion against current separation normal with
@@ -126,7 +112,7 @@ region retirement/revisit. Authored tags supply the initial state; a fixed updat
 does not re-add a tag removed by the script. Collision layers/masks and disabled
 state remain separate filters. See [entity classification](entities.md).
 
-## Animation / generic displacement intent (M95)
+## Animation / generic displacement intent
 
 `displace(worldMetres)` adds a one-step displacement through the ordinary motor
 sweep/slide/step path without accumulating animation speed into velocity.

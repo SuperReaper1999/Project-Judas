@@ -1,7 +1,7 @@
-# Optional per-entity gravity selection
+# Per-entity gravity selection
 
-Follow-up to M72 checkpoint `0f3694bb7142dc38a59abbd7365a113b673bae5e`.
-On 2026-10-09 the operator marked M72 human validated and authorized this gravity
+Follow-up to checkpoint `0f3694bb7142dc38a59abbd7365a113b673bae5e`.
+On 2026-10-09 the operator marked human validated and authorized this gravity
 API follow-up for commit/push. Existing automated evidence remains unchanged;
 this authorization does not claim additional gravity-demo or Windows human tests.
 
@@ -51,12 +51,9 @@ and non-rigid deformables sample their owner intent. Kinematic bodies retain
 prescribed motion. Selection is not implicitly inherited by children, bones or
 an entire ragdoll; individually owned bone bodies may select explicitly.
 
-Position-only `physics.gravity(position)`, conserved liquid equilibrium, legacy
-player compatibility and independent Newtonian/celestial pair forces remain on
-their existing spatial/pairwise paths. The legacy celestial vehicle exclusion
-from local gravity is preserved. This change does not define planetary gravity
-for liquid reservoirs or move authored gravity fields every frame. Source fields
-keep existing load/publication/rebuild transform semantics.
+Position-only `physics.gravity(position)` uses the spatial resolver; independent
+Newtonian/celestial pair forces retain their explicit pairwise ownership. Entity
+selection does not create a gravity source or move authored fields.
 
 ## Authoring and lifecycle
 
@@ -76,28 +73,3 @@ Canonical fingerprint schema remains 5: only non-default selections contribute a
 new tagged extension. No save archive participant/version was added. Uniform
 vectors are explicitly world-space; if content is relocated into a rotated frame,
 its author must express that intent in the target world frame.
-
-## Existing defect found and corrected
-
-A rotated box gravity zone used axis-aligned bounds on initial root-scene load,
-but oriented bounds after a streaming rebuild. A pre-change focused check failed
-at `(0,1,0)` for a quarter-turn narrow box. Both paths now use the same
-`OrientedGravityVolume`. Original failure is preserved; no scene-name exceptions.
-
-## Demonstration and human checklist
-
-Open [gravity selection lab (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/projects/gravity_selection_lab/gravity_selection_lab.judasproj).
-The room has unchanged floor/walls/ceiling, ordinary spatial gravity, selectable
-uniform/RadicalGravity sources and two props with independent gravity.
-
-1. Move with WASD / look with mouse; Space jumps through project JS.
-2. Aim at a wall or ceiling and press **G**. Fall toward it, land and move normally.
-3. Confirm the camera follows your changed orientation; the room does not rotate.
-4. Press **F** to return to ordinary spatial gravity; momentum is retained.
-5. Press **C** for the authored rotated uniform source; **T** for RadicalGravity.
-6. Confirm blue prop falls and gold prop rises independently of your selection.
-7. Escape pauses/releases capture; resume, then **R** reloads authored defaults.
-8. Try the exported package and editor Play/Stop. Desktop feel and Windows require human review.
-
-Evidence: [gravity-selection (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/gravity-selection/README.md). This is a
-small API lab, not a finished gravity-switching game or new character behaviour.

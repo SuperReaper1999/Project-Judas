@@ -88,7 +88,7 @@ world, flattens its hierarchy, rebuilds the entire map or roundtrips the scene
 through serialization. The bounded recipe is still parsed/validated/encoded,
 palette/image admission is checked, and live references are scanned without
 copying definitions. Calls are therefore not constant-cost or free; avoid
-rewriting every tile every frame. See the [measured qualification](../TILEMAP_INCREMENTAL_EDITS.md).
+rewriting every tile every frame. See the [measured qualification](tilemaps-2d.md).
 
 Normal world saves retain the updated recipe and generated entities.
 Unchanged generated children keep their IDs. Replacement children get
@@ -106,3 +106,19 @@ this editing path. Authored tilemaps in those workflows retain their
 existing rendering and collision. Active online sessions reject edits
 because tile changes are not replicated. If you use closure-only
 exports, include the grid's sprite sheet as an explicit runtime asset.
+
+## Incremental publication and lifetime
+
+Runtime editing compiles only the edited sprite and, for a solid layer, its
+16×16 collision chunk. Editor baking and runtime patches use the same compiler;
+there is no second collision mesher. Unchanged keys/fingerprints retain IDs and
+actual collider handles. Changed definitions are validated and staged before
+anything is retired or the durable recipe is published. Invalid requests, manual
+target changes, user children and live joint anchors reject without replacing
+existing geometry. Decorative edits never rebuild colliders.
+
+Generated replacements now own and release their atlas demand. The independent
+reference-count control failed before the ownership correction; one replacement
+and forty repeated replacements now retain the same reference count. Authored
+atlas demand transfers to removable ownership when its tile is first retired.
+Rollback releases staged demand too.

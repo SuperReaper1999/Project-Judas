@@ -1,4 +1,4 @@
-# Weather — profiles, sampled wind and transitions (M86)
+# Weather — profiles, sampled wind and transitions
 
 [Index](../JUDASJS.md) · [Physics](physics.md) · [Effects/view](effects-camera.md) · [Planetary terrain](planetary-terrain.md) · [Saves](saves.md)
 
@@ -70,7 +70,7 @@ ordinary component/serialization path.
 | JS sample/strike position | Current local simulation metres, matching ordinary physics queries. |
 | JS transition wind | World-space metres/second. Returned wind is also world-space. |
 
-Weather keeps absolute positions internally. M85 origin shifts translate
+Weather keeps absolute positions internally. planetary-terrain origin shifts translate
 the local JS/query frame without moving the weather field. Terrain, weather and
 gravity are separate; a weather region never overrides Judas gravity.
 
@@ -148,7 +148,7 @@ This is convincing prescribed weather, not a climate simulator. No flooding,
 physical snowpack, droplet rigid bodies or storm-scale fluid simulation is
 provided. The cloud/precipitation renderer has bounded visual quality and local
 effect ranges; rendering and shadow approximations are separate from CPU force
-semantics. See the M86 implementation report for measured costs and the current
+semantics. See the weather implementation report for measured costs and the current
 renderer limitations.
 
 Clouds sample actual three-dimensional density in a flat slab or spherical

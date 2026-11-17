@@ -1,10 +1,10 @@
 # Current application harness
 
 This is the bounded `JUDAS_TEST_SCRIPT` application driver implemented in
-[`src/TestHarness.cpp`](../src/TestHarness.cpp), originating in M65 and retaining
+[`src/TestHarness.cpp`](../src/TestHarness.cpp), originating in and retaining
 legacy compatibility commands. It is not the entire regression suite. Use the
 [current validation manifest](../tools/validation/suites.json) and
-[Pre-Alpha gates](CURRENT_STATUS.md) for the
+[Pre-Alpha gates](DEVELOPMENT_READINESS.md) for the
 authoritative selected regression configuration.
 
 `JUDAS_TEST_SCRIPT=SCRIPT build/judas PROJECT.judasproj`.
@@ -121,16 +121,12 @@ multi-player device assignment. A successful exit also does not prove every
 physical endpoint: add an explicit oracle for the behaviour under investigation.
 Any script diagnostic fails the normal harness run; output alone is not a pass.
 
-Synthetic frames without drawing are not interactive FPS measurements. For dense
-physics comparisons use the [measurement tool and recorded workload (historical)](https://github.com/SuperReaper1999/Project-Judas/blob/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md)
-and distinguish per-step cost, simulated time, real-time catch-up and rendered FPS.
-
-## Shared application services (post-M65 correction)
+## Shared application services (post-authoring correction)
 
 The Application harness now uses the shipping outer boundary after each frame:
 streaming, save/load publication, then queued scene replacement. A request issued
 inside a callback never destroys that callback's world. Paused frames still advance
-these services. Each scripted frame has its own M56 frame boundary; startup is a
+these services. Each scripted frame has its own profiler frame boundary; startup is a
 separate record. Isolated callers that omit the outer callbacks remain isolated
 InteractivePlay tests, not full application-service tests.
 

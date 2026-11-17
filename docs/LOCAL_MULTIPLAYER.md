@@ -1,8 +1,4 @@
-# M89 — Judas Learns to Play Together
-
-Human-accepted M89, promoted to **main** after operator desktop testing.
-The tested implementation is `945b76390f50d15fe2297664fa23ec349b7cd85d`;
-see [acceptance and remaining platform coverage (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/HUMAN_VALIDATION.md).
+# Local players, devices and views
 
 ## Ownership and integration
 
@@ -29,9 +25,9 @@ see [acceptance and remaining platform coverage (historical)](https://github.com
   flip FBO UVs on composition and scale proportionally to a 2048-pixel longest side.
   Failed allocations are bounded/retried on meaningful changes. UI draws once after
   composition. With no dedicated views, the existing single shared-view path runs.
-- M38 export discovers normal project assets/modules; no project-name branches.
+- export export discovers normal project assets/modules; no project-name branches.
   Prefabs/motors/rigid bodies remain ordinary entities. Saves persist project seat
-  state plus M61 entity references, reconstructing transient identities/device/UI
+  state plus save-slot entity references, reconstructing transient identities/device/UI
   resources in `restore`. There is no second physics world or networking system.
 
 ## Public JudasJS surface
@@ -58,23 +54,3 @@ lobby, reset and end-of-round state are project JS. An available gamepad is an
 **arrival event**, not permission to steal back an explicitly released seat.
 Scripts/assets/scenes/UI are editable; original PCM sounds and licensed font assets
 are included. No hardware-controller availability is assumed for development.
-
-## Validation and remaining limits
-
-See [exact results, raw measurements, failures and reproduction (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/m89/REPORT.md).
-
-- SDL2 merges physical keyboards/mice. Disjoint keys support shared keyboards;
-  independent raw multi-mouse/multi-keyboard streams are not implemented. Keyboard
-  rollover is hardware dependent. Up to 16 gamepad instances/eight identities;
-  the game exposes four seats. Ten active touches; bounded 4096 raw transitions.
-- No networking/replication/prediction, private audio mix/listener, independent
-  floating origins or per-player advanced stick-history cursor API.
-- Shared primary shadows and planetary LOD remain the current policy. Widely
-  separated planetary cameras are not certified. Secondary weather is cheaper.
-- Runtime handles/device tokens/focus are not persistent identities. Save project
-  seats/entity references and reconstruct input intentionally. Players may outlive
-  their creating script/entity until leave or world teardown.
-- Split-screen repeats rendering work. Targets are bounded, not a fixed-FPS promise.
-  Human controller/phone/tablet and Windows M89 acceptance remain outstanding.
-- This game intentionally uses flat-arena JS movement policy; the underlying
-  CharacterMotor and gravity system remain unchanged and available to consumers.

@@ -1,25 +1,44 @@
 # CI and qualification
 
-V2 development remains on Experimental; main is not automatically updated. Alpha and Experimental are build labels, not parallel engine implementations. Advanced Fluids V2 requires project opt-in in every label; the old Alpha denial policy is retired.
-
 ## Routine feedback
 
-`prealpha.yml` builds one Alpha-labelled V2 engine/SDK and the `judas_ci_tests` target. CTest's `routine` label selects 171 native cases plus six Python contract registrations. Fifteen expensive game-level/endurance cases run during full qualification instead. `workflow_dispatch` with `full=true` can run the complete suite for a justified development change; it still does not establish release acceptance.
+`.github/workflows/prealpha.yml` builds one Alpha-labelled V2 engine/SDK on
+Ubuntu 24.04 and the `judas_ci_tests` target. CTest's `routine` label selects
+registered ordinary cases. `releaseOnly` cases require the full suite;
+`workflow_dispatch` with `full=true` selects `judas_prealpha_tests` / `prealpha`.
+Do not copy old hard-coded test counts into the selection policy.
 
-The validation manifest owns the two scheduling decisions: `releaseOnly` excludes a case only from routine feedback; `parallel` allows an audited independent case to overlap. Both require actual JSON booleans. All other native cases remain serial. Every case gets its own scratch and user-data directory. Test arguments, binary identities, numerical tolerances, collision coverage and scene complexity are unchanged. Different invocations of one target (cold restoration, portable mode, loss recovery) remain distinct when they catch different failures.
+`tools/validation/suites.json` owns cases, arguments, groups, explicit manual
+findings, `releaseOnly` and audited `parallel` booleans. Each invocation has isolated
+scratch/user data and validates the executable's embedded source identity before
+running. Cold, portable and loss/recovery variants remain distinct when they
+exercise different contracts. Use `scripts/prealpha_validate.py --list` and
+`--check-manifest` for the current declaration.
 
-Compiler caches preserve source-path semantics (no `CCACHE_BASEDIR` rewriting, because current native fixture loaders use `__FILE__`). They validate actual compiler inputs; dependency cache keys include toolchain/dependency identities. Source/channel identity is regenerated and SDKs are freshly staged/verified. Cache hits are not qualification. Record restore/save time and compiler statistics before claiming a speedup.
+Compiler caches validate actual inputs and preserve source-path semantics.
+Dependency keys include toolchain/dependency identities; SDKs are freshly staged.
+A cache hit is not qualification. Local [storage budgets](WORKSPACE_STORAGE.md)
+and bounded Actions retention own generated outputs; no tracked capture archive
+is required to keep ordinary CI running.
 
 ## Complete candidate qualification
 
-`release-candidate.yml` is manual and never publishes. Its platform selector permits a Linux-only or Windows-only investigation; those partial runs cannot qualify promotion or publication. Full qualification uses the default `both`. It freezes exact source, builds and qualifies Linux and native Windows SDKs, runs all 186 native manifest cases on Linux, cold-process readers, primitive controls and the complete Python control suite, SDK authoring/moved exports, API and ABI checks. Native Windows remains MSVC; Ninja schedules requested targets as a shared dependency graph. Its hosted tool/contracts qualification does not certify Windows hardware GL, Android or full browser gameplay.
+`release-candidate.yml` is manual and never publishes. Its literal candidate SHA,
+channel and platform selector freeze the requested source. Single-platform runs
+are investigation only; complete preparation/promotion proof requires both native
+Linux and Windows jobs. Linux includes coordinated native gates, SDK editor/tool/
+relocation workflows, API checks and declared Ubuntu/ABI inspection. Windows
+builds MSVC SDKs, selected native contracts (including materials) and loader closure.
+Windows hosted success does not certify editor/GL/export/hardware behaviour.
 
-Main promotion requires successful exact-candidate Linux AND Windows jobs and explicit operator acceptance. Routine checks, a different revision, skipped/failed jobs or a completed build alone cannot qualify promotion. Publication continues to consume already-qualified immutable artifacts through the existing operator-approved publication environment. No main promotion or publication follows an Experimental push automatically.
+`ci-tooling.yml` covers packaging, updates, identity/routing and storage controls.
+`current-docs.yml` checks managed source/publication summaries and current links.
+The [documentation reference manifest](../tools/verification/current-docs.json)
+contains current owned docs, not retired progress reports. Required license and
+asset provenance files remain under their owners.
 
-## Coverage decisions
-
-Removed expectations protect only the retired Alpha fluid restriction. Four separate Python water-unavailability checks are consolidated into one all-channel execution check. Duplicate channel/generator registration variants are reduced while retaining provenance, invalid-channel, manual-failure, ordinary and multi-config coverage. Actual water runtime/editor/export tests now exercise opt-in in Alpha rather than testing refusal or returning early. Release packaging Python tests are discovered once with the other controls, rather than invoked again individually.
-
-The 15 release-only cases remain available: sustained terrain residency, Willow Town application/life/absence, Beacon Grove application/loss, tilemap application, Utility AI application, complete 2D authoring, browser workflow, UI menu workflow, Basic Water application/cold cycle, developer workflow and camera cold suite. Their focused subsystem tests remain routine. Full qualification is authoritative for these game-level contracts.
-
-Reference timings and raw cold/warm measurements accompany the checkpoint handover. The pre-change reference is `9176a36a`: Alpha 24m06s + Experimental 31m53s; native Windows candidate 37m58s. Those are measured job wall times, not future targets.
+[Build identity](BUILD_RELEASES.md), [release authority](RELEASING.md),
+[the harness](TEST_HARNESS.md) and [the readiness matrix](DEVELOPMENT_READINESS.md)
+separate a build, unit/integration test, actual application, performance result,
+platform qualification and human acceptance. An old green run cannot certify a
+changed source or an unavailable device.

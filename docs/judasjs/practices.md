@@ -44,6 +44,6 @@ ScriptBehaviour/Vec3/QueryFilter do not exist at runtime. TS cannot enforce fini
 numbers, registry membership, JSON budgets, script phases or setter-only reads.
 
 Get the offline reference/declarations from this checkout's `docs/` at the same
-engine checkpoint. M38 packages runtime assets/scripts, not the engine docs tree.
+engine checkpoint. export packages runtime assets/scripts, not the engine docs tree.
 No package-manager/internet service or TS runtime is required by games; don't import
 `.d.ts` at runtime. No exporter change or whole-doc-tree shipping is needed.

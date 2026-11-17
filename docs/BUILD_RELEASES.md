@@ -1,111 +1,70 @@
-# Build identity and release infrastructure
+# Build identity and reproducible SDKs
 
-[Versioning/channels](VERSIONING.md) · [Prepare/publish](RELEASING.md) ·
-[Distribution verification](DISTRIBUTION.md) · [Support matrix](ALPHA_SUPPORT_MATRIX.md)
+`engine-version.json` owns SemVer, maturity and the display name. CMake's
+`JudasBuildIdentity.cmake` records the actual channel, revision/tree, source
+fingerprint, dirty/untracked observations, platform, architecture, compiler and
+configuration. A matching version string alone does not establish matching tools.
+Git source and verified source archives retain different honest provenance.
 
-`engine-version.json` is authoritative. CMake emits one build identity header and
-JSON record. Editor, runtime, server and public SDK tools expose `--version` and
-`--build-info-json` before initializing windows/resources. SDK `BUILD_INFO.json`,
-export `BUILD_PROVENANCE.json` and JudasJS `engine.buildInfo` preserve that actual
-identity rather than relabelling a neighboring binary.
+## Configure and inspect
 
-Source commit/tree, tracked diff fingerprint, dirty status, observed untracked
-build-input count/hash, configuration, architecture and compiler are distinct.
-Unknown provenance is allowed for local development and rejected by release
-packaging. Clean tracked files do not excuse untracked compilation inputs.
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+  -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
+python3 tools/workspace_storage.py run -- cmake --build build \
+  --target judas_prealpha_tests judas_linux_sdk -j2
+build/judas --build-info-json
+python3 build/linux-sdk/tools/package_sdk.py verify build/linux-sdk
+```
 
-`tools/package_source.py` creates deterministic tracked engine-source archives,
-excluding games, protected evidence and unrelated untracked work. Source archives
-carry `JUDAS_SOURCE_INFO.json` plus a hashed per-file inventory; no Git history is
-required to build them. Changed/missing/added inputs are detected. A different clean source archive must use a fresh build directory:
-deterministic old timestamps can otherwise retain stale compiled objects. CMake
-rejects that cache reuse; unchanged-source repeats and ordinary Git iteration
-remain supported. Use
-`--allow-untracked` only when explicitly excluding unrelated local experiments;
-those inputs are counted in the source-packaging receipt, not silently included.
+Configure from the source root and reuse one valid toolchain/configuration cache.
+Ordinary development permits honest dirty provenance. `JUDAS_SDK_RELEASE=ON`
+requires clean Git/archive source, Release and an admitted distribution channel.
+Do not relabel old executables or bypass source-fingerprint checks. Reconfigure/
+rebuild after source identity changes; a neighbouring executable cannot prove that
+an old native test binary is current.
 
-The Ubuntu 24.04 [baseline builder](LINUX_BASELINE_BUILD.md) supplies an older
-complete compiler/userland; copying files or editing glibc symbol labels is not a
-portability strategy. Native MSVC and optional MinGW remain separate workflows.
-Windows SDKs retain the complete public-tool inventory and required DLL licences.
+`JUDAS_BUILD_IDENTITY_ONLY=ON` allows the isolated identity infrastructure to be
+configured without a graphics SDK. That is not an engine/editor/SDK build.
+`JUDAS_ENABLE_VALIDATION` registers bounded gates; `JUDAS_INCLUDE_KNOWN_FAILURES`
+controls explicit manual finding admission, not permission to count failures as passes.
+The [manifest](../tools/validation/suites.json) owns actual registrations.
 
-SDK inventory is declared once in `packaging/sdk-inventory.json`, consumed by
-CMake and Python staging/verification. Every SDK records its tool identities,
-files, dependencies and SHA256SUMS. Release staging requires a clean known source,
-Release configuration, no observed untracked build inputs and a supported channel.
-A channel's maturity must agree; Alpha is not GA Stable. No staging command tags,
-publishes, promotes a branch or grants human acceptance.
+## Platform and packaging boundaries
 
-Build overrides are for deliberate development/tooling: clear an old
-`JUDAS_ENGINE_VERSION` override to follow the authoritative file. Official release
-preparation rejects SDK identities that differ from their bundled version file.
-Publication uses separately approved immutable artifacts, not an untested rebuild.
+Build `judas_linux_sdk` or the native Windows `judas_windows_sdk` using the
+[shared inventory](../packaging/sdk-inventory.json). Common tools, Windows extras,
+current docs, declarations, runtime notices and curated/source-only examples are
+explicit. Staging/checksum verification is not relocation or application proof.
+Use [SDK qualification](DISTRIBUTION.md) for create/author/save/Play/Stop/reopen and
+moved exports with source dependencies hidden.
 
-## Update notification
+Linux binaries inherit their build host ABI. The [Ubuntu 24.04 baseline builder](LINUX_BASELINE_BUILD.md)
+uses a complete older userland; it does not rewrite symbol requirements in newer
+binaries. [Windows](WINDOWS.md), [Android](ANDROID.md) and
+[browser](BROWSER_SUPPORT.md) have separate prerequisites and scopes.
 
-The editor checks published version manifests, not Git ancestry. See
-[update preferences, trust and integrity](VERSIONING.md#updates). Manual and
-startup checks never install anything or overwrite a project.
+## CI and promotion
 
-## Channel-aware CI qualification
+[Routine CI](CI.md) builds one Alpha-labelled V2 configuration, selected registered
+checks and the public SDK. Advanced Fluids remains project-opt-in in every V2
+channel; retired channel skip plans are not the current validation policy.
+Documentation/tooling-only changes use their corresponding lightweight checks.
+The existing path-routing controls verify those exclusions.
 
-The hosted focused gate builds **both Experimental and Alpha** for native changes
-on Experimental, for pull requests and for explicit manual runs on either branch.
-This catches channel-dependent behaviour before promotion rather than discovering
-it only when main selects Alpha. Both configurations retain SDK qualification.
+Main promotion requires operator acceptance of the exact candidate. The machine
+proof in `scripts/check_ci_promotion.py` currently accepts a completed successful
+**manual release-candidate workflow with both `linux` and `windows` jobs**, from
+this repository's Experimental branch at that exact SHA. Routine focused gates
+alone are not that promotion proof. Incomplete/skipped/foreign-source or tooling-
+only success rejects. This check still does not establish human acceptance.
 
-A main push verifies completed native qualification for the **exact same commit**
-on Experimental, rather than compiling both channels again. It accepts either
-both focused native channel jobs or the complete Linux/Windows release-preparation
-jobs. Wrong commits, other repositories, incomplete/skipped jobs and tooling-only
-passes do not qualify. Missing proof fails with instructions to finish Experimental
-CI or explicitly run the full gate on main; no automatic pass is substituted.
-This machine check does not establish operator acceptance.
+A source archive records exact committed blobs and excludes generated caches.
+Unexpected authored inputs/dirty source must be addressed explicitly; testing does
+not turn output files into release source. [Release preparation](RELEASING.md)
+never publishes or promotes automatically. Successful routine diagnostics retain
+three days; failures/candidate artifacts fourteen days in the current workflows.
+See [storage policy](WORKSPACE_STORAGE.md) for local budgets and output ownership.
 
-Release/CI tooling-only pushes run [lightweight controls](../.github/workflows/ci-tooling.yml)
-for release archives, updates, routing and promotion proof. A checksum-pinned
-actionlint validates GitHub workflow schemas and expressions; shellcheck/pyflakes
-are not part of that structural check. The narrow native
-exclusions are checked against the lightweight workflow by
-[positive/negative controls](../tests/test_ci_workflows.py). Native sources,
-fixtures, API declarations, SDK implementation and unknown paths retain full
-validation. Documentation has its own link/checker workflow. A manual focused
-gate still forces the full native matrix, regardless of changed paths.
-
-CTest and release qualification share the policy in
-[scripts/prealpha_validate.py](../scripts/prealpha_validate.py). Original native
-fixtures and assertions are unchanged. Experimental executes all scheduled fluid
-tests. Alpha retains direct liquid geometry/storage tests, Basic Water/swimming
-and explicit refusal/ownership/export controls. The two native targets requiring
-RuntimeWorld advanced fluids are unavailable in Alpha for the published contact
-stability restriction.
-
-Those cases remain visible in CTest. The runner checks the binary's source and
-configured channel before returning **77 / not-exercised**; CTest reports them as
-skipped, never passed. Their individual JSON receipts retain `passed: false`. A
-wrong/stale binary, a native failure (including native exit 77), or an unrelated
-failing test remains a failure. Group runs containing unavailable cases return
-77 rather than claiming complete coverage. `--channel` is accepted only for a
-configure-time registration plan; execution uses the embedded binary identity.
-
-`judas-validation-channel-plan.json`, per-case results and CTest logs are retained
-in each channel's separate CI artifact. Known historical manual failures retain
-their existing admission rules. The original six Alpha CI failures are preserved
-in [the investigation record (historical)](https://github.com/SuperReaper1999/Project-Judas/tree/2ee4203a0053cc545eab4a184c627f4f5507c4bd/docs/evidence/alpha-ci-channel-policy/ORIGINAL_FAILURE.json);
-this repairs test selection, not the experimental fluid solver. No published tag
-or package is replaced by this correction.
-
-Successful routine diagnostic artifacts expire after three days; failure
-diagnostics and release-preparation artifacts retain fourteen days. This changes
-future retention, not existing evidence or published release assets. Original
-regression fixtures and preserved historical evidence are not removed.
-Actions artifacts are separate from Git LFS; reducing CI storage is not a claim
-to reduce account LFS usage.
-
-Qualification disables Python bytecode generation, and ordinary local bytecode
-caches are ignored. Tracked-source packaging still rejects dirty tracked files
-and unexpected untracked authored inputs. It archives exact committed blobs;
-generated caches are never silently inserted into the source distribution.
-Release preparation freezes that clean source archive before running qualification
-and checks tracked source again before packing the successful SDK. Test-generated
-outputs cannot accidentally become release inputs.
+Editor update checks compare trusted published version manifests, not Git ancestry,
+and never install or overwrite projects. See [versioning](VERSIONING.md#updates).

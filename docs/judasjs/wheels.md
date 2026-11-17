@@ -131,7 +131,7 @@ Destroy the wheel owners with their required chassis (normally one authored
 prefab hierarchy); retaining dangling wheel references causes explicit save
 rejection instead of silently dropping physical state.
 
-## Rigid material section mounts (M83)
+## Rigid material section mounts
 
 An optional authored `wheel.part` names a stable rigid-fracture part key.
 `wheel.chassis` then identifies the partition owner. Its mount/frame follow that
