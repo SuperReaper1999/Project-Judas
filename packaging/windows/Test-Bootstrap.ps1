@@ -59,7 +59,8 @@ try {
     foreach ($config in @('Release', 'Debug')) {
         Run-Native cmake @('--build', $consumer, '--config', $config, '--parallel', '2')
         Run-Native "$consumer/$config/consumer.exe" @()
-        Run-Native "$consumer/$config/consumer_main.exe" @()
+        $main = Start-Process -FilePath "$consumer/$config/consumer_main.exe" -Wait -PassThru
+        if ($main.ExitCode) { throw "SDL2main $config consumer failed: $($main.ExitCode)" }
     }
     if (Test-Path $marker) { throw 'pkg-config was executed' }
     if (Test-Path $env:VCPKG_ROOT) { throw 'vcpkg was used' }

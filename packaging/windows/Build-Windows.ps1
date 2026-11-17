@@ -1,3 +1,4 @@
+[CmdletBinding()]
 param(
     [ValidateSet('Visual Studio 17 2022', 'Visual Studio 18 2026', 'Ninja')][string]$Generator = 'Visual Studio 17 2022',
     [ValidateSet('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')][string]$Channel = 'Experimental',

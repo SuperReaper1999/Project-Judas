@@ -20,6 +20,11 @@ function(judas_windows_dependencies)
     set(SDL_TEST OFF CACHE BOOL "" FORCE)
     set(SDL_TESTS OFF CACHE BOOL "" FORCE)
     set(SDL_LIBC ON CACHE BOOL "" FORCE)
+    # Match the old manifest's unselected optional SDL features; no additional
+    # external resampler dependency or Vulkan adapter is needed by Judas.
+    set(SDL_LIBSAMPLERATE OFF CACHE BOOL "" FORCE)
+    set(SDL_LIBSAMPLERATE_SHARED OFF CACHE BOOL "" FORCE)
+    set(SDL_VULKAN OFF CACHE BOOL "" FORCE)
     set(SDL_FORCE_STATIC_VCRT OFF CACHE BOOL "" FORCE)
     set(SDL2_DISABLE_SDL2MAIN OFF CACHE BOOL "" FORCE)
     # SDL2 and GLM otherwise both declare a global uninstall target when their
