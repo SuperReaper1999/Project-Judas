@@ -37,6 +37,7 @@ jobs:
         with:
           name: windows-bootstrap-diagnostics
           path: |
-            ${{ runner.temp }}/judas-bootstrap/**/*.log
-            ${{ runner.temp }}/judas-bootstrap/**/CMakeConfigureLog.yaml
+            ${{ runner.temp }}/judas-bootstrap/rejected-configure.log
+            ${{ runner.temp }}/judas-bootstrap/dependency build/CMakeFiles/CMakeConfigureLog.yaml
+            ${{ runner.temp }}/judas-bootstrap/consumer-build/CMakeFiles/CMakeConfigureLog.yaml
           retention-days: 14

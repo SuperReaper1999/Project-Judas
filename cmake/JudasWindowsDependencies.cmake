@@ -22,6 +22,9 @@ function(judas_windows_dependencies)
     set(SDL_LIBC ON CACHE BOOL "" FORCE)
     set(SDL_FORCE_STATIC_VCRT OFF CACHE BOOL "" FORCE)
     set(SDL2_DISABLE_SDL2MAIN OFF CACHE BOOL "" FORCE)
+    # SDL2 and GLM otherwise both declare a global uninstall target when their
+    # independent CMake package installations are enabled by the contract test.
+    set(SDL2_DISABLE_UNINSTALL ON CACHE BOOL "" FORCE)
     # SDL's optional Unix backend detection is not a native MSVC dependency.
     # CMake target/link/runtime consumers below validate the Windows contract;
     # no vcpkg port or pkg-config metadata-validation claim is made here.
