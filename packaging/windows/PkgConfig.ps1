@@ -33,7 +33,7 @@ function Get-JudasPkgConfig([string]$Path, [string]$CacheRoot) {
     New-Item -ItemType Directory -Force -Path $directory | Out-Null
     if (!(Test-Path -LiteralPath $installer)) {
         $partial = "$installer.download"
-        Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -OutFile $partial
+        Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -UseBasicParsing -OutFile $partial
         Assert-JudasToolHash $partial 'a236479bbe403b202816745bef19afe2d6240606f28ab1f008ba0f33fbfae43e'
         Move-Item -LiteralPath $partial -Destination $installer
     }

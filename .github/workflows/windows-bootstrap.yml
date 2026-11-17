@@ -27,7 +27,10 @@ jobs:
           $vsPath = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
           if ($LASTEXITCODE -or !$vsPath) { throw 'MSVC installation not found' }
           & "$vsPath/Common7/Tools/Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
-          ./packaging/windows/Test-Bootstrap.ps1 -WorkDirectory "$env:RUNNER_TEMP/judas-bootstrap"
+          # Exercise the Windows PowerShell 5.1 consumer entry point as well as
+          # the PowerShell 7 release build. Both inherit the native VS environment.
+          & powershell.exe -NoProfile -File ./packaging/windows/Test-Bootstrap.ps1 -WorkDirectory "$env:RUNNER_TEMP/judas-bootstrap"
+          if ($LASTEXITCODE) { throw "Windows dependency bootstrap failed: $LASTEXITCODE" }
       - name: Preserve dependency failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
