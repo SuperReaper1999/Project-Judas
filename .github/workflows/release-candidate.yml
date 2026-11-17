@@ -163,21 +163,6 @@ jobs:
       - name: Build complete native MSVC SDK
         shell: pwsh
         run: |
-          # Avoid the pinned vcpkg helper's expired MSYS2 runtime download.
-          $installer = Join-Path $env:RUNNER_TEMP 'pkgconf.msi'
-          Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -OutFile $installer
-          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne 'A236479BBE403B202816745BEF19AFE2D6240606F28AB1F008BA0F33FBFAE43E') { throw 'pkgconf installer checksum mismatch' }
-          $destination = Join-Path $env:RUNNER_TEMP 'pkgconf'
-          $installLog = Join-Path $env:RUNNER_TEMP 'pkgconf-install.log'
-          $extract = Start-Process msiexec.exe -ArgumentList @('/a', "`"$installer`"", '/qn', '/L*V', "`"$installLog`"", "TARGETDIR=`"$destination`"") -Wait -PassThru
-          if ($extract.ExitCode -ne 0) {
-            Get-Content $installLog -Tail 60 -ErrorAction SilentlyContinue
-            throw "pkgconf extraction failed: $($extract.ExitCode)"
-          }
-          $pkgconf = Get-ChildItem $destination -Recurse -Filter pkgconf.exe | Select-Object -First 1
-          if (!$pkgconf) { throw 'Native pkgconf executable missing after extraction' }
-          & $pkgconf.FullName --version
-          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           # Hosted windows-2025 now supplies VS 2026; retain VS 2022 locally.
           $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
           $vsVersion = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationVersion
@@ -185,7 +170,7 @@ jobs:
           $vsPath = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
           & "$vsPath/Common7/Tools/Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
           sccache --zero-stats
-          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator Ninja -CompilerLauncher sccache
+          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -Generator Ninja -CompilerLauncher sccache
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           $build = "build/windows-$env:CHANNEL"
           $bin = $build

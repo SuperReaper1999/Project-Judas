@@ -1,13 +1,15 @@
 param(
     [string]$VcpkgRoot = "$env:LOCALAPPDATA\JudasBuildTools\vcpkg",
     [string]$PkgConfig = "",
+    [string]$ToolCache = "$env:LOCALAPPDATA\JudasBuildTools\pkgconf",
     [ValidateSet('Visual Studio 17 2022', 'Visual Studio 18 2026', 'Ninja')][string]$Generator = 'Visual Studio 17 2022',
     [ValidateSet('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')][string]$Channel = 'Experimental',
     [string]$BuildDirectory = "",
     [string]$EngineVersion = "",
     [string]$CompilerLauncher = "",
     [ValidateRange(1,32)][int]$Jobs = 2,
-    [switch]$ReleasePackage
+    [switch]$ReleasePackage,
+    [switch]$DependenciesOnly
 )
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path "$PSScriptRoot\..\..").Path
@@ -17,28 +19,41 @@ function Run-Native([string]$Program, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "$Program failed with exit $LASTEXITCODE" }
 }
 if (!(Get-Command cmake -ErrorAction SilentlyContinue)) { throw 'Install Visual Studio 2022 Desktop development with C++, including CMake, then use Developer PowerShell.' }
-if ($PkgConfig) {
-    $env:PKG_CONFIG = (Resolve-Path -LiteralPath $PkgConfig).Path
+. "$PSScriptRoot\PkgConfig.ps1"
+$pkgConfigPath = Get-JudasPkgConfig -Path $PkgConfig -CacheRoot ([IO.Path]::GetFullPath($ToolCache))
+$previousPkgConfig = $env:PKG_CONFIG
+$previousKeepEnv = $env:VCPKG_KEEP_ENV_VARS
+try {
+    # Always pass the selected, preflighted tool. Do not discover an unrelated
+    # PATH executable or let the pinned helper acquire its obsolete MSYS2 tree.
+    $env:PKG_CONFIG = $pkgConfigPath
     # vcpkg sanitizes the environment before executing ports.
     $env:VCPKG_KEEP_ENV_VARS = (@($env:VCPKG_KEEP_ENV_VARS -split ';' | Where-Object { $_ }) + 'PKG_CONFIG' | Select-Object -Unique) -join ';'
+    if (!(Test-Path "$VcpkgRoot\.git")) {
+        if (Test-Path $VcpkgRoot) { throw "Existing non-Git directory: $VcpkgRoot" }
+        Run-Native git @('clone', 'https://github.com/microsoft/vcpkg.git', $VcpkgRoot)
+        Run-Native git @('-C', $VcpkgRoot, 'checkout', '--detach', $pin)
+    } else {
+        $current = (& git -C $VcpkgRoot rev-parse HEAD).Trim()
+        if ($LASTEXITCODE -ne 0 -or $current -ne $pin) { throw "Use a dedicated vcpkg checkout at $pin; existing checkout was left untouched." }
+    }
+    Run-Native "$VcpkgRoot\bootstrap-vcpkg.bat" @('-disableMetrics')
+    $build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { "$repo\build\windows-$Channel" }
+    $configure = @('-S', $repo, '-B', $build, '-G', $Generator, '-DCMAKE_BUILD_TYPE=Release', "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot/scripts/buildsystems/vcpkg.cmake", '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md', "-DVCPKG_MANIFEST_DIR=$repo/packaging/windows", "-DVCPKG_INSTALLED_DIR=$build/vcpkg_installed", "-DJUDAS_BUILD_CHANNEL=$Channel")
+    if ($Generator -ne 'Ninja') { $configure += @('-A', 'x64') }
+    if ($CompilerLauncher) { $configure += @("-DCMAKE_C_COMPILER_LAUNCHER=$CompilerLauncher", "-DCMAKE_CXX_COMPILER_LAUNCHER=$CompilerLauncher") }
+    if ($ReleasePackage) { $configure += "-DJUDAS_SDK_RELEASE=ON" }
+    if ($EngineVersion) { $configure += "-DJUDAS_ENGINE_VERSION=$EngineVersion" }
+    Run-Native cmake $configure
+    if ($DependenciesOnly) {
+        Write-Host "Windows dependencies configured; Judas compilation and application qualification were not run: $build"
+        return
+    }
+    Run-Native cmake @('--build', $build, '--config', 'Release', '--target', 'judas_windows_sdk', '--parallel', $Jobs)
+    Run-Native "$build\windows-sdk\judas_windows_readiness_tests.exe" @()
+    Write-Host "Windows SDK staged (native qualification still required): $build\windows-sdk"
+    Write-Host "Open docs/WINDOWS.md and perform the native editor/export checks. This script cannot supply human acceptance."
+} finally {
+    $env:PKG_CONFIG = $previousPkgConfig
+    $env:VCPKG_KEEP_ENV_VARS = $previousKeepEnv
 }
-if (!(Test-Path "$VcpkgRoot\.git")) {
-    if (Test-Path $VcpkgRoot) { throw "Existing non-Git directory: $VcpkgRoot" }
-    Run-Native git @('clone', 'https://github.com/microsoft/vcpkg.git', $VcpkgRoot)
-    Run-Native git @('-C', $VcpkgRoot, 'checkout', '--detach', $pin)
-} else {
-    $current = (& git -C $VcpkgRoot rev-parse HEAD).Trim()
-    if ($LASTEXITCODE -ne 0 -or $current -ne $pin) { throw "Use a dedicated vcpkg checkout at $pin; existing checkout was left untouched." }
-}
-Run-Native "$VcpkgRoot\bootstrap-vcpkg.bat" @('-disableMetrics')
-$build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { "$repo\build\windows-$Channel" }
-$configure = @('-S', $repo, '-B', $build, '-G', $Generator, '-DCMAKE_BUILD_TYPE=Release', "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot/scripts/buildsystems/vcpkg.cmake", '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md', "-DVCPKG_MANIFEST_DIR=$repo/packaging/windows", "-DVCPKG_INSTALLED_DIR=$build/vcpkg_installed", "-DJUDAS_BUILD_CHANNEL=$Channel")
-if ($Generator -ne 'Ninja') { $configure += @('-A', 'x64') }
-if ($CompilerLauncher) { $configure += @("-DCMAKE_C_COMPILER_LAUNCHER=$CompilerLauncher", "-DCMAKE_CXX_COMPILER_LAUNCHER=$CompilerLauncher") }
-if ($ReleasePackage) { $configure += "-DJUDAS_SDK_RELEASE=ON" }
-if ($EngineVersion) { $configure += "-DJUDAS_ENGINE_VERSION=$EngineVersion" }
-Run-Native cmake $configure
-Run-Native cmake @('--build', $build, '--config', 'Release', '--target', 'judas_windows_sdk', '--parallel', $Jobs)
-Run-Native "$build\windows-sdk\judas_windows_readiness_tests.exe" @()
-Write-Host "Windows SDK staged (native qualification still required): $build\windows-sdk"
-Write-Host "Open docs/WINDOWS.md and perform the native editor/export checks. This script cannot supply human acceptance."

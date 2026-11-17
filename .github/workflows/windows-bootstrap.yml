@@ -1,0 +1,40 @@
+name: Windows fresh dependency bootstrap
+on:
+  push:
+    branches: [Experimental, main]
+    paths: ['packaging/windows/**', '.github/workflows/windows-bootstrap.yml']
+  pull_request:
+    branches: [Experimental, main]
+    paths: ['packaging/windows/**', '.github/workflows/windows-bootstrap.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: windows-bootstrap-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  dependencies:
+    runs-on: windows-2025
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Prepare native x64 compiler
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $vsPath = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          if ($LASTEXITCODE -or !$vsPath) { throw 'MSVC installation not found' }
+          & "$vsPath/Common7/Tools/Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
+          ./packaging/windows/Test-Bootstrap.ps1 -WorkDirectory "$env:RUNNER_TEMP/judas-bootstrap"
+      - name: Preserve dependency failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-bootstrap-diagnostics
+          path: |
+            ${{ runner.temp }}/judas-bootstrap/vcpkg/buildtrees/**/*.log
+            ${{ runner.temp }}/judas-bootstrap/tool cache with spaces/**/extract.log
+            ${{ runner.temp }}/judas-bootstrap/build/CMakeFiles/CMakeConfigureLog.yaml
+          retention-days: 14
