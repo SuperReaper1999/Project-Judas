@@ -6,7 +6,7 @@ Deliver one coherent engine/editor/SDK development platform. Independently verif
 source/runtime evidence governs decisions; older reports are not instructions.
 Stage B's bounded collision/UI/coverage/docs/rendering programme was explicitly
 approved on2026-11-17. It is implemented with native Linux integration evidence in
-[RECONCILIATION](RECONCILIATION.md). Stage E final checkpoint qualification is in progress; see the current state below.
+[RECONCILIATION](RECONCILIATION.md). Stage E achieved the scoped development-ready baseline recorded in [DEVELOPMENT_READINESS](../../DEVELOPMENT_READINESS.md).
 
 No physics-core replacement, major restructuring, main promotion, selected external
 SDK replacement or further broad cleanup is authorized. Ordinary validated work
@@ -134,50 +134,70 @@ requires separate approval. Preserve failed evidence and fidelity; do not merge
 isolated experiments on their proof tests alone.
 
 
-### Stage E continuation — current verified state
+## Stage E exit — qualified Experimental baseline (2026-11-17)
 
-Retain the bounded opaque shadow coalescing change. Matched whole-application
-captures passed all18 trials: median p99 animation11.302→9.747ms,
-IK14.569→12.134ms, combined6.553→6.267ms; worst candidate
-13.452/33.142/8.568ms. No clipping, backlog discard or catch-up caps.
-28 shadow-depth fidelity cases passed under each modern/portable NVIDIA policy.
-The complete5154-frame shallow trace did not reproduce/attribute the earlier
-incomplete78ms hitch; the33ms lean hitch remains explicit. Investigation is bounded
-and complete for this increment; no further optimization is required for its exit.
+**Verdict: development-ready native Linux engine/editor/JudasJS SDK within the
+explicit [supported boundaries](../../DEVELOPMENT_READINESS.md).** Qualified code
+candidate: **eb2123684e77494007a4452cee6bb0918f8b4eff**. Final documentation-only
+closure preserves that exact runtime/test candidate; it is not a second native run.
 
-Expanded208CTest cases passed428.76s. A new registered fresh-process animation/IK
-continuation gate also passed, checking uninterrupted/restored hand, motion, phase,
-events and4targets through StepAuthoritativeWorld. Registered suite now209.
-Source-hidden real desktop SDK authoring/39tool operations, town layout, animation
-export and moved IK export/cold restore passed. The latter restores tick142 with
-16enabled IK actors and64targets after a real resumed fixed solve. Its initial
-observer incorrectly demanded residuals before the solver ran; observer corrected,
-engine ordering unchanged. ikStatus.ready denotes asset availability.
+### Demonstrated qualification
 
-See docs/DEVELOPMENT_READINESS.md and evidence/stage-e-{rendering,qualification}.json.
-Raw bounded output is .cache/v2-rendering-next; SDK disposable workspace is
-/tmp/judas-platform-audit-20261116. These are reproducible outputs, not source.
-Original physics preservation refs above remain unchanged and unmerged.
+- **209/209 CTest passed in 471.71 seconds**; all 195 native executable identities
+  report the clean candidate. Python: 206 passed, three explicit JDK/Ninja skips.
+  Public API/type contracts passed (524 symbols, 353 operations, 58 examples).
+- Source-hidden real NVIDIA desktop SDK: 15 matching tools, 39 tool operations,
+  actual create/author/undo/save/reopen/Play/Stop, town packaged layout, animation
+  export, moved IK runtime and cold restoration passed with checksum invariant.
+  IK restored tick 141, 16 enabled actors / 64 targets after a real resumed solve.
+  Build ID: `2.0.0-alpha.1-Experimental-eb21236-clean-6337fffb54e9`.
+- All three regular CI workflows passed: focused engine44101521448,
+  tooling44101521391, current documentation44101521437.
+- [Exact non-publishing target run44101575648](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44101575648)
+  passed both native jobs. Ubuntu24.04 includes SDK workflows, API and GLIBC2.39
+  boundary checks on software GL. Windows2025/MSVC includes full SDK build,
+  selected native contracts, all 166 material checks and SDK loader inspection.
 
-Remaining checkpoint procedure: finish final209suite/tooling and exact clean-head
-identity/SDK checks; commit/push Experimental; run existing never-publishes candidate
-workflow on that exact SHA for both Ubuntu24.04 and native Windows builds/contracts.
-That workflow does not certify Windows graphical workflows. No local Android device,
-complete JDK/emulator or Emscripten toolchain is available; record these runtime gaps
-rather than install/reconfigure or silently inherit historical acceptance.
-The scoped native-Linux readiness verdict does not depend on universal platform or
-stretch performance qualification. Final hosted results belong in the checkpoint
-receipt; no main promotion or selected consumer SDK replacement is authorized.
+### Bounded rendering decision
 
+Retain compatible opaque shadow coalescing: original parts are skipped when one
+merged draw is eligible; colour geometry and simulation ownership stay unchanged.
+28 shadow-depth fidelity cases passed per modern/portable NVIDIA policy. The
+matched whole-application campaign passed all 18 trials: median p99 animation
+11.302→9.747ms, IK14.569→12.134ms, combined6.553→6.267ms; worst candidate
+13.452/33.142/8.568ms. No clipping, discarded backlog or catch-up caps.
+Complete 5154-frame shallow trace: no lost records/time; shadow332.5 draws/frame,
+GL CPU elapsed0.518ms, material0.177ms, callback observation max0.411ms.
+The earlier incomplete78ms frame was not reproduced or attributed; the33.142ms
+lean hitch and animation/IK120FPS misses remain explicit known limitations.
+No additional optimization loop is needed for this scoped baseline.
 
-Final-head qualification of79acc124 found207/209 native passes, not209/209:
-new cold fixture used cwd-relative project path (CI and local isolated runner),
-and one terrain visibility readback failed, unreproduced in3isolated repeats.
-Bounded fixture repairs use ResolveEngineDataPath and an owned render target;
-no assertions weakened. Hosted Windows actually failed compiling MaterialBatch's
-nothrow move assertion. MSVC may allocate map sentinels; keep identical ordered
-kernels on the owner whenever transfer is not guaranteed no-throw. GCC's safe
-worker path stays selected. This is a portability fallback, not a core replacement.
-Windows workflow adds the existing full166-check native material contract.
-Full209final suite and source-hidden SDK must run on the repaired checkpoint.
-Both previous failed hosted runs remain explicit in stage-e-qualification.json.
+### Failures and repairs retained
+
+The first clean79acc124 full run passed207/209, not209/209. The new cold fixture
+used cwd-relative project/IK paths; the terrain image visibility check failed once,
+then passed three isolated repeats. Repaired fixtures use ResolveEngineDataPath
+and an owned image/depth target, retaining all assertions. The initial hosted
+Windows build failed MaterialBatch's no-throw transfer assertion. When instance
+transfer is not guaranteed safe, the same ordered kernels now execute on the
+owner; GCC's safe worker path remains selected. This is a portability fallback,
+not a physics-core replacement. Final full/local/SDK/hosted reruns passed.
+Initial snapshots and negative attempts remain in stage-e-qualification.json;
+its pending fields are historical and superseded by this exit record.
+
+### Scope and continuity
+
+No Windows editor/GL/export qualification is inferred from hosted contracts.
+Android/browser snapshot runtime, physical audio/controllers/IME, long soak,
+hostile WAN/load and broad vehicle/material exceptions remain unqualified.
+Android lacks a complete JDK/emulator/current device; Emscripten is absent.
+Historical scoped acceptance is neither withdrawn nor extended to this snapshot.
+Primary Linux readiness does not require universal platform or stretch-budget
+qualification. Continue feature/game development within the documented boundary.
+
+Main1094d645, preserved contact-material2e607995 and separate physics-cored12490a9
+remain unchanged. No selected consumer SDK, release publication or promotion
+changed. Generated roots remain guarded (8GiB cache /14GiB build /16GiB total;
+no automatic deletion). The current campaign is disposable; concise source receipts
+and this verdict establish the baseline. No new roadmap or substantial replacement
+is authorized by this exit. Existing operator approval boundaries still apply.
